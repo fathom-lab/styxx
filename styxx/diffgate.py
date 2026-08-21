@@ -87,12 +87,19 @@ class DiffGate:
     head: str
     claims: list = field(default_factory=list)
     uncovered_sentences: int = 0
+    # A gate that had NO EVIDENCE still has to answer PASS or FAIL, and PASS is
+    # the flattering half. `measured` is the third answer the two-valued verdict
+    # cannot carry: this gate did not run. A leg that cannot fail must not gate.
+    measured: bool = True
+    why_unmeasured: str = ""
 
     def to_dict(self):
         return {"diffgate": "v0", "verdict": self.verdict, "base": self.base,
                 "head": self.head,
                 "claims": [c.__dict__ for c in self.claims],
-                "uncovered_sentences": self.uncovered_sentences}
+                "uncovered_sentences": self.uncovered_sentences,
+                "measured": self.measured,
+                "why_unmeasured": self.why_unmeasured}
 
 
 def _git(repo, *args) -> str:
@@ -138,7 +145,8 @@ def gate_diff_text(summary_text: str, diff_text: str,
     """Gate a summary against a RAW unified diff — no git checkout required."""
     status, added_blob = parse_unified_diff(diff_text)
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
-                 repo=repo, base="(diff-text)", head="(diff-text)")
+                 repo=repo, base="(diff-text)", head="(diff-text)",
+                 raw_input_len=len(diff_text or ""))
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -160,7 +168,25 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
 
 
 def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
-          run: str | None, strict: bool, repo, base: str, head: str) -> DiffGate:
+          run: str | None, strict: bool, repo, base: str, head: str,
+          raw_input_len: int | None = None) -> DiffGate:
+
+    # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
+    # asks "is anything outside the prefix?" and an empty status answers "no" —
+    # so until 2026-08-21 this gate returned VERIFIED for the input
+    # "Sorry, I could not produce a diff."  The module whose entire purpose is
+    # refusing to take the agent's word took the agent's word.
+    #
+    # An empty status is not agreement. It is the absence of evidence, and this
+    # file already has the right word for that: UNCHECKABLE.
+    no_evidence: str | None = None
+    if not status and not added_blob:
+        no_evidence = "the diff carries no file statuses and no added lines"
+        if raw_input_len:
+            no_evidence += (f"; {raw_input_len} characters of input parsed to "
+                            f"nothing, which is a parse failure, not an empty change")
+    no_paths = "the diff carries no file paths, so scope cannot be checked" \
+        if not status else None
 
     def find_path(claimed: str):
         c = _norm(claimed)
@@ -178,6 +204,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)
+                if no_evidence and kind != "tests_pass":
+                    c.verdict, c.why = "UNCHECKABLE", no_evidence
+                    claims.append(c)
+                    continue
                 if kind in ("file_created", "file_deleted", "file_touched"):
                     p, st = find_path(d["path"])
                     want = {"file_created": "A", "file_deleted": "D"}.get(kind)
@@ -191,8 +221,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.verdict, c.why = "VERIFIED", f"diff status {st!r} for {p!r}"
                 elif kind == "files_changed_count":
                     n = int(d["n"])
-                    c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"
-                    c.why = f"diff changes {len(status)} files, claim says {n}"
+                    if no_paths:
+                        c.verdict, c.why = "UNCHECKABLE", no_paths
+                    else:
+                        c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"
+                        c.why = f"diff changes {len(status)} files, claim says {n}"
                 elif kind == "tests_added":
                     n = int(d["n"])
                     got = len(re.findall(r"^\s*def test_", added_blob, re.M))
@@ -208,9 +241,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     pref = _norm(d["prefix"]).rstrip("/.")   # sentence-final periods are not path
                     outside = [p for p in status if not p.startswith(pref + "/")
                                and p != pref]
-                    c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
-                    c.why = ("all changed paths under prefix" if not outside else
-                             f"paths outside {pref!r}: {outside[:3]}")
+                    if no_paths:
+                        c.verdict, c.why = "UNCHECKABLE", no_paths
+                    else:
+                        c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
+                        c.why = ("all changed paths under prefix" if not outside else
+                                 f"paths outside {pref!r}: {outside[:3]}")
                 elif kind == "tests_pass":
                     if run:
                         r = subprocess.run(run, shell=True, cwd=repo,
@@ -228,6 +264,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
     uncovered = sum(1 for i, s in enumerate(sentences) if s.strip() and i not in covered)
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
+                    measured=not no_evidence, why_unmeasured=no_evidence or "",
                     uncovered_sentences=uncovered)
 
 
@@ -303,6 +340,10 @@ def main(argv=None) -> int:
     g = gate_diff(text, a.repo, a.base, a.head, run=a.run, strict=a.strict)
     if a.out:
         Path(a.out).write_text(json.dumps(g.to_dict(), indent=2) + "\n", encoding="utf-8")
+    if not g.measured:
+        print(f"UNMEASURED  this gate did not run: {g.why_unmeasured}")
+        print("            a PASS here would mean 'nothing contradicted the summary',")
+        print("            which is true of any summary when there is no diff to read.")
     print(f"{g.verdict}  claims={len(g.claims)} "
           f"contradicted={sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} "
           f"uncheckable={sum(1 for c in g.claims if c.verdict == 'UNCHECKABLE')} "
