@@ -22,12 +22,12 @@ import torch
 MODEL = "Qwen2.5-1.5B-Instruct"
 MODEL_ID = f"Qwen/{MODEL}"
 N_ITEMS = 500
-SEED = 20260821
+SEED = 20260822   # confirmatory: FRESH items, disjoint from attempts 1-2
 LAYER_FRAC = 0.75
 N_SPLITS = 20
 MAX_NEW = 24
 POOL = "last"   # attempt 2, frozen: final prompt token, not mean-pooled
-OUT = Path(__file__).resolve().parent.parent / "papers" / f"out_rdm_reliability_{POOL}_2026_08_21.json"
+OUT = Path(__file__).resolve().parent.parent / "papers" / f"out_rdm_reliability_confirmatory_{POOL}.json"
 
 _norm_re = re.compile(r"[^a-z0-9 ]+")
 
@@ -39,8 +39,12 @@ def _norm(s: str) -> str:
 def load_items():
     from datasets import load_dataset
     ds = load_dataset("akariasai/popqa", split="test")
+    # exclude every item used in attempts 1 and 2 -- asserted, not assumed
+    prior = np.random.default_rng(20260821).choice(len(ds), size=N_ITEMS, replace=False)
+    pool = np.setdiff1d(np.arange(len(ds)), prior)
     rng = np.random.default_rng(SEED)
-    idx = rng.choice(len(ds), size=N_ITEMS, replace=False)
+    idx = rng.choice(pool, size=N_ITEMS, replace=False)
+    assert len(np.intersect1d(idx, prior)) == 0, "confirmatory set overlaps the exploratory set"
     items = []
     for i in idx:
         r = ds[int(i)]
