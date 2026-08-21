@@ -26,7 +26,8 @@ SEED = 20260821
 LAYER_FRAC = 0.75
 N_SPLITS = 20
 MAX_NEW = 24
-OUT = Path(__file__).resolve().parent.parent / "papers" / "out_rdm_reliability_2026_08_21.json"
+POOL = "last"   # attempt 2, frozen: final prompt token, not mean-pooled
+OUT = Path(__file__).resolve().parent.parent / "papers" / f"out_rdm_reliability_{POOL}_2026_08_21.json"
 
 _norm_re = re.compile(r"[^a-z0-9 ]+")
 
@@ -82,7 +83,8 @@ def main() -> int:
         with torch.no_grad():
             # representation of the QUESTION, before any answer exists
             hs = model(**enc, output_hidden_states=True).hidden_states[layer]
-            reps.append(hs[0].mean(0).float().cpu().numpy())
+            vec = hs[0, -1] if POOL == "last" else hs[0].mean(0)
+            reps.append(vec.float().cpu().numpy())
 
             gen = model.generate(**enc, max_new_tokens=MAX_NEW, do_sample=False,
                                  return_dict_in_generate=True, output_scores=True,
@@ -142,6 +144,7 @@ def main() -> int:
 
     payload = {
         "model": MODEL, "n_items": len(items), "seed": SEED, "layer": layer,
+        "pool": POOL,
         "n_layers": n_layers, "n_splits": N_SPLITS,
         "accuracy": acc, "degenerate": degenerate,
         "runtime_s": round(time.time() - t0, 1),
