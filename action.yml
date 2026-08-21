@@ -20,9 +20,13 @@ inputs:
     required: false
     default: "false"
   styxx-version:
-    description: "styxx version spec to install"
+    description: >-
+      styxx version spec to install. The floor is 7.44.0 deliberately: every release
+      before it contained a bypass in this very gate — `only touches <prefix>` was
+      VERIFIED against an unreadable diff, because "is any path outside the prefix?"
+      is vacuously false when no paths were parsed. Do not pin below it.
     required: false
-    default: "styxx>=7.29.2"
+    default: "styxx>=7.44.0"
 
 runs:
   using: "composite"

@@ -26,6 +26,13 @@ def api(url: str, accept: str) -> str:
         return r.read().decode("utf-8", errors="replace")
 
 
+def _write_summary(lines) -> None:
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if path:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+
+
 def main() -> int:
     strict = os.environ.get("STYXX_STRICT", "false").lower() == "true"
     soft = os.environ.get("STYXX_SOFT_FAIL", "false").lower() == "true"
@@ -56,11 +63,36 @@ def main() -> int:
         return 0
     try:
         diff = api(diff_url, "application/vnd.github.diff")
-    except Exception as e:  # noqa: BLE001 — a broken fetch must not fake a verdict
-        print(f"::warning::styxx diffgate could not fetch the diff ({e}); not gating")
-        return 0
+    except Exception as e:  # noqa: BLE001
+        # This branch used to `return 0` under a comment saying "a broken fetch
+        # must not fake a verdict" — and 0 IS the passing verdict. A gate that
+        # could not read the diff has not cleared anything, so under `strict` it
+        # now fails rather than passing quietly.
+        print(f"::warning title=styxx diffgate - could not fetch the diff::"
+              f"{e}. The gate did not run; this is not a pass.")
+        _write_summary(["## styxx diffgate — DID NOT RUN", "",
+                        f"The diff could not be fetched: `{e}`.", "",
+                        "_This is not a clean result. A gate with no diff to read "
+                        "cannot contradict anything, which is true of every "
+                        "summary ever written._"])
+        return 1 if (strict and not soft) else 0
 
     g = gate_diff_text(summary, diff, strict=strict)
+
+    # `measured` is False when the fetched text yielded no file statuses and no
+    # added lines — an empty diff, an error payload served with HTTP 200, an
+    # HTML interstitial. PASS/FAIL cannot carry "this gate did not run".
+    if not g.measured:
+        print(f"::warning title=styxx diffgate - UNMEASURED::"
+              f"{g.why_unmeasured}. The gate did not run; this is not a pass.")
+        _write_summary(["## styxx diffgate — UNMEASURED", "",
+                        f"**The gate did not run.** {g.why_unmeasured}", "",
+                        f"Every claim in the {what} is reported UNCHECKABLE, not "
+                        "verified. A PASS here would mean *nothing contradicted "
+                        "the summary* — which is true of any summary when there "
+                        "is no diff to read.", "",
+                        "_Set `strict: true` to fail the job on this._"])
+        return 1 if (strict and not soft) else 0
 
     lines = ["## styxx diffgate — the summary vs the diff", "",
              f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}", ""]
@@ -76,10 +108,7 @@ def main() -> int:
     lines += ["", "_A ❓ fails only with `strict: true`. Zero false accusations across "
               "both public validation corpora — receipts in the "
               "[styxx CHANGELOG](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md)._"]
-    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if summary_path:
-        with open(summary_path, "a", encoding="utf-8") as f:
-            f.write("\n".join(lines) + "\n")
+    _write_summary(lines)
 
     failing = False
     for c in g.claims:

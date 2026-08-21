@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.44.1] — 2026-08-21 — the Action reported a pass when the gate had not run
+
+The published `styxx diffgate` GitHub Action carried the product-level instance of
+the defect class it exists to detect.
+
+### Fixed
+- **A failed diff fetch returned exit 0** — under a comment reading *"a broken
+  fetch must not fake a verdict"*. Exit 0 **is** the verdict. A green check
+  appeared on every PR whose diff the runner could not retrieve. It now reports
+  `DID NOT RUN` in the job summary and **fails under `strict: true`**.
+- **`DiffGate.measured` was ignored entirely.** An error payload served with
+  HTTP 200, an HTML interstitial, or a truncated response parsed to zero file
+  statuses — and the Action printed PASS. It now reports `UNMEASURED`, states
+  that a pass would mean *"nothing contradicted the summary"* (true of any
+  summary when there is no diff), and fails under `strict`.
+- **The version floor was `styxx>=7.29.2`.** Every release from 7.29.2 through
+  7.43.0 contains the `only_touches` bypass in this very gate — a scope claim
+  VERIFIED against an unreadable diff. **Anyone pinning inside that range has
+  been running a gate with a hole in it.** Floor raised to `styxx>=7.44.0`, with
+  the reason written inline in `action.yml` rather than left to the changelog.
+
+11 tests, including four unreadable-payload shapes and both strict and soft-fail
+paths (`tests/test_diffgate_action.py`).
+
+---
+
 ## [7.44.0] — 2026-08-21 — a guard that publishes the score that killed it
 
 ### Fixed — a gate that verified claims against a diff it could not read
