@@ -21,10 +21,17 @@ def corpus():
     return json.loads(EXT.read_text(encoding="utf-8"))
 
 
-def test_incompleteness_is_declared_in_the_data(corpus):
-    """A partial corpus that does not say so is the defect it catalogues."""
-    assert "INCOMPLETE" in corpus["status"]
-    assert "no gate has been applied" in corpus["status"].lower()
+def test_the_status_never_claims_completeness(corpus):
+    """The corpus may finish adjudicating its candidates; the HARVEST is never
+    finished, because recall is unknown. The status has to keep saying so.
+
+    An earlier version of this test asserted the literal string "INCOMPLETE" and
+    failed the moment the adjudication finished — a test that breaks on progress
+    rather than on a defect. It asserts the durable property now.
+    """
+    s = corpus["status"].lower()
+    assert "lower bound" in s or "recall is unknown" in s
+    assert not any(w in s for w in ("exhaustive", "all silent-pass", "every case in"))
 
 
 def test_recall_is_declared_unknown(corpus):

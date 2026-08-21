@@ -1,0 +1,51 @@
+{
+ "n_widened": 17,
+ "n_strict": 8,
+ "dropped": [
+  {
+   "repo": "cleanlab",
+   "sha": "6ec5b173dd81fb604398ab9f90843676ca24b3cb",
+   "subject": "Cleanup token classification utils (#390)"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "65f84098d9970c436d0a9a0d697c8e22e75f63e0",
+   "subject": "Refactored test_hybrid_tracing into a pytest test, and disabled it due to missing data files"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "aab6d31bcc9362a0a7adf4a404fbe0b94d7caf64",
+   "subject": "refactor(voice): group duplex/connector state and drop dynamic attribute probing"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "ccb4b8c728acdbdb300fdd4188f2e72aad3944b9",
+   "subject": "Straighten out missing value handling in expect_table_row_count_to_be_between"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "745b2ec9c37ae11df022700525e73253460f96fe",
+   "subject": "Handle multi-frame zstd in async ZIP read paths (#3771)"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "1c25452bd6d74dc2b75b1a6bfb63829e4bdf8bb2",
+   "subject": "Show real-time metric (#953)"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "b7c982aa26c8dfefd9e514344a283ab9a2ed0d2b",
+   "subject": "native compaction for anthropic models (#3186)"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "0527f1768bffc87966811a7fbea465688247f5c2",
+   "subject": "Rename the samples-listing errors_only param to an extensible filter enum"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "b0195a94f4fe98c10acc043255081506b5d453f8",
+   "subject": "feat(models): add cross-platform onnxruntime-genai backend + refactor winml (#3960)"
+  }
+ ]
+}

@@ -3,7 +3,7 @@
   "description": "Silent-pass defects in code this project did not write, each anchored to a real fix commit in the upstream repository. Ground truth is the upstream maintainers' own decision that the pre-fix behaviour was wrong, not our judgment.",
   "prereg": "papers/PREREG_sp_external_corpus_2026_08_21.md",
   "frozen_at": "38b8428",
-  "status": "INCOMPLETE — 7 of 17 candidates adjudicated (session limit). See papers/RESULT_sp_ext_interim_2026_08_21.md. Not a finished corpus; no gate has been applied.",
+  "status": "COMPLETE for the 17 harvested candidates: all adjudicated 3/3. 2 accepted. Gates applied — see papers/RESULT_sp_ext_2026_08_21.md. The harvest itself is a lower bound; recall is unknown.",
   "inclusion_rule": [
     "R1 a reachable path existed where the measurement did not happen",
     "R2 on that path the value was INDISTINGUISHABLE from a real healthy measurement",
@@ -50,6 +50,46 @@
       "verification": "read directly from git at dd75e974ee by the author of this entry, not taken from the adjudicating agents. An earlier draft of this record named the module as giskard/core/suite.py, which does not exist; corrected before publication.",
       "defect_line": 636,
       "defect_line_verified": "git show dd75e974ee~1:libs/giskard-checks/src/giskard/checks/core/result.py line 636 is `return 1.0`, inside `if denominator == 0:` at 635"
+    },
+    {
+      "id": "SPX-2026-0002",
+      "repo": "UKGovernmentBEIS/inspect_ai",
+      "url": "https://github.com/UKGovernmentBEIS/inspect_ai/commit/acd139cc75aa0778685618a78f9c470613e53208",
+      "fix_commit": "acd139cc75aa0778685618a78f9c470613e53208",
+      "fix_subject": "fix(web_browser): warn once when AppKit is missing on the macOS scale-factor probe",
+      "fix_author": "Yufeng He",
+      "fix_date": "2026-07-16",
+      "module": "src/inspect_tool_support/src/inspect_tool_support/_remote_tools/_web_browser/scale_factor.py",
+      "symbol": "_darwin_scale_factor",
+      "subtype": "SP-2 SENTINEL_DEFAULT",
+      "what_failed": "the optional dependency pyobjc-framework-AppKit was not installed, so `from AppKit import NSScreen` raised ModuleNotFoundError inside a bare `except Exception`",
+      "prefix_code": "try:\n    from AppKit import NSScreen\n    screen = NSScreen.mainScreen()\nexcept Exception:\n    return 1.0",
+      "what_was_returned": "scale factor 1.0",
+      "why_it_reads_healthy": "1.0 is a LEGITIMATE scale factor — every non-HiDPI display measures exactly 1.0 — so a consumer cannot distinguish 'measured, and this screen is not HiDPI' from 'AppKit is missing and we guessed'",
+      "consumer": "the web_browser tool's screenshot and coordinate scaling on headful macOS; a HiDPI screen silently treated as 1x produces mis-scaled coordinates with no error anywhere",
+      "fix": "ModuleNotFoundError is caught separately and emits a functools.cache'd logger.warning naming the missing package",
+      "breaking_change": false,
+      "fix_strength_note": "PARTIAL by the standards of this corpus: the fix still RETURNS 1.0. The absence became visible to a human reading logs, not to a program reading the value. R3 is satisfied because the frozen rule lists 'a warning', but a consumer that thresholds the number still cannot distinguish the two cases.",
+      "adjudication": {
+        "reviewers": 3,
+        "rejections": 0,
+        "verdict": "ACCEPTED unanimously",
+        "subtype_agreement": "3/3 agreed SP-2 SENTINEL_DEFAULT",
+        "confidence": "high on all three lenses"
+      },
+      "verification": "path and line read directly from `git show --name-only` and the pre-fix source. An earlier draft of this entry invented the path 'src/inspect_ai/tool/_tools/_web_browser/_resources/scale.py', which does not exist — the SECOND fabricated path in this corpus today, both caught by checking rather than by re-reading my own text.",
+      "defect_line": 30,
+      "defect_line_verified": "git show acd139cc75~1:<module> line 30 is `return 1.0`, inside `except Exception:` at 29, guarding the AppKit import at 26",
+      "sibling_note": "the same file has a second `except Exception: return 1.0` at line 42 for the Windows DPI probe, which this fix did NOT touch — an unfixed instance of the same shape, recorded rather than claimed"
+    }
+  ],
+  "overturned": [
+    {
+      "candidate": "inspect_ai 34beafda81 — Prevent math scorer from executing model output (#4361)",
+      "adjudication": "2 of 3 reviewers failed to reject it, so the protocol ACCEPTED it",
+      "overturned_by": "direct reading of the pre-fix source by the corpus author",
+      "reason": "The claim was that `parse_answer` returns None when every parse route fails and `check_answers` short-circuits. It does: `if ans1 is None or ans2 is None: return False`, and `score()` then emits Score(value=INCORRECT). So an unparseable TARGET marks the model WRONG. That fails CLOSED — the alarming direction. R2 requires a value indistinguishable from a HEALTHY measurement, and INCORRECT is not one. The single reviewer who rejected it was right and the majority was wrong.",
+      "note": "Recorded because 'every verdict is published so a reader can overturn a label rather than trust it' is only worth writing if the first reader actually does it. A 2-of-3 majority is not evidence; the source is."
     }
   ]
 }
