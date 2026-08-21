@@ -1,0 +1,40 @@
+{
+  "corpus": "SP-EXT",
+  "description": "Silent-pass defects in code this project did not write, each anchored to a real fix commit in the upstream repository. Ground truth is the upstream maintainers' own decision that the pre-fix behaviour was wrong, not our judgment.",
+  "prereg": "papers/PREREG_sp_external_corpus_2026_08_21.md",
+  "frozen_at": "38b8428",
+  "status": "INCOMPLETE — 7 of 17 candidates adjudicated (session limit). See papers/RESULT_sp_ext_interim_2026_08_21.md. Not a finished corpus; no gate has been applied.",
+  "inclusion_rule": [
+    "R1 a reachable path existed where the measurement did not happen",
+    "R2 on that path the value was INDISTINGUISHABLE from a real healthy measurement",
+    "R3 the fix made the absence visible"
+  ],
+  "adjudication": "three independent reviewers per candidate, each assigned a distinct lens and each prompted to REJECT; accepted only when rejecters fail to reach a majority; uncertainty resolves to REJECT",
+  "recall": "UNKNOWN. Candidates come from a frozen commit-message regex intersected with a frozen diff shape. Fixes described some other way are invisible to it. SP-EXT is a LOWER BOUND on incidence and must never be quoted as a rate.",
+  "cases": [
+    {
+      "id": "SPX-2026-0001",
+      "repo": "Giskard-AI/giskard",
+      "url": "https://github.com/Giskard-AI/giskard/commit/dd75e974ee",
+      "fix_commit": "dd75e974ee",
+      "fix_subject": "fix(checks)!: return None from SuiteResult.pass_rate when nothing evaluated (#2753)",
+      "module": "giskard/core/suite.py",
+      "symbol": "SuiteResult.pass_rate",
+      "subtype": "SP-2 SENTINEL_DEFAULT",
+      "what_failed": "the suite evaluated nothing — an empty suite, or every scenario skipped, or the producing probe crashed",
+      "prefix_code": "denominator = len(self.results) - self.skipped_count\nif denominator == 0:\n    return 1.0",
+      "what_was_returned": "pass_rate = 1.0 — a perfect 100% score",
+      "why_it_reads_healthy": "the documented contract was 'pass_rate : float — Fraction of non-skipped...', so a consumer reading 1.0 sees a suite in which everything passed, which is exactly what it sees when a suite genuinely passes",
+      "consumer": "the Rich console summary line 'Summary: … | Pass Rate: 100.0%'; the Giskard Hub upload payload via to_hub_format/model_dump, which shipped 1.0 as a genuine success_rate; the project's own README example print(f'Aggregated pass rate: {results.pass_rate * 100}%'); and user CI gates thresholding the field",
+      "fix": "the zero-denominator branch returns None, the signature becomes float | None, the console renders '—' when None, and the Hub payload serialises the absence",
+      "breaking_change": true,
+      "adjudication": {
+        "reviewers": 3,
+        "rejections": 0,
+        "verdict": "ACCEPTED unanimously",
+        "subtype_agreement": "3/3 agreed SP-2 SENTINEL_DEFAULT",
+        "confidence": "high on all three lenses"
+      }
+    }
+  ]
+}
