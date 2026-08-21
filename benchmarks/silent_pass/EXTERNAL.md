@@ -1,9 +1,18 @@
 # SP-EXT — silent-pass cases in code we did not write
 
-**Status: INCOMPLETE. 7 of 17 candidates adjudicated, 1 accepted. No gate has been
-applied.** See `papers/RESULT_sp_ext_interim_2026_08_21.md`. This document
-describes what SP-EXT is and how to use or extend it; it does not describe a
-finished corpus, because there isn't one yet.
+**Status: 3 cases, 3 repositories. Both adjudication runs complete (17/17 and
+40/40); 100 Q2 candidates remain UNADJUDICATED.** Gates applied in
+`papers/RESULT_sp_ext_2026_08_21.md` and `papers/RESULT_sp_ext_q2_2026_08_21.md`.
+
+**The accept rate is 7.5%, below the frozen 20% floor**, which by the
+preregistration's own rule means the harvest queries are close to noise. And
+**recall is unknown**: SP-EXT is a lower bound on incidence and must never be
+quoted as a rate.
+
+**Subtype labels are unstable.** `giskard` was labelled SP-2 unanimously in one
+run and SP-1 unanimously in another, on identical source. The accept/reject
+verdict replicated; the taxonomy label did not. Treat subtypes as a weak
+annotation and the verdict as the datum.
 
 ---
 

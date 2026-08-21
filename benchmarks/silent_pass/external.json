@@ -3,7 +3,7 @@
   "description": "Silent-pass defects in code this project did not write, each anchored to a real fix commit in the upstream repository. Ground truth is the upstream maintainers' own decision that the pre-fix behaviour was wrong, not our judgment.",
   "prereg": "papers/PREREG_sp_external_corpus_2026_08_21.md",
   "frozen_at": "38b8428",
-  "status": "COMPLETE for the 17 harvested candidates: all adjudicated 3/3. 2 accepted. Gates applied — see papers/RESULT_sp_ext_2026_08_21.md. The harvest itself is a lower bound; recall is unknown.",
+  "status": "Q1-intersection: 17/17 adjudicated. Q2 sample: 40/40 adjudicated of a 140-candidate pool (seed 20260821); 100 remain UNADJUDICATED. 3 cases accepted across both runs. Recall of the harvest is unknown; SP-EXT is a lower bound and is never quoted as a rate.",
   "inclusion_rule": [
     "R1 a reachable path existed where the measurement did not happen",
     "R2 on that path the value was INDISTINGUISHABLE from a real healthy measurement",
@@ -81,6 +81,36 @@
       "defect_line": 30,
       "defect_line_verified": "git show acd139cc75~1:<module> line 30 is `return 1.0`, inside `except Exception:` at 29, guarding the AppKit import at 26",
       "sibling_note": "the same file has a second `except Exception: return 1.0` at line 42 for the Windows DPI probe, which this fix did NOT touch — an unfixed instance of the same shape, recorded rather than claimed"
+    },
+    {
+      "id": "SPX-2026-0003",
+      "repo": "truera/trulens",
+      "url": "https://github.com/truera/trulens/commit/a8d473e4045098e50c011fc0eb862b8dfa25e9bd",
+      "fix_commit": "a8d473e4045098e50c011fc0eb862b8dfa25e9bd",
+      "fix_subject": "instrumentation notebook updates and fixes (#953)",
+      "fix_author": "Piotr Mardziel",
+      "fix_date": "2024-03-06",
+      "module": "trulens_eval/trulens_eval/utils/imports.py",
+      "symbol": "Dummy.__instancecheck__ / Dummy.__subclasscheck__",
+      "defect_line": 308,
+      "defect_line_verified": "git show a8d473e40450~1:<module> line 308 is `return True` in __instancecheck__ (307); line 311 is the same in __subclasscheck__ (310)",
+      "subtype": "SP-4 TRUTHY_GATE",
+      "subtype_note": "the adjudicators labelled it SP-1 HEALTHY_ON_CRASH 2/3 with one abstention; recorded as SP-4 because the value is consumed as a GATE, and the disagreement is disclosed rather than resolved by fiat",
+      "what_failed": "an optional dependency failed to import, so the symbol was replaced by a `Dummy` placeholder",
+      "prefix_code": "def __instancecheck__(self, __instance: Any) -> bool:\n    return True\n\ndef __subclasscheck__(self, __subclass: type) -> bool:\n    return True",
+      "what_was_returned": "isinstance(anything, MissingOptionalClass) -> True, for any object",
+      "why_it_reads_healthy": "True is exactly what a genuine type match returns. Code guarded by `if isinstance(x, SomeOptionalClass):` takes the branch as though the object really were that type, so a missing dependency reads as a satisfied type check rather than as an absence",
+      "consumer": "every isinstance/issubclass guard in the codebase that names an optionally-imported class; the pre-fix tree contains 291 isinstance call sites, and any of them naming a Dummy-substituted symbol matched unconditionally",
+      "fix": "both return False, plus a docstring warning: 'While dummies can be used as types, they return false to all isinstance' — failing closed instead of open",
+      "breaking_change": false,
+      "adjudication": {
+        "reviewers": 3,
+        "rejections": 1,
+        "verdict": "ACCEPTED (1 of 3 rejected)",
+        "subtype_agreement": "2/3 said SP-1, 1 abstained",
+        "confidence": "mixed"
+      },
+      "verification": "diff, pre-fix source and line numbers read directly from git by the corpus author"
     }
   ],
   "overturned": [
