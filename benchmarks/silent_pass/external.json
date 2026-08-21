@@ -47,7 +47,9 @@
         "giskard/scan/integrations/garak/_adapter.py"
       ],
       "consumer_evidence": "confirmed by the fix's own diff: the README example was changed to handle None, tests/export/test_hub.py was extended (the Hub payload carried the value), and the garak scan adapter was updated — three distinct consumers touched by the one fix",
-      "verification": "read directly from git at dd75e974ee by the author of this entry, not taken from the adjudicating agents. An earlier draft of this record named the module as giskard/core/suite.py, which does not exist; corrected before publication."
+      "verification": "read directly from git at dd75e974ee by the author of this entry, not taken from the adjudicating agents. An earlier draft of this record named the module as giskard/core/suite.py, which does not exist; corrected before publication.",
+      "defect_line": 636,
+      "defect_line_verified": "git show dd75e974ee~1:libs/giskard-checks/src/giskard/checks/core/result.py line 636 is `return 1.0`, inside `if denominator == 0:` at 635"
     }
   ]
 }
