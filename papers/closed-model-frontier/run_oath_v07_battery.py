@@ -61,6 +61,24 @@ def mutate_sig16(tok: str, rng: random.Random) -> str:
     return tok[:pos] + str(new) + tok[pos + 1:]
 
 
+def substitute(line: str, tok: str, mut: str) -> tuple[str, bool]:
+    """Land *mut* in place of *tok*, honouring the typographic minus.
+
+    HARNESS DEFECT, OWNED AND FIXED HERE: extraction normalizes U+2212 to ASCII '-' (v0.6.2), so a
+    negative token is reported in ASCII while the document holds U+2212. A bare
+    ``line.replace(tok, mut, 1)`` therefore silently no-ops on every signed claim, the mutant never
+    lands, and the gate reads NOT_EXTRACTED — scoring a harness miss as a verifier miss. The
+    inherited `run_oath_v061_battery.py` carries the same bare replace; it is not modified here
+    (the instrument never moves), the defect is simply not repeated in this cycle's harness."""
+    if tok in line:
+        return line.replace(tok, mut, 1), True
+    if tok.startswith("-"):
+        alt, alt_mut = tok.replace("-", "−", 1), mut.replace("-", "−", 1)
+        if alt in line:
+            return line.replace(alt, alt_mut, 1), True
+    return line, False
+
+
 def resolvable_docs():
     out = []
     for cp in sorted(ROOT.glob("papers/**/*.certificate.json")):
@@ -114,13 +132,14 @@ def set_flags(precision: bool, ulp: bool) -> None:
 def run_arm(items, mut_seed: int, precision: bool, ulp: bool) -> dict:
     set_flags(precision, ulp)
     rng = random.Random(mut_seed)
-    caught = verified = abstained = other = 0
+    caught = verified = abstained = other = unlanded = 0
     rows = []
     for doc, receipts, ln_no, tok in items:
         lines = doc.read_text(encoding="utf-8", errors="replace").splitlines()
         mut = mutate_sig16(tok, rng)
         ml = list(lines)
-        ml[ln_no - 1] = ml[ln_no - 1].replace(tok, mut, 1)
+        ml[ln_no - 1], landed = substitute(ml[ln_no - 1], tok, mut)
+        unlanded += not landed
         with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False,
                                          encoding="utf-8") as tf:
             tf.write("\n".join(ml))
@@ -137,10 +156,12 @@ def run_arm(items, mut_seed: int, precision: bool, ulp: bool) -> dict:
         abstained += status == "ABSTAIN"
         other += status not in ("UNGROUNDED", "VERIFIED", "ABSTAIN")
         rows.append({"doc": doc.name, "line": ln_no, "token": tok, "mutant": mut,
-                     "status": status, "ref": (entry or {}).get("receipt_ref")})
+                     "status": status, "landed": landed,
+                     "ref": (entry or {}).get("receipt_ref")})
     return {"precision": precision, "ulp_escape": ulp, "n": len(items),
             "caught_ungrounded": caught, "false_verified": verified,
-            "abstained": abstained, "other": other, "rows": rows}
+            "abstained": abstained, "other": other,
+            "mutants_that_did_not_land": unlanded, "rows": rows}
 
 
 def corpus_pass(docs, precision: bool, ulp: bool) -> dict:

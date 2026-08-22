@@ -1,0 +1,838 @@
+{
+  "prereg": "PREREG_oath_v07_precision_obligation_2026_08_22.md",
+  "seed": 1,
+  "n": 20,
+  "V07_PRECISION_DIGITS": 7,
+  "V07_ULP_N": 8,
+  "verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+  "baseline_verifier_sha256": "2bd7299f82284c20c6a2804f93777ca924e4ca1c8b41817cb93c484ba5a4af93",
+  "pool": {
+    "total": 349,
+    "unbound": 183,
+    "bound": 166,
+    "unbound_share": 0.5244,
+    "docs": 136
+  },
+  "G1_recall": {
+    "extracted": 20,
+    "bar": 18,
+    "pass": true
+  },
+  "G2_unbound_catch": {
+    "on": {
+      "precision": true,
+      "ulp_escape": true,
+      "n": 20,
+      "caught_ungrounded": 20,
+      "false_verified": 0,
+      "abstained": 0,
+      "other": 0,
+      "mutants_that_did_not_land": 0,
+      "rows": [
+        {
+          "doc": "FINDING_belief_asymptote_2026_07_26.md",
+          "line": 45,
+          "token": "0.7394054395951929",
+          "mutant": "0.7394454395951929",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_source_independence_v2_2026_07_24.md",
+          "line": 54,
+          "token": "0.813953488372093",
+          "mutant": "0.813963488372093",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 65,
+          "token": "0.9918699186991871",
+          "mutant": "0.9910699186991871",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_resolution_2026_07_28.md",
+          "line": 62,
+          "token": "0.033333333333333326",
+          "mutant": "0.033334333333333326",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_belief_asymptote_2026_07_26.md",
+          "line": 23,
+          "token": "0.7336337760910816",
+          "mutant": "0.7336437760910816",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 46,
+          "token": "0.8102139406487232",
+          "mutant": "0.8182139406487232",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 14,
+          "token": "0.7777777777777778",
+          "mutant": "0.7777737777777778",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 26,
+          "token": "0.813953488372093",
+          "mutant": "0.818953488372093",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_two_channel_2026_07_27.md",
+          "line": 33,
+          "token": "0.008333333333333331",
+          "mutant": "0.004333333333333331",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_poisoned_recovery_2026_07_28.md",
+          "line": 20,
+          "token": "0.022222222222222223",
+          "mutant": "0.023222222222222223",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_powered_2026_07_30.md",
+          "line": 64,
+          "token": "0.4666666666666667",
+          "mutant": "0.8666666666666667",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_knowsay_2026_07_27.md",
+          "line": 15,
+          "token": "0.2318840579710145",
+          "mutant": "0.2318540579710145",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 45,
+          "token": "0.8968253968253969",
+          "mutant": "0.8768253968253969",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 28,
+          "token": "0.1746031746031746",
+          "mutant": "0.1736031746031746",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale3b_2026_07_29.md",
+          "line": 21,
+          "token": "-0.2323232323232323",
+          "mutant": "-0.2323272323232323",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_confirm_2026_07_24.md",
+          "line": 14,
+          "token": "0.3409090909090909",
+          "mutant": "0.3403090909090909",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_thirdframe_2026_07_29.md",
+          "line": 21,
+          "token": "0.04285714285714293",
+          "mutant": "0.07285714285714293",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "BLOCKED_source_independence_2026_07_24.md",
+          "line": 27,
+          "token": "0.953757225433526",
+          "mutant": "0.953457225433526",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_test_2026_07_26.md",
+          "line": 20,
+          "token": "0.5951557093425606",
+          "mutant": "0.5151557093425606",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_frame_recovery_2026_07_24.md",
+          "line": 25,
+          "token": "0.01910828025477707",
+          "mutant": "0.01910528025477707",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        }
+      ]
+    },
+    "bar": 16,
+    "pass": true
+  },
+  "G2b_positive_control": {
+    "off": {
+      "precision": false,
+      "ulp_escape": false,
+      "n": 20,
+      "caught_ungrounded": 0,
+      "false_verified": 0,
+      "abstained": 20,
+      "other": 0,
+      "mutants_that_did_not_land": 0,
+      "rows": [
+        {
+          "doc": "FINDING_belief_asymptote_2026_07_26.md",
+          "line": 45,
+          "token": "0.7394054395951929",
+          "mutant": "0.7394454395951929",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_source_independence_v2_2026_07_24.md",
+          "line": 54,
+          "token": "0.813953488372093",
+          "mutant": "0.813963488372093",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 65,
+          "token": "0.9918699186991871",
+          "mutant": "0.9910699186991871",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_resolution_2026_07_28.md",
+          "line": 62,
+          "token": "0.033333333333333326",
+          "mutant": "0.033334333333333326",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_belief_asymptote_2026_07_26.md",
+          "line": 23,
+          "token": "0.7336337760910816",
+          "mutant": "0.7336437760910816",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 46,
+          "token": "0.8102139406487232",
+          "mutant": "0.8182139406487232",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 14,
+          "token": "0.7777777777777778",
+          "mutant": "0.7777737777777778",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 26,
+          "token": "0.813953488372093",
+          "mutant": "0.818953488372093",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_two_channel_2026_07_27.md",
+          "line": 33,
+          "token": "0.008333333333333331",
+          "mutant": "0.004333333333333331",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_poisoned_recovery_2026_07_28.md",
+          "line": 20,
+          "token": "0.022222222222222223",
+          "mutant": "0.023222222222222223",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_powered_2026_07_30.md",
+          "line": 64,
+          "token": "0.4666666666666667",
+          "mutant": "0.8666666666666667",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_knowsay_2026_07_27.md",
+          "line": 15,
+          "token": "0.2318840579710145",
+          "mutant": "0.2318540579710145",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_confirm_2026_07_24.md",
+          "line": 45,
+          "token": "0.8968253968253969",
+          "mutant": "0.8768253968253969",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 28,
+          "token": "0.1746031746031746",
+          "mutant": "0.1736031746031746",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale3b_2026_07_29.md",
+          "line": 21,
+          "token": "-0.2323232323232323",
+          "mutant": "-0.2323272323232323",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_confirm_2026_07_24.md",
+          "line": 14,
+          "token": "0.3409090909090909",
+          "mutant": "0.3403090909090909",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_thirdframe_2026_07_29.md",
+          "line": 21,
+          "token": "0.04285714285714293",
+          "mutant": "0.07285714285714293",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "BLOCKED_source_independence_2026_07_24.md",
+          "line": 27,
+          "token": "0.953757225433526",
+          "mutant": "0.953457225433526",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_test_2026_07_26.md",
+          "line": 20,
+          "token": "0.5951557093425606",
+          "mutant": "0.5151557093425606",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_frame_recovery_2026_07_24.md",
+          "line": 25,
+          "token": "0.01910828025477707",
+          "mutant": "0.01910528025477707",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": null
+        }
+      ]
+    },
+    "bar_max": 2,
+    "pass": true,
+    "on_exceeds_off": true
+  },
+  "G3_no_false_accusation": {
+    "baseline_ungrounded": 4,
+    "on_ungrounded": 5,
+    "new_flags": [
+      {
+        "key": "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md|L40|0.2711864406779661",
+        "context": "**KG2 PASSED: 0.5423728813559322 vs 0.2711864406779661** for the bare post-challenge answer on the"
+      }
+    ],
+    "lost_flags": [],
+    "certificates_flipped": [
+      "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md"
+    ],
+    "ulp_neighbour_roster": [
+      {
+        "key": "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md|L65|0.9918699186991871",
+        "ref": "ulp-neighbour:scale_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate",
+        "context": "| a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channe"
+      },
+      {
+        "key": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md|L23|0.4533333333333333",
+        "ref": "ulp-neighbour:scale3b_result.json:unreg_capability_drop",
+        "context": "UNREG 0.18333333333333332, KP 0.5966666666666667. The overwriting attack loses 0.4533333333333333 of"
+      }
+    ],
+    "pass_mechanical": true,
+    "bar": "every NEW flag must hand-adjudicate GENUINE per the frozen artifact definition; zero lost flags"
+  },
+  "G4_no_tamper_regression": {
+    "on": {
+      "precision": true,
+      "ulp_escape": true,
+      "n": 20,
+      "caught_ungrounded": 18,
+      "false_verified": 0,
+      "abstained": 2,
+      "other": 0,
+      "mutants_that_did_not_land": 0,
+      "rows": [
+        {
+          "doc": "FINDING_scale3b_2026_07_29.md",
+          "line": 19,
+          "token": "+0.7285714285714286",
+          "mutant": "+0.5285714285714286",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_kp_recovery_2026_07_28.md",
+          "line": 35,
+          "token": "-0.2323232323232323",
+          "mutant": "-0.2320232323232323",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_escalation_2026_07_24.md",
+          "line": 15,
+          "token": "0.6363636363636364",
+          "mutant": "0.6353636363636364",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_powered_2026_07_30.md",
+          "line": 36,
+          "token": "0.9833333333333333",
+          "mutant": "0.9833383333333333",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_frontier_freetext_v9_2026_07_29.md",
+          "line": 13,
+          "token": "0.21608040201005024",
+          "mutant": "0.21604040201005024",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_combined_signal_2026_07_26.md",
+          "line": 41,
+          "token": "0.7187269236449564",
+          "mutant": "0.7188269236449564",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": "spec-or-historical"
+        },
+        {
+          "doc": "FINDING_framelocality_dogfood_2026_07_29.md",
+          "line": 27,
+          "token": "-0.01538461538461533",
+          "mutant": "-0.01538861538461533",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_third_party_bench_2026_07_24.md",
+          "line": 29,
+          "token": "0.8666666666666667",
+          "mutant": "0.8866666666666667",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_battery_2026_07_28.md",
+          "line": 18,
+          "token": "0.3566666666666667",
+          "mutant": "0.9566666666666667",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+          "line": 28,
+          "token": "0.01910828025477707",
+          "mutant": "0.01310828025477707",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_self_verification_2026_07_25.md",
+          "line": 11,
+          "token": "0.737746806039489",
+          "mutant": "0.737743806039489",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": "spec-or-historical"
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 37,
+          "token": "0.5423728813559322",
+          "mutant": "0.4423728813559322",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_resolution_2026_07_28.md",
+          "line": 19,
+          "token": "0.3322222222222222",
+          "mutant": "0.4322222222222222",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 26,
+          "token": "0.2674418604651163",
+          "mutant": "0.2674518604651163",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_test_2026_07_26.md",
+          "line": 53,
+          "token": "0.2978723404255319",
+          "mutant": "0.2778723404255319",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_competent_agent_2026_07_24.md",
+          "line": 49,
+          "token": "0.7777777777777778",
+          "mutant": "0.7777707777777778",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 49,
+          "token": "0.2711864406779661",
+          "mutant": "0.2711164406779661",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_2026_07_30.md",
+          "line": 34,
+          "token": "0.1511627906976744",
+          "mutant": "0.1511677906976744",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_self_verification_2026_07_25.md",
+          "line": 47,
+          "token": "+0.07115756871854428",
+          "mutant": "+0.07115956871854428",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_third_party_bench_2026_07_24.md",
+          "line": 22,
+          "token": "0.578397212543554",
+          "mutant": "0.578347212543554",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        }
+      ]
+    },
+    "off": {
+      "precision": false,
+      "ulp_escape": false,
+      "n": 20,
+      "caught_ungrounded": 18,
+      "false_verified": 0,
+      "abstained": 2,
+      "other": 0,
+      "mutants_that_did_not_land": 0,
+      "rows": [
+        {
+          "doc": "FINDING_scale3b_2026_07_29.md",
+          "line": 19,
+          "token": "+0.7285714285714286",
+          "mutant": "+0.5285714285714286",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_kp_recovery_2026_07_28.md",
+          "line": 35,
+          "token": "-0.2323232323232323",
+          "mutant": "-0.2320232323232323",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_selective_escalation_2026_07_24.md",
+          "line": 15,
+          "token": "0.6363636363636364",
+          "mutant": "0.6353636363636364",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_powered_2026_07_30.md",
+          "line": 36,
+          "token": "0.9833333333333333",
+          "mutant": "0.9833383333333333",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_frontier_freetext_v9_2026_07_29.md",
+          "line": 13,
+          "token": "0.21608040201005024",
+          "mutant": "0.21604040201005024",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_combined_signal_2026_07_26.md",
+          "line": 41,
+          "token": "0.7187269236449564",
+          "mutant": "0.7188269236449564",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": "spec-or-historical"
+        },
+        {
+          "doc": "FINDING_framelocality_dogfood_2026_07_29.md",
+          "line": 27,
+          "token": "-0.01538461538461533",
+          "mutant": "-0.01538861538461533",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_third_party_bench_2026_07_24.md",
+          "line": 29,
+          "token": "0.8666666666666667",
+          "mutant": "0.8866666666666667",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_battery_2026_07_28.md",
+          "line": 18,
+          "token": "0.3566666666666667",
+          "mutant": "0.9566666666666667",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+          "line": 28,
+          "token": "0.01910828025477707",
+          "mutant": "0.01310828025477707",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_self_verification_2026_07_25.md",
+          "line": 11,
+          "token": "0.737746806039489",
+          "mutant": "0.737743806039489",
+          "status": "ABSTAIN",
+          "landed": true,
+          "ref": "spec-or-historical"
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 37,
+          "token": "0.5423728813559322",
+          "mutant": "0.4423728813559322",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_coupling_resolution_2026_07_28.md",
+          "line": 19,
+          "token": "0.3322222222222222",
+          "mutant": "0.4322222222222222",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 26,
+          "token": "0.2674418604651163",
+          "mutant": "0.2674518604651163",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_scale_test_2026_07_26.md",
+          "line": 53,
+          "token": "0.2978723404255319",
+          "mutant": "0.2778723404255319",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_competent_agent_2026_07_24.md",
+          "line": 49,
+          "token": "0.7777777777777778",
+          "mutant": "0.7777707777777778",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "DATASHEET_conscience_2026_07_24.md",
+          "line": 49,
+          "token": "0.2711864406779661",
+          "mutant": "0.2711164406779661",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_cot_inward_2026_07_30.md",
+          "line": 34,
+          "token": "0.1511627906976744",
+          "mutant": "0.1511677906976744",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_self_verification_2026_07_25.md",
+          "line": 47,
+          "token": "+0.07115756871854428",
+          "mutant": "+0.07115956871854428",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        },
+        {
+          "doc": "FINDING_third_party_bench_2026_07_24.md",
+          "line": 22,
+          "token": "0.578397212543554",
+          "mutant": "0.578347212543554",
+          "status": "UNGROUNDED",
+          "landed": true,
+          "ref": null
+        }
+      ]
+    },
+    "bar": 16,
+    "false_verified_total": 0,
+    "pass": true
+  },
+  "G5_severability": {
+    "ledger_differences": 0,
+    "bar": 0,
+    "examples": [],
+    "pass": true
+  },
+  "elapsed_s": 6.0
+}

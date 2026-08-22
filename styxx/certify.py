@@ -196,6 +196,22 @@ def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = Tru
     return False
 
 
+def _ulp_neighbour(val: float, rvals: list[tuple[str, str, float]], n: int):
+    """First receipt leaf within *n* ULP of *val*, else None (v0.7 accusation-only escape).
+
+    Distinct from `_match`: this does NOT ground a claim, it only withholds an accusation. Two
+    float64s within a few ULP are the same measurement reached by differently ordered arithmetic
+    (a different summation order, a numpy round-trip, a rounded intermediate), and at >=13 decimals
+    v0.6.2 deliberately leaves no tolerance to absorb that."""
+    if not math.isfinite(val):
+        return None
+    tol = n * math.ulp(val)
+    for rn, pth, rv in rvals:
+        if abs(rv - val) <= tol:
+            return rn, pth
+    return None
+
+
 # v0.5 precision classes (PREREG_oath_v05_precision_2026_07_13) -- severable feature flags. Each
 # gates one false-positive-elimination clause below; the prereg's severability procedure toggles
 # these to measure per-class battery deltas and to drop a class that misses a bar. Shipped values
@@ -214,6 +230,41 @@ V05_SELF_SCOPED_N = True      # class F: n= obligates only its own glued token
 # v0.6.2 (PREREG_oath_v062_signed_extraction_2026_07_31) -- severable per the same procedure.
 V062_FLOAT_STEM_PREF = True   # attribution-only: prefer stem-binding receipt_ref for floats;
                               # may reorder `hits`, never change a status (G5-gated)
+
+# v0.7 (PREREG_oath_v07_precision_obligation_2026_08_22) -- severable, G5-gated.
+V07_PRECISION_OBLIGATION = True   # primary: a token printed at >= V07_PRECISION_DIGITS fractional
+                                  # digits was copied out of a computation, so it is OBLIGATED
+                                  # regardless of line vocabulary. This is the trigger-recall debt
+                                  # on this class: 0.5244 of the full-precision pool sits on
+                                  # unbound lines, where a MUTATED number loses its value-match,
+                                  # never triggers, and falls silently to ABSTAIN while the
+                                  # document keeps its OATH-HELD verdict. The predicate reads only
+                                  # the token, so it survives the mutation it exists to catch --
+                                  # an obligation that consults `hits` evaporates under exactly
+                                  # that mutation and therefore cannot gate.
+V07_PRECISION_DIGITS = 7          # 7, not 5: every live counterexample the red-team pass produced
+                                  # sits at exactly 5-6 digits -- a frozen kill-gate bar in this
+                                  # repo's JSON idiom ("op": "<=", "value": 0.00648), the half-ULP
+                                  # tolerance definition 0.00005, pi as 3.14159, a Bonferroni alpha
+                                  # 0.00714, and the arXiv DOI prefix 10.48550, which neither
+                                  # _VERSIONISH nor v0.5 class C reaches. 5 buys two tokens of
+                                  # catch surface in the certified corpus and re-arms five boundary
+                                  # occupants; cycle 24 died on ONE token sitting on the boundary
+                                  # of a numeric guard.
+V07_ULP_ESCAPE = True             # severable, accusation-only: an obligation created by the
+                                  # precision clause ALONE, with no match but a receipt leaf within
+                                  # V07_ULP_N ULP, degrades to ABSTAIN with a named reason. It may
+                                  # never produce a VERIFIED and never softens an obligation that
+                                  # _TRIGGERS / _TRIGGERS_CORR / n= / range-sanity created.
+V07_ULP_N = 8                     # v0.6.2 withdrew the epsilon subsidy at >=13 decimals, so at
+                                  # doc_dec=16 the tolerance (5e-17) sits BELOW the float64 ULP
+                                  # near 1.0 (1.11e-16). That was safe while such tokens were never
+                                  # obligated; the clause above makes it live, and without this
+                                  # escape a restatement of the SAME measurement by differently
+                                  # ordered arithmetic becomes a loud accusation. Yielding ABSTAIN
+                                  # rather than VERIFIED is what keeps the v0.6.2 epsilon hole
+                                  # closed, and the countable `ulp-neighbour` reason is what keeps
+                                  # the residual enumerable instead of invisible.
 
 
 # ---------------------------------------------------------------- contradiction triggers
@@ -333,6 +384,14 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if not bound and num["decimals"] > 0 and -1.0 <= num["value"] <= 1.0 \
                 and _TRIGGERS_CORR.search(bctx):
             bound = True
+        # v0.7 precision obligation: printed precision IS the binding signal, because a number at
+        # this width was copied out of a computation rather than typed by a person. `precision_only`
+        # records that THIS clause is the sole source of the obligation, which is what scopes the
+        # ULP escape in the status ladder below — an obligation from the trigger registers, from
+        # n=, or from range-sanity is never softened.
+        precision_only = False
+        if not bound and V07_PRECISION_OBLIGATION and num["decimals"] >= V07_PRECISION_DIGITS:
+            bound, precision_only = True, True
         # v0.3 RANGE-SANITY rule: a value sitting directly after bounded-quantity vocabulary cannot
         # leave its possible range — an 'AUC 4.0' is UNGROUNDED no matter what leaf it happens to
         # match (kills the coincidence-verification class of the v0.1 battery misses).
@@ -343,6 +402,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                        (sign_kw and not -1.0 <= num["value"] <= 1.0)
         if out_of_range:
             hits, bound = [], True
+            precision_only = False   # a range-sanity obligation is never ULP-escapable
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.
@@ -383,8 +443,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
             # claims ground in per-item arrays let 13/20 seeded mutants hide in row noise when it
             # was tried. The cure for a legitimate grid-cell cite is persisting it as a summary
             # field in an addendum receipt (the repair loop), not weakening the oath.
-            status = "UNGROUNDED"
-            ref = None
+            # v0.7: the ONE softening the oath admits, and only for an obligation the precision
+            # clause created by itself — a leaf within V07_ULP_N ULP means the receipt holds this
+            # measurement, reached by differently ordered arithmetic. Abstaining names it; it is
+            # never upgraded to VERIFIED, so the claim is still not sworn to.
+            nb = (_ulp_neighbour(num["value"], rvals, V07_ULP_N)
+                  if (V07_ULP_ESCAPE and precision_only) else None)
+            if nb:
+                status, ref = "ABSTAIN", f"ulp-neighbour:{nb[0]}:{nb[1]}"
+            else:
+                status, ref = "UNGROUNDED", None
         else:
             status = "ABSTAIN"
             ref = None
