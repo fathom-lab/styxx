@@ -1,0 +1,47 @@
+{
+  "note": "post-ship corpus state for RESULT_oath_v07_SHIPPED_2026_08_22 (v0.7 + the one repair)",
+  "verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+  "baseline_verifier_sha256": "2bd7299f82284c20c6a2804f93777ca924e4ca1c8b41817cb93c484ba5a4af93",
+  "n_docs": 136,
+  "claim_totals_before": {
+    "ABSTAIN": 1416,
+    "UNGROUNDED": 4,
+    "VERIFIED": 3977
+  },
+  "claim_totals_after": {
+    "ABSTAIN": 1415,
+    "VERIFIED": 3978,
+    "UNGROUNDED": 4
+  },
+  "verified_before": 3977,
+  "verified_after": 3978,
+  "abstain_before": 1416,
+  "abstain_after": 1415,
+  "ungrounded_before": 4,
+  "ungrounded_after": 4,
+  "oath_held_before": 135,
+  "oath_held_after": 135,
+  "n_status_changes": 1,
+  "status_changes": [
+    {
+      "key": "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md|L40|0.2711864406779661",
+      "before": "ABSTAIN",
+      "after": "VERIFIED"
+    }
+  ],
+  "n_ulp_neighbour": 2,
+  "ulp_neighbour_roster": [
+    {
+      "doc": "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md",
+      "line": 65,
+      "token": "0.9918699186991871",
+      "ref": "ulp-neighbour:scale_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+      "line": 23,
+      "token": "0.4533333333333333",
+      "ref": "ulp-neighbour:scale3b_result.json:unreg_capability_drop"
+    }
+  ]
+}

@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.45.0] — 2026-08-22 — the OATH's published debt was measured against the wrong denominator
+
+`styxx.certify` obligated a number only when its line carried recognised trigger
+vocabulary. Issue #39 published the size of that gap as **0.5227 of full-precision
+decimals sit on unbound lines** and asked for broader obligation. Broader
+obligation shipped here. The more useful result is that the debt line describes a
+pool, not the hole.
+
+**The reframe.** 177 of the 183 unbound full-precision tokens in the corpus are
+*already* VERIFIED on clean documents, because VERIFIED is awarded on a value-match
+to a receipt leaf whether or not the number was obligated. Unbound does not mean
+unchecked. The hole opens under tamper: change the number, the value-match
+disappears, the obligation never fires because it never depended on the value, and
+the mutant lands in ABSTAIN while the document keeps its OATH-HELD verdict.
+
+**It had already cost a repair.** `oath_v062_repair_addendum.json` was built at
+v0.6.2 to persist a bare-arm accuracy that existed only inside a gate detail
+string. The same token appears in two documents; only the one whose line carried
+trigger vocabulary was flagged and fixed. The other went on citing a number its
+receipts did not hold. The gap steered a repair loop away from a real provenance
+gap.
+
+### Added
+- **OATH v0.7 precision obligation** (`V07_PRECISION_OBLIGATION`,
+  `V07_PRECISION_DIGITS = 7`). A token printed at seven or more fractional digits
+  was copied out of a computation, so it is obligated regardless of line
+  vocabulary. The predicate reads only the token, which is the whole point: an
+  obligation that consults the match set evaporates under exactly the mutation it
+  is supposed to catch. The candidate rule "receipt-path stem overlap AND
+  value-match" scored a perfect zero clean-corpus accusations and catches nothing;
+  it was rejected for that reason.
+  Threshold 7 rather than 5 because every live counterexample the red-team pass
+  produced sits at five or six digits — a frozen kill-gate bar written in this
+  repo's own JSON idiom, the half-ULP tolerance definition, π written out, a
+  Bonferroni α, the arXiv DOI prefix `10.48550` that neither `_VERSIONISH` nor
+  v0.5 class C reaches. Cycle 24 died on one token on a guard boundary.
+- **ULP-neighbour escape** (`V07_ULP_ESCAPE`, `V07_ULP_N = 8`), severable. v0.6.2
+  withdrew the epsilon subsidy at ≥13 decimals, so at 16 the tolerance sits below
+  the float64 ULP. Safe while such tokens were never obligated; the clause above
+  makes it live, and without the escape a restatement of the same measurement by
+  differently ordered arithmetic reads as a false claim. Yields ABSTAIN with a
+  countable `ulp-neighbour` reason, never VERIFIED, so the v0.6.2 hole stays shut
+  and the residual is enumerable rather than invisible.
+- **`run_oath_v07_battery.py`** with the OFF arm as a **positive control**. The
+  prereg pre-committed to voiding the run if the ON arm did not exceed it. Catch
+  on previously-unbound lines: **0/20 off, 20/20 on.**
+- **`oath_v07_census.py`** and **`oath_v07_silentpass_census.py`** — both censuses,
+  committed and re-runnable.
+
+### Fixed
+- `FINDING_third_party_bench_2026_07_24` cited a bare-arm accuracy its receipt set
+  held only inside a string. Repaired by receipt-set extension with the existing
+  addendum, under its own commit. Checked against the cycle-26 kill: certifying
+  with and without the addendum moves exactly one status.
+
+### The residual — published because the release would otherwise launder itself
+Mutate one significant digit of every claim the shipped verifier certifies
+VERIFIED and re-certify: of **3951** claims, **2696 are not accused — 0.6824**.
+Of those, 2005 abstain, 87 stop extracting, and **604 come back VERIFIED against
+some unrelated leaf**, an affirmative false attestation that no precision
+threshold touches. **135 of 136** documents contain at least one silently mutable
+claim. By decimal width the unaccused are 736 bare integers, then 289 / 257 / 423
+/ 814 at one to four decimals. **v0.7 reaches 176 of the 2696.**
+
+The trigger-recall gap is not closed. It was measured against the wrong
+denominator, the real one is now on record with a re-runnable script, and this
+release closes a small, well-understood corner of it. Still owed, in order:
+status-level claim→field binding for floats (which is what would attack the 604),
+`is_spec` recall on JSON-idiom bars (157 tokens rescued zero times), and
+fence/code-span awareness in `extract_numbers`, whose docstring already claims a
+behaviour it does not have.
+
+---
+
 ## [7.44.2] — 2026-08-21 — the product page made a claim nobody could re-run
 
 `action.yml` told every prospective user the gate was *"validated on real

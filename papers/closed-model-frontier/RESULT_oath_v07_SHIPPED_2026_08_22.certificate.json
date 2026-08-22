@@ -1,0 +1,748 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v07_SHIPPED_2026_08_22.md",
+  "document_sha256": "0991f7d70af55b467d41581cbdfaf8ca08b5f851a31386f1dbd4d6e255cfae09",
+  "receipts_sha256": {
+    "oath_v07_battery_result.json": "0d29428ddae698085a43926d58f59941cf583c331e7b6544388219e04c076441",
+    "oath_v07_precfix_census.json": "426f59869d74a5774330e37586f55f096bc90a1e055190e78a465a1ccd28c22f",
+    "oath_v07_silentpass_census.json": "301e62bfe70c7092b77314b304712944ef344536b5babafdb3fea6e0f0f2ae5e",
+    "oath_v07_baseline_ledger.json": "90247a90ed83bfba153edbf335858d7a39a41f70759ac41259a17dbe39cc83a9",
+    "oath_v07_corpus_after.json": "a686335f5d48365b7607a31e3148ee3d9a494ea9e81954bbdcfd4022a31a8462"
+  },
+  "verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+  "counts": {
+    "VERIFIED": 41,
+    "ABSTAIN": 27,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "349"
+    },
+    {
+      "line": 12,
+      "token": "136"
+    },
+    {
+      "line": 15,
+      "token": "183"
+    },
+    {
+      "line": 32,
+      "token": "7"
+    },
+    {
+      "line": 32,
+      "token": "5"
+    },
+    {
+      "line": 35,
+      "token": "5"
+    },
+    {
+      "line": 36,
+      "token": "24"
+    },
+    {
+      "line": 42,
+      "token": "8"
+    },
+    {
+      "line": 48,
+      "token": "18"
+    },
+    {
+      "line": 49,
+      "token": "20"
+    },
+    {
+      "line": 49,
+      "token": "20"
+    },
+    {
+      "line": 49,
+      "token": "16"
+    },
+    {
+      "line": 58,
+      "token": "16"
+    },
+    {
+      "line": 60,
+      "token": "136"
+    },
+    {
+      "line": 61,
+      "token": "40"
+    },
+    {
+      "line": 62,
+      "token": "13"
+    },
+    {
+      "line": 62,
+      "token": "11"
+    },
+    {
+      "line": 102,
+      "token": "2696"
+    },
+    {
+      "line": 103,
+      "token": "604"
+    },
+    {
+      "line": 111,
+      "token": "176"
+    },
+    {
+      "line": 122,
+      "token": "157"
+    },
+    {
+      "line": 129,
+      "token": "20"
+    },
+    {
+      "line": 129,
+      "token": "20"
+    },
+    {
+      "line": 129,
+      "token": "19"
+    },
+    {
+      "line": 129,
+      "token": "20"
+    },
+    {
+      "line": 129,
+      "token": "18"
+    },
+    {
+      "line": 129,
+      "token": "20"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`oath_v07_corpus_after.json`. Harness: `run_oath_v07_battery.py` (seed 1, non-destructive, mutants in",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:seed"
+    },
+    {
+      "line": 12,
+      "token": "349",
+      "value": 349.0,
+      "decimals": 0,
+      "context": "replicates: of 349 tokens at seven or more fractional digits across the 136 documents whose cited",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "136",
+      "value": 136.0,
+      "decimals": 0,
+      "context": "replicates: of 349 tokens at seven or more fractional digits across the 136 documents whose cited",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "183",
+      "value": 183.0,
+      "decimals": 0,
+      "context": "receipts all resolve, 183 sit on lines the verifier never obligates \u2014 0.5244 of the pool.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:pool.unbound"
+    },
+    {
+      "line": 13,
+      "token": "0.5244",
+      "value": 0.5244,
+      "decimals": 4,
+      "context": "receipts all resolve, 183 sit on lines the verifier never obligates \u2014 0.5244 of the pool.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:pool.unbound_share"
+    },
+    {
+      "line": 15,
+      "token": "177",
+      "value": 177.0,
+      "decimals": 0,
+      "context": "The share hides the mechanism. 177 of those 183 are already VERIFIED on the clean corpus, because",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:unbound_status_breakdown.VERIFIED"
+    },
+    {
+      "line": 15,
+      "token": "183",
+      "value": 183.0,
+      "decimals": 0,
+      "context": "The share hides the mechanism. 177 of those 183 are already VERIFIED on the clean corpus, because",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "180",
+      "value": 180.0,
+      "decimals": 0,
+      "context": "180 of the 183 value-match something. An unbound number in an honest document is not unchecked. The",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:unbound_value_matching"
+    },
+    {
+      "line": 17,
+      "token": "183",
+      "value": 183.0,
+      "decimals": 0,
+      "context": "180 of the 183 value-match something. An unbound number in an honest document is not unchecked. The",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:pool.unbound"
+    },
+    {
+      "line": 30,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "A token printed at `V07_PRECISION_DIGITS` = 7 or more fractional digits is obligated regardless of",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:V07_PRECISION_DIGITS"
+    },
+    {
+      "line": 32,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "status ladder still wins. Threshold 7 rather than 5 because every live counterexample the red-team",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "status ladder still wins. Threshold 7 rather than 5 because every live counterexample the red-team",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "neither `_VERSIONISH` nor v0.5 class C reaches. Dropping to 5 buys two tokens here and re-arms five",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "boundary occupants; cycle 24 died on one token sitting on the boundary of a numeric guard.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "lies within `V07_ULP_N` = 8 ULP, the verdict is ABSTAIN carrying a `ulp-neighbour` reason \u2014 never",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G1 (recall):** 20 of 20 sampled unbound tokens extract (bar 18).",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G1_recall.extracted"
+    },
+    {
+      "line": 48,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G1 (recall):** 20 of 20 sampled unbound tokens extract (bar 18).",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G1_recall.extracted"
+    },
+    {
+      "line": 48,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "- **G1 (recall):** 20 of 20 sampled unbound tokens extract (bar 18).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G2 (catch, the decisive bar):** 20 of 20 mutants on unbound lines land UNGROUNDED (bar 16).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G2 (catch, the decisive bar):** 20 of 20 mutants on unbound lines land UNGROUNDED (bar 16).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **G2 (catch, the decisive bar):** 20 of 20 mutants on unbound lines land UNGROUNDED (bar 16).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G2b (positive control, reported):** the same 20 mutants with the clause off \u2014 0 caught, against a",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G2_unbound_catch.on.caught_ungrounded"
+    },
+    {
+      "line": 50,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **G2b (positive control, reported):** the same 20 mutants with the clause off \u2014 0 caught, against a",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G2_unbound_catch.on.mutants_that_did_not_land"
+    },
+    {
+      "line": 53,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "- **G3 (no false accusations):** baseline 4 UNGROUNDED tokens corpus-wide, 5 after; one new flag,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G3_no_false_accusation.baseline_ungrounded"
+    },
+    {
+      "line": 53,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "- **G3 (no false accusations):** baseline 4 UNGROUNDED tokens corpus-wide, 5 after; one new flag,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G3_no_false_accusation.on_ungrounded"
+    },
+    {
+      "line": 57,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "- **G4 (no tamper regression):** on the bound half the clause catches 18 of 20, identical to the 18",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G4_no_tamper_regression.on.caught_ungrounded"
+    },
+    {
+      "line": 57,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **G4 (no tamper regression):** on the bound half the clause catches 18 of 20, identical to the 18",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G2_unbound_catch.on.n"
+    },
+    {
+      "line": 57,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "- **G4 (no tamper regression):** on the bound half the clause catches 18 of 20, identical to the 18",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G4_no_tamper_regression.on.caught_ungrounded"
+    },
+    {
+      "line": 58,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "of the off arm (bar 16). Across both mutation gates, 0 mutants land VERIFIED.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "of the off arm (bar 16). Across both mutation gates, 0 mutants land VERIFIED.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G2_unbound_catch.on.false_verified"
+    },
+    {
+      "line": 59,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **G5 (severability):** with both flags off, 0 ledger differences against the pre-fix baseline across",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G2b_positive_control.off.caught_ungrounded"
+    },
+    {
+      "line": 60,
+      "token": "136",
+      "value": 136.0,
+      "decimals": 0,
+      "context": "all 136 documents.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "- **G6 (suite):** the 40 certify-, oath- and corpus-audit-scoped tests pass. The full suite does not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "run clean on this host \u2014 13 failures and 11 collection errors, all of them paging-file, subprocess",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "run clean on this host \u2014 13 failures and 11 collection errors, all of them paging-file, subprocess",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "3977",
+      "value": 3977.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_baseline_ledger.json:claim_totals.VERIFIED"
+    },
+    {
+      "line": 69,
+      "token": "3978",
+      "value": 3978.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_corpus_after.json:claim_totals_after.VERIFIED"
+    },
+    {
+      "line": 69,
+      "token": "1416",
+      "value": 1416.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_baseline_ledger.json:claim_totals.ABSTAIN"
+    },
+    {
+      "line": 69,
+      "token": "1415",
+      "value": 1415.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_corpus_after.json:claim_totals_after.ABSTAIN"
+    },
+    {
+      "line": 69,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_battery_result.json:G3_no_false_accusation.baseline_ungrounded"
+    },
+    {
+      "line": 69,
+      "token": "135",
+      "value": 135.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_corpus_after.json:oath_held_before"
+    },
+    {
+      "line": 69,
+      "token": "135",
+      "value": 135.0,
+      "decimals": 0,
+      "context": "VERIFIED 3977 \u2192 3978, ABSTAIN 1416 \u2192 1415, UNGROUNDED 4 \u2192 4. Documents holding OATH: 135 before, 135",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_corpus_after.json:oath_held_before"
+    },
+    {
+      "line": 79,
+      "token": "0.2711864406779661",
+      "value": 0.2711864406779661,
+      "decimals": 16,
+      "context": "| `FINDING_third_party_bench_2026_07_24.md` L40 | `0.2711864406779661` | the bare-arm accuracy is present in `third_party_bench_result.json` only inside the KG2",
+      "binding_context": "| doc | token | gap | repair | | `FINDING_third_party_bench_2026_07_24.md` L40 | `0.2711864406779661` | the bare-arm accuracy is present in `third_party_bench_result.json` only inside the KG2 gate detail string, which `receipt_values` does not traverse | receipt-set extension with the existing `oath_v062_repair_addendu",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[2].token"
+    },
+    {
+      "line": 89,
+      "token": "0.9918699186991871",
+      "value": 0.9918699186991871,
+      "decimals": 16,
+      "context": "| `DATASHEET_conscience_2026_07_24.md` L65 | `0.9918699186991871` | `scale_channel_result.json` agreement rate, one ULP below |",
+      "binding_context": "| doc | token | neighbouring leaf | | `DATASHEET_conscience_2026_07_24.md` L65 | `0.9918699186991871` | `scale_channel_result.json` agreement rate, one ULP below |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[0].token"
+    },
+    {
+      "line": 90,
+      "token": "0.4533333333333333",
+      "value": 0.4533333333333333,
+      "decimals": 16,
+      "context": "| `FINDING_scale3b_2026_07_29.md` L23 | `0.4533333333333333` | `scale3b_result.json` capability drop, one ULP above |",
+      "binding_context": "| doc | token | neighbouring leaf | | `FINDING_scale3b_2026_07_29.md` L23 | `0.4533333333333333` | `scale3b_result.json` capability drop, one ULP above |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[1].token"
+    },
+    {
+      "line": 102,
+      "token": "3951",
+      "value": 3951.0,
+      "decimals": 0,
+      "context": "- 3951 claims mutated. 1255 are accused. **2696 are not \u2014 0.6824 of them.**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:verified_claims_mutated"
+    },
+    {
+      "line": 102,
+      "token": "1255",
+      "value": 1255.0,
+      "decimals": 0,
+      "context": "- 3951 claims mutated. 1255 are accused. **2696 are not \u2014 0.6824 of them.**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:mutant_status.UNGROUNDED"
+    },
+    {
+      "line": 102,
+      "token": "2696",
+      "value": 2696.0,
+      "decimals": 0,
+      "context": "- 3951 claims mutated. 1255 are accused. **2696 are not \u2014 0.6824 of them.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 102,
+      "token": "0.6824",
+      "value": 0.6824,
+      "decimals": 4,
+      "context": "- 3951 claims mutated. 1255 are accused. **2696 are not \u2014 0.6824 of them.**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_share"
+    },
+    {
+      "line": 103,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "- Of the unaccused, 2005 land in ABSTAIN, 87 stop being extracted at all, and **604 come back",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:mutant_status.NOT_EXTRACTED"
+    },
+    {
+      "line": 103,
+      "token": "604",
+      "value": 604.0,
+      "decimals": 0,
+      "context": "- Of the unaccused, 2005 land in ABSTAIN, 87 stop being extracted at all, and **604 come back",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 106,
+      "token": "135",
+      "value": 135.0,
+      "decimals": 0,
+      "context": "- 135 of the 136 documents with certified claims contain at least one claim that can be changed",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:docs_with_at_least_one_silent"
+    },
+    {
+      "line": 106,
+      "token": "136",
+      "value": 136.0,
+      "decimals": 0,
+      "context": "- 135 of the 136 documents with certified claims contain at least one claim that can be changed",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_precfix_census.json:docs_with_resolvable_receipts"
+    },
+    {
+      "line": 108,
+      "token": "736",
+      "value": 736.0,
+      "decimals": 0,
+      "context": "- By decimal width, the unaccused sit at: 736 bare integers, then 289, 257, 423 and 814 at one, two,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.0"
+    },
+    {
+      "line": 108,
+      "token": "289",
+      "value": 289.0,
+      "decimals": 0,
+      "context": "- By decimal width, the unaccused sit at: 736 bare integers, then 289, 257, 423 and 814 at one, two,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.1"
+    },
+    {
+      "line": 108,
+      "token": "257",
+      "value": 257.0,
+      "decimals": 0,
+      "context": "- By decimal width, the unaccused sit at: 736 bare integers, then 289, 257, 423 and 814 at one, two,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.2"
+    },
+    {
+      "line": 108,
+      "token": "423",
+      "value": 423.0,
+      "decimals": 0,
+      "context": "- By decimal width, the unaccused sit at: 736 bare integers, then 289, 257, 423 and 814 at one, two,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.3"
+    },
+    {
+      "line": 108,
+      "token": "814",
+      "value": 814.0,
+      "decimals": 0,
+      "context": "- By decimal width, the unaccused sit at: 736 bare integers, then 289, 257, 423 and 814 at one, two,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.4"
+    },
+    {
+      "line": 111,
+      "token": "176",
+      "value": 176.0,
+      "decimals": 0,
+      "context": "- **v0.7 reaches 176 of the 2696.** Roughly one in fifteen.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 120,
+      "token": "604",
+      "value": 604.0,
+      "decimals": 0,
+      "context": "debt, and the instrument that would actually attack the 604 false attestations, since those are",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_false_verified"
+    },
+    {
+      "line": 122,
+      "token": "157",
+      "value": 157.0,
+      "decimals": 0,
+      "context": "where the operator sits in its own key: 157 such tokens repo-wide are rescued zero times, and only",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 126,
+      "token": "736",
+      "value": 736.0,
+      "decimals": 0,
+      "context": "decimal width they are 736 of the unaccused. Behaviour on documents with missing or drifted receipts",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.0"
+    },
+    {
+      "line": 129,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "Harness defect, owned: the first scored run read 20 of 20 on G1 but 19 of 20 on G2 and 18 of 20 on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
