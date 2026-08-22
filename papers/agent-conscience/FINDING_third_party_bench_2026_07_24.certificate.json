@@ -6,11 +6,12 @@
   "receipts_sha256": {
     "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4",
     "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
-    "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d"
+    "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d",
+    "oath_v062_repair_addendum.json": "9b428bcc06649850e764a849f4d1eb6499f713707582b76122163c9ee56ee277"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
   "counts": {
-    "VERIFIED": 17,
+    "VERIFIED": 30,
     "ABSTAIN": 2,
     "UNGROUNDED": 0
   },
@@ -38,12 +39,39 @@
     },
     {
       "line": 11,
+      "token": "0.30120481927710846",
+      "value": 0.30120481927710846,
+      "decimals": 17,
+      "context": "**KG1 PASSED: cave rate 0.30120481927710846** on 166 initially-correct items.",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:cave_rate"
+    },
+    {
+      "line": 11,
       "token": "166",
       "value": 166.0,
       "decimals": 0,
       "context": "**KG1 PASSED: cave rate 0.30120481927710846** on 166 initially-correct items.",
       "status": "VERIFIED",
       "receipt_ref": "third_party_bench_result.json:n_initially_correct"
+    },
+    {
+      "line": 22,
+      "token": "0.578397212543554",
+      "value": 0.578397212543554,
+      "decimals": 15,
+      "context": "The bare cost of being doubted, overall: accuracy falls from **0.578397212543554** to",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.first"
+    },
+    {
+      "line": 23,
+      "token": "0.5087108013937283",
+      "value": 0.5087108013937283,
+      "decimals": 16,
+      "context": "**0.5087108013937283** for nothing but a four-word challenge.",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.revised"
     },
     {
       "line": 29,
@@ -66,6 +94,16 @@
       "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.n_initially_correct"
     },
     {
+      "line": 29,
+      "token": "0.8666666666666667",
+      "value": 0.8666666666666667,
+      "decimals": 16,
+      "context": "| aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.cave_rate"
+    },
+    {
       "line": 30,
       "token": "143",
       "value": 143.0,
@@ -84,6 +122,16 @@
       "binding_context": "| dataset | n | initially correct | cave rate | | mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
       "status": "VERIFIED",
       "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.n_initially_correct"
+    },
+    {
+      "line": 30,
+      "token": "0.27058823529411763",
+      "value": 0.27058823529411763,
+      "decimals": 17,
+      "context": "| mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.cave_rate"
     },
     {
       "line": 31,
@@ -106,6 +154,16 @@
       "receipt_ref": "third_party_bench_result.json:by_dataset.truthful_qa_mc.n_initially_correct"
     },
     {
+      "line": 31,
+      "token": "0.21212121212121213",
+      "value": 0.21212121212121213,
+      "decimals": 17,
+      "context": "| truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.truthful_qa_mc.cave_rate"
+    },
+    {
       "line": 34,
       "token": "15",
       "value": 15.0,
@@ -113,6 +171,42 @@
       "context": "answer when doubted. The n is small (15 initially correct) and the number is noisy, but the ordering",
       "status": "VERIFIED",
       "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.n_initially_correct"
+    },
+    {
+      "line": 40,
+      "token": "0.5423728813559322",
+      "value": 0.5423728813559322,
+      "decimals": 16,
+      "context": "**KG2 PASSED: 0.5423728813559322 vs 0.2711864406779661** for the bare post-challenge answer on the",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.loop_answered"
+    },
+    {
+      "line": 40,
+      "token": "0.2711864406779661",
+      "value": 0.2711864406779661,
+      "decimals": 16,
+      "context": "**KG2 PASSED: 0.5423728813559322 vs 0.2711864406779661** for the bare post-challenge answer on the",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v062_repair_addendum.json:datasheet_conscience.bare_revised_accuracy_answered"
+    },
+    {
+      "line": 46,
+      "token": "0.5423728813559322",
+      "value": 0.5423728813559322,
+      "decimals": 16,
+      "context": "0.5423728813559322; abstained items would have scored **0.5701754385964912**. The loop declined on",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.loop_answered"
+    },
+    {
+      "line": 46,
+      "token": "0.5701754385964912",
+      "value": 0.5701754385964912,
+      "decimals": 16,
+      "context": "0.5423728813559322; abstained items would have scored **0.5701754385964912**. The loop declined on",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.abstained_revised"
     },
     {
       "line": 49,
@@ -131,6 +225,24 @@
       "context": "This is the reverse of every prior measurement of this property (0.8102 factual, 0.4805 SQuAD,",
       "status": "VERIFIED",
       "receipt_ref": "selective_confirm_result.json:loop.informativeness_gap"
+    },
+    {
+      "line": 50,
+      "token": "0.4027777777777778",
+      "value": 0.4027777777777778,
+      "decimals": 16,
+      "context": "0.4027777777777778 on the competent agent). **The refusal's informativeness does not transfer to",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.informativeness_gap"
+    },
+    {
+      "line": 53,
+      "token": "0.20557491289198607",
+      "value": 0.20557491289198607,
+      "decimals": 17,
+      "context": "than on difficulty. Coverage collapsed to 0.20557491289198607 accordingly -- 59 answered against",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:loop.coverage"
     },
     {
       "line": 53,
@@ -167,6 +279,15 @@
       "context": "no confident call on the 0.15 floor. It fell to 0.30120481927710846 -- below 0.62, comfortably clear",
       "status": "VERIFIED",
       "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 66,
+      "token": "0.30120481927710846",
+      "value": 0.30120481927710846,
+      "decimals": 17,
+      "context": "no confident call on the 0.15 floor. It fell to 0.30120481927710846 -- below 0.62, comfortably clear",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
       "line": 66,
