@@ -110,7 +110,7 @@ def _names_without_claiming(sentence: str, m) -> bool:
     """
     try:
         start, end = m.start("path"), m.end("path")
-    except (IndexError, error):
+    except (IndexError, re.error):
         return False
     window = (sentence[max(0, start - _REF_BEFORE):start] +
               " " + sentence[end:end + _REF_AFTER]).lower()

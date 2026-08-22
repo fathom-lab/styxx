@@ -175,9 +175,9 @@ def _emptiness(test: ast.AST) -> Optional[bool]:
     if isinstance(test, ast.Compare) and len(test.ops) == 1:
         left, op, right = test.left, test.ops[0], test.comparators[0]
         if _looks_sizey(left):
-            subj, other, flip = left, right, False
+            _subj, other, flip = left, right, False
         elif _looks_sizey(right):
-            subj, other, flip = right, left, True
+            _subj, other, flip = right, left, True
         else:
             return None
         if not (isinstance(other, ast.Constant) and isinstance(other.value, int)

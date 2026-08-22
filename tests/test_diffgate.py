@@ -126,3 +126,15 @@ def test_only_touches_prefix_survives_sentence_period(tmp_path):
                   tmp_path, base, "HEAD")
     ot = [c for c in g.claims if c.kind == "only_touches"][0]
     assert "src/app.py" not in ot.why      # in-prefix file never cited as outside
+
+
+def test_referential_guard_returns_false_instead_of_raising():
+    # 7.45.0: `except (IndexError, error)` named an undefined `error`, so evaluating
+    # the except clause raised NameError and the `return False` below it was DEAD --
+    # a guard that cannot fire, in the module whose job is refusing false accusations.
+    import re
+
+    from styxx.diffgate import _names_without_claiming
+
+    m = re.match(r"(?P<other>\w+)", "hello")     # no 'path' group -> m.start('path') raises
+    assert _names_without_claiming("some sentence", m) is False

@@ -66,7 +66,7 @@ import functools
 import inspect
 import math
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Sequence
 
 __all__ = ["measures", "ContractViolation", "violations", "clear_violations",
@@ -128,7 +128,7 @@ def is_degenerate(value: Any, *, min_n: int = 1) -> Optional[str]:
     if value is None:
         return "None"
     if isinstance(value, str):
-        return f"empty string" if not value.strip() else None
+        return "empty string" if not value.strip() else None
     if isinstance(value, dict):
         if not value:
             return "empty dict"
@@ -272,7 +272,7 @@ def measures(
             if not reasons:
                 return result
 
-            claim = (f"return (custom predicate)" if confident_when and confident_when(result)
+            claim = ("return (custom predicate)" if confident_when and confident_when(result)
                      else None) if confident_when else looks_confident(result)
             if not claim:
                 return result           # degenerate in, nothing claimed out: correct
