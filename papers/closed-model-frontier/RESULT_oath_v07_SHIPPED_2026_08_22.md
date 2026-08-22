@@ -58,11 +58,20 @@ invisible.
   of the off arm (bar 16). Across both mutation gates, 0 mutants land VERIFIED.
 - **G5 (severability):** with both flags off, 0 ledger differences against the pre-fix baseline across
   all 136 documents.
-- **G6 (suite):** the 40 certify-, oath- and corpus-audit-scoped tests pass. The full suite does not
-  run clean on this host — 13 failures and 11 collection errors, all of them paging-file, subprocess
-  and import-budget failures in torch-dependent and CLI modules. The identical set fails at the
-  pre-fix verifier with the change stashed, so none of it is attributable to v0.7; the bar is reported
-  as environment-limited rather than claimed green.
+- **G6 (suite):** green. The 40 certify-, oath- and corpus-audit-scoped tests pass locally, and the
+  full suite passes on CI across py3.9, py3.10, py3.11 and py3.12 plus the wheel-packaging and
+  numpy-only jobs.
+
+  Reported honestly, because the route to that answer was not clean. The suite cannot be run to
+  completion on the authoring host — 13 failures and 11 collection errors, all paging-file and
+  subprocess failures in torch-dependent and CLI modules, and the identical set fails with the
+  change stashed, so none of it was ever attributable to v0.7. CI could not answer the question
+  either, because the lint step gates the test step and lint had been failing on five pre-existing
+  ruff errors since well before this work, so every push was reporting a red suite that never
+  executed. Clearing those five is what made the bar scorable at all. One of them was not cosmetic:
+  `diffgate.py` caught `(IndexError, error)` on an undefined name, so the guard below it could not
+  fire. That is the same defect shape this result publishes — a leg that cannot fail — sitting in
+  the module whose job is refusing to accuse someone who told the truth.
 
 ## What changed corpus-wide
 

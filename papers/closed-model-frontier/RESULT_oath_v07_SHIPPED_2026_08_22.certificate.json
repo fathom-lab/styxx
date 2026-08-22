@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_oath_v07_SHIPPED_2026_08_22.md",
-  "document_sha256": "0991f7d70af55b467d41581cbdfaf8ca08b5f851a31386f1dbd4d6e255cfae09",
+  "document_sha256": "93a59ce8e1967f84631c2ae956cd69927a90735901d8c6282b2a8fb147c63311",
   "receipts_sha256": {
     "oath_v07_battery_result.json": "0d29428ddae698085a43926d58f59941cf583c331e7b6544388219e04c076441",
     "oath_v07_precfix_census.json": "426f59869d74a5774330e37586f55f096bc90a1e055190e78a465a1ccd28c22f",
@@ -80,51 +80,51 @@
       "token": "40"
     },
     {
-      "line": 62,
+      "line": 66,
       "token": "13"
     },
     {
-      "line": 62,
+      "line": 66,
       "token": "11"
     },
     {
-      "line": 102,
+      "line": 111,
       "token": "2696"
     },
     {
-      "line": 103,
+      "line": 112,
       "token": "604"
     },
     {
-      "line": 111,
+      "line": 120,
       "token": "176"
     },
     {
-      "line": 122,
+      "line": 131,
       "token": "157"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "19"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "18"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20"
     }
   ],
@@ -422,30 +422,30 @@
       "token": "40",
       "value": 40.0,
       "decimals": 0,
-      "context": "- **G6 (suite):** the 40 certify-, oath- and corpus-audit-scoped tests pass. The full suite does not",
+      "context": "- **G6 (suite):** green. The 40 certify-, oath- and corpus-audit-scoped tests pass locally, and the",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 62,
+      "line": 66,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
-      "context": "run clean on this host \u2014 13 failures and 11 collection errors, all of them paging-file, subprocess",
+      "context": "completion on the authoring host \u2014 13 failures and 11 collection errors, all paging-file and",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 62,
+      "line": 66,
       "token": "11",
       "value": 11.0,
       "decimals": 0,
-      "context": "run clean on this host \u2014 13 failures and 11 collection errors, all of them paging-file, subprocess",
+      "context": "completion on the authoring host \u2014 13 failures and 11 collection errors, all paging-file and",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "3977",
       "value": 3977.0,
       "decimals": 0,
@@ -454,7 +454,7 @@
       "receipt_ref": "oath_v07_baseline_ledger.json:claim_totals.VERIFIED"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "3978",
       "value": 3978.0,
       "decimals": 0,
@@ -463,7 +463,7 @@
       "receipt_ref": "oath_v07_corpus_after.json:claim_totals_after.VERIFIED"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "1416",
       "value": 1416.0,
       "decimals": 0,
@@ -472,7 +472,7 @@
       "receipt_ref": "oath_v07_baseline_ledger.json:claim_totals.ABSTAIN"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "1415",
       "value": 1415.0,
       "decimals": 0,
@@ -481,7 +481,7 @@
       "receipt_ref": "oath_v07_corpus_after.json:claim_totals_after.ABSTAIN"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -490,7 +490,7 @@
       "receipt_ref": "oath_v07_battery_result.json:G3_no_false_accusation.baseline_ungrounded"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "135",
       "value": 135.0,
       "decimals": 0,
@@ -499,7 +499,7 @@
       "receipt_ref": "oath_v07_corpus_after.json:oath_held_before"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "135",
       "value": 135.0,
       "decimals": 0,
@@ -508,7 +508,7 @@
       "receipt_ref": "oath_v07_corpus_after.json:oath_held_before"
     },
     {
-      "line": 79,
+      "line": 88,
       "token": "0.2711864406779661",
       "value": 0.2711864406779661,
       "decimals": 16,
@@ -518,7 +518,7 @@
       "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[2].token"
     },
     {
-      "line": 89,
+      "line": 98,
       "token": "0.9918699186991871",
       "value": 0.9918699186991871,
       "decimals": 16,
@@ -528,7 +528,7 @@
       "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[0].token"
     },
     {
-      "line": 90,
+      "line": 99,
       "token": "0.4533333333333333",
       "value": 0.4533333333333333,
       "decimals": 16,
@@ -538,7 +538,7 @@
       "receipt_ref": "oath_v07_precfix_census.json:clean_accusation_candidates_ge5[1].token"
     },
     {
-      "line": 102,
+      "line": 111,
       "token": "3951",
       "value": 3951.0,
       "decimals": 0,
@@ -547,7 +547,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:verified_claims_mutated"
     },
     {
-      "line": 102,
+      "line": 111,
       "token": "1255",
       "value": 1255.0,
       "decimals": 0,
@@ -556,7 +556,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:mutant_status.UNGROUNDED"
     },
     {
-      "line": 102,
+      "line": 111,
       "token": "2696",
       "value": 2696.0,
       "decimals": 0,
@@ -565,7 +565,7 @@
       "receipt_ref": null
     },
     {
-      "line": 102,
+      "line": 111,
       "token": "0.6824",
       "value": 0.6824,
       "decimals": 4,
@@ -574,7 +574,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_share"
     },
     {
-      "line": 103,
+      "line": 112,
       "token": "87",
       "value": 87.0,
       "decimals": 0,
@@ -583,7 +583,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:mutant_status.NOT_EXTRACTED"
     },
     {
-      "line": 103,
+      "line": 112,
       "token": "604",
       "value": 604.0,
       "decimals": 0,
@@ -592,7 +592,7 @@
       "receipt_ref": null
     },
     {
-      "line": 106,
+      "line": 115,
       "token": "135",
       "value": 135.0,
       "decimals": 0,
@@ -601,7 +601,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:docs_with_at_least_one_silent"
     },
     {
-      "line": 106,
+      "line": 115,
       "token": "136",
       "value": 136.0,
       "decimals": 0,
@@ -610,7 +610,7 @@
       "receipt_ref": "oath_v07_precfix_census.json:docs_with_resolvable_receipts"
     },
     {
-      "line": 108,
+      "line": 117,
       "token": "736",
       "value": 736.0,
       "decimals": 0,
@@ -619,7 +619,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.0"
     },
     {
-      "line": 108,
+      "line": 117,
       "token": "289",
       "value": 289.0,
       "decimals": 0,
@@ -628,7 +628,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.1"
     },
     {
-      "line": 108,
+      "line": 117,
       "token": "257",
       "value": 257.0,
       "decimals": 0,
@@ -637,7 +637,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.2"
     },
     {
-      "line": 108,
+      "line": 117,
       "token": "423",
       "value": 423.0,
       "decimals": 0,
@@ -646,7 +646,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.3"
     },
     {
-      "line": 108,
+      "line": 117,
       "token": "814",
       "value": 814.0,
       "decimals": 0,
@@ -655,7 +655,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.4"
     },
     {
-      "line": 111,
+      "line": 120,
       "token": "176",
       "value": 176.0,
       "decimals": 0,
@@ -664,7 +664,7 @@
       "receipt_ref": null
     },
     {
-      "line": 120,
+      "line": 129,
       "token": "604",
       "value": 604.0,
       "decimals": 0,
@@ -673,7 +673,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_false_verified"
     },
     {
-      "line": 122,
+      "line": 131,
       "token": "157",
       "value": 157.0,
       "decimals": 0,
@@ -682,7 +682,7 @@
       "receipt_ref": null
     },
     {
-      "line": 126,
+      "line": 135,
       "token": "736",
       "value": 736.0,
       "decimals": 0,
@@ -691,7 +691,7 @@
       "receipt_ref": "oath_v07_silentpass_census.json:silent_by_decimal_width.0"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -700,7 +700,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -709,7 +709,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "19",
       "value": 19.0,
       "decimals": 0,
@@ -718,7 +718,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -727,7 +727,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "18",
       "value": 18.0,
       "decimals": 0,
@@ -736,7 +736,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 129,
+      "line": 138,
       "token": "20",
       "value": 20.0,
       "decimals": 0,

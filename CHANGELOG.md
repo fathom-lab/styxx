@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — lint was red, so the test suite had not run in CI for weeks
+
+The `tests` workflow gates the test step behind `ruff check styxx`. Lint had been
+failing on five errors since the contract/flattering work landed, so every push
+since — including the 7.45.0 release — reported a red suite that **never
+executed**. This is the second time lint has masked the tests in this repo.
+
+Four of the five were cosmetic. The fifth was a dead guard: `diffgate.py` read
+`except (IndexError, error)`, and `error` is an undefined name, so when
+`m.start("path")` did raise, Python evaluated the except clause, hit `NameError`,
+and propagated it instead of returning `False`. Reproduced before fixing, and
+pinned by a test that fails with `NameError` at that line when the bug is put
+back. It sat in the module whose entire job is refusing to accuse someone who
+told the truth — a leg that cannot fail, which is the same defect shape 7.45.0
+was published to describe.
+
+With lint clear, the full suite passes on CI across py3.9–py3.12.
+
+---
+
 ## [7.45.0] — 2026-08-22 — the OATH's published debt was measured against the wrong denominator
 
 `styxx.certify` obligated a number only when its line carried recognised trigger
