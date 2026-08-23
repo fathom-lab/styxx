@@ -39,7 +39,7 @@ ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from styxx.certify import (certify_doc, extract_numbers, receipt_values,   # noqa: E402
-                           _match, _TRIGGERS, _TRIGGERS_CORR)
+                           _match)
 from styxx.corpus_audit import _resolve_receipts                           # noqa: E402
 
 OUT = HERE / "oath_v08_fieldbind_dossier.json"
@@ -99,7 +99,6 @@ def main() -> int:
         text = doc.read_text(encoding="utf-8", errors="replace")
         lines = text.splitlines()
         rvs = rvals_for(receipts)
-        all_pstems = set().union(*(path_stems(p) for _, p, _ in rvs)) if rvs else set()
         for num in extract_numbers(text):
             if num["decimals"] == 0 or num["decimals"] > DEC_MAX:
                 continue

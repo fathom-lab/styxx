@@ -186,7 +186,6 @@ def main() -> int:
             hdr = next((e.get("binding_context") for e in extract_numbers("\n".join(ml))
                         if e["line"] == r["line"] and e["token"] == r["mutant"]), None)
             bctx = hdr or ctx
-            tok_at = ctx.find(r["mutant"])
             allow_scaling = "%" in ctx or re.search(r"\bpercent", ctx, re.I) is not None
             try:
                 mval = float(r["mutant"].replace(",", ""))
