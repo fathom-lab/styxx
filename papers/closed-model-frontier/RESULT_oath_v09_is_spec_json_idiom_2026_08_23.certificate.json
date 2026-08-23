@@ -4,7 +4,7 @@
   "document": "RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
   "document_sha256": "58a5530bfb1d140ac433c9b7e59dfe975bfbbf25ed91f39772fbcfa10edaa511",
   "receipts_sha256": {
-    "oath_v09_battery_result.json": "829fade03493316140d1f8aaad4f59eed4f827cce78b862b86acae753447c063",
+    "oath_v09_battery_result.json": "b2f219ed53c942eb30c8e1d7e2fcf9aa4387595b5749f77f3ce6f7750ff81a92",
     "oath_v09_isspec_census.json": "bd3409deaf3d64a2dbed15ddb4e01ed1940d971e391f73bc36acd5720752803e",
     "oath_v09_baseline_ledger.json": "93e17680a642c5a86731bbb52f50eed1a46e7bceea6f560e7ebe5eb438ee9447"
   },
@@ -413,7 +413,7 @@
       "decimals": 0,
       "context": "G3 and G4 are the load-bearing pair. Across the 137 documents whose receipts all resolve, the",
       "status": "VERIFIED",
-      "receipt_ref": "oath_v09_battery_result.json:documents"
+      "receipt_ref": "oath_v09_battery_result.json:documents_in_baseline_frame"
     },
     {
       "line": 76,
