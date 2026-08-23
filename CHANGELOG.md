@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — OATH v0.9: a bar in JSON idiom abstains, and the prose bar clause is refused
+
+`is_spec` (the v0.1 SPEC-CONSTANT rule) abstains a pre-registered bar, because a
+bar's receipt is the preregistration and not a result JSON. It recognised a bar
+only from an operator character or bar vocabulary in an eighteen-character window
+immediately before the token, so a bar written as
+`{"metric": "…", "op": ">=", "value": 0.75}` — operator in a sibling field the
+window cannot see — was never rescued. v0.7 named this class and left it open.
+
+**`V09_IS_SPEC_JSON_IDIOM = True`.** A token in JSON value position whose object
+also carries a comparison-operator field is a SPECIFICATION. 145 such tokens live
+in 42 documents under `papers/`; the shipped verifier rescued 0 of them. The class
+is live: `PREDICTION_h1_human_islands`'s committed certificate swears two
+*different* preregistered bars — a dip-test *p*-value and an R² — against the one
+unrelated leaf `b45_result.json:null_expectation_k20`, whose sole qualification is
+holding the float `0.05`. The operator field is required, not optional: `"value":
+0.75` alone is an ordinary key/value pair, and it is the operator that makes the
+number a bound *on* a quantity rather than a record *of* one.
+
+**`V09_IS_SPEC_BAR_NOUN = False`.** The same doctrine in prose form — "clears the
+0.10 floor" — was measured and **refused**, and is retained at `False` with its
+measurement so one flag reproduces the negative. 38 such tokens sit in the
+certified corpus, 37 VERIFIED, and **36 of them are on lines the verifier already
+obligates**. Only an obligated token can be accused when it is doctored, so only an
+obligated token has a catch that an abstention rule can destroy. Mutating all 38
+across ten seeds, the shipped verifier catches 18.7 on average (range 16–22). The
+clause takes that column to **zero at every seed**, because the predicate reads
+context and a one-digit substitution leaves the context unchanged. It does not
+detect the tamper it would be credited with; it stops looking.
+
+**The trap, named.** In the same arm, false attestations fall from a range of
+14–20 to at most 1. A cycle measuring only that column would have reported a
+twenty-point improvement and shipped. The improvement is real and it is bought
+entirely with silence — so the gate that refuses it (G6) was preregistered as
+expected-to-fail and kept, because it is also the positive control that makes the
+shipping clause's zeros readable. A screen with unknown recall reporting zero on a
+corpus is indistinguishable from a screen that cannot see.
+
+**Residual, published with the change.** The shipping clause has **no measurable
+effect on any certificate today**: of the 145 tokens, 4 sit in a document carrying
+a certificate and **0** sit in one whose receipts all resolve, so the corpus delta
+is zero by construction and the value is forward-looking. Left unclosed: the 38
+prose bar tokens, and the receipt-side variant (63 VERIFIED tokens grounding in a
+`frozen_gates`-like leaf) rejected unbuilt because it consults the match set and
+so stops firing under exactly the mutation it exists to handle. Neither is a
+coverage hole; both are false-attestation surface, which only status-level
+claim→field binding for floats can attack.
+
+Battery: G1 recall 145 ON vs 1 OFF (bar ≥140/≤2), G2 25/25 hand-adjudicated BAR,
+G3 0 VERIFIED→ABSTAIN, G4 0 accusations silenced and 0 verdict flips, G5 0 ledger
+differences with the flags off, G6 FAIL as preregistered. One disclosed defect
+found and not repaired here: `certify_doc` locates a token with `ctx.find`, which
+returns the first occurrence of the token *string* rather than the extracted span,
+which costs G1 its last point and lets at most one mutant per seed escape.
+
+No version bump: `styxx/_version.py`, tags and releases are untouched.
+
 ## [7.46.0] — 2026-08-23 — the v0.4 float-binding debt, built and closed NEGATIVE
 
 `styxx/certify.py` has carried a note at the v0.3 count-binding site since July:
