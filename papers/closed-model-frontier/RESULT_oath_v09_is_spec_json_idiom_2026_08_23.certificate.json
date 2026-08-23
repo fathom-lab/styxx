@@ -8,7 +8,7 @@
     "oath_v09_isspec_census.json": "bd3409deaf3d64a2dbed15ddb4e01ed1940d971e391f73bc36acd5720752803e",
     "oath_v09_baseline_ledger.json": "93e17680a642c5a86731bbb52f50eed1a46e7bceea6f560e7ebe5eb438ee9447"
   },
-  "verifier_sha256": "852aa4d0c0cb4e2304267766cd49ccabd919e33f89fa3d706ffb4fabf89c34d9",
+  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
   "counts": {
     "VERIFIED": 50,
     "ABSTAIN": 8,
