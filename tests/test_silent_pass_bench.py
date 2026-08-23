@@ -34,6 +34,31 @@ def test_pre_fix_source_is_fetched_from_history_not_copied():
     assert "def " in src
 
 
+def test_every_case_loads_in_a_full_clone_regardless_of_platform_locale():
+    """The loader must not lose cases to the platform's preferred encoding.
+
+    `pre_fix_source` shells out to `git show`. With `text=True` and no explicit encoding,
+    Python decodes using the locale preference — cp1252 on Windows — and one source byte that
+    is invalid there raises UnicodeDecodeError inside subprocess's reader THREAD. stdout comes
+    back empty, the case reads as "unavailable", and it silently leaves the benchmark. Measured
+    before the fix on Windows: 7 of 20 cases dropped, which then surfaced as a detector miss in
+    the complementarity test below.
+
+    That is this corpus's own defect class committed by its own loader — an absent measurement,
+    caused by a crash, reported as a result — so it is pinned here rather than left to the
+    platform.
+    """
+    cases = load_cases()
+    if all(c.pre_fix_source() is None for c in cases):
+        pytest.skip("shallow clone — pre-fix history unavailable")
+    unavailable = [c.id for c in cases if c.pre_fix_source() is None]
+    assert not unavailable, (
+        f"{len(unavailable)}/{len(cases)} cases did not load in a full clone: {unavailable}. "
+        "A case that cannot be loaded is not a detector miss — check the loader before the "
+        "detector."
+    )
+
+
 def test_a_detector_that_finds_nothing_scores_zero_not_none():
     result = score(lambda src, name: set())
     if result.recall is None:

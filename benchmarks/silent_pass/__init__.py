@@ -64,9 +64,17 @@ class Case:
     def pre_fix_source(self, repo: Optional[Path] = None) -> Optional[str]:
         """The module as it stood immediately BEFORE the fix landed."""
         repo = Path(repo) if repo else _REPO
+        # encoding is PINNED, not inherited. `text=True` alone decodes with the platform
+        # preferred encoding (cp1252 on Windows), and a single source byte that is invalid
+        # there raises UnicodeDecodeError inside subprocess's reader THREAD -- so stdout comes
+        # back empty, this returns None, and the case silently leaves the benchmark as
+        # "unavailable". That is this corpus's own defect class committed by its loader: an
+        # absent measurement, caused by a crash, surfaced as a result. Measured on Windows
+        # before the fix: 7 of 20 cases dropped out, which then read as a detector miss.
         r = subprocess.run(
             ["git", "show", f"{self.fix_commit}~1:{self.module}"],
-            capture_output=True, text=True, cwd=str(repo),
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            cwd=str(repo),
         )
         return r.stdout if r.returncode == 0 and r.stdout else None
 
