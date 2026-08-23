@@ -11,8 +11,8 @@ ratio is visible without reading 158 cycle entries.
 | | |
 |---|---|
 | cycles logged | **163** |
-| preregistrations frozen | **364** (40 carrying a machine-scored gates block) |
-| OATH certificates | **175** |
+| preregistrations frozen | **365** (40 carrying a machine-scored gates block) |
+| OATH certificates | **176** |
 | trust-stack seals | **34** |
 | cycles ending in a refusal, null, retraction or INVALID | **62** of 163 |
 | verdicts that were literally `INVALID__*` — the machinery refusing its own run | **16** |
@@ -25,7 +25,7 @@ never acquire one and their denominator can never move; quoting only the first r
 understates the discipline, and quoting only the second hides how much of the corpus
 predates it.
 
-Certificate verdicts: `OATH-HELD` × 175
+Certificate verdicts: `OATH-HELD` × 176
 
 Seal verdicts: `SEALED` × 33, `REFUSED` × 1
 

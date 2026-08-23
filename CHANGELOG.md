@@ -62,6 +62,13 @@ found and not repaired here: `certify_doc` locates a token with `ctx.find`, whic
 returns the first occurrence of the token *string* rather than the extracted span,
 which costs G1 its last point and lets at most one mutant per seed escape.
 
+**Convergent with 7.46.0, and not by arrangement.** `V08_FLOAT_FIELD_BINDING` closed NEGATIVE under
+`V08_COVERAGE_DESTRUCTIVE` from a concurrent cycle sharing no code with this one, attacking the same
+false-attestation channel from the receipt side. Two instruments, two independently frozen
+preregistrations, one verdict: what the demotion removed from the VERIFIED column it did not move
+into the caught column. The v0.4 debt is not a missing demotion rule — demotion is the wrong shape
+of answer, and neither cycle found the right one.
+
 No version bump: `styxx/_version.py`, tags and releases are untouched.
 
 ## [7.46.0] — 2026-08-23 — the v0.4 float-binding debt, built and closed NEGATIVE

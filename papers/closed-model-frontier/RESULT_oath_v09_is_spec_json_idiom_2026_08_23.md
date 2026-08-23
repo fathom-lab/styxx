@@ -90,6 +90,21 @@ ATTESTED falls with it, from a range of 14 to 20 down to at most 1. A cycle that
 the second column would have reported a twenty-point improvement in false attestation and shipped
 the clause. The improvement is real and it is bought entirely with silence.
 
+## A convergence this cycle did not arrange
+
+`RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md` landed on `main` while this
+battery was running, from a concurrent cycle that shared no code and no author with it. It attacks
+the false-attestation channel from the receipt side — demote a float claim whose matches all sit on
+unrelated receipt paths — and it closes NEGATIVE under `V08_COVERAGE_DESTRUCTIVE`, retained at
+`False`. Two clauses, two instruments, two independently frozen preregistrations, and the same
+verdict: the demotion was right about the individual tokens and wrong about the ledger, because what
+it removed from the VERIFIED column it did not move into the caught column.
+
+That is worth stating as a pattern rather than a coincidence. Every instrument this family has built
+to attack false attestation has paid for it in silence, and the two cycles that measured the price
+both refused to pay it. The v0.4 debt is not that the verifier lacks a demotion rule. It is that
+demotion is the wrong shape of answer, and neither cycle found the right one.
+
 ## Corrections to the prereg, made here rather than in it
 
 **I1 is not exactly true.** The prereg asserted that a token the clause abstains stays abstained

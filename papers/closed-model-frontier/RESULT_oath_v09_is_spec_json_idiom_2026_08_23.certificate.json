@@ -2,9 +2,9 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
-  "document_sha256": "58a5530bfb1d140ac433c9b7e59dfe975bfbbf25ed91f39772fbcfa10edaa511",
+  "document_sha256": "f14fa083db6b2eabb09ea6b48d0dc6fdd9ab073269679fe0bd75b426225f34f8",
   "receipts_sha256": {
-    "oath_v09_battery_result.json": "b2f219ed53c942eb30c8e1d7e2fcf9aa4387595b5749f77f3ce6f7750ff81a92",
+    "oath_v09_battery_result.json": "f813a59773cbbd24ce124f2f3c0d6947804936f4e80d5182fdb74a6457732df2",
     "oath_v09_isspec_census.json": "bd3409deaf3d64a2dbed15ddb4e01ed1940d971e391f73bc36acd5720752803e",
     "oath_v09_baseline_ledger.json": "93e17680a642c5a86731bbb52f50eed1a46e7bceea6f560e7ebe5eb438ee9447"
   },
@@ -38,15 +38,15 @@
       "token": "2"
     },
     {
-      "line": 100,
+      "line": 115,
       "token": "0.8"
     },
     {
-      "line": 103,
+      "line": 118,
       "token": "23"
     },
     {
-      "line": 126,
+      "line": 141,
       "token": "38"
     }
   ],
@@ -479,7 +479,7 @@
       "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[3].off.false_attested"
     },
     {
-      "line": 99,
+      "line": 114,
       "token": "37",
       "value": 37.0,
       "decimals": 0,
@@ -488,7 +488,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[35].line"
     },
     {
-      "line": 100,
+      "line": 115,
       "token": "0.8",
       "value": 0.8,
       "decimals": 1,
@@ -497,7 +497,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 100,
+      "line": 115,
       "token": "0.9",
       "value": 0.9,
       "decimals": 1,
@@ -506,7 +506,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[111].token"
     },
     {
-      "line": 101,
+      "line": 116,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -515,7 +515,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[67].line"
     },
     {
-      "line": 102,
+      "line": 117,
       "token": "38",
       "value": 38.0,
       "decimals": 0,
@@ -524,7 +524,7 @@
       "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].on.abstained"
     },
     {
-      "line": 103,
+      "line": 118,
       "token": "23",
       "value": 23.0,
       "decimals": 0,
@@ -533,7 +533,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 104,
+      "line": 119,
       "token": "145",
       "value": 145.0,
       "decimals": 0,
@@ -542,7 +542,7 @@
       "receipt_ref": "oath_v09_battery_result.json:gates.G1_recall.on"
     },
     {
-      "line": 121,
+      "line": 136,
       "token": "145",
       "value": 145.0,
       "decimals": 0,
@@ -551,7 +551,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.n"
     },
     {
-      "line": 121,
+      "line": 136,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -560,7 +560,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.in_certified_document"
     },
     {
-      "line": 122,
+      "line": 137,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -569,7 +569,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:json_idiom.in_fully_resolvable_document"
     },
     {
-      "line": 126,
+      "line": 141,
       "token": "38",
       "value": 38.0,
       "decimals": 0,
@@ -578,7 +578,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 127,
+      "line": 142,
       "token": "63",
       "value": 63.0,
       "decimals": 0,
@@ -587,7 +587,7 @@
       "receipt_ref": "oath_v09_isspec_census.json:receipt_side_alternative.verified_grounding_in_spec_like_path"
     },
     {
-      "line": 128,
+      "line": 143,
       "token": "28",
       "value": 28.0,
       "decimals": 0,
