@@ -306,7 +306,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 elif kind == "tests_pass":
                     if run:
                         r = subprocess.run(run, shell=True, cwd=repo,
-                                           capture_output=True, text=True, timeout=1800)
+                                           capture_output=True, text=True,
+                                           encoding="utf-8", errors="replace", timeout=1800)
                         c.verdict = "VERIFIED" if r.returncode == 0 else "CONTRADICTED"
                         c.why = f"--run {run!r} exited {r.returncode}"
                     else:

@@ -338,7 +338,8 @@ class Experiment:
             r = subprocess.run(
                 ["git", "log", "--diff-filter=A", "--format=%H", "--follow", "--",
                  str(self.prereg.name)],
-                cwd=self.prereg.resolve().parent, capture_output=True, text=True, timeout=30)
+                cwd=self.prereg.resolve().parent, capture_output=True, text=True,
+                encoding="utf-8", errors="replace", timeout=30)
         except (OSError, subprocess.TimeoutExpired) as e:
             raise PrologueError(f"cannot verify the freeze against git: {e}") from e
         hashes = [h for h in r.stdout.split() if h]

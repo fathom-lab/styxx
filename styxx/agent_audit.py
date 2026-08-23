@@ -191,8 +191,17 @@ class _Checkers:
 
     @staticmethod
     def _run(repo: Path, *cmd: str) -> str:
+        # encoding is PINNED, not inherited. This reads git DIFFS -- arbitrary source bytes --
+        # and `text=True` alone decodes with the platform preference (cp1252 on Windows). Two
+        # failure modes, both silent: a byte undefined in cp1252 (0x81/0x8D/0x8F/0x90/0x9D, and
+        # 0x90 occurs inside ordinary UTF-8 sequences such as U+2010) raises UnicodeDecodeError in
+        # subprocess's reader THREAD and stdout comes back empty; anything else mojibakes. Either
+        # way `git_show_diff_contains` then reports MATCH=False for a substring that is genuinely
+        # in the diff -- an auditor calling a truthful claim unsupported. Measured: a needle
+        # containing U+2212 read True pinned and False locale-decoded on the same commit.
         r = subprocess.run(
-            list(cmd), cwd=str(repo), capture_output=True, text=True, check=False,
+            list(cmd), cwd=str(repo), capture_output=True, text=True,
+            encoding="utf-8", errors="replace", check=False,
         )
         return (r.stdout or "") + ("\n[stderr]\n" + r.stderr if r.stderr else "")
 

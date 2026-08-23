@@ -88,6 +88,26 @@ unreachable and read as a detector failure. No bar was touched; the corpus was
 restored. Pinned by a test that names the unloadable cases, so the loader is checked
 before the detector is blamed.
 
+### And the same defect class in the shipped package
+
+Sweeping for it found the identical bug in `styxx.agent_audit._run`, which reads git
+**diffs** — arbitrary source bytes. `git_show_diff_contains` computes `substring in
+diff`, so a locale-decoded diff makes it answer **MATCH=False for a substring that is
+genuinely present**: an auditor calling a truthful claim unsupported. Demonstrated on
+one commit — a needle containing U+2212 reads `True` pinned and `False` locale-decoded.
+Correct on Linux, wrong on Windows, and quiet on both.
+
+`styxx.protocol._committed_at` fails safe by comparison (it refuses to score rather
+than passing) but reported the misleading reason "prereg is not committed" when the
+real cause was a decode. `styxx.diffgate`'s test runner only reads `returncode`. All
+three are pinned to `encoding="utf-8", errors="replace"`; `styxx/` now has zero
+unpinned text-mode subprocess calls.
+
+Guarded by an AST test that fails on any future unpinned call anywhere in the shipped
+package — the class, not the three sites that happened to be found — plus a functional
+test that reintroducing the bug turns red with "U+2212 is in the diff but was reported
+missing".
+
 ---
 
 ## [Unreleased] — lint was red, so the test suite had not run in CI for weeks
