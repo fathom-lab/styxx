@@ -6,7 +6,6 @@ value in [-1, 1]). Ordinals, counts, API constants, whole-percents, and out-of-r
 register must NOT be obligated. See papers/closed-model-frontier/PREREG_oath_v04_recall_decimalguard_2026_07_04.md.
 """
 import json
-from pathlib import Path
 
 from styxx.certify import certify_doc
 
@@ -232,3 +231,96 @@ def test_bullet_marker_small_int_is_still_an_artifact(tmp_path):
     from styxx.certify import certify_doc
     cert = certify_doc(doc, [rp])
     assert all(e["token"] != "3" for e in cert["ledger"])
+
+
+# ---- v0.9 is_spec recall: the JSON idiom, and the two asserted invariants (2026-08-23) ----
+# PREREG_oath_v09_is_spec_json_idiom_2026_08_23. A bar written as {"op": "<=", "value": X} puts
+# its operator in a sibling field, so the 18-character pre-window structurally cannot see it and
+# the bar was certified VERIFIED against whatever leaf happened to hold its float. I1 and I2 below
+# are ASSERTED INVARIANTS, not gates: they cannot fail by construction, and the prereg records
+# them here rather than counting them as passed bars.
+
+def test_json_idiom_bar_abstains(tmp_path):
+    line = '{"gates": {"G1": {"metric": "voice_preference_rate", "op": ">=", "value": 0.75}}}'
+    assert _status(tmp_path, line, {"unrelated_leaf": 0.75}, "0.75") == "ABSTAIN"
+
+
+def test_json_value_without_an_operator_field_is_untouched(tmp_path):
+    # the operator field is REQUIRED: a bare "value" key is an ordinary pair, not a specification
+    line = '{"summary": {"metric": "voice_preference_rate", "value": 0.75}}'
+    assert _status(tmp_path, line, {"voice_preference_rate": 0.75}, "0.75") == "VERIFIED"
+
+
+def test_json_idiom_does_not_reach_a_number_outside_value_position(tmp_path):
+    line = '{"G1": {"metric": "acc", "op": ">=", "value": 0.75}} measured accuracy 0.42 this run.'
+    assert _status(tmp_path, line, {"accuracy": 0.99}, "0.42") == "UNGROUNDED"
+
+
+def test_i1_a_json_idiom_bar_stays_abstained_under_mutation(tmp_path):
+    """I1 (asserted invariant, NOT gated): the predicate reads the characters around the token and
+    a one-digit substitution preserves the token's length, so both windows are unchanged. The ON
+    arm's false-attestation count on this class is therefore 0 BY CONSTRUCTION, and reporting that
+    zero as a catch would launder an identity as a measurement."""
+    tpl = '{"gates": {"G1": {"metric": "voice_preference_rate", "op": ">=", "value": %s}}}'
+    rec = {"unrelated_leaf": 0.75, "another_leaf": 0.72}
+    assert _status(tmp_path, tpl % "0.75", rec, "0.75") == "ABSTAIN"
+    assert _status(tmp_path, tpl % "0.72", rec, "0.72") == "ABSTAIN"
+
+
+def _statuses(tmp_path, tag, line, receipt_obj):
+    doc = tmp_path / f"d_{tag}.md"
+    doc.write_text(f"# t\n\npreamble sentence here.\n\n{line}\n", encoding="utf-8")
+    rp = tmp_path / f"r_{tag}.json"
+    rp.write_text(json.dumps(receipt_obj), encoding="utf-8")
+    return {e["token"]: e["status"] for e in certify_doc(doc, [rp])["ledger"]}
+
+
+def test_i2_both_v09_clauses_are_demote_only(tmp_path):
+    """I2 (asserted invariant, NOT gated): is_spec yields only ABSTAIN, so a clause can only MOVE
+    a token INTO abstention. The set of UNGROUNDED tokens with a clause ON is a subset of the set
+    with it OFF, so no clause creates an accusation and no certificate flips HELD -> FAILED."""
+    import styxx.certify as C
+    line = 'the run accuracy clears the 0.10 floor and {"G1": {"op": ">=", "value": 0.75}} froze.'
+    rec = {"unrelated": 0.99}
+    before = C.V09_IS_SPEC_BAR_NOUN
+    try:
+        C.V09_IS_SPEC_BAR_NOUN = False
+        off = _statuses(tmp_path, "off", line, rec)
+        C.V09_IS_SPEC_BAR_NOUN = True
+        on = _statuses(tmp_path, "on", line, rec)
+    finally:
+        C.V09_IS_SPEC_BAR_NOUN = before
+    ung_off = {t for t, s in off.items() if s == "UNGROUNDED"}
+    ung_on = {t for t, s in on.items() if s == "UNGROUNDED"}
+    assert ung_on <= ung_off, "a v0.9 clause created an accusation — is_spec is demote-only"
+    assert off["0.75"] == "ABSTAIN" and on["0.75"] == "ABSTAIN"   # primary clause, both arms
+
+
+def test_g6_in_miniature_the_bar_noun_control_converts_a_catch_into_silence(tmp_path):
+    """The negative this cycle publishes, reproduced in one line of markdown.
+
+    'clears the 0.10 floor' sits on a BOUND line, so the shipped verifier ACCUSES the doctored bar.
+    Turning the control clause on replaces that accusation with an abstention: the tamper metric
+    improves because the verifier stopped looking, which is exactly the trade G6 refused."""
+    import styxx.certify as C
+    line = 'the run accuracy clears the 0.10 floor, well above the frozen bound.'
+    rec = {"unrelated": 0.99}
+    before = C.V09_IS_SPEC_BAR_NOUN
+    try:
+        C.V09_IS_SPEC_BAR_NOUN = False
+        off = _statuses(tmp_path, "g6off", line, rec)
+        C.V09_IS_SPEC_BAR_NOUN = True
+        on = _statuses(tmp_path, "g6on", line, rec)
+    finally:
+        C.V09_IS_SPEC_BAR_NOUN = before
+    assert off["0.10"] == "UNGROUNDED"    # the catch the shipped verifier makes today
+    assert on["0.10"] == "ABSTAIN"        # the silence the control clause would buy
+
+
+def test_v09_bar_noun_control_stays_off_by_default():
+    """The control clause is retained OFF with its measurement (G6: it takes the caught-mutant
+    column to zero at every seed). Flipping this flag reproduces the negative; shipping it True
+    would trade 16-22 catches per seed for 14-20 false attestations removed."""
+    import styxx.certify as C
+    assert C.V09_IS_SPEC_BAR_NOUN is False
+    assert C.V09_IS_SPEC_JSON_IDIOM is True
