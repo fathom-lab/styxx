@@ -256,6 +256,53 @@ V07_ULP_ESCAPE = True             # severable, accusation-only: an obligation cr
                                   # V07_ULP_N ULP, degrades to ABSTAIN with a named reason. It may
                                   # never produce a VERIFIED and never softens an obligation that
                                   # _TRIGGERS / _TRIGGERS_CORR / n= / range-sanity created.
+# v0.8 (PREREG_oath_v08_float_field_binding_2026_08_23) -- severable, G5-gated. The standing
+# v0.4 debt: promote the v0.6.2 float stem test from ATTRIBUTION to STATUS, so a float claim must
+# ground in a leaf whose PATH relates to the claim's context and not merely in one that happens to
+# hold its value. This is the only instrument that attacks FALSE ATTESTATION: of 3951 claims the
+# verifier certifies VERIFIED, mutating one significant digit leaves 604 still VERIFIED, matched to
+# an unrelated leaf. Obligation cannot reach them -- obligation decides whether a claim MUST match,
+# and these already do.
+#
+# SHIPPED OFF. The battery cleared every mechanical bar -- G2 removed 107 false attestations at the
+# gating seed against a bar of 60, G3 cost ratio 1.056 against 1.5, G5 severability 0, and invariant
+# I1 held exactly (UNGROUNDED 4->4, HELD 136->136, all 113 transitions VERIFIED->ABSTAIN). It died
+# on G4, the gate that asks whether the demotions are RIGHT: of 40 sampled demotions hand-scored
+# against the prereg's frozen definition, 30 destroyed a GENUINE binding against a bar of 12.
+# Kill token V08_COVERAGE_DESTRUCTIVE.
+#
+# The structural reason, and why no threshold rescues it: scientific prose names a measurement
+# narratively -- "whole-stack r=16: 0.616-0.626", "the loop beats the stubborn baseline 0.57 vs
+# 0.47" -- while the receipt field that holds it is structural (points[2].naive_relock_auroc,
+# lambdas[1], final.accuracy). Path-stem overlap has no purchase on that, so the honest population
+# is not lexically separable from the tampered one. Five design families were swept pre-fix (naked
+# stem 3.48 cost per kill, KEEP-widenings 1.18, context window 1.06, window+NAMEABLE 1.02,
+# all-hits-array-indexed 7.72) and NONE beats parity: the instrument buys about one honest
+# demotion per false attestation removed. An ACCUSING variant is worse still and was rejected
+# outright -- every operating point of every family would have put dozens of new UNGROUNDED tokens
+# on honest documents (40 at the best point).
+#
+# Kept in tree behind the flag, as V05_APPROX_NOTATION was after the cycle-38 severability drop, so
+# the measurement is re-runnable and the negative is not re-attempted. G5 proves it inert when off.
+# DO NOT re-enable without a new prereg: the v0.4 debt is CLOSED_NEGATIVE, not owed.
+V08_FLOAT_FIELD_BINDING = False
+V08_FIELD_BIND_MAX_DECIMALS = 3   # floats at 1..3 fractional digits. The coincidence surface
+                                  # shrinks with printed precision, so binding pays only at low
+                                  # width: swept pre-fix, cost per false attestation removed is
+                                  # 1.02 at <=3 decimals and 27x at 4 and 76x at 6, where a
+                                  # demotion nearly always destroys a correct binding instead. The
+                                  # ceiling also keeps this clause disjoint from v0.7's >=7 rule.
+V08_FIELD_BIND_PREV_LINES = 1     # the binding window reaches back one line. Prose names a
+                                  # measurement a sentence before it prints it, and a line-local
+                                  # window scores 3.48 cost per kill against 1.06 at prev1.
+                                  # DEMOTE-ONLY: the clause yields ABSTAIN, never UNGROUNDED, so it
+                                  # can neither create nor remove an accusation and no certificate
+                                  # can flip HELD->FAILED (invariant I1, asserted in the suite and
+                                  # deliberately NOT gated -- a leg that cannot fail must not gate).
+                                  # An accusing variant was measured and rejected: every operating
+                                  # point of all five swept design families would have put dozens of
+                                  # new UNGROUNDED tokens on honest documents (40 at the best point).
+
 V07_ULP_N = 8                     # v0.6.2 withdrew the epsilon subsidy at >=13 decimals, so at
                                   # doc_dec=16 the tolerance (5e-17) sits BELOW the float64 ULP
                                   # near 1.0 (1.11e-16). That was safe while such tokens were never
@@ -265,6 +312,22 @@ V07_ULP_N = 8                     # v0.6.2 withdrew the epsilon subsidy at >=13 
                                   # rather than VERIFIED is what keeps the v0.6.2 epsilon hole
                                   # closed, and the countable `ulp-neighbour` reason is what keeps
                                   # the residual enumerable instead of invisible.
+
+
+def _ctx_stems(text: str) -> set[str]:
+    """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
+
+    Identical vocabulary to the inline copies in `certify_doc` (which are left byte-identical):
+    4-char prefixes of every word, plus 4-char prefixes of each hyphen/underscore segment."""
+    words = {w.lower().strip("'’") for w in re.findall(r"[A-Za-z][A-Za-z_-]{2,}", text)}
+    return {w[:4] for w in words} | {s[:4] for w in words
+                                     for s in re.split(r"[-_]", w) if len(s) >= 3}
+
+
+def _path_stems(path: str) -> set[str]:
+    """The v0.3/v0.6.2 receipt-path stem set (`path_ok` / `_stem_ok`), lifted to module level."""
+    segs = {s.lower() for seg in re.split(r"[.\[\]]", path) for s in re.split(r"[-_]", seg) if s}
+    return {s[:4] for s in segs if len(s) >= 3}
 
 
 # ---------------------------------------------------------------- contradiction triggers
@@ -303,6 +366,12 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         receipts[rp.name] = hashlib.sha256(rp.read_bytes()).hexdigest()
         for path, v in receipt_values(j):
             rvals.append((rp.name, path, v))
+
+    # v0.8: every path stem present anywhere in the cited receipt set, computed ONCE per document.
+    # The NAMEABLE test below is per-claim and would otherwise re-scan every leaf for every token.
+    all_path_stems: set[str] = set()
+    for _rn, _pth, _rv in rvals:
+        all_path_stems |= _path_stems(_pth)
 
     ledger = []
     doc_lines = text.splitlines()
@@ -351,8 +420,10 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # v0.3 COUNT-BINDING rule: an integer claim only grounds in a leaf whose PATH shares a word
         # stem with the claim's line (or an n=/n_ pairing) — bare counts coincide with unrelated
         # count fields far too easily (the k=14-class D1 misses: 27->37 'verified' because a shared
-        # addendum carries another experiment's n_held=37). Floats keep value-only matching (v0.4
-        # owes them full claim->field binding).
+        # addendum carries another experiment's n_held=37). Floats are bound at STATUS level by the
+        # v0.8 clause below (the debt this comment used to name as owed to v0.4); the filter here
+        # stays integer-only because the two populations need different treatment -- an integer's
+        # hits are FILTERED and may fall through to UNGROUNDED, a float's are DEMOTED to ABSTAIN.
         if num["decimals"] == 0 and hits:
             words = {w.lower().strip("'’") for w in re.findall(r"[A-Za-z][A-Za-z_-]{2,}", bctx)}
             stems = {w[:4] for w in words} | {s[:4] for w in words for s in re.split(r"[-_]", w) if len(s) >= 3}
@@ -429,12 +500,39 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                 segs = {s.lower() for seg in re.split(r"[.\[\]]", p) for s in re.split(r"[-_]", seg) if s}
                 return bool({s[:4] for s in segs if len(s) >= 3} & stems)
             hits = sorted(hits, key=lambda h: (not _stem_ok(h[1]),))
+        # v0.8 STATUS-LEVEL claim->field binding for FLOAT claims -- the standing v0.4 debt that
+        # the v0.3 count-binding comment above names. A float that value-matches ONLY leaves whose
+        # PATH is unrelated to its context is not grounded, it is coincident: that is exactly how a
+        # mutated number keeps a VERIFIED status by landing on some other leaf. Unlike an
+        # obligation predicate this survives the mutation it exists to catch, because it reads
+        # receipt PATHS and doc CONTEXT, never the claim's value.
+        #
+        # DEMOTE-ONLY. It intercepts claims that would otherwise be VERIFIED and sends them to
+        # ABSTAIN; it can never produce or remove an UNGROUNDED, so no certificate can flip
+        # HELD->FAILED. That is invariant I1 -- asserted in the suite, deliberately not gated.
+        field_unbound_ref = None
+        if (V08_FLOAT_FIELD_BINDING and hits
+                and 0 < num["decimals"] <= V08_FIELD_BIND_MAX_DECIMALS):
+            i0 = max(0, num["line"] - 1 - V08_FIELD_BIND_PREV_LINES)
+            prev = [doc_lines[k].strip().replace("−", "-") for k in range(i0, num["line"] - 1)]
+            wstems = _ctx_stems(" ".join(prev + [bctx])[:800])
+            if not any(_path_stems(pth) & wstems for _, pth in hits):
+                # NAMEABLE: withhold the oath only where binding was POSSIBLE and failed. If the
+                # cited receipts carry NO path the sentence names, the claim is unbindable in
+                # principle (an acronym field like frozen_gates.CG1_SEP under a line reading
+                # "floor 0.10") and demoting it would be a pure coverage loss buying nothing.
+                if all_path_stems & wstems:
+                    field_unbound_ref = f"unbound-field:{hits[0][0]}:{hits[0][1]}"
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
         elif is_notation:
             status, ref = "ABSTAIN", "v05-notation"
         elif derived_ref:
             status, ref = "VERIFIED", derived_ref
+        elif field_unbound_ref:
+            # v0.8: the claim's value is in the receipts, but not in any field its context names.
+            # The oath is withheld, not inverted -- ABSTAIN names the gap and stays countable.
+            status, ref = "ABSTAIN", field_unbound_ref
         elif hits:
             status = "VERIFIED"
             ref = f"{hits[0][0]}:{hits[0][1]}"
