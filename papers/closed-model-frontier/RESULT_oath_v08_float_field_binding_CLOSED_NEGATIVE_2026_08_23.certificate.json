@@ -1,0 +1,498 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+  "document_sha256": "012e9811f1455317b1bacff053596e34f95e413a7f569c1a5dd3a5b0369b872d",
+  "receipts_sha256": {
+    "oath_v08_battery_result.json": "112c36d1e097e03520dfb05ab51e40b3d4f6b019d15ad98d4a94aa75d261b94b",
+    "oath_v08_g4_adjudication_result.json": "d41f69f21c3bd2dc165568d8a501601dc9879c001fa3b96c83e2d57e7ce64e5a"
+  },
+  "verifier_sha256": "852aa4d0c0cb4e2304267766cd49ccabd919e33f89fa3d706ffb4fabf89c34d9",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 19,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "1"
+    },
+    {
+      "line": 34,
+      "token": "3"
+    },
+    {
+      "line": 46,
+      "token": "1.056"
+    },
+    {
+      "line": 47,
+      "token": "137"
+    },
+    {
+      "line": 60,
+      "token": "107"
+    },
+    {
+      "line": 62,
+      "token": "107"
+    },
+    {
+      "line": 74,
+      "token": "9"
+    },
+    {
+      "line": 87,
+      "token": "16"
+    },
+    {
+      "line": 87,
+      "token": "0.616"
+    },
+    {
+      "line": 87,
+      "token": "2"
+    },
+    {
+      "line": 90,
+      "token": "0.624"
+    },
+    {
+      "line": 90,
+      "token": "0.664"
+    },
+    {
+      "line": 90,
+      "token": "0.749"
+    },
+    {
+      "line": 90,
+      "token": "0.682"
+    },
+    {
+      "line": 90,
+      "token": "2"
+    },
+    {
+      "line": 102,
+      "token": "3.48"
+    },
+    {
+      "line": 103,
+      "token": "1.18"
+    },
+    {
+      "line": 105,
+      "token": "1.02"
+    },
+    {
+      "line": 106,
+      "token": "7.72"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 14,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "A float claim at 1\u20133 fractional digits whose value-matches all sit on receipt paths unrelated to its",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "520",
+      "value": 520.0,
+      "decimals": 0,
+      "context": "| G1 | positive control (VOID condition) | ON below OFF | ON 520 against OFF 627 | OK |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G1 | positive control (VOID condition) | ON below OFF | ON 520 against OFF 627 | OK |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G1_positive_control.on"
+    },
+    {
+      "line": 28,
+      "token": "627",
+      "value": 627.0,
+      "decimals": 0,
+      "context": "| G1 | positive control (VOID condition) | ON below OFF | ON 520 against OFF 627 | OK |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G1 | positive control (VOID condition) | ON below OFF | ON 520 against OFF 627 | OK |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G1_positive_control.off"
+    },
+    {
+      "line": 29,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| G2 | benefit, decisive | at least 60 removed | 107 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G2 | benefit, decisive | at least 60 removed | 107 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G2_benefit.bar"
+    },
+    {
+      "line": 29,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "| G2 | benefit, decisive | at least 60 removed | 107 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G2 | benefit, decisive | at least 60 removed | 107 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G2_benefit.removed"
+    },
+    {
+      "line": 30,
+      "token": "1.5",
+      "value": 1.5,
+      "decimals": 1,
+      "context": "| G3 | cost ratio, regression guard | at most 1.5 | 1.056 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G3 | cost ratio, regression guard | at most 1.5 | 1.056 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G3_cost_ratio.bar"
+    },
+    {
+      "line": 30,
+      "token": "1.056",
+      "value": 1.056,
+      "decimals": 3,
+      "context": "| G3 | cost ratio, regression guard | at most 1.5 | 1.056 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G3 | cost ratio, regression guard | at most 1.5 | 1.056 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G3_cost_ratio.ratio"
+    },
+    {
+      "line": 31,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:census.reported.off.false_verified_by_decimals.4"
+    },
+    {
+      "line": 31,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G4_adjudication.n"
+    },
+    {
+      "line": 31,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_g4_adjudication_result.json:counts.GENUINE"
+    },
+    {
+      "line": 31,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G4 | adjudication, decisive | at most 12 of 40 genuine | **30 of 40** | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G4_adjudication.n"
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 | 0 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G5 | severability | 0 | 0 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G5_severability.ledger_differences"
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 | 0 | **PASS** |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G5 | severability | 0 | 0 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G5_severability.ledger_differences"
+    },
+    {
+      "line": 34,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| G6 | suite | green | 3 pre-existing failures, 0 regressions | see below |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G6 | suite | green | 3 pre-existing failures, 0 regressions | see below |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G6 | suite | green | 3 pre-existing failures, 0 regressions | see below |",
+      "binding_context": "| gate | role | bar | measured | verdict | | G6 | suite | green | 3 pre-existing failures, 0 regressions | see below |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G5_severability.bar"
+    },
+    {
+      "line": 44,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "At the gating seed the clause removes 107 affirmative false attestations, against a frozen bar of 60.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G2_benefit.removed"
+    },
+    {
+      "line": 45,
+      "token": "113",
+      "value": 113.0,
+      "decimals": 0,
+      "context": "At the reporting seed it removes 112. The clean corpus loses 113 verifications to ABSTAIN, a cost",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:I1_invariant_asserted_not_gated.transition_kinds.VERIFIED->ABSTAIN"
+    },
+    {
+      "line": 46,
+      "token": "1.056",
+      "value": 1.056,
+      "decimals": 3,
+      "context": "ratio of 1.056 against a bar of 1.5. Severability is exact: with the flag off the ledger is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "137",
+      "value": 137.0,
+      "decimals": 0,
+      "context": "status-identical to the pre-edit baseline across all 137 resolvable documents, 0 differences.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "status-identical to the pre-edit baseline across all 137 resolvable documents, 0 differences.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G5_severability.ledger_differences"
+    },
+    {
+      "line": 56,
+      "token": "2608",
+      "value": 2608.0,
+      "decimals": 0,
+      "context": "fails to accuse is identical \u2014 2608 at the gating seed, 2589 at the reporting seed. The clause",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:census.gating.off.silent_total"
+    },
+    {
+      "line": 56,
+      "token": "2589",
+      "value": 2589.0,
+      "decimals": 0,
+      "context": "fails to accuse is identical \u2014 2608 at the gating seed, 2589 at the reporting seed. The clause",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:census.reported.off.silent_total"
+    },
+    {
+      "line": 60,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "release that reported the 107 without this paragraph would launder its own coverage.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "A second honesty note on the same number: part of the 107 comes from the clause refusing to swear to",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 73,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| GENUINE-BINDING-DESTROYED | **30** | the leaf IS the claim's home; the demotion is a true coverage loss |",
+      "binding_context": "| class | n | meaning | | GENUINE-BINDING-DESTROYED | **30** | the leaf IS the claim's home; the demotion is a true coverage loss |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_g4_adjudication_result.json:counts.GENUINE"
+    },
+    {
+      "line": 74,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "| SPEC-CORRECTED | 9 | a bar / floor / threshold / design parameter that should already abstain |",
+      "binding_context": "| class | n | meaning | | SPEC-CORRECTED | 9 | a bar / floor / threshold / design parameter that should already abstain |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 75,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| COINCIDENCE-CORRECTED | 1 | the leaf records a different quantity; the claim was never earned |",
+      "binding_context": "| class | n | meaning | | COINCIDENCE-CORRECTED | 1 | the leaf records a different quantity; the claim was never earned |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_g4_adjudication_result.json:counts.COINCIDENCE"
+    },
+    {
+      "line": 87,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 87,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "| \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 87,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"whole-stack r=16: 0.616\u20130.626\" | `points[2].naive_relock_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| a table row under a \u03bb column | `lambdas[1]` |",
+      "binding_context": "| the sentence says | the receipt field is | | a table row under a \u03bb column | `lambdas[1]` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:V08_FIELD_BIND_PREV_LINES"
+    },
+    {
+      "line": 90,
+      "token": "0.624",
+      "value": 0.624,
+      "decimals": 3,
+      "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "0.664",
+      "value": 0.664,
+      "decimals": 3,
+      "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "0.749",
+      "value": 0.749,
+      "decimals": 3,
+      "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "0.682",
+      "value": 0.682,
+      "decimals": 3,
+      "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "binding_context": "| the sentence says | the receipt field is | | \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 102,
+      "token": "3.48",
+      "value": 3.48,
+      "decimals": 2,
+      "context": "| naked stem filter (the v0.6.2 test promoted) | 3.48 |",
+      "binding_context": "| family | cost per false attestation removed | | naked stem filter (the v0.6.2 test promoted) | 3.48 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 103,
+      "token": "1.18",
+      "value": 1.18,
+      "decimals": 2,
+      "context": "| KEEP-widenings (spec containers, generic leaves, receipt name) | 1.18 |",
+      "binding_context": "| family | cost per false attestation removed | | KEEP-widenings (spec containers, generic leaves, receipt name) | 1.18 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 104,
+      "token": "1.06",
+      "value": 1.06,
+      "decimals": 2,
+      "context": "| context window widened to the previous line | 1.06 |",
+      "binding_context": "| family | cost per false attestation removed | | context window widened to the previous line | 1.06 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_battery_result.json:G3_cost_ratio.ratio"
+    },
+    {
+      "line": 105,
+      "token": "1.02",
+      "value": 1.02,
+      "decimals": 2,
+      "context": "| window + NAMEABLE (the shipped candidate) | 1.02 |",
+      "binding_context": "| family | cost per false attestation removed | | window + NAMEABLE (the shipped candidate) | 1.02 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 106,
+      "token": "7.72",
+      "value": 7.72,
+      "decimals": 2,
+      "context": "| all-hits-array-indexed | 7.72 |",
+      "binding_context": "| family | cost per false attestation removed | | all-hits-array-indexed | 7.72 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

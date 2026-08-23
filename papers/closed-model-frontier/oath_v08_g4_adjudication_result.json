@@ -1,0 +1,420 @@
+{
+  "note": "G4 hand-adjudication RESULT for PREREG_oath_v08_float_field_binding_2026_08_23, scored against the frozen definition (GENUINE-BINDING-DESTROYED / COINCIDENCE-CORRECTED / SPEC-CORRECTED; ties resolve to GENUINE).",
+  "seed": 11,
+  "n": 40,
+  "roster_total": 115,
+  "counts": {
+    "GENUINE": 30,
+    "COINCIDENCE": 1,
+    "SPEC": 9
+  },
+  "genuine_binding_destroyed": 30,
+  "bar": "GENUINE-BINDING-DESTROYED <= 12 of 40",
+  "pass": false,
+  "kill_token": "V08_COVERAGE_DESTRUCTIVE",
+  "disclosed_prior": "the prereg recorded, before this ran, that two thirds to three quarters of demotions were expected to destroy a GENUINE binding",
+  "measured_genuine_share": 0.75,
+  "dominant_genuine_class": "measurement cells and table parameter columns whose receipt field is structural (lambdas[i], points[i].<metric>) while the prose names the quantity narratively",
+  "rows": [
+    {
+      "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "line": 107,
+      "token": "0.765",
+      "decimals": 3,
+      "ref": "unbound-field:b2_adaptive_erasure_result.json:points[3].private13_auroc",
+      "context": "within one SE of the survival threshold of 0.70 (0.7668, 0.765) \u2014 same thin-margin caveat as B2's",
+      "adjudication": "GENUINE",
+      "rationale": "points[3].private13_auroc holds the cell auroc the sentence prints"
+    },
+    {
+      "doc": "RESULT_oath_v05_precision_2026_07_13.md",
+      "line": 52,
+      "token": "0.56",
+      "decimals": 2,
+      "ref": "unbound-field:cycle38_v05_p4_recert.json:points[0].token",
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "adjudication": "GENUINE",
+      "rationale": "points[0].token records the very doc token the sentence is discussing"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 22,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:attack_sentiment_result.json:lambdas[1]",
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_oath_v05_precision_2026_07_13.md",
+      "line": 52,
+      "token": "0.50",
+      "decimals": 2,
+      "ref": "unbound-field:cycle38_v05_p4_recert.json:points[2].token",
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "adjudication": "GENUINE",
+      "rationale": "points[2].token records the doc token under discussion"
+    },
+    {
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 60,
+      "token": "0.05",
+      "decimals": 2,
+      "ref": "unbound-field:honesty_parity_confirm_result.json:median_parity_gap",
+      "context": "contribution (positive on two of the three seeds, ~0.05 AUROC, \u03bb-insensitive; sign-reversed on the other). The",
+      "adjudication": "GENUINE",
+      "rationale": "median_parity_gap 0.0516 is the ~0.05 parity gap the sentence names"
+    },
+    {
+      "doc": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+      "line": 55,
+      "token": "71.5",
+      "decimals": 1,
+      "ref": "unbound-field:b7_erasure_3b_result.json:points[0].train_minutes",
+      "context": "The scored result is a SINGLE-process run (all four cells, one launch, per-cell wall-clock 71.5 to",
+      "adjudication": "GENUINE",
+      "rationale": "points[0].train_minutes is the per-cell wall-clock the sentence prints"
+    },
+    {
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 22,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:sentiment_probe_parity_result.json:lambdas[1]",
+      "context": "| 1 | 3.0 | 0.729 | 0.828 | 0.859 | 0.099 | 0.032 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+      "line": 27,
+      "token": "0.624",
+      "decimals": 3,
+      "ref": "unbound-field:e3tprime_result.json:points[2].frozen_deployed_auroc",
+      "context": "only reached 0.624 / 0.664 and 0.749 / 0.682 \u2014 it left BOTH reads *more* legible, by a wider margin",
+      "adjudication": "GENUINE",
+      "rationale": "points[2].frozen_deployed_auroc is the reached auroc the sentence prints"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 22,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:attack_sentiment_wholestack_result_r64.json:lambdas[1]",
+      "context": "| 1 | 3.0 | 0.642 | **0.760** | 0.827 | 0.580 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "FINDING_coupling_resolution_2026_07_28.md",
+      "line": 63,
+      "token": "0.0",
+      "decimals": 1,
+      "ref": "unbound-field:coupling_resolution_result.json:frozen_gates.C2_RESIDUAL",
+      "context": "damage is broad across domains; and retiring the \"0.0\" figure from cycle 89 as resolution-limited.",
+      "adjudication": "COINCIDENCE",
+      "rationale": "claim is 0.0 (a retired cycle-89 figure); leaf frozen_gates.C2_RESIDUAL=0.05 is a different quantity, matched only by 1-dp tolerance"
+    },
+    {
+      "doc": "FINDING_coupling_resolution_2026_07_28.md",
+      "line": 19,
+      "token": "0.10",
+      "decimals": 2,
+      "ref": "unbound-field:coupling_resolution_result.json:frozen_gates.C1_DROP",
+      "context": "loses **0.3322222222222222** of general capability against the 0.10 floor \u2014 up from the",
+      "adjudication": "SPEC",
+      "rationale": "\"against the 0.10 floor\" is a bar; its receipt is the prereg"
+    },
+    {
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 37,
+      "token": "0.75",
+      "decimals": 2,
+      "ref": "unbound-field:honesty_parity_confirm_llama_result.json:points[2].naive_matched13_auroc",
+      "context": "Three cells (seed 0 both \u03bb; seed 2 \u03bb=3.0) fell below the 0.75 attacked-EVAL knowledge admissibility",
+      "adjudication": "SPEC",
+      "rationale": "0.75 is the attacked-EVAL admissibility threshold, not the cell auroc it matched"
+    },
+    {
+      "doc": "RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 99,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:honesty_parity_control_result.json:attack_subsample_indices[3]",
+      "context": "1. **Confirmation run** (new frozen prereg): \u22653 seeds + \u03bb {1.0, 3.0} + Llama-3.2-1B via this shared",
+      "adjudication": "SPEC",
+      "rationale": "3.0 is a design lambda in \"{1.0, 3.0}\"; leaf is an unrelated subsample index"
+    },
+    {
+      "doc": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "line": 20,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:e1_result.json:lambdas[1]",
+      "context": "| 0 | 3.0 | 0.835 | 0.833 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 56,
+      "token": "0.62",
+      "decimals": 2,
+      "ref": "unbound-field:attack_sentiment_wholestack_result.json:points[0].naive_relock_auroc",
+      "context": "(clean read 0.954) floors at ~0.62\u20130.65 even under a whole-stack r=64 attack. The stronger the",
+      "adjudication": "GENUINE",
+      "rationale": "points[0].naive_relock_auroc 0.6193 is the ~0.62 floor the sentence names"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 38,
+      "token": "0.616",
+      "decimals": 3,
+      "ref": "unbound-field:attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc",
+      "context": "- whole-stack r=16: 0.616\u20130.626",
+      "adjudication": "GENUINE",
+      "rationale": "points[2].naive_relock_auroc holds 0.616 exactly"
+    },
+    {
+      "doc": "RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 47,
+      "token": "0.02",
+      "decimals": 2,
+      "ref": "unbound-field:honesty_parity_control_result.json:points[1].delta_vs_canonical_naive",
+      "context": "outright (0.8037 \u2265 0.7217 - 0.02).",
+      "adjudication": "SPEC",
+      "rationale": "0.02 is the tolerance in the FAILS condition, not the delta it matched"
+    },
+    {
+      "doc": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+      "line": 34,
+      "token": "0.192",
+      "decimals": 3,
+      "ref": "unbound-field:c5_result.json:real.sub-001__sub-008.obs",
+      "context": "The pairs that failed while looking substantial \u2014 0.192 to 0.237 \u2014 carry surrogate p between",
+      "adjudication": "GENUINE",
+      "rationale": "real.sub-001__sub-008.obs is the failing pair observation the sentence prints"
+    },
+    {
+      "doc": "RESULT_oath_v05_precision_2026_07_13.md",
+      "line": 52,
+      "token": "0.16",
+      "decimals": 2,
+      "ref": "unbound-field:cycle38_v05_p4_recert.json:points[1].token",
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "adjudication": "GENUINE",
+      "rationale": "points[1].token records the doc token under discussion"
+    },
+    {
+      "doc": "FINDING_p1_third_quarantine_2026_08_08.md",
+      "line": 51,
+      "token": "0.30",
+      "decimals": 2,
+      "ref": "unbound-field:p1_redteam_audit.json:measured_by_red_team.rt3_own_prereg_G3_bar",
+      "context": "G2 demanded 0.85 and got 0.75. G3 demanded a 0.30 margin over the best constant and got 0.25.",
+      "adjudication": "SPEC",
+      "rationale": "0.30 is a pre-registered G3 margin bar; the leaf is literally named rt3_own_prereg_G3_bar"
+    },
+    {
+      "doc": "FINDING_conscience_loop_2026_07_24.md",
+      "line": 33,
+      "token": "0.10",
+      "decimals": 2,
+      "ref": "unbound-field:conscience_loop_result.json:frozen_gates.STUBBORN_COST",
+      "context": "- **AG2 FAILED.** RIGHT_PUSH: STYXX 0.7931 against a bar of BARE 0.9310 - 0.10 = 0.8310. Missed by",
+      "adjudication": "SPEC",
+      "rationale": "\"against a bar of BARE 0.9310 - 0.10\" is a bar; its receipt is the prereg"
+    },
+    {
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 15,
+      "token": "0.40",
+      "decimals": 2,
+      "ref": "unbound-field:buried_judge_result.json:design.sep_grid[6]",
+      "context": "from deaf (0.00) through the effective noise-margin gate (~0.255 at K=400) to strong (0.40), at",
+      "adjudication": "GENUINE",
+      "rationale": "design.sep_grid[6] is the swept separation grid point the sentence names"
+    },
+    {
+      "doc": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+      "line": 27,
+      "token": "0.749",
+      "decimals": 3,
+      "ref": "unbound-field:e3tprime_result.json:points[2].mimic_refit_auroc",
+      "context": "only reached 0.624 / 0.664 and 0.749 / 0.682 \u2014 it left BOTH reads *more* legible, by a wider margin",
+      "adjudication": "GENUINE",
+      "rationale": "points[2].mimic_refit_auroc is the reached auroc the sentence prints"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "line": 32,
+      "token": "0.616",
+      "decimals": 3,
+      "ref": "unbound-field:attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc",
+      "context": "three hundredths at the closest cell (0.616). Behavioral sentiment stayed 0.8182\u20130.8727 (all at or",
+      "adjudication": "GENUINE",
+      "rationale": "points[2].naive_relock_auroc holds 0.616 exactly"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 69,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:attack_sentiment_wholestack_result_r64.json:lambdas[1]",
+      "context": "gradient-checkpointed MICRO=8, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}. One 1.5B model, one probe/attack family;",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the lambda sweep the sentence lists"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 23,
+      "token": "0.513",
+      "decimals": 3,
+      "ref": "unbound-field:behavioral_sycophancy_b22_result.json:auc_text_deception",
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 - 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "adjudication": "GENUINE",
+      "rationale": "auc_text_deception 0.5128 is the value the margin arithmetic subtracts"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 29,
+      "token": "0.60",
+      "decimals": 2,
+      "ref": "unbound-field:attack_sentiment_wholestack_result_r64.json:points[1].frozen_stack_read",
+      "context": "**PARTIAL** (0.60 < naive \u2264 0.65, private \u2265 0.70).",
+      "adjudication": "SPEC",
+      "rationale": "0.60 is a PARTIAL band boundary, not the stack read it matched"
+    },
+    {
+      "doc": "FINDING_selective_escalation_2026_07_24.md",
+      "line": 69,
+      "token": "0.57",
+      "decimals": 2,
+      "ref": "unbound-field:selective_escalation_result.json:final.accuracy",
+      "context": "HG3 passed: the loop beats the stubborn baseline 0.57 vs 0.47. And nothing here touches cycle 68's",
+      "adjudication": "GENUINE",
+      "rationale": "final.accuracy holds 0.57, the loop accuracy the sentence prints"
+    },
+    {
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 28,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:honesty_parity_confirm_result.json:lambdas[1]",
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 22,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:attack_sentiment_wholestack_result.json:lambdas[1]",
+      "context": "| 1 | 3.0 | 0.621 | **0.750** | 0.864 | 0.610 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 20,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:sentiment_probe_parity_result.json:lambdas[1]",
+      "context": "| 0 | 3.0 | 0.781 | 0.843 | 0.893 | 0.063 | 0.049 |",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the table row lambda column"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 61,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:attack_sentiment_wholestack_result.json:lambdas[1]",
+      "context": "steps, gradient-checkpointed MICRO=8, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}. The finding is \"a whole-stack r=16",
+      "adjudication": "GENUINE",
+      "rationale": "lambdas[1] is the home of the lambda sweep the sentence lists"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 50,
+      "token": "0.29",
+      "decimals": 2,
+      "ref": "unbound-field:council_grounding_result.json:C3_eswatini.g_pool_true_Lobamba",
+      "context": "The dissent did narrow the inversion (single-model was 0.09 vs 0.80 \u2192 council 0.29",
+      "adjudication": "GENUINE",
+      "rationale": "C3_eswatini.g_pool_true_Lobamba is the council value the sentence prints"
+    },
+    {
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 39,
+      "token": "0.642",
+      "decimals": 3,
+      "ref": "unbound-field:attack_sentiment_wholestack_result_r64.json:points[3].naive_relock_auroc",
+      "context": "- **whole-stack r=64: 0.642\u20130.651**",
+      "adjudication": "GENUINE",
+      "rationale": "points[3].naive_relock_auroc is the r=64 read the sentence prints"
+    },
+    {
+      "doc": "DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+      "line": 44,
+      "token": "0.80",
+      "decimals": 2,
+      "ref": "unbound-field:cycle18_mutant_battery_result.json:d1_bar_analogue",
+      "context": "certificate detects a single corrupted digit at 0.216, not the 0.80 the validated corpus supports.",
+      "adjudication": "SPEC",
+      "rationale": "0.80 is a bar; the leaf is literally named d1_bar_analogue"
+    },
+    {
+      "doc": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+      "line": 27,
+      "token": "0.682",
+      "decimals": 3,
+      "ref": "unbound-field:e3tprime_result.json:points[3].mimic_refit_auroc",
+      "context": "only reached 0.624 / 0.664 and 0.749 / 0.682 \u2014 it left BOTH reads *more* legible, by a wider margin",
+      "adjudication": "GENUINE",
+      "rationale": "points[3].mimic_refit_auroc is the reached auroc the sentence prints"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 37,
+      "token": "0.93",
+      "decimals": 2,
+      "ref": "unbound-field:b24_controls_addendum.json:first_char_firewall_best.auroc",
+      "context": "An answer-abstract length/format code is still decodable *within* intent strata at L29 (0.82/0.93). The",
+      "adjudication": "GENUINE",
+      "rationale": "first_char_firewall_best.auroc 0.9349 is the 0.93 the sentence prints"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 31,
+      "token": "0.838",
+      "decimals": 3,
+      "ref": "unbound-field:b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc",
+      "context": "pre-unembedding, but *not* strictly pre-commit. The only strictly-pre-commit number is POS-B's 0.838,",
+      "adjudication": "GENUINE",
+      "rationale": "doc_cited_summaries.posB_best_groupinv_auroc holds 0.838 exactly"
+    },
+    {
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 26,
+      "token": "0.87",
+      "decimals": 2,
+      "ref": "unbound-field:adversarial_curve_v3_result.json:points[1].refit_mlp",
+      "context": "suppressed answer **off-band at layer 27** (0.60\u21920.87), at or above the cave-only reference. Attacking the",
+      "adjudication": "GENUINE",
+      "rationale": "points[1].refit_mlp holds 0.87, the off-band recovery the sentence prints"
+    },
+    {
+      "doc": "RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 82,
+      "token": "3.0",
+      "decimals": 1,
+      "ref": "unbound-field:honesty_parity_control_result.json:attack_subsample_indices[3]",
+      "context": "\u22653 seeds + a \u03bb sweep {1.0, 3.0} + the Llama-3.2-1B family, scored through this same shared code path.",
+      "adjudication": "SPEC",
+      "rationale": "3.0 is a design lambda in the owed-run spec; leaf is an unrelated subsample index"
+    }
+  ]
+}
