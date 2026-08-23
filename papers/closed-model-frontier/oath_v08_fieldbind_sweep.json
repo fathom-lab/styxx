@@ -1,0 +1,231 @@
+{
+  "note": "predicate sweep for PREREG_oath_v08_float_field_binding_2026_08_23",
+  "clean_float_verified_with_hits": 3037,
+  "float_false_verified_mutants": 330,
+  "sweep": [
+    {
+      "predicate": "W1_stem_only",
+      "dec_max": null,
+      "killed": 165,
+      "demoted": 575,
+      "would_accuse": 203,
+      "cost_per_kill": 3.48
+    },
+    {
+      "predicate": "W1_stem_only",
+      "dec_max": 4,
+      "killed": 164,
+      "demoted": 499,
+      "would_accuse": 127,
+      "cost_per_kill": 3.04
+    },
+    {
+      "predicate": "W1_stem_only",
+      "dec_max": 3,
+      "killed": 155,
+      "demoted": 257,
+      "would_accuse": 83,
+      "cost_per_kill": 1.66
+    },
+    {
+      "predicate": "W1_stem_only",
+      "dec_max": 2,
+      "killed": 126,
+      "demoted": 170,
+      "would_accuse": 60,
+      "cost_per_kill": 1.35
+    },
+    {
+      "predicate": "W2_+spec_container",
+      "dec_max": null,
+      "killed": 159,
+      "demoted": 560,
+      "would_accuse": 197,
+      "cost_per_kill": 3.52
+    },
+    {
+      "predicate": "W2_+spec_container",
+      "dec_max": 4,
+      "killed": 158,
+      "demoted": 484,
+      "would_accuse": 121,
+      "cost_per_kill": 3.06
+    },
+    {
+      "predicate": "W2_+spec_container",
+      "dec_max": 3,
+      "killed": 149,
+      "demoted": 243,
+      "would_accuse": 77,
+      "cost_per_kill": 1.63
+    },
+    {
+      "predicate": "W2_+spec_container",
+      "dec_max": 2,
+      "killed": 120,
+      "demoted": 156,
+      "would_accuse": 54,
+      "cost_per_kill": 1.3
+    },
+    {
+      "predicate": "W3_+spec_container_and_prose",
+      "dec_max": null,
+      "killed": 163,
+      "demoted": 563,
+      "would_accuse": 197,
+      "cost_per_kill": 3.45
+    },
+    {
+      "predicate": "W3_+spec_container_and_prose",
+      "dec_max": 4,
+      "killed": 162,
+      "demoted": 487,
+      "would_accuse": 121,
+      "cost_per_kill": 3.01
+    },
+    {
+      "predicate": "W3_+spec_container_and_prose",
+      "dec_max": 3,
+      "killed": 153,
+      "demoted": 245,
+      "would_accuse": 77,
+      "cost_per_kill": 1.6
+    },
+    {
+      "predicate": "W3_+spec_container_and_prose",
+      "dec_max": 2,
+      "killed": 124,
+      "demoted": 158,
+      "would_accuse": 54,
+      "cost_per_kill": 1.27
+    },
+    {
+      "predicate": "W4_+generic_leaf",
+      "dec_max": null,
+      "killed": 136,
+      "demoted": 505,
+      "would_accuse": 180,
+      "cost_per_kill": 3.71
+    },
+    {
+      "predicate": "W4_+generic_leaf",
+      "dec_max": 4,
+      "killed": 135,
+      "demoted": 435,
+      "would_accuse": 110,
+      "cost_per_kill": 3.22
+    },
+    {
+      "predicate": "W4_+generic_leaf",
+      "dec_max": 3,
+      "killed": 126,
+      "demoted": 211,
+      "would_accuse": 69,
+      "cost_per_kill": 1.67
+    },
+    {
+      "predicate": "W4_+generic_leaf",
+      "dec_max": 2,
+      "killed": 100,
+      "demoted": 128,
+      "would_accuse": 46,
+      "cost_per_kill": 1.28
+    },
+    {
+      "predicate": "W5_+spec_prose+generic_leaf",
+      "dec_max": null,
+      "killed": 134,
+      "demoted": 493,
+      "would_accuse": 174,
+      "cost_per_kill": 3.68
+    },
+    {
+      "predicate": "W5_+spec_prose+generic_leaf",
+      "dec_max": 4,
+      "killed": 133,
+      "demoted": 423,
+      "would_accuse": 104,
+      "cost_per_kill": 3.18
+    },
+    {
+      "predicate": "W5_+spec_prose+generic_leaf",
+      "dec_max": 3,
+      "killed": 124,
+      "demoted": 199,
+      "would_accuse": 63,
+      "cost_per_kill": 1.6
+    },
+    {
+      "predicate": "W5_+spec_prose+generic_leaf",
+      "dec_max": 2,
+      "killed": 98,
+      "demoted": 116,
+      "would_accuse": 40,
+      "cost_per_kill": 1.18
+    },
+    {
+      "predicate": "W6_+spec_container+generic_leaf",
+      "dec_max": null,
+      "killed": 131,
+      "demoted": 490,
+      "would_accuse": 174,
+      "cost_per_kill": 3.74
+    },
+    {
+      "predicate": "W6_+spec_container+generic_leaf",
+      "dec_max": 4,
+      "killed": 130,
+      "demoted": 420,
+      "would_accuse": 104,
+      "cost_per_kill": 3.23
+    },
+    {
+      "predicate": "W6_+spec_container+generic_leaf",
+      "dec_max": 3,
+      "killed": 121,
+      "demoted": 197,
+      "would_accuse": 63,
+      "cost_per_kill": 1.63
+    },
+    {
+      "predicate": "W6_+spec_container+generic_leaf",
+      "dec_max": 2,
+      "killed": 95,
+      "demoted": 114,
+      "would_accuse": 40,
+      "cost_per_kill": 1.2
+    },
+    {
+      "predicate": "W7_+spec_container+generic+receipt",
+      "dec_max": null,
+      "killed": 107,
+      "demoted": 416,
+      "would_accuse": 149,
+      "cost_per_kill": 3.89
+    },
+    {
+      "predicate": "W7_+spec_container+generic+receipt",
+      "dec_max": 4,
+      "killed": 106,
+      "demoted": 358,
+      "would_accuse": 91,
+      "cost_per_kill": 3.38
+    },
+    {
+      "predicate": "W7_+spec_container+generic+receipt",
+      "dec_max": 3,
+      "killed": 99,
+      "demoted": 173,
+      "would_accuse": 57,
+      "cost_per_kill": 1.75
+    },
+    {
+      "predicate": "W7_+spec_container+generic+receipt",
+      "dec_max": 2,
+      "killed": 79,
+      "demoted": 98,
+      "would_accuse": 35,
+      "cost_per_kill": 1.24
+    }
+  ]
+}

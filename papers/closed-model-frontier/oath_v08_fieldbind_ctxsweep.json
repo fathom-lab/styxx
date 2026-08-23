@@ -1,0 +1,231 @@
+{
+  "note": "context-window sweep for PREREG_oath_v08_float_field_binding_2026_08_23",
+  "clean_float_verified_with_hits": 3037,
+  "float_false_verified_mutants": 330,
+  "sweep": [
+    {
+      "window": "line",
+      "dec_max": null,
+      "killed": 165,
+      "demoted": 575,
+      "would_accuse": 203,
+      "cost_per_kill": 3.48
+    },
+    {
+      "window": "line",
+      "dec_max": 4,
+      "killed": 164,
+      "demoted": 499,
+      "would_accuse": 127,
+      "cost_per_kill": 3.04
+    },
+    {
+      "window": "line",
+      "dec_max": 3,
+      "killed": 155,
+      "demoted": 257,
+      "would_accuse": 83,
+      "cost_per_kill": 1.66
+    },
+    {
+      "window": "line",
+      "dec_max": 2,
+      "killed": 126,
+      "demoted": 170,
+      "would_accuse": 60,
+      "cost_per_kill": 1.35
+    },
+    {
+      "window": "prev1",
+      "dec_max": null,
+      "killed": 123,
+      "demoted": 242,
+      "would_accuse": 77,
+      "cost_per_kill": 1.97
+    },
+    {
+      "window": "prev1",
+      "dec_max": 4,
+      "killed": 122,
+      "demoted": 219,
+      "would_accuse": 54,
+      "cost_per_kill": 1.8
+    },
+    {
+      "window": "prev1",
+      "dec_max": 3,
+      "killed": 116,
+      "demoted": 123,
+      "would_accuse": 42,
+      "cost_per_kill": 1.06
+    },
+    {
+      "window": "prev1",
+      "dec_max": 2,
+      "killed": 91,
+      "demoted": 96,
+      "would_accuse": 32,
+      "cost_per_kill": 1.05
+    },
+    {
+      "window": "prev2",
+      "dec_max": null,
+      "killed": 103,
+      "demoted": 195,
+      "would_accuse": 56,
+      "cost_per_kill": 1.89
+    },
+    {
+      "window": "prev2",
+      "dec_max": 4,
+      "killed": 103,
+      "demoted": 180,
+      "would_accuse": 41,
+      "cost_per_kill": 1.75
+    },
+    {
+      "window": "prev2",
+      "dec_max": 3,
+      "killed": 97,
+      "demoted": 101,
+      "would_accuse": 32,
+      "cost_per_kill": 1.04
+    },
+    {
+      "window": "prev2",
+      "dec_max": 2,
+      "killed": 75,
+      "demoted": 86,
+      "would_accuse": 29,
+      "cost_per_kill": 1.15
+    },
+    {
+      "window": "prev3",
+      "dec_max": null,
+      "killed": 95,
+      "demoted": 176,
+      "would_accuse": 53,
+      "cost_per_kill": 1.85
+    },
+    {
+      "window": "prev3",
+      "dec_max": 4,
+      "killed": 95,
+      "demoted": 162,
+      "would_accuse": 39,
+      "cost_per_kill": 1.71
+    },
+    {
+      "window": "prev3",
+      "dec_max": 3,
+      "killed": 90,
+      "demoted": 94,
+      "would_accuse": 30,
+      "cost_per_kill": 1.04
+    },
+    {
+      "window": "prev3",
+      "dec_max": 2,
+      "killed": 70,
+      "demoted": 81,
+      "would_accuse": 28,
+      "cost_per_kill": 1.16
+    },
+    {
+      "window": "para",
+      "dec_max": null,
+      "killed": 88,
+      "demoted": 195,
+      "would_accuse": 62,
+      "cost_per_kill": 2.22
+    },
+    {
+      "window": "para",
+      "dec_max": 4,
+      "killed": 88,
+      "demoted": 177,
+      "would_accuse": 44,
+      "cost_per_kill": 2.01
+    },
+    {
+      "window": "para",
+      "dec_max": 3,
+      "killed": 84,
+      "demoted": 96,
+      "would_accuse": 31,
+      "cost_per_kill": 1.14
+    },
+    {
+      "window": "para",
+      "dec_max": 2,
+      "killed": 67,
+      "demoted": 81,
+      "would_accuse": 29,
+      "cost_per_kill": 1.21
+    },
+    {
+      "window": "head",
+      "dec_max": null,
+      "killed": 153,
+      "demoted": 506,
+      "would_accuse": 176,
+      "cost_per_kill": 3.31
+    },
+    {
+      "window": "head",
+      "dec_max": 4,
+      "killed": 152,
+      "demoted": 439,
+      "would_accuse": 109,
+      "cost_per_kill": 2.89
+    },
+    {
+      "window": "head",
+      "dec_max": 3,
+      "killed": 143,
+      "demoted": 223,
+      "would_accuse": 68,
+      "cost_per_kill": 1.56
+    },
+    {
+      "window": "head",
+      "dec_max": 2,
+      "killed": 117,
+      "demoted": 152,
+      "would_accuse": 52,
+      "cost_per_kill": 1.3
+    },
+    {
+      "window": "para+head",
+      "dec_max": null,
+      "killed": 83,
+      "demoted": 184,
+      "would_accuse": 57,
+      "cost_per_kill": 2.22
+    },
+    {
+      "window": "para+head",
+      "dec_max": 4,
+      "killed": 83,
+      "demoted": 167,
+      "would_accuse": 40,
+      "cost_per_kill": 2.01
+    },
+    {
+      "window": "para+head",
+      "dec_max": 3,
+      "killed": 79,
+      "demoted": 90,
+      "would_accuse": 27,
+      "cost_per_kill": 1.14
+    },
+    {
+      "window": "para+head",
+      "dec_max": 2,
+      "killed": 63,
+      "demoted": 75,
+      "would_accuse": 25,
+      "cost_per_kill": 1.19
+    }
+  ]
+}
