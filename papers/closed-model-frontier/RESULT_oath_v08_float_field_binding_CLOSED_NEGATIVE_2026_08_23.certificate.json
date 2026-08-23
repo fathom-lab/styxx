@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
-  "document_sha256": "012e9811f1455317b1bacff053596e34f95e413a7f569c1a5dd3a5b0369b872d",
+  "document_sha256": "37b18b29c111428589fc99cad09c42205c7fa3cdd4e565463b2df76ba4acd22c",
   "receipts_sha256": {
     "oath_v08_battery_result.json": "112c36d1e097e03520dfb05ab51e40b3d4f6b019d15ad98d4a94aa75d261b94b",
     "oath_v08_g4_adjudication_result.json": "d41f69f21c3bd2dc165568d8a501601dc9879c001fa3b96c83e2d57e7ce64e5a"
@@ -10,7 +10,7 @@
   "verifier_sha256": "852aa4d0c0cb4e2304267766cd49ccabd919e33f89fa3d706ffb4fabf89c34d9",
   "counts": {
     "VERIFIED": 22,
-    "ABSTAIN": 19,
+    "ABSTAIN": 21,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -91,6 +91,14 @@
     {
       "line": 106,
       "token": "7.72"
+    },
+    {
+      "line": 143,
+      "token": "7"
+    },
+    {
+      "line": 143,
+      "token": "20"
     }
   ],
   "ledger": [
@@ -491,6 +499,24 @@
       "decimals": 2,
       "context": "| all-hits-array-indexed | 7.72 |",
       "binding_context": "| family | cost per false attestation removed | | all-hits-array-indexed | 7.72 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 143,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "reader thread and the case silently left the benchmark as \"unavailable\" \u2014 7 of 20 cases lost, which",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 143,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "reader thread and the case silently left the benchmark as \"unavailable\" \u2014 7 of 20 cases lost, which",
       "status": "ABSTAIN",
       "receipt_ref": null
     }

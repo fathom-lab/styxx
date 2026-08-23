@@ -135,8 +135,19 @@ introduces zero regressions; every other test passes, including the nine new one
 reported as missed rather than reinterpreted, because bars do not move after the prereg commit — and
 because the outcome does not turn on it: G4 already decided this.
 
-The version-provenance failure is a stale local install and is environmental. The ledger failure is
-real repository state and is repaired in this cycle.
+**All three were diagnosed and repaired inside this cycle, and the suite now passes with zero
+failures.** The ledger failure was stale repository state, rebuilt from `build_ledger.py`. The
+version-provenance failure was a stale editable install whose metadata lagged the source, refreshed.
+The third was a real defect and the more interesting one: `benchmarks/silent_pass.Case.pre_fix_source`
+decoded `git show` output with the platform locale, so on Windows an invalid byte crashed subprocess's
+reader thread and the case silently left the benchmark as "unavailable" — 7 of 20 cases lost, which
+then surfaced as a detector miss against a subtype bar the truncated corpus could not reach. The
+benchmark that exists to document absent measurements surfaced as results was committing that error
+in its own loader.
+
+The gate is nonetheless recorded as MISSED, because it was missed when the battery ran and bars do
+not move after the prereg commit. The repair is reported here as what it is — work done after the
+measurement, not a re-score of it.
 
 ## What this hands forward
 
