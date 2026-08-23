@@ -1,0 +1,476 @@
+{
+  "prereg": "PREREG_oath_v09_is_spec_json_idiom_2026_08_23.md",
+  "verifier_sha256": "274ece8fbaf71c6f316cee7eb7ce1609db0462fee829a8a4786924d629d61b1a",
+  "baseline_verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+  "census_verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+  "shipped_flags": {
+    "V09_IS_SPEC_JSON_IDIOM": true,
+    "V09_IS_SPEC_BAR_NOUN": false
+  },
+  "documents": 137,
+  "adjudication_frame_n": 146,
+  "bar_noun_roster_n": 38,
+  "gates": {
+    "G1_recall": {
+      "role": "RECALL (gated, two-armed)",
+      "on": 145,
+      "off": 1,
+      "bar_on": 140,
+      "bar_off": 2,
+      "on_exceeds_off": true,
+      "pass": true
+    },
+    "G2_adjudicated_precision": {
+      "role": "PRECISION (gated, hand-adjudicated, ties against the clause)",
+      "bars_abstained": 25,
+      "n": 25,
+      "bar": 24,
+      "false_abstentions": [],
+      "unadjudicated": [],
+      "rows": [
+        {
+          "key": "PREDICTION_h1_human_islands_2026_08_06.md|58|0.50",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b34v3_labelfree_read_2026_08_03.md|43|0.0286",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b35_seed_stability_2026_08_03.md|36|0.143",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b38_legibility_cliff_2026_08_04.md|37|0.30",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b40_anisotropy_signature_2026_08_05.md|35|0.0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b41_bridge_2026_08_05.md|42|0.30",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b42_bridge_dose_2026_08_05.md|28|0.15",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b47_eight_minds_2026_08_06.md|35|0.0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b48_legibility_matrix_ten_2026_08_06.md|36|0.0208",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_b49_amplitude_reaudit_2026_08_07.md|25|1",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_c4_signed_statistic_2026_08_07.md|14|0.80",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_c4_signed_statistic_2026_08_07.md|15|0.10",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_c6_derived_bar_2026_08_13.md|86|0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_e1_effective_n_bakeoff_2026_08_08.md|38|0.20",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_m1_magnetochemistry_2026_08_05.md|59|5.0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_oath_v07_precision_obligation_2026_08_22.md|76|0.00648",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_p1_power_refusal_2026_08_08.md|46|3",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_protocol_power_basis_2026_08_07.md|32|33",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_protocol_v4_composition_2026_08_09.md|44|1.0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_protocol_v4_composition_2026_08_09.md|53|0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_r1_room_legibility_2026_08_05.md|54|0.10",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_r1v2_room_coupling_2026_08_06.md|29|0.01",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_voice_lora_honesty_2026_08_11.md|74|0",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_w1v2_water_imprint_2026_08_05.md|70|9",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        },
+        {
+          "key": "PREREG_w1v3_water_arms_2026_08_05.md|54|1",
+          "adjudication": "BAR",
+          "abstained_by_clause": true
+        }
+      ],
+      "pass": true
+    },
+    "G3_coverage_bound": {
+      "role": "COVERAGE (gated) \u2014 refuses the metric that rewards silence",
+      "verified_to_abstain": 0,
+      "bar": 2,
+      "keys": [],
+      "pass": true
+    },
+    "G4_no_silenced_accusation": {
+      "role": "SAFETY (gated)",
+      "ungrounded_silenced": 0,
+      "failed_to_held_flips": [],
+      "new_ungrounded_I2": [],
+      "bar": 0,
+      "pass": true
+    },
+    "G5_severability": {
+      "role": "SEVERABILITY (gated)",
+      "ledger_differences": 0,
+      "bar": 0,
+      "examples": [],
+      "pass": true
+    },
+    "G6_catch_preservation": {
+      "role": "CONTROL (gated; decides V09_IS_SPEC_BAR_NOUN) + POSITIVE CONTROL for G3/G4",
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "per_seed": [
+        {
+          "seed": 1,
+          "off": {
+            "seed": 1,
+            "caught": 22,
+            "false_attested": 14,
+            "abstained": 2,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 14,
+              "UNGROUNDED": 22,
+              "ABSTAIN": 2
+            }
+          },
+          "on": {
+            "seed": 1,
+            "caught": 0,
+            "false_attested": 0,
+            "abstained": 38,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 38
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 2,
+          "off": {
+            "seed": 2,
+            "caught": 21,
+            "false_attested": 16,
+            "abstained": 1,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 16,
+              "UNGROUNDED": 21,
+              "ABSTAIN": 1
+            }
+          },
+          "on": {
+            "seed": 2,
+            "caught": 0,
+            "false_attested": 0,
+            "abstained": 38,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 38
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 3,
+          "off": {
+            "seed": 3,
+            "caught": 17,
+            "false_attested": 18,
+            "abstained": 3,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 18,
+              "UNGROUNDED": 17,
+              "ABSTAIN": 3
+            }
+          },
+          "on": {
+            "seed": 3,
+            "caught": 0,
+            "false_attested": 1,
+            "abstained": 37,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 37,
+              "VERIFIED": 1
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 4,
+          "off": {
+            "seed": 4,
+            "caught": 17,
+            "false_attested": 20,
+            "abstained": 1,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 20,
+              "UNGROUNDED": 17,
+              "ABSTAIN": 1
+            }
+          },
+          "on": {
+            "seed": 4,
+            "caught": 0,
+            "false_attested": 1,
+            "abstained": 37,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 37,
+              "VERIFIED": 1
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 5,
+          "off": {
+            "seed": 5,
+            "caught": 22,
+            "false_attested": 14,
+            "abstained": 2,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 14,
+              "UNGROUNDED": 22,
+              "ABSTAIN": 2
+            }
+          },
+          "on": {
+            "seed": 5,
+            "caught": 0,
+            "false_attested": 0,
+            "abstained": 38,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 38
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 6,
+          "off": {
+            "seed": 6,
+            "caught": 16,
+            "false_attested": 20,
+            "abstained": 2,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 20,
+              "UNGROUNDED": 16,
+              "ABSTAIN": 2
+            }
+          },
+          "on": {
+            "seed": 6,
+            "caught": 0,
+            "false_attested": 0,
+            "abstained": 38,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 38
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 7,
+          "off": {
+            "seed": 7,
+            "caught": 19,
+            "false_attested": 17,
+            "abstained": 2,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 17,
+              "UNGROUNDED": 19,
+              "ABSTAIN": 2
+            }
+          },
+          "on": {
+            "seed": 7,
+            "caught": 0,
+            "false_attested": 1,
+            "abstained": 37,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 37,
+              "VERIFIED": 1
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 8,
+          "off": {
+            "seed": 8,
+            "caught": 20,
+            "false_attested": 17,
+            "abstained": 1,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 17,
+              "UNGROUNDED": 20,
+              "ABSTAIN": 1
+            }
+          },
+          "on": {
+            "seed": 8,
+            "caught": 0,
+            "false_attested": 0,
+            "abstained": 38,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 38
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 9,
+          "off": {
+            "seed": 9,
+            "caught": 16,
+            "false_attested": 20,
+            "abstained": 2,
+            "did_not_land": 0,
+            "outcomes": {
+              "VERIFIED": 20,
+              "UNGROUNDED": 16,
+              "ABSTAIN": 2
+            }
+          },
+          "on": {
+            "seed": 9,
+            "caught": 0,
+            "false_attested": 1,
+            "abstained": 37,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 37,
+              "VERIFIED": 1
+            }
+          },
+          "pass": false
+        },
+        {
+          "seed": 10,
+          "off": {
+            "seed": 10,
+            "caught": 17,
+            "false_attested": 18,
+            "abstained": 3,
+            "did_not_land": 0,
+            "outcomes": {
+              "UNGROUNDED": 17,
+              "VERIFIED": 18,
+              "ABSTAIN": 3
+            }
+          },
+          "on": {
+            "seed": 10,
+            "caught": 0,
+            "false_attested": 1,
+            "abstained": 37,
+            "did_not_land": 0,
+            "outcomes": {
+              "ABSTAIN": 37,
+              "VERIFIED": 1
+            }
+          },
+          "pass": false
+        }
+      ],
+      "catches_lost_range": [
+        16,
+        22
+      ],
+      "mean_catches_lost": 18.7,
+      "expected_to_fail": true,
+      "pass": false
+    }
+  },
+  "asserted_invariants_not_gated": {
+    "I1": "an abstained token stays abstained under one-digit mutation \u2014 the predicate reads context and the substitution preserves token length. 0 false attestations on the reached class is an IDENTITY, not a measurement.",
+    "I2": "is_spec yields only ABSTAIN, so no clause creates an UNGROUNDED token and no certificate flips OATH-HELD -> OATH-FAILED. Measured above as new_ungrounded_I2 = 0."
+  },
+  "elapsed_s": 34.2
+}
