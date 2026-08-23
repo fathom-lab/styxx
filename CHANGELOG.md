@@ -7,6 +7,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.46.0] — 2026-08-23 — the v0.4 float-binding debt, built and closed NEGATIVE
+
+`styxx/certify.py` has carried a note at the v0.3 count-binding site since July:
+*"Floats keep value-only matching (v0.4 owes them full claim→field binding)."* An
+INTEGER claim's value-matches are filtered to leaves whose receipt PATH shares a
+word stem with the claim's line; floats were exempt. v0.6.2 applied the same test
+to floats but attribution-only — it could reorder matches, never change a status.
+
+This release builds the promotion, measures it, and does **not** ship it.
+
+**The target.** Of the claims the verifier certifies VERIFIED, mutating one
+significant digit leaves 604 still VERIFIED — matched to an unrelated receipt
+leaf. That is affirmative false attestation, and no obligation rule can reach it:
+obligation decides whether a claim *must* match, and these already do. Only field
+binding can. The reachable ceiling was stated before the work began: 330, not 604,
+because the other 274 are integers that pass through the shipped count-binding
+filter and false-verify anyway.
+
+**What it scored.** Demote-only (VERIFIED → ABSTAIN, never UNGROUNDED), floats at
+1–3 decimals, binding window widened one line, and demoting only where the
+receipts carry a path the sentence names. It cleared every mechanical bar: 107
+false attestations removed at a fresh gating seed against a bar of 60, cost ratio
+1.056 against 1.5, severability exact at 0 ledger differences, and its demote-only
+invariant held exactly — UNGROUNDED and OATH-HELD counts unchanged, every
+transition VERIFIED → ABSTAIN.
+
+**Why it still does not ship.** Forty demotions were hand-scored against a frozen
+definition with ties resolved against the clause. **30 of 40 destroyed a GENUINE
+binding** — the leaf really was the claim's home — against a bar of 12. Kill token
+`V08_COVERAGE_DESTRUCTIVE`. The prereg predicted two thirds to three quarters
+before the adjudication ran, so this is a pre-registered negative.
+
+The structural reason is the finding: prose names a measurement narratively
+("whole-stack r=16: 0.616–0.626") while the field that holds it is structural
+(`points[2].naive_relock_auroc`). Path-stem overlap has no purchase on that, and
+the tampered claim sits in the same sentence as the honest one and inherits its
+vocabulary. Five design families were swept before the edit and none beats parity
+— the instrument buys about one honest demotion per false attestation removed, at
+best. An accusing variant was rejected outright: every operating point of every
+family would have put dozens of new UNGROUNDED tokens on honest documents.
+
+**The residual this release publishes.** The clause moves the silent-pass residual
+by nothing at all. In both arms the number of mutants the verifier fails to accuse
+is identical — 2608 at the gating seed. What the clause changes is the
+*composition*: false attestation becomes named abstention. Reporting the 107
+without that sentence would launder the coverage. The residual stands where 7.45.0
+left it, and the false-attestation channel remains open.
+
+`V08_FLOAT_FIELD_BINDING = False`, kept in tree behind its flag with the
+measurement in the source comment (as `V05_APPROX_NOTATION` was after its
+severability drop) so the negative is re-runnable and not re-attempted. Nine
+regression tests lock the default OFF and assert the invariant. The v0.4 debt is
+**CLOSED_NEGATIVE** and is no longer carried as owed work.
+
+Prereg `PREREG_oath_v08_float_field_binding_2026_08_23.md`, RESULT
+`RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md` (OATH-HELD).
+
+Next leads, in order: `is_spec` JSON-idiom recall (bars written as `{"op": "<=",
+"value": ...}` never fire the spec rule and value-match their own `frozen_gates.*`
+leaf — 9 of the 40 adjudicated demotions were this class), then the 274 integer
+false-attestations that count-binding does not stop.
+
+---
+
 ## [Unreleased] — lint was red, so the test suite had not run in CI for weeks
 
 The `tests` workflow gates the test step behind `ruff check styxx`. Lint had been
