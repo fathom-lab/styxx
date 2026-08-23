@@ -279,7 +279,12 @@ def test_i2_both_v09_clauses_are_demote_only(tmp_path):
     """I2 (asserted invariant, NOT gated): is_spec yields only ABSTAIN, so a clause can only MOVE
     a token INTO abstention. The set of UNGROUNDED tokens with a clause ON is a subset of the set
     with it OFF, so no clause creates an accusation and no certificate flips HELD -> FAILED."""
-    import styxx.certify as C
+    # importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is
+    # the provenance FUNCTION by convention, and `import a.b as c` resolves getattr(a, 'b')
+    # BEFORE sys.modules -- so the plain form binds the function once any earlier test has
+    # touched that attribute, and every flag write below would land on the wrong object.
+    import importlib
+    C = importlib.import_module("styxx.certify")
     line = 'the run accuracy clears the 0.10 floor and {"G1": {"op": ">=", "value": 0.75}} froze.'
     rec = {"unrelated": 0.99}
     before = C.V09_IS_SPEC_BAR_NOUN
@@ -302,7 +307,12 @@ def test_g6_in_miniature_the_bar_noun_control_converts_a_catch_into_silence(tmp_
     'clears the 0.10 floor' sits on a BOUND line, so the shipped verifier ACCUSES the doctored bar.
     Turning the control clause on replaces that accusation with an abstention: the tamper metric
     improves because the verifier stopped looking, which is exactly the trade G6 refused."""
-    import styxx.certify as C
+    # importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is
+    # the provenance FUNCTION by convention, and `import a.b as c` resolves getattr(a, 'b')
+    # BEFORE sys.modules -- so the plain form binds the function once any earlier test has
+    # touched that attribute, and every flag write below would land on the wrong object.
+    import importlib
+    C = importlib.import_module("styxx.certify")
     line = 'the run accuracy clears the 0.10 floor, well above the frozen bound.'
     rec = {"unrelated": 0.99}
     before = C.V09_IS_SPEC_BAR_NOUN
@@ -321,6 +331,11 @@ def test_v09_bar_noun_control_stays_off_by_default():
     """The control clause is retained OFF with its measurement (G6: it takes the caught-mutant
     column to zero at every seed). Flipping this flag reproduces the negative; shipping it True
     would trade 16-22 catches per seed for 14-20 false attestations removed."""
-    import styxx.certify as C
+    # importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is
+    # the provenance FUNCTION by convention, and `import a.b as c` resolves getattr(a, 'b')
+    # BEFORE sys.modules -- so the plain form binds the function once any earlier test has
+    # touched that attribute, and every flag write below would land on the wrong object.
+    import importlib
+    C = importlib.import_module("styxx.certify")
     assert C.V09_IS_SPEC_BAR_NOUN is False
     assert C.V09_IS_SPEC_JSON_IDIOM is True

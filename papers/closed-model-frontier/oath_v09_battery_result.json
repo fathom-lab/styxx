@@ -472,5 +472,5 @@
     "I1": "an abstained token stays abstained under one-digit mutation \u2014 the predicate reads context and the substitution preserves token length. 0 false attestations on the reached class is an IDENTITY, not a measurement.",
     "I2": "is_spec yields only ABSTAIN, so no clause creates an UNGROUNDED token and no certificate flips OATH-HELD -> OATH-FAILED. Measured above as new_ungrounded_I2 = 0."
   },
-  "elapsed_s": 34.2
+  "elapsed_s": 35.1
 }

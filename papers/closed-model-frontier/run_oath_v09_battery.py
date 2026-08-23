@@ -37,8 +37,15 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))
 
-import styxx.certify as C                                                  # noqa: E402
+import importlib                                                           # noqa: E402
 from styxx.certify import certify_doc                                      # noqa: E402
+
+# importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is the
+# provenance FUNCTION by convention, and `import a.b as c` resolves getattr(a, 'b') BEFORE
+# sys.modules. The plain form binds the function whenever that attribute has been touched,
+# and every flag write in this harness would then land on the wrong object -- both arms would
+# silently run the shipped verifier and the battery would report a real-looking null.
+C = importlib.import_module("styxx.certify")
 from styxx.corpus_audit import _resolve_receipts                           # noqa: E402
 
 CENSUS = HERE / "oath_v09_isspec_census.json"
