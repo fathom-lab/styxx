@@ -7,7 +7,11 @@
     "V09_IS_SPEC_JSON_IDIOM": true,
     "V09_IS_SPEC_BAR_NOUN": false
   },
-  "documents": 137,
+  "documents_resolvable_now": 138,
+  "documents_in_baseline_frame": 137,
+  "documents_added_since_baseline": [
+    "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md"
+  ],
   "adjudication_frame_n": 146,
   "bar_noun_roster_n": 38,
   "gates": {
@@ -472,5 +476,5 @@
     "I1": "an abstained token stays abstained under one-digit mutation \u2014 the predicate reads context and the substitution preserves token length. 0 false attestations on the reached class is an IDENTITY, not a measurement.",
     "I2": "is_spec yields only ABSTAIN, so no clause creates an UNGROUNDED token and no certificate flips OATH-HELD -> OATH-FAILED. Measured above as new_ungrounded_I2 = 0."
   },
-  "elapsed_s": 35.1
+  "elapsed_s": 46.7
 }

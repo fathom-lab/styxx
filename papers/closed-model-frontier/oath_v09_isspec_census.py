@@ -325,7 +325,7 @@ def main() -> int:
     spec_ref = [r for r in ledger_rows if r["status"] == "VERIFIED"
                 and isinstance(r["receipt_ref"], str) and _SPEC_PATH.search(r["receipt_ref"])]
     bar_keys = {(r["doc"], r["line"], r["token"]) for r in bar_noun}
-    print(f"\n[4] receipt-side alternative (grounding leaf under a frozen_gates-like container):")
+    print("\n[4] receipt-side alternative (grounding leaf under a frozen_gates-like container):")
     print(f"    VERIFIED tokens so grounded: {len(spec_ref)}")
     print(f"    already reached by the doc-side bar-noun predicate: "
           f"{sum(1 for r in spec_ref if (r['doc'], r['line'], r['token']) in bar_keys)}")

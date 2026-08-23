@@ -238,8 +238,19 @@ def main() -> int:                                                   # noqa: C90
     bar_roster = census["bar_noun"]["roster"]
     docs = resolvable_docs()
     doc_by_name = {d.name: (d, rc) for d, rc in docs}
+    # The corpus legs run over the BASELINE's document set, which is the prereg's frozen frame
+    # ("status-identical to oath_v09_baseline_ledger.json across all 137 documents"). Scoping to it
+    # is what makes them re-runnable: this cycle publishes a RESULT note WITH a certificate, so the
+    # moment that lands the repository holds a resolvable document the baseline never saw, and an
+    # unscoped G5 would report ledger differences that are corpus GROWTH rather than clause
+    # behaviour. Documents added since the snapshot are counted and named, never silently dropped.
+    base_docs = set(base["verdicts"])
+    corpus_docs = [(d, rc) for d, rc in docs if d.relative_to(ROOT).as_posix() in base_docs]
+    added = sorted(d.relative_to(ROOT).as_posix() for d, _ in docs
+                   if d.relative_to(ROOT).as_posix() not in base_docs)
     print(f"documents with resolvable receipts: {len(docs)}   "
-          f"adjudication frame: {len(frame)}   bar-noun roster: {len(bar_roster)}\n")
+          f"baseline frame: {len(corpus_docs)}   added since baseline: {len(added)}")
+    print(f"adjudication frame: {len(frame)}   bar-noun roster: {len(bar_roster)}\n")
 
     # ---- G1 recall, two-armed -------------------------------------------------------------
     g1_off = frame_recall(frame, False, False)
@@ -269,8 +280,8 @@ def main() -> int:                                                   # noqa: C90
           f"(bar >= {G2_BAR}); false abstentions {len(false_abstentions)}")
 
     # ---- G3/G4 corpus safety, ON vs baseline ----------------------------------------------
-    print(f"\nG3/G4 clean corpus pass: {len(docs)} documents", flush=True)
-    c_on = corpus_pass(docs, True, False)
+    print(f"\nG3/G4 clean corpus pass: {len(corpus_docs)} baseline documents", flush=True)
+    c_on = corpus_pass(corpus_docs, True, False)
     moved_v2a = [k for k, s in base["ledger"].items()
                  if s == "VERIFIED" and c_on["ledger"].get(k) == "ABSTAIN"]
     silenced = [k for k, s in base["ledger"].items()
@@ -286,7 +297,7 @@ def main() -> int:                                                   # noqa: C90
           f"new UNGROUNDED (I2 must be 0): {len(new_ung)}")
 
     # ---- G5 severability -------------------------------------------------------------------
-    c_off = corpus_pass(docs, False, False)
+    c_off = corpus_pass(corpus_docs, False, False)
     diffs = [k for k in set(c_off["ledger"]) | set(base["ledger"])
              if c_off["ledger"].get(k) != base["ledger"].get(k)]
     print(f"G5 severability : {len(diffs)} ledger differences with both flags OFF (bar {G5_BAR})")
@@ -352,7 +363,9 @@ def main() -> int:                                                   # noqa: C90
         "census_verifier_sha256": census["generated_at_verifier_sha256"],
         "shipped_flags": {"V09_IS_SPEC_JSON_IDIOM": original[0],
                           "V09_IS_SPEC_BAR_NOUN": original[1]},
-        "documents": len(docs),
+        "documents_resolvable_now": len(docs),
+        "documents_in_baseline_frame": len(corpus_docs),
+        "documents_added_since_baseline": added,
         "adjudication_frame_n": len(frame),
         "bar_noun_roster_n": len(bar_roster),
         "gates": gates,
