@@ -69,6 +69,25 @@ Next leads, in order: `is_spec` JSON-idiom recall (bars written as `{"op": "<=",
 leaf — 9 of the 40 adjudicated demotions were this class), then the 274 integer
 false-attestations that count-binding does not stop.
 
+### Also in this release — the silent-pass benchmark was losing a third of its corpus
+
+`benchmarks/silent_pass.Case.pre_fix_source` shells out to `git show` with
+`text=True` and no explicit encoding, so Python decodes with the platform locale —
+cp1252 on Windows. One source byte invalid there raises `UnicodeDecodeError` inside
+subprocess's reader *thread*, stdout returns empty, and the case silently leaves the
+benchmark labelled "unavailable". Measured: **13 of 20 cases loadable, 7 lost**;
+after pinning UTF-8, **20 of 20**. Corrected recall over the full corpus: absence
+0.45, loops 0.25, union 0.65.
+
+The corpus exists to document absent measurements surfaced as results, and
+`test_an_unloadable_case_is_unscored_never_a_miss` states that property outright —
+while its own loader was manufacturing unloadable cases from an encoding crash. It
+also explains a red test on trunk: the complementarity test asserts SP-7 caught ≥ 2,
+the corpus holds exactly 2 SP-7 cases, and only 1 was loadable, so the bar was
+unreachable and read as a detector failure. No bar was touched; the corpus was
+restored. Pinned by a test that names the unloadable cases, so the loader is checked
+before the detector is blamed.
+
 ---
 
 ## [Unreleased] — lint was red, so the test suite had not run in CI for weeks
