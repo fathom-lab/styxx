@@ -1,0 +1,599 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+  "document_sha256": "f14fa083db6b2eabb09ea6b48d0dc6fdd9ab073269679fe0bd75b426225f34f8",
+  "receipts_sha256": {
+    "oath_v09_battery_result.json": "f813a59773cbbd24ce124f2f3c0d6947804936f4e80d5182fdb74a6457732df2",
+    "oath_v09_isspec_census.json": "bd3409deaf3d64a2dbed15ddb4e01ed1940d971e391f73bc36acd5720752803e",
+    "oath_v09_baseline_ledger.json": "93e17680a642c5a86731bbb52f50eed1a46e7bceea6f560e7ebe5eb438ee9447"
+  },
+  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "counts": {
+    "VERIFIED": 50,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 26,
+      "token": "57"
+    },
+    {
+      "line": 58,
+      "token": "140"
+    },
+    {
+      "line": 58,
+      "token": "2"
+    },
+    {
+      "line": 59,
+      "token": "24"
+    },
+    {
+      "line": 60,
+      "token": "2"
+    },
+    {
+      "line": 115,
+      "token": "0.8"
+    },
+    {
+      "line": 118,
+      "token": "23"
+    },
+    {
+      "line": 141,
+      "token": "38"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 21,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "Across the markdown documents under `papers/`, the census finds 145 JSON-idiom tokens in 42 docs.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.n"
+    },
+    {
+      "line": 21,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "Across the markdown documents under `papers/`, the census finds 145 JSON-idiom tokens in 42 docs.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.documents"
+    },
+    {
+      "line": 26,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "56 a dip-test *p*-value bar, and on line 57 an R\u00b2 bar, are both sworn VERIFIED against the single",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.live_in_committed_certificates[1].line"
+    },
+    {
+      "line": 26,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "56 a dip-test *p*-value bar, and on line 57 an R\u00b2 bar, are both sworn VERIFIED against the single",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "0.10 floor\" or \"against the 25 floor\". In the certified corpus this class is 38 tokens, whose",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[71].token"
+    },
+    {
+      "line": 33,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "0.10 floor\" or \"against the 25 floor\". In the certified corpus this class is 38 tokens, whose",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:bar_noun.roster[7].token"
+    },
+    {
+      "line": 33,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "0.10 floor\" or \"against the 25 floor\". In the certified corpus this class is 38 tokens, whose",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:mutation_ledger.tokens_per_seed"
+    },
+    {
+      "line": 34,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "status counts record 37 VERIFIED today. Extending `is_spec` over them looks like the same fix.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:bar_noun.status_counts.VERIFIED"
+    },
+    {
+      "line": 36,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "It is not, and one number separates them. Of the 145 JSON-idiom tokens, **0** sit on a line the",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.n"
+    },
+    {
+      "line": 36,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "It is not, and one number separates them. Of the 145 JSON-idiom tokens, **0** sit on a line the",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].off.did_not_land"
+    },
+    {
+      "line": 37,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "verifier's obligation predicate binds. Of the 38 prose tokens, **36** do. Only an obligated token",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:mutation_ledger.tokens_per_seed"
+    },
+    {
+      "line": 37,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "verifier's obligation predicate binds. Of the 38 prose tokens, **36** do. Only an obligated token",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_baseline_ledger.json:counts.papers/agent-conscience/DATASHEET_conscience_2026_07_24.md.VERIFIED"
+    },
+    {
+      "line": 41,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "Mutating one significant digit in each of the 38 at the shipped verifier, across ten seeds:",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].on.abstained"
+    },
+    {
+      "line": 45,
+      "token": "18.7",
+      "value": 18.7,
+      "decimals": 1,
+      "context": "| mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "binding_context": "| | mean | low | high | | mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.mean_catches_lost"
+    },
+    {
+      "line": 45,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "binding_context": "| | mean | low | high | | mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[5].off.caught"
+    },
+    {
+      "line": 45,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "| mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "binding_context": "| | mean | low | high | | mutants CAUGHT \u2014 the accusations abstention would destroy | 18.7 | 16 | 22 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].off.caught"
+    },
+    {
+      "line": 46,
+      "token": "17.4",
+      "value": 17.4,
+      "decimals": 1,
+      "context": "| mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "binding_context": "| | mean | low | high | | mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:mutation_ledger.mean_false_attestations_removed_by_abstention"
+    },
+    {
+      "line": 46,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "| mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "binding_context": "| | mean | low | high | | mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].off.false_attested"
+    },
+    {
+      "line": 46,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "binding_context": "| | mean | low | high | | mutants FALSELY ATTESTED \u2014 the coincidences abstention removes | 17.4 | 14 | 20 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[3].off.false_attested"
+    },
+    {
+      "line": 58,
+      "token": "140",
+      "value": 140.0,
+      "decimals": 0,
+      "context": "| G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "| G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G1_recall.on"
+    },
+    {
+      "line": 58,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | recall, two-armed | ON \u2265 140, OFF \u2264 2, ON exceeds OFF | 145 | 1 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G1_recall.off"
+    },
+    {
+      "line": 59,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "| G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "| G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G2_adjudicated_precision.bars_abstained"
+    },
+    {
+      "line": 59,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "| G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | adjudicated precision | \u2265 24 of 25 adjudicate BAR | 25 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G2_adjudicated_precision.bars_abstained"
+    },
+    {
+      "line": 60,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| G3 | coverage bound | \u2264 2 VERIFIED \u2192 ABSTAIN | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | coverage bound | \u2264 2 VERIFIED \u2192 ABSTAIN | 0 | \u2014 | **PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G3 | coverage bound | \u2264 2 VERIFIED \u2192 ABSTAIN | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | coverage bound | \u2264 2 VERIFIED \u2192 ABSTAIN | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 61,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 61,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 61,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4 | no silenced accusation | 0 silenced, 0 verdict flips | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 62,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 ledger differences, flags off | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 ledger differences, flags off | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 62,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 ledger differences, flags off | 0 | \u2014 | **PASS** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 ledger differences, flags off | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 63,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G6 | catch preservation (control) | ON \u2265 OFF at every seed | 0 | 16\u201322 | **FAIL** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6 | catch preservation (control) | ON \u2265 OFF at every seed | 0 | 16\u201322 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 63,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| G6 | catch preservation (control) | ON \u2265 OFF at every seed | 0 | 16\u201322 | **FAIL** |",
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6 | catch preservation (control) | ON \u2265 OFF at every seed | 0 | 16\u201322 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[1].off.false_attested"
+    },
+    {
+      "line": 65,
+      "token": "146",
+      "value": 146.0,
+      "decimals": 0,
+      "context": "G1 is scored on the adjudication frame of 146 tokens \u2014 every token on an operator-field line,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:adjudication_frame_n"
+    },
+    {
+      "line": 70,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "G2's sample of 25 was drawn and frozen inside the census before the fix. Every one is the `value`",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:frozen_adjudication_sample[9].line"
+    },
+    {
+      "line": 75,
+      "token": "137",
+      "value": 137.0,
+      "decimals": 0,
+      "context": "G3 and G4 are the load-bearing pair. Across the 137 documents whose receipts all resolve, the",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:documents_in_baseline_frame"
+    },
+    {
+      "line": 76,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "shipping clause converts **0** VERIFIED tokens to ABSTAIN, silences **0** accusations, flips **0**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 76,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "shipping clause converts **0** VERIFIED tokens to ABSTAIN, silences **0** accusations, flips **0**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 76,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "shipping clause converts **0** VERIFIED tokens to ABSTAIN, silences **0** accusations, flips **0**",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G3_coverage_bound.verified_to_abstain"
+    },
+    {
+      "line": 77,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "certificates, and creates **0** new UNGROUNDED tokens. The corpus footprint is empty because no",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G4_no_silenced_accusation.ungrounded_silenced"
+    },
+    {
+      "line": 85,
+      "token": "18.7",
+      "value": 18.7,
+      "decimals": 1,
+      "context": "readable: flip one flag and the same battery reports 18.7 catches lost on average, so it detects",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.mean_catches_lost"
+    },
+    {
+      "line": 89,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "ATTESTED falls with it, from a range of 14 to 20 down to at most 1. A cycle that had measured only",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].off.false_attested"
+    },
+    {
+      "line": 89,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "ATTESTED falls with it, from a range of 14 to 20 down to at most 1. A cycle that had measured only",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[3].off.false_attested"
+    },
+    {
+      "line": 114,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "span extraction actually matched. In `FINDING_cot_inward_powered_2026_07_30.md` line 37, mutating",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[35].line"
+    },
+    {
+      "line": 115,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "the bar 0.8 to 0.9 makes it collide with the leading digits of the sixteen-digit recovery figure",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 115,
+      "token": "0.9",
+      "value": 0.9,
+      "decimals": 1,
+      "context": "the bar 0.8 to 0.9 makes it collide with the leading digits of the sixteen-digit recovery figure",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[111].token"
+    },
+    {
+      "line": 116,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "printed earlier on the same line, the window jumps 25 characters left, and the clause misses.",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.roster[67].line"
+    },
+    {
+      "line": 117,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "Measured at no more than one of 38 tokens per seed. The same defect costs G1 its last point: in",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G6_catch_preservation.per_seed[0].on.abstained"
+    },
+    {
+      "line": 118,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "`PREREG_b49_amplitude_reaudit_2026_08_07.md` line 23 the bar in value position loses to a digit",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 119,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "inside a metric name, which is why recall reads 145 of the 146-token frame, and it is counted",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_battery_result.json:gates.G1_recall.on"
+    },
+    {
+      "line": 136,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "Of the JSON-idiom roster's 145 tokens, exactly 4 appear in a document carrying a certificate at",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.n"
+    },
+    {
+      "line": 136,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Of the JSON-idiom roster's 145 tokens, exactly 4 appear in a document carrying a certificate at",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.in_certified_document"
+    },
+    {
+      "line": 137,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "all, and **0** appear in a document whose receipts all resolve. The corpus delta is therefore zero by construction, and",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:json_idiom.in_fully_resolvable_document"
+    },
+    {
+      "line": 141,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "The class this cycle does **not** close is larger and is named: the 38 prose bar tokens stay",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 142,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "VERIFIED, and the receipt-side variant \u2014 63 VERIFIED tokens grounding in a `frozen_gates`-like leaf,",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_isspec_census.json:receipt_side_alternative.verified_grounding_in_spec_like_path"
+    },
+    {
+      "line": 143,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "28 of which the prose predicate would also reach \u2014 was rejected unbuilt, because it consults the",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v09_baseline_ledger.json:counts.papers/agent-conscience/FINDING_cot_inward_2026_07_30.md.VERIFIED"
+    }
+  ]
+}

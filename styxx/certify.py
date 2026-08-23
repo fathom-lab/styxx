@@ -313,6 +313,55 @@ V07_ULP_N = 8                     # v0.6.2 withdrew the epsilon subsidy at >=13 
                                   # closed, and the countable `ulp-neighbour` reason is what keeps
                                   # the residual enumerable instead of invisible.
 
+# v0.9 (PREREG_oath_v09_is_spec_json_idiom_2026_08_23) -- severable, G5-gated. `is_spec` reads an
+# 18-character window before the token, so it recognises a bar only when the operator or the bar
+# noun happens to sit there. Two recall extensions were measured pre-fix; ONE ships, and the split
+# is the finding.
+V09_IS_SPEC_JSON_IDIOM = True     # primary: a token in JSON value position whose object also
+                                  # carries a comparison-operator field is a bar written in the
+                                  # idiom `{"op": "<=", "value": 0.00648}` -- the operator is in a
+                                  # separate field, so the pre-window never sees it. 145 such
+                                  # tokens in 42 documents under papers/, 0 rescued before this
+                                  # clause. It is live, not hypothetical:
+                                  # PREDICTION_h1_human_islands' committed certificate swears two
+                                  # DIFFERENT preregistered bars -- a dip-test p-value and an R^2 --
+                                  # against one unrelated leaf, b45_result.json:null_expectation_k20,
+                                  # whose only qualification is holding the float 0.05.
+                                  # This clause is safe to abstain because of a measured fact about
+                                  # its class and NOT about abstention in general: 0 of the 145 sit
+                                  # on a line the obligation predicate binds, so none of them has a
+                                  # catch to destroy. See V09_IS_SPEC_BAR_NOUN for what happens
+                                  # where that is not true.
+V09_IS_SPEC_BAR_NOUN = False      # control: a bar named AFTER the number ("clears the 0.10 floor").
+                                  # DROPPED, and retained here so one flag reproduces the negative.
+                                  # 38 such tokens in the 137-document certified corpus, 37 of them
+                                  # VERIFIED -- but 36 sit on BOUND lines, and a bound token is one
+                                  # the verifier CATCHES when it is doctored. Mutating all 38 at the
+                                  # shipped verifier over seeds 1-10: 18.7 caught on average
+                                  # (range 16-22) against 17.4 falsely attested (range 14-20). The
+                                  # columns overlap and the per-seed net changes sign, so no seed
+                                  # settles the trade -- but this clause takes the CATCH column to
+                                  # ZERO at every seed, because the predicate reads context and a
+                                  # one-digit mutation leaves the context unchanged. It does not
+                                  # detect the tamper it is credited with; it stops looking.
+                                  # An abstention rule improves every tamper metric by destroying
+                                  # coverage, and G6 is what made that visible instead of flattering.
+                                  # The 2-character slack is frozen from the pre-fix sweep: at 0 the
+                                  # clause never fires, at >=4 it starts taking the MEASUREMENT in
+                                  # '0.5362318840579711 (floor 0.50)', and at 8 it takes the 0.954
+                                  # out of '(clean read 0.954) floors at ~0.62', where 'floors' is a
+                                  # verb.
+
+# The comparison-operator field is REQUIRED, not optional: `"value": 0.75` alone is an ordinary
+# key/value pair and says nothing about specification. The operator field on the same object is
+# what makes the number a bound ON some other quantity rather than a record OF one, and it is what
+# keeps this clause off result receipts transcribed into a document.
+_JSON_OP_FIELD = re.compile(r'"(?:op|operator|cmp|comparison|direction|sense)"\s*:\s*"\s*'
+                            r'(?:<=|>=|!=|==|<|>|=)\s*"')
+_JSON_BAR_KEY = re.compile(r'"(?:value|bar|threshold|floor|ceiling|cutoff|min|max|alpha|target'
+                           r'|bound)"\s*:\s*$')
+_BAR_NOUN_POST = re.compile(r"^[ \t\-]{0,2}(?:floors?|ceilings?|cutoffs?|caps?|bounds?)\b", re.I)
+
 
 def _ctx_stems(text: str) -> set[str]:
     """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
@@ -399,6 +448,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                                  r"\b[^.]{0,16}$", pre)) \
             or bool(re.match(r"\s*%?\s*(CI|confidence)", post)) \
             or bool(re.match(r"[^.\d]{0,12}\b(bar|threshold|gate)\b", post))
+        # v0.9 is_spec recall (PREREG_oath_v09_is_spec_json_idiom). Both clauses only ADD to the
+        # spec set and both yield ABSTAIN, so neither can create an accusation and no certificate
+        # can flip HELD->FAILED (invariant I2, asserted in the suite and deliberately NOT gated --
+        # a leg that cannot fail must not gate). The JSON clause tests the FULL line for the
+        # operator field, as the v0.3 amendment requires: the operator sits in a sibling field
+        # that the 18-character pre-window structurally cannot see.
+        if V09_IS_SPEC_JSON_IDIOM and not is_spec:
+            is_spec = bool(_JSON_BAR_KEY.search(pre)) and bool(_JSON_OP_FIELD.search(ctx))
+        if V09_IS_SPEC_BAR_NOUN and not is_spec:
+            is_spec = bool(_BAR_NOUN_POST.match(post))
         # v0.5 classes B/C/D (notation-level non-measurements -> ABSTAIN, PREREG_oath_v05_precision):
         # B unit-suffixed numeric range ("2–3B"), C arXiv identifier, D @-glued parameter.
         is_notation = (
