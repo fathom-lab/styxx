@@ -1,0 +1,2944 @@
+{
+  "note": "certificate reproducibility census \u2014 does a committed certificate still hold at the verifier now in the tree?",
+  "tree_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "certificates_examined": 139,
+  "skipped_unresolvable_receipts": 37,
+  "verifier_drift": 138,
+  "document_drift": 0,
+  "counts_drift": 59,
+  "verdict_drift": 1,
+  "held_to_failed": [
+    "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+  ],
+  "distinct_certificate_verifiers": 7,
+  "certificates_per_verifier": {
+    "d42a79cad597": 43,
+    "01f92cc14156": 42,
+    "1084573186de": 30,
+    "3981714d32e8": 20,
+    "2ff0072cfb59": 2,
+    "852aa4d0c0cb": 1,
+    "1bf81d2af727": 1
+  },
+  "rows": [
+    {
+      "doc": "papers/agent-conscience/BLOCKED_source_independence_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 52,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 52,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 46,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 46,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_cot_inward_2026_07_30.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_coupling_battery_2026_07_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_coupling_resolution_2026_07_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_frame_recovery_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_frontier_freetext_v9_2026_07_29.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 37,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 37,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_poisoned_recovery_2026_07_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_retained_probe_instrument_2026_07_30.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_scale_channel_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_scale_test_2026_07_26.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_selective_datasheet_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_self_verification_2026_07_25.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_thirdframe_2026_07_29.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_tiered_channel_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_two_channel_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_vendor3b_2026_07_29.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 93,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 93,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-FAILED",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 4
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": true,
+      "held_to_failed": true
+    },
+    {
+      "doc": "papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/ai-human-alignment/RESULT_ai_brain_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/ai-human-alignment/RESULT_ai_human_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/autopilot/FINDING_protocol_power_basis_invalid_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 43,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 41,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 42,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 38,
+        "ABSTAIN": 26,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 26,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 60,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 64,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 100,
+        "ABSTAIN": 31,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 104,
+        "ABSTAIN": 31,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 72,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 77,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 74,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 78,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 92,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 92,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 82,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 88,
+        "ABSTAIN": 26,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 73,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 79,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 68,
+        "ABSTAIN": 30,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 70,
+        "ABSTAIN": 31,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 24,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 24,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/FINDING_b23_fable_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 41,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 41,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "2ff0072cfb59b6ba5d25f818b436d2a492484debf8ebc28461d8935a45c2e104",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "852aa4d0c0cb4e2304267766cd49ccabd919e33f89fa3d706ffb4fabf89c34d9",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+      "verifier_drift": false,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/council-reference-free-truth/FINDING_council_2026_05_25.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 40,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 40,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 41,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 46,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b43_sub_symbolic_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_c2_still_blind_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_c3_algebra_wrong_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_c4_mechanism_incomplete_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 63,
+        "ABSTAIN": 40,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 63,
+        "ABSTAIN": 40,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_protocol_v4_2026_08_09.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/first-afference/FINDING_r0v2_instrument_valid_2026_08_05.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/grounded-honesty-axis/FINDING_detection_locus_gpt_2026_05_30.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/DEMO_meaning_diff_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/FINDING_anatomy_v0_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/FINDING_gavagai_v0_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/FINDING_matcher_v1_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/mind-instrument/FINDING_telepathy_v0_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E3PRIME_bite_verification_2026_07_07.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_foundation_2026_07_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_axis_independence_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_concept_decode_2026_06_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_conscience_coordinates_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_content_wall_2026_06_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_live_signature_mvp_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_portable_conscience_ood_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_portable_conscience_v0_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_portable_conscience_v2_2026_06_10.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 43,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_says_yes_knows_no_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": false,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    },
+    {
+      "doc": "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+      "certificate_verdict": "OATH-HELD",
+      "live_verdict": "OATH-HELD",
+      "certificate_counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "live_counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "certificate_verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+      "verifier_drift": true,
+      "document_drift": false,
+      "counts_drift": true,
+      "verdict_drift": false,
+      "held_to_failed": false
+    }
+  ]
+}
