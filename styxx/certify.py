@@ -89,10 +89,18 @@ def extract_numbers(text: str) -> list[dict]:
         # it as a sign — pre-fix, '−0.0154' extracted as POSITIVE 0.0154 and an accurate negative
         # claim could be accused (the v0.6.1 G3 kill). En-dash ranges (U+2013) are untouched.
         line = line.replace("−", "-")
-        # drop fenced/sha/date/version spans from the searchable line
-        scrub = _SHAISH.sub(" ", line)
-        scrub = _DATEISH.sub(" ", scrub)
-        scrub = _VERSIONISH.sub(" ", scrub)
+        # drop fenced/sha/date/version spans from the searchable line.
+        # v0.10 (PREREG_oath_v10_token_column): `re.sub(pat, " ", s)` collapses each match to ONE
+        # space, so a 40-char sha shifts every token to its right 39 columns left and `m.start()`
+        # is NOT the source column. `V10_TOKEN_COLUMN` blanks one space PER MATCHED CHARACTER
+        # instead, which is what makes the recorded `col` below an address rather than an
+        # approximation. Measured pre-fix over all 1,073 documents under papers/ (48,097 tokens):
+        # length preservation changes the extracted token sequence on ZERO lines, so this buys
+        # correct columns without moving extraction (battery gate G2).
+        _blank = (lambda m: " " * (m.end() - m.start())) if V10_TOKEN_COLUMN else " "
+        scrub = _SHAISH.sub(_blank, line)
+        scrub = _DATEISH.sub(_blank, scrub)
+        scrub = _VERSIONISH.sub(_blank, scrub)
         for m in _NUM.finditer(scrub):
             tok = m.group(0)
             raw = tok.replace(",", "")
@@ -116,6 +124,12 @@ def extract_numbers(text: str) -> list[dict]:
                 continue
             entry = {"line": ln_no, "token": tok, "value": val, "decimals": _decimals(raw),
                      "context": line.strip()[:160]}
+            if V10_TOKEN_COLUMN:
+                # the column THIS match was found at, in the U+2212-normalized source line.
+                # `certify_doc` anchors its windows here; without it, it re-finds the token
+                # STRING and lands on the first occurrence, which is a different token 9.6% of
+                # the time. Additive: no existing key changes (invariant I1).
+                entry["col"] = m.start()
             if ln_no in header_for:
                 entry["binding_context"] = (header_for[ln_no] + " " + line.strip())[:320]
             out.append(entry)
@@ -362,6 +376,53 @@ _JSON_BAR_KEY = re.compile(r'"(?:value|bar|threshold|floor|ceiling|cutoff|min|ma
                            r'|bound)"\s*:\s*$')
 _BAR_NOUN_POST = re.compile(r"^[ \t\-]{0,2}(?:floors?|ceilings?|cutoffs?|caps?|bounds?)\b", re.I)
 
+# v0.10 (PREREG_oath_v10_token_column_2026_08_23) -- severable, gated. Every cycle from v0.1 to
+# v0.9 argued about what the context windows should MEAN. This one is about where they ARE.
+V10_TOKEN_COLUMN = True           # primary: `extract_numbers` records the column its match was
+                                  # found at and `certify_doc` anchors `pre`/`post` there, instead
+                                  # of `ctx.find(token)` -- which returns the FIRST occurrence of
+                                  # the token STRING and is a DIFFERENT token 4,612 times in the
+                                  # 48,097 tokens under papers/ (9.589%, 841 documents). When it
+                                  # is, every predicate downstream of the windows is decided
+                                  # against text that does not surround the claim: `is_spec`,
+                                  # `is_notation`, `is_hist`, the range-sanity unit_kw/sign_kw
+                                  # tests, the slash-pair branch of count-binding, the v0.5 class F
+                                  # n= self-scope, and the class E derived-percent parse. 95 of the
+                                  # 349 misplaced tokens in the certified corpus have a predicate
+                                  # that actually disagrees between the two anchors.
+                                  # It is live, not hypothetical: PREREG_b49_amplitude_reaudit L23
+                                  # holds a preregistered bar in JSON value position at column 98,
+                                  # `ctx.find("5")` returns 6 -- the 5 inside `b45` -- and
+                                  # V09_IS_SPEC_JSON_IDIOM, shipped for exactly that token class,
+                                  # cannot see the "value": key and does not fire.
+                                  # Requires the length-preserving scrub in `extract_numbers`; a
+                                  # raw m.start() against the shipped collapsing scrub would be a
+                                  # NEW wrong column on every line carrying a sha/date/version.
+V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does not fire on a
+                                  # slash-pair numerator. A value written `a/b` is a count pair,
+                                  # never a value of the bounded quantity named to its left.
+                                  # This exists for exactly one token that the primary un-masks:
+                                  # FINDING_mapped_whitening L31 `(stability 5/5)`, where correct
+                                  # anchoring puts `stability ` in `pre`, 5 leaves [0,1], and the
+                                  # rule accuses a document whose receipt DOES hold the count
+                                  # (mapped_whitening_result.json:stability_count_under_ceiling).
+                                  # Without it the repair flips one committed OATH-HELD to
+                                  # OATH-FAILED on a false accusation (battery gate G3).
+                                  # Measured: with V10_TOKEN_COLUMN OFF this clause changes 0
+                                  # ledger rows, and on the tamper collision channel it changes
+                                  # nothing at all (caught 43->43, false-attested 271->271 over
+                                  # seeds 1-10) -- it carries no behaviour of its own.
+#
+# NAMED RESIDUAL, owed to a successor prereg and expressly NOT owed by this cycle:
+# V10_EQUALS_SPEC_OVERREACH. `is_spec` reads a bare `=` at the end of `pre` as a comparison
+# operator. Pointed at the wrong text it rarely fired; pointed correctly it fires on the ASSIGNMENT
+# idiom, which in this corpus is a MEASUREMENT idiom -- `n = 1`, `n_refits=5`, `n_admissible=5`,
+# `P(>=0.15)=1.0`, `0.0854 = 0.0854`, `95th percentile = 1.000`. All 9 destructive abstentions this
+# cycle measured are that one shape (gate G4c checks it mechanically). Not fixed here for v0.8's
+# reason: `V07_PRECISION_DIGITS = 7` is a spec and `AUROC(S_frame) = 0.75` is not, and the two are
+# identical in form, so the populations are not lexically separable and any narrowing is a doctrine
+# change to `is_spec` with its own battery.
+
 
 def _ctx_stems(text: str) -> set[str]:
     """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
@@ -433,7 +494,17 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # v0.6.2: same U+2212 normalization as extraction, so signed tokens are findable in ctx
         ctx = doc_lines[num["line"] - 1].strip().replace("−", "-")
         bctx = num.get("binding_context", ctx)   # v0.3: table rows bind via their header too
-        tok_at = ctx.find(num["token"])
+        # v0.10: anchor the windows at the column the token was EXTRACTED at. `ctx.find` returns
+        # the first occurrence of the token STRING, which is a different token on 9.6% of the
+        # corpus ("10 neutral + 10 in-frame", "0.0854 = 0.0854", a bar whose digits also appear in
+        # an identifier earlier on the line). `ctx` is `.strip()`ed and `col` is a raw-line offset,
+        # so the leading whitespace comes back off; `.strip()` and the U+2212 replace commute
+        # because U+2212 is not whitespace, so the two spellings of `ctx` agree.
+        if V10_TOKEN_COLUMN and "col" in num:
+            _raw = doc_lines[num["line"] - 1].replace("−", "-")
+            tok_at = num["col"] - (len(_raw) - len(_raw.lstrip()))
+        else:
+            tok_at = ctx.find(num["token"])
         pre = ctx[max(0, tok_at - 18):tok_at] if tok_at >= 0 else ""
         # v0.3: a token at line start inherits the tail of the previous line as pre-context —
         # 'subclass AUC\n1.0)' wraps mid-sentence and the unit keyword must still bind.
@@ -473,6 +544,9 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         hist_m = re.search(r"originally printed|caught by OATH|superseded|was printed|"
                            r"\b(first|earlier|prior)\s+(scored\s+)?run\b", ctx, re.I)
         is_hist = bool(hist_m) and (tok_at < 0 or tok_at >= hist_m.start() - 24)
+        # v0.10: hoisted out of the count-binding block below (same expression, same inputs — `pre`
+        # and `post` are final by here) so the range-sanity guard can read it too.
+        slash_pair = bool(re.search(r"/\s*$", pre)) or bool(re.match(r"\s*/", post))
         allow_scaling = "%" in ctx or re.search(r"\bpercent", ctx, re.I) is not None
         hits = [(rn, pth) for rn, pth, rv in rvals
                 if _match(num["value"], num["decimals"], rv, allow_scaling)]
@@ -494,7 +568,6 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                 segs = {s.lower() for seg in re.split(r"[.\[\]]", p) for s in re.split(r"[-_]", seg) if s}
                 pst = {s[:4] for s in segs if len(s) >= 3} | {m for s in segs for m in re.findall(r"\d{2,}", s)}
                 return bool(pst & stems) or (is_n_eq and any(s == "n" or s.startswith("n_") for s in segs))
-            slash_pair = bool(re.search(r"/\s*$", pre)) or bool(re.match(r"\s*/", post))
             if not slash_pair:
                 hits = [(rn, pth) for rn, pth in hits if path_ok(pth)]
             elif not any(path_ok(p) for _, p in hits):
@@ -530,6 +603,10 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         sign_kw = re.search(r"\b(margins?|deltas?|elevation)\s*[(=:≈~\s]*$", pre, re.I)
         out_of_range = (unit_kw and not 0.0 <= num["value"] <= 1.0) or \
                        (sign_kw and not -1.0 <= num["value"] <= 1.0)
+        # v0.10 companion: a slash-pair numerator is a COUNT, not a value of the bounded quantity
+        # named to its left. '(stability 5/5)' is five of five, not a stability of 5.0.
+        if V10_SLASHPAIR_RANGE_GUARD and slash_pair:
+            out_of_range = False
         if out_of_range:
             hits, bound = [], True
             precision_only = False   # a range-sanity obligation is never ULP-escapable
