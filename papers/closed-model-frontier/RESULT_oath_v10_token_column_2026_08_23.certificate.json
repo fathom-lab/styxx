@@ -2,19 +2,19 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_oath_v10_token_column_2026_08_23.md",
-  "document_sha256": "f3f918b4d3b42a667f18037bf4c58bba47471f94b716e3bb1cccf8dd5b607165",
+  "document_sha256": "bd2a57bccaa71f6474d658e7c5a9a8c79030b8117c910505aa80202fc864a537",
   "receipts_sha256": {
-    "oath_v10_battery_result.json": "e5980c4d2e5ea7ddbd1d5fe3358c2f1655aeb67890d4cab87630a19832ad7911",
+    "oath_v10_battery_result.json": "4a90f48aca479a54b8c481b04553d963f308be4adc5dea97f4e1de90b1301eb2",
     "oath_v10_column_census.json": "aa71ddb74e30e2caa2b3515fc48006faa5751f30a41aedc7f7a790b1b2d6cfb2",
     "oath_v10_baseline_ledger.json": "fcdc6b36ea77404a6335c5181be7a934bced4d544a152b7a35d76f15c88003e2",
     "oath_v10_v09_keying_check.json": "74db0a232d5798bbe3562100ca52231ddd74aa8eeb11f8acf89a932baa44d0a5",
     "oath_v08_fieldbind_precfix_census.json": "612e6fa1b865ee0ebda7a8b0efc16dbd0861b894e53a4547943be63cb6e0683d",
     "oath_v07_silentpass_census.json": "301e62bfe70c7092b77314b304712944ef344536b5babafdb3fea6e0f0f2ae5e"
   },
-  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
   "counts": {
-    "VERIFIED": 96,
-    "ABSTAIN": 19,
+    "VERIFIED": 95,
+    "ABSTAIN": 20,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -33,67 +33,71 @@
       "token": "39"
     },
     {
-      "line": 80,
+      "line": 82,
       "token": "0"
     },
     {
-      "line": 80,
-      "token": "0"
-    },
-    {
-      "line": 83,
+      "line": 85,
       "token": "20"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "10"
     },
     {
-      "line": 98,
+      "line": 100,
       "token": "44"
     },
     {
-      "line": 101,
+      "line": 103,
       "token": "45"
     },
     {
-      "line": 122,
+      "line": 124,
       "token": "1"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "5"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "5"
     },
     {
-      "line": 123,
+      "line": 125,
+      "token": "0.0854"
+    },
+    {
+      "line": 125,
       "token": "1.000"
     },
     {
-      "line": 126,
+      "line": 128,
+      "token": "7"
+    },
+    {
+      "line": 128,
       "token": "0.75"
     },
     {
-      "line": 163,
+      "line": 165,
       "token": "434"
     },
     {
-      "line": 171,
+      "line": 173,
       "token": "47"
     },
     {
-      "line": 171,
+      "line": 173,
       "token": "38"
     },
     {
-      "line": 189,
+      "line": 191,
       "token": "272"
     },
     {
-      "line": 225,
+      "line": 227,
       "token": "254"
     }
   ],
@@ -104,6 +108,7 @@
       "value": 48097.0,
       "decimals": 0,
       "context": "Across the markdown documents under `papers/`, the census reads 48097 extracted tokens and finds",
+      "col": 64,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.tokens"
     },
@@ -113,6 +118,7 @@
       "value": 4612.0,
       "decimals": 0,
       "context": "4612 of them anchored on a different token: 9.589 percent, spread over 841 of the 1073 documents.",
+      "col": 0,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
@@ -122,6 +128,7 @@
       "value": 9.589,
       "decimals": 3,
       "context": "4612 of them anchored on a different token: 9.589 percent, spread over 841 of the 1073 documents.",
+      "col": 44,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.misplaced_pct"
     },
@@ -131,6 +138,7 @@
       "value": 841.0,
       "decimals": 0,
       "context": "4612 of them anchored on a different token: 9.589 percent, spread over 841 of the 1073 documents.",
+      "col": 71,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.documents_affected"
     },
@@ -140,6 +148,7 @@
       "value": 1073.0,
       "decimals": 0,
       "context": "4612 of them anchored on a different token: 9.589 percent, spread over 841 of the 1073 documents.",
+      "col": 82,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.documents"
     },
@@ -149,6 +158,7 @@
       "value": 865.0,
       "decimals": 0,
       "context": "| `slash_pair` (v0.3 count-binding) | 865 |",
+      "col": 38,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `slash_pair` (v0.3 count-binding) | 865 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.slash_pair"
@@ -159,6 +169,7 @@
       "value": 745.0,
       "decimals": 0,
       "context": "| `is_spec` core (operator / bar vocabulary) | 745 |",
+      "col": 47,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `is_spec` core (operator / bar vocabulary) | 745 |",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
@@ -169,6 +180,7 @@
       "value": 124.0,
       "decimals": 0,
       "context": "| `n=` self-scope (v0.5 class F) | 124 |",
+      "col": 35,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `n=` self-scope (v0.5 class F) | 124 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.n_eq"
@@ -179,6 +191,7 @@
       "value": 73.0,
       "decimals": 0,
       "context": "| `unit_kw` (v0.3 range-sanity) | 73 |",
+      "col": 34,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `unit_kw` (v0.3 range-sanity) | 73 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.unit_kw"
@@ -189,6 +202,7 @@
       "value": 27.0,
       "decimals": 0,
       "context": "| `unit_range` (v0.5 class B) | 27 |",
+      "col": 32,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `unit_range` (v0.5 class B) | 27 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.unit_range"
@@ -199,6 +213,7 @@
       "value": 20.0,
       "decimals": 0,
       "context": "| `_BAR_NOUN_POST` (v0.9, shipped off) | 20 |",
+      "col": 41,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `_BAR_NOUN_POST` (v0.9, shipped off) | 20 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.bar_correct"
@@ -209,6 +224,7 @@
       "value": 14.0,
       "decimals": 0,
       "context": "| `@`-param (v0.5 class D) | 14 |",
+      "col": 29,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `@`-param (v0.5 class D) | 14 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.at_param"
@@ -219,6 +235,7 @@
       "value": 2.0,
       "decimals": 0,
       "context": "| `_JSON_BAR_KEY` (v0.9, shipped ON) | 2 |",
+      "col": 39,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `_JSON_BAR_KEY` (v0.9, shipped ON) | 2 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.json_bar_key"
@@ -229,6 +246,7 @@
       "value": 2.0,
       "decimals": 0,
       "context": "| `sign_kw` (v0.3 range-sanity) | 2 |",
+      "col": 34,
       "binding_context": "| predicate | tokens whose two anchors disagree | | `sign_kw` (v0.3 range-sanity) | 2 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.json_bar_key"
@@ -239,6 +257,7 @@
       "value": 1.0,
       "decimals": 0,
       "context": "| derived-percent (v0.5 class E) | 1 |",
+      "col": 35,
       "binding_context": "| predicate | tokens whose two anchors disagree | | derived-percent (v0.5 class E) | 1 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.derived_pct"
@@ -249,6 +268,7 @@
       "value": 349.0,
       "decimals": 0,
       "context": "Inside the certified corpus the defect is 349 misplaced tokens, 95 of which carry a predicate that",
+      "col": 42,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.off.misplaced"
     },
@@ -258,6 +278,7 @@
       "value": 95.0,
       "decimals": 0,
       "context": "Inside the certified corpus the defect is 349 misplaced tokens, 95 of which carry a predicate that",
+      "col": 64,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.misplaced_with_a_divergent_predicate"
     },
@@ -267,6 +288,7 @@
       "value": 23.0,
       "decimals": 0,
       "context": "`PREREG_b49_amplitude_reaudit_2026_08_07.md` line 23 holds a preregistered bar in JSON value",
+      "col": 50,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[49].true_at"
     },
@@ -276,6 +298,7 @@
       "value": 6.0,
       "decimals": 0,
       "context": "position at column 98. `ctx.find` returns 6 \u2014 the digit inside the identifier `b45` \u2014 so `pre`",
+      "col": 42,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[93].find_at"
     },
@@ -285,15 +308,17 @@
       "value": 39.0,
       "decimals": 0,
       "context": "A 40-character sha collapsed to a single column and shifted every token to its right 39 columns",
+      "col": 85,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
       "line": 71,
-      "token": "1074",
-      "value": 1074.0,
+      "token": "1075",
+      "value": 1075.0,
       "decimals": 0,
-      "context": "Measured, and gated as G2: across all 1074 documents under `papers/`, the ON and OFF arms extract",
+      "context": "Measured, and gated as G2: across all 1075 documents under `papers/`, the ON and OFF arms extract",
+      "col": 38,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G2_extraction_invariance.documents"
     },
@@ -302,407 +327,439 @@
       "token": "0",
       "value": 0.0,
       "decimals": 0,
-      "context": "an identical ordered token list, 0 documents differing. Restoring length preservation buys correct",
+      "context": "an identical ordered token list, 0 documents differing. (One fewer at the pre-merge battery: the",
+      "col": 33,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "44",
       "value": 44.0,
       "decimals": 0,
       "context": "| G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
+      "col": 81,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=on,guard=on.diffs"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
+      "col": 91,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
+      "col": 101,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G0 | sweep fidelity (VOID check) | reproduce the frozen shadow sweep exactly | 44 diffs, 0 flips | 0 diffs | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 80,
+      "line": 82,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
+      "col": 36,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 80,
+      "line": 82,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
+      "col": 70,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
-      "status": "ABSTAIN",
-      "receipt_ref": "spec-or-historical"
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 80,
+      "line": 82,
       "token": "349",
       "value": 349.0,
       "decimals": 0,
       "context": "| G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
+      "col": 74,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G1 | anchoring, two-armed | ON == 0 misplaced, ON improves on OFF | 0 | 349 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.off.misplaced"
     },
     {
-      "line": 81,
+      "line": 83,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
+      "col": 42,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 81,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 81,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 82,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 82,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 82,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
       "line": 83,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
+      "col": 76,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 83,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
+      "col": 80,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G2 | extraction invariance, two-armed | 0 documents extract differently | 0 | 0 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 84,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "col": 27,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 84,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "col": 45,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 84,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "col": 65,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G3 | no new accusation | 0 new UNGROUNDED, 0 new OATH-FAILED | 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 85,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
       "context": "| G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
+      "col": 43,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 83,
+      "line": 85,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
+      "col": 55,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 83,
+      "line": 85,
       "token": "23",
       "value": 23.0,
       "decimals": 0,
       "context": "| G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
+      "col": 65,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.restorations_correct"
     },
     {
-      "line": 83,
+      "line": 85,
       "token": "27",
       "value": 27.0,
       "decimals": 0,
       "context": "| G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
+      "col": 71,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen_split.ABSTAIN->VERIFIED"
     },
     {
-      "line": 83,
+      "line": 85,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "| G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
+      "col": 75,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4a | restorations adjudicate sound | >= 20 CORRECT, 0 WRONG | 23 of 27, 0 WRONG | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
       "context": "| G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
+      "col": 32,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "| G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
+      "col": 49,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "17",
       "value": 17.0,
       "decimals": 0,
       "context": "| G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
+      "col": 54,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4b | coverage destroyed | <= 10 DESTRUCTIVE | 9 of 17 | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen_split.VERIFIED->ABSTAIN"
     },
     {
-      "line": 85,
+      "line": 87,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "| G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
+      "col": 65,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
-    },
-    {
-      "line": 85,
-      "token": "9",
-      "value": 9.0,
-      "decimals": 0,
-      "context": "| G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
-    },
-    {
-      "line": 86,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 86,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 86,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
-    },
-    {
-      "line": 86,
-      "token": "0",
-      "value": 0.0,
-      "decimals": 0,
-      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
       "line": 87,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "| G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
+      "col": 70,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G4c | residual enumerable | every destructive case explained | 9 of 9 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
+    },
+    {
+      "line": 88,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "col": 22,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 88,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "col": 40,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 88,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "col": 61,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 88,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "col": 67,
+      "binding_context": "| gate | role | bar | ON | OFF | verdict | | G5 | severability | 0 diffs both-off, 0 diffs guard-only | 0 and 0 | \u2014 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
+    },
+    {
+      "line": 89,
       "token": "43",
       "value": 43.0,
       "decimals": 0,
       "context": "| G6a | tamper, collision channel (no-credit) | pooled caught ON >= OFF | 43 | 34 | **PASS** |",
+      "col": 74,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6a | tamper, collision channel (no-credit) | pooled caught ON >= OFF | 43 | 34 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.on_caught"
     },
     {
-      "line": 87,
+      "line": 89,
       "token": "34",
       "value": 34.0,
       "decimals": 0,
       "context": "| G6a | tamper, collision channel (no-credit) | pooled caught ON >= OFF | 43 | 34 | **PASS** |",
+      "col": 79,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6a | tamper, collision channel (no-credit) | pooled caught ON >= OFF | 43 | 34 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.off_caught"
     },
     {
-      "line": 88,
+      "line": 90,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
       "context": "| G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
+      "col": 64,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.bar_destructive"
     },
     {
-      "line": 88,
+      "line": 90,
       "token": "272",
       "value": 272.0,
       "decimals": 0,
       "context": "| G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
+      "col": 69,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6b_tamper_clean_roster.pooled.on_caught"
     },
     {
-      "line": 88,
+      "line": 90,
       "token": "275",
       "value": 275.0,
       "decimals": 0,
       "context": "| G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
+      "col": 75,
       "binding_context": "| gate | role | bar | ON | OFF | verdict | | G6b | tamper, clean roster (no-credit) | pooled caught within 10 | 272 | 275 | **PASS** |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6b_tamper_clean_roster.pooled.off_caught"
     },
     {
-      "line": 93,
+      "line": 95,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "a bar fitted to a post-fix result. The real verifier reproduced the frozen table exactly: 0 ledger",
+      "col": 90,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 94,
+      "line": 96,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "differences with both flags off, 0 with the guard alone, 45 differences and 1 verdict flip with the",
+      "col": 33,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 94,
+      "line": 96,
       "token": "45",
       "value": 45.0,
       "decimals": 0,
       "context": "differences with both flags off, 0 with the guard alone, 45 differences and 1 verdict flip with the",
+      "col": 57,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=on,guard=off.diffs"
     },
     {
-      "line": 94,
+      "line": 96,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "differences with both flags off, 0 with the guard alone, 45 differences and 1 verdict flip with the",
+      "col": 76,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=on,guard=off.flips"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "44",
       "value": 44.0,
       "decimals": 0,
       "context": "primary alone, 44 differences and 0 flips with both. The transition split reproduced too, 27",
+      "col": 15,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=on,guard=on.diffs"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "primary alone, 44 differences and 0 flips with both. The transition split reproduced too, 27",
+      "col": 34,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "27",
       "value": 27.0,
       "decimals": 0,
       "context": "primary alone, 44 differences and 0 flips with both. The transition split reproduced too, 27",
+      "col": 90,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen_split.ABSTAIN->VERIFIED"
     },
     {
-      "line": 96,
+      "line": 98,
       "token": "17",
       "value": 17.0,
       "decimals": 0,
       "context": "ABSTAIN to VERIFIED and 17 VERIFIED to ABSTAIN, and the 44 rows are the same 44 rows.",
+      "col": 24,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen_split.VERIFIED->ABSTAIN"
     },
     {
-      "line": 96,
+      "line": 98,
       "token": "44",
       "value": 44.0,
       "decimals": 0,
       "context": "ABSTAIN to VERIFIED and 17 VERIFIED to ABSTAIN, and the 44 rows are the same 44 rows.",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v08_fieldbind_precfix_census.json:demoted_rows[183].line"
-    },
-    {
-      "line": 96,
-      "token": "44",
-      "value": 44.0,
-      "decimals": 0,
-      "context": "ABSTAIN to VERIFIED and 17 VERIFIED to ABSTAIN, and the 44 rows are the same 44 rows.",
+      "col": 56,
       "status": "VERIFIED",
       "receipt_ref": "oath_v08_fieldbind_precfix_census.json:demoted_rows[183].line"
     },
@@ -711,472 +768,534 @@
       "token": "44",
       "value": 44.0,
       "decimals": 0,
+      "context": "ABSTAIN to VERIFIED and 17 VERIFIED to ABSTAIN, and the 44 rows are the same 44 rows.",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v08_fieldbind_precfix_census.json:demoted_rows[183].line"
+    },
+    {
+      "line": 100,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
       "context": "## What the 44 status changes are",
+      "col": 12,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 100,
+      "line": 102,
       "token": "27",
       "value": 27.0,
       "decimals": 0,
       "context": "**27 restorations, of which 23 adjudicate CORRECT and 0 adjudicate WRONG.** The largest single",
+      "col": 2,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.restorations"
     },
     {
-      "line": 100,
+      "line": 102,
       "token": "23",
       "value": 23.0,
       "decimals": 0,
       "context": "**27 restorations, of which 23 adjudicate CORRECT and 0 adjudicate WRONG.** The largest single",
+      "col": 28,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.restorations_correct"
     },
     {
-      "line": 100,
+      "line": 102,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "**27 restorations, of which 23 adjudicate CORRECT and 0 adjudicate WRONG.** The largest single",
+      "col": 54,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.on.anchor_not_on_the_token_string"
     },
     {
-      "line": 101,
+      "line": 103,
       "token": "45",
       "value": 45.0,
       "decimals": 0,
       "context": "class is the observed column of a markdown gate table. A row reading `| G0_coverage | >= 45 pairs |",
+      "col": 89,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 102,
+      "line": 104,
       "token": "45",
       "value": 45.0,
       "decimals": 0,
       "context": "45 | PASS |` prints its bar and its measured result as the same digits, so under `ctx.find` every",
+      "col": 0,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[6].find_at"
     },
     {
-      "line": 113,
+      "line": 115,
       "token": "17",
       "value": 17.0,
       "decimals": 0,
       "context": "**17 abstentions, of which 8 adjudicate CORRECT and 9 DESTRUCTIVE.** The correct ones are the",
+      "col": 2,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions"
     },
     {
-      "line": 113,
+      "line": 115,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
       "context": "**17 abstentions, of which 8 adjudicate CORRECT and 9 DESTRUCTIVE.** The correct ones are the",
+      "col": 27,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:tamper_per_seed.G6a[5].on.ABSTAIN"
     },
     {
-      "line": 113,
+      "line": 115,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "**17 abstentions, of which 8 adjudicate CORRECT and 9 DESTRUCTIVE.** The correct ones are the",
+      "col": 52,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
     },
     {
-      "line": 119,
+      "line": 121,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "The 9 destructive ones are a single defect wearing nine faces, and G4c is the gate that proved it",
+      "col": 4,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
     },
     {
-      "line": 122,
+      "line": 124,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "fires on the ASSIGNMENT idiom, which in this corpus is a MEASUREMENT idiom \u2014 `n = 1`,",
+      "col": 82,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "5",
       "value": 5.0,
       "decimals": 0,
       "context": "`n_refits=5`, `n_admissible=5`, `0.0854 = 0.0854`, `95th percentile = 1.000`.",
+      "col": 10,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "5",
       "value": 5.0,
       "decimals": 0,
       "context": "`n_refits=5`, `n_admissible=5`, `0.0854 = 0.0854`, `95th percentile = 1.000`.",
+      "col": 28,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "0.0854",
       "value": 0.0854,
       "decimals": 4,
       "context": "`n_refits=5`, `n_admissible=5`, `0.0854 = 0.0854`, `95th percentile = 1.000`.",
+      "col": 33,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[14].token"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "0.0854",
       "value": 0.0854,
       "decimals": 4,
       "context": "`n_refits=5`, `n_admissible=5`, `0.0854 = 0.0854`, `95th percentile = 1.000`.",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[14].token"
+      "col": 42,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "1.000",
       "value": 1.0,
       "decimals": 3,
       "context": "`n_refits=5`, `n_admissible=5`, `0.0854 = 0.0854`, `95th percentile = 1.000`.",
+      "col": 70,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 126,
+      "line": 128,
       "token": "7",
       "value": 7.0,
       "decimals": 0,
       "context": "reason: `V07_PRECISION_DIGITS = 7` is a specification and `AUROC(S_frame) = 0.75` is not, and the",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_v10_baseline_ledger.json:counts.papers/agent-conscience/DATASHEET_conscience_2026_07_24.md.ABSTAIN"
-    },
-    {
-      "line": 126,
-      "token": "0.75",
-      "value": 0.75,
-      "decimals": 2,
-      "context": "reason: `V07_PRECISION_DIGITS = 7` is a specification and `AUROC(S_frame) = 0.75` is not, and the",
+      "col": 32,
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 148,
+      "line": 128,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "reason: `V07_PRECISION_DIGITS = 7` is a specification and `AUROC(S_frame) = 0.75` is not, and the",
+      "col": 76,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 150,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "primary off the guard changes 0 ledger rows, and on the tamper collision channel it changes nothing",
+      "col": 30,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.on.anchor_not_on_the_token_string"
     },
     {
-      "line": 157,
+      "line": 159,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "`line.replace(token, mut, 1)` \u2014 what `run_oath_v07_battery.py`, `run_oath_v09_battery.py` and",
+      "col": 26,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[18].token"
     },
     {
-      "line": 163,
+      "line": 165,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "see them. Over seeds 1 to 10 it produced 434 mutants:",
+      "col": 21,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:tamper_per_seed.G6a[0].seed"
     },
     {
-      "line": 163,
+      "line": 165,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
       "context": "see them. Over seeds 1 to 10 it produced 434 mutants:",
+      "col": 26,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:tamper_per_seed.G6a[0].on.ABSTAIN"
     },
     {
-      "line": 163,
+      "line": 165,
       "token": "434",
       "value": 434.0,
       "decimals": 0,
       "context": "see them. Over seeds 1 to 10 it produced 434 mutants:",
+      "col": 41,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 167,
+      "line": 169,
       "token": "34",
       "value": 34.0,
       "decimals": 0,
       "context": "| caught (UNGROUNDED) | 34 | 43 |",
+      "col": 24,
       "binding_context": "| | OFF | ON | | caught (UNGROUNDED) | 34 | 43 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.off_caught"
     },
     {
-      "line": 167,
+      "line": 169,
       "token": "43",
       "value": 43.0,
       "decimals": 0,
       "context": "| caught (UNGROUNDED) | 34 | 43 |",
+      "col": 29,
       "binding_context": "| | OFF | ON | | caught (UNGROUNDED) | 34 | 43 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.on_caught"
     },
     {
-      "line": 168,
+      "line": 170,
       "token": "233",
       "value": 233.0,
       "decimals": 0,
       "context": "| falsely attested (VERIFIED) | 233 | 271 |",
+      "col": 32,
       "binding_context": "| | OFF | ON | | falsely attested (VERIFIED) | 233 | 271 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.off_false"
     },
     {
-      "line": 168,
+      "line": 170,
       "token": "271",
       "value": 271.0,
       "decimals": 0,
       "context": "| falsely attested (VERIFIED) | 233 | 271 |",
+      "col": 38,
       "binding_context": "| | OFF | ON | | falsely attested (VERIFIED) | 233 | 271 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.on_false"
     },
     {
-      "line": 169,
+      "line": 171,
       "token": "167",
       "value": 167.0,
       "decimals": 0,
       "context": "| abstained | 167 | 120 |",
+      "col": 14,
       "binding_context": "| | OFF | ON | | abstained | 167 | 120 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.off_abstain"
     },
     {
-      "line": 169,
+      "line": 171,
       "token": "120",
       "value": 120.0,
       "decimals": 0,
       "context": "| abstained | 167 | 120 |",
+      "col": 20,
       "binding_context": "| | OFF | ON | | abstained | 167 | 120 |",
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6a_tamper_collision_channel.pooled.on_abstain"
     },
     {
-      "line": 171,
+      "line": 173,
       "token": "47",
       "value": 47.0,
       "decimals": 0,
       "context": "Read naively that is a safety regression: 47 abstentions became 9 catches and 38 false",
+      "col": 42,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 171,
+      "line": 173,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "Read naively that is a safety regression: 47 abstentions became 9 catches and 38 false",
+      "col": 64,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
     },
     {
-      "line": 171,
+      "line": 173,
       "token": "38",
       "value": 38.0,
       "decimals": 0,
       "context": "Read naively that is a safety regression: 47 abstentions became 9 catches and 38 false",
+      "col": 78,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 175,
+      "line": 177,
       "token": "47",
       "value": 47.0,
       "decimals": 0,
       "context": "doctored number on a line whose earlier text happened to differ would not have abstained. Those 47",
+      "col": 96,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[0].line"
     },
     {
-      "line": 180,
+      "line": 182,
       "token": "604",
       "value": 604.0,
       "decimals": 0,
       "context": "The false attestations that surface are the v0.4 debt, which v0.8 measured at 604 false",
+      "col": 78,
       "status": "VERIFIED",
       "receipt_ref": "oath_v08_fieldbind_precfix_census.json:v07_false_verified_total"
     },
     {
-      "line": 181,
+      "line": 183,
       "token": "3951",
       "value": 3951.0,
       "decimals": 0,
       "context": "attestations among the 3951 VERIFIED claims v0.7's census mutated, and closed NEGATIVE. This cycle does not widen that channel. It stops hiding part of it",
+      "col": 23,
       "status": "VERIFIED",
       "receipt_ref": "oath_v07_silentpass_census.json:verified_claims_mutated"
     },
     {
-      "line": 188,
+      "line": 190,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "On the clean misplaced roster over seeds 1 to 5 the same measurement is flat: 275 catches become",
+      "col": 41,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:tamper_per_seed.G6a[0].seed"
     },
     {
-      "line": 188,
+      "line": 190,
       "token": "5",
       "value": 5.0,
       "decimals": 0,
       "context": "On the clean misplaced roster over seeds 1 to 5 the same measurement is flat: 275 catches become",
+      "col": 46,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:tamper_per_seed.G6a[4].seed"
     },
     {
-      "line": 188,
+      "line": 190,
       "token": "275",
       "value": 275.0,
       "decimals": 0,
       "context": "On the clean misplaced roster over seeds 1 to 5 the same measurement is flat: 275 catches become",
+      "col": 78,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6b_tamper_clean_roster.pooled.off_caught"
     },
     {
-      "line": 189,
+      "line": 191,
       "token": "272",
       "value": 272.0,
       "decimals": 0,
       "context": "272, well inside the tolerance of 10 frozen in the prereg.",
+      "col": 0,
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 189,
+      "line": 191,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
       "context": "272, well inside the tolerance of 10 frozen in the prereg.",
+      "col": 34,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G6b_tamper_clean_roster.tolerance"
     },
     {
-      "line": 195,
+      "line": 197,
       "token": "199",
       "value": 199.0,
       "decimals": 0,
       "context": "the collision merges 199 rows across 177 colliding line-token pairs, leaving 5367 distinct keys for",
+      "col": 21,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_v09_keying_check.json:rows_merged_away_by_the_v09_key"
     },
     {
-      "line": 195,
+      "line": 197,
       "token": "177",
       "value": 177.0,
       "decimals": 0,
       "context": "the collision merges 199 rows across 177 colliding line-token pairs, leaving 5367 distinct keys for",
+      "col": 37,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_v09_keying_check.json:line_token_pairs_that_collide"
     },
     {
-      "line": 195,
+      "line": 197,
       "token": "5367",
       "value": 5367.0,
       "decimals": 0,
       "context": "the collision merges 199 rows across 177 colliding line-token pairs, leaving 5367 distinct keys for",
+      "col": 77,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_v09_keying_check.json:distinct_v09_style_keys_over_the_v10_corpus"
     },
     {
-      "line": 196,
+      "line": 198,
       "token": "5566",
       "value": 5566.0,
       "decimals": 0,
       "context": "5566 extracted tokens.",
+      "col": 0,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.on.tokens"
     },
     {
-      "line": 203,
+      "line": 205,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
       "context": "the number that settles it: of the merged rows, 0 hide a status different from the one that",
+      "col": 48,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G0_sweep_fidelity.frozen.col=off,guard=off.diffs"
     },
     {
-      "line": 209,
+      "line": 211,
       "token": "139",
       "value": 139.0,
       "decimals": 0,
       "context": "Across the 139 documents in the baseline frame and their 5566 tokens, the verdict column does not",
+      "col": 11,
       "status": "VERIFIED",
-      "receipt_ref": "oath_v10_battery_result.json:documents_resolvable_now"
+      "receipt_ref": "oath_v10_battery_result.json:documents_in_baseline_frame"
     },
     {
-      "line": 209,
+      "line": 211,
       "token": "5566",
       "value": 5566.0,
       "decimals": 0,
       "context": "Across the 139 documents in the baseline frame and their 5566 tokens, the verdict column does not",
+      "col": 57,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G1_anchoring.on.tokens"
     },
     {
-      "line": 210,
+      "line": 212,
       "token": "138",
       "value": 138.0,
       "decimals": 0,
       "context": "move: 138 OATH-HELD and 1 OATH-FAILED before, and the same after. No certificate changed its",
+      "col": 6,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[192].line"
     },
     {
-      "line": 210,
+      "line": 212,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
       "context": "move: 138 OATH-HELD and 1 OATH-FAILED before, and the same after. No certificate changed its",
+      "col": 24,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:certified_corpus.roster[18].token"
     },
     {
-      "line": 219,
+      "line": 221,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
       "context": "- `V10_EQUALS_SPEC_OVERREACH` \u2014 9 destroyed bindings in the certified corpus, 745 predicate",
+      "col": 32,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_battery_result.json:gates.G4_adjudicated_coverage.abstentions_destructive"
     },
     {
-      "line": 219,
+      "line": 221,
       "token": "745",
       "value": 745.0,
       "decimals": 0,
       "context": "- `V10_EQUALS_SPEC_OVERREACH` \u2014 9 destroyed bindings in the certified corpus, 745 predicate",
+      "col": 78,
       "status": "VERIFIED",
       "receipt_ref": "oath_v10_column_census.json:repo_wide.divergent_predicate_histogram.is_spec_core"
     },
     {
-      "line": 225,
+      "line": 227,
       "token": "254",
       "value": 254.0,
       "decimals": 0,
       "context": "- The 254 misplaced tokens in the certified corpus whose predicates happened to agree at both",
+      "col": 6,
       "status": "ABSTAIN",
       "receipt_ref": null
     }

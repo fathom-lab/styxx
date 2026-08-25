@@ -68,9 +68,11 @@ left. A naive `m.start()` would have traded one addressing bug for another. The 
 makes the substitution length-preserving, which is itself an extraction change — three filters in
 `extract_numbers` read the scrub positionally.
 
-Measured, and gated as G2: across all 1074 documents under `papers/`, the ON and OFF arms extract
-an identical ordered token list, 0 documents differing. Restoring length preservation buys correct
-columns without moving extraction at all.
+Measured, and gated as G2: across all 1075 documents under `papers/`, the ON and OFF arms extract
+an identical ordered token list, 0 documents differing. (One fewer at the pre-merge battery: the
+count moved when this RESULT note joined the corpus it measures — the same movement the v0.9 cycle
+recorded — and the first re-certification correctly refused the stale number.) Restoring length
+preservation buys correct columns without moving extraction at all.
 
 ## Gates
 

@@ -7,9 +7,11 @@
     "V10_TOKEN_COLUMN": true,
     "V10_SLASHPAIR_RANGE_GUARD": true
   },
-  "documents_resolvable_now": 139,
+  "documents_resolvable_now": 140,
   "documents_in_baseline_frame": 139,
-  "documents_added_since_baseline": [],
+  "documents_added_since_baseline": [
+    "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md"
+  ],
   "gates": {
     "G0_sweep_fidelity": {
       "role": "VOID CHECK \u2014 the shipped edit must be the swept edit",
@@ -101,7 +103,7 @@
     },
     "G2_extraction_invariance": {
       "role": "INVARIANCE (gated, two-armed) \u2014 the repair may move no token",
-      "documents": 1074,
+      "documents": 1075,
       "documents_extracting_differently": 0,
       "examples": [],
       "bar": 0,
@@ -688,5 +690,5 @@
     "I2": "anchoring is exact by construction \u2014 `col` is the offset the match was found at, in a string the same length as the source line. G1 is an identity check and is reported as one, not credited as a measurement."
   },
   "declared_no_credit": "G6a/G6b. This cycle claims NO tamper improvement. The false-attestation column rises (see pooled figures) and is published as the cost of pointing the windows at the right text; the abstentions it replaces were produced by windows aimed at another token and were never a safety property.",
-  "elapsed_s": 163.8
+  "elapsed_s": 152.6
 }

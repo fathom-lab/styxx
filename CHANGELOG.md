@@ -32,7 +32,7 @@ written for it and still be withheld from the tokens it was built for.
 **The precondition nobody had checked.** `re.sub(pat, " ", line)` collapses each
 sha/date/version match to ONE space, so a raw `m.start()` would have been a *new*
 wrong column on every line carrying one. The scrub is now length-preserving, and
-that is gated: across all 1074 documents the two arms extract an identical ordered
+that is gated: across all 1075 documents the two arms extract an identical ordered
 token list, **0** differing.
 
 **`V10_SLASHPAIR_RANGE_GUARD = True`.** The repair un-masks exactly one latent
