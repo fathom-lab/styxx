@@ -1,14 +1,14 @@
 {
   "purpose": "OATH v0.10 \u2014 precision/coverage sweep of table-row-ordinal detectors (measurement only; styxx/certify.py untouched)",
-  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
   "frame": {
-    "documents": 139,
-    "tokens_scored": 5566,
+    "documents": 140,
+    "tokens_scored": 5681,
     "oath_failed_documents": [
       "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
     ],
     "extraction_misaligned_documents": [],
-    "tokens_on_table_data_rows": 1783,
+    "tokens_on_table_data_rows": 1830,
     "tokens_in_first_cell": 150,
     "ungrounded_corpus_wide": 4
   },
@@ -4495,13 +4495,13 @@
     }
   },
   "exposure_census_all_papers_md": {
-    "documents_scanned": 1107,
+    "documents_scanned": 1109,
     "documents_needing_lossy_decode": 1,
     "note": "no statuses here -- these documents carry no certificate, so nothing about VERIFIED/UNGROUNDED is claimable. This sizes the CLASS a clause would reach, nothing more.",
     "per_detector": {
       "D1": {
-        "tokens": 909,
-        "documents": 196,
+        "tokens": 911,
+        "documents": 197,
         "document_list": [
           "papers/EU_AI_ACT_COMPLIANCE_2026.md",
           "papers/INDEX_behavioral_knowledge_boundary_2026_05_25.md",
@@ -5231,5 +5231,5 @@
     "the_number_that_argues_against_it": "D9 destroys 5/6/4 of the 5/6/4 catches the shipped verifier lands on its class, i.e. 100%, exactly the shape that killed V09_IS_SPEC_BAR_NOUN. What differs is measured and stated: that class is 11 tokens whose entire cell content is a row number in ONE table, and the destroyed 'catch' is the verifier noticing a row LABEL changed, not a measurement. That last step is an ADJUDICATION, not a measurement, and it is the load-bearing assumption of this recommendation.",
     "residual": "D9 reaches 155 tokens in 14 documents across all 1107 papers/ markdown files, of which only 11 tokens in 1 document sit in the certified frame today. The other 144 gain nothing measurable until those documents carry certificates."
   },
-  "elapsed_s": 13.2
+  "elapsed_s": 15.2
 }

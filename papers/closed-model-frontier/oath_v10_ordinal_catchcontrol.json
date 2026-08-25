@@ -2,7 +2,7 @@
   "purpose": "ANGLE 3 \u2014 catch-destruction control for a markdown table-row-ordinal abstention rule, measured BEFORE the clause is written.",
   "doctrine": "PREREG_oath_v09_is_spec_json_idiom_2026_08_23.md dropped the prose bar-noun clause because it took the CATCH column to zero at every seed. Any abstention rule is under the same suspicion until its catch cost is measured.",
   "verifier_untouched": true,
-  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
   "mutation_operator": "run_oath_v09_battery.mutate_sig (imported, not copied)",
   "substitution": "run_oath_v09_battery.substitute (sign-aware, imported, not copied)",
   "seeds": [
@@ -18,8 +18,8 @@
     10
   ],
   "frame": {
-    "documents_with_resolvable_receipts": 139,
-    "ledger_tokens_total": 5566,
+    "documents_with_resolvable_receipts": 140,
+    "ledger_tokens_total": 5681,
     "roster_broad": 123,
     "roster_header_gated": 11,
     "roster_ordinal_sequence": 22,
@@ -5486,5 +5486,5 @@
   "asserted_identity_not_a_measurement": {
     "I1": "The ON arm's caught/false-attested columns on the mutated class token are 0 BY CONSTRUCTION: the override predicate reads document structure only, and a one-significant-digit substitution preserves both the token's length and the cell's shape, so an abstained token stays abstained. `override_missed_mutant` is the audit of that identity, and it is 0 where the identity holds. Reporting ON=0 as a tamper result would launder an identity as a finding."
   },
-  "elapsed_s": 74.2
+  "elapsed_s": 76.1
 }

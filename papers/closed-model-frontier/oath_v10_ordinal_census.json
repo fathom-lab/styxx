@@ -1,29 +1,29 @@
 {
   "purpose": "OATH v0.10 angle 1 \u2014 size of the markdown-table row-ordinal class and the shipped verifier's treatment of it. MEASUREMENT ONLY; styxx/certify.py untouched.",
-  "generated_at_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "generated_at_verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
   "replication_control": {
-    "documents_checked": 1246,
+    "documents_checked": 1249,
     "extractor_mismatches_vs_live_extract_numbers": 0,
     "note": "0 is the licence to read the rest of this file"
   },
   "frame": {
     "repo_wide": "papers/**/*.md excluding anc/",
-    "markdown_documents_scanned": 1107,
+    "markdown_documents_scanned": 1109,
     "certified": "papers/** documents carrying a *.certificate.json (no anc/) whose recorded receipts ALL resolve",
-    "resolvable_documents": 139,
-    "corpus_tokens": 5566,
+    "resolvable_documents": 140,
+    "corpus_tokens": 5681,
     "corpus_status_counts": {
-      "ABSTAIN": 1471,
-      "VERIFIED": 4091,
+      "ABSTAIN": 1481,
+      "VERIFIED": 4196,
       "UNGROUNDED": 4
     }
   },
   "class_size": {
     "definition": "a numeric token of extract_numbers whose column falls inside the FIRST cell of a markdown table DATA row, where 'data row' is exactly what certify.py's header machinery calls one (a _TABLE_SEP line preceded by a '|' line, then every following '|' line)",
-    "repo_wide_tokens": 909,
-    "repo_wide_documents": 196,
-    "repo_wide_tables": 998,
-    "repo_wide_tables_with_candidates": 240,
+    "repo_wide_tokens": 911,
+    "repo_wide_documents": 197,
+    "repo_wide_tables": 1004,
+    "repo_wide_tables_with_candidates": 241,
     "certified_corpus_tokens": 150,
     "certified_corpus_documents": 36,
     "sole_token_cells": {
@@ -367,7 +367,7 @@
       "ABSTAIN": 3,
       "UNGROUNDED": 4
     },
-    "share_of_corpus_tokens": 0.026949,
+    "share_of_corpus_tokens": 0.026404,
     "ungrounded_rows": [
       {
         "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
@@ -2732,6 +2732,7 @@
       "gate": 3,
       "cycle": 2,
       "guard": 2,
+      "frame": 2,
       "metric (regime-matched, leakage-free)": 2,
       "item": 2,
       "verdict": 2,
@@ -2955,8 +2956,8 @@
     ]
   },
   "shape": {
-    "tables_with_candidates": 240,
-    "tables_all_rows_first_cell_numeric": 94,
+    "tables_with_candidates": 241,
+    "tables_all_rows_first_cell_numeric": 95,
     "tables_strictly_increasing_int": 51,
     "tables_exactly_1_to_n": 20,
     "tables_all_rows_sole_token": 56,
@@ -2973,7 +2974,7 @@
       "ordinal_header_and_1_to_n": 12,
       "ordinal_header_not_1_to_n": 31,
       "other_header_and_1_to_n": 8,
-      "other_header_not_1_to_n": 189
+      "other_header_not_1_to_n": 190
     },
     "headers_of_1_to_n_tables": {
       "#": 10,
@@ -9143,6 +9144,82 @@
         "header_is_ordinal_vocab": true
       },
       {
+        "header": "| frame | tokens | misplaced | share |",
+        "first_col_header": "frame",
+        "first_col_header_raw": "frame",
+        "n_data_rows": 2,
+        "n_rows_first_cell_numeric": 2,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": true,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [
+          1073.0,
+          139.0
+        ],
+        "rows": [
+          33,
+          34
+        ],
+        "rel": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 32,
+        "n_candidate_tokens": 2,
+        "header_is_ordinal_vocab": false
+      },
+      {
+        "header": "| predicate | tokens where the two anchors disagree |",
+        "first_col_header": "predicate",
+        "first_col_header_raw": "predicate",
+        "n_data_rows": 10,
+        "n_rows_first_cell_numeric": 0,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": false,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [],
+        "rows": [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "rel": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 41,
+        "n_candidate_tokens": 0,
+        "header_is_ordinal_vocab": false
+      },
+      {
+        "header": "| flags | ledger rows differing from the baseline | verdict flips |",
+        "first_col_header": "flags",
+        "first_col_header_raw": "flags",
+        "n_data_rows": 4,
+        "n_rows_first_cell_numeric": 0,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": false,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [],
+        "rows": [
+          154,
+          155,
+          156,
+          157
+        ],
+        "rel": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 153,
+        "n_candidate_tokens": 0,
+        "header_is_ordinal_vocab": false
+      },
+      {
         "header": "| bar | gate | result | PASS |",
         "first_col_header": "bar",
         "first_col_header_raw": "bar",
@@ -9527,6 +9604,86 @@
         "table_sep": 57,
         "n_candidate_tokens": 0,
         "header_is_ordinal_vocab": false
+      },
+      {
+        "header": "| predicate | tokens whose two anchors disagree |",
+        "first_col_header": "predicate",
+        "first_col_header_raw": "predicate",
+        "n_data_rows": 10,
+        "n_rows_first_cell_numeric": 0,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": false,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [],
+        "rows": [
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "rel": "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 34,
+        "n_candidate_tokens": 0,
+        "header_is_ordinal_vocab": false
+      },
+      {
+        "header": "| gate | role | bar | ON | OFF | verdict |",
+        "first_col_header": "gate",
+        "first_col_header_raw": "gate",
+        "n_data_rows": 10,
+        "n_rows_first_cell_numeric": 0,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": false,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [],
+        "rows": [
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90
+        ],
+        "rel": "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 80,
+        "n_candidate_tokens": 0,
+        "header_is_ordinal_vocab": false
+      },
+      {
+        "header": "| | OFF | ON |",
+        "first_col_header": "",
+        "first_col_header_raw": "",
+        "n_data_rows": 3,
+        "n_rows_first_cell_numeric": 0,
+        "n_rows_first_cell_sole_token": 0,
+        "all_rows_numeric": false,
+        "all_rows_sole_token": false,
+        "strict_1_to_n": false,
+        "strict_increasing_int": false,
+        "sequence": [],
+        "rows": [
+          169,
+          170,
+          171
+        ],
+        "rel": "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md",
+        "table_sep": 168,
+        "n_candidate_tokens": 0,
+        "header_is_ordinal_vocab": true
       },
       {
         "header": "| Concept | Positive source | Negative source | Label mode |",
@@ -47459,6 +47616,34 @@
       "sole_token_in_cell": false,
       "ordinal_shaped": false,
       "context": "| `3.14159` (5 dp, below threshold) | `CHANGELOG.md` L4006 | **ARTIFACT** if ever obligated \u2014 \u03c0 in a worked example |"
+    },
+    {
+      "rel": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+      "doc": "PREREG_oath_v10_token_column_2026_08_23.md",
+      "line": 33,
+      "token": "1,073",
+      "value": 1073.0,
+      "decimals": 0,
+      "table_sep": 32,
+      "first_col_header": "frame",
+      "first_col_header_raw": "frame",
+      "sole_token_in_cell": false,
+      "ordinal_shaped": false,
+      "context": "| all 1,073 documents under `papers/` | 48,097 | **4,612** | **9.589%**, across 841 documents |"
+    },
+    {
+      "rel": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+      "doc": "PREREG_oath_v10_token_column_2026_08_23.md",
+      "line": 34,
+      "token": "139",
+      "value": 139.0,
+      "decimals": 0,
+      "table_sep": 32,
+      "first_col_header": "frame",
+      "first_col_header_raw": "frame",
+      "sole_token_in_cell": false,
+      "ordinal_shaped": false,
+      "context": "| the 139 documents whose receipts all resolve | 5,566 | **349** | 6.27% |"
     },
     {
       "rel": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",

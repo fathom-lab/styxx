@@ -2,7 +2,7 @@
   "purpose": "RED TEAM: the false-positive surface of a markdown table row-ordinal detector, plus the mandatory catch-destruction control.",
   "angle": "4 — adversarial",
   "certify_untouched": true,
-  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
   "detector_definitions": {
     "D1": "ANY numeric token in the first cell of a markdown table data row -> ABSTAIN.",
     "D2": "D1 restricted to integer tokens (decimals == 0).",
@@ -23,31 +23,31 @@
     10
   ],
   "corpus": {
-    "resolvable_certified_documents": 139,
-    "all_markdown_under_papers": 1107
+    "resolvable_certified_documents": 140,
+    "all_markdown_under_papers": 1109
   },
   "positive_control": {
     "what": "extract_with_cells() vs the live extract_numbers(), sequence of (line, token, value, decimals) over every resolvable document",
-    "tokens_compared": 5566,
+    "tokens_compared": 5681,
     "documents_differing": 0,
     "differing_examples": [],
     "verdict": "REPLICATION EXACT"
   },
   "table_census": {
-    "tables": 1008,
+    "tables": 1014,
     "tables_without_a_separator_row": 10,
     "tables_without_a_header_row": 37,
     "tables_with_more_than_one_separator_row": 27,
     "unreadable_documents": [
       "papers/DEPOSIT_frame_locality_2026_07_28.md"
     ],
-    "first_columns_carrying_numbers": 385,
+    "first_columns_carrying_numbers": 386,
     "consecutive_integer_run_columns": 18,
-    "non_ordinal_numeric_first_columns": 367
+    "non_ordinal_numeric_first_columns": 368
   },
   "false_positive_surface": {
     "parameter_like_first_columns": {
-      "n": 364,
+      "n": 365,
       "roster": [
         {
           "doc": "papers/adversarial-robustness/FINDING_redteam_2026_05_25.md",
@@ -1070,6 +1070,17 @@
             "`0.9918699186991871`",
             "`0.00648` (5 dp, below threshold)",
             "`3.14159` (5 dp, below threshold)"
+          ],
+          "header_matches_parameter_vocab": false
+        },
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v10_token_column_2026_08_23.md",
+          "table_line": 31,
+          "header": "frame",
+          "rows": 2,
+          "first_cells": [
+            "all 1,073 documents under `papers/`",
+            "the 139 documents whose receipts all resolve"
           ],
           "header_matches_parameter_vocab": false
         },
@@ -5090,8 +5101,8 @@
     "first_cell_shapes": {
       "counts": {
         "letter-prefixed (L27 / s0 / sub-008)": 230,
-        "multi-part (8 (0.5) / >=3/7 / alpha=1.0)": 368,
-        "other numeric-bearing": 492,
+        "multi-part (8 (0.5) / >=3/7 / alpha=1.0)": 369,
+        "other numeric-bearing": 493,
         "bare small integer": 196,
         "float": 78,
         "unit-suffixed (3B / 8M)": 1
@@ -9618,11 +9629,11 @@
   },
   "corpus_wide_firing_surface": {
     "what": "tokens each detector would ABSTAIN across every markdown document under papers/ (not only the 139 certified ones), grouped by first-column header. Receipts are not consulted; this is the surface, not the ledger cost.",
-    "documents": 1107,
-    "first_cell_tokens_in_table_data_rows": 911,
+    "documents": 1109,
+    "first_cell_tokens_in_table_data_rows": 913,
     "fires_by_detector": {
-      "D1": 911,
-      "D2": 659,
+      "D1": 913,
+      "D2": 661,
       "D3": 333,
       "D4": 142,
       "D5": 128
@@ -9712,6 +9723,7 @@
         "cycle": 2,
         "Q": 2,
         "guard": 2,
+        "frame": 2,
         "metric (regime-matched, leakage-free)": 2,
         "item": 2,
         "verdict": 2,
@@ -9811,6 +9823,7 @@
         "prediction": 2,
         "guard": 2,
         "token": 2,
+        "frame": 2,
         "item": 2,
         "outcome": 2,
         "verdict": 2,
@@ -10731,5 +10744,5 @@
     },
     "recommendation_to_the_orchestrator": "Do not abstain first-cell table tokens on POSITION. If the PROSPECTUS is to be repaired, the measured options are (a) a header-gated rule, which costs zero coverage here but is a convention with a measured catch price and no reach into the 37 header-less tables, or (b) repair the document — the row numbers are not claims and the table would carry the same information without them. Option (b) costs the instrument nothing, and the instrument is the thing under test."
   },
-  "elapsed_sec": 33.5
+  "elapsed_sec": 37.0
 }
