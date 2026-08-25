@@ -18,12 +18,17 @@ Two things are locked here:
     certificate can flip HELD -> FAILED. I1 holds by ladder construction, which is exactly why the
     prereg asserts it here instead of gating on it — a leg that cannot fail must not gate.
 """
+import importlib
 import json
 
 import pytest
 
-import styxx.certify as C
-from styxx.certify import certify_doc
+# importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is
+# the provenance FUNCTION (styxx/__init__.py), and `import ... as` binds the attribute
+# when it exists — module alone, function mid-suite. Same class ae45aaa fixed for v0.9;
+# this file was the last one still binding the attribute (CI run 32726760278, 9 failed).
+C = importlib.import_module("styxx.certify")
+from styxx.certify import certify_doc  # noqa: E402
 
 DOC = """# t
 
