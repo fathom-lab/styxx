@@ -1,0 +1,694 @@
+{
+  "prereg": "PREREG_oath_v10_token_column_2026_08_23.md",
+  "verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
+  "baseline_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "census_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "shipped_flags": {
+    "V10_TOKEN_COLUMN": true,
+    "V10_SLASHPAIR_RANGE_GUARD": true
+  },
+  "documents_resolvable_now": 140,
+  "documents_in_baseline_frame": 139,
+  "documents_added_since_baseline": [
+    "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md"
+  ],
+  "gates": {
+    "G0_sweep_fidelity": {
+      "role": "VOID CHECK \u2014 the shipped edit must be the swept edit",
+      "frozen": {
+        "col=off,guard=off": {
+          "diffs": 0,
+          "flips": 0
+        },
+        "col=off,guard=on": {
+          "diffs": 0,
+          "flips": 0
+        },
+        "col=on,guard=off": {
+          "diffs": 45,
+          "flips": 1
+        },
+        "col=on,guard=on": {
+          "diffs": 44,
+          "flips": 0
+        }
+      },
+      "observed": {
+        "col=off,guard=off": {
+          "diffs": 0,
+          "flips": 0
+        },
+        "col=off,guard=on": {
+          "diffs": 0,
+          "flips": 0
+        },
+        "col=on,guard=off": {
+          "diffs": 45,
+          "flips": 1
+        },
+        "col=on,guard=on": {
+          "diffs": 44,
+          "flips": 0
+        }
+      },
+      "frozen_split": {
+        "ABSTAIN->VERIFIED": 27,
+        "VERIFIED->ABSTAIN": 17
+      },
+      "observed_split": {
+        "VERIFIED->ABSTAIN": 17,
+        "ABSTAIN->VERIFIED": 27
+      },
+      "pass": true
+    },
+    "G1_anchoring": {
+      "role": "ANCHORING (gated, two-armed)",
+      "on": {
+        "tokens": 5566,
+        "misplaced": 0,
+        "anchor_not_on_the_token_string": 0,
+        "examples": []
+      },
+      "off": {
+        "tokens": 5566,
+        "misplaced": 349,
+        "anchor_not_on_the_token_string": 0,
+        "examples": [
+          "FINDING_adjudicated_loop_2026_07_24.md|L47|0.05|at=53|true=62",
+          "FINDING_adjudicated_loop_2026_07_24.md|L49|0.8125|at=31|true=40",
+          "FINDING_adjudicated_loop_2026_07_24.md|L66|2|at=24|true=77",
+          "FINDING_combined_signal_2026_07_26.md|L26|10|at=8|true=21",
+          "FINDING_combined_signal_2026_07_26.md|L26|20|at=63|true=96",
+          "FINDING_combined_signal_2026_07_26.md|L41|10|at=15|true=57",
+          "FINDING_combined_signal_2026_07_26.md|L53|77|at=45|true=96",
+          "FINDING_combined_signal_2026_07_26.md|L89|20|at=0|true=18",
+          "FINDING_combined_signal_2026_07_26.md|L89|10|at=31|true=65",
+          "FINDING_combined_signal_2026_07_26.md|L89|10|at=31|true=70",
+          "FINDING_combined_signal_2026_07_26.md|L89|20|at=0|true=85",
+          "FINDING_competent_agent_2026_07_24.md|L29|50|at=14|true=30",
+          "FINDING_competent_agent_2026_07_24.md|L34|36|at=45|true=66",
+          "FINDING_competent_agent_2026_07_24.md|L46|36|at=21|true=27",
+          "FINDING_conscience_loop_2026_07_24.md|L48|0.0854|at=29|true=38",
+          "FINDING_conscience_loop_2026_07_24.md|L50|0.9545|at=29|true=38",
+          "FINDING_conscience_loop_2026_07_24.md|L60|0.0854|at=77|true=86",
+          "FINDING_conscience_loop_2026_07_24.md|L95|3|at=8|true=68",
+          "FINDING_cot_inward_powered_2026_07_30.md|L16|1|at=11|true=25",
+          "FINDING_frame_recovery_2026_07_24.md|L49|1.0|at=27|true=88"
+        ]
+      },
+      "bar_on": 0,
+      "frozen_off": 349,
+      "on_improves_off": true,
+      "pass": true
+    },
+    "G2_extraction_invariance": {
+      "role": "INVARIANCE (gated, two-armed) \u2014 the repair may move no token",
+      "documents": 1075,
+      "documents_extracting_differently": 0,
+      "examples": [],
+      "bar": 0,
+      "pass": true
+    },
+    "G3_no_new_accusation": {
+      "role": "SAFETY (gated)",
+      "new_ungrounded": [],
+      "new_oath_failed_documents": [],
+      "bar": 0,
+      "pass": true
+    },
+    "G4_adjudicated_coverage": {
+      "role": "COVERAGE (gated, hand-adjudicated, ties against the change)",
+      "restorations": 27,
+      "restorations_correct": 23,
+      "restorations_wrong": 0,
+      "bar_correct": 20,
+      "bar_wrong": 0,
+      "abstentions": 17,
+      "abstentions_destructive": 9,
+      "bar_destructive": 10,
+      "destructive_not_explained_by_equals_clause": [],
+      "unadjudicated": [],
+      "rows": [
+        {
+          "key": "FINDING_combined_signal_2026_07_26.md|26|20|13",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "v05-notation"
+        },
+        {
+          "key": "FINDING_combined_signal_2026_07_26.md|89|20|60",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "v05-notation"
+        },
+        {
+          "key": "FINDING_conscience_loop_2026_07_24.md|60|0.0854|47",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_scale_channel_2026_07_24.md|30|0.05|15",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_self_verification_2026_07_25.md|94|74|52",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": null
+        },
+        {
+          "key": "FINDING_verifier_at_7b_2026_07_27.md|22|0.75|5",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "verifier_7b_result.json:frozen_gates.G1_FLOOR"
+        },
+        {
+          "key": "FINDING_protocol_metric_identity_2026_08_07.md|11|0|1",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "protocol_metric_identity_result.json:verdict_string_diffs"
+        },
+        {
+          "key": "FINDING_protocol_metric_identity_2026_08_07.md|12|1|3",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "protocol_metric_identity_result.json:missing_paths_detected"
+        },
+        {
+          "key": "FINDING_protocol_metric_identity_2026_08_07.md|13|1|5",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "protocol_metric_identity_result.json:real_result_paths_all_present"
+        },
+        {
+          "key": "FINDING_protocol_metric_identity_2026_08_07.md|21|1|7",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_protocol_power_basis_invalid_2026_08_07.md|12|1|5",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "protocol_power_basis_result.json:declared_prereg_scores_under_strict"
+        },
+        {
+          "key": "FINDING_protocol_power_basis_invalid_2026_08_07.md|13|0|7",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "protocol_power_basis_result.json:verdict_string_diffs"
+        },
+        {
+          "key": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md|7|5|2",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md|13|5|0",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md|75|1|88",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "b2_subspace_erasure_result.json:seeds[1]"
+        },
+        {
+          "key": "RESULT_attack_sentiment_r64_2026_07_09.md|28|0.65|40",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "QUESTIONABLE",
+          "pre_ends_equals": false,
+          "receipt_ref": "attack_sentiment_wholestack_result_r64.json:points[0].naive_relock_auroc"
+        },
+        {
+          "key": "RESULT_attack_sentiment_r64_2026_07_09.md|28|0|39",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "attack_sentiment_wholestack_result_r64.json:seeds[0]"
+        },
+        {
+          "key": "RESULT_attack_sentiment_wholestack_2026_07_09.md|28|0.60|34",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "QUESTIONABLE",
+          "pre_ends_equals": false,
+          "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+        },
+        {
+          "key": "RESULT_honesty_parity_confirm_2026_07_11.md|48|1|87",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "RESULT_honesty_parity_confirm_llama_2026_07_12.md|45|0|75",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "honesty_parity_confirm_llama_result.json:n_stands_cells"
+        },
+        {
+          "key": "FINDING_b22_nonacknowledged_caving_2026_06_09.md|24|0.284|33",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_b22_nonacknowledged_caving_2026_06_09.md|24|0.500|28",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_b22_nonacknowledged_caving_2026_06_09.md|75|1.0|65",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md|45|0|33",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "QUESTIONABLE",
+          "pre_ends_equals": false,
+          "receipt_ref": "b24_headtohead_result.json:seed"
+        },
+        {
+          "key": "RESULT_oath_v07_SHIPPED_2026_08_22.md|30|7|9",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDINGS_rhythm_substrate_2026_06_03.md|40|20|28",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "ssm_contrast_raw.json:n_dyn"
+        },
+        {
+          "key": "FINDING_fame_vs_truth_2026_05_25.md|18|1.00|12",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+        },
+        {
+          "key": "FINDING_fame_vs_truth_2026_05_25.md|18|1.00|8",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+        },
+        {
+          "key": "FINDING_b34v3_labelfree_read_2026_08_03.md|42|2|31",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_b42_dose_curve_2026_08_05.md|41|1|42",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_b45_frame_geometry_2026_08_06.md|14|5|3",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "QUESTIONABLE",
+          "pre_ends_equals": false,
+          "receipt_ref": "b45_result.json:seeds_qwen_below_clique_k20"
+        },
+        {
+          "key": "FINDING_b45_frame_geometry_2026_08_06.md|14|5|4",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "b45_result.json:seeds_qwen_below_clique_k20"
+        },
+        {
+          "key": "FINDING_b48_invalid_null_bar_2026_08_06.md|20|45|4",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "b48_result.json:n_pairs"
+        },
+        {
+          "key": "FINDING_b50_no_legibility_islands_2026_08_08.md|12|45|1",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "b50_result.json:n_pairs"
+        },
+        {
+          "key": "FINDING_c1_instrument_blind_to_isc_2026_08_06.md|13|21|1",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "c1_result.json:n_pairs"
+        },
+        {
+          "key": "FINDING_h1a_human_single_clique_2026_08_06.md|13|8|1",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "h1a_result.json:n_members"
+        },
+        {
+          "key": "FINDING_h1b_no_unreadable_minds_2026_08_06.md|13|8|2",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "h1b_result.json:n_subjects"
+        },
+        {
+          "key": "FINDING_p1_third_quarantine_2026_08_08.md|26|0.05|9",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "p1_redteam_audit.json:measured_by_this_lab.order_stat_bar_corrected_bar"
+        },
+        {
+          "key": "FINDING_p1_third_quarantine_2026_08_08.md|84|24|49",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.reachable_rejects_own_corrected_bar_count"
+        },
+        {
+          "key": "RESULT_E2_strong_attacker_2026_07_07.md|65|1|49",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "e2_result.json:seeds[1]"
+        },
+        {
+          "key": "RESULT_E3PRIME_bite_verification_2026_07_07.md|60|1|35",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "e3prime_result.json:seeds[1]"
+        },
+        {
+          "key": "RESULT_E3_adaptive_STANDS_2026_07_04.md|21|1|20",
+          "transition": "ABSTAIN->VERIFIED",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "e3_result.json:seeds[1]"
+        },
+        {
+          "key": "RESULT_foundation_2026_07_04.md|16|0.80|7",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "CORRECT",
+          "pre_ends_equals": false,
+          "receipt_ref": "spec-or-historical"
+        },
+        {
+          "key": "FINDING_portable_conscience_v0_2026_06_10.md|29|1.000|11",
+          "transition": "VERIFIED->ABSTAIN",
+          "adjudication": "DESTRUCTIVE",
+          "pre_ends_equals": true,
+          "receipt_ref": "spec-or-historical"
+        }
+      ],
+      "pass": true
+    },
+    "G5_severability": {
+      "role": "SEVERABILITY (gated, two bars)",
+      "both_off_ledger_differences": 0,
+      "guard_only_ledger_differences": 0,
+      "bar": 0,
+      "pass": true
+    },
+    "G6a_tamper_collision_channel": {
+      "role": "TAMPER, NO-CREDIT (gated against regression only)",
+      "pooled": {
+        "n": 434,
+        "off_caught": 34,
+        "on_caught": 43,
+        "off_false": 233,
+        "on_false": 271,
+        "off_abstain": 167,
+        "on_abstain": 120
+      },
+      "pass": true
+    },
+    "G6b_tamper_clean_roster": {
+      "role": "TAMPER, NO-CREDIT (gated against regression only)",
+      "n_roster": 349,
+      "pooled": {
+        "off_caught": 275,
+        "on_caught": 272,
+        "off_false": 341,
+        "on_false": 348
+      },
+      "pooled_abs_delta": 3,
+      "tolerance": 10,
+      "pass": true
+    }
+  },
+  "tamper_per_seed": {
+    "G6a": [
+      {
+        "seed": 1,
+        "n_collide": 52,
+        "off": {
+          "VERIFIED": 34,
+          "ABSTAIN": 17,
+          "UNGROUNDED": 1
+        },
+        "on": {
+          "VERIFIED": 39,
+          "ABSTAIN": 10,
+          "UNGROUNDED": 3
+        }
+      },
+      {
+        "seed": 2,
+        "n_collide": 54,
+        "off": {
+          "ABSTAIN": 20,
+          "UNGROUNDED": 7,
+          "VERIFIED": 27
+        },
+        "on": {
+          "VERIFIED": 32,
+          "UNGROUNDED": 9,
+          "ABSTAIN": 13
+        }
+      },
+      {
+        "seed": 3,
+        "n_collide": 42,
+        "off": {
+          "VERIFIED": 21,
+          "UNGROUNDED": 3,
+          "ABSTAIN": 18
+        },
+        "on": {
+          "VERIFIED": 23,
+          "UNGROUNDED": 4,
+          "ABSTAIN": 15
+        }
+      },
+      {
+        "seed": 4,
+        "n_collide": 42,
+        "off": {
+          "VERIFIED": 22,
+          "ABSTAIN": 18,
+          "UNGROUNDED": 2
+        },
+        "on": {
+          "VERIFIED": 26,
+          "ABSTAIN": 15,
+          "UNGROUNDED": 1
+        }
+      },
+      {
+        "seed": 5,
+        "n_collide": 45,
+        "off": {
+          "ABSTAIN": 18,
+          "UNGROUNDED": 4,
+          "VERIFIED": 23
+        },
+        "on": {
+          "ABSTAIN": 10,
+          "UNGROUNDED": 5,
+          "VERIFIED": 30
+        }
+      },
+      {
+        "seed": 6,
+        "n_collide": 30,
+        "off": {
+          "ABSTAIN": 12,
+          "VERIFIED": 17,
+          "UNGROUNDED": 1
+        },
+        "on": {
+          "ABSTAIN": 8,
+          "VERIFIED": 20,
+          "UNGROUNDED": 2
+        }
+      },
+      {
+        "seed": 7,
+        "n_collide": 49,
+        "off": {
+          "VERIFIED": 28,
+          "UNGROUNDED": 3,
+          "ABSTAIN": 18
+        },
+        "on": {
+          "VERIFIED": 31,
+          "UNGROUNDED": 5,
+          "ABSTAIN": 13
+        }
+      },
+      {
+        "seed": 8,
+        "n_collide": 43,
+        "off": {
+          "ABSTAIN": 21,
+          "VERIFIED": 20,
+          "UNGROUNDED": 2
+        },
+        "on": {
+          "ABSTAIN": 16,
+          "VERIFIED": 25,
+          "UNGROUNDED": 2
+        }
+      },
+      {
+        "seed": 9,
+        "n_collide": 35,
+        "off": {
+          "VERIFIED": 20,
+          "UNGROUNDED": 4,
+          "ABSTAIN": 11
+        },
+        "on": {
+          "VERIFIED": 22,
+          "UNGROUNDED": 5,
+          "ABSTAIN": 8
+        }
+      },
+      {
+        "seed": 10,
+        "n_collide": 42,
+        "off": {
+          "ABSTAIN": 14,
+          "UNGROUNDED": 7,
+          "VERIFIED": 21
+        },
+        "on": {
+          "UNGROUNDED": 7,
+          "VERIFIED": 23,
+          "ABSTAIN": 12
+        }
+      }
+    ],
+    "G6b": [
+      {
+        "seed": 1,
+        "off": {
+          "ABSTAIN": 223,
+          "VERIFIED": 63,
+          "UNGROUNDED": 63
+        },
+        "on": {
+          "ABSTAIN": 226,
+          "VERIFIED": 63,
+          "UNGROUNDED": 60
+        }
+      },
+      {
+        "seed": 2,
+        "off": {
+          "ABSTAIN": 230,
+          "VERIFIED": 60,
+          "UNGROUNDED": 59
+        },
+        "on": {
+          "ABSTAIN": 227,
+          "VERIFIED": 64,
+          "UNGROUNDED": 58
+        }
+      },
+      {
+        "seed": 3,
+        "off": {
+          "ABSTAIN": 227,
+          "VERIFIED": 71,
+          "UNGROUNDED": 51
+        },
+        "on": {
+          "ABSTAIN": 225,
+          "VERIFIED": 71,
+          "UNGROUNDED": 53
+        }
+      },
+      {
+        "seed": 4,
+        "off": {
+          "VERIFIED": 67,
+          "ABSTAIN": 230,
+          "UNGROUNDED": 52
+        },
+        "on": {
+          "VERIFIED": 70,
+          "ABSTAIN": 229,
+          "UNGROUNDED": 50
+        }
+      },
+      {
+        "seed": 5,
+        "off": {
+          "ABSTAIN": 219,
+          "VERIFIED": 80,
+          "UNGROUNDED": 50
+        },
+        "on": {
+          "ABSTAIN": 218,
+          "VERIFIED": 80,
+          "UNGROUNDED": 51
+        }
+      }
+    ]
+  },
+  "asserted_invariants_not_gated": {
+    "I1": "`col` is a new key on each ledger entry; no existing key changes value or type. seal.py, corpus_audit.py and the suite read status/line/token only.",
+    "I2": "anchoring is exact by construction \u2014 `col` is the offset the match was found at, in a string the same length as the source line. G1 is an identity check and is reported as one, not credited as a measurement."
+  },
+  "declared_no_credit": "G6a/G6b. This cycle claims NO tamper improvement. The false-attestation column rises (see pooled figures) and is published as the cost of pointing the windows at the right text; the abstentions it replaces were produced by windows aimed at another token and were never a safety property.",
+  "elapsed_s": 152.6
+}

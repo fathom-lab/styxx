@@ -1,0 +1,16 @@
+{
+  "purpose": "v0.10 observation about the v0.9 harness (PREREG_oath_v10_token_column_2026_08_23)",
+  "v09_baseline_sha256": "93e17680a642c5a86731bbb52f50eed1a46e7bceea6f560e7ebe5eb438ee9447",
+  "v10_baseline_sha256": "fcdc6b36ea77404a6335c5181be7a934bced4d544a152b7a35d76f15c88003e2",
+  "v09_key_format": "<doc>|L<line>|<token>",
+  "v10_key_format": "<doc>|L<line>|<token>|#<ledger ordinal>",
+  "v09_documents": 137,
+  "v09_rows_recorded": 5274,
+  "v10_documents": 139,
+  "v10_rows_recorded": 5566,
+  "distinct_v09_style_keys_over_the_v10_corpus": 5367,
+  "rows_merged_away_by_the_v09_key": 199,
+  "line_token_pairs_that_collide": 177,
+  "collisions_hiding_a_DIFFERENT_status": 0,
+  "note": "This is an observation about the v0.9 HARNESS, not a re-opening of its verdict. Both v0.9 clauses are demote-only and its G5 read zero, but it read zero over a ledger that had already merged these rows."
+}

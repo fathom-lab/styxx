@@ -1,0 +1,3818 @@
+{
+  "purpose": "v0.10 pre-fix census (PREREG_oath_v10_token_column_2026_08_23)",
+  "generated_at_verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "repo_wide": {
+    "documents": 1073,
+    "tokens": 48097,
+    "misplaced": 4612,
+    "misplaced_pct": 9.589,
+    "documents_affected": 841,
+    "tokens_not_anchored_at_true_column": 0,
+    "divergent_predicate_histogram": {
+      "slash_pair": 865,
+      "is_spec_core": 745,
+      "n_eq": 124,
+      "unit_kw": 73,
+      "unit_range": 27,
+      "bar_noun_post": 20,
+      "at_param": 14,
+      "json_bar_key": 2,
+      "sign_kw": 2,
+      "derived_pct": 1
+    },
+    "worst_documents": [
+      [
+        "papers/PROGRAM_BACKLOG.md",
+        353
+      ],
+      [
+        "papers/closed-model-frontier/RESULT_oath_v062_SHIPPED_2026_07_31.md",
+        149
+      ],
+      [
+        "papers/PAPER_recursive_discipline_2026_05_27.md",
+        92
+      ],
+      [
+        "papers/EU_AI_ACT_COMPLIANCE_2026.md",
+        69
+      ],
+      [
+        "papers/closed-model-frontier/DRAFT_oath_v09_integer_count_binding_audit.md",
+        62
+      ],
+      [
+        "papers/sycophancy-target-gate/DIAGNOSIS_2026_05_24.md",
+        54
+      ],
+      [
+        "papers/cognitive-metrology-v1.md",
+        33
+      ],
+      [
+        "papers/PAPER_decorrelation_ceiling_2026_05_27.md",
+        32
+      ],
+      [
+        "papers/conscience-mount/FINDING_mount_cot_ablation_b36_2026_06_14.md",
+        31
+      ],
+      [
+        "papers/agent-self-audit/FINDING_agent_claim_audit_2026_05_28.md",
+        30
+      ]
+    ]
+  },
+  "scrub_offset_check": {
+    "shipped_substitution": "re.sub(pat, ' ', line) \u2014 collapses each match to ONE space",
+    "length_preserving_substitution": "re.sub(pat, lambda m: ' ' * len(m.group(0)), line)",
+    "shipped_is_length_preserving": false,
+    "lines_where_length_preservation_changes_the_extracted_sequence": 0,
+    "note": "0 means the length-preserving scrub is inert for extraction across the whole papers/ corpus, so the offset repair buys its correct columns without changing which tokens are extracted"
+  },
+  "certified_corpus": {
+    "documents": 139,
+    "tokens": 5566,
+    "misplaced": 349,
+    "misplaced_with_a_divergent_predicate": 95,
+    "shipped_status_of_roster": {
+      "VERIFIED": 225,
+      "ABSTAIN": 124
+    },
+    "roster": [
+      {
+        "rel": "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+        "line": 47,
+        "token": "0.05",
+        "ledger_index": 35,
+        "find_at": 53,
+        "true_at": 62,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+        "line": 49,
+        "token": "0.8125",
+        "ledger_index": 41,
+        "find_at": 31,
+        "true_at": 40,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+        "line": 66,
+        "token": "2",
+        "ledger_index": 52,
+        "find_at": 24,
+        "true_at": 77,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 26,
+        "token": "10",
+        "ledger_index": 11,
+        "find_at": 8,
+        "true_at": 21,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 26,
+        "token": "20",
+        "ledger_index": 13,
+        "find_at": 63,
+        "true_at": 96,
+        "divergent_predicates": [
+          "at_param"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 41,
+        "token": "10",
+        "ledger_index": 26,
+        "find_at": 15,
+        "true_at": 57,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 53,
+        "token": "77",
+        "ledger_index": 32,
+        "find_at": 45,
+        "true_at": 96,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "20",
+        "ledger_index": 56,
+        "find_at": 0,
+        "true_at": 18,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "10",
+        "ledger_index": 58,
+        "find_at": 31,
+        "true_at": 65,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "10",
+        "ledger_index": 59,
+        "find_at": 31,
+        "true_at": 70,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "20",
+        "ledger_index": 60,
+        "find_at": 0,
+        "true_at": 85,
+        "divergent_predicates": [
+          "at_param"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+        "line": 29,
+        "token": "50",
+        "ledger_index": 14,
+        "find_at": 14,
+        "true_at": 30,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+        "line": 34,
+        "token": "36",
+        "ledger_index": 22,
+        "find_at": 45,
+        "true_at": 66,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+        "line": 46,
+        "token": "36",
+        "ledger_index": 34,
+        "find_at": 21,
+        "true_at": 27,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+        "line": 48,
+        "token": "0.0854",
+        "ledger_index": 30,
+        "find_at": 29,
+        "true_at": 38,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+        "line": 50,
+        "token": "0.9545",
+        "ledger_index": 36,
+        "find_at": 29,
+        "true_at": 38,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+        "line": 60,
+        "token": "0.0854",
+        "ledger_index": 47,
+        "find_at": 77,
+        "true_at": 86,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+        "line": 95,
+        "token": "3",
+        "ledger_index": 55,
+        "find_at": 8,
+        "true_at": 68,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+        "line": 16,
+        "token": "1",
+        "ledger_index": 10,
+        "find_at": 11,
+        "true_at": 25,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frame_recovery_2026_07_24.md",
+        "line": 49,
+        "token": "1.0",
+        "ledger_index": 21,
+        "find_at": 27,
+        "true_at": 88,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 18,
+        "token": "0",
+        "ledger_index": 9,
+        "find_at": 2,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 8,
+        "token": "0",
+        "ledger_index": 1,
+        "find_at": 25,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 32,
+        "token": "22",
+        "ledger_index": 12,
+        "find_at": 30,
+        "true_at": 36,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 47,
+        "token": "6",
+        "ledger_index": 24,
+        "find_at": 15,
+        "true_at": 60,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 25,
+        "token": "1.0",
+        "ledger_index": 13,
+        "find_at": 31,
+        "true_at": 91,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 55,
+        "token": "1",
+        "ledger_index": 36,
+        "find_at": 22,
+        "true_at": 40,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md",
+        "line": 12,
+        "token": "1.0",
+        "ledger_index": 2,
+        "find_at": 5,
+        "true_at": 24,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md",
+        "line": 12,
+        "token": "1.0",
+        "ledger_index": 3,
+        "find_at": 5,
+        "true_at": 56,
+        "divergent_predicates": [
+          "unit_kw"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md",
+        "line": 13,
+        "token": "1.0",
+        "ledger_index": 3,
+        "find_at": 53,
+        "true_at": 81,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_poisoned_recovery_2026_07_28.md",
+        "line": 20,
+        "token": "45",
+        "ledger_index": 9,
+        "find_at": 31,
+        "true_at": 85,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_retained_probe_instrument_2026_07_30.md",
+        "line": 19,
+        "token": "0.15",
+        "ledger_index": 4,
+        "find_at": 13,
+        "true_at": 32,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+        "line": 18,
+        "token": "0.36363636363636365",
+        "ledger_index": 12,
+        "find_at": 10,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale_channel_2026_07_24.md",
+        "line": 30,
+        "token": "0.05",
+        "ledger_index": 15,
+        "find_at": 14,
+        "true_at": 31,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md",
+        "line": 13,
+        "token": "44",
+        "ledger_index": 4,
+        "find_at": 14,
+        "true_at": 30,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md",
+        "line": 17,
+        "token": "0.7",
+        "ledger_index": 13,
+        "find_at": 39,
+        "true_at": 46,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale_test_2026_07_26.md",
+        "line": 31,
+        "token": "1.0",
+        "ledger_index": 15,
+        "find_at": 2,
+        "true_at": 6,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md",
+        "line": 7,
+        "token": "0",
+        "ledger_index": 2,
+        "find_at": 13,
+        "true_at": 38,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md",
+        "line": 13,
+        "token": "50",
+        "ledger_index": 8,
+        "find_at": 14,
+        "true_at": 30,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md",
+        "line": 75,
+        "token": "50",
+        "ledger_index": 42,
+        "find_at": 1,
+        "true_at": 4,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md",
+        "line": 7,
+        "token": "0",
+        "ledger_index": 2,
+        "find_at": 13,
+        "true_at": 38,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md",
+        "line": 13,
+        "token": "50",
+        "ledger_index": 6,
+        "find_at": 14,
+        "true_at": 30,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md",
+        "line": 76,
+        "token": "50",
+        "ledger_index": 38,
+        "find_at": 1,
+        "true_at": 4,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_self_verification_2026_07_25.md",
+        "line": 94,
+        "token": "74",
+        "ledger_index": 52,
+        "find_at": 10,
+        "true_at": 49,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md",
+        "line": 7,
+        "token": "0",
+        "ledger_index": 1,
+        "find_at": 28,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md",
+        "line": 13,
+        "token": "52",
+        "ledger_index": 4,
+        "find_at": 14,
+        "true_at": 30,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md",
+        "line": 65,
+        "token": "0.8285714285714286",
+        "ledger_index": 38,
+        "find_at": 0,
+        "true_at": 72,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_tiered_channel_2026_07_24.md",
+        "line": 32,
+        "token": "7",
+        "ledger_index": 19,
+        "find_at": 28,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md",
+        "line": 22,
+        "token": "0.75",
+        "ledger_index": 5,
+        "find_at": 32,
+        "true_at": 65,
+        "divergent_predicates": [
+          "bar_noun_post",
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md",
+        "line": 82,
+        "token": "5",
+        "ledger_index": 31,
+        "find_at": 51,
+        "true_at": 61,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
+        "line": 94,
+        "token": "1.0",
+        "ledger_index": 35,
+        "find_at": 2,
+        "true_at": 23,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
+        "line": 173,
+        "token": "1.0",
+        "ledger_index": 71,
+        "find_at": 0,
+        "true_at": 36,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+        "line": 29,
+        "token": "1.0",
+        "ledger_index": 16,
+        "find_at": 50,
+        "true_at": 65,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+        "line": 29,
+        "token": "1.0",
+        "ledger_index": 18,
+        "find_at": 50,
+        "true_at": 109,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+        "line": 89,
+        "token": "83",
+        "ledger_index": 54,
+        "find_at": 0,
+        "true_at": 14,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/ai-human-alignment/RESULT_ai_brain_2026_06_03.md",
+        "line": 17,
+        "token": "60",
+        "ledger_index": 24,
+        "find_at": 10,
+        "true_at": 24,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md",
+        "line": 10,
+        "token": "0",
+        "ledger_index": 2,
+        "find_at": 40,
+        "true_at": 51,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md",
+        "line": 24,
+        "token": "0.10",
+        "ledger_index": 9,
+        "find_at": 48,
+        "true_at": 56,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 13,
+        "token": "0.30",
+        "ledger_index": 3,
+        "find_at": 76,
+        "true_at": 87,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 24,
+        "token": "0.0",
+        "ledger_index": 10,
+        "find_at": 2,
+        "true_at": 9,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 25,
+        "token": "1",
+        "ledger_index": 15,
+        "find_at": 4,
+        "true_at": 25,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 25,
+        "token": "1",
+        "ledger_index": 16,
+        "find_at": 4,
+        "true_at": 27,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 26,
+        "token": "8",
+        "ledger_index": 20,
+        "find_at": 19,
+        "true_at": 25,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 26,
+        "token": "8",
+        "ledger_index": 21,
+        "find_at": 19,
+        "true_at": 27,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+        "line": 32,
+        "token": "1.0",
+        "ledger_index": 47,
+        "find_at": 35,
+        "true_at": 62,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+        "line": 5,
+        "token": "1",
+        "ledger_index": 1,
+        "find_at": 27,
+        "true_at": 64,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+        "line": 24,
+        "token": "58",
+        "ledger_index": 16,
+        "find_at": 17,
+        "true_at": 57,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 11,
+        "token": "0",
+        "ledger_index": 1,
+        "find_at": 35,
+        "true_at": 39,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 12,
+        "token": "1",
+        "ledger_index": 3,
+        "find_at": 44,
+        "true_at": 48,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 13,
+        "token": "1",
+        "ledger_index": 5,
+        "find_at": 44,
+        "true_at": 48,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 21,
+        "token": "1",
+        "ledger_index": 7,
+        "find_at": 49,
+        "true_at": 88,
+        "divergent_predicates": [
+          "is_spec_core",
+          "n_eq"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 49,
+        "token": "28",
+        "ledger_index": 12,
+        "find_at": 33,
+        "true_at": 39,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+        "line": 49,
+        "token": "29",
+        "ledger_index": 14,
+        "find_at": 70,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_power_basis_invalid_2026_08_07.md",
+        "line": 12,
+        "token": "1",
+        "ledger_index": 5,
+        "find_at": 32,
+        "true_at": 36,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/FINDING_protocol_power_basis_invalid_2026_08_07.md",
+        "line": 13,
+        "token": "0",
+        "ledger_index": 7,
+        "find_at": 35,
+        "true_at": 39,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 23,
+        "token": "26",
+        "ledger_index": 7,
+        "find_at": 40,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 24,
+        "token": "16",
+        "ledger_index": 9,
+        "find_at": 33,
+        "true_at": 40,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 25,
+        "token": "0",
+        "ledger_index": 11,
+        "find_at": 24,
+        "true_at": 30,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 26,
+        "token": "0",
+        "ledger_index": 13,
+        "find_at": 35,
+        "true_at": 41,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 26,
+        "token": "3",
+        "ledger_index": 14,
+        "find_at": 10,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 38,
+        "token": "0",
+        "ledger_index": 21,
+        "find_at": 17,
+        "true_at": 21,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 38,
+        "token": "0",
+        "ledger_index": 22,
+        "find_at": 17,
+        "true_at": 25,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 39,
+        "token": "0",
+        "ledger_index": 24,
+        "find_at": 15,
+        "true_at": 19,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 39,
+        "token": "0",
+        "ledger_index": 25,
+        "find_at": 15,
+        "true_at": 23,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 40,
+        "token": "0",
+        "ledger_index": 27,
+        "find_at": 18,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 41,
+        "token": "0",
+        "ledger_index": 30,
+        "find_at": 22,
+        "true_at": 26,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 62,
+        "token": "19",
+        "ledger_index": 51,
+        "find_at": 42,
+        "true_at": 68,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 62,
+        "token": "150",
+        "ledger_index": 52,
+        "find_at": 45,
+        "true_at": 75,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 63,
+        "token": "12.7",
+        "ledger_index": 57,
+        "find_at": 32,
+        "true_at": 82,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 67,
+        "token": "2",
+        "ledger_index": 63,
+        "find_at": 1,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+        "line": 93,
+        "token": "26",
+        "ledger_index": 71,
+        "find_at": 16,
+        "true_at": 24,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+        "line": 7,
+        "token": "5",
+        "ledger_index": 2,
+        "find_at": 11,
+        "true_at": 62,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+        "line": 42,
+        "token": "0.008",
+        "ledger_index": 67,
+        "find_at": 0,
+        "true_at": 27,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+        "line": 81,
+        "token": "0",
+        "ledger_index": 114,
+        "find_at": 29,
+        "true_at": 38,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+        "line": 126,
+        "token": "0",
+        "ledger_index": 134,
+        "find_at": 6,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+        "line": 13,
+        "token": "5",
+        "ledger_index": 0,
+        "find_at": 70,
+        "true_at": 88,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+        "line": 59,
+        "token": "0.6667",
+        "ledger_index": 44,
+        "find_at": 24,
+        "true_at": 42,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+        "line": 60,
+        "token": "0.9167",
+        "ledger_index": 51,
+        "find_at": 24,
+        "true_at": 41,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+        "line": 67,
+        "token": "0.6667",
+        "ledger_index": 62,
+        "find_at": 16,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+        "line": 127,
+        "token": "1.0",
+        "ledger_index": 87,
+        "find_at": 10,
+        "true_at": 68,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 19,
+        "token": "0",
+        "ledger_index": 1,
+        "find_at": 38,
+        "true_at": 50,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 19,
+        "token": "1",
+        "ledger_index": 3,
+        "find_at": 42,
+        "true_at": 70,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 38,
+        "token": "0",
+        "ledger_index": 23,
+        "find_at": 13,
+        "true_at": 28,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 43,
+        "token": "1",
+        "ledger_index": 36,
+        "find_at": 15,
+        "true_at": 91,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 48,
+        "token": "0",
+        "ledger_index": 46,
+        "find_at": 73,
+        "true_at": 86,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+        "line": 49,
+        "token": "1",
+        "ledger_index": 48,
+        "find_at": 5,
+        "true_at": 13,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+        "line": 16,
+        "token": "0.803",
+        "ledger_index": 15,
+        "find_at": 11,
+        "true_at": 24,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+        "line": 16,
+        "token": "0.803",
+        "ledger_index": 16,
+        "find_at": 11,
+        "true_at": 30,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+        "line": 16,
+        "token": "0.75",
+        "ledger_index": 17,
+        "find_at": 17,
+        "true_at": 57,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+        "line": 33,
+        "token": "0.008",
+        "ledger_index": 61,
+        "find_at": 2,
+        "true_at": 29,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+        "line": 75,
+        "token": "1",
+        "ledger_index": 88,
+        "find_at": 31,
+        "true_at": 69,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 10,
+        "token": "4",
+        "ledger_index": 2,
+        "find_at": 52,
+        "true_at": 74,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 18,
+        "token": "23",
+        "ledger_index": 13,
+        "find_at": 69,
+        "true_at": 95,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 20,
+        "token": "1.0",
+        "ledger_index": 21,
+        "find_at": 48,
+        "true_at": 66,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 38,
+        "token": "0.9091",
+        "ledger_index": 67,
+        "find_at": 65,
+        "true_at": 82,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 39,
+        "token": "0.803",
+        "ledger_index": 72,
+        "find_at": 18,
+        "true_at": 35,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+        "line": 44,
+        "token": "0.008",
+        "ledger_index": 89,
+        "find_at": 59,
+        "true_at": 83,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 63,
+        "token": "2",
+        "ledger_index": 52,
+        "find_at": 5,
+        "true_at": 44,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 63,
+        "token": "4",
+        "ledger_index": 53,
+        "find_at": 25,
+        "true_at": 47,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 63,
+        "token": "110",
+        "ledger_index": 56,
+        "find_at": 75,
+        "true_at": 79,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 64,
+        "token": "0",
+        "ledger_index": 61,
+        "find_at": 38,
+        "true_at": 54,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 64,
+        "token": "1",
+        "ledger_index": 62,
+        "find_at": 36,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+        "line": 70,
+        "token": "8",
+        "ledger_index": 64,
+        "find_at": 58,
+        "true_at": 75,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 1,
+        "token": "4",
+        "ledger_index": 1,
+        "find_at": 34,
+        "true_at": 72,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 11,
+        "token": "4",
+        "ledger_index": 7,
+        "find_at": 44,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 28,
+        "token": "0",
+        "ledger_index": 39,
+        "find_at": 8,
+        "true_at": 47,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 28,
+        "token": "0.65",
+        "ledger_index": 40,
+        "find_at": 8,
+        "true_at": 58,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 68,
+        "token": "2",
+        "ledger_index": 64,
+        "find_at": 5,
+        "true_at": 35,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 68,
+        "token": "4",
+        "ledger_index": 65,
+        "find_at": 16,
+        "true_at": 38,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 68,
+        "token": "110",
+        "ledger_index": 68,
+        "find_at": 54,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 69,
+        "token": "0",
+        "ledger_index": 74,
+        "find_at": 38,
+        "true_at": 54,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+        "line": 69,
+        "token": "1",
+        "ledger_index": 75,
+        "find_at": 36,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 28,
+        "token": "0.60",
+        "ledger_index": 34,
+        "find_at": 23,
+        "true_at": 77,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 52,
+        "token": "4",
+        "ledger_index": 48,
+        "find_at": 67,
+        "true_at": 93,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 60,
+        "token": "2",
+        "ledger_index": 54,
+        "find_at": 5,
+        "true_at": 35,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 60,
+        "token": "4",
+        "ledger_index": 55,
+        "find_at": 16,
+        "true_at": 38,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 60,
+        "token": "110",
+        "ledger_index": 58,
+        "find_at": 54,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 61,
+        "token": "0",
+        "ledger_index": 64,
+        "find_at": 45,
+        "true_at": 61,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+        "line": 61,
+        "token": "1",
+        "ledger_index": 65,
+        "find_at": 43,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+        "line": 105,
+        "token": "110",
+        "ledger_index": 72,
+        "find_at": 4,
+        "true_at": 8,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+        "line": 105,
+        "token": "0",
+        "ledger_index": 78,
+        "find_at": 2,
+        "true_at": 95,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+        "line": 105,
+        "token": "1",
+        "ledger_index": 79,
+        "find_at": 4,
+        "true_at": 98,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+        "line": 12,
+        "token": "24",
+        "ledger_index": 4,
+        "find_at": 80,
+        "true_at": 83,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+        "line": 18,
+        "token": "0.500",
+        "ledger_index": 12,
+        "find_at": 58,
+        "true_at": 68,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+        "line": 57,
+        "token": "24",
+        "ledger_index": 30,
+        "find_at": 56,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+        "line": 57,
+        "token": "24",
+        "ledger_index": 31,
+        "find_at": 56,
+        "true_at": 75,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+        "line": 17,
+        "token": "0.565",
+        "ledger_index": 11,
+        "find_at": 45,
+        "true_at": 53,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+        "line": 54,
+        "token": "46",
+        "ledger_index": 28,
+        "find_at": 28,
+        "true_at": 31,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+        "line": 10,
+        "token": "110",
+        "ledger_index": 5,
+        "find_at": 63,
+        "true_at": 67,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+        "line": 43,
+        "token": "110",
+        "ledger_index": 27,
+        "find_at": 29,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 5,
+        "token": "1",
+        "ledger_index": 1,
+        "find_at": 12,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 5,
+        "token": "2",
+        "ledger_index": 2,
+        "find_at": 8,
+        "true_at": 35,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 16,
+        "token": "4",
+        "ledger_index": 18,
+        "find_at": 58,
+        "true_at": 89,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 16,
+        "token": "6",
+        "ledger_index": 19,
+        "find_at": 63,
+        "true_at": 94,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 34,
+        "token": "0.0553",
+        "ledger_index": 69,
+        "find_at": 27,
+        "true_at": 73,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 40,
+        "token": "0.0553",
+        "ledger_index": 76,
+        "find_at": 28,
+        "true_at": 54,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 48,
+        "token": "1",
+        "ledger_index": 87,
+        "find_at": 74,
+        "true_at": 81,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+        "line": 80,
+        "token": "6",
+        "ledger_index": 108,
+        "find_at": 79,
+        "true_at": 94,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+        "line": 8,
+        "token": "10",
+        "ledger_index": 5,
+        "find_at": 10,
+        "true_at": 28,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+        "line": 8,
+        "token": "0",
+        "ledger_index": 6,
+        "find_at": 11,
+        "true_at": 61,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+        "line": 8,
+        "token": "1",
+        "ledger_index": 7,
+        "find_at": 10,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+        "line": 8,
+        "token": "2",
+        "ledger_index": 8,
+        "find_at": 14,
+        "true_at": 65,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+        "line": 45,
+        "token": "0",
+        "ledger_index": 75,
+        "find_at": 38,
+        "true_at": 49,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 6,
+        "token": "0",
+        "ledger_index": 2,
+        "find_at": 71,
+        "true_at": 98,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 19,
+        "token": "53",
+        "ledger_index": 13,
+        "find_at": 58,
+        "true_at": 88,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 22,
+        "token": "0.803",
+        "ledger_index": 30,
+        "find_at": 15,
+        "true_at": 60,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 26,
+        "token": "1",
+        "ledger_index": 31,
+        "find_at": 12,
+        "true_at": 55,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 27,
+        "token": "0",
+        "ledger_index": 33,
+        "find_at": 0,
+        "true_at": 13,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 27,
+        "token": "1",
+        "ledger_index": 35,
+        "find_at": 24,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 44,
+        "token": "83",
+        "ledger_index": 57,
+        "find_at": 12,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 55,
+        "token": "0",
+        "ledger_index": 73,
+        "find_at": 15,
+        "true_at": 49,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 90,
+        "token": "0",
+        "ledger_index": 89,
+        "find_at": 42,
+        "true_at": 57,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 90,
+        "token": "1",
+        "ledger_index": 90,
+        "find_at": 8,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+        "line": 110,
+        "token": "0",
+        "ledger_index": 100,
+        "find_at": 22,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+        "line": 56,
+        "token": "1",
+        "ledger_index": 38,
+        "find_at": 9,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+        "line": 56,
+        "token": "1",
+        "ledger_index": 41,
+        "find_at": 9,
+        "true_at": 91,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 22,
+        "token": "1.0",
+        "ledger_index": 13,
+        "find_at": 34,
+        "true_at": 111,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 24,
+        "token": "0.500",
+        "ledger_index": 28,
+        "find_at": 10,
+        "true_at": 240,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 24,
+        "token": "0.40",
+        "ledger_index": 31,
+        "find_at": 102,
+        "true_at": 261,
+        "divergent_predicates": [
+          "is_spec_core",
+          "slash_pair",
+          "unit_kw"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 24,
+        "token": "0.284",
+        "ledger_index": 33,
+        "find_at": 92,
+        "true_at": 400,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 50,
+        "token": "8",
+        "ledger_index": 52,
+        "find_at": 45,
+        "true_at": 76,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 75,
+        "token": "1.0",
+        "ledger_index": 65,
+        "find_at": 22,
+        "true_at": 52,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 6,
+        "token": "4",
+        "ledger_index": 5,
+        "find_at": 3,
+        "true_at": 74,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 28,
+        "token": "0.90",
+        "ledger_index": 22,
+        "find_at": 9,
+        "true_at": 64,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 45,
+        "token": "0",
+        "ledger_index": 33,
+        "find_at": 4,
+        "true_at": 29,
+        "divergent_predicates": [
+          "is_spec_core",
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 30,
+        "token": "7",
+        "ledger_index": 9,
+        "find_at": 22,
+        "true_at": 44,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 35,
+        "token": "5",
+        "ledger_index": 12,
+        "find_at": 29,
+        "true_at": 60,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 48,
+        "token": "20",
+        "ledger_index": 16,
+        "find_at": 19,
+        "true_at": 25,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 49,
+        "token": "20",
+        "ledger_index": 19,
+        "find_at": 36,
+        "true_at": 42,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 50,
+        "token": "0",
+        "ledger_index": 22,
+        "find_at": 50,
+        "true_at": 82,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 57,
+        "token": "18",
+        "ledger_index": 27,
+        "find_at": 70,
+        "true_at": 97,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 78,
+        "token": "4",
+        "ledger_index": 39,
+        "find_at": 31,
+        "true_at": 54,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 78,
+        "token": "135",
+        "ledger_index": 41,
+        "find_at": 85,
+        "true_at": 97,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 138,
+        "token": "20",
+        "ledger_index": 63,
+        "find_at": 49,
+        "true_at": 55,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 138,
+        "token": "20",
+        "ledger_index": 65,
+        "find_at": 49,
+        "true_at": 74,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+        "line": 138,
+        "token": "20",
+        "ledger_index": 67,
+        "find_at": 49,
+        "true_at": 93,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+        "line": 31,
+        "token": "40",
+        "ledger_index": 10,
+        "find_at": 46,
+        "true_at": 67,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+        "line": 32,
+        "token": "0",
+        "ledger_index": 12,
+        "find_at": 22,
+        "true_at": 26,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+        "line": 87,
+        "token": "2",
+        "ledger_index": 29,
+        "find_at": 30,
+        "true_at": 44,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+        "line": 90,
+        "token": "2",
+        "ledger_index": 35,
+        "find_at": 19,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 58,
+        "token": "1",
+        "ledger_index": 22,
+        "find_at": 3,
+        "true_at": 69,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 59,
+        "token": "25",
+        "ledger_index": 25,
+        "find_at": 39,
+        "true_at": 59,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 61,
+        "token": "0",
+        "ledger_index": 29,
+        "find_at": 32,
+        "true_at": 44,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 61,
+        "token": "0",
+        "ledger_index": 30,
+        "find_at": 32,
+        "true_at": 62,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 62,
+        "token": "0",
+        "ledger_index": 32,
+        "find_at": 22,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 76,
+        "token": "0",
+        "ledger_index": 39,
+        "find_at": 27,
+        "true_at": 70,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 76,
+        "token": "0",
+        "ledger_index": 40,
+        "find_at": 27,
+        "true_at": 95,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+        "line": 136,
+        "token": "4",
+        "ledger_index": 53,
+        "find_at": 28,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 31,
+        "token": "40",
+        "ledger_index": 7,
+        "find_at": 29,
+        "true_at": 68,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 33,
+        "token": "1",
+        "ledger_index": 11,
+        "find_at": 10,
+        "true_at": 25,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 33,
+        "token": "0",
+        "ledger_index": 13,
+        "find_at": 8,
+        "true_at": 65,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 38,
+        "token": "0",
+        "ledger_index": 24,
+        "find_at": 19,
+        "true_at": 55,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 40,
+        "token": "2",
+        "ledger_index": 27,
+        "find_at": 2,
+        "true_at": 6,
+        "divergent_predicates": [
+          "is_spec_core",
+          "n_eq",
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 40,
+        "token": "20",
+        "ledger_index": 28,
+        "find_at": 2,
+        "true_at": 8,
+        "divergent_predicates": [
+          "is_spec_core",
+          "n_eq",
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 46,
+        "token": "0",
+        "ledger_index": 34,
+        "find_at": 10,
+        "true_at": 29,
+        "divergent_predicates": [
+          "is_spec_core",
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+        "line": 46,
+        "token": "40",
+        "ledger_index": 35,
+        "find_at": 12,
+        "true_at": 31,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_council_2026_05_25.md",
+        "line": 63,
+        "token": "8",
+        "ledger_index": 20,
+        "find_at": 10,
+        "true_at": 14,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_council_2026_05_25.md",
+        "line": 63,
+        "token": "2",
+        "ledger_index": 22,
+        "find_at": 55,
+        "true_at": 59,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_council_2026_05_25.md",
+        "line": 70,
+        "token": "1",
+        "ledger_index": 26,
+        "find_at": 0,
+        "true_at": 60,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 17,
+        "token": "8",
+        "ledger_index": 6,
+        "find_at": 27,
+        "true_at": 29,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 17,
+        "token": "2",
+        "ledger_index": 7,
+        "find_at": 22,
+        "true_at": 35,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 18,
+        "token": "1.00",
+        "ledger_index": 8,
+        "find_at": 20,
+        "true_at": 38,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 18,
+        "token": "1.00",
+        "ledger_index": 12,
+        "find_at": 20,
+        "true_at": 82,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 56,
+        "token": "6",
+        "ledger_index": 17,
+        "find_at": 4,
+        "true_at": 6,
+        "divergent_predicates": [
+          "is_spec_core",
+          "n_eq"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+        "line": 56,
+        "token": "8",
+        "ledger_index": 19,
+        "find_at": 8,
+        "true_at": 10,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md",
+        "line": 35,
+        "token": "57",
+        "ledger_index": 28,
+        "find_at": 23,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md",
+        "line": 42,
+        "token": "2",
+        "ledger_index": 31,
+        "find_at": 6,
+        "true_at": 91,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md",
+        "line": 43,
+        "token": "2",
+        "ledger_index": 34,
+        "find_at": 5,
+        "true_at": 34,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+        "line": 32,
+        "token": "2",
+        "ledger_index": 32,
+        "find_at": 10,
+        "true_at": 37,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+        "line": 55,
+        "token": "5",
+        "ledger_index": 45,
+        "find_at": 64,
+        "true_at": 66,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 27,
+        "token": "0",
+        "ledger_index": 11,
+        "find_at": 13,
+        "true_at": 16,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 27,
+        "token": "1",
+        "ledger_index": 12,
+        "find_at": 8,
+        "true_at": 19,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 27,
+        "token": "0",
+        "ledger_index": 13,
+        "find_at": 13,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 27,
+        "token": "0",
+        "ledger_index": 14,
+        "find_at": 13,
+        "true_at": 25,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 28,
+        "token": "1",
+        "ledger_index": 17,
+        "find_at": 15,
+        "true_at": 18,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 28,
+        "token": "1",
+        "ledger_index": 18,
+        "find_at": 15,
+        "true_at": 21,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 28,
+        "token": "1",
+        "ledger_index": 19,
+        "find_at": 15,
+        "true_at": 24,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 28,
+        "token": "1",
+        "ledger_index": 20,
+        "find_at": 15,
+        "true_at": 27,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 29,
+        "token": "1",
+        "ledger_index": 22,
+        "find_at": 7,
+        "true_at": 14,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 29,
+        "token": "1",
+        "ledger_index": 25,
+        "find_at": 7,
+        "true_at": 23,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 29,
+        "token": "1",
+        "ledger_index": 26,
+        "find_at": 7,
+        "true_at": 26,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md",
+        "line": 63,
+        "token": "0.0",
+        "ledger_index": 57,
+        "find_at": 22,
+        "true_at": 41,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+        "line": 13,
+        "token": "0.7398",
+        "ledger_index": 1,
+        "find_at": 15,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+        "line": 13,
+        "token": "0.0408",
+        "ledger_index": 3,
+        "find_at": 43,
+        "true_at": 50,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+        "line": 13,
+        "token": "0.1684",
+        "ledger_index": 5,
+        "find_at": 69,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+        "line": 40,
+        "token": "0.1000",
+        "ledger_index": 36,
+        "find_at": 26,
+        "true_at": 44,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md",
+        "line": 45,
+        "token": "0.17",
+        "ledger_index": 42,
+        "find_at": 19,
+        "true_at": 55,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.md",
+        "line": 12,
+        "token": "0.0612",
+        "ledger_index": 2,
+        "find_at": 24,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.md",
+        "line": 42,
+        "token": "7",
+        "ledger_index": 20,
+        "find_at": 34,
+        "true_at": 49,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md",
+        "line": 11,
+        "token": "20",
+        "ledger_index": 0,
+        "find_at": 43,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+        "line": 41,
+        "token": "1",
+        "ledger_index": 42,
+        "find_at": 0,
+        "true_at": 55,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+        "line": 43,
+        "token": "2",
+        "ledger_index": 44,
+        "find_at": 0,
+        "true_at": 22,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+        "line": 43,
+        "token": "3",
+        "ledger_index": 49,
+        "find_at": 47,
+        "true_at": 89,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+        "line": 54,
+        "token": "3",
+        "ledger_index": 64,
+        "find_at": 12,
+        "true_at": 22,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+        "line": 54,
+        "token": "5",
+        "ledger_index": 67,
+        "find_at": 14,
+        "true_at": 57,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md",
+        "line": 25,
+        "token": "20",
+        "ledger_index": 11,
+        "find_at": 20,
+        "true_at": 41,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md",
+        "line": 25,
+        "token": "2",
+        "ledger_index": 12,
+        "find_at": 20,
+        "true_at": 58,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md",
+        "line": 14,
+        "token": "5",
+        "ledger_index": 3,
+        "find_at": 57,
+        "true_at": 62,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md",
+        "line": 14,
+        "token": "5",
+        "ledger_index": 4,
+        "find_at": 57,
+        "true_at": 72,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md",
+        "line": 22,
+        "token": "2",
+        "ledger_index": 8,
+        "find_at": 14,
+        "true_at": 28,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+        "line": 12,
+        "token": "0",
+        "ledger_index": 0,
+        "find_at": 3,
+        "true_at": 34,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+        "line": 13,
+        "token": "1",
+        "ledger_index": 3,
+        "find_at": 3,
+        "true_at": 33,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md",
+        "line": 67,
+        "token": "20",
+        "ledger_index": 14,
+        "find_at": 0,
+        "true_at": 66,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.md",
+        "line": 20,
+        "token": "45",
+        "ledger_index": 4,
+        "find_at": 18,
+        "true_at": 29,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md",
+        "line": 21,
+        "token": "5",
+        "ledger_index": 4,
+        "find_at": 4,
+        "true_at": 28,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md",
+        "line": 21,
+        "token": "5",
+        "ledger_index": 5,
+        "find_at": 4,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md",
+        "line": 21,
+        "token": "5",
+        "ledger_index": 6,
+        "find_at": 4,
+        "true_at": 45,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md",
+        "line": 21,
+        "token": "5",
+        "ledger_index": 7,
+        "find_at": 4,
+        "true_at": 50,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+        "line": 12,
+        "token": "45",
+        "ledger_index": 1,
+        "find_at": 18,
+        "true_at": 29,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+        "line": 35,
+        "token": "0.0104",
+        "ledger_index": 29,
+        "find_at": 16,
+        "true_at": 25,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+        "line": 36,
+        "token": "0.0521",
+        "ledger_index": 31,
+        "find_at": 13,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md",
+        "line": 33,
+        "token": "8",
+        "ledger_index": 13,
+        "find_at": 2,
+        "true_at": 85,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+        "line": 13,
+        "token": "21",
+        "ledger_index": 1,
+        "find_at": 15,
+        "true_at": 26,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+        "line": 35,
+        "token": "38.0",
+        "ledger_index": 26,
+        "find_at": 17,
+        "true_at": 45,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md",
+        "line": 13,
+        "token": "8",
+        "ledger_index": 1,
+        "find_at": 16,
+        "true_at": 28,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md",
+        "line": 13,
+        "token": "8",
+        "ledger_index": 2,
+        "find_at": 16,
+        "true_at": 29,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 26,
+        "token": "0.05",
+        "ledger_index": 9,
+        "find_at": 57,
+        "true_at": 110,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 35,
+        "token": "1",
+        "ledger_index": 27,
+        "find_at": 9,
+        "true_at": 12,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 57,
+        "token": "0.5",
+        "ledger_index": 37,
+        "find_at": 7,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 84,
+        "token": "24",
+        "ledger_index": 49,
+        "find_at": 60,
+        "true_at": 66,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 86,
+        "token": "-45",
+        "ledger_index": 56,
+        "find_at": 53,
+        "true_at": 105,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 116,
+        "token": "6",
+        "ledger_index": 70,
+        "find_at": 16,
+        "true_at": 43,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+        "line": 130,
+        "token": "1.0",
+        "ledger_index": 85,
+        "find_at": 50,
+        "true_at": 86,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.md",
+        "line": 21,
+        "token": "0.0083",
+        "ledger_index": 12,
+        "find_at": 10,
+        "true_at": 28,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md",
+        "line": 30,
+        "token": "3",
+        "ledger_index": 8,
+        "find_at": 25,
+        "true_at": 49,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md",
+        "line": 30,
+        "token": "3",
+        "ledger_index": 9,
+        "find_at": 25,
+        "true_at": 51,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md",
+        "line": 32,
+        "token": "0.75",
+        "ledger_index": 12,
+        "find_at": 37,
+        "true_at": 74,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/mind-instrument/FINDING_matcher_v1_2026_06_10.md",
+        "line": 11,
+        "token": "16",
+        "ledger_index": 9,
+        "find_at": 2,
+        "true_at": 43,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+        "line": 20,
+        "token": "1",
+        "ledger_index": 13,
+        "find_at": 2,
+        "true_at": 9,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+        "line": 31,
+        "token": "1",
+        "ledger_index": 35,
+        "find_at": 26,
+        "true_at": 50,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+        "line": 32,
+        "token": "0",
+        "ledger_index": 38,
+        "find_at": 7,
+        "true_at": 16,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+        "line": 18,
+        "token": "0",
+        "ledger_index": 10,
+        "find_at": 0,
+        "true_at": 21,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+        "line": 65,
+        "token": "0",
+        "ledger_index": 48,
+        "find_at": 27,
+        "true_at": 37,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+        "line": 65,
+        "token": "1",
+        "ledger_index": 49,
+        "find_at": 25,
+        "true_at": 39,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+        "line": 32,
+        "token": "0",
+        "ledger_index": 18,
+        "find_at": 51,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+        "line": 68,
+        "token": "0",
+        "ledger_index": 34,
+        "find_at": 13,
+        "true_at": 49,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+        "line": 68,
+        "token": "1",
+        "ledger_index": 35,
+        "find_at": 12,
+        "true_at": 51,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3PRIME_bite_verification_2026_07_07.md",
+        "line": 60,
+        "token": "0",
+        "ledger_index": 34,
+        "find_at": 20,
+        "true_at": 30,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3PRIME_bite_verification_2026_07_07.md",
+        "line": 60,
+        "token": "1",
+        "ledger_index": 35,
+        "find_at": 18,
+        "true_at": 32,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+        "line": 33,
+        "token": "0",
+        "ledger_index": 21,
+        "find_at": 51,
+        "true_at": 63,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md",
+        "line": 17,
+        "token": "1",
+        "ledger_index": 8,
+        "find_at": 10,
+        "true_at": 35,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md",
+        "line": 19,
+        "token": "1",
+        "ledger_index": 14,
+        "find_at": 10,
+        "true_at": 28,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md",
+        "line": 19,
+        "token": "0.733",
+        "ledger_index": 16,
+        "find_at": 32,
+        "true_at": 40,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md",
+        "line": 21,
+        "token": "1",
+        "ledger_index": 20,
+        "find_at": 12,
+        "true_at": 28,
+        "divergent_predicates": [
+          "unit_range"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_foundation_2026_07_04.md",
+        "line": 16,
+        "token": "0.80",
+        "ledger_index": 7,
+        "find_at": 40,
+        "true_at": 51,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_foundation_2026_07_04.md",
+        "line": 19,
+        "token": "0.5",
+        "ledger_index": 10,
+        "find_at": 44,
+        "true_at": 55,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_foundation_2026_07_04.md",
+        "line": 23,
+        "token": "0.81",
+        "ledger_index": 18,
+        "find_at": 55,
+        "true_at": 89,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+        "line": 23,
+        "token": "0.5",
+        "ledger_index": 21,
+        "find_at": 65,
+        "true_at": 75,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+        "line": 24,
+        "token": "0",
+        "ledger_index": 22,
+        "find_at": 26,
+        "true_at": 39,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+        "line": 48,
+        "token": "0",
+        "ledger_index": 27,
+        "find_at": 18,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+        "line": 58,
+        "token": "2",
+        "ledger_index": 31,
+        "find_at": 77,
+        "true_at": 90,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md",
+        "line": 46,
+        "token": "2",
+        "ledger_index": 12,
+        "find_at": 75,
+        "true_at": 95,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+        "line": 12,
+        "token": "1.000",
+        "ledger_index": 4,
+        "find_at": 6,
+        "true_at": 14,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+        "line": 24,
+        "token": "0",
+        "ledger_index": 34,
+        "find_at": 45,
+        "true_at": 89,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_concept_decode_2026_06_12.md",
+        "line": 36,
+        "token": "3",
+        "ledger_index": 24,
+        "find_at": 12,
+        "true_at": 77,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_conscience_coordinates_2026_06_11.md",
+        "line": 9,
+        "token": "2",
+        "ledger_index": 3,
+        "find_at": 16,
+        "true_at": 18,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_content_wall_2026_06_12.md",
+        "line": 23,
+        "token": "1.0",
+        "ledger_index": 17,
+        "find_at": 58,
+        "true_at": 66,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_content_wall_2026_06_12.md",
+        "line": 23,
+        "token": "1.0",
+        "ledger_index": 18,
+        "find_at": 58,
+        "true_at": 72,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+        "line": 12,
+        "token": "88",
+        "ledger_index": 2,
+        "find_at": 33,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+        "line": 12,
+        "token": "27",
+        "ledger_index": 5,
+        "find_at": 70,
+        "true_at": 75,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+        "line": 31,
+        "token": "0.9737",
+        "ledger_index": 20,
+        "find_at": 23,
+        "true_at": 32,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+        "line": 32,
+        "token": "1.0",
+        "ledger_index": 22,
+        "find_at": 27,
+        "true_at": 33,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+        "line": 57,
+        "token": "2",
+        "ledger_index": 33,
+        "find_at": 26,
+        "true_at": 95,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 6,
+        "token": "0.65",
+        "ledger_index": 2,
+        "find_at": 49,
+        "true_at": 68,
+        "divergent_predicates": [
+          "bar_noun_post"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 6,
+        "token": "0.6562",
+        "ledger_index": 3,
+        "find_at": 49,
+        "true_at": 105,
+        "divergent_predicates": [
+          "is_spec_core"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 6,
+        "token": "0.65",
+        "ledger_index": 4,
+        "find_at": 49,
+        "true_at": 119,
+        "divergent_predicates": [
+          "bar_noun_post"
+        ],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 18,
+        "token": "1.0",
+        "ledger_index": 13,
+        "find_at": 24,
+        "true_at": 76,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 18,
+        "token": "0.6562",
+        "ledger_index": 14,
+        "find_at": 65,
+        "true_at": 94,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 27,
+        "token": "1.0",
+        "ledger_index": 22,
+        "find_at": 24,
+        "true_at": 30,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 30,
+        "token": "0.5",
+        "ledger_index": 29,
+        "find_at": 58,
+        "true_at": 81,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 31,
+        "token": "0.65",
+        "ledger_index": 35,
+        "find_at": 0,
+        "true_at": 51,
+        "divergent_predicates": [
+          "bar_noun_post"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 31,
+        "token": "5",
+        "ledger_index": 36,
+        "find_at": 3,
+        "true_at": 75,
+        "divergent_predicates": [
+          "slash_pair",
+          "unit_kw"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 31,
+        "token": "5",
+        "ledger_index": 37,
+        "find_at": 3,
+        "true_at": 77,
+        "divergent_predicates": [
+          "slash_pair"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+        "line": 62,
+        "token": "5",
+        "ledger_index": 53,
+        "find_at": 65,
+        "true_at": 67,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+        "line": 23,
+        "token": "0.001",
+        "ledger_index": 14,
+        "find_at": 11,
+        "true_at": 95,
+        "divergent_predicates": [
+          "slash_pair",
+          "unit_kw"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_portable_conscience_v0_2026_06_10.md",
+        "line": 29,
+        "token": "1.000",
+        "ledger_index": 11,
+        "find_at": 42,
+        "true_at": 67,
+        "divergent_predicates": [
+          "is_spec_core",
+          "unit_kw"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md",
+        "line": 44,
+        "token": "0.9983",
+        "ledger_index": 22,
+        "find_at": 18,
+        "true_at": 51,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md",
+        "line": 51,
+        "token": "8",
+        "ledger_index": 26,
+        "find_at": 0,
+        "true_at": 47,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md",
+        "line": 24,
+        "token": "0",
+        "ledger_index": 7,
+        "find_at": 15,
+        "true_at": 24,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md",
+        "line": 33,
+        "token": "13",
+        "ledger_index": 24,
+        "find_at": 19,
+        "true_at": 22,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 22,
+        "token": "2",
+        "ledger_index": 2,
+        "find_at": 86,
+        "true_at": 88,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 28,
+        "token": "1.0",
+        "ledger_index": 10,
+        "find_at": 34,
+        "true_at": 44,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 28,
+        "token": "1.0",
+        "ledger_index": 11,
+        "find_at": 34,
+        "true_at": 54,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 29,
+        "token": "0.5104",
+        "ledger_index": 14,
+        "find_at": 38,
+        "true_at": 56,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 41,
+        "token": "0.65",
+        "ledger_index": 27,
+        "find_at": 36,
+        "true_at": 65,
+        "divergent_predicates": [
+          "bar_noun_post"
+        ],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 69,
+        "token": "0.65",
+        "ledger_index": 40,
+        "find_at": 35,
+        "true_at": 45,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md",
+        "line": 78,
+        "token": "48",
+        "ledger_index": 44,
+        "find_at": 81,
+        "true_at": 97,
+        "divergent_predicates": [],
+        "shipped_status": "ABSTAIN"
+      },
+      {
+        "rel": "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+        "line": 14,
+        "token": "0.47",
+        "ledger_index": 16,
+        "find_at": 51,
+        "true_at": 60,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+        "line": 27,
+        "token": "1.00",
+        "ledger_index": 28,
+        "find_at": 12,
+        "true_at": 26,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      },
+      {
+        "rel": "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+        "line": 57,
+        "token": "1.00",
+        "ledger_index": 34,
+        "find_at": 46,
+        "true_at": 75,
+        "divergent_predicates": [],
+        "shipped_status": "VERIFIED"
+      }
+    ]
+  },
+  "named_instances": [
+    {
+      "rel": "papers/disjoint-worlds/PREREG_b49_amplitude_reaudit_2026_08_07.md",
+      "line": 23,
+      "token": "5",
+      "mutated_for_this_probe": null,
+      "claim": "the bar in the JSON value position anchors on the 5 inside b45, so pre cannot reach the value key and the v0.9 JSON-idiom spec clause never fires",
+      "find_at": 6,
+      "true_at": 98,
+      "reproduced": true,
+      "pre_at_find": "\"G2_b4",
+      "pre_at_true": "\": \">=\", \"value\": ",
+      "post_at_find": "_island_still_lowest\": {\"metric\": \"b45_norm_seed",
+      "post_at_true": ",",
+      "divergent_predicates": [
+        "json_bar_key"
+      ]
+    },
+    {
+      "rel": "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+      "line": 37,
+      "token": "0.9",
+      "mutated_for_this_probe": [
+        "0.8 floor",
+        "0.9 floor"
+      ],
+      "claim": "with the 0.8 bar doctored to 0.9 the token anchors inside 0.9833333333333333, so post never reaches the bar noun",
+      "find_at": 25,
+      "true_at": 51,
+      "reproduced": true,
+      "pre_at_find": "V2: held recovery ",
+      "pre_at_true": "3333333333 vs the ",
+      "post_at_find": "833333333333333 vs the 0.9 floor), the naive mar",
+      "post_at_true": " floor), the naive margin (0.45) is",
+      "divergent_predicates": [
+        "bar_noun_post"
+      ]
+    }
+  ]
+}

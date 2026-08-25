@@ -7,6 +7,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — OATH v0.10: the context windows were pointed at the wrong token
+
+Closes the defect the v0.9 entry below disclosed and did not repair. `certify_doc`
+located each extracted token with `ctx.find(num["token"])` — the FIRST occurrence
+of the token *string* on the line, not the occurrence `extract_numbers` extracted.
+Across the 48097 tokens in the 1073 markdown documents under `papers/`, **4612
+(9.589%, in 841 documents) were anchored on a different token**, so `pre` and
+`post` described some other token's neighbourhood and every predicate downstream
+of them — `is_spec`, `is_notation`, `is_hist`, the range-sanity `unit_kw`/`sign_kw`
+tests, the slash-pair branch of count-binding, the v0.5 class F `n=` self-scope and
+the class E derived-percent parse — was decided against text that does not surround
+the claim. In the certified corpus, 95 of 349 misplaced tokens have a predicate
+that actually disagrees between the two anchors.
+
+**`V10_TOKEN_COLUMN = True`.** `extract_numbers` records `col`, the column its
+match was found at, and `certify_doc` anchors its windows there. The clause indicts
+one shipped three commits earlier: `PREREG_b49_amplitude_reaudit` line 23 holds a
+preregistered bar in JSON value position at column 98, `ctx.find` returns 6 — the
+digit inside the identifier `b45` — and `V09_IS_SPEC_JSON_IDIOM`, shipped for
+exactly that class, never fires on a member of it. A clause can pass every gate
+written for it and still be withheld from the tokens it was built for.
+
+**The precondition nobody had checked.** `re.sub(pat, " ", line)` collapses each
+sha/date/version match to ONE space, so a raw `m.start()` would have been a *new*
+wrong column on every line carrying one. The scrub is now length-preserving, and
+that is gated: across all 1075 documents the two arms extract an identical ordered
+token list, **0** differing.
+
+**`V10_SLASHPAIR_RANGE_GUARD = True`.** The repair un-masks exactly one latent
+false accusation — a slash-pair count sitting after bounded-quantity vocabulary,
+which range-sanity reads as an out-of-range measurement and accuses. The guard says
+range-sanity does not fire on a slash-pair numerator. With the primary off it
+changes 0 ledger rows and 0 tamper outcomes: it carries no behaviour of its own.
+
+**The cost, published rather than buried.** 27 tokens move ABSTAIN→VERIFIED (23
+adjudicate correct, 0 wrong) and 17 move VERIFIED→ABSTAIN (9 destroy a genuine
+binding). The largest restored class is the *observed* column of a markdown gate
+table — a row printing its bar and its result as the same digits had every token
+anchored at the bar, so the measurement was abstained as if it were its own
+threshold, on the one column such a table exists to report. All 9 destroyed
+bindings are one defect: `is_spec` reads a bare `=` at the end of `pre` as a
+comparison operator, which with correct windows fires on the *assignment* idiom
+(`n = 1`, `n_refits=5`, `0.0854 = 0.0854`). Named `V10_EQUALS_SPEC_OVERREACH` and
+deliberately not fixed — `V07_PRECISION_DIGITS = 7` is a spec and
+`AUROC(S_frame) = 0.75` is not, and the two are identical in form.
+
+**Tamper: declared no-credit in advance, and one column goes the wrong way.** On
+the channel where the *mutation* creates the collision (434 mutants over ten
+seeds), catches rise 34→43 but false attestations rise 233→271 as 47 abstentions
+become verdicts. An abstention produced by a misplaced window is not a safety
+property — it is arbitrary, and the same doctored number on a line with different
+earlier text would not have abstained. The false attestations that surface are the
+v0.4 debt, closed NEGATIVE by v0.8; making a known rate visible is not creating it.
+A cycle that declined to fix its addressing to protect a flattering tamper column
+would be committing v0.9's error one register over.
+
+**Also found: the v0.9 harness's baseline key.** `<doc>|L<line>|<token>` collides
+when a line carries the same token twice, merging 199 rows across 177 colliding
+pairs — precisely this cycle's population. v0.10's baseline appends the ledger
+ordinal. Of the merged rows, 0 hide a differing status, so v0.9's G5 verdict stands.
+
+Battery (`run_oath_v10_battery.py`, both arms, all bars frozen before the edit):
+G0 sweep fidelity reproduced exactly, G1 anchoring 0 ON vs 349 OFF, G2 extraction
+invariance 0, G3 0 new accusations and 0 verdict flips, G4a 23/27 correct + 0
+wrong, G4b 9/17, G4c 9/9 explained, G5 0 and 0, G6a/G6b no regression. Corpus
+verdicts unmoved: 138 OATH-HELD, 1 OATH-FAILED, before and after. Ledger entries
+gain one integer (`col`); committed certificates are untouched.
+
+---
+
 ## [Unreleased] — OATH v0.9: a bar in JSON idiom abstains, and the prose bar clause is refused
 
 `is_spec` (the v0.1 SPEC-CONSTANT rule) abstains a pre-registered bar, because a
