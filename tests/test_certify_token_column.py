@@ -15,12 +15,16 @@ These lock the shipped behaviour so a future edit cannot silently regress it:
   * the companion slash-pair range-sanity guard, and the range-sanity rule it must not weaken;
   * both flags are severable, and the ledger shape addition is additive (invariant I1).
 """
+import importlib
 import json
 
 import pytest
 
-import styxx.certify as certify
-from styxx.certify import certify_doc, extract_numbers
+# importlib, not `import styxx.certify as ...`: the package attribute `styxx.certify` is
+# the provenance FUNCTION (styxx/__init__.py), and `import ... as` binds the attribute
+# when it exists — module alone, function mid-suite. Same class ae45aaa fixed for v0.9.
+certify = importlib.import_module("styxx.certify")
+from styxx.certify import certify_doc, extract_numbers  # noqa: E402
 
 
 @pytest.fixture
