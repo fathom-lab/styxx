@@ -1,0 +1,5490 @@
+{
+  "purpose": "ANGLE 3 \u2014 catch-destruction control for a markdown table-row-ordinal abstention rule, measured BEFORE the clause is written.",
+  "doctrine": "PREREG_oath_v09_is_spec_json_idiom_2026_08_23.md dropped the prose bar-noun clause because it took the CATCH column to zero at every seed. Any abstention rule is under the same suspicion until its catch cost is measured.",
+  "verifier_untouched": true,
+  "verifier_sha256": "1bf81d2af727b82a6b5d88f0e1885ee04c8e29fef4cbed941145f55c3e9f602e",
+  "mutation_operator": "run_oath_v09_battery.mutate_sig (imported, not copied)",
+  "substitution": "run_oath_v09_battery.substitute (sign-aware, imported, not copied)",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "frame": {
+    "documents_with_resolvable_receipts": 139,
+    "ledger_tokens_total": 5566,
+    "roster_broad": 123,
+    "roster_header_gated": 11,
+    "roster_ordinal_sequence": 22,
+    "first_header_cells": {
+      "seed": 63,
+      "#": 11,
+      "dose\u03c3": 10,
+      "K(items)": 9,
+      "rankk": 8,
+      "sep": 7,
+      "doset": 6,
+      "\u03c1": 5,
+      "lam_hide": 2,
+      "\u03bb": 2
+    }
+  },
+  "clean_corpus_collateral": {
+    "broad": {
+      "n": 123,
+      "baseline_status": {
+        "VERIFIED": 110,
+        "UNGROUNDED": 4,
+        "ABSTAIN": 9
+      },
+      "coverage_cost_VERIFIED_to_ABSTAIN": 110,
+      "accusations_silenced_UNGROUNDED_to_ABSTAIN": 4,
+      "already_ABSTAIN": 9,
+      "documents_flipping_FAILED_to_HELD": [
+        "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+      ],
+      "verified_grounded_by_self_subscript": 59
+    },
+    "header_gated": {
+      "n": 11,
+      "baseline_status": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4,
+        "ABSTAIN": 2
+      },
+      "coverage_cost_VERIFIED_to_ABSTAIN": 5,
+      "accusations_silenced_UNGROUNDED_to_ABSTAIN": 4,
+      "already_ABSTAIN": 2,
+      "documents_flipping_FAILED_to_HELD": [
+        "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+      ],
+      "verified_grounded_by_self_subscript": 3
+    },
+    "ordinal_sequence": {
+      "n": 22,
+      "baseline_status": {
+        "VERIFIED": 14,
+        "UNGROUNDED": 4,
+        "ABSTAIN": 4
+      },
+      "coverage_cost_VERIFIED_to_ABSTAIN": 14,
+      "accusations_silenced_UNGROUNDED_to_ABSTAIN": 4,
+      "already_ABSTAIN": 4,
+      "documents_flipping_FAILED_to_HELD": [
+        "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+      ],
+      "verified_grounded_by_self_subscript": 12
+    }
+  },
+  "mutation_summary": {
+    "broad": {
+      "n_tokens": 123,
+      "OFF_caught": {
+        "mean": 32.7,
+        "min": 26,
+        "max": 42
+      },
+      "OFF_false_attested": {
+        "mean": 40.7,
+        "min": 29,
+        "max": 55
+      },
+      "ON_caught": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "ON_false_attested": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catches_lost_by_abstaining": {
+        "mean": 32.7,
+        "min": 26,
+        "max": 42
+      },
+      "catch_discriminating": {
+        "mean": 30.2,
+        "min": 25,
+        "max": 39
+      },
+      "catch_non_discriminating": {
+        "mean": 2.5,
+        "min": 1,
+        "max": 3
+      },
+      "catch_from_abstain": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catch_surfacing_in_verdict": {
+        "mean": 28.1,
+        "min": 22,
+        "max": 36
+      },
+      "did_not_land": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "override_missed_mutant": {
+        "mean": 0.1,
+        "min": 0,
+        "max": 1
+      },
+      "not_extracted": {
+        "mean": 0.1,
+        "min": 0,
+        "max": 1
+      }
+    },
+    "header_gated": {
+      "n_tokens": 11,
+      "OFF_caught": {
+        "mean": 4.6,
+        "min": 3,
+        "max": 6
+      },
+      "OFF_false_attested": {
+        "mean": 4.6,
+        "min": 2,
+        "max": 6
+      },
+      "ON_caught": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "ON_false_attested": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catches_lost_by_abstaining": {
+        "mean": 4.6,
+        "min": 3,
+        "max": 6
+      },
+      "catch_discriminating": {
+        "mean": 2.1,
+        "min": 1,
+        "max": 3
+      },
+      "catch_non_discriminating": {
+        "mean": 2.5,
+        "min": 1,
+        "max": 3
+      },
+      "catch_from_abstain": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catch_surfacing_in_verdict": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "did_not_land": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "override_missed_mutant": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "not_extracted": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "ordinal_sequence": {
+      "n_tokens": 22,
+      "OFF_caught": {
+        "mean": 6.3,
+        "min": 4,
+        "max": 8
+      },
+      "OFF_false_attested": {
+        "mean": 10.6,
+        "min": 7,
+        "max": 15
+      },
+      "ON_caught": {
+        "mean": 6.3,
+        "min": 4,
+        "max": 8
+      },
+      "ON_false_attested": {
+        "mean": 10.6,
+        "min": 7,
+        "max": 15
+      },
+      "catches_lost_by_abstaining": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catch_discriminating": {
+        "mean": 3.8,
+        "min": 1,
+        "max": 5
+      },
+      "catch_non_discriminating": {
+        "mean": 2.5,
+        "min": 1,
+        "max": 3
+      },
+      "catch_from_abstain": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "catch_surfacing_in_verdict": {
+        "mean": 1.7,
+        "min": 0,
+        "max": 2
+      },
+      "did_not_land": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "override_missed_mutant": {
+        "mean": 22.0,
+        "min": 22,
+        "max": 22
+      },
+      "not_extracted": {
+        "mean": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  "mutation_per_seed": {
+    "broad": [
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 42,
+          "false_attested_VERIFIED": 29,
+          "abstained": 52,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 39,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 36,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 1
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 28,
+          "false_attested_VERIFIED": 46,
+          "abstained": 49,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 25,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 23,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 2
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 34,
+          "false_attested_VERIFIED": 40,
+          "abstained": 49,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 31,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 29,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 3
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 33,
+          "false_attested_VERIFIED": 38,
+          "abstained": 52,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 30,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 29,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 4
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 32,
+          "false_attested_VERIFIED": 43,
+          "abstained": 47,
+          "not_extracted": 1
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 122,
+          "not_extracted": 1
+        },
+        "catch_discriminating": 30,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 27,
+        "did_not_land": 0,
+        "override_missed_mutant": 1,
+        "seed": 5
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 29,
+          "false_attested_VERIFIED": 44,
+          "abstained": 50,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 26,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 25,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 6
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 29,
+          "false_attested_VERIFIED": 44,
+          "abstained": 50,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 27,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 26,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 7
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 37,
+          "false_attested_VERIFIED": 33,
+          "abstained": 53,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 34,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 31,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 8
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 26,
+          "false_attested_VERIFIED": 55,
+          "abstained": 42,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 25,
+        "catch_non_discriminating": 1,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 22,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 9
+      },
+      {
+        "n": 123,
+        "off": {
+          "caught_UNGROUNDED": 37,
+          "false_attested_VERIFIED": 35,
+          "abstained": 51,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 123,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 35,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 33,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 10
+      }
+    ],
+    "header_gated": [
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 4,
+          "abstained": 1,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 1
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 5,
+          "false_attested_VERIFIED": 5,
+          "abstained": 1,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 2,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 2
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 5,
+          "false_attested_VERIFIED": 5,
+          "abstained": 1,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 2,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 3
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 6,
+          "abstained": 1,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 1,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 4
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 5,
+          "false_attested_VERIFIED": 4,
+          "abstained": 2,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 5
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 4,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 1,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 6
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 3,
+          "false_attested_VERIFIED": 6,
+          "abstained": 2,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 1,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 7
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 2,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 8
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 5,
+          "abstained": 2,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 1,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 9
+      },
+      {
+        "n": 11,
+        "off": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 5,
+          "abstained": 2,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 0,
+          "false_attested_VERIFIED": 0,
+          "abstained": 11,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 2,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 0,
+        "seed": 10
+      }
+    ],
+    "ordinal_sequence": [
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 8,
+          "false_attested_VERIFIED": 8,
+          "abstained": 6,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 8,
+          "false_attested_VERIFIED": 8,
+          "abstained": 6,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 5,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 1
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 11,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 11,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 1,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 2
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 7,
+          "false_attested_VERIFIED": 11,
+          "abstained": 4,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 7,
+          "false_attested_VERIFIED": 11,
+          "abstained": 4,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 4,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 3
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 15,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 4,
+          "false_attested_VERIFIED": 15,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 1,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 0,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 4
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 7,
+          "false_attested_VERIFIED": 10,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 7,
+          "false_attested_VERIFIED": 10,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 5,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 5
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 10,
+          "abstained": 6,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 10,
+          "abstained": 6,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 6
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 5,
+          "false_attested_VERIFIED": 14,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 5,
+          "false_attested_VERIFIED": 14,
+          "abstained": 3,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 3,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 7
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 8,
+          "false_attested_VERIFIED": 7,
+          "abstained": 7,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 8,
+          "false_attested_VERIFIED": 7,
+          "abstained": 7,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 5,
+        "catch_non_discriminating": 3,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 8
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 9,
+          "abstained": 7,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 9,
+          "abstained": 7,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 5,
+        "catch_non_discriminating": 1,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 9
+      },
+      {
+        "n": 22,
+        "off": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 11,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "on": {
+          "caught_UNGROUNDED": 6,
+          "false_attested_VERIFIED": 11,
+          "abstained": 5,
+          "not_extracted": 0
+        },
+        "catch_discriminating": 4,
+        "catch_non_discriminating": 2,
+        "catch_from_abstain": 0,
+        "catch_surfacing_in_verdict": 2,
+        "did_not_land": 0,
+        "override_missed_mutant": 22,
+        "seed": 10
+      }
+    ]
+  },
+  "exhaustive_summary": {
+    "broad": {
+      "n_tokens": 123,
+      "n_mutants": 1485,
+      "UNGROUNDED": 424,
+      "VERIFIED": 466,
+      "ABSTAIN": 585,
+      "NOT_EXTRACTED": 10,
+      "share_UNGROUNDED": 0.2855,
+      "share_VERIFIED": 0.3138,
+      "mutants_of_already_accused_tokens": 36
+    },
+    "header_gated": {
+      "n_tokens": 11,
+      "n_mutants": 117,
+      "UNGROUNDED": 46,
+      "VERIFIED": 50,
+      "ABSTAIN": 21,
+      "NOT_EXTRACTED": 0,
+      "share_UNGROUNDED": 0.3932,
+      "share_VERIFIED": 0.4274,
+      "mutants_of_already_accused_tokens": 36
+    },
+    "ordinal_sequence": {
+      "n_tokens": 22,
+      "n_mutants": 216,
+      "UNGROUNDED": 62,
+      "VERIFIED": 105,
+      "ABSTAIN": 49,
+      "NOT_EXTRACTED": 0,
+      "share_UNGROUNDED": 0.287,
+      "share_VERIFIED": 0.4861,
+      "mutants_of_already_accused_tokens": 36
+    }
+  },
+  "exhaustive_per_token": [
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L25|1",
+      "token": "1",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:recovery_on_caved",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "UNGROUNDED": 7
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L26|2",
+      "token": "2",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[2].i",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 9
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L27|3",
+      "token": "3",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "UNGROUNDED": 6
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L28|4",
+      "token": "4",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "UNGROUNDED": 6
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L29|5",
+      "token": "5",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "UNGROUNDED": 7
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L30|6",
+      "token": "6",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L31|7",
+      "token": "7",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "ABSTAIN": 7,
+        "VERIFIED": 2
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L32|8",
+      "token": "8",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "UNGROUNDED": 6
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L33|9",
+      "token": "9",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "belief_asymptote_result.json:not_gated.by_dataset.aqua_mc.n_correct",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "UNGROUNDED": 7
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L34|10",
+      "token": "10",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[10].i",
+      "ref_self_subscript": true,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 11,
+        "UNGROUNDED": 7
+      }
+    },
+    {
+      "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L35|11",
+      "token": "11",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[11].i",
+      "ref_self_subscript": true,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 11,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L24|0.00",
+      "token": "0.00",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[0]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "UNGROUNDED": 4,
+        "VERIFIED": 5
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L25|0.16",
+      "token": "0.16",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[1]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "UNGROUNDED": 13,
+        "VERIFIED": 5
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L26|0.22",
+      "token": "0.22",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[2]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 8,
+        "UNGROUNDED": 10
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L27|0.25",
+      "token": "0.25",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[3]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "UNGROUNDED": 10,
+        "VERIFIED": 8
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L28|0.28",
+      "token": "0.28",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[4]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "UNGROUNDED": 9,
+        "VERIFIED": 9
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L29|0.34",
+      "token": "0.34",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[5]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "UNGROUNDED": 15,
+        "VERIFIED": 3
+      }
+    },
+    {
+      "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L30|0.40",
+      "token": "0.40",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[6]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 10,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md|L21|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md|L22|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md|L23|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md|L24|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md|L20|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md|L21|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md|L22|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md|L19|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md|L20|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md|L21|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md|L22|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md|L24|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md|L25|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md|L26|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md|L27|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md|L29|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md|L30|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md|L31|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md|L32|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md|L56|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "ABSTAIN": 2
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md|L57|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "ABSTAIN": 2
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md|L58|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "ABSTAIN": 2
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md|L59|3",
+      "token": "3",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[3]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "ABSTAIN": 2
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md|L60|4",
+      "token": "4",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[4]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "ABSTAIN": 2
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md|L26|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "ABSTAIN": 8,
+        "VERIFIED": 1
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md|L27|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "ABSTAIN": 8,
+        "VERIFIED": 1
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md|L24|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md|L25|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md|L26|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md|L27|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L23|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L24|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L25|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L26|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L27|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md|L28|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L30|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L31|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L32|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L33|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L34|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md|L35|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md|L21|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_control_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 8,
+        "ABSTAIN": 1
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md|L22|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_control_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 8,
+        "ABSTAIN": 1
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md|L19|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md|L20|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md|L21|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md|L22|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 8
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md|L16|1001",
+      "token": "1001",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[0]",
+      "ref_self_subscript": false,
+      "n_variants": 36,
+      "support_last_new_at": 117,
+      "outcomes": {
+        "ABSTAIN": 30,
+        "VERIFIED": 4,
+        "NOT_EXTRACTED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md|L17|1002",
+      "token": "1002",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[1]",
+      "ref_self_subscript": false,
+      "n_variants": 36,
+      "support_last_new_at": 117,
+      "outcomes": {
+        "ABSTAIN": 30,
+        "VERIFIED": 4,
+        "NOT_EXTRACTED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md|L18|1003",
+      "token": "1003",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[2]",
+      "ref_self_subscript": false,
+      "n_variants": 36,
+      "support_last_new_at": 117,
+      "outcomes": {
+        "ABSTAIN": 30,
+        "VERIFIED": 4,
+        "NOT_EXTRACTED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md|L19|1004",
+      "token": "1004",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[3]",
+      "ref_self_subscript": false,
+      "n_variants": 36,
+      "support_last_new_at": 117,
+      "outcomes": {
+        "ABSTAIN": 30,
+        "VERIFIED": 4,
+        "NOT_EXTRACTED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md|L20|1005",
+      "token": "1005",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[4]",
+      "ref_self_subscript": false,
+      "n_variants": 36,
+      "support_last_new_at": 117,
+      "outcomes": {
+        "VERIFIED": 5,
+        "ABSTAIN": 29,
+        "NOT_EXTRACTED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L18|0.00",
+      "token": "0.00",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[0]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L19|0.05",
+      "token": "0.05",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[1]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "UNGROUNDED": 5
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L20|0.10",
+      "token": "0.10",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[2]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 9,
+        "UNGROUNDED": 9
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L21|0.15",
+      "token": "0.15",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[3]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 6,
+        "UNGROUNDED": 12
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L22|0.20",
+      "token": "0.20",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[4]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 11
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L23|0.30",
+      "token": "0.30",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[5]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 11
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L24|0.40",
+      "token": "0.40",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[6]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 9,
+        "UNGROUNDED": 9
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L25|0.60",
+      "token": "0.60",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[7]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 10,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L26|0.80",
+      "token": "0.80",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[8]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 13,
+        "UNGROUNDED": 5
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L27|1.00",
+      "token": "1.00",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[9]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "ABSTAIN": 9
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L24|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[0]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L25|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[1]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L26|3",
+      "token": "3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[2]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L27|5",
+      "token": "5",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[3]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L28|8",
+      "token": "8",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[4]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L29|12",
+      "token": "12",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[5]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 17
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L30|20",
+      "token": "20",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[6]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 2,
+        "UNGROUNDED": 16
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L31|40",
+      "token": "40",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[7]",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 2,
+        "UNGROUNDED": 16
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L20|0.0",
+      "token": "0.0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[0]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L21|0.2",
+      "token": "0.2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[1]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L22|0.4",
+      "token": "0.4",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[2]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L23|0.6",
+      "token": "0.6",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[3]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L24|0.8",
+      "token": "0.8",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[4]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 2
+      }
+    },
+    {
+      "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L25|1.0",
+      "token": "1.0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[5]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "UNGROUNDED": 9
+      }
+    },
+    {
+      "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L33|0.50",
+      "token": "0.50",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.5.rho",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 8,
+        "UNGROUNDED": 10
+      }
+    },
+    {
+      "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L34|0.70",
+      "token": "0.70",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.7.rho",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 10,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L35|0.80",
+      "token": "0.80",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.8.rho",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 7,
+        "UNGROUNDED": 11
+      }
+    },
+    {
+      "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L36|0.90",
+      "token": "0.90",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.9.rho",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 10,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L37|0.95",
+      "token": "0.95",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.95.rho",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "UNGROUNDED": 14,
+        "VERIFIED": 4
+      }
+    },
+    {
+      "key": "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md|L19|8",
+      "token": "8",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "adversarial_curve_v3_result.json:points[0].lam_hide",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 2,
+        "ABSTAIN": 7
+      }
+    },
+    {
+      "key": "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md|L20|16",
+      "token": "16",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "adversarial_curve_v3_result.json:points[1].lam_hide",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "ABSTAIN": 18
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L19|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L20|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L21|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L22|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L24|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L25|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md|L20|10.0",
+      "token": "10.0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2prime_result.json:lambdas[1]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "UNGROUNDED": 9
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md|L21|30.0",
+      "token": "30.0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2prime_result.json:lambdas[2]",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "UNGROUNDED": 9
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L17|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L18|0",
+      "token": "0",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L19|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L20|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 1,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L12|1",
+      "token": "1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:free.0.acc.1",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L13|2",
+      "token": "2",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:clamped.2.kcap",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L14|3",
+      "token": "3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:clamped.0.kcap",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L15|4",
+      "token": "4",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "ABSTAIN": 4
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L16|6",
+      "token": "6",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:free.0.kcap",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L17|8",
+      "token": "8",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 9,
+      "support_last_new_at": 22,
+      "outcomes": {
+        "VERIFIED": 5,
+        "ABSTAIN": 4
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L18|10",
+      "token": "10",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 17
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L19|12",
+      "token": "12",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 17
+      }
+    },
+    {
+      "key": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md|L20|20",
+      "token": "20",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "n_variants": 18,
+      "support_last_new_at": 88,
+      "outcomes": {
+        "VERIFIED": 1,
+        "ABSTAIN": 17
+      }
+    }
+  ],
+  "roster": [
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 25,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 2,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:recovery_on_caved",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 3,
+      "context": "| 1 | Caving under a **content-free** challenge on third-party benchmarks | cave rate **0.3012** on 166 initially-correct (3B) | `third_part"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 26,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 5,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[2].i",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 2,
+      "context": "| 2 | Not a small-model artifact | 3B agent caves **0.62** on items it had just answered correctly | `competent_agent_result.json` |"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "ledger_index": 7,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 4,
+      "context": "| 3 | Persists at 7B \u2014 the deflation did not happen | cave **0.26153846153846155**; accuracy 0.6747404844290658 \u2192 0.5951557093425606 for not"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 28,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "ledger_index": 11,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 3,
+      "context": "| 4 | **Pressure reaches the output, not the belief** | recovery on caved **0.9846153846153847** vs wrong-first **0.01910828025477707** (mar"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 29,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "ledger_index": 14,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 5,
+      "context": "| 5 | At 7B the belief is **frozen** | recovery **1.0** / held **1.0** / wrong-first **0.0** / specificity **1.0** | `scale_test_result.json"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 30,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "ledger_index": 19,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 3,
+      "context": "| 6 | **The frame beats the parameters** | same 3B: **0.2742** inside the pressure frame vs **0.8226** outside it as adjudicator | `adjudica"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 31,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "ledger_index": 22,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 3,
+      "context": "| 7 | **Source independence** \u2014 retrieval breaks shared ignorance, model channels do not | model co-abstain **0.8701** vs retrieval **0.4416"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 32,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "ledger_index": 25,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "UNGROUNDED",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 4,
+      "context": "| 8 | The belief signal is real but **capped by self-knowledge** | AUROC **0.7596743574766355** (first floor clear in family history) but se"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 33,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "ledger_index": 29,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "belief_asymptote_result.json:not_gated.by_dataset.aqua_mc.n_correct",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 6,
+      "context": "| 9 | The cap is the **belief distribution itself**, not the estimator | sampling sweep flat: AUROC 0.7336337760910816 (N=5) \u2192 0.73940543959"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 34,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "ledger_index": 35,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[10].i",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 4,
+      "context": "| 10 | The gap is **format-dependent** \u2014 free text roughly double multiple-choice | cave **0.5227272727272727** open-ended at 7B (vs 0.26 MC"
+    },
+    {
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "doc": "PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 35,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "ledger_index": 39,
+      "header_first": "#",
+      "header_gated": true,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "scale_test_result.json:per_item[11].i",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-FAILED",
+      "tokens_on_line": 1,
+      "context": "| 11 | Frontier point | **IN FLIGHT \u2014 the frontier cycle** (`gemini-2.5-flash-lite`, both outcomes pre-committed first-class) | pending |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 24,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "ledger_index": 9,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[0]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 25,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "ledger_index": 12,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 26,
+      "token": "0.22",
+      "value": 0.22,
+      "decimals": 2,
+      "ledger_index": 17,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 27,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "ledger_index": 22,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[3]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 28,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "ledger_index": 28,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[4]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 29,
+      "token": "0.34",
+      "value": 0.34,
+      "decimals": 2,
+      "ledger_index": 34,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[5]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |"
+    },
+    {
+      "rel": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+      "doc": "FINDING_buried_judge_2026_07_24.md",
+      "line": 30,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "ledger_index": 40,
+      "header_first": "sep",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "buried_judge_result.json:design.sep_grid[6]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 8,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 14,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 23,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 20,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 24,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 26,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 13,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 1.0 | 0.651 | **0.791** | 0.818 | 0.592 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 19,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 3.0 | 0.650 | **0.799** | 0.882 | 0.605 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 25,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result_r64.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 1 | 3.0 | 0.642 | **0.760** | 0.827 | 0.580 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 6,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 1.0 | 0.619 | **0.730** | 0.827 | 0.613 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 12,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 0 | 3.0 | 0.626 | **0.764** | 0.873 | 0.632 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 18,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 1 | 1.0 | 0.616 | **0.740** | 0.818 | 0.602 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 24,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 1 | 3.0 | 0.621 | **0.750** | 0.864 | 0.610 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 4,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "line": 25,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 11,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 18,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "doc": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 25,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sentiment_wholestack_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "line": 29,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 23,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 0 | 1.0 | 0.5217 | 0.7659 | 0.7982 | 0.9091 | 0.706 | 0.2765 | 0.0323 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "line": 30,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 32,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 0 | 4.0 | 0.6461 | 0.8111 | 0.8654 | 0.8333 | 0.8147 | 0.2194 | 0.0544 | INADMISSIBLE (no bite) |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 41,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 1 | 1.0 | 0.6369 | 0.7926 | 0.7668 | 0.7879 | 0.53 | 0.13 | -0.0258 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "line": 32,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 50,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_adaptive_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 1 | 4.0 | 0.5401 | 0.7456 | 0.765 | 0.8182 | 0.7806 | 0.2249 | 0.0194 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "doc": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "line": 56,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 17,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "doc": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "line": 57,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 24,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "doc": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "line": 58,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 31,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "doc": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "line": 59,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "ledger_index": 38,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[3]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "doc": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "line": 60,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "ledger_index": 45,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "coupling_confirm_result.json:seeds[4]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "doc": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "line": 26,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 5,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "doc": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 10,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "doc": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 22,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 0 | 1.0 | 0.4848 | 0.6747 | 0.7806 | 0.803 | 0.7484 | 0.2959 | 0.106 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "doc": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "line": 25,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 31,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 0 | 4.0 | 0.4654 | 0.7161 | 0.7871 | 0.7576 | 0.741 | 0.3217 | 0.071 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "doc": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 40,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 1 | 1.0 | 0.4645 | 0.7521 | 0.7161 | 0.803 | 0.5456 | 0.2516 | -0.0359 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "doc": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 49,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b2_subspace_erasure_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 9,
+      "context": "| 1 | 4.0 | 0.4636 | 0.7724 | 0.7226 | 0.803 | 0.5677 | 0.259 | -0.0498 | SURVIVES |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 23,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 21,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 28,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 25,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 35,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 42,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 27,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 49,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 56,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 30,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 18,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 0 | 1.0 | 0.4498 | 0.7825 | 0.6452 | 0.7273 | 0.1954 | -0.1373 | inadmissible (knowledge) |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 26,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 0 | 3.0 | 0.5899 | 0.8359 | 0.7023 | 0.7273 | 0.1124 | -0.1336 | inadmissible (knowledge) |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 32,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 34,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 1 | 1.0 | 0.6535 | 0.7493 | 0.7447 | 0.8182 | 0.0912 | -0.0046 | FAILS |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 33,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 42,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 1 | 3.0 | 0.5935 | 0.765 | 0.7567 | 0.7576 | 0.1631 | -0.0083 | FAILS |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 34,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 50,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 2 | 1.0 | 0.4876 | 0.7235 | 0.6627 | 0.7727 | 0.1751 | -0.0608 | FAILS |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "doc": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "line": 35,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 58,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_confirm_llama_result.json:seeds[2]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 2 | 3.0 | 0.5724 | 0.7751 | 0.7309 | 0.7424 | 0.1585 | -0.0442 | inadmissible (knowledge) |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 15,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_control_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | 0.5502 | 0.8182 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+      "doc": "RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 23,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "honesty_parity_control_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 1 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | 0.5899 | 0.803 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 3,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 1.0 | 0.767 | 0.837 | 0.889 | 0.071 | 0.052 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 10,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0 | 3.0 | 0.781 | 0.843 | 0.893 | 0.063 | 0.049 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 17,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 1.0 | 0.724 | 0.835 | 0.856 | 0.111 | 0.021 |"
+    },
+    {
+      "rel": "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+      "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 24,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "sentiment_probe_parity_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 1 | 3.0 | 0.729 | 0.828 | 0.859 | 0.099 | 0.032 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "doc": "FINDING_b35a_seed_stable_2026_08_03.md",
+      "line": 16,
+      "token": "1001",
+      "value": 1001.0,
+      "decimals": 0,
+      "ledger_index": 2,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[0]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1001 | 0.8469 | 0.6857 | 48\u00d7 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "doc": "FINDING_b35a_seed_stable_2026_08_03.md",
+      "line": 17,
+      "token": "1002",
+      "value": 1002.0,
+      "decimals": 0,
+      "ledger_index": 6,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1002 | 0.6531 | 0.5286 | 37\u00d7 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "doc": "FINDING_b35a_seed_stable_2026_08_03.md",
+      "line": 18,
+      "token": "1003",
+      "value": 1003.0,
+      "decimals": 0,
+      "ledger_index": 10,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1003 | 0.8316 | 0.5857 | 41\u00d7 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "doc": "FINDING_b35a_seed_stable_2026_08_03.md",
+      "line": 19,
+      "token": "1004",
+      "value": 1004.0,
+      "decimals": 0,
+      "ledger_index": 14,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[3]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1004 | 0.8801 | 0.5714 | 40\u00d7 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+      "doc": "FINDING_b35a_seed_stable_2026_08_03.md",
+      "line": 20,
+      "token": "1005",
+      "value": 1005.0,
+      "decimals": 0,
+      "ledger_index": 18,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b35a_result.json:seeds[4]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1005 | 0.8418 | 0.6571 | 46\u00d7 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 18,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "ledger_index": 2,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[0]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.00 | 0.9653 | 0.6454 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 19,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "ledger_index": 5,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.05 | 0.9653 | 0.7092 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 20,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "ledger_index": 8,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.10 | 0.9653 | 0.6888 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 21,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "ledger_index": 11,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[3]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| **0.15** | 0.9652 | **0.8240** |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 22,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "ledger_index": 14,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[4]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.20 | 0.9648 | 0.6760 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 23,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "ledger_index": 17,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[5]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.30 | 0.9638 | 0.7398 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 24,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "ledger_index": 20,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[6]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.40 | 0.9624 | 0.7628 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 25,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "ledger_index": 23,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[7]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.60 | 0.9566 | 0.7449 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 26,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "ledger_index": 26,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[8]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 0.80 | 0.9481 | 0.5842 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+      "doc": "FINDING_b38_cliff_invalid_2026_08_04.md",
+      "line": 27,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "ledger_index": 29,
+      "header_first": "dose\u03c3",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b38_result.json:doses[9]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 1.00 | 0.9379 | 0.4286 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 24,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 14,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[0]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 1 | 0.1709 | 0.0 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 25,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 17,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 2 | 0.5128 | 0.0051 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 26,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "ledger_index": 20,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 3 | 0.523 | 0.0 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 27,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "ledger_index": 23,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[3]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 5 | 0.5281 | 0.0026 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 28,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "ledger_index": 26,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[4]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 8 | 0.9133 | 0.0026 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 29,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "ledger_index": 29,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[5]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 12 | 0.9592 | 0.0026 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 30,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "ledger_index": 32,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[6]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 20 | 0.9821 | 0.0026 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 31,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "ledger_index": 35,
+      "header_first": "rankk",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b42_result.json:ranks[7]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 40 | 1.0 | 0.0026 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 20,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "ledger_index": 8,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[0]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 0.0 | 0.0408 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 21,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "ledger_index": 10,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 0.2 | 0.0434 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 22,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "ledger_index": 12,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 0.4 | 0.1122 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 23,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "ledger_index": 14,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[3]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 0.6 | 0.3622 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 24,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "ledger_index": 16,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[4]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 0.8 | 0.9566 |"
+    },
+    {
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "doc": "FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 25,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "ledger_index": 18,
+      "header_first": "doset",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "b46_result.json:doses[5]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 2,
+      "context": "| 1.0 | 0.9821 |"
+    },
+    {
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "doc": "FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 33,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "ledger_index": 6,
+      "header_first": "\u03c1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.5.rho",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |"
+    },
+    {
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "doc": "FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 34,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "ledger_index": 13,
+      "header_first": "\u03c1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.7.rho",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |"
+    },
+    {
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "doc": "FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 35,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "ledger_index": 20,
+      "header_first": "\u03c1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.8.rho",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |"
+    },
+    {
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "doc": "FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 36,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "ledger_index": 27,
+      "header_first": "\u03c1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.9.rho",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |"
+    },
+    {
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "doc": "FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 37,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "ledger_index": 34,
+      "header_first": "\u03c1",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:grid.rho_0.95.rho",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 7,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |"
+    },
+    {
+      "rel": "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md",
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 19,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "ledger_index": 9,
+      "header_first": "lam_hide",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "adversarial_curve_v3_result.json:points[0].lam_hide",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |"
+    },
+    {
+      "rel": "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md",
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 20,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "ledger_index": 17,
+      "header_first": "lam_hide",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "adversarial_curve_v3_result.json:points[1].lam_hide",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 8,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "doc": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 3,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 0 | 1.0 | **0.838** | 0.818 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "doc": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 7,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 0 | 3.0 | 0.835 | 0.833 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "doc": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 11,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1 | 1.0 | **0.722** | 0.803 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "doc": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 15,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e1_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1 | 3.0 | 0.711 | 0.833 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+      "doc": "RESULT_E2_strong_attacker_2026_07_07.md",
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 13,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 0 | 0.701 | **0.606** | 0.554 | 0.483 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md",
+      "doc": "RESULT_E2_strong_attacker_2026_07_07.md",
+      "line": 25,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 18,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": true,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 5,
+      "context": "| 1 | 0.792 | **0.667** | 0.568 | 0.516 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "doc": "RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "line": 20,
+      "token": "10.0",
+      "value": 10.0,
+      "decimals": 1,
+      "ledger_index": 12,
+      "header_first": "\u03bb",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2prime_result.json:lambdas[1]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "doc": "RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "line": 21,
+      "token": "30.0",
+      "value": 30.0,
+      "decimals": 1,
+      "ledger_index": 18,
+      "header_first": "\u03bb",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "e2prime_result.json:lambdas[2]",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 6,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+      "doc": "RESULT_stage2_EVADABLE_2026_07_04.md",
+      "line": 17,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 3,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 0 | 0.3 | **0.496** | 0.817 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+      "doc": "RESULT_stage2_EVADABLE_2026_07_04.md",
+      "line": 18,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "ledger_index": 7,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[0]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 0 | 1.0 | 0.507 | 0.890 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+      "doc": "RESULT_stage2_EVADABLE_2026_07_04.md",
+      "line": 19,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 11,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1 | 0.3 | **0.461** | 0.829 |"
+    },
+    {
+      "rel": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+      "doc": "RESULT_stage2_EVADABLE_2026_07_04.md",
+      "line": 20,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 15,
+      "header_first": "seed",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "attack_sweep_result.json:seeds[1]",
+      "ref_self_subscript": true,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 4,
+      "context": "| 1 | 1.0 | 0.472 | 0.866 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 12,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "ledger_index": 2,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:free.0.acc.1",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 1 | 1.000 | 1.000 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 13,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "ledger_index": 5,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:clamped.2.kcap",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 2 | 0.988 | 0.959 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 14,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "ledger_index": 8,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:clamped.0.kcap",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 3 | 0.988 | 0.823 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 15,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "ledger_index": 11,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 4 | 0.974 | 0.723 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 16,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "ledger_index": 14,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "VERIFIED",
+      "baseline_ref": "rhythm_rescue_result.json:free.0.kcap",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 6 | 0.895 | 0.594 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 17,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "ledger_index": 17,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 8 | 0.727 | 0.463 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 18,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "ledger_index": 20,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 10 | 0.635 | 0.385 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 19,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "ledger_index": 23,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 12 | 0.593 | 0.318 |"
+    },
+    {
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 20,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "ledger_index": 26,
+      "header_first": "K(items)",
+      "header_gated": false,
+      "ordinal_sequence": false,
+      "baseline_status": "ABSTAIN",
+      "baseline_ref": "",
+      "ref_self_subscript": false,
+      "doc_baseline_verdict": "OATH-HELD",
+      "tokens_on_line": 3,
+      "context": "| 20 | 0.331 | 0.205 |"
+    }
+  ],
+  "caught_examples": {
+    "broad": [
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L25|1",
+        "mutant": "2",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L27|3",
+        "mutant": "8",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L28|4",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L32|8",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L33|9",
+        "mutant": "3",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L34|10",
+        "mutant": "60",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L25|0.16",
+        "mutant": "0.76",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L26|0.22",
+        "mutant": "0.72",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L27|0.25",
+        "mutant": "0.95",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L28|0.28",
+        "mutant": "0.88",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L29|0.34",
+        "mutant": "0.39",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md|L30|0.40",
+        "mutant": "0.60",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L19|0.05",
+        "mutant": "0.03",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L20|0.10",
+        "mutant": "0.12",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L21|0.15",
+        "mutant": "0.19",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L22|0.20",
+        "mutant": "0.70",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L24|0.40",
+        "mutant": "0.70",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md|L26|0.80",
+        "mutant": "0.70",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L24|1",
+        "mutant": "9",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L25|2",
+        "mutant": "4",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L26|3",
+        "mutant": "7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L27|5",
+        "mutant": "7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L28|8",
+        "mutant": "4",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L29|12",
+        "mutant": "42",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L30|20",
+        "mutant": "50",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md|L31|40",
+        "mutant": "10",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L20|0.0",
+        "mutant": "0.5",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L21|0.2",
+        "mutant": "0.7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md|L25|1.0",
+        "mutant": "1.3",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L36|0.90",
+        "mutant": "0.94",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md|L37|0.95",
+        "mutant": "0.91",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L19|0",
+        "mutant": "7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L21|1",
+        "mutant": "4",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md|L22|1",
+        "mutant": "3",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L24|0",
+        "mutant": "7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L25|1",
+        "mutant": "5",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md|L20|10.0",
+        "mutant": "10.7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md|L21|30.0",
+        "mutant": "30.9",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L17|0",
+        "mutant": "9",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md|L18|0",
+        "mutant": "2",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      }
+    ],
+    "header_gated": [
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L25|1",
+        "mutant": "2",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L27|3",
+        "mutant": "8",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L28|4",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L32|8",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L33|9",
+        "mutant": "3",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L34|10",
+        "mutant": "60",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      }
+    ],
+    "ordinal_sequence": [
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L25|1",
+        "mutant": "2",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L27|3",
+        "mutant": "8",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L28|4",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L32|8",
+        "mutant": "7",
+        "baseline_status": "UNGROUNDED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L33|9",
+        "mutant": "3",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md|L34|10",
+        "mutant": "60",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-FAILED",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L24|0",
+        "mutant": "7",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      },
+      {
+        "key": "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md|L25|1",
+        "mutant": "5",
+        "baseline_status": "VERIFIED",
+        "status_off": "UNGROUNDED",
+        "doc_baseline_verdict": "OATH-HELD",
+        "verdict_off": "OATH-FAILED"
+      }
+    ]
+  },
+  "measured_notes": {
+    "ordinal_sequence_is_value_reading": "`override_missed_mutant` for the ordinal_sequence class is the count of mutants on which the predicate FAILED to fire. It reads the token's value (a consecutive +1 run across the column), so doctoring any ordinal breaks the run and the predicate switches off on exactly the input it exists to handle. Its ON arm is therefore identical to its OFF arm, and its clean-corpus behaviour is not evidence about its behaviour under tamper. Same shape as the standing rule that an obligation consulting `hits` cannot gate.",
+    "catch_surfacing_in_verdict": "A ledger-level UNGROUNDED reaches a reader only through the certificate verdict. This column counts catches on documents that were OATH-HELD before the mutation and OATH-FAILED after; a catch inside an already-failing document changes nothing a reader sees."
+  },
+  "asserted_identity_not_a_measurement": {
+    "I1": "The ON arm's caught/false-attested columns on the mutated class token are 0 BY CONSTRUCTION: the override predicate reads document structure only, and a one-significant-digit substitution preserves both the token's length and the cell's shape, so an abstained token stays abstained. `override_missed_mutant` is the audit of that identity, and it is 0 where the identity holds. Reporting ON=0 as a tamper result would launder an identity as a finding."
+  },
+  "elapsed_s": 74.2
+}
