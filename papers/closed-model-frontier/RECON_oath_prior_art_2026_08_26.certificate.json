@@ -1,0 +1,77 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_oath_prior_art_2026_08_26.md",
+  "document_sha256": "0b399b5cb8df334884a06975c7587a11b2493be3ec24c73e2811675016048a0c",
+  "receipts_sha256": {
+    "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6"
+  },
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "counts": {
+    "VERIFIED": 0,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 40,
+      "token": "2509.06902"
+    },
+    {
+      "line": 52,
+      "token": "2604.24658"
+    },
+    {
+      "line": 52,
+      "token": "37"
+    },
+    {
+      "line": 79,
+      "token": "163"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 40,
+      "token": "2509.06902",
+      "value": 2509.06902,
+      "decimals": 5,
+      "context": "**Proof-Carrying Numbers** (arXiv 2509.06902) is the closest work found, and it is close enough",
+      "col": 34,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 52,
+      "token": "2604.24658",
+      "value": 2604.24658,
+      "decimals": 5,
+      "context": "**Agent-Native Research Artifacts** (arXiv 2604.24658, 37 authors) proposes replacing the",
+      "col": 43,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 52,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "**Agent-Native Research Artifacts** (arXiv 2604.24658, 37 authors) proposes replacing the",
+      "col": 55,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 79,
+      "token": "163",
+      "value": 163.0,
+      "decimals": 0,
+      "context": "3. **The instrument audited by its own standard, at scale.** 163 logged cycles, a published",
+      "col": 61,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
