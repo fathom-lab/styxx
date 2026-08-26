@@ -1,0 +1,1335 @@
+{
+  "battery": "OATH v0.11 — the row-ordinal retraction",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v11_row_ordinal_retraction_2026_08_25.md",
+  "prereg_frozen_on_commit": "cbd2864",
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "baseline_verifier_sha256": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
+  "clause": "V11_ORDINAL_LABEL",
+  "reason_code": "row_ordinal_label",
+  "outcome": "V11_ORDINAL_RETRACTION_SHIPS",
+  "gates": [
+    {
+      "gate": "G1",
+      "name": "INSTRUMENT VALIDITY (VOID-producing)",
+      "verdict": "PASS",
+      "extractor_replication_documents": 1109,
+      "extractor_replication_population_ok": true,
+      "extractor_mismatches": 0,
+      "extractor_mismatch_roster": [],
+      "frame_at_freeze": {
+        "documents": 140,
+        "tokens": 5681,
+        "VERIFIED": 4196,
+        "ABSTAIN": 1481,
+        "UNGROUNDED": 4
+      },
+      "frame_at_run": {
+        "documents": 140,
+        "tokens": 5681,
+        "VERIFIED": 4196,
+        "ABSTAIN": 1481,
+        "UNGROUNDED": 4
+      },
+      "frame_matches": true,
+      "audit_off_arm_severability_mismatches": 0,
+      "audit_off_arm_severability_roster": [],
+      "audit_note": "Per-token OFF-arm identity (status AND reason) against the pre-change baseline. An AUDIT, not a bar: the prereg gates G1 on the aggregate frame, and adding a bar after the freeze is bar-moving even when it makes the run harder to pass."
+    },
+    {
+      "gate": "G2",
+      "name": "FIRING-SURFACE EXACTNESS",
+      "verdict": "PASS",
+      "firings_in_frame": 11,
+      "firing_documents": [
+        "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+      ],
+      "prospectus_firings": 11,
+      "over_reach": [],
+      "under_reach": [],
+      "firings_outside_prospectus": {},
+      "coordinates": [
+        [
+          25,
+          2,
+          "1"
+        ],
+        [
+          26,
+          2,
+          "2"
+        ],
+        [
+          27,
+          2,
+          "3"
+        ],
+        [
+          28,
+          2,
+          "4"
+        ],
+        [
+          29,
+          2,
+          "5"
+        ],
+        [
+          30,
+          2,
+          "6"
+        ],
+        [
+          31,
+          2,
+          "7"
+        ],
+        [
+          32,
+          2,
+          "8"
+        ],
+        [
+          33,
+          2,
+          "9"
+        ],
+        [
+          34,
+          2,
+          "10"
+        ],
+        [
+          35,
+          2,
+          "11"
+        ]
+      ]
+    },
+    {
+      "gate": "G3",
+      "name": "THE RETRACTION LEDGER AUDIT",
+      "verdict": "PASS",
+      "transitions": {
+        "VERIFIED->ABSTAIN": 5,
+        "UNGROUNDED->ABSTAIN": 4
+      },
+      "ungrounded_to_abstain": [
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          27,
+          "3"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          28,
+          "4"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          29,
+          "5"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          32,
+          "8"
+        ]
+      ],
+      "ungrounded_to_abstain_matches_whitelist": true,
+      "verified_to_abstain": [
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          25,
+          "1"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          26,
+          "2"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          33,
+          "9"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          34,
+          "10"
+        ],
+        [
+          "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+          35,
+          "11"
+        ]
+      ],
+      "verified_to_abstain_matches_enumeration": true,
+      "failed_to_held": [
+        "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md"
+      ],
+      "off_target_conversions": [],
+      "post_clause_frame_expected": {
+        "VERIFIED": 4191,
+        "ABSTAIN": 1490,
+        "UNGROUNDED": 0
+      },
+      "post_clause_frame": {
+        "VERIFIED": 4191,
+        "ABSTAIN": 1490,
+        "UNGROUNDED": 0
+      },
+      "ledger_misalignments": [],
+      "audit_A1_conversions_elsewhere_in_frame": 0,
+      "audit_A1_note": "Vacuous in-frame and never sold as a passed bar: the frame's four UNGROUNDED ARE the target.",
+      "audit_I2_held_to_failed": 0,
+      "audit_I2_note": "Zero by construction of an abstain-only clause. Audited and reported; deliberately absent from this gate's bar list.",
+      "genuine_verifications_destroyed": 0,
+      "genuine_verifications_note": "All five VERIFIED->ABSTAIN were hand-adjudicated as false attestations (a rate coincidence, three index leaves, one unrelated count) and re-adjudicated blind at G4'b."
+    },
+    {
+      "gate": "G4'a",
+      "name": "WARRANT — mechanical leg",
+      "verdict": "PASS",
+      "expected": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4,
+        "ABSTAIN": 2
+      },
+      "observed": {
+        "VERIFIED": 5,
+        "UNGROUNDED": 4,
+        "ABSTAIN": 2
+      },
+      "drift": []
+    },
+    {
+      "gate": "G4'b",
+      "name": "WARRANT — second blind adjudicator",
+      "verdict": "PASS",
+      "artifact": "oath_v11_panel_recheck.json",
+      "coverage": {
+        "targets_adjudicated": 4,
+        "targets_expected": 4,
+        "non_target_roster_adjudicated": 7,
+        "non_target_roster_expected": 7,
+        "fresh_draw_adjudicated": 10,
+        "fresh_draw_expected": 10,
+        "reported_totals_reconcile_with_cases": true
+      },
+      "verifier_pin": {
+        "ship_candidate_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+        "sha256_at_adjudication": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
+        "pins_match": false,
+        "disclosure": "I adjudicated all 21 cases while the working tree still held the pre-change verifier, so the `status` field I read on each case is the candidate clause's OFF arm as computed by that earlier file, not by the ship-candidate verifier pinned here. Whether those OFF-arm statuses are identical under the ship-candidate verifier is established by the battery's gate G4'a and is NOT something this adjudication establishes for itself."
+      },
+      "totals": {
+        "examined": 21,
+        "CLAIM": 10,
+        "LABEL": 11,
+        "by_confidence": {
+          "HIGH": 20,
+          "MEDIUM": 1,
+          "LOW": 0
+        }
+      },
+      "bar_i_all_four_targets_LABEL": true,
+      "targets": [
+        {
+          "line": 27,
+          "token": "3",
+          "call": "LABEL"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "call": "LABEL"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "call": "LABEL"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "call": "LABEL"
+        }
+      ],
+      "bar_ii_zero_LABEL_in_fresh_draw": true,
+      "fresh_draw_examined": 10,
+      "fresh_draw_LABELs": [],
+      "bar_iii_zero_CLAIM_on_non_targets": true,
+      "non_targets": [
+        {
+          "line": 25,
+          "token": "1",
+          "call": "LABEL"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "call": "LABEL"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "call": "LABEL"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "call": "LABEL"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "call": "LABEL"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "call": "LABEL"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "call": "LABEL"
+        }
+      ]
+    },
+    {
+      "gate": "G5",
+      "name": "CATCH DECOMPOSITION",
+      "verdict": "PASS",
+      "seeds": [
+        {
+          "seed": 1,
+          "off_arm_caught": 6,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 36,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 2,
+          "off_arm_caught": 5,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 23,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 3,
+          "off_arm_caught": 5,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 29,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 4,
+          "off_arm_caught": 4,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 29,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 5,
+          "off_arm_caught": 5,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 27,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 6,
+          "off_arm_caught": 4,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 25,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 7,
+          "off_arm_caught": 3,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 26,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 8,
+          "off_arm_caught": 6,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 31,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 9,
+          "off_arm_caught": 4,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 22,
+          "broad_class_did_not_land": 0
+        },
+        {
+          "seed": 10,
+          "off_arm_caught": 4,
+          "off_arm_did_not_land": 0,
+          "override_missed_mutant": 0,
+          "collateral_abstentions_lost": 0,
+          "off_arm_catch_surfacing": 0,
+          "on_arm_catch_surfacing": 0,
+          "broad_class_surfacing_destroyed": 33,
+          "broad_class_did_not_land": 0
+        }
+      ],
+      "positive_control_valid_seeds": 10,
+      "positive_control_bar": 8,
+      "off_arm_caught_mean": 4.6,
+      "off_arm_caught_range": [
+        3,
+        6
+      ],
+      "identity_audit_override_missed_seeds": [],
+      "collateral_nonzero_seeds": [],
+      "comparison_arm": {
+        "severable": true,
+        "class": "the broad 123-token sole-token first-cell class — what the REJECTED positional rule would silence",
+        "n_tokens": 123,
+        "surfacing_destroyed_mean": 28.1,
+        "surfacing_destroyed_range": [
+          22,
+          36
+        ],
+        "band": [
+          22,
+          36
+        ],
+        "reproduces": true,
+        "note": "Irreproducibility VOIDs this comparison claim only, never the gated legs above. This contrast — not the entailed zero — is the measured content of the catch leg."
+      },
+      "audit_I1_note": "Raw ON-arm caught is an identity for a structure-reading clause and is not reported as a tamper result. Its audit is override_missed_mutant = 0, and that audit IS gated above.",
+      "audit_I3_on_arm_surfacing": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "audit_I3_note": "Entailed by G2 plus the frozen frame: every in-frame firing sits in PROSPECTUS_knowsay, OATH-FAILED at the OFF baseline, and surfacing counts only HELD->FAILED transitions. Cannot fail while G2 holds; audited, never counted as a passed bar."
+    },
+    {
+      "gate": "G6",
+      "name": "EXHAUSTIVE SWEEP REPRODUCTION",
+      "verdict": "PASS",
+      "mutants_expected": 117,
+      "mutants_run": 117,
+      "expected": {
+        "UNGROUNDED": 46,
+        "VERIFIED": 50,
+        "ABSTAIN": 21
+      },
+      "observed": {
+        "UNGROUNDED": 46,
+        "VERIFIED": 50,
+        "ABSTAIN": 21
+      },
+      "outcomes_all": {
+        "VERIFIED": 50,
+        "UNGROUNDED": 46,
+        "ABSTAIN": 21
+      },
+      "did_not_land": 0,
+      "false_attestation_rate_under_tamper": 0.4274,
+      "note": "did_not_land > 0 VOIDs rather than fails: the operator broke, not the clause.",
+      "mutant_ledger": [
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "3",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "4",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "5",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "8",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 25,
+          "token": "1",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "3",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "4",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "5",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "6",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "7",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "8",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 26,
+          "token": "2",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "4",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "5",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "8",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 27,
+          "token": "3",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "3",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "5",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "8",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 28,
+          "token": "4",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "3",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "4",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "8",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 29,
+          "token": "5",
+          "mutant": "9",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "2",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "3",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "4",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "5",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "7",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "8",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 30,
+          "token": "6",
+          "mutant": "9",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "0",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "2",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "3",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "4",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "5",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "6",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "8",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 31,
+          "token": "7",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "3",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "4",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "5",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 32,
+          "token": "8",
+          "mutant": "9",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "0",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "1",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "2",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "3",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "4",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "5",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "6",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "7",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 33,
+          "token": "9",
+          "mutant": "8",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "00",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "20",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "30",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "40",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "50",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "60",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "70",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "80",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "90",
+          "status": "UNGROUNDED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "11",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "12",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "13",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "14",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "15",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "16",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "17",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "18",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 34,
+          "token": "10",
+          "mutant": "19",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "01",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "21",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "31",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "41",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "51",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "61",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "71",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "81",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "91",
+          "status": "ABSTAIN"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "10",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "12",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "13",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "14",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "15",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "16",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "17",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "18",
+          "status": "VERIFIED"
+        },
+        {
+          "line": 35,
+          "token": "11",
+          "mutant": "19",
+          "status": "VERIFIED"
+        }
+      ]
+    },
+    {
+      "gate": "G8",
+      "name": "MECHANISM PROOF",
+      "verdict": "PASS",
+      "post_clause_tokens": 5681,
+      "expected_tokens": 5681,
+      "non_extraction_would_read": 5670,
+      "silenced_rows_by_coordinate": [
+        {
+          "line": 25,
+          "col": 2,
+          "token": "1",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 26,
+          "col": 2,
+          "token": "2",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 27,
+          "col": 2,
+          "token": "3",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 28,
+          "col": 2,
+          "token": "4",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 29,
+          "col": 2,
+          "token": "5",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 30,
+          "col": 2,
+          "token": "6",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 31,
+          "col": 2,
+          "token": "7",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 32,
+          "col": 2,
+          "token": "8",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 33,
+          "col": 2,
+          "token": "9",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 34,
+          "col": 2,
+          "token": "10",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        },
+        {
+          "line": 35,
+          "col": 2,
+          "token": "11",
+          "status": "ABSTAIN",
+          "reason": "row_ordinal_label"
+        }
+      ],
+      "abstained_array_carries_all_11": true
+    }
+  ],
+  "boundary_surfaces_for_G9": {
+    "regeneration_surface_census_vocabulary": {
+      "tokens": 155,
+      "documents": 14,
+      "in_certified_frame": 11,
+      "outside_certified_frame": 144,
+      "by_header": {
+        "#": 128,
+        "rank": 22,
+        "Rank": 5
+      }
+    },
+    "frozen_clause_firing_surface": {
+      "tokens": 128,
+      "documents": 12,
+      "in_certified_frame": 11,
+      "outside_certified_frame": 117,
+      "by_header": {
+        "#": 128
+      }
+    },
+    "excluded_rank_tokens_still_obligated": {
+      "tokens": 27,
+      "documents": 2,
+      "in_certified_frame": 0,
+      "outside_certified_frame": 27,
+      "by_header": {
+        "rank": 22,
+        "Rank": 5
+      }
+    },
+    "blind_spots": {
+      "tables_total": 1015,
+      "separator_less": 10,
+      "header_less": 27,
+      "multi_separator": 27
+    },
+    "tables_the_header_machinery_never_binds": 37,
+    "blind_spot_reconciliation": "The prereg's G9 list names '37 headerless, 10 separator-less, 27 multi-separator' as if the first two were disjoint classes. They are not: a table with NO separator also has no header row, so the 10 are a subset of the 37. Re-derived here the 37 decomposes exactly — 27 runs whose separator opens the run (a header line could exist and does not) PLUS 10 runs with no separator at all — and the union reproduces the red-team receipt's `tables_without_a_header_row = 37`. The multi-separator 27 is a genuinely separate class and reproduces independently. Published as a decomposition rather than a correction: no number in the prereg is wrong, the list was ambiguous about nesting.",
+    "blind_spot_definition": "counted over maximal runs of pipe-leading lines: separator_less = no _TABLE_SEP in the run; header_less = the separator opens the run, so no header line precedes it; multi_separator = more than one separator inside one run, which the shipped header machinery treats as ONE table.",
+    "per_document_ordinal_abstain_count": {
+      "papers/closed-model-frontier/DRAFT_oath_v09_integer_count_binding_audit.md": 43,
+      "papers/REPORT_blackbox_cognometrics_2026_05_25.md": 12,
+      "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md": 11,
+      "papers/cognometry-research-agenda-2026.md": 10,
+      "papers/REPORT_decorrelation_ceiling_v2_2026_05_27.md": 10,
+      "papers/grounded-honesty-axis/MAP.md": 8,
+      "papers/INDEX_behavioral_knowledge_boundary_2026_05_25.md": 8,
+      "papers/depth-truth/PREREG_v2.md": 6,
+      "papers/dogfood-self-audit/DAY_2026_08_13.md": 6,
+      "papers/sycophancy-target-gate/README.md": 6,
+      "papers/consensus-hallucination/FINDING_ict_authoritative_2026_05_27.md": 4,
+      "papers/PAPER_decorrelation_ceiling_2026_05_27.md": 4
+    },
+    "note": "The regeneration surface is measured under the census's wider 16-entry vocabulary and is NOT what the clause fires on; the clause's own surface is the second tally. Every token in the first-minus-second difference stays OBLIGATED — a disclosed false-accusation surface, not a silenced one."
+  },
+  "out_of_battery": {
+    "G7": "SUITE CLOSURE — a property of the ship commit, not of a harness run.",
+    "G9": "BOUNDARY DISCLOSURE — a property of the RESULT document; its re-derived numbers are computed above under boundary_surfaces_for_G9."
+  },
+  "elapsed_s": 79.6
+}

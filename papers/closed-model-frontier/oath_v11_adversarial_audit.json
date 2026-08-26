@@ -1,0 +1,137 @@
+{
+  "purpose": "adversarial audit of the OATH v0.11 clause and battery, run against the frozen prereg AFTER every gate passed",
+  "method": {
+    "attack_lenses": 4,
+    "lens_names": [
+      "clause-fidelity",
+      "gate-vacuity",
+      "battery-fidelity",
+      "doctrine"
+    ],
+    "refutation": "each finding faced 2 independent skeptics prompted to REFUTE, defaulting to refuted when the defect could not be independently exhibited",
+    "survival_rule": "a finding survives only if NO skeptic refuted it",
+    "agents_total": 46,
+    "agent_tool_calls": 981
+  },
+  "findings_raised": 18,
+  "by_severity": {
+    "MAJOR": 10,
+    "MINOR": 7,
+    "BLOCKER": 1
+  },
+  "findings_survived": 2,
+  "survived_titles": [
+    "G4'b bars (ii) and (iii) are satisfied",
+    "G4'b bars (ii) and (iii) pass vacuousl"
+  ],
+  "all_findings": [
+    {
+      "severity": "MAJOR",
+      "title": "G3's bar conjunction contains I2 (HELD→FAILED = 0), which the prereg deliberately removes from G3's bar list",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 265
+    },
+    {
+      "severity": "MAJOR",
+      "title": "G4'b bars (ii) and (iii) pass vacuously — no coverage check on the fresh draw or on the seven non-target roster tokens",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 329
+    },
+    {
+      "severity": "MAJOR",
+      "title": "G4'b's warrant artifact was adjudicated at the pre-change verifier (pins_match: false) and the gate never checks the pin",
+      "file": "papers/closed-model-frontier/oath_v11_panel_recheck.json",
+      "line": 20
+    },
+    {
+      "severity": "MINOR",
+      "title": "G3's bar conjunction also contains A1 (0 conversions elsewhere in frame), contradicting the gate's own docstring",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 263
+    },
+    {
+      "severity": "MINOR",
+      "title": "G2's over-reach test discards `col`, so a 12th firing sharing a (line, token) with a roster member is invisible to the bar",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 203
+    },
+    {
+      "severity": "BLOCKER",
+      "title": "G4'b passes on a panel artifact containing no fresh draw and no non-target roster cases — bars (ii) and (iii) are vacuously true",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 329
+    },
+    {
+      "severity": "MAJOR",
+      "title": "The G4'b blinding is nominal: the packet's `status` field identifies all four retraction targets with zero error",
+      "file": "papers/closed-model-frontier/make_oath_v11_panel_packet.py",
+      "line": 58
+    },
+    {
+      "severity": "MAJOR",
+      "title": "The G4'b artifact is not pinned to the ship-candidate verifier, and the gate does not check the pin",
+      "file": "papers/closed-model-frontier/oath_v11_panel_recheck.json",
+      "line": 1
+    },
+    {
+      "severity": "MAJOR",
+      "title": "The prereg's \"extract_numbers ... byte-identical\" is false — the cycle refactored it",
+      "file": "styxx/certify.py",
+      "line": 101
+    },
+    {
+      "severity": "MAJOR",
+      "title": "A G1 VOID crashes the harness with IndexError before any result JSON is written — the pre-committed V11_BATTERY_VOID outcome is unreachable",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 712
+    },
+    {
+      "severity": "MAJOR",
+      "title": "The RESULT's own certificate joins the certified frame, so the ship commit does not reproduce G1, G3 or G8",
+      "file": "papers/closed-model-frontier/RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+      "line": 93
+    },
+    {
+      "severity": "MAJOR",
+      "title": "G7 asserts \"suite green\"; the suite is red — 9 failures",
+      "file": "papers/closed-model-frontier/RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+      "line": 100
+    },
+    {
+      "severity": "MINOR",
+      "title": "G4'b bar (ii) is close to unfailable as instantiated: not one of the ten freshly drawn tokens sits under an in-vocabulary header",
+      "file": "papers/closed-model-frontier/oath_v11_panel_packet.json",
+      "line": 1
+    },
+    {
+      "severity": "MINOR",
+      "title": "test_the_known_drift_is_a_held_certificate_that_now_fails is now a silently-passing no-op, and the module docstring asserting the drift is now false",
+      "file": "tests/test_certificate_reproduces.py",
+      "line": 99
+    },
+    {
+      "severity": "MINOR",
+      "title": "The recheck's pin disclosure overstates what G4'a covers",
+      "file": "papers/closed-model-frontier/oath_v11_panel_recheck.json",
+      "line": 1
+    },
+    {
+      "severity": "MINOR",
+      "title": "No committed or logged run record — the \"battery re-run once, gate output byte-identical\" claim is unfalsifiable as recorded",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 740
+    },
+    {
+      "severity": "MAJOR",
+      "title": "G4'b bars (ii) and (iii) are satisfied by OMISSION: `all()` over an empty case list passes, so a truncated panel artifact ships",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 329
+    },
+    {
+      "severity": "MINOR",
+      "title": "G1's extractor-replication leg has no population bar: an emptied baseline extraction map passes over ZERO documents",
+      "file": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 155
+    }
+  ]
+}

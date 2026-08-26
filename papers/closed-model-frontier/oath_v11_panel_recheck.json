@@ -1,0 +1,233 @@
+{
+  "lens": "IS THIS TOKEN A CLAIM AT ALL? (second blind adjudicator, OATH v0.11 gate G4'b)",
+  "adjudicator": "A second panel lens agent, working blind and by hand: it read only the packet, the 21 cited source documents, and the cited receipt JSONs, and called each token under the frozen definition without access to the prereg, the key, the prior panel, the census framing, or the candidate implementation.",
+  "definition": "For each token: does the number assert something about the world that a receipt could confirm or contradict (CLAIM), or is it a row number / list marker / identifier with no truth condition (LABEL)? A LABEL has no truth condition, so neither VERIFIED nor UNGROUNDED is meaningful for it and ABSTAIN is the only defensible status. TIES RESOLVE TOWARD CLAIM.",
+  "blinding": [
+    "I did not read, grep, open, or list the contents of any file matching PREREG_oath_v11*.",
+    "I did not open papers/closed-model-frontier/oath_v10_panel_isclaim.json.",
+    "I did not open papers/closed-model-frontier/oath_v11_panel_key.json.",
+    "I did not open any run_oath_v11* battery or any other v0.11 harness.",
+    "I did not read the contents of styxx/certify.py or any v0.11 diff against it; I computed its sha256 over raw bytes without inspecting them.",
+    "I did not open oath_v10_ordinal_census.json, oath_v10_ordinal_detectors.json, oath_v10_ordinal_redteam.json, or oath_v10_ordinal_catchcontrol.json.",
+    "I made no attempt to work out which cases were targets of anything, and I did not group or reason about the cases by their provenance.",
+    "The only files I opened were: oath_v11_panel_packet.json, the 11 distinct documents named by the cases' `rel` fields, and the receipt JSONs named by the cases' `receipt_ref` fields.",
+    "A filesystem search located receipt paths and returned filenames only; I did not open any file under .claude/worktrees/.",
+    "I modified no file other than this one."
+  ],
+  "verifier_pin": {
+    "ship_candidate_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+    "sha256_at_adjudication": "729b5e6f5dd04981973ec3fe77f7187a4d9f57dda65d705784af2ec0c5b1db7f",
+    "pins_match": false,
+    "disclosure": "I adjudicated all 21 cases while the working tree still held the pre-change verifier, so the `status` field I read on each case is the candidate clause's OFF arm as computed by that earlier file, not by the ship-candidate verifier pinned here. Whether those OFF-arm statuses are identical under the ship-candidate verifier is established by the battery's gate G4'a and is NOT something this adjudication establishes for itself."
+  },
+  "totals": {
+    "examined": 21,
+    "CLAIM": 10,
+    "LABEL": 11,
+    "by_confidence": {"HIGH": 20, "MEDIUM": 1, "LOW": 0}
+  },
+  "cases": [
+    {
+      "case": "C01",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 27,
+      "token": "3",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "The column header is literally `#` and its values run 1-11 in strict line order across the claims table, and the surrounding prose cites them as positions (\"row 7\", \"rows 8-9\", \"rows 4-7\"), so `3` marks where the row sits and the row's assertions live entirely in its Claim and Key-numbers cells."
+    },
+    {
+      "case": "C02",
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 24,
+      "token": "1",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "`seed` is a real experimental factor crossed with lambda so the values 0,0,1,1 repeat down the four rows and cannot be a row index, the Bounds section states \"seeds {0,1}\", and attack_sentiment_result.json records seeds:[0,1] - the row asserts that these AUROCs came from the seed-1 run, which a receipt could contradict."
+    },
+    {
+      "case": "C03",
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 19,
+      "token": "12",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "The first column is the ordered-copy task's item count and runs 1,2,3,4,6,8,10,12,20 - non-sequential, hence an independent variable and not an enumeration - so the row asserts that at K=12 items FREE scored 0.593 against CLAMPED 0.318."
+    },
+    {
+      "case": "C04",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 29,
+      "token": "5",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column: `5` is the fifth entry in a hand-numbered list of eleven claims, and nothing in scale_test_result.json or anywhere else could make the number 5 true or false."
+    },
+    {
+      "case": "C05",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 26,
+      "token": "2",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column; the cited leaf per_item[2].i is the third element's own index inside a 289-element array in scale_test_result.json, a self-referential array position that has no relation to this row's content (a 3B caving rate of 0.62 receipted to competent_agent_result.json)."
+    },
+    {
+      "case": "C06",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 31,
+      "token": "7",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column, and the prose confirms the usage by referring back to this entry as \"row 7\" - an address, not an assertion."
+    },
+    {
+      "case": "C07",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 35,
+      "token": "11",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column, and this row is the strongest instance: its Receipt cell reads \"pending\" and its content is \"IN FLIGHT\", so there is no measured quantity anywhere in the row for the ordinal to be."
+    },
+    {
+      "case": "C08",
+      "rel": "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md",
+      "line": 33,
+      "token": "8",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "The cell reads \"8 announcement tweets (the ones we already wrote)\" - a count of actual artifacts that were scored, echoed in the same row by \"(all 8 pass)\" and recorded in probe_dogfood_results.json as summary.PART_B_n_announcement_tweets = 8."
+    },
+    {
+      "case": "C09",
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 35,
+      "token": "0.80",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "The first column is the AR(1) autocorrelation of the simulated cell over a grid 0.50/0.70/0.80/0.90/0.95, and e1_result.json carries grid.rho_0.8 with rho = 0.8 and analytic_effective_n = 33.3333 matching the row's second cell, so the token asserts the condition under which those five estimator readings were produced."
+    },
+    {
+      "case": "C10",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 33,
+      "token": "9",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column; the cited leaf is belief_asymptote_result.json not_gated.by_dataset.aqua_mc.n_correct = 9, a count of correct AQuA items that has nothing to do with this row, whose own numbers are the AUROC sweep 0.7336 to 0.7394."
+    },
+    {
+      "case": "C11",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 34,
+      "token": "10",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column; the cited leaf per_item[10].i is again an array element's own index inside scale_test_result.json, while this row's actual assertions (cave 0.5227, AUROC 0.834) are receipted to two_channel_result.json."
+    },
+    {
+      "case": "C12",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 30,
+      "token": "6",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column: the sixth position in the claims list, with the row's checkable content being 0.2742 vs 0.8226 in adjudicated_loop_result.json, not the digit 6."
+    },
+    {
+      "case": "C13",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 25,
+      "token": "1",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column, the first row of the list; the cited leaf scale_test_result.json recovery_on_caved = 1.0 is a recovery rate from a different experiment that happens to equal 1, and no receipt bears on the row's ordinal position."
+    },
+    {
+      "case": "C14",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 32,
+      "token": "8",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column, and the prose addresses this entry as one of \"rows 8-9\"; the row's truth-apt content is AUROC 0.7597 and selective 0.7797 in verifier_7b_result.json."
+    },
+    {
+      "case": "C15",
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 21,
+      "token": "0",
+      "call": "CLAIM",
+      "confidence": "MEDIUM",
+      "why": "The document names seed as a run parameter throughout (\"two cells (seed 0 and seed 1, lambda=1.0)\", per-cell sections headed \"Seed 0:\"/\"Seed 1:\", Bounds \"seeds {0,1}\") and honesty_parity_control_result.json records seeds:[0,1], so the token asserts run provenance; confidence is MEDIUM only because a two-row table whose seed values are exactly 0 and 1 is value-indistinguishable from a zero-based row index, and the packet's tie-break resolves that ambiguity toward CLAIM."
+    },
+    {
+      "case": "C16",
+      "rel": "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md",
+      "line": 18,
+      "token": "20",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "The cell as a whole is an arm name, but the embedded 20 asserts a quantity - the number of llama contrast directions swapped into qwen - stated three more times in the prose (\"top-20 contrast pattern\", \"a rank-20 correction, 20 directions out of 392 anchor dimensions\", \"k=20 frozen from B40\") and recorded as k = 20 in b41_result.json."
+    },
+    {
+      "case": "C17",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 28,
+      "token": "4",
+      "call": "LABEL",
+      "confidence": "HIGH",
+      "why": "Same `#` enumeration column; the document even has a dedicated \"Precision note for the pressure-reaches-output row\" that restates this row's real numbers (0.9846153846153847, 0.01910828025477707, 0.9655071043606076) and never treats the 4 as one of them."
+    },
+    {
+      "case": "C18",
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 25,
+      "token": "1.0",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "`dose t` is the frame-interpolation dose and b46_result.json records doses = [0.0,0.2,0.4,0.6,0.8,1.0] with the cited leaf doses[5] = 1.0; the row asserts a median discovery of 0.9821 at full dose, which is exactly the quantity gate G1_bridge_high (\"min disc at t=1 >= 0.30\") scores."
+    },
+    {
+      "case": "C19",
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 24,
+      "token": "1",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "`rank k` runs 1,2,3,5,8,12,20,40 - non-sequential and therefore a swept variable rather than an index - b42_result.json records ranks[0] = 1, and the prose asserts the row directly as \"One direction is not enough (median 0.1709 at k=1)\"."
+    },
+    {
+      "case": "C20",
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 20,
+      "token": "0",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "Four rows cross seeds {0,1} with lambda {1.0,3.0} so the seed value repeats and cannot be a row index, Bounds states \"seeds {0,1}\", and attack_sentiment_wholestack_result.json records seeds:[0,1] - the token asserts which run produced the 0.626/0.764/0.873/0.632 cell."
+    },
+    {
+      "case": "C21",
+      "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+      "line": 29,
+      "token": "33.33",
+      "call": "CLAIM",
+      "confidence": "HIGH",
+      "why": "The cell reads \"`effective_n` on AR(1) rho=0.8, analytic truth 33.33\" - a direct assertion of a closed-form value, recorded as measured_by_red_team.effective_n_ar1_rho08_analytic = 33.33 in p1_redteam_audit.json and independently corroborated by e1_result.json's analytic_effective_n = 33.3333 at rho=0.8."
+    }
+  ],
+  "caveats": [
+    "All 11 LABEL calls come from one document, PROSPECTUS_knowsay_2026_07_27.md, and from one homogeneous construct within it: a single `#` column enumerating eleven claims. These are eleven instances of one judgment, not eleven independent judgments; if that judgment is wrong, all eleven fall together, and the LABEL count should not be read as eleven separate pieces of evidence.",
+    "The packet's `status` and `receipt_leaf` fields were visible to me before I formed each call. I formed every call from the source document's own table and prose and treated the binding as evidence about the verifier rather than about claim-ness, but I cannot assert zero anchoring from having seen them.",
+    "The seed columns (C02, C15, C20) are the one class where I see a genuine opposing argument: a seed can be read as a run identifier that names a row rather than as an assertion about the world. I called CLAIM because a seed is a causal input the receipt actually records, so a wrong seed would contradict the receipt, and because the frozen tie-break resolves toward CLAIM. C15 is the weakest of the three and is marked MEDIUM.",
+    "C08, C16 and C21 are numeric tokens embedded inside first cells that are otherwise descriptive labels (a text name, an arm name, a defect name). I adjudicated the token, as the packet asks, not the cell. An adjudicator who took the cell as the unit would plausibly call all three LABEL, so those three calls turn on the unit of analysis rather than on any disagreement about the facts.",
+    "RESULT_rhythm_rescue_2026_06_03.md names no receipt JSON and the packet supplies none for C03, so that CLAIM rests on the token having a truth condition in principle - a K=12 cell that either was or was not run at those accuracies - rather than on a leaf I could inspect.",
+    "Minor transcription discrepancy, no bearing on any call: the packet records C03's first_col_header as \"k (items)\" while the document's header row reads \"K (items)\".",
+    "I inspected only the leaf each case named plus, where cheap, the sibling structure around it. I did not attempt to determine whether a better or more appropriate binding exists elsewhere in any receipt, and nothing in this adjudication should be read as endorsing or rejecting a binding.",
+    "Confidence values express my certainty about the CLAIM/LABEL call under the frozen definition. They say nothing about whether the shipped verifier's status for that token is correct, and I deliberately did not let a VERIFIED or UNGROUNDED status move a call in either direction.",
+    "I computed the sha256 of styxx/certify.py over its raw bytes without reading the file, so I can attest to the hashes but cannot describe or characterise the verifier versions they correspond to.",
+    "The verifier moved underneath this adjudication. styxx/certify.py was being modified in parallel while I worked: the hash I took at adjudication time (729b5e6f...) is the pre-change verifier, and the ship-candidate verifier now in the tree hashes to aba199d7..., so the two pins do NOT match. The practical consequence is that every `status` value I was shown in the packet is the candidate clause's OFF arm as computed by the pre-change file. I did not use any status to decide a call, and no call, confidence, or reason in this artifact was formed from or altered by a status - but a reader should not treat this document as evidence that the OFF-arm statuses are stable across that change. That is gate G4'a's job, not this lens's.",
+    "Line numbers and token strings in every case were checked against the live documents and all 21 matched; no case was adjudicated from the packet's `context` excerpt alone."
+  ]
+}

@@ -68,6 +68,28 @@ _FORMULA_AFTER = re.compile(r"^\s?[−–-]\s?[A-Za-z]")   # '1−syc', '1-dec':
 _MD_STRUCTURE = re.compile(r"^\s{0,3}(?:#{1,6}\s|[-*+]\s|>\s|\[\^?\d+\]:)")
 
 
+def _table_rows(lines: list[str]) -> dict[int, int]:
+    """Map each markdown table DATA row to its HEADER row, both as 1-based line numbers.
+
+    The single definition of "data row" and "header row" in this module. `extract_numbers`
+    reads it to build binding context, and the v0.11 row-ordinal clause reads it to decide
+    scope — so clause scope and binding-context scope cannot diverge (PREREG_oath_v11,
+    conjunct 1: the clause reads this machinery, it never copies it).
+
+    Lifted verbatim out of `extract_numbers`; the walk is unchanged, only the value stored
+    (the header's line number rather than its stripped text) differs, and the caller there
+    re-derives the text it used to store.
+    """
+    rows: dict[int, int] = {}
+    for i, line in enumerate(lines):
+        if _TABLE_SEP.match(line) and i > 0 and lines[i - 1].lstrip().startswith("|"):
+            j = i + 1
+            while j < len(lines) and lines[j].lstrip().startswith("|"):
+                rows[j + 1] = i   # 1-based: data row j+1, header row (i-1)+1 == i
+                j += 1
+    return rows
+
+
 def extract_numbers(text: str) -> list[dict]:
     """All groundable number tokens with line context. Filters dates/SHAs/versions/years/markdown
     artifacts and formula notation; keeps order and position so the ledger is reviewable.
@@ -76,14 +98,8 @@ def extract_numbers(text: str) -> list[dict]:
     the trigger vocabulary of '| regime | AUC-g | margin |' binds the numbers in every data row."""
     out = []
     lines = text.splitlines()
-    header_for: dict[int, str] = {}
-    for i, line in enumerate(lines):
-        if _TABLE_SEP.match(line) and i > 0 and lines[i - 1].lstrip().startswith("|"):
-            hdr = lines[i - 1].strip()
-            j = i + 1
-            while j < len(lines) and lines[j].lstrip().startswith("|"):
-                header_for[j + 1] = hdr   # 1-based line numbers
-                j += 1
+    header_for: dict[int, str] = {ln: lines[h - 1].strip()
+                                  for ln, h in _table_rows(lines).items()}
     for ln_no, line in enumerate(lines, 1):
         # v0.6.2 signed extraction: the typographic minus U+2212 becomes ASCII '-' so _NUM reads
         # it as a sign — pre-fix, '−0.0154' extracted as POSITIVE 0.0154 and an accurate negative
@@ -423,6 +439,131 @@ V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does n
 # identical in form, so the populations are not lexically separable and any narrowing is a doctrine
 # change to `is_spec` with its own battery.
 
+# v0.11 (PREREG_oath_v11_row_ordinal_retraction_2026_08_25) -- flag-gated, gated by a nine-gate
+# battery. Every cycle before this one asked whether a token was GROUNDED. This one asks whether
+# it is a CLAIM.
+#
+# A markdown table's first column is where this corpus writes its row numbers. `extract_numbers`
+# extracts them like any other token, and on rows whose text carries trigger vocabulary the
+# OBLIGATION predicate binds them -- so a row number must ground in a receipt leaf or be accused.
+# A row number has no receipt, because it asserts nothing. The certified frame's ENTIRE standing
+# accusation surface was four of them: PROSPECTUS_knowsay_2026_07_27.md L27 `3`, L28 `4`, L29 `5`,
+# L32 `8`. The VERIFIED half of the same column is worse than the accused half -- L26 `2` swears
+# against `scale_test_result.json:per_item[2].i`, an index leaf equal to its own subscript, so the
+# oath is taken on a coincidence. Exhaustive substitution over the 11-token class (117 mutants)
+# answers UNGROUNDED 46 / VERIFIED 50 / ABSTAIN 21: a 0.427 false-attestation rate under tamper,
+# on tokens that assert nothing.
+#
+# UNGROUNDED asserts "this token is a claim whose truth condition was never met." A hand panel
+# (`oath_v10_panel_isclaim.json`, re-checked blind at the shipping verifier by
+# `oath_v11_panel_recheck.json`) found the accused tokens are LABELs -- they have no truth
+# condition -- so neither VERIFIED nor UNGROUNDED is meaningful and ABSTAIN is the only defensible
+# status. An accusation is itself a claim, and these four accusations have no receipts.
+#
+# THE RETRACTION PREDICATE, doctrine: a status may be withdrawn only when what is shown false is
+# the accusation's PRESUPPOSITION (claimhood), never its verdict (groundedness). v0.9's G4 -- zero
+# accusations silenced, zero FAILED->HELD flips -- protected accusations that are MEASUREMENTS. It
+# never contemplated accusations that fail to be claims. The whitelist is non-precedential as a
+# mechanism: the next retraction runs the full protocol again, with its own panel and its own
+# prereg.
+#
+# NEVER NON-EXTRACTION. A fix that stops accusing by stopping extracting is not a fix. Every
+# silenced token stays countable by coordinate: the certificate's `abstained` array carries its
+# line and token, and its ledger row carries the reason `row_ordinal_label`. Silence loud, never
+# omission.
+V11_ORDINAL_LABEL = True
+
+# The frozen vocabulary, written here and nowhere else. THIS LIST CAN ONLY SHRINK.
+# Named exclusions, each with its measured reason -- exclusion is the safe direction, because an
+# excluded header leaves its tokens OBLIGATED (a disclosed false-accusation surface) while an
+# admitted one silences them:
+#   ''  and '-'  the unlabeled-parameter convention. Admitting them was "luck rather than design";
+#                closing them costs zero -- all 11 in-frame firings and all 128 corpus-wide
+#                firings carry a literal '#'.
+#   'rank'       27 corpus-wide firings, hand-labeled by the red team as ordinal rankings -- a
+#                label, same class as a row number. Excluded NOT because they are claims but
+#                because retracting a class needs its own panel and prereg. They stay obligated.
+#                ('rank k' is a different population entirely: its sweep values ground in
+#                `ranks[j]` under a NON-identity mapping, i.e. genuine claims.)
+#   'n', 'no', 'num', 'id', 'item', 'line', 'claim', 'seed', 'k', 'run', 'attempt'
+#                each a live or plausible claim header. `seed` alone is 63 of the 150 first-cell
+#                tokens in frame, 61 of them VERIFIED; silencing it replays the broad-detector
+#                catastrophe (115 of 150 tokens falsely silenced, 28.1 reader-visible catches
+#                destroyed per seed).
+# The three vocabulary variants in the v0.10 receipts disagree with each other; that discrepancy is
+# a disclosed defect of the measurement cycle, resolved by freezing this narrower list BEFORE data.
+_V11_ORDINAL_HEADERS = frozenset({"#", "#.", "no.", "nr", "idx", "index", "row", "row #", "№"})
+
+# The cell must be ENTIRELY a bare non-negative integer of value <= 100. In-frame this conjunct and
+# this cap do no discriminative work -- the header does all of it, and the largest of the 11
+# firings is 11 -- so both are anti-gaming defense-in-depth, bounding what an author could hide
+# under a renamed column. Receipt-bound variance disclosed rather than averaged: the detectors
+# receipt says `|value| <= 100`, the red-team receipt says `|value| < 100`; frozen here as
+# non-negative and <= 100 (no negative first-cell integer exists under any variant).
+# EDGE DISCLOSED: a 1..N column longer than 100 rows flips behaviour at row 101, re-manufacturing
+# the accused class on the rows past the cap. No in-frame table is within a factor of two of it.
+_V11_MAX_VALUE = 100
+_V11_BARE_INT = re.compile(r"[0-9]+")
+_V11_EMPHASIS = " \t*_"
+
+
+def _first_cell(line: str):
+    """(start, end) column span of a markdown table row's FIRST cell, or None.
+
+    Columns are offsets into the U+2212-normalized line, which is the frame `col` is recorded in
+    (the replacement is one character for one, so offsets are preserved)."""
+    a = line.find("|")
+    if a < 0:
+        return None
+    b = line.find("|", a + 1)
+    if b < 0:
+        return None
+    return a + 1, b
+
+
+def _v11_header_ok(cell: str) -> bool:
+    """Header first cell, backticks and emphasis stripped, trimmed, case-folded, EXACT match."""
+    return cell.replace("`", "").strip(_V11_EMPHASIS).strip().casefold() in _V11_ORDINAL_HEADERS
+
+
+def _v11_sole_int(cell: str) -> bool:
+    """Cell, emphasis stripped, is entirely a bare non-negative integer <= _V11_MAX_VALUE.
+
+    Backticks are deliberately NOT stripped here (the prereg strips them for the HEADER only):
+    a cell written `` `3` `` fails this conjunct and its token stays obligated, which is the safe
+    direction. `_V11_BARE_INT` is ASCII-only on purpose -- `str.isdigit()` accepts superscripts
+    and non-ASCII digit forms that `int()` and `_NUM` do not agree about."""
+    s = cell.strip(_V11_EMPHASIS).strip()
+    return bool(_V11_BARE_INT.fullmatch(s)) and int(s) <= _V11_MAX_VALUE
+
+
+def _v11_row_ordinal_label(num: dict, lines: list[str], table_rows: dict[int, int]) -> bool:
+    """True iff token *num* is a markdown table row ordinal under a frozen ordinal header.
+
+    Value-blind by construction: it reads the token's ADDRESS and the table's STRUCTURE, never
+    the token's value beyond the sole-content bound, and never `hits`. That is what stops it
+    being a fuse -- doctor the digit and the clause still fires, which is the property v0.7 and
+    the rejected value-reading designs failed (`override_missed_mutant` 22/22).
+    """
+    if not V11_ORDINAL_LABEL:
+        return False
+    # V10_TOKEN_COLUMN is a DECLARED, NON-SEVERABLE prerequisite: position must be an address,
+    # not a re-found string. Without `col` this clause has no scope and must not fire.
+    if not V10_TOKEN_COLUMN or "col" not in num:
+        return False
+    hdr_ln = table_rows.get(num["line"])
+    if hdr_ln is None:
+        return False                       # not a table data row
+    row = lines[num["line"] - 1].replace("−", "-")
+    span = _first_cell(row)
+    if span is None or not span[0] <= num["col"] < span[1]:
+        return False                       # not in the first cell
+    hdr_span = _first_cell(lines[hdr_ln - 1])
+    if hdr_span is None:
+        return False
+    return (_v11_header_ok(lines[hdr_ln - 1][hdr_span[0]:hdr_span[1]])
+            and _v11_sole_int(row[span[0]:span[1]]))
+
 
 def _ctx_stems(text: str) -> set[str]:
     """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
@@ -485,7 +626,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
 
     ledger = []
     doc_lines = text.splitlines()
+    table_rows = _table_rows(doc_lines)   # v0.11: the SAME machinery extract_numbers binds by
     for num in extract_numbers(text):
+        # v0.11 ROW-ORDINAL LABEL: a status-level demotion to ABSTAIN with the machine-readable
+        # reason `row_ordinal_label`, at the `is_spec` tier — literally BEFORE any obligation or
+        # match is consulted, which is what keeps the clause value-blind and idempotent. A row
+        # number is not a claim whose truth condition was unmet; it has no truth condition, so
+        # neither VERIFIED nor UNGROUNDED is meaningful for it.
+        if _v11_row_ordinal_label(num, doc_lines, table_rows):
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label"})
+            continue
         # v0.1 SPEC-CONSTANT rule: a number that is a pre-registered bar/threshold, a CI confidence
         # level, or a comparison bound is SPEC, not a measurement -> ABSTAIN (it has no receipt by
         # design; its receipt is the PREREG document).

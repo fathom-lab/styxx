@@ -32,14 +32,23 @@ ROOT = Path(__file__).resolve().parents[1]
 # This set is asserted EXACTLY, in both directions. A new drift fails the test, and a drift that has
 # been repaired ALSO fails it until the entry is removed — so the list can only shrink, and it can
 # never become a quiet place to park a failing document.
-KNOWN_VERDICT_DRIFT = {
-    # Four table row ordinals ("| 3 |", "| 4 |", "| 5 |", "| 8 |") in a claim table are extracted as
-    # numeric claims and obligated by trigger vocabulary in their own row text. Under value-only
-    # matching they false-verify against `per_item[3].i`, a leaf equal to its own subscript; under
-    # count-binding they are accused. Both regimes are wrong and the correct status is ABSTAIN.
-    # Tracked by the v0.10 table-row-ordinal cycle; remove this entry when that lands.
-    "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
-}
+KNOWN_VERDICT_DRIFT = set()
+# EMPTY — and it got here by repair, not by deletion.
+#
+# The one entry this set ever held was PROSPECTUS_knowsay_2026_07_27.md: four table row ordinals
+# ("| 3 |", "| 4 |", "| 5 |", "| 8 |") extracted as numeric claims and obligated by trigger
+# vocabulary in their own row text. Under value-only matching they false-verified against
+# `per_item[3].i`, a leaf equal to its own subscript; under count-binding they were accused. Both
+# regimes were wrong, because a row ordinal has no truth condition at all —
+# `V11_ORDINAL_LABEL` (PREREG_oath_v11_row_ordinal_retraction_2026_08_25) demotes it to ABSTAIN
+# with the reason `row_ordinal_label`. The document's live verdict returned to OATH-HELD, the
+# `repaired` assertion below went red, and the entry was deleted IN THE SHIP COMMIT — the only way
+# an entry is allowed to leave this set. The committed certificate was never hand-edited; it
+# reproduces.
+#
+# The direction test below is VACUOUS while this set is empty. That is the intended resting
+# state: it re-arms the moment an entry is added, and an empty set is the thing this repository is
+# trying to be.
 
 
 def _resolvable():
