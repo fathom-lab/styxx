@@ -80,12 +80,27 @@ verdict: FAIL — this summary would fail your CI with each lie named.
 ```
 
 Zero receipts, zero cooperation from the agent that wrote the summary, no checkout.
-Fails only on a contradicted claim — a class with **zero false accusations** across both
-public validation corpora (this repo's 80-commit history and 24 real agent-authored PRs
-pulled off GitHub; every false accusation we ever had is named in
-[CHANGELOG.md](CHANGELOG.md) with the regression test that closed it). Prose outside the
-closed template set is never judged, and the CLI prints what it checks when it finds
-nothing — silence is scope, not weakness.
+Fails only on a contradicted claim. Prose outside the closed template set is never judged,
+and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
+
+**The zero-false-accusation claim that stood here is withdrawn, and here is what replaced it.**
+It was true of two frozen corpora (this repo's 80-commit history and 24 agent-authored PRs) and
+was written in the present tense, so it kept asserting itself as the corpus grew. Re-run at
+7.46.0 by our own committed harness, `python scripts/diffgate_validation_sweep.py` reports 13
+claims and **4 contradictions**, and hand-adjudicating all four finds every one is a false
+accusation — the gate treats a filename *mentioned* in a commit message as a file the diff must
+contain. One says a candidate file is "nothing alike"; one describes a fix in *someone else's*
+repository; one is a commit whose message discusses the very document it is reporting a defect
+in. That commit was made the same day this paragraph was rewritten.
+
+Mention-versus-use is not a quirk of this gate. The same defect is documented in the OATH
+verifier in [RECON_oath_external_reach](papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md)
+and was found in the ledger's own classifier on the same day — three instruments, written months
+apart for unrelated jobs, all reading a line and calling it a claim. Historic false accusations
+are named in [CHANGELOG.md](CHANGELOG.md) with the regression test that closed each one. **These
+four are not closed** — they are open, reproducible with the command above, and owed a fix with
+its own preregistration. They are stated here rather than behind a number, because a headline
+that keeps asserting itself in the present tense is how the old one went wrong.
 
 ### MEASURE — two minds can share a geometry and still be unable to read each other
 
@@ -368,6 +383,28 @@ signal relocate, and the eraser that chased never converged
 [erasure_bound_fork.png](papers/calib-poison-general/erasure_bound_fork.png)). every rung re-runs
 on an 8GB consumer GPU, and [REPLICATIONS.md](REPLICATIONS.md) pays named credit to the first
 external re-run of each — more for breaking one than for confirming it.
+
+### the oath is a contract, not a detector
+
+we pointed the verifier at twelve public repositories it had never seen. it abstained on 94% of
+what it read and **every accusation it made was false**
+([the measurement](papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md)). that is
+a fact about the instrument, not about those repositories. proof-carrying code does not verify
+arbitrary binaries either — it requires a compiler that emits the proof. proof-carrying cognition
+requires an author who emits receipts.
+
+so the deliverable is a contract you can adopt without adopting anything else here, plus the check
+that tells you whether you kept it:
+
+```bash
+python -m styxx.oathready YOUR_DOC.md results.json
+```
+
+it lists every number in your document, says whether it grounds in a receipt, flags the ones that
+"verify" against an array index by coincidence, and tells you what to change. non-zero exit only
+on accusations — silence is honest and never fails. the rules, each learned by getting it wrong,
+are in [OATH_CONTRACT.md](OATH_CONTRACT.md), including the limits: a document can keep this
+contract perfectly and still be completely wrong.
 
 ## links
 
