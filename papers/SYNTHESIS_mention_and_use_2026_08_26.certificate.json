@@ -1,0 +1,158 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "document_sha256": "060e23a1375bf6bc29c6b4654ecdb4fc3fbfdfc3b874b8839f3bbc628b52225a",
+  "receipts_sha256": {
+    "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6",
+    "ledger_classifier_audit.json": "8060dd7fb1f4d6bf1c6318e55f380e4bd0518b44953493136753e53c5c910a73",
+    "oath_v11_battery_result.json": "04584a3e9fdfd07416f358893350ab939aca55e7b951f73243c0824703672106"
+  },
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "counts": {
+    "VERIFIED": 6,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 3
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 67,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 45,
+      "token": "13"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 24,
+      "token": "0.9408",
+      "value": 0.9408,
+      "decimals": 4,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_share.ABSTAIN"
+    },
+    {
+      "line": 24,
+      "token": "507",
+      "value": 507.0,
+      "decimals": 0,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 55,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:tokens_total"
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusations_total"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 67,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "156",
+      "value": 156.0,
+      "decimals": 0,
+      "context": "The specimen that should have caught this months ago: **cycle 156 is the cycle that built the",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "ledger_classifier_audit.json:rendered_nonsense_entries.detail[7].cycle"
+    },
+    {
+      "line": 45,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**4. The diffgate claim extractor.** Re-run at 7.46.0, the gate reports 13 claims and 4",
+      "col": 72,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**4. The diffgate claim extractor.** Re-run at 7.46.0, the gate reports 13 claims and 4",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[5].counts.UNGROUNDED"
+    },
+    {
+      "line": 106,
+      "token": "28.1",
+      "value": 28.1,
+      "decimals": 1,
+      "context": "broad positional rule destroys a mean of 28.1 reader-visible catches per seed; the value-reading",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v11_battery_result.json:gates[5].comparison_arm.surfacing_destroyed_mean"
+    }
+  ]
+}
