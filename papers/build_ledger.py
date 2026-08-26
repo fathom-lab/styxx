@@ -19,7 +19,44 @@ NEG = r'INVALID__|NOT_|NO_|BLIND|WRONG|REFUS|_FAIL|DO NOT SHIP|RECALL|QUARANTIN|
 seal_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in seals)
 cert_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in certs)
 negatives = [c for c in cy if re.search(NEG, c.get("verdict", ""))]
-invalids = [c for c in cy if "INVALID__" in c.get("verdict", "")]
+_INVALID_TOK = re.compile(r"INVALID__[A-Za-z0-9_]+")
+_HEAD = re.compile(r"^[^.;\n]{0,160}")
+_ANNOUNCES = re.compile(r"^\S+\s+(?:HONEST\s+)?INVALIDS\b")
+
+
+def _is_refusal(v):
+    """Did THIS cycle's gate return `INVALID__*`, or is its prose discussing someone else's?
+
+    The previous rule was `"INVALID__" in verdict` — a substring test over a free-prose blob —
+    and the renderer below printed the verdict's FIRST WORD. Together they produced a section
+    headed "cycles where a preregistered gate returned INVALID__*" that listed `SHIPPED`,
+    `PRODUCT`, `DO`, `REWRITTEN` and `BUILT`, and counted the cycle that BUILT this ledger as a
+    loss, because that cycle's verdict text quotes this ledger's own negatives count.
+
+    A cycle is a machinery refusal when its LEADING verdict token is an `INVALID__*`, or when
+    its verdict opens by announcing invalids ("TWO HONEST INVALIDS, ..."). A cycle that cites an
+    earlier invalid in a parenthetical does not qualify.
+
+    Measured in `papers/ledger_classifier_audit.py`. The same mention-versus-use defect is
+    documented in the OATH verifier by `RECON_oath_external_reach_2026_08_26.md`: two
+    independently written instruments, one root cause — a predicate that reads a line cannot
+    tell you what the line claims.
+    """
+    v = (v or "").strip()
+    if not v:
+        return False
+    lead = v.split()[0].strip("(")
+    return lead.startswith("INVALID__") or bool(_ANNOUNCES.match(_HEAD.match(v).group(0)))
+
+
+def _refusal_tokens(v):
+    toks = sorted(set(_INVALID_TOK.findall(v or "")))
+    return ", ".join("`%s`" % t for t in toks) if toks else "`INVALID__*`"
+
+
+invalids = [c for c in cy if _is_refusal(c.get("verdict", ""))]
+mention_only = [c for c in cy if "INVALID__" in (c.get("verdict") or "")
+                and not _is_refusal(c.get("verdict", ""))]
 gated = [p for p in preregs if "```gates" in p.read_text(encoding="utf-8")]
 with_power = sum(1 for p in gated if '"power_basis"' in p.read_text(encoding="utf-8"))
 
@@ -83,6 +120,18 @@ emit(f"| gates declaring a power basis | {with_power} of {len(gated)} gated prer
 if _split:
     emit(f"| — of those frozen *since* the field existed | **{_split[0]} of {_split[1]}** |")
 emit()
+emit("**The negatives row is not yet a measurement, and is published anyway.** The")
+emit(f"{len(negatives)} is produced by matching a keyword list against each cycle's free-prose")
+emit("verdict field, so a cycle counts as a loss whenever its commentary happens to contain one")
+emit("of those words — the same defect that put `SHIPPED` in the refusal list below. Scoping the")
+emit("identical keywords to the verdict's opening clause instead yields far fewer. Neither")
+emit("number is right: the field is prose, and no keyword test over prose is a classifier. The")
+emit("honest fix is a machine-readable verdict token per cycle, which is owed and not yet done.")
+emit("The figure above is left standing rather than quietly restated because it has already been")
+emit("cited in a frozen preregistration, which can never be edited; moving it here without")
+emit("adjudicating all 163 cycles would replace a disclosed error with an undisclosed one.")
+emit("Measured in `papers/ledger_classifier_audit.py`.")
+emit()
 if _split:
     emit("Both power-basis rows are reported because either alone misleads. A frozen")
     emit("preregistration is never edited, so the preregs written before `power_basis` existed can")
@@ -101,8 +150,18 @@ emit("run, the verdict was computed, and the frozen table said the result licens
 emit("one cost real compute and produced no claim.")
 emit()
 for c in invalids:
-    verdict = c.get("verdict", "").split(" ")[0].strip("(")
-    emit(f"- **cycle {c['cycle']}** ({c.get('date','?')}) — `{verdict}`")
+    emit(f"- **cycle {c['cycle']}** ({c.get('date','?')}) — "
+         f"{_refusal_tokens(c.get('verdict',''))}")
+emit()
+emit(f"A further **{len(mention_only)}** cycles mention an `INVALID__*` verdict in their own")
+emit("commentary without having returned one, and are deliberately not listed here. Until")
+emit("2026-08-26 they were, and the defect was visible in this file: the selection test was a")
+emit("substring match over a free-prose verdict field, and the renderer printed only that")
+emit("field's first word — so this section listed `SHIPPED`, `PRODUCT`, `DO`, `REWRITTEN` and")
+emit("`BUILT` as runs the machinery refused, including the cycle that built this file, counted")
+emit("as a loss because its verdict quotes this file's own negatives count. Measured in")
+emit("`papers/ledger_classifier_audit.py`; the same mention-versus-use defect is documented in")
+emit("the OATH verifier in `closed-model-frontier/RECON_oath_external_reach_2026_08_26.md`.")
 emit()
 emit("## The rule, measured")
 emit()
