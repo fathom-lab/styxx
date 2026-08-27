@@ -48,7 +48,48 @@ def discover_certificates(root: Path) -> list[Path]:
     on disk, so auditing those copies reports phantom MISSING_DOC entries for documents whose
     canonical certificates are audited at their real location.
     """
-    return sorted(p for p in root.rglob("*.certificate.json") if "anc" not in p.parts)
+    return sorted(p for p in _search(root, "*.certificate.json") if "anc" not in p.parts)
+
+
+# Directory names that are never part of the corpus: build outputs, virtualenvs, caches — and
+# `.claude`, which is the one that actually bit.
+#
+# `.claude/worktrees/` holds agent scratch clones of this repository. A worktree is a full copy,
+# so EVERY receipt in the tree has a byte-identical phantom twin inside each one: 1,611 JSON files
+# at the time this was written, against 0 tracked JSON under `.claude` (its only tracked file is a
+# skill markdown). The receipt search had no exclusions at all and walked straight into them.
+#
+# The cost was paid twice, and the larger half was the DENOMINATOR. `discover_certificates` had the
+# same unscoped rglob, so the audit enumerated 365 certificates of which 178 — 49% — were phantoms
+# from one stale worktree. Every corpus-wide number this module printed was computed over a
+# population that was half ephemeral clone, and every finding was reported twice. Scoping the run
+# to `papers/` (what REPLICATIONS.md documents, and what CI does on a fresh checkout) dodged it
+# entirely, which is exactly why it survived: the published numbers were right and the numbers on
+# a working copy were not.
+#
+# The other half was a HIDDEN FINDING. CAPSTONE_universal_mind's `mind_v0_validation.json`
+# is present-and-CHANGED — one real file whose content is not what was certified. The phantom twin
+# made two candidates out of one, so `classify_missing` reported `ambiguous` ("several candidates,
+# no non-arbitrary choice") instead of `changed`, and the audit printed `receipt-changed 0` over a
+# receipt it could see had drifted. The comment in `_resolve_receipts` had said "present and
+# changed" about this exact file since it was written; the classifier disagreed with it because
+# its search population included files that are not in the corpus.
+#
+# Same defect as everything else found on 2026-08-27: the measurement's population was defined by
+# what a glob matched rather than by what the thing is. Exclusion is by directory NAME anywhere in
+# the path, which is deliberately blunt — a receipt that exists ONLY inside one of these stays
+# unresolved and is reported `absent`, which is the honest answer, not resolved from scratch space.
+_EXCLUDED_DIRS = frozenset({
+    ".git", ".claude", ".venv", "venv", "node_modules", "__pycache__",
+    ".pytest_cache", ".mypy_cache", ".ruff_cache", ".tox", "build", "dist",
+})
+
+
+def _search(root: Path, name: str):
+    """`root.rglob(name)`, minus paths through a directory that is not part of the corpus."""
+    for p in root.rglob(name):
+        if _EXCLUDED_DIRS.isdisjoint(p.parts):
+            yield p
 
 
 def _receipt_sha_matches(raw: bytes, recorded: str) -> bool:
@@ -108,7 +149,7 @@ def _resolve_receipts(cert_path: Path, cert: dict,
             continue
         found, candidates = None, []
         if search_root is not None:
-            for cand in search_root.rglob(name):
+            for cand in _search(search_root, name):
                 try:
                     if _receipt_sha_matches(cand.read_bytes(), sha):
                         found = cand
@@ -164,7 +205,7 @@ def classify_missing(cert_path: Path, cert: dict, missing: list,
     for name in missing:
         cands = []
         if search_root is not None:
-            cands = [p for p in search_root.rglob(name) if p.is_file()]
+            cands = [p for p in _search(search_root, name) if p.is_file()]
         local = cert_path.parent / name
         if local.exists() and local not in cands:
             cands.append(local)

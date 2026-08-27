@@ -25,12 +25,12 @@ the same credit.
 | **the bridge + dose + cliff** (CPU-only) | the island's barrier is causal (0.0612→0.9745 vs random 0.0), rank-2 at core (k\*=2), and switch-like (knee t=0.8) | `run_b41.py` · `run_b42.py` · `run_b46.py` (same dir) | `b41_result.json` · `b42_result.json` · `b46_result.json` | verdict strings match; medians within tolerance — see [REPLICATE_legibility.md](papers/disjoint-worlds/REPLICATE_legibility.md) |
 | **OATH corpus audit** (CPU-only) | every published claim doc certifies against its receipts, with five disclosed exceptions | `python -m styxx.corpus_audit papers/` | committed `*.certificate.json` files | your output matches the expected line below, character for character (CPU-deterministic) |
 
-**What the corpus audit prints today, so a divergence means something.** As of 2026-08-26 the
+**What the corpus audit prints today, so a divergence means something.** As of 2026-08-27 the
 audit does **not** come back clean, and the honest bar is that you reproduce the same five
 exceptions rather than zero:
 
 ```
-corpus papers: 185 certificates | HELD 181  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1
+corpus papers: 186 certificates | HELD 182  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1
   [OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_universal_mind_2026_06_10.md
   [OATH-FAILED] verdict-CHANGED  FINDING_behavioral_sycophancy_blackbox_2026_06_09.md
   [OATH-FAILED]  PREREG_oath_v12_formula_constant_2026_08_26.md
