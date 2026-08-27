@@ -1,0 +1,69 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_vacuous_pass_2026_08_27.md",
+  "document_sha256": "471200fc22c7b0f32ca89934bc3c2d352a687ea1af5ccf732c34ed795fd2a697",
+  "receipts_sha256": {
+    "oath_vacuous_pass_census.json": "bcf3601d740912e9692ac1200f04c165a63bd165fdf9434ffe65bfa0d8094323"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 2,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "26"
+    },
+    {
+      "line": 71,
+      "token": "9"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 14,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "good result.* Over 2026-08-25 and 26, four defects answering exactly that description were found in",
+      "col": 34,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**0 of 4 caught.** `styxx.absence` returns no finding at all on any of the four files.",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_vacuous_pass_census.json:cases_caught"
+    },
+    {
+      "line": 30,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**0 of 4 caught.** `styxx.absence` returns no finding at all on any of the four files.",
+      "col": 7,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_vacuous_pass_census.json:cases[1].loops_findings"
+    },
+    {
+      "line": 71,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "receipt this note does not carry is the very habit `OATH_CONTRACT.md` rule 9 warns about. Its",
+      "col": 77,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

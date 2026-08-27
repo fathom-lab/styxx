@@ -30,7 +30,7 @@ audit does **not** come back clean, and the honest bar is that you reproduce the
 exceptions rather than zero:
 
 ```
-corpus papers: 184 certificates | HELD 180  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0
+corpus papers: 185 certificates | HELD 181  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0
   [OATH-FAILED] verdict-CHANGED  FINDING_behavioral_sycophancy_blackbox_2026_06_09.md
   [OATH-FAILED]  PREREG_oath_v12_formula_constant_2026_08_26.md
   [OATH-FAILED]  RECON_oath_external_reach_2026_08_26.md
