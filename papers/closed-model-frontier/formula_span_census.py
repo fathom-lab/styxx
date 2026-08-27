@@ -207,17 +207,61 @@ def main() -> int:
         r["corpus_wide_tokens"] = w["tokens"]
         r["corpus_wide_documents"] = len(w["documents"])
 
+    # PERMISSIVE CONTROL. If a rule with no span test at all scores the same as the best
+    # candidate on a column, that column is not measuring the span test. This control is what
+    # the census should have carried from the start; the vacuous-pass census written the same
+    # day DID carry controls, and this one did not.
+    ctrl = collections.Counter()
+    ctrl_nominal = 0
+    for doc, receipts in docs:
+        try:
+            cert = certify_doc(doc, receipts)
+        except Exception:
+            continue
+        lines = doc.read_text(encoding="utf-8", errors="replace").splitlines()
+        for e in cert["ledger"]:
+            col = e.get("col")
+            if col is None or not BARE_NUM.fullmatch(e["token"]):
+                continue
+            line = lines[e["line"] - 1] if e["line"] - 1 < len(lines) else ""
+            if not BSLASH.search(line):
+                continue
+            ctrl[e["status"]] += 1
+            if e["status"] == "VERIFIED" and not coincident(e["receipt_ref"]):
+                ctrl_nominal += 1
+
     payload = {
         "census": "formula-constant class, measured at SPAN level",
+        "permissive_control": {
+            "rule": "no span test at all — any bare numeral on a line containing a backslash "
+                    "command",
+            "reaches_accusations": ctrl["UNGROUNDED"],
+            "destroys_nominal": ctrl_nominal,
+            "destroys_coincident": ctrl["VERIFIED"] - ctrl_nominal,
+            "verdict": "the deciding column reads IDENTICALLY for this and for the best "
+                       "candidate, so it discriminates between none of them",
+        },
         "status": "CENSUS. Licenses no claim. Measures the population a conjunct-1 candidate "
                   "would actually see — the step whose absence killed v0.12.",
         "verifier_sha256":
             hashlib.sha256((ROOT / "styxx" / "certify.py").read_bytes()).hexdigest(),
         "frame": {"documents": len(docs), "status_counts": dict(totals)},
-        "the_column_that_decides": "destroys_nominal. A verification sworn to an index or a seed "
-                                   "is a coincidence and destroying it is a gain; a verification "
-                                   "sworn to the quantity its line names is a real cost. Every "
-                                   "design killed in v0.11 and v0.12 died on this column.",
+        "the_column_that_decides": "RETRACTED 2026-08-27. This field claimed destroys_nominal was "
+                                   "the deciding column. It cannot decide anything: the "
+                                   "permissive control below — NO span test at all, every bare "
+                                   "numeral on a line carrying a backslash command — scores "
+                                   "destroys_nominal 0 as well, identical to the best candidate. "
+                                   "A column that reads the same for the best and the worst "
+                                   "possible rule is a vacuous gate, which is the defect "
+                                   "RECON_vacuous_pass_2026_08_27.md catalogues, committed here "
+                                   "the same day. Found by the adversarial red team, not by the "
+                                   "author.",
+        "why_it_is_vacuous": "destroys_nominal is measured over the CERTIFIED FRAME, which is 184 "
+                             "of the ~1,119 markdown documents under papers/. Every genuine "
+                             "measurement any of these candidates would silence lives in an "
+                             "UNCERTIFIED document, where no ledger status exists and the column "
+                             "is structurally blind. The zero is a property of the frame's "
+                             "coverage, not of any rule.",
         "candidates": rows,
         "what_this_does_not_show": [
             "That any candidate is good, or that a successor should be written. Reaching an "

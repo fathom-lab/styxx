@@ -4,7 +4,8 @@
 the same sentence, and a fourth turned up while checking the third.*
 
 Receipts: `closed-model-frontier/oath_ext_recon.json`, `ledger_classifier_audit.json`,
-`closed-model-frontier/oath_v11_battery_result.json`. The diffgate figures are re-derived on
+`closed-model-frontier/oath_v11_battery_result.json`, and — for the addendum's eighth instance —
+`closed-model-frontier/formula_span_census.json`. The diffgate figures are re-derived on
 demand by `python scripts/diffgate_validation_sweep.py` and are disclosed as command-reproducible
 rather than pinned to a committed receipt.
 
@@ -109,6 +110,53 @@ detector misses the mutant it exists to catch at every seed.
 The lesson generalises even though the clause does not: **claimhood needs its own predicate,
 adjudicated rather than inferred from neighbours.** Every instrument above is currently deciding
 claimhood as a side effect of deciding something else.
+
+## addendum, 2026-08-27: it is not only the instruments
+
+This synthesis found the defect in four instruments and concluded that claimhood needs its own
+predicate. Over the following day it turned up three more times, and the three were not
+instruments. They were the **measurements built to audit the instruments** — including the
+measurements written specifically to stop the previous instance recurring.
+
+| where | the proxy it matched | the class it named | what it cost |
+|---|---|---|---|
+| OATH obligation predicate | line vocabulary | this token is a CLAIM | every accusation false, outside this lab |
+| OATH on quotation | a numeral appears | the author ASSERTS it | three certificates OATH-FAILED on quoted examples |
+| the ledger's classifier | the substring `INVALID__` | the gate RETURNED one | `SHIPPED` listed as a machinery refusal |
+| diffgate's claim extractor | a filename is mentioned | the diff CONTAINS it | every contradiction false; a README claim withdrawn |
+| v0.12's frozen bar | a LINE-level marker | the SPAN the clause reads | reached six where the bar said eleven |
+| the vacuous-pass census | the current tree | the PRE-FIX code | three repaired defects scored as zero reach |
+| the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |
+| the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |
+
+Eight, and the last four are the uncomfortable ones. The v0.12 bar was frozen by someone who had
+just read this synthesis. The vacuous-pass census made v0.12's exact error *inside the census
+written to stop it*. The formula-span census was built to be the careful, population-first
+measurement the previous failure demanded, and its marker matched `\b` and `\d` — regex escapes —
+while claiming to identify rendered mathematics.
+
+The eighth is the sharpest, and it is a proxy for a **cost** rather than for a class.
+`destroys_nominal` stood in for *would this rule destroy a real verification*, was named "the
+column that decides", and cannot decide: a control run afterwards with no span test at all — the
+worst rule available — scores the same zero. The column was blind because its frame holds only 184
+documents, and every genuine measurement these rules would silence lives in one of the roughly 935
+markdown files outside it. It was published the same day as the RECON that catalogues vacuous
+gates, by that RECON's author, and an adversary found it. See
+`closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md`.
+
+So the generalisation in the section above is too narrow. It is not that instruments decide
+claimhood as a side effect. It is:
+
+> **A marker that co-occurs with a class is not the class, and this holds for the measurement
+> exactly as it holds for the instrument.** A census defines a population by matching something
+> observable; if what it matches is a correlate rather than the thing, every number downstream is
+> about the correlate. Freezing a bar against it does not make it true, it makes it frozen.
+
+There is no reason to think measurement is safer than instrumentation here, and three instances
+in one day say it is not. The countermeasure is not care — care was applied and failed three
+times. It is the same one v0.11 used: **look at what the marker actually matched**, case by case,
+before quoting any number it produced. Every one of the three was caught that way and none was
+caught by reasoning about the definition in advance.
 
 ## what follows, and what does not
 

@@ -1,0 +1,225 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_v13_not_frozen_2026_08_27.md",
+  "document_sha256": "c83f6f58a7d69b3f1ca5cde9e9ad35c1bb736dd53583f9d141fe880c890b38c4",
+  "receipts_sha256": {
+    "formula_span_census.json": "b1d92e708c272dcecf8901019718357d1298161a4b7cd41371c16861d8c5f493"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 39,
+      "token": "1,119"
+    },
+    {
+      "line": 49,
+      "token": "0.043"
+    },
+    {
+      "line": 51,
+      "token": "0.30"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 18,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "col": 26,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].reaches_accusations"
+    },
+    {
+      "line": 18,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "col": 30,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.destroys_nominal"
+    },
+    {
+      "line": 18,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "| inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "col": 34,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].corpus_wide_tokens"
+    },
+    {
+      "line": 18,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "col": 46,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | inline code + command | 3 | 0 | 37 tokens / 13 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].corpus_wide_documents"
+    },
+    {
+      "line": 19,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "col": 29,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].reaches_accusations"
+    },
+    {
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "col": 33,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.destroys_nominal"
+    },
+    {
+      "line": 19,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "col": 37,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].reaches_accusations"
+    },
+    {
+      "line": 19,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "col": 48,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | indented block + command | 3 | 0 | 3 tokens / 1 doc |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[0].reach_roster[0].token"
+    },
+    {
+      "line": 20,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "col": 33,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.reaches_accusations"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "col": 37,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.destroys_nominal"
+    },
+    {
+      "line": 20,
+      "token": "236",
+      "value": 236.0,
+      "decimals": 0,
+      "context": "| right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "col": 41,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[2].corpus_wide_tokens"
+    },
+    {
+      "line": 20,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "col": 54,
+      "binding_context": "| candidate | reaches | destroys nominal | corpus-wide | | right of a backslash command | 6 | 0 | 236 tokens / 31 docs |",
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:candidates[2].corpus_wide_documents"
+    },
+    {
+      "line": 30,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "command \u2014 scores `reaches 6, destroys_nominal 0`. Identical to the best candidate, and identical to",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.reaches_accusations"
+    },
+    {
+      "line": 30,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "command \u2014 scores `reaches 6, destroys_nominal 0`. Identical to the best candidate, and identical to",
+      "col": 46,
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:permissive_control.destroys_nominal"
+    },
+    {
+      "line": 39,
+      "token": "184",
+      "value": 184.0,
+      "decimals": 0,
+      "context": "certified frame, which is 184 documents of roughly 1,119 under `papers/`. **Every genuine",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "formula_span_census.json:frame.documents"
+    },
+    {
+      "line": 39,
+      "token": "1,119",
+      "value": 1119.0,
+      "decimals": 0,
+      "context": "certified frame, which is 184 documents of roughly 1,119 under `papers/`. **Every genuine",
+      "col": 51,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "- a measured cross-substrate cosine, written `$\\cos \\approx 0.043$`, on which its sentence's",
+      "col": 60,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "- a bound written `$\\mathrm{AlignDepth} \\leq 0.30$`;",
+      "col": 45,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
