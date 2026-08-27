@@ -1,7 +1,10 @@
 # RECON — the silent-pass detector does not see the silent passes in our own verification machinery
 
-Fathom Lab · 2026-08-27 · **RECON. Licenses no claim, proposes no fix.** Receipt:
-`oath_vacuous_pass_census.json`. Harness: `oath_vacuous_pass_census.py`, deterministic, re-runnable.
+Fathom Lab · 2026-08-27 · **RECON. Licenses no claim, and after measuring, proposes no
+detector.** Receipts: `oath_vacuous_pass_census.json` (does the detector see them?) and
+`vacuous_pass_population_census.json` (what would a detector reach, and destroy?). Harnesses:
+`oath_vacuous_pass_census.py`, `vacuous_pass_population_census.py` — both deterministic and
+re-runnable.
 
 ---
 
@@ -98,17 +101,50 @@ reason it is wrong was already in the repository.
   is a measured blind spot, not a defect, and this note is not an accusation.
 - **Not that the class is four.** Four is four. They were found in two days by people looking for
   other things, which suggests density rather than exhaustion, but suggestion is not measurement.
-- **Not that a detector is feasible.** Nothing was built or tried. The rejected-design arithmetic
-  that would decide it — what such a rule reaches, and what it destroys — has not been done, and
-  the v0.11 and v0.12 cycles are both standing reminders of what happens when that arithmetic is
-  skipped or taken from the wrong population.
+- **Not that a detector is feasible — and the next section shows it is not.** No detector was
+  built. The rejected-design arithmetic that decides such things was done first this time, and it
+  came back negative; the v0.11 and v0.12 cycles are both standing reminders of what happens when
+  that arithmetic is skipped or taken from the wrong population.
+
+## The arithmetic was done, and it says do not build the detector
+
+The section below originally said SP-9 was owed *if the arithmetic supports one*. The arithmetic
+has now been done first, for once, in `vacuous_pass_population_census.json`. It does not support
+one.
+
+Five naive syntactic candidates were scored over the whole repository — 1,482 Python files — on
+what each REACHES among the catalogued instances and how many sites it fires on at all. Scored
+honestly out of the three instances that have a syntactic defect site, because VP-C is a
+classification decision and VP-E is a data fact and no AST pattern reaches either.
+
+Every candidate reaches at most **one** of the three, and every one costs hundreds of sites per
+reach. The cheapest, flagging every `skip()` call, reaches only the shallow-clone case and is a
+lint rule rather than an instrument. Nothing here is a detector; the best of them is a
+highlighter with a good excuse.
+
+**So no SP-9 preregistration should be frozen on this evidence, and none is.** The class is real —
+five instances, and the lab's own detectors blind to all four it could have caught — but it is not
+*syntactically separable*, and the reason is the same fact that makes it dangerous: the emptiness
+is manufactured upstream of the check that passes. A local pattern cannot see a composition. Any
+future attempt should be runtime rather than static — instrument the check to record the size of
+the population it examined — and that is a different instrument with a different census.
+
+**Two measurement errors were made and corrected in producing that table, and both are recorded
+because they are the same error this lab keeps making.** The first run scored reach against the
+*current* tree while the recorded line numbers came from *pre-fix* code, so three repaired
+defects read as zeroes — measuring against the wrong population, inside the census written to
+stop v0.12's exact mistake happening again. The second: VP-D's line was copied from an audit
+finding's header without being checked, and at the catalogued commit that line is
+`if not PANEL.exists():`, not the vacuous bars, which sit forty lines further down. A census that
+trusts a cited line number is measuring the citation.
 
 ## What is owed
 
-1. **A subtype, if the arithmetic supports one.** SP-9 VACUOUS_PASS is the obvious name and this
-   census is its seed corpus. Adding cases to a recall benchmark after measuring that the detector
-   misses them will *lower* a published score, which is the correct direction and should be done
-   deliberately, under a preregistration, not as a side effect of this note.
+1. **NOT a subtype detector.** That was the obvious next item and the arithmetic above killed it.
+   What may still be owed is the SEED CORPUS: adding these instances to the SILENT-PASS benchmark
+   records real cases the detectors miss, and will *lower* a published recall score, which is the
+   correct direction — done deliberately under a preregistration, never as a side effect of a note
+   like this one.
 2. **A census at the population level, not the function level.** Every candidate detector for this
    shape must answer the same question v0.12 died on: what does it reach, and what does it
    destroy? A rule that flags every `if not xs: return` in this repository would flag hundreds of

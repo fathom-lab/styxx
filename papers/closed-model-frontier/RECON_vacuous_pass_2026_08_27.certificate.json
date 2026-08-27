@@ -2,13 +2,14 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RECON_vacuous_pass_2026_08_27.md",
-  "document_sha256": "8202da3aeff7b8afd4340bd9827b48416665c4b93bbe91728ac1f3c67c89fbf4",
+  "document_sha256": "47ef02d14dcd5d06d557f8346e45ff750ae3b3cde216e6a003f0dea37fec7536",
   "receipts_sha256": {
-    "oath_vacuous_pass_census.json": "bcf3601d740912e9692ac1200f04c165a63bd165fdf9434ffe65bfa0d8094323"
+    "oath_vacuous_pass_census.json": "bcf3601d740912e9692ac1200f04c165a63bd165fdf9434ffe65bfa0d8094323",
+    "vacuous_pass_population_census.json": "65e361163028f7ada23ae57606a0111bfb9fd420b68c642137d59fbdcb5ae590"
   },
   "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
   "counts": {
-    "VERIFIED": 2,
+    "VERIFIED": 3,
     "ABSTAIN": 3,
     "UNGROUNDED": 0
   },
@@ -16,21 +17,21 @@
   "ungrounded": [],
   "abstained": [
     {
-      "line": 14,
+      "line": 17,
       "token": "26"
     },
     {
-      "line": 70,
+      "line": 73,
       "token": "0"
     },
     {
-      "line": 96,
+      "line": 99,
       "token": "9"
     }
   ],
   "ledger": [
     {
-      "line": 14,
+      "line": 17,
       "token": "26",
       "value": 26.0,
       "decimals": 0,
@@ -40,7 +41,7 @@
       "receipt_ref": null
     },
     {
-      "line": 30,
+      "line": 33,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -50,7 +51,7 @@
       "receipt_ref": "oath_vacuous_pass_census.json:cases_caught"
     },
     {
-      "line": 30,
+      "line": 33,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -60,7 +61,7 @@
       "receipt_ref": "oath_vacuous_pass_census.json:cases[1].loops_findings"
     },
     {
-      "line": 70,
+      "line": 73,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -70,7 +71,7 @@
       "receipt_ref": null
     },
     {
-      "line": 96,
+      "line": 99,
       "token": "9",
       "value": 9.0,
       "decimals": 0,
@@ -78,6 +79,16 @@
       "col": 77,
       "status": "ABSTAIN",
       "receipt_ref": null
+    },
+    {
+      "line": 115,
+      "token": "1,482",
+      "value": 1482.0,
+      "decimals": 0,
+      "context": "Five naive syntactic candidates were scored over the whole repository \u2014 1,482 Python files \u2014 on",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "vacuous_pass_population_census.json:python_files_scanned"
     }
   ]
 }
