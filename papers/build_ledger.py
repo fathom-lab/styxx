@@ -19,40 +19,12 @@ NEG = r'INVALID__|NOT_|NO_|BLIND|WRONG|REFUS|_FAIL|DO NOT SHIP|RECALL|QUARANTIN|
 seal_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in seals)
 cert_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in certs)
 negatives = [c for c in cy if re.search(NEG, c.get("verdict", ""))]
-_INVALID_TOK = re.compile(r"INVALID__[A-Za-z0-9_]+")
-_HEAD = re.compile(r"^[^.;\n]{0,160}")
-_ANNOUNCES = re.compile(r"^\S+\s+(?:HONEST\s+)?INVALIDS\b")
-
-
-def _is_refusal(v):
-    """Did THIS cycle's gate return `INVALID__*`, or is its prose discussing someone else's?
-
-    The previous rule was `"INVALID__" in verdict` — a substring test over a free-prose blob —
-    and the renderer below printed the verdict's FIRST WORD. Together they produced a section
-    headed "cycles where a preregistered gate returned INVALID__*" that listed `SHIPPED`,
-    `PRODUCT`, `DO`, `REWRITTEN` and `BUILT`, and counted the cycle that BUILT this ledger as a
-    loss, because that cycle's verdict text quotes this ledger's own negatives count.
-
-    A cycle is a machinery refusal when its LEADING verdict token is an `INVALID__*`, or when
-    its verdict opens by announcing invalids ("TWO HONEST INVALIDS, ..."). A cycle that cites an
-    earlier invalid in a parenthetical does not qualify.
-
-    Measured in `papers/ledger_classifier_audit.py`. The same mention-versus-use defect is
-    documented in the OATH verifier by `RECON_oath_external_reach_2026_08_26.md`: two
-    independently written instruments, one root cause — a predicate that reads a line cannot
-    tell you what the line claims.
-    """
-    v = (v or "").strip()
-    if not v:
-        return False
-    lead = v.split()[0].strip("(")
-    return lead.startswith("INVALID__") or bool(_ANNOUNCES.match(_HEAD.match(v).group(0)))
-
-
-def _refusal_tokens(v):
-    toks = sorted(set(_INVALID_TOK.findall(v or "")))
-    return ", ".join("`%s`" % t for t in toks) if toks else "`INVALID__*`"
-
+# The refusal classifier lives in its own module so it can be imported and TESTED by hand
+# (tests/test_ledger_classifier.py). The regeneration guard in tests/test_ledger.py proves this
+# file agrees with what it produces — never that the classification is right, which is how the
+# refusal list came to print `SHIPPED`.
+from ledger_verdicts import is_refusal as _is_refusal          # noqa: E402
+from ledger_verdicts import refusal_tokens as _refusal_tokens  # noqa: E402
 
 invalids = [c for c in cy if _is_refusal(c.get("verdict", ""))]
 mention_only = [c for c in cy if "INVALID__" in (c.get("verdict") or "")
