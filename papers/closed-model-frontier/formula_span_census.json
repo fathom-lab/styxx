@@ -1,0 +1,129 @@
+{
+  "census": "formula-constant class, measured at SPAN level",
+  "status": "CENSUS. Licenses no claim. Measures the population a conjunct-1 candidate would actually see — the step whose absence killed v0.12.",
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "frame": {
+    "documents": 184,
+    "status_counts": {
+      "ABSTAIN": 2030,
+      "VERIFIED": 5705,
+      "UNGROUNDED": 11
+    }
+  },
+  "the_column_that_decides": "destroys_nominal. A verification sworn to an index or a seed is a coincidence and destroying it is a gain; a verification sworn to the quantity its line names is a real cost. Every design killed in v0.11 and v0.12 died on this column.",
+  "candidates": [
+    {
+      "span": "S2_inline_code_with_command",
+      "reaches_accusations": 3,
+      "destroys_nominal": 0,
+      "destroys_coincident": 3,
+      "already_abstaining": 0,
+      "reach_roster": [
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "1",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "2",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "2",
+          "receipt_ref": null
+        }
+      ],
+      "nominal_roster": [],
+      "corpus_wide_tokens": 37,
+      "corpus_wide_documents": 13
+    },
+    {
+      "span": "S3_indented_block_with_command",
+      "reaches_accusations": 3,
+      "destroys_nominal": 0,
+      "destroys_coincident": 0,
+      "already_abstaining": 0,
+      "reach_roster": [
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "1",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "2",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "2",
+          "receipt_ref": null
+        }
+      ],
+      "nominal_roster": [],
+      "corpus_wide_tokens": 3,
+      "corpus_wide_documents": 1
+    },
+    {
+      "span": "S5_right_of_a_backslash_command",
+      "reaches_accusations": 6,
+      "destroys_nominal": 0,
+      "destroys_coincident": 3,
+      "already_abstaining": 0,
+      "reach_roster": [
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "1",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "2",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+          "line": 23,
+          "token": "2",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "1",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "2",
+          "receipt_ref": null
+        },
+        {
+          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+          "line": 28,
+          "token": "2",
+          "receipt_ref": null
+        }
+      ],
+      "nominal_roster": [],
+      "corpus_wide_tokens": 236,
+      "corpus_wide_documents": 31
+    }
+  ],
+  "what_this_does_not_show": [
+    "That any candidate is good, or that a successor should be written. Reaching an accusation is not the same as being RIGHT to silence it; that needs a blind adjudication with ties resolved against the clause.",
+    "Anything about documents outside the certified frame.",
+    "That the accusations reached are false. They look false to their author, which is exactly the judgement a panel exists to replace."
+  ]
+}
