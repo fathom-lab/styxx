@@ -131,6 +131,41 @@ than sufficient: a column can separate cleanly and still measure the wrong thing
 defect the next section is about, and which this check would have cleared in all seven earlier
 instances.
 
+### What it found when it was pointed at the programme's other censuses
+
+A survey of every candidate-scoring census in this repository — a script that scores two or more
+named rules against each other and writes a receipt — found seventeen. **Seven declare one column
+as decisive** in the text or the receipt, in phrasings like *"the column a design lives or dies
+on"*, *"THE NUMBER THAT KILLS DESIGNS"*, *"the second is the one that kills"*, *"(b) is the bar"*.
+**Two of the seven score that column against any baseline.** The rest do not know whether their
+deciding column can fail, because nothing was ever run that could have told them.
+
+Those three counts come from a single automated survey pass, not from a frozen instrument, and
+they are disclosed at that strength. What was checked by hand afterwards: the deciding-column
+declarations quoted above are verbatim from the four files named, and the two censuses called out
+below carry no occurrence of `control`, `baseline`, `null`, `permissive`, `trivial` or `noop`
+anywhere in their source. The population boundary — what counts as "a census" — is a judgement,
+which is the same kind of judgement this whole document is about getting wrong, so the seventeen
+should be read as an order of magnitude and the seven as a floor.
+
+That is a statement about evidence, not about defect, and the distinction turned out to matter.
+The obvious next move was to assume the worst about the most consequential one and it would have
+been wrong.
+
+The mention/use census is the census that **killed four of five candidate designs for v0.12**. It
+declares `of_which_nominal` decisive and carries no control. Running the one it never ran — treat
+every token as a mention, the most permissive rule the design admits — gives a control that
+destroys 5,159 nominal verifications, and **all five candidates beat it.** The column
+`SEPARATES`. That decision was sound, and it is now measured rather than assumed.
+
+The same run exposed a limitation in the new check, which is recorded in its docstring and pinned
+by a test. On that census the *benefit* column comes back `NULL_TIES_BEST`, because a rule that
+fires on everything catches everything — the null rule maximises reach by construction. In a
+cost/benefit design that verdict is expected and is not vacuity; it means the candidates justify
+themselves on cost. Declare the cost column as deciding and read the benefit column as context.
+An instrument that flagged it would be misreading the design, and would have condemned nearly
+every census in this repository on its first run.
+
 ## The pattern this is the eighth instance of
 
 `SYNTHESIS_mention_and_use_2026_08_26.md` catalogues a defect where a marker that co-occurs with a

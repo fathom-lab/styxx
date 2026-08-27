@@ -7,13 +7,13 @@
     "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6",
     "ledger_classifier_audit.json": "8060dd7fb1f4d6bf1c6318e55f380e4bd0518b44953493136753e53c5c910a73",
     "oath_v11_battery_result.json": "04584a3e9fdfd07416f358893350ab939aca55e7b951f73243c0824703672106",
-    "formula_span_census.json": "ac7c83ff88b535f68f08dbf610f6613a56d40e51f793fb2bf88108cdf7d957a4"
+    "formula_span_census.json": "fc603599b5a09db6fc163d72410587a7215dfd3a78c85960a4a011f109dd6289"
   },
   "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
   "counts": {
-    "VERIFIED": 11,
+    "VERIFIED": 10,
     "ABSTAIN": 2,
-    "UNGROUNDED": 3
+    "UNGROUNDED": 4
   },
   "verdict": "OATH-FAILED",
   "ungrounded": [
@@ -44,6 +44,16 @@
       "decimals": 0,
       "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
       "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 141,
+      "token": "184",
+      "value": 184.0,
+      "decimals": 0,
+      "context": "worst rule available \u2014 scores the same zero. The column was blind because its frame holds only 184",
+      "col": 95,
       "status": "UNGROUNDED",
       "receipt_ref": null
     }
@@ -210,8 +220,8 @@
       "decimals": 0,
       "context": "worst rule available \u2014 scores the same zero. The column was blind because its frame holds only 184",
       "col": 95,
-      "status": "VERIFIED",
-      "receipt_ref": "formula_span_census.json:frame.documents"
+      "status": "UNGROUNDED",
+      "receipt_ref": null
     },
     {
       "line": 142,

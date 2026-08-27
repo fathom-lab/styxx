@@ -20,10 +20,24 @@ Five SPAN definitions — the actual conjunct-1 candidates a successor could fre
 what it REACHES (currently-accused tokens) and what it DESTROYS (currently-verified tokens),
 with the destroy column split by whether the binding is NOMINAL or merely COINCIDENT.
 
-That split is the one that decides. Destroying a verification sworn to an array index or a seed
-is a gain wearing a loss's clothes; destroying one sworn to the quantity its line names is a real
-cost. v0.11's winning clause destroyed zero nominal bindings, and every design killed in v0.11 and
-v0.12 died on this column.
+That split was called "the one that decides", and **that claim is RETRACTED** — see
+`the_column_that_decides` in the receipt, `discrimination` beside it, and
+`RECON_v13_not_frozen_2026_08_27.md`. The reasoning was sound and the column is not: destroying a
+verification sworn to an array index or a seed really is a gain wearing a loss's clothes, but
+`destroys_nominal` reads 0 for the permissive control too — the rule with no span test at all —
+so it cannot separate the best candidate from the worst. It was blind because it can only see the
+certified frame, and every genuine measurement these rules would silence sits outside it.
+
+The census now scores that control and runs `styxx.discriminates` over the result, so the
+retraction is computed rather than asserted. **No candidate here should be frozen against
+`destroys_nominal` until the frame covers the documents the column is supposed to be about.**
+
+CONVERGENCE. This census reads stored certificates, and documents cite this census as a receipt,
+so the two are mutually recursive: re-running the census invalidates the certificates of any
+document citing it, and re-certifying those documents can change what the census reads. Iterate —
+certify the citing documents, re-run the census, repeat — until the receipt's hash stops moving.
+It settled in two rounds each time it was needed on 2026-08-27. Do not read a single run's numbers
+as final, and do not quote them in a document that is itself inside the frame.
 
   python papers/closed-model-frontier/formula_span_census.py
 """

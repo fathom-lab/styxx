@@ -2,14 +2,14 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RECON_v13_not_frozen_2026_08_27.md",
-  "document_sha256": "066d4c4aa0f83d386e7b484668cfc6632c5fc271b2b5056a3fcf16afa51d1978",
+  "document_sha256": "1e56e6acbcc5d126e232e56f7f49c69fe199a18b4a33d061c99846e28c6c222d",
   "receipts_sha256": {
-    "formula_span_census.json": "ac7c83ff88b535f68f08dbf610f6613a56d40e51f793fb2bf88108cdf7d957a4"
+    "formula_span_census.json": "fc603599b5a09db6fc163d72410587a7215dfd3a78c85960a4a011f109dd6289"
   },
   "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
   "counts": {
     "VERIFIED": 0,
-    "ABSTAIN": 2,
+    "ABSTAIN": 3,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -22,6 +22,10 @@
     {
       "line": 57,
       "token": "0.30"
+    },
+    {
+      "line": 158,
+      "token": "5,159"
     }
   ],
   "ledger": [
@@ -42,6 +46,16 @@
       "decimals": 2,
       "context": "- a bound written `$\\mathrm{AlignDepth} \\leq 0.30$`;",
       "col": 45,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 158,
+      "token": "5,159",
+      "value": 5159.0,
+      "decimals": 0,
+      "context": "destroys 5,159 nominal verifications, and **all five candidates beat it.** The column",
+      "col": 9,
       "status": "ABSTAIN",
       "receipt_ref": null
     }

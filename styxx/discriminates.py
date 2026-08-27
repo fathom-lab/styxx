@@ -59,6 +59,15 @@ any bar is frozen; from the CLI it is a non-zero exit.
 * **It says nothing about coverage.** The census above scored zero on a column because its frame
   excluded every specimen that could have made it non-zero. This module reports that the column
   is degenerate; it cannot tell you that widening the frame would fix it.
+* **In a cost/benefit design the null rule wins the BENEFIT column by construction, and that is
+  not a defect.** A rule that fires on everything catches everything, so it maximises recall and
+  ties or beats every candidate there. `NULL_TIES_BEST` on such a column is expected and means
+  only "the candidates justify themselves on cost, not on reach". Declare the **cost** column as
+  deciding in those designs, and read the benefit column as context. Reported when it was found:
+  the mention/use census scores `of_which_nominal` (cost) `SEPARATES` — the null rule destroys
+  5,159 nominal verifications and all five candidates beat it — while `accusations_reached`
+  (benefit) comes back `NULL_TIES_BEST` at a control of 11. The first is the census's own declared
+  deciding column and it is sound; flagging the second would be this module misreading the design.
 
 CLI:
   python -m styxx.discriminates SCORES.json [--json OUT.json]

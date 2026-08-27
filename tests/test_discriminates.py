@@ -93,6 +93,38 @@ def test_live_census_control_ties_the_best_candidate_whatever_the_values():
     assert ctl["destroys_nominal"] == min(c["destroys_nominal"] for c in payload["candidates"])
 
 
+def test_cost_benefit_design_the_null_wins_benefit_and_that_is_not_a_defect():
+    """The mention/use census, with the control it never ran, measured 2026-08-27.
+
+    A rule that fires on everything catches everything, so the null rule ties or beats every
+    candidate on the BENEFIT column by construction. That is not vacuity — it means the
+    candidates justify themselves on cost. Declaring the cost column as deciding is the correct
+    reading, and on that column the census is sound: the null rule destroys 5,159 nominal
+    verifications and all five candidates beat it.
+
+    This guards the limitation as much as the behaviour: if a future change made the benefit
+    column an accusation by default, every cost/benefit census in the repository would be
+    reported as defective, which would be the instrument misreading the design.
+    """
+    cands = {
+        "blockquote":           {"reached": 0, "nominal": 17},
+        "fenced_block":         {"reached": 0, "nominal": 1},
+        "inline_code":          {"reached": 4, "nominal": 31},
+        "latex_on_line":        {"reached": 3, "nominal": 0},
+        "quoting_verb_on_line": {"reached": 0, "nominal": 501},
+    }
+    control = {"reached": 11, "nominal": 5159}          # abstain every token
+    directions = {"reached": HIGHER, "nominal": LOWER}
+
+    cost_declared = discrimination_report(cands, control, directions, deciding=["nominal"])
+    assert cost_declared["columns"]["nominal"]["verdict"] == SEPARATES
+    assert len(cost_declared["columns"]["nominal"]["beats_control"]) == 5
+    assert cost_declared["holds"], "the census's own deciding column is sound"
+
+    assert discrimination_report(cands, control, directions)["columns"]["reached"]["verdict"] \
+        == NULL_TIES_BEST, "benefit column: expected, reported, and not an accusation"
+
+
 def test_a_column_that_separates_holds():
     rep = discrimination_report(
         {"good": {"cost": 1}, "bad": {"cost": 9}}, {"cost": 9}, {"cost": LOWER},
