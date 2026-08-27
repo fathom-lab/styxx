@@ -51,17 +51,50 @@ def discover_certificates(root: Path) -> list[Path]:
     return sorted(p for p in root.rglob("*.certificate.json") if "anc" not in p.parts)
 
 
+def _receipt_sha_matches(raw: bytes, recorded: str) -> bool:
+    """Does *raw* hash to *recorded*, on ANY platform's line endings?
+
+    THE DEFECT THIS CLOSES. Receipt JSONs are stored in git as LF and checked out as CRLF on
+    Windows, and every `receipts_sha256` in this corpus was recorded from a Windows working
+    tree — so the pinned hashes are CRLF hashes. On Linux the same committed bytes hash
+    differently, the cross-directory branch below finds no match, the receipt reports as
+    `missing`, and the document is silently DROPPED from the drift guard.
+
+    That is not hypothetical and it is not new. `.gitattributes` carries a note about the
+    identical bug hitting `styxx/centroids/*.json` — "the pin was a CRLF-rendered hash, so the
+    LF Linux CI checkout failed to verify" — fixed there with `-text` and nowhere else. It
+    recurred here, and it was found when CI went red on a document that passes on Windows.
+
+    A receipt is a JSON document. Its meaning does not depend on its line endings, so a hash
+    that does is pinning the wrong thing: it makes a certificate platform-dependent, which
+    defeats the whole promise that anyone can re-run it. This compares the raw bytes first and
+    falls back to both newline normalisations.
+
+    DISCLOSED WEAKENING: two files differing ONLY in line endings now resolve as the same
+    receipt. That is intended — they carry identical JSON — but it does mean the sha no longer
+    certifies byte-identity, only content-identity-modulo-newlines. The stricter alternative is
+    to re-record every certificate's hashes from normalised bytes, which is a corpus migration
+    and needs its own preregistration.
+    """
+    if hashlib.sha256(raw).hexdigest() == recorded:
+        return True
+    lf = raw.replace(b"\r\n", b"\n")
+    if hashlib.sha256(lf).hexdigest() == recorded:
+        return True
+    return hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest() == recorded
+
+
 def _resolve_receipts(cert_path: Path, cert: dict,
                       search_root: Path | None = None) -> tuple[list[Path], list[str], list[str]]:
     """Receipt filenames recorded in the cert, resolved to real files.
 
     Resolution order: (1) next to the doc — the common case; (2) if absent there, search
-    ``search_root`` for a file of that name whose sha256 MATCHES the recorded one. Step 2 is
-    strictly stricter than location-trust: a same-named file only resolves if its content is
-    byte-identical to what was certified. Cross-directory receipts (a synthesis citing arcs
-    from several folders) previously reported as ``missing``, which re-certified the document
-    against a crippled receipt set and produced spurious OATH-FAILED verdicts on documents
-    whose committed certificates are HELD.
+    ``search_root`` for a file of that name whose sha256 matches the recorded one, on any
+    platform's line endings (see ``_receipt_sha_matches``). Step 2 is stricter than
+    location-trust: a same-named file only resolves if its CONTENT is what was certified.
+    Cross-directory receipts (a synthesis citing arcs from several folders) previously reported
+    as ``missing``, which re-certified the document against a crippled receipt set and produced
+    spurious OATH-FAILED verdicts on documents whose committed certificates are HELD.
 
     Returns (existing_paths, missing_names, sha_drifted_names).
     """
@@ -69,7 +102,7 @@ def _resolve_receipts(cert_path: Path, cert: dict,
     for name, sha in cert.get("receipts_sha256", {}).items():
         rp = cert_path.parent / name
         if rp.exists():
-            if hashlib.sha256(rp.read_bytes()).hexdigest() != sha:
+            if not _receipt_sha_matches(rp.read_bytes(), sha):
                 drift.append(name)
             paths.append(rp)
             continue
@@ -77,7 +110,7 @@ def _resolve_receipts(cert_path: Path, cert: dict,
         if search_root is not None:
             for cand in search_root.rglob(name):
                 try:
-                    if hashlib.sha256(cand.read_bytes()).hexdigest() == sha:
+                    if _receipt_sha_matches(cand.read_bytes(), sha):
                         found = cand
                         break
                 except OSError:

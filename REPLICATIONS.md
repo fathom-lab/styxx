@@ -30,21 +30,37 @@ audit does **not** come back clean, and the honest bar is that you reproduce the
 exceptions rather than zero:
 
 ```
-corpus papers: 179 certificates | HELD 177  FAILED 2  unresolved 0  verdict-drift 1  receipt-drift 0
+corpus papers: 183 certificates | HELD 179  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0
   [OATH-FAILED] verdict-CHANGED  FINDING_behavioral_sycophancy_blackbox_2026_06_09.md
+  [OATH-FAILED]  PREREG_oath_v12_formula_constant_2026_08_26.md
   [OATH-FAILED]  RECON_oath_external_reach_2026_08_26.md
+  [OATH-FAILED]  SYNTHESIS_mention_and_use_2026_08_26.md
 ```
 
-The first is a real drift, found on 2026-08-26 and recorded in `KNOWN_VERDICT_DRIFT` in
-`tests/test_certificate_reproduces.py` with its diagnosis: line 13 of that FINDING is truncated
-mid-sentence, so a dangling `4` lost the vocabulary that bound it to `n_nogate`. It was invisible
-for months because the guard test resolved receipts only next to the certificate, and that
-document cites two from another folder — one of 36 certificates the guard was skipping. Repairing
-a published document is its own cycle; the entry exists so it cannot be forgotten.
+**One is a real drift.** `FINDING_behavioral_sycophancy_blackbox` is recorded in
+`KNOWN_VERDICT_DRIFT` in `tests/test_certificate_reproduces.py` with its diagnosis: line 13 of
+that FINDING is truncated mid-sentence, so a dangling `4` lost the vocabulary that bound it to
+`n_nogate`. It was invisible for months because the guard resolved receipts only next to the
+certificate, and that document cites two from another folder — one of 36 certificates the guard
+was skipping. Repairing a published document is its own cycle; the entry exists so it cannot be
+forgotten.
 
-The second is committed as `OATH-FAILED` on purpose and is not a drift: it is the RECON reporting
-that the verifier does not transfer outside this lab, and it is accused on the tokens it quotes
-as examples of false accusations. See `papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md`.
+**Three are committed `OATH-FAILED` on purpose, and each is accused on the example it cites.**
+The RECON reports that the verifier does not transfer outside this lab and is accused on the
+tokens it quotes as false accusations. The SYNTHESIS reports that four instruments cannot tell a
+mention from a use, and is accused on the digits of the LaTeX formula it quotes as the specimen.
+The v0.12 PREREG proposes to close that formula case and is a member of the class it proposes to
+close — with a pre-committed transition saying that when the clause lands, its own verdict and
+the SYNTHESIS's must both flip to `OATH-HELD`, or the cycle under-reached. All three were
+published failing rather than reworded until they passed.
+
+**A note for anyone replicating on Linux.** Receipt hashes in this corpus were recorded from a
+Windows working tree, so they are CRLF hashes, while git stores and Linux checks out LF. Until
+2026-08-26 that meant cross-directory receipts silently failed to resolve on Linux and their
+documents were dropped from the drift guard — CI reported a document "repaired" when it had
+merely become invisible. `_resolve_receipts` now compares content modulo line endings, so the
+audit gives the same answer on either platform. If you see a different count from the block
+above, that is a divergence worth filing.
 
 Both are stated here because a replicator who runs the advertised command and gets an unexplained
 failure has been handed a divergence that is really our undisclosed known state — which would
