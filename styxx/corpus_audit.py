@@ -106,19 +106,39 @@ def _resolve_receipts(cert_path: Path, cert: dict,
                 drift.append(name)
             paths.append(rp)
             continue
-        found = None
+        found, candidates = None, []
         if search_root is not None:
             for cand in search_root.rglob(name):
                 try:
                     if _receipt_sha_matches(cand.read_bytes(), sha):
                         found = cand
                         break
+                    candidates.append(cand)
                 except OSError:
                     continue
-        if found is None:
-            missing.append(name)
-        else:
+        if found is not None:
             paths.append(found)
+        else:
+            # PRESENT-BUT-CHANGED still reports as `missing`, and that is DELIBERATE.
+            #
+            # It is tempting to resolve a lone same-named candidate and flag it as drift, so the
+            # document stays examinable instead of vanishing from the guard — a version of this
+            # function did exactly that for about ten minutes. It is wrong. `tests/test_corpus_audit.py`
+            # pins the reason: "a same-named file with DIFFERENT content must NOT satisfy the
+            # receipt — the search is stricter than location-trust, not looser." This repository
+            # is full of files called `*_result.json`, and resolving one whose content does not
+            # match would certify a document against ANOTHER EXPERIMENT'S data while reporting
+            # success. That is a worse failure than invisibility, and it is the failure this
+            # whole programme exists to prevent.
+            #
+            # The visibility problem is real and stays OPEN rather than being traded for that:
+            # a caller cannot currently distinguish "no file of that name anywhere" from "a file
+            # exists and its content has changed", so `corpus_audit` prints `receipt-drift 0`
+            # over a genuinely changed receipt. Live instance: CAPSTONE_universal_mind's
+            # `mind_v0_validation.json`. The fix is a REPORTING change — a fourth channel naming
+            # present-but-changed — not a resolution change, and it is owed its own cycle.
+            # Catalogued as VP-C in RECON_vacuous_pass_2026_08_27.md.
+            missing.append(name)
     return paths, missing, drift
 
 

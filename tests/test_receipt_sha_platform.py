@@ -86,7 +86,17 @@ def test_a_genuinely_absent_receipt_is_still_missing(tmp_path):
 
 
 def test_a_same_named_receipt_with_different_content_does_not_resolve(tmp_path):
-    """Cross-directory resolution is content-checked, and stays so."""
+    """Cross-directory resolution is content-checked, and stays so.
+
+    This assertion was briefly reversed and then restored, and the round trip is worth recording.
+    A present-but-changed receipt reports as `missing`, which means the document drops out of the
+    drift guard — the shape catalogued as VP-C. The obvious repair is to resolve the lone
+    candidate and flag it as drift, and it is wrong: `tests/test_corpus_audit.py` pins why, and
+    this repository is full of files called `*_result.json`. Certifying a document against
+    another experiment's data while reporting success is a worse failure than invisibility.
+
+    The visibility problem stays open and is owed a REPORTING fix, not a resolution one.
+    """
     here, there = tmp_path / "a", tmp_path / "b"
     here.mkdir()
     there.mkdir()
@@ -94,5 +104,6 @@ def test_a_same_named_receipt_with_different_content_does_not_resolve(tmp_path):
     cert = {"receipts_sha256": {"r.json": SHA_LF}}
     cp = here / "DOC.certificate.json"
     cp.write_text(json.dumps(cert), encoding="utf-8")
-    _paths, missing, _drift = _resolve_receipts(cp, cert, tmp_path)
-    assert missing == ["r.json"]
+    _paths, missing, drift = _resolve_receipts(cp, cert, tmp_path)
+    assert missing == ["r.json"], "a changed receipt must never pass as the certified one"
+    assert not drift

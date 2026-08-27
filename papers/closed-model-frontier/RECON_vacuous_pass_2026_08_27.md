@@ -63,6 +63,31 @@ full, confident result" — but SP-6 as instrumented looks at a function handed 
 all four cases here nothing is handed an empty input; the population is *made* empty by a filter
 that had a good reason, and the check downstream is structurally incapable of noticing.
 
+## A fifth instance, found while writing this — and the repair that was refused
+
+`CAPSTONE_universal_mind_2026_06_10` cites `mind_v0_validation.json`. That file is present in the
+tree and its content differs from what was certified. It is not a newline artifact. It is genuine
+receipt drift, and the audit reports `receipt-drift 0`.
+
+The reason is VP-C's shape exactly: the cross-directory branch of `_resolve_receipts` accepts only
+a sha match and otherwise falls through to `missing`, so a changed receipt is reclassified as an
+absent one and the whole document drops out of the drift guard. A guarantee prints a zero over it.
+
+**The obvious repair was written, and then reverted.** Resolving the lone same-named candidate and
+flagging it as drift keeps the document examinable and makes the drift visible — and it is wrong.
+`tests/test_corpus_audit.py` already pins why, in a sentence written long before this note: *a
+same-named file with DIFFERENT content must NOT satisfy the receipt — the search is stricter than
+location-trust, not looser.* This repository is full of files called `*_result.json`. Resolving one
+whose content does not match would certify a document against another experiment's data **while
+reporting success**, which is a worse failure than invisibility and is the precise failure this
+programme exists to prevent.
+
+So the visibility defect stays open rather than being traded for a silent-pass of its own. The fix
+it actually needs is a REPORTING change — a channel that distinguishes *no file of that name
+anywhere* from *a file exists and has changed* — not a resolution change, and it is owed its own
+cycle. The refusal is recorded here because the tempting repair took ten minutes to write and the
+reason it is wrong was already in the repository.
+
 ## What this does not show
 
 - **Not that `styxx.absence` is broken.** Its recall on the SILENT-PASS benchmark is published,
