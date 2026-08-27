@@ -107,3 +107,88 @@ def test_a_same_named_receipt_with_different_content_does_not_resolve(tmp_path):
     _paths, missing, drift = _resolve_receipts(cp, cert, tmp_path)
     assert missing == ["r.json"], "a changed receipt must never pass as the certified one"
     assert not drift
+
+
+# --------------------------- a partial receipt set must not print like a clean one (VP-C fix)
+
+def _cert_with(tmp_path, receipts: dict):
+    here = tmp_path / "arcA"
+    here.mkdir(exist_ok=True)
+    cp = here / "DOC.certificate.json"
+    cp.write_text(json.dumps({"receipts_sha256": receipts}), encoding="utf-8")
+    return cp
+
+
+def test_classify_missing_names_absent_versus_changed(tmp_path):
+    """`_resolve_receipts` refuses to resolve a changed receipt, correctly. This is how a caller
+    finds out WHY something did not resolve, which is what was missing."""
+    from styxx.corpus_audit import classify_missing
+
+    there = tmp_path / "arcB"
+    there.mkdir()
+    (there / "changed.json").write_bytes(CONTENT_LF.replace(b"27", b"99"))
+    cert = {"changed.json": SHA_LF, "absent.json": SHA_LF}
+    cp = _cert_with(tmp_path, cert)
+
+    detail = classify_missing(cp, {"receipts_sha256": cert},
+                              ["changed.json", "absent.json"], tmp_path)
+    assert detail["changed.json"]["status"] == "changed"
+    assert detail["absent.json"]["status"] == "absent"
+    assert detail["changed.json"]["candidates"], "a changed receipt names where it was found"
+
+
+def test_several_non_matching_candidates_are_ambiguous_not_changed(tmp_path):
+    from styxx.corpus_audit import classify_missing
+
+    for i, sub in enumerate(("arcB", "arcC")):
+        d = tmp_path / sub
+        d.mkdir()
+        (d / "r.json").write_bytes(CONTENT_LF.replace(b"27", str(90 + i).encode()))
+    cert = {"r.json": SHA_LF}
+    cp = _cert_with(tmp_path, cert)
+    detail = classify_missing(cp, {"receipts_sha256": cert}, ["r.json"], tmp_path)
+    assert detail["r.json"]["status"] == "ambiguous"
+
+
+def test_a_document_certified_on_a_partial_receipt_set_is_flagged(tmp_path):
+    """The defect this closes: a verdict computed from 11 of 12 receipts printed exactly like a
+    verdict computed from 12 of 12."""
+    from styxx.corpus_audit import audit_document
+
+    here = tmp_path / "arcA"
+    here.mkdir()
+    (here / "good.json").write_bytes(b'{"recall": 0.82}')
+    there = tmp_path / "arcB"
+    there.mkdir()
+    (there / "gone.json").write_bytes(CONTENT_LF.replace(b"27", b"99"))
+    (here / "DOC.md").write_text("# t\n\nThe recall reached 0.82 on the held set.\n",
+                                 encoding="utf-8")
+    cp = here / "DOC.certificate.json"
+    cp.write_text(json.dumps({
+        "verdict": "OATH-HELD",
+        "receipts_sha256": {"good.json": hashlib.sha256(b'{"recall": 0.82}').hexdigest(),
+                            "gone.json": SHA_LF}}), encoding="utf-8")
+
+    rec = audit_document(cp, search_root=tmp_path)
+    assert rec["live_verdict"], "it still gets certified on what resolved"
+    assert rec["incomplete_receipts"] is True, "and it must say the evidence was partial"
+    assert rec["receipt_changed"] == ["gone.json"]
+    assert rec["missing_detail"]["gone.json"]["status"] == "changed"
+
+
+def test_a_complete_receipt_set_is_not_flagged(tmp_path):
+    from styxx.corpus_audit import audit_document
+
+    here = tmp_path / "arcA"
+    here.mkdir()
+    (here / "good.json").write_bytes(b'{"recall": 0.82}')
+    (here / "DOC.md").write_text("# t\n\nThe recall reached 0.82 on the held set.\n",
+                                 encoding="utf-8")
+    cp = here / "DOC.certificate.json"
+    cp.write_text(json.dumps({
+        "verdict": "OATH-HELD",
+        "receipts_sha256": {"good.json": hashlib.sha256(b'{"recall": 0.82}').hexdigest()}}),
+        encoding="utf-8")
+    rec = audit_document(cp, search_root=tmp_path)
+    assert rec["incomplete_receipts"] is False
+    assert rec["receipt_changed"] == []

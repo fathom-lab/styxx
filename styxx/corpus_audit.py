@@ -131,15 +131,52 @@ def _resolve_receipts(cert_path: Path, cert: dict,
             # success. That is a worse failure than invisibility, and it is the failure this
             # whole programme exists to prevent.
             #
-            # The visibility problem is real and stays OPEN rather than being traded for that:
-            # a caller cannot currently distinguish "no file of that name anywhere" from "a file
-            # exists and its content has changed", so `corpus_audit` prints `receipt-drift 0`
-            # over a genuinely changed receipt. Live instance: CAPSTONE_universal_mind's
-            # `mind_v0_validation.json`. The fix is a REPORTING change — a fourth channel naming
-            # present-but-changed — not a resolution change, and it is owed its own cycle.
+            # The visibility problem it created was real, and it was fixed WITHOUT touching this
+            # strictness: `classify_missing` below says whether an unresolved receipt is genuinely
+            # absent or present-and-changed, and `audit_document` reports `incomplete_receipts`,
+            # so a verdict computed from a partial receipt set can no longer print like a clean
+            # one. A reporting channel, not a resolution change. The live instance that motivated
+            # it: CAPSTONE_universal_mind's `mind_v0_validation.json`, present and changed.
             # Catalogued as VP-C in RECON_vacuous_pass_2026_08_27.md.
             missing.append(name)
     return paths, missing, drift
+
+
+def classify_missing(cert_path: Path, cert: dict, missing: list,
+                     search_root: Path | None = None) -> dict:
+    """Why is each unresolved receipt unresolved — genuinely absent, or present and CHANGED?
+
+    `_resolve_receipts` deliberately refuses to resolve a same-named file whose content differs
+    from what was certified (see the comment there, and
+    `tests/test_corpus_audit.py::test_cross_directory_wrong_sha_does_not_resolve`). That
+    strictness is correct and stays. What was missing is the ability to SAY WHY, so a changed
+    receipt and an absent one were indistinguishable to every caller — which let the audit print
+    `receipt-drift 0` over a receipt sitting in the tree with different content.
+
+    This is the reporting channel, not a resolution change. Nothing here decides what gets
+    certified; it decides what a reader is told.
+
+      absent      no file of that name under the search root
+      changed     exactly one candidate exists and its content is not what was certified
+      ambiguous   several candidates exist, none matching — no non-arbitrary choice
+    """
+    out = {}
+    for name in missing:
+        cands = []
+        if search_root is not None:
+            cands = [p for p in search_root.rglob(name) if p.is_file()]
+        local = cert_path.parent / name
+        if local.exists() and local not in cands:
+            cands.append(local)
+        if not cands:
+            status = "absent"
+        elif len(cands) == 1:
+            status = "changed"
+        else:
+            status = "ambiguous"
+        out[name] = {"status": status,
+                     "candidates": [str(p) for p in cands[:4]]}
+    return out
 
 
 def mutate_token(tok: str, rng: random.Random) -> str:
@@ -169,6 +206,13 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
     rec["receipt_drift"] = drift
     rec["missing_receipts"] = missing
+    # WHY each one is missing, and whether this verdict is being computed from partial evidence.
+    # A document certified against 11 of its 12 receipts used to print exactly like one certified
+    # against all 12; `incomplete_receipts` is what stops that.
+    rec["missing_detail"] = classify_missing(cert_path, cert, missing, search_root)
+    rec["incomplete_receipts"] = bool(missing) and bool(receipts)
+    rec["receipt_changed"] = sorted(n for n, d in rec["missing_detail"].items()
+                                    if d["status"] == "changed")
     if not receipts:
         rec.update(status="NO_RECEIPTS", live_verdict=None)
         return rec
@@ -223,8 +267,13 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     unresolved = sum(1 for d in docs if d.get("status") in ("MISSING_DOC", "NO_RECEIPTS"))
     changed = sum(1 for d in docs if d.get("verdict_changed"))
     drifted = sum(1 for d in docs if d.get("receipt_drift"))
+    # A verdict computed from a partial receipt set is not a clean verdict, and until these two
+    # counters existed it printed like one.
+    incomplete = sum(1 for d in docs if d.get("incomplete_receipts"))
+    changed_receipts = sum(1 for d in docs if d.get("receipt_changed"))
     summary = {"root": str(root), "n_certificates": len(docs), "held": held, "failed": failed,
-               "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted}
+               "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted,
+               "incomplete_receipts": incomplete, "receipt_changed": changed_receipts}
     if tamper:
         tot = {"n_mutants": 0, "caught": 0, "false_verify": 0, "abstain_degrade": 0}
         for d in docs:
@@ -248,12 +297,18 @@ def main(argv=None) -> int:
     s = report["summary"]
     print(f"corpus {s['root']}: {s['n_certificates']} certificates | "
           f"HELD {s['held']}  FAILED {s['failed']}  unresolved {s['unresolved']}  "
-          f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}")
+          f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}  "
+          f"incomplete {s['incomplete_receipts']}  receipt-changed {s['receipt_changed']}")
     for d in report["documents"]:
-        if d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed") or d.get("receipt_drift"):
+        if (d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
+                or d.get("receipt_drift") or d.get("incomplete_receipts")):
             tag = d.get("live_verdict") or d.get("status")
             extra = " receipt-drift" if d.get("receipt_drift") else ""
             extra += " verdict-CHANGED" if d.get("verdict_changed") else ""
+            if d.get("incomplete_receipts"):
+                det = d.get("missing_detail", {})
+                why = ",".join(sorted({v["status"] for v in det.values()})) or "?"
+                extra += f" INCOMPLETE-RECEIPTS({why})"
             print(f"  [{tag}]{extra}  {d['document']}")
     if a.tamper and "tamper" in s:
         t = s["tamper"]
