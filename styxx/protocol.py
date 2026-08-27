@@ -167,6 +167,7 @@ class Verdict:
     smoke: bool = False
     power_basis: dict = field(default_factory=dict)      # gate -> how its bar was derived
     undeclared_power_gates: list = field(default_factory=list)
+    vacuous_gates: list = field(default_factory=list)    # gates no outcome row depends on
     metric_paths: dict = field(default_factory=dict)     # gate -> the dotted path it read
 
 
@@ -183,8 +184,10 @@ class Experiment:
     """One preregistered experiment, scored only on the frozen document's terms."""
 
     def __init__(self, prereg: str | Path, repo_root: str | Path | None = None,
-                 require_power_basis: bool = False):
+                 require_power_basis: bool = False,
+                 require_nonvacuous_gates: bool = False):
         self.require_power_basis = require_power_basis
+        self.require_nonvacuous_gates = require_nonvacuous_gates
         self.prereg = Path(prereg)
         self.repo_root = Path(repo_root) if repo_root else self.prereg.resolve().parent
         if not self.prereg.exists():
@@ -276,6 +279,33 @@ class Experiment:
                 f"\"none — exploratory\". Three bars in this program were set without checking "
                 f"whether any instrument could clear them (b37 G2, b48 G2, C5 G1); each was "
                 f"written up and each recurred. An undeclared bar is now a refusal, not a note.")
+
+        # VACUITY. A gate no outcome row mentions is computed, hashed, displayed and scored —
+        # and no verdict depends on it. It is decoration wearing a bar's clothes, and this
+        # programme has shipped one: the v0.11 drafting record names a BLOCKER where "the
+        # warrant gate as first drafted could not fail". Our own preregs say a leg that cannot
+        # fail must not gate; nothing enforced it.
+        #
+        # Adopted from `honest-signal` (github.com/alexcard3/honest-signal), whose preregistration
+        # firewall refuses a merge when the kill criterion is vacuous. The frozen prior-art survey
+        # (RESULT_oath_prior_art_survey_2026_08_26.md) found that tool occupying the mechanism
+        # this lab thought was its own, and this check is the half we did not have. Credit is the
+        # useful response to being second, not priority.
+        #
+        # Deliberately NARROW: vacuous means "no outcome row's `when` clause names this gate".
+        # Single-polarity mention is NOT flagged — a gate appearing once as true, with a wildcard
+        # row catching false, genuinely decides the verdict, and the totality check already
+        # refuses the case where nothing catches it. An unfailable BAR (`>= 0.0` on a
+        # probability) needs domain knowledge this parser does not have and is not attempted;
+        # that residual is disclosed rather than silently implied to be covered.
+        _mentioned = {n for row in spec["outcomes"] for n in (row.get("when") or {})}
+        self.vacuous_gates = sorted(n for n in spec["gates"] if n not in _mentioned)
+        if self.require_nonvacuous_gates and self.vacuous_gates:
+            raise GateSpecError(
+                f"gates no outcome row depends on: {self.vacuous_gates}. Such a gate is scored "
+                f"and reported while no verdict turns on it — a leg that cannot fail must not "
+                f"gate. Either give it an outcome row, or stop calling it a gate and record it "
+                f"as an asserted invariant, which is what it is.")
 
     def check_metrics(self, result: dict) -> dict:
         """Resolve every gate's metric path against a candidate result WITHOUT scoring.
@@ -430,6 +460,7 @@ class Experiment:
                            prereg_commit=self.prereg_commit, smoke=True,
                            power_basis=dict(self.power_basis),
                            undeclared_power_gates=list(self.undeclared_power_gates),
+                           vacuous_gates=list(self.vacuous_gates),
                            metric_paths=dict(self.metric_paths))
         fired: dict[str, bool] = {}
         for name, g in self.spec["gates"].items():
@@ -456,6 +487,7 @@ class Experiment:
                                prereg_commit=self.prereg_commit,
                                power_basis=dict(self.power_basis),
                                undeclared_power_gates=list(self.undeclared_power_gates),
+                               vacuous_gates=list(self.vacuous_gates),
                                metric_paths=dict(self.metric_paths))
         raise GateSpecError(
             f"no outcome row matches gates {fired} — the frozen table is not total; "

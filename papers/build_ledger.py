@@ -23,8 +23,11 @@ negatives = [c for c in cy if re.search(NEG, c.get("verdict", ""))]
 # (tests/test_ledger_classifier.py). The regeneration guard in tests/test_ledger.py proves this
 # file agrees with what it produces — never that the classification is right, which is how the
 # refusal list came to print `SHIPPED`.
+from ledger_verdicts import adjudication_coverage as _coverage  # noqa: E402
 from ledger_verdicts import is_refusal as _is_refusal          # noqa: E402
 from ledger_verdicts import refusal_tokens as _refusal_tokens  # noqa: E402
+
+_cov = _coverage(cy)
 
 invalids = [c for c in cy if _is_refusal(c.get("verdict", ""))]
 mention_only = [c for c in cy if "INVALID__" in (c.get("verdict") or "")
@@ -98,7 +101,12 @@ emit("verdict field, so a cycle counts as a loss whenever its commentary happens
 emit("of those words — the same defect that put `SHIPPED` in the refusal list below. Scoping the")
 emit("identical keywords to the verdict's opening clause instead yields far fewer. Neither")
 emit("number is right: the field is prose, and no keyword test over prose is a classifier. The")
-emit("honest fix is a machine-readable verdict token per cycle, which is owed and not yet done.")
+emit("honest fix is a machine-readable verdict token per cycle. That mechanism now exists —")
+emit("`verdict_token` on a cycle record, carrying verbatim the string the scorer emitted — and")
+emit(f"**{_cov['with_verdict_token']} of {_cov['cycles']}** cycles carry one. Until those two")
+emit("numbers are equal the row above stays a keyword count, and this line is how a reader can")
+emit("tell which it is. An unadjudicated cycle is reported as unadjudicated rather than guessed:")
+emit("defaulting unknown tokens either way would flatter, in one direction or the other.")
 emit("The figure above is left standing rather than quietly restated because it has already been")
 emit("cited in a frozen preregistration, which can never be edited; moving it here without")
 emit("adjudicating all 163 cycles would replace a disclosed error with an undisclosed one.")

@@ -58,6 +58,78 @@ def is_refusal(v: str) -> bool:
     return lead.startswith("INVALID__") or bool(_ANNOUNCES.match(verdict_head(v)))
 
 
+# ---------------------------------------------------------------- the machine-readable token
+#
+# THE STANDING DEFECT this exists to close. The flagship negatives ratio is produced by matching
+# a keyword list against each cycle's free-prose `verdict` field, so a cycle counts as a loss
+# whenever its commentary happens to contain one of those words. Head-scoping the identical
+# keywords gives a very different number. NEITHER is right: the field is prose, and no keyword
+# test over prose is a classifier — which is the same mention-versus-use defect documented in
+# four instruments in `SYNTHESIS_mention_and_use_2026_08_26.md`.
+#
+# The fix is not a better regex. It is a `verdict_token` field on each cycle record carrying the
+# verdict the SCORER emitted, verbatim — the string `styxx.protocol.score()` already produces
+# from a frozen outcome table. Then the ratio is a count of tokens rather than a guess about
+# prose.
+#
+# This is deliberately INCREMENTAL and deliberately refuses to guess. `classify` returns None for
+# a token it does not recognise, and the ledger reports unadjudicated cycles as unadjudicated.
+# A classifier that silently defaulted unknown tokens to "positive" would flatter; one that
+# defaulted them to "negative" would flatter differently. Unknown is a third answer and it is the
+# honest one until a human adjudicates.
+
+# Verdict-token families, by leading prefix. Small, explicit, and extended only by adjudication.
+_NEGATIVE_PREFIXES = ("INVALID__", "REFUSED__", "NULL__", "CLOSED_NEGATIVE", "NO_", "NOT_",
+                      "BLIND", "WRONG", "OVERTURN", "RECALL", "QUARANTIN", "INCOMPLETE",
+                      "DO_NOT_SHIP", "MALFORMED", "VOID", "UNDERREACH", "OVERREACH")
+_POSITIVE_PREFIXES = ("SURVIVED", "SURVIVES", "LICENSED", "DOOR_OPENS", "SHIPPED", "HELD",
+                      "CONFIRMED", "BUILT", "PRODUCT", "DONE", "CERTIFIED", "REWRITTEN")
+
+
+def token_of(record: dict):
+    """The cycle's machine-readable verdict token, or None if it has not been adjudicated.
+
+    A cycle without one is not assumed to be anything. That is the whole point.
+    """
+    t = (record or {}).get("verdict_token")
+    return t.strip() if isinstance(t, str) and t.strip() else None
+
+
+def classify(token: str):
+    """True (negative), False (positive), or **None** — unrecognised, needing adjudication."""
+    if not token:
+        return None
+    t = token.strip().upper()
+    for p in _NEGATIVE_PREFIXES:
+        if t.startswith(p):
+            return True
+    for p in _POSITIVE_PREFIXES:
+        if t.startswith(p):
+            return False
+    return None
+
+
+def adjudication_coverage(records) -> dict:
+    """How much of the record is machine-readable, and how much is still prose.
+
+    Published rather than quietly averaged, so the ratio's own maturity is visible next to it.
+    """
+    total = len(records)
+    tokens = [token_of(r) for r in records]
+    have = [t for t in tokens if t]
+    calls = [classify(t) for t in have]
+    return {
+        "cycles": total,
+        "with_verdict_token": len(have),
+        "without_verdict_token": total - len(have),
+        "negative": sum(1 for c in calls if c is True),
+        "positive": sum(1 for c in calls if c is False),
+        "token_unrecognised": sum(1 for c in calls if c is None),
+        "ratio_is_computable": total > 0 and len(have) == total
+        and all(c is not None for c in calls),
+    }
+
+
 def refusal_tokens(v: str) -> str:
     """The actual `INVALID__*` token(s), for display — never the verdict's first word.
 

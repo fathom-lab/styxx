@@ -25,7 +25,12 @@ verdict field, so a cycle counts as a loss whenever its commentary happens to co
 of those words — the same defect that put `SHIPPED` in the refusal list below. Scoping the
 identical keywords to the verdict's opening clause instead yields far fewer. Neither
 number is right: the field is prose, and no keyword test over prose is a classifier. The
-honest fix is a machine-readable verdict token per cycle, which is owed and not yet done.
+honest fix is a machine-readable verdict token per cycle. That mechanism now exists —
+`verdict_token` on a cycle record, carrying verbatim the string the scorer emitted — and
+**0 of 163** cycles carry one. Until those two
+numbers are equal the row above stays a keyword count, and this line is how a reader can
+tell which it is. An unadjudicated cycle is reported as unadjudicated rather than guessed:
+defaulting unknown tokens either way would flatter, in one direction or the other.
 The figure above is left standing rather than quietly restated because it has already been
 cited in a frozen preregistration, which can never be edited; moving it here without
 adjudicating all 163 cycles would replace a disclosed error with an undisclosed one.
