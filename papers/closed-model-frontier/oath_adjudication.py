@@ -136,9 +136,9 @@ def build() -> dict:
         "packets": packets,
     }
     PACKETS.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n",
-                       encoding="utf-8", newline="\n")
+                       encoding="utf-8")
     KEY.write_text(json.dumps(key, indent=1, ensure_ascii=False) + "\n",
-                   encoding="utf-8", newline="\n")
+                   encoding="utf-8")
     print(f"accused {len(accused)}  abstain-decoys {len(dec_a)}  verified-decoys {len(dec_v)}")
     print(f"-> {PACKETS.name} ({len(packets)} packets)  /  {KEY.name} (withheld)")
     return payload
@@ -205,7 +205,7 @@ def score(judgements_path: Path) -> dict:
         "per_arm_detail": arms,
     }
     RESULT.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n",
-                      encoding="utf-8", newline="\n")
+                      encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items() if k != "per_arm_detail"}, indent=1))
     return out
 

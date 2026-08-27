@@ -493,7 +493,7 @@ def main() -> int:
             "from this pair."),
     }
 
-    with LEDGER.open("w", encoding="utf-8", newline="\n") as fh:
+    with LEDGER.open("w", encoding="utf-8") as fh:
         for r in certified:
             for t in r["tokens"]:
                 fh.write(json.dumps({"repo": r["repo"], "sha": r["sha"], **t},
@@ -552,7 +552,7 @@ def main() -> int:
             "adjudication arm, and until it runs no accusation here may be called false."),
     }
     MANIFEST.write_text(json.dumps(manifest, indent=1, ensure_ascii=False) + "\n",
-                        encoding="utf-8", newline="\n")
+                        encoding="utf-8")
 
     print()
     print(f"external : {len(certified)} docs  {total} tokens  "
