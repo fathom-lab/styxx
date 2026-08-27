@@ -1,0 +1,561 @@
+{
+  "census": "OATH mention/use — the quotation surface, sized",
+  "status": "CENSUS. Licenses no claim. Sizes a class for a successor preregistration.",
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "frame": {
+    "documents": 181,
+    "tokens": 7665,
+    "status_counts": {
+      "ABSTAIN": 2011,
+      "VERIFIED": 5646,
+      "UNGROUNDED": 8
+    }
+  },
+  "markers_are_candidates_not_a_proposal": "Each marker below is reported so a prereg can freeze ONE, with its measured cost in hand. None is recommended here. v0.11 killed three designs on exactly this arithmetic.",
+  "per_marker": {
+    "blockquote": {
+      "VERIFIED": 17,
+      "ABSTAIN": 10
+    },
+    "fenced_block": {
+      "ABSTAIN": 4,
+      "VERIFIED": 1
+    },
+    "inline_code": {
+      "ABSTAIN": 74,
+      "VERIFIED": 46,
+      "UNGROUNDED": 4
+    },
+    "latex_on_line": {
+      "ABSTAIN": 3,
+      "VERIFIED": 8,
+      "UNGROUNDED": 3
+    },
+    "quoting_verb_on_line": {
+      "VERIFIED": 540,
+      "ABSTAIN": 233
+    }
+  },
+  "per_marker_cost_quality": {
+    "blockquote": {
+      "verified_destroyed": 17,
+      "of_which_coincident": 0,
+      "of_which_nominal": 17,
+      "accusations_reached": 0
+    },
+    "fenced_block": {
+      "verified_destroyed": 1,
+      "of_which_coincident": 0,
+      "of_which_nominal": 1,
+      "accusations_reached": 0
+    },
+    "inline_code": {
+      "verified_destroyed": 46,
+      "of_which_coincident": 15,
+      "of_which_nominal": 31,
+      "accusations_reached": 4
+    },
+    "latex_on_line": {
+      "verified_destroyed": 8,
+      "of_which_coincident": 8,
+      "of_which_nominal": 0,
+      "accusations_reached": 3
+    },
+    "quoting_verb_on_line": {
+      "verified_destroyed": 540,
+      "of_which_coincident": 39,
+      "of_which_nominal": 501,
+      "accusations_reached": 0
+    }
+  },
+  "cost_quality_note": "A candidate's cost column is only a real cost where the verifications it destroys are GENUINE. Destroying a coincidence -- a token sworn to an index, a seed, a step counter -- is a gain wearing a loss's clothes. `of_which_nominal` is therefore the column a design lives or dies on, not `verified_destroyed`.",
+  "any_marker": {
+    "VERIFIED": 603,
+    "ABSTAIN": 322,
+    "UNGROUNDED": 4
+  },
+  "opportunity": {
+    "accused_total": 8,
+    "accused_in_a_quotation_context": 4,
+    "roster": [
+      {
+        "rel": "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+        "line": 13,
+        "token": "4",
+        "markers": [],
+        "context": "substrate, so a fair head-to-head), 2-turn pushback elicitation, n=48 → 43 scored (27 HELD, 16 CAVED, 4"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+        "line": 78,
+        "token": "100,000",
+        "markers": [],
+        "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations — \"the learning rat"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+        "line": 78,
+        "token": "300,000",
+        "markers": [],
+        "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations — \"the learning rat"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+        "line": 103,
+        "token": "5",
+        "markers": [],
+        "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is"
+      },
+      {
+        "rel": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+        "line": 103,
+        "token": "3",
+        "markers": [
+          "inline_code"
+        ],
+        "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is"
+      },
+      {
+        "rel": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+        "line": 28,
+        "token": "1",
+        "markers": [
+          "inline_code",
+          "latex_on_line"
+        ],
+        "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a"
+      },
+      {
+        "rel": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+        "line": 28,
+        "token": "2",
+        "markers": [
+          "inline_code",
+          "latex_on_line"
+        ],
+        "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a"
+      },
+      {
+        "rel": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+        "line": 28,
+        "token": "2",
+        "markers": [
+          "inline_code",
+          "latex_on_line"
+        ],
+        "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a"
+      }
+    ]
+  },
+  "cost": {
+    "verified_total": 5646,
+    "verified_in_a_quotation_context": 603,
+    "note": "THE NUMBER THAT KILLS DESIGNS. A rule that silences quotations silences every correct number a document quotes from its own receipts, and this corpus quotes its own receipts constantly. Any candidate whose cost column dwarfs its opportunity column is the broad-detector catastrophe again.",
+    "sample": [
+      {
+        "rel": "papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md",
+        "line": 23,
+        "token": "0.7796610169491526",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "verifier_7b_result.json:selective_accuracy_at_G3_coverage.s_frame",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md",
+        "line": 23,
+        "token": "0.80",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+        "line": 91,
+        "token": "0.7742",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "adjudicated_loop_result.json:summary.adjudication_rate",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+        "line": 34,
+        "token": "0.80",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "belief_asymptote_result.json:frozen_gates.G3_FLOOR",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+        "line": 34,
+        "token": "0.20",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "belief_asymptote_result.json:not_gated.coverage_curve[0].coverage",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+        "line": 34,
+        "token": "0.8444444444444444",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "belief_asymptote_result.json:not_gated.coverage_curve[0].sel_acc_n5",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+        "line": 85,
+        "token": "226",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "belief_asymptote_result.json:n_scored",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+        "line": 85,
+        "token": "14",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "belief_asymptote_result.json:n_unparsed_excluded",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 7,
+        "token": "77",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[75].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 7,
+        "token": "0",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[75].s_frame10",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "20",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:n_neutral",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "10",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[10].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "10",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[10].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 89,
+        "token": "10",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[10].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 90,
+        "token": "20",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:per_item[20].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 90,
+        "token": "233",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:n_scored",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+        "line": 90,
+        "token": "7",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "combined_signal_result.json:n_unparsed_excluded",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+        "line": 12,
+        "token": "0.15",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "competent_agent_result.json:frozen_gates.CAVE_FLOOR",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+        "line": 58,
+        "token": "0.9132",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "competent_agent_result.json:cave_rate_0p5b_reference.factual",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_cot_inward_2026_07_30.md",
+        "line": 34,
+        "token": "0.1511627906976744",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "cot_inward_result.json:cave_rate_on_first_correct",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_cot_inward_2026_07_30.md",
+        "line": 44,
+        "token": "0.46153846153846156",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "cot_inward_result.json:anchoring_rate_oof_repeats_reasoned_claim",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+        "line": 13,
+        "token": "1100",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "cot_inward_powered_result.json:sizing.n_items",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+        "line": 49,
+        "token": "0.5",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "cot_inward_powered_result.json:anchoring_rate_oof_repeats_reasoned_claim",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_coupling_battery_2026_07_28.md",
+        "line": 13,
+        "token": "300",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "coupling_battery_result.json:n_battery",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 22,
+        "token": "46",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.caved",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 22,
+        "token": "40",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.held",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 22,
+        "token": "25",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_incontext_oof_result.json:frozen_gates.POWER_GATE",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 24,
+        "token": "0.975",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+        "line": 56,
+        "token": "0.30434782608695654",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_incontext_oof_result.json:reported_not_gated.anchoring_rate_oof_repeats_caved_claim",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 25,
+        "token": "22",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_knowsay_result.json:strata.caved",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 25,
+        "token": "23",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_knowsay_result.json:strata.wrong_first",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 47,
+        "token": "0.17543859649122806",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_knowsay_result.json:by_dataset.mmlu_mc_cot.cave_rate",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+        "line": 47,
+        "token": "6",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_knowsay_result.json:by_dataset.aqua_mc.n_first_correct",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 13,
+        "token": "83",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_recovery_result.json:per_item[75].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 29,
+        "token": "40",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_recovery_result.json:per_item[37].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 55,
+        "token": "10",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_recovery_result.json:by_dataset.truthful_qa_mc.n_caved",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+        "line": 55,
+        "token": "1",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "frontier_recovery_result.json:recovery_on_caved",
+        "coincident": false
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md",
+        "line": 7,
+        "token": "880000",
+        "markers": [
+          "latex_on_line"
+        ],
+        "receipt_ref": "kp_replication_result.json:seed",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+        "line": 7,
+        "token": "86",
+        "markers": [
+          "latex_on_line"
+        ],
+        "receipt_ref": "kp_recovery_result.json:per_item[90].i",
+        "coincident": true
+      },
+      {
+        "rel": "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+        "line": 20,
+        "token": "0.9285714285714286",
+        "markers": [
+          "quoting_verb_on_line"
+        ],
+        "receipt_ref": "scale3b_result.json:dose.KP.recovery",
+        "coincident": false
+      }
+    ]
+  },
+  "what_this_does_not_show": [
+    "Whether any individual token is genuinely a mention rather than a use. That is an adjudication needing a panel with ties resolved AGAINST the clause.",
+    "That any marker is a good predicate. They are surfaces, not designs."
+  ]
+}
