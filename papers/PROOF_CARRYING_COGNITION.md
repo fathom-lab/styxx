@@ -19,11 +19,50 @@ take on faith. Borrow the term from computer science: *proof-carrying code* ship
 machine-checkable proof of its own safety, so you need not trust the author. **Proof-carrying
 cognition is the same move for thought.**
 
-For the whole of history no mind has been able to prove its own sincerity to another. Humans cannot;
-we infer it, police it, and built every institution we have — law, contracts, audit, reputation — as
-a workaround for the unverifiability of minds. AI minds are the first that are readable from the
-outside. styxx is the instrument that turns that readability into a trust primitive: **the first time
-trust can be a measurement instead of a gamble.**
+No mind has been able to prove its own sincerity to another. Humans cannot; we infer it, police it,
+and built every institution we have — law, contracts, audit, reputation — as a workaround for the
+unverifiability of minds. AI minds are the first that are readable from the outside, and styxx is
+an attempt to turn that readability into a trust primitive.
+
+**This paragraph used to end "the first time trust can be a measurement instead of a gamble," and
+that claim is withdrawn.** A frozen prior-art protocol run on 2026-08-26
+(`closed-model-frontier/RESULT_oath_prior_art_survey_2026_08_26.md`) found the neighbourhood
+occupied on every axis this document reaches for. Read that note before this one; what follows is
+written on the assumption that you have.
+
+## Related work, and what it leaves us
+
+Stated here rather than in a footnote, because a north star that has to be corrected by a reviewer
+is worth less than one that corrects itself.
+
+- **Checking numbers in documents** is a populated field with deployed tools. `statcheck` and
+  `JATSdecoder` and `ESCIMate` extract reported statistics and recompute them; `arXiVeri` matches
+  a table to its cited source; `Aletheia` verifies data claims against a dataset. Several need no
+  cooperation from the author at all, which is a regime our own instrument does not reach.
+- **Binding a claim to hashed evidence for later third-party checking** is solved engineering in
+  software supply chains — C2PA, in-toto, SLSA — and has at least one close scientific
+  implementation in hash-linked evidence graphs for measurement records.
+- **Proof-carrying numbers** already names and builds the architecture this document borrows its
+  metaphor from: claim-bound numeric spans, verified outside the model, fail-closed.
+- **Preregistration enforced as a runtime precondition** — the mechanism this lab believed was its
+  own — is implemented by `honest-signal`, whose firewall blocks a merge unless a preregistration
+  exists, provably precedes the result, is unedited, and names a non-vacuous kill criterion. Its
+  vacuity check is one we do not have and should adopt.
+
+What that leaves is narrower than what this document used to claim, and it is real:
+
+1. **A measured account of what happens when the contract is NOT kept.** Every system above
+   assumes claims arrive bound to evidence by construction. Pointed at twelve repositories that
+   never agreed to any of this, our verifier abstained on almost everything and every accusation
+   it made was false (`closed-model-frontier/RECON_oath_external_reach_2026_08_26.md`). Nobody
+   else appears to have run that experiment or published its answer.
+2. **The instrument turned on itself, at scale**, including a cycle whose entire content was
+   retracting four of the verifier's own accusations, and a survey that retired this document's
+   strongest claim the day after it was made.
+
+Neither is a mechanism. Both are checkable. The rung ladder below is unaffected by any of this —
+it was always scoped by experiment rather than by rhetoric, and the scoping is why the correction
+above costs a paragraph rather than the programme.
 
 ## The certificate
 
