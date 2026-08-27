@@ -11,6 +11,16 @@ On 2026-08-26 the shipped verifier was pointed at twelve public repositories it 
 what it read, and every accusation it made was false. The conclusion was not that the instrument
 is broken — it was that OATH is not a lie detector aimable at arbitrary prose.
 
+**The second half of that is withdrawn** (`RESULT_oath_external_corpus_2026_08_27.md`). Against
+140 repositories across seven filename conventions rather than two, the false-accusation rate is
+0.2596: about three quarters of what the verifier accuses outside this lab are genuine claims, and
+the original result replicates on its own query and nowhere else. The same cycle found that of
+external tokens the verifier VERIFIED, a blind panel judged only about half to be claims at all —
+the rest are command-line flags, link labels and hardware specs carrying an affirmative oath
+because a value matched a receipt field. Read the "coincident" and "accused" sections of your own
+report with that in mind: this module reports what the verifier did, and the verifier is noisy in
+both directions on prose that was not written to carry receipts.
+
 **OATH is a contract.** Proof-carrying code does not verify arbitrary binaries; it requires a
 compiler that emits the proof alongside the program. Proof-carrying cognition is the same move:
 it requires an author who emits receipts alongside the claims. The instrument works where the

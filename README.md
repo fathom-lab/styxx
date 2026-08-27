@@ -387,11 +387,21 @@ external re-run of each — more for breaking one than for confirming it.
 ### the oath is a contract, not a detector
 
 we pointed the verifier at twelve public repositories it had never seen. it abstained on 94% of
-what it read and **every accusation it made was false**
-([the measurement](papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md)). that is
-a fact about the instrument, not about those repositories. proof-carrying code does not verify
-arbitrary binaries either — it requires a compiler that emits the proof. proof-carrying cognition
-requires an author who emits receipts.
+what it read and every accusation it made was false. **that second half is withdrawn.** repeated
+against 140 repositories across seven filename conventions instead of two, the false-accusation
+rate is `0.2596` — roughly three quarters of what it accuses outside this lab are real claims. the
+original finding replicates on its own query and nowhere else, so it was a fact about one
+filename, not about external writing ([the measurement that withdraws
+it](papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md)).
+
+worse, and newer: of external tokens the verifier **verified**, a blind panel called only about
+half of them claims at all. the rest are command-line flags, link labels and hardware specs
+carrying `OATH-VERIFIED` because a value happened to match a receipt field. a false verification is
+worse than a false accusation — the attestation is the product.
+
+proof-carrying code does not verify arbitrary binaries either — it requires a compiler that emits
+the proof. proof-carrying cognition requires an author who emits receipts. that framing survives.
+"nearly silent outside the contract" does not: the instrument is noisy in both directions.
 
 so the deliverable is a contract you can adopt without adopting anything else here, plus the check
 that tells you whether you kept it:

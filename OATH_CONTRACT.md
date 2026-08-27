@@ -22,13 +22,29 @@ not have to trust the author. It does **not** verify arbitrary binaries: it requ
 that emits the proof alongside the program. Retrofitting it onto software that was not built to
 carry proofs is not something anyone claims to do.
 
-This is the same move one level up, and it has the same boundary. On 2026-08-26 we pointed our
-verifier at twelve public repositories it had never seen. It abstained on 94% of what it read,
-and **every accusation it made was false** — the full measurement is in
-[`RECON_oath_external_reach_2026_08_26.md`](papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md).
-That is not a claim about those repositories, all of which are doing what essentially the whole
-field does. It is a claim about the instrument: it works where the contract is kept, and it is
-nearly silent where it is not.
+This is the same move one level up, and it has the same boundary — though the boundary is not
+where we first said it was.
+
+On 2026-08-26 we pointed our verifier at twelve public repositories it had never seen, saw it
+abstain on 94% of what it read, and reported that **every accusation it made was false**.
+**That claim is withdrawn.** Repeated on 2026-08-27 against 140 repositories drawn from seven
+filename conventions rather than two, the false-accusation rate is `0.2596` — about three quarters
+of what it accuses outside this lab are genuine claims. The original finding replicates almost
+exactly on its own query and nowhere else: it was a fact about one filename, not about external
+writing. The measurement that withdraws it is
+[`RESULT_oath_external_corpus_2026_08_27.md`](papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md).
+
+The same cycle found something worse, and you should know it before adopting anything here. Of
+external tokens the verifier **verified** — the affirmative attestation, the thing this whole
+document is asking you to rely on — a blind panel judged only about half to be claims at all. The
+rest are command-line flags, link labels, hardware specifications and numerals inside HTML tags,
+each carrying `OATH-VERIFIED` because its value happened to match a receipt field. The instrument
+is not nearly silent outside its contract. It is noisy in both directions, and the direction that
+should worry you is the one where it speaks confidently.
+
+None of that is a claim about those repositories, all of which are doing what essentially the
+whole field does. It is a claim about the instrument, and the rules below are what keep you on
+the side of it that works.
 
 So this document is the contract. It is short, every rule below was learned by getting it wrong,
 and each names the cycle that taught it.
