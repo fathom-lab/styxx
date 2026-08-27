@@ -1,0 +1,66 @@
+{
+ "analysis": "derived from the blind three-seat adjudication; no new judgement was made",
+ "status": "the pre-committed VERIFIED-arm sanity gate FAILED; see sanity_gate below",
+ "sanity_gate": {
+  "pre_committed_condition": "If the share of VERIFIED tokens the panel agrees are claims is low, the panel and the instrument disagree about what a claim IS, and every other number here is suspect.",
+  "observed": 0.4933,
+  "n": 75,
+  "a_passing_value_would_have_been_at_least": 0.8,
+  "verdict": "FAILED",
+  "consequence_honoured": "The false-accusation and miss rates below are reported, and are NOT promoted to headline findings, because the frozen protocol said they would be suspect if this gate failed. Reinterpreting the row after seeing it is the move the protocol's opening paragraph forbids."
+ },
+ "why_the_gate_failed": {
+  "coincident_bindings": {
+   "n": 5,
+   "panel_calls_claim": 0
+  },
+  "nominal_bindings": {
+   "n": 70,
+   "panel_calls_claim": 37,
+   "share": 0.5286
+  },
+  "reading": "The v0.8 coincidence channel explains only the coincident row. The bulk of the rejections are NOMINALLY bound: the token matched a receipt leaf whose path its own line names, and the panel still says it is not a claim. Inspected, they are CLI flags (`--episodes 20`), link labels (`[Blog 6]`), hardware specs ('Apple M4 (10 logical cores'), range notation ('[0, 1]'), configuration ('256 with K=8') and a numeral inside an <img> tag. The panel is not being strict; the instrument is swearing oaths to non-claims.",
+  "what_this_means": "The mention/use defect is not confined to accusations. It is in the VERIFIED channel too, and a false verification is worse than a false accusation because the affirmative attestation is the entire product. No previous cycle measured this: the pilot looked only at what the verifier accused."
+ },
+ "accusations": {
+  "n": 366,
+  "false_accusation_rate": 0.2596,
+  "share_on_genuine_claims": 0.7404,
+  "within_dominant_repo": {
+   "repo": "hopit-ai/Moda",
+   "n": 194,
+   "false_accusation_rate": 0.1856
+  },
+  "excluding_dominant_repo": {
+   "n": 172,
+   "false_accusation_rate": 0.343
+  },
+  "pilot_comparison": {
+   "pilot_n": 13,
+   "pilot_false_accusation_rate": 1.0,
+   "reading": "The pilot reported that not one of its thirteen accusations was a catch. At n=366 across seven query families the rate is far below 1.0, so the pilot's headline does not survive and is withdrawn."
+  }
+ },
+ "misses": {
+  "n": 150,
+  "miss_rate": 0.4067,
+  "reading": "Of tokens the verifier declined to check, this share are checkable claims. Abstention on external text is therefore substantially blindness rather than calibrated restraint, and the pilot's flattering abstain share cannot be read as caution."
+ },
+ "concentration": {
+  "accusations_total": 366,
+  "repos_with_any_accusation": 30,
+  "dominant_repo_share": 0.5301,
+  "top3_share": 0.7322,
+  "median_per_repo_accusation_share": 0.0,
+  "repos_with_zero_accusations": 43,
+  "repos_scored": 73,
+  "reading": "The pooled accusation rate is a statement about a handful of claim-dense documents. The median external repository draws none."
+ },
+ "panel_independence": {
+  "unanimity_share": 0.9814,
+  "split_panels": 11,
+  "unsure_votes": 16,
+  "total_votes": 1773,
+  "reading": "Three seats of one model family agreed on 98% of items. That is the correlated-error ceiling the protocol disclosed in advance, not evidence of correctness. A human re-adjudication of the retained packets is the only thing that would lift it."
+ }
+}
