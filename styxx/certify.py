@@ -565,6 +565,76 @@ def _v11_row_ordinal_label(num: dict, lines: list[str], table_rows: dict[int, in
             and _v11_sole_int(row[span[0]:span[1]]))
 
 
+# v0.12 (PREREG_oath_v12_formula_constant_2026_08_26) -- SHIPPED OFF, killed by its own G2.
+#
+# The defect it aimed at is real and is still open: `extract_numbers` takes numerals out of
+# rendered mathematics, and `\Delta` is trigger vocabulary because `delta` is in `_TRIGGERS`, so
+# the literal `1` in `\left(1 \pm \frac{\Delta \sigma^2}{\sigma^2}\right)` gets accused of being
+# a claim whose truth condition was never met. It is a mathematical constant. It has no truth
+# condition at all -- the same category error v0.11 spent a cycle retracting for row ordinals.
+#
+# THE KILL. The prereg froze G2 on an 11-token roster (3 UNGROUNDED + 8 VERIFIED) taken from the
+# census's LINE-level marker, then specified a SPAN-level clause. Those are different
+# populations and the gap is the whole defect: the clause reaches 6 tokens, not 11, so G2
+# under-fires and the pre-committed outcome is `V12_UNDERREACH` -- revert and publish.
+#
+# What it misses is the part worth remembering: **the prereg's own motivating specimen.** That
+# formula is written as an indented code block, so there is no inline-code span and no `$`
+# delimiter, and conjunct 1 never fires. The prereg pre-committed that if its own certificate
+# failed to flip to OATH-HELD the cycle had under-reached regardless of the other gates. It did
+# not flip. A clause that cannot reach the example its own preregistration quotes has not earned
+# a corpus.
+#
+# Kept in tree behind the flag -- as V05_APPROX_NOTATION and V08_FLOAT_FIELD_BINDING were after
+# their kills -- so the measurement is re-runnable and the negative is not re-attempted. DO NOT
+# widen conjunct 1 to catch indented code blocks and re-run: the prereg says the clause is atomic
+# and forbids post-freeze narrowing or widening, and "no second attempt inside this cycle". A
+# successor needs its own preregistration, frozen against a SPAN-level census rather than a
+# line-level one.
+V12_FORMULA_CONSTANT = False
+
+_V12_BACKSLASH_CMD = re.compile(r"\\[A-Za-z]+")
+_V12_BARE_NUM = re.compile(r"[0-9]+(?:\.[0-9]+)?")
+
+
+def _delimited_spans(line: str, delim: str) -> list:
+    """(start, end) content spans between successive occurrences of *delim*."""
+    out, i = [], 0
+    while True:
+        a = line.find(delim, i)
+        if a < 0:
+            return out
+        b = line.find(delim, a + len(delim))
+        if b < 0:
+            return out
+        out.append((a + len(delim), b))
+        i = b + len(delim)
+
+
+def _v12_formula_constant(num: dict, lines: list[str]) -> bool:
+    """True iff token *num* sits inside a delimited mathematical span (frozen v0.12 conjuncts).
+
+    Conjunct 1: the recorded column lies inside a `$...$` / `$$...$$` span, or inside an
+    inline-code span whose content carries a backslash command. Conjunct 2: that span contains a
+    backslash command -- a `$...$` span without one is a dollar amount or a shell prompt, not
+    rendered mathematics. Conjunct 3: the token is a bare integer or decimal with no thousands
+    comma, because a formula does not contain `100,000`.
+    """
+    if not V12_FORMULA_CONSTANT:
+        return False
+    if not V10_TOKEN_COLUMN or "col" not in num:
+        return False
+    if not _V12_BARE_NUM.fullmatch(num["token"]):
+        return False
+    line = lines[num["line"] - 1].replace("−", "-") if num["line"] - 1 < len(lines) else ""
+    col = num["col"]
+    for delim in ("$$", "$", "`"):
+        for a, b in _delimited_spans(line, delim):
+            if a <= col < b and _V12_BACKSLASH_CMD.search(line[a:b]):
+                return True
+    return False
+
+
 def _ctx_stems(text: str) -> set[str]:
     """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
 
@@ -635,6 +705,11 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # neither VERIFIED nor UNGROUNDED is meaningful for it.
         if _v11_row_ordinal_label(num, doc_lines, table_rows):
             ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label"})
+            continue
+        # v0.12 FORMULA CONSTANT: same tier, same shape — and SHIPPED OFF, killed by its own G2
+        # for under-reaching. Live only so the negative stays re-runnable.
+        if _v12_formula_constant(num, doc_lines):
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "formula_constant"})
             continue
         # v0.1 SPEC-CONSTANT rule: a number that is a pre-registered bar/threshold, a CI confidence
         # level, or a comparison bound is SPEC, not a measurement -> ABSTAIN (it has no receipt by

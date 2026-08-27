@@ -23,14 +23,14 @@ the same credit.
 | **legibility matrix** (CPU-only, easiest) | three models mutually legible label-free cross-family; qwen an island from every direction (`LEGIBILITY_LAW_CANDIDATE`, matrix licensed / law not) | `papers/disjoint-worlds/run_b37.py` | `papers/disjoint-worlds/b37_result.json` | anchor discoveries (0.5918, 0.0536) match to the digit; clique/island topology holds. **One command from a clone, no GPU — see [REPLICATE_legibility.md](papers/disjoint-worlds/REPLICATE_legibility.md)** |
 | **island frame geometry** (CPU-only, ~4 s — the single easiest check in this repo) | the clique's concept-frames co-align far above random; the island sits below the clique in every seed (`SHARED_FRAME_CONFIRMED_GEOMETRICALLY`) | `papers/disjoint-worlds/run_b45.py` | `papers/disjoint-worlds/b45_result.json` | verdict matches; clique median 0.848 vs null p95 0.0566; qwen below in 5/5 seeds |
 | **the bridge + dose + cliff** (CPU-only) | the island's barrier is causal (0.0612→0.9745 vs random 0.0), rank-2 at core (k\*=2), and switch-like (knee t=0.8) | `run_b41.py` · `run_b42.py` · `run_b46.py` (same dir) | `b41_result.json` · `b42_result.json` · `b46_result.json` | verdict strings match; medians within tolerance — see [REPLICATE_legibility.md](papers/disjoint-worlds/REPLICATE_legibility.md) |
-| **OATH corpus audit** (CPU-only) | every published claim doc certifies against its receipts, with two disclosed exceptions | `python -m styxx.corpus_audit papers/` | committed `*.certificate.json` files | your output matches the expected line below, character for character (CPU-deterministic) |
+| **OATH corpus audit** (CPU-only) | every published claim doc certifies against its receipts, with four disclosed exceptions | `python -m styxx.corpus_audit papers/` | committed `*.certificate.json` files | your output matches the expected line below, character for character (CPU-deterministic) |
 
 **What the corpus audit prints today, so a divergence means something.** As of 2026-08-26 the
-audit does **not** come back clean, and the honest bar is that you reproduce the same two
+audit does **not** come back clean, and the honest bar is that you reproduce the same four
 exceptions rather than zero:
 
 ```
-corpus papers: 183 certificates | HELD 179  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0
+corpus papers: 184 certificates | HELD 180  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0
   [OATH-FAILED] verdict-CHANGED  FINDING_behavioral_sycophancy_blackbox_2026_06_09.md
   [OATH-FAILED]  PREREG_oath_v12_formula_constant_2026_08_26.md
   [OATH-FAILED]  RECON_oath_external_reach_2026_08_26.md
@@ -62,9 +62,9 @@ merely become invisible. `_resolve_receipts` now compares content modulo line en
 audit gives the same answer on either platform. If you see a different count from the block
 above, that is a divergence worth filing.
 
-Both are stated here because a replicator who runs the advertised command and gets an unexplained
-failure has been handed a divergence that is really our undisclosed known state — which would
-waste the first thing an outside checker ever does for us.
+All of it is stated here because a replicator who runs the advertised command and gets an
+unexplained failure has been handed a divergence that is really our undisclosed known state —
+which would waste the first thing an outside checker ever does for us.
 
 **Tolerance for GPU targets:** bf16 CUDA training is non-deterministic across hardware; the honest
 replication bar is the frozen VERDICT STRING plus per-cell decisive reads within ±0.05 AUROC, with

@@ -1,0 +1,132 @@
+{
+  "battery": "OATH v0.12 — the formula constant",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "clause": "V12_FORMULA_CONSTANT",
+  "shipped_value": false,
+  "outcome": "V12_UNDERREACH",
+  "gates_scored": [
+    {
+      "gate": "G1",
+      "name": "INSTRUMENT VALIDITY (VOID-producing)",
+      "verdict": "PASS",
+      "frame_at_freeze": {
+        "documents": 181,
+        "tokens": 7665,
+        "VERIFIED": 5646,
+        "ABSTAIN": 2011,
+        "UNGROUNDED": 8
+      },
+      "frame_at_run": {
+        "documents": 181,
+        "tokens": 7665,
+        "VERIFIED": 5646,
+        "ABSTAIN": 2011,
+        "UNGROUNDED": 8
+      }
+    },
+    {
+      "gate": "G2",
+      "name": "FIRING-SURFACE EXACTNESS",
+      "verdict": "FAIL:V12_UNDERREACH",
+      "roster_expected": 11,
+      "roster_split_expected": {
+        "UNGROUNDED": 3,
+        "VERIFIED": 8
+      },
+      "firings_observed": 6,
+      "firings_split_observed": {
+        "VERIFIED": 3,
+        "UNGROUNDED": 3
+      },
+      "firing_documents": {
+        "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md": [
+          [
+            82,
+            94,
+            "1"
+          ],
+          [
+            82,
+            120,
+            "2"
+          ],
+          [
+            82,
+            130,
+            "2"
+          ]
+        ],
+        "papers/SYNTHESIS_mention_and_use_2026_08_26.md": [
+          [
+            28,
+            41,
+            "1"
+          ],
+          [
+            28,
+            67,
+            "2"
+          ],
+          [
+            28,
+            77,
+            "2"
+          ]
+        ]
+      },
+      "note": "The prereg froze this roster from the census's LINE-level marker (`latex_on_line`) and then specified a SPAN-level clause. Those are different populations; the clause reaches the smaller one."
+    }
+  ],
+  "proof_of_repair": {
+    "requirement": "the prereg pre-commits that BOTH its own certificate and the SYNTHESIS's must flip OATH-FAILED -> OATH-HELD when the clause lands; if either fails to flip the cycle under-reached regardless of the other gates",
+    "documents": [
+      {
+        "document": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+        "off": "OATH-FAILED",
+        "on": "OATH-HELD",
+        "flips": true,
+        "still_accused": []
+      },
+      {
+        "document": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+        "off": "OATH-FAILED",
+        "on": "OATH-FAILED",
+        "flips": false,
+        "still_accused": [
+          {
+            "line": 23,
+            "token": "1"
+          },
+          {
+            "line": 23,
+            "token": "2"
+          },
+          {
+            "line": 23,
+            "token": "2"
+          }
+        ]
+      }
+    ],
+    "all_flip": false
+  },
+  "severability_off_arm_inert": true,
+  "frame_reconstruction": {
+    "excluded_from_frame": [
+      "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.certificate.json"
+    ],
+    "why": "certificates created after the census froze the frame; excluded so G1's pin is reconstructible in place. Named, not silent.",
+    "note": "the excluded document is still scored for proof-of-repair, directly from its own certificate — the frame is reconstructed, the subject is not hidden"
+  },
+  "gates_not_scored": {
+    "G3 conversion ledger": "not reached — G2 is terminal under the outcome table",
+    "G4 cost is zero genuine verifications": "not reached",
+    "G5 value-blindness": "not reached",
+    "G6 collateral": "not reached",
+    "G7 blind adjudication": "NOT RUN. A warrant panel adjudicates whether a retraction is DESERVED; it cannot rescue a clause that does not reach its class. Running one here would be theatre, and its population was in any case unsatisfiable as frozen — the prereg asks for 10 non-roster tokens from lines carrying a LaTeX span and the frame contains fewer.",
+    "G8 suite closure": "not reached",
+    "G9 mechanism proof": "not reached"
+  },
+  "elapsed_s": 10.6
+}
