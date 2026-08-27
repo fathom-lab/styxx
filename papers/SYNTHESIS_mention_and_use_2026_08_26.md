@@ -128,20 +128,45 @@ measurements written specifically to stop the previous instance recurring.
 | the vacuous-pass census | the current tree | the PRE-FIX code | three repaired defects scored as zero reach |
 | the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |
 | the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |
+| the external collector's `RECEIPT_NAMES` | an exact filename | a machine-readable RESULTS file | 26 repositories reported as publishing none demonstrably do |
+| **the verifier's VERIFIED channel** | line vocabulary + a value match | this token is a CHECKED CLAIM | about half of nominally-bound external tokens are not claims at all |
 
-Eight, and the last four are the uncomfortable ones. The v0.12 bar was frozen by someone who had
+Ten, and the last four are the uncomfortable ones. The v0.12 bar was frozen by someone who had
 just read this synthesis. The vacuous-pass census made v0.12's exact error *inside the census
 written to stop it*. The formula-span census was built to be the careful, population-first
 measurement the previous failure demanded, and its marker matched `\b` and `\d` — regex escapes —
 while claiming to identify rendered mathematics.
 
-The eighth is the sharpest, and it is a proxy for a **cost** rather than for a class.
+The **tenth is the serious one**, and it arrived on 2026-08-27 from
+`closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md`. Every instance above concerns
+what the instrument **accuses** — firing where it should not. Nobody had looked at the other
+channel. Put to a blind panel, only about half the external tokens the verifier had **verified**
+were judged to be claims at all; the rest are command-line flags, link labels, hardware
+specifications and numerals inside HTML tags, each carrying `OATH-VERIFIED` because its value
+happened to match a receipt field.
+
+That inverts the programme's own risk model. **A false verification is worse than a false
+accusation**, because the affirmative attestation is the entire product. An accusation says *check
+this*; a verification says *I have checked this, and it is sworn to a receipt*. The second is what
+an outside reader would rely on, and it is where this defect had been sitting unmeasured the whole
+time. It was found only because a cycle salted its blind panel with decoys in order to fix a
+blinding leak — the measurement existed as a side effect of an integrity fix, not because anyone
+set out to look.
+
+The ninth is smaller and is the same shape as the seventh: an exact, case-sensitive filename list
+standing in for *machine-readable results file*, inside the collector built to measure this
+defect's reach.
+
+The eighth is the sharpest of the earlier ones, and it is a proxy for a **cost** rather than for a
+class.
 `destroys_nominal` stood in for *would this rule destroy a real verification*, was named "the
 column that decides", and cannot decide: a control run afterwards with no span test at all — the
-worst rule available — scores the same zero. The column was blind because its frame holds only 184
-documents, and every genuine measurement these rules would silence lives in one of the roughly 935
-markdown files outside it. It was published the same day as the RECON that catalogues vacuous
-gates, by that RECON's author, and an adversary found it. See
+worst rule available — scores the same zero. The column was blind because its frame holds only the
+certified documents, a small fraction of the markdown under `papers/`, and every genuine
+measurement these rules would silence lives outside it. The frame size is in the receipt and is
+deliberately not quoted here: it moves whenever a document is certified, and it moved again while
+this addendum was being written. It was published the same day as the RECON that catalogues
+vacuous gates, by that RECON's author, and an adversary found it. See
 `closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md`.
 
 So the generalisation in the section above is too narrow. It is not that instruments decide

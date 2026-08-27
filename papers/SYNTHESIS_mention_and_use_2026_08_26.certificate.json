@@ -2,18 +2,20 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "SYNTHESIS_mention_and_use_2026_08_26.md",
-  "document_sha256": "9fba86dabe51624b1fb8caf4241cc281ed6b96ed63a0137b03723c5249239dd5",
+  "document_sha256": "a0259c8bdaa187c28d912cfa1173a102d58000c3ac609001213f17e493b3f72f",
   "receipts_sha256": {
     "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6",
     "ledger_classifier_audit.json": "8060dd7fb1f4d6bf1c6318e55f380e4bd0518b44953493136753e53c5c910a73",
     "oath_v11_battery_result.json": "04584a3e9fdfd07416f358893350ab939aca55e7b951f73243c0824703672106",
-    "formula_span_census.json": "fc603599b5a09db6fc163d72410587a7215dfd3a78c85960a4a011f109dd6289"
+    "formula_span_census.json": "5882b852ba4dd3101a10ec034089d22f25d4989f1700d0e5396d093a530bfcb5",
+    "oath_adjudication_analysis.json": "2203c8a073261d71ac73c4058359a1ae686db9d5f46b9053d493bc131f6c58ab",
+    "oath_external_no_receipt_diagnostic.json": "ad4bc34c06975900e19a92f21ba710b327efc2088d144bba918f3506cd10db4f"
   },
   "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
   "counts": {
-    "VERIFIED": 10,
-    "ABSTAIN": 2,
-    "UNGROUNDED": 4
+    "VERIFIED": 11,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 3
   },
   "verdict": "OATH-FAILED",
   "ungrounded": [
@@ -46,26 +48,12 @@
       "col": 77,
       "status": "UNGROUNDED",
       "receipt_ref": null
-    },
-    {
-      "line": 141,
-      "token": "184",
-      "value": 184.0,
-      "decimals": 0,
-      "context": "worst rule available \u2014 scores the same zero. The column was blind because its frame holds only 184",
-      "col": 95,
-      "status": "UNGROUNDED",
-      "receipt_ref": null
     }
   ],
   "abstained": [
     {
       "line": 46,
       "token": "13"
-    },
-    {
-      "line": 142,
-      "token": "935"
     }
   ],
   "ledger": [
@@ -214,24 +202,15 @@
       "receipt_ref": "oath_ext_recon.json:accusation_roster[0].decimals"
     },
     {
-      "line": 141,
-      "token": "184",
-      "value": 184.0,
+      "line": 131,
+      "token": "26",
+      "value": 26.0,
       "decimals": 0,
-      "context": "worst rule available \u2014 scores the same zero. The column was blind because its frame holds only 184",
-      "col": 95,
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 142,
-      "token": "935",
-      "value": 935.0,
-      "decimals": 0,
-      "context": "documents, and every genuine measurement these rules would silence lives in one of the roughly 935",
-      "col": 95,
-      "status": "ABSTAIN",
-      "receipt_ref": null
+      "context": "| the external collector's `RECEIPT_NAMES` | an exact filename | a machine-readable RESULTS file | 26 repositories reported as publishing none demonstrably do |",
+      "col": 99,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the external collector's `RECEIPT_NAMES` | an exact filename | a machine-readable RESULTS file | 26 repositories reported as publishing none demonstrably do |",
+      "status": "VERIFIED",
+      "receipt_ref": "ledger_classifier_audit.json:all_cycles[26].cycle"
     }
   ]
 }

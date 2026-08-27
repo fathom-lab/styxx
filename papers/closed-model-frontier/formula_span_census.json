@@ -47,11 +47,11 @@
   "status": "CENSUS. Licenses no claim. Measures the population a conjunct-1 candidate would actually see — the step whose absence killed v0.12.",
   "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
   "frame": {
-    "documents": 185,
+    "documents": 186,
     "status_counts": {
-      "ABSTAIN": 2034,
-      "VERIFIED": 5709,
-      "UNGROUNDED": 12
+      "ABSTAIN": 2037,
+      "VERIFIED": 5763,
+      "UNGROUNDED": 11
     }
   },
   "the_column_that_decides": "RETRACTED 2026-08-27. This field claimed destroys_nominal was the deciding column. It cannot decide anything: the permissive control below — NO span test at all, every bare numeral on a line carrying a backslash command — scores destroys_nominal 0 as well, identical to the best candidate. A column that reads the same for the best and the worst possible rule is a vacuous gate, which is the defect RECON_vacuous_pass_2026_08_27.md catalogues, committed here the same day. Found by the adversarial red team, not by the author.",
