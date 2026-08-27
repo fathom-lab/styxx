@@ -181,6 +181,7 @@ styxx-absence = "styxx.absence:main"
 styxx-loops = "styxx.loops:main"
 styxx-flagship = "styxx.flagship:main"
 styxx-oathready = "styxx.oathready:main"
+styxx-discriminates = "styxx.discriminates:main"
 
 [tool.setuptools.dynamic]
 # `attr` reads styxx/_version.py.__version__ via AST without importing the

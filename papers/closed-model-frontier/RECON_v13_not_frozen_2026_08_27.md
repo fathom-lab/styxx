@@ -13,22 +13,23 @@ Its RESULT gave the lesson in one line: *freeze the bar against the thing you ar
 So a span-level census was taken, five candidate span definitions were scored, and the table looked
 like a design ready to write:
 
-| candidate | reaches | destroys nominal | corpus-wide |
-|---|---|---|---|
-| inline code + command | 3 | 0 | 37 tokens / 13 docs |
-| indented block + command | 3 | 0 | 3 tokens / 1 doc |
-| right of a backslash command | 6 | 0 | 236 tokens / 31 docs |
+Every candidate destroyed **nothing** on the nominal column — the shape v0.11's winning clause
+had. Then three lenses designed against it and three adversaries attacked the designs. **Eleven
+blockers.** The cycle is not frozen. What follows is why, in the order that matters.
 
-Zero nominal verifications destroyed by anything — the shape v0.11's winning clause had. Then three
-lenses designed against it and three adversaries attacked the designs. **Eleven blockers.** The
-cycle is not frozen. What follows is why, in the order that matters.
+**No count from this census is quoted anywhere below.** They live in the receipt, and they are
+volatile in a way that is itself part of the finding: this document is inside the corpus the
+census measures, so publishing it moves them, and re-running after drafting one section moved
+two of three candidates. What is quoted instead are the census's *verdicts*, which are stable
+under corpus growth. That distinction is the discipline this cycle failed to have and the reason
+it is being written up rather than shipped.
 
 ## 1. The deciding column could not fail
 
 The census named `destroys_nominal` "the column that decides". A control that should have been in
 it from the start — **no span test at all**, every bare numeral on a line carrying a backslash
-command — scores `reaches 6, destroys_nominal 0`. Identical to the best candidate, and identical to
-the worst rule available.
+command — scores *identically to the best candidate on that column*, and identically to the worst
+rule available.
 
 A column that reads the same for the best and the worst possible rule discriminates between
 neither. It is a vacuous gate — the exact defect catalogued as VP-D in
@@ -36,10 +37,15 @@ neither. It is a vacuous gate — the exact defect catalogued as VP-D in
 that RECON. Found by the red team, not by me.
 
 The reason it is vacuous is worth more than the fact. `destroys_nominal` is measured over the
-certified frame, which is 184 documents of roughly 1,119 under `papers/`. **Every genuine
-measurement any candidate would silence lives in an uncertified document**, where no ledger status
-exists and the column is structurally blind. The zero was a property of the frame's coverage, not
-of any rule. The census now carries the control and the retraction.
+certified frame, which is a sixth of the markdown under `papers/`. **Every genuine measurement any
+candidate would silence lives in an uncertified document**, where no ledger status exists and the
+column is structurally blind. The zero was a property of the frame's coverage, not of any rule.
+The census now carries the control and the retraction.
+
+The second column fails too, and differently. On reach, the candidates *do* differ from one
+another — so the column looks alive — but not one of them beats the null rule. Candidates
+separating from each other while none separates from doing nothing is a distinct failure from a
+column that is flat, and only the control makes it visible.
 
 ## 2. Both designs silence genuine claims, verified by implementation
 
@@ -94,6 +100,36 @@ not stand is the sentence saying which column decides.
 condition, and the verifier still accuses one. Three certificates in this corpus are OATH-FAILED
 on it. It remains open, and it is now clear that closing it needs a population this lab did not
 write — which the external recon suggests exists and which nobody has collected.
+
+## What was built instead of a clause
+
+`protocol.require_nonvacuous_gates` already refuses a preregistration whose gate no outcome row
+depends on. Its own comment discloses the half it cannot reach — *"an unfailable BAR needs domain
+knowledge this parser does not have and is not attempted; that residual is disclosed rather than
+silently implied to be covered."*
+
+That disclosed residual is what killed this census. An outcome row did name `destroys_nominal`,
+so the structural check passed; the bar was unfailable for a reason no parser could infer from
+the prereg text. The technique this cycle produced needs no domain knowledge at all: **score the
+null rule too, and a column the null rule ties is not a deciding column.**
+
+`styxx/discriminates.py` is that check, with `styxx-discriminates` on the command line. Given
+each candidate's scores, the control's scores, and a declared direction per column, it returns
+one of three verdicts per column — `SEPARATES` when some candidate strictly beats the control,
+`NULL_TIES_BEST` when candidates differ from each other but none beats doing nothing, and
+`DEGENERATE` when candidates and control all share one value. A column the author declared
+decisive that comes back anything but `SEPARATES` is an accusation, and in strict mode an
+exception, so it can be called inside a preregistration before a bar is frozen.
+
+Run against this census it returns `destroys_nominal DEGENERATE` and `reaches NULL_TIES_BEST` —
+**both** columns, not just the one the adversary found. The receipt now carries that verdict as a
+`discrimination` block, so the retraction above is computed rather than asserted, and the anchor
+test in `tests/test_discriminates.py` scores the real historical numbers and requires it to fire.
+
+It changes no certificate, so nothing here needed a preregistration. And it is necessary rather
+than sufficient: a column can separate cleanly and still measure the wrong thing, which is the
+defect the next section is about, and which this check would have cleared in all seven earlier
+instances.
 
 ## The pattern this is the eighth instance of
 

@@ -117,6 +117,26 @@ In our own flagship result note, nine bindings are coincident. We report the num
 suppress it. *(The path-binding repair that would fix this was measured across five design
 families in v0.8 and closed NEGATIVE — none beat parity. It is an open problem, not an oversight.)*
 
+### 10. If a number decides something, score the null rule too
+
+This rule is not about certifying a document. It is about the measurements you take *before*
+freezing a bar, and it is here because it is the one we broke most recently and most stupidly.
+
+A census scored candidate rules for a proposed clause and reported one column as "the column that
+decides". An adversary scored the rule that does nothing at all, and it scored the same. The best
+candidate and the worst rule available were indistinguishable, so nothing downstream of that
+column was evidence for anything, and the cycle was cancelled rather than shipped
+(`papers/closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md`).
+
+The countermeasure costs one extra row in your table. **Score the most permissive rule your design
+admits — the one that does no work — and put it in the receipt beside the candidates.** If it ties
+your best candidate, the column is not measuring your idea; it is measuring your frame.
+`styxx-discriminates` does the comparison and names the two ways it fails: `DEGENERATE`, where
+everything including the control shares one value, and `NULL_TIES_BEST`, where candidates differ
+from each other but none beats doing nothing — which looks alive and is not.
+
+Necessary, not sufficient. A column can separate cleanly and still measure the wrong thing.
+
 ---
 
 ## What a kept contract does and does not buy you

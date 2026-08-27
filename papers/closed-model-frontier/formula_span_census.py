@@ -42,6 +42,7 @@ sys.path.insert(0, str(ROOT))
 
 from styxx.certify import certify_doc                                       # noqa: E402
 from styxx.corpus_audit import _resolve_receipts                            # noqa: E402
+from styxx.discriminates import discrimination_report                       # noqa: E402
 
 OUT = HERE / "formula_span_census.json"
 
@@ -230,8 +231,19 @@ def main() -> int:
             if e["status"] == "VERIFIED" and not coincident(e["receipt_ref"]):
                 ctrl_nominal += 1
 
+    # The retraction, computed rather than asserted. styxx.discriminates scores every column
+    # against the permissive control; a column the null rule ties is not a deciding column.
+    disc = discrimination_report(
+        {c["span"]: {"reaches": c["reaches_accusations"],
+                     "destroys_nominal": c["destroys_nominal"]} for c in rows},
+        {"reaches": ctrl["UNGROUNDED"], "destroys_nominal": ctrl_nominal},
+        {"reaches": "higher_is_better", "destroys_nominal": "lower_is_better"},
+        deciding=["destroys_nominal"],
+    )
+
     payload = {
         "census": "formula-constant class, measured at SPAN level",
+        "discrimination": disc,
         "permissive_control": {
             "rule": "no span test at all — any bare numeral on a line containing a backslash "
                     "command",

@@ -1,8 +1,45 @@
 {
   "census": "formula-constant class, measured at SPAN level",
+  "discrimination": {
+    "columns": {
+      "destroys_nominal": {
+        "verdict": "DEGENERATE",
+        "direction": "lower_is_better",
+        "control": 0,
+        "beats_control": [],
+        "distinct_values": 1,
+        "spread": [
+          0,
+          0
+        ]
+      },
+      "reaches": {
+        "verdict": "NULL_TIES_BEST",
+        "direction": "higher_is_better",
+        "control": 3,
+        "beats_control": [],
+        "distinct_values": 2,
+        "spread": [
+          0,
+          3
+        ]
+      }
+    },
+    "accusations": [
+      {
+        "column": "destroys_nominal",
+        "verdict": "DEGENERATE",
+        "why": "every candidate and the control share one value, so this column separates nothing"
+      }
+    ],
+    "deciding": [
+      "destroys_nominal"
+    ],
+    "holds": false
+  },
   "permissive_control": {
     "rule": "no span test at all — any bare numeral on a line containing a backslash command",
-    "reaches_accusations": 6,
+    "reaches_accusations": 3,
     "destroys_nominal": 0,
     "destroys_coincident": 5,
     "verdict": "the deciding column reads IDENTICALLY for this and for the best candidate, so it discriminates between none of them"
@@ -12,43 +49,35 @@
   "frame": {
     "documents": 184,
     "status_counts": {
-      "ABSTAIN": 2030,
-      "VERIFIED": 5707,
-      "UNGROUNDED": 11
+      "ABSTAIN": 2031,
+      "VERIFIED": 5699,
+      "UNGROUNDED": 8
     }
   },
   "the_column_that_decides": "RETRACTED 2026-08-27. This field claimed destroys_nominal was the deciding column. It cannot decide anything: the permissive control below — NO span test at all, every bare numeral on a line carrying a backslash command — scores destroys_nominal 0 as well, identical to the best candidate. A column that reads the same for the best and the worst possible rule is a vacuous gate, which is the defect RECON_vacuous_pass_2026_08_27.md catalogues, committed here the same day. Found by the adversarial red team, not by the author.",
   "why_it_is_vacuous": "destroys_nominal is measured over the CERTIFIED FRAME, which is 184 of the ~1,119 markdown documents under papers/. Every genuine measurement any of these candidates would silence lives in an UNCERTIFIED document, where no ledger status exists and the column is structurally blind. The zero is a property of the frame's coverage, not of any rule.",
   "candidates": [
     {
+      "span": "S1_dollar_span",
+      "reaches_accusations": 0,
+      "destroys_nominal": 0,
+      "destroys_coincident": 0,
+      "already_abstaining": 2,
+      "reach_roster": [],
+      "nominal_roster": [],
+      "corpus_wide_tokens": 125,
+      "corpus_wide_documents": 12
+    },
+    {
       "span": "S2_inline_code_with_command",
-      "reaches_accusations": 3,
+      "reaches_accusations": 0,
       "destroys_nominal": 0,
       "destroys_coincident": 3,
-      "already_abstaining": 0,
-      "reach_roster": [
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "1",
-          "receipt_ref": null
-        },
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "2",
-          "receipt_ref": null
-        },
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "2",
-          "receipt_ref": null
-        }
-      ],
+      "already_abstaining": 2,
+      "reach_roster": [],
       "nominal_roster": [],
-      "corpus_wide_tokens": 37,
-      "corpus_wide_documents": 13
+      "corpus_wide_tokens": 39,
+      "corpus_wide_documents": 14
     },
     {
       "span": "S3_indented_block_with_command",
@@ -82,10 +111,10 @@
     },
     {
       "span": "S5_right_of_a_backslash_command",
-      "reaches_accusations": 6,
+      "reaches_accusations": 3,
       "destroys_nominal": 0,
       "destroys_coincident": 3,
-      "already_abstaining": 0,
+      "already_abstaining": 2,
       "reach_roster": [
         {
           "doc": "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
@@ -104,29 +133,11 @@
           "line": 23,
           "token": "2",
           "receipt_ref": null
-        },
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "1",
-          "receipt_ref": null
-        },
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "2",
-          "receipt_ref": null
-        },
-        {
-          "doc": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
-          "line": 28,
-          "token": "2",
-          "receipt_ref": null
         }
       ],
       "nominal_roster": [],
-      "corpus_wide_tokens": 236,
-      "corpus_wide_documents": 31
+      "corpus_wide_tokens": 238,
+      "corpus_wide_documents": 32
     }
   ],
   "what_this_does_not_show": [
