@@ -1,0 +1,112 @@
+From e005e94b2f6650da2d4360265a1faf96a66868e3 Mon Sep 17 00:00:00 2001
+From: darkflobi <darkflobi@darkcity.wtf>
+Date: Sun, 9 Aug 2026 17:33:37 -0400
+Subject: [PATCH] ci (LOCAL until a workflow-scoped token exists): diffgate
+ self-gating + nightly-heavy PR paths
+
+- diffgate.yml: drafted 2026-08-01 (da237a1), gates every push-to-main head
+  commit message against its own diff with our own action.
+- nightly-heavy.yml: pull_request trigger with a paths filter over the modules
+  the 8 AUC-instrument test files import, so calibration-touching PRs run the
+  heavy check instead of importorskip-passing green.
+
+NOTE: GitHub rejects any push touching .github/workflows/ from the current
+fathomlab PAT (classic token, no `workflow` scope) -- same blocker recorded at
+da237a1. Regenerate the PAT with workflow scope, then push this commit.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+---
+ .github/workflows/diffgate.yml      | 17 ++++++++++++++
+ .github/workflows/nightly-heavy.yml | 36 +++++++++++++++++++++++++++++
+ .github/workflows/test.yml          |  4 ++++
+ 3 files changed, 57 insertions(+)
+ create mode 100644 .github/workflows/diffgate.yml
+
+diff --git a/.github/workflows/diffgate.yml b/.github/workflows/diffgate.yml
+new file mode 100644
+index 0000000..7e79012
+--- /dev/null
++++ b/.github/workflows/diffgate.yml
+@@ -0,0 +1,17 @@
++# the gate, pointed at ourselves: every push to main, the head commit message is gated
++# against its own diff — publicly. if we ever lie about a diff, our own product fails
++# our own build. that is the product demo.
++name: diffgate
++on:
++  push:
++    branches: [main]
++  pull_request:
++
++permissions:
++  contents: read
++
++jobs:
++  gate:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: fathom-lab/styxx@main
+diff --git a/.github/workflows/nightly-heavy.yml b/.github/workflows/nightly-heavy.yml
+index 0c58e14..65208b3 100644
+--- a/.github/workflows/nightly-heavy.yml
++++ b/.github/workflows/nightly-heavy.yml
+@@ -26,6 +26,42 @@ on:
+     # 03:17 UTC daily — odd minute to dodge the top-of-hour scheduling stampede.
+     - cron: "17 3 * * *"
+   workflow_dispatch:
++  # Calibration-touching PRs get the heavy leg at PR time instead of a nightly
++  # failure ~a day after merge. Paths mirror exactly what the 8 AUC test files
++  # import (directly or by-path via importlib); ordinary PRs stay on the light
++  # `tests` workflow.
++  pull_request:
++    paths:
++      - ".github/workflows/nightly-heavy.yml"
++      # heavy-extra definitions ([test,nli,coherence,signing]) live here
++      - "pyproject.toml"
++      # the 8 AUC test files themselves
++      - "tests/test_styxx_deception_score_core.py"
++      - "tests/test_semantic_subjectivity.py"
++      - "tests/test_coherence_locked_scorer_parity.py"
++      - "tests/test_preflight_needs_revision_gate.py"
++      - "tests/test_probe.py"
++      - "tests/test_divergence.py"
++      - "tests/test_mind.py"
++      - "tests/test_handoff_protocol.py"
++      # styxx modules the tests import (styxx.preflight entry lives in __init__)
++      - "styxx/__init__.py"
++      - "styxx/cognometrics.py"
++      - "styxx/coherence.py"
++      - "styxx/divergence.py"
++      - "styxx/errors.py"
++      - "styxx/handoff.py"
++      - "styxx/handshake.py"
++      - "styxx/mind.py"
++      - "styxx/guardrail/**"
++      - "styxx/residual_probe/**"
++      # by-path loads and frozen originals
++      - "scripts/phase_coherence_pilot.py"
++      - "integrations/inspect_evals/styxx_deception/**"
++      - "papers/closed-model-frontier/run_behavioral_sycophancy.py"
++      - "papers/closed-model-frontier/behavioral_sycophancy_b22_result.json"
++      # published calibration artifacts
++      - "benchmarks/*weights*.json"
+ 
+ permissions:
+   contents: read
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 2ddadab..b665eef 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -30,6 +30,10 @@ jobs:
+     steps:
+       - name: Checkout source
+         uses: actions/checkout@v4
++        with:
++          # full history: test_ledger regenerates papers/LEDGER.md, whose
++          # power-basis split needs git log -S / --follow / merge-base.
++          fetch-depth: 0
+ 
+       - name: Set up Python ${{ matrix.python-version }}
+         uses: actions/setup-python@v5
+-- 
+2.52.0.windows.1
+
