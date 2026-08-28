@@ -242,9 +242,102 @@ def card(r: dict, i: int) -> str:
 </article>'''
 
 
+POSTER_CSS = """
+/* the main stylesheet is not loaded here, so the reset has to be repeated -- its absence
+   is what made width:1200px + 48px padding render a 1296px frame and clip the right
+   column out of the capture. */
+*{box-sizing:border-box}
+html,body{margin:0;background:#0F1311;}
+.poster{width:1200px; background:#0F1311; color:#C7D0CB; padding:44px 48px;
+  display:flex; flex-direction:column; gap:16px; overflow:hidden;
+  font-family:"IBM Plex Sans",sans-serif;}
+.poster .tagp{font-family:"IBM Plex Mono",monospace; color:#E3A63C; font-size:13px;
+  line-height:1.06; white-space:pre; margin:0;}
+.poster h1{font-family:"IBM Plex Sans Condensed",sans-serif; font-weight:700; text-transform:uppercase;
+  letter-spacing:.02em; font-size:54px; line-height:.92; margin:4px 0 0;}
+.poster .sub{color:#79847F; font-size:17.5px; max-width:60ch; margin:0; line-height:1.42;}
+.poster .sub b{color:#C7D0CB; font-weight:500;}
+.poster .rule{height:1px; background:rgba(199,208,203,.18);}
+.pgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px;}
+.pc{border:1px solid rgba(199,208,203,.18); background:#171D1A; padding:13px 15px;
+  display:flex; flex-direction:column; gap:6px; min-height:118px;
+  min-width:0; overflow:hidden; overflow-wrap:anywhere;}
+.pc.ctl{border-style:dashed; background:#131917;}
+.pc .h{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+.pc .n{font-family:"IBM Plex Sans Condensed",sans-serif; font-weight:700; text-transform:uppercase;
+  letter-spacing:.06em; font-size:16px;}
+.pc .d{width:8px;height:8px;border-radius:50%;background:#E3A63C;box-shadow:0 0 0 4px rgba(227,166,60,.2);
+  flex-shrink:0;margin-top:4px;}
+.pc.ctl .d{background:#4A5450; box-shadow:none;}
+.pc .m{font-family:"IBM Plex Mono",monospace; font-size:12px; color:#79847F; letter-spacing:.03em;}
+.pc .f{font-size:12px; line-height:1.4; color:#D4664B; border-left:2px solid #D4664B;
+  padding-left:8px; margin-top:auto;}
+.pc .ok{font-size:12px; line-height:1.4; color:#79847F; border-left:2px solid rgba(199,208,203,.2);
+  padding-left:8px; margin-top:auto;}
+.pstats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px;}
+.pstats div{border:1px solid rgba(199,208,203,.18); padding:12px 16px; background:#171D1A;}
+.pstats .v{font-family:"IBM Plex Mono",monospace; font-size:30px; font-weight:600; display:block;
+  line-height:1.05; font-variant-numeric:tabular-nums;}
+.pstats .k{font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:#79847F;}
+.pfoot{display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+  margin-top:8px; border-top:1px solid rgba(199,208,203,.18); padding-top:18px;}
+.pfoot .why{font-size:14.5px; color:#79847F; max-width:70ch; line-height:1.48;}
+.pfoot .why b{color:#E3A63C; font-weight:500;}
+.pfoot .url{font-family:"IBM Plex Mono",monospace; font-size:12px; color:#79847F; text-align:right;
+  white-space:nowrap;}
+"""
+
+
+def poster(cen, cert) -> str:
+    e = html.escape
+    roles = [r for r in cen["roles"] if r["layer"] != "control"]
+    ctrl = [r for r in cen["roles"] if r["layer"] == "control"]
+
+    def box(r):
+        absent = r["status"] == "ABSENT"
+        if r["disclosed_defect"]:
+            line = f'<div class="f">{e(r["disclosed_defect"][:104])}&hellip;</div>'
+        elif r["self_disclosed_limits"]["discloses"]:
+            line = '<div class="ok">States its own limits, in its own source.</div>'
+        else:
+            line = '<div class="ok">No fault disclosed. Not the same as healthy.</div>'
+        return (f'<div class="pc{" ctl" if absent else ""}"><div class="h">'
+                f'<span class="n">{e(r["role"].title())}</span><span class="d"></span></div>'
+                f'<div class="m">{r["loc"]} lines &middot; {r["tests"]["passed"]} tests run '
+                f'&middot; {"ABSENT" if absent else "online"}</div>{line}</div>')
+
+    stats = [(cen["tests_run_here"], "tests run here"), (cen["tests_failed_here"], "failed"),
+             (cen["roles_disclosing_a_defect"], "disclose a fault"),
+             (cen["status_tally"].get("ABSENT", 0), "absent, on purpose")]
+    return f'''<title>STYXX org chart</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>{POSTER_CSS}</style>
+<div class="poster">
+  <pre class="tagp">{WORDMARK.strip(chr(10))}</pre>
+  <h1>The chart that<br>cannot lie</h1>
+  <p class="sub">Every AI-org diagram puts a lamp on each box reading ONLINE or BOOTING.
+  Nobody checks them. <b>Here every lamp is computed</b> &mdash; line counts read from disk, tests
+  executed while this page was generated, every fault citing a document whose existence is
+  verified.</p>
+  <div class="rule"></div>
+  <div class="pgrid">{"".join(box(r) for r in roles)}{"".join(box(r) for r in ctrl)}</div>
+  <div class="pstats">{"".join(f'<div><span class="v">{v}</span><span class="k">{k}</span></div>' for v, k in stats)}</div>
+  <div class="pfoot">
+    <div class="why">The last box is the control. The chart that inspired this drew a TRADER box,
+    &ldquo;paper trading &rarr; live&rdquo;, lamp set to BOOTING. <b>Mine points at a module that
+    is not on disk and reports ABSENT</b> &mdash; and the generator refuses to emit a chart if it
+    ever says otherwise. A status column that cannot report a bad value is not reporting a good
+    one either.</div>
+    <div class="url">fathom lab &middot; styxx<br>{e(cert.get("verdict", ""))}</div>
+  </div>
+</div>'''
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(ROOT.parent / "styxx-org-chart.html"))
+    ap.add_argument("--poster", action="store_true",
+                    help="emit a fixed 1200x1500 frame built to be screenshotted and posted")
     a = ap.parse_args()
 
     cen = json.loads(CENSUS.read_text(encoding="utf-8"))
@@ -374,6 +467,8 @@ def main() -> int:
 </footer>
 </div>
 '''
+    if a.poster:
+        page = poster(cen, cert)
     out = Path(a.out)
     out.write_text(page, encoding="utf-8")
     print(f"roles {len(roles)}  control {len(ctrl)}  chars {len(page)}")
