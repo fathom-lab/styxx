@@ -1,0 +1,1654 @@
+{
+ "I0000": {
+  "status": "VERIFIED",
+  "repo": "PREDICTION_h1_human_islands_2026_08_06.md",
+  "line": 30,
+  "token": "0.9745",
+  "receipt_ref": "b41_result.json:a1_bridge_disc"
+ },
+ "I0001": {
+  "status": "VERIFIED",
+  "repo": "FINDING_buried_judge_2026_07_24.md",
+  "line": 26,
+  "token": "0.867",
+  "receipt_ref": "buried_judge_result.json:cells.0.22.summary.void_rate"
+ },
+ "I0002": {
+  "status": "VERIFIED",
+  "repo": "ATLAS_OF_MINDS_v0.md",
+  "line": 37,
+  "token": "0.1972",
+  "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[1].geometry.citizenship_xfam_partial_lex"
+ },
+ "I0003": {
+  "status": "VERIFIED",
+  "repo": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+  "line": 27,
+  "token": "0.682",
+  "receipt_ref": "e3tprime_result.json:points[3].mimic_refit_auroc"
+ },
+ "I0004": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+  "line": 25,
+  "token": "4.0",
+  "receipt_ref": "b2_subspace_erasure_result.json:n_survives_cells"
+ },
+ "I0005": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+  "line": 90,
+  "token": "5",
+  "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+ },
+ "I0006": {
+  "status": "VERIFIED",
+  "repo": "BLOCKED_source_independence_2026_07_24.md",
+  "line": 29,
+  "token": "0.175",
+  "receipt_ref": "source_independence_result.json:model_tier2.final_coverage"
+ },
+ "I0007": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 53,
+  "token": "1.0",
+  "receipt_ref": "b42_result.json:spearman_medianbridge_vs_k"
+ },
+ "I0008": {
+  "status": "VERIFIED",
+  "repo": "FINDING_portable_conscience_v0_2026_06_10.md",
+  "line": 38,
+  "token": "0.688",
+  "receipt_ref": "portable_conscience_result.json:random_map_control_paired_acc"
+ },
+ "I0009": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+  "line": 95,
+  "token": "5",
+  "receipt_ref": "oath_v11_battery_result.json:gates[1].coordinates[4][2]"
+ },
+ "I0010": {
+  "status": "VERIFIED",
+  "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+  "line": 75,
+  "token": "0.08333333333333333",
+  "receipt_ref": "frontier_freetext_v9_result.json:rescue_rate_on_wrong_first"
+ },
+ "I0011": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+  "line": 85,
+  "token": "4",
+  "receipt_ref": "mount_cot_ablation_result.json:edges.instr_reason_C3_C4.effect"
+ },
+ "I0012": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b48_invalid_null_bar_2026_08_06.md",
+  "line": 29,
+  "token": "45",
+  "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
+ },
+ "I0013": {
+  "status": "VERIFIED",
+  "repo": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+  "line": 27,
+  "token": "0.50",
+  "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG1_FLOOR"
+ },
+ "I0014": {
+  "status": "VERIFIED",
+  "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+  "line": 18,
+  "token": "0.694",
+  "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.rand_auroc"
+ },
+ "I0015": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+  "line": 83,
+  "token": "0.25",
+  "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[15].mutant"
+ },
+ "I0016": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+  "line": 35,
+  "token": "0.4848",
+  "receipt_ref": "b2_subspace_erasure_result.json:points[0].naive_dom6_auroc"
+ },
+ "I0017": {
+  "status": "VERIFIED",
+  "repo": "CAPSTONE_universal_mind_2026_06_10.md",
+  "line": 95,
+  "token": "684",
+  "receipt_ref": "oath_corpus_attestation.json:claim_totals.UNGROUNDED"
+ },
+ "I0018": {
+  "status": "VERIFIED",
+  "repo": "FINDING_conscience_loop_2026_07_24.md",
+  "line": 50,
+  "token": "0.9545",
+  "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.PASSED.styxx_acc"
+ },
+ "I0019": {
+  "status": "VERIFIED",
+  "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+  "line": 39,
+  "token": "0.435",
+  "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.random_map_auroc"
+ },
+ "I0020": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+  "line": 88,
+  "token": "1.0",
+  "receipt_ref": "b2_adaptive_erasure_result.json:attack_subsample_indices[1]"
+ },
+ "I0021": {
+  "status": "VERIFIED",
+  "repo": "FINDING_frontier_recovery_2026_07_27.md",
+  "line": 17,
+  "token": "840000",
+  "receipt_ref": "frontier_recovery_result.json:seed"
+ },
+ "I0022": {
+  "status": "VERIFIED",
+  "repo": "FINDING_anatomy_v2_2026_06_10.md",
+  "line": 40,
+  "token": "10000",
+  "receipt_ref": "anatomy_v2_result.json:n_perm"
+ },
+ "I0023": {
+  "status": "VERIFIED",
+  "repo": "FINDING_frame_recovery_2026_07_24.md",
+  "line": 21,
+  "token": "0.9846153846153847",
+  "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+ },
+ "I0024": {
+  "status": "VERIFIED",
+  "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+  "line": 32,
+  "token": "0.0188",
+  "receipt_ref": "verdict.json:H2.primary.ci_hi"
+ },
+ "I0025": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+  "line": 24,
+  "token": "1",
+  "receipt_ref": "attack_sentiment_result.json:seeds[1]"
+ },
+ "I0026": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 39,
+  "token": "37",
+  "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+ },
+ "I0027": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_fpr_live_2026_06_12.md",
+  "line": 47,
+  "token": "0.1799",
+  "receipt_ref": "mount_fpr_live_result.json:scale"
+ },
+ "I0028": {
+  "status": "VERIFIED",
+  "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+  "line": 33,
+  "token": "0.50",
+  "receipt_ref": "e1_result.json:grid.rho_0.5.rho"
+ },
+ "I0029": {
+  "status": "VERIFIED",
+  "repo": "FINDING_conscience_coordinates_2026_06_11.md",
+  "line": 25,
+  "token": "0.4948",
+  "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_refusal_recovers_H"
+ },
+ "I0030": {
+  "status": "VERIFIED",
+  "repo": "FINDING_h1a_human_single_clique_2026_08_06.md",
+  "line": 20,
+  "token": "907",
+  "receipt_ref": "h1a_result.json:n_shared_images"
+ },
+ "I0031": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+  "line": 27,
+  "token": "30",
+  "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+ },
+ "I0032": {
+  "status": "VERIFIED",
+  "repo": "FINDING_coupling_resolution_2026_07_28.md",
+  "line": 16,
+  "token": "0.3211111111111111",
+  "receipt_ref": "coupling_resolution_result.json:accuracy_pooled.UNREG"
+ },
+ "I0033": {
+  "status": "VERIFIED",
+  "repo": "RESULT_margin_parity_control_2026_07_10.md",
+  "line": 77,
+  "token": "1",
+  "receipt_ref": "margin_parity_control_result.json:seeds[1]"
+ },
+ "I0034": {
+  "status": "VERIFIED",
+  "repo": "RESULT_geometry_integrity_2026_06_03.md",
+  "line": 13,
+  "token": "1.00",
+  "receipt_ref": "geometry_mismatch_result.json:per_model.Llama-3.2-1B.neg_footprint_AUC"
+ },
+ "I0035": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "line": 35,
+  "token": "0.433",
+  "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C2_NEUT_IMM"
+ },
+ "I0036": {
+  "status": "VERIFIED",
+  "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+  "line": 34,
+  "token": "0.7235",
+  "receipt_ref": "honesty_parity_confirm_llama_result.json:points[4].naive_matched13_auroc"
+ },
+ "I0037": {
+  "status": "VERIFIED",
+  "repo": "source.md",
+  "line": 153,
+  "token": "0.70",
+  "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.s_detection_power.rate"
+ },
+ "I0038": {
+  "status": "VERIFIED",
+  "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+  "line": 24,
+  "token": "0.0",
+  "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.bare_small"
+ },
+ "I0039": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_external_corpus_2026_08_27.md",
+  "line": 85,
+  "token": "0.0274",
+  "receipt_ref": "oath_external_corpus.json:per_arm[0].accusation_share"
+ },
+ "I0040": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+  "line": 52,
+  "token": "0.16",
+  "receipt_ref": "cycle38_v05_p4_recert.json:points[1].token"
+ },
+ "I0041": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "line": 49,
+  "token": "30",
+  "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+ },
+ "I0042": {
+  "status": "VERIFIED",
+  "repo": "PAPER_frame_locality_2026_07_28.md",
+  "line": 45,
+  "token": "0.975",
+  "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+ },
+ "I0043": {
+  "status": "VERIFIED",
+  "repo": "FINDING_gavagai_v0_2026_06_10.md",
+  "line": 25,
+  "token": "0.344",
+  "receipt_ref": "gavagai_v0_result.json:pairs[3].cat_normeq"
+ },
+ "I0044": {
+  "status": "VERIFIED",
+  "repo": "PAPER_knowsay_gap_2026_07_27.md",
+  "line": 116,
+  "token": "0.7394",
+  "receipt_ref": "belief_asymptote_result.json:auroc_by_n.80"
+ },
+ "I0045": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+  "line": 1,
+  "token": "23",
+  "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.caught"
+ },
+ "I0046": {
+  "status": "VERIFIED",
+  "repo": "FINDING_selective_escalation_2026_07_24.md",
+  "line": 76,
+  "token": "50",
+  "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+ },
+ "I0047": {
+  "status": "VERIFIED",
+  "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+  "line": 15,
+  "token": "0.818",
+  "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
+ },
+ "I0048": {
+  "status": "VERIFIED",
+  "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+  "line": 27,
+  "token": "0.929",
+  "receipt_ref": "portable_conscience_ood_v2_result.json:gemma_self_ood_auroc"
+ },
+ "I0049": {
+  "status": "VERIFIED",
+  "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+  "line": 35,
+  "token": "-0.0517",
+  "receipt_ref": "verdict.json:H3.dAUC_ood"
+ },
+ "I0050": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+  "line": 23,
+  "token": "3",
+  "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.UNGROUNDED"
+ },
+ "I0051": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 26,
+  "token": "0.0909",
+  "receipt_ref": "b2_coupling_dose_result.json:per_seed.0.knowledge_drop"
+ },
+ "I0052": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_frame_locality_2026_07_28.md",
+  "line": 33,
+  "token": "0.2742",
+  "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
+ },
+ "I0053": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b40_island_named_2026_08_05.md",
+  "line": 59,
+  "token": "343",
+  "receipt_ref": "b40_result.json:seed"
+ },
+ "I0054": {
+  "status": "VERIFIED",
+  "repo": "FINDING_frontier_knowsay_2026_07_27.md",
+  "line": 8,
+  "token": "0",
+  "receipt_ref": "frontier_knowsay_result.json:per_item[0].i"
+ },
+ "I0055": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+  "line": 13,
+  "token": "0.0408",
+  "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+ },
+ "I0056": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+  "line": 42,
+  "token": "20",
+  "receipt_ref": "mount_freeform_early_warning_result.json:baseline.n_caves"
+ },
+ "I0057": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_r64_2026_07_09.md",
+  "line": 24,
+  "token": "1",
+  "receipt_ref": "attack_sentiment_wholestack_result_r64.json:seeds[1]"
+ },
+ "I0058": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+  "line": 45,
+  "token": "1.6694",
+  "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.null_output_spread"
+ },
+ "I0059": {
+  "status": "VERIFIED",
+  "repo": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+  "line": 45,
+  "token": "0.65",
+  "receipt_ref": "entanglement_resolution_result.json:off_ceiling"
+ },
+ "I0060": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_within_b39_2026_06_14.md",
+  "line": 35,
+  "token": "51",
+  "receipt_ref": "mount_within_result.json:truecorrect_counts.C4_NEUT_COT"
+ },
+ "I0061": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_ensemble_2026_06_13.md",
+  "line": 9,
+  "token": "2",
+  "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+ },
+ "I0062": {
+  "status": "VERIFIED",
+  "repo": "RESULT_ai_human_2026_06_03.md",
+  "line": 19,
+  "token": "0.737",
+  "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.human"
+ },
+ "I0063": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 64,
+  "token": "8",
+  "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].erased_rank"
+ },
+ "I0064": {
+  "status": "VERIFIED",
+  "repo": "DATASHEET_conscience_2026_07_24.md",
+  "line": 28,
+  "token": "0.1746031746031746",
+  "receipt_ref": "selective_confirm_result.json:selective_at_matched_coverage.bare.accuracy"
+ },
+ "I0065": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+  "line": 52,
+  "token": "26",
+  "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify"
+ },
+ "I0066": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 48,
+  "token": "0.7521",
+  "receipt_ref": "b2_coupling_dose_result.json:curves.0.fixed[3].private13"
+ },
+ "I0067": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 124,
+  "token": "0.9149",
+  "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
+ },
+ "I0068": {
+  "status": "VERIFIED",
+  "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+  "line": 24,
+  "token": "0.049",
+  "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+ },
+ "I0069": {
+  "status": "VERIFIED",
+  "repo": "PAPER_frame_locality_2026_07_28.md",
+  "line": 18,
+  "token": "0.9846153846153847",
+  "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+ },
+ "I0070": {
+  "status": "VERIFIED",
+  "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+  "line": 32,
+  "token": "0.0026",
+  "receipt_ref": "verdict.json:H2.primary.dAUC"
+ },
+ "I0071": {
+  "status": "VERIFIED",
+  "repo": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+  "line": 31,
+  "token": "0.92",
+  "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.plain_ood_auroc"
+ },
+ "I0072": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+  "line": 35,
+  "token": "0.861",
+  "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
+ },
+ "I0073": {
+  "status": "VERIFIED",
+  "repo": "FINDING_detection_locus_gpt_2026_05_30.md",
+  "line": 30,
+  "token": "0.087",
+  "receipt_ref": "detection_locus_gpt_result.json:means.correct_clean_entropy"
+ },
+ "I0074": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+  "line": 34,
+  "token": "0.892",
+  "receipt_ref": "attack_sentiment_result.json:points[1].private_relock_auroc"
+ },
+ "I0075": {
+  "status": "VERIFIED",
+  "repo": "RESULT_stage2_EVADABLE_2026_07_04.md",
+  "line": 25,
+  "token": "0.57",
+  "receipt_ref": "attack_sweep_result.json:points[0].knowledge_acc"
+ },
+ "I0076": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+  "line": 19,
+  "token": "0.1429",
+  "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.read_top1"
+ },
+ "I0077": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 123,
+  "token": "0.9965",
+  "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+ },
+ "I0078": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+  "line": 32,
+  "token": "45",
+  "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate.break_rule_fired"
+ },
+ "I0079": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+  "line": 19,
+  "token": "0.7092",
+  "receipt_ref": "b38_result.json:curves.gemma[1].disc"
+ },
+ "I0080": {
+  "status": "VERIFIED",
+  "repo": "FINDING_selective_escalation_2026_07_24.md",
+  "line": 29,
+  "token": "0.0909",
+  "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.paired_gain"
+ },
+ "I0081": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_offmanifold_2026_06_13.md",
+  "line": 17,
+  "token": "1.0",
+  "receipt_ref": "mount_offmanifold_result.json:offmanifold_detect_perturbed"
+ },
+ "I0082": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+  "line": 40,
+  "token": "0.0104",
+  "receipt_ref": "b50_result.json:chance"
+ },
+ "I0083": {
+  "status": "VERIFIED",
+  "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+  "line": 30,
+  "token": "28",
+  "receipt_ref": "adversarial_curve_v3_result.json:n_layers"
+ },
+ "I0084": {
+  "status": "VERIFIED",
+  "repo": "FINDING_axis_independence_2026_06_11.md",
+  "line": 32,
+  "token": "-0.2132",
+  "receipt_ref": "axis_independence_result.json:cosines_at_common_layer.truth_refusal"
+ },
+ "I0085": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+  "line": 68,
+  "token": "343",
+  "receipt_ref": "b37_result.json:seed"
+ },
+ "I0086": {
+  "status": "VERIFIED",
+  "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+  "line": 76,
+  "token": "7.4805",
+  "receipt_ref": "e1_result.json:addendum_identification_detail.initial_positive_sequence.max_abs_diff_vs_addendum"
+ },
+ "I0087": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b31v2_door_opens_2026_08_01.md",
+  "line": 12,
+  "token": "0.3429",
+  "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
+ },
+ "I0088": {
+  "status": "VERIFIED",
+  "repo": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+  "line": 32,
+  "token": "0.3742",
+  "receipt_ref": "e1_result.json:c5_strongest_pair_r"
+ },
+ "I0089": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+  "line": 20,
+  "token": "0.632",
+  "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].frozen_stack_read"
+ },
+ "I0090": {
+  "status": "VERIFIED",
+  "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+  "line": 18,
+  "token": "0.500",
+  "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+ },
+ "I0091": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mapped_whitening_2026_06_12.md",
+  "line": 25,
+  "token": "0.9288",
+  "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_recovers_T"
+ },
+ "I0092": {
+  "status": "VERIFIED",
+  "repo": "FINDING_tiered_channel_2026_07_24.md",
+  "line": 24,
+  "token": "7",
+  "receipt_ref": "tiered_channel_result.json:rescue.n_rescued"
+ },
+ "I0093": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "line": 69,
+  "token": "23",
+  "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+ },
+ "I0094": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 43,
+  "token": "0.5281",
+  "receipt_ref": "b42_result.json:grid.k5_s1003.bridge"
+ },
+ "I0095": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+  "line": 41,
+  "token": "0.2347",
+  "receipt_ref": "b35a_result.json:per_seed[2].llama_1b.seed_acc"
+ },
+ "I0096": {
+  "status": "VERIFIED",
+  "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+  "line": 28,
+  "token": "0.0553",
+  "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+ },
+ "I0097": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 28,
+  "token": "0.9133",
+  "receipt_ref": "b42_result.json:grid.k8_s1001.bridge"
+ },
+ "I0098": {
+  "status": "VERIFIED",
+  "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+  "line": 19,
+  "token": "8",
+  "receipt_ref": "adversarial_curve_v3_result.json:points[0].lam_hide"
+ },
+ "I0099": {
+  "status": "VERIFIED",
+  "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+  "line": 12,
+  "token": "101",
+  "receipt_ref": "frontier_freetext_v9_result.json:per_item[101].i"
+ },
+ "I0100": {
+  "status": "VERIFIED",
+  "repo": "FINDING_coupling_resolution_2026_07_28.md",
+  "line": 23,
+  "token": "0.033333333333333326",
+  "receipt_ref": "coupling_resolution_result.json:kp_residual_pooled"
+ },
+ "I0101": {
+  "status": "VERIFIED",
+  "repo": "FINDING_cot_inward_2026_07_30.md",
+  "line": 31,
+  "token": "46",
+  "receipt_ref": "frontier_freetext_v9_result.json:strata.caved"
+ },
+ "I0102": {
+  "status": "VERIFIED",
+  "repo": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
+  "line": 35,
+  "token": "0.8299",
+  "receipt_ref": "says_yes_knows_no_v3_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.item_conditional_auroc"
+ },
+ "I0103": {
+  "status": "VERIFIED",
+  "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+  "line": 35,
+  "token": "3.0",
+  "receipt_ref": "honesty_parity_confirm_llama_result.json:n_fails_cells"
+ },
+ "I0104": {
+  "status": "VERIFIED",
+  "repo": "FINDING_calib_poison_law_2026_07_09.md",
+  "line": 35,
+  "token": "0.616",
+  "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+ },
+ "I0105": {
+  "status": "VERIFIED",
+  "repo": "RESULT_ai_human_2026_06_03.md",
+  "line": 53,
+  "token": "0.81",
+  "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.convergence"
+ },
+ "I0106": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+  "line": 105,
+  "token": "0",
+  "receipt_ref": "attack_sentiment_wholestack_result.json:seeds[0]"
+ },
+ "I0107": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+  "line": 44,
+  "token": "2",
+  "receipt_ref": "oath_v11_baseline_ledger.json:counts.papers/agent-conscience/FINDING_scale_test_2026_07_26.md.ABSTAIN"
+ },
+ "I0108": {
+  "status": "VERIFIED",
+  "repo": "FINDING_scale3b_2026_07_29.md",
+  "line": 13,
+  "token": "55",
+  "receipt_ref": "scale3b_result.json:cells.control"
+ },
+ "I0109": {
+  "status": "VERIFIED",
+  "repo": "FINDING_buried_judge_2026_07_24.md",
+  "line": 13,
+  "token": "0.30",
+  "receipt_ref": "buried_judge_result.json:design.alpha_inform"
+ },
+ "I0110": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 156,
+  "token": "+0.002",
+  "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+ },
+ "I0111": {
+  "status": "VERIFIED",
+  "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+  "line": 25,
+  "token": "0.2341",
+  "receipt_ref": "honesty_parity_confirm_result.json:points[2].baseline_gap"
+ },
+ "I0112": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 29,
+  "token": "0.0026",
+  "receipt_ref": "b42_result.json:grid.k12_s343.null"
+ },
+ "I0113": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "line": 33,
+  "token": "30",
+  "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+ },
+ "I0114": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 37,
+  "token": "0.6756",
+  "receipt_ref": "b2_coupling_dose_result.json:per_seed.1.read_at_rstar"
+ },
+ "I0115": {
+  "status": "VERIFIED",
+  "repo": "FINDING_council_2026_05_25.md",
+  "line": 63,
+  "token": "0.75",
+  "receipt_ref": "probe_fame_vs_truth_results.json:T1_truth_not_fame(R2>=0.70 & R2-fake>=0.30)[2]"
+ },
+ "I0116": {
+  "status": "VERIFIED",
+  "repo": "ATLAS_OF_MINDS_v0.md",
+  "line": 35,
+  "token": "0.3321",
+  "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[7].geometry.citizenship_xfam_partial_lex"
+ },
+ "I0117": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "line": 107,
+  "token": "28.1",
+  "receipt_ref": "oath_v11_battery_result.json:gates[5].comparison_arm.surfacing_destroyed_mean"
+ },
+ "I0118": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_ensemble_2026_06_13.md",
+  "line": 15,
+  "token": "0.4305",
+  "receipt_ref": "mount_ensemble_result.json:cos_member_mean_avg"
+ },
+ "I0119": {
+  "status": "VERIFIED",
+  "repo": "FINDING_gavagai_scale_2026_06_10.md",
+  "line": 15,
+  "token": "1",
+  "receipt_ref": "gavagai_scale_result.json:pairs_improving_192_vs_96"
+ },
+ "I0120": {
+  "status": "VERIFIED",
+  "repo": "RESULT_E2_strong_attacker_2026_07_07.md",
+  "line": 18,
+  "token": "0.786",
+  "receipt_ref": "e2_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_frozen_stack_read"
+ },
+ "I0121": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+  "line": 31,
+  "token": "0.838",
+  "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
+ },
+ "I0122": {
+  "status": "VERIFIED",
+  "repo": "FINDING_third_party_bench_2026_07_24.md",
+  "line": 30,
+  "token": "0.27058823529411763",
+  "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.cave_rate"
+ },
+ "I0123": {
+  "status": "VERIFIED",
+  "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+  "line": 29,
+  "token": "48.8",
+  "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_within_25pct"
+ },
+ "I0124": {
+  "status": "VERIFIED",
+  "repo": "FINDING_combined_signal_2026_07_26.md",
+  "line": 59,
+  "token": "7",
+  "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.aqua_mc.n_correct"
+ },
+ "I0125": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v04_recall_decimalguard_2026_07_04.md",
+  "line": 21,
+  "token": "26",
+  "receipt_ref": "cycle25_decimalguard_battery_result.json:false_verify"
+ },
+ "I0126": {
+  "status": "VERIFIED",
+  "repo": "FINDING_self_verification_2026_07_25.md",
+  "line": 6,
+  "token": "228",
+  "receipt_ref": "self_verification_result.json:n_scored"
+ },
+ "I0127": {
+  "status": "VERIFIED",
+  "repo": "FINDING_coupling_resolution_2026_07_28.md",
+  "line": 40,
+  "token": "0.033333333333333326",
+  "receipt_ref": "coupling_resolution_result.json:kp_residual_pooled"
+ },
+ "I0128": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_live_catch_2026_06_12.md",
+  "line": 77,
+  "token": "13",
+  "receipt_ref": "mount_live_catch_result.json:caved"
+ },
+ "I0129": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 94,
+  "token": "0.2151",
+  "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
+ },
+ "I0130": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b39_whitening_2026_08_04.md",
+  "line": 14,
+  "token": "0.0434",
+  "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__qwen_1p5b"
+ },
+ "I0131": {
+  "status": "VERIFIED",
+  "repo": "FINDING_promptopinion_2026_05_24.md",
+  "line": 12,
+  "token": "0.00",
+  "receipt_ref": "results_promptopinion.json:C4.restrained_yes_FPR"
+ },
+ "I0132": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 43,
+  "token": "0.7346",
+  "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].private13"
+ },
+ "I0133": {
+  "status": "VERIFIED",
+  "repo": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+  "line": 68,
+  "token": "0",
+  "receipt_ref": "e3dprime_result.json:seeds[0]"
+ },
+ "I0134": {
+  "status": "VERIFIED",
+  "repo": "FINDING_thirdframe_2026_07_29.md",
+  "line": 22,
+  "token": "0.7038961038961038",
+  "receipt_ref": "thirdframe_result.json:cells.KP.frames.T3.specificity"
+ },
+ "I0135": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mapped_whitening_2026_06_12.md",
+  "line": 62,
+  "token": "5",
+  "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+ },
+ "I0136": {
+  "status": "VERIFIED",
+  "repo": "FINDING_portable_values_refusal_2026_06_11.md",
+  "line": 44,
+  "token": "0.001",
+  "receipt_ref": "portable_values_refusal_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.p_value"
+ },
+ "I0137": {
+  "status": "VERIFIED",
+  "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+  "line": 55,
+  "token": "5",
+  "receipt_ref": "b35a_constants_addendum.json:n_seeds"
+ },
+ "I0138": {
+  "status": "VERIFIED",
+  "repo": "FINDING_scale3b_2026_07_29.md",
+  "line": 38,
+  "token": "0.9285714285714286",
+  "receipt_ref": "scale3b_result.json:dose.KP.recovery"
+ },
+ "I0139": {
+  "status": "VERIFIED",
+  "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+  "line": 31,
+  "token": "0.5468",
+  "receipt_ref": "verdict.json:H1.auroc"
+ },
+ "I0140": {
+  "status": "VERIFIED",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 56,
+  "token": "0.9745",
+  "receipt_ref": "b41_result.json:a1_bridge_disc"
+ },
+ "I0141": {
+  "status": "VERIFIED",
+  "repo": "FINDING_dogfood_2026_05_25.md",
+  "line": 43,
+  "token": "0.78",
+  "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[5].overconfidence"
+ },
+ "I0142": {
+  "status": "VERIFIED",
+  "repo": "FINDING_selective_confirm_2026_07_24.md",
+  "line": 46,
+  "token": "0.4804804804804805",
+  "receipt_ref": "selective_confirm_result.json:loop.informativeness_gap"
+ },
+ "I0143": {
+  "status": "VERIFIED",
+  "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+  "line": 51,
+  "token": "1.000",
+  "receipt_ref": "behavioral_sycophancy_result.json:auc_grounded"
+ },
+ "I0144": {
+  "status": "VERIFIED",
+  "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+  "line": 26,
+  "token": "1073",
+  "receipt_ref": "oath_v10_column_census.json:repo_wide.documents"
+ },
+ "I0145": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+  "line": 40,
+  "token": "0.6166",
+  "receipt_ref": "b7_erasure_3b_result.json:points[1].naive_dom6_auroc"
+ },
+ "I0146": {
+  "status": "VERIFIED",
+  "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+  "line": 57,
+  "token": "0.6756",
+  "receipt_ref": "coupling_confirm_result.json:per_seed.1.read_at_rstar"
+ },
+ "I0147": {
+  "status": "VERIFIED",
+  "repo": "RESULT_ai_brain_2026_06_03.md",
+  "line": 9,
+  "token": "0.002",
+  "receipt_ref": "ai_brain_result.json:per_model.Qwen-1.5B.brain"
+ },
+ "I0148": {
+  "status": "VERIFIED",
+  "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+  "line": 38,
+  "token": "30",
+  "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+ },
+ "I0149": {
+  "status": "VERIFIED",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+  "line": 43,
+  "token": "0.7299",
+  "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+ },
+ "I0150": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_v04_float_binding_2026_07_03.md",
+  "line": 22,
+  "token": "0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0151": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+  "line": 90,
+  "token": "0.682",
+  "receipt_ref": null
+ },
+ "I0152": {
+  "status": "ABSTAIN",
+  "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "line": 61,
+  "token": "90",
+  "receipt_ref": null
+ },
+ "I0153": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_within_b39_2026_06_14.md",
+  "line": 8,
+  "token": "60",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0154": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+  "line": 63,
+  "token": "150",
+  "receipt_ref": null
+ },
+ "I0155": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_promptopinion_2026_05_24.md",
+  "line": 8,
+  "token": "120",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0156": {
+  "status": "ABSTAIN",
+  "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "line": 155,
+  "token": "21",
+  "receipt_ref": null
+ },
+ "I0157": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_buried_judge_2026_07_24.md",
+  "line": 49,
+  "token": "0.3443",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0158": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_within_b39_2026_06_14.md",
+  "line": 79,
+  "token": "0.0034",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0159": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_coupling_battery_2026_07_28.md",
+  "line": 14,
+  "token": "74",
+  "receipt_ref": null
+ },
+ "I0160": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_content_wall_2026_06_12.md",
+  "line": 27,
+  "token": "3",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0161": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+  "line": 77,
+  "token": "0.06",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0162": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_scale_confirm_2026_07_24.md",
+  "line": 62,
+  "token": "66",
+  "receipt_ref": null
+ },
+ "I0163": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_within_b39_2026_06_14.md",
+  "line": 8,
+  "token": "30",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0164": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_council_grounding_2026_05_28.md",
+  "line": 30,
+  "token": "36",
+  "receipt_ref": null
+ },
+ "I0165": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_axis_independence_2026_06_11.md",
+  "line": 43,
+  "token": "0.65",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0166": {
+  "status": "ABSTAIN",
+  "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+  "line": 30,
+  "token": "6",
+  "receipt_ref": "row_ordinal_label"
+ },
+ "I0167": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+  "line": 83,
+  "token": "23",
+  "receipt_ref": null
+ },
+ "I0168": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 41,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "I0169": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_combined_signal_2026_07_26.md",
+  "line": 89,
+  "token": "20",
+  "receipt_ref": "v05-notation"
+ },
+ "I0170": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_margin_parity_control_2026_07_10.md",
+  "line": 32,
+  "token": "0.70",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0171": {
+  "status": "ABSTAIN",
+  "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+  "line": 66,
+  "token": "74",
+  "receipt_ref": null
+ },
+ "I0172": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 12,
+  "token": "20",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0173": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+  "line": 10,
+  "token": "110",
+  "receipt_ref": null
+ },
+ "I0174": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_combined_signal_2026_07_26.md",
+  "line": 17,
+  "token": "0.7717",
+  "receipt_ref": null
+ },
+ "I0175": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_kp_replication_2026_07_28.md",
+  "line": 56,
+  "token": "16",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0176": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+  "line": 11,
+  "token": "70",
+  "receipt_ref": null
+ },
+ "I0177": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_prior_art_survey_2026_08_26.md",
+  "line": 130,
+  "token": "181",
+  "receipt_ref": null
+ },
+ "I0178": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_geometry_integrity_2026_06_03.md",
+  "line": 47,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "I0179": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_scale_confirm_2026_07_24.md",
+  "line": 22,
+  "token": "66",
+  "receipt_ref": null
+ },
+ "I0180": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_ensemble_2026_06_13.md",
+  "line": 38,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "I0181": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+  "line": 60,
+  "token": "1.0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0182": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+  "line": 24,
+  "token": "2",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0183": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "line": 63,
+  "token": "0.007812",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0184": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+  "line": 40,
+  "token": "66",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0185": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+  "line": 51,
+  "token": "64",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0186": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+  "line": 9,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "I0187": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+  "line": 37,
+  "token": "36",
+  "receipt_ref": null
+ },
+ "I0188": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+  "line": 69,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "I0189": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+  "line": 67,
+  "token": "0.80",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0190": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+  "line": 97,
+  "token": "0.60",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0191": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_portable_conscience_v2_2026_06_10.md",
+  "line": 18,
+  "token": "0.65",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0192": {
+  "status": "ABSTAIN",
+  "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "line": 196,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "I0193": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_ai_human_2026_06_03.md",
+  "line": 35,
+  "token": "13",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0194": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_early_warning_b34_2026_06_13.md",
+  "line": 21,
+  "token": "60",
+  "receipt_ref": null
+ },
+ "I0195": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
+  "line": 41,
+  "token": "16",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0196": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+  "line": 52,
+  "token": "10",
+  "receipt_ref": null
+ },
+ "I0197": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_llm_breadth_2026_06_03.md",
+  "line": 32,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "I0198": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_ai_brain_2026_06_03.md",
+  "line": 28,
+  "token": "56",
+  "receipt_ref": null
+ },
+ "I0199": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_dogfood_2026_05_25.md",
+  "line": 13,
+  "token": "8",
+  "receipt_ref": null
+ },
+ "I0200": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_protocol_metric_identity_2026_08_07.md",
+  "line": 49,
+  "token": "28",
+  "receipt_ref": null
+ },
+ "I0201": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 33,
+  "token": "2",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0202": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_frontier_incontext_oof_2026_07_30.md",
+  "line": 78,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "I0203": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_honesty_parity_control_2026_07_11.md",
+  "line": 80,
+  "token": "0.02",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0204": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_coupling_battery_2026_07_28.md",
+  "line": 22,
+  "token": "0.0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0205": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 46,
+  "token": "40",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0206": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+  "line": 173,
+  "token": "47",
+  "receipt_ref": null
+ },
+ "I0207": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+  "line": 54,
+  "token": "92",
+  "receipt_ref": null
+ },
+ "I0208": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+  "line": 19,
+  "token": "61",
+  "receipt_ref": null
+ },
+ "I0209": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_buried_judge_2026_07_24.md",
+  "line": 49,
+  "token": "0.354",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0210": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+  "line": 28,
+  "token": "2",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0211": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+  "line": 8,
+  "token": "30",
+  "receipt_ref": null
+ },
+ "I0212": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_truth_danger_basis_2026_06_12.md",
+  "line": 78,
+  "token": "48",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0213": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_mapped_whitening_2026_06_12.md",
+  "line": 30,
+  "token": "0.2",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0214": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "line": 26,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "I0215": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_buried_judge_2026_07_24.md",
+  "line": 41,
+  "token": "60",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0216": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+  "line": 28,
+  "token": "1.0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0217": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_conscience_loop_2026_07_24.md",
+  "line": 55,
+  "token": "137",
+  "receipt_ref": null
+ },
+ "I0218": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_anatomy_v2_2026_06_10.md",
+  "line": 40,
+  "token": "0.0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0219": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+  "line": 43,
+  "token": "5",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0220": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+  "line": 13,
+  "token": "0.0516",
+  "receipt_ref": "spec-or-historical"
+ },
+ "I0221": {
+  "status": "ABSTAIN",
+  "repo": "RECON_oath_external_reach_2026_08_26.md",
+  "line": 101,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "I0222": {
+  "status": "ABSTAIN",
+  "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+  "line": 60,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "I0223": {
+  "status": "ABSTAIN",
+  "repo": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
+  "line": 10,
+  "token": "32",
+  "receipt_ref": null
+ },
+ "I0224": {
+  "status": "ABSTAIN",
+  "repo": "PAPER_knowsay_gap_2026_07_27.md",
+  "line": 108,
+  "token": "7",
+  "receipt_ref": null
+ },
+ "I0225": {
+  "status": "UNGROUNDED",
+  "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+  "line": 13,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "I0226": {
+  "status": "UNGROUNDED",
+  "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "line": 23,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "I0227": {
+  "status": "UNGROUNDED",
+  "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "line": 23,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "I0228": {
+  "status": "UNGROUNDED",
+  "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "line": 23,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "I0229": {
+  "status": "UNGROUNDED",
+  "repo": "RECON_oath_external_reach_2026_08_26.md",
+  "line": 78,
+  "token": "100,000",
+  "receipt_ref": null
+ },
+ "I0230": {
+  "status": "UNGROUNDED",
+  "repo": "RECON_oath_external_reach_2026_08_26.md",
+  "line": 78,
+  "token": "300,000",
+  "receipt_ref": null
+ },
+ "I0231": {
+  "status": "UNGROUNDED",
+  "repo": "RECON_oath_external_reach_2026_08_26.md",
+  "line": 103,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "I0232": {
+  "status": "UNGROUNDED",
+  "repo": "RECON_oath_external_reach_2026_08_26.md",
+  "line": 103,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "I0233": {
+  "status": "UNGROUNDED",
+  "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "line": 29,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "I0234": {
+  "status": "UNGROUNDED",
+  "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "line": 29,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "I0235": {
+  "status": "UNGROUNDED",
+  "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "line": 29,
+  "token": "2",
+  "receipt_ref": null
+ }
+}

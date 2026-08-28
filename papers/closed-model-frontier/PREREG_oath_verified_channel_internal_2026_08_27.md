@@ -87,4 +87,32 @@ decisive.
 
 ---
 
-*Frozen 2026-08-27, before the internal ledger was built.*
+## Amendments, recorded before any verdict was known
+
+**1. The rubric's opening sentence differs between the arms, and it had to.** The external run told
+adjudicators they were judging *"numeric tokens extracted from README files in public GitHub
+repositories"*, which was true of that corpus and is **false** of this one. Repeating it verbatim
+in the name of identical presentation would have meant asserting a false provenance to the panel.
+Blinding means withholding which corpus an item came from; it does not license lying about it.
+
+So the internal run opens with a description true of both: *"numeric tokens extracted from
+technical documents that ship machine-readable result files alongside them."* Everything else —
+the four categories, the `UNSURE` instruction, the integrity constraints, the item fields, the
+packet size, the panel size, the seed and the tie direction — is unchanged.
+
+**2. The operative question text lives in the panel harness, not in the packets file.** Both runs
+record a `question` field inside their packets JSON, and in both runs the text adjudicators
+actually received is the one embedded in the workflow that drove them. The two are the same
+question in near-identical words — "checkable against the cited receipts" in the file,
+"checkable against the document's committed result files" in the harness — but they are not
+byte-identical, and a reader comparing them should know which was operative. This applies to the
+external run exactly as it applies here.
+
+Both are real differences and are disclosed as such rather than smoothed over. If the framing
+sentence moves adjudicators at all, the comparison inherits that; it is one more reason the
+internal/external gap is not a clean causal contrast, alongside the genre confound already
+disclosed above. Recorded here, in the frozen document, before the panel returned.
+
+---
+
+*Frozen 2026-08-27, before the internal ledger was built. Amended before it was scored.*
