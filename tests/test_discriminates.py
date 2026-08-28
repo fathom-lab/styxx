@@ -228,3 +228,60 @@ def test_cli_exits_zero_when_a_candidate_beats_the_control(tmp_path):
                        capture_output=True, text=True, encoding="utf-8", errors="replace")
     assert p.returncode == 0, p.stdout + p.stderr
     assert "SEPARATES" in p.stdout
+
+
+def test_a_candidate_that_does_nothing_beats_the_control_on_a_cost_column():
+    """The obligation-repair census, held out across documents, 2026-08-27.
+
+    A word list catching 1 of 85 missed claims -- recall 0.012 -- costs 1 against a null rule
+    costing 127, so it BEATS the control on the cost column and this module reports holds. A rule
+    that does nothing is cheap, and on a cost column that is indistinguishable from a rule that is
+    cheap because it is precise. The pass is real and is not suppressed; what the report must do
+    is make the 0.012 visible beside it.
+    """
+    rep = discrimination_report(
+        {"does_almost_nothing": {"caught": 1, "cost": 1},
+         "does_something": {"caught": 40, "cost": 20}},
+        {"caught": 85, "cost": 127},
+        {"caught": HIGHER, "cost": LOWER},
+        deciding=["cost"])
+    assert rep["columns"]["cost"]["verdict"] == SEPARATES
+    assert rep["holds"], "it does beat the null on the declared deciding column"
+    share = rep["share_of_control"]
+    assert share["does_almost_nothing"]["caught"] == 0.0118
+    assert share["does_something"]["caught"] == 0.4706
+    assert share["does_almost_nothing"]["cost"] == 0.0079
+
+
+def test_share_of_control_is_reported_for_every_candidate_and_column():
+    rep = discrimination_report(
+        {"a": {"caught": 40, "cost": 20}}, {"caught": 85, "cost": 127},
+        {"caught": HIGHER, "cost": LOWER}, deciding=["cost"])
+    assert set(rep["share_of_control"]["a"]) == {"caught", "cost"}
+    assert "does nothing cheaply" in rep["share_of_control_note"]
+
+
+def test_the_first_attempt_at_flagging_would_have_flagged_everything():
+    """Why this reports rather than judges.
+
+    In a cost/benefit design the null rule wins the benefit column by construction, so a rule that
+    flags candidates winning ONLY on the deciding column flags every candidate -- including the
+    good one. Pinned so nobody reintroduces it.
+    """
+    rep = discrimination_report(
+        {"good": {"caught": 40, "cost": 20}, "useless": {"caught": 1, "cost": 1}},
+        {"caught": 85, "cost": 127},
+        {"caught": HIGHER, "cost": LOWER}, deciding=["cost"])
+    assert rep["columns"]["caught"]["verdict"] == NULL_TIES_BEST
+    assert rep["columns"]["caught"]["beats_control"] == [], (
+        "neither candidate beats the null on benefit, which is why 'wins only on the deciding "
+        "column' cannot separate them")
+
+
+def test_render_shows_the_retained_share():
+    rep = discrimination_report(
+        {"useless": {"caught": 1, "cost": 1}}, {"caught": 85, "cost": 127},
+        {"caught": HIGHER, "cost": LOWER}, deciding=["cost"])
+    text = render(rep)
+    assert "share of the control" in text
+    assert "caught=0.0118" in text

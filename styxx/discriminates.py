@@ -68,6 +68,28 @@ any bar is frozen; from the CLI it is a non-zero exit.
   5,159 nominal verifications and all five candidates beat it — while `accusations_reached`
   (benefit) comes back `NULL_TIES_BEST` at a control of 11. The first is the census's own declared
   deciding column and it is sound; flagging the second would be this module misreading the design.
+* **But declaring the cost column as deciding is not sufficient either, and the advice above is
+  half of a rule.** A candidate can beat the control on a cost column *by doing almost nothing*.
+  On 2026-08-27 `oath_obligation_repair_census.py` scored word lists for repairing the obligation
+  predicate: held out across documents, the top-20 list caught **1** of 85 missed claims — a
+  recall of `0.012` — at a cost of 1 against a null rule costing 127. This module reported
+  `SEPARATES` and `holds: true`. A rule that does nothing has a very low cost, and on a cost
+  column that is indistinguishable from a rule that is cheap because it is precise.
+
+  There is no threshold-free rule that separates that from a rule which is cheap *because it is
+  precise*, and the first attempt at one proved it: flagging candidates that win only on the
+  deciding column flagged **every** candidate, because in a cost/benefit design the null rule wins
+  the benefit column by construction. So `report["share_of_control"]` reports, per candidate, what
+  fraction of the null rule's score it retains on each column. The word list above retains `0.012`
+  of the null's catches at `0.008` of its cost — a fine-looking trade whose first number is the
+  one that tells you it does nothing. **Reported, not judged**: how much benefit is enough is the
+  caller's question, and answering it here would be the proxy defect this module exists to catch.
+* **It cannot see overfitting, and no version of it will.** The same census's word lists looked
+  excellent in-sample — 36 of 85 caught at a cost of 4 — and collapsed on a held-out split. This
+  module asks whether a candidate beats doing nothing; that is a different question from whether
+  the candidate was fitted on the data it is scored on. **A discrimination check is not a
+  substitute for a held-out evaluation, and passing this one licenses nothing about
+  generalisation.**
 
 CLI:
   python -m styxx.discriminates SCORES.json [--json OUT.json]
@@ -159,6 +181,34 @@ def discrimination_report(candidates: dict, control: dict, directions: dict,
             "spread": [min(values), max(values)],
         }
 
+    # A candidate can beat the control on a COST column by doing almost nothing, and no
+    # threshold-free rule distinguishes that from a rule which is cheap because it is precise.
+    # A first attempt flagged candidates winning only on the deciding column -- useless, because
+    # in any cost/benefit design the null rule wins the benefit column by construction, so it
+    # flagged every candidate including the good ones.
+    #
+    # So this REPORTS rather than judges: for every candidate, what share of the control's score
+    # it retains on each column. On 2026-08-27 the obligation-repair census had a word list
+    # retaining 0.012 of the null rule's catches at 0.008 of its cost. Both look fine as a trade;
+    # the 0.012 is what tells you the rule does nothing, and only a human comparing it against
+    # what the repair needs can say so. Deciding which column carries the benefit, and how much of
+    # it is enough, is the caller's judgement -- guessing it here would be the proxy defect this
+    # module exists to catch.
+    shares = {}
+    for name, scores in candidates.items():
+        row = {}
+        for col in columns:
+            if col not in scores:
+                continue
+            ctl = control[col]
+            row[col] = round(scores[col] / ctl, 4) if ctl else None
+        shares[name] = row
+    report["share_of_control"] = shares
+    report["share_of_control_note"] = (
+        "Per candidate, its score divided by the null rule's on each column. A candidate that "
+        "beats the control on a cost column while retaining almost none of its benefit is a rule "
+        "that does nothing cheaply. Read these before believing a cost-column pass.")
+
     for col in sorted(deciding):
         entry = report["columns"].get(col)
         if entry is None:
@@ -206,6 +256,12 @@ def render(rep: dict, control_name: str = "control") -> str:
         out.append(f"{col.ljust(width)}  {e['verdict']:<15}  {e['control']:>7}  {beats}")
     out.append("")
     out.append(f"control: {control_name}")
+    if rep.get("share_of_control"):
+        out.append("")
+        out.append("share of the control's score retained, per candidate:")
+        for n, row in rep["share_of_control"].items():
+            cells = "  ".join(f"{c}={v}" for c, v in row.items())
+            out.append(f"  {n:<28} {cells}")
     if rep["accusations"]:
         out.append("")
         out.append(f"{len(rep['accusations'])} column(s) declared decisive that cannot fail:")
