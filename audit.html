@@ -1,0 +1,303 @@
+<title>Watch It Check Itself</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+*{box-sizing:border-box}
+:root{
+  --ground:#EDEEEB; --paper:#F7F8F6; --ink:#131816; --dim:#5B6560;
+  --hair:rgba(19,24,22,.14); --rule:rgba(19,24,22,.26);
+  --bound:#8A5D10; --bound-bg:rgba(138,93,16,.13);
+  --accused:#8F3520; --accused-bg:rgba(143,53,32,.12);
+  --unread:#5B6560; --unread-bg:rgba(19,24,22,.055);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0F1311; --paper:#151A18; --ink:#C7D0CB; --dim:#79847F;
+  --hair:rgba(199,208,203,.15); --rule:rgba(199,208,203,.22);
+  --bound:#E3A63C; --bound-bg:rgba(227,166,60,.14);
+  --accused:#D4664B; --accused-bg:rgba(212,102,75,.15);
+  --unread:#79847F; --unread-bg:rgba(199,208,203,.06);
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1311; --paper:#151A18; --ink:#C7D0CB; --dim:#79847F;
+  --hair:rgba(199,208,203,.15); --rule:rgba(199,208,203,.22);
+  --bound:#E3A63C; --bound-bg:rgba(227,166,60,.14);
+  --accused:#D4664B; --accused-bg:rgba(212,102,75,.15);
+  --unread:#79847F; --unread-bg:rgba(199,208,203,.06);
+}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 72px;}
+.plate{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;}
+.micro{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);}
+.tag pre{margin:0;font-family:"IBM Plex Mono",monospace;color:var(--bound);
+  font-size:clamp(5px,1.3vw,10px);line-height:1.06;white-space:pre;}
+.tag{overflow-x:auto;margin-bottom:10px;}
+h1{margin:.2em 0 .1em;font-size:clamp(1.9rem,5vw,3rem);line-height:.96;text-wrap:balance;}
+.sub{color:var(--dim);max-width:66ch;margin:.6em 0 0;}
+.sub b{color:var(--ink);font-weight:500;}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;align-items:stretch;}
+.k{border:1px solid var(--hair);background:var(--paper);padding:9px 13px;display:flex;
+  align-items:center;gap:9px;}
+.k .sw{width:11px;height:11px;flex-shrink:0;border-radius:2px;}
+.k .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-variant-numeric:tabular-nums;}
+.k .l{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);}
+.sw.bound{background:var(--bound-bg);border:1px solid var(--bound);}
+.sw.accused{background:var(--accused-bg);border:1px solid var(--accused);}
+.sw.unread{background:var(--unread-bg);border:1px dashed var(--unread);}
+button.tog{font:inherit;font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+  border:1px solid var(--rule);background:transparent;color:var(--ink);padding:9px 15px;
+  cursor:pointer;font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;}
+button.tog:hover{border-color:var(--bound);color:var(--bound);}
+button.tog[aria-pressed="true"]{background:var(--bound);border-color:var(--bound);color:var(--ground);}
+button.tog:focus-visible{outline:2px solid var(--bound);outline-offset:2px;}
+.cols{display:grid;grid-template-columns:1fr 330px;gap:18px;margin-top:22px;align-items:start;}
+.doc{border:1px solid var(--hair);background:var(--paper);overflow-x:auto;position:relative;}
+.doc .head{border-bottom:1px solid var(--hair);padding:11px 16px;display:flex;
+  justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;}
+.doc .head .f{font-family:"IBM Plex Mono",monospace;font-size:12px;}
+pre.src{margin:0;padding:14px 16px 20px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;
+  line-height:1.85;white-space:pre-wrap;word-break:break-word;tab-size:2;}
+.ln{display:inline-block;width:2.6em;color:var(--dim);opacity:.5;user-select:none;
+  font-variant-numeric:tabular-nums;}
+mark.t{background:transparent;color:inherit;padding:1px 2px;border-radius:2px;cursor:pointer;
+  border-bottom:2px solid transparent;}
+mark.t:focus-visible{outline:2px solid var(--bound);outline-offset:1px;}
+mark.bound{background:var(--bound-bg);border-bottom-color:var(--bound);color:var(--bound);}
+mark.accused{background:var(--accused-bg);border-bottom-color:var(--accused);color:var(--accused);
+  font-weight:600;}
+mark.unread{background:var(--unread-bg);border-bottom:2px dashed var(--unread);}
+mark.t.sel{outline:2px solid var(--ink);outline-offset:1px;}
+body.blind mark.bound{background:transparent;border-bottom-color:transparent;color:var(--dim);
+  opacity:.35;}
+body.blind mark.accused{opacity:.35;}
+body.blind mark.unread{background:var(--accused-bg);border-bottom:2px solid var(--accused);
+  color:var(--accused);}
+.panel{border:1px solid var(--hair);background:var(--paper);padding:16px;position:sticky;top:16px;}
+.panel h2{margin:0 0 10px;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;
+  font-family:"IBM Plex Sans Condensed",sans-serif;}
+.panel .tokv{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;font-weight:600;
+  display:block;margin-bottom:2px;}
+.panel dl{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;}
+.panel dt{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);}
+.panel dd{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;word-break:break-all;}
+.panel .hint{color:var(--dim);font-size:.86rem;}
+.blindnote{border-left:2px solid var(--accused);background:var(--accused-bg);padding:10px 12px;
+  margin-top:14px;font-size:.85rem;line-height:1.5;display:none;}
+body.blind .blindnote{display:block;}
+footer{margin-top:44px;border-top:1px solid var(--hair);padding-top:18px;color:var(--dim);
+  font-size:.87rem;max-width:70ch;}
+footer b{color:var(--ink);font-weight:500;}
+@media (max-width:900px){.cols{grid-template-columns:1fr}.panel{position:static}}
+@media (prefers-reduced-motion:no-preference){
+  mark.t{animation:lite .28s ease-out backwards;animation-delay:var(--d,0ms);}
+  @keyframes lite{from{background:transparent;border-bottom-color:transparent;color:inherit;}}
+}
+</style>
+<div class="wrap">
+<div class="tag" role="img" aria-label="styxx"><pre> ███████  ████████  ██    ██  ██    ██  ██    ██
+ ██          ██      ██  ██    ██  ██    ██  ██
+ ███████     ██       ████      ████      ████
+      ██     ██        ██      ██  ██    ██  ██
+ ███████     ██        ██     ██    ██  ██    ██</pre></div>
+<h1 class="plate">Watch it<br>check itself</h1>
+<p class="sub">Every claim-checking tool shows you what it checked. This is the same audit with the
+third band left in: <b>the numbers the verifier never read at all.</b> Click any highlighted
+number to see what obligated it and what it bound to. This is a real document from the corpus,
+annotated from its committed certificate &mdash; not a mock-up.</p>
+
+<div class="bar">
+  <div class="k"><span class="sw bound"></span><span class="n">31</span><span class="l">bound to a receipt</span></div><div class="k"><span class="sw accused"></span><span class="n">2</span><span class="l">accused</span></div><div class="k"><span class="sw unread"></span><span class="n">12</span><span class="l">never read</span></div>
+  <button class="tog" id="blind" aria-pressed="false">Show what it never read</button>
+</div>
+
+<div class="cols">
+  <div class="doc">
+    <div class="head">
+      <span class="f">RESULT_oath_verified_channel_internal_2026_08_27.md</span>
+      <span class="micro">OATH-FAILED &middot; verifier 8c15962b5737dac6&hellip;</span>
+    </div>
+    <pre class="src"><span class="ln">1</span># RESULT — the defect is in our own certificates, and the contract buys less than we said
+<span class="ln">2</span>
+<span class="ln">3</span>Fathom Lab · 2026-08-27 · Prereg: `PREREG_oath_verified_channel_internal_2026_08_27.md`, frozen
+<span class="ln">4</span>and committed before the internal ledger was built and amended before it was scored. Receipts:
+<span class="ln">5</span>`oath_internal_result.json`, `oath_adjudication_result.json`, `oath_adjudication_analysis.json`.
+<span class="ln">6</span>
+<span class="ln">7</span>**The pre-committed middle row fired.** Of this laboratory&#x27;s own tokens carrying `OATH-VERIFIED`,
+<span class="ln">8</span>a blind panel judged `<mark class="t bound" data-i="0" style="--d:0ms" tabindex="0" role="button" aria-label="bound token 0.7933">0.7933</mark>` to be claims. The prereg said in advance what that would mean:
+<span class="ln">9</span>
+<span class="ln">10</span>&gt; *the defect is present here too, merely **milder** — every OATH-HELD certificate in this
+<span class="ln">11</span>&gt; repository is partly attesting to non-claims; the flagship numbers need a stated error bar and
+<span class="ln">12</span>&gt; the repair is urgent.*
+<span class="ln">13</span>
+<span class="ln">14</span>That is the verdict, taken as written.
+<span class="ln">15</span>
+<span class="ln">16</span>---
+<span class="ln">17</span>
+<span class="ln">18</span>## 1. What the two arms say
+<span class="ln">19</span>
+<span class="ln">20</span>| | internal (ours) | external | gap |
+<span class="ln">21</span>|---|---|---|---|
+<span class="ln">22</span>| verified tokens the panel calls claims | `<mark class="t bound" data-i="1" style="--d:26ms" tabindex="0" role="button" aria-label="bound token 0.7933">0.7933</mark>` (n=<mark class="t unread" data-i="2" style="--d:52ms" tabindex="0" role="button" aria-label="unread token 150">150</mark>) | `<mark class="t bound" data-i="3" style="--d:78ms" tabindex="0" role="button" aria-label="bound token 0.4933">0.4933</mark>` (n=<mark class="t unread" data-i="4" style="--d:104ms" tabindex="0" role="button" aria-label="unread token 75">75</mark>) | `<mark class="t bound" data-i="5" style="--d:130ms" tabindex="0" role="button" aria-label="bound token 0.3">0.3</mark>` |
+<span class="ln">23</span>| abstained tokens the panel calls claims — the **miss rate** | `<mark class="t bound" data-i="6" style="--d:156ms" tabindex="0" role="button" aria-label="bound token 0.4267">0.4267</mark>` (n=<mark class="t unread" data-i="7" style="--d:182ms" tabindex="0" role="button" aria-label="unread token 75">75</mark>) | `<mark class="t bound" data-i="8" style="--d:208ms" tabindex="0" role="button" aria-label="bound token 0.4067">0.4067</mark>` (n=<mark class="t unread" data-i="9" style="--d:234ms" tabindex="0" role="button" aria-label="unread token 150">150</mark>) | `<mark class="t bound" data-i="10" style="--d:260ms" tabindex="0" role="button" aria-label="bound token 0.02">0.02</mark>` |
+<span class="ln">24</span>| panel unanimity | `<mark class="t bound" data-i="11" style="--d:286ms" tabindex="0" role="button" aria-label="bound token 0.9619">0.9619</mark>` | `<mark class="t bound" data-i="12" style="--d:312ms" tabindex="0" role="button" aria-label="bound token 0.9814">0.9814</mark>` | — |
+<span class="ln">25</span>
+<span class="ln">26</span>The first row is the defence working. Documents written to keep the contract carry verifications
+<span class="ln">27</span>that are much more often about real claims, and the thirty-point gap is the largest evidence this
+<span class="ln">28</span>programme has that the contract framing is worth something.
+<span class="ln">29</span>
+<span class="ln">30</span>**The second row is the finding, and it is not good.** On abstention the two corpora are
+<span class="ln">31</span>indistinguishable. The verifier declines to check a checkable claim at essentially the same rate
+<span class="ln">32</span>whether the author signed the contract or never heard of it. **Keeping the contract buys nothing
+<span class="ln">33</span>at all against blindness.**
+<span class="ln">34</span>
+<span class="ln">35</span>That was not predicted anywhere. The contract framing says the instrument works where authors
+<span class="ln">36</span>emit receipts; it turns out to be true of what the instrument *says* and false of what it
+<span class="ln">37</span>*chooses to look at*. The obligation predicate is not contract-sensitive, because it never reads
+<span class="ln">38</span>the receipts — it reads the vocabulary on a line, and our lines are not more legible to it than
+<span class="ln">39</span>anyone else&#x27;s.
+<span class="ln">40</span>
+<span class="ln">41</span>## 2. What our own bad verifications look like
+<span class="ln">42</span>
+<span class="ln">43</span>Thirty-one of a hundred and fifty. The pattern is the external one, unchanged:
+<span class="ln">44</span>
+<span class="ln">45</span>| the token | its line | what it is |
+<span class="ln">46</span>|---|---|---|
+<span class="ln">47</span>| `<mark class="t bound" data-i="13" style="--d:338ms" tabindex="0" role="button" aria-label="bound token 343">343</mark>` | `One seed (<mark class="t bound" data-i="14" style="--d:364ms" tabindex="0" role="button" aria-label="bound token 343">343</mark>), one split, 70-way read` | a seed |
+<span class="ln">48</span>| `<mark class="t bound" data-i="15" style="--d:390ms" tabindex="0" role="button" aria-label="bound token 10000">10000</mark>` | `permutation p = <mark class="t unread" data-i="16" style="--d:416ms" tabindex="0" role="button" aria-label="unread token 0.0">0.0</mark> (<mark class="t bound" data-i="17" style="--d:442ms" tabindex="0" role="button" aria-label="bound token 10000">10000</mark> draws)` | a draw count |
+<span class="ln">49</span>| `<mark class="t bound" data-i="18" style="--d:468ms" tabindex="0" role="button" aria-label="bound token 0.75">0.75</mark>` | `agreement quantized to {<mark class="t bound" data-i="19" style="--d:494ms" tabindex="0" role="button" aria-label="bound token 0.25">0.25</mark>, <mark class="t bound" data-i="20" style="--d:520ms" tabindex="0" role="button" aria-label="bound token 2">2</mark>/<mark class="t bound" data-i="21" style="--d:546ms" tabindex="0" role="button" aria-label="bound token 4">4</mark>, <mark class="t bound" data-i="22" style="--d:572ms" tabindex="0" role="button" aria-label="bound token 0.75">0.75</mark>, <mark class="t bound" data-i="23" style="--d:598ms" tabindex="0" role="button" aria-label="bound token 1.0">1.0</mark>}` | notation, a set member |
+<span class="ln">50</span>| `<mark class="t bound" data-i="24" style="--d:624ms" tabindex="0" role="button" aria-label="bound token 5">5</mark>` | `any 5th conversion, 2nd flip, 6th silenced verification` | a gate&#x27;s ordinal |
+<span class="ln">51</span>| `<mark class="t bound" data-i="25" style="--d:650ms" tabindex="0" role="button" aria-label="bound token 8">8</mark>` | a leading table cell in an adversarial-curve row | a row index |
+<span class="ln">52</span>| `<mark class="t bound" data-i="26" style="--d:676ms" tabindex="0" role="button" aria-label="bound token 1">1</mark>` | `Qwen2.5-1.5B only, ... λ=<mark class="t unread" data-i="27" style="--d:702ms" tabindex="0" role="button" aria-label="unread token 1.0">1.0</mark> only, seeds {<mark class="t bound" data-i="28" style="--d:728ms" tabindex="0" role="button" aria-label="bound token 0">0</mark>,<mark class="t bound" data-i="29" style="--d:754ms" tabindex="0" role="button" aria-label="bound token 1">1</mark>}` | a configuration value |
+<span class="ln">53</span>
+<span class="ln">54</span>Each carries an affirmative oath in a committed certificate, because its value happened to match
+<span class="ln">55</span>a receipt field. The v0.8 coincidence channel — which exists to catch exactly this — does not
+<span class="ln">56</span>reach them, because these bind *nominally*: the path shares vocabulary with the line.
+<span class="ln">57</span>
+<span class="ln">58</span>## 3. What our own misses look like, which is worse
+<span class="ln">59</span>
+<span class="ln">60</span>Thirty-two of seventy-five abstained tokens are, on the panel&#x27;s reading, checkable claims. These
+<span class="ln">61</span>are not edge cases. They are headline measurements in flagship documents:
+<span class="ln">62</span>
+<span class="ln">63</span>* `median parity_gap=<mark class="t unread" data-i="30" style="--d:780ms" tabindex="0" role="button" aria-label="unread token 0.0516">0.0516</mark>` — a reported median, in a RESULT;
+<span class="ln">64</span>* `k* = <mark class="t unread" data-i="31" style="--d:806ms" tabindex="0" role="button" aria-label="unread token 2">2</mark>` **under the pre-stated definition** — a preregistered quantity;
+<span class="ln">65</span>* `<mark class="t accused" data-i="32" style="--d:832ms" tabindex="0" role="button" aria-label="accused token 31">31</mark>/<mark class="t accused" data-i="33" style="--d:858ms" tabindex="0" role="button" aria-label="accused token 60">60</mark> replicates cleared the noise-margin` — a pass count at a gate;
+<span class="ln">66</span>* `n=<mark class="t unread" data-i="34" style="--d:884ms" tabindex="0" role="button" aria-label="unread token 60">60</mark> = <mark class="t unread" data-i="35" style="--d:910ms" tabindex="0" role="button" aria-label="unread token 30">30</mark> original + <mark class="t unread" data-i="36" style="--d:936ms" tabindex="0" role="button" aria-label="unread token 30">30</mark> new authored pairs` — a stated sample size.
+<span class="ln">67</span>
+<span class="ln">68</span>The verifier read these lines and declined to check them. The certificate on those documents says
+<span class="ln">69</span>`OATH-HELD`.
+<span class="ln">70</span>
+<span class="ln">71</span>**So what an OATH-HELD certificate actually means is narrower than we have ever written it.** It
+<span class="ln">72</span>means *the numbers this verifier chose to obligate, it could bind to a receipt.* It does not mean
+<span class="ln">73</span>the document&#x27;s claims are grounded, and until today nobody had measured the distance between
+<span class="ln">74</span>those two sentences. On our own corpus it is roughly two in five.
+<span class="ln">75</span>
+<span class="ln">76</span>## 4. What this costs, stated plainly
+<span class="ln">77</span>
+<span class="ln">78</span>1. **Every `OATH-HELD` certificate in this repository needs the error bar this cycle measured**,
+<span class="ln">79</span>   in both directions: about one in five of its verifications may be sworn to a non-claim, and
+<span class="ln">80</span>   about two in five of the document&#x27;s checkable claims were never examined.
+<span class="ln">81</span>2. **The claim that OATH is &quot;a contract, not a detector&quot; survives, but weaker and differently.**
+<span class="ln">82</span>   The contract helps the verification channel a great deal and the obligation channel not at all.
+<span class="ln">83</span>   Anyone adopting it is buying better attestations about what gets checked, not better coverage.
+<span class="ln">84</span>3. **The repair to the obligation predicate is now the top item in the lane**, ahead of the
+<span class="ln">85</span>   verified-channel repair, because it is the one the contract cannot compensate for.
+<span class="ln">86</span>
+<span class="ln">87</span>## 5. Limits, and one that is severe
+<span class="ln">88</span>
+<span class="ln">89</span>* **The internal accusation arm is n=<mark class="t unread" data-i="37" style="--d:962ms" tabindex="0" role="button" aria-label="unread token 11">11</mark> and unusable.** Its false-accusation rate is `<mark class="t bound" data-i="38" style="--d:988ms" tabindex="0" role="button" aria-label="bound token 0.8182">0.8182</mark>`,
+<span class="ln">90</span>  which sounds alarming and means almost nothing: all eleven live in three documents from one day,
+<span class="ln">91</span>  two of which are documents *about* accusations whose accused tokens are quoted examples. It is
+<span class="ln">92</span>  reported for completeness and no weight is put on it.
+<span class="ln">93</span>* **The panel is not three readers.** `<mark class="t bound" data-i="39" style="--d:1014ms" tabindex="0" role="button" aria-label="bound token 0.9619">0.9619</mark>` unanimity internally against `<mark class="t bound" data-i="40" style="--d:1040ms" tabindex="0" role="button" aria-label="bound token 0.9814">0.9814</mark>` externally,
+<span class="ln">94</span>  from three seats of one model family. That is the correlated-error ceiling the prereg disclosed,
+<span class="ln">95</span>  not agreement between independent readers.
+<span class="ln">96</span>* **The comparison is confounded by genre as well as by contract.** Our papers are argumentative
+<span class="ln">97</span>  prose about measurements; READMEs are installation instructions with results attached. No causal
+<span class="ln">98</span>  claim is made from the pair, and the disclosed rubric deviation between arms is one more reason.
+<span class="ln">99</span>* **The panel&#x27;s independence was verified behaviourally, not by supervision.** The harness&#x27;s
+<span class="ln">100</span>  safety classifier was unavailable for thirteen of thirty seats. Rather than assume, the check is
+<span class="ln">101</span>  in the output: the panel contradicts the withheld answer key in **all three arms** — calling <mark class="t bound" data-i="41" style="--d:1066ms" tabindex="0" role="button" aria-label="bound token 43">43</mark>%
+<span class="ln">102</span>  of abstentions claims, and most accusations non-claims. A panel with key access would agree with
+<span class="ln">103</span>  it, not contradict it. There is no evidence of key access, and this is the check rather than an
+<span class="ln">104</span>  assurance.
+<span class="ln">105</span>* **The internal corpus is not a sample of anything.** It is one laboratory&#x27;s output.
+<span class="ln">106</span>
+<span class="ln">107</span>## 6. This document is OATH-FAILED, on the example
+<span class="ln">108</span>
+<span class="ln">109</span>The certificate beside this file says `OATH-FAILED`, with exactly two accusations, and both are
+<span class="ln">110</span>the numerals in `<mark class="t bound" data-i="42" style="--d:1092ms" tabindex="0" role="button" aria-label="bound token 31">31</mark>/<mark class="t bound" data-i="43" style="--d:1118ms" tabindex="0" role="button" aria-label="bound token 60">60</mark>` — the line in §<mark class="t bound" data-i="44" style="--d:1144ms" tabindex="0" role="button" aria-label="bound token 3">3</mark> quoting a pass count the verifier failed to check.
+<span class="ln">111</span>
+<span class="ln">112</span>So: a document reporting that the verifier misses real claims is accused on its **quotation of a
+<span class="ln">113</span>missed claim**. The line carries measurement vocabulary because it is *about* a measurement, the
+<span class="ln">114</span>obligation predicate cannot tell a quoted example from an assertion, and the accusation lands on
+<span class="ln">115</span>the specimen.
+<span class="ln">116</span>
+<span class="ln">117</span>It is published failing rather than reworded until it passes. Rewording would remove the clearest
+<span class="ln">118</span>demonstration in the document of the defect the document is about, and this lane has three other
+<span class="ln">119</span>certificates already `OATH-FAILED` for the same reason. The cost of explaining this defect
+<span class="ln">120</span>continues to scale with how concretely you explain it.
+<span class="ln">121</span>
+<span class="ln">122</span>## What this licenses
+<span class="ln">123</span>
+<span class="ln">124</span>Nothing. No clause, no bar, no version bump. It produces two numbers and a comparison, and it
+<span class="ln">125</span>moves the top of the repair queue.
+<span class="ln">126</span>
+<span class="ln">127</span>---
+<span class="ln">128</span>
+<span class="ln">129</span>*We built the instrument, wrote the contract, kept it, and then measured what keeping it bought.
+<span class="ln">130</span>It bought a great deal on the channel we were looking at and nothing at all on the channel we were
+<span class="ln">131</span>not.*</pre>
+  </div>
+  <aside class="panel" id="panel"><h2>Select a token</h2>
+    <div class="hint">Click any highlighted number in the document.</div></aside>
+</div>
+
+<div class="blindnote">These dashes are every number the verifier declined to obligate. Blind
+panels adjudicated a uniform sample of this band on 2026-08-27 and judged <b>0.4267</b> of them,
+in this laboratory's own corpus, to be checkable claims &mdash; reported medians, preregistered
+quantities, pass counts at gates. The certificate above still reads OATH-FAILED.</div>
+
+<footer>
+  <p><b>An OATH certificate is a floor, not a summary.</b> It attests to the numbers the verifier
+  chose to obligate. It is silent about coverage, and the silence is not small: about two in five
+  of the checkable claims in a document carrying one were never examined. That number exists
+  because we went and measured it with a blind panel, and it is the reason the third band is on
+  this page instead of hidden behind a green tick.</p>
+  <p class="micro">fathom lab &middot; styxx &middot; rendered from
+  RESULT_oath_verified_channel_internal_2026_08_27.certificate.json</p>
+</footer>
+</div>
+<script>window.__LEDGER__=[{"token": "0.7933", "status": "VERIFIED", "line": 8, "ref": "oath_internal_result.json:verified_claim_share_internal.rate", "triggers": ["mean"], "why": "bound to oath_internal_result.json:verified_claim_share_internal.rate"}, {"token": "0.7933", "status": "VERIFIED", "line": 22, "ref": "oath_internal_result.json:verified_claim_share_internal.rate", "triggers": [], "why": "bound to oath_internal_result.json:verified_claim_share_internal.rate"}, {"token": "150", "status": "ABSTAIN", "line": 22, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "0.4933", "status": "VERIFIED", "line": 22, "ref": "oath_internal_result.json:verified_claim_share_external.rate", "triggers": [], "why": "bound to oath_internal_result.json:verified_claim_share_external.rate"}, {"token": "75", "status": "ABSTAIN", "line": 22, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "0.3", "status": "VERIFIED", "line": 22, "ref": "oath_internal_result.json:gap", "triggers": [], "why": "bound to oath_internal_result.json:gap"}, {"token": "0.4267", "status": "VERIFIED", "line": 23, "ref": "oath_internal_result.json:miss_rate_internal.rate", "triggers": ["rate"], "why": "bound to oath_internal_result.json:miss_rate_internal.rate"}, {"token": "75", "status": "ABSTAIN", "line": 23, "ref": "spec-or-historical", "triggers": ["rate"], "why": "read as specification or historical, not a live claim"}, {"token": "0.4067", "status": "VERIFIED", "line": 23, "ref": "oath_adjudication_result.json:miss_rate.rate", "triggers": ["rate"], "why": "bound to oath_adjudication_result.json:miss_rate.rate"}, {"token": "150", "status": "ABSTAIN", "line": 23, "ref": "spec-or-historical", "triggers": ["rate"], "why": "read as specification or historical, not a live claim"}, {"token": "0.02", "status": "VERIFIED", "line": 23, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[41].token", "triggers": ["rate"], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[41].token"}, {"token": "0.9619", "status": "VERIFIED", "line": 24, "ref": "oath_internal_result.json:agreement.unanimity_share", "triggers": [], "why": "bound to oath_internal_result.json:agreement.unanimity_share"}, {"token": "0.9814", "status": "VERIFIED", "line": 24, "ref": "oath_internal_result.json:agreement.external_unanimity", "triggers": [], "why": "bound to oath_internal_result.json:agreement.external_unanimity"}, {"token": "343", "status": "VERIFIED", "line": 47, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[4].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[4].token"}, {"token": "343", "status": "VERIFIED", "line": 47, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[4].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[4].token"}, {"token": "10000", "status": "VERIFIED", "line": 48, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[2].token", "triggers": ["permutation"], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[2].token"}, {"token": "0.0", "status": "ABSTAIN", "line": 48, "ref": "spec-or-historical", "triggers": ["permutation"], "why": "read as specification or historical, not a live claim"}, {"token": "10000", "status": "VERIFIED", "line": 48, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[2].token", "triggers": ["permutation"], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[2].token"}, {"token": "0.75", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[1].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[1].token"}, {"token": "0.25", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[85].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[85].token"}, {"token": "2", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[100].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[100].token"}, {"token": "4", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[66].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[66].token"}, {"token": "0.75", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[1].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[1].token"}, {"token": "1.0", "status": "VERIFIED", "line": 49, "ref": "oath_internal_result.json:agreement.unanimity_share", "triggers": [], "why": "bound to oath_internal_result.json:agreement.unanimity_share"}, {"token": "5", "status": "VERIFIED", "line": 50, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[3].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[3].token"}, {"token": "8", "status": "VERIFIED", "line": 51, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[10].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[10].token"}, {"token": "1", "status": "VERIFIED", "line": 52, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[7].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[7].token"}, {"token": "1.0", "status": "ABSTAIN", "line": 52, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "0", "status": "VERIFIED", "line": 52, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[27].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[27].token"}, {"token": "1", "status": "VERIFIED", "line": 52, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[7].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[7].token"}, {"token": "0.0516", "status": "ABSTAIN", "line": 63, "ref": "spec-or-historical", "triggers": ["median"], "why": "read as specification or historical, not a live claim"}, {"token": "2", "status": "ABSTAIN", "line": 64, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "31", "status": "UNGROUNDED", "line": 65, "ref": null, "triggers": ["margin"], "why": "no receipt field holds this value"}, {"token": "60", "status": "UNGROUNDED", "line": 65, "ref": null, "triggers": ["margin"], "why": "no receipt field holds this value"}, {"token": "60", "status": "ABSTAIN", "line": 66, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "30", "status": "ABSTAIN", "line": 66, "ref": "spec-or-historical", "triggers": [], "why": "read as specification or historical, not a live claim"}, {"token": "30", "status": "ABSTAIN", "line": 66, "ref": null, "triggers": [], "why": "nothing on this line obligated it"}, {"token": "11", "status": "ABSTAIN", "line": 89, "ref": "spec-or-historical", "triggers": ["rate"], "why": "read as specification or historical, not a live claim"}, {"token": "0.8182", "status": "VERIFIED", "line": 89, "ref": "oath_internal_result.json:false_accusation_rate_internal.rate", "triggers": ["rate"], "why": "bound to oath_internal_result.json:false_accusation_rate_internal.rate"}, {"token": "0.9619", "status": "VERIFIED", "line": 93, "ref": "oath_internal_result.json:agreement.unanimity_share", "triggers": [], "why": "bound to oath_internal_result.json:agreement.unanimity_share"}, {"token": "0.9814", "status": "VERIFIED", "line": 93, "ref": "oath_internal_result.json:agreement.external_unanimity", "triggers": [], "why": "bound to oath_internal_result.json:agreement.external_unanimity"}, {"token": "43", "status": "VERIFIED", "line": 101, "ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[43].line", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.ABSTAIN[43].line"}, {"token": "31", "status": "VERIFIED", "line": 110, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[9].line", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[9].line"}, {"token": "60", "status": "VERIFIED", "line": 110, "ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[3].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.ABSTAIN[3].token"}, {"token": "3", "status": "VERIFIED", "line": 110, "ref": "oath_internal_result.json:per_arm_detail.VERIFIED[78].token", "triggers": [], "why": "bound to oath_internal_result.json:per_arm_detail.VERIFIED[78].token"}];
+const L = window.__LEDGER__;
+const panel = document.getElementById('panel');
+let sel = null;
+function show(i){
+  const t = L[i]; if(!t) return;
+  if(sel) sel.classList.remove('sel');
+  sel = document.querySelector('mark[data-i="'+i+'"]');
+  if(sel) sel.classList.add('sel');
+  const band = {VERIFIED:'BOUND', UNGROUNDED:'ACCUSED', ABSTAIN:'UNREAD'}[t.status];
+  panel.innerHTML = '<h2>'+band+'</h2>'+
+    '<span class="tokv">'+t.token+'</span>'+
+    '<div class="hint">'+t.why+'</div>'+
+    '<dl>'+
+      '<dt>line</dt><dd>'+t.line+'</dd>'+
+      '<dt>obligated by</dt><dd>'+(t.triggers.length?t.triggers.join(', '):'&mdash; nothing')+'</dd>'+
+      '<dt>receipt</dt><dd>'+(t.ref?t.ref:'&mdash; none')+'</dd>'+
+    '</dl>';
+}
+document.querySelectorAll('mark.t').forEach(m=>{
+  m.addEventListener('click',()=>show(+m.dataset.i));
+  m.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(+m.dataset.i);}});
+});
+const btn = document.getElementById('blind');
+btn.addEventListener('click',()=>{
+  const on = document.body.classList.toggle('blind');
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  btn.textContent = on ? 'Showing what it never read' : 'Show what it never read';
+});
+const first = document.querySelector('mark.accused') || document.querySelector('mark.t');
+if(first) show(+first.dataset.i);
+</script>

@@ -1,0 +1,44 @@
+{
+ "finding": "what drifted under CAPSTONE_universal_mind, and what depended on it",
+ "status": "RESOLVED as a question of consequence. The drift is real and correctly reported; no claim in the document rests on it.",
+ "receipt": "papers/mind-instrument/mind_v0_validation.json",
+ "certified_sha256": "27d3b81e6e3b181dd12bd97d13e38793d63cb3f8464e14b0059abaaefb3fbd89",
+ "live_sha256_by_normalisation": {
+  "as_committed": "d34ca22efef7b22f6557466944830389401ac2f9f7539113c06a141e6779877b",
+  "crlf_to_lf": "a17b1d5ddbe9ab010cdf07dc6678a77deffcd58a4b5bdb58eb2466289bbf5a1e",
+  "lf_to_crlf": "d34ca22efef7b22f6557466944830389401ac2f9f7539113c06a141e6779877b"
+ },
+ "is_a_line_ending_artifact": false,
+ "history_matched_only_after_newline_normalisation": true,
+ "certified_over": {
+  "commit": "c4969b7",
+  "when": "2026-06-10 12:17",
+  "subject": "styxx.mind v0: the certified mind-profile instrument — ALL VALIDATION GATES PASS"
+ },
+ "diverged_at": {
+  "commit": "10907dd",
+  "when": "2026-06-10 13:02",
+  "subject": "release prep 7.14.0: changelog + version bump; CI fix (skip frozen-original equivalence test when torch absent — the gate still runs locally via validate_mind_v0); mind refusal text corrected (meaning_integrity IS packaged since 7.11.0, the mind-axis wiring is what is owed). Mind validation re-run after source change: ALL-GATES-PASS. 1422 tests green; clean-venv wheel smoke green (mind/certify/token import, no mcp)."
+ },
+ "fields_that_changed": {
+  "elapsed_s": {
+   "before": 0.6,
+   "after": 0.5
+  },
+  "instrument_sha256": {
+   "before": "35a7871955d4793abdf39cffd924c86248fd9d21887614943af741dee5c985b3",
+   "after": "c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115"
+  }
+ },
+ "gates_unchanged": true,
+ "verdict_unchanged": true,
+ "tokens_in_the_document_bound_to_this_receipt": 0,
+ "document_verdict": "OATH-HELD",
+ "document_counts": {
+  "VERIFIED": 38,
+  "ABSTAIN": 10,
+  "UNGROUNDED": 0
+ },
+ "reading": "The instrument was re-validated after its source changed, on the same day, forty minutes after the certificate was written. Every gate and the verdict are identical; what moved is `instrument_sha256` -- the receipt now attests to a DIFFERENT BUILD of the instrument than the one the certificate was taken over -- and `elapsed_s`, which is wall-clock noise. Zero tokens in the document bind to this receipt, so no number in CAPSTONE depends on it and the OATH-HELD verdict is unaffected.",
+ "what_is_not_claimed": "That the drift is harmless in general. A receipt whose `instrument_sha256` moves is attesting to a different artifact, and if any claim HAD bound to it the certificate would be stale in a way the verdict could not survive. The audit is right to keep reporting it, and it is NOT silently re-certified here: regenerating the certificate would erase the evidence that the drift happened, which is the one thing this repository is for."
+}
