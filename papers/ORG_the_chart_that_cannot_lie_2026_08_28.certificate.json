@@ -1,0 +1,65 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "ORG_the_chart_that_cannot_lie_2026_08_28.md",
+  "document_sha256": "4d4c7e952b5d086eab10673d7ad0fbdfbdb1a497465d2a1f0c10677d287bd755",
+  "receipts_sha256": {
+    "styxx_org_census.json": "554e4d67aa832cb81a1adcca5d5a21641855d5a1535663f41e2e39617aea1640"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 60,
+      "token": "98"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 24,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "For each of the 11 roles:",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "styxx_org_census.json:roles_total"
+    },
+    {
+      "line": 33,
+      "token": "231",
+      "value": 231.0,
+      "decimals": 0,
+      "context": "231 tests are executed by the census itself, and 0 of them fail. No box can report `ONLINE`",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "styxx_org_census.json:tests_run_here"
+    },
+    {
+      "line": 33,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "231 tests are executed by the census itself, and 0 of them fail. No box can report `ONLINE`",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "styxx_org_census.json:tests_failed_here"
+    },
+    {
+      "line": 60,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "whose 98% unanimity is a correlated-error ceiling rather than agreement, and that is written on",
+      "col": 6,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
