@@ -5,13 +5,14 @@
  "roles_total": 11,
  "status_tally": {
   "ONLINE_WITH_DISCLOSED_DEFECT": 8,
-  "ONLINE_NO_DEFECT_DISCLOSED": 2,
+  "ONLINE_SELF_DISCLOSES_LIMITS": 2,
   "ABSENT": 1
  },
  "tests_run_here": 231,
  "tests_failed_here": 0,
  "roles_disclosing_a_defect": 9,
- "roles_with_no_defect_disclosed": 2,
+ "roles_with_no_defect_disclosed": 0,
+ "roles_self_disclosing_limits_in_source": 4,
  "positive_control": {
   "role": "TRADER",
   "status": "ABSENT",
@@ -40,6 +41,10 @@
    "receipts_produced": 10,
    "disclosed_defect": "its vacuity check is structural only; an unfailable BAR is not detected",
    "defect_document": "papers/closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -55,7 +60,7 @@
     "passed": 84,
     "failed": 0,
     "exit": 0,
-    "seconds": 2.5,
+    "seconds": 2.7,
     "files": [
      "tests/test_certify_row_ordinal.py",
      "tests/test_certify_recall.py"
@@ -64,6 +69,10 @@
    "receipts_produced": 0,
    "disclosed_defect": "~1 in 5 of its verifications are sworn to non-claims, and it declines to check 0.4267 of the checkable claims in our own corpus",
    "defect_document": "papers/closed-model-frontier/RESULT_oath_verified_channel_internal_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -79,7 +88,7 @@
     "passed": 8,
     "failed": 0,
     "exit": 0,
-    "seconds": 5.0,
+    "seconds": 6.8,
     "files": [
      "tests/test_corpus_audit_search_scope.py"
     ]
@@ -87,6 +96,10 @@
    "receipts_produced": 0,
    "disclosed_defect": "was enumerating a population 49% of which was an agent scratch clone; one CAPSTONE receipt remains present-and-changed",
    "defect_document": "REPLICATIONS.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -102,7 +115,7 @@
     "passed": 24,
     "failed": 0,
     "exit": 0,
-    "seconds": 2.8,
+    "seconds": 2.7,
     "files": [
      "tests/test_discriminates.py"
     ]
@@ -110,6 +123,12 @@
    "receipts_produced": 0,
    "disclosed_defect": "cannot see overfitting, and a rule that does nothing passes a cost column",
    "defect_document": "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "The honest limits"
+    ]
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -133,6 +152,13 @@
    "receipts_produced": 0,
    "disclosed_defect": "its abstained bucket is not neutral: ~2 in 5 of those rows are unchecked claims",
    "defect_document": "OATH_CONTRACT.md",
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "The honest limits",
+     "known_limits"
+    ]
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -156,8 +182,16 @@
    "receipts_produced": 0,
    "disclosed_defect": null,
    "defect_document": null,
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "LIMITS =",
+     "LIMITS:",
+     "What it CANNOT see"
+    ]
+   },
    "defect_document_exists": null,
-   "status": "ONLINE_NO_DEFECT_DISCLOSED"
+   "status": "ONLINE_SELF_DISCLOSES_LIMITS"
   },
   {
    "role": "LOOP DETECTOR",
@@ -179,8 +213,16 @@
    "receipts_produced": 0,
    "disclosed_defect": null,
    "defect_document": null,
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "LIMITS =",
+     "LIMITS:",
+     "What it cannot see"
+    ]
+   },
    "defect_document_exists": null,
-   "status": "ONLINE_NO_DEFECT_DISCLOSED"
+   "status": "ONLINE_SELF_DISCLOSES_LIMITS"
   },
   {
    "role": "LEDGER",
@@ -194,7 +236,7 @@
     "passed": 52,
     "failed": 0,
     "exit": 0,
-    "seconds": 20.7,
+    "seconds": 20.4,
     "files": [
      "tests/test_ledger.py",
      "tests/test_ledger_classifier.py"
@@ -203,6 +245,10 @@
    "receipts_produced": 7,
    "disclosed_defect": "the negatives ratio is a keyword match over prose, and 0 of 163 cycles carry a machine-readable verdict token",
    "defect_document": "papers/LEDGER.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -218,7 +264,7 @@
     "passed": 10,
     "failed": 0,
     "exit": 0,
-    "seconds": 19.9,
+    "seconds": 20.9,
     "files": [
      "tests/test_silent_pass_bench.py"
     ]
@@ -226,6 +272,10 @@
    "receipts_produced": 0,
    "disclosed_defect": "was itself skipping in CI on every shallow checkout until 2026-08-28",
    "defect_document": "tests/conftest.py",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -241,7 +291,7 @@
     "passed": 14,
     "failed": 0,
     "exit": 0,
-    "seconds": 1.8,
+    "seconds": 1.9,
     "files": [
      "tests/test_adjudication_packets.py"
     ]
@@ -249,6 +299,10 @@
    "receipts_produced": 5,
    "disclosed_defect": "three seats of one model family; 98% unanimity is a correlated-error ceiling, not agreement between readers",
    "defect_document": "papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ONLINE_WITH_DISCLOSED_DEFECT"
   },
@@ -268,6 +322,10 @@
    "receipts_produced": 0,
    "disclosed_defect": "does not exist. Retail algorithmic trading is a backtest away from the in-sample collapse this lane measured on 2026-08-27, and no edge here transfers to markets",
    "defect_document": "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
    "defect_document_exists": true,
    "status": "ABSENT"
   }

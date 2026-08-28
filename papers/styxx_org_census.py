@@ -113,6 +113,25 @@ ROLES = [
 ]
 
 
+# A module that states its own limits in its source is disclosing without being asked, and that
+# is checkable rather than curated. Added after the first version of this census recorded two
+# roles as "no defect disclosed" when both modules carry an explicit limits section -- the
+# omission was the author's, not theirs, which is exactly the failure a computed field prevents.
+DISCLOSURE_MARKERS = (
+    "LIMITS = ", "LIMITS: ", "What it CANNOT see", "What it cannot see",
+    "The honest limits", "known_limits", "Known limits", "what_this_does_not_show",
+)
+
+
+def self_disclosed_limits(path: Path) -> dict:
+    """Does the module state its own limits, in its own source?"""
+    if not path.exists():
+        return {"discloses": False, "markers": []}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    found = [m.strip() for m in DISCLOSURE_MARKERS if m in text]
+    return {"discloses": bool(found), "markers": found}
+
+
 def run_tests(files: list[str]) -> dict:
     present = [f for f in files if (ROOT / f).exists()]
     if not present:
@@ -148,6 +167,7 @@ def main() -> int:
         citation_ok = None
         if doc is not None:
             citation_ok = (ROOT / doc).exists()
+        self_disc = self_disclosed_limits(mod)
 
         if not implemented:
             status = "ABSENT"
@@ -157,6 +177,8 @@ def main() -> int:
             status = "CITATION_MISSING"
         elif defect is not None:
             status = "ONLINE_WITH_DISCLOSED_DEFECT"
+        elif self_disc["discloses"]:
+            status = "ONLINE_SELF_DISCLOSES_LIMITS"
         else:
             status = "ONLINE_NO_DEFECT_DISCLOSED"
 
@@ -165,6 +187,7 @@ def main() -> int:
             "implemented": implemented, "loc": loc,
             "tests": t, "receipts_produced": len(receipts),
             "disclosed_defect": defect, "defect_document": doc,
+            "self_disclosed_limits": self_disc,
             "defect_document_exists": citation_ok,
             "status": status,
         })
@@ -194,7 +217,11 @@ def main() -> int:
         "tests_run_here": sum(r["tests"]["passed"] for r in roles),
         "tests_failed_here": sum(r["tests"]["failed"] for r in roles),
         "roles_disclosing_a_defect": sum(1 for r in roles if r["disclosed_defect"]),
-        "roles_with_no_defect_disclosed": sum(1 for r in roles if not r["disclosed_defect"]),
+        "roles_with_no_defect_disclosed": sum(
+            1 for r in roles if not r["disclosed_defect"]
+            and not r["self_disclosed_limits"]["discloses"]),
+        "roles_self_disclosing_limits_in_source": sum(
+            1 for r in roles if r["self_disclosed_limits"]["discloses"]),
         "positive_control": {
             "role": control["role"], "status": control["status"],
             "asserted": "must report ABSENT",
