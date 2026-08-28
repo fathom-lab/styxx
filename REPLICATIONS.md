@@ -26,17 +26,21 @@ the same credit.
 | **OATH corpus audit** (CPU-only) | every published claim doc certifies against its receipts, with five disclosed exceptions | `python -m styxx.corpus_audit papers/` | committed `*.certificate.json` files | your output matches the expected line below, character for character (CPU-deterministic) |
 
 **What the corpus audit prints today, so a divergence means something.** As of 2026-08-27 the
-audit does **not** come back clean, and the honest bar is that you reproduce the same five
+audit does **not** come back clean, and the honest bar is that you reproduce the same six
 exceptions rather than zero:
 
 ```
-corpus papers: 187 certificates | HELD 183  FAILED 4  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1
+corpus papers: 188 certificates | HELD 183  FAILED 5  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1
   [OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_universal_mind_2026_06_10.md
   [OATH-FAILED] verdict-CHANGED  FINDING_behavioral_sycophancy_blackbox_2026_06_09.md
   [OATH-FAILED]  PREREG_oath_v12_formula_constant_2026_08_26.md
   [OATH-FAILED]  RECON_oath_external_reach_2026_08_26.md
+  [OATH-FAILED]  RESULT_oath_verified_channel_internal_2026_08_27.md
   [OATH-FAILED]  SYNTHESIS_mention_and_use_2026_08_26.md
 ```
+
+Four of those `OATH-FAILED` lines are **deliberate**: each is a document accused on the example it
+quotes, published failing rather than reworded until it passes.
 
 **One is a partial-evidence warning, and it is new.** `CAPSTONE_universal_mind` cites twelve
 receipts; one of them, `mind_v0_validation.json`, is present in the tree with content that is not

@@ -1,0 +1,571 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_verified_channel_internal_2026_08_27.md",
+  "document_sha256": "3338e9711a5f5ef5b7e6c60b836ba621850a92ab877c41fbd69c3f3c1a0625e8",
+  "receipts_sha256": {
+    "oath_internal_result.json": "4680f357c4a1b6105d1e217eaa36645ebb15e513d4e3421d3edf19f557df68b9",
+    "oath_adjudication_result.json": "596b4ed4fa3ab092cbd390aa11f871fda8cab9a90912e8556158a70bd1874908",
+    "oath_adjudication_analysis.json": "2203c8a073261d71ac73c4058359a1ae686db9d5f46b9053d493bc131f6c58ab"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 31,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 2
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 65,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "* `31/60 replicates cleared the noise-margin` \u2014 a pass count at a gate;",
+      "col": 3,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 65,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "* `31/60 replicates cleared the noise-margin` \u2014 a pass count at a gate;",
+      "col": 6,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 22,
+      "token": "150"
+    },
+    {
+      "line": 22,
+      "token": "75"
+    },
+    {
+      "line": 23,
+      "token": "75"
+    },
+    {
+      "line": 23,
+      "token": "150"
+    },
+    {
+      "line": 48,
+      "token": "0.0"
+    },
+    {
+      "line": 52,
+      "token": "1.0"
+    },
+    {
+      "line": 63,
+      "token": "0.0516"
+    },
+    {
+      "line": 64,
+      "token": "2"
+    },
+    {
+      "line": 66,
+      "token": "60"
+    },
+    {
+      "line": 66,
+      "token": "30"
+    },
+    {
+      "line": 66,
+      "token": "30"
+    },
+    {
+      "line": 89,
+      "token": "11"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 8,
+      "token": "0.7933",
+      "value": 0.7933,
+      "decimals": 4,
+      "context": "a blind panel judged `0.7933` to be claims. The prereg said in advance what that would mean:",
+      "col": 22,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_internal.rate"
+    },
+    {
+      "line": 22,
+      "token": "0.7933",
+      "value": 0.7933,
+      "decimals": 4,
+      "context": "| verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "col": 44,
+      "binding_context": "| | internal (ours) | external | gap | | verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_internal.rate"
+    },
+    {
+      "line": 22,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "| verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "col": 55,
+      "binding_context": "| | internal (ours) | external | gap | | verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.4933",
+      "value": 0.4933,
+      "decimals": 4,
+      "context": "| verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "col": 63,
+      "binding_context": "| | internal (ours) | external | gap | | verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_external.rate"
+    },
+    {
+      "line": 22,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "| verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "col": 74,
+      "binding_context": "| | internal (ours) | external | gap | | verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "| verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "col": 81,
+      "binding_context": "| | internal (ours) | external | gap | | verified tokens the panel calls claims | `0.7933` (n=150) | `0.4933` (n=75) | `0.3` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:gap"
+    },
+    {
+      "line": 23,
+      "token": "0.4267",
+      "value": 0.4267,
+      "decimals": 4,
+      "context": "| abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "col": 65,
+      "binding_context": "| | internal (ours) | external | gap | | abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:miss_rate_internal.rate"
+    },
+    {
+      "line": 23,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "| abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "col": 76,
+      "binding_context": "| | internal (ours) | external | gap | | abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.4067",
+      "value": 0.4067,
+      "decimals": 4,
+      "context": "| abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "col": 83,
+      "binding_context": "| | internal (ours) | external | gap | | abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_adjudication_result.json:miss_rate.rate"
+    },
+    {
+      "line": 23,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "| abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "col": 94,
+      "binding_context": "| | internal (ours) | external | gap | | abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "| abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "col": 102,
+      "binding_context": "| | internal (ours) | external | gap | | abstained tokens the panel calls claims \u2014 the **miss rate** | `0.4267` (n=75) | `0.4067` (n=150) | `0.02` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[41].token"
+    },
+    {
+      "line": 24,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "| panel unanimity | `0.9619` | `0.9814` | \u2014 |",
+      "col": 21,
+      "binding_context": "| | internal (ours) | external | gap | | panel unanimity | `0.9619` | `0.9814` | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:agreement.unanimity_share"
+    },
+    {
+      "line": 24,
+      "token": "0.9814",
+      "value": 0.9814,
+      "decimals": 4,
+      "context": "| panel unanimity | `0.9619` | `0.9814` | \u2014 |",
+      "col": 32,
+      "binding_context": "| | internal (ours) | external | gap | | panel unanimity | `0.9619` | `0.9814` | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:agreement.external_unanimity"
+    },
+    {
+      "line": 47,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "| `343` | `One seed (343), one split, 70-way read` | a seed |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `343` | `One seed (343), one split, 70-way read` | a seed |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[4].token"
+    },
+    {
+      "line": 47,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "| `343` | `One seed (343), one split, 70-way read` | a seed |",
+      "col": 21,
+      "binding_context": "| the token | its line | what it is | | `343` | `One seed (343), one split, 70-way read` | a seed |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[4].token"
+    },
+    {
+      "line": 48,
+      "token": "10000",
+      "value": 10000.0,
+      "decimals": 0,
+      "context": "| `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[2].token"
+    },
+    {
+      "line": 48,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "col": 29,
+      "binding_context": "| the token | its line | what it is | | `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "10000",
+      "value": 10000.0,
+      "decimals": 0,
+      "context": "| `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "col": 34,
+      "binding_context": "| the token | its line | what it is | | `10000` | `permutation p = 0.0 (10000 draws)` | a draw count |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[2].token"
+    },
+    {
+      "line": 49,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[1].token"
+    },
+    {
+      "line": 49,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 36,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[85].token"
+    },
+    {
+      "line": 49,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 42,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[100].token"
+    },
+    {
+      "line": 49,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 44,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[66].token"
+    },
+    {
+      "line": 49,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 47,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[1].token"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "col": 53,
+      "binding_context": "| the token | its line | what it is | | `0.75` | `agreement quantized to {0.25, 2/4, 0.75, 1.0}` | notation, a set member |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:agreement.unanimity_share"
+    },
+    {
+      "line": 50,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| `5` | `any 5th conversion, 2nd flip, 6th silenced verification` | a gate's ordinal |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `5` | `any 5th conversion, 2nd flip, 6th silenced verification` | a gate's ordinal |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[3].token"
+    },
+    {
+      "line": 51,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| `8` | a leading table cell in an adversarial-curve row | a row index |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `8` | a leading table cell in an adversarial-curve row | a row index |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[10].token"
+    },
+    {
+      "line": 52,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "col": 3,
+      "binding_context": "| the token | its line | what it is | | `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[7].token"
+    },
+    {
+      "line": 52,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "col": 34,
+      "binding_context": "| the token | its line | what it is | | `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "col": 51,
+      "binding_context": "| the token | its line | what it is | | `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[27].token"
+    },
+    {
+      "line": 52,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "col": 53,
+      "binding_context": "| the token | its line | what it is | | `1` | `Qwen2.5-1.5B only, ... \u03bb=1.0 only, seeds {0,1}` | a configuration value |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[7].token"
+    },
+    {
+      "line": 63,
+      "token": "0.0516",
+      "value": 0.0516,
+      "decimals": 4,
+      "context": "* `median parity_gap=0.0516` \u2014 a reported median, in a RESULT;",
+      "col": 21,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "* `k* = 2` **under the pre-stated definition** \u2014 a preregistered quantity;",
+      "col": 8,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 65,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "* `31/60 replicates cleared the noise-margin` \u2014 a pass count at a gate;",
+      "col": 3,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 65,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "* `31/60 replicates cleared the noise-margin` \u2014 a pass count at a gate;",
+      "col": 6,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "* `n=60 = 30 original + 30 new authored pairs` \u2014 a stated sample size.",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 66,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "* `n=60 = 30 original + 30 new authored pairs` \u2014 a stated sample size.",
+      "col": 10,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 66,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "* `n=60 = 30 original + 30 new authored pairs` \u2014 a stated sample size.",
+      "col": 24,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "* **The internal accusation arm is n=11 and unusable.** Its false-accusation rate is `0.8182`,",
+      "col": 37,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 89,
+      "token": "0.8182",
+      "value": 0.8182,
+      "decimals": 4,
+      "context": "* **The internal accusation arm is n=11 and unusable.** Its false-accusation rate is `0.8182`,",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:false_accusation_rate_internal.rate"
+    },
+    {
+      "line": 93,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "* **The panel is not three readers.** `0.9619` unanimity internally against `0.9814` externally,",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:agreement.unanimity_share"
+    },
+    {
+      "line": 93,
+      "token": "0.9814",
+      "value": 0.9814,
+      "decimals": 4,
+      "context": "* **The panel is not three readers.** `0.9619` unanimity internally against `0.9814` externally,",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:agreement.external_unanimity"
+    },
+    {
+      "line": 101,
+      "token": "43",
+      "value": 43.0,
+      "decimals": 0,
+      "context": "in the output: the panel contradicts the withheld answer key in **all three arms** \u2014 calling 43%",
+      "col": 95,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[43].line"
+    },
+    {
+      "line": 110,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "the numerals in `31/60` \u2014 the line in \u00a73 quoting a pass count the verifier failed to check.",
+      "col": 17,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[9].line"
+    },
+    {
+      "line": 110,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "the numerals in `31/60` \u2014 the line in \u00a73 quoting a pass count the verifier failed to check.",
+      "col": 20,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[3].token"
+    },
+    {
+      "line": 110,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "the numerals in `31/60` \u2014 the line in \u00a73 quoting a pass count the verifier failed to check.",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[78].token"
+    }
+  ]
+}
