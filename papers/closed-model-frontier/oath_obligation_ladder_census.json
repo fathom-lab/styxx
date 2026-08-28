@@ -1,0 +1,27 @@
+{
+ "census": "where an added obligation trigger can reach, given the ladder order",
+ "status": "RECON. Killed a preregistration before it was frozen.",
+ "candidate": ">= 2 decimal places AND not inside a backtick code span",
+ "corpus_abstain_tokens": 2040,
+ "predicate_fires_on": 493,
+ "by_why_the_token_abstained": {
+  "spec-or-historical": 360,
+  "NULL": 127,
+  "v05-notation": 6
+ },
+ "actually_movable": 127,
+ "movable_across_documents": 60,
+ "intercepted_above_bound": 366,
+ "every_movable_token_becomes": "UNGROUNDED",
+ "movable_tokens_that_could_become_VERIFIED": 0,
+ "why_zero": "`elif hits: VERIFIED` precedes `elif bound: UNGROUNDED`. A token currently ABSTAIN with receipt_ref None reached the final else, which is reachable only when hits is empty. Adding a disjunct to `bound` can therefore only produce UNGROUNDED.",
+ "obligation_gates_verification_probe": {
+  "line_has_no_measurement_vocabulary": true,
+  "token": "0.4267",
+  "status": "VERIFIED",
+  "receipt_ref": "r.json:whatever",
+  "obligation_gates_verification": false
+ },
+ "the_structural_finding": "Obligation does NOT gate verification. It gates ACCUSATION only. A number whose value matches a receipt leaf is sworn to regardless of whether anything obligated the verifier to examine it -- demonstrated above on a line carrying no measurement vocabulary at all.",
+ "what_this_corrects": "Documents published on 2026-08-27 describe the abstained band as 'checkable claims the verifier declined to examine', which reads as claims it would have verified. It would not: those tokens abstained because no receipt holds their value, so obligating them yields accusations. The coverage gap is real and its CHARACTER is different -- it is unbacked claims that go unflagged, not backed claims that go unchecked."
+}
