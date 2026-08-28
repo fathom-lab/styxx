@@ -159,3 +159,9 @@ papers/disjoint-worlds/_PHI_STAGE_C_LIVELOCK_NOTE.md
 papers/arxiv/**/main.aux
 papers/arxiv/**/main.log
 papers/arxiv/**/main.out
+
+# generated views (regenerate with papers/styxx_org_chart.py --poster / styxx_audit_view.py)
+poster.html
+audit.html
+*-shot.png
+anon-check.png
