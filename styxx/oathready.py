@@ -179,6 +179,13 @@ def readiness_report(doc_path: Path, receipt_paths: list) -> dict:
         "not_a_grade": "These are counts, not a score. This tool cannot tell whether a number is "
                        "CORRECT — only whether it is bound to something a reader could check. A "
                        "document can be fully ready and completely wrong.",
+        "abstained_is_not_neutral": (
+            "The abstained count is the least safe number in this report. Blind panels on "
+            "2026-08-27 judged 0.4267 of abstained tokens in this laboratory's own corpus, and "
+            "0.4067 in a 140-repository external one, to be CHECKABLE CLAIMS the verifier simply "
+            "declined to examine — including reported medians, preregistered quantities and pass "
+            "counts at gates. Read your abstained rows with --all before believing a clean "
+            "report: roughly two in five of them are claims nobody checked."),
         "known_limits": [
             "Mention is treated as use: a number you QUOTE is treated as one you CLAIM.",
             "The obligation predicate reads a LINE, not a claim — configuration values and "
@@ -198,13 +205,17 @@ def render(rep: dict, show: str = "actionable") -> str:
     out.append(f"  {rep['tokens']} numeric tokens: {rep['bound']} bound, "
                f"{rep['coincident']} coincident, {rep['accused']} accused, "
                f"{rep['abstained']} abstained")
+    if rep.get("abstained"):
+        out.append("  NOTE: abstained is not neutral — on measured corpora ~2 in 5 abstained "
+                   "tokens are claims nobody checked. Re-run with --all to read them.")
     out.append("")
 
     groups = [("ACCUSED — these block a certificate", "accused"),
               ("COINCIDENT — these verify by accident, which is worse than abstaining",
                "coincident")]
     if show == "all":
-        groups.append(("ABSTAINED — no oath taken either way", "abstained"))
+        groups.append(("ABSTAINED — no oath taken either way, and ~2 in 5 of these are "
+                       "real claims the verifier declined to check", "abstained"))
         groups.append(("BOUND — a kept contract", "bound"))
 
     for title, kind in groups:

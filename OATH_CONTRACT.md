@@ -168,6 +168,33 @@ well designed, or that the conclusion follows. **A document can keep this contra
 be completely wrong.** Anyone who tells you otherwise — including us — is overclaiming, and you
 should say so publicly.
 
+**And it does not mean your document's claims are covered. This is the part we got wrong until
+2026-08-27, and it is measured now rather than estimated.** `OATH-HELD` means, precisely:
+
+> *the numbers this verifier chose to obligate, it could bind to a receipt.*
+
+It does not mean *the claims in this document are grounded*, and the distance between those two
+sentences is large. Blind panels adjudicated every abstained token in both our own corpus and a
+140-repository external one, and of the numbers the verifier **declined to check**, `0.4267` of
+ours and `0.4067` of theirs were checkable claims. Roughly two in five of the claims in a document
+carrying our own certificate were never examined at all — including reported medians,
+preregistered quantities and pass counts at gates.
+
+Two consequences you should hold us to:
+
+* **Read `OATH-HELD` as a floor, not a summary.** It attests to what was checked. It is silent
+  about coverage, and the silence is not small.
+* **Keeping the contract does not fix this.** The gap is nearly identical inside and outside a
+  corpus written to keep it — `0.4267` against `0.4067` — because the obligation predicate never
+  reads your receipts. It reads the vocabulary on a line. Careful authorship buys a great deal on
+  the verification side and, as far as we can measure, nothing here.
+
+The repair is the top item in this lane and the cheapest version of it is already dead: widening
+the trigger vocabulary catches one missed claim in eighty-five when fitted on one set of documents
+and scored on another (`RECON_obligation_repair_is_not_lexical_2026_08_27.md`). Until it is fixed,
+this rule stands in place of a fix: **the contract tells you how to make your claims checkable; it
+does not promise that all of them were checked.**
+
 ## When not to bother
 
 If your document quotes other people's numbers more than it reports your own, the current
