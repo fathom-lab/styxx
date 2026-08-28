@@ -102,3 +102,90 @@ def test_render_says_so_when_there_is_nothing_to_fix(tmp_path):
     d, r = _doc(tmp_path, "# t\n\nThe recall reached 0.82 on the held set.\n", {"recall": 0.82})
     text = render(readiness_report(d, r))
     assert "No accusations and no coincidental bindings" in text
+
+
+def _mk(tmp, text, receipt):
+    from pathlib import Path
+    import json as _j
+    d = Path(tmp)
+    doc = d / "d.md"; doc.write_text(text + "\n", encoding="utf-8")
+    rec = d / "r.json"; rec.write_text(_j.dumps(receipt), encoding="utf-8")
+    return doc, [rec]
+
+
+def test_a_decimal_matched_on_value_alone_is_not_called_a_kept_contract(tmp_path):
+    """The blocker an adversarial merge review found, pinned.
+
+    certify.py path-checks INTEGERS only (`if num["decimals"] == 0`), and the status-level float
+    binding is shipped off (CLOSED_NEGATIVE, v0.8). So a decimal verifies on a bare value match
+    against any leaf that is not one of sixteen position names. This module used to tell the
+    author such a row "grounds at a receipt leaf whose path relates to this line. This is what a
+    kept contract looks like" -- which is false, and false in exactly the way its own docstring
+    warns about.
+    """
+    from styxx.oathready import readiness_report
+    doc, recs = _mk(tmp_path, "The sycophancy rate was 0.5 on the held-out split.",
+                    {"gpu_memory_fraction": 0.5})
+    rep = readiness_report(doc, recs)
+    row = next(r for r in rep["rows"] if r["token"] == "0.5")
+    assert row["kind"] == "bound"
+    assert row["path_checked"] is False
+    assert "VALUE ONLY" in row["advice"]
+    assert "path relates to this line" not in row["advice"]
+    assert "kept contract" not in row["advice"]
+
+
+def test_the_clean_run_summary_does_not_claim_relatedness_it_never_checked(tmp_path):
+    """A clean report is the one place an author stops reading. It must not overstate there."""
+    from styxx.oathready import readiness_report, render
+    doc, recs = _mk(tmp_path, "The sycophancy rate was 0.5 on the held-out split.",
+                    {"gpu_memory_fraction": 0.5})
+    text = render(readiness_report(doc, recs))
+    assert "related receipt leaf" not in text
+    assert "VALUE ONLY" in text
+
+
+def test_an_integer_that_was_actually_path_checked_still_says_so(tmp_path):
+    """The fix must not flatten the honest case: integers DO go through v0.3 count-binding."""
+    from styxx.oathready import readiness_report
+    doc, recs = _mk(tmp_path, "Recall counted 27 held-out items.", {"n_held": 27})
+    rep = readiness_report(doc, recs)
+    row = next(r for r in rep["rows"] if r["token"] == "27")
+    if row["kind"] == "bound":
+        assert row["path_checked"] is True
+        assert "word stem" in row["advice"]
+
+
+def test_an_accusation_with_no_trigger_on_the_line_says_what_really_bound_it(tmp_path):
+    """The second blocker from the merge review, pinned.
+
+    certify.py obligates on precision alone at >= V07_PRECISION_DIGITS fractional digits,
+    regardless of line vocabulary. This module used to tell every accused author to "reword so the
+    vocabulary does not bind it" while naming "no word this tool can name" in the same sentence --
+    advice that cannot be acted on. Measured on the external corpus: 180 of 366 accusations sit on
+    a line naming no trigger at all. Internally it is 0 of 11, which is exactly why it went
+    unnoticed: our own prose puts the word on the line.
+    """
+    from styxx.certify import V07_PRECISION_DIGITS
+    from styxx.oathready import readiness_report
+    tok = "0." + "1234567890"[:V07_PRECISION_DIGITS]        # precision-obligated, no vocabulary
+    doc, recs = _mk(tmp_path, f"Legal scholars have long argued about {tok} in the abstract.",
+                    {"unrelated": 1})
+    rep = readiness_report(doc, recs)
+    row = next((r for r in rep["rows"] if r["token"] == tok), None)
+    assert row is not None and row["kind"] == "accused"
+    assert row["obligated_by"] == [], "no trigger word is on this line"
+    assert row["obligated_by_rule"] == "precision"
+    assert "PRECISION" in row["advice"]
+    assert "Rewording the sentence will not help" in row["advice"]
+
+
+def test_an_accusation_that_does_name_a_trigger_still_gets_the_reword_advice(tmp_path):
+    """The fix must not flatten the case where rewording IS the right move."""
+    from styxx.oathready import readiness_report
+    doc, recs = _mk(tmp_path, "The recall was 0.9 on the split.", {"unrelated": 1})
+    rep = readiness_report(doc, recs)
+    row = next((r for r in rep["rows"] if r["token"] == "0.9"), None)
+    if row and row["kind"] == "accused":
+        assert row["obligated_by"], "recall is on the line"
+        assert "reword" in row["advice"]

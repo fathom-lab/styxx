@@ -55,7 +55,8 @@ import re
 import sys
 from pathlib import Path
 
-from .certify import _TRIGGERS, _TRIGGERS_CORR, certify_doc
+from .certify import (_TRIGGERS, _TRIGGERS_CORR, V07_PRECISION_DIGITS,
+                      V07_PRECISION_OBLIGATION, certify_doc)
 
 __all__ = ["readiness_report", "render"]
 
@@ -111,19 +112,71 @@ def _classify(entry: dict, line: str) -> dict:
     if status == "VERIFIED":
         path = (ref or "").partition(":")[2]
         out["kind"] = "coincident" if _coincident(path) else "bound"
-        out["advice"] = (
-            "grounds at a leaf that is a POSITION, not a measurement — an index, a seed, a step "
-            "counter. The value matched by arithmetic accident. Persist the quantity you mean as "
-            "its own summary field, or reword the line to name it."
-            if out["kind"] == "coincident" else
-            "grounds at a receipt leaf whose path relates to this line. This is what a kept "
-            "contract looks like.")
+        # Whether the receipt PATH was ever compared to the line depends on the token's type, and
+        # this advice used to claim it always was. It does not: the v0.3 count-binding filter in
+        # certify.py is guarded `if num["decimals"] == 0`, so only INTEGERS are path-checked, and
+        # the status-level float binding (V08_FLOAT_FIELD_BINDING) is shipped False and closed
+        # NEGATIVE. A float therefore verifies on a bare VALUE match against any leaf whose
+        # terminal segment is not one of sixteen position names.
+        #
+        # Telling an author that a float "grounds at a receipt leaf whose path relates to this
+        # line" is false, and it is false in exactly the way this module's own docstring warns
+        # about: a value matching a receipt field and receiving an affirmative oath. Found by an
+        # adversarial review of the merge, with the repro "The sycophancy rate was 0.5" grounding
+        # in `gpu_memory_fraction` and being reported as a kept contract.
+        out["path_checked"] = out["kind"] == "bound" and "." not in entry["token"]
+        if out["kind"] == "coincident":
+            out["advice"] = (
+                "grounds at a leaf that is a POSITION, not a measurement — an index, a seed, a "
+                "step counter. The value matched by arithmetic accident. Persist the quantity you "
+                "mean as its own summary field, or reword the line to name it.")
+        elif out["path_checked"]:
+            out["advice"] = (
+                "grounds at a receipt leaf whose path shares a word stem with this line, which "
+                "the verifier checked (v0.3 count-binding, integers only). This is what a kept "
+                "contract looks like.")
+        else:
+            out["advice"] = (
+                "matched this receipt leaf BY VALUE ONLY. Nothing compared the leaf's path to "
+                "your line: path-binding runs for integers, and for decimals it is shipped off "
+                "(CLOSED_NEGATIVE in v0.8). So a decimal can ground in an unrelated field that "
+                "happens to hold the same number. Read the path and satisfy yourself it is the "
+                "quantity your line names.")
         return out
 
     if status == "UNGROUNDED":
         out["kind"] = "accused"
         words = _obligating_words(line)
         out["obligated_by"] = words
+
+        # Not every obligation comes from vocabulary on the line, and telling an author to reword
+        # words that are not there is advice they cannot act on. certify.py obligates a token
+        # additionally when it is printed at >= V07_PRECISION_DIGITS fractional digits (regardless
+        # of vocabulary), and via a range-sanity rule. Measured on the external corpus: 180 of 366
+        # accusations -- 49.2% -- sit on a line naming no trigger at all. Internally it is 0 of 11,
+        # which is why this went unnoticed: our own prose puts the word on the line, and the tool
+        # is built for authors whose prose does not.
+        if not words:
+            if V07_PRECISION_OBLIGATION and entry.get("decimals", 0) >= V07_PRECISION_DIGITS:
+                out["obligated_by_rule"] = "precision"
+                out["advice"] = (
+                    f"no measurement word appears on this line. It was obligated by PRECISION: a "
+                    f"number printed at {entry['decimals']} fractional digits "
+                    f"(>= {V07_PRECISION_DIGITS}) was copied out of a computation rather than "
+                    f"typed by a person, so it must ground regardless of vocabulary. Persist it as "
+                    f"a summary field in a cited receipt, or round it to the precision you actually "
+                    f"mean. Rewording the sentence will not help.")
+            else:
+                out["obligated_by_rule"] = "not-on-this-line"
+                out["advice"] = (
+                    "no measurement word appears on this line, so the obligation came from "
+                    "somewhere this tool cannot point at — a table header above the row, an n= "
+                    "pairing, or the range-sanity rule. Rewording this line may not release it. "
+                    "The reliable fix is to persist the value as a summary field in a cited "
+                    "receipt; if it is not a claim, move it out of the table or off the "
+                    "construction that binds it.")
+            return out
+
         out["advice"] = (
             "this line carries measurement vocabulary ({}), so every number on it must ground in "
             "a receipt — and this one does not. Three fixes, in order of honesty: persist the "
@@ -230,8 +283,18 @@ def render(rep: dict, show: str = "actionable") -> str:
         out.append("")
 
     if not rep["accused"] and not rep["coincident"]:
-        out.append("No accusations and no coincidental bindings. Every number here either grounds")
-        out.append("in a related receipt leaf or is honestly silent.")
+        # This used to say every number "grounds in a related receipt leaf or is honestly silent".
+        # For decimals, relatedness was never checked, so the clean-run summary asserted something
+        # the verifier had not measured — the same defect the accused/coincident sections exist to
+        # surface, printed in the one place an author reads when everything looks fine.
+        unchecked = sum(1 for r in rep["rows"] if r.get("kind") == "bound"
+                        and not r.get("path_checked"))
+        out.append("No accusations and no coincidental bindings.")
+        if unchecked:
+            noun = ("1 of the bound rows is a decimal" if unchecked == 1
+                    else f"{unchecked} of the bound rows are decimals")
+            out.append(f"But {noun} matched BY VALUE ONLY — nothing compared")
+            out.append("the receipt's path to your line. Re-run with --all and read them.")
         out.append("")
     out.append(rep["not_a_grade"])
     return "\n".join(out)

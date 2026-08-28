@@ -71,10 +71,24 @@ correct one. *(Learned in v0.1, where exactly that happened.)*
 
 ### 3. Name the quantity on the same line as the number
 
-`recall reached 0.82` grounds. A bare `0.82` in a sentence that never says what it measures does
-not, because an integer or a float only binds to a receipt field whose **path** shares a word
-with the claim's own line. This is what stops `27` from grounding in some unrelated experiment's
-`n_held`. *(v0.3 count-binding.)*
+`recall reached 0.82` reads well and is what you should write. But be clear about what the
+instrument actually enforces, because this rule previously overstated it and the overstatement was
+found in review before it reached you.
+
+**Integers are path-checked. Decimals are not.** An integer only binds to a receipt field whose
+**path** shares a word stem with the claim's own line — that is what stops `27` from grounding in
+some unrelated experiment's `n_held` *(v0.3 count-binding, guarded `decimals == 0`)*. A **decimal**
+binds on **value alone**: the status-level path binding for floats was measured across five design
+families in v0.8, closed `CLOSED_NEGATIVE` because none beat parity, and ships off.
+
+So `The sycophancy rate was 0.5` will happily ground in a receipt's `gpu_memory_fraction`, and the
+certificate will say `OATH-HELD`. `styxx-oathready` now labels such a row *matched by value only*
+rather than calling it a kept contract, which is what it used to do.
+
+Follow this rule anyway. Naming the quantity on the line is what makes a decimal's binding
+*checkable by a reader* even though the verifier does not check it, and it is what will make your
+document survive the repair when it lands. But do not believe you are protected by machinery that
+is not running.
 
 ### 4. Never let a claim sit on a truncated line
 
