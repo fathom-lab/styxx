@@ -1,0 +1,655 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_obligation_predicts_claimhood_2026_08_30.md",
+  "document_sha256": "4ffd5021ae531b6592cf249f7dcf5cc280e1f45b2ce078dc28a8c77a3bf93a2b",
+  "receipts_sha256": {
+    "oath_obligation_claimhood_join.json": "e476eb020888879f4ca6a9a40d70407553d897a8f56610274ddab6afce8802c6",
+    "oath_unobligated_oath_census.json": "a996667b3882af8e610616951ec25835bfcb222991d8f80340e8bc87e075fe54",
+    "oath_internal_result.json": "4680f357c4a1b6105d1e217eaa36645ebb15e513d4e3421d3edf19f557df68b9",
+    "oath_adjudication_result.json": "596b4ed4fa3ab092cbd390aa11f871fda8cab9a90912e8556158a70bd1874908"
+  },
+  "verifier_sha256": "49bfd147953697fe106ea1adb40d49a9f70a20c42e5ea35dff0f9f97b560c708",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "225"
+    },
+    {
+      "line": 30,
+      "token": "0.4933"
+    },
+    {
+      "line": 30,
+      "token": "118"
+    },
+    {
+      "line": 30,
+      "token": "149"
+    },
+    {
+      "line": 31,
+      "token": "119"
+    },
+    {
+      "line": 51,
+      "token": "74"
+    },
+    {
+      "line": 53,
+      "token": "34"
+    },
+    {
+      "line": 58,
+      "token": "23"
+    },
+    {
+      "line": 63,
+      "token": "149"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "The unobligated-oath census counted the split: `0.5811` of this corpus's verifications were",
+      "col": 48,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oath_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "225",
+      "value": 225.0,
+      "decimals": 0,
+      "context": "panels had already adjudicated claimhood for `225` verified tokens \u2014 `150` internal, `75`",
+      "col": 46,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 13,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "panels had already adjudicated claimhood for `225` verified tokens \u2014 `150` internal, `75`",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_internal.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 13,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "panels had already adjudicated claimhood for `225` verified tokens \u2014 `150` internal, `75`",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:per_token_detail.internal[132].line",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.8472",
+      "value": 0.8472,
+      "decimals": 4,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 18,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 39,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.obligated.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "72",
+      "value": 72.0,
+      "decimals": 0,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 45,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.obligated.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.7403",
+      "value": 0.7403,
+      "decimals": 4,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 52,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.volunteered.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 61,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.volunteered.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "| **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "col": 67,
+      "binding_context": "| arm | obligated | volunteered | | **internal** | `0.8472` claim-share (61 of 72) | `0.7403` (57 of 77) |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.volunteered.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.7826",
+      "value": 0.7826,
+      "decimals": 4,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 18,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 26,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 27,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 33,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.3654",
+      "value": 0.3654,
+      "decimals": 4,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 42,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 26,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 51,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "| **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "col": 57,
+      "binding_context": "| arm | obligated | volunteered | | **external** | `0.7826` (18 of 23) | **`0.3654` (19 of 52)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Unresolved: 1 internal token (document could not be re-certified; reported, not dropped),",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.unresolved",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 29,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "0 external. Cross-checks are exact: the external cells recompose the arm's published overall",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.unresolved",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 30,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 29,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 30,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 32,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 30,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:per_token_detail.internal[132].line",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 30,
+      "token": "0.4933",
+      "value": 0.4933,
+      "decimals": 4,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 41,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 30,
+      "token": "118",
+      "value": 118.0,
+      "decimals": 0,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 85,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 30,
+      "token": "149",
+      "value": 149.0,
+      "decimals": 0,
+      "context": "claim-share to the digit \u2014 `(18+19)/75 = 0.4933` \u2014 and the internal cells recompose `118/149`",
+      "col": 89,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 31,
+      "token": "119",
+      "value": 119.0,
+      "decimals": 0,
+      "context": "against the published `119/150` with the single unresolved token accounting for the difference.",
+      "col": 23,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 31,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "against the published `119/150` with the single unresolved token accounting for the difference.",
+      "col": 27,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_internal.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 34,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "predicate required is right about claimhood at nearly the internal rate \u2014 `0.78` against `0.85`.",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 34,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "predicate required is right about claimhood at nearly the internal rate \u2014 `0.78` against `0.85`.",
+      "col": 90,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 35,
+      "token": "0.37",
+      "value": 0.37,
+      "decimals": 2,
+      "context": "An oath the value-match volunteered collapses to `0.37`: **most volunteered oaths on external",
+      "col": 50,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 42,
+      "token": "0.4933",
+      "value": 0.4933,
+      "decimals": 4,
+      "context": "verified channel's `0.4933` as \"the panel and the instrument disagree about what a claim is.\"",
+      "col": 20,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:verified_claim_share_external.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 43,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "Decomposed, the panel agrees with the *obligated* instrument just fine (`0.78`). What it rejects",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 51,
+      "token": "74",
+      "value": 74.0,
+      "decimals": 0,
+      "context": "would cost real bindings \u2014 `74%` of internal volunteers are genuine claims \u2014 so an outright gate",
+      "col": 28,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 53,
+      "token": "34",
+      "value": 34.0,
+      "decimals": 0,
+      "context": "weakest 34% of the count from hidden to labelled. That is exactly the certificate-schema change",
+      "col": 8,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 58,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "* **Small cells.** External obligated is `n=23`; no interval or significance is asserted anywhere",
+      "col": 44,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 63,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "* **The internal sample was drawn uniformly from verified tokens**, so its 77/149 volunteer mix is",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.volunteered.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 63,
+      "token": "149",
+      "value": 149.0,
+      "decimals": 0,
+      "context": "* **The internal sample was drawn uniformly from verified tokens**, so its 77/149 volunteer mix is",
+      "col": 78,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 64,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "an independent estimate of the census's `0.5811` (sampling, not contradiction).",
+      "col": 43,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oath_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    }
+  ]
+}
