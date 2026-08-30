@@ -189,3 +189,29 @@ def test_an_accusation_that_does_name_a_trigger_still_gets_the_reword_advice(tmp
     if row and row["kind"] == "accused":
         assert row["obligated_by"], "recall is on the line"
         assert "reword" in row["advice"]
+
+
+def test_oathready_reads_the_verifier_epistemics_not_its_own_guess(tmp_path):
+    """path_checked and obligation_source come from the annotation, not re-derivation.
+
+    Before this, oathready inferred path_checked from '"." not in token' -- a second definition
+    of the same concept, one drift away from lying to an adopter.
+    """
+    from styxx.oathready import readiness_report
+    doc, recs = _mk(tmp_path, "Scholars argued about 0.4267 in the abstract.",
+                    {"whatever": 0.4267})
+    rep = readiness_report(doc, recs)
+    row = next(r for r in rep["rows"] if r["token"] == "0.4267")
+    assert row["kind"] == "bound"
+    assert row["obligated"] is False, "the volunteered oath, from the annotation"
+    assert row["obligation_source"] is None
+    assert row["path_checked"] is False
+
+
+def test_the_report_counts_volunteered_oaths_for_the_author(tmp_path):
+    from styxx.oathready import readiness_report
+    doc, recs = _mk(tmp_path, "The recall was 0.82 here.\nScholars argued about 0.4267 there.",
+                    {"recall": 0.82, "whatever": 0.4267})
+    rep = readiness_report(doc, recs)
+    assert rep["volunteered_oaths"]["count"] == 1
+    assert "0.3654" in rep["volunteered_oaths"]["meaning"]

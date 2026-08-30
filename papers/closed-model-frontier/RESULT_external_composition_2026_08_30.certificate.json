@@ -1,0 +1,479 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_external_composition_2026_08_30.md",
+  "document_sha256": "c93f5136619f05fbe1becab970ca3e97e8236326863fcd31236bd77ea079e913",
+  "receipts_sha256": {
+    "oath_external_epistemics_census.json": "f163e6992d64e47d87ae13ab95e0c7eb9675af42624cc298567b44513c65f59f",
+    "oath_obligation_claimhood_join.json": "e476eb020888879f4ca6a9a40d70407553d897a8f56610274ddab6afce8802c6",
+    "oath_unobligated_oath_census.json": "a996667b3882af8e610616951ec25835bfcb222991d8f80340e8bc87e075fe54",
+    "oath_adjudication_result.json": "596b4ed4fa3ab092cbd390aa11f871fda8cab9a90912e8556158a70bd1874908"
+  },
+  "verifier_sha256": "76f0dac9b27757850d37bb58f0392e1a9449f3e86c2c1f82d4149368e19c7054",
+  "counts": {
+    "VERIFIED": 19,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 2,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 19,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 4
+    },
+    "verified": {
+      "total": 19,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 2,
+        "obligated_integer_filter_na": 4,
+        "unobligated_integer_filter_ran": 7,
+        "unobligated_integer_filter_na": 6
+      }
+    },
+    "obligated_total": 8,
+    "obligation_sources": {
+      "vocabulary": 4,
+      "n-glued": 2,
+      "range-correlation": 2,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 24,
+      "token": "75"
+    },
+    {
+      "line": 30,
+      "token": "260"
+    },
+    {
+      "line": 39,
+      "token": "414"
+    },
+    {
+      "line": 39,
+      "token": "575"
+    },
+    {
+      "line": 51,
+      "token": "52"
+    },
+    {
+      "line": 51,
+      "token": "23"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "Every `CERTIFIED` external repository \u2014 all `82` \u2014 rebuilt from the frozen fetch cache with every",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:repos_certified_in_manifest",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 11,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`0` unresolved. Folding their `epistemics_summary` blocks:",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.unresolved",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "> **External unobligated oath rate: `0.72`** \u2014 `414` of `575` external verifications were",
+      "col": 37,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.unobligated_oath_rate_external",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "414",
+      "value": 414.0,
+      "decimals": 0,
+      "context": "> **External unobligated oath rate: `0.72`** \u2014 `414` of `575` external verifications were",
+      "col": 48,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.unobligated_oaths",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 13,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "> **External unobligated oath rate: `0.72`** \u2014 `414` of `575` external verifications were",
+      "col": 57,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.verified_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 14,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "> volunteered, not obligated. Internal, for comparison: `0.5811`.",
+      "col": 57,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.internal_comparison.unobligated_oath_rate_internal",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 16,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "The weakest cell \u2014 volunteered **and** no binding filter ever ran \u2014 is `0.36` of all external",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.weakest_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 17,
+      "token": "207",
+      "value": 207.0,
+      "decimals": 0,
+      "context": "verifications (`207` tokens), against `0.3399` internally. And the obligated minority abroad is",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:verified_value_match.unobligated_integer_filter_ran",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 17,
+      "token": "0.3399",
+      "value": 0.3399,
+      "decimals": 4,
+      "context": "verifications (`207` tokens), against `0.3399` internally. And the obligated minority abroad is",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.internal_comparison.weakest_share_internal",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 18,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "thin: only `28` external verifications in the whole corpus are the strongest form, obligated with",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:verified_value_match.obligated_integer_filter_ran",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 23,
+      "token": "0.3654",
+      "value": 0.3654,
+      "decimals": 4,
+      "context": "The join measured volunteered external oaths at `0.3654` claim-share and obligated ones at",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.7826",
+      "value": 0.7826,
+      "decimals": 4,
+      "context": "`0.7826`, on a panel sample whose volunteer mix was `52` of `75`. Weighting those claim-shares by",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "`0.7826`, on a panel sample whose volunteer mix was `52` of `75`. Weighting those claim-shares by",
+      "col": 53,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "`0.7826`, on a panel sample whose volunteer mix was `52` of `75`. Weighting those claim-shares by",
+      "col": 61,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.4933",
+      "value": 0.4933,
+      "decimals": 4,
+      "context": "the panel's published `0.4933` \u2014 the three measurements recompose. That is a consistency check,",
+      "col": 23,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_adjudication_result.json:verified_arm_sanity.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 29,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "Multiplying `0.72` by the volunteer non-claim rate gives an **estimate** \u2014 labelled as such, never",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.unobligated_oath_rate_external",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 30,
+      "token": "260",
+      "value": 260.0,
+      "decimals": 0,
+      "context": "a measurement \u2014 that roughly `260` of the `575` external verifications are sworn to non-claims.",
+      "col": 30,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 30,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "a measurement \u2014 that roughly `260` of the `575` external verifications are sworn to non-claims.",
+      "col": 43,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.verified_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 31,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "The certificate calls all `575` `VERIFIED`, identically.",
+      "col": 27,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.verified_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 39,
+      "token": "414",
+      "value": 414.0,
+      "decimals": 0,
+      "context": "external adopter's report now shows their own `414/575` equivalent without any of this",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 39,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "external adopter's report now shows their own `414/575` equivalent without any of this",
+      "col": 53,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 51,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "correlated-error ceiling and small cells (`n=52`, `n=23`), disclosed in the join. The `0.72` and",
+      "col": 45,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 51,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "correlated-error ceiling and small cells (`n=52`, `n=23`), disclosed in the join. The `0.72` and",
+      "col": 53,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 51,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "correlated-error ceiling and small cells (`n=52`, `n=23`), disclosed in the join. The `0.72` and",
+      "col": 87,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.unobligated_oath_rate_external",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 52,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "`0.36` themselves are exact counts over the frozen corpus, not estimates.",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.weakest_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    }
+  ]
+}

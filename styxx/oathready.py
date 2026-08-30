@@ -55,8 +55,7 @@ import re
 import sys
 from pathlib import Path
 
-from .certify import (_TRIGGERS, _TRIGGERS_CORR, V07_PRECISION_DIGITS,
-                      V07_PRECISION_OBLIGATION, certify_doc)
+from .certify import _TRIGGERS, _TRIGGERS_CORR, V07_PRECISION_DIGITS, certify_doc
 
 __all__ = ["readiness_report", "render"]
 
@@ -124,7 +123,13 @@ def _classify(entry: dict, line: str) -> dict:
         # about: a value matching a receipt field and receiving an affirmative oath. Found by an
         # adversarial review of the merge, with the repro "The sycophancy rate was 0.5" grounding
         # in `gpu_memory_fraction` and being reported as a kept contract.
-        out["path_checked"] = out["kind"] == "bound" and "." not in entry["token"]
+        # Read the verifier's own epistemics rather than re-deriving them. This line used to
+        # infer path_checked from '"." not in token' -- a second definition of the same concept,
+        # one drift away from lying. The annotation is authoritative and invariant-tested.
+        _ep = entry["epistemics"]
+        out["path_checked"] = out["kind"] == "bound" and _ep.get("path_checked", False)
+        out["obligated"] = _ep["obligated"]
+        out["obligation_source"] = _ep["obligation_source"]
         if out["kind"] == "coincident":
             out["advice"] = (
                 "grounds at a leaf that is a POSITION, not a measurement — an index, a seed, a "
@@ -156,8 +161,10 @@ def _classify(entry: dict, line: str) -> dict:
         # accusations -- 49.2% -- sit on a line naming no trigger at all. Internally it is 0 of 11,
         # which is why this went unnoticed: our own prose puts the word on the line, and the tool
         # is built for authors whose prose does not.
+        # The verifier now names the obligating clause itself; stop guessing it from decimals.
+        out["obligation_source"] = entry["epistemics"]["obligation_source"]
         if not words:
-            if V07_PRECISION_OBLIGATION and entry.get("decimals", 0) >= V07_PRECISION_DIGITS:
+            if entry["epistemics"]["obligation_source"] == "precision":
                 out["obligated_by_rule"] = "precision"
                 out["advice"] = (
                     f"no measurement word appears on this line. It was obligated by PRECISION: a "
@@ -232,6 +239,14 @@ def readiness_report(doc_path: Path, receipt_paths: list) -> dict:
         "not_a_grade": "These are counts, not a score. This tool cannot tell whether a number is "
                        "CORRECT — only whether it is bound to something a reader could check. A "
                        "document can be fully ready and completely wrong.",
+        "volunteered_oaths": {
+            "count": sum(1 for r in rows if r["kind"] == "bound" and not r.get("obligated", True)),
+            "meaning": ("VERIFIED rows nothing obligated the verifier to examine -- the value "
+                        "matched a receipt field and an oath was volunteered. Measured on a "
+                        "140-repository external corpus (2026-08-30): 0.72 of external "
+                        "verifications are volunteered, and on the blind-panel sample only "
+                        "0.3654 of volunteered external oaths sit on real claims. Read yours."),
+        },
         "abstained_is_not_neutral": (
             "The abstained count is the least safe number in this report. Blind panels on "
             "2026-08-27 judged 0.4267 of abstained tokens in this laboratory's own corpus, and "
