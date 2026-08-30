@@ -185,14 +185,25 @@ should say so publicly.
 **And it does not mean your document's claims are covered. This is the part we got wrong until
 2026-08-27, and it is measured now rather than estimated.** `OATH-HELD` means, precisely:
 
-> *the numbers this verifier chose to obligate, it could bind to a receipt.*
+> *the numbers this verifier could bind to a receipt, it bound; the numbers it obligated and could
+> not bind, it accused.*
 
-It does not mean *the claims in this document are grounded*, and the distance between those two
-sentences is large. Blind panels adjudicated every abstained token in both our own corpus and a
-140-repository external one, and of the numbers the verifier **declined to check**, `0.4267` of
-ours and `0.4067` of theirs were checkable claims. Roughly two in five of the claims in a document
-carrying our own certificate were never examined at all — including reported medians,
-preregistered quantities and pass counts at gates.
+An earlier version of this section said "the numbers this verifier chose to obligate, it could
+bind to a receipt." That was wrong in a direction we then measured
+(`RECON_v13_not_frozen_the_ladder_2026_08_28.md`): **obligation gates accusation, not
+verification.** A number whose value matches a receipt field is sworn to whether or not anything
+obligated the verifier to examine it. Counted over our own corpus with the epistemics annotation
+(`RESULT_unobligated_oath_2026_08_28.md`): **`0.5811` of our verifications — 3,458 of 5,951 —
+were volunteered, not obligated**, and `0.3399` of all verifications are the weakest form, value
+match alone with the receipt path never compared.
+
+It also does not mean *the claims in this document are grounded*. Blind panels adjudicated every
+abstained token in both our own corpus and a 140-repository external one, and of the numbers the
+verifier **said nothing about**, `0.4267` of ours and `0.4067` of theirs were checkable claims —
+including reported medians, preregistered quantities and pass counts at gates. One precision about
+those: they abstained because **no receipt holds their value**, so the gap is *unbacked claims
+going unflagged*, not backed claims going unchecked. An earlier phrasing here ("declined to
+check") read as the latter and is corrected.
 
 Two consequences you should hold us to:
 

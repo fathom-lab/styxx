@@ -704,12 +704,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # number is not a claim whose truth condition was unmet; it has no truth condition, so
         # neither VERIFIED nor UNGROUNDED is meaningful for it.
         if _v11_row_ordinal_label(num, doc_lines, table_rows):
-            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label"})
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label",
+                           "epistemics": {"branch": "row-ordinal-label", "obligated": False,
+                                          "obligation_source": None}})
             continue
         # v0.12 FORMULA CONSTANT: same tier, same shape — and SHIPPED OFF, killed by its own G2
         # for under-reaching. Live only so the negative stays re-runnable.
         if _v12_formula_constant(num, doc_lines):
-            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "formula_constant"})
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "formula_constant",
+                           "epistemics": {"branch": "formula-constant", "obligated": False,
+                                          "obligation_source": None}})
             continue
         # v0.1 SPEC-CONSTANT rule: a number that is a pre-registered bar/threshold, a CI confidence
         # level, or a comparison bound is SPEC, not a measurement -> ABSTAIN (it has no receipt by
@@ -802,16 +806,27 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                         if re.search(r"(^|[._\[])n_|n_held|n_caved|^n(\.|$)|count", pth, re.I)]
         # v0.5 class F: the n= register obligates only its OWN glued token (self-scoped). When the
         # class is OFF, n= falls back to the v0.4 line-wide trigger behavior.
+        #
+        # EPISTEMICS (2026-08-28, annotation only): `_ob_src` records the FIRST clause that set
+        # `bound`, and the ladder below records which arm produced the status. Both land in the
+        # ledger entry so a certificate can say, per token, which epistemic path it took — most
+        # consequentially whether a VERIFIED token was ever obligated at all, which the ladder
+        # RECON showed it need not be. The invariant frozen in
+        # INVARIANT_epistemics_annotation_2026_08_28.md: this may move NOTHING.
+        _voc = bool(_TRIGGERS.search(bctx))
         if V05_SELF_SCOPED_N:
-            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=\s*$", pre, re.I))
+            _ngl = bool(re.search(r"\bn\s*=\s*$", pre, re.I))
         else:
-            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=", bctx, re.I))
+            _ngl = bool(re.search(r"\bn\s*=", bctx, re.I))
+        bound = _voc or _ngl
+        _ob_src = "vocabulary" if _voc else ("n-glued" if _ngl else None)
         # v0.4 decimal+range-guarded recall: the correlation/similarity register obligates a number
         # only when it is a fractional correlation (decimals > 0 and in [−1, 1]) — spares ordinals /
         # counts / API caps / whole-percents, binds RSA 0.264 / reliability 0.735.
         if not bound and num["decimals"] > 0 and -1.0 <= num["value"] <= 1.0 \
                 and _TRIGGERS_CORR.search(bctx):
             bound = True
+            _ob_src = "range-correlation"
         # v0.7 precision obligation: printed precision IS the binding signal, because a number at
         # this width was copied out of a computation rather than typed by a person. `precision_only`
         # records that THIS clause is the sole source of the obligation, which is what scopes the
@@ -820,6 +835,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         precision_only = False
         if not bound and V07_PRECISION_OBLIGATION and num["decimals"] >= V07_PRECISION_DIGITS:
             bound, precision_only = True, True
+            _ob_src = "precision"
         # v0.3 RANGE-SANITY rule: a value sitting directly after bounded-quantity vocabulary cannot
         # leave its possible range — an 'AUC 4.0' is UNGROUNDED no matter what leaf it happens to
         # match (kills the coincidence-verification class of the v0.1 battery misses).
@@ -835,6 +851,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if out_of_range:
             hits, bound = [], True
             precision_only = False   # a range-sanity obligation is never ULP-escapable
+            _ob_src = "range-sanity"
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.
@@ -886,17 +903,22 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                     field_unbound_ref = f"unbound-field:{hits[0][0]}:{hits[0][1]}"
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
+            _branch = "spec-or-historical"
         elif is_notation:
             status, ref = "ABSTAIN", "v05-notation"
+            _branch = "notation"
         elif derived_ref:
             status, ref = "VERIFIED", derived_ref
+            _branch = "derived"
         elif field_unbound_ref:
             # v0.8: the claim's value is in the receipts, but not in any field its context names.
             # The oath is withheld, not inverted -- ABSTAIN names the gap and stays countable.
             status, ref = "ABSTAIN", field_unbound_ref
+            _branch = "unbound-field"
         elif hits:
             status = "VERIFIED"
             ref = f"{hits[0][0]}:{hits[0][1]}"
+            _branch = "value-match"
         elif bound:
             # NOTE (v0.3): a bulk-row match deliberately does NOT soften this to ABSTAIN — letting
             # claims ground in per-item arrays let 13/20 seeded mutants hide in row noise when it
@@ -910,12 +932,23 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                   if (V07_ULP_ESCAPE and precision_only) else None)
             if nb:
                 status, ref = "ABSTAIN", f"ulp-neighbour:{nb[0]}:{nb[1]}"
+                _branch = "ulp-neighbour"
             else:
                 status, ref = "UNGROUNDED", None
+                _branch = "obligated-accusation"
         else:
             status = "ABSTAIN"
             ref = None
-        ledger.append({**num, "status": status, "receipt_ref": ref})
+            _branch = "silent"
+        # The epistemic path, recorded rather than discarded. `obligated` is `bound` at ladder
+        # time; a VERIFIED entry with obligated=False is an UNOBLIGATED OATH -- the verifier swore
+        # to a value nothing required it to examine. `path_checked` says whether the v0.3 integer
+        # count-binding filter ran; for decimals it never does (v0.8 CLOSED_NEGATIVE), which is
+        # the gpu_memory_fraction class of binding. Annotation only; see the frozen invariant.
+        _ep = {"branch": _branch, "obligated": bool(bound), "obligation_source": _ob_src}
+        if _branch == "value-match":
+            _ep["path_checked"] = num["decimals"] == 0
+        ledger.append({**num, "status": status, "receipt_ref": ref, "epistemics": _ep})
 
     counts = {s: sum(1 for c in ledger if c["status"] == s) for s in ("VERIFIED", "ABSTAIN", "UNGROUNDED")}
     cert = {
