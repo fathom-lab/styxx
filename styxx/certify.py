@@ -1044,6 +1044,17 @@ def main(argv=None) -> int:
     c = cert["counts"]
     print(f"{cert['verdict']}  verified={c['VERIFIED']} abstained={c['ABSTAIN']} "
           f"contradicted={c['UNGROUNDED']}  -> {out.name}")
+    # A verified count alone is the green-checkmark half-truth this instrument exists to reject:
+    # it says nothing about how much of what was sworn was ever obligated. Print the split so the
+    # boundary is visible without opening the JSON.
+    es = cert["epistemics_summary"]["verified"]
+    obl = (es["value_match"]["obligated_integer_filter_ran"]
+           + es["value_match"]["obligated_integer_filter_na"] + es["derived"]["obligated"])
+    if es["total"]:
+        unobl = es["total"] - obl
+        weakest = es["value_match"]["unobligated_integer_filter_na"]
+        print(f"  of {es['total']} verified: {obl} obligated, {unobl} volunteered "
+              f"({round(unobl / es['total'] * 100)}%) — {weakest} by value match alone")
     for bad in cert["ungrounded"]:
         print(f"  UNGROUNDED L{bad['line']}: {bad['token']}  | {bad['context'][:100]}")
     return 0 if cert["verdict"] == "OATH-HELD" else 1

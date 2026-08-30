@@ -185,3 +185,23 @@ def test_a_consumer_can_count_unbound_verifications_without_the_ledger(mk):
     vm = s["verified"]["value_match"]
     no_binding = vm["obligated_integer_filter_na"] + vm["unobligated_integer_filter_na"]
     assert no_binding == 2, "both floats verified with no binding filter, visible without the ledger"
+
+
+def test_cli_prints_the_obligation_split_not_just_the_count(mk, tmp_path, capsys, monkeypatch):
+    """The green-checkmark half-truth this instrument rejects: a verified count with no boundary.
+
+    The CLI must print how much of what it verified was volunteered, so an operator sees the
+    boundary without opening the JSON.
+    """
+    import sys
+    from styxx.certify import main
+    doc = tmp_path / "d.md"
+    doc.write_text("The recall was 0.82 here.\nScholars argued about 0.4267 there.\n",
+                   encoding="utf-8")
+    rec = tmp_path / "r.json"
+    rec.write_text('{"recall": 0.82, "whatever": 0.4267}', encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["certify", str(doc), str(rec)])
+    main([str(doc), str(rec)])
+    out = capsys.readouterr().out
+    assert "obligated" in out and "volunteered" in out
+    assert "%" in out, "the volunteered percentage must be visible in the terminal"
