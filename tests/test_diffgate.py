@@ -100,6 +100,34 @@ def test_uncovered_prose_is_counted_not_judged(tmp_path):
     assert g.uncovered_sentences >= 1
 
 
+def test_the_never_read_band_is_auditable_not_just_countable(tmp_path):
+    """RESULT_agent_gate_boundary_2026_08_30: this gate read 6 of an agent's
+    2,738 sentences. A count buried in a dict cannot confess that boundary —
+    the gate must carry the denominator and the never-read sentences
+    themselves, in the result AND in --out, so an attestation without its
+    never-read band is impossible to construct from this API."""
+    base = _repo(tmp_path)
+    g = gate_diff("Modified src/app.py. This work is brilliant and revolutionary.",
+                  tmp_path, base, "HEAD")
+    assert g.sentences_total == 2
+    assert g.uncovered_texts == ["This work is brilliant and revolutionary."]
+    assert g.uncovered_sentences == len(g.uncovered_texts)
+    d = g.to_dict()
+    assert d["sentences_total"] == 2
+    assert d["uncovered_texts"] == g.uncovered_texts
+
+
+def test_the_cli_confesses_the_never_read_band(tmp_path, capsys):
+    from styxx.diffgate import main
+    base = _repo(tmp_path)
+    doc = tmp_path / "summary.md"
+    doc.write_text("Modified src/app.py. A profound and unjudgeable sentence.",
+                   encoding="utf-8")
+    main([str(doc), "--repo", str(tmp_path), "--base", base, "--head", "HEAD"])
+    out = capsys.readouterr().out
+    assert "never read: 1 of 2 sentences" in out
+
+
 def test_added_section_bullet_is_not_a_created_file_claim(tmp_path):
     # market-sweep catch (IBL5#1667): "`f.md`: Added the X section" means content added
     # IN the file, not the file being added — must not accuse an M file of not being A

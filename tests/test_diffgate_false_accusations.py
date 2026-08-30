@@ -64,6 +64,55 @@ def test_creation_the_noun_is_not_creation_the_act():
     assert not any(c.verdict == "CONTRADICTED" for c in g.claims)
 
 
+# ── found 8.30 (agent branch attestation): MENTION vs USE, three for three ──
+#
+# RESULT_agent_gate_boundary_2026_08_30: all 54 commits of the branch that
+# built this gate, gated against their own diffs. Every CONTRADICTED entry —
+# all three — was prose ABOUT a file (a drift entry, a receipt, a narrative of
+# why a test fired) read as a claim the commit touched it. The sentences below
+# are verbatim from `agent_branch_attestation.json`. They are NOT fixed:
+# _REFERENTIAL is a closed list and none of these carry its markers. They are
+# pinned as xfail(strict) so the day a repair lands, these flip loudly and the
+# catalogue test below must be flipped with them — no silent drift in either
+# direction. Any repair must be measured against the blind ground truth first
+# (lexical patches are measured dead in this corpus; see the word-list RECON).
+
+_AGENT_SWEEP_SENTENCES = [
+    # 8cb66a448 — a ledger-style line REPORTING a document's certificate status
+    "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md: committed OATH-HELD",
+    # f76b5099b — a sentence REPORTING the corpus's known drift finding
+    "mind_v0_validation.json -- is present in the tree with content that is not "
+    "what was certified",
+    # aef4a402e — a sentence NARRATING why a test fired ("new" + window + path
+    # became file_created against a file the diff only modified)
+    "new prereg changed the corpus and LEDGER.md had not been rebuilt.",
+]
+
+
+@pytest.mark.parametrize("sentence", _AGENT_SWEEP_SENTENCES)
+@pytest.mark.xfail(strict=True, reason="mention-vs-use, unrepaired: the gate "
+                   "still accuses prose that reports on a file it never claimed "
+                   "to touch (RESULT_agent_gate_boundary_2026_08_30)")
+def test_reporting_on_a_file_is_not_claiming_to_touch_it(sentence):
+    g = gate_diff_text(sentence, TOUCHED)
+    assert not any(c.verdict == "CONTRADICTED" for c in g.claims), (
+        f"false accusation: {sentence!r}")
+
+
+def test_the_agent_sweep_defect_is_catalogued_not_forgotten():
+    """Pins CURRENT behavior: all three sentences still draw an accusation.
+
+    If this test starts failing, a change altered extraction on these exact
+    sentences — flip the xfails above in the same commit and cite the
+    measurement that licensed the repair. One direction changing without the
+    other is the silent drift this pair exists to catch.
+    """
+    for sentence in _AGENT_SWEEP_SENTENCES:
+        g = gate_diff_text(sentence, TOUCHED)
+        assert any(c.verdict == "CONTRADICTED" for c in g.claims), (
+            f"extraction changed on {sentence!r} without the xfail flipping")
+
+
 # ── and the gate must still catch actual lies ─────────────────────────────
 
 @pytest.mark.parametrize("sentence,diff", [

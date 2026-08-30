@@ -133,6 +133,15 @@ class DiffGate:
     head: str
     claims: list = field(default_factory=list)
     uncovered_sentences: int = 0
+    # The never-read band, first-class. The agent-branch attestation
+    # (RESULT_agent_gate_boundary_2026_08_30) measured this gate reading 6
+    # sentences of an agent's own 2,738 — a coverage boundary that a bare count
+    # buried in a dict could not confess. So the gate now carries the
+    # denominator and the sentences themselves: what was never read is
+    # auditable, not just countable. Same promotion epistemics_summary gave
+    # OATH's abstained band; observation only, verdict logic untouched.
+    sentences_total: int = 0
+    uncovered_texts: list = field(default_factory=list)
     # A gate that had NO EVIDENCE still has to answer PASS or FAIL, and PASS is
     # the flattering half. `measured` is the third answer the two-valued verdict
     # cannot carry: this gate did not run. A leg that cannot fail must not gate.
@@ -144,6 +153,8 @@ class DiffGate:
                 "head": self.head,
                 "claims": [c.__dict__ for c in self.claims],
                 "uncovered_sentences": self.uncovered_sentences,
+                "sentences_total": self.sentences_total,
+                "uncovered_texts": self.uncovered_texts,
                 "measured": self.measured,
                 "why_unmeasured": self.why_unmeasured}
 
@@ -319,10 +330,13 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     contradicted = any(c.verdict == "CONTRADICTED" for c in claims)
     uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)
     verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
-    uncovered = sum(1 for i, s in enumerate(sentences) if s.strip() and i not in covered)
+    uncovered_texts = [s.strip() for i, s in enumerate(sentences)
+                       if s.strip() and i not in covered]
+    total = sum(1 for s in sentences if s.strip())
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
                     measured=not no_evidence, why_unmeasured=no_evidence or "",
-                    uncovered_sentences=uncovered)
+                    uncovered_sentences=len(uncovered_texts),
+                    sentences_total=total, uncovered_texts=uncovered_texts)
 
 
 _DEMO_SUMMARY = ("Refactored src/retry.py for resilience. Adds function backoff with "
@@ -405,6 +419,12 @@ def main(argv=None) -> int:
           f"contradicted={sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} "
           f"uncheckable={sum(1 for c in g.claims if c.verdict == 'UNCHECKABLE')} "
           f"uncovered_sentences={g.uncovered_sentences}")
+    if g.sentences_total:
+        # The boundary, confessed on every run: a PASS over N sentences the gate
+        # never read is a PASS over the templates, not over the summary.
+        print(f"never read: {g.uncovered_sentences} of {g.sentences_total} "
+              f"sentences — prose outside the closed template set is listed "
+              f"in --out, not judged")
     for c in g.claims:
         if c.verdict != "VERIFIED":
             print(f"  [{c.verdict}:{c.kind}] {c.why}")
