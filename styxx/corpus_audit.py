@@ -260,6 +260,9 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     live = certify_doc(doc, receipts)
     rec["live_verdict"] = live["verdict"]
     rec["counts"] = live["counts"]
+    # The auditor reads the verifier's own epistemics_summary rather than re-deriving anything;
+    # it may only ADD corpus totals, never touch a verdict or an existing count.
+    rec["epistemics_summary"] = live.get("epistemics_summary")
     rec["verdict_changed"] = (live["verdict"] != cert.get("verdict"))
     rec["status"] = "OK"
     if tamper:
@@ -299,6 +302,50 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     return rec
 
 
+def _fold_epistemics(docs: list) -> dict:
+    """Corpus-wide composition, summed from every certificate's own epistemics_summary.
+
+    Answers, over a whole corpus, the question a single certificate now answers per token: of what
+    this corpus swears to, how much was the verifier ever OBLIGATED to examine, and how much is the
+    weakest form -- a volunteered value coincidence no binding filter touched. Additive: reads the
+    summary, sums it, invents nothing. A certificate predating epistemics_summary v1 contributes
+    nothing (older certificates carry no block) and is counted in `certificates_without_summary`.
+    """
+    ver = 0
+    obligated_ver = 0
+    weakest = 0            # unobligated value-match, no integer filter
+    accusations = 0
+    without = 0
+    for d in docs:
+        s = d.get("epistemics_summary")
+        if not s or s.get("schema") != "styxx-oath/epistemics-summary/v1":
+            without += 1
+            continue
+        vm = s["verified"]["value_match"]
+        der = s["verified"]["derived"]
+        ver += s["verified"]["total"]
+        obligated_ver += (vm["obligated_integer_filter_ran"] + vm["obligated_integer_filter_na"]
+                          + der["obligated"])
+        weakest += vm["unobligated_integer_filter_na"]
+        accusations += s["by_branch"]["obligated-accusation"]
+    unobligated = ver - obligated_ver
+    return {
+        "certificates_with_summary": len(docs) - without,
+        "certificates_without_summary": without,
+        "verified_total": ver,
+        "verified_obligated": obligated_ver,
+        "verified_unobligated": unobligated,
+        "unobligated_oath_rate": round(unobligated / ver, 4) if ver else None,
+        "weakest_attestations": weakest,
+        "weakest_share": round(weakest / ver, 4) if ver else None,
+        "accusations": accusations,
+        "reading": ("unobligated_oath_rate is the share of this corpus's VERIFIED tokens that "
+                    "nothing obligated the verifier to examine; weakest_share is the subset that "
+                    "is value-match alone with no binding filter. Both are composition, not "
+                    "quality -- claim-share is the panel's job, not the auditor's."),
+    }
+
+
 def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     """Audit every certificate under *root*; return per-doc records + a corpus summary."""
     docs = [audit_document(cp, tamper, seed, search_root=root)
@@ -314,7 +361,8 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     changed_receipts = sum(1 for d in docs if d.get("receipt_changed"))
     summary = {"root": str(root), "n_certificates": len(docs), "held": held, "failed": failed,
                "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted,
-               "incomplete_receipts": incomplete, "receipt_changed": changed_receipts}
+               "incomplete_receipts": incomplete, "receipt_changed": changed_receipts,
+               "epistemics": _fold_epistemics(docs)}
     if tamper:
         tot = {"n_mutants": 0, "caught": 0, "false_verify": 0, "abstain_degrade": 0}
         for d in docs:
@@ -340,6 +388,12 @@ def main(argv=None) -> int:
           f"HELD {s['held']}  FAILED {s['failed']}  unresolved {s['unresolved']}  "
           f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}  "
           f"incomplete {s['incomplete_receipts']}  receipt-changed {s['receipt_changed']}")
+    ep = s.get("epistemics", {})
+    if ep.get("verified_total"):
+        print(f"  epistemics: {ep['verified_total']} verified | "
+              f"obligated {ep['verified_obligated']} unobligated {ep['verified_unobligated']} "
+              f"(rate {ep['unobligated_oath_rate']}) | weakest {ep['weakest_attestations']} "
+              f"({ep['weakest_share']}) | {ep['certificates_without_summary']} pre-v1")
     for d in report["documents"]:
         if (d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
                 or d.get("receipt_drift") or d.get("incomplete_receipts")):
