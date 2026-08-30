@@ -678,6 +678,66 @@ _TRIGGERS_CORR = re.compile(
     r"convergence|drift|entropy|similarity|variance)\b", re.I)
 
 
+# The ten labels this verifier version can emit, in execution order: two pre-ladder demotions,
+# then the ladder. A new branch or clause is a NEW schema string, never a mutation of v1.
+_EPISTEMICS_BRANCHES = ("row-ordinal-label", "formula-constant", "spec-or-historical",
+                        "notation", "derived", "unbound-field", "value-match",
+                        "ulp-neighbour", "obligated-accusation", "silent")
+_EPISTEMICS_SOURCES = ("vocabulary", "n-glued", "range-correlation", "precision", "range-sanity")
+
+
+def _epistemics_summary(ledger: list, counts: dict) -> dict:
+    """Fold the per-token epistemics into a machine-consumable block.
+
+    Frozen shape: styxx-oath/epistemics-summary/v1, designed and red-teamed 2026-08-30
+    (`papers/closed-model-frontier/DESIGN_epistemics_summary_schema_2026_08_30.md`). Counts only,
+    no rates; every key always present, zeros included; a pure deterministic function of the
+    certificate's own ledger and of nothing else. It counts which door each token came through and
+    says nothing about whether any token is a true claim or a good one.
+
+    The four value-match cells name the MECHANISM, not a virtue: `integer_filter_ran` means the
+    v0.3 count-binding filter executed (decimals == 0); `integer_filter_na` means the token is a
+    float and receives no status-level binding at this verifier version (v0.8 CLOSED_NEGATIVE).
+    `unobligated_integer_filter_na` is the weakest attestation the instrument produces;
+    `obligated_integer_filter_na` is the larger obligated exposure the first draft of this schema
+    hid. Invariants are asserted loudly at issuance -- a certificate must fail to issue rather
+    than carry a self-inconsistent summary.
+    """
+    by_branch = {b: 0 for b in _EPISTEMICS_BRANCHES}
+    sources = {k: 0 for k in _EPISTEMICS_SOURCES}
+    vm = {"obligated_integer_filter_ran": 0, "obligated_integer_filter_na": 0,
+          "unobligated_integer_filter_ran": 0, "unobligated_integer_filter_na": 0}
+    derived = {"obligated": 0, "unobligated": 0}
+    obligated_total = 0
+    for e in ledger:
+        ep = e["epistemics"]
+        by_branch[ep["branch"]] += 1
+        if ep["obligated"]:
+            obligated_total += 1
+            sources[ep["obligation_source"]] += 1
+        if e["status"] == "VERIFIED":
+            if ep["branch"] == "derived":
+                derived["obligated" if ep["obligated"] else "unobligated"] += 1
+            elif ep["branch"] == "value-match":
+                key = ("obligated" if ep["obligated"] else "unobligated") +                       ("_integer_filter_ran" if ep["path_checked"] else "_integer_filter_na")
+                vm[key] += 1
+    total_tokens = counts["VERIFIED"] + counts["ABSTAIN"] + counts["UNGROUNDED"]
+    assert sum(by_branch.values()) == total_tokens, "epistemics_summary: branch sum drifted"
+    assert by_branch["obligated-accusation"] == counts["UNGROUNDED"],         "epistemics_summary: accusation branch != UNGROUNDED count"
+    assert counts["VERIFIED"] == sum(derived.values()) + sum(vm.values()),         "epistemics_summary: verified partition drifted"
+    assert obligated_total == sum(sources.values()), "epistemics_summary: source sum drifted"
+    return {
+        "schema": "styxx-oath/epistemics-summary/v1",
+        "note": ("attestation composition folded from this certificate's own ledger; counts "
+                 "which door each token came through; says nothing about whether any token is a "
+                 "true claim or a good one"),
+        "by_branch": by_branch,
+        "verified": {"total": counts["VERIFIED"], "derived": derived, "value_match": vm},
+        "obligated_total": obligated_total,
+        "obligation_sources": sources,
+    }
+
+
 def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     text = doc_path.read_text(encoding="utf-8")
     receipts = {}
@@ -851,7 +911,10 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if out_of_range:
             hits, bound = [], True
             precision_only = False   # a range-sanity obligation is never ULP-escapable
-            _ob_src = "range-sanity"
+            if _ob_src is None:      # first-writer, as the annotation contract documents --
+                _ob_src = "range-sanity"   # range-sanity FORCES the accusation but does not
+                                           # rewrite who obligated the token (caught in schema
+                                           # red-team: this line used to clobber unconditionally)
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.
@@ -951,6 +1014,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         ledger.append({**num, "status": status, "receipt_ref": ref, "epistemics": _ep})
 
     counts = {s: sum(1 for c in ledger if c["status"] == s) for s in ("VERIFIED", "ABSTAIN", "UNGROUNDED")}
+    summary = _epistemics_summary(ledger, counts)
     cert = {
         "oath": "styxx OATH v0 (numeric-claim certificate)",
         "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
@@ -959,6 +1023,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         "receipts_sha256": receipts,
         "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "counts": counts,
+        "epistemics_summary": summary,
         "verdict": "OATH-HELD" if counts["UNGROUNDED"] == 0 else "OATH-FAILED",
         "ungrounded": [c for c in ledger if c["status"] == "UNGROUNDED"],
         "abstained": [{"line": c["line"], "token": c["token"]} for c in ledger if c["status"] == "ABSTAIN"],

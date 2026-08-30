@@ -108,9 +108,80 @@ def test_the_invariant_direction_annotation_only():
     # that form binds the function and getsource returns provenance code -- an order-dependent
     # failure that hit this test in the full suite and the invariant A/B script within two days.
     C = importlib.import_module("styxx.certify")
-    src = inspect.getsource(C)
-    assert '["epistemics"]' not in src, "certify.py subscript-reads the annotation"
-    assert '.get("epistemics"' not in src, "certify.py get-reads the annotation"
-    assert "'epistemics'" not in src, "single-quoted access form"
-    # and the writes exist: the ladder append plus the two early silencers
-    assert src.count('"epistemics":') >= 3
+    ladder = inspect.getsource(C.certify_doc)
+    # The one sanctioned reader is _epistemics_summary, which folds annotation into MORE
+    # annotation after every status is final. The ladder itself may only ever WRITE.
+    assert '["epistemics"]' not in ladder, "certify_doc subscript-reads the annotation"
+    assert '.get("epistemics"' not in ladder, "certify_doc get-reads the annotation"
+    assert ladder.count('"epistemics":') >= 3, "the writes should live in certify_doc"
+    whole = inspect.getsource(C)
+    readers = whole.count('e["epistemics"]')
+    summary_src = inspect.getsource(C._epistemics_summary)
+    assert readers == summary_src.count('e["epistemics"]'), (
+        "an annotation read exists outside _epistemics_summary")
+    assert "verdict" not in summary_src.replace("no rates", ""), (
+        "the summary fold must not touch verdict logic")
+
+
+# --- the epistemics_summary block (styxx-oath/epistemics-summary/v1) ----------------------------
+
+def test_summary_sits_between_counts_and_verdict_and_carries_the_schema_string(mk):
+    cert = mk("The recall was 0.82 on the split.", {"recall": 0.82})
+    keys = list(cert.keys())
+    assert keys.index("counts") < keys.index("epistemics_summary") < keys.index("verdict")
+    assert cert["epistemics_summary"]["schema"] == "styxx-oath/epistemics-summary/v1"
+    assert "says nothing about whether any token is a true claim" in cert["epistemics_summary"]["note"]
+
+
+def test_summary_every_key_always_present_zeros_included(mk):
+    s = mk("Nothing numeric here beyond 15 people.", {"unrelated": 1})["epistemics_summary"]
+    assert len(s["by_branch"]) == 10
+    assert len(s["obligation_sources"]) == 5
+    assert set(s["verified"]["value_match"]) == {
+        "obligated_integer_filter_ran", "obligated_integer_filter_na",
+        "unobligated_integer_filter_ran", "unobligated_integer_filter_na"}
+    assert all(isinstance(v, int) for v in s["by_branch"].values())
+
+
+def test_summary_invariants_hold_on_a_mixed_document(mk):
+    cert = mk("The recall was 0.82 with about 15 people and 0.4267 in the abstract.\n"
+              "Held-out recall 4.0 across the split.",
+              {"recall": 0.82, "whatever": 0.4267})
+    s, c = cert["epistemics_summary"], cert["counts"]
+    assert sum(s["by_branch"].values()) == c["VERIFIED"] + c["ABSTAIN"] + c["UNGROUNDED"]
+    assert s["by_branch"]["obligated-accusation"] == c["UNGROUNDED"]
+    assert s["verified"]["total"] == c["VERIFIED"] == (
+        sum(s["verified"]["derived"].values()) + sum(s["verified"]["value_match"].values()))
+    assert s["obligated_total"] == sum(s["obligation_sources"].values())
+
+
+def test_summary_names_the_weakest_cell_correctly(mk):
+    """The volunteered float on an unrelated field is unobligated_integer_filter_na."""
+    s = mk("Legal scholars argued about 0.4267 in the abstract.",
+           {"whatever": 0.4267})["epistemics_summary"]
+    assert s["verified"]["value_match"]["unobligated_integer_filter_na"] == 1
+    assert s["obligated_total"] == 0
+
+
+def test_range_sanity_forces_the_accusation_but_does_not_rewrite_authorship(mk):
+    """The schema red-team caught this line clobbering obligation_source unconditionally.
+
+    First-writer is the contract: vocabulary obligated the token, range-sanity emptied its hits.
+    The accusation happens; the author stays.
+    """
+    cert = mk("Held-out recall 4.0 across the split.", {"unrelated": 1})
+    e = next(x for x in cert["ledger"] if x["token"] == "4.0")
+    assert e["status"] == "UNGROUNDED"
+    assert e["epistemics"]["obligation_source"] == "vocabulary"
+    assert cert["epistemics_summary"]["obligation_sources"]["vocabulary"] >= 1
+    assert cert["epistemics_summary"]["obligation_sources"]["range-sanity"] == 0
+
+
+def test_a_consumer_can_count_unbound_verifications_without_the_ledger(mk):
+    """The design's gate use-case: sum the two _na cells, never parse the ledger."""
+    text = "The recall was 0.82 on the split." + chr(10) + \
+           "Scholars argued about 0.4267 in the abstract."
+    s = mk(text, {"recall": 0.82, "whatever": 0.4267})["epistemics_summary"]
+    vm = s["verified"]["value_match"]
+    no_binding = vm["obligated_integer_filter_na"] + vm["unobligated_integer_filter_na"]
+    assert no_binding == 2, "both floats verified with no binding filter, visible without the ledger"
