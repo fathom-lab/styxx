@@ -1,0 +1,862 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_struct1_beats_the_null_2026_08_31.md",
+  "document_sha256": "8bb643a294281c182cb92a73b86d7b1a7519ba968d61a3b92e2e02c4571eb7f7",
+  "receipts_sha256": {
+    "stage2_result.json": "fcd6c2c1304d75a543a1217c76b12ca9a3ad9fe82b15f3e9d2ffba90a53cd638",
+    "claim_detector_corpus_census.json": "f0168870dbadddf997ffacc6a48fd5d0cb840b22149aa5b416b97c7e18062299",
+    "claim_detector_dev_eval.json": "94ad3cf89a50d73c94df8f699a734b41f608c960e097520719cd83df2c77cd54",
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 37,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 1
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 4,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 37,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 1,
+      "silent": 5
+    },
+    "verified": {
+      "total": 37,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 1,
+        "obligated_integer_filter_na": 3,
+        "unobligated_integer_filter_ran": 22,
+        "unobligated_integer_filter_na": 11
+      }
+    },
+    "obligated_total": 6,
+    "obligation_sources": {
+      "vocabulary": 5,
+      "n-glued": 1,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 85,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "corpus: *\"9 new tests.\"* (no action verb) and decoy #2, *\"certify: collapse the ladder's third rung into",
+      "col": 10,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    }
+  ],
+  "abstained": [
+    {
+      "line": 27,
+      "token": "16"
+    },
+    {
+      "line": 27,
+      "token": "0.2061"
+    },
+    {
+      "line": 28,
+      "token": "0"
+    },
+    {
+      "line": 28,
+      "token": "38"
+    },
+    {
+      "line": 37,
+      "token": "22"
+    },
+    {
+      "line": 45,
+      "token": "1"
+    },
+    {
+      "line": 76,
+      "token": "38"
+    },
+    {
+      "line": 79,
+      "token": "60"
+    },
+    {
+      "line": 119,
+      "token": "22"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "# RESULT \u2014 the first repair in this lane to beat its null: STRUCT-1 at 0.4211 against 0.2061",
+      "col": 71,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 1,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "# RESULT \u2014 the first repair in this lane to beat its null: STRUCT-1 at 0.4211 against 0.2061",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N2_verb_stems.precision_weighted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 12,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "extractor blind \u2014 precision 0.3333, corpus recall near one claim in thirty \u2014 and set a single",
+      "col": 28,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "bar for any successor: beat **0.2061**, the weighted precision of N2, the verb-stem null. Not",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:gates.G-S2P.bar",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 19,
+      "token": "0.9578",
+      "value": 0.9578,
+      "decimals": 4,
+      "context": "text, no re-runs and no seat discarded. Every seat cleared validity; unanimity 0.9578; **zero",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "| **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "col": 36,
+      "binding_context": "| arm | adjudicated A | n | A-share | | **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "col": 44,
+      "binding_context": "| arm | adjudicated A | n | A-share | | **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "| **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "col": 51,
+      "binding_context": "| arm | adjudicated A | n | A-share | | **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "| **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "col": 58,
+      "binding_context": "| arm | adjudicated A | n | A-share | | **STRUCT-1 flagged** (census, all 38) | **16** | 38 | **0.4211** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "col": 41,
+      "binding_context": "| arm | adjudicated A | n | A-share | | matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.control.A",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "| matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "col": 47,
+      "binding_context": "| arm | adjudicated A | n | A-share | | matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.control.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "col": 54,
+      "binding_context": "| arm | adjudicated A | n | A-share | | matched control (STRUCT-1 said no) | **0** | 38 | **0.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.control.A",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 27,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **G-S2P \u2014 PASS.** STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control =",
+      "col": 31,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 27,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "- **G-S2P \u2014 PASS.** STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control =",
+      "col": 34,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "- **G-S2P \u2014 PASS.** STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control =",
+      "col": 46,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "- **G-S2P \u2014 PASS.** STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control =",
+      "col": 75,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 28,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "0/38 (A-share 0.0); no significance is claimed at these n.",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 28,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "0/38 (A-share 0.0); no significance is claimed at these n.",
+      "col": 4,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 28,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "0/38 (A-share 0.0); no significance is claimed at these n.",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.control.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 30,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "distance available: 0.4211 against zero.",
+      "col": 22,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 37,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "## The honest half: 22 of 38 flags are not claims",
+      "col": 20,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 37,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "## The honest half: 22 of 38 flags are not claims",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 39,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "Precision 0.4211 means the majority of what STRUCT-1 flags is still not a claim. Every one is",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 45,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Conjunct 1 reads it as a verb because it is one, syntactically.",
+      "col": 12,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 53,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "baseline RESULT already named this as an instrument defect; Stage 2 confirms it is the",
+      "col": 69,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:stage",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 56,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Two of the three have obvious structural fixes (mask code spans before reading conjunct 1;",
+      "col": 88,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_dev_eval.json:struct1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 64,
+      "token": "2,824",
+      "value": 2824.0,
+      "decimals": 0,
+      "context": "Over the pinned corpus of 2,824 sentences, diffgate's templates parsed **7** claims and never",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:pin.sentences",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 64,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "Over the pinned corpus of 2,824 sentences, diffgate's templates parsed **7** claims and never",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:gate_vs_detector.templates_parsed_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 65,
+      "token": "2,818",
+      "value": 2818.0,
+      "decimals": 0,
+      "context": "read **2,818** sentences. STRUCT-1 flags **40** structurally checkable claims inside that",
+      "col": 7,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:gate_vs_detector.never_read_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 65,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "read **2,818** sentences. STRUCT-1 flags **40** structurally checkable claims inside that",
+      "col": 43,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:gate_vs_detector.structurally_checkable_but_unparsed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 66,
+      "token": "5.71",
+      "value": 5.71,
+      "decimals": 2,
+      "context": "blind spot \u2014 **5.71\u00d7** what the gate read \u2014 and diffgate now carries them as",
+      "col": 15,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:gate_vs_detector.reading_multiple",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 76,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "n=38 per arm. No significance is claimed and none may be quoted; both gates compare small",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 79,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "the frozen Stage 2 design was **unsatisfiable** (it required 60 flags where 38 exist), a",
+      "col": 17,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:stage",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 79,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "the frozen Stage 2 design was **unsatisfiable** (it required 60 flags where 38 exist), a",
+      "col": 61,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 79,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "the frozen Stage 2 design was **unsatisfiable** (it required 60 flags where 38 exist), a",
+      "col": 76,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 81,
+      "token": "0.9578",
+      "value": 0.9578,
+      "decimals": 4,
+      "context": "share one model family with each other and with the corpus's author; unanimity 0.9578 is a",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 82,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "correlated-error ceiling, not independent agreement. The control arm's perfect 0/38 is",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:verdicts.no_majority",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 82,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "correlated-error ceiling, not independent agreement. The control arm's perfect 0/38 is",
+      "col": 81,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 83,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "strong, but 38 sentences cannot establish that STRUCT-1's non-flags are claim-free in",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 85,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "corpus: *\"9 new tests.\"* (no action verb) and decoy #2, *\"certify: collapse the ladder's third rung into",
+      "col": 10,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 85,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "corpus: *\"9 new tests.\"* (no action verb) and decoy #2, *\"certify: collapse the ladder's third rung into",
+      "col": 53,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_dev_eval.json:null_n2_verb_stems.true_positive",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 92,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "token: the `9` inside the verbatim quotation *\"9 new tests.\"* \u2014 a corpus sentence this RESULT",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:verdicts.trailer_sentences",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 92,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "token: the `9` inside the verbatim quotation *\"9 new tests.\"* \u2014 a corpus sentence this RESULT",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:verdicts.trailer_sentences",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 109,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "1. Mask code spans before conjunct 1, and separate behavioural-present from commit-past \u2014 the",
+      "col": 35,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:per_commit[2].unparsed_claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 110,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "two repairs Stage 2's own false positives specify, developed on DEV and reported on a",
+      "col": 21,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:stage",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 119,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "*The word lists all died. Structure lived \u2014 at 0.4211, with its 22 failures printed beside",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 119,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "*The word lists all died. Structure lived \u2014 at 0.4211, with its 22 failures printed beside",
+      "col": 64,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}
