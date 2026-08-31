@@ -2,6 +2,8 @@
 """styxx.diffgate — the summary cannot lie about the diff. Catches are the product."""
 import subprocess
 
+import pytest
+
 from styxx.diffgate import gate_diff
 
 
@@ -39,6 +41,9 @@ def test_honest_summary_passes(tmp_path):
     assert all(c.verdict == "VERIFIED" for c in g.claims)
 
 
+@pytest.mark.xfail(strict=True, reason=(
+    "EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. The phantom-file claim is now WITHHELD, not accused. "
+    "strict=True forces this marker off in the same commit as the repair."))
 def test_phantom_file_claim_contradicted(tmp_path):
     base = _repo(tmp_path)
     g = gate_diff("Updated docs/readme.md with the new usage section.",

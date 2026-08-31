@@ -50,9 +50,13 @@ DIFF_PASS = (
     "-def old(x):\n"
     "-    return x\n")
 
+# A summary that still earns a CONTRADICTED after EXTERNAL-1 disabled the
+# path-claim accusation (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31):
+# the file-count claim is checked by counting the diff, not by matching prose
+# paths, so it is untouched by that repair. The old fixture claimed a
+# nonexistent file and now correctly returns UNCHECKABLE rather than accusing.
 SUMMARY_LIE = (
-    "Added styxx/ghost.py implementing the phantom feature. "
-    "Deleted old_helper.py.\n")
+    "This change is small: 7 files changed in total across the codebase.\n")
 
 
 def _mint(tmp_path, summary=SUMMARY_PASS, diff=DIFF_PASS, gate=None, name="s"):

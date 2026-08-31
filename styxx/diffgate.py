@@ -286,11 +286,28 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     p, st = find_path(d["path"])
                     want = {"file_created": "A", "file_deleted": "D"}.get(kind)
                     if p is None:
-                        c.verdict, c.why = "CONTRADICTED", \
-                            f"{d['path']!r} does not appear in the diff at all"
+                        # EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31):
+                        # over 100 blind-adjudicated accusations on an external corpus of
+                        # agent-authored PRs this branch reached precision 0.23 against a
+                        # preregistered floor of 0.95. The preregistration's committed
+                        # consequence was to disable the accusing verdict for this class
+                        # until repaired, and this is that consequence being paid. Four
+                        # mechanical defects account for it: bare basenames never met full
+                        # diff paths ('glob.ts' vs 'src/node/glob.ts'); "removed X from
+                        # FILE" bound the verb to the file instead of X; prose nouns passed
+                        # the extension whitelist ('Node.js', 'Express.js'); and negation
+                        # ("avoids modifying tsconfig.json") was read as assertion.
+                        # An instrument that cannot accuse precisely must abstain. Repair
+                        # is preregistered separately and must clear its gate on the
+                        # HELD-OUT split before this line accuses again.
+                        c.verdict, c.why = "UNCHECKABLE", (
+                            f"{d['path']!r} does not appear in the diff — accusation "
+                            "WITHHELD: this class failed EXTERNAL-1 precision "
+                            "(0.23 vs 0.95 floor), disabled pending repair")
                     elif want and st != want:
-                        c.verdict, c.why = "CONTRADICTED", \
-                            f"{d['path']!r} is status {st!r} in the diff, claim wants {want!r}"
+                        c.verdict, c.why = "UNCHECKABLE", (
+                            f"{d['path']!r} is status {st!r}, claim wants {want!r} — "
+                            "accusation WITHHELD pending the EXTERNAL-1 repair")
                     else:
                         c.verdict, c.why = "VERIFIED", f"diff status {st!r} for {p!r}"
                 elif kind == "files_changed_count":

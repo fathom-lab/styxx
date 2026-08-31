@@ -1,0 +1,95 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md",
+  "document_sha256": "5320be2caae75fce5ce2aa9904fe6405162ce35e4745c0a6eb29819acba43b78",
+  "receipts_sha256": {
+    "external1_summary.json": "d87f6ddcca4c42502b5c2ce1a2cbc80bafc7aeaf6473dcfb7730d5a4b47f8435",
+    "external1_adjudication.json": "29875cb75de35a3c0f8b29eb1c887044a6b24f7ddcdfdec2986e2c831b70da56",
+    "external1_failure_taxonomy.json": "698f45c0458c8b9e93afd86a29ff4c4210f8fba6f05f840ea833ba4e3a0583a5"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 1,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 1,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 1
+    },
+    "verified": {
+      "total": 1,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 0,
+        "obligated_integer_filter_na": 1,
+        "unobligated_integer_filter_ran": 0,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 1,
+    "obligation_sources": {
+      "vocabulary": 1,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "10.5281"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 17,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "10.5281/zenodo.16919272), the MSR 2026 Mining Challenge corpus of agent-authored pull",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 32,
+      "token": "0.23",
+      "value": 0.23,
+      "decimals": 2,
+      "context": "- **G-E1 (accusation precision) \u2014 FAIL.** Threshold 0.95. Observed **0.23**.",
+      "col": 69,
+      "status": "VERIFIED",
+      "receipt_ref": "external1_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    }
+  ]
+}

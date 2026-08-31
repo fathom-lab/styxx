@@ -1,0 +1,652 @@
+{
+ "E1-000": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-001": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-002": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-003": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-004": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-005": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-006": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-007": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-008": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-009": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-010": [
+  "SUPPORTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-011": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-012": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-013": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "CONTRADICTED"
+ ],
+ "E1-014": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "SUPPORTED"
+ ],
+ "E1-015": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-016": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-017": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-018": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-019": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-020": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-021": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-022": [
+  "CONTRADICTED",
+  "SUPPORTED",
+  "CONTRADICTED"
+ ],
+ "E1-023": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-024": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-025": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-026": [
+  "UNSURE",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-027": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-028": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-029": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-030": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-031": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "CONTRADICTED"
+ ],
+ "E1-032": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-033": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-034": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-035": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-036": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-037": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-038": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-039": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-040": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-041": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-042": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-043": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-044": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-045": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-046": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-047": [
+  "SUPPORTED",
+  "UNSURE",
+  "SUPPORTED"
+ ],
+ "E1-048": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-049": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-050": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-051": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-052": [
+  "UNSURE",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-053": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-054": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-055": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-056": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-057": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-058": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-059": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-060": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-061": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-062": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-063": [
+  "SUPPORTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-064": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-065": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-066": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "SUPPORTED"
+ ],
+ "E1-067": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-068": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-069": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-070": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-071": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-072": [
+  "UNSURE",
+  "CONTRADICTED",
+  "UNSURE"
+ ],
+ "E1-073": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "SUPPORTED"
+ ],
+ "E1-074": [
+  "CONTRADICTED",
+  "UNSURE",
+  "CONTRADICTED"
+ ],
+ "E1-075": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-076": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "UNSURE"
+ ],
+ "E1-077": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-078": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-079": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-080": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-081": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "UNSURE"
+ ],
+ "E1-082": [
+  "SUPPORTED",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-083": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-084": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-085": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-086": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-087": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-088": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-089": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-090": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-091": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-092": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-093": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-094": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-095": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-096": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-097": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "UNSURE"
+ ],
+ "E1-098": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-099": [
+  "UNSURE",
+  "UNSURE",
+  "UNSURE"
+ ],
+ "E1-100": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-101": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-102": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-103": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-104": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-105": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-106": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-107": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-108": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-109": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-110": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-111": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-112": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-113": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-114": [
+  "SUPPORTED",
+  "SUPPORTED",
+  "SUPPORTED"
+ ],
+ "E1-115": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-116": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-117": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-118": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-119": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-120": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-121": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-122": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-123": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-124": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-125": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-126": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-127": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-128": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ],
+ "E1-129": [
+  "CONTRADICTED",
+  "CONTRADICTED",
+  "CONTRADICTED"
+ ]
+}

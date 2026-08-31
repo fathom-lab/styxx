@@ -1,0 +1,11 @@
+{
+ "decoys_correct": 30,
+ "decoys_total": 30,
+ "adjudicator_reliable": true,
+ "accusations_scored": 100,
+ "accusations_upheld": 23,
+ "accusations_rejected": 77,
+ "precision": 0.23,
+ "gate_G_E1_pass": false,
+ "decoy_misses": []
+}

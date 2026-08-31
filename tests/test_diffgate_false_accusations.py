@@ -90,9 +90,10 @@ _AGENT_SWEEP_SENTENCES = [
 
 
 @pytest.mark.parametrize("sentence", _AGENT_SWEEP_SENTENCES)
-@pytest.mark.xfail(strict=True, reason="mention-vs-use, unrepaired: the gate "
-                   "still accuses prose that reports on a file it never claimed "
-                   "to touch (RESULT_agent_gate_boundary_2026_08_30)")
+# The mention-vs-use xfail is REMOVED here, and honesty requires naming why: the
+# false accusation is gone because the accusation itself is gone, not because the
+# defect was understood and repaired. EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. When the repair lands, this
+# test must still pass — on merit that time.
 def test_reporting_on_a_file_is_not_claiming_to_touch_it(sentence):
     g = gate_diff_text(sentence, TOUCHED)
     assert not any(c.verdict == "CONTRADICTED" for c in g.claims), (
@@ -100,21 +101,29 @@ def test_reporting_on_a_file_is_not_claiming_to_touch_it(sentence):
 
 
 def test_the_agent_sweep_defect_is_catalogued_not_forgotten():
-    """Pins CURRENT behavior: all three sentences still draw an accusation.
+    """Pins CURRENT behavior: extraction still fires on all three sentences, but
+    the verdict is now WITHHELD rather than CONTRADICTED.
 
-    If this test starts failing, a change altered extraction on these exact
-    sentences — flip the xfails above in the same commit and cite the
-    measurement that licensed the repair. One direction changing without the
-    other is the silent drift this pair exists to catch.
+    EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. Extraction is unchanged — the sentences still produce claims —
+    so the catalogued defect is not forgotten, only un-weaponised. When the
+    repair lands, this test flips back to asserting CONTRADICTED for genuinely
+    false sentences, in the same commit that cites its gate.
     """
     for sentence in _AGENT_SWEEP_SENTENCES:
         g = gate_diff_text(sentence, TOUCHED)
-        assert any(c.verdict == "CONTRADICTED" for c in g.claims), (
-            f"extraction changed on {sentence!r} without the xfail flipping")
+        assert g.claims, f"extraction stopped firing on {sentence!r}"
+        assert any("WITHHELD" in (c.why or "") for c in g.claims), (
+            f"accusation state changed on {sentence!r} without this pin flipping")
 
 
 # ── and the gate must still catch actual lies ─────────────────────────────
 
+@pytest.mark.xfail(strict=True, reason=(
+    "EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. These are real lies and the gate no longer catches them: "
+    "that is the price of withholding, stated in the RESULT and pinned here so "
+    "it cannot be forgotten. strict=True means the repair CANNOT land silently "
+    "— when the catches come back this xfail fails and must be removed in the "
+    "same commit as the gate that licensed it."))
 @pytest.mark.parametrize("sentence,diff", [
     ("Created pkg/missing.go for the new gate.", CREATED),
     ("Modified styxx/nowhere.py to add the screen.", TOUCHED),
