@@ -1,0 +1,2059 @@
+{
+ "panel": "OBLIGATE-2 — 9 fresh blind seats, three arms",
+ "prereg": "PREREG_obligate2_2026_08_31.md",
+ "note": "all nine seats returned on the first run; no re-runs, no seat discarded",
+ "seats": {
+  "p1-seat1": {
+   "labels": [
+    {
+     "id": "o2p1-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-003",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-007",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-010",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-011",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-012",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-017",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-019",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-027",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-028",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-030",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-032",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-033",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p1-034",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-036",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-044",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-049",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-052",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p1-seat2": {
+   "labels": [
+    {
+     "id": "o2p1-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-003",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-007",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-010",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-011",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-012",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-017",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-019",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-027",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-028",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-030",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-032",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-033",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p1-034",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-036",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-044",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-049",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-052",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p1-seat3": {
+   "labels": [
+    {
+     "id": "o2p1-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-003",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-007",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-010",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-011",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-012",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-017",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-019",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-027",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-028",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-030",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-032",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-033",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p1-034",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-036",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-044",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-049",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-052",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p1-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p1-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p2-seat1": {
+   "labels": [
+    {
+     "id": "o2p2-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-004",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-008",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-010",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-018",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-020",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-022",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-023",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-026",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-028",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-033",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-035",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-039",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-040",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-048",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p2-seat2": {
+   "labels": [
+    {
+     "id": "o2p2-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-004",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-008",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-010",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-018",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-020",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-022",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-023",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-026",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-028",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p2-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-033",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-035",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-039",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-040",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-048",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p2-seat3": {
+   "labels": [
+    {
+     "id": "o2p2-001",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-002",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-004",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-005",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-006",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-008",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-010",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-014",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-018",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-020",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-021",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-022",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-023",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-024",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-025",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-026",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-028",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-033",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-035",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-037",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-039",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-040",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-042",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-045",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-046",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-048",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-050",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-051",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-054",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p2-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p2-056",
+     "label": "NOT_A_CLAIM"
+    }
+   ]
+  },
+  "p3-seat1": {
+   "labels": [
+    {
+     "id": "o2p3-001",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p3-002",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-005",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-006",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-010",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-014",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-021",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-024",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-025",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-028",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-033",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-037",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-042",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-045",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-046",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-050",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-051",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-054",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-056",
+     "label": "CLAIM"
+    }
+   ]
+  },
+  "p3-seat2": {
+   "labels": [
+    {
+     "id": "o2p3-001",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p3-002",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-005",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-006",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-010",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-014",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-021",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-024",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-025",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-028",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-033",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-037",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-042",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-045",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-046",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-050",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-051",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-054",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-056",
+     "label": "CLAIM"
+    }
+   ]
+  },
+  "p3-seat3": {
+   "labels": [
+    {
+     "id": "o2p3-001",
+     "label": "UNSURE"
+    },
+    {
+     "id": "o2p3-002",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-003",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-004",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-005",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-006",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-007",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-008",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-009",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-010",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-011",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-012",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-013",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-014",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-015",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-016",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-017",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-018",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-019",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-020",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-021",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-022",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-023",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-024",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-025",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-026",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-027",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-028",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-029",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-030",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-031",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-032",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-033",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-034",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-035",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-036",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-037",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-038",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-039",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-040",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-041",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-042",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-043",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-044",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-045",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-046",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-047",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-048",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-049",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-050",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-051",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-052",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-053",
+     "label": "CLAIM"
+    },
+    {
+     "id": "o2p3-054",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-055",
+     "label": "NOT_A_CLAIM"
+    },
+    {
+     "id": "o2p3-056",
+     "label": "CLAIM"
+    }
+   ]
+  }
+ }
+}
