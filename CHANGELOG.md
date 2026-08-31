@@ -38,6 +38,23 @@ The week the instrument stack started overruling its builders on the record.
   production by the project's longest-running MCP user; regression-pinned by
   `tests/test_unmeasured_not_adversarial.py`.
 
+**OATH Capsule — the proof-carrying document (`styxx.capsule`, NEW)**
+- **v0.1**: one self-contained HTML file carrying a paper's exact bytes, every
+  receipt's exact bytes, the certificate verbatim, and two verification layers the
+  READER runs — browser WebCrypto tamper-evidence (offline, zero requests, every
+  token painted with its epistemic band) and `python -m styxx.capsule verify`
+  re-running the real verifier. Creation refuses to lie; capsules of FAILED papers
+  are first-class and shipped.
+- **v0.2 — the agent-handoff capsule**: seals (agent summary, unified diff, diffgate
+  record) with the gate a pure function of the two byte streams (strict=False,
+  run=None, environment legs refused at mint). Layer 2 re-derives the full record at
+  the installed instrument; `unparsed_claims` is advisory by construction; instrument
+  skew is distinguished from tamper. Sealed-record forgeries that re-seal their own
+  binding hash are caught by re-execution (the K2 test). Specs frozen first:
+  `SPEC_oath_capsule_v01_2026_08_31.md`, `SPEC_oath_capsule_v02_2026_08_31.md`.
+- The first v0.2 capsule minted is the v0.2 implementation itself, gated against its
+  own diff: `HANDOFF_capsule_v02_2026_08_31.capsule.html`.
+
 **Research record shipped alongside**: the agent-gate boundary RESULT, the blind-panel
 baseline that overturned its author, OBLIGATE-1's held-out negative, OBLIGATE-2's
 split verdict, and two papers published OATH-FAILED by the verifier they describe.
