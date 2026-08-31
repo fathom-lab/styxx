@@ -85,3 +85,25 @@ was not applied to `n=3` and the conflict is stated rather than laundered.
 *We pointed the agent-gate at the agent that built it. It read six sentences out of two thousand
 seven hundred, and misread half of what it managed to read. Now that's a measurement — which
 means now it can get better.*
+
+---
+
+## AMENDMENT — 2026-08-30, the blind panel overturns the author on one of three
+
+The hand adjudication above said all three contradictions were mention-vs-use false
+accusations, three for three. The follow-up this RESULT owed — the blind ground truth of
+`PREREG_agent_claim_extractor_baseline_2026_08_30.md` — has now run, and the panel does not
+agree. On the `8cb66a44` sentence (*"FINDING_behavioral_sycophancy_blackbox_2026_06_09.md:
+committed OATH-HELD"*), the majority read it as a claim that the commit committed that file —
+and the panel's synthetic twin of this exact shape was read the same way by eight of nine
+seats. The prereg's own frozen tense-and-agency rule sides with the panel, against the key
+its author wrote.
+
+**Withdrawn: "three for three" and "none survived adjudication."** The corrected statement:
+two of the three contradictions are author-adjudicated mention-vs-use false accusations
+whose panel majorities agree (C); the third is, by blind majority and by the frozen
+disambiguation rules, a claim — which the diff genuinely does not support, making the
+gate's CONTRADICTED on it a defensible catch of a false report rather than a false
+accusation. The conflict disclosed in *Limits* (adjudicator = the messages' author) did
+exactly the damage the disclosure warned about, on exactly one case, and the panel found
+it. Receipt: `agent_claim_extractor_baseline.json`, `known_accusations_panel_verdicts`.

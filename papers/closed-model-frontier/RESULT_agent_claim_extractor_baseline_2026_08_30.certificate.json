@@ -1,0 +1,603 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_agent_claim_extractor_baseline_2026_08_30.md",
+  "document_sha256": "660c73abccb02875a6fd13831db2d45e04d589ccd5dbad1b2ba7c8eb9eea3f54",
+  "receipts_sha256": {
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe",
+    "agent_claim_packets.json": "03990cf64b45258aaa82e16dc2b362bacad650c74228887007a0f394d4918a90"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 26,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 6,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 26,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 0
+    },
+    "verified": {
+      "total": 26,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 8,
+        "obligated_integer_filter_na": 8,
+        "unobligated_integer_filter_ran": 5,
+        "unobligated_integer_filter_na": 5
+      }
+    },
+    "obligated_total": 18,
+    "obligation_sources": {
+      "vocabulary": 17,
+      "n-glued": 1,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 10,
+      "token": "0.28"
+    },
+    {
+      "line": 10,
+      "token": "0.5"
+    },
+    {
+      "line": 40,
+      "token": "2"
+    },
+    {
+      "line": 40,
+      "token": "3"
+    },
+    {
+      "line": 69,
+      "token": "0.2061"
+    },
+    {
+      "line": 77,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "# RESULT \u2014 the extractor measured blind: precision 0.3333, recall near one claim in thirty, and the panel overturns the author",
+      "col": 51,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 10,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "context": "- Distinguishability probe: J = 0.28, under the 0.5 void threshold \u2014 the decoys were not",
+      "col": 32,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 10,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "- Distinguishability probe: J = 0.28, under the 0.5 void threshold \u2014 the decoys were not",
+      "col": 48,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 12,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "- All nine seats scored 24 of 24 on the gating decoys. **G-V: PASS.**",
+      "col": 24,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:seat_validity.p1-seat1.gating_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 12,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "- All nine seats scored 24 of 24 on the gating decoys. **G-V: PASS.**",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:seat_validity.p1-seat1.gating_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.9718",
+      "value": 0.9718,
+      "decimals": 4,
+      "context": "- Unanimity 0.9718 across 390 verdicts; **zero** NO-MAJORITY sentences. (That unanimity is",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "390",
+      "value": 390.0,
+      "decimals": 0,
+      "context": "- Unanimity 0.9718 across 390 verdicts; **zero** NO-MAJORITY sentences. (That unanimity is",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:verdicts.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 22,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "| E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "col": 41,
+      "binding_context": "| estimand | value | counts | | E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 22,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "col": 52,
+      "binding_context": "| estimand | value | counts | | E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.numerator_A",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 22,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "col": 54,
+      "binding_context": "| estimand | value | counts | | E1 \u2014 extractor precision on claims | **0.3333** | 2/6 flagged sentences adjudicated A |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:mvu_decoys_reported_not_gated.p1-seat1.mvu_n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 23,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "| E2 \u2014 recall, within adjudicated sample | 0.25 | two of eight adjudicated A |",
+      "col": 43,
+      "binding_context": "| estimand | value | counts | | E2 \u2014 recall, within adjudicated sample | 0.25 | two of eight adjudicated A |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E2.recall_raw_within_sample",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.033621",
+      "value": 0.033621,
+      "decimals": 6,
+      "context": "| E2 \u2014 recall, corpus-level | **0.033621** | ESTIMATE, not a measurement |",
+      "col": 32,
+      "binding_context": "| estimand | value | counts | | E2 \u2014 recall, corpus-level | **0.033621** | ESTIMATE, not a measurement |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E2.recall_corpus_level_ESTIMATE_not_measurement",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "| E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "col": 48,
+      "binding_context": "| estimand | value | counts | | E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:gates.G1.unflagged_A_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "col": 59,
+      "binding_context": "| estimand | value | counts | | E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:mvu_decoys_reported_not_gated.p1-seat1.mvu_n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "294",
+      "value": 294.0,
+      "decimals": 0,
+      "context": "| E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "col": 61,
+      "binding_context": "| estimand | value | counts | | E4 \u2014 claim density of the never-read band | **0.0204** | 6/294 sampled unflagged sentences |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E4.sampled_valid",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.1401",
+      "value": 0.1401,
+      "decimals": 4,
+      "context": "| N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "col": 46,
+      "binding_context": "| estimand | value | counts | | N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N1_path_regex.precision_weighted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 26,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "col": 59,
+      "binding_context": "| estimand | value | counts | | N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N1_path_regex.flags_A_raw",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "| N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "col": 61,
+      "binding_context": "| estimand | value | counts | | N1 (path regex alone), weighted precision | 0.1401 | raw 3/14 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N1_path_regex.flags_raw",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "| N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "col": 46,
+      "binding_context": "| estimand | value | counts | | N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N2_verb_stems.precision_weighted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "col": 59,
+      "binding_context": "| estimand | value | counts | | N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N1_path_regex.flags_A_raw",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 27,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "col": 61,
+      "binding_context": "| estimand | value | counts | | N2 (verb stems alone), weighted precision | 0.2061 | raw 3/12 |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N2_verb_stems.flags_raw",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 34,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "- **G1 \u2014 PASS, by one sentence.** The never-read band's claim density is 0.0204 against the",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E4.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 35,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "0.02 floor: six A's in 294. A single A fewer and the boundary RESULT's central claim would",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:probe.fpr_corpus_called_synthetic",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 40,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **G2 \u2014 PASS, mandated counts attached:** \"E1 = 2/6 vs best null = 3/12 (weighted 0.2061);",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 40,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "- **G2 \u2014 PASS, mandated counts attached:** \"E1 = 2/6 vs best null = 3/12 (weighted 0.2061);",
+      "col": 51,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:mvu_decoys_reported_not_gated.p1-seat1.mvu_n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 40,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "- **G2 \u2014 PASS, mandated counts attached:** \"E1 = 2/6 vs best null = 3/12 (weighted 0.2061);",
+      "col": 68,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 40,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- **G2 \u2014 PASS, mandated counts attached:** \"E1 = 2/6 vs best null = 3/12 (weighted 0.2061);",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N2_verb_stems.flags_raw",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 40,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "- **G2 \u2014 PASS, mandated counts attached:** \"E1 = 2/6 vs best null = 3/12 (weighted 0.2061);",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E3_nulls.N2_verb_stems.precision_weighted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 65,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "three hundred adjudicated, precision 0.3333, corpus recall around three percent. The never-read band is not narrative \u2014 it",
+      "col": 37,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 66,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "carries claims at 0.0204 \u2014 and the flagged band is two-thirds noise. Both repairs now have a",
+      "col": 18,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E4.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 69,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "that cycle), and must beat N2's 0.2061 weighted precision, not merely the current templates.",
+      "col": 32,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 77,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "elsewhere proves nothing beyond consistency. n=6 flagged sentences; nothing here supports a",
+      "col": 47,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    }
+  ]
+}

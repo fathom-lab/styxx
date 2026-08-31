@@ -2,9 +2,10 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_agent_gate_boundary_2026_08_30.md",
-  "document_sha256": "f26d0da6b1f8d9d52eb32d6b09c0203151e37c2ebd9fa3adb02a0a5150f083c2",
+  "document_sha256": "d965eea1477512eb7a6d659cb2d4a2d88f5b550de83854cad65363f33eba5b5a",
   "receipts_sha256": {
-    "agent_branch_attestation.json": "5b44589802ef2a7f06b9f64328cc1fc7bfd40354a118ffb1e7919c01c080b06a"
+    "agent_branch_attestation.json": "5b44589802ef2a7f06b9f64328cc1fc7bfd40354a118ffb1e7919c01c080b06a",
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe"
   },
   "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
   "counts": {
