@@ -55,6 +55,17 @@ The week the instrument stack started overruling its builders on the record.
 - The first v0.2 capsule minted is the v0.2 implementation itself, gated against its
   own diff: `HANDOFF_capsule_v02_2026_08_31.capsule.html`.
 
+**OATH / certify — V12 MIRROR-SUM** (`PREREG_mirror_sum_2026_08_31`)
+- **`V12_SUM_COHERENCE = True`** — an integer the ladder would otherwise accuse binds
+  iff it equals the exhaustive same-field sum over ALL dict-children of one receipt
+  node (≥2 integer addends, not all equal). Repairs the pooled denominator: the
+  OBLIGATE-1 `115` (= arms.positive.valid + arms.negative.valid) comes home on all
+  three occurrences. The non-uniform rule was forced by pre-freeze grounding: a
+  quoted "9" coincides with nine seat scores of 1 each, and a uniform sum is
+  indistinguishable from counting — refused. Absolute corpus A/B: 3 tokens moved,
+  all the prereg-named specimens, zero wrong, zero verdict flips. OBLIGATE-1
+  re-certifies still FAILED (32/22/3) — a class repaired, not a verdict.
+
 **Research record shipped alongside**: the agent-gate boundary RESULT, the blind-panel
 baseline that overturned its author, OBLIGATE-1's held-out negative, OBLIGATE-2's
 split verdict, and two papers published OATH-FAILED by the verifier they describe.

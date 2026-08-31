@@ -10,11 +10,11 @@
     "oath_structural_obligation_census.json": "8393f2f8d5de9cb4f3c882974ca675e5373466843623cb83482911b05a67ac4d",
     "oath_v061_battery_result.json": "28804d6bf1edcfcdb37f8d8af8c0f5127850cc19ec139552361a5a9d836dd2bf"
   },
-  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
   "counts": {
-    "VERIFIED": 29,
+    "VERIFIED": 32,
     "ABSTAIN": 22,
-    "UNGROUNDED": 6
+    "UNGROUNDED": 3
   },
   "epistemics_summary": {
     "schema": "styxx-oath/epistemics-summary/v1",
@@ -24,17 +24,17 @@
       "formula-constant": 0,
       "spec-or-historical": 15,
       "notation": 2,
-      "derived": 1,
+      "derived": 4,
       "unbound-field": 0,
       "value-match": 28,
       "ulp-neighbour": 0,
-      "obligated-accusation": 6,
+      "obligated-accusation": 3,
       "silent": 5
     },
     "verified": {
-      "total": 29,
+      "total": 32,
       "derived": {
-        "obligated": 1,
+        "obligated": 4,
         "unobligated": 0
       },
       "value_match": {
@@ -56,21 +56,6 @@
   "verdict": "OATH-FAILED",
   "ungrounded": [
     {
-      "line": 28,
-      "token": "115",
-      "value": 115.0,
-      "decimals": 0,
-      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
-      "col": 12,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    },
-    {
       "line": 37,
       "token": "58",
       "value": 58.0,
@@ -86,42 +71,12 @@
       }
     },
     {
-      "line": 72,
-      "token": "115",
-      "value": 115.0,
-      "decimals": 0,
-      "context": "and `115` inside the counts statement the prereg REQUIRES verbatim (\"OBLIGATE-1 precision =",
-      "col": 5,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    },
-    {
       "line": 73,
       "token": "58",
       "value": 58.0,
       "decimals": 0,
       "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
       "col": 3,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    },
-    {
-      "line": 73,
-      "token": "115",
-      "value": 115.0,
-      "decimals": 0,
-      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
-      "col": 18,
       "status": "UNGROUNDED",
       "receipt_ref": null,
       "epistemics": {
@@ -579,10 +534,10 @@
       "decimals": 0,
       "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
       "col": 12,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }
@@ -918,10 +873,10 @@
       "decimals": 0,
       "context": "and `115` inside the counts statement the prereg REQUIRES verbatim (\"OBLIGATE-1 precision =",
       "col": 5,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }
@@ -978,10 +933,10 @@
       "decimals": 0,
       "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
       "col": 18,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }

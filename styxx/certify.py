@@ -425,6 +425,14 @@ V11_FRACTION_COHERENCE = True     # PREREG_fraction_coherence_2026_08_31: intege
                                   # sets derived_ref, so it can flip UNGROUNDED->VERIFIED and
                                   # nothing else; a coherent pair that fails joint binding falls
                                   # through to today's ladder untouched.
+V12_SUM_COHERENCE = True          # PREREG_mirror_sum_2026_08_31: an integer the ladder would
+                                  # otherwise accuse binds iff it equals the EXHAUSTIVE sum of
+                                  # one field f across ALL dict-children of one receipt node G
+                                  # (>=2 integer addends, NOT all equal). The non-uniform rule
+                                  # was forced by grounding done before the freeze: STRUCT-1's
+                                  # quoted "9" coincides with nine seat scores of 1 each — a
+                                  # uniform sum is indistinguishable from counting and never
+                                  # binds. RESCUE-ONLY, same guard as V11 by construction.
 V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does not fire on a
                                   # slash-pair numerator. A value written `a/b` is a count pair,
                                   # never a value of the bounded quantity named to its left.
@@ -765,6 +773,23 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     for _rn, _pth, _rv in rvals:
         all_path_stems |= _path_stems(_pth)
 
+    # v0.12 MIRROR-SUM index, computed ONCE per document: every exhaustive same-field sum over
+    # the dict-children of one receipt node. Key: the integer sum. Value: the derivations. Only
+    # non-uniform integer sums with >=2 addends are indexed — the uniform-sum refusal is part of
+    # the clause definition (PREREG_mirror_sum_2026_08_31), not an implementation shortcut.
+    _msums: dict[int, list] = {}
+    if V12_SUM_COHERENCE:
+        _groups: dict[tuple, list] = {}
+        for _rn, _pth, _rv in rvals:
+            _segs = _pth.split(".")
+            if len(_segs) >= 3 and "[" not in _segs[-1] and "[" not in _segs[-2]:
+                _groups.setdefault((_rn, ".".join(_segs[:-2]), _segs[-1]), []).append(_rv)
+        for (_rn, _g, _f), _vals in _groups.items():
+            if (len(_vals) >= 2 and all(float(v) == int(v) for v in _vals)
+                    and len({int(v) for v in _vals}) > 1):
+                _msums.setdefault(int(sum(int(v) for v in _vals)), []).append(
+                    (_rn, _g, _f, sorted((int(v) for v in _vals), reverse=True)))
+
     ledger = []
     doc_lines = text.splitlines()
     table_rows = _table_rows(doc_lines)   # v0.11: the SAME machinery extract_numbers binds by
@@ -962,6 +987,19 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                     if common:
                         derived_ref = (f"derived-fraction:{int(fA)}/{int(fB)}={r_txt}@"
                                        f"{common[0][0]}:{common[0][1] or '<root>'}")
+        # v0.12 MIRROR-SUM (PREREG_mirror_sum_2026_08_31): the pooled-denominator repair.
+        # STRICTLY RESCUE-ONLY under the same guard as V11 — fires only where the ladder
+        # would otherwise accuse. The token must equal an exhaustive, non-uniform,
+        # same-field integer sum indexed once per document above; partial sums never
+        # appear in the index and uniform sums are refused at indexing time.
+        if V12_SUM_COHERENCE and derived_ref is None and bound and not hits \
+                and not out_of_range and num["decimals"] == 0 \
+                and not is_spec and not is_hist and not is_notation:
+            _cands = _msums.get(int(num["value"]), [])
+            if _cands:
+                _rn, _g, _f, _vals = _cands[0]
+                derived_ref = (f"derived-sum:{'+'.join(str(v) for v in _vals)}"
+                               f"={int(num['value'])}@{_rn}:{_g}.*.{_f}")
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.

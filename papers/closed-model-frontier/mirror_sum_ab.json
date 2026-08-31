@@ -1,0 +1,36 @@
+{
+ "gate": "G-S3 (absolute)",
+ "prereg": "PREREG_mirror_sum_2026_08_31.md",
+ "documents_compared": 202,
+ "tokens_moved": 3,
+ "moves_every_one": [
+  {
+   "doc": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+   "line": 73,
+   "token": "115",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid"
+  },
+  {
+   "doc": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+   "line": 28,
+   "token": "115",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid"
+  },
+  {
+   "doc": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+   "line": 72,
+   "token": "115",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-sum:58+57=115@obligate1_result.json:arms.*.valid"
+  }
+ ],
+ "wrong_movements": [],
+ "verdict_flips": [],
+ "held_to_failed": [],
+ "verdict": "PASS"
+}

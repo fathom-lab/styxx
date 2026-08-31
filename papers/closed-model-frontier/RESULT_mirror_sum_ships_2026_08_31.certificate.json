@@ -1,0 +1,265 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_mirror_sum_ships_2026_08_31.md",
+  "document_sha256": "5905b03c9ff882575771885cbb8bea5e1c08230c18807f93faea5622170bef6e",
+  "receipts_sha256": {
+    "mirror_sum_ab.json": "dd48ebdb97e229d896d453abdcc126c2875638cccea2c02770951299f507912e",
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 1,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 1,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 1,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 9
+    },
+    "verified": {
+      "total": 1,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 1,
+        "obligated_integer_filter_na": 0,
+        "unobligated_integer_filter_ran": 0,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 1,
+    "obligation_sources": {
+      "vocabulary": 1,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 11,
+      "token": "115"
+    },
+    {
+      "line": 18,
+      "token": "2"
+    },
+    {
+      "line": 23,
+      "token": "9"
+    },
+    {
+      "line": 26,
+      "token": "9"
+    },
+    {
+      "line": 32,
+      "token": "58"
+    },
+    {
+      "line": 32,
+      "token": "57"
+    },
+    {
+      "line": 32,
+      "token": "115"
+    },
+    {
+      "line": 48,
+      "token": "32"
+    },
+    {
+      "line": 48,
+      "token": "58"
+    },
+    {
+      "line": 48,
+      "token": "58"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "The V11 ship left a named successor: the pooled `115` \u2014 a denominator computed inside a",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 18,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "2 integer addends that are not all equal. Strictly rescue-only, same guard as V11.",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 23,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "uniform-sum trap: STRUCT-1's quoted *\"9 new tests.\"* coincides with nine seat-validity",
+      "col": 38,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 24,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "scores of 1 each. The prose counts tests; the sum counts seats. The non-uniform-addends",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:seat_validity.p1-seat1.score",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 26,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "`9` never moves.",
+      "col": 1,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 32,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "`derived-sum:58+57=115@obligate1_result.json:arms.*.valid`. The three remaining",
+      "col": 15,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 32,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "`derived-sum:58+57=115@obligate1_result.json:arms.*.valid`. The three remaining",
+      "col": 18,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 32,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "`derived-sum:58+57=115@obligate1_result.json:arms.*.valid`. The three remaining",
+      "col": 21,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 48,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "of six. The bare count pair *\"32 of every 58\"* and the quoted-fragment `58`s remain",
+      "col": 30,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 48,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "of six. The bare count pair *\"32 of every 58\"* and the quoted-fragment `58`s remain",
+      "col": 42,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 48,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "of six. The bare count pair *\"32 of every 58\"* and the quoted-fragment `58`s remain",
+      "col": 72,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}
