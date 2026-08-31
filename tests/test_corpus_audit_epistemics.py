@@ -63,9 +63,21 @@ def test_the_fold_never_touches_verdict_or_counts():
     assert s["epistemics"]["certificates_without_summary"] == 0, (
         "every certificate reissued under v1 should carry the block")
     # and the classic summary keys are still exactly what they were: this is the audit line
-    # REPLICATIONS.md pins, and the epistemics fold must not have perturbed it
+    # REPLICATIONS.md pins, and the epistemics fold must not have perturbed it. The pin used
+    # to hardcode failed == 5 here as well; it went stale the day two RESULTs were honestly
+    # published OATH-FAILED (2026-08-31, FAILED 5 -> 7) and CI caught it -- which is the
+    # correct behaviour, but the number belongs in ONE place. REPLICATIONS.md's expected
+    # audit line is that place; this test now reads it, so a deliberate change updates one
+    # file and an accidental drift still fails both.
     assert s["n_certificates"] == s["held"] + s["failed"] + s["unresolved"]
-    assert s["held"] >= 188 and s["failed"] == 5
+    import re
+    rep_text = (ROOT / "REPLICATIONS.md").read_text(encoding="utf-8")
+    m = re.search(r"corpus papers: (\d+) certificates \| HELD (\d+)  FAILED (\d+)", rep_text)
+    assert m, "REPLICATIONS.md no longer carries the expected audit line"
+    assert s["n_certificates"] == int(m.group(1))
+    assert s["held"] == int(m.group(2))
+    assert s["failed"] == int(m.group(3))
+    assert s["held"] >= 188
 
 
 def test_composition_is_labelled_as_composition_not_quality():
