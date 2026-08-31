@@ -414,6 +414,17 @@ V10_TOKEN_COLUMN = True           # primary: `extract_numbers` records the colum
                                   # Requires the length-preserving scrub in `extract_numbers`; a
                                   # raw m.start() against the shipped collapsing scrub would be a
                                   # NEW wrong column on every line carrying a sha/date/version.
+V11_FRACTION_COHERENCE = True     # PREREG_fraction_coherence_2026_08_31: integer operands of an
+                                  # explicit fraction A/B whose SAME-LINE ratio r satisfies
+                                  # round(A/B, decimals(r)) == r bind JOINTLY iff both values sit
+                                  # under ONE common receipt parent. The shared-subtree requirement
+                                  # replaces the v0.3 path-vocabulary test for exactly this class,
+                                  # because fields named `valid`/`claims` never appear in prose --
+                                  # which is how three consecutive RESULTs were accused on the
+                                  # digits of their own mandated counts statements. RESCUE-ONLY:
+                                  # sets derived_ref, so it can flip UNGROUNDED->VERIFIED and
+                                  # nothing else; a coherent pair that fails joint binding falls
+                                  # through to today's ladder untouched.
 V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does not fire on a
                                   # slash-pair numerator. A value written `a/b` is a count pair,
                                   # never a value of the bounded quantity named to its left.
@@ -915,10 +926,45 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                 _ob_src = "range-sanity"   # range-sanity FORCES the accusation but does not
                                            # rewrite who obligated the token (caught in schema
                                            # red-team: this line used to clobber unconditionally)
+        derived_ref = None
+        # v0.11 FRACTION-COHERENCE (PREREG_fraction_coherence_2026_08_31): the denominator
+        # repair. STRICTLY RESCUE-ONLY, enforced by construction: fires only when the
+        # token is bound with zero post-filter hits and range-sanity has not spoken --
+        # i.e. exactly where the ladder would otherwise say UNGROUNDED. The first
+        # implementation fired unconditionally and G-F3 caught it re-attributing
+        # healthy VERIFIED tokens and elevating an ABSTAIN through the degenerate
+        # 0/38 zero-numerator case. The absolute gate exists for exactly that.
+        if V11_FRACTION_COHERENCE and derived_ref is None and bound and not hits \
+                and not out_of_range and num["decimals"] == 0 \
+                and not is_spec and not is_hist and not is_notation and slash_pair:
+            fA = fB = None
+            m_den = re.match(r"\s*/\s*(\d+)", post)      # token is the numerator
+            m_num = re.search(r"(\d+)\s*/\s*$", pre)        # token is the denominator
+            if m_den:
+                fA, fB = num["value"], float(m_den.group(1))
+            elif m_num:
+                fA, fB = float(m_num.group(1)), num["value"]
+            if fA is not None and fB:
+                r_txt = None
+                for rm in re.finditer(r"(?<![\w.])\d+\.(\d+)(?![\w.])", ctx):
+                    rv, dec = float(rm.group(0)), len(rm.group(1))
+                    if abs(round(fA / fB, dec) - rv) < 1e-9:
+                        r_txt = rm.group(0)
+                        break
+                if r_txt is not None:
+                    def _parent(pth):
+                        return pth.rsplit(".", 1)[0] if "." in pth else ""
+                    a_homes = {(rn2, _parent(p2)) for rn2, p2, rv2 in rvals
+                               if _match(fA, 0, rv2, False)}
+                    b_homes = {(rn2, _parent(p2)) for rn2, p2, rv2 in rvals
+                               if _match(fB, 0, rv2, False)}
+                    common = sorted(a_homes & b_homes)
+                    if common:
+                        derived_ref = (f"derived-fraction:{int(fA)}/{int(fB)}={r_txt}@"
+                                       f"{common[0][0]}:{common[0][1] or '<root>'}")
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.
-        derived_ref = None
         if V05_DERIVED_PCT and not hits and not is_spec and not is_hist and not is_notation:
             dm = re.match(r"\s*%\s*\(\s*(\d+(?:\.\d+)?)\s*/\s*(\d+(?:\.\d+)?)", post)
             if dm:
