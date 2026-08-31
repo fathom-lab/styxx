@@ -1,0 +1,255 @@
+{
+ "prereg": "PREREG_obligate2_2026_08_31.md",
+ "key_hash_verified": "71314e1e4e805a0dee9941152f9fbb02f5b4f8a3e1740a371e2645c550ab25ab",
+ "seat_validity": {
+  "p1-seat1": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p1-seat2": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p1-seat3": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p2-seat1": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p2-seat2": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p2-seat3": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p3-seat1": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p3-seat2": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  },
+  "p3-seat3": {
+   "correct": 16,
+   "n": 16,
+   "passes": true
+  }
+ },
+ "verdicts": {
+  "total": 168,
+  "unanimity_rate": 0.9881,
+  "no_majority": 0
+ },
+ "arms": {
+  "positive": {
+   "total": 60,
+   "valid": 59,
+   "claims": 44,
+   "excluded": 1,
+   "claim_share": 0.7458
+  },
+  "barband": {
+   "total": 30,
+   "valid": 30,
+   "claims": 10,
+   "excluded": 0,
+   "claim_share": 0.3333
+  },
+  "negative": {
+   "total": 30,
+   "valid": 29,
+   "claims": 13,
+   "excluded": 1,
+   "claim_share": 0.4483
+  }
+ },
+ "population_weights": {
+  "w_pos": 1.6833,
+  "w_bar": 11.1333,
+  "w_neg": 47.9667
+ },
+ "gates": {
+  "G-V": {
+   "all_seats_pass": true,
+   "verdict": "PASS"
+  },
+  "G-O2P": {
+   "precision": 0.7458,
+   "bar": 0.7,
+   "verdict": "PASS",
+   "mandatory_counts_statement": "OBLIGATE-2 precision = 44/59 (0.7458) vs bar 0.7 and corpse 0.4483; obligate-everything null = 67/118 (0.5678); bar-band CLAIM share = 10/30 (0.3333) vs max 0.3; weighted recall = 0.0916 vs bar 0.1; no significance is claimed at these n"
+  },
+  "G-O2NULL": {
+   "null_precision": 0.5678,
+   "corpse": 0.4483,
+   "verdict": "PASS"
+  },
+  "G-O2R": {
+   "weighted_recall": 0.0916,
+   "bar": 0.1,
+   "verdict": "FAIL"
+  },
+  "G-O2BAR": {
+   "barband_claim_share": 0.3333,
+   "max": 0.3,
+   "verdict": "FAIL"
+  }
+ },
+ "positive_not_claims_every_one": [
+  {
+   "id": "o2p1-001",
+   "token": "10.5281",
+   "doc": "PROGRAM_SYNTHESIS_2026_07_30.md",
+   "context": "statelessness — the control was circular (erratum DOI 10.5281/zenodo.21679805). The"
+  },
+  {
+   "id": "o2p1-037",
+   "token": "5.28",
+   "doc": "PREDICTION_h1_human_islands_2026_08_06.md",
+   "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check — cavea"
+  },
+  {
+   "id": "o2p1-046",
+   "token": "10.5281",
+   "doc": "FINDING_calib_poison_law_2026_07_09.md",
+   "context": "The flagship (Fathom v28, DOI 10.5281/zenodo.21263158) established, on *honesty*, that an apparent"
+  },
+  {
+   "id": "o2p1-050",
+   "token": "10.5281",
+   "doc": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+   "context": "in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not"
+  },
+  {
+   "id": "o2p1-055",
+   "token": "2606.27934",
+   "doc": "RESULT_oath_prior_art_survey_2026_08_26.md",
+   "context": "The closest scientific hit is **Self-Verifying Measurement Records** (arXiv 2606.27934): every"
+  },
+  {
+   "id": "o2p2-008",
+   "token": "0.05",
+   "doc": "PREDICTION_h1_human_islands_2026_08_06.md",
+   "context": "\"H2_cliff\": {\"metric\": \"sigmoid_minus_linear_r2\", \"op\": \">=\", \"value\": 0.05},"
+  },
+  {
+   "id": "o2p2-019",
+   "token": "10.5281",
+   "doc": "PROGRAM_SYNTHESIS_2026_07_30.md",
+   "context": "(10.5281/zenodo.21679805) → v32 corrected edition (10.5281/zenodo.21693636) → v33"
+  },
+  {
+   "id": "o2p2-048",
+   "token": "0.05",
+   "doc": "PREDICTION_h1_human_islands_2026_08_06.md",
+   "context": "\"H1_islands\": {\"metric\": \"dip_test_p_subject_accuracy\", \"op\": \"<=\", \"value\": 0.05},"
+  },
+  {
+   "id": "o2p2-052",
+   "token": "2509.06902",
+   "doc": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+   "context": "citation id (arXiv 2509.06902). A quantity written to two decimals outside code is, in this"
+  },
+  {
+   "id": "o2p2-055",
+   "token": "0.50",
+   "doc": "PREDICTION_h1_human_islands_2026_08_06.md",
+   "context": "\"H3_lowrank_rescue\": {\"metric\": \"median_gap_recovered_by_lowrank_align\", \"op\": \">=\", \"value\": 0.50}},"
+  },
+  {
+   "id": "o2p3-032",
+   "token": "10.5281",
+   "doc": "PROGRAM_SYNTHESIS_2026_07_30.md",
+   "context": "vendor-generality (10.5281/zenodo.21695691), each carrying the certified paper, its"
+  },
+  {
+   "id": "o2p3-042",
+   "token": "0.5639",
+   "doc": "FINDING_anatomy_v0_2026_06_10.md",
+   "context": "this document originally printed 0.5639 here, a value its author never read anywhere: caught by"
+  },
+  {
+   "id": "o2p3-045",
+   "token": "10.5281",
+   "doc": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+   "context": "published paper (Fathom v26, DOI 10.5281/zenodo.21241185) carried — reported loudly, as the prereg"
+  },
+  {
+   "id": "o2p3-054",
+   "token": "2604.24658",
+   "doc": "RECON_oath_prior_art_2026_08_26.md",
+   "context": "**Agent-Native Research Artifacts** (arXiv 2604.24658, 37 authors) proposes replacing the"
+  },
+  {
+   "id": "o2p3-055",
+   "token": "2606.27934",
+   "doc": "RESULT_oath_prior_art_survey_2026_08_26.md",
+   "context": "*stopped holding because the verifier moved underneath it*. The abstract of 2606.27934 does not"
+  }
+ ],
+ "barband_claims_every_one": [
+  {
+   "id": "o2p1-013",
+   "token": "0.0485",
+   "context": "difference of 0.0485, best threshold near affinity 0.7524) — but **both fits are weak**, and on"
+  },
+  {
+   "id": "o2p1-015",
+   "token": "0.9655071043606076",
+   "context": "= 0.01910828025477707, specificity margin = 0.9655071043606076 — all from"
+  },
+  {
+   "id": "o2p1-040",
+   "token": "0.0779",
+   "context": "| `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |"
+  },
+  {
+   "id": "o2p2-002",
+   "token": "0.764",
+   "context": "reliability at **ρ = 0.764**. Partialling reliability out:"
+  },
+  {
+   "id": "o2p2-003",
+   "token": "0.012",
+   "context": "EVAL knowledge 0.788 < the frozen 0.80 bar (missed by 0.012), so its arm is not a verdict. Its"
+  },
+  {
+   "id": "o2p2-006",
+   "token": "0.715",
+   "context": "p95=0.715 vs observed 0.941 (0/120 perms ≥ observed)."
+  },
+  {
+   "id": "o2p2-021",
+   "token": "0.6941",
+   "context": "(0.6941 < 0.7315 - 0.02). Roughly two-thirds of the gap vanished at parity."
+  },
+  {
+   "id": "o2p2-039",
+   "token": "0.8174",
+   "context": "- **BG1 PASSED**: 0.8174 vs bar 0.0365 + 0.15."
+  },
+  {
+   "id": "o2p3-012",
+   "token": "1.056",
+   "context": "ratio of 1.056 against a bar of 1.5. Severability is exact: with the flag off the ledger is"
+  },
+  {
+   "id": "o2p3-016",
+   "token": "0.16",
+   "context": "Total explainable is capped by the fMRI noise ceiling (RSA ≤ 0.56 → R² ≤ 0.16–0.31); the full"
+  }
+ ]
+}
