@@ -6,6 +6,13 @@ existed. Receipts: `external1_summary.json`, `external1_adjudication.json`,
 `external1_failure_taxonomy.json`, `external1_packet.json`, `external1_answers.json`,
 `external1_panel_raw.json`, `external1_harness.py`, `external1_packet.py`.
 
+> **CORRECTED the same day** — see `CORRECTION_external1_cause_2026_08_31.md`.
+> The measured precision below stands. The cause analysis in "Why it failed" was
+> partly wrong: the gate's path lookup already matched basenames and suffixes, and a
+> substantial share of the accusations were caused by a defect in OUR harness, which
+> collapsed each file's status across commits and handed the gate a false account of
+> the diff. Read the correction before citing any cause here.
+
 **The preregistered primary gate FAILS.** On agent-authored pull requests this lab did not
 collect, the shipped diffgate accuses correctly in fewer than one case in four. The
 contradiction rate that would have made the better headline is therefore withheld, exactly

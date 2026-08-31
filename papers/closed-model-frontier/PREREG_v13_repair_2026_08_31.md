@@ -6,6 +6,12 @@ disabled the path-claim accusation after it scored 0.23 precision against a 0.95
 Governed by `SPLIT_external_corpus_2026_08_31.md`: design on DEVELOPMENT repositories only,
 report the headline on HELD-OUT.
 
+> **AMENDED before implementation** — see `CORRECTION_external1_cause_2026_08_31.md`.
+> Repair 1 (suffix matching) is STRUCK: the lookup was never broken, and the cases that
+> looked like suffix failures were the harness's status-collapse defect, now fixed. The
+> remaining three repairs stand, with the verb-object binding confirmed dominant by a
+> counterfactual run. G-R2's recovery target now applies to those three only.
+
 ## The claim under test
 
 The gate's failure was not conceptual. It was four mechanical defects, each named by the

@@ -88,13 +88,54 @@ def stage_shelf() -> int:
     return 0
 
 
+def _fold_statuses(files: list[tuple]) -> dict:
+    """Net per-file status across ALL commits of one PR.
+
+    CORRECTION (2026-08-31, before EXTERNAL-1's cause analysis was published):
+    the corpus carries one row per file PER COMMIT, and 6.1% of (PR, file)
+    pairs disagree across commits — typically `added` in one commit and
+    `modified` in a later one. The first version of this function emitted a
+    hunk per row, and `parse_unified_diff` kept the LAST header it saw, so a
+    file genuinely created by the PR was reported as merely modified. That
+    manufactured status mismatches, which the gate then accused. The defect was
+    the harness's, not the instrument's.
+
+    Net rule, order-free because the shelf carries no commit ordering: a file
+    added and never removed is ADDED for the PR; removed and never added is
+    DELETED; anything else — including the rare add-then-remove within one PR,
+    which nets to absent and is deliberately not claimed as either — is
+    MODIFIED.
+    """
+    seen: dict[str, set] = {}
+    for filename, status, _patch in files:
+        if filename:
+            seen.setdefault(filename, set()).add((status or "").lower())
+    out = {}
+    for filename, sts in seen.items():
+        if (sts & ADDED) and not (sts & REMOVED):
+            out[filename] = "added"
+        elif (sts & REMOVED) and not (sts & ADDED):
+            out[filename] = "removed"
+        else:
+            out[filename] = "modified"
+    return out
+
+
 def reconstruct(files: list[tuple]) -> tuple[str, dict]:
-    """Per-file corpus records -> unified diff text + the status map they imply."""
+    """Per-file corpus records -> unified diff text + the status map they imply.
+
+    One hunk group per FILE (not per commit row), carrying the net status, with
+    every commit's patch text appended under it so added-line evidence survives.
+    """
+    net = _fold_statuses(files)
+    patches: dict[str, list] = {}
+    for filename, _status, patch in files:
+        if filename and patch:
+            patches.setdefault(filename, []).append(patch)
+
     parts, implied = [], {}
-    for filename, status, patch in files:
-        if not filename:
-            continue
-        st = (status or "").lower()
+    for filename, status in net.items():
+        st = status
         parts.append(f"diff --git a/{filename} b/{filename}")
         if st in ADDED:
             parts += ["new file mode 100644", "--- /dev/null", f"+++ b/{filename}"]
@@ -105,7 +146,7 @@ def reconstruct(files: list[tuple]) -> tuple[str, dict]:
         else:
             parts += [f"--- a/{filename}", f"+++ b/{filename}"]
             implied[_norm(filename)] = "M"
-        if patch:
+        for patch in patches.get(filename, []):
             parts.append(patch)
     return "\n".join(parts) + "\n", implied
 

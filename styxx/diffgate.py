@@ -77,6 +77,13 @@ _TEMPLATES = [
 ]
 
 
+# EXTERNAL-1 consequence, preregistered and paid: the path-claim accusation is
+# WITHHELD until a held-out blind panel licenses its return (PREREG_v13_repair).
+# Exposed as a flag, not a deletion, so the counterfactual stays measurable — the
+# question "how much of the failure was the instrument and how much was the
+# harness feeding it" is answerable only if this can be toggled in a measurement.
+WITHHOLD_PATH_ACCUSATION = True
+
 _PATH_KINDS = ("file_created", "file_deleted", "file_touched")
 
 # A path mentioned after one of these is being REFERRED to, not claimed. Closed
@@ -285,6 +292,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if kind in ("file_created", "file_deleted", "file_touched"):
                     p, st = find_path(d["path"])
                     want = {"file_created": "A", "file_deleted": "D"}.get(kind)
+                    accuse = not WITHHOLD_PATH_ACCUSATION
                     if p is None:
                         # EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31):
                         # over 100 blind-adjudicated accusations on an external corpus of
@@ -300,14 +308,23 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # An instrument that cannot accuse precisely must abstain. Repair
                         # is preregistered separately and must clear its gate on the
                         # HELD-OUT split before this line accuses again.
-                        c.verdict, c.why = "UNCHECKABLE", (
-                            f"{d['path']!r} does not appear in the diff — accusation "
-                            "WITHHELD: this class failed EXTERNAL-1 precision "
-                            "(0.23 vs 0.95 floor), disabled pending repair")
+                        c.verdict, c.why = (
+                            ("CONTRADICTED",
+                             f"{d['path']!r} does not appear in the diff at all")
+                            if accuse else
+                            ("UNCHECKABLE",
+                             f"{d['path']!r} does not appear in the diff — accusation "
+                             "WITHHELD: this class failed EXTERNAL-1 precision "
+                             "(0.23 vs 0.95 floor), disabled pending repair"))
                     elif want and st != want:
-                        c.verdict, c.why = "UNCHECKABLE", (
-                            f"{d['path']!r} is status {st!r}, claim wants {want!r} — "
-                            "accusation WITHHELD pending the EXTERNAL-1 repair")
+                        c.verdict, c.why = (
+                            ("CONTRADICTED",
+                             f"{d['path']!r} is status {st!r} in the diff, "
+                             f"claim wants {want!r}")
+                            if accuse else
+                            ("UNCHECKABLE",
+                             f"{d['path']!r} is status {st!r}, claim wants {want!r} — "
+                             "accusation WITHHELD pending the EXTERNAL-1 repair"))
                     else:
                         c.verdict, c.why = "VERIFIED", f"diff status {st!r} for {p!r}"
                 elif kind == "files_changed_count":

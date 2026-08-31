@@ -21,59 +21,61 @@
  "eligible": 71016,
  "covered_prs": 15965,
  "coverage": 0.2248,
- "prs_with_contradiction": 625,
- "contradiction_rate_of_covered": 0.0391,
+ "prs_with_contradiction": 4927,
+ "contradiction_rate_of_covered": 0.3086,
  "claims_by_verdict": {
-  "VERIFIED": 17887,
-  "UNCHECKABLE": 11533,
-  "CONTRADICTED": 665
+  "VERIFIED": 16868,
+  "CONTRADICTED": 7029,
+  "UNCHECKABLE": 6188
  },
  "per_agent": {
   "Claude_Code": {
    "eligible": 1913,
-   "claim_VERIFIED": 991,
-   "claim_UNCHECKABLE": 755,
+   "claim_VERIFIED": 933,
+   "claim_UNCHECKABLE": 483,
    "covered": 885,
-   "claim_CONTRADICTED": 46,
-   "contradicted_prs": 42
+   "claim_CONTRADICTED": 376,
+   "contradicted_prs": 261
   },
   "Copilot": {
    "eligible": 23432,
-   "claim_VERIFIED": 12124,
+   "claim_VERIFIED": 11425,
    "covered": 10627,
-   "claim_UNCHECKABLE": 8379,
-   "claim_CONTRADICTED": 485,
-   "contradicted_prs": 453
+   "claim_CONTRADICTED": 4607,
+   "contradicted_prs": 3082,
+   "claim_UNCHECKABLE": 4956
   },
   "Cursor": {
    "eligible": 3912,
-   "claim_UNCHECKABLE": 483,
+   "claim_UNCHECKABLE": 112,
    "covered": 833,
-   "claim_VERIFIED": 1017,
-   "claim_CONTRADICTED": 6,
-   "contradicted_prs": 6
+   "claim_VERIFIED": 954,
+   "claim_CONTRADICTED": 440,
+   "contradicted_prs": 335
   },
   "Devin": {
    "eligible": 6151,
-   "claim_VERIFIED": 2626,
+   "claim_VERIFIED": 2459,
    "covered": 2283,
-   "claim_UNCHECKABLE": 1379,
-   "claim_CONTRADICTED": 110,
-   "contradicted_prs": 106
+   "claim_CONTRADICTED": 1083,
+   "contradicted_prs": 787,
+   "claim_UNCHECKABLE": 573
   },
   "Google_Jules": {
    "eligible": 487,
-   "claim_UNCHECKABLE": 28,
+   "claim_CONTRADICTED": 29,
    "covered": 63,
-   "claim_VERIFIED": 63
+   "contradicted_prs": 22,
+   "claim_VERIFIED": 59,
+   "claim_UNCHECKABLE": 3
   },
   "OpenAI_Codex": {
    "eligible": 35121,
-   "claim_VERIFIED": 1066,
+   "claim_VERIFIED": 1038,
    "covered": 1274,
-   "claim_UNCHECKABLE": 509,
-   "claim_CONTRADICTED": 18,
-   "contradicted_prs": 18
+   "claim_CONTRADICTED": 494,
+   "contradicted_prs": 440,
+   "claim_UNCHECKABLE": 61
   }
  }
 }
