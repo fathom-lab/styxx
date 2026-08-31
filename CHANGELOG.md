@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.47.0] — the boundary arc: epistemics per token, the agent gate priced, structure over word lists, and the first external bug report
+
+The week the instrument stack started overruling its builders on the record.
+
+**OATH / certify**
+- `epistemics_summary` v1 on every certificate: per-token `{branch, obligated,
+  obligation_source, path_checked}` folded into a machine-readable boundary block —
+  what the verifier was obligated to check, what it volunteered, what it never read.
+- **`V11_FRACTION_COHERENCE = True`** — integer operands of an explicit `A/B` whose
+  same-line ratio checks out arithmetically bind jointly under one common receipt
+  parent. Strictly rescue-only; shipped through four gates including an absolute
+  corpus A/B (three tokens moved, all licensed, zero wrong). Repairs the verifier
+  taxing the counts statements its own preregs mandate.
+- CLI prints the obligation split ("of N verified: X obligated, Y volunteered") and
+  corpus_audit folds a corpus-wide epistemics line.
+
+**diffgate / agent attestation**
+- The never-read band is first-class: `sentences_total`, `uncovered_texts`, and
+  `unparsed_claims` (via the new STRUCT-1 observer) on every gate result, confessed
+  on every CLI run.
+- `styxx.claimdetect` (STRUCT-1): a structural claim detector for agent prose that
+  beat its verb-list null 0.4211 to 0.2061 on a fresh blind panel, with a zero-claim
+  control arm. Observer-only by tested invariant.
+
+**MCP / cognometrics**
+- **The not-stacc fix**: absence of logprobs (every Anthropic response) now returns
+  `classification "unmeasured", gate "unmeasured", measured: false` with the reason
+  named — it used to classify missing data as `adversarial`/`fail`. Found in
+  production by the project's longest-running MCP user; regression-pinned by
+  `tests/test_unmeasured_not_adversarial.py`.
+
+**Research record shipped alongside**: the agent-gate boundary RESULT, the blind-panel
+baseline that overturned its author, OBLIGATE-1's held-out negative, OBLIGATE-2's
+split verdict, and two papers published OATH-FAILED by the verifier they describe.
+Corpus at release: 202 certificates, HELD 195, FAILED 7 — failures included.
+
+---
+
 ## [Unreleased] — OATH v0.10: the context windows were pointed at the wrong token
 
 Closes the defect the v0.9 entry below disclosed and did not repair. `certify_doc`
