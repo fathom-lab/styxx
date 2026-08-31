@@ -81,6 +81,16 @@ name — **the verifier taxes the exact disclosures the preregs order** — and 
 here as an instrument defect (denominator blindness on metric lines), not reworded away.
 The numbers stand; the tax is paid in public.
 
+**CORRECTION (2026-08-31, appended before the repair cycle):** this note attributed the
+accusation to the range-sanity clause. Empirical re-diagnosis against the stored ledger shows
+`obligation_source: vocabulary` with empty hits — the true mechanism is the v0.3
+COUNT-BINDING filter, which requires an integer's receipt leaf to share path vocabulary with
+the claim's line, and correct fields named `valid`/`claims` are not echoed in prose. The
+accusations were wrong for the reason stated; the clause blamed was not the one firing. The
+misdiagnosis is corrected here at the same prominence, and the repair prereg targets the
+mechanism the ledger actually names.
+
+
 ## Limits
 
 n=58/57 per arm; no significance claimed anywhere. Seats saw one line of context capped near

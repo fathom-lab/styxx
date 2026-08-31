@@ -104,6 +104,16 @@ STRUCT-1's own false positives and OATH's accusation here share one root — a r
 see a token's shape but not its speech act — and that is the next problem in this lane,
 stated by two independent instruments on the same day.
 
+**CORRECTION (2026-08-31, appended before the repair cycle):** this note attributed the
+accusation to the range-sanity clause. Empirical re-diagnosis against the stored ledger shows
+`obligation_source: vocabulary` with empty hits — the true mechanism is the v0.3
+COUNT-BINDING filter, which requires an integer's receipt leaf to share path vocabulary with
+the claim's line, and correct fields named `valid`/`claims` are not echoed in prose. The
+accusations were wrong for the reason stated; the clause blamed was not the one firing. The
+misdiagnosis is corrected here at the same prominence, and the repair prereg targets the
+mechanism the ledger actually names.
+
+
 ## What is owed
 
 1. Mask code spans before conjunct 1, and separate behavioural-present from commit-past — the

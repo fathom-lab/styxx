@@ -75,6 +75,16 @@ papers is no longer a curiosity, it is a queue — the defect graduates to a rep
 with its own future freeze. Until that repair earns its licence the way everything here must,
 the tax is paid in public and the numbers stand unedited.
 
+**CORRECTION (2026-08-31, appended before the repair cycle):** this note attributed the
+accusation to the range-sanity clause. Empirical re-diagnosis against the stored ledger shows
+`obligation_source: vocabulary` with empty hits — the true mechanism is the v0.3
+COUNT-BINDING filter, which requires an integer's receipt leaf to share path vocabulary with
+the claim's line, and correct fields named `valid`/`claims` are not echoed in prose. The
+accusations were wrong for the reason stated; the clause blamed was not the one firing. The
+misdiagnosis is corrected here at the same prominence, and the repair prereg targets the
+mechanism the ledger actually names.
+
+
 ## Limits
 
 n=59/30/29 per arm; no significance claimed anywhere; one model family throughout; seats saw
