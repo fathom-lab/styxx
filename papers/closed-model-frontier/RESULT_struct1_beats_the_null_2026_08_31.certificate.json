@@ -2,14 +2,14 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_struct1_beats_the_null_2026_08_31.md",
-  "document_sha256": "8bb643a294281c182cb92a73b86d7b1a7519ba968d61a3b92e2e02c4571eb7f7",
+  "document_sha256": "0dc3291e8ed2c4e731a0d12e7d255406fcecc3c8b598a89385fc428cf0e52727",
   "receipts_sha256": {
     "stage2_result.json": "fcd6c2c1304d75a543a1217c76b12ca9a3ad9fe82b15f3e9d2ffba90a53cd638",
     "claim_detector_corpus_census.json": "f0168870dbadddf997ffacc6a48fd5d0cb840b22149aa5b416b97c7e18062299",
     "claim_detector_dev_eval.json": "94ad3cf89a50d73c94df8f699a734b41f608c960e097520719cd83df2c77cd54",
     "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe"
   },
-  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
   "counts": {
     "VERIFIED": 37,
     "ABSTAIN": 9,
@@ -104,7 +104,7 @@
       "token": "60"
     },
     {
-      "line": 119,
+      "line": 129,
       "token": "22"
     }
   ],
@@ -796,7 +796,7 @@
       }
     },
     {
-      "line": 109,
+      "line": 119,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -812,7 +812,7 @@
       }
     },
     {
-      "line": 110,
+      "line": 120,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -828,7 +828,7 @@
       }
     },
     {
-      "line": 119,
+      "line": 129,
       "token": "0.4211",
       "value": 0.4211,
       "decimals": 4,
@@ -844,7 +844,7 @@
       }
     },
     {
-      "line": 119,
+      "line": 129,
       "token": "22",
       "value": 22.0,
       "decimals": 0,

@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_obligate1_does_not_ship_2026_08_31.md",
-  "document_sha256": "6243b921e2987400b74cd0c39939f86bbe5d04b7004e0f16587d60a14833aef0",
+  "document_sha256": "9a362d33f1f6704a8b7db83a13bb814c86c3e34e8b74ccb7467b2d4962d02415",
   "receipts_sha256": {
     "obligate1_result.json": "7a392d9c722f23f87b12cd6b672f453bbcc21641059e64b2f6e7be9dda58ed95",
     "obligate1_packets.json": "d02c3754c8c79aa8ea887745b8bc32676f6bcf01c27a022dc08d234a29514a9f",
@@ -10,11 +10,11 @@
     "oath_structural_obligation_census.json": "8393f2f8d5de9cb4f3c882974ca675e5373466843623cb83482911b05a67ac4d",
     "oath_v061_battery_result.json": "28804d6bf1edcfcdb37f8d8af8c0f5127850cc19ec139552361a5a9d836dd2bf"
   },
-  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
   "counts": {
-    "VERIFIED": 28,
+    "VERIFIED": 29,
     "ABSTAIN": 22,
-    "UNGROUNDED": 7
+    "UNGROUNDED": 6
   },
   "epistemics_summary": {
     "schema": "styxx-oath/epistemics-summary/v1",
@@ -24,17 +24,17 @@
       "formula-constant": 0,
       "spec-or-historical": 15,
       "notation": 2,
-      "derived": 0,
+      "derived": 1,
       "unbound-field": 0,
       "value-match": 28,
       "ulp-neighbour": 0,
-      "obligated-accusation": 7,
+      "obligated-accusation": 6,
       "silent": 5
     },
     "verified": {
-      "total": 28,
+      "total": 29,
       "derived": {
-        "obligated": 0,
+        "obligated": 1,
         "unobligated": 0
       },
       "value_match": {
@@ -55,21 +55,6 @@
   },
   "verdict": "OATH-FAILED",
   "ungrounded": [
-    {
-      "line": 27,
-      "token": "58",
-      "value": 58.0,
-      "decimals": 0,
-      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
-      "col": 46,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    },
     {
       "line": 28,
       "token": "115",
@@ -239,15 +224,15 @@
       "token": "39"
     },
     {
-      "line": 86,
+      "line": 96,
       "token": "58"
     },
     {
-      "line": 86,
+      "line": 96,
       "token": "57"
     },
     {
-      "line": 87,
+      "line": 97,
       "token": "140"
     }
   ],
@@ -534,10 +519,10 @@
       "decimals": 0,
       "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
       "col": 46,
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-fraction:26/58=0.4483@obligate1_result.json:arms.positive",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }
@@ -1017,7 +1002,7 @@
       }
     },
     {
-      "line": 86,
+      "line": 96,
       "token": "58",
       "value": 58.0,
       "decimals": 0,
@@ -1032,7 +1017,7 @@
       }
     },
     {
-      "line": 86,
+      "line": 96,
       "token": "57",
       "value": 57.0,
       "decimals": 0,
@@ -1047,7 +1032,7 @@
       }
     },
     {
-      "line": 87,
+      "line": 97,
       "token": "140",
       "value": 140.0,
       "decimals": 0,
@@ -1062,7 +1047,7 @@
       }
     },
     {
-      "line": 87,
+      "line": 97,
       "token": "0.9762",
       "value": 0.9762,
       "decimals": 4,
@@ -1078,7 +1063,7 @@
       }
     },
     {
-      "line": 88,
+      "line": 98,
       "token": "0.5227",
       "value": 0.5227,
       "decimals": 4,
@@ -1094,7 +1079,7 @@
       }
     },
     {
-      "line": 95,
+      "line": 105,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
@@ -1110,7 +1095,7 @@
       }
     },
     {
-      "line": 95,
+      "line": 105,
       "token": "0.4483",
       "value": 0.4483,
       "decimals": 4,
@@ -1126,7 +1111,7 @@
       }
     },
     {
-      "line": 96,
+      "line": 106,
       "token": "0.3935",
       "value": 0.3935,
       "decimals": 4,

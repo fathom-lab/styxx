@@ -1,0 +1,42 @@
+{
+ "gate": "G-F3 (absolute)",
+ "prereg": "PREREG_fraction_coherence_2026_08_31.md",
+ "documents_compared": 201,
+ "tokens_moved": 3,
+ "moves_every_one": [
+  {
+   "doc": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+   "line": 27,
+   "token": "58",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-fraction:26/58=0.4483@obligate1_result.json:arms.positive"
+  },
+  {
+   "doc": "RESULT_obligate2_split_verdict_2026_08_31.md",
+   "line": 23,
+   "token": "59",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive"
+  },
+  {
+   "doc": "RESULT_obligate2_split_verdict_2026_08_31.md",
+   "line": 23,
+   "token": "44",
+   "off": "UNGROUNDED",
+   "on": "VERIFIED",
+   "on_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive"
+  }
+ ],
+ "wrong_movements": [],
+ "verdict_flips": [
+  {
+   "doc": "RESULT_obligate2_split_verdict_2026_08_31.md",
+   "off": "OATH-FAILED",
+   "on": "OATH-HELD"
+  }
+ ],
+ "held_to_failed": [],
+ "verdict": "PASS"
+}

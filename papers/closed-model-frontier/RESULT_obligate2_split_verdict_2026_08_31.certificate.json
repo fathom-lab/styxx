@@ -2,18 +2,18 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_obligate2_split_verdict_2026_08_31.md",
-  "document_sha256": "12ac447f440826d3fb7dff1c4473e34819afe4d5c6b0edf6cf3b4a804e225766",
+  "document_sha256": "64d2500733d4c6395eebd392e111c5e632b8bd9ce7f923a916379261e6929cc6",
   "receipts_sha256": {
     "obligate2_result.json": "ccc5a7bd6c6cd025ddbd796b8e88f729d62818e94b3acc1dfa185cbe063a9603",
     "obligate2_packets.json": "3e4a7b813dbabb86ccf8e7ecd60f2d33dda1e416544b36fe9284e74637905a1e",
     "obligate1_result.json": "7a392d9c722f23f87b12cd6b672f453bbcc21641059e64b2f6e7be9dda58ed95",
     "obligate2_dev_eval.json": "c1274af0b112d8be4c76b0304da70d89a29c2dcff7db4229d922666a9197dc94"
   },
-  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
   "counts": {
-    "VERIFIED": 20,
+    "VERIFIED": 22,
     "ABSTAIN": 19,
-    "UNGROUNDED": 2
+    "UNGROUNDED": 0
   },
   "epistemics_summary": {
     "schema": "styxx-oath/epistemics-summary/v1",
@@ -23,17 +23,17 @@
       "formula-constant": 0,
       "spec-or-historical": 11,
       "notation": 0,
-      "derived": 0,
+      "derived": 2,
       "unbound-field": 0,
       "value-match": 20,
       "ulp-neighbour": 0,
-      "obligated-accusation": 2,
+      "obligated-accusation": 0,
       "silent": 8
     },
     "verified": {
-      "total": 20,
+      "total": 22,
       "derived": {
-        "obligated": 0,
+        "obligated": 2,
         "unobligated": 0
       },
       "value_match": {
@@ -52,41 +52,8 @@
       "range-sanity": 0
     }
   },
-  "verdict": "OATH-FAILED",
-  "ungrounded": [
-    {
-      "line": 23,
-      "token": "44",
-      "value": 44.0,
-      "decimals": 0,
-      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "col": 38,
-      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    },
-    {
-      "line": 23,
-      "token": "59",
-      "value": 59.0,
-      "decimals": 0,
-      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "col": 41,
-      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
-      "epistemics": {
-        "branch": "obligated-accusation",
-        "obligated": true,
-        "obligation_source": "vocabulary"
-      }
-    }
-  ],
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
   "abstained": [
     {
       "line": 16,
@@ -153,15 +120,15 @@
       "token": "59"
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "59"
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "30"
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "29"
     }
   ],
@@ -317,10 +284,10 @@
       "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
       "col": 38,
       "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }
@@ -333,10 +300,10 @@
       "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
       "col": 41,
       "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
-      "status": "UNGROUNDED",
-      "receipt_ref": null,
+      "status": "VERIFIED",
+      "receipt_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive",
       "epistemics": {
-        "branch": "obligated-accusation",
+        "branch": "derived",
         "obligated": true,
         "obligation_source": "vocabulary"
       }
@@ -736,7 +703,7 @@
       }
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "59",
       "value": 59.0,
       "decimals": 0,
@@ -751,7 +718,7 @@
       }
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "30",
       "value": 30.0,
       "decimals": 0,
@@ -766,7 +733,7 @@
       }
     },
     {
-      "line": 80,
+      "line": 90,
       "token": "29",
       "value": 29.0,
       "decimals": 0,
@@ -781,7 +748,7 @@
       }
     },
     {
-      "line": 81,
+      "line": 91,
       "token": "0.8462",
       "value": 0.8462,
       "decimals": 4,
@@ -797,7 +764,7 @@
       }
     },
     {
-      "line": 88,
+      "line": 98,
       "token": "0.7458",
       "value": 0.7458,
       "decimals": 4,
