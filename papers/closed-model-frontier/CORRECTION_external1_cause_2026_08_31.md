@@ -40,7 +40,7 @@ else is a modification. The rule is order-free, documented in the code, and stat
 ## The counterfactual, measured rather than argued
 
 Running the original accusing behaviour over the corrected reconstruction isolates the two
-causes. The harness defect accounted for roughly a fifth of all path accusations. The rest
+causes. The harness defect accounted for about a sixth of the path accusations — a real share, and smaller than a first reading of the panel transcript suggested. The rest
 survive the fix, and they exhibit exactly the remaining patterns the panel described:
 *"Removed the helper from `mantineTheme.ts`"* accusing the file of not being deleted, and
 `Next.js` extracted as a filename and then accused of not existing.

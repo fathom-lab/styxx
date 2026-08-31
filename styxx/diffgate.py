@@ -84,6 +84,44 @@ _TEMPLATES = [
 # harness feeding it" is answerable only if this can be toggled in a measurement.
 WITHHOLD_PATH_ACCUSATION = True
 
+# V13 repair 2 (PREREG_v13_repair_2026_08_31): FROZEN NON-FILE NOUNS. The
+# extension whitelist cannot tell the runtime `Node.js` from a file named
+# node.js, and EXTERNAL-1 caught the gate accusing agent prose of not
+# containing a file called "Next.js". Closed list, quoted in full in the
+# RESULT so the closure is auditable, and applied only to bare tokens with no
+# directory part -- a real `lib/node.js` still claims normally.
+_NON_FILE_NOUNS = frozenset({
+    "node.js", "next.js", "express.js", "vue.js", "nuxt.js", "react.js",
+    "angular.js", "ember.js", "backbone.js", "three.js", "d3.js", "chart.js",
+    "moment.js", "jquery.js", "socket.io", "nest.js", "svelte.js", "alpine.js",
+})
+
+
+def _is_non_file_noun(claimed: str) -> bool:
+    return ("/" not in claimed and "\\" not in claimed
+            and claimed.lower() in _NON_FILE_NOUNS)
+
+
+# V13 repair 1 (PREREG_v13_repair_2026_08_31): VERB-OBJECT BINDING. "Removed
+# the helper FROM mantineTheme.ts" claims something about content INSIDE a file
+# the diff shows as modified -- the verb binds to the helper, not to the file.
+# EXTERNAL-1's largest surviving defect: such sentences read as deletions and
+# were accused of not deleting the file. Containment prepositions demote
+# creation/deletion claims to "touched"; "at" and bare direct objects are left
+# alone, because "created the docs at path/x.md" really does claim that file.
+_CONTAINMENT = re.compile(
+    r"\b(?:from|in|inside|within|out\s+of|of)\s+"
+    r"(?:the\s+|its\s+|this\s+)?[`\"']?$", re.I)
+
+
+def _demoted_by_containment(sentence: str, m) -> bool:
+    try:
+        start = m.start("path")
+    except (IndexError, re.error):
+        return False
+    return bool(_CONTAINMENT.search(sentence[max(0, start - 40):start]))
+
+
 _PATH_KINDS = ("file_created", "file_deleted", "file_touched")
 
 # A path mentioned after one of these is being REFERRED to, not claimed. Closed
@@ -98,6 +136,17 @@ _REFERENTIAL = (
     "follow-up", "followup", "next commit", "separate commit", "separately",
     "not in this", "left for", "deferred", "pending", "in a later", "later commit",
     "still needs", "yet to be", "planned", "TODO", "todo",
+    # V13 repair 3 (PREREG_v13_repair_2026_08_31): NEGATION. A sentence saying a
+    # file was NOT changed makes its absence from the diff the sentence coming
+    # TRUE. EXTERNAL-1 caught the gate accusing "avoids the need to modify
+    # tsconfig.json" because tsconfig.json was absent -- which is what the
+    # sentence promised. Same pathway as every other referential cue: the path
+    # is named, not claimed.
+    "avoid", "avoids", "without modif", "without chang", "without touch",
+    "without altering", "no need to", "does not modify", "does not change",
+    "does not touch", "doesn't modify", "doesn't change", "doesn't touch",
+    "not modified", "not changed", "not touched", "no changes to",
+    "unchanged", "untouched", "preserves",
 )
 _REF_BEFORE = 110          # run-up inspected before the matched path
 _REF_AFTER = 70            # and after it: "test.yml) is staged" puts the
@@ -282,6 +331,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 # does not get to call a summary a liar.
                 if kind in _PATH_KINDS and _names_without_claiming(sent, m):
                     continue
+                if kind in _PATH_KINDS and _is_non_file_noun(m.group("path")):
+                    continue                        # V13 repair 2
+                if (kind in ("file_created", "file_deleted")
+                        and _demoted_by_containment(sent, m)):
+                    kind = "file_touched"           # V13 repair 1
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)

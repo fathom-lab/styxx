@@ -1,0 +1,77 @@
+{
+ "prereg": "PREREG_v13_repair_2026_08_31.md (amended)",
+ "prs_scored": 71016,
+ "accusations_before": 5256,
+ "accusations_after": 3521,
+ "removed": 1735,
+ "by_kind_before": {
+  "file_created": 1439,
+  "only_touches": 333,
+  "file_deleted": 1294,
+  "file_touched": 1876,
+  "symbol_added": 64,
+  "files_changed_count": 71,
+  "tests_added": 179
+ },
+ "by_kind_after": {
+  "file_created": 886,
+  "only_touches": 333,
+  "file_touched": 1593,
+  "file_deleted": 395,
+  "symbol_added": 64,
+  "files_changed_count": 71,
+  "tests_added": 179
+ },
+ "G_R1_subset_invariant": {
+  "prs_gaining_an_accusation": 53,
+  "pass": false,
+  "examples": [
+   {
+    "pr": 2801155743,
+    "url": "https://github.com/elizaOS/eliza/pull/2595",
+    "new": [
+     "('file_touched', 'src/index.ts')"
+    ]
+   },
+   {
+    "pr": 2914287594,
+    "url": "https://github.com/Cap-go/capgo/pull/1049",
+    "new": [
+     "('file_touched', 'channel_self.ts')"
+    ]
+   },
+   {
+    "pr": 2967944043,
+    "url": "https://github.com/NethermindEth/starknet.go/pull/685",
+    "new": [
+     "('file_touched', 'starknet.go')"
+    ]
+   },
+   {
+    "pr": 3058723574,
+    "url": "https://github.com/calcom/cal.com/pull/21267",
+    "new": [
+     "('file_touched', 'packages/prisma/enums/creditType.ts')"
+    ]
+   },
+   {
+    "pr": 3067711307,
+    "url": "https://github.com/airbytehq/airbyte/pull/60314",
+    "new": [
+     "('file_touched', 'docker-connector-image-publishing.yml')"
+    ]
+   }
+  ]
+ },
+ "development_bucket": {
+  "prs": 15617,
+  "before": 1530,
+  "after": 1002,
+  "fraction_removed": 0.3451
+ },
+ "G_R2_recovery": {
+  "threshold": 0.6667,
+  "observed": 0.3451,
+  "pass": false
+ }
+}
