@@ -1,0 +1,307 @@
+{
+ "prereg": "PREREG_obligate1_2026_08_31.md",
+ "key_hash_verified": "9d283ef5e1a4da4ca8a6904d5edb931c981e533ef5fffac4f8188061629368f2",
+ "protocol_notes": "seats saw each token with its line context capped near 140 characters; the packets file stores up to 240",
+ "seat_validity": {
+  "p1-seat1": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p1-seat2": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p1-seat3": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat1": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat2": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat3": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p3-seat1": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p3-seat2": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  },
+  "p3-seat3": {
+   "correct": 16,
+   "n": 16,
+   "score": 1.0,
+   "passes": true
+  }
+ },
+ "verdicts": {
+  "total": 168,
+  "unanimity_rate": 0.9762,
+  "no_majority": 0,
+  "majority_unsure": 5
+ },
+ "arms": {
+  "positive": {
+   "total": 60,
+   "valid": 58,
+   "claims": 26,
+   "excluded_unsure_or_nomaj": 2,
+   "claim_share": 0.4483
+  },
+  "negative": {
+   "total": 60,
+   "valid": 57,
+   "claims": 13,
+   "excluded_unsure_or_nomaj": 3,
+   "claim_share": 0.2281
+  }
+ },
+ "population_weights": {
+  "w_pos": 8.0333,
+  "w_neg": 24.7667
+ },
+ "gates": {
+  "G-V": {
+   "all_seats_pass": true,
+   "verdict": "PASS"
+  },
+  "G-O1P": {
+   "precision": 0.4483,
+   "bar": 0.7,
+   "verdict": "FAIL",
+   "mandatory_counts_statement": "OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at these n",
+   "mandatory_failure_statement": "the structural obligation clause does not survive held-out adjudication"
+  },
+  "G-O1NULL": {
+   "null_precision": 0.3391,
+   "verdict": "PASS"
+  },
+  "G-O1R": {
+   "weighted_recall": 0.3935,
+   "bar": 0.2,
+   "raw_arm_claims": {
+    "positive": 26,
+    "negative": 13
+   },
+   "verdict": "PASS"
+  }
+ },
+ "positive_arm_not_claims_every_one": [
+  {
+   "id": "o1p1-002",
+   "token": "2509.06902",
+   "doc": "RECON_oath_prior_art_2026_08_26.md",
+   "context": "**Proof-Carrying Numbers** (arXiv 2509.06902) is the closest work found, and it is close enough"
+  },
+  {
+   "id": "o1p1-005",
+   "token": "0.30",
+   "doc": "FINDING_b41_bridge_built_2026_08_05.md",
+   "context": "| **A1 bridge (qwen ← llama's 20 contrasts)** | **0.9745** | ≥ 0.30 | **✓ a 16× jump** |"
+  },
+  {
+   "id": "o1p1-006",
+   "token": "0.15",
+   "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+   "context": "grounding detects it (1.000, margin 0.487, P(≥0.15)=1.0).**"
+  },
+  {
+   "id": "o1p1-012",
+   "token": "0.05",
+   "doc": "FINDING_concept_decode_2026_06_12.md",
+   "context": "held-out concepts the map never saw (chance top-1 = 0.05)."
+  },
+  {
+   "id": "o1p1-013",
+   "token": "0.70",
+   "doc": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+   "context": "then collapses (≤ 0.60) while the private re-lock holds (≥ 0.70), calibration poisoning GENERALIZES;"
+  },
+  {
+   "id": "o1p1-019",
+   "token": "+0.05",
+   "doc": "FINDING_tiered_channel_2026_07_24.md",
+   "context": "the frozen +0.05 bar. Missed by 0.0093. Per the frozen mapping this is CLOSED_NEGATIVE; the bar"
+  },
+  {
+   "id": "o1p1-022",
+   "token": "0.80",
+   "doc": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+   "context": "0.9242 against the frozen floor (threshold of 0.80), clean frozen-deploy read 0.9069, clean"
+  },
+  {
+   "id": "o1p1-024",
+   "token": "0.9341",
+   "doc": "FINDING_tiered_channel_2026_07_24.md",
+   "context": "- **DG2 PASSED.** Final answered accuracy 0.9850 against a 0.9341 bar -- it did not merely hold, it"
+  },
+  {
+   "id": "o1p1-028",
+   "token": "0.78",
+   "doc": "FINDING_portable_conscience_ood_2026_06_11.md",
+   "context": "hit 0.865 (>= 0.78). The random-direction floor is the WRONG null for a difference-of-means direction —"
+  },
+  {
+   "id": "o1p1-030",
+   "token": "0.05",
+   "doc": "FINDING_h1a_human_single_clique_2026_08_06.md",
+   "context": "| G2_islands_present | gap-screen p ≤ 0.05 | 0.0779 | ❌ |"
+  },
+  {
+   "id": "o1p1-048",
+   "token": "0.60",
+   "doc": "FINDING_anatomy_v0_2026_06_10.md",
+   "context": "partial-lexical RSA agree at **Kendall's W = 0.75** against the pre-registered bar of 0.60, with"
+  },
+  {
+   "id": "o1p1-052",
+   "token": "0.15",
+   "doc": "BLOCKED_source_independence_2026_07_24.md",
+   "context": "(b) inherit FG1-FG4 **verbatim** -- especially FG4's 0.15 separation bar, which is not to be"
+  },
+  {
+   "id": "o1p1-055",
+   "token": "0.30",
+   "doc": "FINDING_b44_shared_frame_2026_08_05.md",
+   "context": "| G2_wrong_min_high | min wrong-donor at k=20 ≥ 0.30 | 0.3622 | ✅ |"
+  },
+  {
+   "id": "o1p2-026",
+   "token": "0.70",
+   "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+   "context": "- AUC(R2 vs fake) = 1.00. T1 PASS (R2 1.00 ≥ 0.70; R2-fake 0.75 ≥ 0.30). T2 PASS (1.00)."
+  },
+  {
+   "id": "o1p2-027",
+   "token": "0.05",
+   "doc": "FINDING_h1a_human_single_clique_2026_08_06.md",
+   "context": "distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an"
+  },
+  {
+   "id": "o1p2-033",
+   "token": "0.15",
+   "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+   "context": "- k\\* uses the prereg's fixed 0.30/0.15 definition; by construction it says where legibility"
+  },
+  {
+   "id": "o1p2-034",
+   "token": "0.70",
+   "doc": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+   "context": "seeds {0, 1}) does not push the private-13 read below the survival threshold of 0.70 in any"
+  },
+  {
+   "id": "o1p2-040",
+   "token": "0.90",
+   "doc": "RESULT_oath_v05_precision_2026_07_13.md",
+   "context": "- **D — @-parameter → ABSTAIN**: \"cosine@0.90\" is a config threshold."
+  },
+  {
+   "id": "o1p2-041",
+   "token": "0.25",
+   "doc": "FINDING_gavagai_v0_2026_06_10.md",
+   "context": "chance 0.125 (bar 0.25)."
+  },
+  {
+   "id": "o1p2-043",
+   "token": "0.85",
+   "doc": "FINDING_portable_conscience_v0_2026_06_10.md",
+   "context": "test for the gemma probe (ceiling 0.75, not the pre-registered 0.85). A negative bounds linear single-direction"
+  },
+  {
+   "id": "o1p2-048",
+   "token": "0.15",
+   "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+   "context": "- **H_kill** (margin over *best* text baseline ≥ 0.15): **FAIL** — margin = 1.000 - 0.861 = **0.139**."
+  },
+  {
+   "id": "o1p3-007",
+   "token": "0.53",
+   "doc": "FINDING_b31v2_door_opens_2026_08_01.md",
+   "context": "- **G0 machinery: PASS** (0.8000 ≥ 0.53; the llama_1b cell reproduced identically across"
+  },
+  {
+   "id": "o1p3-009",
+   "token": "0.0208",
+   "doc": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+   "context": "| G2_null_at_chance | median null ≤ 0.0208 | 0.0104 | ✅ |"
+  },
+  {
+   "id": "o1p3-021",
+   "token": "0.10",
+   "doc": "FINDING_c3_algebra_wrong_2026_08_07.md",
+   "context": "| G4_rejects_shared_trend | ≤ 0.10 | 1.0 | ❌ |"
+  },
+  {
+   "id": "o1p3-022",
+   "token": "0.03",
+   "doc": "RESULT_sentiment_probe_parity_2026_07_09.md",
+   "context": "reaches PRIVACY_STANDS (parity_gap ≥ 0.06), and only one cell is ≤ 0.03 (not a CAPACITY majority), so"
+  },
+  {
+   "id": "o1p3-026",
+   "token": "0.05",
+   "doc": "FINDING_b43_sub_symbolic_2026_08_05.md",
+   "context": "*less* coherent than a random 15-word set), far from the p ≤ 0.05 bar."
+  },
+  {
+   "id": "o1p3-030",
+   "token": "0.02",
+   "doc": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+   "context": "within the ε = 0.02 noise floor (`delta_frozen_deployed` in the receipt), and the mimic-refit delta"
+  },
+  {
+   "id": "o1p3-040",
+   "token": "0.40",
+   "doc": "FINDINGS_rhythm_substrate_2026_06_03.md",
+   "context": "regime (r=0.40) it detects **0/40** — commitment. (A high-AR(1) real process, r=0.95,"
+  },
+  {
+   "id": "o1p3-044",
+   "token": "0.15",
+   "doc": "FINDING_selective_escalation_2026_07_24.md",
+   "context": "| **HG1 selective escalation earns its slice** | **FAIL** -- gain 0.06666666666666676 vs a 0.15 bar |"
+  },
+  {
+   "id": "o1p3-049",
+   "token": "0.15",
+   "doc": "FINDING_b42_dose_curve_2026_08_05.md",
+   "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds ≤ 0.15 | 0.0026 | ✅ |"
+  },
+  {
+   "id": "o1p3-053",
+   "token": "0.60",
+   "doc": "RESULT_margin_parity_control_2026_07_10.md",
+   "context": "dragged to **0.6068 / 0.6044** — above the ≤ 0.60 SUPPORTED bar by well under a hundredth on both"
+  },
+  {
+   "id": "o1p3-056",
+   "token": "0.70",
+   "doc": "FINDING_b36_write_door_2026_08_01.md",
+   "context": "| M1 beats random (sign rate) | 0.6571 | G2 sign ≥ 0.70 | **FAIL** |"
+  }
+ ]
+}

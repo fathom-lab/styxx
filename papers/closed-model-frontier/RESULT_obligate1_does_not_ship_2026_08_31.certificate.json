@@ -1,0 +1,1145 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_obligate1_does_not_ship_2026_08_31.md",
+  "document_sha256": "6243b921e2987400b74cd0c39939f86bbe5d04b7004e0f16587d60a14833aef0",
+  "receipts_sha256": {
+    "obligate1_result.json": "7a392d9c722f23f87b12cd6b672f453bbcc21641059e64b2f6e7be9dda58ed95",
+    "obligate1_packets.json": "d02c3754c8c79aa8ea887745b8bc32676f6bcf01c27a022dc08d234a29514a9f",
+    "stage2_result.json": "fcd6c2c1304d75a543a1217c76b12ca9a3ad9fe82b15f3e9d2ffba90a53cd638",
+    "oath_structural_obligation_census.json": "8393f2f8d5de9cb4f3c882974ca675e5373466843623cb83482911b05a67ac4d",
+    "oath_v061_battery_result.json": "28804d6bf1edcfcdb37f8d8af8c0f5127850cc19ec139552361a5a9d836dd2bf"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 22,
+    "UNGROUNDED": 7
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 15,
+      "notation": 2,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 28,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 7,
+      "silent": 5
+    },
+    "verified": {
+      "total": 28,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 4,
+        "obligated_integer_filter_na": 13,
+        "unobligated_integer_filter_ran": 4,
+        "unobligated_integer_filter_na": 7
+      }
+    },
+    "obligated_total": 34,
+    "obligation_sources": {
+      "vocabulary": 32,
+      "n-glued": 1,
+      "range-correlation": 1,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 27,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
+      "col": 46,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 28,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 12,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 37,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "the false-accusation rate \u2014 and a rule that would false-accuse **32 of every 58** tokens it",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 72,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "and `115` inside the counts statement the prereg REQUIRES verbatim (\"OBLIGATE-1 precision =",
+      "col": 5,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 3,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 18,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    }
+  ],
+  "abstained": [
+    {
+      "line": 11,
+      "token": "39"
+    },
+    {
+      "line": 15,
+      "token": "0.70"
+    },
+    {
+      "line": 27,
+      "token": "26"
+    },
+    {
+      "line": 27,
+      "token": "0.4483"
+    },
+    {
+      "line": 27,
+      "token": "0.7"
+    },
+    {
+      "line": 28,
+      "token": "39"
+    },
+    {
+      "line": 28,
+      "token": "0.3935"
+    },
+    {
+      "line": 28,
+      "token": "0.2"
+    },
+    {
+      "line": 54,
+      "token": "32"
+    },
+    {
+      "line": 56,
+      "token": "0.60"
+    },
+    {
+      "line": 56,
+      "token": "0.05"
+    },
+    {
+      "line": 57,
+      "token": "0.80"
+    },
+    {
+      "line": 57,
+      "token": "+0.05"
+    },
+    {
+      "line": 57,
+      "token": "0.90"
+    },
+    {
+      "line": 58,
+      "token": "2509.06902"
+    },
+    {
+      "line": 67,
+      "token": "0.70"
+    },
+    {
+      "line": 71,
+      "token": "58"
+    },
+    {
+      "line": 73,
+      "token": "26"
+    },
+    {
+      "line": 73,
+      "token": "39"
+    },
+    {
+      "line": 86,
+      "token": "58"
+    },
+    {
+      "line": 86,
+      "token": "57"
+    },
+    {
+      "line": 87,
+      "token": "140"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "# RESULT \u2014 OBLIGATE-1 does not ship: in-sample 0.80 collapsed to 0.4483 held-out",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[6].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 1,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "# RESULT \u2014 OBLIGATE-1 does not ship: in-sample 0.80 collapsed to 0.4483 held-out",
+      "col": 65,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 10,
+      "token": "0.5227",
+      "value": 0.5227,
+      "decimals": 4,
+      "context": "The largest known hole in the flagship instrument \u2014 0.5227 of full-precision decimals sit on",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v061_battery_result.json:G2b_unbound_share_of_full_pool",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 11,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "lines without trigger vocabulary and are never checked (issue #39). The best structural",
+      "col": 63,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "code span*) scored **0.80 precision in-sample**, against 0.40 for the word-list family. That",
+      "col": 21,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_and_outside_code.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "code span*) scored **0.80 precision in-sample**, against 0.40 for the word-list family. That",
+      "col": 57,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 15,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "the ship bar frozen at **0.70** \u2014 a stated allowance for regression to the mean.",
+      "col": 25,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 19,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Nine fresh seats, three packets, sixteen token decoys each. **Every seat scored 16 of 16 on",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:seat_validity.p1-seat1.correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 19,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Nine fresh seats, three packets, sixteen token decoys each. **Every seat scored 16 of 16 on",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:seat_validity.p1-seat1.correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 20,
+      "token": "0.9762",
+      "value": 0.9762,
+      "decimals": 4,
+      "context": "the decoys.** Unanimity 0.9762, zero NO-MAJORITY, five majority-UNSURE excluded and counted.",
+      "col": 24,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "col": 28,
+      "binding_context": "| | adjudicated CLAIM | n | share | | OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "| OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "col": 33,
+      "binding_context": "| | adjudicated CLAIM | n | share | | OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.valid",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "| OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "col": 40,
+      "binding_context": "| | adjudicated CLAIM | n | share | | OBLIGATE-1 positive arm | 26 | 58 | **0.4483** |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 25,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "col": 37,
+      "binding_context": "| | adjudicated CLAIM | n | share | | negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.negative.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "| negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "col": 42,
+      "binding_context": "| | adjudicated CLAIM | n | share | | negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.negative.valid",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.2281",
+      "value": 0.2281,
+      "decimals": 4,
+      "context": "| negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "col": 47,
+      "binding_context": "| | adjudicated CLAIM | n | share | | negative arm (predicate said no) | 13 | 57 | 0.2281 |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.negative.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 27,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
+      "col": 43,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 27,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
+      "col": 46,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
+      "col": 50,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "- **G-O1P \u2014 FAIL.** OBLIGATE-1 precision = 26/58 (0.4483) vs bar 0.7; obligate-everything",
+      "col": 65,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 28,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 9,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 28,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 12,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 28,
+      "token": "0.3391",
+      "value": 0.3391,
+      "decimals": 4,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 17,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:gates.G-O1NULL.null_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 28,
+      "token": "0.3935",
+      "value": 0.3935,
+      "decimals": 4,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 44,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 28,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "null = 39/115 (0.3391); weighted recall = 0.3935 vs bar 0.2; no significance is claimed at",
+      "col": 58,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 31,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "- **G-O1NULL \u2014 PASS.** 0.4483 beats obligate-everything's 0.3391. The structure is real",
+      "col": 23,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 33,
+      "token": "0.3935",
+      "value": 0.3935,
+      "decimals": 4,
+      "context": "- **G-O1R \u2014 PASS.** Population-weighted recall 0.3935: the rule would catch roughly two in",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:gates.G-O1R.weighted_recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 37,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "the false-accusation rate \u2014 and a rule that would false-accuse **32 of every 58** tokens it",
+      "col": 65,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_and_outside_code.misses_caught",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 37,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "the false-accusation rate \u2014 and a rule that would false-accuse **32 of every 58** tokens it",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 39,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "cost inversion did its job: on the claim-detector problem 0.4211 precision was a PASS because",
+      "col": 58,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 40,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "a missed flag costs nothing; here 0.4483 is a hard FAIL because every false positive indicts",
+      "col": 34,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 45,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "In-sample 0.80 \u2192 held-out 0.4483. The candidates were written before the census data was",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_and_outside_code.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 46,
+      "token": "225",
+      "value": 225.0,
+      "decimals": 0,
+      "context": "consulted, but they were *scored* on the 225 adjudications that motivated the whole census \u2014",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:population.adjudicated_abstentions",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 50,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "false accusations wearing a 0.80 badge.",
+      "col": 28,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[6].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 54,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "All 32 would-be false accusations are listed in the receipt. Read together they are one",
+      "col": 4,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 56,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "0.60\"), gate criteria in tables (\"| G2_islands_present | gap-screen p \u2264 0.05 |\"), floors and",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 56,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "0.60\"), gate criteria in tables (\"| G2_islands_present | gap-screen p \u2264 0.05 |\"), floors and",
+      "col": 72,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 57,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "ceilings (\"threshold of 0.80\", \"the frozen +0.05 bar\"), config values (\"cosine@0.90\"), and a",
+      "col": 24,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 57,
+      "token": "+0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "ceilings (\"threshold of 0.80\", \"the frozen +0.05 bar\"), config values (\"cosine@0.90\"), and a",
+      "col": 43,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 57,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "ceilings (\"threshold of 0.80\", \"the frozen +0.05 bar\"), config values (\"cosine@0.90\"), and a",
+      "col": 79,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation",
+      "epistemics": {
+        "branch": "notation",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 58,
+      "token": "2509.06902",
+      "value": 2509.06902,
+      "decimals": 5,
+      "context": "citation id (arXiv 2509.06902). A quantity written to two decimals outside code is, in this",
+      "col": 19,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation",
+      "epistemics": {
+        "branch": "notation",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 67,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "and the same 0.70 bar \u2014 after this one, nobody gets to call that step optional.",
+      "col": 13,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 71,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "The certificate for this RESULT reads **OATH-FAILED** on three tokens: the denominators `58`",
+      "col": 89,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 72,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "and `115` inside the counts statement the prereg REQUIRES verbatim (\"OBLIGATE-1 precision =",
+      "col": 5,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 3,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 15,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 18,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 73,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "26/58 \u2026 null = 39/115 \u2026\"), and the same `58` where the false-accusation rate restates it.",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 86,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "n=58/57 per arm; no significance claimed anywhere. Seats saw one line of context capped near",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 86,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "n=58/57 per arm; no significance claimed anywhere. Seats saw one line of context capped near",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 87,
+      "token": "140",
+      "value": 140.0,
+      "decimals": 0,
+      "context": "140 characters, not the document. One model family throughout; unanimity 0.9762 is a",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 87,
+      "token": "0.9762",
+      "value": 0.9762,
+      "decimals": 4,
+      "context": "140 characters, not the document. One model family throughout; unanimity 0.9762 is a",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 88,
+      "token": "0.5227",
+      "value": 0.5227,
+      "decimals": 4,
+      "context": "correlated-error ceiling. The 0.5227 gap figure describes decimals; this sample adjudicated",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v061_battery_result.json:G2b_unbound_share_of_full_pool",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 95,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "lists (0.40, measured dead twice), and the best naive structural rule (0.4483 held-out,",
+      "col": 7,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 95,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "lists (0.40, measured dead twice), and the best naive structural rule (0.4483 held-out,",
+      "col": 71,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 96,
+      "token": "0.3935",
+      "value": 0.3935,
+      "decimals": 4,
+      "context": "0.3935 recall, real but unshippable). The open trigger-recall issue gains its second measured negative and its",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:gates.G-O1R.weighted_recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    }
+  ]
+}
