@@ -142,6 +142,12 @@ class DiffGate:
     # OATH's abstained band; observation only, verdict logic untouched.
     sentences_total: int = 0
     uncovered_texts: list = field(default_factory=list)
+    # Of the never-read band, which sentences a STRUCTURAL reader thinks are claims the
+    # templates simply failed to parse. This is the boundary's boundary: not "prose we did
+    # not judge" but "claims we should have judged and could not". OBSERVATION ONLY —
+    # STRUCT-1 never touches a verdict, exactly as the epistemics annotation never touched
+    # OATH's ladder. See PREREG_claim_detector_2026_08_30.md.
+    unparsed_claims: list = field(default_factory=list)
     # A gate that had NO EVIDENCE still has to answer PASS or FAIL, and PASS is
     # the flattering half. `measured` is the third answer the two-valued verdict
     # cannot carry: this gate did not run. A leg that cannot fail must not gate.
@@ -155,6 +161,7 @@ class DiffGate:
                 "uncovered_sentences": self.uncovered_sentences,
                 "sentences_total": self.sentences_total,
                 "uncovered_texts": self.uncovered_texts,
+                "unparsed_claims": self.unparsed_claims,
                 "measured": self.measured,
                 "why_unmeasured": self.why_unmeasured}
 
@@ -333,10 +340,20 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     uncovered_texts = [s.strip() for i, s in enumerate(sentences)
                        if s.strip() and i not in covered]
     total = sum(1 for s in sentences if s.strip())
+    # The never-read band, read structurally. Import is local and failure is silent: the
+    # gate must run identically whether or not the observer is available, because a
+    # verdict that depends on an observer is not an observation.
+    unparsed = []
+    try:
+        from styxx.claimdetect import detect as _detect
+        unparsed = [s for s in uncovered_texts if _detect(s).is_claim]
+    except Exception:
+        unparsed = []
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
                     measured=not no_evidence, why_unmeasured=no_evidence or "",
                     uncovered_sentences=len(uncovered_texts),
-                    sentences_total=total, uncovered_texts=uncovered_texts)
+                    sentences_total=total, uncovered_texts=uncovered_texts,
+                    unparsed_claims=unparsed)
 
 
 _DEMO_SUMMARY = ("Refactored src/retry.py for resilience. Adds function backoff with "
@@ -425,6 +442,9 @@ def main(argv=None) -> int:
         print(f"never read: {g.uncovered_sentences} of {g.sentences_total} "
               f"sentences — prose outside the closed template set is listed "
               f"in --out, not judged")
+        if g.unparsed_claims:
+            print(f"            of those, {len(g.unparsed_claims)} look like claims a "
+                  f"structural reader would check but these templates cannot parse")
     for c in g.claims:
         if c.verdict != "VERIFIED":
             print(f"  [{c.verdict}:{c.kind}] {c.why}")
