@@ -141,11 +141,28 @@ def _to_dict(obj: Any) -> Any:
 
 def _vitals_payload(vitals: Any) -> Dict[str, Any]:
     if vitals is None:
+        # ABSENCE OF EVIDENCE IS NOT AN ACCUSATION. This branch used to return
+        # classification="adversarial" / gate="fail" whenever the response carried no
+        # logprobs -- which is EVERY response from Anthropic's API, since it exposes no
+        # logprobs at all (see styxx/adapters/anthropic.py, "why tier 0 is not available").
+        # A production MCP user running Claude Code systemwide got styxx accusing every
+        # tool chain of adversarial behaviour for months, and reported it 2026-08-31 --
+        # the first external bug report this project received, and it was a boundary-
+        # confession failure: the instrument could not tell "no data" from "bad data".
+        # The unmeasured band is the same third answer diffgate's `measured` flag gives:
+        # this gate did not run, and it says so instead of picking the accusing half.
         return {
-            "classification": "adversarial",
+            "classification": "unmeasured",
             "confidence": 0.0,
-            "gate": "fail",
-            "reason": "no trajectory data",
+            "gate": "unmeasured",
+            "measured": False,
+            "reason": (
+                "no token logprobs in the response -- this provider (e.g. Anthropic) "
+                "does not expose them, so trajectory vitals cannot run. Not a failure "
+                "and not adversarial: use the text-only cognometric tools (cogn_audit, "
+                "cogn_score) which need no logprobs, or route via an OpenAI-compatible "
+                "endpoint that returns logprobs for tier-0 vitals."
+            ),
         }
     classification = getattr(vitals, "classification", None) or "reasoning"
     confidence = float(getattr(vitals, "confidence", 0.0) or 0.0)
