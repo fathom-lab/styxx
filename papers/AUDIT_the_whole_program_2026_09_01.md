@@ -11,7 +11,7 @@ few hours; §9 states exactly what that means for each section, and the honest s
 §5 and §6 are mechanically checkable while §2 and §7 are judgement calls that a reader should
 expect to argue with.
 
-Companion: `INDEX_program_map_2026_09_01.md`, which holds the per-arc table, the idea index and
+Companion: `INDEX.md`, which holds the per-arc table, the idea index and
 the receipts index. This file says what the map implies.
 
 ---
