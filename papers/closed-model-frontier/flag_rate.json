@@ -1,0 +1,67 @@
+{
+ "what": "flag rate of the repaired path accuser on AIDev, by split",
+ "instrument": {
+  "WITHHOLD_PATH_ACCUSATION": false,
+  "V14_CONTAINMENT_TOUCH": true,
+  "V14_BARE_NAME_ABSTAIN": true,
+  "run": null,
+  "strict": false
+ },
+ "identity": "accusation keyed on PATH, never (kind, path)",
+ "population": {
+  "expected_eligible": 71016,
+  "observed_eligible": 71016,
+  "matches_v14_gates": true,
+  "skipped_reconstruction_roundtrip": 1,
+  "gate_errors": 0
+ },
+ "development": {
+  "prs_scored": 15617,
+  "prs_with_path_claim_any_verdict": 2672,
+  "prs_with_path_accusation": 339,
+  "path_accusations": 393,
+  "prs_with_tests_pass_claim": 1236,
+  "prs_with_tests_pass_accusation": 0,
+  "tests_pass_claims": 1476,
+  "tests_pass_by_verdict": {
+   "UNCHECKABLE": 1476
+  },
+  "path_flag_rate": 0.021707,
+  "path_flag_rate_of_claiming_prs": 0.126871,
+  "tests_pass_flag_rate": 0.0,
+  "tests_pass_claim_rate": 0.079145
+ },
+ "held_out": {
+  "prs_scored": 55399,
+  "prs_with_path_claim_any_verdict": 6657,
+  "prs_with_path_accusation": 858,
+  "path_accusations": 951,
+  "prs_with_tests_pass_claim": 3402,
+  "prs_with_tests_pass_accusation": 0,
+  "tests_pass_claims": 4038,
+  "tests_pass_by_verdict": {
+   "UNCHECKABLE": 4038
+  },
+  "path_flag_rate": 0.015488,
+  "path_flag_rate_of_claiming_prs": 0.128887,
+  "tests_pass_flag_rate": 0.0,
+  "tests_pass_claim_rate": 0.061409
+ },
+ "corpus_wide": {
+  "prs_scored": 71016,
+  "prs_with_path_claim_any_verdict": 9329,
+  "prs_with_path_accusation": 1197,
+  "path_accusations": 1344,
+  "prs_with_tests_pass_claim": 4638,
+  "prs_with_tests_pass_accusation": 0,
+  "tests_pass_claims": 5514,
+  "tests_pass_by_verdict": {
+   "UNCHECKABLE": 5514
+  },
+  "path_flag_rate": 0.016855,
+  "path_flag_rate_of_claiming_prs": 0.12831,
+  "tests_pass_flag_rate": 0.0,
+  "tests_pass_claim_rate": 0.065309
+ },
+ "tests_pass_note": "with run=None the gate does not take the agent's word for test results, so every tests_pass claim is UNCHECKABLE and the accusation count is zero by construction \u2014 the hole the evidence leg exists to fill, measured"
+}
