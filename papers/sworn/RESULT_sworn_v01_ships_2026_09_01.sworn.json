@@ -1,0 +1,131 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "10b051b6608df9419749272cbe829cef4402f1f4",
+ "document": {
+  "name": "RESULT_sworn_v01_ships_2026_09_01.md",
+  "sha256": "806f68da691f179fc34bab63e49702d8f75e504e5cd1eed434d8bee3280ecf7a"
+ },
+ "text": "# RESULT — sworn output v0.1 ships: the author declares, the receipt disposes\n\nFathom Lab · 2026-09-01 · Spec: `SPEC_sworn_output_v01_2026_09_01.md`, frozen before any code.\nModule: `styxx/sworn.py`. Tests: `tests/test_sworn.py`. Harness: `harness_pytest.py`, turn\n`turn_2026_09_01_sworn_v01`. **This document is itself sworn**: every count in it is bound by `sworn/0.1` to a\nreceipt the author could not have written — the manifest the harness minted from the test run,\nor a file at commit `10b051b6608d` — and its sidecar and verdict receipt sit beside it. Nothing here\nis a measurement of sworn output. That is owed item 3 of the spec and it is still owed.\n\n## What was built\n\nThe spec's invariant reads `THE AUTHOR CHOOSES WHAT TO SWEAR; THE AUTHOR CANNOT CHOOSE WHAT THE RECEIPT SAYS.`\nThe module implements it as a byte-exact lexer, a canonicalizer whose round trip is asserted\nbefore a sidecar is written, three receipt forms resolved as pure functions of bytes, four check\nkinds with no float, no percent conversion, no normalisation and no search over leaves, and a\ncontent-addressed verdict receipt that re-derives in the parrhesia manner.\n\nAt commit `10b051b6608d` the verifier's own bytes hash to `628eea7a03b5d40715153252ae4b62fc5b2d8fc9d96832623871c6698deb5600`.\nIt is 1541 lines long.\nThe harness ran the suite and 296 tests passed.\n0 failed.\npytest's output carries no `failed`.\nruff printed `All checks passed!`\nThe interpreter was `3.11.15`.\n\nThe four receipts above marked `rN` were minted by `harness_pytest.py` from what pytest and ruff\nwrote, with `kind_of_source` naming where each came from; the harness recorded no\n`authored_sha256`, because a script that runs after the agent has finished cannot see what the\nagent wrote during the turn, so invariant 2 rests on `kind_of_source` alone for this manifest.\nThe verdict receipt says so.\n\n## The two sworn documents\n\nThe h declaration binds 25 counts to its census receipt, and all of them held.\nIts document verdict reads `SWORN-HELD`.\n0 of its spans were UNRESOLVED.\nThis document is the second. `tests/test_sworn_dogfood.py` renders every committed sidecar back to\nthe committed bytes and re-derives every committed receipt at the commit it names; a receipt that\nstops re-deriving fails the suite rather than sitting quietly in the tree.\n\n## What the design refuses, mechanically\n\nThe receipt-shopping attack in `papers/charon/RECON_state_2026_09_01.md` — an OATH verdict on\nfixed bytes moves with the receipt set the author supplies, because the verifier value-matches\nover every leaf — cannot reach a sworn span: the author named the leaf, so a larger pool has\nnothing to offer. The suite pins it as `test_receipt_shopping_moves_oath_but_cannot_move_sworn`.\n\nThe OATH `_NUM` trailing-period defect — `precision of 0.55.` certifying with zero tokens\nexamined — cannot occur: the suite pins `test_a_number_followed_by_a_sentence_period_is_still_the_number`,\nand the number grammar cuts a span into maximal tokens of which exactly one may carry a digit,\nso a fragment of a number is never extracted and an identifier glued to digits is MALFORMED\nrather than guessed about.\n\nA broken tag is never narrative. A document that swore nothing is UNSWORN, never \"no failures\".\nA receipt the verifier cannot see is UNRESOLVED and accuses nobody. Every decision the frozen\nspec left open is named once in `DECISIONS`, carried in every receipt, and pinned by a test.\n\n## What this does not say\n\nThat the format works. No panel has read a sworn document; no author outside this session has\nwritten one; the coverage figure printed beside every verdict is counted by an instrument at a\ndocumented ceiling and is advisory by construction. That the right sentences were bound: the\nspans above are the counts this author chose to bind, and the narrative around them is exactly\nas unverified as the spec says narrative is. That the manifest is honest: it is as trustworthy as\nthe committed script that minted it, and no more.\n\n## Owed\n\nThe measurement (spec item 3). The price of trivial swearing against published coverage (item 4).\nThe eleven-instrument census (item 2). A pointer form for `rN` receipts, so a numeric span can\nname a leaf inside a harness capture instead of needing a one-number capture. A rule for tags\ninside HTML comments, which v0.1 recognises because the spec's lexical rules are closed. The\nscript-aware cap (item 5).\n\n---\n\n*The first sworn document about sworn output swears to what the test runner printed and to the\nhash of its own verifier, and says, in the same breath, how little that proves.*\n",
+ "spans": [
+  {
+   "start": 688,
+   "end": 798,
+   "receipt": "prereg:cd29034153d2aa81c6f38bfb46557fcd99414ee542eed1adab29fdd26d7af8f1",
+   "kind": "quote"
+  },
+  {
+   "start": 1159,
+   "end": 1284,
+   "receipt": "path:styxx/sworn.py",
+   "kind": "hash"
+  },
+  {
+   "start": 1285,
+   "end": 1307,
+   "receipt": "path:papers/sworn/turn_2026_09_01_sworn_v01.test_run_result.json#/sworn_lines",
+   "kind": "numeric"
+  },
+  {
+   "start": 1308,
+   "end": 1355,
+   "receipt": "r1",
+   "kind": "numeric"
+  },
+  {
+   "start": 1356,
+   "end": 1365,
+   "receipt": "r4",
+   "kind": "numeric"
+  },
+  {
+   "start": 1366,
+   "end": 1402,
+   "receipt": "r2",
+   "kind": "absent"
+  },
+  {
+   "start": 1403,
+   "end": 1436,
+   "receipt": "r3",
+   "kind": "quote"
+  },
+  {
+   "start": 1437,
+   "end": 1467,
+   "receipt": "path:papers/sworn/turn_2026_09_01_sworn_v01.test_run_result.json#/python",
+   "kind": "quote"
+  },
+  {
+   "start": 1896,
+   "end": 1974,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/counts/HELD",
+   "kind": "numeric"
+  },
+  {
+   "start": 1975,
+   "end": 2015,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/document_verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2016,
+   "end": 2047,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/counts/UNRESOLVED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2667,
+   "end": 2745,
+   "receipt": "path:tests/test_sworn.py",
+   "kind": "quote"
+  },
+  {
+   "start": 2866,
+   "end": 2946,
+   "receipt": "path:tests/test_sworn.py",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "harness": "papers/sworn/harness_pytest.py",
+  "turn": "turn_2026_09_01_sworn_v01",
+  "minted_at": "2026-09-01T21:26:34Z",
+  "authored_sha256": [],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "a0f8b2c4cb1ac82abdb37f0fe5203b97be556c4468c83bba18684d620fd8eaf9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-01T21:26:39Z",
+    "complete": true,
+    "bytes": "Mjk2"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "211d4e132e213ef976110c9cfe8b91a3a405a318cb327ac8b92da884bc75535c",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-01T21:26:39Z",
+    "complete": true,
+    "bytes": "Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgMjQlXQouLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4gWyA0OCVdCi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLiBbIDcyJV0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgOTclXQouLi4uLi4uLiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgWzEwMCVdCjI5NiBwYXNzZWQgaW4gMy43N3MK"
+   },
+   "r3": {
+    "id": "r3",
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-01T21:26:39Z",
+    "complete": true,
+    "bytes": "QWxsIGNoZWNrcyBwYXNzZWQhCg=="
+   },
+   "r4": {
+    "id": "r4",
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-01T21:26:39Z",
+    "complete": true,
+    "bytes": "MA=="
+   }
+  },
+  "digest": "313503dbeac84ed08f305e401c7a2776e6b7563ff2422965ead16832810d4767"
+ }
+}
