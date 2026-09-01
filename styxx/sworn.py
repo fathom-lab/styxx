@@ -169,8 +169,9 @@ DECISIONS = {
                     "EOF is MALFORMED; a trailing LF does not begin an empty last line"),
     "rn_grammar": "^r[1-9][0-9]*$, no fragment",
     "path_grammar": ("relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no "
-                     "leading ':' (git pathspec magic); split at the FIRST #; fragment is "
-                     "`/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]"),
+                     "glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path "
+                     "names ONE committed file, never a set the verifier would pick from; split at "
+                     "the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]"),
     "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
     "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
     "author_minted": ("kind_of_source in {agent_output, agent_file_write, agent_message}, or a "
@@ -782,7 +783,7 @@ class GitTree:
 
 _RN = re.compile(r"r[1-9][0-9]*")
 _ANCHOR = re.compile(r"L([1-9][0-9]*)(?:-L([1-9][0-9]*))?")
-_PATH_SEG_BAD = re.compile(r"[\\\s\x00-\x1f\x7f]")
+_PATH_SEG_BAD = re.compile(r"[\\\s\x00-\x1f\x7f*?\[\]]")   # no whitespace, control, glob
 
 
 def _parse_receipt(ref: str) -> Tuple[Optional[dict], Optional[str]]:
@@ -1024,7 +1025,7 @@ def _needle_in(inner: bytes) -> Tuple[Optional[bytes], str]:
         p = closed.end()
     if len(spans) != 1:
         return None, "needle_count"
-    if not spans[0].strip(b" \t\r\n"):
+    if not spans[0].strip(b" \t\r\n\f\v"):
         return None, "needle_empty"          # a blank needle would HELD against almost anything
     return spans[0], "ok"
 
@@ -1280,7 +1281,17 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
             manifest = manifest or embedded
     if raw is None:
         raise SystemExit("REFUSED: nothing to verify")
-    if tree is not None and getattr(tree, "commit", None) is None and commit is not None:
+    if commit is not None and not (isinstance(commit, str)
+                                   and re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", commit)):
+        raise SystemExit("REFUSED: commit must be a full lowercase hex object id or None, not %r"
+                         % (commit,))
+    if tree is not None:
+        # The receipts resolve AT THE COMMIT THE DOCUMENT NAMES. A tree handle is a repository,
+        # not a choice of commit: whatever it was built with, the sidecar's commit (or the
+        # caller's explicit one for an inline document) is the one that counts, and a document
+        # that names none gets no commit however the handle was built.
+        if commit is None and sidecar is None:
+            commit = getattr(tree, "commit", None)
         tree.commit = commit
     sc = scan(raw)
     if sidecar is not None:
@@ -1351,19 +1362,36 @@ def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional
                    manifest: Optional[Manifest] = None, tree=None) -> dict:
     """Re-derive a receipt against the presented document. Trust neither the author (bytes are
     hashed) nor the verifier that issued it (the verdict is re-run)."""
+    if not isinstance(receipt, dict):
+        return {"status": "FAILED", "digest_match": False, "verdict_reproduces": False,
+                "same_verifier_build": False, "note": "not a receipt object"}
     core = {k: v for k, v in receipt.items() if k not in ("digest", "timestamp")}
-    digest_ok = receipt.get("digest") == _sha256(_jcs(core).encode("utf-8"))
-    fresh = verify(raw, sidecar, name=core.get("document", {}).get("name", ""),
-                   manifest=manifest, tree=tree, commit=core.get("commit"))
+    try:
+        digest_ok = receipt.get("digest") == _sha256(_jcs(core).encode("utf-8"))
+    except (TypeError, ValueError):
+        digest_ok = False
+    doc = core.get("document") if isinstance(core.get("document"), dict) else {}
+    ver = core.get("verifier") if isinstance(core.get("verifier"), dict) else {}
+    note = "verify-by-re-derivation: the document is hashed and the verdict is re-run"
+    try:
+        fresh = verify(raw, sidecar, name=doc.get("name", ""), manifest=manifest, tree=tree,
+                       commit=core.get("commit"))
+    except SystemExit as e:
+        # a receipt whose fields no longer describe a verifiable document does not re-derive;
+        # that is a FAILED re-derivation, not a refusal of the caller
+        return {"status": "FAILED", "digest_match": digest_ok, "verdict_reproduces": False,
+                "same_verifier_build": False, "note": note + " — " + str(e.code)}
     # the verifier block names the build; a different build is reported, not hidden
-    same_build = fresh["verifier"]["sworn_sha256"] == core.get("verifier", {}).get("sworn_sha256")
+    same_build = fresh["verifier"]["sworn_sha256"] == ver.get("sworn_sha256")
     cmp_fresh = {k: v for k, v in fresh.items() if k != "verifier"}
     cmp_core = {k: v for k, v in core.items() if k != "verifier"}
-    reproduces = _jcs(cmp_fresh) == _jcs(cmp_core)
+    try:
+        reproduces = _jcs(cmp_fresh) == _jcs(cmp_core)
+    except (TypeError, ValueError):
+        reproduces = False
     return {"status": "VERIFIED" if (digest_ok and reproduces) else "FAILED",
             "digest_match": digest_ok, "verdict_reproduces": reproduces,
-            "same_verifier_build": same_build,
-            "note": "verify-by-re-derivation: the document is hashed and the verdict is re-run"}
+            "same_verifier_build": same_build, "note": note}
 
 
 # =============================================================================================

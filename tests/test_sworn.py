@@ -1271,3 +1271,53 @@ class TestGamingLens:
         assert core["document_verdict"] == "SWORN-HELD"
         head = sworn._headline(core)
         assert "coverage≈0.40" in head and "unsworn-claims≈3" in head
+
+
+class TestGamingLensFromTheAttackPass:
+    """Confirmed by the gaming attacker."""
+
+    @pytest.mark.parametrize("ws", [b"\x0c", b"\x0b", b" \t\x0c\x0b"])   # no newline: a needle is line-local
+    def test_every_ascii_whitespace_only_needle_is_empty(self, ws):
+        doc = b'<sworn r="r1" k="quote">see `' + ws + b'`</sworn>\n'
+        d, _ = one(doc, manifest=manifest(r1=b"a" + ws + b"b"))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "needle_empty")
+
+    @pytest.mark.parametrize("ref", ["path:*.json#/x", "path:?.json#/x", "path:[a].json#/x", "path:a]json"])
+    def test_a_path_names_one_file_never_a_glob_the_verifier_would_pick_from(self, ref):
+        d, _ = one(sp("1", ref).encode(), tree=MemoryTree({"a.json": b'{"x": 1}'}, commit=C40))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "receipt_form")
+
+    def test_a_tampered_receipt_fails_and_never_crashes_or_refuses(self):
+        doc = sp("0.5").encode()
+        m = manifest(r1=b"0.5")
+        good = issue_receipt(verify(doc, name="d.md", manifest=m))
+        for mutate in (lambda r: r.__setitem__("document", None), lambda r: r.__setitem__("verifier", None),
+                       lambda r: r.__setitem__("commit", 5), lambda r: r.__setitem__("commit", "b" * 40),
+                       lambda r: r.__setitem__("spans", "x"), lambda r: r.__setitem__("counts", None)):
+            rec = json.loads(json.dumps(good))
+            mutate(rec)
+            res = verify_receipt(rec, doc, manifest=m)
+            assert res["status"] == "FAILED", res
+        assert verify_receipt("not a receipt", doc, manifest=m)["status"] == "FAILED"
+        side = to_sidecar(doc, "d.md", C40, m)
+        rec = issue_receipt(verify(sidecar=side))
+        rec["commit"] = "b" * 40                                 # edited after issuance
+        assert verify_receipt(rec, sidecar=side)["status"] == "FAILED"
+
+    def test_the_commit_the_document_names_wins_over_the_tree_handle(self, git_repo):
+        """path receipts resolve AT THE COMMIT THE DOCUMENT NAMES; a tree handle built at another
+        commit is a repository, not a choice."""
+        repo, sha = git_repo
+        doc = sp("0.10", "path:res.json#/recall").encode()          # 0.10 is the WORKING-TREE value
+        side = to_sidecar(doc, "d.md", sha)
+        handle = GitTree(repo, "b" * 40)
+        core = verify(sidecar=side, tree=handle)
+        assert core["commit"] == sha and handle.commit == sha
+        assert (core["spans"][0]["verdict"], core["spans"][0]["reason"]) == ("FAILED", "value_mismatch")
+        core = verify(doc, name="d.md", tree=GitTree(repo, "b" * 40), commit=sha)
+        assert core["commit"] == sha and core["spans"][0]["verdict"] == "FAILED"
+        # a sidecar that names no commit gets none, however the handle was built
+        side = to_sidecar(doc, "d.md", None)
+        core = verify(sidecar=side, tree=GitTree(repo, sha))
+        assert core["commit"] is None
+        assert (core["spans"][0]["verdict"], core["spans"][0]["reason"]) == ("UNRESOLVED", "no_commit")
