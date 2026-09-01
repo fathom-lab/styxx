@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — sworn output v0.1: the author declares, the receipt disposes
+
+**Sworn output (`styxx.sworn`, NEW).** Spec frozen first —
+`papers/sworn/SPEC_sworn_output_v01_2026_09_01.md` — then built. Format `sworn/0.1`, manifest
+`sworn/manifest/0.1`, verdict receipt `styxx.sworn.verdict-receipt/v0`. Every instrument this
+lab built to *find* claims in prose was measured against strangers and did not survive it
+(0.23 in the wild, 0.16 held-out after repair, 0.4211 at the best structural attempt). Sworn
+does not find claims. The author binds one sentence at write time to bytes it could not have
+written — `<sworn r="RECEIPT" k="KIND">…</sworn>` — and everything unbound is narrative by
+definition, never accused. The verifier is handed commitments, not a target.
+- **Lexer:** tags recognised only outside fenced regions and inline backtick spans, by one exact
+  byte pattern; anything tag-shaped that is not the pattern is MALFORMED and never narrative
+  (silent downgrade is how a format gets gamed). Unbalanced fences and undecodable UTF-8 are
+  document-level MALFORMED, never UNSWORN.
+- **Canonical form:** tags deleted, UTF-8 byte offsets recorded, tags re-inserted, bytes compared
+  — a sidecar that cannot round-trip is REFUSED, never written. Newlines are never normalised.
+- **Receipts:** `rN` from a harness-minted manifest; `path:` at the commit the document names,
+  through git plumbing and never a working tree; `prereg:SHA256` by content address. UNRESOLVED
+  is the verifier saying it could not see, and is never an accusation.
+- **Kinds:** `numeric` (the span is cut into maximal tokens and exactly one may carry a digit, so
+  a fragment of a number can never be extracted — the OATH `_NUM` defect, refused by
+  construction; Decimal on the printed digits, ROUND_HALF_EVEN, no float, no percent
+  conversion, no search over leaves), `quote`, `hash`, `absent` (negatives only over complete
+  objects). `exec` is v0.2 and MALFORMED here.
+- **Verdicts:** HELD / FAILED / UNRESOLVED / MALFORMED / WITHHELD (reserved, no producer);
+  SWORN-HELD / SWORN-FAILED / UNSWORN — a document that swore nothing is never "no failures".
+  Every non-HELD verdict carries a reason from a closed enum.
+- **The four invariants, mechanically:** no function proposes tags; a receipt with an author-side
+  `kind_of_source` or a digest in the manifest's `authored_sha256` is MALFORMED; UNSWORN is a
+  distinct verdict; coverage (advisory, counted by `styxx.claimdetect` at its documented
+  0.4211 ceiling, n=38) prints beside every verdict and can never touch one.
+- **Receipt:** content-addressed via `styxx.attestation.jcs`, re-derivable in the parrhesia manner,
+  carrying a `certifies` boundary and every implementation decision the spec left open
+  (`DECISIONS`, pinned by tests). `sworn` is not on the package surface and does not shadow
+  `styxx.parrhesia`.
+- **Dogfood:** `DECLARATION_h_mapping_2026_09_01.md` is the first sworn document in the tree
+  (25 counts bound to its census receipt at a commit; SWORN-HELD), `tests/test_sworn_dogfood.py`
+  re-derives every committed sworn document, and `papers/sworn/harness_pytest.py` is the harness
+  that mints a manifest from a pytest run.
+- **Owed, unchanged:** no measurement of sworn output exists; nothing here is evidence that
+  authors bind the sentences that matter. The `rN` form carries no pointer, so a numeric span
+  against an `rN` needs a one-number capture — a v0.2 usability item. Tags inside HTML comments
+  are recognised (the spec's lexical rules are closed); a hidden commitment inflating coverage
+  is a v0.2 item.
+
+**corpus_audit.** Since the UNCOVERED band a verdict reads `OATH-HELD, N uncovered`; the auditor
+compared whole strings, put 131 of 208 certificates in neither HELD nor FAILED and read every one
+as verdict drift. `verdict_class()` buckets and drift-detects on the class; the corpus uncovered
+totals are folded and printed on their own line beside the verdict line, never inside it.
+
+**h — the handedness mapping declared.** `DECLARATION_h_mapping_2026_09_01.md` +
+`h_mapping.json` + `h_mapping_census.py`: every `obligation_source` the verifier can emit (five)
+plus the defined-but-unshipped `structural-precision` mapped to who handed the verifier its target
+(`object_text` / `object_form`; nothing is receipt- or externally-handed). Two populations that
+must never be pooled — PRINTED (18 of 208 committed certificates carry per-token epistemics) and
+LIVE (207 documents re-certified) — and two denominators named: `vocabulary` is 0.83 of obligated
+and 0.35 of verified on the same run. A test fails if a new source appears without a mapping.
+
+**AUDIT addendum M7 — verifier-version stratification.** Every field the certificate gains
+silently partitions the corpus by verifier build; found four times on 2026-09-01 and added to the
+program audit as a dated addendum.
+
 ## [7.47.0] — the boundary arc: epistemics per token, the agent gate priced, structure over word lists, and the first external bug report
 
 The week the instrument stack started overruling its builders on the record.
