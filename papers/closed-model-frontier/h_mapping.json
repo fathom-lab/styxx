@@ -1,0 +1,59 @@
+{
+  "schema": "styxx-oath/h-mapping/v1",
+  "declared_on": "2026-09-01",
+  "what_h_is": "handedness: for each obligated token, WHO handed the verifier its target. M2 in AUDIT_the_whole_program_2026_09_01.md: an instrument measured where the target was supplied collapses when it must find the target. The mapping below is DECLARED, not derived; a source the verifier can emit that is absent from this table fails tests/test_h_mapping.py.",
+  "handedness_classes": {
+    "object_text": "the target was selected by WORDS of the document under judgement, on or around the token's line. The object hands the verifier its target.",
+    "object_form": "the target was selected by the SHAPE of the token itself (printed precision), not by any surrounding vocabulary. Still the object, not its words.",
+    "receipt": "the target was selected from the RECEIPT side (the evidence names what must be checked). No obligation source of this verifier does this.",
+    "external": "the target was declared by a party other than the object's text and the receipt: a preregistration, a panel, or the author binding a span at write time (sworn/0.1). No obligation source of this verifier does this."
+  },
+  "declared_sources": {
+    "vocabulary": {
+      "clause": "_TRIGGERS matches the token's binding context (bctx); the oldest clause (v0)",
+      "handed_by": "object_text",
+      "emittable": true,
+      "note": "the brief's object_text. Its share of VERIFIED tokens (0.35, LIVE) is the handedness figure the epistemics summary already computes per certificate."
+    },
+    "n-glued": {
+      "clause": "`n=` glued directly before the token (V05_SELF_SCOPED_N, PREREG_oath_v05_precision)",
+      "handed_by": "object_text",
+      "emittable": true,
+      "note": "self-scoped since v0.5: the `n=` register obligates only its own glued token."
+    },
+    "range-correlation": {
+      "clause": "_TRIGGERS_CORR on bctx AND decimals > 0 AND value in [-1, 1] (v0.4, PREREG_oath_v04_recall_decimalguard)",
+      "handed_by": "object_text",
+      "emittable": true,
+      "note": "a conjunction of vocabulary (necessary) and form (a guard). Classed by the necessary conjunct: without the correlation word nothing fires."
+    },
+    "precision": {
+      "clause": "the token prints >= V07_PRECISION_DIGITS (7) fractional digits (V07_PRECISION_OBLIGATION)",
+      "handed_by": "object_form",
+      "emittable": true,
+      "note": "the only shipped source that reads no vocabulary. precision_only obligations are ULP-escapable."
+    },
+    "range-sanity": {
+      "clause": "bounded-quantity vocabulary directly before the token AND the value leaves its possible range (v0.3); recorded as the source only when no earlier clause obligated the token (first-writer, fixed 2026-08-30)",
+      "handed_by": "object_text",
+      "emittable": true,
+      "note": "emittable, zero in both populations on 2026-09-01: every out-of-range token so far was already obligated by vocabulary."
+    },
+    "structural-precision": {
+      "clause": "OBLIGATE-1: >= 2 fractional digits AND outside a code span (PREREG_obligate1_2026_08_31)",
+      "handed_by": "object_form",
+      "emittable": false,
+      "note": "DEFINED, NOT SHIPPED: RESULT_obligate1_does_not_ship_2026_08_31. Declared here so the sixth source the lane has named is in the same table as the five it emits, and so that shipping it later is a one-flag change to this file rather than a silent new partition of the corpus."
+    }
+  },
+  "instrument_level": {
+    "what": "a classification PER INSTRUMENT of where its targets come from. It is a different population from the token histogram above: an instrument is one row whatever its token count, and a hypothesis about instruments (handed-target instruments collapse held-out; found-target ones do not) is tested on THIS table, never on token shares.",
+    "rows": {
+      "styxx.certify obligation predicate": {"handed_by": ["object_text", "object_form"], "finds_its_own_target": false, "measured_held_out": "false-accusation 0.2596 across 140 repositories (RESULT_oath_external_corpus_2026_08_27)"},
+      "styxx.diffgate path-claim accuser": {"handed_by": ["object_text"], "finds_its_own_target": true, "measured_held_out": "0.16 precision against a 0.95 floor (RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01); accusing branch deleted"},
+      "styxx.claimdetect STRUCT-1": {"handed_by": ["object_text"], "finds_its_own_target": true, "measured_held_out": "0.4211 precision, n=38 (RESULT_struct1_beats_the_null_2026_08_31)"},
+      "styxx.sworn (sworn/0.1)": {"handed_by": ["external"], "finds_its_own_target": false, "measured_held_out": "NONE — unmeasured by design of the spec; the author binds the target at write time"}
+    },
+    "do_not_conflate": "token-level h is a share over tokens inside one instrument; instrument-level h is a label over instruments. Drawing the test of an instrument-level hypothesis from the token histogram measures the wrong population — the one the certificates print rather than the one the hypothesis is about."
+  }
+}

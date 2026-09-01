@@ -1,0 +1,532 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v0",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "DECLARATION_h_mapping_2026_09_01.md",
+  "inline_sha256": "6923b04c68e6720c59bc478a111254f80426b38db1a35990113e42410e465530",
+  "canonical_sha256": "25aa7cb0454bcd851d3d025a505b7281cd5932144ca9887a526255efd8edb278"
+ },
+ "commit": "ed084cef8811406ee38460c4ad5b967d3d55c71c",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 5267,
+   "start": 5267,
+   "end": 5298,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/distinct_verifier_builds_on_disk",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "15",
+    "printed": "15",
+    "receipt": "15",
+    "receipt_rounded": "15",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 5501,
+   "start": 5354,
+   "end": 5389,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_on_disk",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "208",
+    "printed": "208",
+    "receipt": "208",
+    "receipt_rounded": "208",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 5672,
+   "start": 5390,
+   "end": 5440,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_with_epistemics_summary_v1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "16",
+    "printed": "16",
+    "receipt": "16",
+    "receipt_rounded": "16",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 5882,
+   "start": 5446,
+   "end": 5481,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_with_per_token_epistemics",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "18",
+    "printed": "18",
+    "receipt": "18",
+    "receipt_rounded": "18",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6071,
+   "start": 5482,
+   "end": 5521,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/obligated_tokens",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "233",
+    "printed": "233",
+    "receipt": "233",
+    "receipt_rounded": "233",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6243,
+   "start": 5523,
+   "end": 5539,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/vocabulary",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "215",
+    "printed": "215",
+    "receipt": "215",
+    "receipt_rounded": "215",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6411,
+   "start": 5541,
+   "end": 5562,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/range-correlation",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "8",
+    "printed": "8",
+    "receipt": "8",
+    "receipt_rounded": "8",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6591,
+   "start": 5564,
+   "end": 5575,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/n-glued",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "8",
+    "printed": "8",
+    "receipt": "8",
+    "receipt_rounded": "8",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6751,
+   "start": 5577,
+   "end": 5590,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/precision",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "2",
+    "printed": "2",
+    "receipt": "2",
+    "receipt_rounded": "2",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 6925,
+   "start": 5602,
+   "end": 5620,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/handedness_share_of_obligated/object_text/share",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.9914",
+    "printed": "0.9914",
+    "receipt": "0.9914",
+    "receipt_rounded": "0.9914",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 7113,
+   "start": 5628,
+   "end": 5646,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/handedness_share_of_obligated/object_form/share",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.0086",
+    "printed": "0.0086",
+    "receipt": "0.0086",
+    "receipt_rounded": "0.0086",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 7491,
+   "start": 5844,
+   "end": 5875,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/documents_recertified",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "207",
+    "printed": "207",
+    "receipt": "207",
+    "receipt_rounded": "207",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 7657,
+   "start": 5877,
+   "end": 5902,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/documents_skipped_unresolvable",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 7836,
+   "start": 5914,
+   "end": 5932,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/ledger_tokens",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "8583",
+    "printed": "8583",
+    "receipt": "8583",
+    "receipt_rounded": "8583",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 7981,
+   "start": 5934,
+   "end": 5947,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/verified_tokens",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "6300",
+    "printed": "6300",
+    "receipt": "6300",
+    "receipt_rounded": "6300",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8126,
+   "start": 5952,
+   "end": 5966,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligated_tokens",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "3148",
+    "printed": "3148",
+    "receipt": "3148",
+    "receipt_rounded": "3148",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8288,
+   "start": 5986,
+   "end": 6003,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/vocabulary",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "2612",
+    "printed": "2612",
+    "receipt": "2612",
+    "receipt_rounded": "2612",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8448,
+   "start": 6005,
+   "end": 6020,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/precision",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "242",
+    "printed": "242",
+    "receipt": "242",
+    "receipt_rounded": "242",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8605,
+   "start": 6022,
+   "end": 6045,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/range-correlation",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "210",
+    "printed": "210",
+    "receipt": "210",
+    "receipt_rounded": "210",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8778,
+   "start": 6047,
+   "end": 6059,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/n-glued",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "84",
+    "printed": "84",
+    "receipt": "84",
+    "receipt_rounded": "84",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 8940,
+   "start": 6071,
+   "end": 6089,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/handedness_share_of_obligated/object_text/share",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.9231",
+    "printed": "0.9231",
+    "receipt": "0.9231",
+    "receipt_rounded": "0.9231",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 9125,
+   "start": 6097,
+   "end": 6115,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/handedness_share_of_obligated/object_form/share",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.0769",
+    "printed": "0.0769",
+    "receipt": "0.0769",
+    "receipt_rounded": "0.0769",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 9304,
+   "start": 6117,
+   "end": 6164,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/by_source_and_status/n-glued|ABSTAIN",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "84",
+    "printed": "84",
+    "receipt": "84",
+    "receipt_rounded": "84",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 10128,
+   "start": 6793,
+   "end": 6835,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/source_share_of_obligated/vocabulary",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.8297",
+    "printed": "0.8297",
+    "receipt": "0.8297",
+    "receipt_rounded": "0.8297",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  },
+  {
+   "at": 10323,
+   "start": 6840,
+   "end": 6865,
+   "receipt": "path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/source_share_of_verified/vocabulary",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.3517",
+    "printed": "0.3517",
+    "receipt": "0.3517",
+    "receipt_rounded": "0.3517",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+  }
+ ],
+ "counts": {
+  "HELD": 25,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 25,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "coverage": {
+  "estimate": 0.8929,
+  "unsworn_claims_estimate": 3,
+  "unsworn_claims": [
+   {
+    "start": 3563,
+    "end": 3736,
+    "text": "| `structural-precision` | OBLIGATE-1: ≥ 2 fractional digits AND outside a code span | object_form | **no** — defined in `PREREG_obligate1_2026_08_31.md`, did not ship |"
+   },
+   {
+    "start": 5065,
+    "end": 5154,
+    "text": "`h_mapping_census.py` folds the mapping over the corpus twice and writes both folds under"
+   },
+   {
+    "start": 7860,
+    "end": 7958,
+    "text": "accuser (object_text; finds its own target; 0.16 held-out against a 0.95 floor; deleted), STRUCT-1"
+   }
+  ],
+  "advisory": true,
+  "ceiling_note": "advisory: the denominator is counted by styxx.claimdetect (STRUCT-1), measured at precision 0.4211 on n=38 with two known recall misses; false flags bias coverage low, misses bias it high; never a gate, never a measurement",
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "da90cbc363e38f62ef957f9aed7f435ddb0ffde9a6bfd15ba76870278e5e90f0",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text; it can be verified inline but a sidecar is refused",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, no fragment",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "numerator sworn_total; denominator adds sentences of the narrative (canonical text minus sworn spans minus fenced regions) that styxx.claimdetect reads as claims; the splitter is diffgate's `(?<=[.!?])\\s+|\\n+`; 0/0 is null; ALWAYS advisory",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "a tag inside an HTML comment is recognised like any other (the spec's lexical rules are closed); a hidden commitment inflating coverage is an owed v0.2 item"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "1302ac26cfc516021417857b7657d39d5d887f240292959f577547c9f3e488c5",
+ "timestamp": "2026-09-01T21:06:49Z"
+}

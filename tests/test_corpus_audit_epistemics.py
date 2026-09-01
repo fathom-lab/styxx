@@ -96,8 +96,12 @@ def test_the_fold_never_touches_verdict_or_counts():
     # `.*?` because an exception line may carry a drift tag between the verdict and the
     # filename, e.g. "[OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_....md".
     listed = set(re.findall(r"^  \[OATH-(?:HELD|FAILED)\].*?(\S+\.md)$", rep_text, re.M))
+    # The CLASS, not the string: since the v0.13 band a live verdict reads `OATH-FAILED, 2
+    # uncovered`, and the exception list is pinned by class. Comparing the whole string here
+    # dropped every suffixed FAILED from `live` and reported the pinned list as stale.
+    from styxx.corpus_audit import verdict_class
     live = {Path(d["document"]).name for d in rep["documents"]
-            if d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
+            if verdict_class(d.get("live_verdict")) == "OATH-FAILED" or d.get("verdict_changed")
             or d.get("receipt_drift") or d.get("incomplete_receipts")}
     assert listed == live, (
         f"REPLICATIONS.md's exception list is out of date. "

@@ -37,7 +37,23 @@ from styxx.provenance import certify as _provenance_certify
 _styxx_pkg.certify = _provenance_certify
 del _styxx_pkg, _provenance_certify
 
-__all__ = ["discover_certificates", "audit_document", "audit_corpus", "mutate_token"]
+__all__ = ["discover_certificates", "audit_document", "audit_corpus", "mutate_token",
+           "verdict_class"]
+
+
+def verdict_class(verdict) -> str:
+    """The HELD/FAILED dichotomy of a verdict string, with the v0.13 coverage suffix stripped.
+
+    Since the UNCOVERED band (`styxx.certify.uncovered_spans`) a verdict reads
+    `OATH-HELD, 3 uncovered` when the document carries numeric spans the extractor never
+    examined. The suffix is a COVERAGE report travelling in the headline; it is not a verdict
+    change — `counts["UNGROUNDED"]` is untouched and no token's status moved. An auditor that
+    bucketed on the whole string put 131 of 208 certificates in neither HELD nor FAILED and
+    reported every one of them as verdict drift the day the band shipped, which is false and
+    would have buried the one real drift the corpus is holding. Bucket and drift-detect on the
+    class; the suffix is folded separately as `uncovered_*` corpus totals.
+    """
+    return str(verdict or "").split(",")[0].strip()
 
 
 def discover_certificates(root: Path) -> list[Path]:
@@ -259,11 +275,17 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
         return rec
     live = certify_doc(doc, receipts)
     rec["live_verdict"] = live["verdict"]
+    rec["live_verdict_class"] = verdict_class(live["verdict"])
     rec["counts"] = live["counts"]
+    # v0.13: the count of numeric spans the extractor never examined. Reporting only — it is
+    # carried as its own field so a corpus total can be printed WITHOUT reading it as a verdict.
+    rec["uncovered"] = int(live.get("uncovered", 0) or 0)
     # The auditor reads the verifier's own epistemics_summary rather than re-deriving anything;
     # it may only ADD corpus totals, never touch a verdict or an existing count.
     rec["epistemics_summary"] = live.get("epistemics_summary")
-    rec["verdict_changed"] = (live["verdict"] != cert.get("verdict"))
+    # Drift is a change of CLASS. A committed `OATH-HELD` re-issued today as `OATH-HELD, 2
+    # uncovered` has not stopped holding; the suffix is new information, not a moved verdict.
+    rec["verdict_changed"] = (verdict_class(live["verdict"]) != verdict_class(cert.get("verdict")))
     rec["status"] = "OK"
     if tamper:
         rng = random.Random(seed)
@@ -350,8 +372,8 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     """Audit every certificate under *root*; return per-doc records + a corpus summary."""
     docs = [audit_document(cp, tamper, seed, search_root=root)
             for cp in discover_certificates(root)]
-    held = sum(1 for d in docs if d.get("live_verdict") == "OATH-HELD")
-    failed = sum(1 for d in docs if d.get("live_verdict") == "OATH-FAILED")
+    held = sum(1 for d in docs if verdict_class(d.get("live_verdict")) == "OATH-HELD")
+    failed = sum(1 for d in docs if verdict_class(d.get("live_verdict")) == "OATH-FAILED")
     unresolved = sum(1 for d in docs if d.get("status") in ("MISSING_DOC", "NO_RECEIPTS"))
     changed = sum(1 for d in docs if d.get("verdict_changed"))
     drifted = sum(1 for d in docs if d.get("receipt_drift"))
@@ -359,9 +381,13 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     # counters existed it printed like one.
     incomplete = sum(1 for d in docs if d.get("incomplete_receipts"))
     changed_receipts = sum(1 for d in docs if d.get("receipt_changed"))
+    # v0.13 UNCOVERED, folded as corpus totals beside the verdict counts and never into them.
+    uncovered_docs = sum(1 for d in docs if d.get("uncovered"))
+    uncovered_spans = sum(int(d.get("uncovered") or 0) for d in docs)
     summary = {"root": str(root), "n_certificates": len(docs), "held": held, "failed": failed,
                "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted,
                "incomplete_receipts": incomplete, "receipt_changed": changed_receipts,
+               "uncovered_documents": uncovered_docs, "uncovered_spans": uncovered_spans,
                "epistemics": _fold_epistemics(docs)}
     if tamper:
         tot = {"n_mutants": 0, "caught": 0, "false_verify": 0, "abstain_degrade": 0}
@@ -388,6 +414,11 @@ def main(argv=None) -> int:
           f"HELD {s['held']}  FAILED {s['failed']}  unresolved {s['unresolved']}  "
           f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}  "
           f"incomplete {s['incomplete_receipts']}  receipt-changed {s['receipt_changed']}")
+    # v0.13: the corpus-wide UNCOVERED total on its own line, beside the verdict line and never
+    # inside it. The verdict line is what REPLICATIONS.md pins; this line is what it cannot see.
+    print(f"  uncovered: {s.get('uncovered_spans', 0)} numeric spans across "
+          f"{s.get('uncovered_documents', 0)} documents that the extractor never examined "
+          f"(reporting only; no verdict moved)")
     ep = s.get("epistemics", {})
     if ep.get("verified_total"):
         print(f"  epistemics: {ep['verified_total']} verified | "
@@ -395,9 +426,11 @@ def main(argv=None) -> int:
               f"(rate {ep['unobligated_oath_rate']}) | weakest {ep['weakest_attestations']} "
               f"({ep['weakest_share']}) | {ep['certificates_without_summary']} pre-v1")
     for d in report["documents"]:
-        if (d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
+        if (verdict_class(d.get("live_verdict")) == "OATH-FAILED" or d.get("verdict_changed")
                 or d.get("receipt_drift") or d.get("incomplete_receipts")):
-            tag = d.get("live_verdict") or d.get("status")
+            # the CLASS is the tag: the exception list is pinned by class in REPLICATIONS.md, and
+            # the coverage suffix is reported on its own line above, not smuggled into the tag.
+            tag = verdict_class(d.get("live_verdict")) or d.get("status")
             extra = " receipt-drift" if d.get("receipt_drift") else ""
             extra += " verdict-CHANGED" if d.get("verdict_changed") else ""
             if d.get("incomplete_receipts"):

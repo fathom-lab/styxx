@@ -1,0 +1,42 @@
+{
+ "spec": "sworn/manifest/0.1",
+ "harness": "papers/sworn/harness_pytest.py",
+ "turn": "turn_2026_09_01_sworn_v01",
+ "minted_at": "2026-09-01T21:26:34Z",
+ "authored_sha256": [],
+ "receipts": {
+  "r1": {
+   "id": "r1",
+   "sha256": "a0f8b2c4cb1ac82abdb37f0fe5203b97be556c4468c83bba18684d620fd8eaf9",
+   "kind_of_source": "test_report",
+   "captured_at": "2026-09-01T21:26:39Z",
+   "complete": true,
+   "bytes": "Mjk2"
+  },
+  "r2": {
+   "id": "r2",
+   "sha256": "211d4e132e213ef976110c9cfe8b91a3a405a318cb327ac8b92da884bc75535c",
+   "kind_of_source": "tool_stdout",
+   "captured_at": "2026-09-01T21:26:39Z",
+   "complete": true,
+   "bytes": "Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgMjQlXQouLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4gWyA0OCVdCi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLiBbIDcyJV0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgOTclXQouLi4uLi4uLiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgWzEwMCVdCjI5NiBwYXNzZWQgaW4gMy43N3MK"
+  },
+  "r3": {
+   "id": "r3",
+   "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+   "kind_of_source": "tool_stdout",
+   "captured_at": "2026-09-01T21:26:39Z",
+   "complete": true,
+   "bytes": "QWxsIGNoZWNrcyBwYXNzZWQhCg=="
+  },
+  "r4": {
+   "id": "r4",
+   "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+   "kind_of_source": "test_report",
+   "captured_at": "2026-09-01T21:26:39Z",
+   "complete": true,
+   "bytes": "MA=="
+  }
+ },
+ "digest": "313503dbeac84ed08f305e401c7a2776e6b7563ff2422965ead16832810d4767"
+}

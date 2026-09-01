@@ -1,0 +1,275 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v0",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "RESULT_sworn_v01_ships_2026_09_01.md",
+  "inline_sha256": "3108f20ac3299f091a7cb784522d9949cf3433fbcb34cbc3d9b496074551f3d8",
+  "canonical_sha256": "806f68da691f179fc34bab63e49702d8f75e504e5cd1eed434d8bee3280ecf7a"
+ },
+ "commit": "10b051b6608df9419749272cbe829cef4402f1f4",
+ "manifest_digest": "313503dbeac84ed08f305e401c7a2776e6b7563ff2422965ead16832810d4767",
+ "spans": [
+  {
+   "at": 688,
+   "start": 688,
+   "end": 798,
+   "receipt": "prereg:cd29034153d2aa81c6f38bfb46557fcd99414ee542eed1adab29fdd26d7af8f1",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 81,
+    "haystack_bytes": 24836
+   },
+   "resolved_sha256": "cd29034153d2aa81c6f38bfb46557fcd99414ee542eed1adab29fdd26d7af8f1"
+  },
+  {
+   "at": 1260,
+   "start": 1159,
+   "end": 1284,
+   "receipt": "path:styxx/sworn.py",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "628eea7a03b5d40715153252ae4b62fc5b2d8fc9d96832623871c6698deb5600",
+    "receipt_sha256": "628eea7a03b5d40715153252ae4b62fc5b2d8fc9d96832623871c6698deb5600"
+   },
+   "resolved_sha256": "628eea7a03b5d40715153252ae4b62fc5b2d8fc9d96832623871c6698deb5600"
+  },
+  {
+   "at": 1434,
+   "start": 1285,
+   "end": 1307,
+   "receipt": "path:papers/sworn/turn_2026_09_01_sworn_v01.test_run_result.json#/sworn_lines",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1541",
+    "printed": "1541",
+    "receipt": "1541",
+    "receipt_rounded": "1541",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2b9e672e933404a838fad933577c587357bfc3ff45e7506597cb532f25a0cd55"
+  },
+  {
+   "at": 1566,
+   "start": 1308,
+   "end": 1355,
+   "receipt": "r1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "296",
+    "printed": "296",
+    "receipt": "296",
+    "receipt_rounded": "296",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a0f8b2c4cb1ac82abdb37f0fe5203b97be556c4468c83bba18684d620fd8eaf9"
+  },
+  {
+   "at": 1648,
+   "start": 1356,
+   "end": 1365,
+   "receipt": "r4",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  },
+  {
+   "at": 1692,
+   "start": 1366,
+   "end": 1402,
+   "receipt": "r2",
+   "kind": "absent",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 6,
+    "haystack_bytes": 420,
+    "complete": true
+   },
+   "resolved_sha256": "211d4e132e213ef976110c9cfe8b91a3a405a318cb327ac8b92da884bc75535c"
+  },
+  {
+   "at": 1762,
+   "start": 1403,
+   "end": 1436,
+   "receipt": "r3",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 18,
+    "haystack_bytes": 19
+   },
+   "resolved_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  {
+   "at": 1828,
+   "start": 1437,
+   "end": 1467,
+   "receipt": "path:papers/sworn/turn_2026_09_01_sworn_v01.test_run_result.json#/python",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 7,
+    "haystack_bytes": 7
+   },
+   "resolved_sha256": "2b9e672e933404a838fad933577c587357bfc3ff45e7506597cb532f25a0cd55"
+  },
+  {
+   "at": 2389,
+   "start": 1896,
+   "end": 1974,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/counts/HELD",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "25",
+    "printed": "25",
+    "receipt": "25",
+    "receipt_rounded": "25",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "19dabb4dac266a174c9aaf07b8733c262d2563e3d8f3ccf335c8ec917d1a89b9"
+  },
+  {
+   "at": 2598,
+   "start": 1975,
+   "end": 2015,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/document_verdict",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 10,
+    "haystack_bytes": 10
+   },
+   "resolved_sha256": "19dabb4dac266a174c9aaf07b8733c262d2563e3d8f3ccf335c8ec917d1a89b9"
+  },
+  {
+   "at": 2772,
+   "start": 2016,
+   "end": 2047,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json#/counts/UNRESOLVED",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "19dabb4dac266a174c9aaf07b8733c262d2563e3d8f3ccf335c8ec917d1a89b9"
+  },
+  {
+   "at": 3559,
+   "start": 2667,
+   "end": 2745,
+   "receipt": "path:tests/test_sworn.py",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 54,
+    "haystack_bytes": 72305
+   },
+   "resolved_sha256": "00f44fde798f5707008b2439f5277a2a39c5d1246dd3866b87296af2b6f04928"
+  },
+  {
+   "at": 3812,
+   "start": 2866,
+   "end": 2946,
+   "receipt": "path:tests/test_sworn.py",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 63,
+    "haystack_bytes": 72305
+   },
+   "resolved_sha256": "00f44fde798f5707008b2439f5277a2a39c5d1246dd3866b87296af2b6f04928"
+  }
+ ],
+ "counts": {
+  "HELD": 13,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 13,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "coverage": {
+  "estimate": 0.9286,
+  "unsworn_claims_estimate": 1,
+  "unsworn_claims": [
+   {
+    "start": 2077,
+    "end": 2146,
+    "text": "`tests/test_sworn_dogfood.py` renders every committed sidecar back to"
+   }
+  ],
+  "advisory": true,
+  "ceiling_note": "advisory: the denominator is counted by styxx.claimdetect (STRUCT-1), measured at precision 0.4211 on n=38 with two known recall misses; false flags bias coverage low, misses bias it high; never a gate, never a measurement",
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "628eea7a03b5d40715153252ae4b62fc5b2d8fc9d96832623871c6698deb5600",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, no fragment",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "numerator sworn_total; denominator adds sentences of the narrative (canonical text minus sworn spans minus fenced regions) that styxx.claimdetect reads as claims; the splitter is diffgate's `(?<=[.!?])\\s+|\\n+`; 0/0 is null; ALWAYS advisory",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "a tag inside an HTML comment is recognised like any other (the spec's lexical rules are closed); a hidden commitment inflating coverage is an owed v0.2 item"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "cdf91d0400b50fbc5d869146ca44887190dd20c3b1ae97847c8f039d182a23bd",
+ "timestamp": "2026-09-01T21:27:20Z"
+}

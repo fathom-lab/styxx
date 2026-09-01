@@ -69,6 +69,29 @@ KNOWN_VERDICT_DRIFT = {
 # repository is trying to be — but only once it is empty over the whole corpus.
 
 
+def _verdict_class(verdict) -> str:
+    """The HELD/FAILED dichotomy, with the v0.13 uncovered suffix stripped.
+
+    The verifier's verdict now reads `OATH-HELD, 3 uncovered` when the document carries numeric
+    spans the extractor never examined (`styxx.certify.uncovered_spans`). That suffix is a COVERAGE
+    report, not a verdict change: the same tokens carry the same statuses, `counts["UNGROUNDED"]`
+    is untouched, and no document's oath started or stopped holding because of it.
+
+    This guard exists to catch a certificate that no longer reproduces its VERDICT — the docstring
+    above is explicit that counts drift is expected and benign and that gating it converts a real
+    signal into noise. Comparing the decorated string would report 131 of 208 committed
+    certificates as newly drifted on the day the band shipped, which is false and would bury the
+    one real drift this set is holding.
+
+    So the comparison is on the dichotomy, and the suffix is deliberately NOT gated here. Whether
+    to re-certify the corpus so the committed certificates carry their uncovered counts is a
+    separate decision with its own blast radius; this test does not pre-empt it, and it does not
+    hide it either — `uncovered` is a first-class field on every certificate the verifier issues
+    from now on.
+    """
+    return str(verdict or "").split(",")[0].strip()
+
+
 def _resolvable():
     for cp in sorted(ROOT.glob("papers/**/*.certificate.json")):
         if "anc" in cp.parts:
@@ -100,7 +123,7 @@ def test_no_committed_certificate_silently_stops_holding():
         except Exception:
             continue
         examined += 1
-        if rec.get("verdict") != live["verdict"]:
+        if _verdict_class(rec.get("verdict")) != _verdict_class(live["verdict"]):
             drifted.add(doc.relative_to(ROOT).as_posix())
 
     if examined == 0:
@@ -133,6 +156,6 @@ def test_the_known_drift_is_a_held_certificate_that_now_fails():
             pytest.skip(f"{rel} is not resolvable in this checkout")
         doc, receipts, rec = by_doc[rel]
         live = certify_doc(doc, receipts)
-        assert rec.get("verdict") == "OATH-HELD", f"{rel}: expected a HELD certificate"
-        assert live["verdict"] == "OATH-FAILED", f"{rel}: expected the live run to FAIL"
+        assert _verdict_class(rec.get("verdict")) == "OATH-HELD", f"{rel}: expected a HELD certificate"
+        assert _verdict_class(live["verdict"]) == "OATH-FAILED", f"{rel}: expected the live run to FAIL"
         assert live["counts"]["UNGROUNDED"] > 0
