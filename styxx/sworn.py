@@ -39,10 +39,11 @@ IMPLEMENTATION DECISIONS the frozen spec left open are named in :data:`DECISIONS
 every verdict receipt, and pinned by ``tests/test_sworn.py``. They are decisions, not spec.
 
 THE ARC.  The spec records its INDEX declaration as owed because ``papers/INDEX.md`` did not
-exist when it was frozen. It exists now; ``papers/sworn/`` carries a row, and the two sworn
-documents in the tree (``DECLARATION_h_mapping_2026_09_01.md`` and this module's own RESULT) are
-re-derived by ``tests/test_sworn_dogfood.py``. Nothing here is a measurement of sworn output:
-that is owed item 3 of the spec and it is still owed.
+exist when it was frozen. It exists now; ``papers/sworn/`` carries a row, and every sworn document
+in the tree (the h declaration, this module's own RESULT, the measurement DESIGN, the
+prose-claimhood CENSUS) is re-derived by ``tests/test_sworn_dogfood.py``. Nothing here is a
+measurement of sworn output: that is owed item 3 of the spec, designed in
+``papers/sworn/DESIGN_sworn_measurement_2026_09_01.md`` and still owed.
 
 CLI::
 

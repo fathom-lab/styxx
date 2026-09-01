@@ -58,6 +58,24 @@ definition, never accused. The verifier is handed commitments, not a target.
   are recognised (the spec's lexical rules are closed); a hidden commitment inflating coverage
   is a v0.2 item.
 
+**The eleven-instrument census, with receipts.** `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`
+(sworn) and `prose_claimhood_census.json` (built by `prose_claimhood_census.py`, which resolves
+every pointer): the audit's eleven prose-reading instruments, each with the document that measured
+it, its headline number, and the JSON receipt and pointer when one exists — so "eleven" is now a
+count of a receipt rather than a phrase, and the rows that rest on prose alone are named as such.
+
+**The measurement, designed and not faked.** `papers/sworn/DESIGN_sworn_measurement_2026_09_01.md`:
+bound recall, trivial swearing, coverage error and the gaming price (spec items 3 and 4), with the
+panel reading the canonical text so it cannot be handed the author's target, five gates proposed
+with reasons, and the builder's own documents excluded as specimens chosen to pass. Deliberately a
+DESIGN, to be frozen as a PREREG by signature — a lock hash of "TBD" is the shape the audit named
+as the worst of both.
+
+**Back-pointers.** Fourteen documents the audit's staleness table lists as killed by a document
+that names them now carry one blockquote line under the title naming the killer and the date;
+text unchanged, no numbers added, certified documents keep their verdicts. README's "switched off"
+now says the branch was later deleted.
+
 **corpus_audit.** Since the UNCOVERED band a verdict reads `OATH-HELD, N uncovered`; the auditor
 compared whole strings, put 131 of 208 certificates in neither HELD nor FAILED and read every one
 as verdict drift. `verdict_class()` buckets and drift-detects on the class; the corpus uncovered

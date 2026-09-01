@@ -1,0 +1,171 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "508d839e3b9daeb83363909f202cf47fc338ab79",
+ "document": {
+  "name": "CENSUS_prose_claimhood_instruments_2026_09_01.md",
+  "sha256": "5ce2df45feaf39719d6e4ed9422d22969fedef3408cdf20b5e1b6dc8f882ee35"
+ },
+ "text": "# CENSUS — the prose-claimhood instruments, with receipts\n\nFathom Lab · 2026-09-01 · **A census, not a result.** The brief that commissioned sworn output\ncounted *eleven prose-claimhood instruments measured and eleven failures*, and the spec recorded\nthe count as UNVERIFIED because no receipt in the tree enumerated them. This document is that\nreceipt's reading. The rows are the program audit's own list (`AUDIT_the_whole_program_2026_09_01.md`\n§8.1, direction 1), taken as written, plus the two the audit did not count. Every number below is\nsworn to the JSON receipt that holds it, or — where no receipt exists — to the bytes of the\ndocument that printed it. `prose_claimhood_census.py` resolves every pointer and refuses to write\n`prose_claimhood_census.json` if one fails; this document's sidecar binds to that file at commit\n`508d839e3b9d`.\n\n## The count, as a receipt\n\nThe audit's list holds 11 instruments.\nThe headline number of 9 of them rests on a JSON receipt with a pointer;\n2 rest on the prose of the document alone, and are named as such below.\nWith the two rows the audit did not count, the census holds 13 rows.\n\nSo *eleven* is sayable, as a count of the audit's list. What the count does not say: whether\nevery instrument on it was measured against a stranger's prose (four were not — a dogfood run, an\nauthor-written proposition set, a single live report, and the lab's own cycle log), or whether\n\"failure\" means the same thing in each row. It means a number short of the bar its own document\nset, and each row says which.\n\n## The eleven\n\n**diffgate path-claim accuser** — `styxx/diffgate.py`; the accusing branch is deleted and the\ninstrument is an observer. Held-out accusation precision was 0.16\nagainst a floor the preregistration wrote as 0.95 in prose (the floor is not a receipt leaf, and\nthe census does not invent one). In the wild, on pull requests this lab did not collect, precision was 0.23.\n\n**OATH obligation predicate on external text** — `styxx/certify.py`, shipped.\nA false-accusation rate of 0.2596, published as an upper bound;\nthe panel called 0.4933 of the tokens it had VERIFIED claims at all.\n\n**agent-report claim extractor** — the diffgate templates read against agent prose, blind.\nPrecision 0.3333 on the claims it flagged;\ncorpus-level recall estimated at 0.0336,\nand the receipt's own key says that number is an estimate, not a measurement.\n\n**`styxx.agent_audit` extract_claims** — shipped; no JSON receipt. The FINDING that ran it on a\nreal report says `read **0 claims from a 7-sentence real agent session report**`.\n\n**the ledger's refusal classifier** — `papers/build_ledger.py`, repaired by `ledger_verdicts.py`;\nnever in the package. The audit receipt records the token `SHIPPED` printed as a machinery refusal,\none of 9 rendered-nonsense entries\nin the lab's own cycle log.\n\n**the deception NLI** — `styxx/guardrail/deception_v2.py`; the prompt-aware fix was reverted.\nCorrections were still flagged at 0.17 after the fix,\nand the defect the audit names — a quoted false premise read as asserted — is what the fix was for.\n\n**the capstone NLI** — the joint integration, reverted. Joint correction fire rate 0.15;\nthe FINDING states the scope of the lie-suppressing defect as `Measured scope: **2 of 50** factual` triples.\n\n**the prompt-opinion detector** — a candidate gate, never shipped.\nAccuracy 0.47 on the decisive class under fresh phrasing,\nafter the FINDING had reported it `separated the classes **100%**`\non the fixed-template holdout — the handed-target collapse in one row.\n\n**critique_detector** — `styxx/critique.py`, shipped. All 18 author-written propositions\nscored at the ends of the scale, a TRUE claim at exactly 0.0,\nwith no panel: saturation, not discrimination.\n\n**the dogfood register gates** — not shipped. On a live status report that made claims,\n`Both returned **zero claims**`.\n\n**text-only deception** — `styxx/attack/fingerprint.py`, shipped as a register axis.\nAUC 0.4983 separating true from false self-claims: chance.\n\n## Two the audit did not count\n\n**STRUCT-1 claimdetect** — `styxx/claimdetect.py`, shipped as an observer. It beat its null:\nprecision 0.4211 against\na frozen null bar of 0.2061. It is on this list\nbecause it is short of the bar every accuser in this lane was held to, and it is not on the\naudit's because it passed its own.\n\n**the OATH unobligated oath** — `styxx/certify.py`. 0.5811 of the lab's own verifications were volunteered rather than obligated;\n0.3399 were value match alone, the receipt path never compared.\nNot a claimhood failure measured against strangers; a measurement of how little the obligation\npredicate was ever asked.\n\n## What this does not say\n\nWhich instruments belong on the list is a judgement, the audit's, and this census inherits it\nrather than re-deciding it. Whether a number is a failure is its own document's verdict against\nits own bar. No row here has been re-measured. The four rows without a blind panel are\nmeasurements of a different kind — a dogfood run, an author-written set, one live report, a\ncycle log — and a count that pools them with the seven panel measurements is counting\ndocuments, not evidence of equal weight. The prose-only rows are bound to bytes, which proves\nthe document said it, not that it was so.\n\n---\n\n*Eleven was a phrase. It is now a count of a receipt, with two rows resting on prose and four on\nno panel, and it says so.*\n",
+ "spans": [
+  {
+   "start": 886,
+   "end": 924,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_direction_1",
+   "kind": "numeric"
+  },
+  {
+   "start": 925,
+   "end": 996,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_rows_whose_headline_has_a_json_receipt",
+   "kind": "numeric"
+  },
+  {
+   "start": 998,
+   "end": 1039,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_rows_whose_headline_rests_on_prose",
+   "kind": "numeric"
+  },
+  {
+   "start": 1113,
+   "end": 1137,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/rows_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1693,
+   "end": 1731,
+   "receipt": "path:papers/closed-model-frontier/v14_adjudication.json#/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 1862,
+   "end": 1936,
+   "receipt": "path:papers/closed-model-frontier/external1_adjudication.json#/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 2019,
+   "end": 2081,
+   "receipt": "path:papers/closed-model-frontier/oath_adjudication_result.json#/false_accusation_rate/rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 2083,
+   "end": 2150,
+   "receipt": "path:papers/closed-model-frontier/oath_adjudication_result.json#/verified_arm_sanity/rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 2246,
+   "end": 2287,
+   "receipt": "path:papers/closed-model-frontier/agent_claim_extractor_baseline.json#/E1/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 2289,
+   "end": 2328,
+   "receipt": "path:papers/closed-model-frontier/agent_claim_extractor_baseline.json#/E2/recall_corpus_level_ESTIMATE_not_measurement",
+   "kind": "numeric"
+  },
+  {
+   "start": 2524,
+   "end": 2587,
+   "receipt": "path:papers/agent-self-audit/FINDING_dogfood_binding_stack_2026_07_04.md",
+   "kind": "quote"
+  },
+  {
+   "start": 2712,
+   "end": 2788,
+   "receipt": "path:papers/ledger_classifier_audit.json#/rendered_nonsense_entries/detail/2/printed_as",
+   "kind": "quote"
+  },
+  {
+   "start": 2797,
+   "end": 2824,
+   "receipt": "path:papers/ledger_classifier_audit.json#/rendered_nonsense_entries/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2950,
+   "end": 3002,
+   "receipt": "path:papers/deception-correction-gate/results.json#/fixed/correction_fire",
+   "kind": "numeric"
+  },
+  {
+   "start": 3167,
+   "end": 3198,
+   "receipt": "path:papers/decoupled-diagonal-capstone/results.json#/joint/correction_fire",
+   "kind": "numeric"
+  },
+  {
+   "start": 3262,
+   "end": 3299,
+   "receipt": "path:papers/decoupled-diagonal-capstone/FINDING_2026_05_25.md",
+   "kind": "quote"
+  },
+  {
+   "start": 3379,
+   "end": 3435,
+   "receipt": "path:papers/sycophancy-target-gate/results_promptopinion.json#/detector_by_class/agreement_cf",
+   "kind": "numeric"
+  },
+  {
+   "start": 3471,
+   "end": 3503,
+   "receipt": "path:papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+   "kind": "quote"
+  },
+  {
+   "start": 3634,
+   "end": 3668,
+   "receipt": "path:experiments/critique_detector_on_paper_2026_05_28/results.json#/n_propositions",
+   "kind": "numeric"
+  },
+  {
+   "start": 3702,
+   "end": 3729,
+   "receipt": "path:experiments/critique_detector_on_paper_2026_05_28/results.json#/results/0/observed_p_no",
+   "kind": "numeric"
+  },
+  {
+   "start": 3869,
+   "end": 3900,
+   "receipt": "path:papers/dogfood-self-audit/FINDING_nominal_register_blindspot_2026_08_13.md",
+   "kind": "quote"
+  },
+  {
+   "start": 3990,
+   "end": 4039,
+   "receipt": "path:papers/grounded-honesty-axis/grounded_honesty_result.json#/auc_text_only_deception",
+   "kind": "numeric"
+  },
+  {
+   "start": 4177,
+   "end": 4193,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/arms/flagged/A_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 4202,
+   "end": 4229,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/gates/G-S2P/bar",
+   "kind": "numeric"
+  },
+  {
+   "start": 4432,
+   "end": 4508,
+   "receipt": "path:papers/closed-model-frontier/oath_unobligated_oath_census.json#/headline/unobligated_oath_rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 4510,
+   "end": 4572,
+   "receipt": "path:papers/closed-model-frontier/oath_unobligated_oath_census.json#/headline/weakest_share_of_verified",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}
