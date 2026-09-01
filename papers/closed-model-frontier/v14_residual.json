@@ -1,0 +1,286 @@
+{
+ "split": "DEVELOPMENT only (held-out unread)",
+ "prs_scored": 15617,
+ "path_accusations_after_v13": 933,
+ "by_gate_reason": {
+  "absent-from-diff": 701,
+  "status-mismatch": 232
+ },
+ "residual_classes": {
+  "unclassified": {
+   "n": 486,
+   "share": 0.5209
+  },
+  "glob/ellipsis (names a set, not a file)": {
+   "n": 161,
+   "share": 0.1726
+  },
+  "checklist-item (template boilerplate, not a claim)": {
+   "n": 95,
+   "share": 0.1018
+  },
+  "quoted-block (reporting someone else's text)": {
+   "n": 70,
+   "share": 0.075
+  },
+  "path-inside-a-url-or-markdown-link": {
+   "n": 55,
+   "share": 0.0589
+  },
+  "conditional or optional": {
+   "n": 33,
+   "share": 0.0354
+  },
+  "future-or-intended, not asserted-done": {
+   "n": 18,
+   "share": 0.0193
+  },
+  "generic basename (index.ts, main.py, ...)": {
+   "n": 15,
+   "share": 0.0161
+  }
+ },
+ "samples": {
+  "unclassified": [
+   {
+    "url": "https://github.com/OneKeyHQ/app-monorepo/pull/6458",
+    "kind": "file_touched",
+    "path": "packages/core/src/secret/hash.ts",
+    "text": "Added comprehensive snapshot tests for all hash functions in `packages/core/src/secret/hash.ts`:",
+    "why": "'packages/core/src/secret/hash.ts' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/OneKeyHQ/app-monorepo/pull/6548",
+    "kind": "file_deleted",
+    "path": "asmcrypto.js",
+    "text": "- Remove asmcrypto.js dependency usage from crypto-functions.ts",
+    "why": "'asmcrypto.js' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/ensdomains/docs/pull/387",
+    "kind": "file_touched",
+    "path": "ethers.js",
+    "text": "- Added example code showing proper verification in ethers.js",
+    "why": "'ethers.js' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/OneKeyHQ/app-monorepo/pull/6694",
+    "kind": "file_touched",
+    "path": "skipWords.js",
+    "text": "Adding misspelled words to skipWords.js to prevent ESLint warnings",
+    "why": "'skipWords.js' does not appear in the diff at all"
+   }
+  ],
+  "checklist-item (template boilerplate, not a claim)": [
+   {
+    "url": "https://github.com/grafana/loki/pull/16510",
+    "kind": "file_deleted",
+    "path": "deprecated-config.yaml",
+    "text": "- [X] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectivel",
+    "why": "'deprecated-config.yaml' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/grafana/loki/pull/16510",
+    "kind": "file_touched",
+    "path": "deprecated-config.yaml",
+    "text": "- [X] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectivel",
+    "why": "'deprecated-config.yaml' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/primer/react/pull/6102",
+    "kind": "file_created",
+    "path": "storybook-helpers.tsx",
+    "text": "- [x] Created new storybook-helpers.tsx file combining functionality from both duplicate files",
+    "why": "'storybook-helpers.tsx' is status 'M' in the diff, claim wants 'A'"
+   },
+   {
+    "url": "https://github.com/antiwork/gumroad/pull/549",
+    "kind": "file_created",
+    "path": "/help/article/134-how-does-gumroad-handle-chargebacks.html",
+    "text": "- [ ] **Test the chargeback link functionality** - Ensure the new link to `/help/article/134-how-does-gumroad-handle-chargebacks.html` works correctly",
+    "why": "'/help/article/134-how-does-gumroad-handle-chargebacks.html' does not appear in the diff at all"
+   }
+  ],
+  "future-or-intended, not asserted-done": [
+   {
+    "url": "https://github.com/liam-hq/liam/pull/1060",
+    "kind": "file_touched",
+    "path": "CHANGELOG.md",
+    "text": "@liam-hq/db and @liam-hq/jobs are not packages that should be published, so they should be excluded from the changeset configuration to prevent unnece",
+    "why": "'CHANGELOG.md' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/antiwork/helper/pull/230",
+    "kind": "file_deleted",
+    "path": "not-found.tsx",
+    "text": "I've removed the global not-found.tsx file and kept the existing (marketing)/not-found.tsx file, which should handle 404 errors within that route grou",
+    "why": "'not-found.tsx' is status 'M' in the diff, claim wants 'D'"
+   },
+   {
+    "url": "https://github.com/antiwork/flexile/pull/280",
+    "kind": "file_created",
+    "path": "TypeScript/Next.js",
+    "text": "The new rules cover both Ruby/Rails and TypeScript/Next.js code changes, and include guidelines for both unit tests and e2e tests.",
+    "why": "'TypeScript/Next.js' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/antiwork/flexile/pull/280",
+    "kind": "file_touched",
+    "path": "TypeScript/Next.js",
+    "text": "- Added specific rules for TypeScript/Next.js test updates (e2e tests)",
+    "why": "'TypeScript/Next.js' does not appear in the diff at all"
+   }
+  ],
+  "conditional or optional": [
+   {
+    "url": "https://github.com/antiwork/helper/pull/244",
+    "kind": "file_created",
+    "path": "development.md",
+    "text": "This PR adds a new section to the development.md document with setup instructions for all optional integrations listed in env.ts.",
+    "why": "'development.md' is status 'M' in the diff, claim wants 'A'"
+   },
+   {
+    "url": "https://github.com/browserless/browserless/pull/4720",
+    "kind": "file_touched",
+    "path": "src/cloud/hooks.ts",
+    "text": "- Modified the `after` method in `src/cloud/hooks.ts` to extract error information when the status is \"error\"",
+    "why": "'src/cloud/hooks.ts' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/Azure/azure-sdk-for-rust/pull/2620",
+    "kind": "file_created",
+    "path": "CONTRIBUTING.md",
+    "text": "Added a new section to CONTRIBUTING.md titled \"Contributing to Issues\" that tells contributors to look for issues with the following labels if they'd ",
+    "why": "'CONTRIBUTING.md' is status 'M' in the diff, claim wants 'A'"
+   },
+   {
+    "url": "https://github.com/dotnet/runtime/pull/115823",
+    "kind": "file_touched",
+    "path": "System.Text.Json",
+    "text": "This PR fixes a regression in System.Text.Json 9 where flags enums are serialized differently than in previous versions when using `JsonStringEnumConv",
+    "why": "'System.Text.Json' does not appear in the diff at all"
+   }
+  ],
+  "glob/ellipsis (names a set, not a file)": [
+   {
+    "url": "https://github.com/liam-hq/liam/pull/1622",
+    "kind": "file_touched",
+    "path": "build/page.tsx",
+    "text": "The changes are implemented in `build/page.tsx`, where we **aggregate and merge schema overrides from different sources (e.g., multiple databases) and",
+    "why": "'build/page.tsx' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/Azure/autorest/pull/5116",
+    "kind": "file_deleted",
+    "path": "rush.json",
+    "text": "- Removed all Rush-specific files (`rush.json`, `common/config/rush/*`, etc.)",
+    "why": "'rush.json' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/Azure/azure-sdk-for-net/pull/50182",
+    "kind": "file_created",
+    "path": "Library_Inventory.py",
+    "text": "- **Inventory Script**: Created `Library_Inventory.py` that scans the repository and categorizes libraries as:",
+    "why": "'Library_Inventory.py' is status 'M' in the diff, claim wants 'A'"
+   },
+   {
+    "url": "https://github.com/Azure/fleet/pull/1136",
+    "kind": "file_touched",
+    "path": "webhook.yaml",
+    "text": "\"webhook.yaml\": {...}",
+    "why": "'webhook.yaml' does not appear in the diff at all"
+   }
+  ],
+  "path-inside-a-url-or-markdown-link": [
+   {
+    "url": "https://github.com/softmaple/softmaple/pull/151",
+    "kind": "file_touched",
+    "path": "//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_Ka9YdyuNwWJKFKTw/764c3764-23f0-4b71-82e6-3925349f797a/localhost_3000_103617.png",
+    "text": "![Editor Integration Screenshot](https://devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_Ka9YdyuNwWJKFKTw/764c37",
+    "why": "'//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_Ka9YdyuNwWJKFKTw/764c"
+   },
+   {
+    "url": "https://github.com/theopenco/llmgateway/pull/276",
+    "kind": "file_touched",
+    "path": "//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_IrRLpYTBnfbMGLDM/dc89cb3b-018a-453f-b560-d0ac53681c60/localhost_3002_232519.png",
+    "text": "![Models page showing updated pricing format](https://devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_IrRLpYTBnf",
+    "why": "'//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_IrRLpYTBnfbMGLDM/dc89"
+   },
+   {
+    "url": "https://github.com/antiwork/gumroad/pull/309",
+    "kind": "file_touched",
+    "path": "//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_ARlvYXXw0dGdZm4f/b39576d6-8a10-4872-8a77-494b9b6242d2/file_home_ubuntu_140457.png",
+    "text": "![Article with updated title](https://devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_ARlvYXXw0dGdZm4f/b39576d6-",
+    "why": "'//devin-public-attachments.s3.dualstack.us-west-2.amazonaws.com/attachments_private/org_ARlvYXXw0dGdZm4f/b395"
+   },
+   {
+    "url": "https://github.com/shopware/shopware/pull/10496",
+    "kind": "file_created",
+    "path": "//github.com/shopware/shopware/blob/trunk/adr/2020-08-03-implement-new-changelog.md",
+    "text": "- [ ] I have created a [changelog file](https://github.com/shopware/shopware/blob/trunk/adr/2020-08-03-implement-new-changelog.md) with all necessary ",
+    "why": "'//github.com/shopware/shopware/blob/trunk/adr/2020-08-03-implement-new-changelog.md' does not appear in the d"
+   }
+  ],
+  "generic basename (index.ts, main.py, ...)": [
+   {
+    "url": "https://github.com/sslava/ai-sdk-agents/pull/24",
+    "kind": "file_deleted",
+    "path": "types.ts",
+    "text": "- remove `types.ts` and `utils.ts` entries",
+    "why": "'types.ts' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/liam-hq/liam/pull/2348",
+    "kind": "file_touched",
+    "path": "index.ts",
+    "text": "- Added overrides to exempt all `index.ts` files from these restrictions",
+    "why": "'index.ts' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/ax-llm/ax/pull/289",
+    "kind": "file_touched",
+    "path": "src/ax/index.ts",
+    "text": "This change adds TSDoc comments to all the exported functions and classes in `src/ax/index.ts` to improve documentation and usability for other develo",
+    "why": "'src/ax/index.ts' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/microsoft/genaiscript/pull/1773",
+    "kind": "file_created",
+    "path": "types.ts",
+    "text": "### New Types Added (`types.ts`)",
+    "why": "'types.ts' is status 'M' in the diff, claim wants 'A'"
+   }
+  ],
+  "quoted-block (reporting someone else's text)": [
+   {
+    "url": "https://github.com/onlook-dev/onlook/pull/2047",
+    "kind": "file_deleted",
+    "path": "package.json",
+    "text": "> Remove obsolete release scripts and update `package.json` to remove references to them.",
+    "why": "'package.json' is status 'M' in the diff, claim wants 'D'"
+   },
+   {
+    "url": "https://github.com/567-labs/instructor/pull/1627",
+    "kind": "file_touched",
+    "path": "uv.lock",
+    "text": ">     - Updated `uv.lock` to reflect the new `tenacity` version range.",
+    "why": "'uv.lock' does not appear in the diff at all"
+   },
+   {
+    "url": "https://github.com/567-labs/instructor/pull/1729",
+    "kind": "file_deleted",
+    "path": "retry.py",
+    "text": ">     - Removes outdated references to `retry.py` in `hooks.md`.",
+    "why": "'retry.py' is status 'M' in the diff, claim wants 'D'"
+   },
+   {
+    "url": "https://github.com/onlook-dev/onlook/pull/2700",
+    "kind": "file_created",
+    "path": "llms.txt",
+    "text": "> This PR improves build performance by removing excessive fallback configurations and introducing new route handlers for `llms.txt` and `llms-full.tx",
+    "why": "'llms.txt' does not appear in the diff at all"
+   }
+  ]
+ },
+ "note": "classes named before counting; 'unclassified' is the honest remainder and is not evidence of anything"
+}
