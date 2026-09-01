@@ -1,0 +1,24 @@
+{
+ "spec": "styxx-worklog/v0.1",
+ "session": "undeclared-build-2026-09-01",
+ "harness": "claude-code",
+ "entries": [
+  {
+   "seq": 1,
+   "path": "styxx/undeclared.py",
+   "tool": "create",
+   "at": "2026-09-01T04:06:53Z",
+   "after_sha256": "886ed591ba556ae6422ef7aa9c1a484213923c52d41f7bdefc837acbaca5e618",
+   "before_sha256": null
+  },
+  {
+   "seq": 2,
+   "path": "tests/test_undeclared.py",
+   "tool": "create",
+   "at": "2026-09-01T04:07:23Z",
+   "after_sha256": "8dc626afc445a089edfa97cc70894422ade3b7d4a9e8946daa476f1cd1fcb3b2",
+   "before_sha256": null
+  }
+ ],
+ "digest": "e17f631199960c85c9bc30b5cde2ac094f558458638c7ba38f4887fdcfc7a4f4"
+}
