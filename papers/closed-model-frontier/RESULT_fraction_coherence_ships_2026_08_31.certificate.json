@@ -1,0 +1,208 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_fraction_coherence_ships_2026_08_31.md",
+  "document_sha256": "da3287f88d76d1fe0f103cc6873ad731e8b5b5c5bc24f1d6f5b455e8b6c25829",
+  "receipts_sha256": {
+    "fraction_coherence_ab.json": "91571e235669c0ca5ed701d828994e9a9c8487a159525e9354ded11490f9d691",
+    "obligate2_result.json": "ccc5a7bd6c6cd025ddbd796b8e88f729d62818e94b3acc1dfa185cbe063a9603"
+  },
+  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
+  "counts": {
+    "VERIFIED": 1,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 1,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 7
+    },
+    "verified": {
+      "total": 1,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 0,
+        "obligated_integer_filter_na": 0,
+        "unobligated_integer_filter_ran": 1,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 0,
+    "obligation_sources": {
+      "vocabulary": 0,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 25,
+      "token": "115"
+    },
+    {
+      "line": 42,
+      "token": "0"
+    },
+    {
+      "line": 42,
+      "token": "38"
+    },
+    {
+      "line": 46,
+      "token": "115"
+    },
+    {
+      "line": 53,
+      "token": "115"
+    },
+    {
+      "line": 54,
+      "token": "32"
+    },
+    {
+      "line": 54,
+      "token": "9"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 25,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "`115` \u2014 a sum computed inside the statement, stored in no receipt \u2014 is refused both times,",
+      "col": 3,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 42,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "healthy VERIFIED tokens and elevating an ABSTAIN through the degenerate `0/38`",
+      "col": 73,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 42,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "healthy VERIFIED tokens and elevating an ABSTAIN through the degenerate `0/38`",
+      "col": 75,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 46,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "both in the record. And the prereg itself carried an unsatisfiable fixture (the `115`",
+      "col": 81,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 53,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "pair. The OBLIGATE-1 and STRUCT-1 RESULTs re-certify **still FAILED**: the pooled `115`, the",
+      "col": 83,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 54,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "bare count pair *\"32 of every 58\"*, and the quoted *\"9 new tests.\"* remain accused, exactly",
+      "col": 18,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 54,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "bare count pair *\"32 of every 58\"*, and the quoted *\"9 new tests.\"* remain accused, exactly",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "fraction_coherence_ab.json:moves_every_one[0].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 54,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "bare count pair *\"32 of every 58\"*, and the quoted *\"9 new tests.\"* remain accused, exactly",
+      "col": 53,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}

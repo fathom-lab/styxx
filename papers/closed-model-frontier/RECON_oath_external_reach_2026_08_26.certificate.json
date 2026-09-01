@@ -1,0 +1,504 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_oath_external_reach_2026_08_26.md",
+  "document_sha256": "746295e583f6cde4a67ff790fe745c4722ba538c694d68f72d047f74cdfc07b0",
+  "receipts_sha256": {
+    "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6"
+  },
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "counts": {
+    "VERIFIED": 32,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 4
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 78,
+      "token": "100,000",
+      "value": 100000.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 20,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 78,
+      "token": "300,000",
+      "value": 300000.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 30,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 103,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+      "col": 5,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 103,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+      "col": 70,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 100,
+      "token": "17"
+    },
+    {
+      "line": 101,
+      "token": "0"
+    },
+    {
+      "line": 101,
+      "token": "0"
+    },
+    {
+      "line": 120,
+      "token": "13"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "178",
+      "value": 178.0,
+      "decimals": 0,
+      "context": "Every one of the 178 committed OATH certificates in this repository is on a document written by",
+      "col": 17,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[12].tokens"
+    },
+    {
+      "line": 53,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "Of the repositories selected, 12 yielded a document-and-receipt pair and were certified. External",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:repos_certified"
+    },
+    {
+      "line": 60,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| repositories certified | 12 |",
+      "col": 27,
+      "binding_context": "| | | | repositories certified | 12 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:repos_certified"
+    },
+    {
+      "line": 61,
+      "token": "507",
+      "value": 507.0,
+      "decimals": 0,
+      "context": "| numeric tokens examined | 507 |",
+      "col": 28,
+      "binding_context": "| | | | numeric tokens examined | 507 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:tokens_total"
+    },
+    {
+      "line": 62,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| VERIFIED | 17 |",
+      "col": 13,
+      "binding_context": "| | | | VERIFIED | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_counts.VERIFIED"
+    },
+    {
+      "line": 63,
+      "token": "477",
+      "value": 477.0,
+      "decimals": 0,
+      "context": "| ABSTAIN | 477 |",
+      "col": 12,
+      "binding_context": "| | | | ABSTAIN | 477 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_counts.ABSTAIN"
+    },
+    {
+      "line": 64,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| UNGROUNDED | 13 |",
+      "col": 15,
+      "binding_context": "| | | | UNGROUNDED | 13 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_counts.UNGROUNDED"
+    },
+    {
+      "line": 66,
+      "token": "0.9408",
+      "value": 0.9408,
+      "decimals": 4,
+      "context": "**The instrument abstains on 0.9408 of what it sees.** On documents written without any",
+      "col": 29,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_share.ABSTAIN"
+    },
+    {
+      "line": 71,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "## The accusation column: 13 for 13 traceable to a trigger read out of context",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusations_total"
+    },
+    {
+      "line": 71,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "## The accusation column: 13 for 13 traceable to a trigger read out of context",
+      "col": 33,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusations_total"
+    },
+    {
+      "line": 78,
+      "token": "100,000",
+      "value": 100000.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 20,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 78,
+      "token": "300,000",
+      "value": 300000.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 30,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 78,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 40,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[2].token"
+    },
+    {
+      "line": 78,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the l",
+      "col": 45,
+      "binding_context": "| document | token | obligated by | what the token actually is | | DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations \u2014 \"the learning rate of the low-rank matrices and training steps\" |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[3].token"
+    },
+    {
+      "line": 79,
+      "token": "72.18",
+      "value": 72.18,
+      "decimals": 2,
+      "context": "| CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval recei",
+      "col": 23,
+      "binding_context": "| document | token | obligated by | what the token actually is | | CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval receipt supplied |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[4].token"
+    },
+    {
+      "line": 79,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval recei",
+      "col": 31,
+      "binding_context": "| document | token | obligated by | what the token actually is | | CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval receipt supplied |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[5].token"
+    },
+    {
+      "line": 79,
+      "token": "7.96",
+      "value": 7.96,
+      "decimals": 2,
+      "context": "| CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval recei",
+      "col": 36,
+      "binding_context": "| document | token | obligated by | what the token actually is | | CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval receipt supplied |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[6].token"
+    },
+    {
+      "line": 79,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval recei",
+      "col": 43,
+      "binding_context": "| document | token | obligated by | what the token actually is | | CoReVLA README L16 | 72.18 / 50 / 7.96 / 15 | `rate`, `score` | figures cited in a paper abstract, whose home is the paper's own tables and not the eval receipt supplied |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[7].token"
+    },
+    {
+      "line": 80,
+      "token": "1.554562",
+      "value": 1.554562,
+      "decimals": 6,
+      "context": "| BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "col": 36,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[8].token"
+    },
+    {
+      "line": 80,
+      "token": "1.598064",
+      "value": 1.598064,
+      "decimals": 6,
+      "context": "| BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "col": 47,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[9].token"
+    },
+    {
+      "line": 80,
+      "token": "1.554562",
+      "value": 1.554562,
+      "decimals": 6,
+      "context": "| BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "col": 114,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L116, L128 | 1.554562 / 1.598064 | `score` | lines of pasted console output reading `score:1.554562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[8].token"
+    },
+    {
+      "line": 81,
+      "token": "637.879562",
+      "value": 637.879562,
+      "decimals": 6,
+      "context": "| BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "col": 36,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[10].token"
+    },
+    {
+      "line": 81,
+      "token": "167.052877",
+      "value": 167.052877,
+      "decimals": 6,
+      "context": "| BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "col": 49,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[11].token"
+    },
+    {
+      "line": 81,
+      "token": "637.879562",
+      "value": 637.879562,
+      "decimals": 6,
+      "context": "| BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "col": 127,
+      "binding_context": "| document | token | obligated by | what the token actually is | | BetterMixture README L180, L192 | 637.879562 / 167.052877 | `mean` | rows of a pasted `describe()` table reading `mean       637.879562` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[10].token"
+    },
+    {
+      "line": 82,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "col": 32,
+      "binding_context": "| document | token | obligated by | what the token actually is | | GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verification_roster[16].token"
+    },
+    {
+      "line": 82,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "col": 59,
+      "binding_context": "| document | token | obligated by | what the token actually is | | GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verification_roster[16].token"
+    },
+    {
+      "line": 82,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "col": 94,
+      "binding_context": "| document | token | obligated by | what the token actually is | | GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verification_roster[16].token"
+    },
+    {
+      "line": 82,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "col": 120,
+      "binding_context": "| document | token | obligated by | what the token actually is | | GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verification_roster[10].token"
+    },
+    {
+      "line": 82,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "col": 130,
+      "binding_context": "| document | token | obligated by | what the token actually is | | GradRetentionNet README L67 | 1 | `delta` | the literal `1` inside the LaTeX formula `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verification_roster[10].token"
+    },
+    {
+      "line": 98,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "Of the 17 VERIFIED tokens, 16 come from a single repository. Graded by the structural definition",
+      "col": 7,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_counts.VERIFIED"
+    },
+    {
+      "line": 98,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Of the 17 VERIFIED tokens, 16 come from a single repository. Graded by the structural definition",
+      "col": 27,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[1].counts.VERIFIED"
+    },
+    {
+      "line": 100,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "bare array subscript or an index-like name \u2014 5 of 17 are structurally coincident, grounding at",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:verifications_structurally_coincident"
+    },
+    {
+      "line": 100,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "bare array subscript or an index-like name \u2014 5 of 17 are structurally coincident, grounding at",
+      "col": 50,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 101,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "things like `config.seeds[0]`, `metric_history.step`, and `results[0].metric_history.loss[\u2026]`.",
+      "col": 26,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 101,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "things like `config.seeds[0]`, `metric_history.step`, and `results[0].metric_history.loss[\u2026]`.",
+      "col": 67,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 103,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+      "col": 5,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 103,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+      "col": 70,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 104,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "sworn to `rope.aggregated.standard.final_loss`, and a bare `1` is sworn to `[0].level`. A count of",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[7].counts.ABSTAIN"
+    },
+    {
+      "line": 104,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "sworn to `rope.aggregated.standard.final_loss`, and a bare `1` is sworn to `[0].level`. A count of",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[0].counts.VERIFIED"
+    },
+    {
+      "line": 120,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "adjudication of the same 13 tokens is invited.",
+      "col": 25,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

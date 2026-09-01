@@ -1,0 +1,875 @@
+{
+ "prereg": "PREREG_obligate1_2026_08_31.md",
+ "population": {
+  "documents_recertified": 198,
+  "abstained_tokens_after_exclusions": 1968,
+  "obligate1_positive": 482,
+  "obligate1_negative": 1486
+ },
+ "sample": {
+  "positive": 60,
+  "negative": 60,
+  "decoys_per_packet": 16,
+  "packets": 3
+ },
+ "packets": [
+  {
+   "packet": 1,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o1p1-001",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o1p1-002",
+     "token": "2509.06902",
+     "context": "**Proof-Carrying Numbers** (arXiv 2509.06902) is the closest work found, and it is close enough"
+    },
+    {
+     "id": "o1p1-003",
+     "token": "4",
+     "context": "channel this document named in §4, and the answer arrived in two moves. An **unregularized**"
+    },
+    {
+     "id": "o1p1-004",
+     "token": "1",
+     "context": "- **Round 1** found the class (hidden fence, duplicate key). The fix counted exact-lowercase"
+    },
+    {
+     "id": "o1p1-005",
+     "token": "0.30",
+     "context": "| **A1 bridge (qwen ← llama's 20 contrasts)** | **0.9745** | ≥ 0.30 | **✓ a 16× jump** |"
+    },
+    {
+     "id": "o1p1-006",
+     "token": "0.15",
+     "context": "grounding detects it (1.000, margin 0.487, P(≥0.15)=1.0).**"
+    },
+    {
+     "id": "o1p1-007",
+     "token": "0.034",
+     "context": "excludes zero on the wrong side (DeLong p=0.034). Where confidence fails hardest, depth hurts."
+    },
+    {
+     "id": "o1p1-008",
+     "token": "0.001953",
+     "context": "in the caving-down direction — leading immediate→reasoning (C1→C3) effect 10, exact p=0.001953; neutral"
+    },
+    {
+     "id": "o1p1-009",
+     "token": "16",
+     "context": "- **G-S2P — PASS.** STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control ="
+    },
+    {
+     "id": "o1p1-010",
+     "token": "1",
+     "context": "The two ship-blocking defects in round 1 were not in the new mechanic. They were in the"
+    },
+    {
+     "id": "o1p1-011",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o1p1-012",
+     "token": "0.05",
+     "context": "held-out concepts the map never saw (chance top-1 = 0.05)."
+    },
+    {
+     "id": "o1p1-013",
+     "token": "0.70",
+     "context": "then collapses (≤ 0.60) while the private re-lock holds (≥ 0.70), calibration poisoning GENERALIZES;"
+    },
+    {
+     "id": "o1p1-014",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o1p1-015",
+     "token": "42",
+     "context": "1,854 objects × 42 human dimensions distilled from ~1.5M human odd-one-out judgments. **120** of our"
+    },
+    {
+     "id": "o1p1-016",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o1p1-017",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o1p1-018",
+     "token": "0.0036",
+     "context": "non-bit-deterministic training (measured deltas ≤ 0.0036 here). The margin arm is one layer on one"
+    },
+    {
+     "id": "o1p1-019",
+     "token": "+0.05",
+     "context": "the frozen +0.05 bar. Missed by 0.0093. Per the frozen mapping this is CLOSED_NEGATIVE; the bar"
+    },
+    {
+     "id": "o1p1-020",
+     "token": "0.282",
+     "context": "**[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+     "id": "o1p1-021",
+     "token": "20",
+     "context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 |"
+    },
+    {
+     "id": "o1p1-022",
+     "token": "0.80",
+     "context": "0.9242 against the frozen floor (threshold of 0.80), clean frozen-deploy read 0.9069, clean"
+    },
+    {
+     "id": "o1p1-023",
+     "token": "77",
+     "context": "- **Tier-2 (escalated authority pressure): seven near-neighbor caves over n=77 gated items**,"
+    },
+    {
+     "id": "o1p1-024",
+     "token": "0.9341",
+     "context": "- **DG2 PASSED.** Final answered accuracy 0.9850 against a 0.9341 bar -- it did not merely hold, it"
+    },
+    {
+     "id": "o1p1-025",
+     "token": "0.5066",
+     "context": "here vs the 2-way re-lock 0.5066 / 0.4725 (`attack_sweep_result.json` λ=1;"
+    },
+    {
+     "id": "o1p1-026",
+     "token": "24",
+     "context": "| G2 | adjudicated precision | ≥ 24 of 25 adjudicate BAR | 25 | — | **PASS** |"
+    },
+    {
+     "id": "o1p1-027",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o1p1-028",
+     "token": "0.78",
+     "context": "hit 0.865 (>= 0.78). The random-direction floor is the WRONG null for a difference-of-means direction —"
+    },
+    {
+     "id": "o1p1-029",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o1p1-030",
+     "token": "0.05",
+     "context": "| G2_islands_present | gap-screen p ≤ 0.05 | 0.0779 | ❌ |"
+    },
+    {
+     "id": "o1p1-031",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o1p1-032",
+     "token": "2",
+     "context": "b34-v3's G2 null passed at *exactly* 2× chance — one 2-hit draw of 70. This prereg therefore"
+    },
+    {
+     "id": "o1p1-033",
+     "token": "1.0",
+     "context": "(λ=1.0), LoRA r=16, 300 steps. Audit surface byte-identical to the parity arc by import"
+    },
+    {
+     "id": "o1p1-034",
+     "token": "0.007812",
+     "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30→12/30 (exact McNemar effect 8, p=0.007812,"
+    },
+    {
+     "id": "o1p1-035",
+     "token": "23",
+     "context": "* **Small cells.** External obligated is `n=23`; no interval or significance is asserted anywhere"
+    },
+    {
+     "id": "o1p1-036",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o1p1-037",
+     "token": "184",
+     "context": "On 184 length-matched 2★-vs-4★ Amazon reviews (the label↔length correlation is negligible — the"
+    },
+    {
+     "id": "o1p1-038",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o1p1-039",
+     "token": "0.94",
+     "context": "- **Borrowing a different reference does NOT defend** (gamed: cos 0.94 — different references read truth via"
+    },
+    {
+     "id": "o1p1-040",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o1p1-041",
+     "token": "0.0091",
+     "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median"
+    },
+    {
+     "id": "o1p1-042",
+     "token": "1",
+     "context": "extractions. 55 of 70 foreign thoughts identified; binomial against chance 1/70 is"
+    },
+    {
+     "id": "o1p1-043",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o1p1-044",
+     "token": "27",
+     "context": "the reasoning edges below are measured from a sigil-inflated immediate baseline (27, not 20). This also"
+    },
+    {
+     "id": "o1p1-045",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o1p1-046",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    },
+    {
+     "id": "o1p1-047",
+     "token": "16",
+     "context": "Within this objective family (difference-of-means gap-suppression) and scale (LoRA r=16, 300"
+    },
+    {
+     "id": "o1p1-048",
+     "token": "0.60",
+     "context": "partial-lexical RSA agree at **Kendall's W = 0.75** against the pre-registered bar of 0.60, with"
+    },
+    {
+     "id": "o1p1-049",
+     "token": "0.4967",
+     "context": "arithmetic is unambiguous. These BOLD series carry lag-1 autocorrelation of 0.4967 to 0.8054, which by the standard"
+    },
+    {
+     "id": "o1p1-050",
+     "token": "0.615",
+     "context": "- Within-family transmission runs far higher (e.g. Qwen2.5-0.5B→Qwen2.5-1.5B 0.615 top-1, oracle"
+    },
+    {
+     "id": "o1p1-051",
+     "token": "28",
+     "context": "base probe's gold direction directly, and (b) a **displacement sweep** — refit a probe at every one of the 28"
+    },
+    {
+     "id": "o1p1-052",
+     "token": "0.15",
+     "context": "(b) inherit FG1-FG4 **verbatim** -- especially FG4's 0.15 separation bar, which is not to be"
+    },
+    {
+     "id": "o1p1-053",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o1p1-054",
+     "token": "0.02876236892630335",
+     "context": "0.02876236892630335, against a 0.05 margin.** The in-frame batch adds a little — a real but small"
+    },
+    {
+     "id": "o1p1-055",
+     "token": "0.30",
+     "context": "| G2_wrong_min_high | min wrong-donor at k=20 ≥ 0.30 | 0.3622 | ✅ |"
+    },
+    {
+     "id": "o1p1-056",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    }
+   ]
+  },
+  {
+   "packet": 2,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o1p2-001",
+     "token": "0.026",
+     "context": "**[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+     "id": "o1p2-002",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o1p2-003",
+     "token": "1.0",
+     "context": "whole-stack DoM scrub, λ=1.0, seeds {0,1}, small EVAL (66 facts). A single knob (replay strength) was"
+    },
+    {
+     "id": "o1p2-004",
+     "token": "0.0365",
+     "context": "- **BG1 PASSED**: 0.8174 vs bar 0.0365 + 0.15."
+    },
+    {
+     "id": "o1p2-005",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    },
+    {
+     "id": "o1p2-006",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o1p2-007",
+     "token": "2",
+     "context": "(2 of 6, needed 4).** Therefore **no erratum is triggered and none ships.** The correct, non-erratum"
+    },
+    {
+     "id": "o1p2-008",
+     "token": "0.8378",
+     "context": "(0.7825 < 0.8378 - 0.02 = 0.8178, by 0.0353). Roughly **83%** of the gap vanished at parity."
+    },
+    {
+     "id": "o1p2-009",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o1p2-010",
+     "token": "0.41",
+     "context": "**[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+     "id": "o1p2-011",
+     "token": "87",
+     "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped"
+    },
+    {
+     "id": "o1p2-012",
+     "token": "0.82",
+     "context": "An answer-abstract length/format code is still decodable *within* intent strata at L29 (0.82/0.93). The"
+    },
+    {
+     "id": "o1p2-013",
+     "token": "0.06",
+     "context": "Qwen2.5-1.5B only, honesty construct, EVAL n=66 (per-cell AUROC SE = 0.06), one run per cell, bf16"
+    },
+    {
+     "id": "o1p2-014",
+     "token": "6",
+     "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 2/4, 0.75, 1.0} with a"
+    },
+    {
+     "id": "o1p2-015",
+     "token": "0.796",
+     "context": "0.796→0.492) **before any adversary acts**, and that reference is noisy across runs (v2 ref refit 0.675 vs v3 ref"
+    },
+    {
+     "id": "o1p2-016",
+     "token": "5",
+     "context": "**Port check (only the metric changes):** the source-whitened readout reproduces cycle 5 exactly —"
+    },
+    {
+     "id": "o1p2-017",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o1p2-018",
+     "token": "100,000",
+     "context": "the two that matter most: the DePT hyperparameter values quoted in prose (`100,000`, `300,000`)"
+    },
+    {
+     "id": "o1p2-019",
+     "token": "2",
+     "context": "order/binding via positional encoding, and memory without a 7±2 limit (full context)."
+    },
+    {
+     "id": "o1p2-020",
+     "token": "13",
+     "context": "set would move the n = 13 H2 residual off the fence."
+    },
+    {
+     "id": "o1p2-021",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o1p2-022",
+     "token": "0.04",
+     "context": "a fraction of pairs — producing values spanning 0.02 to 0.04 judged against a bar of 0.80. The"
+    },
+    {
+     "id": "o1p2-023",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o1p2-024",
+     "token": "0.35",
+     "context": "[0.35, 0.65])."
+    },
+    {
+     "id": "o1p2-025",
+     "token": "6",
+     "context": "- **`PARTIAL_CONSOLIDATED__residual_real_but_not_robust`** — N_admissible=6, FAILS-cells=2,"
+    },
+    {
+     "id": "o1p2-026",
+     "token": "0.70",
+     "context": "- AUC(R2 vs fake) = 1.00. T1 PASS (R2 1.00 ≥ 0.70; R2-fake 0.75 ≥ 0.30). T2 PASS (1.00)."
+    },
+    {
+     "id": "o1p2-027",
+     "token": "0.05",
+     "context": "distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an"
+    },
+    {
+     "id": "o1p2-028",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o1p2-029",
+     "token": "-0.0011",
+     "context": "| **H2** additivity (LP_norm) | ΔAUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |"
+    },
+    {
+     "id": "o1p2-030",
+     "token": "6",
+     "context": "The pre-committed gate requires ≥8 caves AND ≥8 resists AND ≥6 of each with a usable pre-assertion window."
+    },
+    {
+     "id": "o1p2-031",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o1p2-032",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o1p2-033",
+     "token": "0.15",
+     "context": "- k\\* uses the prereg's fixed 0.30/0.15 definition; by construction it says where legibility"
+    },
+    {
+     "id": "o1p2-034",
+     "token": "0.70",
+     "context": "seeds {0, 1}) does not push the private-13 read below the survival threshold of 0.70 in any"
+    },
+    {
+     "id": "o1p2-035",
+     "token": "13",
+     "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;"
+    },
+    {
+     "id": "o1p2-036",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o1p2-037",
+     "token": "0.833",
+     "context": "hold rests on **seed 0** (0.782 @ 0.833); Llama corroborates on both seeds."
+    },
+    {
+     "id": "o1p2-038",
+     "token": "18",
+     "context": "- **G1 (recall):** 20 of 20 sampled unbound tokens extract (bar 18)."
+    },
+    {
+     "id": "o1p2-039",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o1p2-040",
+     "token": "0.90",
+     "context": "- **D — @-parameter → ABSTAIN**: \"cosine@0.90\" is a config threshold."
+    },
+    {
+     "id": "o1p2-041",
+     "token": "0.25",
+     "context": "chance 0.125 (bar 0.25)."
+    },
+    {
+     "id": "o1p2-042",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o1p2-043",
+     "token": "0.85",
+     "context": "test for the gemma probe (ceiling 0.75, not the pre-registered 0.85). A negative bounds linear single-direction"
+    },
+    {
+     "id": "o1p2-044",
+     "token": "157",
+     "context": "where the operator sits in its own key: 157 such tokens repo-wide are rescued zero times, and only"
+    },
+    {
+     "id": "o1p2-045",
+     "token": "0.9844",
+     "context": "The channel was correct on 0.9841 of the items it adjudicated -- replicating cycle 63's 0.9844 on"
+    },
+    {
+     "id": "o1p2-046",
+     "token": "0.01",
+     "context": "structure (it beats random-label directions, p < 0.01 both primaries)."
+    },
+    {
+     "id": "o1p2-047",
+     "token": "300",
+     "context": "Within this objective family (difference-of-means gap-suppression) and scale (LoRA r=16, 300"
+    },
+    {
+     "id": "o1p2-048",
+     "token": "0.15",
+     "context": "- **H_kill** (margin over *best* text baseline ≥ 0.15): **FAIL** — margin = 1.000 - 0.861 = **0.139**."
+    },
+    {
+     "id": "o1p2-049",
+     "token": "184",
+     "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token"
+    },
+    {
+     "id": "o1p2-050",
+     "token": "10",
+     "context": "letter; N=10 per frame; greedy reported answers; 235 scored, 5 excluded unparseable (rule"
+    },
+    {
+     "id": "o1p2-051",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o1p2-052",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o1p2-053",
+     "token": "1",
+     "context": "1. **Honesty-side parity check** (new frozen prereg, ~1 GPU-hour: retrain the E1-regime honesty"
+    },
+    {
+     "id": "o1p2-054",
+     "token": "117",
+     "context": "\"Lyon\" — no \"I stand corrected\" tell. n=117 items → 109 scored (**72 CAVED / 37 HELD**, powered)."
+    },
+    {
+     "id": "o1p2-055",
+     "token": "0.635",
+     "context": "1.0); cross-lab pairs work too (pythia-410m→gpt2 0.188 top-1, 0.635 top-5, oracle 0.875)."
+    },
+    {
+     "id": "o1p2-056",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    }
+   ]
+  },
+  {
+   "packet": 3,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o1p3-001",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o1p3-002",
+     "token": "60",
+     "context": "Ten models, one 96-concept battery, one extraction, k = 60, single seed, and an INVALID verdict"
+    },
+    {
+     "id": "o1p3-003",
+     "token": "100",
+     "context": "50/100/150/200/250 — and keeps driving the relocated component to zero. Single-variable vs B2 by"
+    },
+    {
+     "id": "o1p3-004",
+     "token": "128",
+     "context": "clean-calibrated auditor. The stronger attacker (LoRA r=64, α=128, a scrub summed over every scan"
+    },
+    {
+     "id": "o1p3-005",
+     "token": "63",
+     "context": "## The honest picture: cycle 63's negative REPLICATES, and is not overturned"
+    },
+    {
+     "id": "o1p3-006",
+     "token": "0.0001",
+     "context": "per-pair D-delta sign test gives mean 0.3167, p=0.0001 at n=60. It corroborates B38's argument that B37's"
+    },
+    {
+     "id": "o1p3-007",
+     "token": "0.53",
+     "context": "- **G0 machinery: PASS** (0.8000 ≥ 0.53; the llama_1b cell reproduced identically across"
+    },
+    {
+     "id": "o1p3-008",
+     "token": "3",
+     "context": "e.g. {3, 10, 30}) until the attacker is pushed into the knowledge-preserving regime, then reads the"
+    },
+    {
+     "id": "o1p3-009",
+     "token": "0.0208",
+     "context": "| G2_null_at_chance | median null ≤ 0.0208 | 0.0104 | ✅ |"
+    },
+    {
+     "id": "o1p3-010",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o1p3-011",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o1p3-012",
+     "token": "48",
+     "context": "DiM directions, three axes, local open models (gemma source; Llama-3.2-3B + Qwen2.5-3B targets), n=48"
+    },
+    {
+     "id": "o1p3-013",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o1p3-014",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o1p3-015",
+     "token": "68",
+     "context": "The prereg required the indiscriminate arm -- cycle 68's design -- to be computed on the same pool"
+    },
+    {
+     "id": "o1p3-016",
+     "token": "500",
+     "context": "declines roughly **499 sentences in 500**."
+    },
+    {
+     "id": "o1p3-017",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o1p3-018",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o1p3-019",
+     "token": "500",
+     "context": "K=200 random directions / K=500 label permutations. Forward passes only; no training in the"
+    },
+    {
+     "id": "o1p3-020",
+     "token": "343",
+     "context": "identical data at these identical settings**. Seed 343 is this module's documented default and"
+    },
+    {
+     "id": "o1p3-021",
+     "token": "0.10",
+     "context": "| G4_rejects_shared_trend | ≤ 0.10 | 1.0 | ❌ |"
+    },
+    {
+     "id": "o1p3-022",
+     "token": "0.03",
+     "context": "reaches PRIVACY_STANDS (parity_gap ≥ 0.06), and only one cell is ≤ 0.03 (not a CAPACITY majority), so"
+    },
+    {
+     "id": "o1p3-023",
+     "token": "1.0",
+     "context": "both sizes (no quantization confound). `LAM = 1.0` was frozen from the 1.5B ladder and not re-searched"
+    },
+    {
+     "id": "o1p3-024",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o1p3-025",
+     "token": "108",
+     "context": "One model (Qwen2.5-3B-Instruct), one regime (silent bare-term sycophantic caving), one seed, n=108,"
+    },
+    {
+     "id": "o1p3-026",
+     "token": "0.05",
+     "context": "*less* coherent than a random 15-word set), far from the p ≤ 0.05 bar."
+    },
+    {
+     "id": "o1p3-027",
+     "token": "1.000",
+     "context": "## The load-bearing caveat (why grounded=1.000 is *not* the achievement)"
+    },
+    {
+     "id": "o1p3-028",
+     "token": "3.48",
+     "context": "| naked stem filter (the v0.6.2 test promoted) | 3.48 |"
+    },
+    {
+     "id": "o1p3-029",
+     "token": "50",
+     "context": "50/100/150/200/250 — and keeps driving the relocated component to zero. Single-variable vs B2 by"
+    },
+    {
+     "id": "o1p3-030",
+     "token": "0.02",
+     "context": "within the ε = 0.02 noise floor (`delta_frozen_deployed` in the receipt), and the mimic-refit delta"
+    },
+    {
+     "id": "o1p3-031",
+     "token": "1",
+     "context": "0.4922 / 0.4486 (`papers/read-neq-write/attack_sweep_result.json`, per-layer L18 at λ=1). Within"
+    },
+    {
+     "id": "o1p3-032",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o1p3-033",
+     "token": "3",
+     "context": "- One function (ordered copy), one architecture (LRU), n=3 seeds, capacity at a 0.80"
+    },
+    {
+     "id": "o1p3-034",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o1p3-035",
+     "token": "8",
+     "context": "extends the crossing to all five seeds (r_star=8 on three, r_star=6 on two) and confirms the"
+    },
+    {
+     "id": "o1p3-036",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o1p3-037",
+     "token": "1",
+     "context": "| G2_check_metrics_finds_a_missing_path | ≥ 1 | 1 | ✅ |"
+    },
+    {
+     "id": "o1p3-038",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o1p3-039",
+     "token": "0.9411",
+     "context": "(old convention) to **0.9411** (gate G3 passed). And under the healed instrument, the measured"
+    },
+    {
+     "id": "o1p3-040",
+     "token": "0.40",
+     "context": "regime (r=0.40) it detects **0/40** — commitment. (A high-AR(1) real process, r=0.95,"
+    },
+    {
+     "id": "o1p3-041",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o1p3-042",
+     "token": "0.9918699186991871",
+     "context": "| a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channel_result.j"
+    },
+    {
+     "id": "o1p3-043",
+     "token": "11",
+     "context": "completion on the authoring host — 13 failures and 11 collection errors, all paging-file and"
+    },
+    {
+     "id": "o1p3-044",
+     "token": "0.15",
+     "context": "| **HG1 selective escalation earns its slice** | **FAIL** -- gain 0.06666666666666676 vs a 0.15 bar |"
+    },
+    {
+     "id": "o1p3-045",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o1p3-046",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    },
+    {
+     "id": "o1p3-047",
+     "token": "1",
+     "context": "`decimals > 0` AND value ∈ [-1, 1]. Two lines: a `_TRIGGERS_CORR` pattern and a guarded `bound`"
+    },
+    {
+     "id": "o1p3-048",
+     "token": "0.0",
+     "context": "| the same function on a sparse null | returns 0.0, a bar conceding **α = 1.0** |"
+    },
+    {
+     "id": "o1p3-049",
+     "token": "0.15",
+     "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds ≤ 0.15 | 0.0026 | ✅ |"
+    },
+    {
+     "id": "o1p3-050",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    },
+    {
+     "id": "o1p3-051",
+     "token": "0.07115756871854428",
+     "context": "0.07115756871854428**, against a 0.05 margin. At **matched compute** — same weights, same N=10, same"
+    },
+    {
+     "id": "o1p3-052",
+     "token": "523",
+     "context": "the v0.1 prototype pass originally printed 6 held / 82 failed / 523 ungrounded — superseded by the"
+    },
+    {
+     "id": "o1p3-053",
+     "token": "0.60",
+     "context": "dragged to **0.6068 / 0.6044** — above the ≤ 0.60 SUPPORTED bar by well under a hundredth on both"
+    },
+    {
+     "id": "o1p3-054",
+     "token": "45",
+     "context": "class is the observed column of a markdown gate table. A row reading `| G0_coverage | >= 45 pairs |"
+    },
+    {
+     "id": "o1p3-055",
+     "token": "64",
+     "context": "The generalization question is resolved without another rung: r=64 confirms a floor, so further"
+    },
+    {
+     "id": "o1p3-056",
+     "token": "0.70",
+     "context": "| M1 beats random (sign rate) | 0.6571 | G2 sign ≥ 0.70 | **FAIL** |"
+    }
+   ]
+  }
+ ]
+}

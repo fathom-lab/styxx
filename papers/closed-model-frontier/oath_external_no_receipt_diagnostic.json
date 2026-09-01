@@ -1,0 +1,611 @@
+{
+ "diagnostic": "post-hoc sizing of NO_RECEIPT; NOT part of the frozen protocol",
+ "changes_no_frozen_number": true,
+ "probed": 57,
+ "unreachable": 0,
+ "carry_a_loosely_matching_results_file": 26,
+ "share_of_probed": 0.4561,
+ "missed_on_CASE_alone": 5,
+ "missed_on_AFFIX": 21,
+ "reading": "Of the repositories the frozen run reported as publishing no machine-readable results, this many demonstrably do. Outcome-table row 6 -- 'almost nobody publishes a claim document beside machine-readable results' -- CANNOT be read off this corpus, because NO_RECEIPT measures agreement with a frozen filename list rather than the presence of results. The frozen numbers stand; the inference does not.",
+ "per_repo": [
+  {
+   "repo": "dwzhu-pku/LongEmbed",
+   "status": "NO_RECEIPT",
+   "query": "filename:all_results.json",
+   "loose_matches": 84,
+   "case_only_misses": 0,
+   "affix_misses": 12,
+   "examples": [
+    "results/bge-base-en-v1.5/LEMBNarrativeQARetrieval.json",
+    "results/bge-base-en-v1.5/LEMBNeedleRetrieval.json",
+    "results/bge-base-en-v1.5/LEMBPasskeyRetrieval.json",
+    "results/bge-base-en-v1.5/LEMBQMSumRetrieval.json"
+   ]
+  },
+  {
+   "repo": "pfmonville/whole_history_rating",
+   "status": "NO_RECEIPT",
+   "query": "filename:all_results.json",
+   "loose_matches": 3,
+   "case_only_misses": 0,
+   "affix_misses": 3,
+   "examples": [
+    "benchmarks/results/football_results.json",
+    "benchmarks/results/nba_results.json",
+    "benchmarks/results/tennis_results.json"
+   ]
+  },
+  {
+   "repo": "tsinghua-fib-lab/Token_Signature",
+   "status": "NO_RECEIPT",
+   "query": "filename:all_results.json",
+   "loose_matches": 5,
+   "case_only_misses": 2,
+   "affix_misses": 2,
+   "examples": [
+    "dynamic_cot/All_results.json",
+    "dynamic_cot/All_results_z-test.json",
+    "dynamic_cot/flexible_cot_result_50_C0_1.json",
+    "model transfer/All_results.json"
+   ]
+  },
+  {
+   "repo": "G-Taxonomy-Workgroup/GTaxoGym",
+   "status": "NO_RECEIPT",
+   "query": "filename:all_results.json",
+   "loose_matches": 10,
+   "case_only_misses": 0,
+   "affix_misses": 10,
+   "examples": [
+    "agg_results/graph_cheb_results.json",
+    "agg_results/graph_gatedgcn_results.json",
+    "agg_results/graph_gcn2_results.json",
+    "agg_results/graph_gcn_results.json"
+   ]
+  },
+  {
+   "repo": "machinefi/trio-core",
+   "status": "NO_RECEIPT",
+   "query": "filename:all_results.json",
+   "loose_matches": 29,
+   "case_only_misses": 0,
+   "affix_misses": 7,
+   "examples": [
+    "experiments/results/aggregation_results.json",
+    "experiments/results/k3_eval_results.json",
+    "experiments/results/mall_calibrated_results.json",
+    "experiments/results/mall_final_results.json"
+   ]
+  },
+  {
+   "repo": "Azure-Samples/rag-data-openai-python-promptflow",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "michaelhla/pro-1",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 12,
+   "case_only_misses": 0,
+   "affix_misses": 12,
+   "examples": [
+    "ca2_analysis/base_structure_analysis/flexibility_results.json",
+    "ca2_analysis/md_simulations/flexibility_results.json",
+    "ca2_analysis/md_simulations/md_results.json",
+    "ca2_analysis/structure_analysis/flexibility_results.json"
+   ]
+  },
+  {
+   "repo": "TingxiYu/academic-figure-skill",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "scripts/.eval_results.json"
+   ]
+  },
+  {
+   "repo": "statnett/Talk2PowerSystem",
+   "status": "NO_DOC",
+   "query": "filename:eval_results.json",
+   "loose_matches": 2,
+   "case_only_misses": 1,
+   "affix_misses": 0,
+   "examples": [
+    "demo1/eval_results.json",
+    "demo1/eval_summary.json"
+   ]
+  },
+  {
+   "repo": "Julien-pour/evaluate_model",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "res_eval_plus/rd_gene_1_1samples_eval_results.json"
+   ]
+  },
+  {
+   "repo": "thiagorepo/deriv-jules",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 1,
+   "affix_misses": 0,
+   "examples": [
+    "EVAL_RESULTS.json"
+   ]
+  },
+  {
+   "repo": "yuvaraj-kannan/preocr",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 4,
+   "case_only_misses": 0,
+   "affix_misses": 2,
+   "examples": [
+    "scripts/benchmark_data_source_formats.json",
+    "scripts/benchmark_planner_results.json",
+    "scripts/planner_eval_downloads.json",
+    "scripts/planner_eval_results.json"
+   ]
+  },
+  {
+   "repo": "sciai-lab/batchlib",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "misc/evaluation/seg_eval_results.json"
+   ]
+  },
+  {
+   "repo": "vicenteherrera/starter-ml",
+   "status": "NO_RECEIPT",
+   "query": "filename:eval_results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "kontena/kontena",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "com-lihaoyi/fastparse",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "KumoCorp/kumomta",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 3,
+   "case_only_misses": 0,
+   "affix_misses": 3,
+   "examples": [
+    "docs/reference/http/sample-metrics.json",
+    "docs/reference/kumod-metrics.json",
+    "docs/reference/proxy-server-metrics.json"
+   ]
+  },
+  {
+   "repo": "toddsundsted/ktistec",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "GoogleCloudPlatform/ml-testing-accelerators",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "bgeesaman/hhkbe",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "casts/kops-metrics.json"
+   ]
+  },
+  {
+   "repo": "dingodb/dingo-deploy",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "boundary/meter-plugin-sdk-lua",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "m-lab/k8s-support",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "dbvideostriketeam/wubloader",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "aexel90/shelly_exporter",
+   "status": "NO_RECEIPT",
+   "query": "filename:metrics.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "wibyweb/wiby",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "twitter/ios-twitter-network-layer",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "TwitterNetworkLayerTests/BingResults.json"
+   ]
+  },
+  {
+   "repo": "secureCodeBox/secureCodeBox",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 19,
+   "case_only_misses": 0,
+   "affix_misses": 15,
+   "examples": [
+    "hooks/persistence-defectdojo/hook/src/test/resources/nikto-raw-result.json",
+    "scanners/ffuf/parser/__testFiles__/ffuf-results-multiple-fuzz-keywords.json",
+    "scanners/ffuf/parser/__testFiles__/ffuf-results-postdata.json",
+    "scanners/ffuf/parser/__testFiles__/ffuf-results.json"
+   ]
+  },
+  {
+   "repo": "litecart/litecart",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "projectatomic/atomic-site",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "adambutler/poll",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "redhat-openstack/website",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "Coursemology/coursemology2",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": [
+    "spec/fixtures/course/codaveri/codaveri_evaluation_test.json"
+   ]
+  },
+  {
+   "repo": "MushroomObserver/mushroom-observer",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "leandronsp/rinha-backend-bash",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "getgrav/grav-plugin-simplesearch",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "projectcalico/tiger-bench",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "theforeman/foreman_templates",
+   "status": "NO_RECEIPT",
+   "query": "filename:results.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "ddnet/ddnet-discordbot",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "farsides/cardstories",
+   "status": "NO_DOC",
+   "query": "filename:scores.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "plugins/bot/fixture/bot/cards_words_scores.json"
+   ]
+  },
+  {
+   "repo": "MountainUnicorn/add",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    ".add/retro-scores.json"
+   ]
+  },
+  {
+   "repo": "Cantara/cantara-annual-christmasbeer",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "DLR-TS/KDDCup2021-CityBrainChallenge-starter-kit",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "pkruszynski/sveltekit-fastapi-docker-compose",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "MobilityLabs/pdredesign-server",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "Bit-Coin/Bit-Coin-6",
+   "status": "NO_DOC",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "indra83/DiviService",
+   "status": "NO_DOC",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "AthleteInAction/hotice",
+   "status": "NO_DOC",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "AthleteInAction/hotice-v1",
+   "status": "NO_DOC",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "matejko4/clovece_nezlob_se",
+   "status": "NO_RECEIPT",
+   "query": "filename:scores.json",
+   "loose_matches": 0,
+   "case_only_misses": 0,
+   "affix_misses": 0,
+   "examples": []
+  },
+  {
+   "repo": "waybarrios/vllm-mlx",
+   "status": "NO_RECEIPT",
+   "query": "filename:benchmark_results.json",
+   "loose_matches": 2,
+   "case_only_misses": 0,
+   "affix_misses": 2,
+   "examples": [
+    "gsm8k_qwen3_0.6b_results.json",
+    "vlm_benchmark_results.json"
+   ]
+  },
+  {
+   "repo": "akoumjian/datefinder",
+   "status": "NO_DOC",
+   "query": "filename:benchmark_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 1,
+   "affix_misses": 0,
+   "examples": [
+    "bench/benchmark_results.json"
+   ]
+  },
+  {
+   "repo": "michaelofengenden/PPTArena",
+   "status": "NO_RECEIPT",
+   "query": "filename:evaluation_results.json",
+   "loose_matches": 3,
+   "case_only_misses": 0,
+   "affix_misses": 2,
+   "examples": [
+    "claude_evaluation_results.json",
+    "evaluation_results_bulk.json",
+    "src/evaluation_pairs_refined.json"
+   ]
+  },
+  {
+   "repo": "NHID-Clinical/NHID-Clinical",
+   "status": "NO_RECEIPT",
+   "query": "filename:evaluation_results.json",
+   "loose_matches": 4,
+   "case_only_misses": 0,
+   "affix_misses": 3,
+   "examples": [
+    "corpus_evaluation_output/corpus_detailed_results.json",
+    "corpus_evaluation_output/corpus_metrics.json",
+    "corpus_evaluation_results.json",
+    "tests/evaluation_corpus_v1.json"
+   ]
+  },
+  {
+   "repo": "Cheer-Beep/Tea_rag_agent",
+   "status": "NO_RECEIPT",
+   "query": "filename:evaluation_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 1,
+   "affix_misses": 0,
+   "examples": [
+    "docs/EVALUATION_RESULTS.json"
+   ]
+  },
+  {
+   "repo": "linjh1118/eval_lightning",
+   "status": "NO_RECEIPT",
+   "query": "filename:evaluation_results.json",
+   "loose_matches": 1,
+   "case_only_misses": 0,
+   "affix_misses": 1,
+   "examples": [
+    "wandb_evaluation_results.json"
+   ]
+  },
+  {
+   "repo": "pratheeshkumar99/SketchGAN",
+   "status": "NO_RECEIPT",
+   "query": "filename:evaluation_results.json",
+   "loose_matches": 2,
+   "case_only_misses": 0,
+   "affix_misses": 2,
+   "examples": [
+    "gamma_inversion_model_evaluation_results.json",
+    "model_evaluation_results.json"
+   ]
+  }
+ ]
+}

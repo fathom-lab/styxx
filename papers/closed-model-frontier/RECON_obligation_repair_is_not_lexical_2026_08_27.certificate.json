@@ -1,0 +1,469 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+  "document_sha256": "fc76d78c709f0d43b09bef8c21aa047ba44029f3f9ab94e83f0dc393dad0ca22",
+  "receipts_sha256": {
+    "oath_obligation_repair_census.json": "701103b3beabeeaf3df0c6a69cbef7ce8b9d09a8d3d23935a10ffd42d2860915",
+    "oath_internal_result.json": "4680f357c4a1b6105d1e217eaa36645ebb15e513d4e3421d3edf19f557df68b9",
+    "oath_adjudication_result.json": "596b4ed4fa3ab092cbd390aa11f871fda8cab9a90912e8556158a70bd1874908"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "0.4267",
+      "value": 0.4267,
+      "decimals": 4,
+      "context": "the repair queue: the miss rate is `0.4267` inside this laboratory and `0.4067` outside it, and",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:miss_rate_internal.rate"
+    },
+    {
+      "line": 7,
+      "token": "0.4067",
+      "value": 0.4067,
+      "decimals": 4,
+      "context": "the repair queue: the miss rate is `0.4267` inside this laboratory and `0.4067` outside it, and",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_adjudication_result.json:miss_rate.rate"
+    },
+    {
+      "line": 17,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "* **External: 61 of 61** occurred because the trigger vocabulary never fired on the line at all.",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[20].line"
+    },
+    {
+      "line": 17,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "* **External: 61 of 61** occurred because the trigger vocabulary never fired on the line at all.",
+      "col": 20,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[20].line"
+    },
+    {
+      "line": 18,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "* **Internal: 24 of 32.** The other 8 fired a trigger and were abstained downstream, 7 of them by",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.VERIFIED[32].line"
+    },
+    {
+      "line": 18,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "* **Internal: 24 of 32.** The other 8 fired a trigger and were abstained downstream, 7 of them by",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[3].line"
+    },
+    {
+      "line": 18,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "* **Internal: 24 of 32.** The other 8 fired a trigger and were abstained downstream, 7 of them by",
+      "col": 85,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_internal_result.json:per_arm_detail.ABSTAIN[13].token"
+    },
+    {
+      "line": 32,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| add top 5 words | 16 | 2 | 0.125 |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 5 words | 16 | 2 | 0.125 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_5_words.k"
+    },
+    {
+      "line": 32,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| add top 5 words | 16 | 2 | 0.125 |",
+      "col": 20,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 5 words | 16 | 2 | 0.125 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_5_words.misses_caught"
+    },
+    {
+      "line": 32,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| add top 5 words | 16 | 2 | 0.125 |",
+      "col": 25,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 5 words | 16 | 2 | 0.125 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_1_words.non_claims_obligated"
+    },
+    {
+      "line": 32,
+      "token": "0.125",
+      "value": 0.125,
+      "decimals": 3,
+      "context": "| add top 5 words | 16 | 2 | 0.125 |",
+      "col": 29,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 5 words | 16 | 2 | 0.125 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_5_words.cost_per_catch"
+    },
+    {
+      "line": 33,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| add top 20 words | 36 | 4 | 0.111 |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 20 words | 36 | 4 | 0.111 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_20_words.k"
+    },
+    {
+      "line": 33,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "| add top 20 words | 36 | 4 | 0.111 |",
+      "col": 21,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 20 words | 36 | 4 | 0.111 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_20_words.misses_caught"
+    },
+    {
+      "line": 33,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| add top 20 words | 36 | 4 | 0.111 |",
+      "col": 26,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 20 words | 36 | 4 | 0.111 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_10_words.non_claims_obligated"
+    },
+    {
+      "line": 33,
+      "token": "0.111",
+      "value": 0.111,
+      "decimals": 3,
+      "context": "| add top 20 words | 36 | 4 | 0.111 |",
+      "col": 30,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 20 words | 36 | 4 | 0.111 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_20_words.cost_per_catch"
+    },
+    {
+      "line": 34,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| add top 40 words | 55 | 11 | 0.2 |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 40 words | 55 | 11 | 0.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_40_words.k"
+    },
+    {
+      "line": 34,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "| add top 40 words | 55 | 11 | 0.2 |",
+      "col": 21,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 40 words | 55 | 11 | 0.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_40_words.misses_caught"
+    },
+    {
+      "line": 34,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "| add top 40 words | 55 | 11 | 0.2 |",
+      "col": 26,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 40 words | 55 | 11 | 0.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_40_words.non_claims_obligated"
+    },
+    {
+      "line": 34,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "| add top 40 words | 55 | 11 | 0.2 |",
+      "col": 31,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | add top 40 words | 55 | 11 | 0.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_1_words.cost_per_catch"
+    },
+    {
+      "line": 35,
+      "token": "85",
+      "value": 85.0,
+      "decimals": 0,
+      "context": "| **null: obligate every number** | **85** | **127** | **1.494** |",
+      "col": 38,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | **null: obligate every number** | **85** | **127** | **1.494** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:population.of_which_real_claims_MISSED"
+    },
+    {
+      "line": 35,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "| **null: obligate every number** | **85** | **127** | **1.494** |",
+      "col": 47,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | **null: obligate every number** | **85** | **127** | **1.494** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:null_rule.non_claims_obligated"
+    },
+    {
+      "line": 35,
+      "token": "1.494",
+      "value": 1.494,
+      "decimals": 3,
+      "context": "| **null: obligate every number** | **85** | **127** | **1.494** |",
+      "col": 57,
+      "binding_context": "| rule | misses caught | non-claims obligated | cost per catch | | **null: obligate every number** | **85** | **127** | **1.494** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:null_rule.cost_per_catch"
+    },
+    {
+      "line": 37,
+      "token": "0.4235",
+      "value": 0.4235,
+      "decimals": 4,
+      "context": "The top-20 rule retains `0.4235` of the null rule's catches for `0.0315` of its cost. Every",
+      "col": 25,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_in_sample.share_of_control.add_top_20_words.misses_caught"
+    },
+    {
+      "line": 37,
+      "token": "0.0315",
+      "value": 0.0315,
+      "decimals": 4,
+      "context": "The top-20 rule retains `0.4235` of the null rule's catches for `0.0315` of its cost. Every",
+      "col": 65,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_in_sample.share_of_control.add_top_10_words.non_claims_obligated"
+    },
+    {
+      "line": 49,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| add top 5 words | 0 | 0.0 | 0.0 |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 5 words | 0 | 0.0 | 0.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_5_words.k"
+    },
+    {
+      "line": 49,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| add top 5 words | 0 | 0.0 | 0.0 |",
+      "col": 20,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 5 words | 0 | 0.0 | 0.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_HELD_OUT.add_top_1_words.misses_caught"
+    },
+    {
+      "line": 49,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| add top 5 words | 0 | 0.0 | 0.0 |",
+      "col": 24,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 5 words | 0 | 0.0 | 0.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_HELD_OUT.add_top_1_words.misses_caught"
+    },
+    {
+      "line": 49,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| add top 5 words | 0 | 0.0 | 0.0 |",
+      "col": 30,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 5 words | 0 | 0.0 | 0.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_HELD_OUT.add_top_1_words.misses_caught"
+    },
+    {
+      "line": 50,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| add top 20 words | **1** | **0.012** | **0.0118** |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 20 words | **1** | **0.012** | **0.0118** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_20_words.k"
+    },
+    {
+      "line": 50,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| add top 20 words | **1** | **0.012** | **0.0118** |",
+      "col": 23,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 20 words | **1** | **0.012** | **0.0118** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_1_words.k"
+    },
+    {
+      "line": 50,
+      "token": "0.012",
+      "value": 0.012,
+      "decimals": 3,
+      "context": "| add top 20 words | **1** | **0.012** | **0.0118** |",
+      "col": 31,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 20 words | **1** | **0.012** | **0.0118** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_HELD_OUT.add_top_20_words.recall_of_misses"
+    },
+    {
+      "line": 50,
+      "token": "0.0118",
+      "value": 0.0118,
+      "decimals": 4,
+      "context": "| add top 20 words | **1** | **0.012** | **0.0118** |",
+      "col": 43,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 20 words | **1** | **0.012** | **0.0118** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_held_out.share_of_control.add_top_20_words.misses_caught"
+    },
+    {
+      "line": 51,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| add top 40 words | 4 | 0.047 | 0.0471 |",
+      "col": 10,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 40 words | 4 | 0.047 | 0.0471 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_40_words.k"
+    },
+    {
+      "line": 51,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| add top 40 words | 4 | 0.047 | 0.0471 |",
+      "col": 21,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 40 words | 4 | 0.047 | 0.0471 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_10_words.non_claims_obligated"
+    },
+    {
+      "line": 51,
+      "token": "0.047",
+      "value": 0.047,
+      "decimals": 3,
+      "context": "| add top 40 words | 4 | 0.047 | 0.0471 |",
+      "col": 25,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 40 words | 4 | 0.047 | 0.0471 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_HELD_OUT.add_top_40_words.recall_of_misses"
+    },
+    {
+      "line": 51,
+      "token": "0.0471",
+      "value": 0.0471,
+      "decimals": 4,
+      "context": "| add top 40 words | 4 | 0.047 | 0.0471 |",
+      "col": 33,
+      "binding_context": "| rule | misses caught | recall | share of the null's catches | | add top 40 words | 4 | 0.047 | 0.0471 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_held_out.share_of_control.add_top_40_words.misses_caught"
+    },
+    {
+      "line": 67,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "top-20 rule costs `1` against the null's `127`, so it \"beats\" it \u2014 while catching one token in",
+      "col": 22,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_1_words.k"
+    },
+    {
+      "line": 67,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "top-20 rule costs `1` against the null's `127`, so it \"beats\" it \u2014 while catching one token in",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:null_rule.non_claims_obligated"
+    },
+    {
+      "line": 72,
+      "token": "0.0118",
+      "value": 0.0118,
+      "decimals": 4,
+      "context": "`share_of_control` per candidate instead of judging: `0.0118` beside `0.0079` says at a glance",
+      "col": 57,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_held_out.share_of_control.add_top_20_words.misses_caught"
+    },
+    {
+      "line": 72,
+      "token": "0.0079",
+      "value": 0.0079,
+      "decimals": 4,
+      "context": "`share_of_control` per candidate instead of judging: `0.0118` beside `0.0079` says at a glance",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_held_out.share_of_control.add_top_10_words.non_claims_obligated"
+    },
+    {
+      "line": 103,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "The 8 internal misses that *did* fire a trigger are a separate and much smaller problem, 7 of them",
+      "col": 4,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:candidates_IN_SAMPLE.add_top_1_words.misses_caught"
+    },
+    {
+      "line": 103,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "The 8 internal misses that *did* fire a trigger are a separate and much smaller problem, 7 of them",
+      "col": 89,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_repair_census.json:discrimination_in_sample.columns.misses_caught.distinct_values"
+    }
+  ]
+}

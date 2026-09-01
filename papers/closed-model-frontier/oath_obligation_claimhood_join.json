@@ -1,0 +1,1620 @@
+{
+ "join": "panel-adjudicated claimhood x epistemics obligation, per VERIFIED token",
+ "question": "among VERIFIED tokens the blind panels adjudicated, is the claim-share of volunteered oaths lower than that of obligated oaths?",
+ "no_new_judgement": "panel verdicts are the committed 2026-08-27 majority verdicts; obligation tags come from live re-certification at the pinned verifier. Nothing here was re-adjudicated.",
+ "arms": {
+  "internal": {
+   "obligated": {
+    "n": 72,
+    "claims": 61,
+    "claim_share": 0.8472
+   },
+   "volunteered": {
+    "n": 77,
+    "claims": 57,
+    "claim_share": 0.7403
+   },
+   "unresolved": 1,
+   "cells": {
+    "obligated|CLAIM": 61,
+    "obligated|NOT_A_CLAIM": 11,
+    "volunteered|NOT_A_CLAIM": 20,
+    "volunteered|CLAIM": 57
+   }
+  },
+  "external": {
+   "obligated": {
+    "n": 23,
+    "claims": 18,
+    "claim_share": 0.7826
+   },
+   "volunteered": {
+    "n": 52,
+    "claims": 19,
+    "claim_share": 0.3654
+   },
+   "unresolved": 0,
+   "cells": {
+    "volunteered|CLAIM": 19,
+    "volunteered|NOT_A_CLAIM": 33,
+    "obligated|NOT_A_CLAIM": 5,
+    "obligated|CLAIM": 18
+   }
+  }
+ },
+ "per_token_detail": {
+  "internal": [
+   {
+    "repo": "FINDING_conscience_coordinates_2026_06_11.md",
+    "line": 25,
+    "token": "0.4948",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_council_2026_05_25.md",
+    "line": 63,
+    "token": "0.75",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_anatomy_v2_2026_06_10.md",
+    "line": 40,
+    "token": "10000",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 95,
+    "token": "5",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 68,
+    "token": "343",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 20,
+    "token": "0.632",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 38,
+    "token": "0.9285714285714286",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_margin_parity_control_2026_07_10.md",
+    "line": 77,
+    "token": "1",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 37,
+    "token": "0.6756",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 31,
+    "token": "0.5468",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 19,
+    "token": "8",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "source.md",
+    "line": 153,
+    "token": "0.70",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 32,
+    "token": "45",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 18,
+    "token": "0.9846153846153847",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 107,
+    "token": "28.1",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
+    "line": 35,
+    "token": "0.8299",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 57,
+    "token": "0.6756",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_geometry_integrity_2026_06_03.md",
+    "line": 13,
+    "token": "1.00",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 45,
+    "token": "0.975",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 25,
+    "token": "0.9288",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 53,
+    "token": "1.0",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 40,
+    "token": "0.033333333333333326",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_third_party_bench_2026_07_24.md",
+    "line": 30,
+    "token": "0.27058823529411763",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_frame_recovery_2026_07_24.md",
+    "line": 21,
+    "token": "0.9846153846153847",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 13,
+    "token": "0.0408",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 76,
+    "token": "7.4805",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 30,
+    "token": "28",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+    "line": 68,
+    "token": "0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 29,
+    "token": "0.0909",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 35,
+    "token": "0.4848",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 69,
+    "token": "23",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 33,
+    "token": "30",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+    "line": 88,
+    "token": "1.0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_offmanifold_2026_06_13.md",
+    "line": 17,
+    "token": "1.0",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+    "line": 45,
+    "token": "1.6694",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_frontier_recovery_2026_07_27.md",
+    "line": 17,
+    "token": "840000",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+    "line": 29,
+    "token": "48.8",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 12,
+    "token": "101",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_h1a_human_single_clique_2026_08_06.md",
+    "line": 20,
+    "token": "907",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.694",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0188",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_conscience_loop_2026_07_24.md",
+    "line": 50,
+    "token": "0.9545",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_selective_confirm_2026_07_24.md",
+    "line": 46,
+    "token": "0.4804804804804805",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DATASHEET_conscience_2026_07_24.md",
+    "line": 28,
+    "token": "0.1746031746031746",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 94,
+    "token": "0.2151",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 27,
+    "token": "30",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 43,
+    "token": "0.7299",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+    "line": 35,
+    "token": "0.861",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0026",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+    "line": 32,
+    "token": "0.3742",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 105,
+    "token": "0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_external_corpus_2026_08_27.md",
+    "line": 85,
+    "token": "0.0274",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_gavagai_v0_2026_06_10.md",
+    "line": 25,
+    "token": "0.344",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 15,
+    "token": "0.4305",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 90,
+    "token": "5",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 19,
+    "token": "0.737",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "CAPSTONE_universal_mind_2026_06_10.md",
+    "line": 95,
+    "token": "684",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_portable_values_refusal_2026_06_11.md",
+    "line": 44,
+    "token": "0.001",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 26,
+    "token": "0.867",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_stage2_EVADABLE_2026_07_04.md",
+    "line": 25,
+    "token": "0.57",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 34,
+    "token": "0.892",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+    "line": 27,
+    "token": "0.50",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "line": 40,
+    "token": "0.6166",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 28,
+    "token": "0.9133",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_attack_sentiment_r64_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 85,
+    "token": "4",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 16,
+    "token": "0.3211111111111111",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_calib_poison_law_2026_07_09.md",
+    "line": 35,
+    "token": "0.616",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+    "line": 31,
+    "token": "0.92",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b39_whitening_2026_08_04.md",
+    "line": 14,
+    "token": "0.0434",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 41,
+    "token": "0.2347",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_thirdframe_2026_07_29.md",
+    "line": 22,
+    "token": "0.7038961038961038",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 39,
+    "token": "0.435",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_dogfood_2026_05_25.md",
+    "line": 43,
+    "token": "0.78",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 35,
+    "token": "0.3321",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 76,
+    "token": "50",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_frontier_knowsay_2026_07_27.md",
+    "line": 8,
+    "token": "0",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 35,
+    "token": "3.0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_fpr_live_2026_06_12.md",
+    "line": 47,
+    "token": "0.1799",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_gavagai_scale_2026_06_10.md",
+    "line": 15,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 35,
+    "token": "-0.0517",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+    "line": 26,
+    "token": "1073",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 23,
+    "token": "0.033333333333333326",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 83,
+    "token": "0.25",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 13,
+    "token": "55",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 27,
+    "token": "0.929",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 49,
+    "token": "30",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 59,
+    "token": "7",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 24,
+    "token": "0.049",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 25,
+    "token": "0.2341",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+    "line": 1,
+    "token": "23",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_promptopinion_2026_05_24.md",
+    "line": 12,
+    "token": "0.00",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.500",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_portable_conscience_v0_2026_06_10.md",
+    "line": 38,
+    "token": "0.688",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 53,
+    "token": "0.81",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "BLOCKED_source_independence_2026_07_24.md",
+    "line": 29,
+    "token": "0.175",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 124,
+    "token": "0.9149",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "3",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 44,
+    "token": "2",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_E2_strong_attacker_2026_07_07.md",
+    "line": 18,
+    "token": "0.786",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+    "line": 45,
+    "token": "0.65",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 64,
+    "token": "8",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+    "line": 15,
+    "token": "0.818",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_cot_inward_2026_07_30.md",
+    "line": 31,
+    "token": "46",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+    "line": 31,
+    "token": "0.838",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 28,
+    "token": "0.0553",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 62,
+    "token": "5",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 56,
+    "token": "0.9745",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 33,
+    "token": "0.50",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_b31v2_door_opens_2026_08_01.md",
+    "line": 12,
+    "token": "0.3429",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_tiered_channel_2026_07_24.md",
+    "line": 24,
+    "token": "7",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "PAPER_knowsay_gap_2026_07_27.md",
+    "line": 116,
+    "token": "0.7394",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b48_invalid_null_bar_2026_08_06.md",
+    "line": 29,
+    "token": "45",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 25,
+    "token": "4.0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+    "line": 24,
+    "token": "0.0",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b40_island_named_2026_08_05.md",
+    "line": 59,
+    "token": "343",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_axis_independence_2026_06_11.md",
+    "line": 32,
+    "token": "-0.2132",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "PREDICTION_h1_human_islands_2026_08_06.md",
+    "line": 30,
+    "token": "0.9745",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 123,
+    "token": "0.9965",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 43,
+    "token": "0.7346",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 34,
+    "token": "0.7235",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 156,
+    "token": "+0.002",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 43,
+    "token": "0.5281",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 52,
+    "token": "0.16",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_self_verification_2026_07_25.md",
+    "line": 6,
+    "token": "228",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 37,
+    "token": "0.1972",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+    "line": 40,
+    "token": "0.0104",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 48,
+    "token": "0.7521",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 55,
+    "token": "5",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 13,
+    "token": "0.30",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+    "line": 19,
+    "token": "0.7092",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 75,
+    "token": "0.08333333333333333",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_live_catch_2026_06_12.md",
+    "line": 77,
+    "token": "13",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 38,
+    "token": "30",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+    "line": 19,
+    "token": "0.1429",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 42,
+    "token": "20",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 35,
+    "token": "0.433",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 29,
+    "token": "0.0026",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 35,
+    "token": "51",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 9,
+    "token": "2",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 39,
+    "token": "37",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_detection_locus_gpt_2026_05_30.md",
+    "line": 30,
+    "token": "0.087",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+    "line": 27,
+    "token": "0.682",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SYNTHESIS_frame_locality_2026_07_28.md",
+    "line": 33,
+    "token": "0.2742",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 26,
+    "token": "0.0909",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "line": 52,
+    "token": "26",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "RESULT_ai_brain_2026_06_03.md",
+    "line": 9,
+    "token": "0.002",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "line": 51,
+    "token": "1.000",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   }
+  ],
+  "external": [
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 56,
+    "token": "22",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.5",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "76.00",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 224,
+    "token": "2.5",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 81,
+    "token": "6",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "nextcloud/whiteboard",
+    "line": 234,
+    "token": "0.2",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 254,
+    "token": "95.83",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 348,
+    "token": "256",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 34,
+    "token": "103",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "0.7",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "1.00",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "opendatalab/WebMainBench",
+    "line": 89,
+    "token": "0",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "AdilzhanB/StockRL",
+    "line": 67,
+    "token": "157.07",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 228,
+    "token": "51.6",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 247,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "nextcloud/whiteboard",
+    "line": 241,
+    "token": "100",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 255,
+    "token": "0.1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "skadio/text2model",
+    "line": 61,
+    "token": "0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "nextcloud/whiteboard",
+    "line": 223,
+    "token": "10",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "feyninc/tokie",
+    "line": 205,
+    "token": "9.1",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 189,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 175,
+    "token": "93.3",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 339,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1193,
+    "token": "0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "100",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 33,
+    "token": "4",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "syncable-dev/memtrace-public",
+    "line": 2,
+    "token": "100",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "feyninc/tokie",
+    "line": 231,
+    "token": "10.6",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 37,
+    "token": "5",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "2",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 280,
+    "token": "0.006",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "0.8000",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 143,
+    "token": "2.5",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 573,
+    "token": "6",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 180,
+    "token": "2.5",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "AdilzhanB/StockRL",
+    "line": 68,
+    "token": "0.00",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 31,
+    "token": "2",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 549,
+    "token": "0.2",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1142,
+    "token": ".0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "0.9907",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 258,
+    "token": "97.9",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "4",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 73,
+    "token": "93.9",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "AdilzhanB/StockRL",
+    "line": 66,
+    "token": "-0.22",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1637,
+    "token": ".0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "1.18",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 267,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "nextcloud/whiteboard",
+    "line": 242,
+    "token": "500",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 191,
+    "token": "23.3",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 112,
+    "token": "12.3",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 292,
+    "token": "5",
+    "obligation": "obligated",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "hopit-ai/Moda",
+    "line": 76,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 250,
+    "token": "0.9375",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "harrrshall/barunlm-35m",
+    "line": 7,
+    "token": "35,072,768",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "1.0000",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 120,
+    "token": "2.5",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 223,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "s4nkar/SoundSense",
+    "line": 63,
+    "token": ".0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "84.00",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 207,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 248,
+    "token": "100",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "harrrshall/barunlm-35m",
+    "line": 17,
+    "token": "1",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "connor-makowski/scgraph",
+    "line": 308,
+    "token": "0.0",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "DebarghaG/proofofthought",
+    "line": 247,
+    "token": "100",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "harrrshall/barunlm-35m",
+    "line": 46,
+    "token": "+1.81",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "syncable-dev/memtrace-public",
+    "line": 79,
+    "token": "5.3",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 93,
+    "token": "1.41",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 103,
+    "token": "83.8",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 105,
+    "token": "20",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "AdilzhanB/StockRL",
+    "line": 64,
+    "token": "7,243.44",
+    "obligation": "obligated",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "harrrshall/barunlm-35m",
+    "line": 27,
+    "token": "1,854",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "harrrshall/barunlm-35m",
+    "line": 63,
+    "token": "35,072,768",
+    "obligation": "volunteered",
+    "panel": "NOT_A_CLAIM"
+   },
+   {
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "5",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   },
+   {
+    "repo": "stanford-oval/Churro",
+    "line": 205,
+    "token": "69.7",
+    "obligation": "volunteered",
+    "panel": "CLAIM"
+   }
+  ]
+ },
+ "caveats": "Panel = three LLM seats of one family; unanimity ~0.96-0.98 is a correlated-error ceiling. Sample sizes are small and no interval or significance is asserted. External resolution depends on the frozen fetch cache; unresolved counts are reported, not dropped. The internal sample was drawn uniformly from VERIFIED tokens, so its obligated/volunteered mix estimates the corpus mix independently of the census."
+}

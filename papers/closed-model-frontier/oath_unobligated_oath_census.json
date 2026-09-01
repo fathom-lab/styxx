@@ -1,0 +1,115 @@
+{
+ "census": "the unobligated oath, counted for the first time",
+ "status": "MEASUREMENT over live re-certification; stored certificates untouched",
+ "documents": 192,
+ "unresolvable_skipped": 0,
+ "status_counts": {
+  "ABSTAIN": 2068,
+  "VERIFIED": 5951,
+  "UNGROUNDED": 13
+ },
+ "ladder_branches": {
+  "value-match": 5951,
+  "silent": 1042,
+  "spec-or-historical": 989,
+  "notation": 24,
+  "obligated-accusation": 13,
+  "row-ordinal-label": 11,
+  "ulp-neighbour": 2
+ },
+ "obligation_sources_when_obligated": {
+  "vocabulary": 2425,
+  "precision": 240,
+  "range-correlation": 207,
+  "n-glued": 76
+ },
+ "verified_split": {
+  "UNOBLIGATED+path-unchecked": 2023,
+  "obligated+path-unchecked": 1909,
+  "UNOBLIGATED": 1435,
+  "obligated": 584
+ },
+ "headline": {
+  "verified_total": 5951,
+  "unobligated_oaths": 3458,
+  "unobligated_oath_rate": 0.5811,
+  "weakest_attestations": 2023,
+  "weakest_share_of_verified": 0.3399,
+  "weakest_means": "VERIFIED with obligated=false AND path never compared: value match alone, on a token nothing required the verifier to read"
+ },
+ "documents_most_exposed": [
+  {
+   "document": "RESULT_rhythm_rescue_2026_06_03.md",
+   "verified": 30,
+   "unobligated": 30,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+   "verified": 22,
+   "unobligated": 22,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDINGS_rhythm_substrate_2026_06_03.md",
+   "verified": 22,
+   "unobligated": 22,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_b41_bridge_built_2026_08_05.md",
+   "verified": 16,
+   "unobligated": 16,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_b39_whitening_2026_08_04.md",
+   "verified": 15,
+   "unobligated": 15,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_mount_gamed_2026_06_13.md",
+   "verified": 12,
+   "unobligated": 12,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+   "verified": 11,
+   "unobligated": 11,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
+   "verified": 6,
+   "unobligated": 6,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_c3_algebra_wrong_2026_08_07.md",
+   "verified": 5,
+   "unobligated": 5,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_c4_mechanism_incomplete_2026_08_07.md",
+   "verified": 4,
+   "unobligated": 4,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "FINDING_protocol_v4_2026_08_09.md",
+   "verified": 3,
+   "unobligated": 3,
+   "unobligated_share": 1.0
+  },
+  {
+   "document": "ORG_the_chart_that_cannot_lie_2026_08_28.md",
+   "verified": 3,
+   "unobligated": 3,
+   "unobligated_share": 1.0
+  }
+ ],
+ "what_this_does_not_say": "That unobligated oaths are wrong. Many will be true claims whose lines happen to carry no trigger vocabulary. What it says is narrower and worse for the certificate's semantics: the affirmative attestation is not scoped by the obligation predicate, so OATH-HELD's verified count mixes oaths the instrument was required to take with oaths it volunteered. The blind-panel measurement of how often volunteered oaths land on non-claims (~1 in 5 externally) is the companion number, measured 2026-08-27."
+}

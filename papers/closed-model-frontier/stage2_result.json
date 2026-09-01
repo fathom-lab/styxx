@@ -1,0 +1,264 @@
+{
+ "stage": 2,
+ "prereg": "PREREG_claim_detector_2026_08_30.md",
+ "amendment": "AMENDMENT_claim_detector_stage2_2026_08_31.md",
+ "struct1_version": "struct-1/2026-08-30",
+ "key_hash_verified": "f07ffb3c6b20e86b5791e716027d193fee30537e0cd23014d629ace8bc91e21d",
+ "seat_validity": {
+  "p1-seat1": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p1-seat2": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p1-seat3": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat1": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat2": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p2-seat3": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p3-seat1": {
+   "gating_correct": 24,
+   "gating_n": 24,
+   "score": 1.0,
+   "passes": true
+  },
+  "p3-seat2": {
+   "gating_correct": 23,
+   "gating_n": 24,
+   "score": 0.9583,
+   "passes": true
+  },
+  "p3-seat3": {
+   "gating_correct": 23,
+   "gating_n": 24,
+   "score": 0.9583,
+   "passes": true
+  }
+ },
+ "mvu_decoys_reported_not_gated": {
+  "p1-seat1": {
+   "correct": 5,
+   "n": 6
+  },
+  "p1-seat2": {
+   "correct": 5,
+   "n": 6
+  },
+  "p1-seat3": {
+   "correct": 5,
+   "n": 6
+  },
+  "p2-seat1": {
+   "correct": 6,
+   "n": 6
+  },
+  "p2-seat2": {
+   "correct": 6,
+   "n": 6
+  },
+  "p2-seat3": {
+   "correct": 6,
+   "n": 6
+  },
+  "p3-seat1": {
+   "correct": 5,
+   "n": 6
+  },
+  "p3-seat2": {
+   "correct": 6,
+   "n": 6
+  },
+  "p3-seat3": {
+   "correct": 6,
+   "n": 6
+  }
+ },
+ "verdicts": {
+  "total": 166,
+  "unanimity_rate": 0.9578,
+  "no_majority": 0
+ },
+ "arms": {
+  "flagged": {
+   "total": 38,
+   "valid": 38,
+   "A": 16,
+   "no_majority": 0,
+   "A_share": 0.4211,
+   "label_counts": {
+    "A": 16,
+    "C": 20,
+    "B": 2
+   }
+  },
+  "control": {
+   "total": 38,
+   "valid": 38,
+   "A": 0,
+   "no_majority": 0,
+   "A_share": 0.0,
+   "label_counts": {
+    "C": 33,
+    "B": 5
+   }
+  }
+ },
+ "gates": {
+  "G-V": {
+   "all_seats_pass": true,
+   "floors_ok": true,
+   "verdict": "PASS"
+  },
+  "G-S2P": {
+   "A_share": 0.4211,
+   "bar": 0.2061,
+   "verdict": "PASS",
+   "mandatory_counts_statement": "STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control = 0/38 (A-share 0.0); no significance is claimed at these n"
+  },
+  "G-S2LIFT": {
+   "flagged_A_share": 0.4211,
+   "control_A_share": 0.0,
+   "lift": 0.4211,
+   "verdict": "PASS",
+   "mandatory_counts_statement": "STRUCT-1 = 16/38 (A-share 0.4211) vs the frozen N2 bar 0.2061; control = 0/38 (A-share 0.0); no significance is claimed at these n"
+  }
+ },
+ "flagged_not_adjudicated_A_every_one": [
+  {
+   "id": "s2p1-011",
+   "verdict": "C",
+   "text": "`add -A` cannot repeat it."
+  },
+  {
+   "id": "s2p1-029",
+   "verdict": "B",
+   "text": "non-arbitrary choice\") and the audit printed `receipt-changed 0` over a"
+  },
+  {
+   "id": "s2p1-038",
+   "verdict": "C",
+   "text": "`corpus_audit` does not drop a document whose"
+  },
+  {
+   "id": "s2p1-044",
+   "verdict": "C",
+   "text": "The unshallow first landed inside test_ledger.py,"
+  },
+  {
+   "id": "s2p1-045",
+   "verdict": "C",
+   "text": "only a sha match and otherwise falls through to `missing`, so a CHANGED receipt"
+  },
+  {
+   "id": "s2p1-055",
+   "verdict": "C",
+   "text": "from RECON_vacuous_pass_2026_08_27.md, committed the same day, by that"
+  },
+  {
+   "id": "s2p1-056",
+   "verdict": "C",
+   "text": "landed: the range-sanity clause clobbered obligation_source unconditionally"
+  },
+  {
+   "id": "s2p2-001",
+   "verdict": "C",
+   "text": "change status, receipt_ref, or verdict; the corpus audit line must be"
+  },
+  {
+   "id": "s2p2-003",
+   "verdict": "C",
+   "text": "instrument_sha256 moves is attesting to a different artifact; had any claim"
+  },
+  {
+   "id": "s2p2-006",
+   "verdict": "C",
+   "text": "commit that line is `if not PANEL.exists():` and the vacuous bars are forty lines"
+  },
+  {
+   "id": "s2p2-008",
+   "verdict": "C",
+   "text": "`bound` where obligating them changes nothing."
+  },
+  {
+   "id": "s2p2-012",
+   "verdict": "C",
+   "text": "Landing them is `git am ci-pending/*.patch && git push` from"
+  },
+  {
+   "id": "s2p2-017",
+   "verdict": "C",
+   "text": "`git show commit:path` returns the blob"
+  },
+  {
+   "id": "s2p2-024",
+   "verdict": "C",
+   "text": "[OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_universal_mind_2026_06_10.md"
+  },
+  {
+   "id": "s2p2-025",
+   "verdict": "C",
+   "text": "this morning and went straight past `cycle 133 - SHIPPED`."
+  },
+  {
+   "id": "s2p2-028",
+   "verdict": "C",
+   "text": "reports as `missing`, and `_resolvable()` drops the document."
+  },
+  {
+   "id": "s2p2-029",
+   "verdict": "C",
+   "text": "firewall.py reads git history and exits non-zero, wired as a required status check"
+  },
+  {
+   "id": "s2p2-031",
+   "verdict": "B",
+   "text": "reporting_verb lands at 0.40 -- the base rate"
+  },
+  {
+   "id": "s2p3-028",
+   "verdict": "C",
+   "text": "regenerates LEDGER.md and fails on a changed character -- which proves the"
+  },
+  {
+   "id": "s2p3-033",
+   "verdict": "C",
+   "text": "how the refusal list came to print `SHIPPED`."
+  },
+  {
+   "id": "s2p3-035",
+   "verdict": "C",
+   "text": "VP-C in RECON_vacuous_pass_2026_08_27.md now has a fix for its reporting half."
+  },
+  {
+   "id": "s2p3-052",
+   "verdict": "C",
+   "text": "So `--poster` emits a fixed 1200px frame built to be screenshotted, rendered"
+  }
+ ],
+ "control_adjudicated_A_every_one": []
+}

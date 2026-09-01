@@ -1,0 +1,150 @@
+{
+ "redteam": "two adversarial passes on PREREG_agent_claim_extractor_baseline before freezing",
+ "lenses": [
+  "failability-and-denominators",
+  "blinding-and-leakage"
+ ],
+ "disposition": "every BLOCKING finding incorporated into the frozen prereg verbatim or strengthened; WEAKNESS and NOTE findings incorporated except the cross-family shadow seat (no cross-family model reachable in this harness -- disclosed in the prereg's limits) ",
+ "attacks": [
+  {
+   "findings": [
+    {
+     "severity": "BLOCKING",
+     "title": "E1's denominator can be intercepted to near-zero by the tests_pass carve-out, and the prereg is silent on 0/0",
+     "attack": "E1 excludes tests_pass flags, but the corpus is dense with '2575 passed, 11 skipped' style sentences — exactly what tests_pass fires on. Known total flags are ~6. Scenario: 5 of 6 flags are tests_pass; E1 becomes 1/1 (a 100% 'precision' from one sentence) and G2 trivially passes against N1 — or all 6 are tests_pass and E1 is 0/0, making G2 unevaluable with no specified behavior. This is the ladder-RECON failure mode again: an upstream branch (tests_pass routing to E1b) intercepts the cases and the headline gate cannot meaningfully fail, yet the RESULT still reads 'extractor precision'.",
+     "fix": "Add to Estimands: 'E1's denominator (count of non-tests_pass flags) is reported verbatim wherever E1 is quoted. If that denominator is 0, E1 is undefined, G2 does not evaluate, and the RESULT must state, with the same prominence as a gate failure: \"G2 not evaluable — the extractor produced zero non-tests_pass flags on this corpus.\" If the denominator is below 4, G2's verdict must be accompanied verbatim by the counts (E1 = x/y vs N1 = a/b).'"
+    },
+    {
+     "severity": "BLOCKING",
+     "title": "G-V's 're-run once with clarified instructions' is a post-hoc laundering channel for the ground truth",
+     "attack": "A seat fails the decoys. The author — who wrote the answer key and adjudicated the original 3 mention-vs-use false accusations — now writes 'clarified instructions' AFTER seeing which decoys the seat missed and (plausibly) how it labeled the real corpus sentences. Since the decoys probe exactly the mention-vs-use line, the clarification can shift where seats draw that line on corpus sentences, moving E1/E2/E4 in a chosen direction. The second run's labels then count as blind ground truth. The escape hatch converts a validity failure into an opportunity to steer the estimands.",
+     "fix": "Replace the G-V failure clause with: 'The only permissible clarified-instruction text is committed in the same commit as the answer key, before any seat runs. A G-V failure triggers exactly one re-run of the packet by FRESH seats using that pre-committed text verbatim. Any other instruction change, or a second failure, invalidates the packet. First-run labels from a failing seat are discarded and never compared against re-run labels before the re-run completes.'"
+    },
+    {
+     "severity": "BLOCKING",
+     "title": "N1/N2 precision has no defined denominator, can be 0/0, and is structurally biased toward the extractor's own selection",
+     "attack": "G2 gates on 'E1 exceeds N1's precision' but never defines N1's precision denominator. Two attacks: (1) if no adjudicated sentence matches the _PATH regex, N1 precision is 0/0 and 'E1 exceeds undefined' has no truth value — the gate silently cannot fail or pass. (2) Worse, the adjudicated set is ALL extractor flags plus a ~11% uniform sample of the remainder (294 of ~2732). N1's matches inside the extractor's flag set are counted at 100% while its matches in the remainder are sampled at ~11%, so N1's measured precision is dominated by sentences the extractor pre-selected. The E1-vs-N1 comparison is partly circular: the null rule is being graded mostly on the extractor's home turf.",
+     "fix": "Add to E3: 'N1/N2 precision is computed with inverse-probability weights frozen here: weight 1 for flagged-set sentences, weight (unflagged remainder size / 294) for sampled sentences; both the weighted rate and the raw counts publish. If a null rule's (weighted) denominator is 0, its precision is undefined, G2 does not evaluate against it, and the RESULT reports this as a gate non-evaluation with failure-level prominence.'"
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "Three seats, three labels: a 1-1-1 split has no verdict rule, enabling silent denominator shrinkage",
+     "attack": "With labels A/B/C and 3 seats, a sentence can adjudicate A-B-C — no majority exists. The prereg says 'majority of 3' and nothing else. Whoever writes the harness will pick a tiebreak (drop the sentence, default to C, use the extractor's own flag as tiebreak — the worst option) after seeing the data. Dropping silently shrinks the denominators of E1, E2, and E4; defaulting to C deflates the A-rate and biases G1 toward failure; any post-hoc choice is a degree of freedom the freeze was supposed to remove.",
+     "fix": "Add to Verdict: 'A sentence with no majority label is verdict NO-MAJORITY: excluded from every numerator and denominator, with its count reported next to each estimand it was excluded from. If NO-MAJORITY sentences exceed 10% of any estimand's denominator, that estimand and any gate over it publish as UNSTABLE, treated with failure-level prominence.'"
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "Packet invalidation cascades are unspecified — gates keep 'evaluating' over arbitrarily shrunken denominators, and total invalidation has no defined output",
+     "attack": "Second G-V failures invalidate whole packets. Scenario: two packets invalidate; the adjudicated unflagged sample drops from 294 to ~98, so G1's 0.02 threshold now means '2 or more A sentences' — a coin flip that still prints as a gate verdict. If the invalidated packets happen to hold most of the ~6 flagged sentences, E1's denominator collapses too. If all three packets invalidate, the prereg specifies no outcome at all — the exact 'HOLDS over zero comparisons' failure the lab was burned by, one level up.",
+     "fix": "Add to G-V: 'Gates evaluate only if at least 200 unflagged-sample sentences AND at least half the flagged set survive adjudication. Below either floor, no gate evaluates and the cycle's RESULT is, verbatim: \"measurement failed — insufficient valid adjudications (n_surviving reported)\" — published with the prominence a gate failure would have. Which sentences each packet contains is recorded in the receipt at freeze.'"
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "G-V's 0.80 decoy threshold can pass while the seat fails every mention-vs-use decoy — validating a panel that is blind to the exact error class under measurement",
+     "attack": "30 decoys across 3 packets is ~10 per packet (composition per packet is not even specified). A seat scoring 8/10 passes G-V while missing both/all mention-vs-use C decoys in its packet. The whole point of the study is the mention-vs-use line (3 of 6 original flags were that false-accusation class), so G-V can certify a ground truth produced by seats demonstrably incompetent at the one distinction the estimands hinge on. The validity gate cannot fail on the failure that matters.",
+     "fix": "Add to G-V: 'Decoy composition per packet is fixed at freeze: 5 clear-A, 1-2 clear-B, 3-4 clear-C with at least 3 mention-vs-use C decoys per packet. In addition to the 0.80 overall threshold, every seat must correctly label at least 2 of the 3+ mention-vs-use decoys in its packet; a miss on this sub-threshold follows the same re-run/invalidate ladder.'"
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "The answer key ships in the same commit as the packets; seat blindness is instructed, not enforced",
+     "attack": "Seats are subagents 'instructed to read no files and run no commands.' If the answer key sits in-repo in the packet commit at run time, a seat that (deliberately or through tool-use drift) reads it aces the decoys, G-V passes vacuously, and the corpus labels inherit whatever that seat does. The validity gate then certifies exactly nothing. The prereg's own house history (attestation found the gate reading 6 of 2738 sentences) shows agents do not reliably do what prose tells them.",
+     "fix": "Change Ground truth construction: 'The commit shipping the packets contains only the SHA-256 of the answer key; the key file itself is committed after all seat outputs are recorded, and the RESULT verifies the hash. Seats run in a configuration with file-read and command tools disabled, not merely instructed away; the harness records the tool configuration in the receipt.'"
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "HELD-OUT adjudications are published this cycle, making the future DEV/HELD-OUT discipline honor-system — and HELD-OUT's own denominators may be empty",
+     "attack": "This cycle reports pooled numbers, so the receipt presumably publishes every sentence's adjudicated label — including the HELD-OUT third. The future repairer is the same agent lineage; once HELD-OUT labels are visible, 'developed against DEV only' is unenforceable and the before/after on HELD-OUT is a measurement in name only. Separately: HELD-OUT is ~18 commits; with ~6 total flags and a ~2% A-rate, HELD-OUT can easily contain 0-2 adjudicated A sentences, so the mandated before/after would report over an empty or meaningless denominator while citing this prereg as its authority.",
+     "fix": "Add to the split section: 'The receipt publishes DEV adjudications in the clear and HELD-OUT adjudications only as a salted hash; the plaintext HELD-OUT labels are released in the repair cycle's RESULT after the repaired extractor's HELD-OUT run is committed. If HELD-OUT contains fewer than 5 adjudicated-A sentences, the before/after is descriptive, not a gate, and must say so.'"
+    },
+    {
+     "severity": "NOTE",
+     "title": "G2's hedge is asymmetric: failure carries a mandated verbatim caveat, a pass at n≈4 carries none",
+     "attack": "E1 = 3/4 vs N1 = 5/8: G2 passes on a margin of one adjudication — one seat's flip on one sentence reverses the verdict — and the RESULT may headline 'the templates beat the null' with no mandated qualifier, while the failure branch is forced to say 'at this sample size'. The escape is one-directional: noise can only ever be laundered into a pass.",
+     "fix": "Add to G2: 'Whether G2 passes or fails, the RESULT states verbatim: \"E1 = x/y vs N1 = a/b; no significance is claimed at these n.\" A pass may not be quoted anywhere without those counts.'"
+    },
+    {
+     "severity": "NOTE",
+     "title": "N2 is measured but gates nothing — the verb-list null can beat the extractor with no forced consequence",
+     "attack": "G2's bar is N1 only. Scenario: N2 ('flag iff any file_touched verb stem matches') out-precises both the extractor and N1 — plausible in a corpus where 'Rebuilt LEDGER.md' style sentences pair verbs with real changes. The RESULT publishes the number, the extractor 'survives' its measurement, and nothing forces the future repair to treat the stronger null as the bar. A comparison that cannot force anything is decoration wearing a gate's clothes.",
+     "fix": "Change G2's bar to max(N1, N2) precision — 'E1 exceeds the better null' — with the failure sentence generalized to name whichever null won; or add one line stating explicitly why N2 is descriptive-only, so the omission is a frozen decision rather than a leak."
+    },
+    {
+     "severity": "NOTE",
+     "title": "E2 recall can be 0/0 if zero sentences adjudicate A, and the prereg does not say what publishes then",
+     "attack": "If G1 fails hard (0 A's in the 294-sample) and the few flagged sentences all adjudicate B or C (the known history: half the flags were false accusations), then 'all adjudicated A' = 0 and E2 = 0/0. The extrapolated corpus-level form multiplies an undefined rate. A harness written without a guard prints 1.0 or NaN-as-dash, and either could slip into the RESULT as a recall number.",
+     "fix": "Add to E2: 'If the count of adjudicated-A sentences is 0, both forms of E2 publish as UNDEFINED with the denominator shown; no recall number appears anywhere in the RESULT in that case.'"
+    }
+   ]
+  },
+  {
+   "findings": [
+    {
+     "severity": "BLOCKING",
+     "title": "Flagged set is missing from the packet composition — E1 precision has no blind ground truth",
+     "attack": "Ground truth construction defines FLAGGED (exhaustive) and the UNFLAGGED sample, but the packet line reads 'Packets: sampled sentences + decoys shuffled together.' Read literally, the flagged sentences are never placed in any packet. Then E1 ('the share adjudicated A' among flagged sentences) has an empty adjudicated numerator/denominator and the headline precision number is either undefined or gets adjudicated later outside the blind protocol — e.g. by the author, who already hand-labeled 3 of the ~6 flagged sentences as false accusations. Either way the central estimand is measured unblinded or not at all, and G2 (E1 vs N1) cannot fail meaningfully. Alternate reading — flagged sentences ARE silently included — leaves the packet contents unpinned at freeze time, so either behavior can be defended post hoc.",
+     "fix": "Rewrite the packet line: 'Packets: FLAGGED set (exhaustive) + UNFLAGGED sample (n=294) + 30 decoys, shuffled together under opaque sequential ids.' State the total packet-sentence count so the composition is checkable against the receipt. Additionally note that because the flagged set is included exhaustively while the unflagged band is sampled, no per-sentence marking or ordering may distinguish them (already implied by the shuffle — say it explicitly)."
+    },
+    {
+     "severity": "BLOCKING",
+     "title": "Header/imperative sentences fall into an A-vs-C definitional collision covering the corpus's densest claim-bearing class",
+     "attack": "Every commit in this corpus opens with a header like 'diffgate: promote the band' or 'diffgate: the never-read band is first-class'. The newline-splitting regex makes each header its own sentence. Label A covers 'asserts at least one specific change made by this commit'; label C explicitly lists 'headers'. An imperative header naming a concrete change satisfies both. Two honest seats systematically split: seat 1 labels every imperative header A (it names the commit's change), seat 2 labels every header C (the C clause says headers). With ~54 commits that is ~54 sentences of systematic 2-1 or 1-1-1 disagreement, and since headers are exactly where this agent concentrates its claims, E2 recall and E4 (unflagged A-rate, hence G1) swing on which reading the majority happens to adopt. G1 can pass or fail purely on header-labeling convention, not on whether the never-read band holds substance. Same collision for a scope-claim header: 'diffgate: only touch the band logic' is simultaneously an A scope claim and a C header.",
+     "fix": "Freeze one rule in the Labels section, e.g.: 'The first line of a message (the scope: summary form) is labeled by content like any other sentence; the C \"headers\" clause covers only structural headers (section markers, trailers), not the subject line. Imperatives and subjectless fragments naming a concrete file/symbol/scope change are read as assertions that this commit makes that change → A.' Add 3+ decoys in exactly this imperative-header form (some A, some C narrative-headers) so G-V exercises the rule."
+    },
+    {
+     "severity": "BLOCKING",
+     "title": "Majority-of-3 over a 3-way label space has an undefined verdict on 1-1-1 splits",
+     "attack": "Three seats, three labels: a 1/1/1 split (A/B/C) has no majority. The prereg freezes 'Verdict: majority of 3' and nothing else. On the ambiguous classes above (headers, self-referential sentences, past-tense state reports), 1-1-1 ties are likely, and the analyst then chooses tie-handling after seeing which choice makes G1 or G2 pass — exclude ties (shrinks the A denominator, helps G2), coerce ties to C (kills G1), or coerce to A (rescues G1). The gate outcome becomes an analyst degree of freedom, the exact 'cannot fail' failure mode the lab killed the ladder RECON for.",
+     "fix": "Freeze tie handling now: '1-1-1 splits adjudicate NO-VERDICT; NO-VERDICT sentences are excluded from every estimand numerator and denominator, and the NO-VERDICT rate is reported next to each estimand. If NO-VERDICT exceeds 10% of the adjudicated sample, the RESULT must state the label definitions failed and no gate verdict is claimed.'"
+    },
+    {
+     "severity": "BLOCKING",
+     "title": "Decoy circularity: the author of the contested adjudication writes the answer key that gates the panel, and failing seats are 're-run with clarified instructions'",
+     "attack": "The original finding under test — 3 of 6 flags were mention-vs-use false accusations — was hand-adjudicated by the author. The same author now writes 10 clear-C decoys 'built to probe mention-vs-use' plus their answer key, and G-V ejects any seat scoring < 0.80 on them, with one retry under 'clarified instructions.' Concretely: a seat that honestly reads 'Rebuilt LEDGER.md' as A fails the author's C-decoys, gets re-run with instructions clarified (after the author sees which decoys it missed) until it adopts the author's line, then labels the in-sample 3 known cases the author's way. The panel is structurally incapable of overturning the original hand-adjudication — the one prior result this prereg exists to check. The retry is also adaptive: instruction text written after observing failures is a channel from the answer key into the ground-truth labels of corpus sentences in that packet.",
+     "fix": "(1) Pre-commit both instruction versions — v1 and the single permissible 'clarified' v2 — in the freeze commit, before any seat runs; the retry may only swap v1 for v2 verbatim. (2) Remove the mention-vs-use decoys from the G-V pass/fail computation: gate seats on the uncontested clear-A/clear-B/structural-C decoys only, and REPORT seat performance on the mention-vs-use decoys as a finding. (3) Report the 3 known cases' panel verdicts individually; state in advance that a panel verdict of A on any of them retracts the corresponding 'false accusation' claim with equal prominence."
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "Synthetic decoys are stylistically separable from the corpus's distinctive house prose, letting a seat pass G-V without validating corpus labels",
+     "attack": "The corpus is dense, lowercase-ish, idiomatic findings prose ('A/B at the pinned range reproduces all 54 gates byte-identical'). Decoys are authored fresh as 'clear-A / clear-B / clear-C' — by construction cleaner, shorter, textbook-shaped. An LLM seat (same family as the decoy author) can implicitly detect 'this reads like a test item' and apply careful canonical labeling on decoys while labeling the gnarly corpus sentences by vibes. G-V then certifies a seat whose corpus labels are unvalidated — the validity gate measures decoy-style competence, not corpus-label competence.",
+     "fix": "Author decoys by minimally editing real sentences from OTHER commits/repos in the same idiom (flip mention→use by changing one verb, etc.) so surface style matches; then run a one-off distinguishability probe: a fresh seat is shown the packet and asked only 'synthetic or corpus?' per sentence. Commit the probe protocol in the freeze; if it beats chance materially (state the threshold, e.g. AUC > 0.65), G-V is declared void for this cycle and the RESULT must say so."
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "G-V has no per-class floor — a seat can miss every mention-vs-use decoy and still pass",
+     "attack": "30 decoys across 3 packets is ~10 per packet (allocation unspecified — see separate note), so 0.80 permits 2 misses. If a packet carries ~3 mention-vs-use C-decoys, a seat can miss 2 of 3 — or with unlucky allocation, all of its mention-vs-use decoys — and still be certified valid, then mislabel the exact class E1's headline number turns on. The gate that exists to validate competence on the contested boundary is insensitive to it.",
+     "fix": "Specify decoy allocation per packet in the prereg (e.g. each packet contains all 30, or exactly 5A/2B/3C-mvu each), and add a per-class clause: 'G-V additionally requires at most 1 miss among the mention-vs-use decoys in the packet' — or, if adopting the fix that removes mvu decoys from gating, require the per-class breakdown to be reported per seat."
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "Answer key ships in the same commit as the packets, and seat blindness is instructed, not enforced",
+     "attack": "'The answer key is committed in the same commit as the packets' + seats are LLM subagents merely 'instructed to read no files and run no commands.' A seat spawned with file tools that ignores or misreads the instruction (or receives repo context through its harness) can read the key at labeling time; and even if no seat cheats, the protocol cannot prove it — the key was accessible for the entire labeling window. This is the difference between blinding and pinky-swearing.",
+     "fix": "Two changes: (1) commit SHA-256(answer key + salt) in the freeze commit; commit the plaintext key only after all seat outputs are committed (hash verifies no swap). (2) Spawn seats with no file/command tools at the harness level and record the seat configuration in the receipt: 'seats had no tools' must be a checkable property of the run, not an instruction in the prompt."
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "'Made by THIS commit' is undecidable from an isolated sentence — past-tense action reports split honest seats",
+     "attack": "Label A requires a change 'made by this commit,' but seats see bare sentences. 'Rebuilt LEDGER.md and bumped REPLICATIONS.md' — seat 1: past-tense action verbs, this commit did it → A; seat 2: could be reporting a prior commit's work ('reports on other commits' work' → C), and without the diff there is no way to tell. Its negative twin 'LEDGER.md had not been rebuilt' is a state report (C) that is nonetheless diff-checkable-in-principle, tempting an A. A self-referential sentence describing the creation of the very file the message ships ('adds this prereg, freezing the panel protocol') sits on the mention-vs-use line the decoys probe, but from the sentence alone a seat cannot know the file is in this diff. These aren't edge cases — findings-prose commits are full of past-tense reports on the repo's state.",
+     "fix": "Freeze a tense/agency default in the Labels section: 'A bare past-tense or present-tense action verb with a file/symbol object, no other agent or commit named, is read as asserting this commit performed it → A. Perfect/pluperfect and stative constructions (\"had not been rebuilt\", \"holds\", \"carries\", \"exists\") → C. A sentence naming another commit, branch, or prior cycle as the actor → C.' Add decoy pairs exercising each default ('Rebuilt X' vs 'X had been rebuilt in the prior cycle')."
+    },
+    {
+     "severity": "WEAKNESS",
+     "title": "A-precedence plus the E1/E1b split perversely scores compound change+result sentences against tests_pass",
+     "attack": "'Fixed the band split; 2575 passed, 11 skipped' — precedence forces the panel label to A. tests_pass fires on it and E1b scores tests_pass flags against B, so this correct flag of a genuine test-result clause is recorded as a tests_pass precision error. Symmetrically for recall: a compound sentence flagged ONLY by tests_pass is excluded from E1's flag set ('every template except tests_pass') yet adjudicated A, so it lands as an extractor recall miss even though the extractor fired on the sentence. The single-label precedence systematically punishes the extractor on exactly the corpus's common 'did X; N passed' sentence shape, in both estimands, in the same direction.",
+     "fix": "Keep the single reported label for the corpus statistics, but have seats record a two-bit sub-label on A sentences: 'also contains a B-type result clause' (frozen wording in the instructions). Score E1b's tests_pass flags as correct iff the sentence is B or A-with-B-clause; score E2 recall counting a tests_pass-only flag on an A-with-B-clause sentence as neither hit nor miss, reported separately. Freeze these scoring rules now, before any flag counts are known."
+    },
+    {
+     "severity": "NOTE",
+     "title": "Packet/seat topology and decoy allocation are unpinned",
+     "attack": "'3 packets' + '3 independent LLM seats per packet' is readable as 9 seats total (3 per packet) or 3 seats each labeling all packets; 'majority of 3' works under either, but decoy counts per packet, whether the 294 sampled sentences are split across packets or repeated, and whether the 30 decoys are duplicated per packet or partitioned are all unstated. Post hoc, whichever topology yields passing gates can be claimed as the intended one.",
+     "fix": "Pin the topology in one sentence: e.g. 'The 294 + FLAGGED corpus sentences are partitioned into 3 packets of ~N each; all 30 decoys appear in every packet; each packet is labeled by 3 seats; verdict per sentence is the majority of its packet's 3 seats; 9 seat-runs total.' Whatever the intended design, its counts must be derivable from the prereg alone."
+    },
+    {
+     "severity": "NOTE",
+     "title": "No cross-family seat despite the disclosed correlated-error ceiling",
+     "attack": "The disclosure ('same model family, unanimity is a correlated-error ceiling') is honest but passive: with all 3 seats sharing family — and sharing it with the corpus author AND the decoy author — a family-wide systematic reading of, say, imperative headers as A produces a unanimous, G-V-passing, wrong ground truth, and nothing in the design can detect it. Disclosure names the hole; the design walks into it.",
+     "fix": "If any cross-family model is reachable in the harness, pre-commit one shadow seat from a different family per packet, non-voting: its labels don't enter the verdict but its disagreement rate with the panel majority is reported per label class. Cheap, changes no estimand, and turns the disclosed ceiling into a measured quantity. If no cross-family model is reachable, state that explicitly in Disclosed limits."
+    }
+   ]
+  }
+ ]
+}

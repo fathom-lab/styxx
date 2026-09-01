@@ -1,0 +1,753 @@
+{
+  "purpose": "dogfood — the shipped verifier run on this cycle's own RESULT, with its VERIFIED bindings graded by a frozen structural definition",
+  "definition_frozen_before_the_count": {
+    "structurally_coincident": "the receipt path's terminal segment is a bare array subscript, or one of case, col, i, idx, index, line, seed, token",
+    "ties_resolve": "toward NOMINAL — the direction that flatters this document",
+    "status": "MECHANICAL, not a hand adjudication. The coincident count is a FLOOR on the false-attestation surface, never a ceiling: this definition cannot tell a nominal binding that names the WRONG quantity from a right one."
+  },
+  "document": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "verdict": "OATH-HELD",
+  "counts": {
+    "VERIFIED": 72,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verified_bindings": 72,
+  "structurally_coincident": 9,
+  "nominal": 63,
+  "coincident_share": 0.125,
+  "coincident_roster": [
+    {
+      "line": 49,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].non_targets[6].token",
+      "terminal": "token",
+      "coincident": true,
+      "context": "Exhaustive substitution over the class, every single-significant-digit mutant of all 11 tokens,"
+    },
+    {
+      "line": 94,
+      "token": "1",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][2]",
+      "terminal": "coordinates[0][2]",
+      "coincident": true,
+      "context": "| G2 firing-surface exactness | a 12th firing, or a missed roster token | 11 firings, 1 document, 0 over-reach, 0 under-"
+    },
+    {
+      "line": 95,
+      "token": "5",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[4][2]",
+      "terminal": "coordinates[4][2]",
+      "coincident": true,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "1",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][2]",
+      "terminal": "coordinates[0][2]",
+      "coincident": true,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 96,
+      "token": "5",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[4][2]",
+      "terminal": "coordinates[4][2]",
+      "coincident": true,
+      "context": "| G4′a warrant, mechanical | roster status drift at the ship-candidate verifier | reproduces exactly: 5 VERIFIED, 4 UNGR"
+    },
+    {
+      "line": 96,
+      "token": "2",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][1]",
+      "terminal": "coordinates[0][1]",
+      "coincident": true,
+      "context": "| G4′a warrant, mechanical | roster status drift at the ship-candidate verifier | reproduces exactly: 5 VERIFIED, 4 UNGR"
+    },
+    {
+      "line": 97,
+      "token": "10",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[9][2]",
+      "terminal": "coordinates[9][2]",
+      "coincident": true,
+      "context": "| G4′b warrant, second blind adjudicator | a target called CLAIM, or a LABEL in the fresh draw | 21 examined, 11 LABEL, "
+    },
+    {
+      "line": 110,
+      "token": "3",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].seeds[2].seed",
+      "terminal": "seed",
+      "coincident": true,
+      "context": "caught a mean of 4.6 times per seed across ten seeds, range 3 to 6, so the tamper channel this"
+    },
+    {
+      "line": 155,
+      "token": "27",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].targets[0].line",
+      "terminal": "line",
+      "coincident": true,
+      "context": "nothing in 37 of them — 27 whose separator opens the run so no header line precedes it, plus 10"
+    }
+  ],
+  "all_bindings": [
+    {
+      "line": 34,
+      "token": "140",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.documents",
+      "terminal": "documents",
+      "coincident": false,
+      "context": "At the shipped verifier, over the frozen frame of 140 documents and 5681 extracted tokens"
+    },
+    {
+      "line": 34,
+      "token": "5681",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.tokens",
+      "terminal": "tokens",
+      "coincident": false,
+      "context": "At the shipped verifier, over the frozen frame of 140 documents and 5681 extracted tokens"
+    },
+    {
+      "line": 35,
+      "token": "4196",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.VERIFIED",
+      "terminal": "VERIFIED",
+      "coincident": false,
+      "context": "(VERIFIED 4196 / ABSTAIN 1481 / UNGROUNDED 4):"
+    },
+    {
+      "line": 35,
+      "token": "1481",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.ABSTAIN",
+      "terminal": "ABSTAIN",
+      "coincident": false,
+      "context": "(VERIFIED 4196 / ABSTAIN 1481 / UNGROUNDED 4):"
+    },
+    {
+      "line": 35,
+      "token": "4",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.UNGROUNDED",
+      "terminal": "UNGROUNDED",
+      "coincident": false,
+      "context": "(VERIFIED 4196 / ABSTAIN 1481 / UNGROUNDED 4):"
+    },
+    {
+      "line": 37,
+      "token": "123",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].comparison_arm.n_tokens",
+      "terminal": "n_tokens",
+      "coincident": false,
+      "context": "- 123 sole-token first-cell tokens — the cell content is the number and nothing else."
+    },
+    {
+      "line": 38,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.per_document_ordinal_abstain_count.papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "terminal": "md",
+      "coincident": false,
+      "context": "- 11 of those are ordinal-shaped, and all 11 sit in ONE document under the column header `#`: the"
+    },
+    {
+      "line": 38,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.per_document_ordinal_abstain_count.papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "terminal": "md",
+      "coincident": false,
+      "context": "- 11 of those are ordinal-shaped, and all 11 sit in ONE document under the column header `#`: the"
+    },
+    {
+      "line": 44,
+      "token": "2",
+      "receipt": "oath_v11_baseline_ledger.json",
+      "path": "counts.papers/agent-conscience/FINDING_scale_test_2026_07_26.md.ABSTAIN",
+      "terminal": "ABSTAIN",
+      "coincident": false,
+      "context": "`scale_test_result.json:per_item[2].i` — an index leaf equal to its own subscript. The oath was"
+    },
+    {
+      "line": 49,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].non_targets[6].token",
+      "terminal": "token",
+      "coincident": true,
+      "context": "Exhaustive substitution over the class, every single-significant-digit mutant of all 11 tokens,"
+    },
+    {
+      "line": 50,
+      "token": "117",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].mutants_expected",
+      "terminal": "mutants_expected",
+      "coincident": false,
+      "context": "reproduced at the ship-candidate verifier with the clause off: of 117 mutants the shipped verifier"
+    },
+    {
+      "line": 51,
+      "token": "46",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].expected.UNGROUNDED",
+      "terminal": "UNGROUNDED",
+      "coincident": false,
+      "context": "answers UNGROUNDED 46, VERIFIED 50, ABSTAIN 21. A false-attestation rate under tamper of 0.4274 on"
+    },
+    {
+      "line": 51,
+      "token": "50",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].expected.VERIFIED",
+      "terminal": "VERIFIED",
+      "coincident": false,
+      "context": "answers UNGROUNDED 46, VERIFIED 50, ABSTAIN 21. A false-attestation rate under tamper of 0.4274 on"
+    },
+    {
+      "line": 51,
+      "token": "0.4274",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].false_attestation_rate_under_tamper",
+      "terminal": "false_attestation_rate_under_tamper",
+      "coincident": false,
+      "context": "answers UNGROUNDED 46, VERIFIED 50, ABSTAIN 21. A false-attestation rate under tamper of 0.4274 on"
+    },
+    {
+      "line": 87,
+      "token": "1109",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_replication_documents",
+      "terminal": "extractor_replication_documents",
+      "coincident": false,
+      "context": "refactor moved zero tokens across all 1109 markdown documents under `papers/`."
+    },
+    {
+      "line": 93,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G1 instrument validity | extractor drift, or frame at run ≠ frame at freeze | 0 mismatches over 1109 documents; frame "
+    },
+    {
+      "line": 93,
+      "token": "1109",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_replication_documents",
+      "terminal": "extractor_replication_documents",
+      "coincident": false,
+      "context": "| G1 instrument validity | extractor drift, or frame at run ≠ frame at freeze | 0 mismatches over 1109 documents; frame "
+    },
+    {
+      "line": 93,
+      "token": "140",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.documents",
+      "terminal": "documents",
+      "coincident": false,
+      "context": "| G1 instrument validity | extractor drift, or frame at run ≠ frame at freeze | 0 mismatches over 1109 documents; frame "
+    },
+    {
+      "line": 93,
+      "token": "5681",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.tokens",
+      "terminal": "tokens",
+      "coincident": false,
+      "context": "| G1 instrument validity | extractor drift, or frame at run ≠ frame at freeze | 0 mismatches over 1109 documents; frame "
+    },
+    {
+      "line": 94,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].firings_in_frame",
+      "terminal": "firings_in_frame",
+      "coincident": false,
+      "context": "| G2 firing-surface exactness | a 12th firing, or a missed roster token | 11 firings, 1 document, 0 over-reach, 0 under-"
+    },
+    {
+      "line": 94,
+      "token": "1",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][2]",
+      "terminal": "coordinates[0][2]",
+      "coincident": true,
+      "context": "| G2 firing-surface exactness | a 12th firing, or a missed roster token | 11 firings, 1 document, 0 over-reach, 0 under-"
+    },
+    {
+      "line": 94,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G2 firing-surface exactness | a 12th firing, or a missed roster token | 11 firings, 1 document, 0 over-reach, 0 under-"
+    },
+    {
+      "line": 94,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G2 firing-surface exactness | a 12th firing, or a missed roster token | 11 firings, 1 document, 0 over-reach, 0 under-"
+    },
+    {
+      "line": 95,
+      "token": "4",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.UNGROUNDED",
+      "terminal": "UNGROUNDED",
+      "coincident": false,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "5",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[4][2]",
+      "terminal": "coordinates[4][2]",
+      "coincident": true,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "1",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][2]",
+      "terminal": "coordinates[0][2]",
+      "coincident": true,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "4191",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[2].post_clause_frame_expected.VERIFIED",
+      "terminal": "VERIFIED",
+      "coincident": false,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "1490",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[2].post_clause_frame_expected.ABSTAIN",
+      "terminal": "ABSTAIN",
+      "coincident": false,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 95,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip"
+    },
+    {
+      "line": 96,
+      "token": "5",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[4][2]",
+      "terminal": "coordinates[4][2]",
+      "coincident": true,
+      "context": "| G4′a warrant, mechanical | roster status drift at the ship-candidate verifier | reproduces exactly: 5 VERIFIED, 4 UNGR"
+    },
+    {
+      "line": 96,
+      "token": "4",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.UNGROUNDED",
+      "terminal": "UNGROUNDED",
+      "coincident": false,
+      "context": "| G4′a warrant, mechanical | roster status drift at the ship-candidate verifier | reproduces exactly: 5 VERIFIED, 4 UNGR"
+    },
+    {
+      "line": 96,
+      "token": "2",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[0][1]",
+      "terminal": "coordinates[0][1]",
+      "coincident": true,
+      "context": "| G4′a warrant, mechanical | roster status drift at the ship-candidate verifier | reproduces exactly: 5 VERIFIED, 4 UNGR"
+    },
+    {
+      "line": 97,
+      "token": "21",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].totals.examined",
+      "terminal": "examined",
+      "coincident": false,
+      "context": "| G4′b warrant, second blind adjudicator | a target called CLAIM, or a LABEL in the fresh draw | 21 examined, 11 LABEL, "
+    },
+    {
+      "line": 97,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].firings_in_frame",
+      "terminal": "firings_in_frame",
+      "coincident": false,
+      "context": "| G4′b warrant, second blind adjudicator | a target called CLAIM, or a LABEL in the fresh draw | 21 examined, 11 LABEL, "
+    },
+    {
+      "line": 97,
+      "token": "10",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].coordinates[9][2]",
+      "terminal": "coordinates[9][2]",
+      "coincident": true,
+      "context": "| G4′b warrant, second blind adjudicator | a target called CLAIM, or a LABEL in the fresh draw | 21 examined, 11 LABEL, "
+    },
+    {
+      "line": 97,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G4′b warrant, second blind adjudicator | a target called CLAIM, or a LABEL in the fresh draw | 21 examined, 11 LABEL, "
+    },
+    {
+      "line": 98,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G5 catch decomposition | a fuse, or collateral silencing | override missed 0 at every seed; collateral 0 at every seed"
+    },
+    {
+      "line": 98,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G5 catch decomposition | a fuse, or collateral silencing | override missed 0 at every seed; collateral 0 at every seed"
+    },
+    {
+      "line": 99,
+      "token": "117",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].mutants_expected",
+      "terminal": "mutants_expected",
+      "coincident": false,
+      "context": "| G6 exhaustive sweep | the affirmative case failing to reproduce | 117 mutants, 46 / 50 / 21, 0 did-not-land |"
+    },
+    {
+      "line": 99,
+      "token": "46",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].expected.UNGROUNDED",
+      "terminal": "UNGROUNDED",
+      "coincident": false,
+      "context": "| G6 exhaustive sweep | the affirmative case failing to reproduce | 117 mutants, 46 / 50 / 21, 0 did-not-land |"
+    },
+    {
+      "line": 99,
+      "token": "50",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[6].expected.VERIFIED",
+      "terminal": "VERIFIED",
+      "coincident": false,
+      "context": "| G6 exhaustive sweep | the affirmative case failing to reproduce | 117 mutants, 46 / 50 / 21, 0 did-not-land |"
+    },
+    {
+      "line": 99,
+      "token": "21",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].totals.examined",
+      "terminal": "examined",
+      "coincident": false,
+      "context": "| G6 exhaustive sweep | the affirmative case failing to reproduce | 117 mutants, 46 / 50 / 21, 0 did-not-land |"
+    },
+    {
+      "line": 99,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].extractor_mismatches",
+      "terminal": "extractor_mismatches",
+      "coincident": false,
+      "context": "| G6 exhaustive sweep | the affirmative case failing to reproduce | 117 mutants, 46 / 50 / 21, 0 did-not-land |"
+    },
+    {
+      "line": 101,
+      "token": "5681",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[0].frame_at_freeze.tokens",
+      "terminal": "tokens",
+      "coincident": false,
+      "context": "| G8 mechanism proof | the clause drifting into certified-by-omission | 5681 tokens post-clause; non-extraction would re"
+    },
+    {
+      "line": 101,
+      "token": "5670",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[7].non_extraction_would_read",
+      "terminal": "non_extraction_would_read",
+      "coincident": false,
+      "context": "| G8 mechanism proof | the clause drifting into certified-by-omission | 5681 tokens post-clause; non-extraction would re"
+    },
+    {
+      "line": 107,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[2].audit_A1_conversions_elsewhere_in_frame",
+      "terminal": "audit_A1_conversions_elsewhere_in_frame",
+      "coincident": false,
+      "context": "destroyed: **0**. Conversions anywhere outside the target document: **0**."
+    },
+    {
+      "line": 107,
+      "token": "0",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[2].audit_A1_conversions_elsewhere_in_frame",
+      "terminal": "audit_A1_conversions_elsewhere_in_frame",
+      "coincident": false,
+      "context": "destroyed: **0**. Conversions anywhere outside the target document: **0**."
+    },
+    {
+      "line": 110,
+      "token": "4.6",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].off_arm_caught_mean",
+      "terminal": "off_arm_caught_mean",
+      "coincident": false,
+      "context": "caught a mean of 4.6 times per seed across ten seeds, range 3 to 6, so the tamper channel this"
+    },
+    {
+      "line": 110,
+      "token": "3",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].seeds[2].seed",
+      "terminal": "seed",
+      "coincident": true,
+      "context": "caught a mean of 4.6 times per seed across ten seeds, range 3 to 6, so the tamper channel this"
+    },
+    {
+      "line": 110,
+      "token": "6",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].seeds[0].off_arm_caught",
+      "terminal": "off_arm_caught",
+      "coincident": false,
+      "context": "caught a mean of 4.6 times per seed across ten seeds, range 3 to 6, so the tamper channel this"
+    },
+    {
+      "line": 112,
+      "token": "123",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].comparison_arm.n_tokens",
+      "terminal": "n_tokens",
+      "coincident": false,
+      "context": "is the broad-class comparison: the rejected positional rule, which silences all 123 sole-token"
+    },
+    {
+      "line": 113,
+      "token": "28.1",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[5].comparison_arm.surfacing_destroyed_mean",
+      "terminal": "surfacing_destroyed_mean",
+      "coincident": false,
+      "context": "first cells, destroys a mean of 28.1 reader-visible catches per seed. The frozen clause destroys"
+    },
+    {
+      "line": 142,
+      "token": "155",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.regeneration_surface_census_vocabulary.tokens",
+      "terminal": "tokens",
+      "coincident": false,
+      "context": "- **The regeneration surface.** Under the census's wider sixteen-entry vocabulary the class is 155"
+    },
+    {
+      "line": 143,
+      "token": "14",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.regeneration_surface_census_vocabulary.documents",
+      "terminal": "documents",
+      "coincident": false,
+      "context": "tokens across 14 documents. That is what the class regrows into if documents are merely repaired"
+    },
+    {
+      "line": 146,
+      "token": "128",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.regeneration_surface_census_vocabulary.by_header.#",
+      "terminal": "#",
+      "coincident": false,
+      "context": "- **The frozen clause's own surface.** 128 tokens, all under a literal `#`, across 12 documents."
+    },
+    {
+      "line": 146,
+      "token": "12",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.frozen_clause_firing_surface.documents",
+      "terminal": "documents",
+      "coincident": false,
+      "context": "- **The frozen clause's own surface.** 128 tokens, all under a literal `#`, across 12 documents."
+    },
+    {
+      "line": 147,
+      "token": "11",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[1].firings_in_frame",
+      "terminal": "firings_in_frame",
+      "coincident": false,
+      "context": "Only 11 of them sit inside the certified frame; the other 117 are in documents carrying no"
+    },
+    {
+      "line": 147,
+      "token": "117",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.frozen_clause_firing_surface.outside_certified_frame",
+      "terminal": "outside_certified_frame",
+      "coincident": false,
+      "context": "Only 11 of them sit inside the certified frame; the other 117 are in documents carrying no"
+    },
+    {
+      "line": 149,
+      "token": "27",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.excluded_rank_tokens_still_obligated.tokens",
+      "terminal": "tokens",
+      "coincident": false,
+      "context": "- **What stays obligated.** The 27 `rank` tokens the vocabulary excludes remain accusable. They"
+    },
+    {
+      "line": 155,
+      "token": "37",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.tables_the_header_machinery_never_binds",
+      "terminal": "tables_the_header_machinery_never_binds",
+      "coincident": false,
+      "context": "nothing in 37 of them — 27 whose separator opens the run so no header line precedes it, plus 10"
+    },
+    {
+      "line": 155,
+      "token": "27",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "gates[4].targets[0].line",
+      "terminal": "line",
+      "coincident": true,
+      "context": "nothing in 37 of them — 27 whose separator opens the run so no header line precedes it, plus 10"
+    },
+    {
+      "line": 155,
+      "token": "10",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.blind_spots.separator_less",
+      "terminal": "separator_less",
+      "coincident": false,
+      "context": "nothing in 37 of them — 27 whose separator opens the run so no header line precedes it, plus 10"
+    },
+    {
+      "line": 156,
+      "token": "27",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.blind_spots.multi_separator",
+      "terminal": "multi_separator",
+      "coincident": false,
+      "context": "carrying no separator at all. A further 27 runs carry more than one separator, which the shipped"
+    },
+    {
+      "line": 165,
+      "token": "100",
+      "receipt": "oath_v10_ordinal_census.json",
+      "path": "class_size.ordinal_shaped.repo_wide_headers.#",
+      "terminal": "#",
+      "coincident": false,
+      "context": "countable abstention, and git-visible headers. A 1..N column longer than 100 rows also flips"
+    },
+    {
+      "line": 247,
+      "token": "37",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.tables_the_header_machinery_never_binds",
+      "terminal": "tables_the_header_machinery_never_binds",
+      "coincident": false,
+      "context": "\"37 headerless, 10 separator-less, 27 multi-separator\" as though the first two were disjoint. They"
+    },
+    {
+      "line": 247,
+      "token": "10",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.blind_spots.separator_less",
+      "terminal": "separator_less",
+      "coincident": false,
+      "context": "\"37 headerless, 10 separator-less, 27 multi-separator\" as though the first two were disjoint. They"
+    },
+    {
+      "line": 247,
+      "token": "27",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.blind_spots.header_less",
+      "terminal": "header_less",
+      "coincident": false,
+      "context": "\"37 headerless, 10 separator-less, 27 multi-separator\" as though the first two were disjoint. They"
+    },
+    {
+      "line": 248,
+      "token": "37",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.tables_the_header_machinery_never_binds",
+      "terminal": "tables_the_header_machinery_never_binds",
+      "coincident": false,
+      "context": "are not: a run with no separator also has no header row. Re-derived here, the 37 decomposes exactly"
+    },
+    {
+      "line": 249,
+      "token": "27",
+      "receipt": "oath_v11_baseline_ledger.json",
+      "path": "counts.papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md.VERIFIED",
+      "terminal": "VERIFIED",
+      "coincident": false,
+      "context": "into 27 plus 10, and the union reproduces the red team's own count. No number in the prereg is"
+    },
+    {
+      "line": 249,
+      "token": "10",
+      "receipt": "oath_v11_battery_result.json",
+      "path": "boundary_surfaces_for_G9.per_document_ordinal_abstain_count.papers/cognometry-research-agenda-2026.md",
+      "terminal": "md",
+      "coincident": false,
+      "context": "into 27 plus 10, and the union reproduces the red team's own count. No number in the prereg is"
+    },
+    {
+      "line": 262,
+      "token": "18",
+      "receipt": "oath_v11_adversarial_audit.json",
+      "path": "findings_raised",
+      "terminal": "findings_raised",
+      "coincident": false,
+      "context": "18 findings were raised. 2 survived, and both name the same defect."
+    },
+    {
+      "line": 262,
+      "token": "2",
+      "receipt": "oath_v11_adversarial_audit.json",
+      "path": "findings_survived",
+      "terminal": "findings_survived",
+      "coincident": false,
+      "context": "18 findings were raised. 2 survived, and both name the same defect."
+    }
+  ]
+}

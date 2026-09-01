@@ -1,0 +1,83 @@
+{
+  "census": "vacuous pass — four silent passes in this lab's own verification machinery",
+  "status": "CENSUS. Licenses no claim, proposes no fix. Sizes a detector's blind spot against four cases it did not have.",
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "window_lines": 6,
+  "controls": {
+    "positive": {
+      "absence": [
+        6
+      ],
+      "loops": []
+    },
+    "negative": {
+      "absence": [],
+      "loops": []
+    },
+    "usable": true,
+    "why": "a detector reporting zero everywhere is indistinguishable from a detector being called wrongly. The first version of this census made exactly that mistake — it read `.findings` off a list — and the controls are why it was caught rather than published."
+  },
+  "cases_examined": 4,
+  "cases_caught": 0,
+  "cases_missed": 4,
+  "cases": [
+    {
+      "id": "VP-A",
+      "commit": "HEAD",
+      "path": "tests/test_ledger.py",
+      "line": 25,
+      "shape": "pytest.skip() on a shallow clone; a skipped test reads GREEN in CI",
+      "found_by": "reading .github/workflows/test.yml for an unrelated reason",
+      "source_lines": 36,
+      "absence_findings": 0,
+      "loops_findings": 0,
+      "flags_within_window": [],
+      "caught": false
+    },
+    {
+      "id": "VP-B",
+      "commit": "cbd2864",
+      "path": "tests/test_certificate_reproduces.py",
+      "line": 56,
+      "shape": "generator yields only fully-resolvable documents; the rest are dropped, not reported",
+      "found_by": "an adversarial program audit",
+      "source_lines": 105,
+      "absence_findings": 0,
+      "loops_findings": 4,
+      "flags_within_window": [],
+      "caught": false
+    },
+    {
+      "id": "VP-C",
+      "commit": "cbd2864",
+      "path": "styxx/corpus_audit.py",
+      "line": 85,
+      "shape": "sha mismatch classified as `missing`; platform-dependent hashes make it silent",
+      "found_by": "CI going red on a document that passes locally",
+      "source_lines": 216,
+      "absence_findings": 0,
+      "loops_findings": 8,
+      "flags_within_window": [],
+      "caught": false
+    },
+    {
+      "id": "VP-D",
+      "commit": "9d09ef3",
+      "path": "papers/closed-model-frontier/run_oath_v11_battery.py",
+      "line": 329,
+      "shape": "all() over an empty population returns True; the gate passes having examined nothing",
+      "found_by": "an adversarial audit of the battery, after every gate passed",
+      "source_lines": 808,
+      "absence_findings": 0,
+      "loops_findings": 36,
+      "flags_within_window": [],
+      "caught": false
+    }
+  ],
+  "the_shared_shape": "None of the four is 'a healthy value returned on a crash', which is the family `absence` does catch (SP-1/SP-5). All four are SUCCESS BY EMPTY POPULATION: the thing to be checked is filtered away upstream — by a skip, by a generator guard, by a mismatch reclassified as absence — and a downstream check then passes over nothing, reporting the same green it would report on a full population. The emptiness is not at the function boundary where a value-returning detector looks; it is manufactured several steps earlier, and the check that passes never learns the difference.",
+  "what_this_does_not_show": [
+    "That `styxx.absence` is broken. Its published recall is 9/20 on the SILENT-PASS benchmark and its own LIMITS string says a clean run is not a certificate. Missing a family it was not built for is a measured blind spot, not a defect.",
+    "That these four are the whole class. Four is four.",
+    "That a detector for this shape is feasible. Nothing here was built or tried; the rejected-design arithmetic that would decide it has not been done."
+  ]
+}

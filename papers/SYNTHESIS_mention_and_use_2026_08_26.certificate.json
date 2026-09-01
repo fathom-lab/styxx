@@ -1,0 +1,216 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "SYNTHESIS_mention_and_use_2026_08_26.md",
+  "document_sha256": "a0259c8bdaa187c28d912cfa1173a102d58000c3ac609001213f17e493b3f72f",
+  "receipts_sha256": {
+    "oath_ext_recon.json": "1470448bd1af4f8209e248360eeeb317a4a2720ec445772632817c7d55c964e6",
+    "ledger_classifier_audit.json": "8060dd7fb1f4d6bf1c6318e55f380e4bd0518b44953493136753e53c5c910a73",
+    "oath_v11_battery_result.json": "04584a3e9fdfd07416f358893350ab939aca55e7b951f73243c0824703672106",
+    "formula_span_census.json": "5882b852ba4dd3101a10ec034089d22f25d4989f1700d0e5396d093a530bfcb5",
+    "oath_adjudication_analysis.json": "2203c8a073261d71ac73c4058359a1ae686db9d5f46b9053d493bc131f6c58ab",
+    "oath_external_no_receipt_diagnostic.json": "ad4bc34c06975900e19a92f21ba710b327efc2088d144bba918f3506cd10db4f"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 11,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 3
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 67,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 46,
+      "token": "13"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 25,
+      "token": "0.9408",
+      "value": 0.9408,
+      "decimals": 4,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:status_share.ABSTAIN"
+    },
+    {
+      "line": 25,
+      "token": "507",
+      "value": 507.0,
+      "decimals": 0,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 55,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:tokens_total"
+    },
+    {
+      "line": 25,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "it had never seen, the verifier abstained on 0.9408 of 507 tokens and made 13 accusations, **not",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusations_total"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 41,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 67,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` \u2014 a",
+      "col": 77,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "156",
+      "value": 156.0,
+      "decimals": 0,
+      "context": "The specimen that should have caught this months ago: **cycle 156 is the cycle that built the",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "ledger_classifier_audit.json:rendered_nonsense_entries.detail[7].cycle"
+    },
+    {
+      "line": 46,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**4. The diffgate claim extractor.** Re-run at 7.46.0, the gate reports 13 claims and 4",
+      "col": 72,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**4. The diffgate claim extractor.** Re-run at 7.46.0, the gate reports 13 claims and 4",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:per_repo[5].counts.UNGROUNDED"
+    },
+    {
+      "line": 107,
+      "token": "28.1",
+      "value": 28.1,
+      "decimals": 1,
+      "context": "broad positional rule destroys a mean of 28.1 reader-visible catches per seed; the value-reading",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v11_battery_result.json:gates[5].comparison_arm.surfacing_destroyed_mean"
+    },
+    {
+      "line": 129,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |",
+      "col": 60,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |",
+      "status": "VERIFIED",
+      "receipt_ref": "ledger_classifier_audit.json:all_cycles[31].cycle"
+    },
+    {
+      "line": 129,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |",
+      "col": 66,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the formula-span census | a backslash | a LaTeX command | 31 of 40 corpus tokens are regexes, not formulas |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[2].token"
+    },
+    {
+      "line": 130,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |",
+      "col": 60,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[0].decimals"
+    },
+    {
+      "line": 130,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |",
+      "col": 99,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the same census's deciding column | `destroys_nominal` is 0 | this rule COSTS nothing | it reads 0 for the worst possible rule too |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_ext_recon.json:accusation_roster[0].decimals"
+    },
+    {
+      "line": 131,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| the external collector's `RECEIPT_NAMES` | an exact filename | a machine-readable RESULTS file | 26 repositories reported as publishing none demonstrably do |",
+      "col": 99,
+      "binding_context": "| where | the proxy it matched | the class it named | what it cost | | the external collector's `RECEIPT_NAMES` | an exact filename | a machine-readable RESULTS file | 26 repositories reported as publishing none demonstrably do |",
+      "status": "VERIFIED",
+      "receipt_ref": "ledger_classifier_audit.json:all_cycles[26].cycle"
+    }
+  ]
+}

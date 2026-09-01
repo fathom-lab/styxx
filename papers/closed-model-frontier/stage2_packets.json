@@ -1,0 +1,708 @@
+{
+ "stage": 2,
+ "prereg": "PREREG_claim_detector_2026_08_30.md",
+ "amendment": "AMENDMENT_claim_detector_stage2_2026_08_31.md",
+ "struct1_version": "struct-1/2026-08-30",
+ "pin": {
+  "base": "origin/main",
+  "head": "a6994ac",
+  "commits": 57,
+  "sentences": 2824
+ },
+ "counts": {
+  "available_after_exclusions": 2444,
+  "flagged_census": 38,
+  "controls": 38,
+  "decoys_per_packet": 30,
+  "packets": 3
+ },
+ "gates": {
+  "G-S2P_bar": 0.2061,
+  "G-S2LIFT": "flagged A-share > control A-share",
+  "floor_per_arm": 30
+ },
+ "packets": [
+  {
+   "packet": 1,
+   "n": 56,
+   "sentences": [
+    {
+     "id": "s2p1-001",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "s2p1-002",
+     "text": "re-certified at the pinned annotated verifier, epistemics_summary folded:"
+    },
+    {
+     "id": "s2p1-003",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "s2p1-004",
+     "text": "Changes no certificate, so no preregistration was needed -- same class as"
+    },
+    {
+     "id": "s2p1-005",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "s2p1-006",
+     "text": "blocker fixed in oathready hours earlier, and it explains it."
+    },
+    {
+     "id": "s2p1-007",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "s2p1-008",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "s2p1-009",
+     "text": "sentences promoted to first-class the way epistemics_summary promoted the"
+    },
+    {
+     "id": "s2p1-010",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "s2p1-011",
+     "text": "`add -A` cannot repeat it."
+    },
+    {
+     "id": "s2p1-012",
+     "text": "for 40 tokens across at most 14."
+    },
+    {
+     "id": "s2p1-013",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "s2p1-014",
+     "text": "rule catches ONE of 85."
+    },
+    {
+     "id": "s2p1-015",
+     "text": "adjudicates whether a retraction is DESERVED and cannot rescue a clause that does"
+    },
+    {
+     "id": "s2p1-016",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "s2p1-017",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "s2p1-018",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "s2p1-019",
+     "text": "decoys -- which buys the miss rate, the measurement the"
+    },
+    {
+     "id": "s2p1-020",
+     "text": "Of what the gate did read, half was misread."
+    },
+    {
+     "id": "s2p1-021",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "s2p1-022",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "s2p1-023",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "s2p1-024",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "s2p1-025",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "s2p1-026",
+     "text": "say so."
+    },
+    {
+     "id": "s2p1-027",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "s2p1-028",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "s2p1-029",
+     "text": "non-arbitrary choice\") and the audit printed `receipt-changed 0` over a"
+    },
+    {
+     "id": "s2p1-030",
+     "text": "formula_span_census.py   permissive control added; the_column_that_decides"
+    },
+    {
+     "id": "s2p1-031",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "s2p1-032",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "s2p1-033",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "s2p1-034",
+     "text": "HELD OUT, IT COLLAPSES."
+    },
+    {
+     "id": "s2p1-035",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "s2p1-036",
+     "text": "## What is owed"
+    },
+    {
+     "id": "s2p1-037",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "s2p1-038",
+     "text": "`corpus_audit` does not drop a document whose"
+    },
+    {
+     "id": "s2p1-039",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    },
+    {
+     "id": "s2p1-040",
+     "text": "Now it folds each certificate's epistemics_summary into a corpus total,"
+    },
+    {
+     "id": "s2p1-041",
+     "text": "Exactly two fields moved -- `instrument_sha256` and"
+    },
+    {
+     "id": "s2p1-042",
+     "text": "REPLICATIONS.md's expected corpus-audit output updated again (184 certificates,"
+    },
+    {
+     "id": "s2p1-043",
+     "text": "SYNTHESIS: ten instances, and the tenth inverts the risk model"
+    },
+    {
+     "id": "s2p1-044",
+     "text": "The unshallow first landed inside test_ledger.py,"
+    },
+    {
+     "id": "s2p1-045",
+     "text": "only a sha match and otherwise falls through to `missing`, so a CHANGED receipt"
+    },
+    {
+     "id": "s2p1-046",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "s2p1-047",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "s2p1-048",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "s2p1-049",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "s2p1-050",
+     "text": "Pooled accusation share 0.0707, but one repository supplies"
+    },
+    {
+     "id": "s2p1-051",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "s2p1-052",
+     "text": "Those charts"
+    },
+    {
+     "id": "s2p1-053",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "s2p1-054",
+     "text": "checkout failed to verify\" -- fixed there with `-text`, and nowhere else."
+    },
+    {
+     "id": "s2p1-055",
+     "text": "from RECON_vacuous_pass_2026_08_27.md, committed the same day, by that"
+    },
+    {
+     "id": "s2p1-056",
+     "text": "landed: the range-sanity clause clobbered obligation_source unconditionally"
+    }
+   ]
+  },
+  {
+   "packet": 2,
+   "n": 55,
+   "sentences": [
+    {
+     "id": "s2p2-001",
+     "text": "change status, receipt_ref, or verdict; the corpus audit line must be"
+    },
+    {
+     "id": "s2p2-002",
+     "text": "own thesis: small fixed English word lists, written a priori."
+    },
+    {
+     "id": "s2p2-003",
+     "text": "instrument_sha256 moves is attesting to a different artifact; had any claim"
+    },
+    {
+     "id": "s2p2-004",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "s2p2-005",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "s2p2-006",
+     "text": "commit that line is `if not PANEL.exists():` and the vacuous bars are forty lines"
+    },
+    {
+     "id": "s2p2-007",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "s2p2-008",
+     "text": "`bound` where obligating them changes nothing."
+    },
+    {
+     "id": "s2p2-009",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "s2p2-010",
+     "text": "papers/LEDGER.md is the document every other claim in this repository is"
+    },
+    {
+     "id": "s2p2-011",
+     "text": "Remove scratch files committed by an over-broad `git add -A`"
+    },
+    {
+     "id": "s2p2-012",
+     "text": "Landing them is `git am ci-pending/*.patch && git push` from"
+    },
+    {
+     "id": "s2p2-013",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "s2p2-014",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "s2p2-015",
+     "text": "REPLICATIONS.md's expected line moves 185 -> 186 certificates, HELD 181 ->"
+    },
+    {
+     "id": "s2p2-016",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "s2p2-017",
+     "text": "`git show commit:path` returns the blob"
+    },
+    {
+     "id": "s2p2-018",
+     "text": "IS, and repositories fall into the gap."
+    },
+    {
+     "id": "s2p2-019",
+     "text": "emit a verdict unless the prereg is committed in git -- and named it as the one"
+    },
+    {
+     "id": "s2p2-020",
+     "text": "Six documents are 1.0 unobligated -- including the paper that"
+    },
+    {
+     "id": "s2p2-021",
+     "text": "So the chart carries a"
+    },
+    {
+     "id": "s2p2-022",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "s2p2-023",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "s2p2-024",
+     "text": "[OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_universal_mind_2026_06_10.md"
+    },
+    {
+     "id": "s2p2-025",
+     "text": "this morning and went straight past `cycle 133 - SHIPPED`."
+    },
+    {
+     "id": "s2p2-026",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "s2p2-027",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "s2p2-028",
+     "text": "reports as `missing`, and `_resolvable()` drops the document."
+    },
+    {
+     "id": "s2p2-029",
+     "text": "firewall.py reads git history and exits non-zero, wired as a required status check"
+    },
+    {
+     "id": "s2p2-030",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "s2p2-031",
+     "text": "reporting_verb lands at 0.40 -- the base rate"
+    },
+    {
+     "id": "s2p2-032",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "s2p2-033",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "s2p2-034",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "s2p2-035",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "s2p2-036",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "s2p2-037",
+     "text": "detector."
+    },
+    {
+     "id": "s2p2-038",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "s2p2-039",
+     "text": "## What is owed"
+    },
+    {
+     "id": "s2p2-040",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "s2p2-041",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "s2p2-042",
+     "text": "from a word list and the reason the folds mean what they appear to: there is"
+    },
+    {
+     "id": "s2p2-043",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "s2p2-044",
+     "text": "S1 dollar span                    reaches 0"
+    },
+    {
+     "id": "s2p2-045",
+     "text": "skips, because a developer with a shallow clone is not the person hiding"
+    },
+    {
+     "id": "s2p2-046",
+     "text": "Q3 IS OCCUPIED."
+    },
+    {
+     "id": "s2p2-047",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "s2p2-048",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "s2p2-049",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "s2p2-050",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "s2p2-051",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "s2p2-052",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "s2p2-053",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "s2p2-054",
+     "text": "REPLICATIONS.md updated to six expected exceptions, four of them deliberate."
+    },
+    {
+     "id": "s2p2-055",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    }
+   ]
+  },
+  {
+   "packet": 3,
+   "n": 55,
+   "sentences": [
+    {
+     "id": "s2p3-001",
+     "text": "What it leaves is narrower and real: a measured account of what happens when the"
+    },
+    {
+     "id": "s2p3-002",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "s2p3-003",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "s2p3-004",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "s2p3-005",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "s2p3-006",
+     "text": "## What is owed"
+    },
+    {
+     "id": "s2p3-007",
+     "text": "hand-written HTML with the numbers typed in -- which is the defect the"
+    },
+    {
+     "id": "s2p3-008",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "s2p3-009",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    },
+    {
+     "id": "s2p3-010",
+     "text": "silently dropping large repos), per-file provenance (repo, branch, sha,"
+    },
+    {
+     "id": "s2p3-011",
+     "text": "numbers were right and only a working-copy run was wrong."
+    },
+    {
+     "id": "s2p3-012",
+     "text": "No clause exists, no bar was frozen, certify.py is untouched."
+    },
+    {
+     "id": "s2p3-013",
+     "text": "grows whenever a document is certified and this cycle certified several."
+    },
+    {
+     "id": "s2p3-014",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "s2p3-015",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "s2p3-016",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "s2p3-017",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "s2p3-018",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "s2p3-019",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "s2p3-020",
+     "text": "because the frozen run produced a figure that cannot be read the way the"
+    },
+    {
+     "id": "s2p3-021",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "s2p3-022",
+     "text": "Invariants"
+    },
+    {
+     "id": "s2p3-023",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "s2p3-024",
+     "text": "say OATH-HELD."
+    },
+    {
+     "id": "s2p3-025",
+     "text": "verifications destroyed to retract ZERO accusations."
+    },
+    {
+     "id": "s2p3-026",
+     "text": "Stored certificates untouched; verifier_sha256 moving is the"
+    },
+    {
+     "id": "s2p3-027",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "s2p3-028",
+     "text": "regenerates LEDGER.md and fails on a changed character -- which proves the"
+    },
+    {
+     "id": "s2p3-029",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "s2p3-030",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "s2p3-031",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "s2p3-032",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "s2p3-033",
+     "text": "how the refusal list came to print `SHIPPED`."
+    },
+    {
+     "id": "s2p3-034",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "s2p3-035",
+     "text": "VP-C in RECON_vacuous_pass_2026_08_27.md now has a fix for its reporting half."
+    },
+    {
+     "id": "s2p3-036",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "s2p3-037",
+     "text": "REPLICATIONS.md's expected corpus-audit output is updated to the current four"
+    },
+    {
+     "id": "s2p3-038",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "s2p3-039",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "s2p3-040",
+     "text": "test_receipt_only_in_scratch_is_absent: this fix makes the search NARROWER"
+    },
+    {
+     "id": "s2p3-041",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "s2p3-042",
+     "text": "verifications:"
+    },
+    {
+     "id": "s2p3-043",
+     "text": "REPLICATIONS.md expected line updated 186 -> 187."
+    },
+    {
+     "id": "s2p3-044",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "s2p3-045",
+     "text": "The tests-passed figures,"
+    },
+    {
+     "id": "s2p3-046",
+     "text": "partition the ledger exactly:"
+    },
+    {
+     "id": "s2p3-047",
+     "text": "corpus_audit: the audited population was 49% scratch clone"
+    },
+    {
+     "id": "s2p3-048",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "s2p3-049",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "s2p3-050",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "s2p3-051",
+     "text": "Nobody surveyed here measured what the machinery"
+    },
+    {
+     "id": "s2p3-052",
+     "text": "So `--poster` emits a fixed 1200px frame built to be screenshotted, rendered"
+    },
+    {
+     "id": "s2p3-053",
+     "text": "exploration graph preserving failed experiments."
+    },
+    {
+     "id": "s2p3-054",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "s2p3-055",
+     "text": "styxx.diffgate against its own parent diff."
+    }
+   ]
+  }
+ ]
+}

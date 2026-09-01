@@ -1,0 +1,4139 @@
+{
+ "T0000": {
+  "status": "UNGROUNDED",
+  "repo": "ShiZhengyan/DePT",
+  "line": 93,
+  "token": "100,000",
+  "receipt_ref": null
+ },
+ "T0001": {
+  "status": "UNGROUNDED",
+  "repo": "ShiZhengyan/DePT",
+  "line": 93,
+  "token": "300,000",
+  "receipt_ref": null
+ },
+ "T0002": {
+  "status": "UNGROUNDED",
+  "repo": "ShiZhengyan/DePT",
+  "line": 93,
+  "token": "40",
+  "receipt_ref": null
+ },
+ "T0003": {
+  "status": "UNGROUNDED",
+  "repo": "ShiZhengyan/DePT",
+  "line": 93,
+  "token": "60",
+  "receipt_ref": null
+ },
+ "T0004": {
+  "status": "UNGROUNDED",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 16,
+  "token": "72.18",
+  "receipt_ref": null
+ },
+ "T0005": {
+  "status": "UNGROUNDED",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 16,
+  "token": "50",
+  "receipt_ref": null
+ },
+ "T0006": {
+  "status": "UNGROUNDED",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 16,
+  "token": "7.96",
+  "receipt_ref": null
+ },
+ "T0007": {
+  "status": "UNGROUNDED",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 16,
+  "token": "15",
+  "receipt_ref": null
+ },
+ "T0008": {
+  "status": "UNGROUNDED",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 116,
+  "token": "1.554562",
+  "receipt_ref": null
+ },
+ "T0009": {
+  "status": "UNGROUNDED",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 128,
+  "token": "1.598064",
+  "receipt_ref": null
+ },
+ "T0010": {
+  "status": "UNGROUNDED",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 180,
+  "token": "637.879562",
+  "receipt_ref": null
+ },
+ "T0011": {
+  "status": "UNGROUNDED",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 192,
+  "token": "167.052877",
+  "receipt_ref": null
+ },
+ "T0012": {
+  "status": "UNGROUNDED",
+  "repo": "eliasjacob/paper_brcad5",
+  "line": 12,
+  "token": "0.3688",
+  "receipt_ref": null
+ },
+ "T0013": {
+  "status": "UNGROUNDED",
+  "repo": "eliasjacob/paper_brcad5",
+  "line": 12,
+  "token": "0.1253",
+  "receipt_ref": null
+ },
+ "T0014": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 133,
+  "token": "1.7",
+  "receipt_ref": null
+ },
+ "T0015": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 133,
+  "token": "2.5",
+  "receipt_ref": null
+ },
+ "T0016": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 274,
+  "token": "01",
+  "receipt_ref": null
+ },
+ "T0017": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 412,
+  "token": "3.10",
+  "receipt_ref": null
+ },
+ "T0018": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 539,
+  "token": "90",
+  "receipt_ref": null
+ },
+ "T0019": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1114,
+  "token": "403",
+  "receipt_ref": null
+ },
+ "T0020": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1187,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0021": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1191,
+  "token": "3.10",
+  "receipt_ref": null
+ },
+ "T0022": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1191,
+  "token": "3.10",
+  "receipt_ref": null
+ },
+ "T0023": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1379,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0024": {
+  "status": "UNGROUNDED",
+  "repo": "sbhooley/ainativelang",
+  "line": 1379,
+  "token": "42",
+  "receipt_ref": null
+ },
+ "T0025": {
+  "status": "UNGROUNDED",
+  "repo": "Azure-Samples/python-agentframework-demos",
+  "line": 87,
+  "token": "6379",
+  "receipt_ref": null
+ },
+ "T0026": {
+  "status": "UNGROUNDED",
+  "repo": "Azure-Samples/python-agentframework-demos",
+  "line": 93,
+  "token": "5432",
+  "receipt_ref": null
+ },
+ "T0027": {
+  "status": "UNGROUNDED",
+  "repo": "Azure-Samples/python-agentframework-demos",
+  "line": 270,
+  "token": "18888",
+  "receipt_ref": null
+ },
+ "T0028": {
+  "status": "UNGROUNDED",
+  "repo": "Azure-Samples/python-agentframework-demos",
+  "line": 270,
+  "token": "4317",
+  "receipt_ref": null
+ },
+ "T0029": {
+  "status": "UNGROUNDED",
+  "repo": "kssteven418/LTP",
+  "line": 98,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0030": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 27,
+  "token": "+10.9",
+  "receipt_ref": null
+ },
+ "T0031": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 27,
+  "token": "+8.7",
+  "receipt_ref": null
+ },
+ "T0032": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 28,
+  "token": "+5.4",
+  "receipt_ref": null
+ },
+ "T0033": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 28,
+  "token": "12,000",
+  "receipt_ref": null
+ },
+ "T0034": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 62,
+  "token": "253,685",
+  "receipt_ref": null
+ },
+ "T0035": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 99,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0036": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 99,
+  "token": "775",
+  "receipt_ref": null
+ },
+ "T0037": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 99,
+  "token": "67.63",
+  "receipt_ref": null
+ },
+ "T0038": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 99,
+  "token": "53.85",
+  "receipt_ref": null
+ },
+ "T0039": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 99,
+  "token": "+3.79",
+  "receipt_ref": null
+ },
+ "T0040": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 165,
+  "token": "0.0186",
+  "receipt_ref": null
+ },
+ "T0041": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 165,
+  "token": ".0183",
+  "receipt_ref": null
+ },
+ "T0042": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 165,
+  "token": "0.0227",
+  "receipt_ref": null
+ },
+ "T0043": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 165,
+  "token": "0.0059",
+  "receipt_ref": null
+ },
+ "T0044": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 165,
+  "token": "0.0251",
+  "receipt_ref": null
+ },
+ "T0045": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 166,
+  "token": "0.0265",
+  "receipt_ref": null
+ },
+ "T0046": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 166,
+  "token": ".0261",
+  "receipt_ref": null
+ },
+ "T0047": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 166,
+  "token": "0.0369",
+  "receipt_ref": null
+ },
+ "T0048": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 166,
+  "token": "0.0106",
+  "receipt_ref": null
+ },
+ "T0049": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 166,
+  "token": "0.0462",
+  "receipt_ref": null
+ },
+ "T0050": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 167,
+  "token": "0.0328",
+  "receipt_ref": null
+ },
+ "T0051": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 167,
+  "token": ".0324",
+  "receipt_ref": null
+ },
+ "T0052": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 167,
+  "token": "0.0429",
+  "receipt_ref": null
+ },
+ "T0053": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 167,
+  "token": "0.0121",
+  "receipt_ref": null
+ },
+ "T0054": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 167,
+  "token": "0.0457",
+  "receipt_ref": null
+ },
+ "T0055": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 168,
+  "token": "0.0543",
+  "receipt_ref": null
+ },
+ "T0056": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 168,
+  "token": ".0537",
+  "receipt_ref": null
+ },
+ "T0057": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 168,
+  "token": "0.0569",
+  "receipt_ref": null
+ },
+ "T0058": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 168,
+  "token": "0.0164",
+  "receipt_ref": null
+ },
+ "T0059": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 168,
+  "token": "0.0559",
+  "receipt_ref": null
+ },
+ "T0060": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 170,
+  "token": "22,855",
+  "receipt_ref": null
+ },
+ "T0061": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 174,
+  "token": "0.0464",
+  "receipt_ref": null
+ },
+ "T0062": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 174,
+  "token": "0.0695",
+  "receipt_ref": null
+ },
+ "T0063": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 174,
+  "token": "0.0189",
+  "receipt_ref": null
+ },
+ "T0064": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 175,
+  "token": "0.0265",
+  "receipt_ref": null
+ },
+ "T0065": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 175,
+  "token": "0.0369",
+  "receipt_ref": null
+ },
+ "T0066": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 175,
+  "token": "0.0106",
+  "receipt_ref": null
+ },
+ "T0067": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 176,
+  "token": "0.0556",
+  "receipt_ref": null
+ },
+ "T0068": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 176,
+  "token": "0.0662",
+  "receipt_ref": null
+ },
+ "T0069": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 176,
+  "token": "0.0201",
+  "receipt_ref": null
+ },
+ "T0070": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 177,
+  "token": "0.0748",
+  "receipt_ref": null
+ },
+ "T0071": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 177,
+  "token": "0.0738",
+  "receipt_ref": null
+ },
+ "T0072": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 177,
+  "token": "0.0215",
+  "receipt_ref": null
+ },
+ "T0073": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 185,
+  "token": "0.0186",
+  "receipt_ref": null
+ },
+ "T0074": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 185,
+  "token": "0.0227",
+  "receipt_ref": null
+ },
+ "T0075": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 185,
+  "token": "0.0059",
+  "receipt_ref": null
+ },
+ "T0076": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 186,
+  "token": "0.0412",
+  "receipt_ref": null
+ },
+ "T0077": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 186,
+  "token": "0.0695",
+  "receipt_ref": null
+ },
+ "T0078": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 186,
+  "token": "0.0189",
+  "receipt_ref": null
+ },
+ "T0079": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 188,
+  "token": "+121",
+  "receipt_ref": null
+ },
+ "T0080": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 188,
+  "token": "+206",
+  "receipt_ref": null
+ },
+ "T0081": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 188,
+  "token": "+220",
+  "receipt_ref": null
+ },
+ "T0082": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 190,
+  "token": "22,855",
+  "receipt_ref": null
+ },
+ "T0083": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 194,
+  "token": "0.0639",
+  "receipt_ref": null
+ },
+ "T0084": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 194,
+  "token": "0.0648",
+  "receipt_ref": null
+ },
+ "T0085": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 194,
+  "token": "0.0172",
+  "receipt_ref": null
+ },
+ "T0086": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 195,
+  "token": "0.0664",
+  "receipt_ref": null
+ },
+ "T0087": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 195,
+  "token": "0.0678",
+  "receipt_ref": null
+ },
+ "T0088": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 195,
+  "token": "0.0180",
+  "receipt_ref": null
+ },
+ "T0089": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 196,
+  "token": "0.0689",
+  "receipt_ref": null
+ },
+ "T0090": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 196,
+  "token": "0.0701",
+  "receipt_ref": null
+ },
+ "T0091": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 196,
+  "token": "0.0190",
+  "receipt_ref": null
+ },
+ "T0092": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 196,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0093": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 197,
+  "token": "0.0735",
+  "receipt_ref": null
+ },
+ "T0094": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 197,
+  "token": "0.0751",
+  "receipt_ref": null
+ },
+ "T0095": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 197,
+  "token": "0.0217",
+  "receipt_ref": null
+ },
+ "T0096": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 197,
+  "token": "25",
+  "receipt_ref": null
+ },
+ "T0097": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 198,
+  "token": "0.0976",
+  "receipt_ref": null
+ },
+ "T0098": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 198,
+  "token": "0.0931",
+  "receipt_ref": null
+ },
+ "T0099": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 198,
+  "token": "0.0268",
+  "receipt_ref": null
+ },
+ "T0100": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 198,
+  "token": "25",
+  "receipt_ref": null
+ },
+ "T0101": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 202,
+  "token": "22,855",
+  "receipt_ref": null
+ },
+ "T0102": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 208,
+  "token": "0.0229",
+  "receipt_ref": null
+ },
+ "T0103": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 208,
+  "token": "0.0542",
+  "receipt_ref": null
+ },
+ "T0104": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 208,
+  "token": "+137",
+  "receipt_ref": null
+ },
+ "T0105": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 209,
+  "token": "0.0208",
+  "receipt_ref": null
+ },
+ "T0106": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 209,
+  "token": "0.0505",
+  "receipt_ref": null
+ },
+ "T0107": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 209,
+  "token": "+143",
+  "receipt_ref": null
+ },
+ "T0108": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 210,
+  "token": "0.0433",
+  "receipt_ref": null
+ },
+ "T0109": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 210,
+  "token": "0.0811",
+  "receipt_ref": null
+ },
+ "T0110": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 210,
+  "token": "+87",
+  "receipt_ref": null
+ },
+ "T0111": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 211,
+  "token": "0.168",
+  "receipt_ref": null
+ },
+ "T0112": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 211,
+  "token": "0.244",
+  "receipt_ref": null
+ },
+ "T0113": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 211,
+  "token": "+45",
+  "receipt_ref": null
+ },
+ "T0114": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 219,
+  "token": "0.0946",
+  "receipt_ref": null
+ },
+ "T0115": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 219,
+  "token": "0.0660",
+  "receipt_ref": null
+ },
+ "T0116": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 219,
+  "token": "0.0253",
+  "receipt_ref": null
+ },
+ "T0117": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 220,
+  "token": "0.1063",
+  "receipt_ref": null
+ },
+ "T0118": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 220,
+  "token": "0.0766",
+  "receipt_ref": null
+ },
+ "T0119": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 220,
+  "token": "0.0265",
+  "receipt_ref": null
+ },
+ "T0120": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 221,
+  "token": "0.0983",
+  "receipt_ref": null
+ },
+ "T0121": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 221,
+  "token": "0.0925",
+  "receipt_ref": null
+ },
+ "T0122": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 221,
+  "token": "0.0268",
+  "receipt_ref": null
+ },
+ "T0123": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 222,
+  "token": "0.1017",
+  "receipt_ref": null
+ },
+ "T0124": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 222,
+  "token": "0.0741",
+  "receipt_ref": null
+ },
+ "T0125": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 222,
+  "token": "0.0258",
+  "receipt_ref": null
+ },
+ "T0126": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 224,
+  "token": "0.1023",
+  "receipt_ref": null
+ },
+ "T0127": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 224,
+  "token": "0.1103",
+  "receipt_ref": null
+ },
+ "T0128": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 228,
+  "token": "22,855",
+  "receipt_ref": null
+ },
+ "T0129": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 234,
+  "token": "0.0355",
+  "receipt_ref": null
+ },
+ "T0130": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 234,
+  "token": "0.0657",
+  "receipt_ref": null
+ },
+ "T0131": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 234,
+  "token": "0.0196",
+  "receipt_ref": null
+ },
+ "T0132": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 235,
+  "token": "0.0305",
+  "receipt_ref": null
+ },
+ "T0133": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 235,
+  "token": "0.0560",
+  "receipt_ref": null
+ },
+ "T0134": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 235,
+  "token": "0.0148",
+  "receipt_ref": null
+ },
+ "T0135": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 236,
+  "token": "0.0350",
+  "receipt_ref": null
+ },
+ "T0136": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 236,
+  "token": "0.0656",
+  "receipt_ref": null
+ },
+ "T0137": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 236,
+  "token": "0.0185",
+  "receipt_ref": null
+ },
+ "T0138": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 237,
+  "token": "0.0833",
+  "receipt_ref": null
+ },
+ "T0139": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 237,
+  "token": "0.0899",
+  "receipt_ref": null
+ },
+ "T0140": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 237,
+  "token": "0.0272",
+  "receipt_ref": null
+ },
+ "T0141": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 238,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0142": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 238,
+  "token": "0.1063",
+  "receipt_ref": null
+ },
+ "T0143": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 238,
+  "token": "0.0766",
+  "receipt_ref": null
+ },
+ "T0144": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 238,
+  "token": "0.0265",
+  "receipt_ref": null
+ },
+ "T0145": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 261,
+  "token": "+0.85",
+  "receipt_ref": null
+ },
+ "T0146": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 331,
+  "token": "256",
+  "receipt_ref": null
+ },
+ "T0147": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 331,
+  "token": "32",
+  "receipt_ref": null
+ },
+ "T0148": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 335,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0149": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 335,
+  "token": "7",
+  "receipt_ref": null
+ },
+ "T0150": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 335,
+  "token": "7",
+  "receipt_ref": null
+ },
+ "T0151": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 335,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0152": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 335,
+  "token": "10,000",
+  "receipt_ref": null
+ },
+ "T0153": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 339,
+  "token": "0.27687",
+  "receipt_ref": null
+ },
+ "T0154": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 339,
+  "token": "0.29074",
+  "receipt_ref": null
+ },
+ "T0155": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 339,
+  "token": "+5.01",
+  "receipt_ref": null
+ },
+ "T0156": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 339,
+  "token": "+0.00894",
+  "receipt_ref": null
+ },
+ "T0157": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 339,
+  "token": "+0.01883",
+  "receipt_ref": null
+ },
+ "T0158": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 340,
+  "token": "0.18577",
+  "receipt_ref": null
+ },
+ "T0159": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 340,
+  "token": "0.19510",
+  "receipt_ref": null
+ },
+ "T0160": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 340,
+  "token": "+5.02",
+  "receipt_ref": null
+ },
+ "T0161": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 340,
+  "token": "+0.01477",
+  "receipt_ref": null
+ },
+ "T0162": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 341,
+  "token": "0.15865",
+  "receipt_ref": null
+ },
+ "T0163": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 341,
+  "token": "0.16371",
+  "receipt_ref": null
+ },
+ "T0164": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 341,
+  "token": "+3.19",
+  "receipt_ref": null
+ },
+ "T0165": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 341,
+  "token": "+0.00304",
+  "receipt_ref": null
+ },
+ "T0166": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 341,
+  "token": "+0.00710",
+  "receipt_ref": null
+ },
+ "T0167": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 342,
+  "token": "0.36645",
+  "receipt_ref": null
+ },
+ "T0168": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 342,
+  "token": "0.37191",
+  "receipt_ref": null
+ },
+ "T0169": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 342,
+  "token": "+1.49",
+  "receipt_ref": null
+ },
+ "T0170": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 342,
+  "token": "+0.00086",
+  "receipt_ref": null
+ },
+ "T0171": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 342,
+  "token": "+0.01014",
+  "receipt_ref": null
+ },
+ "T0172": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 343,
+  "token": "0.18264",
+  "receipt_ref": null
+ },
+ "T0173": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 343,
+  "token": "0.18637",
+  "receipt_ref": null
+ },
+ "T0174": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 343,
+  "token": "+2.05",
+  "receipt_ref": null
+ },
+ "T0175": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 343,
+  "token": "-0.00017",
+  "receipt_ref": null
+ },
+ "T0176": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 343,
+  "token": "+0.00775",
+  "receipt_ref": null
+ },
+ "T0177": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 344,
+  "token": "0.01477",
+  "receipt_ref": null
+ },
+ "T0178": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 344,
+  "token": "0.01504",
+  "receipt_ref": null
+ },
+ "T0179": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 344,
+  "token": "+1.87",
+  "receipt_ref": null
+ },
+ "T0180": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 344,
+  "token": "-0.00121",
+  "receipt_ref": null
+ },
+ "T0181": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 366,
+  "token": "100",
+  "receipt_ref": null
+ },
+ "T0182": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 392,
+  "token": "100",
+  "receipt_ref": null
+ },
+ "T0183": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 392,
+  "token": "200",
+  "receipt_ref": null
+ },
+ "T0184": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 394,
+  "token": "+137",
+  "receipt_ref": null
+ },
+ "T0185": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 394,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0186": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 394,
+  "token": "0.0229",
+  "receipt_ref": null
+ },
+ "T0187": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 394,
+  "token": "16.8",
+  "receipt_ref": null
+ },
+ "T0188": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 394,
+  "token": "24.4",
+  "receipt_ref": null
+ },
+ "T0189": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 402,
+  "token": "+3.84",
+  "receipt_ref": null
+ },
+ "T0190": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 402,
+  "token": "63.84",
+  "receipt_ref": null
+ },
+ "T0191": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 402,
+  "token": "67.68",
+  "receipt_ref": null
+ },
+ "T0192": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 402,
+  "token": "67.63",
+  "receipt_ref": null
+ },
+ "T0193": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 402,
+  "token": "1.07",
+  "receipt_ref": null
+ },
+ "T0194": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 404,
+  "token": "39.49",
+  "receipt_ref": null
+ },
+ "T0195": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 404,
+  "token": "24",
+  "receipt_ref": null
+ },
+ "T0196": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 412,
+  "token": "256",
+  "receipt_ref": null
+ },
+ "T0197": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 412,
+  "token": "67.42",
+  "receipt_ref": null
+ },
+ "T0198": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 414,
+  "token": "32",
+  "receipt_ref": null
+ },
+ "T0199": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 414,
+  "token": "3.66",
+  "receipt_ref": null
+ },
+ "T0200": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 420,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0201": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 435,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0202": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 466,
+  "token": "9200",
+  "receipt_ref": null
+ },
+ "T0203": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 574,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0204": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 605,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0205": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 631,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0206": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 633,
+  "token": "20",
+  "receipt_ref": null
+ },
+ "T0207": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 633,
+  "token": "19",
+  "receipt_ref": null
+ },
+ "T0208": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "2,345",
+  "receipt_ref": null
+ },
+ "T0209": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "67.63",
+  "receipt_ref": null
+ },
+ "T0210": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0211": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "67.68",
+  "receipt_ref": null
+ },
+ "T0212": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "3.84",
+  "receipt_ref": null
+ },
+ "T0213": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 662,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0214": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0215": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "64",
+  "receipt_ref": null
+ },
+ "T0216": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "128",
+  "receipt_ref": null
+ },
+ "T0217": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "256",
+  "receipt_ref": null
+ },
+ "T0218": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "384",
+  "receipt_ref": null
+ },
+ "T0219": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "512",
+  "receipt_ref": null
+ },
+ "T0220": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0221": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "256",
+  "receipt_ref": null
+ },
+ "T0222": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0223": {
+  "status": "UNGROUNDED",
+  "repo": "hopit-ai/Moda",
+  "line": 674,
+  "token": "32",
+  "receipt_ref": null
+ },
+ "T0224": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 470,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0225": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 470,
+  "token": "0.899",
+  "receipt_ref": null
+ },
+ "T0226": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 470,
+  "token": "0.956",
+  "receipt_ref": null
+ },
+ "T0227": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 470,
+  "token": "0.883",
+  "receipt_ref": null
+ },
+ "T0228": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 470,
+  "token": "225",
+  "receipt_ref": null
+ },
+ "T0229": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 471,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0230": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 471,
+  "token": "0.886",
+  "receipt_ref": null
+ },
+ "T0231": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 471,
+  "token": "0.878",
+  "receipt_ref": null
+ },
+ "T0232": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 471,
+  "token": "0.928",
+  "receipt_ref": null
+ },
+ "T0233": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 471,
+  "token": "104",
+  "receipt_ref": null
+ },
+ "T0234": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 472,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0235": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 472,
+  "token": "0.880",
+  "receipt_ref": null
+ },
+ "T0236": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 472,
+  "token": "0.883",
+  "receipt_ref": null
+ },
+ "T0237": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 472,
+  "token": "0.900",
+  "receipt_ref": null
+ },
+ "T0238": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 472,
+  "token": "280",
+  "receipt_ref": null
+ },
+ "T0239": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 473,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0240": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 473,
+  "token": "0.859",
+  "receipt_ref": null
+ },
+ "T0241": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 473,
+  "token": "0.784",
+  "receipt_ref": null
+ },
+ "T0242": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 473,
+  "token": "1.022",
+  "receipt_ref": null
+ },
+ "T0243": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 473,
+  "token": "312",
+  "receipt_ref": null
+ },
+ "T0244": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 474,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0245": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 474,
+  "token": "0.837",
+  "receipt_ref": null
+ },
+ "T0246": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 474,
+  "token": "0.772",
+  "receipt_ref": null
+ },
+ "T0247": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 474,
+  "token": "0.983",
+  "receipt_ref": null
+ },
+ "T0248": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 474,
+  "token": "148",
+  "receipt_ref": null
+ },
+ "T0249": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 475,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0250": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 475,
+  "token": "0.788",
+  "receipt_ref": null
+ },
+ "T0251": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 475,
+  "token": "0.716",
+  "receipt_ref": null
+ },
+ "T0252": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 475,
+  "token": "1.017",
+  "receipt_ref": null
+ },
+ "T0253": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 475,
+  "token": "468",
+  "receipt_ref": null
+ },
+ "T0254": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 476,
+  "token": "0.652",
+  "receipt_ref": null
+ },
+ "T0255": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 476,
+  "token": "0.622",
+  "receipt_ref": null
+ },
+ "T0256": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 476,
+  "token": "0.800",
+  "receipt_ref": null
+ },
+ "T0257": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 476,
+  "token": "383",
+  "receipt_ref": null
+ },
+ "T0258": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 489,
+  "token": "0.899",
+  "receipt_ref": null
+ },
+ "T0259": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 489,
+  "token": "0.956",
+  "receipt_ref": null
+ },
+ "T0260": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 489,
+  "token": "225",
+  "receipt_ref": null
+ },
+ "T0261": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 500,
+  "token": "0.956",
+  "receipt_ref": null
+ },
+ "T0262": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 508,
+  "token": "0.886",
+  "receipt_ref": null
+ },
+ "T0263": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 508,
+  "token": "0.878",
+  "receipt_ref": null
+ },
+ "T0264": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 508,
+  "token": "104",
+  "receipt_ref": null
+ },
+ "T0265": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 519,
+  "token": "0.880",
+  "receipt_ref": null
+ },
+ "T0266": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 519,
+  "token": "0.883",
+  "receipt_ref": null
+ },
+ "T0267": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 519,
+  "token": "280",
+  "receipt_ref": null
+ },
+ "T0268": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 539,
+  "token": "0.859",
+  "receipt_ref": null
+ },
+ "T0269": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 539,
+  "token": "0.784",
+  "receipt_ref": null
+ },
+ "T0270": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 539,
+  "token": "312",
+  "receipt_ref": null
+ },
+ "T0271": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 548,
+  "token": "0.837",
+  "receipt_ref": null
+ },
+ "T0272": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 548,
+  "token": "0.772",
+  "receipt_ref": null
+ },
+ "T0273": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 548,
+  "token": "148",
+  "receipt_ref": null
+ },
+ "T0274": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 560,
+  "token": "0.788",
+  "receipt_ref": null
+ },
+ "T0275": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 560,
+  "token": "0.716",
+  "receipt_ref": null
+ },
+ "T0276": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 560,
+  "token": "468",
+  "receipt_ref": null
+ },
+ "T0277": {
+  "status": "UNGROUNDED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1120,
+  "token": "38",
+  "receipt_ref": null
+ },
+ "T0278": {
+  "status": "UNGROUNDED",
+  "repo": "AaronSpieler/elmneuron",
+  "line": 20,
+  "token": "0.9827",
+  "receipt_ref": null
+ },
+ "T0279": {
+  "status": "UNGROUNDED",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 142,
+  "token": "8888",
+  "receipt_ref": null
+ },
+ "T0280": {
+  "status": "UNGROUNDED",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 171,
+  "token": "8888",
+  "receipt_ref": null
+ },
+ "T0281": {
+  "status": "UNGROUNDED",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 573,
+  "token": "9090",
+  "receipt_ref": null
+ },
+ "T0282": {
+  "status": "UNGROUNDED",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 589,
+  "token": "3000",
+  "receipt_ref": null
+ },
+ "T0283": {
+  "status": "UNGROUNDED",
+  "repo": "nextcloud/whiteboard",
+  "line": 64,
+  "token": "3002",
+  "receipt_ref": null
+ },
+ "T0284": {
+  "status": "UNGROUNDED",
+  "repo": "nextcloud/whiteboard",
+  "line": 100,
+  "token": "3002",
+  "receipt_ref": null
+ },
+ "T0285": {
+  "status": "UNGROUNDED",
+  "repo": "nextcloud/whiteboard",
+  "line": 244,
+  "token": "30",
+  "receipt_ref": null
+ },
+ "T0286": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 9,
+  "token": "342",
+  "receipt_ref": null
+ },
+ "T0287": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 16,
+  "token": "9",
+  "receipt_ref": null
+ },
+ "T0288": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 16,
+  "token": "10",
+  "receipt_ref": null
+ },
+ "T0289": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 25,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0290": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 35,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0291": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 35,
+  "token": "342",
+  "receipt_ref": null
+ },
+ "T0292": {
+  "status": "UNGROUNDED",
+  "repo": "karpathy/jobs",
+  "line": 43,
+  "token": "342",
+  "receipt_ref": null
+ },
+ "T0293": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 79,
+  "token": "15.4",
+  "receipt_ref": null
+ },
+ "T0294": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 80,
+  "token": "42.5",
+  "receipt_ref": null
+ },
+ "T0295": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 80,
+  "token": "613.7",
+  "receipt_ref": null
+ },
+ "T0296": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 80,
+  "token": "14.4",
+  "receipt_ref": null
+ },
+ "T0297": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 149,
+  "token": "1,500",
+  "receipt_ref": null
+ },
+ "T0298": {
+  "status": "UNGROUNDED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 149,
+  "token": "1.2",
+  "receipt_ref": null
+ },
+ "T0299": {
+  "status": "UNGROUNDED",
+  "repo": "nhadaututtheky/neural-memory",
+  "line": 142,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0300": {
+  "status": "UNGROUNDED",
+  "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+  "line": 207,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0301": {
+  "status": "UNGROUNDED",
+  "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+  "line": 207,
+  "token": "124",
+  "receipt_ref": null
+ },
+ "T0302": {
+  "status": "UNGROUNDED",
+  "repo": "stanford-oval/Churro",
+  "line": 59,
+  "token": "75",
+  "receipt_ref": null
+ },
+ "T0303": {
+  "status": "UNGROUNDED",
+  "repo": "kunal12203/webify-mcp",
+  "line": 86,
+  "token": "80",
+  "receipt_ref": null
+ },
+ "T0304": {
+  "status": "UNGROUNDED",
+  "repo": "kunal12203/webify-mcp",
+  "line": 86,
+  "token": "3,000",
+  "receipt_ref": null
+ },
+ "T0305": {
+  "status": "UNGROUNDED",
+  "repo": "kunal12203/webify-mcp",
+  "line": 92,
+  "token": "15",
+  "receipt_ref": null
+ },
+ "T0306": {
+  "status": "UNGROUNDED",
+  "repo": "kunal12203/webify-mcp",
+  "line": 92,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0307": {
+  "status": "UNGROUNDED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 47,
+  "token": "39.10",
+  "receipt_ref": null
+ },
+ "T0308": {
+  "status": "UNGROUNDED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 47,
+  "token": "+1.91",
+  "receipt_ref": null
+ },
+ "T0309": {
+  "status": "UNGROUNDED",
+  "repo": "feyninc/tokie",
+  "line": 193,
+  "token": "10",
+  "receipt_ref": null
+ },
+ "T0310": {
+  "status": "UNGROUNDED",
+  "repo": "feyninc/tokie",
+  "line": 242,
+  "token": "74",
+  "receipt_ref": null
+ },
+ "T0311": {
+  "status": "UNGROUNDED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 141,
+  "token": "15",
+  "receipt_ref": null
+ },
+ "T0312": {
+  "status": "UNGROUNDED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 186,
+  "token": "+4.3",
+  "receipt_ref": null
+ },
+ "T0313": {
+  "status": "UNGROUNDED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 193,
+  "token": "9",
+  "receipt_ref": null
+ },
+ "T0314": {
+  "status": "UNGROUNDED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 317,
+  "token": "922",
+  "receipt_ref": null
+ },
+ "T0315": {
+  "status": "UNGROUNDED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 317,
+  "token": "245",
+  "receipt_ref": null
+ },
+ "T0316": {
+  "status": "UNGROUNDED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 317,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0317": {
+  "status": "UNGROUNDED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 317,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0318": {
+  "status": "UNGROUNDED",
+  "repo": "AdilzhanB/StockRL",
+  "line": 91,
+  "token": "0.0003",
+  "receipt_ref": null
+ },
+ "T0319": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 35,
+  "token": "52",
+  "receipt_ref": null
+ },
+ "T0320": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 85,
+  "token": "78.4",
+  "receipt_ref": null
+ },
+ "T0321": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 85,
+  "token": "78.4",
+  "receipt_ref": null
+ },
+ "T0322": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 90,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0323": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 111,
+  "token": "0.67",
+  "receipt_ref": null
+ },
+ "T0324": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 111,
+  "token": "0.80",
+  "receipt_ref": null
+ },
+ "T0325": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 111,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0326": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 112,
+  "token": "0.85",
+  "receipt_ref": null
+ },
+ "T0327": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 112,
+  "token": "0.89",
+  "receipt_ref": null
+ },
+ "T0328": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 112,
+  "token": "0.87",
+  "receipt_ref": null
+ },
+ "T0329": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 112,
+  "token": "19",
+  "receipt_ref": null
+ },
+ "T0330": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 113,
+  "token": "0.67",
+  "receipt_ref": null
+ },
+ "T0331": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 113,
+  "token": "0.80",
+  "receipt_ref": null
+ },
+ "T0332": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 113,
+  "token": "12",
+  "receipt_ref": null
+ },
+ "T0333": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 131,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0334": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 131,
+  "token": "16",
+  "receipt_ref": null
+ },
+ "T0335": {
+  "status": "UNGROUNDED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 158,
+  "token": "200",
+  "receipt_ref": null
+ },
+ "T0336": {
+  "status": "UNGROUNDED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 177,
+  "token": "7860",
+  "receipt_ref": null
+ },
+ "T0337": {
+  "status": "UNGROUNDED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 306,
+  "token": "-80325.282",
+  "receipt_ref": null
+ },
+ "T0338": {
+  "status": "UNGROUNDED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 307,
+  "token": "-91727",
+  "receipt_ref": null
+ },
+ "T0339": {
+  "status": "UNGROUNDED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 308,
+  "token": "-72401.308",
+  "receipt_ref": null
+ },
+ "T0340": {
+  "status": "UNGROUNDED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 309,
+  "token": "8271.131",
+  "receipt_ref": null
+ },
+ "T0341": {
+  "status": "UNGROUNDED",
+  "repo": "K-RED90/Cropify-AI",
+  "line": 87,
+  "token": "77.27",
+  "receipt_ref": null
+ },
+ "T0342": {
+  "status": "UNGROUNDED",
+  "repo": "K-RED90/Cropify-AI",
+  "line": 111,
+  "token": "89",
+  "receipt_ref": null
+ },
+ "T0343": {
+  "status": "UNGROUNDED",
+  "repo": "makai891124-prog/H2Q-Evo",
+  "line": 22,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0344": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 227,
+  "token": "31",
+  "receipt_ref": null
+ },
+ "T0345": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 235,
+  "token": "94.5",
+  "receipt_ref": null
+ },
+ "T0346": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 236,
+  "token": "91.2",
+  "receipt_ref": null
+ },
+ "T0347": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 237,
+  "token": "89.3",
+  "receipt_ref": null
+ },
+ "T0348": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 240,
+  "token": "92.1",
+  "receipt_ref": null
+ },
+ "T0349": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 241,
+  "token": "87.4",
+  "receipt_ref": null
+ },
+ "T0350": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 245,
+  "token": "68.4",
+  "receipt_ref": null
+ },
+ "T0351": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 245,
+  "token": "3.1",
+  "receipt_ref": null
+ },
+ "T0352": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 245,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0353": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 246,
+  "token": "91.2",
+  "receipt_ref": null
+ },
+ "T0354": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 246,
+  "token": "4.2",
+  "receipt_ref": null
+ },
+ "T0355": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 246,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0356": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 383,
+  "token": "68.4",
+  "receipt_ref": null
+ },
+ "T0357": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 383,
+  "token": "91.2",
+  "receipt_ref": null
+ },
+ "T0358": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 383,
+  "token": "+22.8",
+  "receipt_ref": null
+ },
+ "T0359": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 384,
+  "token": "3.1",
+  "receipt_ref": null
+ },
+ "T0360": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 384,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0361": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 384,
+  "token": "4.2",
+  "receipt_ref": null
+ },
+ "T0362": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 384,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0363": {
+  "status": "UNGROUNDED",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 384,
+  "token": "+35.5",
+  "receipt_ref": null
+ },
+ "T0364": {
+  "status": "UNGROUNDED",
+  "repo": "asif-jc/Dont-Swim-in-Data",
+  "line": 148,
+  "token": "8501",
+  "receipt_ref": null
+ },
+ "T0365": {
+  "status": "UNGROUNDED",
+  "repo": "haddybhaiya/sem-i-con",
+  "line": 103,
+  "token": "98",
+  "receipt_ref": null
+ },
+ "T0366": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 246,
+  "token": "75.9",
+  "receipt_ref": null
+ },
+ "T0367": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1222,
+  "token": "0.246",
+  "receipt_ref": null
+ },
+ "T0368": {
+  "status": "ABSTAIN",
+  "repo": "kunal12203/webify-mcp",
+  "line": 239,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0369": {
+  "status": "ABSTAIN",
+  "repo": "KMnO4-zx/huanhuan-chat",
+  "line": 98,
+  "token": "96",
+  "receipt_ref": null
+ },
+ "T0370": {
+  "status": "ABSTAIN",
+  "repo": "asif-jc/Dont-Swim-in-Data",
+  "line": 148,
+  "token": "8501",
+  "receipt_ref": null
+ },
+ "T0371": {
+  "status": "ABSTAIN",
+  "repo": "connor-makowski/scgraph",
+  "line": 322,
+  "token": "31.23",
+  "receipt_ref": null
+ },
+ "T0372": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 90,
+  "token": "20",
+  "receipt_ref": null
+ },
+ "T0373": {
+  "status": "ABSTAIN",
+  "repo": "kunal12203/webify-mcp",
+  "line": 112,
+  "token": "15",
+  "receipt_ref": null
+ },
+ "T0374": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1460,
+  "token": "0.001",
+  "receipt_ref": null
+ },
+ "T0375": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 713,
+  "token": "20",
+  "receipt_ref": null
+ },
+ "T0376": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1253,
+  "token": "0.333",
+  "receipt_ref": null
+ },
+ "T0377": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 701,
+  "token": "12",
+  "receipt_ref": null
+ },
+ "T0378": {
+  "status": "ABSTAIN",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 35,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0379": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 905,
+  "token": "3.3",
+  "receipt_ref": null
+ },
+ "T0380": {
+  "status": "ABSTAIN",
+  "repo": "sbhooley/ainativelang",
+  "line": 92,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0381": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 130,
+  "token": "0.938272",
+  "receipt_ref": null
+ },
+ "T0382": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 338,
+  "token": "14",
+  "receipt_ref": null
+ },
+ "T0383": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 719,
+  "token": "100",
+  "receipt_ref": null
+ },
+ "T0384": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 204,
+  "token": "900",
+  "receipt_ref": null
+ },
+ "T0385": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 116,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0386": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 109,
+  "token": "216",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0387": {
+  "status": "ABSTAIN",
+  "repo": "painezeng/CSharpAndSolidWorks",
+  "line": 435,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0388": {
+  "status": "ABSTAIN",
+  "repo": "WillyEverGreen/acon",
+  "line": 101,
+  "token": "90",
+  "receipt_ref": null
+ },
+ "T0389": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1723,
+  "token": "2.0",
+  "receipt_ref": null
+ },
+ "T0390": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 624,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0391": {
+  "status": "ABSTAIN",
+  "repo": "jerryliang24/Drag-and-Drop-LLMs",
+  "line": 48,
+  "token": "12,000",
+  "receipt_ref": null
+ },
+ "T0392": {
+  "status": "ABSTAIN",
+  "repo": "nextcloud/whiteboard",
+  "line": 224,
+  "token": "8192",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0393": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 712,
+  "token": "80",
+  "receipt_ref": null
+ },
+ "T0394": {
+  "status": "ABSTAIN",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 49,
+  "token": "12",
+  "receipt_ref": null
+ },
+ "T0395": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 594,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0396": {
+  "status": "ABSTAIN",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 20,
+  "token": "90",
+  "receipt_ref": null
+ },
+ "T0397": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 135,
+  "token": "0.15865",
+  "receipt_ref": null
+ },
+ "T0398": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 342,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0399": {
+  "status": "ABSTAIN",
+  "repo": "connor-makowski/scgraph",
+  "line": 521,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0400": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1127,
+  "token": "86",
+  "receipt_ref": null
+ },
+ "T0401": {
+  "status": "ABSTAIN",
+  "repo": "makai891124-prog/H2Q-Evo",
+  "line": 135,
+  "token": "7",
+  "receipt_ref": null
+ },
+ "T0402": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 198,
+  "token": "5510.001000",
+  "receipt_ref": null
+ },
+ "T0403": {
+  "status": "ABSTAIN",
+  "repo": "AdilzhanB/StockRL",
+  "line": 210,
+  "token": "2",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0404": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 233,
+  "token": "310",
+  "receipt_ref": null
+ },
+ "T0405": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 740,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0406": {
+  "status": "ABSTAIN",
+  "repo": "parinzee/seed-free-synthetic-instruct",
+  "line": 112,
+  "token": "979",
+  "receipt_ref": null
+ },
+ "T0407": {
+  "status": "ABSTAIN",
+  "repo": "connor-makowski/scgraph",
+  "line": 544,
+  "token": "1181",
+  "receipt_ref": null
+ },
+ "T0408": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 135,
+  "token": "50",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0409": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 81,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0410": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 135,
+  "token": "99",
+  "receipt_ref": null
+ },
+ "T0411": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1188,
+  "token": "75",
+  "receipt_ref": null
+ },
+ "T0412": {
+  "status": "ABSTAIN",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 240,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0413": {
+  "status": "ABSTAIN",
+  "repo": "ludwig-ai/ludwig",
+  "line": 190,
+  "token": "8000",
+  "receipt_ref": null
+ },
+ "T0414": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1172,
+  "token": "55",
+  "receipt_ref": null
+ },
+ "T0415": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1470,
+  "token": "99",
+  "receipt_ref": null
+ },
+ "T0416": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 336,
+  "token": "47",
+  "receipt_ref": null
+ },
+ "T0417": {
+  "status": "ABSTAIN",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 365,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0418": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 726,
+  "token": "15",
+  "receipt_ref": null
+ },
+ "T0419": {
+  "status": "ABSTAIN",
+  "repo": "opendatalab/WebMainBench",
+  "line": 47,
+  "token": "0.22",
+  "receipt_ref": null
+ },
+ "T0420": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 956,
+  "token": "80",
+  "receipt_ref": null
+ },
+ "T0421": {
+  "status": "ABSTAIN",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 141,
+  "token": "6",
+  "receipt_ref": null
+ },
+ "T0422": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 127,
+  "token": "0.2137",
+  "receipt_ref": null
+ },
+ "T0423": {
+  "status": "ABSTAIN",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 209,
+  "token": "693",
+  "receipt_ref": null
+ },
+ "T0424": {
+  "status": "ABSTAIN",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 90,
+  "token": "16",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0425": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 457,
+  "token": "9",
+  "receipt_ref": null
+ },
+ "T0426": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 744,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0427": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1462,
+  "token": "27.8",
+  "receipt_ref": null
+ },
+ "T0428": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 312,
+  "token": "86.05",
+  "receipt_ref": null
+ },
+ "T0429": {
+  "status": "ABSTAIN",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 75,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0430": {
+  "status": "ABSTAIN",
+  "repo": "asif-jc/Dont-Swim-in-Data",
+  "line": 50,
+  "token": "75.7",
+  "receipt_ref": null
+ },
+ "T0431": {
+  "status": "ABSTAIN",
+  "repo": "opendatalab/WebMainBench",
+  "line": 104,
+  "token": "0.7121",
+  "receipt_ref": null
+ },
+ "T0432": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1603,
+  "token": "0.302",
+  "receipt_ref": null
+ },
+ "T0433": {
+  "status": "ABSTAIN",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 386,
+  "token": "+34.4",
+  "receipt_ref": null
+ },
+ "T0434": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 81,
+  "token": "304",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0435": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 109,
+  "token": "591",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0436": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 57,
+  "token": "8",
+  "receipt_ref": null
+ },
+ "T0437": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1729,
+  "token": "0.212",
+  "receipt_ref": null
+ },
+ "T0438": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 715,
+  "token": "20",
+  "receipt_ref": null
+ },
+ "T0439": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 239,
+  "token": "0.305",
+  "receipt_ref": null
+ },
+ "T0440": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 755,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0441": {
+  "status": "ABSTAIN",
+  "repo": "connor-makowski/scgraph",
+  "line": 299,
+  "token": "-87.6298",
+  "receipt_ref": null
+ },
+ "T0442": {
+  "status": "ABSTAIN",
+  "repo": "sbhooley/ainativelang",
+  "line": 1413,
+  "token": "1",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0443": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 242,
+  "token": "5",
+  "receipt_ref": null
+ },
+ "T0444": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1578,
+  "token": "10",
+  "receipt_ref": null
+ },
+ "T0445": {
+  "status": "ABSTAIN",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 392,
+  "token": "-15.2",
+  "receipt_ref": null
+ },
+ "T0446": {
+  "status": "ABSTAIN",
+  "repo": "WillyEverGreen/acon",
+  "line": 35,
+  "token": "100",
+  "receipt_ref": null
+ },
+ "T0447": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1156,
+  "token": "3",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0448": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 293,
+  "token": "70",
+  "receipt_ref": null
+ },
+ "T0449": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 99,
+  "token": "128",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0450": {
+  "status": "ABSTAIN",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 524,
+  "token": ".57",
+  "receipt_ref": null
+ },
+ "T0451": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 284,
+  "token": "39.49",
+  "receipt_ref": null
+ },
+ "T0452": {
+  "status": "ABSTAIN",
+  "repo": "apple/ml-tweak",
+  "line": 2,
+  "token": "2311.09467",
+  "receipt_ref": "v05-notation"
+ },
+ "T0453": {
+  "status": "ABSTAIN",
+  "repo": "karpathy/jobs",
+  "line": 22,
+  "token": "342",
+  "receipt_ref": null
+ },
+ "T0454": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 135,
+  "token": "+3.19",
+  "receipt_ref": null
+ },
+ "T0455": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 119,
+  "token": "1.262384",
+  "receipt_ref": null
+ },
+ "T0456": {
+  "status": "ABSTAIN",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 205,
+  "token": "134",
+  "receipt_ref": null
+ },
+ "T0457": {
+  "status": "ABSTAIN",
+  "repo": "makai891124-prog/H2Q-Evo",
+  "line": 32,
+  "token": "4",
+  "receipt_ref": null
+ },
+ "T0458": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1167,
+  "token": "33.6",
+  "receipt_ref": null
+ },
+ "T0459": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 306,
+  "token": "1",
+  "receipt_ref": "v05-notation"
+ },
+ "T0460": {
+  "status": "ABSTAIN",
+  "repo": "opendatalab/WebMainBench",
+  "line": 106,
+  "token": "0.7309",
+  "receipt_ref": null
+ },
+ "T0461": {
+  "status": "ABSTAIN",
+  "repo": "sbhooley/ainativelang",
+  "line": 1680,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0462": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 333,
+  "token": "20",
+  "receipt_ref": null
+ },
+ "T0463": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 101,
+  "token": "768",
+  "receipt_ref": null
+ },
+ "T0464": {
+  "status": "ABSTAIN",
+  "repo": "aalto-ui/aim",
+  "line": 16,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0465": {
+  "status": "ABSTAIN",
+  "repo": "stanford-oval/Churro",
+  "line": 154,
+  "token": "71.2",
+  "receipt_ref": null
+ },
+ "T0466": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1401,
+  "token": "0.215",
+  "receipt_ref": null
+ },
+ "T0467": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1097,
+  "token": "22673",
+  "receipt_ref": null
+ },
+ "T0468": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 80,
+  "token": "5090",
+  "receipt_ref": null
+ },
+ "T0469": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 117,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0470": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 753,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0471": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1118,
+  "token": "3",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0472": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1481,
+  "token": "100",
+  "receipt_ref": null
+ },
+ "T0473": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 870,
+  "token": "5090",
+  "receipt_ref": null
+ },
+ "T0474": {
+  "status": "ABSTAIN",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 372,
+  "token": "12",
+  "receipt_ref": null
+ },
+ "T0475": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 319,
+  "token": "1",
+  "receipt_ref": "v05-notation"
+ },
+ "T0476": {
+  "status": "ABSTAIN",
+  "repo": "AdilzhanB/StockRL",
+  "line": 346,
+  "token": "14",
+  "receipt_ref": null
+ },
+ "T0477": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 920,
+  "token": "131072",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0478": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 135,
+  "token": "0.16371",
+  "receipt_ref": null
+ },
+ "T0479": {
+  "status": "ABSTAIN",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 535,
+  "token": ".2",
+  "receipt_ref": null
+ },
+ "T0480": {
+  "status": "ABSTAIN",
+  "repo": "ShiZhengyan/DePT",
+  "line": 52,
+  "token": "256",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0481": {
+  "status": "ABSTAIN",
+  "repo": "opendatalab/WebMainBench",
+  "line": 43,
+  "token": "0.57",
+  "receipt_ref": null
+ },
+ "T0482": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 719,
+  "token": "80",
+  "receipt_ref": null
+ },
+ "T0483": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 123,
+  "token": "3.610803",
+  "receipt_ref": null
+ },
+ "T0484": {
+  "status": "ABSTAIN",
+  "repo": "netscaler/netscaler-adc-metrics-exporter",
+  "line": 374,
+  "token": "14",
+  "receipt_ref": null
+ },
+ "T0485": {
+  "status": "ABSTAIN",
+  "repo": "feyninc/tokie",
+  "line": 117,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0486": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 348,
+  "token": "14",
+  "receipt_ref": null
+ },
+ "T0487": {
+  "status": "ABSTAIN",
+  "repo": "scaleapi/SWE-bench_Pro-os",
+  "line": 18,
+  "token": "7",
+  "receipt_ref": null
+ },
+ "T0488": {
+  "status": "ABSTAIN",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 748,
+  "token": "2501.12948",
+  "receipt_ref": "v05-notation"
+ },
+ "T0489": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 352,
+  "token": "0.268",
+  "receipt_ref": null
+ },
+ "T0490": {
+  "status": "ABSTAIN",
+  "repo": "jerryliang24/Drag-and-Drop-LLMs",
+  "line": 348,
+  "token": "200",
+  "receipt_ref": null
+ },
+ "T0491": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 744,
+  "token": "3",
+  "receipt_ref": null
+ },
+ "T0492": {
+  "status": "ABSTAIN",
+  "repo": "kssteven418/LTP",
+  "line": 47,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0493": {
+  "status": "ABSTAIN",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 420,
+  "token": "10",
+  "receipt_ref": null
+ },
+ "T0494": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 705,
+  "token": "63",
+  "receipt_ref": null
+ },
+ "T0495": {
+  "status": "ABSTAIN",
+  "repo": "jerryliang24/Drag-and-Drop-LLMs",
+  "line": 265,
+  "token": "26",
+  "receipt_ref": null
+ },
+ "T0496": {
+  "status": "ABSTAIN",
+  "repo": "FanGShiYuu/CoReVLA",
+  "line": 138,
+  "token": "1123",
+  "receipt_ref": null
+ },
+ "T0497": {
+  "status": "ABSTAIN",
+  "repo": "AnandMayank/Muse_v2",
+  "line": 247,
+  "token": "35",
+  "receipt_ref": null
+ },
+ "T0498": {
+  "status": "ABSTAIN",
+  "repo": "karpathy/jobs",
+  "line": 76,
+  "token": "8000",
+  "receipt_ref": null
+ },
+ "T0499": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1117,
+  "token": "71.0",
+  "receipt_ref": null
+ },
+ "T0500": {
+  "status": "ABSTAIN",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 284,
+  "token": "0",
+  "receipt_ref": null
+ },
+ "T0501": {
+  "status": "ABSTAIN",
+  "repo": "heyblackC/BetterMixture-Top1-Solution",
+  "line": 108,
+  "token": "0",
+  "receipt_ref": "spec-or-historical"
+ },
+ "T0502": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1816,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0503": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 591,
+  "token": "30",
+  "receipt_ref": null
+ },
+ "T0504": {
+  "status": "ABSTAIN",
+  "repo": "AaronSpieler/elmneuron",
+  "line": 17,
+  "token": "50",
+  "receipt_ref": null
+ },
+ "T0505": {
+  "status": "ABSTAIN",
+  "repo": "painezeng/CSharpAndSolidWorks",
+  "line": 283,
+  "token": "1",
+  "receipt_ref": null
+ },
+ "T0506": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 711,
+  "token": "49",
+  "receipt_ref": null
+ },
+ "T0507": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 90,
+  "token": "0.292",
+  "receipt_ref": null
+ },
+ "T0508": {
+  "status": "ABSTAIN",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 50,
+  "token": "30",
+  "receipt_ref": null
+ },
+ "T0509": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1233,
+  "token": "2",
+  "receipt_ref": null
+ },
+ "T0510": {
+  "status": "ABSTAIN",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 78,
+  "token": "1",
+  "receipt_ref": "v05-notation"
+ },
+ "T0511": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 718,
+  "token": "29",
+  "receipt_ref": null
+ },
+ "T0512": {
+  "status": "ABSTAIN",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 94,
+  "token": "0.258",
+  "receipt_ref": null
+ },
+ "T0513": {
+  "status": "ABSTAIN",
+  "repo": "opendatalab/WebMainBench",
+  "line": 119,
+  "token": "0.7819",
+  "receipt_ref": null
+ },
+ "T0514": {
+  "status": "ABSTAIN",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 57,
+  "token": "1706.03762",
+  "receipt_ref": "v05-notation"
+ },
+ "T0515": {
+  "status": "ABSTAIN",
+  "repo": "hopit-ai/Moda",
+  "line": 121,
+  "token": "0.2769",
+  "receipt_ref": null
+ },
+ "T0516": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 175,
+  "token": "93.3",
+  "receipt_ref": "r0_benchmark_results.json:[1].main_language_and_type_metrics.print.Hindi"
+ },
+ "T0517": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 34,
+  "token": "103",
+  "receipt_ref": "r0_benchmark_results.json:results[4].tests_total"
+ },
+ "T0518": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 37,
+  "token": "5",
+  "receipt_ref": "r0_benchmark_results.json:results[0].tests_passed"
+ },
+ "T0519": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 398,
+  "token": "2",
+  "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.other.n_queries"
+ },
+ "T0520": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 398,
+  "token": "0.7",
+  "receipt_ref": "r0_results.json:ours.atlas.ci_95[1]"
+ },
+ "T0521": {
+  "status": "VERIFIED",
+  "repo": "feyninc/tokie",
+  "line": 205,
+  "token": "9.1",
+  "receipt_ref": "r0_benchmark_results.json:vs_hf[6].hf_ms"
+ },
+ "T0522": {
+  "status": "VERIFIED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1193,
+  "token": "0",
+  "receipt_ref": "r0_results.json:thinking_length"
+ },
+ "T0523": {
+  "status": "VERIFIED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 7,
+  "token": "35,072,768",
+  "receipt_ref": "r0_benchmark_results.json:model.parameters"
+ },
+ "T0524": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 549,
+  "token": "0.2",
+  "receipt_ref": "r4_results.json:[9].metrics.dataset_weights.code"
+ },
+ "T0525": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 250,
+  "token": "0.9375",
+  "receipt_ref": "r0_benchmark_results.json:[3].precision"
+ },
+ "T0526": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 361,
+  "token": "1.18",
+  "receipt_ref": "r4_results.json:[0].metrics.final_loss"
+ },
+ "T0527": {
+  "status": "VERIFIED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 27,
+  "token": "1,854",
+  "receipt_ref": "r0_benchmark_results.json:protocol.decontamination.excluded_samples"
+ },
+ "T0528": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 143,
+  "token": "2.5",
+  "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+ },
+ "T0529": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 247,
+  "token": "100",
+  "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+ },
+ "T0530": {
+  "status": "VERIFIED",
+  "repo": "skadio/text2model",
+  "line": 61,
+  "token": "0",
+  "receipt_ref": "r0_evaluation_results.json:verified_results.gpt-oss:20b.baseline.by_source.complexor.exec_acc"
+ },
+ "T0531": {
+  "status": "VERIFIED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 79,
+  "token": "5.3",
+  "receipt_ref": "r0_benchmark_results.json:raw.gitnexus[373].time_ms"
+ },
+ "T0532": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 573,
+  "token": "6",
+  "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.outerwear.n_queries"
+ },
+ "T0533": {
+  "status": "VERIFIED",
+  "repo": "nextcloud/whiteboard",
+  "line": 223,
+  "token": "10",
+  "receipt_ref": "r0_results.json:environment.logicalCores"
+ },
+ "T0534": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 191,
+  "token": "23.3",
+  "receipt_ref": "r0_benchmark_results.json:[26].main_language_and_type_metrics.handwriting.Persian"
+ },
+ "T0535": {
+  "status": "VERIFIED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 255,
+  "token": "0.1",
+  "receipt_ref": "r0_evaluation_results.json:total_evaluated"
+ },
+ "T0536": {
+  "status": "VERIFIED",
+  "repo": "alex-jb/orallexa-ai-trading-agent",
+  "line": 93,
+  "token": "1.41",
+  "receipt_ref": "r0_evaluation_results.json:evaluations[1].monte_carlo.original_sharpe"
+ },
+ "T0537": {
+  "status": "VERIFIED",
+  "repo": "SHITIANYU-hue/amai_ocl",
+  "line": 247,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:records[40].episode_index"
+ },
+ "T0538": {
+  "status": "VERIFIED",
+  "repo": "ranga4all1/research-assistant-mm-rag",
+  "line": 280,
+  "token": "0.006",
+  "receipt_ref": "r0_evaluation_results.json:answer_metrics.rouge2"
+ },
+ "T0539": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 224,
+  "token": "2.5",
+  "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+ },
+ "T0540": {
+  "status": "VERIFIED",
+  "repo": "AdilzhanB/StockRL",
+  "line": 66,
+  "token": "-0.22",
+  "receipt_ref": "r0_evaluation_results.json:TSLA.metrics.sharpe_ratio"
+ },
+ "T0541": {
+  "status": "VERIFIED",
+  "repo": "feyninc/tokie",
+  "line": 231,
+  "token": "10.6",
+  "receipt_ref": "r0_benchmark_results.json:loading[2].tokie_ms"
+ },
+ "T0542": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 361,
+  "token": "4",
+  "receipt_ref": "r0_all_results.json:rope.results[13].config.num_layers"
+ },
+ "T0543": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 30,
+  "token": "5",
+  "receipt_ref": "r0_benchmark_results.json:results[0].tests_passed"
+ },
+ "T0544": {
+  "status": "VERIFIED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 17,
+  "token": "1",
+  "receipt_ref": "r0_benchmark_results.json:schema_version"
+ },
+ "T0545": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 248,
+  "token": "100",
+  "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+ },
+ "T0546": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 255,
+  "token": "76.00",
+  "receipt_ref": "r0_benchmark_results.json:[6].accuracy"
+ },
+ "T0547": {
+  "status": "VERIFIED",
+  "repo": "AdilzhanB/StockRL",
+  "line": 68,
+  "token": "0.00",
+  "receipt_ref": "r0_evaluation_results.json:AMZN.metrics.win_rate"
+ },
+ "T0548": {
+  "status": "VERIFIED",
+  "repo": "nextcloud/whiteboard",
+  "line": 234,
+  "token": "0.2",
+  "receipt_ref": "r0_results.json:scenarios[1].cpu.average"
+ },
+ "T0549": {
+  "status": "VERIFIED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1637,
+  "token": ".0",
+  "receipt_ref": "r0_results.json:thinking_length"
+ },
+ "T0550": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 292,
+  "token": "5",
+  "receipt_ref": "r0_results.json:ours.polyvore.per_stratum.dresses.n_queries"
+ },
+ "T0551": {
+  "status": "VERIFIED",
+  "repo": "s4nkar/SoundSense",
+  "line": 63,
+  "token": ".0",
+  "receipt_ref": "r0_evaluation_results.json:cnn.confusion_matrix[1][3]"
+ },
+ "T0552": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 105,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+ },
+ "T0553": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 251,
+  "token": "0.8000",
+  "receipt_ref": "r0_benchmark_results.json:[4].f1_score"
+ },
+ "T0554": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 252,
+  "token": "1.0000",
+  "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+ },
+ "T0555": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 348,
+  "token": "256",
+  "receipt_ref": "r0_all_results.json:rope.config.base_config.d_model"
+ },
+ "T0556": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 180,
+  "token": "2.5",
+  "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+ },
+ "T0557": {
+  "status": "VERIFIED",
+  "repo": "shi3z/japanese-llm-benchmark",
+  "line": 1142,
+  "token": ".0",
+  "receipt_ref": "r0_results.json:thinking_length"
+ },
+ "T0558": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 73,
+  "token": "93.9",
+  "receipt_ref": "r0_benchmark_results.json:[2].main_language_and_type_metrics.print.Dutch"
+ },
+ "T0559": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 56,
+  "token": "22",
+  "receipt_ref": "r0_benchmark_results.json:[2].main_language_and_type_metrics.handwriting.Japanese"
+ },
+ "T0560": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 33,
+  "token": "4",
+  "receipt_ref": "r0_benchmark_results.json:results[2].level"
+ },
+ "T0561": {
+  "status": "VERIFIED",
+  "repo": "nextcloud/whiteboard",
+  "line": 241,
+  "token": "100",
+  "receipt_ref": "r0_results.json:scenarios[1].concurrency"
+ },
+ "T0562": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 255,
+  "token": "100",
+  "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+ },
+ "T0563": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 205,
+  "token": "69.7",
+  "receipt_ref": "r0_benchmark_results.json:[21].printed"
+ },
+ "T0564": {
+  "status": "VERIFIED",
+  "repo": "AdilzhanB/StockRL",
+  "line": 64,
+  "token": "7,243.44",
+  "receipt_ref": "r0_evaluation_results.json:MSFT.metrics.total_return"
+ },
+ "T0565": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 76,
+  "token": "1",
+  "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.bottoms.n_queries"
+ },
+ "T0566": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 228,
+  "token": "51.6",
+  "receipt_ref": "r0_benchmark_results.json:[27].main_language_and_type_metrics.handwriting.Spanish"
+ },
+ "T0567": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 30,
+  "token": "1",
+  "receipt_ref": "r0_benchmark_results.json:results[0].task_id"
+ },
+ "T0568": {
+  "status": "VERIFIED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 103,
+  "token": "83.8",
+  "receipt_ref": "r0_evaluation_results.json:finetuned_accuracy"
+ },
+ "T0569": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 120,
+  "token": "2.5",
+  "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+ },
+ "T0570": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 258,
+  "token": "97.9",
+  "receipt_ref": "r0_benchmark_results.json:[3].main_language_and_type_metrics.print.Czech"
+ },
+ "T0571": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 81,
+  "token": "6",
+  "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.outerwear.n_queries"
+ },
+ "T0572": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 223,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+ },
+ "T0573": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 339,
+  "token": "1",
+  "receipt_ref": "r7_results.json:[3].metrics.mtp_depth"
+ },
+ "T0574": {
+  "status": "VERIFIED",
+  "repo": "opendatalab/WebMainBench",
+  "line": 89,
+  "token": "0",
+  "receipt_ref": "r0_evaluation_results.json:[0].sample_results[0].metrics.formula_edit.score"
+ },
+ "T0575": {
+  "status": "VERIFIED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 63,
+  "token": "35,072,768",
+  "receipt_ref": "r0_benchmark_results.json:model.parameters"
+ },
+ "T0576": {
+  "status": "VERIFIED",
+  "repo": "TenchiNeko/standalone-orchestrator",
+  "line": 31,
+  "token": "2",
+  "receipt_ref": "r0_benchmark_results.json:results[0].level"
+ },
+ "T0577": {
+  "status": "VERIFIED",
+  "repo": "syncable-dev/memtrace-public",
+  "line": 2,
+  "token": "100",
+  "receipt_ref": "r0_benchmark_results.json:summary.memtrace.accuracy_pct"
+ },
+ "T0578": {
+  "status": "VERIFIED",
+  "repo": "nextcloud/whiteboard",
+  "line": 242,
+  "token": "500",
+  "receipt_ref": "r0_results.json:scenarios[3].concurrency"
+ },
+ "T0579": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 251,
+  "token": "84.00",
+  "receipt_ref": "r0_benchmark_results.json:[4].accuracy"
+ },
+ "T0580": {
+  "status": "VERIFIED",
+  "repo": "AdilzhanB/StockRL",
+  "line": 67,
+  "token": "157.07",
+  "receipt_ref": "r0_evaluation_results.json:AAPL.metrics.max_drawdown"
+ },
+ "T0581": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 207,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+ },
+ "T0582": {
+  "status": "VERIFIED",
+  "repo": "DevJadhav/deepseek-from-scratch",
+  "line": 112,
+  "token": "12.3",
+  "receipt_ref": "r0_all_results.json:rope.results[10].metric_history.perplexity[1]"
+ },
+ "T0583": {
+  "status": "VERIFIED",
+  "repo": "stanford-oval/Churro",
+  "line": 267,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+ },
+ "T0584": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 252,
+  "token": "0.9907",
+  "receipt_ref": "r0_benchmark_results.json:[5].f1_score"
+ },
+ "T0585": {
+  "status": "VERIFIED",
+  "repo": "SHITIANYU-hue/amai_ocl",
+  "line": 189,
+  "token": "20",
+  "receipt_ref": "r0_benchmark_results.json:records[40].episode_index"
+ },
+ "T0586": {
+  "status": "VERIFIED",
+  "repo": "hopit-ai/Moda",
+  "line": 176,
+  "token": "0.5",
+  "receipt_ref": "r0_results.json:ours.atlas.map10"
+ },
+ "T0587": {
+  "status": "VERIFIED",
+  "repo": "DebarghaG/proofofthought",
+  "line": 254,
+  "token": "95.83",
+  "receipt_ref": "r0_benchmark_results.json:[7].accuracy"
+ },
+ "T0588": {
+  "status": "VERIFIED",
+  "repo": "harrrshall/barunlm-35m",
+  "line": 46,
+  "token": "+1.81",
+  "receipt_ref": "r0_benchmark_results.json:comparisons[0].barunlm_lead"
+ },
+ "T0589": {
+  "status": "VERIFIED",
+  "repo": "connor-makowski/scgraph",
+  "line": 308,
+  "token": "0.0",
+  "receipt_ref": "r0_benchmark_results.json:cache_geograph.single_cached_length_only_ms"
+ },
+ "T0590": {
+  "status": "VERIFIED",
+  "repo": "Hluii/ai201-project3-TakeMeter",
+  "line": 113,
+  "token": "1.00",
+  "receipt_ref": "r0_evaluation_results.json:label_map.advice_request"
+ }
+}

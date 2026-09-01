@@ -1,0 +1,877 @@
+{
+ "prereg": "PREREG_obligate2_2026_08_31.md",
+ "population": {
+  "documents_recertified": 200,
+  "fresh_abstained": 1874,
+  "obligate2_positive": 101,
+  "bar_band": 334,
+  "other_negative": 1439
+ },
+ "sample": {
+  "positive": 60,
+  "barband": 30,
+  "negative": 30,
+  "decoys_per_packet": 16,
+  "packets": 3
+ },
+ "packets": [
+  {
+   "packet": 1,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o2p1-001",
+     "token": "10.5281",
+     "context": "statelessness — the control was circular (erratum DOI 10.5281/zenodo.21679805). The"
+    },
+    {
+     "id": "o2p1-002",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o2p1-003",
+     "token": "1",
+     "context": "- `geometry_integrity` L46: a reproduction line *\"run_geometry_integrity.py (**drift**, stage 1) ·"
+    },
+    {
+     "id": "o2p1-004",
+     "token": "4",
+     "context": "Ruled out on cohort size despite being obvious candidates: Algonauts 2025 (n=4), THINGS-MEG"
+    },
+    {
+     "id": "o2p1-005",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    },
+    {
+     "id": "o2p1-006",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o2p1-007",
+     "token": "0.1149",
+     "context": "~two-thirds of a **small** gap (0.1149 / 0.1288), one seed FAILS."
+    },
+    {
+     "id": "o2p1-008",
+     "token": "0.0407",
+     "context": "channels. It bought 0.0407 and failed its gate. **Coverage is bounded by item difficulty, not by"
+    },
+    {
+     "id": "o2p1-009",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o2p1-010",
+     "token": "0.0",
+     "context": "| G1_clique_frames_shared | median clique affinity - null 95th pct ≥ 0.0 | 0.7914 | ✅ |"
+    },
+    {
+     "id": "o2p1-011",
+     "token": "0.90",
+     "context": "> near-perfectly (raw cosine top-1 0.90, mapped-space-whitened 1.0, Llama AND Qwen). Cycle 6's wall was"
+    },
+    {
+     "id": "o2p1-012",
+     "token": "5",
+     "context": "Cross-family content reading above 5× chance; any cross-mind write channel; any claim that"
+    },
+    {
+     "id": "o2p1-013",
+     "token": "0.0485",
+     "context": "difference of 0.0485, best threshold near affinity 0.7524) — but **both fits are weak**, and on"
+    },
+    {
+     "id": "o2p1-014",
+     "token": "5",
+     "context": "crosses below the survival threshold in n_control_read_also_crossed=3 of n_seeds=5 (0.6811, 0.6571,"
+    },
+    {
+     "id": "o2p1-015",
+     "token": "0.9655071043606076",
+     "context": "= 0.01910828025477707, specificity margin = 0.9655071043606076 — all from"
+    },
+    {
+     "id": "o2p1-016",
+     "token": "0.0161",
+     "context": "CUDA non-deterministic, LoRA r=16 at 300 steps (full-FT is B6). Seed 1's cells sit 0.0161–0.0226"
+    },
+    {
+     "id": "o2p1-017",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o2p1-018",
+     "token": "0.1288",
+     "context": "~two-thirds of a **small** gap (0.1149 / 0.1288), one seed FAILS."
+    },
+    {
+     "id": "o2p1-019",
+     "token": "0.06",
+     "context": "RETRACTED. It rested on two stacked problems: an underpowered map (R² 0.06) AND a whitening readout that"
+    },
+    {
+     "id": "o2p1-020",
+     "token": "0.92",
+     "context": "This supersedes both prior live numbers — the leaky 0.92 (center on test states) and the"
+    },
+    {
+     "id": "o2p1-021",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o2p1-022",
+     "token": "9",
+     "context": "fMRI (9 subjects, 60 concrete nouns, top-500 stable voxels, group RDM). LLM concept RDMs at the fixed"
+    },
+    {
+     "id": "o2p1-023",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o2p1-024",
+     "token": "1.0",
+     "context": "| **LG2 neutral channel sane on HELD** | **PASS** -- 1.0 (bar 0.80) |"
+    },
+    {
+     "id": "o2p1-025",
+     "token": "0.15",
+     "context": "| **M1** paired MLP transfer (the attack) | **0.0504** | G1 ≥ 0.15 | **FAIL** |"
+    },
+    {
+     "id": "o2p1-026",
+     "token": "+0.17",
+     "context": "practical keeper (standardize-then-discover, +0.17 on the clique) and the mechanism statement"
+    },
+    {
+     "id": "o2p1-027",
+     "token": "0.30",
+     "context": "`styxx.protocol` walked the frozen table: G0_discovery ✓ (median llama seed_acc 0.5638 ≥ 0.30),"
+    },
+    {
+     "id": "o2p1-028",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o2p1-029",
+     "token": "0.3746",
+     "context": "hundred timepoints (`c5_effective_df_addendum.json`). At the cohort's median effective n, a correlation must exceed 0.3746 to clear"
+    },
+    {
+     "id": "o2p1-030",
+     "token": "0.95",
+     "context": "regime (r=0.40) it detects **0/40** — commitment. (A high-AR(1) real process, r=0.95,"
+    },
+    {
+     "id": "o2p1-031",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o2p1-032",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o2p1-033",
+     "token": "0",
+     "context": "| G2 | D2 = 0 on corpus AND battery false-verify ≤ 26 | 0 and 26 → PASS |"
+    },
+    {
+     "id": "o2p1-034",
+     "token": "0.10",
+     "context": "| G4_rejects_shared_trend | ≤ 0.10 | 0.0 | ✅ |"
+    },
+    {
+     "id": "o2p1-035",
+     "token": "53",
+     "context": "subsample indices (n=53, seed 0) in the result JSON."
+    },
+    {
+     "id": "o2p1-036",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o2p1-037",
+     "token": "5.28",
+     "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check — caveat: SSVEP decoding is near-satu"
+    },
+    {
+     "id": "o2p1-038",
+     "token": "0.624",
+     "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |"
+    },
+    {
+     "id": "o2p1-039",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o2p1-040",
+     "token": "0.0779",
+     "context": "| `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |"
+    },
+    {
+     "id": "o2p1-041",
+     "token": "0.94",
+     "context": "a different reference shares ~one truth direction, cos ~0.94; a small activation perturbation evades all"
+    },
+    {
+     "id": "o2p1-042",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o2p1-043",
+     "token": "0.15",
+     "context": "0.21608040201005024, gate FFG1 vs the 0.15 floor frozen three months of cycles earlier)."
+    },
+    {
+     "id": "o2p1-044",
+     "token": "0.548",
+     "context": "outside adjudicator, a gap of 0.548 that parameters alone cannot explain."
+    },
+    {
+     "id": "o2p1-045",
+     "token": "0.1739",
+     "context": "0.1739 there). Half these items are RIGHT_PUSH, where the pressured answer is the truth and the"
+    },
+    {
+     "id": "o2p1-046",
+     "token": "10.5281",
+     "context": "The flagship (Fathom v28, DOI 10.5281/zenodo.21263158) established, on *honesty*, that an apparent"
+    },
+    {
+     "id": "o2p1-047",
+     "token": "13",
+     "context": "completion on the authoring host — 13 failures and 11 collection errors, all paging-file and"
+    },
+    {
+     "id": "o2p1-048",
+     "token": "0.067",
+     "context": "| BLOOM-560m | 0.067 |"
+    },
+    {
+     "id": "o2p1-049",
+     "token": "0.062",
+     "context": "exhaustive estimate puts the truth near 0.062 — the published **0.0779 sits at roughly the 98.7th"
+    },
+    {
+     "id": "o2p1-050",
+     "token": "10.5281",
+     "context": "in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not"
+    },
+    {
+     "id": "o2p1-051",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o2p1-052",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o2p1-053",
+     "token": "0.45",
+     "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 ≤0.20 ✓ |"
+    },
+    {
+     "id": "o2p1-054",
+     "token": "0.024",
+     "context": "| DistilGPT-2 | 0.024 |"
+    },
+    {
+     "id": "o2p1-055",
+     "token": "2606.27934",
+     "context": "The closest scientific hit is **Self-Verifying Measurement Records** (arXiv 2606.27934): every"
+    },
+    {
+     "id": "o2p1-056",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    }
+   ]
+  },
+  {
+   "packet": 2,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o2p2-001",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o2p2-002",
+     "token": "0.764",
+     "context": "reliability at **ρ = 0.764**. Partialling reliability out:"
+    },
+    {
+     "id": "o2p2-003",
+     "token": "0.012",
+     "context": "EVAL knowledge 0.788 < the frozen 0.80 bar (missed by 0.012), so its arm is not a verdict. Its"
+    },
+    {
+     "id": "o2p2-004",
+     "token": "1.02",
+     "context": "| window + NAMEABLE (the shipped candidate) | 1.02 |"
+    },
+    {
+     "id": "o2p2-005",
+     "token": "0.15",
+     "context": "per-item 0.0333. Qwen→gemma is 0.1 top-1 — above chance but below the frozen 3×-chance bar (0.15) and"
+    },
+    {
+     "id": "o2p2-006",
+     "token": "0.715",
+     "context": "p95=0.715 vs observed 0.941 (0/120 perms ≥ observed)."
+    },
+    {
+     "id": "o2p2-007",
+     "token": "0.10",
+     "context": "read ≥0.15 (frozen) or ≥0.10 (refit) *below the cave-only reference*. It fails at both points: at lam16 the"
+    },
+    {
+     "id": "o2p2-008",
+     "token": "0.05",
+     "context": "\"H2_cliff\": {\"metric\": \"sigmoid_minus_linear_r2\", \"op\": \">=\", \"value\": 0.05},"
+    },
+    {
+     "id": "o2p2-009",
+     "token": "0.70",
+     "context": "or above the survival threshold of 0.70, i.e. the attack has removed nothing):"
+    },
+    {
+     "id": "o2p2-010",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o2p2-011",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o2p2-012",
+     "token": "0.8054",
+     "context": "arithmetic is unambiguous. These BOLD series carry lag-1 autocorrelation of 0.4967 to 0.8054, which by the standard"
+    },
+    {
+     "id": "o2p2-013",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o2p2-014",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o2p2-015",
+     "token": "67",
+     "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |"
+    },
+    {
+     "id": "o2p2-016",
+     "token": "0.95",
+     "context": "- clean read (no attack): ~0.95"
+    },
+    {
+     "id": "o2p2-017",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o2p2-018",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o2p2-019",
+     "token": "10.5281",
+     "context": "(10.5281/zenodo.21679805) → v32 corrected edition (10.5281/zenodo.21693636) → v33"
+    },
+    {
+     "id": "o2p2-020",
+     "token": "0.70",
+     "context": "and the same 0.70 bar — after this one, nobody gets to call that step optional."
+    },
+    {
+     "id": "o2p2-021",
+     "token": "0.6941",
+     "context": "(0.6941 < 0.7315 - 0.02). Roughly two-thirds of the gap vanished at parity."
+    },
+    {
+     "id": "o2p2-022",
+     "token": "7",
+     "context": "shared per-item *amplitude* profile with no shared geometry whatsoever, and it demonstrated 7×"
+    },
+    {
+     "id": "o2p2-023",
+     "token": "0.954",
+     "context": "(clean read 0.954) floors at ~0.62–0.65 even under a whole-stack r=64 attack. The stronger the"
+    },
+    {
+     "id": "o2p2-024",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o2p2-025",
+     "token": "0.60",
+     "context": "the low-to-mid 0.6s, never reaching the 0.60 collapse bar. This is the decisive evidence that the"
+    },
+    {
+     "id": "o2p2-026",
+     "token": "100",
+     "context": "`REFUSED__underpowered` naming every unlicensed rate — the floors are `MIN_FIRST_CORRECT = 100`"
+    },
+    {
+     "id": "o2p2-027",
+     "token": "0.022",
+     "context": "| GPT-2 | 0.022 |"
+    },
+    {
+     "id": "o2p2-028",
+     "token": "192",
+     "context": "N=192 of 0.1018 vs the v0 baseline's 0.1073 (and below baseline at every world size: 0.1349 vs"
+    },
+    {
+     "id": "o2p2-029",
+     "token": "0.1436",
+     "context": "`e1_result.json`, refuses with the violation named — the metric quotes 0.1436, the declared"
+    },
+    {
+     "id": "o2p2-030",
+     "token": "0.041",
+     "context": "correct answer nearly half the time (the 7B rescued 0.2979 on multiple-choice and 0.041 on free"
+    },
+    {
+     "id": "o2p2-031",
+     "token": "0.4725",
+     "context": "here vs the 2-way re-lock 0.5066 / 0.4725 (`attack_sweep_result.json` λ=1;"
+    },
+    {
+     "id": "o2p2-032",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o2p2-033",
+     "token": "36",
+     "context": "Qwen2.5-3B-Instruct (num_hidden_layers 36), scan layers [15, 18, 21, 23, 26, 28], deploy layer 23"
+    },
+    {
+     "id": "o2p2-034",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o2p2-035",
+     "token": "1.19",
+     "context": "cluster tightly high (center 1.3766, scale 0.0621). The neutral center (1.19) had sat *below* the true"
+    },
+    {
+     "id": "o2p2-036",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o2p2-037",
+     "token": "40",
+     "context": "instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected):"
+    },
+    {
+     "id": "o2p2-038",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o2p2-039",
+     "token": "0.8174",
+     "context": "- **BG1 PASSED**: 0.8174 vs bar 0.0365 + 0.15."
+    },
+    {
+     "id": "o2p2-040",
+     "token": "0.10",
+     "context": "| G4_rejects_shared_trend | ≤ 0.10 | 0.0 | ✅ |"
+    },
+    {
+     "id": "o2p2-041",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o2p2-042",
+     "token": "2696",
+     "context": "- 3951 claims mutated. 1255 are accused. **2696 are not — 0.6824 of them.**"
+    },
+    {
+     "id": "o2p2-043",
+     "token": "0.05",
+     "context": "| G2_bimodal_readability | gap-screen p ≤ 0.05 | 0.6523 | ❌ |"
+    },
+    {
+     "id": "o2p2-044",
+     "token": "70",
+     "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check — caveat: SSVEP decoding is near-satu"
+    },
+    {
+     "id": "o2p2-045",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o2p2-046",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    },
+    {
+     "id": "o2p2-047",
+     "token": "28",
+     "context": "subset is 0.9333 (28/30) versus 0.6667 on the original — a drift (0.6667 → 0.9333), over the pre-registered 0.20 ceiling"
+    },
+    {
+     "id": "o2p2-048",
+     "token": "0.05",
+     "context": "\"H1_islands\": {\"metric\": \"dip_test_p_subject_accuracy\", \"op\": \"<=\", \"value\": 0.05},"
+    },
+    {
+     "id": "o2p2-049",
+     "token": "25",
+     "context": "FV1, the validity precondition, required >= 25 items in EACH condition. The realized split was"
+    },
+    {
+     "id": "o2p2-050",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    },
+    {
+     "id": "o2p2-051",
+     "token": "0.30",
+     "context": "| G0_positive_control | min bridge at k=20 ≥ 0.30 | 0.9745 | ✅ |"
+    },
+    {
+     "id": "o2p2-052",
+     "token": "2509.06902",
+     "context": "citation id (arXiv 2509.06902). A quantity written to two decimals outside code is, in this"
+    },
+    {
+     "id": "o2p2-053",
+     "token": "0.18",
+     "context": "0.492 — a 0.18 swing on one seed). So there is almost no headroom to register \"the attack pushed *further* than"
+    },
+    {
+     "id": "o2p2-054",
+     "token": "0.01425",
+     "context": "| alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 — off by 33×, verdict inverted |"
+    },
+    {
+     "id": "o2p2-055",
+     "token": "0.50",
+     "context": "\"H3_lowrank_rescue\": {\"metric\": \"median_gap_recovered_by_lowrank_align\", \"op\": \">=\", \"value\": 0.50}},"
+    },
+    {
+     "id": "o2p2-056",
+     "token": "0.15",
+     "context": "0.15 bar."
+    }
+   ]
+  },
+  {
+   "packet": 3,
+   "n": 56,
+   "rows": [
+    {
+     "id": "o2p3-001",
+     "token": "0.65",
+     "context": "0.65). Linear difference-of-means directions in a whitened space; danger-train n=48, factorial n=48"
+    },
+    {
+     "id": "o2p3-002",
+     "token": "38",
+     "context": "Issue #38 tracks the replication effort."
+    },
+    {
+     "id": "o2p3-003",
+     "token": "0.01",
+     "context": "about 0.01 — and even that thin continuous signal does not translate into a usable catch (it collapses to"
+    },
+    {
+     "id": "o2p3-004",
+     "token": "0.70",
+     "context": "within one SE of the survival threshold of 0.70 (0.7668, 0.765) — same thin-margin caveat as B2's"
+    },
+    {
+     "id": "o2p3-005",
+     "token": "7.72",
+     "context": "| all-hits-array-indexed | 7.72 |"
+    },
+    {
+     "id": "o2p3-006",
+     "token": "3.2.1",
+     "context": "See section 3.2.1 for the derivation."
+    },
+    {
+     "id": "o2p3-007",
+     "token": "0.8178",
+     "context": "(0.7825 < 0.8378 - 0.02 = 0.8178, by 0.0353). Roughly **83%** of the gap vanished at parity."
+    },
+    {
+     "id": "o2p3-008",
+     "token": "2.35",
+     "context": "Mean latency settled at 2.35 seconds per call."
+    },
+    {
+     "id": "o2p3-009",
+     "token": "14",
+     "context": "Row 14 of the table carries the exception."
+    },
+    {
+     "id": "o2p3-010",
+     "token": "575",
+     "context": "external adopter's report now shows their own `414/575` equivalent without any of this"
+    },
+    {
+     "id": "o2p3-011",
+     "token": "30.00",
+     "context": "Set `timeout=30.00` in the client config."
+    },
+    {
+     "id": "o2p3-012",
+     "token": "1.056",
+     "context": "ratio of 1.056 against a bar of 1.5. Severability is exact: with the flag off the ledger is"
+    },
+    {
+     "id": "o2p3-013",
+     "token": "0.48",
+     "context": "produced (there the naive re-lock fell to ~0.48). The sentiment read (clean 0.954, graded) is more"
+    },
+    {
+     "id": "o2p3-014",
+     "token": "41.27",
+     "context": "Throughput averaged 41.27 documents per minute."
+    },
+    {
+     "id": "o2p3-015",
+     "token": "0.8213",
+     "context": "Held-out recall landed at 0.8213 after the split."
+    },
+    {
+     "id": "o2p3-016",
+     "token": "0.16",
+     "context": "Total explainable is capped by the fMRI noise ceiling (RSA ≤ 0.56 → R² ≤ 0.16–0.31); the full"
+    },
+    {
+     "id": "o2p3-017",
+     "token": "0.70",
+     "context": "Every knowledge-preserving attack point clears the 0.70 recovery bar on both seeds (random-direction"
+    },
+    {
+     "id": "o2p3-018",
+     "token": "10",
+     "context": "Poisson assumption (0.152 expected hits per draw) that is a ~4×10⁻⁵ coincidence. It is not a"
+    },
+    {
+     "id": "o2p3-019",
+     "token": "0.6.2",
+     "context": "Shipped in v0.6.2 alongside the loader fix."
+    },
+    {
+     "id": "o2p3-020",
+     "token": "0.7717",
+     "context": "one-time 0.7717 was a favourable draw, exactly the reason the program forbids helping oneself to a"
+    },
+    {
+     "id": "o2p3-021",
+     "token": "0.80",
+     "context": "`guard_pass = false` for exactly this family. The frozen foundation knowledge threshold of 0.80 was"
+    },
+    {
+     "id": "o2p3-022",
+     "token": "15",
+     "context": "same-cluster models (gemma reference, Llama-3.2-3B agent), single-turn pressure, n = 30 pairs / ~15"
+    },
+    {
+     "id": "o2p3-023",
+     "token": "343",
+     "context": "Reproduce with seed 343 and the pinned wheel."
+    },
+    {
+     "id": "o2p3-024",
+     "token": "0.70",
+     "context": "threshold of 0.70) and seed 0's knowledge break (0.7273 against the threshold of 0.75) sit"
+    },
+    {
+     "id": "o2p3-025",
+     "token": "0.664",
+     "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |"
+    },
+    {
+     "id": "o2p3-026",
+     "token": "212",
+     "context": "| subj08 | 0.4670 | **212** |"
+    },
+    {
+     "id": "o2p3-027",
+     "token": "0.2674",
+     "context": "Cycle 64 left the loop refusing 0.2674 of items, with its own next-step note demanding that any"
+    },
+    {
+     "id": "o2p3-028",
+     "token": "32",
+     "context": "All 32 would-be false accusations are listed in the receipt. Read together they are one"
+    },
+    {
+     "id": "o2p3-029",
+     "token": "0.63",
+     "context": "anchor-to-organic false-fire gap from 0.63 to 0.0322 (attribute) and to 0.0078 (chains). What"
+    },
+    {
+     "id": "o2p3-030",
+     "token": "0.8478",
+     "context": "| family diversity (different family, same scale) | 65 | co-abstention 0.8478, coverage gate failed |"
+    },
+    {
+     "id": "o2p3-031",
+     "token": "0.182",
+     "context": "the AI↔brain match **survives** removing a vision model (partial 0.182 → 0.107), so it is **not a"
+    },
+    {
+     "id": "o2p3-032",
+     "token": "10.5281",
+     "context": "vendor-generality (10.5281/zenodo.21695691), each carrying the certified paper, its"
+    },
+    {
+     "id": "o2p3-033",
+     "token": "0.3012",
+     "context": "so any change it produces is pure deference. At 3B the model abandons a correct answer on 0.3012 of"
+    },
+    {
+     "id": "o2p3-034",
+     "token": "0.875",
+     "context": "1.0); cross-lab pairs work too (pythia-410m→gpt2 0.188 top-1, 0.635 top-5, oracle 0.875)."
+    },
+    {
+     "id": "o2p3-035",
+     "token": "2026",
+     "context": "The run finished on 2026-07-12 without incident."
+    },
+    {
+     "id": "o2p3-036",
+     "token": "0.3704",
+     "context": "| `styxx.coupling` | two independent streams on one irregular clock | coupled, RV 0.3704 at p 0.0033 | **this lab, on real agent telemetry** |"
+    },
+    {
+     "id": "o2p3-037",
+     "token": "0.9127",
+     "context": "Coverage reached 0.9127 of the addressable corpus."
+    },
+    {
+     "id": "o2p3-038",
+     "token": "0.6644",
+     "context": "The floor held at 0.6644 across every fold."
+    },
+    {
+     "id": "o2p3-039",
+     "token": "10",
+     "context": "attempted, exactly as §10 requires."
+    },
+    {
+     "id": "o2p3-040",
+     "token": "0.4533333333333333",
+     "context": "UNREG 0.18333333333333332, KP 0.5966666666666667. The overwriting attack loses 0.4533333333333333 of"
+    },
+    {
+     "id": "o2p3-041",
+     "token": "41",
+     "context": "41× chance, minimum 37×, nulls at chance. It is bounded to: this map class, ≤3B models, one"
+    },
+    {
+     "id": "o2p3-042",
+     "token": "0.5639",
+     "context": "this document originally printed 0.5639 here, a value its author never read anywhere: caught by"
+    },
+    {
+     "id": "o2p3-043",
+     "token": "0.50",
+     "context": "with top-5 0.2 below the 0.50 bar. Neither clears the CONTENT-DECODABLE gate."
+    },
+    {
+     "id": "o2p3-044",
+     "token": "1",
+     "context": "**Earned.** (1) An independent channel queried outside the pressure frame repairs the confabulation"
+    },
+    {
+     "id": "o2p3-045",
+     "token": "10.5281",
+     "context": "published paper (Fathom v26, DOI 10.5281/zenodo.21241185) carried — reported loudly, as the prereg"
+    },
+    {
+     "id": "o2p3-046",
+     "token": "0.4471",
+     "context": "The margin widened to 0.4471 on the second run."
+    },
+    {
+     "id": "o2p3-047",
+     "token": "0.0912",
+     "context": "The pooled share fell to 0.0912 after exclusions."
+    },
+    {
+     "id": "o2p3-048",
+     "token": "0.13",
+     "context": "roughly 0.13 in squared-cosine mass at k=20. The island is not in another galaxy; it is a"
+    },
+    {
+     "id": "o2p3-049",
+     "token": "12",
+     "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly"
+    },
+    {
+     "id": "o2p3-050",
+     "token": "0.07",
+     "context": "A residual remains, but at **n = 13 it is borderline** (p ≈ 0.07) and hard to separate from \"every"
+    },
+    {
+     "id": "o2p3-051",
+     "token": "4",
+     "context": "| disagreement with the shipped `styxx.anchors` | **4× on α, 0.15 on power** for the same question |"
+    },
+    {
+     "id": "o2p3-052",
+     "token": "five",
+     "context": "The third experiment of five is still queued."
+    },
+    {
+     "id": "o2p3-053",
+     "token": "0.7789",
+     "context": "Agreement came out at 0.7789 between the two seats."
+    },
+    {
+     "id": "o2p3-054",
+     "token": "2604.24658",
+     "context": "**Agent-Native Research Artifacts** (arXiv 2604.24658, 37 authors) proposes replacing the"
+    },
+    {
+     "id": "o2p3-055",
+     "token": "2606.27934",
+     "context": "*stopped holding because the verifier moved underneath it*. The abstract of 2606.27934 does not"
+    },
+    {
+     "id": "o2p3-056",
+     "token": "0.20",
+     "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 ≤0.15 ✓ |"
+    }
+   ]
+  }
+ ]
+}

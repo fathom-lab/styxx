@@ -1,0 +1,65 @@
+{
+  "census": "vacuous pass — what a detector would reach and what it would destroy",
+  "status": "CENSUS. Licenses no claim, proposes no detector. Measures the population a rule would actually see, BEFORE any design — the step v0.12 died for skipping.",
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "python_files_scanned": 1482,
+  "window_lines": 6,
+  "line_correction": "VP-D was first recorded at line 329, taken from the audit finding's header without checking it. At the catalogued commit line 329 is `if not PANEL.exists():`; the vacuous bars are at 382-384. Corrected to 383 after reading the source. A census that trusts a cited line number is measuring the citation, not the code.",
+  "measurement_note": "REACH is measured on the pre-fix source at each defect's catalogued commit; DESTROY is measured on the current tree. The first run of this census read both from the current tree and scored zeroes, because three of the four defects are repaired there — measuring against the wrong population, inside the census written to stop exactly that.",
+  "denominator": {
+    "catalogued_instances": 5,
+    "with_a_syntactic_defect_site": 3,
+    "note": "Scored out of the SYNTACTIC instances only. VP-C is a classification decision and VP-E is a data fact; no AST pattern reaches either, and scoring out of five would flatter by choice of denominator."
+  },
+  "candidates": [
+    {
+      "rule": "C1_all_any_over_comprehension",
+      "sites_repo_wide": 559,
+      "reaches": [
+        "VP-D"
+      ],
+      "n_reached": 1,
+      "cost_per_reach": 559.0
+    },
+    {
+      "rule": "C2_if_not_x_then_exit",
+      "sites_repo_wide": 677,
+      "reaches": [
+        "VP-B"
+      ],
+      "n_reached": 1,
+      "cost_per_reach": 677.0
+    },
+    {
+      "rule": "C3_filtered_comprehension",
+      "sites_repo_wide": 3398,
+      "reaches": [],
+      "n_reached": 0,
+      "cost_per_reach": null
+    },
+    {
+      "rule": "C4_swallowing_skip_call",
+      "sites_repo_wide": 44,
+      "reaches": [
+        "VP-A"
+      ],
+      "n_reached": 1,
+      "cost_per_reach": 44.0
+    },
+    {
+      "rule": "C5_except_pass_or_continue",
+      "sites_repo_wide": 327,
+      "reaches": [
+        "VP-B"
+      ],
+      "n_reached": 1,
+      "cost_per_reach": 327.0
+    }
+  ],
+  "how_to_read_this": "`sites_repo_wide` is the destroy surface: every one of those is a guard a rule would flag, and the overwhelming majority are correct code. `cost_per_reach` is sites divided by instances reached. A candidate in the hundreds per reach is a highlighter, not a detector, and no threshold rescues it — that is the finding v0.11 and v0.12 both paid for.",
+  "what_this_does_not_show": [
+    "That any candidate is good. None is proposed and none is recommended.",
+    "That a hand-adjudicated subset of the sites would be mostly false positives — nobody has read them. The destroy column is a COUNT, not a judgement.",
+    "That the class is five. Five is five, found in two days by people looking for other things."
+  ]
+}

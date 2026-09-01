@@ -1,0 +1,15 @@
+{
+ "note": "DEV TELEMETRY on OBLIGATE-1's spent adjudications; may not be quoted as a result",
+ "positive": {
+  "adjudicated": 58,
+  "obligate2_fires": 13,
+  "of_those_CLAIM": 11,
+  "precision_dev": 0.8462
+ },
+ "negative": {
+  "adjudicated": 57,
+  "obligate2_fires": 0,
+  "of_those_CLAIM": 0,
+  "precision_dev": null
+ }
+}

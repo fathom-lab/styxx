@@ -1,0 +1,109 @@
+{
+ "census": "external certificates' epistemic composition, folded from epistemics_summary",
+ "repos_certified_in_manifest": 82,
+ "repos_recertified": 82,
+ "unresolved": {},
+ "by_branch": {
+  "silent": 3844,
+  "value-match": 575,
+  "obligated-accusation": 366,
+  "spec-or-historical": 289,
+  "notation": 105,
+  "row-ordinal-label": 0,
+  "formula-constant": 0,
+  "derived": 0,
+  "unbound-field": 0,
+  "ulp-neighbour": 0
+ },
+ "obligation_sources": {
+  "vocabulary": 567,
+  "n-glued": 13,
+  "range-sanity": 13,
+  "range-correlation": 2,
+  "precision": 0
+ },
+ "verified_value_match": {
+  "obligated_integer_filter_ran": 28,
+  "obligated_integer_filter_na": 133,
+  "unobligated_integer_filter_ran": 207,
+  "unobligated_integer_filter_na": 207
+ },
+ "verified_derived": {
+  "obligated": 0,
+  "unobligated": 0
+ },
+ "headline": {
+  "verified_total": 575,
+  "unobligated_oaths": 414,
+  "unobligated_oath_rate_external": 0.72,
+  "weakest_attestations": 207,
+  "weakest_share": 0.36,
+  "internal_comparison": {
+   "unobligated_oath_rate_internal": 0.5811,
+   "weakest_share_internal": 0.3399
+  }
+ },
+ "repos_most_exposed": [
+  {
+   "repo": "feyninc/tokie",
+   "verified": 34,
+   "unobligated": 34,
+   "share": 1.0
+  },
+  {
+   "repo": "nextcloud/whiteboard",
+   "verified": 20,
+   "unobligated": 20,
+   "share": 1.0
+  },
+  {
+   "repo": "alex-jb/orallexa-ai-trading-agent",
+   "verified": 18,
+   "unobligated": 18,
+   "share": 1.0
+  },
+  {
+   "repo": "shi3z/japanese-llm-benchmark",
+   "verified": 15,
+   "unobligated": 15,
+   "share": 1.0
+  },
+  {
+   "repo": "WillyEverGreen/acon",
+   "verified": 11,
+   "unobligated": 11,
+   "share": 1.0
+  },
+  {
+   "repo": "SHITIANYU-hue/amai_ocl",
+   "verified": 9,
+   "unobligated": 9,
+   "share": 1.0
+  },
+  {
+   "repo": "connor-makowski/scgraph",
+   "verified": 8,
+   "unobligated": 8,
+   "share": 1.0
+  },
+  {
+   "repo": "asif-jc/Dont-Swim-in-Data",
+   "verified": 4,
+   "unobligated": 4,
+   "share": 1.0
+  },
+  {
+   "repo": "nhadaututtheky/neural-memory",
+   "verified": 3,
+   "unobligated": 3,
+   "share": 1.0
+  },
+  {
+   "repo": "mbzuai-nlp/AudioJailbreak",
+   "verified": 2,
+   "unobligated": 2,
+   "share": 1.0
+  }
+ ],
+ "companion_quality_number": "The join RESULT measured volunteered external oaths at 0.3654 claim-share on the panel sample. This census gives the corpus-wide DENOMINATOR those volunteers sit in; multiplying the two is an estimate, not a measurement, and is left to the reader with that label."
+}

@@ -77,6 +77,51 @@ _TEMPLATES = [
 ]
 
 
+# EXTERNAL-1 consequence, preregistered and paid: the path-claim accusation is
+# WITHHELD until a held-out blind panel licenses its return (PREREG_v13_repair).
+# Exposed as a flag, not a deletion, so the counterfactual stays measurable — the
+# question "how much of the failure was the instrument and how much was the
+# harness feeding it" is answerable only if this can be toggled in a measurement.
+WITHHOLD_PATH_ACCUSATION = True
+
+# V13 repair 2 (PREREG_v13_repair_2026_08_31): FROZEN NON-FILE NOUNS. The
+# extension whitelist cannot tell the runtime `Node.js` from a file named
+# node.js, and EXTERNAL-1 caught the gate accusing agent prose of not
+# containing a file called "Next.js". Closed list, quoted in full in the
+# RESULT so the closure is auditable, and applied only to bare tokens with no
+# directory part -- a real `lib/node.js` still claims normally.
+_NON_FILE_NOUNS = frozenset({
+    "node.js", "next.js", "express.js", "vue.js", "nuxt.js", "react.js",
+    "angular.js", "ember.js", "backbone.js", "three.js", "d3.js", "chart.js",
+    "moment.js", "jquery.js", "socket.io", "nest.js", "svelte.js", "alpine.js",
+})
+
+
+def _is_non_file_noun(claimed: str) -> bool:
+    return ("/" not in claimed and "\\" not in claimed
+            and claimed.lower() in _NON_FILE_NOUNS)
+
+
+# V13 repair 1 (PREREG_v13_repair_2026_08_31): VERB-OBJECT BINDING. "Removed
+# the helper FROM mantineTheme.ts" claims something about content INSIDE a file
+# the diff shows as modified -- the verb binds to the helper, not to the file.
+# EXTERNAL-1's largest surviving defect: such sentences read as deletions and
+# were accused of not deleting the file. Containment prepositions demote
+# creation/deletion claims to "touched"; "at" and bare direct objects are left
+# alone, because "created the docs at path/x.md" really does claim that file.
+_CONTAINMENT = re.compile(
+    r"\b(?:from|in|inside|within|out\s+of|of)\s+"
+    r"(?:the\s+|its\s+|this\s+)?[`\"']?$", re.I)
+
+
+def _demoted_by_containment(sentence: str, m) -> bool:
+    try:
+        start = m.start("path")
+    except (IndexError, re.error):
+        return False
+    return bool(_CONTAINMENT.search(sentence[max(0, start - 40):start]))
+
+
 _PATH_KINDS = ("file_created", "file_deleted", "file_touched")
 
 # A path mentioned after one of these is being REFERRED to, not claimed. Closed
@@ -91,6 +136,17 @@ _REFERENTIAL = (
     "follow-up", "followup", "next commit", "separate commit", "separately",
     "not in this", "left for", "deferred", "pending", "in a later", "later commit",
     "still needs", "yet to be", "planned", "TODO", "todo",
+    # V13 repair 3 (PREREG_v13_repair_2026_08_31): NEGATION. A sentence saying a
+    # file was NOT changed makes its absence from the diff the sentence coming
+    # TRUE. EXTERNAL-1 caught the gate accusing "avoids the need to modify
+    # tsconfig.json" because tsconfig.json was absent -- which is what the
+    # sentence promised. Same pathway as every other referential cue: the path
+    # is named, not claimed.
+    "avoid", "avoids", "without modif", "without chang", "without touch",
+    "without altering", "no need to", "does not modify", "does not change",
+    "does not touch", "doesn't modify", "doesn't change", "doesn't touch",
+    "not modified", "not changed", "not touched", "no changes to",
+    "unchanged", "untouched", "preserves",
 )
 _REF_BEFORE = 110          # run-up inspected before the matched path
 _REF_AFTER = 70            # and after it: "test.yml) is staged" puts the
@@ -133,6 +189,21 @@ class DiffGate:
     head: str
     claims: list = field(default_factory=list)
     uncovered_sentences: int = 0
+    # The never-read band, first-class. The agent-branch attestation
+    # (RESULT_agent_gate_boundary_2026_08_30) measured this gate reading 6
+    # sentences of an agent's own 2,738 — a coverage boundary that a bare count
+    # buried in a dict could not confess. So the gate now carries the
+    # denominator and the sentences themselves: what was never read is
+    # auditable, not just countable. Same promotion epistemics_summary gave
+    # OATH's abstained band; observation only, verdict logic untouched.
+    sentences_total: int = 0
+    uncovered_texts: list = field(default_factory=list)
+    # Of the never-read band, which sentences a STRUCTURAL reader thinks are claims the
+    # templates simply failed to parse. This is the boundary's boundary: not "prose we did
+    # not judge" but "claims we should have judged and could not". OBSERVATION ONLY —
+    # STRUCT-1 never touches a verdict, exactly as the epistemics annotation never touched
+    # OATH's ladder. See PREREG_claim_detector_2026_08_30.md.
+    unparsed_claims: list = field(default_factory=list)
     # A gate that had NO EVIDENCE still has to answer PASS or FAIL, and PASS is
     # the flattering half. `measured` is the third answer the two-valued verdict
     # cannot carry: this gate did not run. A leg that cannot fail must not gate.
@@ -144,6 +215,9 @@ class DiffGate:
                 "head": self.head,
                 "claims": [c.__dict__ for c in self.claims],
                 "uncovered_sentences": self.uncovered_sentences,
+                "sentences_total": self.sentences_total,
+                "uncovered_texts": self.uncovered_texts,
+                "unparsed_claims": self.unparsed_claims,
                 "measured": self.measured,
                 "why_unmeasured": self.why_unmeasured}
 
@@ -257,6 +331,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 # does not get to call a summary a liar.
                 if kind in _PATH_KINDS and _names_without_claiming(sent, m):
                     continue
+                if kind in _PATH_KINDS and _is_non_file_noun(m.group("path")):
+                    continue                        # V13 repair 2
+                if (kind in ("file_created", "file_deleted")
+                        and _demoted_by_containment(sent, m)):
+                    kind = "file_touched"           # V13 repair 1
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)
@@ -267,12 +346,39 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if kind in ("file_created", "file_deleted", "file_touched"):
                     p, st = find_path(d["path"])
                     want = {"file_created": "A", "file_deleted": "D"}.get(kind)
+                    accuse = not WITHHOLD_PATH_ACCUSATION
                     if p is None:
-                        c.verdict, c.why = "CONTRADICTED", \
-                            f"{d['path']!r} does not appear in the diff at all"
+                        # EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31):
+                        # over 100 blind-adjudicated accusations on an external corpus of
+                        # agent-authored PRs this branch reached precision 0.23 against a
+                        # preregistered floor of 0.95. The preregistration's committed
+                        # consequence was to disable the accusing verdict for this class
+                        # until repaired, and this is that consequence being paid. Four
+                        # mechanical defects account for it: bare basenames never met full
+                        # diff paths ('glob.ts' vs 'src/node/glob.ts'); "removed X from
+                        # FILE" bound the verb to the file instead of X; prose nouns passed
+                        # the extension whitelist ('Node.js', 'Express.js'); and negation
+                        # ("avoids modifying tsconfig.json") was read as assertion.
+                        # An instrument that cannot accuse precisely must abstain. Repair
+                        # is preregistered separately and must clear its gate on the
+                        # HELD-OUT split before this line accuses again.
+                        c.verdict, c.why = (
+                            ("CONTRADICTED",
+                             f"{d['path']!r} does not appear in the diff at all")
+                            if accuse else
+                            ("UNCHECKABLE",
+                             f"{d['path']!r} does not appear in the diff — accusation "
+                             "WITHHELD: this class failed EXTERNAL-1 precision "
+                             "(0.23 vs 0.95 floor), disabled pending repair"))
                     elif want and st != want:
-                        c.verdict, c.why = "CONTRADICTED", \
-                            f"{d['path']!r} is status {st!r} in the diff, claim wants {want!r}"
+                        c.verdict, c.why = (
+                            ("CONTRADICTED",
+                             f"{d['path']!r} is status {st!r} in the diff, "
+                             f"claim wants {want!r}")
+                            if accuse else
+                            ("UNCHECKABLE",
+                             f"{d['path']!r} is status {st!r}, claim wants {want!r} — "
+                             "accusation WITHHELD pending the EXTERNAL-1 repair"))
                     else:
                         c.verdict, c.why = "VERIFIED", f"diff status {st!r} for {p!r}"
                 elif kind == "files_changed_count":
@@ -319,10 +425,23 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     contradicted = any(c.verdict == "CONTRADICTED" for c in claims)
     uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)
     verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
-    uncovered = sum(1 for i, s in enumerate(sentences) if s.strip() and i not in covered)
+    uncovered_texts = [s.strip() for i, s in enumerate(sentences)
+                       if s.strip() and i not in covered]
+    total = sum(1 for s in sentences if s.strip())
+    # The never-read band, read structurally. Import is local and failure is silent: the
+    # gate must run identically whether or not the observer is available, because a
+    # verdict that depends on an observer is not an observation.
+    unparsed = []
+    try:
+        from styxx.claimdetect import detect as _detect
+        unparsed = [s for s in uncovered_texts if _detect(s).is_claim]
+    except Exception:
+        unparsed = []
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
                     measured=not no_evidence, why_unmeasured=no_evidence or "",
-                    uncovered_sentences=uncovered)
+                    uncovered_sentences=len(uncovered_texts),
+                    sentences_total=total, uncovered_texts=uncovered_texts,
+                    unparsed_claims=unparsed)
 
 
 _DEMO_SUMMARY = ("Refactored src/retry.py for resilience. Adds function backoff with "
@@ -405,6 +524,15 @@ def main(argv=None) -> int:
           f"contradicted={sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} "
           f"uncheckable={sum(1 for c in g.claims if c.verdict == 'UNCHECKABLE')} "
           f"uncovered_sentences={g.uncovered_sentences}")
+    if g.sentences_total:
+        # The boundary, confessed on every run: a PASS over N sentences the gate
+        # never read is a PASS over the templates, not over the summary.
+        print(f"never read: {g.uncovered_sentences} of {g.sentences_total} "
+              f"sentences — prose outside the closed template set is listed "
+              f"in --out, not judged")
+        if g.unparsed_claims:
+            print(f"            of those, {len(g.unparsed_claims)} look like claims a "
+                  f"structural reader would check but these templates cannot parse")
     for c in g.claims:
         if c.verdict != "VERIFIED":
             print(f"  [{c.verdict}:{c.kind}] {c.why}")

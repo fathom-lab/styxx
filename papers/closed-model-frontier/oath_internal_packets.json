@@ -1,0 +1,2082 @@
+{
+ "prereg": "papers/closed-model-frontier/PREREG_oath_verified_channel_internal_2026_08_27.md",
+ "arm": "this laboratory's own certified corpus, re-certified live at the pinned verifier",
+ "seed": 20260827,
+ "packet_size": 25,
+ "panel": 3,
+ "question": "Is this token a CLAIM whose truth a reader could check against the cited receipts?\n\nAnswer CLAIM if the number asserts something about a measurement, result, dataset, or outcome that the document is reporting — something a reader could look up in the receipts and find to be right or wrong.\n\nAnswer NOT_A_CLAIM if the number is anything else: a version, a date, a hyperparameter or configuration value, a file path or index, a count of items in a list, a citation, a URL fragment, a table row number, a quantity quoted FROM somewhere else rather than asserted, or a number inside a formula or code snippet that names no measured quantity.\n\nAnswer UNSURE only if you genuinely cannot tell from the line and its context. UNSURE is counted against the instrument, so use it honestly rather than defensively.",
+ "composition": {
+  "verified": 150,
+  "abstain_decoys": 75,
+  "ungrounded_decoys": 11,
+  "total_items": 236,
+  "packets": 10
+ },
+ "available": {
+  "verified": 5800,
+  "abstained": 2048,
+  "ungrounded": 11
+ },
+ "blinding": "Identical presentation to the external run; nothing in a packet indicates which corpus an item came from, or what the verifier decided about it.",
+ "packets": [
+  [
+   {
+    "id": "I0029",
+    "repo": "FINDING_conscience_coordinates_2026_06_11.md",
+    "line": 25,
+    "token": "0.4948",
+    "context": "| c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0115",
+    "repo": "FINDING_council_2026_05_25.md",
+    "line": 63,
+    "token": "0.75",
+    "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 2/4, 0.75, 1.0} with a",
+    "obligating_words": []
+   },
+   {
+    "id": "I0201",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 33,
+    "token": "2",
+    "context": "**k\\* = 2** under the pre-stated definition (minimum rank with median bridge ≥ 0.30 and median",
+    "obligating_words": [
+     "median"
+    ]
+   },
+   {
+    "id": "I0022",
+    "repo": "FINDING_anatomy_v2_2026_06_10.md",
+    "line": 40,
+    "token": "10000",
+    "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+    "obligating_words": [
+     "permutation"
+    ]
+   },
+   {
+    "id": "I0176",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 11,
+    "token": "70",
+    "context": "the committed linear machinery (zero labels), fit one MLP on the discovered pairing, read 70",
+    "obligating_words": []
+   },
+   {
+    "id": "I0177",
+    "repo": "RESULT_oath_prior_art_survey_2026_08_26.md",
+    "line": 130,
+    "token": "181",
+    "context": "- **The scale of self-application.** 163 logged cycles, 367 frozen preregistrations, 181",
+    "obligating_words": []
+   },
+   {
+    "id": "I0009",
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 95,
+    "token": "5",
+    "context": "| G3 retraction ledger audit | any 5th conversion, 2nd flip, 6th silenced verification | 4 withdrawn, 5 silenced, 1 flip, post-frame 4191 / 1490 / 0 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0085",
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 68,
+    "token": "343",
+    "context": "One seed (343), one split, 70-way read, four models ≤3B, source layers as-banked with",
+    "obligating_words": []
+   },
+   {
+    "id": "I0089",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 20,
+    "token": "0.632",
+    "context": "| 0 | 3.0 | 0.626 | **0.764** | 0.873 | 0.632 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0153",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 8,
+    "token": "60",
+    "context": "floor). n=60 = 30 original + 30 new authored pairs, unscreened. The headline is VOID-ANCHOR-DRIFT: under",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0138",
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 38,
+    "token": "0.9285714285714286",
+    "context": "0.9285714285714286 at 3B. The consistent picture across both channels: **as models scale, attacks",
+    "obligating_words": []
+   },
+   {
+    "id": "I0220",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 13,
+    "token": "0.0516",
+    "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median",
+    "obligating_words": [
+     "mean",
+     "median"
+    ]
+   },
+   {
+    "id": "I0033",
+    "repo": "RESULT_margin_parity_control_2026_07_10.md",
+    "line": 77,
+    "token": "1",
+    "context": "Qwen2.5-1.5B only, sentiment construct only, λ=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE ≈ 0.05 —",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0215",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 41,
+    "token": "60",
+    "context": "The sep 0.25 cell sits at the effective gate: 31/60 replicates cleared the noise-margin keep",
+    "obligating_words": [
+     "margin"
+    ]
+   },
+   {
+    "id": "I0114",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 37,
+    "token": "0.6756",
+    "context": "- EVAL n=66; per-checkpoint AUROC SE = 0.06. Both crossings (0.671 and 0.6756 against the",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0216",
+    "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+    "line": 28,
+    "token": "1.0",
+    "context": "| the same function on a sparse null | returns 0.0, a bar conceding **α = 1.0** |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0202",
+    "repo": "FINDING_frontier_incontext_oof_2026_07_30.md",
+    "line": 78,
+    "token": "1",
+    "context": "One frontier substrate, free text, one benchmark family (SQuAD v2 1-3 word answers), one",
+    "obligating_words": []
+   },
+   {
+    "id": "I0139",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 31,
+    "token": "0.5468",
+    "context": "| **H1** signal | AUROC(depth→correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+    "obligating_words": [
+     "auroc",
+     "ci"
+    ]
+   },
+   {
+    "id": "I0228",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "2",
+    "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+    "obligating_words": [
+     "delta"
+    ]
+   },
+   {
+    "id": "I0178",
+    "repo": "RESULT_geometry_integrity_2026_06_03.md",
+    "line": 47,
+    "token": "3",
+    "context": "`run_geometry_signature.py` (benign-behavioral confound, stage 3). Results: `geometry_*_result.json`.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0166",
+    "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+    "line": 30,
+    "token": "6",
+    "context": "| 6 | **The frame beats the parameters** | same 3B: **0.2742** inside the pressure frame vs **0.8226** outside it as adjudicator | `adjudicated_loop_result.json` |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0098",
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 19,
+    "token": "8",
+    "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0037",
+    "repo": "source.md",
+    "line": 153,
+    "token": "0.70",
+    "context": "prevalence-dependent.** As the true rate of incorrect answers rose across 0.30 / 0.50 / 0.70, the",
+    "obligating_words": [
+     "rate"
+    ]
+   },
+   {
+    "id": "I0078",
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 32,
+    "token": "45",
+    "context": "| accumulate | 60 | 45 | 0.75 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0069",
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 18,
+    "token": "0.9846153846153847",
+    "context": "(held = first-correct and *not* caved). In the receipt these are **0.9846153846153847 vs 1.0** — nearly",
+    "obligating_words": [
+     "caved",
+     "held"
+    ]
+   }
+  ],
+  [
+   {
+    "id": "I0117",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 107,
+    "token": "28.1",
+    "context": "broad positional rule destroys a mean of 28.1 reader-visible catches per seed; the value-reading",
+    "obligating_words": [
+     "mean"
+    ]
+   },
+   {
+    "id": "I0102",
+    "repo": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
+    "line": 35,
+    "token": "0.8299",
+    "context": "(0.8299, p = 0.003). gemma's own pressure-context self-read is 0.7861 (validity holds).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0196",
+    "repo": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+    "line": 52,
+    "token": "10",
+    "context": "adaptive scheme, frozen separately before its run. E3″ candidates: refit the MIMIC probe every 10",
+    "obligating_words": []
+   },
+   {
+    "id": "I0146",
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 57,
+    "token": "0.6756",
+    "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0034",
+    "repo": "RESULT_geometry_integrity_2026_06_03.md",
+    "line": 13,
+    "token": "1.00",
+    "context": "great on Qwen (combined AUC 1.00) but **model-dependent**: Llama *resists* the jailbreaks (they make",
+    "obligating_words": [
+     "auc"
+    ]
+   },
+   {
+    "id": "I0185",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 51,
+    "token": "64",
+    "context": "the private one is a rung behind.\" A stronger attacker (the prereg's named r=64 rung) is on",
+    "obligating_words": []
+   },
+   {
+    "id": "I0042",
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 45,
+    "token": "0.975",
+    "context": "CAVED 46 / HELD 40). The probe frame is valid — items the model never abandoned answer at **0.975**",
+    "obligating_words": [
+     "caved",
+     "held"
+    ]
+   },
+   {
+    "id": "I0091",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 25,
+    "token": "0.9288",
+    "context": "| c_truth recovers T | 0.9288 | 0.8351 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0007",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 53,
+    "token": "1.0",
+    "context": "(Spearman 1.0), but individual seeds do invert within the plateau — seed 1001 dips from 0.5714",
+    "obligating_words": []
+   },
+   {
+    "id": "I0127",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 40,
+    "token": "0.033333333333333326",
+    "context": "0.033333333333333326) rather than the infinite ratio the lower-resolution run implied. An infinite",
+    "obligating_words": []
+   },
+   {
+    "id": "I0187",
+    "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "line": 37,
+    "token": "36",
+    "context": "(2 ∉ range), as were the other four cycle-23 artifacts (`20`, `60`, `60`, `36`, all out of range).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0224",
+    "repo": "PAPER_knowsay_gap_2026_07_27.md",
+    "line": 108,
+    "token": "7",
+    "context": "point (§7) is the natural third.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0122",
+    "repo": "FINDING_third_party_bench_2026_07_24.md",
+    "line": 30,
+    "token": "0.27058823529411763",
+    "context": "| mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0023",
+    "repo": "FINDING_frame_recovery_2026_07_24.md",
+    "line": 21,
+    "token": "0.9846153846153847",
+    "context": "the same weights outside the conversation returns the correct answer **0.9846153846153847** of the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0154",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 63,
+    "token": "150",
+    "context": "values AND 100·19/150 rounds to 12.7 — no fabricated-pair verification (triviaqa `12.7` =",
+    "obligating_words": []
+   },
+   {
+    "id": "I0231",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 103,
+    "token": "5",
+    "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0055",
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 13,
+    "token": "0.0408",
+    "context": "(llama1b↔gemma 0.7398/0.7398; llama1b↔qwen 0.0408/0.0408; gemma↔qwen 0.1684/0.1684) —",
+    "obligating_words": []
+   },
+   {
+    "id": "I0086",
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 76,
+    "token": "7.4805",
+    "context": "**7.4805** — far too large to call a match. The committed range 6.9 to 45.8 therefore has",
+    "obligating_words": []
+   },
+   {
+    "id": "I0083",
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 30,
+    "token": "28",
+    "context": "28 noisy per-layer CV accuracies — it is selection-inflated and needs a permutation-corrected penalty before",
+    "obligating_words": [
+     "permutation"
+    ]
+   },
+   {
+    "id": "I0168",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 41,
+    "token": "1",
+    "context": "knowledge pays the price is NOT resolved at n=66,\" not \"seed 1 broke read-neq-write.\"",
+    "obligating_words": []
+   },
+   {
+    "id": "I0133",
+    "repo": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+    "line": 68,
+    "token": "0",
+    "context": "refit-every-10, whole-stack scrub, λ=1.0, seeds {0,1}, small EVAL (60 facts). The finding is \"these",
+    "obligating_words": []
+   },
+   {
+    "id": "I0080",
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 29,
+    "token": "0.0909",
+    "context": "**Selecting made both numbers worse.** The gain fell from 0.0909 to 0.0667 and final accuracy fell",
+    "obligating_words": [
+     "accuracy"
+    ]
+   },
+   {
+    "id": "I0016",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 35,
+    "token": "0.4848",
+    "context": "DoM auditor collapsed to chance in every cell (0.4848/0.4654/0.4645/0.4636 vs random-direction",
+    "obligating_words": []
+   },
+   {
+    "id": "I0093",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 69,
+    "token": "23",
+    "context": "The neutral-reasoning cell **C4 scored 23/30 on true claims — one claim under the pre-registered 24/30 floor**.",
+    "obligating_words": [
+     "floor",
+     "scored"
+    ]
+   },
+   {
+    "id": "I0169",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 89,
+    "token": "20",
+    "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0151",
+    "repo": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+    "line": 90,
+    "token": "0.682",
+    "context": "| \"only reached 0.624 / 0.664 and 0.749 / 0.682\" | `points[2].frozen_deployed_auroc` |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0113",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 33,
+    "token": "30",
+    "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0195",
+    "repo": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
+    "line": 41,
+    "token": "16",
+    "context": "- **Scope unchanged:** LoRA r=16, 300 steps, a difference-of-means-targeted scrub, 1.5B/1B, small",
+    "obligating_words": []
+   },
+   {
+    "id": "I0188",
+    "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+    "line": 69,
+    "token": "1",
+    "context": "is honored: no alignment-level conclusion is drawn. The two results above are (1) a licensed",
+    "obligating_words": []
+   },
+   {
+    "id": "I0233",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "1",
+    "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a",
+    "obligating_words": [
+     "delta"
+    ]
+   },
+   {
+    "id": "I0025",
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0020",
+    "repo": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+    "line": 88,
+    "token": "1.0",
+    "context": "the rank-2-per-layer gold subspace on the current model at a 50-step cadence (α ∈ {1.0, 4.0},",
+    "obligating_words": []
+   },
+   {
+    "id": "I0234",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "2",
+    "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a",
+    "obligating_words": [
+     "delta"
+    ]
+   },
+   {
+    "id": "I0081",
+    "repo": "FINDING_mount_offmanifold_2026_06_13.md",
+    "line": 17,
+    "token": "1.0",
+    "context": "| detection of perturbed (evading) caves | 1.0 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0058",
+    "repo": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+    "line": 45,
+    "token": "1.6694",
+    "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0152",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 61,
+    "token": "90",
+    "context": "`per_item[90].i`, and five to `verification_roster[…].token` — a token string inside a receipt.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0021",
+    "repo": "FINDING_frontier_recovery_2026_07_27.md",
+    "line": 17,
+    "token": "840000",
+    "context": "200 items drawn at seed 840000 to clear the 25-per-cell rule without optional stopping.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0217",
+    "repo": "FINDING_conscience_loop_2026_07_24.md",
+    "line": 55,
+    "token": "137",
+    "context": "137 items. The intervention mechanism itself works.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0123",
+    "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+    "line": 29,
+    "token": "48.8",
+    "context": "| `effective_n` on AR(1) ρ=0.8, analytic truth 33.33 | p5–p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+    "obligating_words": [
+     "p95"
+    ]
+   },
+   {
+    "id": "I0186",
+    "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+    "line": 9,
+    "token": "2",
+    "context": "Stage 2 returned EVADABLE, but its re-lock calibrated the probe on the ATTACK facts the attacker",
+    "obligating_words": []
+   },
+   {
+    "id": "I0208",
+    "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "line": 19,
+    "token": "61",
+    "context": "(the frozen proportional image of the 1.5B constants), E1 three-way split (ATTACK 61 / CALIB 53 /",
+    "obligating_words": []
+   },
+   {
+    "id": "I0099",
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 12,
+    "token": "101",
+    "context": "The question cycle 101 was forced to withhold, with the cells to answer it: fresh pool v10",
+    "obligating_words": []
+   },
+   {
+    "id": "I0191",
+    "repo": "FINDING_portable_conscience_v2_2026_06_10.md",
+    "line": 18,
+    "token": "0.65",
+    "context": "Both clear the 0.65 bar and **beat the powered floor** — so it is the SPECIFIC honesty direction, not",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0030",
+    "repo": "FINDING_h1a_human_single_clique_2026_08_06.md",
+    "line": 20,
+    "token": "907",
+    "context": "subject's repetitions and intersected to the 907 images present for all eight. Voxel counts",
+    "obligating_words": []
+   },
+   {
+    "id": "I0014",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.694",
+    "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0024",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0188",
+    "context": "| **H2** additivity (SE) | ΔAUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+    "obligating_words": [
+     "ci"
+    ]
+   },
+   {
+    "id": "I0167",
+    "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+    "line": 83,
+    "token": "23",
+    "context": "channel, or retrieval, invoked only on the ~23% the first channel declines; (b) make the fallback",
+    "obligating_words": []
+   },
+   {
+    "id": "I0018",
+    "repo": "FINDING_conscience_loop_2026_07_24.md",
+    "line": 50,
+    "token": "0.9545",
+    "context": "| RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0142",
+    "repo": "FINDING_selective_confirm_2026_07_24.md",
+    "line": 46,
+    "token": "0.4804804804804805",
+    "context": "| informativeness gap | 0.8102139406487232 | 0.4804804804804805 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0064",
+    "repo": "DATASHEET_conscience_2026_07_24.md",
+    "line": 28,
+    "token": "0.1746031746031746",
+    "context": "| beats the pressured baseline (matched coverage) | -- | 0.1746031746031746 |",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0129",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 94,
+    "token": "0.2151",
+    "context": "a layer where the target demonstrably steers natively (native gain 0.2151, subspace hosting",
+    "obligating_words": []
+   },
+   {
+    "id": "I0031",
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 27,
+    "token": "30",
+    "context": "screen pass-rate is the tell — only 5/30 passed. Final set 35 pairs < the pre-registered 48 minimum ⇒",
+    "obligating_words": [
+     "rate"
+    ]
+   },
+   {
+    "id": "I0190",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 97,
+    "token": "0.60",
+    "context": "private-collapse condition (private ≤ 0.60 — the defense BROKEN) and the non-collapse condition",
+    "obligating_words": [
+     "collapse"
+    ]
+   },
+   {
+    "id": "I0218",
+    "repo": "FINDING_anatomy_v2_2026_06_10.md",
+    "line": 40,
+    "token": "0.0",
+    "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+    "obligating_words": [
+     "permutation"
+    ]
+   },
+   {
+    "id": "I0149",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 43,
+    "token": "0.7299",
+    "context": "| Stage-2b whole-stack attack | 0.616–0.6263 | 0.7299–0.764 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0072",
+    "repo": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+    "line": 35,
+    "token": "0.861",
+    "context": "Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 → **0.500** (Δ −0.361);",
+    "obligating_words": [
+     "sycophancy"
+    ]
+   },
+   {
+    "id": "I0157",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 49,
+    "token": "0.3443",
+    "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0070",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0026",
+    "context": "| **H2** additivity (SE) | ΔAUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+    "obligating_words": [
+     "ci"
+    ]
+   },
+   {
+    "id": "I0088",
+    "repo": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+    "line": 32,
+    "token": "0.3742",
+    "context": "Two of twenty-one pairs licensed, and they are **the two strongest**: signed mean r of 0.3742",
+    "obligating_words": [
+     "mean"
+    ]
+   },
+   {
+    "id": "I0106",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 105,
+    "token": "0",
+    "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12–22, λ ∈ {1.0, 3.0}, seeds {0, 1},",
+    "obligating_words": []
+   },
+   {
+    "id": "I0039",
+    "repo": "RESULT_oath_external_corpus_2026_08_27.md",
+    "line": 85,
+    "token": "0.0274",
+    "context": "| `all_results.json` *(pilot)* | 511 | 0.908 | 0.0274 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0223",
+    "repo": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
+    "line": 10,
+    "token": "32",
+    "context": "| G1_backward_compatible | ≥ 33 | 32 | ❌ |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0043",
+    "repo": "FINDING_gavagai_v0_2026_06_10.md",
+    "line": 25,
+    "token": "0.344",
+    "context": "Llama-3.2-1B→gemma-2-2b 0.375, Qwen2.5-3B→gemma-2-2b 0.344, and gpt2→pythia-410m 0.302",
+    "obligating_words": []
+   },
+   {
+    "id": "I0118",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 15,
+    "token": "0.4305",
+    "context": "their shared mean direction (cos **0.4305**).",
+    "obligating_words": [
+     "mean"
+    ]
+   },
+   {
+    "id": "I0005",
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 90,
+    "token": "5",
+    "context": "skepticism shift sits on the via-C3 path only: the actual 5/30 endpoint, C4 (neutral+reasoning), is NOT",
+    "obligating_words": []
+   },
+   {
+    "id": "I0179",
+    "repo": "FINDING_scale_confirm_2026_07_24.md",
+    "line": 22,
+    "token": "66",
+    "context": "grounds that cycle 66's own measured picture (7B abstaining on 0.8043 of the slice, agreeing with",
+    "obligating_words": []
+   },
+   {
+    "id": "I0062",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 19,
+    "token": "0.737",
+    "context": "| Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0017",
+    "repo": "CAPSTONE_universal_mind_2026_06_10.md",
+    "line": 95,
+    "token": "684",
+    "context": "under `styxx.certify` — 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,",
+    "obligating_words": [
+     "held"
+    ]
+   },
+   {
+    "id": "I0136",
+    "repo": "FINDING_portable_values_refusal_2026_06_11.md",
+    "line": 44,
+    "token": "0.001",
+    "context": "(Llama-3.2-1B OOD 0.9983 p 0.007; Qwen2.5-1.5B OOD 0.9983 p 0.001). **Verdict per the frozen gate:",
+    "obligating_words": []
+   },
+   {
+    "id": "I0001",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 26,
+    "token": "0.867",
+    "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0075",
+    "repo": "RESULT_stage2_EVADABLE_2026_07_04.md",
+    "line": 25,
+    "token": "0.57",
+    "context": "(→ ~0.57–0.60), and the replay term is what buys the attacker a knowledge-preserving evasion — the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0213",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 30,
+    "token": "0.2",
+    "context": "`c_truth_invariant_H` across the shrinkage sweep: λ=0.2 → 0.5729, 0.35 → 0.5868, 0.5 → 0.6059,",
+    "obligating_words": []
+   },
+   {
+    "id": "I0189",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 67,
+    "token": "0.80",
+    "context": "its base behavioral knowledge (`0.7727`) is below the frozen knowledge threshold of 0.80, reproducing",
+    "obligating_words": []
+   },
+   {
+    "id": "I0074",
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 34,
+    "token": "0.892",
+    "context": "the private (clean-calibrated) re-lock beats the naive (poisoned) re-lock — 0.888 vs 0.767, 0.892",
+    "obligating_words": []
+   },
+   {
+    "id": "I0013",
+    "repo": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+    "line": 27,
+    "token": "0.50",
+    "context": "- out-of-frame recovery on the flipped items **0.022222222222222223** (floor 0.50);",
+    "obligating_words": [
+     "floor"
+    ]
+   }
+  ],
+  [
+   {
+    "id": "I0145",
+    "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "line": 40,
+    "token": "0.6166",
+    "context": "SHALLOWER at 3B (0.6101/0.6166/0.5585/0.5272 vs 0.4848/0.4654/0.4645/0.4636 at 1.5B): scale did",
+    "obligating_words": []
+   },
+   {
+    "id": "I0097",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 28,
+    "token": "0.9133",
+    "context": "| 8 | 0.9133 | 0.0026 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0057",
+    "repo": "RESULT_attack_sentiment_r64_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "context": "(The fourth cell, seed 1 λ=1.0, had behavioral 0.736 < 0.75 — not behavior-preserving — and is",
+    "obligating_words": []
+   },
+   {
+    "id": "I0011",
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 85,
+    "token": "4",
+    "context": "present only DESCRIPTIVELY here: (a) instruction wording did NOT reach Holm significance (edges 6 and 4, ns),",
+    "obligating_words": []
+   },
+   {
+    "id": "I0032",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 16,
+    "token": "0.3211111111111111",
+    "context": "Pooled accuracy: **BASE 0.6533333333333333**, **UNREG 0.3211111111111111**, **KP 0.62**.",
+    "obligating_words": [
+     "accuracy"
+    ]
+   },
+   {
+    "id": "I0104",
+    "repo": "FINDING_calib_poison_law_2026_07_09.md",
+    "line": 35,
+    "token": "0.616",
+    "context": "| whole-stack r=16 | 0.616–0.626 | 0.730–0.764 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0071",
+    "repo": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+    "line": 31,
+    "token": "0.92",
+    "context": "(baseline 0.5). The white-box honesty direction nonetheless separates true from false at ~0.92-0.94 in",
+    "obligating_words": []
+   },
+   {
+    "id": "I0130",
+    "repo": "FINDING_b39_whitening_2026_08_04.md",
+    "line": 14,
+    "token": "0.0434",
+    "context": "| T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0095",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 41,
+    "token": "0.2347",
+    "context": "across seeds; seed 1003 dipped to 0.2347, **below the per-seed 0.30 floor**, but the *median*",
+    "obligating_words": [
+     "floor",
+     "median"
+    ]
+   },
+   {
+    "id": "I0155",
+    "repo": "FINDING_promptopinion_2026_05_24.md",
+    "line": 8,
+    "token": "120",
+    "context": "## Result (τ=0.30, n=120, varied-phrasing prompts)",
+    "obligating_words": []
+   },
+   {
+    "id": "I0159",
+    "repo": "FINDING_coupling_battery_2026_07_28.md",
+    "line": 14,
+    "token": "74",
+    "context": "74–88 and from both adapters' training data. The two adapters trained on the same items and differ",
+    "obligating_words": []
+   },
+   {
+    "id": "I0134",
+    "repo": "FINDING_thirdframe_2026_07_29.md",
+    "line": 22,
+    "token": "0.7038961038961038",
+    "context": "**0.7038961038961038** (essentially unchanged from 0.7285714285714286), while UNREG recovery in the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0019",
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 39,
+    "token": "0.435",
+    "context": "robust, but a margin, not a chasm. The random-MAP control collapses (0.530 / 0.435), so the LEARNED",
+    "obligating_words": [
+     "margin"
+    ]
+   },
+   {
+    "id": "I0141",
+    "repo": "FINDING_dogfood_2026_05_25.md",
+    "line": 43,
+    "token": "0.78",
+    "context": "The **overconfidence** axis reads **0.78–0.99 on nearly every declarative line** — honest,",
+    "obligating_words": []
+   },
+   {
+    "id": "I0116",
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 35,
+    "token": "0.3321",
+    "context": "- **Quality, not size, moves citizenship within a lineage**: gpt2-large (0.3321) above gpt2",
+    "obligating_words": []
+   },
+   {
+    "id": "I0046",
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 76,
+    "token": "50",
+    "context": "(50/50), two-turn pressure, gold in top-5 on 0.82 of items. Third disjoint pool, stratified on a",
+    "obligating_words": []
+   },
+   {
+    "id": "I0054",
+    "repo": "FINDING_frontier_knowsay_2026_07_27.md",
+    "line": 8,
+    "token": "0",
+    "context": "multiple-choice items, 130 scored, eleventh disjoint pool, 0 overlap with every prior MC pool",
+    "obligating_words": [
+     "scored"
+    ]
+   },
+   {
+    "id": "I0103",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 35,
+    "token": "3.0",
+    "context": "| 2 | 3.0 | 0.5724 | 0.7751 | 0.7309 | 0.7424 | 0.1585 | -0.0442 | inadmissible (knowledge) |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0174",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 17,
+    "token": "0.7717",
+    "context": "0.0039506719834589.** The cycle-77 0.7717 was pool-770000-specific; on fresh data the combined",
+    "obligating_words": []
+   },
+   {
+    "id": "I0125",
+    "repo": "RESULT_oath_v04_recall_decimalguard_2026_07_04.md",
+    "line": 21,
+    "token": "26",
+    "context": "| G2 | D2 = 0 on corpus AND battery false-verify ≤ 26 | 0 and 26 → PASS |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0027",
+    "repo": "FINDING_mount_fpr_live_2026_06_12.md",
+    "line": 47,
+    "token": "0.1799",
+    "context": "baseline (center 1.1861, scale 0.1799) that does not match the pressured-decision regime the caves",
+    "obligating_words": []
+   },
+   {
+    "id": "I0119",
+    "repo": "FINDING_gavagai_scale_2026_06_10.md",
+    "line": 15,
+    "token": "1",
+    "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen",
+    "obligating_words": []
+   },
+   {
+    "id": "I0193",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 35,
+    "token": "13",
+    "context": "A residual remains, but at **n = 13 it is borderline** (p ≈ 0.07) and hard to separate from \"every",
+    "obligating_words": []
+   },
+   {
+    "id": "I0049",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 35,
+    "token": "-0.0517",
+    "context": "| **H3** OOD retention | ΔAUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir ≥ ID | **NO** (anti-signal; DeLong p=0.034) |",
+    "obligating_words": [
+     "ci"
+    ]
+   },
+   {
+    "id": "I0144",
+    "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+    "line": 26,
+    "token": "1073",
+    "context": "4612 of them anchored on a different token: 9.589 percent, spread over 841 of the 1073 documents.",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0180",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 38,
+    "token": "2",
+    "context": "who moves along that shared direction evades all members at once (2× cost).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0100",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 23,
+    "token": "0.033333333333333326",
+    "context": "**0.033333333333333326**, below the 0.05 bound frozen in advance (hence the label",
+    "obligating_words": []
+   },
+   {
+    "id": "I0015",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 83,
+    "token": "0.25",
+    "context": "- `0.25→0.00` transition values stay UNGROUNDED (real gap; repair is doc/receipt-side).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0108",
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 13,
+    "token": "55",
+    "context": "55 control, 40 held); ARC first-answer accuracy 0.8281. All three gates pass, and not marginally:",
+    "obligating_words": [
+     "accuracy",
+     "held"
+    ]
+   },
+   {
+    "id": "I0172",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 12,
+    "token": "20",
+    "context": "| G1_replicates | min bridge at k=20 across 5 seeds ≥ 0.30 | 0.9745 | ✅ |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0200",
+    "repo": "FINDING_protocol_metric_identity_2026_08_07.md",
+    "line": 49,
+    "token": "28",
+    "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+    "obligating_words": []
+   },
+   {
+    "id": "I0048",
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 27,
+    "token": "0.929",
+    "context": "concur (Llama-3.2-1B p 0.004; Qwen2.5-1.5B p 0.002). gemma's own OOD self-readout is 0.929 (the source",
+    "obligating_words": []
+   },
+   {
+    "id": "I0041",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 49,
+    "token": "30",
+    "context": "one-turn 17/30 — exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+    "obligating_words": []
+   },
+   {
+    "id": "I0214",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 26,
+    "token": "0",
+    "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0124",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 59,
+    "token": "7",
+    "context": "| `aqua_mc` | 29 | 7 | 0.6038961038961039 | 0.6363636363636364 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0068",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 24,
+    "token": "0.049",
+    "context": "including the earliest scanned (L6), and random directions score at the extremes (0.049 / 0.694)",
+    "obligating_words": [
+     "score"
+    ]
+   },
+   {
+    "id": "I0226",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "1",
+    "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+    "obligating_words": [
+     "delta"
+    ]
+   },
+   {
+    "id": "I0111",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 25,
+    "token": "0.2341",
+    "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0045",
+    "repo": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+    "line": 1,
+    "token": "23",
+    "context": "# RESULT — OATH v0.4 trigger-vocabulary recall extension: CLOSED_NEGATIVE (autopilot cycle 23)",
+    "obligating_words": [
+     "recall"
+    ]
+   },
+   {
+    "id": "I0131",
+    "repo": "FINDING_promptopinion_2026_05_24.md",
+    "line": 12,
+    "token": "0.00",
+    "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 ≤0.15 ✓ |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0090",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.500",
+    "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0008",
+    "repo": "FINDING_portable_conscience_v0_2026_06_10.md",
+    "line": 38,
+    "token": "0.688",
+    "context": "The learned map is doing genuine work, not noise: a RANDOM map of the same shape scores only 0.688",
+    "obligating_words": [
+     "scores"
+    ]
+   },
+   {
+    "id": "I0150",
+    "repo": "RESULT_oath_v04_float_binding_2026_07_03.md",
+    "line": 22,
+    "token": "0",
+    "context": "| B2 | validator D2 false UNGROUNDED = 0 | 0 | YES |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0175",
+    "repo": "FINDING_kp_replication_2026_07_28.md",
+    "line": 56,
+    "token": "16",
+    "context": "class (LoRA r=16, 300 steps, flip + replay), N=5 neutral samples, English. ARC first-answer accuracy",
+    "obligating_words": [
+     "accuracy"
+    ]
+   },
+   {
+    "id": "I0219",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 43,
+    "token": "5",
+    "context": "2. **A plateau from k=2 to k=5** (0.5128 → 0.523 → 0.5281; essentially flat). Directions 3–5",
+    "obligating_words": []
+   },
+   {
+    "id": "I0105",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 53,
+    "token": "0.81",
+    "context": "(reliability ρ 0.76; conv→human collapses 0.81→0.60), the residual is borderline at n=13, and the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0006",
+    "repo": "BLOCKED_source_independence_2026_07_24.md",
+    "line": 29,
+    "token": "0.175",
+    "context": "| final coverage | 0.175 | 0.74 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0067",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 124,
+    "token": "0.9149",
+    "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
+    "obligating_words": [
+     "permutation"
+    ]
+   },
+   {
+    "id": "I0199",
+    "repo": "FINDING_dogfood_2026_05_25.md",
+    "line": 13,
+    "token": "8",
+    "context": "| **known fact** — \"chemical formula for water\" | `H₂O` ×8 (identical) | **−0.0** (convergent) |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0050",
+    "repo": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "3",
+    "context": "frozen roster expected 3 accused and 8 verified, so the accused half is reached in full and the",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0107",
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 44,
+    "token": "2",
+    "context": "`scale_test_result.json:per_item[2].i` — an index leaf equal to its own subscript. The oath was",
+    "obligating_words": []
+   },
+   {
+    "id": "I0120",
+    "repo": "RESULT_E2_strong_attacker_2026_07_07.md",
+    "line": 18,
+    "token": "0.786",
+    "context": "0.786 to 0.554 (seed 0) and 0.568 (seed 1) on Qwen — the multi-layer scrub did what it was built to.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0059",
+    "repo": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+    "line": 45,
+    "token": "0.65",
+    "context": "misses the cross-model gate (0.6562 vs the 0.65 ceiling) while gemma and Qwen clear.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0162",
+    "repo": "FINDING_scale_confirm_2026_07_24.md",
+    "line": 62,
+    "token": "66",
+    "context": "| scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0158",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 79,
+    "token": "0.0034",
+    "context": "could measure it found it: B37 p=0.0034, B39 p=0.0001, large within-claim effect), **but a fully clean,",
+    "obligating_words": []
+   },
+   {
+    "id": "I0063",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 64,
+    "token": "8",
+    "context": "rank 8 of a union that never lets go — and the read comes back as the accumulator dilutes",
+    "obligating_words": []
+   },
+   {
+    "id": "I0047",
+    "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+    "line": 15,
+    "token": "0.818",
+    "context": "0.938, knowledge 0.818):**",
+    "obligating_words": []
+   },
+   {
+    "id": "I0101",
+    "repo": "FINDING_cot_inward_2026_07_30.md",
+    "line": 31,
+    "token": "46",
+    "context": "pressure would have produced. The strata moved accordingly: 13 caved / 73 held (vs 46 / 40",
+    "obligating_words": [
+     "caved",
+     "held"
+    ]
+   },
+   {
+    "id": "I0121",
+    "repo": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+    "line": 31,
+    "token": "0.838",
+    "context": "pre-unembedding, but *not* strictly pre-commit. The only strictly-pre-commit number is POS-B's 0.838,",
+    "obligating_words": []
+   },
+   {
+    "id": "I0096",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 28,
+    "token": "0.0553",
+    "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0135",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 62,
+    "token": "5",
+    "context": "shrinkage sweep + stability requirement were pre-registered; the 5/5 stability is the evidence the result",
+    "obligating_words": [
+     "stability"
+    ]
+   },
+   {
+    "id": "I0140",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 56,
+    "token": "0.9745",
+    "context": "concept-contrast directions in concept space took discovery from a 0.0612 baseline to 0.9745,",
+    "obligating_words": []
+   },
+   {
+    "id": "I0165",
+    "repo": "FINDING_axis_independence_2026_06_11.md",
+    "line": 43,
+    "token": "0.65",
+    "context": "**But BASIS-INDEPENDENT also fails.** It required the truth↔refusal off-diagonals ≤ 0.65; they are",
+    "obligating_words": []
+   },
+   {
+    "id": "I0207",
+    "repo": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+    "line": 54,
+    "token": "92",
+    "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token",
+    "obligating_words": []
+   },
+   {
+    "id": "I0183",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 63,
+    "token": "0.007812",
+    "context": "(p=0.007812), reason-neutral C2→C4 effect 14 (p=0.000519), instr-reason C3→C4 effect 9 (p=0.011719); the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0028",
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 33,
+    "token": "0.50",
+    "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0203",
+    "repo": "RESULT_honesty_parity_control_2026_07_11.md",
+    "line": 80,
+    "token": "0.02",
+    "context": "private read held above its parity read by more than the 0.02 bar). What this run establishes is **demotion pressure on the \"privacy\"",
+    "obligating_words": [
+     "held"
+    ]
+   },
+   {
+    "id": "I0087",
+    "repo": "FINDING_b31v2_door_opens_2026_08_01.md",
+    "line": 12,
+    "token": "0.3429",
+    "context": "| Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56× |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0164",
+    "repo": "FINDING_council_grounding_2026_05_28.md",
+    "line": 30,
+    "token": "36",
+    "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is",
+    "obligating_words": []
+   },
+   {
+    "id": "I0232",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 103,
+    "token": "3",
+    "context": "That 5 is a floor and hand inspection immediately exceeds it: a bare `3` on two separate lines is",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0092",
+    "repo": "FINDING_tiered_channel_2026_07_24.md",
+    "line": 24,
+    "token": "7",
+    "context": "- **DG3 PASSED, strongly.** On the 7 items tier-2 rescued it scored 1.0, against 0.4286 for the",
+    "obligating_words": [
+     "scored"
+    ]
+   },
+   {
+    "id": "I0044",
+    "repo": "PAPER_knowsay_gap_2026_07_27.md",
+    "line": 116,
+    "token": "0.7394",
+    "context": "ceiling, not noise — AUROC 0.7336 at five samples and 0.7394 at eighty,",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0211",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 8,
+    "token": "30",
+    "context": "returns a VOID: the free-form \"think step by step, then VERDICT\" register yields only 5 of 30 caves (3 with",
+    "obligating_words": []
+   },
+   {
+    "id": "I0012",
+    "repo": "FINDING_b48_invalid_null_bar_2026_08_06.md",
+    "line": 29,
+    "token": "45",
+    "context": "The failure is that G2 gated the **maximum of 45 draws** against a bar set for a *single* draw",
+    "obligating_words": [
+     "gated"
+    ]
+   },
+   {
+    "id": "I0004",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 25,
+    "token": "4.0",
+    "context": "| 0 | 4.0 | 0.4654 | 0.7161 | 0.7871 | 0.7576 | 0.741 | 0.3217 | 0.071 | SURVIVES |",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0038",
+    "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+    "line": 24,
+    "token": "0.0",
+    "context": "| STUBBORN (first answer) | 1.0 | 0.0 | 0.8831 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0156",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 155,
+    "token": "21",
+    "context": "artifact not covering all 21 cases yields INCOMPLETE, never PASS. That guard exists because",
+    "obligating_words": []
+   },
+   {
+    "id": "I0160",
+    "repo": "FINDING_content_wall_2026_06_12.md",
+    "line": 27,
+    "token": "3",
+    "context": "gemma-whitened readout < 3× chance with a well-fit map), the verdict is CONTENT-WALL.** But that gate",
+    "obligating_words": []
+   },
+   {
+    "id": "I0221",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 101,
+    "token": "0",
+    "context": "things like `config.seeds[0]`, `metric_history.step`, and `results[0].metric_history.loss[…]`.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0181",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 60,
+    "token": "1.0",
+    "context": "- CLAIMED: on Qwen2.5-1.5B, a LoRA r=16 / 300-step / λ=1.0 knowledge-replay attacker that",
+    "obligating_words": []
+   },
+   {
+    "id": "I0053",
+    "repo": "FINDING_b40_island_named_2026_08_05.md",
+    "line": 59,
+    "token": "343",
+    "context": "Six pairs sharing four models ≤3B; k=20 frozen; one anchor split (seed 343); order statements",
+    "obligating_words": []
+   },
+   {
+    "id": "I0184",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 40,
+    "token": "66",
+    "context": "privacy residual at BOTH λ (0.0553 & 0.0479; 0.0645 & 0.0553) — small (~one SE, EVAL n=66) but",
+    "obligating_words": []
+   },
+   {
+    "id": "I0084",
+    "repo": "FINDING_axis_independence_2026_06_11.md",
+    "line": 32,
+    "token": "-0.2132",
+    "context": "Cosines at L12: truth·refusal **−0.2132**, truth·valence 0.0903, refusal·valence −0.0686. Refusal native",
+    "obligating_words": []
+   },
+   {
+    "id": "I0000",
+    "repo": "PREDICTION_h1_human_islands_2026_08_06.md",
+    "line": 30,
+    "token": "0.9745",
+    "context": "0.0612 to 0.9745 while matched random frames do 0.0 (`b41_result.json`), with a rank-2 core",
+    "obligating_words": []
+   },
+   {
+    "id": "I0077",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 123,
+    "token": "0.9965",
+    "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0198",
+    "repo": "RESULT_ai_brain_2026_06_03.md",
+    "line": 28,
+    "token": "56",
+    "context": "| **best LLM** (text-only concept geometry) | **0.222** | 56% |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0132",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 43,
+    "token": "0.7346",
+    "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+    "obligating_words": []
+   },
+   {
+    "id": "I0235",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "2",
+    "context": "`delta` firing on `\\Delta` inside `\\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)` — a",
+    "obligating_words": [
+     "delta"
+    ]
+   },
+   {
+    "id": "I0036",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 34,
+    "token": "0.7235",
+    "context": "| 2 | 1.0 | 0.4876 | 0.7235 | 0.6627 | 0.7727 | 0.1751 | -0.0608 | FAILS |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0194",
+    "repo": "FINDING_mount_early_warning_b34_2026_06_13.md",
+    "line": 21,
+    "token": "60",
+    "context": "claim-content span was located and verified by decode (56 of 60 items matched cleanly, 4 excluded).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0110",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 156,
+    "token": "+0.002",
+    "context": "richer detectors collapse (harmonic-spread +0.002 at eight-fold parameters; nested",
+    "obligating_words": [
+     "collapse"
+    ]
+   },
+   {
+    "id": "I0094",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 43,
+    "token": "0.5281",
+    "context": "2. **A plateau from k=2 to k=5** (0.5128 → 0.523 → 0.5281; essentially flat). Directions 3–5",
+    "obligating_words": []
+   },
+   {
+    "id": "I0192",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 196,
+    "token": "5",
+    "context": "frequency as a capability doorway; and everything in §2–§5 beyond the tested substrates",
+    "obligating_words": []
+   },
+   {
+    "id": "I0230",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 78,
+    "token": "300,000",
+    "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations — \"the learning rate of the low-rank matrices and training steps\" |",
+    "obligating_words": [
+     "rate"
+    ]
+   },
+   {
+    "id": "I0040",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 52,
+    "token": "0.16",
+    "context": "derived-bound gaps written with `~` (`RSA ≤ ~0.56 → R² ≤ ~0.16`; a bulk agreement `0.50`). Class A",
+    "obligating_words": []
+   },
+   {
+    "id": "I0126",
+    "repo": "FINDING_self_verification_2026_07_25.md",
+    "line": 6,
+    "token": "228",
+    "context": "`self_verification_result.json`. Agent Qwen2.5-3B-Instruct, 228 scored third-party items",
+    "obligating_words": [
+     "scored"
+    ]
+   },
+   {
+    "id": "I0002",
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 37,
+    "token": "0.1972",
+    "context": "- **The Qwen family sits low across all three sizes** (0.1801 / 0.1833 / 0.1972) — a coherent",
+    "obligating_words": []
+   },
+   {
+    "id": "I0225",
+    "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "line": 13,
+    "token": "4",
+    "context": "substrate, so a fair head-to-head), 2-turn pushback elicitation, n=48 → 43 scored (27 HELD, 16 CAVED, 4",
+    "obligating_words": [
+     "caved",
+     "held",
+     "scored"
+    ]
+   },
+   {
+    "id": "I0206",
+    "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+    "line": 173,
+    "token": "47",
+    "context": "Read naively that is a safety regression: 47 abstentions became 9 catches and 38 false",
+    "obligating_words": []
+   },
+   {
+    "id": "I0212",
+    "repo": "FINDING_truth_danger_basis_2026_06_12.md",
+    "line": 78,
+    "token": "48",
+    "context": "0.65). Linear difference-of-means directions in a whitened space; danger-train n=48, factorial n=48",
+    "obligating_words": []
+   }
+  ],
+  [
+   {
+    "id": "I0082",
+    "repo": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+    "line": 40,
+    "token": "0.0104",
+    "context": "distribution whose floor is the 0.0104 chance rate. Two independent families agreeing this precisely is the strongest",
+    "obligating_words": [
+     "floor",
+     "rate"
+    ]
+   },
+   {
+    "id": "I0170",
+    "repo": "RESULT_margin_parity_control_2026_07_10.md",
+    "line": 32,
+    "token": "0.70",
+    "context": "cells, and far below the ≥ 0.70 UNSUPPORTED bar. Neither frozen corner is reached: reported verbatim",
+    "obligating_words": []
+   },
+   {
+    "id": "I0066",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 48,
+    "token": "0.7521",
+    "context": "- **Dose vs steps.** At the matched step 75 the fixed-rank control reads 0.7521 (seed 0) and",
+    "obligating_words": []
+   },
+   {
+    "id": "I0137",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 55,
+    "token": "5",
+    "context": "from geometry alone, single nonlinear lens) is **seed-stable**: 5/5 splits clear the bar, median",
+    "obligating_words": [
+     "lens",
+     "median"
+    ]
+   },
+   {
+    "id": "I0109",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 13,
+    "token": "0.30",
+    "context": "this one is built to sit on the boundary. A single informative judge (alpha 0.30, beta 0.30 + sep)",
+    "obligating_words": []
+   },
+   {
+    "id": "I0079",
+    "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+    "line": 19,
+    "token": "0.7092",
+    "context": "| 0.05 | 0.9653 | 0.7092 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0010",
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 75,
+    "token": "0.08333333333333333",
+    "context": "here, 0.08333333333333333 without reasoning); and the caves that survive deliberation are the",
+    "obligating_words": []
+   },
+   {
+    "id": "I0128",
+    "repo": "FINDING_mount_live_catch_2026_06_12.md",
+    "line": 77,
+    "token": "13",
+    "context": "axis is content/request-bounded per HARM-AXIS-NULL). One cave was missed (12/13) and one honest answer",
+    "obligating_words": []
+   },
+   {
+    "id": "I0148",
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 38,
+    "token": "30",
+    "context": "| **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0076",
+    "repo": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+    "line": 19,
+    "token": "0.1429",
+    "context": "| qwen_1p5b (context) | 0.0536 | 0.1429 | 10× | 0.0286 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0209",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 49,
+    "token": "0.354",
+    "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+    "obligating_words": []
+   },
+   {
+    "id": "I0056",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 42,
+    "token": "20",
+    "context": "In the forced-choice register (B34, recomputed here as the baseline) the agent caved on **20** false",
+    "obligating_words": [
+     "caved"
+    ]
+   },
+   {
+    "id": "I0173",
+    "repo": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+    "line": 10,
+    "token": "110",
+    "context": "On 440 length-matched 2★-vs-4★ Amazon reviews (index-split 220/110/110), the corrected controls land",
+    "obligating_words": []
+   },
+   {
+    "id": "I0035",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 35,
+    "token": "0.433",
+    "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0112",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 29,
+    "token": "0.0026",
+    "context": "| 12 | 0.9592 | 0.0026 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0161",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 77,
+    "token": "0.06",
+    "context": "Llama-3.2-1B only, honesty construct, EVAL n=66 (per-cell AUROC SE = 0.06), one run per cell, bf16",
+    "obligating_words": [
+     "auroc"
+    ]
+   },
+   {
+    "id": "I0197",
+    "repo": "RESULT_llm_breadth_2026_06_03.md",
+    "line": 32,
+    "token": "4",
+    "context": "- Demonstrates the shipped tool on **real, recognizable LLM internals** across 4 families — not toy vectors.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0204",
+    "repo": "FINDING_coupling_battery_2026_07_28.md",
+    "line": 22,
+    "token": "0.0",
+    "context": "(floor 0.10), and KP stays exactly at base (BASE − KP = 0.0, floor 0.05). The unregularized attack",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0060",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 35,
+    "token": "51",
+    "context": "| C4 neutral+reasoning | neutral | reasoning | **11**/60 | 51/60 | 0.667 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0061",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 9,
+    "token": "2",
+    "context": "## Result — naive attacker defeated 32×, adaptive attacker evades at 2×",
+    "obligating_words": []
+   },
+   {
+    "id": "I0026",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 39,
+    "token": "37",
+    "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37–48× chance, nulls at chance) — a",
+    "obligating_words": [
+     "median"
+    ]
+   },
+   {
+    "id": "I0171",
+    "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+    "line": 66,
+    "token": "74",
+    "context": "- Selective-prediction results are **not format-invariant** (cycle 74) and nothing here claims",
+    "obligating_words": []
+   },
+   {
+    "id": "I0229",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 78,
+    "token": "100,000",
+    "context": "| DePT README L93 | 100,000 / 300,000 / 40 / 60 | `rate` | hyperparameter ranges in a prose paragraph about the work's limitations — \"the learning rate of the low-rank matrices and training steps\" |",
+    "obligating_words": [
+     "rate"
+    ]
+   },
+   {
+    "id": "I0073",
+    "repo": "FINDING_detection_locus_gpt_2026_05_30.md",
+    "line": 30,
+    "token": "0.087",
+    "context": "| correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0003",
+    "repo": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+    "line": 27,
+    "token": "0.682",
+    "context": "only reached 0.624 / 0.664 and 0.749 / 0.682 — it left BOTH reads *more* legible, by a wider margin",
+    "obligating_words": [
+     "margin"
+    ]
+   }
+  ],
+  [
+   {
+    "id": "I0205",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 46,
+    "token": "40",
+    "context": "1.0 at k=40 — a secondary band of correctable structure beyond the core.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0052",
+    "repo": "SYNTHESIS_frame_locality_2026_07_28.md",
+    "line": 33,
+    "token": "0.2742",
+    "context": "it: 0.2742 in-frame vs 0.8226 as an outside adjudicator",
+    "obligating_words": []
+   },
+   {
+    "id": "I0051",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 26,
+    "token": "0.0909",
+    "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+    "obligating_words": []
+   },
+   {
+    "id": "I0065",
+    "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "line": 52,
+    "token": "26",
+    "context": "to regenerate `cycle24_rangeguard_battery_result.json` (119 / 26 / 121) and",
+    "obligating_words": []
+   },
+   {
+    "id": "I0147",
+    "repo": "RESULT_ai_brain_2026_06_03.md",
+    "line": 9,
+    "token": "0.002",
+    "context": "shuffled-noun control **0.002 ± 0.028**. Most models reach 47–67% of ceiling. The brain's own",
+    "obligating_words": []
+   },
+   {
+    "id": "I0143",
+    "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "line": 51,
+    "token": "1.000",
+    "context": "grounded stays 1.000 (subclass margin **+0.168**).",
+    "obligating_words": [
+     "grounded",
+     "margin"
+    ]
+   },
+   {
+    "id": "I0210",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 28,
+    "token": "2",
+    "context": "(\"cannot drive naive ≤ 0.60 on ≥2 seeds\") and its PARTIAL clause (\"naive in (0.60, ~0.75] with",
+    "obligating_words": []
+   },
+   {
+    "id": "I0163",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 8,
+    "token": "30",
+    "context": "floor). n=60 = 30 original + 30 new authored pairs, unscreened. The headline is VOID-ANCHOR-DRIFT: under",
+    "obligating_words": [
+     "floor"
+    ]
+   },
+   {
+    "id": "I0222",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 60,
+    "token": "4",
+    "context": "`Qwen2.5-1.5B`, 440 length-matched 2★/4★ reviews, 220/110/110, LoRA r=16, whole-stack scrub, 300",
+    "obligating_words": []
+   },
+   {
+    "id": "I0182",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 24,
+    "token": "2",
+    "context": "only 3 caves and 11 resists had ≥2 buffered non-restatement pre-assertion tokens.",
+    "obligating_words": []
+   },
+   {
+    "id": "I0227",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "2",
+    "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+    "obligating_words": [
+     "delta"
+    ]
+   }
+  ]
+ ]
+}

@@ -1,0 +1,316 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_unobligated_oath_2026_08_28.md",
+  "document_sha256": "a52b75ecce160ed45e5e008233793da9d4d2d61a24d1520c2f0a2cd84d6be4d9",
+  "receipts_sha256": {
+    "oath_unobligated_oath_census.json": "a996667b3882af8e610616951ec25835bfcb222991d8f80340e8bc87e075fe54"
+  },
+  "verifier_sha256": "49bfd147953697fe106ea1adb40d49a9f70a20c42e5ea35dff0f9f97b560c708",
+  "counts": {
+    "VERIFIED": 10,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "192"
+    },
+    {
+      "line": 21,
+      "token": "192"
+    },
+    {
+      "line": 21,
+      "token": "192"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 57,
+      "token": "42"
+    },
+    {
+      "line": 67,
+      "token": "117"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "# RESULT \u2014 the unobligated oath: 0.5811 of our verifications were volunteered",
+      "col": 33,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oath_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 21,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "pre-change verifier, per token, over all `192` committed certificates \u2014 `192` compared, `192`",
+      "col": 42,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 21,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "pre-change verifier, per token, over all `192` committed certificates \u2014 `192` compared, `192`",
+      "col": 73,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 21,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "pre-change verifier, per token, over all `192` committed certificates \u2014 `192` compared, `192`",
+      "col": 89,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "identical, `0` moved, `0` errors. The annotation is observation only. Stored historical",
+      "col": 12,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "identical, `0` moved, `0` errors. The annotation is observation only. Stored historical",
+      "col": 23,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 27,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "Live re-certification of all `192` documents at the pinned verifier, `5951` verifications:",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:documents",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 27,
+      "token": "5951",
+      "value": 5951.0,
+      "decimals": 0,
+      "context": "Live re-certification of all `192` documents at the pinned verifier, `5951` verifications:",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:status_counts.VERIFIED",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 33,
+      "token": "1435",
+      "value": 1435.0,
+      "decimals": 0,
+      "context": "| unobligated, path filter ran (integers) or derived | 1435 |",
+      "col": 55,
+      "binding_context": "| verified split | count | | unobligated, path filter ran (integers) or derived | 1435 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:verified_split.UNOBLIGATED",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 34,
+      "token": "584",
+      "value": 584.0,
+      "decimals": 0,
+      "context": "| obligated, path filter ran | 584 |",
+      "col": 31,
+      "binding_context": "| verified split | count | | obligated, path filter ran | 584 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:verified_split.obligated",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 36,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "> **Unobligated oath rate: `0.5811`** \u2014 `3458` of `5951` verifications in this laboratory's own",
+      "col": 28,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oath_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 36,
+      "token": "3458",
+      "value": 3458.0,
+      "decimals": 0,
+      "context": "> **Unobligated oath rate: `0.5811`** \u2014 `3458` of `5951` verifications in this laboratory's own",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oaths",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 36,
+      "token": "5951",
+      "value": 5951.0,
+      "decimals": 0,
+      "context": "> **Unobligated oath rate: `0.5811`** \u2014 `3458` of `5951` verifications in this laboratory's own",
+      "col": 51,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:status_counts.VERIFIED",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 39,
+      "token": "0.3399",
+      "value": 0.3399,
+      "decimals": 4,
+      "context": "`2023` of them \u2014 `0.3399` of *all* verifications \u2014 are the weakest attestation the instrument",
+      "col": 18,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.weakest_share_of_verified",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 40,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "produces: unobligated **and** path-unchecked. Six documents' verifications are `1.0` unobligated,",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:documents_most_exposed[0].unobligated_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 57,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "* *\"The verifier checked what it was obligated to check\"* \u2014 true, and the obligated 42% is that.",
+      "col": 84,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 67,
+      "token": "117",
+      "value": 117.0,
+      "decimals": 0,
+      "context": "verifier versions** and reported 117 violations \u2014 verifier-version drift wearing my change's",
+      "col": 36,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}

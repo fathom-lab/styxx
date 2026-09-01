@@ -1,0 +1,19 @@
+{
+ "snapshot": "corpus audit immediately BEFORE this deposit's own certificate joined the ledger, 2026-08-31",
+ "n_certificates": 199,
+ "held": 192,
+ "failed": 7,
+ "unresolved": 0,
+ "epistemics": {
+  "certificates_with_summary": 199,
+  "certificates_without_summary": 0,
+  "verified_total": 6107,
+  "verified_obligated": 2543,
+  "verified_unobligated": 3564,
+  "unobligated_oath_rate": 0.5836,
+  "weakest_attestations": 2064,
+  "weakest_share": 0.338,
+  "accusations": 21,
+  "reading": "unobligated_oath_rate is the share of this corpus's VERIFIED tokens that nothing obligated the verifier to examine; weakest_share is the subset that is value-match alone with no binding filter. Both are composition, not quality -- claim-share is the panel's job, not the auditor's."
+ }
+}

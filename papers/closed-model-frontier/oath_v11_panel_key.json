@@ -1,0 +1,173 @@
+{
+  "note": "UN-BLINDING KEY. The adjudicator must not read this file.",
+  "key": [
+    {
+      "case": "C01",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 27,
+      "token": "3",
+      "arm": "prospectus_roster",
+      "off_arm_status": "UNGROUNDED"
+    },
+    {
+      "case": "C02",
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "line": 24,
+      "token": "1",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C03",
+      "rel": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 19,
+      "token": "12",
+      "arm": "fresh_draw",
+      "off_arm_status": "ABSTAIN"
+    },
+    {
+      "case": "C04",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 29,
+      "token": "5",
+      "arm": "prospectus_roster",
+      "off_arm_status": "UNGROUNDED"
+    },
+    {
+      "case": "C05",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 26,
+      "token": "2",
+      "arm": "prospectus_roster",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C06",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 31,
+      "token": "7",
+      "arm": "prospectus_roster",
+      "off_arm_status": "ABSTAIN"
+    },
+    {
+      "case": "C07",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 35,
+      "token": "11",
+      "arm": "prospectus_roster",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C08",
+      "rel": "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md",
+      "line": 33,
+      "token": "8",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C09",
+      "rel": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+      "line": 35,
+      "token": "0.80",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C10",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 33,
+      "token": "9",
+      "arm": "prospectus_roster",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C11",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 34,
+      "token": "10",
+      "arm": "prospectus_roster",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C12",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 30,
+      "token": "6",
+      "arm": "prospectus_roster",
+      "off_arm_status": "ABSTAIN"
+    },
+    {
+      "case": "C13",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 25,
+      "token": "1",
+      "arm": "prospectus_roster",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C14",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 32,
+      "token": "8",
+      "arm": "prospectus_roster",
+      "off_arm_status": "UNGROUNDED"
+    },
+    {
+      "case": "C15",
+      "rel": "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md",
+      "line": 21,
+      "token": "0",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C16",
+      "rel": "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md",
+      "line": 18,
+      "token": "20",
+      "arm": "fresh_draw",
+      "off_arm_status": "ABSTAIN"
+    },
+    {
+      "case": "C17",
+      "rel": "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+      "line": 28,
+      "token": "4",
+      "arm": "prospectus_roster",
+      "off_arm_status": "UNGROUNDED"
+    },
+    {
+      "case": "C18",
+      "rel": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md",
+      "line": 25,
+      "token": "1.0",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C19",
+      "rel": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+      "line": 24,
+      "token": "1",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C20",
+      "rel": "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "line": 20,
+      "token": "0",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    },
+    {
+      "case": "C21",
+      "rel": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+      "line": 29,
+      "token": "33.33",
+      "arm": "fresh_draw",
+      "off_arm_status": "VERIFIED"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+  "document_sha256": "8798e642bc8947e388e77ecf9e264b4cb85191fb73ef678fd60f8e9e291ae660",
+  "receipts_sha256": {
+    "oath_v12_battery_result.json": "20397240e571188e8e3761d13fb36bfef93ca1ecc714a974e5fb5e7de68cecd0",
+    "oath_mention_use_census.json": "1a13eca73079af3af91bec810589902b18d98ecb9680ef5b16d738872d0da0ee"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 11,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "| roster expected | 11 |",
+      "col": 20,
+      "binding_context": "| | | | roster expected | 11 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_expected"
+    },
+    {
+      "line": 20,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| firings observed | 6 |",
+      "col": 21,
+      "binding_context": "| | | | firings observed | 6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].firings_observed"
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Split of the firings observed: 3 on tokens the OFF arm accuses, 3 on tokens it verifies. The",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.UNGROUNDED"
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Split of the firings observed: 3 on tokens the OFF arm accuses, 3 on tokens it verifies. The",
+      "col": 64,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.UNGROUNDED"
+    },
+    {
+      "line": 23,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "frozen roster expected 3 accused and 8 verified, so the accused half is reached in full and the",
+      "col": 23,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.UNGROUNDED"
+    },
+    {
+      "line": 23,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "frozen roster expected 3 accused and 8 verified, so the accused half is reached in full and the",
+      "col": 37,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.VERIFIED"
+    },
+    {
+      "line": 50,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "The preregistration remains accused, on line 23, on the digits of the formula it quotes as the",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:proof_of_repair.documents[1].still_accused[0].line"
+    },
+    {
+      "line": 62,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "G7 asked a blind adjudicator for the 11 roster tokens **plus 10 non-roster tokens drawn from lines",
+      "col": 37,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_expected"
+    },
+    {
+      "line": 62,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "G7 asked a blind adjudicator for the 11 roster tokens **plus 10 non-roster tokens drawn from lines",
+      "col": 61,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:cost.sample[11].token"
+    },
+    {
+      "line": 63,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "carrying a LaTeX span**. The frame does not contain 10 such tokens. The population was",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:cost.sample[11].token"
+    },
+    {
+      "line": 79,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "What is **not** licensed: widening conjunct 1 to catch indented code blocks and re-running. The",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].firing_documents.papers/SYNTHESIS_mention_and_use_2026_08_26.md[0][2]"
+    }
+  ]
+}

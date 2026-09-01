@@ -1,0 +1,364 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "ZENODO_nothing_crosses_unseen_2026_08_31.md",
+  "document_sha256": "e4d46c4680632cecefd0aa05ec92aacb354e1f2c1340e76780e0de987251c5a0",
+  "receipts_sha256": {
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe",
+    "stage2_result.json": "fcd6c2c1304d75a543a1217c76b12ca9a3ad9fe82b15f3e9d2ffba90a53cd638",
+    "obligate1_result.json": "7a392d9c722f23f87b12cd6b672f453bbcc21641059e64b2f6e7be9dda58ed95",
+    "claim_detector_corpus_census.json": "f0168870dbadddf997ffacc6a48fd5d0cb840b22149aa5b416b97c7e18062299",
+    "oath_v061_battery_result.json": "28804d6bf1edcfcdb37f8d8af8c0f5127850cc19ec139552361a5a9d836dd2bf",
+    "agent_branch_attestation.json": "5b44589802ef2a7f06b9f64328cc1fc7bfd40354a118ffb1e7919c01c080b06a",
+    "corpus_audit_snapshot_2026_08_31.json": "2ec07b4f5c2ddef7550881b028e35425b7ea4d45951982a052e06132c06fde8d"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 14,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 3,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 14,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 1
+    },
+    "verified": {
+      "total": 14,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 2,
+        "obligated_integer_filter_na": 4,
+        "unobligated_integer_filter_ran": 4,
+        "unobligated_integer_filter_na": 4
+      }
+    },
+    "obligated_total": 7,
+    "obligation_sources": {
+      "vocabulary": 6,
+      "n-glued": 0,
+      "range-correlation": 1,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 37,
+      "token": "2,738"
+    },
+    {
+      "line": 62,
+      "token": "0.2061"
+    },
+    {
+      "line": 65,
+      "token": "5.71"
+    },
+    {
+      "line": 73,
+      "token": "0.70"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 27,
+      "token": "199",
+      "value": 199.0,
+      "decimals": 0,
+      "context": "document's own certificate joined it: **199 certificates \u00b7",
+      "col": 40,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_audit_snapshot_2026_08_31.json:n_certificates",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 28,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "192 OATH-HELD \u00b7 7 OATH-FAILED**. The failures are published beside the passes; two of the",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_audit_snapshot_2026_08_31.json:held",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 28,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "192 OATH-HELD \u00b7 7 OATH-FAILED**. The failures are published beside the passes; two of the",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_audit_snapshot_2026_08_31.json:failed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 29,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "seven are papers in this very arc, failed by the verifier they describe (\u00a77). Certifying",
+      "col": 74,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_audit_snapshot_2026_08_31.json:failed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 37,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "changed. Pointed at the 54-commit branch its own author wrote, it read 6 sentences of 2,738",
+      "col": 71,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:per_commit[46].never_read",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 37,
+      "token": "2,738",
+      "value": 2738.0,
+      "decimals": 0,
+      "context": "changed. Pointed at the 54-commit branch its own author wrote, it read 6 sentences of 2,738",
+      "col": 86,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 40,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "adjudication itself to nine blind seats: the extractor's precision adjudicated at 0.3333,",
+      "col": 82,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E1.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 42,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "0.0204 \u2014 real claims, sitting unexamined",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_claim_extractor_baseline.json:E4.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 51,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "shuffled items under opaque ids; known-answer decoys gating each seat at 0.80 or better, with",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[6].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 61,
+      "token": "0.4211",
+      "value": 0.4211,
+      "decimals": 4,
+      "context": "a fresh blind panel on a census of every flag it produced. It adjudicated at **0.4211**",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:arms.flagged.A_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 62,
+      "token": "0.2061",
+      "value": 0.2061,
+      "decimals": 4,
+      "context": "against its own verb-list null's frozen bar of **0.2061**, and the sentences it declined",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 64,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "(`RESULT_struct1_beats_the_null_2026_08_31.md`). Applied to the pinned corpus, it finds 40",
+      "col": 88,
+      "status": "VERIFIED",
+      "receipt_ref": "claim_detector_corpus_census.json:gate_vs_detector.structurally_checkable_but_unparsed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 65,
+      "token": "5.71",
+      "value": 5.71,
+      "decimals": 2,
+      "context": "structurally checkable claims in the band the templates never read \u2014 5.71\u00d7 what the gate",
+      "col": 69,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 71,
+      "token": "0.5227",
+      "value": 0.5227,
+      "decimals": 4,
+      "context": "The flagship verifier's largest known hole: 0.5227 of full-precision decimals sit on lines",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v061_battery_result.json:G2b_unbound_share_of_full_pool",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 73,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "earlier in-sample census \u2014 0.80 precision there \u2014 was frozen with a ship bar of 0.70 and put",
+      "col": 27,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[6].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 73,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "earlier in-sample census \u2014 0.80 precision there \u2014 was frozen with a ship bar of 0.70 and put",
+      "col": 80,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 74,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "to nine fresh blind seats. It adjudicated at **0.4483**",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.positive.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 107,
+      "token": "0.96",
+      "value": 0.96,
+      "decimals": 2,
+      "context": "rates near 0.96\u20130.98 are correlated-error ceilings, not independent agreement. Sample sizes",
+      "col": 11,
+      "status": "VERIFIED",
+      "receipt_ref": "stage2_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    }
+  ]
+}

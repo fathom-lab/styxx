@@ -1,0 +1,105 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "CORPUS_STATE_2026_08_31.md",
+  "document_sha256": "2d60317abfad671ca8a94eac5d391110bb8caa6621365deb9f341b129b78ba31",
+  "receipts_sha256": {
+    "corpus_census.json": "6c656fb063bb1b4b8c01e5dec2b8d8cce515dede925f8a1f086cc97aafaa0b55"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 3,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 0
+    },
+    "verified": {
+      "total": 3,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 2,
+        "obligated_integer_filter_na": 0,
+        "unobligated_integer_filter_ran": 1,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 2,
+    "obligation_sources": {
+      "vocabulary": 2,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [],
+  "ledger": [
+    {
+      "line": 10,
+      "token": "203",
+      "value": 203.0,
+      "decimals": 0,
+      "context": "The census holds 203 stored certificates. Of these, 197 were sworn OATH-HELD at",
+      "col": 17,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_census.json:totals.certificates",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 10,
+      "token": "197",
+      "value": 197.0,
+      "decimals": 0,
+      "context": "The census holds 203 stored certificates. Of these, 197 were sworn OATH-HELD at",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_census.json:totals.held",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 11,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "issuance and 6 were sworn OATH-FAILED \u2014 because this lab publishes its failures under",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_census.json:totals.failed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    }
+  ]
+}

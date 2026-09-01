@@ -1,0 +1,20 @@
+        the agent wrote                    the bytes say
+   ┌──────────────────────────┐      ┌──────────────────────────┐
+   │  "Added witness.py"      │      │   · no such file         │
+   │  "Deleted legacy_gate"   │      │   · no such file         │
+   │  "docs-only change"      │      │   .gitignore        M    │
+   │  "All tests pass"        │      │   CHANGELOG.md      M    │
+   └────────────┬─────────────┘      └────────────┬─────────────┘
+                │                                 │
+                └────────────────┬────────────────┘
+                                 │
+                    ┌────────────┴────────────┐
+                    │   closed template set   │
+                    │   no LLM · no network   │
+                    └────────────┬────────────┘
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        │                        │                        │
+     VERIFIED               UNCHECKABLE             CONTRADICTED
+   the bytes agree      nothing here can say      the bytes disagree
+                                                       exit 1

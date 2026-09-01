@@ -159,3 +159,18 @@ papers/disjoint-worlds/_PHI_STAGE_C_LIVELOCK_NOTE.md
 papers/arxiv/**/main.aux
 papers/arxiv/**/main.log
 papers/arxiv/**/main.out
+
+# generated views (regenerate with papers/styxx_org_chart.py --poster / styxx_audit_view.py)
+poster.html
+audit.html
+*-shot.png
+anon-check.png
+exhibit.html
+
+# EXTERNAL-1: the local corpus shelf is a rebuildable cache of a public dataset
+# (hao-li/AIDev, CC-BY-4.0) — never committed. The receipts that matter are the
+# summary + ledger, which the RESULT cites and the capsule seals.
+papers/closed-model-frontier/external1_shelf.sqlite*
+# EXTERNAL-1: the sealed adjudication key is committed only AFTER scoring
+papers/closed-model-frontier/external1_key_SEALED.json
+papers/closed-model-frontier/external1_ledger.jsonl

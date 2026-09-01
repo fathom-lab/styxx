@@ -19,7 +19,19 @@ NEG = r'INVALID__|NOT_|NO_|BLIND|WRONG|REFUS|_FAIL|DO NOT SHIP|RECALL|QUARANTIN|
 seal_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in seals)
 cert_verdicts = Counter(json.loads(p.read_text(encoding="utf-8")).get("verdict") for p in certs)
 negatives = [c for c in cy if re.search(NEG, c.get("verdict", ""))]
-invalids = [c for c in cy if "INVALID__" in c.get("verdict", "")]
+# The refusal classifier lives in its own module so it can be imported and TESTED by hand
+# (tests/test_ledger_classifier.py). The regeneration guard in tests/test_ledger.py proves this
+# file agrees with what it produces — never that the classification is right, which is how the
+# refusal list came to print `SHIPPED`.
+from ledger_verdicts import adjudication_coverage as _coverage  # noqa: E402
+from ledger_verdicts import is_refusal as _is_refusal          # noqa: E402
+from ledger_verdicts import refusal_tokens as _refusal_tokens  # noqa: E402
+
+_cov = _coverage(cy)
+
+invalids = [c for c in cy if _is_refusal(c.get("verdict", ""))]
+mention_only = [c for c in cy if "INVALID__" in (c.get("verdict") or "")
+                and not _is_refusal(c.get("verdict", ""))]
 gated = [p for p in preregs if "```gates" in p.read_text(encoding="utf-8")]
 with_power = sum(1 for p in gated if '"power_basis"' in p.read_text(encoding="utf-8"))
 
@@ -83,6 +95,23 @@ emit(f"| gates declaring a power basis | {with_power} of {len(gated)} gated prer
 if _split:
     emit(f"| — of those frozen *since* the field existed | **{_split[0]} of {_split[1]}** |")
 emit()
+emit("**The negatives row is not yet a measurement, and is published anyway.** The")
+emit(f"{len(negatives)} is produced by matching a keyword list against each cycle's free-prose")
+emit("verdict field, so a cycle counts as a loss whenever its commentary happens to contain one")
+emit("of those words — the same defect that put `SHIPPED` in the refusal list below. Scoping the")
+emit("identical keywords to the verdict's opening clause instead yields far fewer. Neither")
+emit("number is right: the field is prose, and no keyword test over prose is a classifier. The")
+emit("honest fix is a machine-readable verdict token per cycle. That mechanism now exists —")
+emit("`verdict_token` on a cycle record, carrying verbatim the string the scorer emitted — and")
+emit(f"**{_cov['with_verdict_token']} of {_cov['cycles']}** cycles carry one. Until those two")
+emit("numbers are equal the row above stays a keyword count, and this line is how a reader can")
+emit("tell which it is. An unadjudicated cycle is reported as unadjudicated rather than guessed:")
+emit("defaulting unknown tokens either way would flatter, in one direction or the other.")
+emit("The figure above is left standing rather than quietly restated because it has already been")
+emit("cited in a frozen preregistration, which can never be edited; moving it here without")
+emit("adjudicating all 163 cycles would replace a disclosed error with an undisclosed one.")
+emit("Measured in `papers/ledger_classifier_audit.py`.")
+emit()
 if _split:
     emit("Both power-basis rows are reported because either alone misleads. A frozen")
     emit("preregistration is never edited, so the preregs written before `power_basis` existed can")
@@ -101,8 +130,18 @@ emit("run, the verdict was computed, and the frozen table said the result licens
 emit("one cost real compute and produced no claim.")
 emit()
 for c in invalids:
-    verdict = c.get("verdict", "").split(" ")[0].strip("(")
-    emit(f"- **cycle {c['cycle']}** ({c.get('date','?')}) — `{verdict}`")
+    emit(f"- **cycle {c['cycle']}** ({c.get('date','?')}) — "
+         f"{_refusal_tokens(c.get('verdict',''))}")
+emit()
+emit(f"A further **{len(mention_only)}** cycles mention an `INVALID__*` verdict in their own")
+emit("commentary without having returned one, and are deliberately not listed here. Until")
+emit("2026-08-26 they were, and the defect was visible in this file: the selection test was a")
+emit("substring match over a free-prose verdict field, and the renderer printed only that")
+emit("field's first word — so this section listed `SHIPPED`, `PRODUCT`, `DO`, `REWRITTEN` and")
+emit("`BUILT` as runs the machinery refused, including the cycle that built this file, counted")
+emit("as a loss because its verdict quotes this file's own negatives count. Measured in")
+emit("`papers/ledger_classifier_audit.py`; the same mention-versus-use defect is documented in")
+emit("the OATH verifier in `closed-model-frontier/RECON_oath_external_reach_2026_08_26.md`.")
 emit()
 emit("## The rule, measured")
 emit()

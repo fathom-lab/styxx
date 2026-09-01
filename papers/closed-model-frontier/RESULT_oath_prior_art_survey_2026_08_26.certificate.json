@@ -1,0 +1,216 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_prior_art_survey_2026_08_26.md",
+  "document_sha256": "a7202a84c39aecc611648747c2937dc91a13b9c6d1ea59d4e6987753c4e84335",
+  "receipts_sha256": {
+    "oath_prior_art_survey.json": "c740c2c137112e72f6a1a52f634fd4843bfd473e8f5671106beb0a21cc02ee35"
+  },
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "counts": {
+    "VERIFIED": 5,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 43,
+      "token": "8"
+    },
+    {
+      "line": 81,
+      "token": "2606.27934"
+    },
+    {
+      "line": 90,
+      "token": "2606.27934"
+    },
+    {
+      "line": 103,
+      "token": "54"
+    },
+    {
+      "line": 104,
+      "token": "10"
+    },
+    {
+      "line": 127,
+      "token": "94"
+    },
+    {
+      "line": 130,
+      "token": "163"
+    },
+    {
+      "line": 130,
+      "token": "367"
+    },
+    {
+      "line": 130,
+      "token": "181"
+    },
+    {
+      "line": 152,
+      "token": "2606.27934"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 18,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| queries frozen and run verbatim | 13 |",
+      "col": 36,
+      "binding_context": "| | | | queries frozen and run verbatim | 13 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_prior_art_survey.json:queries_frozen"
+    },
+    {
+      "line": 19,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "| sources recorded, each with a URL its recorder fetched | 18 |",
+      "col": 59,
+      "binding_context": "| | | | sources recorded, each with a URL its recorder fetched | 18 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_prior_art_survey.json:sources_recorded"
+    },
+    {
+      "line": 20,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "| sources survived independent refetch | 18 |",
+      "col": 41,
+      "binding_context": "| | | | sources survived independent refetch | 18 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_prior_art_survey.json:sources_recorded"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| sources dropped | 0 |",
+      "col": 20,
+      "binding_context": "| | | | sources dropped | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_prior_art_survey.json:sources_dropped"
+    },
+    {
+      "line": 22,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| leads named but could not verify | 20 |",
+      "col": 37,
+      "binding_context": "| | | | leads named but could not verify | 20 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_prior_art_survey.json:could_not_verify_count"
+    },
+    {
+      "line": 43,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "One honest null is recorded and should not be smoothed over. Query 8 \u2014 *detect when a published",
+      "col": 67,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 81,
+      "token": "2606.27934",
+      "value": 2606.27934,
+      "decimals": 5,
+      "context": "The closest scientific hit is **Self-Verifying Measurement Records** (arXiv 2606.27934): every",
+      "col": 76,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 90,
+      "token": "2606.27934",
+      "value": 2606.27934,
+      "decimals": 5,
+      "context": "*stopped holding because the verifier moved underneath it*. The abstract of 2606.27934 does not",
+      "col": 76,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 103,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "against a manifest-locked analysis table under content-hash verification, reporting that 54% of",
+      "col": 89,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 104,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "its numerical claims exact-matched a locked table value and 10% were untraceable.",
+      "col": 60,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 127,
+      "token": "94",
+      "value": 94.0,
+      "decimals": 0,
+      "context": "and reported what happened. `RECON_oath_external_reach_2026_08_26.md` did: 94% abstention, and",
+      "col": 77,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 130,
+      "token": "163",
+      "value": 163.0,
+      "decimals": 0,
+      "context": "- **The scale of self-application.** 163 logged cycles, 367 frozen preregistrations, 181",
+      "col": 37,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 130,
+      "token": "367",
+      "value": 367.0,
+      "decimals": 0,
+      "context": "- **The scale of self-application.** 163 logged cycles, 367 frozen preregistrations, 181",
+      "col": 56,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 130,
+      "token": "181",
+      "value": 181.0,
+      "decimals": 0,
+      "context": "- **The scale of self-application.** 163 logged cycles, 367 frozen preregistrations, 181",
+      "col": 85,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 152,
+      "token": "2606.27934",
+      "value": 2606.27934,
+      "decimals": 5,
+      "context": "2. **Read 2606.27934 in full** and settle whether the checker's identity is in the record. Until",
+      "col": 10,
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    }
+  ]
+}

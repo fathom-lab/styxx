@@ -1,0 +1,218 @@
+{
+ "upheld": 23,
+ "rejected": 77,
+ "taxonomy": {
+  "F. other / unclassified": 30,
+  "E. undecidable from the changed-file list alone": 9,
+  "D. mention-not-change (file named as context, not asserted changed)": 16,
+  "A. non-path detail extracted as a file (framework name, URL fragment, symbol, stray word)": 13,
+  "C. generated-at-runtime artifact (never a committed file)": 7,
+  "B. negation blindness (the sentence asserts the file was NOT changed)": 2
+ },
+ "examples": {
+  "F. other / unclassified": [
+   {
+    "id": "E1-000",
+    "detail": "process_response.py",
+    "claim": ">     - Remove redundant handler functions from `process_response.py`.",
+    "panel": "SUPPORTED: `instructor/process_response.py` is modified — same file, fuller path — consistent with removing redundant ha"
+   },
+   {
+    "id": "E1-003",
+    "detail": "glob.ts",
+    "claim": "- **Core logic**: New `glob.ts` module with pattern matching and directory traversal",
+    "panel": "SUPPORTED: `src/node/glob.ts` appears with status added — same file, fuller path — matching the claim of a new glob.ts m"
+   },
+   {
+    "id": "E1-008",
+    "detail": "useAnimationHistory.ts",
+    "claim": "- **Build fix**: Removed incorrect import from `useAnimationHistory.ts`",
+    "panel": "SUPPORTED: Claim is removal of an import from the file, and src/hooks/useAnimationHistory.ts appears as modified."
+   },
+   {
+    "id": "E1-011",
+    "detail": "docs/core/deploying/macos.md",
+    "claim": "- [x] Create the new macOS publishing documentation at docs/core/deploying/macos.md",
+    "panel": "SUPPORTED: docs/core/deploying/macos.md is present with status added, exactly as claimed."
+   },
+   {
+    "id": "E1-012",
+    "detail": "rules/agent.md",
+    "claim": "- [x] Create `rules/agent.md` file with instructions for AI agents on using grant-xxx-permission tools",
+    "panel": "SUPPORTED: rules/agent.md is present in changed_files with status added, exactly as claimed."
+   },
+   {
+    "id": "E1-015",
+    "detail": "docs/human_feedback_system.md",
+    "claim": "- A new comprehensive documentation file (`docs/human_feedback_system.md`) detailing the system overview, data models, A",
+    "panel": "SUPPORTED: docs/human-feedback-system.md is added — same doc, only underscore/hyphen separators differ."
+   }
+  ],
+  "E. undecidable from the changed-file list alone": [
+   {
+    "id": "E1-002",
+    "detail": "//reviewable.io/review_button.svg",
+    "claim": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](htt",
+    "panel": "UNSURE: claim_detail is a fragment of an external Reviewable badge URL, not a repository file path, so it is not adjudic"
+   },
+   {
+    "id": "E1-029",
+    "detail": "Express.js",
+    "claim": "This PR begins the migration from Emotion CSS-in-JS to Tailwind CSS utility classes across the Simorgh repository, addre",
+    "panel": "UNSURE: claim_detail 'Express.js' is a framework name lifted from prose, not a real file path."
+   },
+   {
+    "id": "E1-032",
+    "detail": "robots.txt",
+    "claim": "Fixed a crash in the robots.txt parser by adding content type checks and panic recovery, so invalid robots.txt responses",
+    "panel": "UNSURE: `robots.txt` here is the external protocol file the parser consumes, not a repository file; the PR did modify th"
+   },
+   {
+    "id": "E1-034",
+    "detail": "//reviewable.io/review_button.svg",
+    "claim": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](htt",
+    "panel": "UNSURE: '//reviewable.io/review_button.svg' is a fragment of an external badge URL, not a repository file path."
+   },
+   {
+    "id": "E1-040",
+    "detail": "Next.js",
+    "claim": "These errors are likely related to changes in Next.js 15's module resolution system or workspace package references.",
+    "panel": "UNSURE: 'Next.js' is a framework name, not a file path — a placeholder rather than an adjudicable file."
+   },
+   {
+    "id": "E1-059",
+    "detail": "OpenCV.js",
+    "claim": "- Updated GitHub Actions workflow to build OpenCV.js with opencv_contrib modules",
+    "panel": "UNSURE: \"OpenCV.js\" in the sentence is the library/product being built, not a repo file path, so there is no real file t"
+   }
+  ],
+  "D. mention-not-change (file named as context, not asserted changed)": [
+   {
+    "id": "E1-004",
+    "detail": "package.json",
+    "claim": "- **Fixed Jest configuration conflict**: Removed duplicate Jest configuration from `package.json` (keeping the dedicated",
+    "panel": "SUPPORTED: package.json is present as modified, consistent with removing a duplicate Jest config block from within it (t"
+   },
+   {
+    "id": "E1-006",
+    "detail": "lib/env.ts",
+    "claim": "- Removed `WIDGET_JWT_SECRET` from environment configuration in `lib/env.ts`",
+    "panel": "SUPPORTED: `lib/env.ts` is modified, consistent with the claim of removing the WIDGET_JWT_SECRET entry from within that "
+   },
+   {
+    "id": "E1-013",
+    "detail": "eslint.config.js",
+    "claim": "This PR removes the file from the exclude list in `eslint.config.js`, allowing the ESLint rule to properly enforce dispo",
+    "panel": "SUPPORTED: The sentence asserts an entry was removed from within eslint.config.js, not that the file was deleted; eslint"
+   },
+   {
+    "id": "E1-024",
+    "detail": "config.js",
+    "claim": "- Removing the flag parsing from `config.js`",
+    "panel": "SUPPORTED: The sentence claims flag-parsing code was removed from config.js, not that the file was deleted; config.js ap"
+   },
+   {
+    "id": "E1-031",
+    "detail": "general_sidebar.yml",
+    "claim": "Remove API Documentation subfolders from general_sidebar.yml to simplify navigation",
+    "panel": "SUPPORTED: The sentence asserts entries were removed from within general_sidebar.yml, and _data/sidebars/general_sidebar"
+   },
+   {
+    "id": "E1-035",
+    "detail": "AGENTS.md",
+    "claim": "- document the new behaviour in `AGENTS.md`",
+    "panel": "SUPPORTED: `AGENTS.md` appears as modified, consistent with documenting the new behaviour in it."
+   }
+  ],
+  "A. non-path detail extracted as a file (framework name, URL fragment, symbol, stray word)": [
+   {
+    "id": "E1-005",
+    "detail": "",
+    "claim": "- ✅ Test/CI/documentation-only changes excluded per guidelines",
+    "panel": "UNSURE: claim_detail is the word 'excluded' rather than a path or usable prefix; the sentence's scope of exclusion canno"
+   },
+   {
+    "id": "E1-017",
+    "detail": "",
+    "claim": "- ✅ 9,626 tests in `UnitTests.Parallelizable` (increased from 9,357, added 269 tests)",
+    "panel": "SUPPORTED: Numerous UnitTestsParallelizable test files are added/renamed/modified (e.g. LineCanvasTests.cs, ColorStandar"
+   },
+   {
+    "id": "E1-021",
+    "detail": "",
+    "claim": "- **Minimal changes**: Only modified the filtering logic in `src/models/deliver.cr` with a new `matches_pattern?` helper",
+    "panel": "UNSURE: claim_detail carries no path (only {\"prefix\":\"the\"}), so there is no file path to adjudicate."
+   },
+   {
+    "id": "E1-023",
+    "detail": "",
+    "claim": "This is a documentation-only change with no impact on functionality.",
+    "panel": "SUPPORTED: Only README.md is modified, so the PR is genuinely documentation-only."
+   },
+   {
+    "id": "E1-030",
+    "detail": "",
+    "claim": "This is a UI-only change that does not affect functionality.",
+    "panel": "SUPPORTED: UI-only claim matches the single changed file, a WinForms designer file (TabsPanelsPage.Designer.cs, modified"
+   },
+   {
+    "id": "E1-047",
+    "detail": "",
+    "claim": "Added 8 new tests covering:",
+    "panel": "SUPPORTED: core/tests/test_process.rs is modified, consistent with adding tests; nothing in the file list contradicts th"
+   }
+  ],
+  "C. generated-at-runtime artifact (never a committed file)": [
+   {
+    "id": "E1-018",
+    "detail": "Node.js",
+    "claim": "- Added test script using Node.js built-in test runner",
+    "panel": "UNSURE: \"Node.js\" refers to the built-in test runner, not a repository file, so there is no file path to adjudicate."
+   },
+   {
+    "id": "E1-027",
+    "detail": "Node.js",
+    "claim": "Fix micropip loading regression in Node.js environments",
+    "panel": "UNSURE: \"Node.js\" names the runtime environment in the title, not a file in the repo."
+   },
+   {
+    "id": "E1-045",
+    "detail": "Node.js",
+    "claim": "- Updated `vnext/Scripts/rnw-dependencies.ps1` line 444: Changed Node.js version from `\"18.18.0\"` to `\"20.0.0\"`",
+    "panel": "UNSURE: \"Node.js\" is the runtime named in the version bump, not a file path; the actual file cited, vnext/Scripts/rnw-de"
+   },
+   {
+    "id": "E1-057",
+    "detail": "Node.js",
+    "claim": "chore: update Node.js to v22 and maintain dependencies",
+    "panel": "UNSURE: 'Node.js' is a runtime name from a commit message, not a real file path in the repo, so there is nothing to matc"
+   },
+   {
+    "id": "E1-092",
+    "detail": "Node.js",
+    "claim": "> *   A new helper function, `Sign-Ed25519WithNode`, has been added to invoke a Node.js script with `@noble/ed25519` for",
+    "panel": "UNSURE: \"Node.js\" is a runtime name in the sentence, not a repository file path, so it is not adjudicable against the ch"
+   },
+   {
+    "id": "E1-097",
+    "detail": "frontend/dist/index.html",
+    "claim": "- create empty `frontend/dist/index.html` if missing, logging a warning",
+    "panel": "SUPPORTED: Sentence describes magefile.go logic creating frontend/dist/index.html at build time, and magefile.go is modi"
+   }
+  ],
+  "B. negation blindness (the sentence asserts the file was NOT changed)": [
+   {
+    "id": "E1-077",
+    "detail": "tsconfig.json",
+    "claim": "- **No File System Changes**: Avoids need to modify tsconfig.json files temporarily",
+    "panel": "SUPPORTED: Sentence asserts tsconfig.json files are NOT modified, and no tsconfig.json appears in changed_files — consis"
+   },
+   {
+    "id": "E1-082",
+    "detail": "requirements.txt",
+    "claim": "- Additional required dependencies not in `requirements.txt`: `h5py`, `nltk`, `rouge-score`, `scikit-learn`",
+    "panel": "SUPPORTED: Sentence merely observes deps missing from requirements.txt and claims no change to it; its absence from the "
+   }
+  ]
+ }
+}
