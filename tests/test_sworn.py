@@ -251,24 +251,35 @@ class TestCanonical:
         lexer accepts it the sidecar must reproduce it and re-verify to the same spans."""
         import random
         rng = random.Random(20260901)
-        atoms = ["a", "é", "字", " ", "\n", "\r\n", "`", "``", "```\n", "<", ">", "&lt;sworn&gt;",
-                 sp("x"), sp("0.5", "r2", "numeric"), sp("`q`", "path:a.json", "quote"), "</sworn>",
-                 '<sworn r="r1" k="numeric">', "  ```", "text. More text!\n"]
+        atoms = ["a", "é", "字", "😀", " ", "\t", "\n", "\r\n", "\r", "\x00", "\ufeff", "`", "``",
+                 "```", "```\n", " ```\n", "    ```\n", "~~~\n", "````\n", "<", ">", "&lt;sworn&gt;",
+                 "<!--", "-->", sp("x"), sp("0.5", "r2", "numeric"), sp("`q`", "path:a.json", "quote"),
+                 sp("", "r1", "quote"), sp("`</sworn>`", "r1", "quote"), sp("5\n", "r1"), "</sworn>",
+                 '<sworn r="r1" k="numeric">', "<sworn", "</swor", '<sworn r="', "<sworn>",
+                 '<sworn r="r1" k="numeric" >', '<SWORN r="r1" k="numeric">', "<sworn/>", "<swornx>",
+                 "text. More text!\n", "`" + sp("x") + "`", "```" + sp("x") + "\n"]
+        m = manifest(r1=b"5", r2=b"0.5")
         accepted = refused = 0
-        for _ in range(300):
-            doc = "".join(rng.choice(atoms) for _ in range(rng.randint(1, 14))).encode()
+        for _ in range(1500):
+            doc = "".join(rng.choice(atoms) for _ in range(rng.randint(1, 16))).encode()
             sc = scan(doc)
-            if sc["document_malformed"] or not sc["lexical_ok"]:
+            inline = verify(doc, name="f.md", manifest=m)          # never raises on content
+            assert inline["sworn_total"] == len(sc["declarations"])
+            if (sc["document_malformed"] or not sc["lexical_ok"]
+                    or any(d["malformed"] == "empty_span" for d in sc["declarations"])):
                 with pytest.raises(SystemExit):
                     to_sidecar(doc, "f.md")
                 refused += 1
                 continue
-            side = to_sidecar(doc, "f.md")
+            side = to_sidecar(doc, "f.md", manifest=m)
             assert render(side) == doc
-            core = verify(sidecar=side)
-            assert core["sworn_total"] == len(side["spans"])
+            j = json.loads(json.dumps(side, ensure_ascii=False))
+            core = verify(sidecar=j)
+            assert core["counts"] == inline["counts"], doc
+            assert [(x["verdict"], x["reason"]) for x in core["spans"]] == \
+                   [(x["verdict"], x["reason"]) for x in inline["spans"]], doc
             accepted += 1
-        assert accepted > 50 and refused > 50, (accepted, refused)
+        assert accepted > 200 and refused > 200, (accepted, refused)
 
     def test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused(self):
         side = to_sidecar(sp("x").encode(), "d.md")
@@ -1079,3 +1090,61 @@ class TestWorkedExamplesOnTheStruct1Receipt:
                + " at " + sp("n=38", "path:stage2_result.json#/arms/flagged/total") + ".\n").encode()
         core = verify(doc, name="d.md", tree=tree)
         assert core["document_verdict"] == "SWORN-HELD" and core["counts"]["HELD"] == 3
+
+
+# ============================================================================ from the attack pass
+
+class TestSidecarHardening:
+    """Confirmed by the adversarial pass: a sidecar the loader refuses must never be emitted, and
+    a loader must refuse, never crash, on any shape."""
+
+    def test_a_zero_byte_span_is_malformed_inline_and_refuses_the_sidecar(self):
+        doc = b"ab " + sp("").encode() + b" cd\n"
+        core = verify(doc, name="d.md")
+        assert core["counts"]["MALFORMED"] == 1 and core["spans"][0]["reason"] == "empty_span"
+        with pytest.raises(SystemExit, match="REFUSED"):
+            to_sidecar(doc, "d.md")
+
+    def test_to_sidecar_never_emits_a_commit_its_loader_refuses(self):
+        for bad in ("HEAD", "A" * 40, "abc", 5):
+            with pytest.raises(SystemExit, match="REFUSED"):
+                to_sidecar(sp("x").encode(), "d.md", bad)
+
+    @pytest.mark.parametrize("mutate", [
+        lambda s: s.__setitem__("text", 5), lambda s: s.__setitem__("text", None),
+        lambda s: s.__setitem__("text", "\ud800"), lambda s: s.__setitem__("spans", 5),
+        lambda s: s.__setitem__("spans", [5]), lambda s: s.__setitem__("spans", [None]),
+        lambda s: s.__setitem__("spans", [["start", "end", "receipt", "kind"]]),
+        lambda s: s.__setitem__("document", "x"), lambda s: s.__setitem__("document", []),
+        lambda s: s.__setitem__("document", {"sha256": s["document"]["sha256"]}),
+        lambda s: s.__setitem__("commit", 5), lambda s: s.__setitem__("manifest", "x"),
+        lambda s: s.__setitem__("manifest", {"spec": "sworn/manifest/0.1", "receipts": ["r1"]}),
+        lambda s: s.__setitem__("manifest", {"spec": "sworn/manifest/0.1", "receipts": {"r1": "abc"}}),
+        lambda s: s.__setitem__("manifest", {"spec": "sworn/manifest/0.1", "receipts": {},
+                                             "authored_sha256": 5}),
+        lambda s: s["spans"][0].update({"start": True}),
+        lambda s: s["spans"][0].update({"receipt": None}),
+        lambda s: s["spans"][0].update({"receipt": ["r1"]}),
+        lambda s: s["spans"][0].update({"receipt": "r1>"}),
+        lambda s: s["spans"][0].update({"receipt": "r1\n```"}),
+        lambda s: s["spans"][0].update({"kind": 5}),
+        lambda s: s["spans"][0].update({"kind": 'quo"te'}),
+    ])
+    def test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on(self, mutate):
+        side = json.loads(json.dumps(to_sidecar(sp("x").encode(), "d.md")))
+        mutate(side)
+        with pytest.raises(SystemExit, match="REFUSED"):
+            verify(sidecar=side)
+
+    def test_a_sidecar_whose_text_has_no_canonical_form_is_refused(self):
+        text = "```\nx\n"
+        side = {"spec": SPEC, "commit": None, "document": {"name": "d.md", "sha256": sworn._sha256(text.encode())},
+                "text": text, "spans": [], "manifest": {"spec": "sworn/manifest/0.1", "receipts": {}}}
+        with pytest.raises(SystemExit, match="no canonical form"):
+            verify(sidecar=side)
+
+    def test_a_sidecar_placing_a_span_where_the_lexer_sees_none_is_refused(self):
+        side = json.loads(json.dumps(to_sidecar(b"`code` here\n", "d.md")))
+        side["spans"] = [{"start": 1, "end": 5, "receipt": "r1", "kind": "quote"}]
+        with pytest.raises(SystemExit, match="REFUSED"):
+            verify(sidecar=side)

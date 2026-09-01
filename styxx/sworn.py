@@ -131,8 +131,10 @@ DECISIONS = {
                     "and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a "
                     "non-name byte) is MALFORMED, never narrative"),
     "lexical_malformed_refuses_sidecar": ("a document with tag_syntax/nesting/stray_closer/unclosed "
-                                          "has no canonical text; it can be verified inline but a "
-                                          "sidecar is refused"),
+                                          "has no canonical text, and a zero-byte span has no "
+                                          "representable offsets; both can be verified inline but a "
+                                          "sidecar is refused, and a sidecar carrying either shape "
+                                          "is refused on load"),
     "sworn_total_counts_malformed": ("sworn_total includes MALFORMED; UNSWORN is reserved for a "
                                      "document with no tag-shaped candidate at all"),
     "document_malformed_is_failed": ("unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with "
@@ -346,6 +348,10 @@ def scan(raw: bytes) -> Scan:
                         d["closer_at"] = p
                         d["closer_end"] = p + len(_CLOSER)
                         d["inner"] = raw[d["opener_end"]:p]
+                        if not d["inner"]:
+                            # zero bytes sworn: MALFORMED from the bytes, and unrepresentable in
+                            # the sidecar (start == end cannot be ordered against a neighbour)
+                            d["malformed"] = d["malformed"] or "empty_span"
                     else:
                         decls.append(Declaration(at=p, receipt=None, kind=None, inner=None,
                                                  start=None, end=None, malformed="stray_closer",
@@ -426,9 +432,14 @@ def to_sidecar(raw: bytes, name: str, commit: Optional[str] = None,
     if sc["document_malformed"]:
         raise SystemExit("REFUSED: document-level MALFORMED (%s) — no canonical text exists"
                          % sc["document_malformed"]["reason"])
-    if not sc["lexical_ok"]:
+    if commit is not None and not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", str(commit)):
+        raise SystemExit("REFUSED: commit must be a full lowercase hex object id or None, not %r"
+                         % (commit,))
+    empties = [d for d in sc["declarations"] if d["malformed"] == "empty_span"]
+    if not sc["lexical_ok"] or empties:
         bad = [d for d in sc["declarations"]
-               if d["malformed"] in ("tag_syntax", "nesting", "stray_closer", "unclosed")]
+               if d["malformed"] in ("tag_syntax", "nesting", "stray_closer", "unclosed",
+                                     "empty_span")]
         lines = "\n".join("  - byte %d: %s %s" % (d["at"], d["malformed"], d.get("raw") or "")
                           for d in bad)
         raise SystemExit("REFUSED: the sidecar form cannot carry a lexically MALFORMED declaration; "
@@ -452,35 +463,67 @@ def to_sidecar(raw: bytes, name: str, commit: Optional[str] = None,
     return side
 
 
+_ATTR_VALUE = re.compile(r'[^"<>\r\n]*')
+
+
+def _refuse(msg: str):
+    raise SystemExit("REFUSED: " + msg)
+
+
 def load_sidecar(obj: dict) -> dict:
-    """Validate a sidecar strictly. A shape this verifier does not know is refused, not guessed."""
+    """Validate a sidecar strictly. A shape this verifier does not know is refused, never guessed
+    and never crashed on: every check below raises the REFUSED SystemExit and nothing else."""
     if not isinstance(obj, dict) or obj.get("spec") != SPEC:
-        raise SystemExit("REFUSED: unknown sidecar spec %r (this verifier knows %s)"
-                         % (obj.get("spec") if isinstance(obj, dict) else None, SPEC))
+        _refuse("unknown sidecar spec %r (this verifier knows %s)"
+                % (obj.get("spec") if isinstance(obj, dict) else None, SPEC))
     required = ("spec", "commit", "document", "text", "spans", "manifest")
     missing = [k for k in required if k not in obj]
     extra = sorted(set(obj) - set(required))
     if missing or extra:
-        raise SystemExit("REFUSED: sidecar keys — missing %s, unknown %s" % (missing, extra))
+        _refuse("sidecar keys — missing %s, unknown %s" % (missing, extra))
     commit = obj["commit"]
-    if commit is not None and not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", str(commit)):
-        raise SystemExit("REFUSED: sidecar commit must be a full lowercase hex object id or null")
-    text = obj["text"].encode("utf-8")
-    if _sha256(text) != (obj["document"] or {}).get("sha256"):
-        raise SystemExit("REFUSED: sidecar text does not hash to document.sha256")
+    if commit is not None and not (isinstance(commit, str)
+                                   and re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", commit)):
+        _refuse("sidecar commit must be a full lowercase hex object id or null")
+    if not isinstance(obj["text"], str):
+        _refuse("sidecar text must be a string")
+    try:
+        text = obj["text"].encode("utf-8")
+    except UnicodeEncodeError as e:
+        _refuse("sidecar text is not encodable as UTF-8 at character %d" % e.start)
+    doc = obj["document"]
+    if not (isinstance(doc, dict) and isinstance(doc.get("name"), str)
+            and isinstance(doc.get("sha256"), str)):
+        _refuse("sidecar document must carry a string name and a string sha256")
+    if _sha256(text) != doc["sha256"]:
+        _refuse("sidecar text does not hash to document.sha256")
+    if not isinstance(obj["spans"], list):
+        _refuse("sidecar spans must be a list")
     last_end = 0
     for i, s in enumerate(obj["spans"]):
-        if set(s) != {"start", "end", "receipt", "kind"}:
-            raise SystemExit("REFUSED: span %d carries keys other than start/end/receipt/kind" % i)
+        if not isinstance(s, dict) or set(s) != {"start", "end", "receipt", "kind"}:
+            _refuse("span %d is not an object with exactly start/end/receipt/kind" % i)
         a, b = s["start"], s["end"]
-        if not (isinstance(a, int) and isinstance(b, int) and 0 <= a < b <= len(text)):
-            raise SystemExit("REFUSED: span %d offsets %r are not a non-empty range in the text" % (i, (a, b)))
+        if (isinstance(a, bool) or isinstance(b, bool) or not isinstance(a, int)
+                or not isinstance(b, int) or not (0 <= a < b <= len(text))):
+            _refuse("span %d offsets %r are not a non-empty range in the text" % (i, (a, b)))
         if a < last_end:
-            raise SystemExit("REFUSED: spans are not ordered and non-overlapping at span %d" % i)
+            _refuse("spans are not ordered and non-overlapping at span %d" % i)
         for off in (a, b):
             if off < len(text) and (text[off] & 0xC0) == 0x80:
-                raise SystemExit("REFUSED: span %d offset %d is not on a UTF-8 character boundary" % (i, off))
+                _refuse("span %d offset %d is not on a UTF-8 character boundary" % (i, off))
+        for key in ("receipt", "kind"):
+            v = s[key]
+            if not isinstance(v, str) or not _ATTR_VALUE.fullmatch(v):
+                _refuse("span %d %s %r cannot be carried by the inline tag grammar" % (i, key, v))
         last_end = b
+    man = obj["manifest"]
+    if not (isinstance(man, dict) and man.get("spec") == MANIFEST_SPEC
+            and isinstance(man.get("receipts"), dict)
+            and all(isinstance(k, str) and isinstance(v, dict) for k, v in man["receipts"].items())
+            and isinstance(man.get("authored_sha256", []), list)
+            and all(isinstance(x, str) for x in man.get("authored_sha256", []))):
+        _refuse("sidecar manifest is not a %s object" % MANIFEST_SPEC)
     return obj
 
 
@@ -1197,7 +1240,16 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
     if tree is not None and getattr(tree, "commit", None) is None and commit is not None:
         tree.commit = commit
     sc = scan(raw)
-    if sidecar is not None and sc["lexical_ok"] and not sc["document_malformed"]:
+    if sidecar is not None:
+        # One lexer, one truth: the sidecar must render into a document the lexer reads as
+        # exactly those spans. A text with no canonical form, or a span table the re-scan does
+        # not reproduce, is not a sidecar and is refused rather than verified on a guess.
+        if sc["document_malformed"]:
+            raise SystemExit("REFUSED: the sidecar text has no canonical form (%s)"
+                             % sc["document_malformed"]["reason"])
+        if not sc["lexical_ok"] or any(d["malformed"] == "empty_span" for d in sc["declarations"]):
+            raise SystemExit("REFUSED: the rendered sidecar carries a declaration the sidecar form "
+                             "cannot represent")
         seen = [(d["start"], d["end"], d["receipt"], d["kind"]) for d in sc["declarations"]]
         want = [(s["start"], s["end"], s["receipt"], s["kind"]) for s in sidecar["spans"]]
         if sorted(seen) != want:
