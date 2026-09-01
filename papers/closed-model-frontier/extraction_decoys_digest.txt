@@ -1,0 +1,6 @@
+sha256 = 6a491480623ff96c2a55f70da9a6ef9f47d11246afeaa477946bd8af4787892b
+items = 30
+claim = 15  not_a_claim = 15
+seed = 20260901
+built = extraction_decoys.py
+committed BEFORE any panel is prompted

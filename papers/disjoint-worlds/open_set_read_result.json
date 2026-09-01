@@ -1,0 +1,65 @@
+{
+  "prereg": "PREREG_open_set_read_2026_09_01.md",
+  "prereg_commit": "45d7ae5",
+  "what": "does the reader decline when the target is ABSENT from the candidate array? read_top1 is an index-matched argmin over an array containing the truth, so E = 1 by construction and every published read figure is an A-term",
+  "reject_statistic": "top-1/top-2 margin (d2 - d1) in the mapped space, fixed in the prereg",
+  "b34v3_seed": 343,
+  "open_seed": 20260901,
+  "n_heldout": 70,
+  "n_candidates": 35,
+  "n_oov": 35,
+  "deviation_from_prereg": "The prereg says 'partition the 462 concept indices'. This partitions the 70 HELD-OUT concepts instead \u2014 STRICTER, because every query is then a concept the mapper never trained on. Partitioning all 462 would draw most queries from the 392 training concepts and confound familiarity with presence-in-candidate-set. The prereg did not fix |C| and |O|; set to 35/35 here for balance. Disclosed, not silently taken.",
+  "targets": {
+    "llama_1b": {
+      "seed_acc": 0.7959,
+      "closed_set_read_top1": 0.6857,
+      "committed_read_top1": 0.6857,
+      "G_O1_reconciles": true,
+      "auroc_margin_in_vs_oov": 0.7665,
+      "auroc_margin_null_mapper": 0.5861,
+      "in_trial_top1_within_C": 0.8286,
+      "seconds": 246.4
+    },
+    "gemma_2b": {
+      "seed_acc": 0.5918,
+      "closed_set_read_top1": 0.5714,
+      "committed_read_top1": 0.5714,
+      "G_O1_reconciles": true,
+      "auroc_margin_in_vs_oov": 0.6033,
+      "auroc_margin_null_mapper": 0.5584,
+      "in_trial_top1_within_C": 0.7429,
+      "seconds": 253.6
+    },
+    "qwen_1p5b": {
+      "seed_acc": 0.0536,
+      "closed_set_read_top1": 0.1429,
+      "committed_read_top1": 0.1429,
+      "G_O1_reconciles": true,
+      "auroc_margin_in_vs_oov": 0.5061,
+      "auroc_margin_null_mapper": 0.5012,
+      "in_trial_top1_within_C": 0.2571,
+      "seconds": 254.3
+    }
+  },
+  "gates": {
+    "G_O1_closed_set_reconciliation": {
+      "pass": true,
+      "note": "every target must re-derive its committed read_top1 exactly"
+    },
+    "G_O2_null_mapper_auroc_le_0.55": {
+      "pass": false,
+      "observed": {
+        "llama_1b": 0.5861,
+        "gemma_2b": 0.5584,
+        "qwen_1p5b": 0.5012
+      }
+    },
+    "G_O3_per_target_verdict": {
+      "llama_1b": "OPEN_SET_SIGNAL",
+      "gemma_2b": "INDETERMINATE",
+      "qwen_1p5b": "CLOSED_SET_ONLY"
+    }
+  },
+  "verdict": "VOID__null_mapper_separates",
+  "seconds_total": 756.4
+}

@@ -1,0 +1,555 @@
+{
+ "what": "EXTRACTION census of the cross-model read battery: the construction chain of the N=462 concept battery that b31v2, b34v3 and b35c are scored over",
+ "kind": "CENSUS \u2014 descriptive, report-only. No hypothesis test, no gate, no verdict token, NO PREREGISTRATION. Nothing here may carry a headline finding.",
+ "companion_paper": "CENSUS_read_extraction_2026_09_01.md",
+ "loads_no_model": true,
+ "writes": [
+  "read_extraction_census.json"
+ ],
+ "edits_no_receipt": true,
+ "rules": {
+  "raw_tokens": "the module-level `_BANK = \"\"\"...\"\"\".split()` literal in run_g0clear.py, recovered by ast.literal_eval of the receiver of .split(), then split on whitespace exactly as Python's str.split does",
+  "deduplicated": "the order-preserving comprehension at run_g0clear.py:66-67, reproduced character-for-character in dedup_order_preserving",
+  "split_seed0": "run_g0clear.py:99-108 replayed with numpy default_rng(0): n_tr = int(0.70*N), n_sel = int(0.15*N), fin = the remainder",
+  "split_seed343": "run_b34v3.py:64-72 replayed with numpy default_rng(343): fin = first 70 of the permutation, tr = the next N-70. This is NOT split_concepts",
+  "anchors_392": "run_b31v2.py:104-105 concatenates TRAIN and SEL_dirs after calling split_concepts(seed=0); the concatenation is the consumer's, not the splitter's",
+  "loop_skip_branches": "ast walk of the named extraction function counting `continue` and `break`. A per-concept filter in these extractors could only be a skip inside the concept loop, so zero skips is evidence that no concept is ever dropped by measurement",
+  "candidate_pool": "NO RULE EXISTS. There is no committed corpus, vocabulary slice, dataset or generator script from which the battery was drawn, so there is no denominator to compute against"
+ },
+ "provenance": {
+  "run_g0clear_py_sha256": "5ff6e5c2ed85c542bda38e378372f0279e3135c4e1b630a394c874b1b6c24bc9",
+  "git": {
+   "status": "read",
+   "n_commits": 1,
+   "commits": [
+    {
+     "commit": "681c26e804940e69771bbcb8de06f4fd91304618",
+     "date": "2026-06-20 23:03:25 -0400",
+     "subject": "runner(thought-transfer): Stage-0 G0-clear instrument \u00e2\u20ac\u201d N=462 concept bank + (layer,k) sweep with SELECTION/FINAL seal; loads only model A, computes only pc_cos (no cross-model number). Per PREREG_thought_transfer_g0clear."
+    }
+   ]
+  },
+  "recorded_pool_size": null,
+  "recorded_pool_size_status": "UNCHECKABLE \u2014 the pre-filter candidate pool was never recorded as an artifact, so no survival ratio exists to compute. This is a verdict, not a failure, and it is not a claim that the ratio is low. Absence of evidence is never a contradiction.",
+  "design_targets_not_measurements": {
+   "run_g0clear.py:29 docstring": "~480 single-word concepts",
+   "PREREG_thought_transfer_g0clear_2026_06_20.md:25,43": "N~480",
+   "note": "both were written before the list existed; they are design targets, not counts of anything"
+  }
+ },
+ "battery": {
+  "raw_tokens_in_literal": 465,
+  "raw_tokens_recorded_in_any_receipt": false,
+  "deduplicated": 462,
+  "deduplicated_recorded_in": "g0clear_result_llama3b.json .n_concepts",
+  "duplicates": [
+   {
+    "word": "chicken",
+    "first_index": 52,
+    "repeat_index": 133
+   },
+   {
+    "word": "mushroom",
+    "first_index": 104,
+    "repeat_index": 265
+   },
+   {
+    "word": "orange",
+    "first_index": 68,
+    "repeat_index": 439
+   }
+  ],
+  "distinct_after_dedup_equals_len_set": true,
+  "line_structure": {
+   "note": "token counts per source line of the literal. THE BYTES CARRY NO CATEGORY LABELS: there are no comments, no blank lines and no markers between the apparent category blocks, so any category attribution is a reader's inference and is NOT mechanically derivable from this file. Reported as structure, not as taxonomy.",
+   "lines": [
+    {
+     "line": 32,
+     "tokens": 19,
+     "first": "dog",
+     "last": "zebra"
+    },
+    {
+     "line": 33,
+     "tokens": 16,
+     "first": "giraffe",
+     "last": "shrimp"
+    },
+    {
+     "line": 34,
+     "tokens": 17,
+     "first": "snail",
+     "last": "swan"
+    },
+    {
+     "line": 35,
+     "tokens": 14,
+     "first": "chicken",
+     "last": "worm"
+    },
+    {
+     "line": 36,
+     "tokens": 15,
+     "first": "apple",
+     "last": "pineapple"
+    },
+    {
+     "line": 37,
+     "tokens": 14,
+     "first": "strawberry",
+     "last": "pepper"
+    },
+    {
+     "line": 38,
+     "tokens": 13,
+     "first": "lettuce",
+     "last": "turnip"
+    },
+    {
+     "line": 39,
+     "tokens": 18,
+     "first": "bread",
+     "last": "chocolate"
+    },
+    {
+     "line": 40,
+     "tokens": 14,
+     "first": "candy",
+     "last": "water"
+    },
+    {
+     "line": 41,
+     "tokens": 19,
+     "first": "hammer",
+     "last": "hoe"
+    },
+    {
+     "line": 42,
+     "tokens": 15,
+     "first": "ladder",
+     "last": "bucket"
+    },
+    {
+     "line": 43,
+     "tokens": 16,
+     "first": "car",
+     "last": "subway"
+    },
+    {
+     "line": 44,
+     "tokens": 8,
+     "first": "canoe",
+     "last": "sled"
+    },
+    {
+     "line": 45,
+     "tokens": 17,
+     "first": "chair",
+     "last": "cabinet"
+    },
+    {
+     "line": 46,
+     "tokens": 12,
+     "first": "drawer",
+     "last": "wardrobe"
+    },
+    {
+     "line": 47,
+     "tokens": 18,
+     "first": "shirt",
+     "last": "tie"
+    },
+    {
+     "line": 48,
+     "tokens": 8,
+     "first": "button",
+     "last": "helmet"
+    },
+    {
+     "line": 49,
+     "tokens": 17,
+     "first": "tree",
+     "last": "lake"
+    },
+    {
+     "line": 50,
+     "tokens": 17,
+     "first": "forest",
+     "last": "beach"
+    },
+    {
+     "line": 51,
+     "tokens": 18,
+     "first": "sun",
+     "last": "wood"
+    },
+    {
+     "line": 52,
+     "tokens": 12,
+     "first": "clay",
+     "last": "steam"
+    },
+    {
+     "line": 53,
+     "tokens": 15,
+     "first": "house",
+     "last": "barn"
+    },
+    {
+     "line": 54,
+     "tokens": 9,
+     "first": "stadium",
+     "last": "lighthouse"
+    },
+    {
+     "line": 55,
+     "tokens": 14,
+     "first": "guitar",
+     "last": "tambourine"
+    },
+    {
+     "line": 56,
+     "tokens": 17,
+     "first": "anger",
+     "last": "worry"
+    },
+    {
+     "line": 57,
+     "tokens": 9,
+     "first": "relief",
+     "last": "jealousy"
+    },
+    {
+     "line": 58,
+     "tokens": 15,
+     "first": "king",
+     "last": "sailor"
+    },
+    {
+     "line": 59,
+     "tokens": 12,
+     "first": "chef",
+     "last": "priest"
+    },
+    {
+     "line": 60,
+     "tokens": 19,
+     "first": "head",
+     "last": "brain"
+    },
+    {
+     "line": 61,
+     "tokens": 8,
+     "first": "bone",
+     "last": "chin"
+    },
+    {
+     "line": 62,
+     "tokens": 11,
+     "first": "red",
+     "last": "gray"
+    },
+    {
+     "line": 63,
+     "tokens": 15,
+     "first": "freedom",
+     "last": "wisdom"
+    },
+    {
+     "line": 64,
+     "tokens": 4,
+     "first": "chaos",
+     "last": "war"
+    }
+   ]
+  }
+ },
+ "parent_bank": {
+  "citation": "run_thought_transfer.py:31-40",
+  "raw_tokens": 121,
+  "deduplicated": 121,
+  "recorded_as": {
+   "run_g0clear.py:5 docstring": 110,
+   "g0clear_result_llama3b.json .parent_baseline.N": 110
+  },
+  "recorded_figure_matches_committed_literal": false,
+  "drift_unrecorded": 11,
+  "parent_words_present_in_battery": 121,
+  "parent_words_absent_from_battery": [],
+  "net_new_words_in_battery": 341,
+  "how_the_net_new_were_chosen": "UNCHECKABLE \u2014 the pre-filter candidate pool was never recorded as an artifact, so no survival ratio exists to compute. This is a verdict, not a failure, and it is not a claim that the ratio is low. Absence of evidence is never a contradiction."
+ },
+ "chain": [
+  {
+   "stage": "hand-typed literal `_BANK`",
+   "citation": "run_g0clear.py:31-65",
+   "in": null,
+   "removed": 0,
+   "out": 465,
+   "note": "the list was born whole; there is no upstream artifact"
+  },
+  {
+   "stage": "order-preserving deduplication",
+   "citation": "run_g0clear.py:66-67",
+   "in": 465,
+   "removed": 3,
+   "out": 462,
+   "note": "the ONLY filter in the entire chain",
+   "removed_words": [
+    "chicken",
+    "mushroom",
+    "orange"
+   ]
+  },
+  {
+   "stage": "tokenization / single-token constraint",
+   "citation": "run_g0clear.py extract_multi; run_thought_transfer.py extract",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  },
+  {
+   "stage": "presence-in-both-models / shared-vocabulary check",
+   "citation": "no target tokenizer is consulted anywhere; concepts are embedded through the 12 CONCEPT_TEMPLATES at introspection_gate.py:26-38",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  },
+  {
+   "stage": "frequency threshold",
+   "citation": "no frequency table is imported anywhere in the chain",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  },
+  {
+   "stage": "part-of-speech filter",
+   "citation": "no POS tagger is imported anywhere in the chain",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  },
+  {
+   "stage": "representation-quality gate / norm or outlier screen",
+   "citation": "no per-concept statistic is ever compared against a threshold",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  },
+  {
+   "stage": "downstream re-filtering by the read experiments",
+   "citation": "run_b31v2.py:34,103 and run_b34v3.py:26,70 both import the list wholesale",
+   "in": 462,
+   "removed": 0,
+   "out": 462,
+   "note": "NO SUCH FILTER EXISTS"
+  }
+ ],
+ "loop_skip_branches": {
+  "run_g0clear.extract_multi": {
+   "found": true,
+   "continue_statements": 0,
+   "break_statements": 0,
+   "if_statements": 1,
+   "if_statement_lines": [
+    {
+     "line": 94,
+     "source": "if (i + 1) % 40 == 0:"
+    }
+   ]
+  },
+  "run_thought_transfer.extract": {
+   "found": true,
+   "continue_statements": 0,
+   "break_statements": 0,
+   "if_statements": 0,
+   "if_statement_lines": []
+  }
+ },
+ "filter_token_scan_DIAGNOSTIC_not_a_category": {
+  "note": "a hit is not a filter and a miss is not proof of absence; the load-bearing evidence is loop_skip_branches",
+  "run_g0clear.py": {},
+  "run_b31v2.py": {
+   "skip": [
+    {
+     "line": 146,
+     "source": "print(f\">> {tag}: cells already banked \u2014 skip\", flush=True)"
+    }
+   ]
+  },
+  "run_b34v3.py": {},
+  "run_thought_transfer.py": {
+   "skip": [
+    {
+     "line": 76,
+     "source": "pad_token_id=tok.eos_token_id)[0, plen:], skip_special_tokens=True)"
+    },
+    {
+     "line": 79,
+     "source": "pad_token_id=tok.eos_token_id)[0, plen:], skip_special_tokens=True)"
+    }
+   ]
+  }
+ },
+ "splits": {
+  "split_concepts_seed0": {
+   "citation": "run_g0clear.py:99-108",
+   "train": 323,
+   "sel_dirs": 69,
+   "fin_dirs": 70
+  },
+  "b31v2_anchors": {
+   "citation": "run_b31v2.py:104-105",
+   "anchors": 392,
+   "held_out": 70,
+   "note": "train+sel concatenated by the CONSUMER, not the splitter"
+  },
+  "b34v3_seed343": {
+   "citation": "run_b34v3.py:32,64-72",
+   "train": 392,
+   "held_out": 70,
+   "note": "b34v3 does NOT use split_concepts(seed=0). Same battery, own permutation, different membership."
+  },
+  "held_out_overlap_seed343_vs_seed0": {
+   "n": 13,
+   "words": [
+    "bone",
+    "church",
+    "cloud",
+    "dream",
+    "forest",
+    "melon",
+    "pear",
+    "planet",
+    "singer",
+    "skirt",
+    "watch",
+    "yacht",
+    "yogurt"
+   ],
+   "genuinely_fresh": 57,
+   "preregistered_as": "disjoint",
+   "falsified_by": "b34v3_fresh_split_addendum.json"
+  },
+  "scripts_referencing_split_concepts": [
+   "run_b31v2.py",
+   "run_b34.py",
+   "run_b34v2.py",
+   "run_b34v3.py",
+   "run_b36.py",
+   "run_g0_stage1.py",
+   "run_g0_stage1b.py",
+   "run_g0_stage3_truthaxis.py",
+   "run_g0clear.py",
+   "run_read_verify.py",
+   "run_rung2_read.py",
+   "run_rung3_steerlayer.py"
+  ],
+  "scripts_importing_from_run_g0clear": [
+   "diag_b35c_collapse.py",
+   "run_b31v2.py",
+   "run_b34.py",
+   "run_b34v2.py",
+   "run_b34v3.py",
+   "run_b35a.py",
+   "run_b35b.py",
+   "run_b35c.py",
+   "run_b35c_nullreplicate.py",
+   "run_b36.py",
+   "run_b37.py",
+   "run_b38.py",
+   "run_b39.py",
+   "run_b40.py",
+   "run_b41.py",
+   "run_b42.py",
+   "run_b43.py",
+   "run_b44.py",
+   "run_b45.py",
+   "run_b46.py",
+   "run_g0_stage1.py",
+   "run_g0_stage1b.py",
+   "run_g0_stage3_truthaxis.py",
+   "run_read_verify.py",
+   "run_rung2_read.py",
+   "run_rung3_steerlayer.py"
+  ],
+  "held_out_ness_note": "the seed-0 FIN-70 is never in a fit within any single run, but it has been SCORED by every script listed above. Its held-out-ness has been spent by repetition, which no single receipt records."
+ },
+ "published_read_figures_are_A_terms": {
+  "why": "read_top1 is an index-matched argmin over the held-out target centroids (run_b31v2.py:90-93, run_b34v3.py:46-49). The truth is in the candidate array with probability 1; there is no threshold and no reject option. E = 1 by construction on every trial these scripts have ever run.",
+  "b31v2_gemma_M1_mlp_top1": 0.7857,
+  "b31v2_gemma_requires": "392 TRUE cross-model concept pairs (supervised)",
+  "b34v3_gemma_read_top1_full70": 0.5714,
+  "b34v3_gemma_read_top1_fresh57": 0.5263,
+  "b34v3_llama_read_top1_full70": 0.6857,
+  "b34v3_llama_read_top1_fresh57": 0.6667,
+  "quote_both_or_neither": "the fresh-57 recompute is the honest figure for b34v3; the full-70 headline includes 13 concepts scored before"
+ },
+ "closed_set_penalty_SEPARATE_TERM_not_E": {
+  "receipt": "b35c_result.json",
+  "verdict_in_receipt": "INVALID__null_artifact",
+  "status": "UNLICENSED \u2014 b35c returned INVALID__null_artifact on a null-model error (G2_null false). These retention figures are reported as observations and decide nothing.",
+  "vocab_size": 462,
+  "gemma_read70": 0.5714,
+  "gemma_read462": 0.2,
+  "llama_read70": 0.6857,
+  "llama_read462": 0.3143,
+  "gemma_retention_70_to_462": 0.35,
+  "llama_retention_70_to_462": 0.4584,
+  "retention_is_derived_from_two_receipts": [
+   "b34v3_result.json .targets.*.read_top1",
+   "b35c_result.json .targets.*.read462"
+  ],
+  "note": "widening an ALREADY-CLOSED candidate set 70 -> 462 cost most of the read. 462 is still the same hand-typed list, so this bounds nothing about an open vocabulary."
+ },
+ "dedup_survival_ratio_NOT_A_SELECTION_RATIO": {
+  "warning": "NOT A SELECTION RATIO and NOT AN E-TERM. This is the share of the hand-typed literal that survived order-preserving deduplication. It measures that the author typed three words twice while balancing category blocks. The literal is the OUTPUT of the selection, not its input; quoting this as E would be exactly the error the P = E x A decomposition exists to name.",
+  "value": 0.993548,
+  "numerator": 462,
+  "denominator": 465,
+  "what_it_measures": "deduplication of a hand-typed literal, nothing else"
+ },
+ "E_term_for_the_read_UNCHECKABLE": {
+  "status": "UNCHECKABLE \u2014 the pre-filter candidate pool was never recorded as an artifact, so no survival ratio exists to compute. This is a verdict, not a failure, and it is not a claim that the ratio is low. Absence of evidence is never a contradiction.",
+  "question_it_would_answer": "was the activation the reader was handed in fact a single-concept-dominated state, isolable at the committed extraction site \u2014 last token, layer 11 locked by the g0clear sweep, mean-pooled over the 12 CONCEPT_TEMPLATES, differenced against the fixed 'object' baseline \u2014 at the moment it was read?",
+  "why_it_cannot_be_measured_from_committed_artifacts": [
+   "the candidate pool was never written down; the selection happened at authoring time and left no rejection log",
+   "no generator script and no source corpus is cited anywhere in the repository",
+   "the apparatus has never once been pointed at a state it did not itself manufacture from 12 experimenter-written sentences, so no committed run can answer the question even in principle"
+  ],
+  "what_would_have_to_be_re_run": [
+   "commit a candidate pool as a mechanically-derived artifact with a stated rule and a hashed file, not a docstring summary",
+   "express each intended filter as a committed function and record the survivor count after each stage in the result JSON",
+   "sample the battery from the survivors under a committed seed",
+   "re-extract on GPU across all four models \u2014 the _b31v2_pts_*.npz caches are keyed positionally to the current 462-word list (run_b34v3.py:37-38) and cannot be reused for a different battery",
+   "re-run the b31v2 M0/M1/N1 cells and the b34v3 label-free read"
+  ],
+  "what_that_would_still_not_buy": "a perfectly recorded word-list ratio is an E-term for single-word English noun concepts, not for the states a model can hold. That second gap survives the repair and no construction over a word list closes it."
+ },
+ "reconciliation": {
+  "n_concepts_receipt": 462,
+  "n_concepts_recomputed": 462,
+  "n_concepts_reconciles": true,
+  "b31v2_n_heldout_receipt": 70,
+  "b31v2_n_heldout_recomputed": 70,
+  "b31v2_heldout_reconciles": true,
+  "b34v3_n_tr_receipt": 392,
+  "b34v3_n_tr_recomputed": 392,
+  "b34v3_n_heldout_receipt": 70,
+  "b34v3_n_heldout_recomputed": 70,
+  "b34v3_split_reconciles": true,
+  "b34v3_addendum_overlap_receipt": 13,
+  "b34v3_overlap_recomputed": 13,
+  "b34v3_overlap_reconciles": true,
+  "b34v3_genuinely_fresh_receipt": 57,
+  "b34v3_genuinely_fresh_recomputed": 57,
+  "b35c_vocab_size_receipt": 462,
+  "b35c_vocab_is_the_same_battery": true,
+  "all_reconcile": true
+ }
+}

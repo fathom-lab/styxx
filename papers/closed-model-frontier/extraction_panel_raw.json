@@ -1,0 +1,655 @@
+{
+ "n_seats": 3,
+ "per_item": {
+  "XP-V14-078": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-075": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-088": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-077": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-001": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-018": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N06": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-092": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-091": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C07": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C13": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N12": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-062": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-085": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-034": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-016": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N03": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C00": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-064": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-041": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-052": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-014": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N14": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N13": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-090": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C01": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-003": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C11": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-069": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-045": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-067": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-009": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-063": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-026": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-053": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-005": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-011": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-049": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N02": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C10": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-070": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-047": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-033": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-044": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-042": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N07": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-084": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-089": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-055": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N05": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-056": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-054": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-032": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C06": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-087": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-093": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-023": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-050": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N00": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C04": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-046": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-035": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-013": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N10": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N08": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-N04": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-081": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-039": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-080": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-008": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-068": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-073": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-002": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-071": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-036": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-030": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C03": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-060": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-038": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-024": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-066": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-083": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-099": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-074": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-025": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-076": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-057": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-027": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-020": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-061": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-031": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-004": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-037": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-095": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C02": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C05": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N09": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-043": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-029": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-021": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-022": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-086": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-028": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-098": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-010": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-006": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-C12": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-015": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C08": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-058": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-072": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-082": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-019": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-017": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N01": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-065": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-079": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-040": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-051": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-000": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-094": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C14": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-059": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-XD-C09": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-012": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-007": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-048": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ],
+  "XP-V14-096": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-V14-097": [
+   "CLAIM",
+   "CLAIM",
+   "CLAIM"
+  ],
+  "XP-XD-N11": [
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM",
+   "NOT-A-CLAIM"
+  ]
+ }
+}

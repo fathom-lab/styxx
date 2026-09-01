@@ -1,0 +1,48 @@
+From 0e27b9dc5e18e32782d61b8c3031b5714352e15b Mon Sep 17 00:00:00 2001
+From: darkflobi <darkflobi@darkcity.wtf>
+Date: Tue, 1 Sep 2026 12:34:49 -0400
+Subject: [PATCH] CI: fetch-depth 0, because the ledger regeneration test has
+ never actually run
+
+Under the default depth-1 checkout .git/shallow exists and
+tests/test_ledger.py SKIPS. The regeneration guarantee papers/LEDGER.md
+advertises has therefore never run in CI on any of the four Python versions --
+an absent measurement surfaced as a passing check, which is the exact defect
+class this repository exists to document.
+
+papers/build_ledger.py needs real history: git log --diff-filter=A --follow,
+git log -S power_basis, and git merge-base --is-ancestor. Without it the
+power-basis split cannot be computed and the regenerated ledger differs from
+the committed one, which is why this branch went red the moment the test
+started running.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ .github/workflows/test.yml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 2ddadab..16df8c6 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -30,6 +30,17 @@ jobs:
+     steps:
+       - name: Checkout source
+         uses: actions/checkout@v4
++        with:
++          # fetch-depth: 0, not the default 1. tests/test_ledger.py regenerates
++          # papers/LEDGER.md from the committed receipts and fails on a single
++          # changed character -- and papers/build_ledger.py needs real history to
++          # compute the power-basis split (git log -S, --follow, merge-base).
++          # Under a depth-1 checkout .git/shallow exists, that test SKIPS, and the
++          # regeneration guarantee LEDGER.md advertises has never actually run in
++          # CI on any of the four Python versions. A guarantee that silently does
++          # not run is exactly the defect class this repository exists to
++          # document: an absent measurement surfaced as a passing check.
++          fetch-depth: 0
+ 
+       - name: Set up Python ${{ matrix.python-version }}
+         uses: actions/setup-python@v5
+-- 
+2.52.0.windows.1
+

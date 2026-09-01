@@ -1,0 +1,4822 @@
+{
+  "what": "two-sided decoy set for the EXTRACTION question — 15 CLAIM taken unmodified from the sealed V14 packet, 15 NOT-A-CLAIM synthesised by three committed frames from DEVELOPMENT-split verified claims",
+  "repairs": "ADDENDUM_extraction_ceiling_gate_unsatisfiable_2026_09_01.md",
+  "question": "Ignoring entirely whether the gate's verdict was correct, and reading only the author's summary: is the author making a claim about this path — asserting that THIS change created, deleted or touched it? CLAIM / NOT-A-CLAIM / UNREADABLE",
+  "seed": 20260901,
+  "split_of_notaclaim_sources": "DEVELOPMENT only (bucket < 3), per SPLIT rule 1",
+  "frames": {
+    "negation": "negation",
+    "quotation": "quotation",
+    "comparative_reference": "comparative_reference"
+  },
+  "frame_ratio": {
+    "negation": 5,
+    "quotation": 5,
+    "comparative_reference": 5
+  },
+  "authorship_disclosure": "The NOT-A-CLAIM side is authored by us. The frames are judgment, stated in advance and mechanical given the source sentence. Any result quoting this set must say so in the same breath as the number.",
+  "n_claim": 15,
+  "n_notaclaim": 15,
+  "items": [
+    {
+      "id": "XD-C09",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-109",
+      "agent": "Copilot",
+      "url": "https://github.com/intellectronica/ruler/pull/146",
+      "claim_kind": "file_touched",
+      "claim_text": "Updated README.md with comprehensive examples showing both stdio and remote server configurations, proper TOML table syntax, and migration guidance from JSON.",
+      "claim_detail": {
+        "path": "README.md"
+      },
+      "changed_files": [
+        {
+          "path": "tmp-fixtures/unified-basic/.ruler/extra.md",
+          "status": "added"
+        },
+        {
+          "path": "tmp-fixtures/unified-basic/.ruler/ruler.toml",
+          "status": "added"
+        },
+        {
+          "path": "README.md",
+          "status": "modified"
+        },
+        {
+          "path": "src/core/UnifiedConfigLoader.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/core/UnifiedConfigTypes.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/core/apply-engine.ts",
+          "status": "modified"
+        },
+        {
+          "path": "tests/apply-mcp.toml-disable.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/apply-mcp.toml-json-merge.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/apply-mcp.toml-remote.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/apply-mcp.toml-stdio.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/mcp-invalid-fields.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/unified-config.mcp-toml-load.test.ts",
+          "status": "added"
+        },
+        {
+          "path": "tests/unit/core/apply-engine.test.ts",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C07",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-107",
+      "agent": "Cursor",
+      "url": "https://github.com/MCPJam/inspector/pull/433",
+      "claim_kind": "file_touched",
+      "claim_text": "updated include the new mcpjam-client-manager.ts, updated routes for",
+      "claim_detail": {
+        "path": "mcpjam-client-manager.ts"
+      },
+      "changed_files": [
+        {
+          "path": "server/routes/mcp/tools.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/services/mcpjam-agent.ts",
+          "status": "added"
+        },
+        {
+          "path": "server/tsup.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/index.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/connect.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/prompts.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/resources.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/types/hono.ts",
+          "status": "added"
+        },
+        {
+          "path": "client/src/App.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "client/src/components/ToolsTab.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "client/src/components/TestsTab.tsx",
+          "status": "added"
+        },
+        {
+          "path": "client/src/components/mcp-sidebar.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "client/src/lib/test-storage.ts",
+          "status": "added"
+        },
+        {
+          "path": "server/agents/TestAgent.ts",
+          "status": "added"
+        },
+        {
+          "path": "server/routes/mcp/chat.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/index.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/tests.ts",
+          "status": "added"
+        },
+        {
+          "path": "server/utils/mcp-utils.ts",
+          "status": "modified"
+        },
+        {
+          "path": "client/src/components/ServersTab.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "client/src/hooks/use-app-state.ts",
+          "status": "modified"
+        },
+        {
+          "path": "server/routes/mcp/servers.ts",
+          "status": "added"
+        },
+        {
+          "path": "server/services/mcpjam-client-manager.ts",
+          "status": "renamed"
+        }
+      ]
+    },
+    {
+      "id": "XD-C02",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-102",
+      "agent": "OpenAI_Codex",
+      "url": "https://github.com/mochilang/mochi/pull/18868",
+      "claim_kind": "file_touched",
+      "claim_text": "- Update benchmarks and checklist (ALGORITHMS.md, README.md, TASKS.md)",
+      "claim_detail": {
+        "path": "ALGORITHMS.md"
+      },
+      "changed_files": [
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/scc_kosaraju.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/scc_kosaraju.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/strongly_connected_components.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/strongly_connected_components.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/tarjans_scc.error",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/tests/test_min_spanning_tree_kruskal.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/tests/test_min_spanning_tree_kruskal.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/tests/test_min_spanning_tree_prim.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/graphs/tests/test_min_spanning_tree_prim.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/best_time_to_buy_and_sell_stock.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/best_time_to_buy_and_sell_stock.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_cover_problem.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_cover_problem.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_knapsack_2.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/fractional_knapsack_2.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/gas_station.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/gas_station.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/minimum_coin_change.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/minimum_coin_change.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/minimum_waiting_time.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/minimum_waiting_time.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/optimal_merge_pattern.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/optimal_merge_pattern.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/smallest_range.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/greedy_methods/smallest_range.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/adler32.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/adler32.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/chaos_machine.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/chaos_machine.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/djb2.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/djb2.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/elf.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/elf.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/enigma_machine.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/enigma_machine.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/enigma_machine.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/fletcher16.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/fletcher16.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/hamming_code.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/hamming_code.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/luhn.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/luhn.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/md5.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/md5.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/md5.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sdbm.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sdbm.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sha1.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sha1.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sha256.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/hashes/sha256.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/greedy_knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/greedy_knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/recursive_approach_knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/recursive_approach_knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/tests/test_greedy_knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/tests/test_greedy_knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/tests/test_knapsack.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/knapsack/tests/test_knapsack.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/gaussian_elimination.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/gaussian_elimination.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/jacobi_iteration_method.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/jacobi_iteration_method.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/lu_decomposition.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/lu_decomposition.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/matrix_inversion.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/matrix_inversion.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/matrix_inversion.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/conjugate_gradient.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/conjugate_gradient.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/gaussian_elimination_pivoting.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/gaussian_elimination_pivoting.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/lib.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/lib.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/polynom_for_points.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/polynom_for_points.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/power_iteration.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/power_iteration.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/rank_of_matrix.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/rank_of_matrix.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/rayleigh_quotient.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/rayleigh_quotient.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/schur_complement.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/schur_complement.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/schur_complement.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/test_linear_algebra.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/test_linear_algebra.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/transformations_2d.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/transformations_2d.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_algebra/src/transformations_2d.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_programming/simplex.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_programming/simplex.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/linear_programming/simplex.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/apriori_algorithm.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/apriori_algorithm.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/apriori_algorithm.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/astar.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/astar.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/automatic_differentiation.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/automatic_differentiation.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/automatic_differentiation.out",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/data_transformations.bench",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/data_transformations.erl",
+          "status": "modified"
+        },
+        {
+          "path": "tests/algorithms/x/Erlang/machine_learning/data_transformations.out",
+          "status": "modified"
+        },
+        {
+          "path": "transpiler/x/erl/ALGORITHMS.md",
+          "status": "modified"
+        },
+        {
+          "path": "transpiler/x/erl/README.md",
+          "status": "modified"
+        },
+        {
+          "path": "transpiler/x/erl/TASKS.md",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C04",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-104",
+      "agent": "Copilot",
+      "url": "https://github.com/Wynntils/Wynntils/pull/3584",
+      "claim_kind": "file_touched",
+      "claim_text": "This PR adds a comprehensive `.github/copilot-instructions.md` file to onboard the Wynntils repository for efficient use with GitHub Copilot coding agents.",
+      "claim_detail": {
+        "path": ".github/copilot-instructions.md"
+      },
+      "changed_files": [
+        {
+          "path": ".github/copilot-instructions.md",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-N06",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'quotation' from a DEVELOPMENT verified claim",
+      "frame": "quotation",
+      "source_url": "https://github.com/gitbutlerapp/gitbutler/pull/10575",
+      "source_claim_text": "- Updated `apps/desktop/src/lib/backend/tauri.ts` to call the backend command instead of directly setting the title on the window object",
+      "agent": "Copilot",
+      "url": "https://github.com/gitbutlerapp/gitbutler/pull/10575",
+      "claim_kind": "file_touched",
+      "claim_text": "For reference, the linked issue asks for the following: \"- Updated `apps/desktop/src/lib/backend/tauri.ts` to call the backend command instead of directly setting the title on the window object\" That work is tracked separately and is not part of this pull request.",
+      "claim_detail": {
+        "path": "apps/desktop/src/lib/backend/tauri.ts"
+      },
+      "changed_files": [
+        {
+          "path": "apps/desktop/src/lib/backend/tauri.ts",
+          "status": "modified"
+        },
+        {
+          "path": "crates/gitbutler-tauri/src/main.rs",
+          "status": "modified"
+        },
+        {
+          "path": "crates/gitbutler-tauri/src/window.rs",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C05",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-105",
+      "agent": "Copilot",
+      "url": "https://github.com/githubnext/gh-aw/pull/1824",
+      "claim_kind": "file_touched",
+      "claim_text": "- Recompiled workflow to generate updated `.github/workflows/dev.lock.yml`",
+      "claim_detail": {
+        "path": ".github/workflows/dev.lock.yml"
+      },
+      "changed_files": [
+        {
+          "path": ".github/workflows/dev.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/dev.md",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N02",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'negation' from a DEVELOPMENT verified claim",
+      "frame": "negation",
+      "source_url": "https://github.com/antiwork/flexile/pull/132",
+      "source_claim_text": "Fix Vercel deployment by removing package.json",
+      "agent": "Devin",
+      "url": "https://github.com/antiwork/flexile/pull/132",
+      "claim_kind": "file_touched",
+      "claim_text": "To be explicit about scope: this change does not touch `package.json`. That file is unchanged here and stays exactly as it is on main.",
+      "claim_detail": {
+        "path": "package.json"
+      },
+      "changed_files": [
+        {
+          "path": "apps/next/package.json",
+          "status": "removed"
+        }
+      ]
+    },
+    {
+      "id": "XD-C14",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-114",
+      "agent": "Claude_Code",
+      "url": "https://github.com/FinAegis/core-banking-prototype-laravel/pull/39",
+      "claim_kind": "file_touched",
+      "claim_text": "- Updated ROADMAP.md to mark Quick Win #5 as completed",
+      "claim_detail": {
+        "path": "ROADMAP.md"
+      },
+      "changed_files": [
+        {
+          "path": "GCU_VISION.md",
+          "status": "added"
+        },
+        {
+          "path": "README.md",
+          "status": "modified"
+        },
+        {
+          "path": "ROADMAP.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/README.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/archive/GCU_USER_VISION.md",
+          "status": "renamed"
+        },
+        {
+          "path": "docs/archive/README.md",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-N01",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'negation' from a DEVELOPMENT verified claim",
+      "frame": "negation",
+      "source_url": "https://github.com/Significant-Gravitas/AutoGPT/pull/10828",
+      "source_claim_text": "*   Updated `useLibraryAgentList.ts` to implement client-side sorting, ensuring favorited agents appear at the top of the list.",
+      "agent": "Cursor",
+      "url": "https://github.com/Significant-Gravitas/AutoGPT/pull/10828",
+      "claim_kind": "file_touched",
+      "claim_text": "To be explicit about scope: this change does not touch `useLibraryAgentList.ts`. That file is unchanged here and stays exactly as it is on main.",
+      "claim_detail": {
+        "path": "useLibraryAgentList.ts"
+      },
+      "changed_files": [
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/library/model.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/mockServiceWorker.js",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/components/LibraryAgentCard/LibraryAgentCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/components/LibraryAgentList/useLibraryAgentList.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/api/openapi.json",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/lib/autogpt-server-api/types.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/library/routes_test.py",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/claude-ci-failure-auto-fix.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/claude-dependabot.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/claude.yml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/autogpt_libs/poetry.lock",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/autogpt_libs/pyproject.toml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/bannerbear/__init__.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/bannerbear/_config.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/bannerbear/text_overlay.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/poetry.lock",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/pyproject.toml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/db/docker/docker-compose.yml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/docker-compose.platform.yml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/pnpm-lock.yaml",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/APIKeyCredentialsModal/APIKeyCredentialsModal.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/CredentialsInputs/CredentialsInputs.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/HotScopedCredentialsModal/HotScopedCredentialsModal.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/PasswordCredentialsModal/PasswordCredentialsModal.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentInputs/RunAgentInputs.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/RunAgentModal.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/AgentInputFields/AgentInputFields.tsx",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/DefaultRunView/DefaultRunView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/useAgentRunModal.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/OldAgentLibraryView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/agent-run-details-view.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/agent-run-output-view.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/agent-runs-selector-list.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/components/OutputActions.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/components/OutputItem.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/index.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/CodeRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/ImageRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/JSONRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/MarkdownRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/TextRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/renderers/VideoRenderer.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/types.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/utils/copy.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/output-renderers/utils/download.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/use-agent-runs.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/globals.css",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/CustomNode.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/atoms/Input/Input.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/components/AgentSelectStep/AgentSelectStep.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/NavbarView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/helpers.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Dialog/components/BaseFooter.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Dialog/components/DialogWrap.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Dialog/components/DrawerWrap.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Dialog/components/styles.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Dialog/components/styles.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/styles/scrollbars.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/ui/icons.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/ui/multiselect.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/services/feature-flags/use-get-flag.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/tailwind.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/snapshots/lib_agts_search",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/ai_image_customizer.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/github/pull_requests.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/block.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/block_cost_config.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/cost.py",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/credit.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/graph.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/includes.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/executor/utils.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/sdk/__init__.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/sdk/builder.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/sdk/cost_integration.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/sdk/provider.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/builder/db.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/builder/model.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/store/db.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/store/db_test.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/store/model.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/store/routes.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/migrations/20250904171522_update_store_agent_view_with_availability/migration.sql",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/migrations/20250905130657_add_recommended_schedule_cron/migration.sql",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/schema.prisma",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/snapshots/agt_details",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/snapshots/grph_single",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/snapshots/grphs_all",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/test/sdk/test_sdk_registry.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/instrumentation-client.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/sentry.edge.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/sentry.server.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/AgentRunsView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/AgentInputsReadOnly/AgentInputsReadOnly.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/EmptyAgentRuns/EmptyAgentRuns.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ScheduleView/ScheduleView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ScheduleView/helpers.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetailCard/RunDetailCard.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetailHeader/RunDetailHeader.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetailHeader/useRunDetailHeader.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetailHeader/useScheduleDetailHeader.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetails/RunDetails.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetails/components/RunStatusBadge.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetails/useRunDetails.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/RunsSidebar.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/components/RunIconWrapper.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/components/RunListItem.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/components/RunSidebarCard.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/components/ScheduleListItem.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/useRunsSidebar.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/ScheduleDetails.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/DeleteScheduleButton/DeleteScheduleButton.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/EditInputsModal/EditInputsModal.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/EditInputsModal/useEditInputsModal.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/EditScheduleModal/EditScheduleModal.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/EditScheduleModal/useEditScheduleModal.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/useScheduleDetails.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/useAgentRunsView.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/agent-run-draft-view.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/page.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/legacy/[id]/page.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/Flow.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/components/AgentInfoStep/AgentInfoStep.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/components/AgentInfoStep/helpers.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/components/AgentInfoStep/useAgentInfoStep.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/components/AgentSelectStep/useAgentSelectStep.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/helpers.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/contextual/PublishAgentModal/usePublishAgentModal.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/cron-scheduler-dialog.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/cron-scheduler.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/edit/control/SaveControl.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/MobileNavbar/MobileNavBar.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/MobileNavbar/components/MobileNavbarMenuItem.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/NavbarLink.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/Breadcrumbs/Breadcrumbs.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/DropdownMenu/DropdownMenu.stories.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/DropdownMenu/DropdownMenu.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/ErrorCard/ErrorCard.stories.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/ErrorCard/ErrorCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/ErrorCard/components/CardWrapper.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/ErrorCard/components/ErrorMessage.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/ErrorCard/helpers.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/InfiniteList/InfiniteList.stories.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/InfiniteList/InfiniteList.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/molecules/TabsLine/TabsLine.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/ui/skeleton.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/hooks/useAgentGraph.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/library/db.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/v2/library/routes/agents.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/orval.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/components/FavoritesSection/FavoritesSection.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/hooks/useFavoriteAgents.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/page.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/lib/autogpt-server-api/client.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/autogpt_libs/autogpt_libs/api_key/key_manager.py",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/autogpt_libs/autogpt_libs/api_key/keysmith.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/autogpt_libs/autogpt_libs/api_key/test_keysmith.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/airtable/_api.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/airtable/bases.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/airtable/records.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/blocks/google/gmail.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/api_key.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/external/middleware.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/external/routes/v1.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/model.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/rest_api.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/routers/v1.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/utils/api_key_auth.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/server/utils/api_key_auth_test.py",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/util/metrics.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/util/process.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/migrations/20250901104517_fix_api_key_table/migration.sql",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/migrations/20250912164006_keep_credit_transactions_on_user_delete/migration.sql",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/backend/test/e2e_test_data.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/test/test_data_creator.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/.prettierignore",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/Dockerfile",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/next.config.mjs",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/aiml_api.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/airtable.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/anthropic.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/apollo.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/baas.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/bannerbear.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/d-id.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/d_id.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/dataforseo.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/discord.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/e2b.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/enrichlayer.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/exa.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/fal.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/firecrawl.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/github.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/google.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/google_maps.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/groq.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/http.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/hubspot.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/ideogram.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/jina.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/linear.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/llama_api.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/maps.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/medium.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/mem0.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/notion.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/nvidia.jpg",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/nvidia.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/ollama.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/open_router.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/openai.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/openweathermap.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/pinecone.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/reddit.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/replicate.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/revid.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/screenshotone.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/slant3d.jpeg",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/slant3d.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/smartlead.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/smtp.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/stagehand.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/todoist.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/twitter.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/unreal_speech.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/v0.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/wolfram.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/x.png",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/public/integrations/zerobounce.png",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/AiBlock.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/AllBlocksContent/AllBlocksContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/AllBlocksContent/useAllBlockContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/Block.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockList/BlockList.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenu/BlockMenu.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenu/useBlockMenu.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuDefault/BlockMenuDefault.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuDefaultContent/BlockMenuDefaultContent.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuSearch/BlockMenuSearch.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuSearchBar/BlockMenuSearchBar.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuSearchBar/useBlockMenuSearchBar.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuSidebar/BlockMenuSidebar.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/BlockMenuSidebar/useBlockMenuSidebar.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/ControlPanelButton.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/FilterChip.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/Integration.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/IntegrationBlocks/IntegrationBlocks.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/IntegrationBlocks/useIntegrationBlocks.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/IntegrationChip.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/IntegrationsContent/IntegrationsContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/IntergrationBlock.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MarketplaceAgentBlock.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MarketplaceAgentsContent/MarketplaceAgentsContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MarketplaceAgentsContent/useMarketplaceAgentsContent.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MenuItem.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MyAgentsContent/MyAgentsContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/MyAgentsContent/useMyAgentsContent.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/NewControlPanel/NewControlPanel.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/NewControlPanel/useNewControlPanel.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/NoSearchResult.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/PaginatedBlocksContent/PaginatedBlocksContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/PaginatedBlocksContent/usePaginatedBlocks.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/PaginatedIntegrationList/PaginatedIntegrationList.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/PaginatedIntegrationList/usePaginatedIntegrationList.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/SaveControl/NewSaveControl.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/SearchHistoryChip.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/SuggestionContent/SuggestionContent.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/SuggestionContent/useSuggestionContent.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/UGCAgentBlock.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/block-menu-provider.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/helpers.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/build/components/NewBlockMenu/style.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/components/OutputActions.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/components/OutputItem.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/index.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/CodeRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/ImageRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/JSONRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/MarkdownRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/TextRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/renderers/VideoRenderer.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/types.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/utils/copy.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/OutputRenderers/utils/download.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/CronScheduler.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/CustomInterval.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/FrequencySelect.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/MonthlyPicker.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/TimeAt.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/WeeklyPicker.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/CronScheduler/YearlyPicker.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/TimezoneNotice/TimezoneNotice.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetailHeader/components/AgentActions.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunDetails/components/RunOutputs.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/marketplace/components/CreatorCard/CreatorCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/marketplace/components/CreatorInfoCard/CreatorInfoCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/marketplace/components/StoreCard/StoreCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/profile/(user)/api_keys/components/APIKeySection/APIKeySection.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/profile/(user)/api_keys/components/APIKeySection/useAPISection.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/layout.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/agptui/CreatorInfoCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/agptui/StoreCard.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/atoms/Avatar/Avatar.stories.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/atoms/Avatar/Avatar.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/AccountMenu/AccountMenu.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/layout/Navbar/components/AgentActivityDropdown/components/ActivityDropdown/ActivityDropdown.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/ui/avatar.tsx",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/lib/timezone-utils.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/data/execution.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/executor/manager.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/executor/utils_test.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/backend/migrations/20250910161617_fix_store_materialized_views_refresh_job/migration.sql",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/AgentActionsDropdown.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/AgentRunsLoading.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ModalRunSection/DefaultRunView.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ModalScheduleSection/ScheduleView.tsx",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ModalScheduleSection/helpers.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunAgentModal/components/ModalScheduleSection/useModalScheduleSection.ts",
+          "status": "renamed"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/RunsSidebar/helpers.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/AgentRunsView/components/ScheduleDetails/components/ScheduleActions.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/api/helpers.ts",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/atoms/Button/helpers.ts",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/atoms/Button/helpers.tsx",
+          "status": "removed"
+        },
+        {
+          "path": "autogpt_platform/backend/backend/executor/scheduler.py",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/library/agents/[id]/components/OldAgentLibraryView/components/agent-schedule-details-view.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/app/(platform)/monitoring/page.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/DataTable.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/ExpandableOutputDialog.tsx",
+          "status": "added"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/NodeOutputs.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/components/monitor/scheduleTable.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "autogpt_platform/frontend/src/lib/cron-expression-utils.ts",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N09",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'quotation' from a DEVELOPMENT verified claim",
+      "frame": "quotation",
+      "source_url": "https://github.com/getsentry/sentry-python/pull/4662",
+      "source_claim_text": "- `reproduce_issue.py`: A comprehensive script showing behavior with and without Sentry.",
+      "agent": "Cursor",
+      "url": "https://github.com/getsentry/sentry-python/pull/4662",
+      "claim_kind": "file_touched",
+      "claim_text": "For reference, the linked issue asks for the following: \"- `reproduce_issue.py`: A comprehensive script showing behavior with and without Sentry.\" That work is tracked separately and is not part of this pull request.",
+      "claim_detail": {
+        "path": "reproduce_issue.py"
+      },
+      "changed_files": [
+        {
+          "path": "reproduction/README.md",
+          "status": "added"
+        },
+        {
+          "path": "reproduction/reproduce_issue.py",
+          "status": "added"
+        },
+        {
+          "path": "reproduction/requirements.txt",
+          "status": "added"
+        },
+        {
+          "path": "reproduction/simple_reproduce.py",
+          "status": "added"
+        },
+        {
+          "path": "reproduction/test_generator_issue.py",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-N07",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'quotation' from a DEVELOPMENT verified claim",
+      "frame": "quotation",
+      "source_url": "https://github.com/vmware-tanzu/velero/pull/9283",
+      "source_claim_text": "Update .github/workflows/e2e-test-kind.yaml",
+      "agent": "Claude_Code",
+      "url": "https://github.com/vmware-tanzu/velero/pull/9283",
+      "claim_kind": "file_touched",
+      "claim_text": "For reference, the linked issue asks for the following: \"Update .github/workflows/e2e-test-kind.yaml\" That work is tracked separately and is not part of this pull request.",
+      "claim_detail": {
+        "path": ".github/workflows/e2e-test-kind.yaml"
+      },
+      "changed_files": [
+        {
+          "path": ".github/workflows/e2e-test-kind.yaml",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N08",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'quotation' from a DEVELOPMENT verified claim",
+      "frame": "quotation",
+      "source_url": "https://github.com/microsoft/fabric-cicd/pull/469",
+      "source_claim_text": "This PR adds a comprehensive `.github/copilot-instructions.md` file that provides GitHub Copilot with detailed instructions for working effectively in the fabri",
+      "agent": "Copilot",
+      "url": "https://github.com/microsoft/fabric-cicd/pull/469",
+      "claim_kind": "file_touched",
+      "claim_text": "For reference, the linked issue asks for the following: \"This PR adds a comprehensive `.github/copilot-instructions.md` file that provides GitHub Copilot with detailed instructions for working effectively in the fabri\" That work is tracked separately and is not part of this pull request.",
+      "claim_detail": {
+        "path": ".github/copilot-instructions.md"
+      },
+      "changed_files": [
+        {
+          "path": "tests/test_fabric_workspace.py",
+          "status": "modified"
+        },
+        {
+          "path": ".github/copilot-instructions.md",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-C01",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-101",
+      "agent": "Devin",
+      "url": "https://github.com/lingodotdev/lingo.dev/pull/706",
+      "claim_kind": "file_created",
+      "claim_text": "- Created a root composer.json file that references the PHP SDK in the subdirectory",
+      "claim_detail": {
+        "path": "composer.json"
+      },
+      "changed_files": [
+        {
+          "path": ".github/workflows/publish-php-sdk.yml",
+          "status": "modified"
+        },
+        {
+          "path": "composer.json",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-N05",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'quotation' from a DEVELOPMENT verified claim",
+      "frame": "quotation",
+      "source_url": "https://github.com/edgestorejs/edgestore/pull/87",
+      "source_claim_text": "- **Updated `package.json`**: Added `\"license\": \"MIT\"` field to the root package.json to match the license field already present in the individual package manif",
+      "agent": "Copilot",
+      "url": "https://github.com/edgestorejs/edgestore/pull/87",
+      "claim_kind": "file_touched",
+      "claim_text": "For reference, the linked issue asks for the following: \"- **Updated `package.json`**: Added `\"license\": \"MIT\"` field to the root package.json to match the license field already present in the individual package manif\" That work is tracked separately and is not part of this pull request.",
+      "claim_detail": {
+        "path": "package.json"
+      },
+      "changed_files": [
+        {
+          "path": "LICENSE",
+          "status": "added"
+        },
+        {
+          "path": "package.json",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N04",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'negation' from a DEVELOPMENT verified claim",
+      "frame": "negation",
+      "source_url": "https://github.com/krivahtoo/silicon.nvim/pull/56",
+      "source_claim_text": "- Updated README.md with comprehensive nvim-treesitter integration documentation",
+      "agent": "Copilot",
+      "url": "https://github.com/krivahtoo/silicon.nvim/pull/56",
+      "claim_kind": "file_touched",
+      "claim_text": "To be explicit about scope: this change does not touch `README.md`. That file is unchanged here and stays exactly as it is on main.",
+      "claim_detail": {
+        "path": "README.md"
+      },
+      "changed_files": [
+        {
+          "path": "test.py",
+          "status": "added"
+        },
+        {
+          "path": "Cargo.lock",
+          "status": "modified"
+        },
+        {
+          "path": "Cargo.toml",
+          "status": "modified"
+        },
+        {
+          "path": "debug_plugin.lua",
+          "status": "added"
+        },
+        {
+          "path": "src/config.rs",
+          "status": "modified"
+        },
+        {
+          "path": "src/lib.rs",
+          "status": "modified"
+        },
+        {
+          "path": "src/treesitter.rs",
+          "status": "added"
+        },
+        {
+          "path": "test_plugin.lua",
+          "status": "added"
+        },
+        {
+          "path": "test_treesitter.py",
+          "status": "added"
+        },
+        {
+          "path": "test_treesitter_direct.lua",
+          "status": "added"
+        },
+        {
+          "path": "README.md",
+          "status": "modified"
+        },
+        {
+          "path": "basic_test.lua",
+          "status": "added"
+        },
+        {
+          "path": "demo_treesitter.lua",
+          "status": "added"
+        },
+        {
+          "path": "minimal_test.lua",
+          "status": "added"
+        },
+        {
+          "path": "test_notifications.lua",
+          "status": "added"
+        },
+        {
+          "path": "test_treesitter_setup.lua",
+          "status": "added"
+        },
+        {
+          "path": "test_integration.lua",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-C00",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-100",
+      "agent": "OpenAI_Codex",
+      "url": "https://github.com/MontrealAI/AGI-Alpha-Agent-v0/pull/3320",
+      "claim_kind": "file_touched",
+      "claim_text": "- update `ci.yml` to fail early when actor isn't repo owner",
+      "claim_detail": {
+        "path": "ci.yml"
+      },
+      "changed_files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N00",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'negation' from a DEVELOPMENT verified claim",
+      "frame": "negation",
+      "source_url": "https://github.com/webiny/webiny-js/pull/4745",
+      "source_claim_text": "The package.json files have been updated and `yarn.lock` has been regenerated to lock the new versions.",
+      "agent": "Copilot",
+      "url": "https://github.com/webiny/webiny-js/pull/4745",
+      "claim_kind": "file_touched",
+      "claim_text": "To be explicit about scope: this change does not touch `yarn.lock`. That file is unchanged here and stays exactly as it is on main.",
+      "claim_detail": {
+        "path": "yarn.lock"
+      },
+      "changed_files": [
+        {
+          "path": "packages/project-aws/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/pulumi-sdk/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/pulumi/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "yarn.lock",
+          "status": "modified"
+        },
+        {
+          "path": "packages/admin-ui/src/Popover/Popover.stories.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "packages/project-aws/src/pulumi/apps/core/CoreVpc.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/project-aws/src/pulumi/apps/syncSystem/SyncSystemWorkerLambda.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/cli/files/references.json",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/pullRequestsCommandCypress.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/wac/pullRequestsCommandCypress.wac.ts",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N11",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'comparative_reference' from a DEVELOPMENT verified claim",
+      "frame": "comparative_reference",
+      "source_url": "https://github.com/Z3Prover/z3/pull/7764",
+      "source_claim_text": "- Updated CMakeLists.txt files to remove these sources",
+      "agent": "Copilot",
+      "url": "https://github.com/Z3Prover/z3/pull/7764",
+      "claim_kind": "file_touched",
+      "claim_text": "The approach here follows the same pattern `CMakeLists.txt` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+      "claim_detail": {
+        "path": "CMakeLists.txt"
+      },
+      "changed_files": [
+        {
+          "path": "src/params/CMakeLists.txt",
+          "status": "modified"
+        },
+        {
+          "path": "src/params/smt_params.cpp",
+          "status": "modified"
+        },
+        {
+          "path": "src/params/smt_params.h",
+          "status": "modified"
+        },
+        {
+          "path": "src/params/theory_str_params.cpp",
+          "status": "removed"
+        },
+        {
+          "path": "src/params/theory_str_params.h",
+          "status": "removed"
+        },
+        {
+          "path": "src/smt/CMakeLists.txt",
+          "status": "modified"
+        },
+        {
+          "path": "src/smt/smt_setup.cpp",
+          "status": "modified"
+        },
+        {
+          "path": "src/smt/smt_setup.h",
+          "status": "modified"
+        },
+        {
+          "path": "src/smt/smt_theory.h",
+          "status": "modified"
+        },
+        {
+          "path": "src/smt/theory_str.cpp",
+          "status": "removed"
+        },
+        {
+          "path": "src/smt/theory_str.h",
+          "status": "removed"
+        },
+        {
+          "path": "src/smt/theory_str_mc.cpp",
+          "status": "removed"
+        },
+        {
+          "path": "src/smt/theory_str_regex.cpp",
+          "status": "removed"
+        }
+      ]
+    },
+    {
+      "id": "XD-C06",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-106",
+      "agent": "Copilot",
+      "url": "https://github.com/gerlero/foamlib/pull/468",
+      "claim_kind": "file_touched",
+      "claim_text": "- `foamlib/_files/_files.py`: Added `@override` to `FoamFile` and `SubDict` methods",
+      "claim_detail": {
+        "path": "foamlib/_files/_files.py"
+      },
+      "changed_files": [
+        {
+          "path": "foamlib/_cases/_run.py",
+          "status": "modified"
+        },
+        {
+          "path": "foamlib/_cases/_util.py",
+          "status": "modified"
+        },
+        {
+          "path": "foamlib/_files/_files.py",
+          "status": "modified"
+        },
+        {
+          "path": "foamlib/_files/_parsing.py",
+          "status": "modified"
+        },
+        {
+          "path": "foamlib/_files/_types.py",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N14",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'comparative_reference' from a DEVELOPMENT verified claim",
+      "frame": "comparative_reference",
+      "source_url": "https://github.com/DaveSkender/Stock.Indicators/pull/1587",
+      "source_claim_text": "Updated `specs/002-fix-streaming-performance/tasks.md` with:",
+      "agent": "Copilot",
+      "url": "https://github.com/DaveSkender/Stock.Indicators/pull/1587",
+      "claim_kind": "file_touched",
+      "claim_text": "The approach here follows the same pattern `specs/002-fix-streaming-performance/tasks.md` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+      "claim_detail": {
+        "path": "specs/002-fix-streaming-performance/tasks.md"
+      },
+      "changed_files": [
+        {
+          "path": "specs/002-fix-streaming-performance/tasks.md",
+          "status": "modified"
+        },
+        {
+          "path": "src/_common/Catalog/Catalog.Listings.cs",
+          "status": "modified"
+        },
+        {
+          "path": "src/e-k/ElderRay/ElderRay.Catalog.cs",
+          "status": "modified"
+        },
+        {
+          "path": "src/e-k/ElderRay/ElderRay.StreamHub.cs",
+          "status": "added"
+        },
+        {
+          "path": "tests/indicators/e-k/ElderRay/ElderRay.Catalog.Tests.cs",
+          "status": "modified"
+        },
+        {
+          "path": "tests/indicators/e-k/ElderRay/ElderRay.Regression.Tests.cs",
+          "status": "modified"
+        },
+        {
+          "path": "tests/indicators/e-k/ElderRay/ElderRay.StreamHub.Tests.cs",
+          "status": "added"
+        },
+        {
+          "path": "tools/performance/Perf.Stream.cs",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N10",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'comparative_reference' from a DEVELOPMENT verified claim",
+      "frame": "comparative_reference",
+      "source_url": "https://github.com/DaveSkender/Stock.Indicators/pull/1409",
+      "source_claim_text": "- **Improved caching**: Added `cache-dependency-path: package-lock.json` to Node.js setup for more efficient npm caching",
+      "agent": "Copilot",
+      "url": "https://github.com/DaveSkender/Stock.Indicators/pull/1409",
+      "claim_kind": "file_touched",
+      "claim_text": "The approach here follows the same pattern `package-lock.json` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+      "claim_detail": {
+        "path": "package-lock.json"
+      },
+      "changed_files": [
+        {
+          "path": "package-lock.json",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/test-code-quality.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/test-indicators.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".coderabbit.yml",
+          "status": "added"
+        },
+        {
+          "path": "docs/coderabbit.md",
+          "status": "added"
+        },
+        {
+          "path": "docs/contributing.md",
+          "status": "modified"
+        },
+        {
+          "path": ".vscode/tasks.json",
+          "status": "modified"
+        },
+        {
+          "path": "package.json",
+          "status": "modified"
+        },
+        {
+          "path": "src/_common/BufferLists/IBufferList.cs",
+          "status": "modified"
+        },
+        {
+          "path": "src/a-d/Adx/Adx.BufferList.cs",
+          "status": "modified"
+        },
+        {
+          "path": "src/e-k/Ema/Ema.BufferList.cs",
+          "status": "modified"
+        },
+        {
+          "path": "src/e-k/Hma/Hma.BufferList.cs",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C13",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-113",
+      "agent": "Copilot",
+      "url": "https://github.com/githubnext/gh-aw/pull/967",
+      "claim_kind": "file_created",
+      "claim_text": "- [x] **Refactor**: Move EnableWorkflows function to new `enable.go` file",
+      "claim_detail": {
+        "path": "enable.go"
+      },
+      "changed_files": [
+        {
+          "path": "pkg/workflow/js/add_labels.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_discussion.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_issue.js",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/ci-doctor.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/dev.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/commands.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/commands_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/enable.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/test-ai-inference-github-models.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-add-issue-comment.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-add-issue-labels.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-cache-memory.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-command.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-create-issue.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-create-pull-request-review-comment.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-create-pull-request.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-create-repository-security-advisory.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-markitdown-mcp.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-max-patch-size.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-mcp.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-missing-tool.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-patch-size-exceeded.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-push-to-pr-branch.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-claude-update-issue.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-playwright-accessibility-contrast.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/workflows/test-playwright-screenshots.lock.yml",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N03",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'negation' from a DEVELOPMENT verified claim",
+      "frame": "negation",
+      "source_url": "https://github.com/microsoft/lisa/pull/4055",
+      "source_claim_text": "- [x] Refactored fio.py to extract unified message sending logic into dedicated helper method",
+      "agent": "Copilot",
+      "url": "https://github.com/microsoft/lisa/pull/4055",
+      "claim_kind": "file_touched",
+      "claim_text": "To be explicit about scope: this change does not touch `fio.py`. That file is unchanged here and stays exactly as it is on main.",
+      "claim_detail": {
+        "path": "fio.py"
+      },
+      "changed_files": [
+        {
+          "path": "lisa/tools/fio.py",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N12",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'comparative_reference' from a DEVELOPMENT verified claim",
+      "frame": "comparative_reference",
+      "source_url": "https://github.com/spacetx/starfish/pull/2091",
+      "source_claim_text": "- [x] Update REQUIREMENTS.txt to allow jsonschema 4.18+ and add referencing",
+      "agent": "Copilot",
+      "url": "https://github.com/spacetx/starfish/pull/2091",
+      "claim_kind": "file_touched",
+      "claim_text": "The approach here follows the same pattern `REQUIREMENTS.txt` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+      "claim_detail": {
+        "path": "REQUIREMENTS.txt"
+      },
+      "changed_files": [
+        {
+          "path": ".test_venv/bin/Activate.ps1",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/activate",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/activate.csh",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/activate.fish",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/pip",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/pip3",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/pip3.12",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/python",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/python3",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/bin/python3.12",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/lib64",
+          "status": "added"
+        },
+        {
+          "path": ".test_venv/pyvenv.cfg",
+          "status": "added"
+        },
+        {
+          "path": ".gitignore",
+          "status": "modified"
+        },
+        {
+          "path": "REQUIREMENTS.txt",
+          "status": "modified"
+        },
+        {
+          "path": "starfish/REQUIREMENTS-STRICT.txt",
+          "status": "modified"
+        },
+        {
+          "path": "starfish/core/spacetx_format/util.py",
+          "status": "modified"
+        },
+        {
+          "path": "requirements/REQUIREMENTS-CI.txt",
+          "status": "modified"
+        },
+        {
+          "path": "requirements/REQUIREMENTS-JUPYTER.txt",
+          "status": "modified"
+        },
+        {
+          "path": "requirements/REQUIREMENTS-NAPARI-CI.txt",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-N13",
+      "expected": "NOT-A-CLAIM",
+      "construction": "synthesised by frame 'comparative_reference' from a DEVELOPMENT verified claim",
+      "frame": "comparative_reference",
+      "source_url": "https://github.com/liam-hq/liam/pull/2358",
+      "source_claim_text": "# fix: update artifact/tsconfig.json extends path to match other packages",
+      "agent": "Devin",
+      "url": "https://github.com/liam-hq/liam/pull/2358",
+      "claim_kind": "file_touched",
+      "claim_text": "The approach here follows the same pattern `artifact/tsconfig.json` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+      "claim_detail": {
+        "path": "artifact/tsconfig.json"
+      },
+      "changed_files": [
+        {
+          "path": "frontend/internal-packages/artifact/tsconfig.json",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C11",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-111",
+      "agent": "Claude_Code",
+      "url": "https://github.com/aws-samples/generative-ai-use-cases/pull/1193",
+      "claim_kind": "file_touched",
+      "claim_text": "- `tenantS3.ts`: S3 operations with tenant-prefixed object keys",
+      "claim_detail": {
+        "path": "tenantS3.ts"
+      },
+      "changed_files": [
+        {
+          "path": ".gitignore",
+          "status": "modified"
+        },
+        {
+          "path": "packages/cdk/cdk.example.json",
+          "status": "renamed"
+        },
+        {
+          "path": "browser-extension/src/assets/gaixer-white.svg",
+          "status": "added"
+        },
+        {
+          "path": "packages/web/public/favicon.ico",
+          "status": "added"
+        },
+        {
+          "path": "packages/web/src/assets/gaixer-white.svg",
+          "status": "added"
+        },
+        {
+          "path": "packages/web/index.html",
+          "status": "modified"
+        },
+        {
+          "path": "packages/web/public/favicon.png",
+          "status": "removed"
+        },
+        {
+          "path": "packages/web/public/favicon.svg",
+          "status": "removed"
+        },
+        {
+          "path": "packages/web/src/pages/LandingPage.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "packages/cdk/lambda/manageTenantRole.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/onboardTenant.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/predictWithTenant.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/utils/bedrockClientTenant.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/utils/lambdaExecution.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/utils/tenantAuth.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/utils/tenantDynamoDB.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lambda/utils/tenantS3.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lib/construct/auth.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/cdk/lib/construct/tenant-manager.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lib/construct/tenant-role.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/cdk/lib/multi-tenant-stack.ts",
+          "status": "added"
+        }
+      ]
+    },
+    {
+      "id": "XD-C03",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-103",
+      "agent": "Copilot",
+      "url": "https://github.com/mui/mui-x/pull/19332",
+      "claim_kind": "file_touched",
+      "claim_text": "Updated `computeAxisValue.ts`:",
+      "claim_detail": {
+        "path": "computeAxisValue.ts"
+      },
+      "changed_files": [
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/createAxisFilterMapper.test.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/createAxisFilterMapper.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxisRendering.selectors.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/applyDomainLimit.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/computeAxisValue.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/getAxisDomainLimit.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/getCountinuouseScale.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/x-charts/src/internals/plugins/featurePlugins/useChartCartesianAxis/getContinuousScale.ts",
+          "status": "renamed"
+        },
+        {
+          "path": ".circleci/config.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/check-if-pr-has-type-label.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/publish.yml",
+          "status": "added"
+        },
+        {
+          "path": ".gitignore",
+          "status": "modified"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/areas-demo/areas-demo.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/axis/axis.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/bar-demo/bar-demo.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/bars/bars.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/components/components.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/composition/composition.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/export/export.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/funnel/FunnelLabelPositioning.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/funnel/FunnelLabelPositioning.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/funnel/funnel.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/heatmap/heatmap.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/highlighting/highlighting.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/label/label.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/legend/legend.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/line-demo/line-demo.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/lines/lines.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/localization/data.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/overview/overview.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/pie-demo/pie-demo.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/radar/radar.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/sankey/ComplexSankeyChart.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/ComplexSankeyChart.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/ComplexSankeyChart.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyBasicDataStructure.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyBasicDataStructure.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyBasicDataStructure.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyClick.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyClick.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyCurveCorrection.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyCurveCorrection.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyCurveCorrection.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyDetailedDataStructure.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyDetailedDataStructure.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyDetailedDataStructure.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyIterations.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyIterations.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyLinkSorting.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyLinkSorting.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyLinkStyling.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyLinkStyling.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeAlignment.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeAlignment.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeSorting.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeSorting.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeStyling.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/SankeyNodeStyling.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/charts/sankey/sankey.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/scatter-demo/scatter-demo.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/scatter/scatter.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/sparkline/sparkline.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/stacking/stacking.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/styling/styling.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/tooltip/tooltip.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/treemap/treemap.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/charts/zoom-and-pan/zoom-and-pan.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/chartsApiPages.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/accessibility/accessibility.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/ai-assistant/ai-assistant.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/cells/cells.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/column-definition/column-definition.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/column-dimensions/column-dimensions.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/column-groups/column-groups.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/column-spanning/column-spanning.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/column-visibility/column-visibility.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/editing/editing.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/export/export.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/filtering-recipes/FilterPresetsPanel.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/filtering-recipes/FilterPresetsPanel.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/filtering-recipes/FilterPresetsPanel.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/filtering-recipes/filtering-recipes.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/filtering/customization.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/filtering/header-filters.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/filtering/index.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/filtering/quick-filter.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/performance/performance.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/pivoting/GridGetPivotDerivedColumns.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/pivoting/GridGetPivotDerivedColumns.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/pivoting/GridPivotingFinancial.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/pivoting/GridPivotingFinancial.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/quickstart/quickstart.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/recipes-editing/recipes-editing.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/recipes-row-grouping/recipes-row-grouping.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingGroupingValueGetter.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingGroupingValueGetter.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingGroupingValueSetter.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingGroupingValueSetter.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingGroupingValueSetter.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingReordering.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingReordering.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/RowGroupingReordering.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/data-grid/row-grouping/row-grouping.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-ordering/row-ordering.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-selection/row-selection.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/row-updates/row-updates.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/scrolling/scrolling.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/ServerSideLazyLoadingErrorHandling.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/ServerSideLazyLoadingErrorHandling.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/ServerSideTreeDataCustomCache.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/ServerSideTreeDataErrorHandling.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/index.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/server-side-data/row-grouping.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/sorting/sorting.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/state/state.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/style-recipes/style-recipes.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/style/style.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/data-grid/virtualization/virtualization.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/accessibility/accessibility.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/adapters-locale/adapters-locale.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/base-concepts/base-concepts.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/custom-components/custom-components.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/custom-field/custom-field.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/custom-layout/custom-layout.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/custom-opening-button/custom-opening-button.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-calendar/date-calendar.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-picker/date-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-range-calendar/date-range-calendar.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-range-field/date-range-field.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-range-picker/date-range-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-time-picker/date-time-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-time-range-field/date-time-range-field.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/date-time-range-picker/date-time-range-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/digital-clock/digital-clock.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/fields/fields.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/lifecycle/lifecycle.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/localization/localization.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/quickstart/quickstart.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/shortcuts/shortcuts.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/time-picker/time-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/time-range-field/time-range-field.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/time-range-picker/time-range-picker.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/timezone/timezone.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/date-pickers/validation/validation.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/migration/migration-data-grid-v7/migration-data-grid-v7.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/pages.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/agenda-view/BasicAgendaView.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/agenda-view/BasicAgendaView.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "docs/data/scheduler/agenda-view/BasicAgendaView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/agenda-view/BasicAgendaView.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/car-rental.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/car-rental.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/palette-demo.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/palette-demo.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/personal-agenda.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/personal-agenda.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/recurring-events.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/datasets/recurring-events.ts",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/day-view/BasicDayView.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/day-view/BasicDayView.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "docs/data/scheduler/day-view/BasicDayView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/day-view/BasicDayView.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/ColorPalettes.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/ColorPalettes.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/ColorPalettes.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultView.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultView.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultVisibleDate.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultVisibleDate.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DefaultVisibleDate.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DragAndDrop.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DragAndDrop.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/DragAndDrop.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/FullEventCalendar.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/FullEventCalendar.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/FullEventCalendar.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/FullEventCalendar.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/PreferencesMenu.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/PreferencesMenu.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/PreferencesMenu.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Recurrence.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Recurrence.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Recurrence.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/RemoveViews.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/RemoveViews.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/RemoveViews.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Translations.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Translations.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/Translations.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/event-calendar/event-calendar.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/month-view/BasicMonthView.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/month-view/BasicMonthView.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "docs/data/scheduler/month-view/BasicMonthView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/month-view/BasicMonthView.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/overview/overview.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/primitives/TimeGridPrimitiveDragAndDrop.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/primitives/TimeGridPrimitiveDragAndDrop.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/primitives/TimeGridPrimitiveDragAndDropResource.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/primitives/TimeGridPrimitiveDragAndDropResource.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/timeline-view/BasicTimelineView.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/timeline-view/BasicTimelineView.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/timeline-view/BasicTimelineView.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/timeline-view/timeline-view.md",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/scheduler/week-view/BasicWeekView.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/week-view/BasicWeekView.module.css",
+          "status": "removed"
+        },
+        {
+          "path": "docs/data/scheduler/week-view/BasicWeekView.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/scheduler/week-view/BasicWeekView.tsx.preview",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/quickstart/quickstart.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/editing/editing.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/expansion/ApiMethodIsItemExpanded.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/expansion/ApiMethodIsItemExpanded.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/expansion/ApiMethodIsItemExpanded.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/expansion/expansion.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/headless/LogExpandedItems.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/headless/LogExpandedItems.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/headless/headless.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/items/items.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/lazy-loading/ApiMethodUpdateItemChildren.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/lazy-loading/ApiMethodUpdateItemChildren.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/lazy-loading/ApiMethodUpdateItemChildren.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/lazy-loading/lazy-loading.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/ordering/ordering.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/selection/SelectionPropagationMount.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/selection/SelectionPropagationMount.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/selection/SelectionPropagationMount.tsx.preview",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/rich-tree-view/selection/selection.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/simple-tree-view/expansion/ApiMethodIsItemExpanded.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/simple-tree-view/expansion/ApiMethodIsItemExpanded.tsx",
+          "status": "added"
+        },
+        {
+          "path": "docs/data/tree-view/simple-tree-view/expansion/expansion.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/data/tree-view/simple-tree-view/selection/selection.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/next-env.d.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/next.config.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/_app.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/area-element.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/area-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/bar-chart.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/bar-element.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/bar-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/charts-x-axis.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/charts-y-axis.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/line-chart.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/line-element.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/line-highlight-element.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/line-highlight-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/line-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/mark-element.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/mark-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-arc-label-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-arc-label.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-arc-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-arc.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-chart.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/pie-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/radar-axis.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-chart.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-chart.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-plot.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-plot.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-tooltip-content.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-tooltip-content.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-tooltip.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/sankey-tooltip.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/pages/x/api/charts/scatter-chart.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/scatter-plot.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/charts/scatter.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/data-grid-premium.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/data-grid-pro.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/data-grid.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/grid-actions-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/grid-api.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/grid-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/data-grid/grid-single-select-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/tree-view/rich-tree-view-pro.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/tree-view/rich-tree-view.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/api/tree-view/simple-tree-view.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/react-scheduler/full-screen-event-calendar.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/pages/x/react-scheduler/timeline-view.js",
+          "status": "added"
+        },
+        {
+          "path": "docs/scripts/api/buildExportsDocumentation.ts",
+          "status": "modified"
+        },
+        {
+          "path": "docs/scripts/formattedTSDemos.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/modules/components/ChartComponentsGrid.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/modules/components/ChartComponentsUpcoming.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/modules/utils/useCustomizationPlayground.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/sw.js",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/charts/sankey-chart/sankey-chart.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/translations/api-docs/charts/sankey-plot/sankey-plot.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/translations/api-docs/charts/sankey-tooltip-content/sankey-tooltip-content.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/translations/api-docs/charts/sankey-tooltip/sankey-tooltip.json",
+          "status": "added"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/data-grid-premium/data-grid-premium.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/data-grid-pro/data-grid-pro.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/data-grid/data-grid.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/grid-actions-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/grid-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "docs/translations/api-docs/data-grid/grid-single-select-col-def.json",
+          "status": "modified"
+        },
+        {
+          "path": "eslint.config.mjs",
+          "status": "modified"
+        },
+        {
+          "path": "netlify.toml",
+          "status": "modified"
+        },
+        {
+          "path": "package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/eslint-plugin-mui-x/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-premium/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-premium/src/SankeyChart/index.ts",
+          "status": "added"
+        },
+        {
+          "path": "packages/x-charts-pro/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-pro/src/ChartZoomSlider/internals/ChartAxisZoomSliderThumb.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-pro/src/FunnelChart/curves/bump.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-pro/src/FunnelChart/curves/linear.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/x-charts-pro/src/FunnelChart/curves/pyramid.ts",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C08",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-108",
+      "agent": "Copilot",
+      "url": "https://github.com/samchon/typia/pull/1640",
+      "claim_kind": "file_touched",
+      "claim_text": "This PR adds a comprehensive `.github/copilot-instructions.md` file that provides GitHub Copilot coding agents with detailed instructions on how to work effecti",
+      "claim_detail": {
+        "path": ".github/copilot-instructions.md"
+      },
+      "changed_files": [
+        {
+          "path": "pnpm-lock.yaml",
+          "status": "modified"
+        },
+        {
+          "path": "test-esm/generate/output/index.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_llm.ts",
+          "status": "modified"
+        },
+        {
+          "path": ".github/copilot-instructions.md",
+          "status": "added"
+        },
+        {
+          "path": "src/IRandomGenerator.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/programmers/json/JsonStringifyProgrammer.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Constant.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/ContentMediaType.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Default.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Example.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Examples.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/ExclusiveMaximum.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Format.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/JsonSchemaPlugin.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/MaxItems.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/MaxLength.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Maximum.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/MinItems.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/MinLength.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Minimum.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/MultipleOf.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Pattern.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Sequence.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/TagBase.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/Type.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/tags/UniqueItems.ts",
+          "status": "modified"
+        },
+        {
+          "path": "src/transformers/ImportTransformer.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_http.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_index.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_json.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_misc.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_notations.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_plain.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_protobuf.ts",
+          "status": "modified"
+        },
+        {
+          "path": "test/generate/output/generate_use.ts",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C10",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-110",
+      "agent": "Copilot",
+      "url": "https://github.com/githubnext/gh-aw/pull/1228",
+      "claim_kind": "file_touched",
+      "claim_text": "- **Refactored `reaction.go`**: Simplified github-script step generation by passing script directly to `BuildGitHubScriptStepLines`, eliminating manual append p",
+      "claim_detail": {
+        "path": "reaction.go"
+      },
+      "changed_files": [
+        {
+          "path": ".github/workflows/scout.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/tidy.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/agentic_engine.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/reaction.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/step.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/step_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/add_comment.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/create_discussion.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/create_pr_review_comment.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/parse_utils.go",
+          "status": "modified"
+        },
+        {
+          "path": ".github/prompts/create-agentic-workflow.prompt.md",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/artifacts-summary.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/technical-doc-writer.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "AGENTS.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/content/docs/reference/frontmatter.md",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/templates/create-agentic-workflow.prompt.md",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/copilot_engine.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_pull_request.cjs",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_pull_request.test.cjs",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/safe_outputs.go",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/dev.lock.yml",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/add_labels.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/collect_ndjson_output.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_discussion.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/create_issue.js",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/add_labels.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/create_code_scanning_alert.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/create_issue.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/create_pull_request.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/update_issue.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/claude_engine.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/codex_engine.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/compiler.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/custom_engine.go",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/ci-doctor.lock.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/ci-doctor.md",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/dev.invalid.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/dev.md",
+          "status": "modified"
+        },
+        {
+          "path": ".github/workflows/poem-bot.lock.yml",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/poem-bot.md",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/shared/keep-it-short.md",
+          "status": "added"
+        },
+        {
+          "path": ".github/workflows/shared/use-emojis.md",
+          "status": "added"
+        },
+        {
+          "path": ".gitignore",
+          "status": "modified"
+        },
+        {
+          "path": "cmd/gh-aw/main.go",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/content/docs/reference/include-directives.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/content/docs/reference/safe-jobs.md",
+          "status": "modified"
+        },
+        {
+          "path": "docs/src/content/docs/reference/spec-syntax.md",
+          "status": "added"
+        },
+        {
+          "path": "docs/src/content/docs/reference/template-rendering.md",
+          "status": "added"
+        },
+        {
+          "path": "docs/src/content/docs/tools/cli.md",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/add_command.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/add_source_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/commands_utils_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/imports.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/packages.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/remove_command.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/semver.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/semver_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/spec.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/spec_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/trial_command.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/cli/update_command.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/update_command_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/shared/keep-it-short.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/shared/use-emojis.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/test-copilot-imports.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/test-template-github-actions-syntax.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/test-template-issue-context.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/cli/workflows/test-template-pr-context.md",
+          "status": "added"
+        },
+        {
+          "path": "pkg/parser/frontmatter.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/parser/frontmatter_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/parser/schemas/main_workflow_schema.json",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/claude_engine_network_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/claude_engine_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/codex_engine_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/codex_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/copilot_engine_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/engine_includes_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/js/render_template.cjs",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/js/render_template.test.cjs",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/max_turns_test.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/nodejs.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/source_field_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/template.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/template_rendering_test.go",
+          "status": "added"
+        },
+        {
+          "path": "pkg/workflow/threat_detection.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/tools.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/yaml.go",
+          "status": "modified"
+        },
+        {
+          "path": "pkg/workflow/yaml_test.go",
+          "status": "modified"
+        }
+      ]
+    },
+    {
+      "id": "XD-C12",
+      "expected": "CLAIM",
+      "construction": "unmodified decoy_verified from v14_packet.json",
+      "source_v14_id": "V14-112",
+      "agent": "Copilot",
+      "url": "https://github.com/runtipi/runtipi/pull/2361",
+      "claim_kind": "file_touched",
+      "claim_text": "- Updated both `en.json` and `en-US.json` files",
+      "claim_detail": {
+        "path": "en.json"
+      },
+      "changed_files": [
+        {
+          "path": "packages/backend/package.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/backend/src/modules/backups/backup.manager.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/backend/src/modules/backups/backups.controller.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/backend/src/modules/backups/backups.service.ts",
+          "status": "modified"
+        },
+        {
+          "path": "packages/backend/src/modules/i18n/translations/en-US.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/backend/src/modules/i18n/translations/en.json",
+          "status": "modified"
+        },
+        {
+          "path": "packages/frontend/src/modules/app/components/dialogs/restore-app-dialog/restore-app-dialog.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "packages/frontend/src/modules/app/containers/app-backups/app-backups.tsx",
+          "status": "modified"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "status": "modified"
+        }
+      ]
+    }
+  ]
+}

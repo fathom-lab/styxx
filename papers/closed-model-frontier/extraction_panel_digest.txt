@@ -1,0 +1,6 @@
+packet sha256 = febd781eb1e616ea422bad9c5e9c600de2e630bef3878ade4ffdffb5558c096d
+key    sha256 = 3596c382c23c64cb8264e7295acc79ecac0e82c89aed3e87fb77116ddc4741ea
+items = 130 (100 accusations + 30 two-sided decoys)
+seed = 20260901
+decoy set = 6a491480623ff96c2a55f70da9a6ef9f47d11246afeaa477946bd8af4787892b
+committed while the panel was running and BEFORE any answer existed
