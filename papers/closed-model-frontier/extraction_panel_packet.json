@@ -1,0 +1,659 @@
+{
+ "question": "Ignoring entirely whether the gate's verdict was correct, and reading only the author's summary: is the author making a claim about this path — asserting that THIS change created, deleted or touched it? CLAIM / NOT-A-CLAIM / UNREADABLE",
+ "prereg": "PREREG_extraction_ceiling_v2_2026_09_01.md",
+ "decoy_digest": "6a491480623ff96c2a55f70da9a6ef9f47d11246afeaa477946bd8af4787892b",
+ "n_items": 130,
+ "blinded": "seats see sentence + path only; no diff, no verdict, no V14 material",
+ "items": [
+  {
+   "id": "XP-V14-078",
+   "sentence": "> changeset spec and format: https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md",
+   "path": "//github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md"
+  },
+  {
+   "id": "XP-V14-075",
+   "sentence": ">  - `OkHttpClientWrapper.save` writes straight to a `FileOutputStream` with a 4 KiB  buffer (`byte[] b = new byte[4096];`) `src/main/java/com/frostwire/util/ht",
+   "path": "src/main/java/com/frostwire/util/http/OkHttpClientWrapper.java"
+  },
+  {
+   "id": "XP-V14-088",
+   "sentence": "- Removed accidentally added `package-lock.json` (project uses pnpm, not npm)",
+   "path": "package-lock.json"
+  },
+  {
+   "id": "XP-V14-077",
+   "sentence": "src/example.py: Unformatted file.",
+   "path": "src/example.py"
+  },
+  {
+   "id": "XP-V14-001",
+   "sentence": "Adding a new \"Using Licensee with Docker\" section to `docs/command-line-usage.md` with detailed examples showing the proper syntax for various scenarios:",
+   "path": "docs/command-line-usage.md"
+  },
+  {
+   "id": "XP-V14-018",
+   "sentence": "Added 21 new localization keys to `types/localization.ts` under the `Frontend` section:",
+   "path": "types/localization.ts"
+  },
+  {
+   "id": "XP-XD-N06",
+   "sentence": "For reference, the linked issue asks for the following: \"- Updated `apps/desktop/src/lib/backend/tauri.ts` to call the backend command instead of directly setting the title on the window object\" That work is tracked separately and is not part of this pull request.",
+   "path": "apps/desktop/src/lib/backend/tauri.ts"
+  },
+  {
+   "id": "XP-V14-092",
+   "sentence": "**Schema URL**: Updated `$schema` from `https://developer.microsoft.com/en-us/json-schemas/teams/v1.22/MicrosoftTeams.schema.json` to `v1.23`",
+   "path": "//developer.microsoft.com/en-us/json-schemas/teams/v1.22/MicrosoftTeams.schema.json"
+  },
+  {
+   "id": "XP-V14-091",
+   "sentence": "// New route added to layout.tsx",
+   "path": "layout.tsx"
+  },
+  {
+   "id": "XP-XD-C07",
+   "sentence": "updated include the new mcpjam-client-manager.ts, updated routes for",
+   "path": "mcpjam-client-manager.ts"
+  },
+  {
+   "id": "XP-XD-C13",
+   "sentence": "- [x] **Refactor**: Move EnableWorkflows function to new `enable.go` file",
+   "path": "enable.go"
+  },
+  {
+   "id": "XP-XD-N12",
+   "sentence": "The approach here follows the same pattern `REQUIREMENTS.txt` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+   "path": "REQUIREMENTS.txt"
+  },
+  {
+   "id": "XP-V14-062",
+   "sentence": "This PR adds a new section to the Python style guide (`dev/guides/python.md`) that establishes the convention of preferring `unittest.mock.patch` as a context m",
+   "path": "dev/guides/python.md"
+  },
+  {
+   "id": "XP-V14-085",
+   "sentence": "- document new golden tests in Kotlin `TASKS.md`",
+   "path": "TASKS.md"
+  },
+  {
+   "id": "XP-V14-034",
+   "sentence": "❯ updateResult src/hooks/useQuery.ts:336:7",
+   "path": "src/hooks/useQuery.ts"
+  },
+  {
+   "id": "XP-V14-016",
+   "sentence": "- Created `palette-config.json` with the 7 existing EDS colors (Moss Green, Gray, North sea, Green, Blue, Orange, Red)",
+   "path": "palette-config.json"
+  },
+  {
+   "id": "XP-XD-N03",
+   "sentence": "To be explicit about scope: this change does not touch `fio.py`. That file is unchanged here and stays exactly as it is on main.",
+   "path": "fio.py"
+  },
+  {
+   "id": "XP-XD-C00",
+   "sentence": "- update `ci.yml` to fail early when actor isn't repo owner",
+   "path": "ci.yml"
+  },
+  {
+   "id": "XP-V14-064",
+   "sentence": "- Remove CLAUDE.md from `.gitignore` to allow tracking in version control",
+   "path": "CLAUDE.md"
+  },
+  {
+   "id": "XP-V14-041",
+   "sentence": "**New Functions** (`pkg/cli/secrets.go`):",
+   "path": "pkg/cli/secrets.go"
+  },
+  {
+   "id": "XP-V14-052",
+   "sentence": "This PR adds a new guideline to the Python style guide (`dev/guides/python.md`) recommending the use of `typing.Literal` when a parameter only accepts a fixed s",
+   "path": "dev/guides/python.md"
+  },
+  {
+   "id": "XP-V14-014",
+   "sentence": "**Removed hardcoded fill** from the CHEM symbol SVG definition (`Chem.tsx`)",
+   "path": "Chem.tsx"
+  },
+  {
+   "id": "XP-XD-N14",
+   "sentence": "The approach here follows the same pattern `specs/002-fix-streaming-performance/tasks.md` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+   "path": "specs/002-fix-streaming-performance/tasks.md"
+  },
+  {
+   "id": "XP-XD-N13",
+   "sentence": "The approach here follows the same pattern `artifact/tsconfig.json` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+   "path": "artifact/tsconfig.json"
+  },
+  {
+   "id": "XP-V14-090",
+   "sentence": "✅ **Code Cleanup**: Removed CLAUDE.md file and misleading browser tool comments",
+   "path": "CLAUDE.md"
+  },
+  {
+   "id": "XP-XD-C01",
+   "sentence": "- Created a root composer.json file that references the PHP SDK in the subdirectory",
+   "path": "composer.json"
+  },
+  {
+   "id": "XP-V14-003",
+   "sentence": "Create comprehensive README.md with improved structure, examples, and documentation",
+   "path": "README.md"
+  },
+  {
+   "id": "XP-XD-C11",
+   "sentence": "- `tenantS3.ts`: S3 operations with tenant-prefixed object keys",
+   "path": "tenantS3.ts"
+  },
+  {
+   "id": "XP-V14-069",
+   "sentence": "Modified `app/views/events/sub_organizations.html.erb` to add `value: params[:name]`, `value: params[:email]`, and `value: params[:cosigner_email]` attributes t",
+   "path": "app/views/events/sub_organizations.html"
+  },
+  {
+   "id": "XP-V14-045",
+   "sentence": "\"artwork/art1.jpg\": {",
+   "path": "artwork/art1.jpg"
+  },
+  {
+   "id": "XP-V14-067",
+   "sentence": "- Reflecting the new limit in the API documentation (`fern/apis/server/definition/comments.yml`).",
+   "path": "fern/apis/server/definition/comments.yml"
+  },
+  {
+   "id": "XP-V14-009",
+   "sentence": "**Filter Bar Gap** - Removes visual gap at top of horizontal filter bar superset-frontend/src/dashboard/components/nativeFilters/FilterBar/Horizontal.tsx",
+   "path": "superset-frontend/src/dashboard/components/nativeFilters/FilterBar/Horizontal.tsx"
+  },
+  {
+   "id": "XP-V14-063",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/elsa-workflow",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-026",
+   "sentence": "Added a comprehensive new section to `src/site/markdown/TestingBundles.md` that documents:",
+   "path": "src/site/markdown/TestingBundles.md"
+  },
+  {
+   "id": "XP-V14-053",
+   "sentence": "- [x] Remove package-lock.json file and add to .gitignore",
+   "path": "package-lock.json"
+  },
+  {
+   "id": "XP-V14-005",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/elsa-workflow",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-011",
+   "sentence": "This change aligns with `/reference/engines.md` where GitHub Copilot is documented as the default and recommended AI engine.",
+   "path": "/reference/engines.md"
+  },
+  {
+   "id": "XP-V14-049",
+   "sentence": "- **New document**: `docs/core/compatibility/xml/10.0/xsltsettings-enablescript-obsolete.md`",
+   "path": "docs/core/compatibility/xml/10.0/xsltsettings-enablescript-obsolete.md"
+  },
+  {
+   "id": "XP-XD-N02",
+   "sentence": "To be explicit about scope: this change does not touch `package.json`. That file is unchanged here and stays exactly as it is on main.",
+   "path": "package.json"
+  },
+  {
+   "id": "XP-XD-C10",
+   "sentence": "- **Refactored `reaction.go`**: Simplified github-script step generation by passing script directly to `BuildGitHubScriptStepLines`, eliminating manual append p",
+   "path": "reaction.go"
+  },
+  {
+   "id": "XP-V14-070",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/databendlabs/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-047",
+   "sentence": "- **Created `pkg/cli/init_command.go`**: Contains the `NewInitCommand()` function that creates the Cobra command for the `init` subcommand",
+   "path": "pkg/cli/init_command.go"
+  },
+  {
+   "id": "XP-V14-033",
+   "sentence": "Added **8 new error pattern categories** to `pkg/workflow/copilot_engine.go`:",
+   "path": "pkg/workflow/copilot_engine.go"
+  },
+  {
+   "id": "XP-V14-044",
+   "sentence": "**Modified `src/bun.js/test/jest.zig`:**",
+   "path": "src/bun.js"
+  },
+  {
+   "id": "XP-V14-042",
+   "sentence": "- update links referencing `../docs/DISCLAIMER_SNIPPET.md`",
+   "path": "../docs/DISCLAIMER_SNIPPET.md"
+  },
+  {
+   "id": "XP-XD-N07",
+   "sentence": "For reference, the linked issue asks for the following: \"Update .github/workflows/e2e-test-kind.yaml\" That work is tracked separately and is not part of this pull request.",
+   "path": ".github/workflows/e2e-test-kind.yaml"
+  },
+  {
+   "id": "XP-V14-084",
+   "sentence": "*   Adds a new endpoint at `/.well-known/mcp.json`.",
+   "path": "/.well-known/mcp.json"
+  },
+  {
+   "id": "XP-V14-089",
+   "sentence": "public/index.html:  <!-- Legacy redirect -->",
+   "path": "public/index.html"
+  },
+  {
+   "id": "XP-V14-055",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/dsccommunity/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-XD-N05",
+   "sentence": "For reference, the linked issue asks for the following: \"- **Updated `package.json`**: Added `\"license\": \"MIT\"` field to the root package.json to match the license field already present in the individual package manif\" That work is tracked separately and is not part of this pull request.",
+   "path": "package.json"
+  },
+  {
+   "id": "XP-V14-056",
+   "sentence": "Created `TODO_REVIEW_SUMMARY.md` providing:",
+   "path": "TODO_REVIEW_SUMMARY.md"
+  },
+  {
+   "id": "XP-V14-054",
+   "sentence": "- [x] Remove unnecessary ConfigurationSchema.json file since using base component's schema",
+   "path": "ConfigurationSchema.json"
+  },
+  {
+   "id": "XP-V14-032",
+   "sentence": "rad resource-type create myType --from-file /path/to/input.json",
+   "path": "/path/to/input.json"
+  },
+  {
+   "id": "XP-XD-C06",
+   "sentence": "- `foamlib/_files/_files.py`: Added `@override` to `FoamFile` and `SubDict` methods",
+   "path": "foamlib/_files/_files.py"
+  },
+  {
+   "id": "XP-V14-087",
+   "sentence": "The `.github/workflows/shared/jqschema.md` workflow file was attempting to create `/tmp/gh-aw/jqschema.sh` without first ensuring the parent directory exists.",
+   "path": "/tmp/gh-aw/jqschema.sh"
+  },
+  {
+   "id": "XP-V14-093",
+   "sentence": "- Removed `tests/genai/scorers/test_scorer_CRUD.py` from the `mock_patch_as_decorator.py` ignore list",
+   "path": "tests/genai/scorers/test_scorer_CRUD.py"
+  },
+  {
+   "id": "XP-V14-023",
+   "sentence": "- Added `GET /openapi.json` endpoint serving dynamically generated OpenAPI 3.0 specification",
+   "path": "/openapi.json"
+  },
+  {
+   "id": "XP-V14-050",
+   "sentence": "rad resource-type create  --from-file /path/to/input.yaml",
+   "path": "/path/to/input.yaml"
+  },
+  {
+   "id": "XP-XD-N00",
+   "sentence": "To be explicit about scope: this change does not touch `yarn.lock`. That file is unchanged here and stays exactly as it is on main.",
+   "path": "yarn.lock"
+  },
+  {
+   "id": "XP-XD-C04",
+   "sentence": "This PR adds a comprehensive `.github/copilot-instructions.md` file to onboard the Wynntils repository for efficient use with GitHub Copilot coding agents.",
+   "path": ".github/copilot-instructions.md"
+  },
+  {
+   "id": "XP-V14-046",
+   "sentence": "- How to identify issues created with the `.github/ISSUE_TEMPLATE/tested_config.md` template",
+   "path": ".github/ISSUE_TEMPLATE/tested_config.md"
+  },
+  {
+   "id": "XP-V14-035",
+   "sentence": "- **Fixed Header Includes**: Uses only `kiwi/Kiwi.h` (removed non-existent `kiwi/KiwiBuilder.h`)",
+   "path": "kiwi/KiwiBuilder.h"
+  },
+  {
+   "id": "XP-V14-013",
+   "sentence": "- Remove .claude/settings.local.json from git tracking",
+   "path": ".claude/settings.local.json"
+  },
+  {
+   "id": "XP-XD-N10",
+   "sentence": "The approach here follows the same pattern `package-lock.json` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+   "path": "package-lock.json"
+  },
+  {
+   "id": "XP-XD-N08",
+   "sentence": "For reference, the linked issue asks for the following: \"This PR adds a comprehensive `.github/copilot-instructions.md` file that provides GitHub Copilot with detailed instructions for working effectively in the fabri\" That work is tracked separately and is not part of this pull request.",
+   "path": ".github/copilot-instructions.md"
+  },
+  {
+   "id": "XP-XD-N04",
+   "sentence": "To be explicit about scope: this change does not touch `README.md`. That file is unchanged here and stays exactly as it is on main.",
+   "path": "README.md"
+  },
+  {
+   "id": "XP-V14-081",
+   "sentence": "This PR adds a new section to the Python style guide (`dev/guides/python.md`) that encourages using pytest's `tmp_path` fixture instead of manual `tempfile.Temp",
+   "path": "dev/guides/python.md"
+  },
+  {
+   "id": "XP-V14-039",
+   "sentence": "*   `examples/workflows/x_follow_advanced.yaml`: A more robust workflow for X.com, performing batch clicks on multiple \"Follow\" buttons and double-scrolling.",
+   "path": "examples/workflows/x_follow_advanced.yaml"
+  },
+  {
+   "id": "XP-V14-080",
+   "sentence": "Adds a new \"Copilot Environment Restrictions\" section to `.github/copilot-instructions.md` to document known Google API connectivity issues within the GitHub Co",
+   "path": ".github/copilot-instructions.md"
+  },
+  {
+   "id": "XP-V14-008",
+   "sentence": "_core team members can create a canary release [here](https://github.com/storybookjs/storybook/actions/workflows/canary-release-pr.yml) or locally with `gh work",
+   "path": "//github.com/storybookjs/storybook/actions/workflows/canary-release-pr.yml"
+  },
+  {
+   "id": "XP-V14-068",
+   "sentence": "The full changelog is available at: https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#changelog",
+   "path": "//github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md"
+  },
+  {
+   "id": "XP-V14-073",
+   "sentence": "- `internal/rules/no_misused_promises/no_misused_promises.go`: \"spreaded\" → \"spread\"",
+   "path": "internal/rules/no_misused_promises/no_misused_promises.go"
+  },
+  {
+   "id": "XP-V14-002",
+   "sentence": "Remove `node_modules/.vlt-lock.json` on install, uninstall, or update failures to prevent stale lockfiles.",
+   "path": "node_modules/.vlt-lock.json"
+  },
+  {
+   "id": "XP-V14-071",
+   "sentence": "- [ ] **End-to-end workflow**: Create a project and run `python src/{project}/main.py` to verify the complete workflow",
+   "path": "/main.py"
+  },
+  {
+   "id": "XP-V14-036",
+   "sentence": "**Hidden Removal Failures**: Changed `lifecycle.go` to return an error when supervise directories are not empty, preventing false positives for removal completi",
+   "path": "lifecycle.go"
+  },
+  {
+   "id": "XP-V14-030",
+   "sentence": ">             new StaticAssetResponseHeader(\"Link\", \"</_content/项目/app.js>; rel=modulepreload\")",
+   "path": "/_content/项目/app.js"
+  },
+  {
+   "id": "XP-XD-C03",
+   "sentence": "Updated `computeAxisValue.ts`:",
+   "path": "computeAxisValue.ts"
+  },
+  {
+   "id": "XP-V14-060",
+   "sentence": "Remove random safe output filename logic, use fixed path /tmp/safe-outputs/raw.jsonl",
+   "path": "/tmp/safe-outputs/raw.jsonl"
+  },
+  {
+   "id": "XP-V14-038",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/dsccommunity/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-024",
+   "sentence": "- Created CHANGELOG.md for source-mssql",
+   "path": "CHANGELOG.md"
+  },
+  {
+   "id": "XP-V14-066",
+   "sentence": "Updated `templates/vsc/ts/message-extension-v2/appPackage/manifest.json.tpl` to:",
+   "path": "templates/vsc/ts/message-extension-v2/appPackage/manifest.json"
+  },
+  {
+   "id": "XP-V14-083",
+   "sentence": "Adding a new markdown file (`sys_fe_locks_documentation.md`) that details the `sys.fe_locks` system view.",
+   "path": "sys_fe_locks_documentation.md"
+  },
+  {
+   "id": "XP-V14-099",
+   "sentence": "📁 Found 1 changed files: docs/installation.md",
+   "path": "docs/installation.md"
+  },
+  {
+   "id": "XP-V14-074",
+   "sentence": "**Cleanup**: Removed rolldown-version.txt test artifact file",
+   "path": "rolldown-version.txt"
+  },
+  {
+   "id": "XP-V14-025",
+   "sentence": "Added a new OpenAPI example allOfRequired.yaml showing how a parent schema marks the pet property as required while composing its definition with allOf",
+   "path": "allOfRequired.yaml"
+  },
+  {
+   "id": "XP-V14-076",
+   "sentence": "rad resource-type create myType --from-file /path/to/input.yaml",
+   "path": "/path/to/input.yaml"
+  },
+  {
+   "id": "XP-V14-057",
+   "sentence": "&gt;    - IF the user chose to create a github actions workflow, then this file <a href=\"https://raw.githubusercontent.com/ShaftHQ/using_SHAFT_Engine/refs/heads",
+   "path": "//raw.githubusercontent.com/ShaftHQ/using_SHAFT_Engine/refs/heads/main/.github/workflows/e2etests.yml"
+  },
+  {
+   "id": "XP-V14-027",
+   "sentence": "- Created ContentExplorer.js.flow for Flow compatibility",
+   "path": "ContentExplorer.js"
+  },
+  {
+   "id": "XP-V14-020",
+   "sentence": "- Removed Footer.js after verifying Footer.js.flow compatibility",
+   "path": "Footer.js"
+  },
+  {
+   "id": "XP-V14-061",
+   "sentence": "- [x] Update test imports that reference ../index.js to use ../distribution/index.js",
+   "path": "../index.js"
+  },
+  {
+   "id": "XP-V14-031",
+   "sentence": "This PR removes all references to `tests/server/auth` from both `conftest.py` and `.github/workflows/master.yml` to ensure that authentication tests are not col",
+   "path": "conftest.py"
+  },
+  {
+   "id": "XP-V14-004",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/elsa-workflow",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-037",
+   "sentence": "Install the [9.0.204] .NET SDK or update [/workspaces/csharp-sdk/global.json] to match an installed SDK.",
+   "path": "/workspaces/csharp-sdk/global.json"
+  },
+  {
+   "id": "XP-V14-095",
+   "sentence": "- update Vite and Vitest configs and change library entry to `src/index.ts`",
+   "path": "src/index.ts"
+  },
+  {
+   "id": "XP-XD-C02",
+   "sentence": "- Update benchmarks and checklist (ALGORITHMS.md, README.md, TASKS.md)",
+   "path": "ALGORITHMS.md"
+  },
+  {
+   "id": "XP-XD-C05",
+   "sentence": "- Recompiled workflow to generate updated `.github/workflows/dev.lock.yml`",
+   "path": ".github/workflows/dev.lock.yml"
+  },
+  {
+   "id": "XP-XD-N09",
+   "sentence": "For reference, the linked issue asks for the following: \"- `reproduce_issue.py`: A comprehensive script showing behavior with and without Sentry.\" That work is tracked separately and is not part of this pull request.",
+   "path": "reproduce_issue.py"
+  },
+  {
+   "id": "XP-V14-043",
+   "sentence": "- Created a new breaking change document at `docs/core/compatibility/extensions/10.0/provider-alias-attribute-moved-namespace.md` that:",
+   "path": "docs/core/compatibility/extensions/10.0/provider-alias-attribute-moved-namespace.md"
+  },
+  {
+   "id": "XP-V14-029",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/databendlabs/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-021",
+   "sentence": "- Adds the necessary mangled symbols for these new methods to `src/symbols.txt`, `src/symbols.dyn` (Linux), and `src/symbols.def` (Windows) to ensure they are e",
+   "path": "src/symbols.txt"
+  },
+  {
+   "id": "XP-V14-022",
+   "sentence": "- **`EngineWorker.h`**: Removed `<GL/gl.h>` include (not needed in the header)",
+   "path": "GL/gl.h"
+  },
+  {
+   "id": "XP-V14-086",
+   "sentence": "Added three new localization keys to `types/localization.ts`:",
+   "path": "types/localization.ts"
+  },
+  {
+   "id": "XP-V14-028",
+   "sentence": "Added two new policy sections to the policy index (`02_政策インデックス.md`) as requested:",
+   "path": "02_政策インデックス.md"
+  },
+  {
+   "id": "XP-V14-098",
+   "sentence": "Removed explicit version tags from 25 module pom.xml files where these dependencies are used, allowing them to inherit versions from the parent's dependency man",
+   "path": "pom.xml"
+  },
+  {
+   "id": "XP-V14-010",
+   "sentence": ">     - In `.github/workflows/ci.yml`, expand the `check-notebook-docs-sync` job to check the entire repository for changes after running `scripts/update_cookbo",
+   "path": "scripts/update_cookbook_docs.sh"
+  },
+  {
+   "id": "XP-V14-006",
+   "sentence": "- Remove .claude/settings.local.json from git tracking",
+   "path": ".claude/settings.local.json"
+  },
+  {
+   "id": "XP-XD-C12",
+   "sentence": "- Updated both `en.json` and `en-US.json` files",
+   "path": "en.json"
+  },
+  {
+   "id": "XP-V14-015",
+   "sentence": "> - File path for the new atlas: `micapipe/MNI152Volumes/mni_icbm152_t1_tal_nlin_sym_09a.nii.gz`",
+   "path": "micapipe/MNI152Volumes/mni_icbm152_t1_tal_nlin_sym_09a.nii.gz"
+  },
+  {
+   "id": "XP-XD-C08",
+   "sentence": "This PR adds a comprehensive `.github/copilot-instructions.md` file that provides GitHub Copilot coding agents with detailed instructions on how to work effecti",
+   "path": ".github/copilot-instructions.md"
+  },
+  {
+   "id": "XP-V14-058",
+   "sentence": ">   - **New File**: Adds `AGENTS.md` to provide AI coding assistants with detailed project context.",
+   "path": "AGENTS.md"
+  },
+  {
+   "id": "XP-V14-072",
+   "sentence": "**New environment dependencies**: Added S3 bucket env vars to compose.yaml.",
+   "path": "compose.yaml"
+  },
+  {
+   "id": "XP-V14-082",
+   "sentence": "Removes the Webhook button from the single prompt detail page (`web/src/features/prompts/components/prompt-detail.tsx`).",
+   "path": "web/src/features/prompts/components/prompt-detail.tsx"
+  },
+  {
+   "id": "XP-V14-019",
+   "sentence": "- [x] Add five new tools to drain3_server.py:",
+   "path": "drain3_server.py"
+  },
+  {
+   "id": "XP-V14-017",
+   "sentence": "- Creates and updates `.zed/settings.json` in the project root directory",
+   "path": ".zed/settings.json"
+  },
+  {
+   "id": "XP-XD-N01",
+   "sentence": "To be explicit about scope: this change does not touch `useLibraryAgentList.ts`. That file is unchanged here and stays exactly as it is on main.",
+   "path": "useLibraryAgentList.ts"
+  },
+  {
+   "id": "XP-V14-065",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/dsccommunity/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-079",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/dsccommunity/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-040",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/highperforman",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-V14-051",
+   "sentence": "Addresses feedback: @davidfowl run through the instructions in https://github.com/dotnet/aspire/blob/main/tools/ReleaseNotes/docs/README.md",
+   "path": "//github.com/dotnet/aspire/blob/main/tools/ReleaseNotes/docs/README.md"
+  },
+  {
+   "id": "XP-V14-000",
+   "sentence": "Created `/02-SetupDevEnvironment/src/BasicChat-01MEAI/README.md` with:",
+   "path": "/02-SetupDevEnvironment/src/BasicChat-01MEAI/README.md"
+  },
+  {
+   "id": "XP-V14-094",
+   "sentence": "Added two new workflow steps to automatically update `studio/package.json` during the release process:",
+   "path": "studio/package.json"
+  },
+  {
+   "id": "XP-XD-C14",
+   "sentence": "- Updated ROADMAP.md to mark Quick Win #5 as completed",
+   "path": "ROADMAP.md"
+  },
+  {
+   "id": "XP-V14-059",
+   "sentence": "This change is [<img src=\"https://reviewable.io/review_button.svg\" height=\"34\" align=\"absmiddle\" alt=\"Reviewable\"/>](https://reviewable.io/reviews/dsccommunity/",
+   "path": "//reviewable.io/review_button.svg"
+  },
+  {
+   "id": "XP-XD-C09",
+   "sentence": "Updated README.md with comprehensive examples showing both stdio and remote server configurations, proper TOML table syntax, and migration guidance from JSON.",
+   "path": "README.md"
+  },
+  {
+   "id": "XP-V14-012",
+   "sentence": "The implementation adds several new functions to `pkg/parser/schema.go`:",
+   "path": "pkg/parser/schema.go"
+  },
+  {
+   "id": "XP-V14-007",
+   "sentence": "- [x] Created shared workflow file at `.github/workflows/shared/actions-ai-inference.md`",
+   "path": ".github/workflows/shared/actions-ai-inference.md"
+  },
+  {
+   "id": "XP-V14-048",
+   "sentence": "- [ ] Update docs/setup/configuring-rules.md if needed",
+   "path": "docs/setup/configuring-rules.md"
+  },
+  {
+   "id": "XP-V14-096",
+   "sentence": "Added comprehensive documentation to `docs/automation/step-definitions.md` explaining:",
+   "path": "docs/automation/step-definitions.md"
+  },
+  {
+   "id": "XP-V14-097",
+   "sentence": "*   **API Client Method**: A new `updateIssue` method was added to `packages/mcp-server/src/api-client/client.ts`.",
+   "path": "packages/mcp-server/src/api-client/client.ts"
+  },
+  {
+   "id": "XP-XD-N11",
+   "sentence": "The approach here follows the same pattern `CMakeLists.txt` already uses, which was settled in an earlier pull request. Nothing in this change modifies that file.",
+   "path": "CMakeLists.txt"
+  }
+ ]
+}
