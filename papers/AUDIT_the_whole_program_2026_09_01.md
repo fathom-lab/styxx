@@ -103,6 +103,37 @@ are what actually recur.
 | M5 **a receipt is history too** — binding by filename, not by digest | 3 documents in 2 days, plus one precedent in June | 2026-06-10 → 2026-09-01 | 2026-08-31 |
 | M6 **the specimen was chosen to pass** — a gate scored on an instance selected because it passes | ≥4 (autopilot G2, G3; v0.12's frozen bar; the vacuous-pass census) | 2026-08-07 → 2026-08-27 | 2026-08-27 |
 
+### Addendum, 2026-09-01 (later the same day) — a seventh mechanism, found four times before it was named
+
+**M7 — the corpus is stratified by verifier version, and every new certificate field silently
+partitions it.** The table above was frozen with six rows; this row is added as an addendum
+rather than edited in, so the count the audit published stays readable as published.
+
+| mechanism | independent discoveries | span | named on |
+|---|---|---|---|
+| M7 **verifier-version stratification** — a field added to the certificate exists only on documents re-issued after it, and a reader of the corpus cannot tell absence-of-field from absence-of-fact | 4 on one day | 2026-08-28 → 2026-09-01 | 2026-09-01 (here) |
+
+The four, each recorded elsewhere and cited by name: **(1)** ledger entries without `status` —
+certificates issued before the ledger schema gained `status`/`col`/`receipt_ref` embed a ledger
+the current verifier re-derives as `None`, so two June capsules were minted verifying on zero
+tokens (`styxx/capsule.py`, the mint gate added 2026-09-01; PR #55). **(2)** `_NUM`'s trailing
+period — 131 of 208 certified documents carry numeric spans no certificate ever examined, absent
+from the ledger rather than abstained (`DEFECT_uncovered_lines_2026_09_01.md`; the UNCOVERED band
+in `styxx/certify.py`). **(3)** per-token epistemics — present on 18 of 208 committed certificates
+and the v1 summary on 16, so the only handedness figure a reader of the committed corpus can see
+is drawn from 9% of it (`DECLARATION_h_mapping_2026_09_01.md`, population PRINTED vs LIVE).
+**(4)** the UNCOVERED band itself — the day it shipped, the corpus auditor bucketed on the whole
+verdict string and put 131 certificates in neither HELD nor FAILED (`styxx/corpus_audit.py`,
+`verdict_class`; `tests/test_corpus_audit_uncovered_suffix.py`). The corpus on disk was written
+by **15 distinct verifier builds** (`h_mapping_census_result.json`).
+
+The shape is the one §5.2 describes, one level down: not a claim killed by a document that does
+not name the killer, but a certificate whose *silence* about a field is read as a zero. The
+repair is the same discipline the epistemics-summary design already wrote for one field —
+*absence of the key means pre-summary, never zeros; gates key on the schema string, never on key
+presence* — applied to every field the certificate gains from now on, and a census that reports
+the stratum a number was measured in beside the number.
+
 ### The confirmed re-inventions, with the check anyone can run
 
 **M1 was operationally present three months before it was named, in a different arc family, and
