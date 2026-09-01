@@ -1,0 +1,1052 @@
+{
+ "what": "EXTRACTION census of the tests_pass template: of the sentences the regex fires on, how many are a claim being made",
+ "target_regex": "\\b(?:all\\s+)?tests\\s+(?:pass|are\\s+passing|green)\\b",
+ "target_source": "styxx/diffgate.py _TEMPLATES entry 'tests_pass'",
+ "not_measured_here": "adjudication. Every tests_pass verdict in this corpus is UNCHECKABLE (run=None), so no accusation exists to adjudicate. This file measures the step BEFORE the verdict.",
+ "population": {
+  "expected_eligible": 71016,
+  "observed_eligible": 71016,
+  "eligible_matches_flag_rate": true,
+  "skipped_reconstruction_roundtrip": 1,
+  "splitter_divergences_from_re_split": 0,
+  "expected_tests_pass_claims": {
+   "development": 1476,
+   "held_out": 4038,
+   "corpus_wide": 5514
+  },
+  "observed_matches": {
+   "development": 1476,
+   "held_out": 4038,
+   "corpus_wide": 5514
+  },
+  "expected_prs_with_tests_pass_claim": {
+   "development": 1236,
+   "held_out": 3402,
+   "corpus_wide": 4638
+  },
+  "observed_prs_with_match": {
+   "development": 1236,
+   "held_out": 3402,
+   "corpus_wide": 4638
+  },
+  "matches_reconcile_with_flag_rate": true
+ },
+ "mechanical": {
+  "status": "MECHANICAL \u2014 a pure function of the summary bytes, reproducible by anyone who runs this file",
+  "rules": {
+   "fenced_code_block": "the match's line lies between a line matching ^ {0,3}(`{3,}|~{3,}) and the next line closing with the same character at >= the opening length; the fence lines themselves are counted as inside",
+   "indented_code_block": "tabs expanded to 4; the line's leading spaces >= 4; it is not inside a fence; the previous line is blank or is itself indented code by this rule; and the nearest preceding non-blank line at indent < 4 is not a list-item marker (^ {0,3}([-*+]|\\d+[.)])\\s) \u2014 because 4-space indentation inside a list is continuation, not code",
+   "blockquote": "the match's line matches ^ {0,3}>",
+   "html_comment": "the match offset lies inside a <!-- ... --> span (DOTALL, non-greedy); an unterminated <!-- is NOT treated as a comment",
+   "task_list_item": "the match's line matches ^\\s*([-*+]|\\d+[.)])\\s+\\[( |x|X)\\]; the box character decides checked vs unchecked",
+   "link_title_or_url": "the match offset lies inside the [title] or (destination) span of a [..](..) link, inside a <http...> autolink, or inside a bare https?:// run",
+   "inline_code_span": "the match offset lies between two backtick runs of equal length on the same line, paired left to right",
+   "negation_cue_near": "a cue from the closed set (not/cannot/n't forms/never/no longer/fails to/unable to/without) occurs in the 40 characters of the same gate-sentence immediately before the match",
+   "negation_cue_in_sentence": "the same closed cue set, anywhere earlier in the same gate-sentence (reported alongside as the looser variant; the disjoint table uses the windowed form)"
+  },
+  "priority_for_the_disjoint_table": [
+   "html_comment",
+   "fenced_code_block",
+   "indented_code_block",
+   "blockquote",
+   "task_box_unchecked",
+   "task_box_checked",
+   "link_title_or_url",
+   "inline_code_span",
+   "negation_cue_near"
+  ],
+  "note": "mech_flags_any counts each flag independently and matches may carry several; mech_category assigns each match to exactly one bucket by the priority above. The headline unchecked-box number is the INDEPENDENT count, mech_flags_any.task_box_unchecked.",
+  "diagnostics_not_categories": {
+   "indented_ge4_spaces_naive": "the NAIVE indented-code rule (>= 4 leading spaces, outside a fence) with none of the CommonMark conditions. Reported so the cost of the list-continuation refusal is visible: the gap between this and indented_code_block is what the strict rule declined to call code, and it is almost entirely markdown list continuation, not code",
+   "backtick_somewhere_on_line": "the match's line contains a backtick at all. If this is large while inline_code_span is zero, the code-span detector is working and the matches simply sit outside the spans",
+   "url_somewhere_on_line": "the match's line contains an http(s) URL at all. Same purpose for link_url. Note the regex requires literal whitespace between 'tests' and 'pass', which URLs almost never contain \u2014 a zero here is expected from the pattern, not evidence of a bug",
+   "negation_cue_is_without_only": "of the negation_cue_near matches, those whose ONLY cue in the window is the word 'without'. See disclosed_defects"
+  },
+  "disclosed_defects": {
+   "negation_cue_near_over-fires_on_without": "'without' earns its place in the cue set for 'without modifying X', but it also fires on 'the solution builds without any warnings and all tests pass' \u2014 a sentence that ASSERTS. This is a false positive inside the group that is supposed to carry weight, so it is counted (negation_cue_is_without_only) rather than patched away. Subtract it from negation_cue_near for a conservative read",
+   "fence_lines_counted_as_inside": "the ``` line itself is counted as fenced. A match can only land there via the info string, which is vanishingly rare, but the choice is stated rather than hidden",
+   "blockquote_lazy_continuation_missed": "a blockquote continued lazily (a following line with no '>') is NOT detected. Such matches fall through to the residual and are therefore counted against us, not for us",
+   "task_item_continuation_lines_missed": "the box state is read from the line containing the match. A match on a continuation line under a task item is not attributed to that item's box, so the unchecked-box count is a LOWER bound"
+  }
+ },
+ "judgment": {
+  "status": "UNVALIDATED",
+  "warning": "This group is a regex approximating a human judgment. That is exactly the class of instrument this lab measured at 0.16 held-out precision (RESULT_v14). It has had NO blind panel. It MUST NOT be quoted as a precision, as a false-extraction rate, or as any figure that decides anything. It is a hypothesis generator and nothing else.",
+  "priority_for_the_disjoint_table": [
+   "self_disclosed_failure",
+   "conditional_or_future",
+   "scoped_to_authors_machine",
+   "scoped_to_a_subset"
+  ],
+  "applied_to": "only the matches carrying no mechanical flag (mech_category == no_mechanical_flag)",
+  "where_the_numbers_live": {
+   "keys": [
+    "judgment_UNVALIDATED_flags_any",
+    "judgment_UNVALIDATED_category"
+   ],
+   "counts_under": "counts_UNVALIDATED",
+   "examples_prefixed": "JUDGMENT_UNVALIDATED:",
+   "in_each_of": [
+    "development",
+    "held_out",
+    "corpus_wide"
+   ]
+  },
+  "why_the_keys_are_named_that_way": "An earlier emission of this file marked judgment.status UNVALIDATED at the top level only, while the per-split counts sat under a bare `judgment_category` map. A consumer reading d['held_out']['judgment_category'] saw no marker and could quote the number with nothing attached to it. A sibling status field beside the map would not have fixed that, because the careless read never touches the sibling. So the marker is in the KEY NAMES, which cannot be reached without being typed, and the status string is repeated inside the value so that a dump of any level of the path still carries it. The key names changed in this emission; that is a deliberate break for any consumer indexing the old names.",
+  "known_defects_found_by_reading_its_own_output": {
+   "self_disclosed_failure_fires_on_paths": "the cue 'error\\w*' matched inside a file path in 'Verified all tests pass with `yarn test src/elements/common/error-boundary/__tests__/`'. A path is not a disclosure. Left in place, disclosed, because hand-patching an unvalidated classifier until its output looks right is the failure mode this lab is trying to stop",
+   "self_disclosed_failure_fires_on_flaky": "'All tests pass, including the previously flaky test' is labelled a self-disclosed failure; a reader might call it an assertion. This label is contested and unadjudicated",
+   "scoped_to_a_subset_is_the_largest_and_the_weakest": "it is the biggest bucket and it rests entirely on the single word before 'tests' against a hand-written stoplist. 'Verified existing tests pass' and 'All 21 unit tests pass' both land here and they are not obviously the same thing. This number in particular must not leave the file"
+  },
+  "stoplist_verbatim": [
+   "a",
+   "again",
+   "all",
+   "also",
+   "an",
+   "and",
+   "as",
+   "because",
+   "but",
+   "if",
+   "its",
+   "my",
+   "now",
+   "or",
+   "our",
+   "since",
+   "so",
+   "still",
+   "that",
+   "the",
+   "their",
+   "then",
+   "these",
+   "this",
+   "those",
+   "when",
+   "where",
+   "while"
+  ]
+ },
+ "development": {
+  "matches": 1476,
+  "prs_with_match": 1236,
+  "mech_flags_any": {
+   "html_comment": 2,
+   "fenced_code_block": 19,
+   "indented_code_block": 0,
+   "blockquote": 23,
+   "task_box_unchecked": 54,
+   "task_box_checked": 157,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 4,
+   "no_mechanical_flag": 1220,
+   "task_list_item": 211,
+   "negation_cue_in_sentence": 5,
+   "link_title": 0,
+   "link_url": 0,
+   "in_title": 0,
+   "indented_ge4_spaces_naive": 0,
+   "backtick_somewhere_on_line": 112,
+   "url_somewhere_on_line": 4,
+   "negation_cue_is_without_only": 2
+  },
+  "mech_category": {
+   "html_comment": 2,
+   "fenced_code_block": 19,
+   "indented_code_block": 0,
+   "blockquote": 23,
+   "task_box_unchecked": 53,
+   "task_box_checked": 156,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 3,
+   "no_mechanical_flag": 1220
+  },
+  "judgment_UNVALIDATED_flags_any": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 122,
+    "conditional_or_future": 70,
+    "scoped_to_authors_machine": 26,
+    "scoped_to_a_subset": 778
+   }
+  },
+  "judgment_UNVALIDATED_category": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 122,
+    "conditional_or_future": 60,
+    "scoped_to_authors_machine": 21,
+    "scoped_to_a_subset": 670,
+    "bare_unqualified_assertion": 347
+   }
+  },
+  "residual_matches": 1220
+ },
+ "held_out": {
+  "matches": 4038,
+  "prs_with_match": 3402,
+  "mech_flags_any": {
+   "html_comment": 5,
+   "fenced_code_block": 48,
+   "indented_code_block": 1,
+   "blockquote": 70,
+   "task_box_unchecked": 125,
+   "task_box_checked": 435,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 7,
+   "no_mechanical_flag": 3360,
+   "task_list_item": 560,
+   "negation_cue_in_sentence": 47,
+   "link_title": 0,
+   "link_url": 0,
+   "in_title": 1,
+   "indented_ge4_spaces_naive": 2,
+   "backtick_somewhere_on_line": 260,
+   "url_somewhere_on_line": 6,
+   "negation_cue_is_without_only": 1
+  },
+  "mech_category": {
+   "html_comment": 5,
+   "fenced_code_block": 48,
+   "indented_code_block": 1,
+   "blockquote": 69,
+   "task_box_unchecked": 122,
+   "task_box_checked": 432,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 1,
+   "no_mechanical_flag": 3360
+  },
+  "judgment_UNVALIDATED_flags_any": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 306,
+    "conditional_or_future": 209,
+    "scoped_to_authors_machine": 37,
+    "scoped_to_a_subset": 2310
+   }
+  },
+  "judgment_UNVALIDATED_category": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 306,
+    "conditional_or_future": 172,
+    "scoped_to_authors_machine": 26,
+    "scoped_to_a_subset": 1969,
+    "bare_unqualified_assertion": 887
+   }
+  },
+  "residual_matches": 3360
+ },
+ "corpus_wide": {
+  "matches": 5514,
+  "prs_with_match": 4638,
+  "mech_flags_any": {
+   "html_comment": 7,
+   "fenced_code_block": 67,
+   "indented_code_block": 1,
+   "blockquote": 93,
+   "task_box_unchecked": 179,
+   "task_box_checked": 592,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 11,
+   "no_mechanical_flag": 4580,
+   "task_list_item": 771,
+   "negation_cue_in_sentence": 52,
+   "link_title": 0,
+   "link_url": 0,
+   "in_title": 1,
+   "indented_ge4_spaces_naive": 2,
+   "backtick_somewhere_on_line": 372,
+   "url_somewhere_on_line": 10,
+   "negation_cue_is_without_only": 3
+  },
+  "mech_category": {
+   "html_comment": 7,
+   "fenced_code_block": 67,
+   "indented_code_block": 1,
+   "blockquote": 92,
+   "task_box_unchecked": 175,
+   "task_box_checked": 588,
+   "link_title_or_url": 0,
+   "inline_code_span": 0,
+   "negation_cue_near": 4,
+   "no_mechanical_flag": 4580
+  },
+  "judgment_UNVALIDATED_flags_any": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 428,
+    "conditional_or_future": 279,
+    "scoped_to_authors_machine": 63,
+    "scoped_to_a_subset": 3088
+   }
+  },
+  "judgment_UNVALIDATED_category": {
+   "status": "UNVALIDATED \u2014 a regex approximating a human reading, with NO blind panel. These counts are NOT a precision, NOT a false-extraction rate, and decide nothing. See .judgment.warning in this file before quoting any of them.",
+   "counts_UNVALIDATED": {
+    "self_disclosed_failure": 428,
+    "conditional_or_future": 232,
+    "scoped_to_authors_machine": 47,
+    "scoped_to_a_subset": 2639,
+    "bare_unqualified_assertion": 1234
+   }
+  },
+  "residual_matches": 4580
+ },
+ "examples": {
+  "JUDGMENT_UNVALIDATED:self_disclosed_failure": [
+   {
+    "split": "development",
+    "url": "https://github.com/marimo-team/marimo/pull/3290",
+    "matched_text": "tests pass",
+    "sentence": "- Frontend tests pass (93/94 files, with only unrelated snapshot failures in data-frames plugin)",
+    "line": "- Frontend tests pass (93/94 files, with only unrelated snapshot failures in data-frames plugin)"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/1815",
+    "matched_text": "All tests pass",
+    "sentence": "All tests pass except for expected OpenAI connection errors.",
+    "line": "All tests pass except for expected OpenAI connection errors."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/marimo-team/marimo/pull/3485",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass, including the previously flaky test",
+    "line": "- All tests pass, including the previously flaky test"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/liam-hq/liam/pull/721",
+    "matched_text": "tests pass",
+    "sentence": "- Verified E2E tests pass locally with updated schema (19 passed, 1 failed, 5 skipped)",
+    "line": "- Verified E2E tests pass locally with updated schema (19 passed, 1 failed, 5 skipped)"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/wix/react-native-ui-lib/pull/3515",
+    "matched_text": "all tests pass",
+    "sentence": "- No critical issues found - all tests pass (907/913) with only 2 unrelated test suite failures",
+    "line": "- No critical issues found - all tests pass (907/913) with only 2 unrelated test suite failures"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3984",
+    "matched_text": "all tests pass",
+    "sentence": "- Verified all tests pass with `yarn test src/elements/common/error-boundary/__tests__/`",
+    "line": "- Verified all tests pass with `yarn test src/elements/common/error-boundary/__tests__/`"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3992",
+    "matched_text": "all tests pass",
+    "sentence": "- Fixed type errors and ensured all tests pass",
+    "line": "- Fixed type errors and ensured all tests pass"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/calcom/cal.com/pull/21217",
+    "matched_text": "All tests pass",
+    "sentence": "All tests pass, including the previously failing tests for GMT-11 browsing scenarios with IST timezone schedules.",
+    "line": "All tests pass, including the previously failing tests for GMT-11 browsing scenarios with IST timezone schedules. The changes ensure that half-hour slots (04:30, 05:30, etc.) are correctly generated f"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/dotnet/aspnetcore/pull/62085",
+    "matched_text": "tests pass",
+    "sentence": "The Components project builds successfully after this change, and the tests pass, indicating that the change doesn't break any functionality.",
+    "line": "After investigating the code, I confirmed that there are no dependencies on internal types from the Components assembly in the Server project. The Components project builds successfully after this cha"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/elsa-workflows/elsa-core/pull/6686",
+    "matched_text": "all tests pass",
+    "sentence": "- Test runs fail with errors even though all tests pass",
+    "line": "- Test runs fail with errors even though all tests pass"
+   }
+  ],
+  "JUDGMENT_UNVALIDATED:bare_unqualified_assertion": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/1818",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass with the new changes",
+    "line": "- All tests pass with the new changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/1820",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass with the new changes",
+    "line": "- All tests pass with the new changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/whitphx/vscode-emacs-mcx/pull/2148",
+    "matched_text": "All tests are passing",
+    "sentence": "All tests are passing and type safety has been improved.",
+    "line": "All tests are passing and type safety has been improved."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/whitphx/vscode-emacs-mcx/pull/2149",
+    "matched_text": "All tests are passing",
+    "sentence": "All tests are passing and type safety has been improved.",
+    "line": "All tests are passing and type safety has been improved."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/bespokelabsai/curator/pull/304",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass successfully",
+    "line": "- All tests pass successfully"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3832",
+    "matched_text": "All tests are passing",
+    "sentence": "- All tests are passing with 99.56% coverage",
+    "line": "- All tests are passing with 99.56% coverage"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3833",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass",
+    "line": "- All tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3841",
+    "matched_text": "all tests pass",
+    "sentence": "- Verified all tests pass",
+    "line": "- Verified all tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3843",
+    "matched_text": "all tests pass",
+    "sentence": "- Verified all tests pass",
+    "line": "- Verified all tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/modelcontextprotocol/inspector/pull/125",
+    "matched_text": "All tests are passing",
+    "sentence": "All tests are passing and the build is successful.",
+    "line": "All tests are passing and the build is successful."
+   }
+  ],
+  "JUDGMENT_UNVALIDATED:scoped_to_a_subset": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/1825",
+    "matched_text": "tests pass",
+    "sentence": "- Verified existing tests pass",
+    "line": "- Verified existing tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/1835",
+    "matched_text": "tests pass",
+    "sentence": "- Local tests pass",
+    "line": "- Local tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/CodebuffAI/codebuff/pull/61",
+    "matched_text": "tests are passing",
+    "sentence": "\u2705 All credit-related tests are passing",
+    "line": "\u2705 All credit-related tests are passing"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/OHIF/Viewers/pull/4656",
+    "matched_text": "tests pass",
+    "sentence": "- All existing tests pass",
+    "line": "- All existing tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3834",
+    "matched_text": "tests pass",
+    "sentence": "- \u2705 All 21 unit tests pass",
+    "line": "- \u2705 All 21 unit tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/OHIF/Viewers/pull/4698",
+    "matched_text": "tests pass",
+    "sentence": "Note: Build and unit tests pass successfully.",
+    "line": "Note: Build and unit tests pass successfully. Awaiting test data with multiple character sets (ISO_IR 192 and ISO 2022 IR 100) for full verification."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/airbytehq/airbyte/pull/52574",
+    "matched_text": "tests pass",
+    "sentence": "All unit tests pass successfully.",
+    "line": "All unit tests pass successfully."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/airbytehq/airbyte/pull/52583",
+    "matched_text": "tests pass",
+    "sentence": "All unit tests pass successfully.",
+    "line": "All unit tests pass successfully."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/airbytehq/airbyte/pull/52602",
+    "matched_text": "tests pass",
+    "sentence": "- Integration tests pass successfully with Milvus Lite configuration",
+    "line": "- Integration tests pass successfully with Milvus Lite configuration"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/2076",
+    "matched_text": "tests pass",
+    "sentence": "- All existing tests pass",
+    "line": "- All existing tests pass"
+   }
+  ],
+  "JUDGMENT_UNVALIDATED:scoped_to_authors_machine": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/bespokelabsai/curator/pull/316",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass locally, including the new test for special token handling",
+    "line": "- All tests pass locally, including the new test for special token handling"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/marimo-team/marimo/pull/3618",
+    "matched_text": "All tests are passing",
+    "sentence": "- All tests are passing locally",
+    "line": "- All tests are passing locally"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3885",
+    "matched_text": "All tests are passing",
+    "sentence": "All tests are passing locally.",
+    "line": "All tests are passing locally."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/liam-hq/liam/pull/692",
+    "matched_text": "All tests are passing",
+    "sentence": "- All tests are passing locally",
+    "line": "- All tests are passing locally"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3991",
+    "matched_text": "tests are passing",
+    "sentence": "We've verified locally that all linting and tests are passing.",
+    "line": "- The `lint_test_build` CI check is failing, but according to the repository guidelines, this workflow can sometimes be flaky. We've verified locally that all linting and tests are passing."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/pdfme/pdfme/pull/810",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass locally",
+    "line": "- All tests pass locally"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/sugi/wareki/pull/21",
+    "matched_text": "all tests pass",
+    "sentence": "The changes have been tested locally and all tests pass successfully.",
+    "line": "The changes have been tested locally and all tests pass successfully."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/GlareDB/glaredb/pull/3543",
+    "matched_text": "All tests pass",
+    "sentence": "- All tests pass locally",
+    "line": "- All tests pass locally"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/cberner/raptorq/pull/176",
+    "matched_text": "All tests pass",
+    "sentence": "All tests pass locally.",
+    "line": "All tests pass locally."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/cberner/raptorq/pull/189",
+    "matched_text": "All tests are passing",
+    "sentence": "All tests are passing locally.",
+    "line": "All tests are passing locally."
+   }
+  ],
+  "task_box_checked": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/appsmithorg/appsmith/pull/38639",
+    "matched_text": "tests pass",
+    "sentence": "- [x] New and existing unit tests pass locally with my changes",
+    "line": "- [x] New and existing unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3848",
+    "matched_text": "Tests pass",
+    "sentence": "- [x] Tests pass",
+    "line": "- [x] Tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3891",
+    "matched_text": "Tests pass",
+    "sentence": "- [x] Tests pass",
+    "line": "- [x] Tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3893",
+    "matched_text": "all tests pass",
+    "sentence": "- [x] Ran `yarn test` - all tests pass",
+    "line": "- [x] Ran `yarn test` - all tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/modelcontextprotocol/inspector/pull/158",
+    "matched_text": "tests pass",
+    "sentence": "- [x] New and existing tests pass locally",
+    "line": "- [x] New and existing tests pass locally"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/modelcontextprotocol/typescript-sdk/pull/163",
+    "matched_text": "tests pass",
+    "sentence": "- [x] New and existing tests pass locally",
+    "line": "- [x] New and existing tests pass locally"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/saturday06/VRM-Addon-for-Blender/pull/792",
+    "matched_text": "Tests pass",
+    "sentence": "- [x] Tests pass",
+    "line": "- [x] Tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/2679",
+    "matched_text": "Tests pass",
+    "sentence": "- [x] Tests pass locally",
+    "line": "- [x] Tests pass locally"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/vercel/turborepo/pull/10407",
+    "matched_text": "tests pass",
+    "sentence": "- [x] Verified that existing tests pass",
+    "line": "- [x] Verified that existing tests pass"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/liam-hq/liam/pull/1608",
+    "matched_text": "tests pass",
+    "sentence": "- [x] New and existing unit tests pass locally with my changes",
+    "line": "- [x] New and existing unit tests pass locally with my changes"
+   }
+  ],
+  "JUDGMENT_UNVALIDATED:conditional_or_future": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/pyth-network/pyth-crosschain/pull/2275",
+    "matched_text": "tests pass",
+    "sentence": "- Existing e2e tests pass as they verify response formats rather than specific URLs",
+    "line": "- Existing e2e tests pass as they verify response formats rather than specific URLs"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/box/box-ui-elements/pull/3992",
+    "matched_text": "all tests pass",
+    "sentence": "- Ran `yarn test` to verify all tests pass",
+    "line": "- Ran `yarn test` to verify all tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/pdfme/pdfme/pull/808",
+    "matched_text": "tests pass",
+    "sentence": "- Ran `npm run build && npm run test` to ensure build and tests pass",
+    "line": "- Ran `npm run build && npm run test` to ensure build and tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/2548",
+    "matched_text": "all tests pass",
+    "sentence": "- Ran pytest to ensure all tests pass",
+    "line": "- Ran pytest to ensure all tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/2643",
+    "matched_text": "All tests pass",
+    "sentence": "All tests pass when running `uv run pytest tests -vv`.",
+    "line": "All tests pass when running `uv run pytest tests -vv`."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/antiwork/gumroad/pull/168",
+    "matched_text": "all tests pass",
+    "sentence": "- Awaiting CI to verify all tests pass with the new Ruby version",
+    "line": "- Awaiting CI to verify all tests pass with the new Ruby version"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/crewAIInc/crewAI/pull/2701",
+    "matched_text": "All tests pass",
+    "sentence": "All tests pass, including new tests that specifically verify CrewStructuredTool can be used with Task.",
+    "line": "All tests pass, including new tests that specifically verify CrewStructuredTool can be used with Task."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/reflex-dev/reflex/pull/5211",
+    "matched_text": "tests pass",
+    "sentence": "- All existing tests pass, ensuring backward compatibility",
+    "line": "- All existing tests pass, ensuring backward compatibility"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/calcom/cal.com/pull/21152",
+    "matched_text": "tests pass",
+    "sentence": "All unit tests pass when run with `TZ=UTC yarn test packages/features/insights/server/routing-events.test.ts`.",
+    "line": "All unit tests pass when run with `TZ=UTC yarn test packages/features/insights/server/routing-events.test.ts`."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/pyth-network/pyth-crosschain/pull/2676",
+    "matched_text": "tests pass",
+    "sentence": "Both tests pass when run with forge test and the code passes linting checks.",
+    "line": "Both tests pass when run with forge test and the code passes linting checks."
+   }
+  ],
+  "task_box_unchecked": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/NousResearch/atropos/pull/71",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] New and existing unit tests pass locally with my changes",
+    "line": "- [ ] New and existing unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/benbalter/jekyll-relative-links/pull/98",
+    "matched_text": "all tests pass",
+    "sentence": "- [ ] Ensure all tests pass before final submission",
+    "line": "- [ ] Ensure all tests pass before final submission"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/primer/react/pull/6076",
+    "matched_text": "all tests are passing",
+    "sentence": "- [ ] Run final Vitest to confirm all tests are passing",
+    "line": "- [ ] Run final Vitest to confirm all tests are passing"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/modelcontextprotocol/python-sdk/pull/773",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] New and existing tests pass locally",
+    "line": "- [ ] New and existing tests pass locally"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/ray-project/kuberay/pull/3654",
+    "matched_text": "tests are passing",
+    "sentence": "- [ ] I've made sure the tests are passing.",
+    "line": "- [ ] I've made sure the tests are passing."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/wvlet/airframe/pull/3937",
+    "matched_text": "all tests pass",
+    "sentence": "- [ ] Verify all tests pass with new implementation",
+    "line": "- [ ] Verify all tests pass with new implementation"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/modelcontextprotocol/inspector/pull/486",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] New and existing tests pass locally",
+    "line": "- [ ] New and existing tests pass locally"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/deeeed/expo-audio-stream/pull/261",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] Integration tests pass",
+    "line": "- [ ] Integration tests pass"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/RocketChat/Rocket.Chat.ReactNative/pull/6395",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] Lint and unit tests pass locally with my changes",
+    "line": "- [ ] Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/antiwork/flexile/pull/356",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] Backend tests pass: `cd backend && bundle exec rspec`",
+    "line": "- [ ] Backend tests pass: `cd backend && bundle exec rspec`"
+   }
+  ],
+  "fenced_code_block": [
+   {
+    "split": "development",
+    "url": "https://github.com/haasonsaas/ocode/pull/7",
+    "matched_text": "All tests pass",
+    "sentence": "# All tests pass including the fixed performance test",
+    "line": "# All tests pass including the fixed performance test"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/Azure/azure-sdk-for-js/pull/34739",
+    "matched_text": "tests pass",
+    "sentence": "# Verify tests pass",
+    "line": "# Verify tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/celestiaorg/celestia-app/pull/4978",
+    "matched_text": "tests pass",
+    "sentence": "# Unit tests pass",
+    "line": "# Unit tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/microsoft/secureboot_objects/pull/225",
+    "matched_text": "tests pass",
+    "sentence": "# All unit tests pass",
+    "line": "# All unit tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/aztfmod/terraform-provider-azurecaf/pull/312",
+    "matched_text": "tests pass",
+    "sentence": "# All new tests pass",
+    "line": "# All new tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/evstack/ev-node/pull/2406",
+    "matched_text": "tests pass",
+    "sentence": "# Regular tests pass",
+    "line": "# Regular tests pass"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/poppopjmp/spiderfoot/pull/309",
+    "matched_text": "tests pass",
+    "sentence": "# All correlation integration tests pass",
+    "line": "# All correlation integration tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/Codehagen/Badget/pull/294",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] Unit tests pass",
+    "line": "- [ ] Unit tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/Codehagen/Badget/pull/294",
+    "matched_text": "tests pass",
+    "sentence": "- [ ] Integration tests pass",
+    "line": "- [ ] Integration tests pass"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/Codehagen/Badget/pull/294",
+    "matched_text": "tests pass",
+    "sentence": "- [x] New and existing unit tests pass locally with my changes (implied by successful build)",
+    "line": "- [x] New and existing unit tests pass locally with my changes (implied by successful build)"
+   }
+  ],
+  "blockquote": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/Azure/autorest.typescript/pull/3280",
+    "matched_text": "all tests pass",
+    "sentence": "> - Fix any issues that arise during the process, and ensure all tests pass before considering the upgrade complete",
+    "line": "> - Fix any issues that arise during the process, and ensure all tests pass before considering the upgrade complete"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/Azure/autorest.typescript/pull/3280",
+    "matched_text": "tests are passing",
+    "sentence": "> - If all integration tests are passing, you can run `npm run stop-test-server -- -p 3000` to stop the RLC test server or `npm run stop-test-server -- -p 3002` to stop the Modular test server.",
+    "line": "> - If all integration tests are passing, you can run `npm run stop-test-server -- -p 3000` to stop the RLC test server or `npm run stop-test-server -- -p 3002` to stop the Modular test server."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/bikeshaving/crank/pull/286",
+    "matched_text": "tests pass",
+    "sentence": "Ensure all relevant hydration tests pass, including edge cases of mismatches and raw element hydration.",
+    "line": "> 5. Ensure all relevant hydration tests pass, including edge cases of mismatches and raw element hydration."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/dotnet/maui/pull/30586",
+    "matched_text": "tests pass",
+    "sentence": "After renaming, verify that the repository builds and that tests pass, if applicable.",
+    "line": "> Rename every instance of \"MAUI\" to \"MIAU\" throughout the entire repository, including all code files, documentation, comments, variable names, constants, class names, project and solution files, and"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/dotnet/maui/pull/30586",
+    "matched_text": "tests pass",
+    "sentence": "After renaming, verify that the repository builds and that tests pass, if applicable.",
+    "line": "> Rename every instance of \"MAUI\" to \"MIAU\" throughout the entire repository, including all code files, documentation, comments, variable names, constants, class names, project and solution files, and"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/openops-cloud/openops/pull/960",
+    "matched_text": "all tests pass",
+    "sentence": "Iterate on errors, fixing any new failures that appear in subsequent runs, until all tests pass.",
+    "line": "> Fix all test and type errors in the above files so that the CI passes. Iterate on errors, fixing any new failures that appear in subsequent runs, until all tests pass."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/chrxh/alien/pull/133",
+    "matched_text": "tests pass",
+    "sentence": "> Ensure that the rename is consistent everywhere and that all code continues to build and tests pass after the change.",
+    "line": "> Ensure that the rename is consistent everywhere and that all code continues to build and tests pass after the change. For further instances, search for `numRequiredAdditionalConnections` in the repo"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/dotnet/aspire/pull/10521",
+    "matched_text": "all tests pass",
+    "sentence": "Ensure all tests pass after these changes.",
+    "line": "> 4. Ensure all tests pass after these changes."
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/pull/11060",
+    "matched_text": "tests pass",
+    "sentence": "> - Ensure that builds and tests pass with the new dependency tree.",
+    "line": "> - Ensure that builds and tests pass with the new dependency tree."
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/yysun/apprun/pull/151",
+    "matched_text": "tests pass",
+    "sentence": "**Testing**: Ensure all existing tests pass and that the change doesn't break any existing functionality.",
+    "line": "> 4. **Testing**: Ensure all existing tests pass and that the change doesn't break any existing functionality."
+   }
+  ],
+  "indented_code_block": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/opencv/opencv/pull/27441",
+    "matched_text": "tests pass",
+    "sentence": "All existing tests pass, and the new test verifies the mask generation logic.",
+    "line": "All existing tests pass, and the new test verifies the mask generation logic."
+   }
+  ],
+  "negation_cue_near": [
+   {
+    "split": "development",
+    "url": "https://github.com/wieslawsoltes/Dock/pull/498",
+    "matched_text": "tests pass",
+    "sentence": "- `dotnet test -c Release` *(fails to reach telemetry servers but tests pass)*",
+    "line": "- `dotnet test -c Release` *(fails to reach telemetry servers but tests pass)*"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/wieslawsoltes/Svg.Skia/pull/329",
+    "matched_text": "tests pass",
+    "sentence": "- `dotnet test Svg.Skia.sln --no-build` *(fails: Could not find resources but some tests pass)*",
+    "line": "- `dotnet test Svg.Skia.sln --no-build` *(fails: Could not find resources but some tests pass)*"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/AzureCosmosDB/data-migration-desktop-tool/pull/211",
+    "matched_text": "all tests pass",
+    "sentence": "The solution builds without any CS8602 warnings and all tests pass.",
+    "line": "All CS8602 warnings have been successfully eliminated. The solution builds without any CS8602 warnings and all tests pass. Added null-forgiving operators to Cosmos and SqlServer extensions that were m"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/PowerShell/PowerShell/pull/26244",
+    "matched_text": "tests pass",
+    "sentence": "- On regular CI (Ubuntu/macOS/Windows without FIPS): 12 tests pass, 2 MD5 tests skipped",
+    "line": "- On regular CI (Ubuntu/macOS/Windows without FIPS): 12 tests pass, 2 MD5 tests skipped"
+   }
+  ],
+  "html_comment": [
+   {
+    "split": "held_out",
+    "url": "https://github.com/RocketChat/Rocket.Chat/pull/36783",
+    "matched_text": "tests pass",
+    "sentence": "- Lint and unit tests pass locally with my changes",
+    "line": "- Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/RocketChat/Rocket.Chat/pull/36785",
+    "matched_text": "tests pass",
+    "sentence": "- Lint and unit tests pass locally with my changes",
+    "line": "- Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/RocketChat/Rocket.Chat/pull/36826",
+    "matched_text": "tests pass",
+    "sentence": "- Lint and unit tests pass locally with my changes",
+    "line": "- Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/RocketChat/Rocket.Chat/pull/36932",
+    "matched_text": "tests pass",
+    "sentence": "- Lint and unit tests pass locally with my changes",
+    "line": "- Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "held_out",
+    "url": "https://github.com/RocketChat/Rocket.Chat/pull/37220",
+    "matched_text": "tests pass",
+    "sentence": "- Lint and unit tests pass locally with my changes",
+    "line": "- Lint and unit tests pass locally with my changes"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/marcocesarato/php-conventional-changelog/pull/85",
+    "matched_text": "tests pass",
+    "sentence": "- [x] Run tests to verify changes (all 3 tests pass - 5 assertions)",
+    "line": "- [x] Run tests to verify changes (all 3 tests pass - 5 assertions)"
+   },
+   {
+    "split": "development",
+    "url": "https://github.com/marcocesarato/php-conventional-changelog/pull/85",
+    "matched_text": "tests pass",
+    "sentence": "- All 3 tests pass (5 assertions total)",
+    "line": "- All 3 tests pass (5 assertions total)"
+   }
+  ]
+ },
+ "headline": {
+  "unchecked_task_box_matches_corpus_wide": 179,
+  "unchecked_task_box_share_of_all_matches_pct": 3.25,
+  "checked_task_box_matches_corpus_wide": 592,
+  "unchecked_share_of_task_list_matches_pct": 23.22,
+  "held_out_unchecked": 125,
+  "development_unchecked": 54,
+  "reading": "an unchecked box is an author explicitly DECLINING to claim the tests pass; the extractor reads it as asserting it"
+ }
+}
