@@ -1,0 +1,39 @@
+{
+  "prereg": "PREREG_extraction_ceiling_v2_2026_09_01.md (G-E1); v1 for everything else",
+  "scorer_committed_before_panel_returned": true,
+  "n_seats": 3,
+  "gates": {
+    "G_E1a_overall": {
+      "observed": "30/30",
+      "bar": ">=27/30",
+      "pass": true
+    },
+    "G_E1b_each_side": {
+      "claim": "15/15",
+      "not_a_claim": "15/15",
+      "bar": ">=9/15 each",
+      "pass": true
+    },
+    "G_E2_reconciliation": {
+      "observed": 0.16,
+      "target": 0.16,
+      "pass": true
+    },
+    "panel_split": {
+      "n_split": 0,
+      "rate": 0.0,
+      "bar": "<=0.10",
+      "pass": true
+    }
+  },
+  "decomposition": {
+    "E": 0.55,
+    "A": 0.2,
+    "n_scored_accusations": 100,
+    "n_claim": 55,
+    "upheld_among_claim": 11,
+    "P_reconciled": 0.16,
+    "G_E3_verdict": "REFUTED"
+  },
+  "verdict": "REFUTED"
+}
