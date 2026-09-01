@@ -1,0 +1,27 @@
+{
+ "prereg": "PREREG_v14_repair_2026_08_31.md",
+ "identity": "accusation keyed on PATH (kind is deliberately changed by the repairs)",
+ "prs_scored": 71016,
+ "corpus_wide": {
+  "accusations_unrepaired": 4427,
+  "accusations_after_v13_v14": 1344,
+  "removed": 3083
+ },
+ "G_S1_subset_invariant": {
+  "paths_gaining_an_accusation": 0,
+  "pass": true,
+  "examples": []
+ },
+ "development_bucket": {
+  "prs": 15617,
+  "unrepaired": 1299,
+  "after_v13_v14": 393,
+  "fraction_removed": 0.6975
+ },
+ "G_S2_cumulative_recovery": {
+  "threshold": 0.6667,
+  "observed": 0.6975,
+  "pass": true,
+  "note": "V13 alone reached 0.3462 against this same bar and failed"
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "split": "HELD-OUT",
+ "decoys_correct": 30,
+ "decoys_total": 30,
+ "adjudicator_reliable": true,
+ "accusations_scored": 100,
+ "upheld": 16,
+ "rejected": 84,
+ "precision": 0.16,
+ "G_S3_pass": false,
+ "decoy_misses": []
+}

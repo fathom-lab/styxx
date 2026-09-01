@@ -1,0 +1,267 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md",
+  "document_sha256": "278884b0164237bfa76fe01e56f50643c282bf292e86a46232c39a5d073b87d7",
+  "receipts_sha256": {
+    "v14_gates.json": "2ae92827abd104dbb4ff3e5e9970d05b86346a377ba1733dbc59bad89025b289",
+    "v14_adjudication.json": "f77ea4326502393070408697cd0953461c789f0675631acf234bb47b4c757d6d",
+    "v14_residual.json": "16977b963b30285ea560aae13b16ebb3f0fadde616d8aec78683937decea2d52"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 7,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 1,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 7,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 4
+    },
+    "verified": {
+      "total": 7,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 0,
+        "obligated_integer_filter_na": 3,
+        "unobligated_integer_filter_ran": 3,
+        "unobligated_integer_filter_na": 1
+      }
+    },
+    "obligated_total": 3,
+    "obligation_sources": {
+      "vocabulary": 3,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "71,016"
+    },
+    {
+      "line": 14,
+      "token": "0.6667"
+    },
+    {
+      "line": 15,
+      "token": "1"
+    },
+    {
+      "line": 45,
+      "token": "0.23"
+    },
+    {
+      "line": 76,
+      "token": "130"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "71,016",
+      "value": 71016.0,
+      "decimals": 0,
+      "context": "- **G-S1 (subset invariant) \u2014 PASS.** Across all 71,016 eligible pull requests, **zero paths",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 14,
+      "token": "0.6975",
+      "value": 0.6975,
+      "decimals": 4,
+      "context": "- **G-S2 (cumulative recovery) \u2014 PASS at 0.6975** against the 0.6667 bar that V13 alone",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_gates.json:G_S2_cumulative_recovery.observed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 14,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "- **G-S2 (cumulative recovery) \u2014 PASS at 0.6975** against the 0.6667 bar that V13 alone",
+      "col": 62,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 15,
+      "token": "4,427",
+      "value": 4427.0,
+      "decimals": 0,
+      "context": "failed at 0.3462. Corpus-wide, path accusations fall from 4,427 to 1,344.",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_gates.json:corpus_wide.accusations_unrepaired",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 15,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "failed at 0.3462. Corpus-wide, path accusations fall from 4,427 to 1,344.",
+      "col": 69,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "**G-S3 (held-out precision) \u2014 FAIL. Observed 0.16 against a floor of 0.95.**",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 28,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "item was judged. The panel called **30 of 30 decoys correctly** and was unanimous on the",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 28,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "item was judged. The panel called **30 of 30 decoys correctly** and was unanimous on the",
+      "col": 42,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 45,
+      "token": "0.23",
+      "value": 0.23,
+      "decimals": 2,
+      "context": "**One comparison this paper explicitly refuses to make.** The earlier 0.23 figure was",
+      "col": 70,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 46,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "measured over a sample drawn from all eligible pull requests; this 0.16 is held-out only.",
+      "col": 67,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 49,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "repair cycles, precision on prose the instrument's authors have never read is **0.16**, and",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 76,
+      "token": "130",
+      "value": 130.0,
+      "decimals": 0,
+      "context": "Three of the 130 items were adjudicated by two seats rather than three; one batch returned",
+      "col": 13,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}
