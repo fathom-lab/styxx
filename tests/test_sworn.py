@@ -1148,3 +1148,66 @@ class TestSidecarHardening:
         side["spans"] = [{"start": 1, "end": 5, "receipt": "r1", "kind": "quote"}]
         with pytest.raises(SystemExit, match="REFUSED"):
             verify(sidecar=side)
+
+
+class TestReceiptHardening:
+    """Confirmed by the receipts attacker: shapes that crashed, or reached git with a meaning
+    other than the committed file they named."""
+
+    @pytest.mark.parametrize("ref", ["path::/res.json", "path::(top)res.json", "path::!res.json",
+                                     "path::^res.json", "path::res.json"])
+    def test_git_pathspec_magic_never_reaches_the_tree(self, ref, git_repo):
+        repo, sha = git_repo
+        d, _ = one(sp("0.91", ref).encode(), tree=GitTree(repo, sha))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "receipt_form")
+        d, _ = one(sp("0.91", ref).encode(), tree=MemoryTree({"res.json": b"0.91"}, commit=C40))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "receipt_form")
+
+    def test_a_string_leaf_holding_a_lone_surrogate_is_not_text_and_never_crashes(self):
+        tree = MemoryTree({"a.json": b'{"s": "\\ud800", "n": 1}'}, commit=C40)
+        d, _ = one(sp("`x`", "path:a.json#/s", "quote").encode(), tree=tree)
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "leaf_not_string")
+        d, core = one(sp("1", "path:a.json#/s").encode(), tree=tree)
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "leaf_not_numeric")
+        assert len(issue_receipt(core)["digest"]) == 64            # the detail is serialisable
+
+    @pytest.mark.parametrize("entry", ["abc", 5, None, ["r1"]])
+    def test_a_manifest_entry_that_is_not_an_object_is_manifest_integrity(self, entry):
+        m = manifest(r1=b"0.5")
+        m.receipts["r1"] = entry
+        d, _ = one(sp("0.5").encode(), manifest=m)
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "manifest_integrity")
+
+    def test_a_kind_of_source_that_is_not_a_string_is_kind_of_source_unknown(self):
+        m = manifest(r1=b"0.5")
+        m.receipts["r1"]["kind_of_source"] = ["tool_stdout"]
+        d, _ = one(sp("0.5").encode(), manifest=m)
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "kind_of_source_unknown")
+
+    def test_a_manifest_no_canonical_form_can_hold_is_manifest_integrity(self):
+        m = manifest(r1=b"0.5")
+        m.receipts["r1"]["captured_at"] = float("nan")
+        m.declared_digest = "0" * 64
+        d, core = one(sp("0.5").encode(), manifest=m)
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "manifest_integrity")
+        assert core["manifest_digest"] is None
+        assert len(issue_receipt(core)["digest"]) == 64
+
+    @pytest.mark.parametrize("bad", [{"spec": "sworn/manifest/0.1", "receipts": "abc"},
+                                     {"spec": "sworn/manifest/0.1", "receipts": ["r1"]},
+                                     {"spec": "sworn/manifest/0.1", "receipts": {}, "authored_sha256": 5},
+                                     {"spec": "sworn/manifest/0.1", "receipts": {}, "authored_sha256": [5]}])
+    def test_a_manifest_of_the_wrong_shape_is_refused_not_crashed_on(self, bad):
+        with pytest.raises(SystemExit, match="REFUSED"):
+            Manifest.from_dict(bad)
+
+    def test_the_modules_own_add_mints_only_entries_it_can_resolve(self):
+        m = Manifest("h", "t")
+        e = m.add("r1", b"bytes", "file_read", complete=True, sha256=sworn._sha256(b"bytes").upper())
+        assert e["sha256"] == sworn._sha256(b"bytes")
+        d, _ = one(sp("`byt`", kind="quote").encode(), manifest=m)
+        assert d["verdict"] == "HELD"
+        with pytest.raises(ValueError):
+            m.add("r2", b"bytes", "file_read", sha256="0" * 64)      # a lie about the bytes
+        with pytest.raises(ValueError):
+            m.add("r3", None, "file_read", sha256="not-hex")

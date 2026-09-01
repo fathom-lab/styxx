@@ -168,8 +168,9 @@ DECISIONS = {
                     "interior newlines kept, the final line's terminating LF excluded; a line past "
                     "EOF is MALFORMED; a trailing LF does not begin an empty last line"),
     "rn_grammar": "^r[1-9][0-9]*$, no fragment",
-    "path_grammar": ("relative, /-separated, no empty/./.. segment, no backslash, no whitespace; "
-                     "split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]"),
+    "path_grammar": ("relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no "
+                     "leading ':' (git pathspec magic); split at the FIRST #; fragment is "
+                     "`/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]"),
     "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
     "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
     "author_minted": ("kind_of_source in {agent_output, agent_file_write, agent_message}, or a "
@@ -204,6 +205,12 @@ _COVERAGE_CEILING = ("advisory: the denominator is counted by styxx.claimdetect 
 
 def _sha256(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
+
+
+def _safe_text(x: Any, limit: int = 80) -> str:
+    """A detail string that can always be serialised: lone surrogates from JSON escapes are
+    replaced, never allowed to crash a receipt."""
+    return str(x)[:limit].encode("utf-8", errors="replace").decode("utf-8")
 
 
 def _b64(b: bytes) -> str:
@@ -562,6 +569,12 @@ class Manifest:
             raise ValueError("receipt id must match r[1-9][0-9]*: %r" % rid)
         if data is None and not sha256:
             raise ValueError("a receipt needs bytes or at least a sha256")
+        if sha256 is not None:
+            sha256 = str(sha256).lower()
+            if not re.fullmatch(r"[0-9a-f]{64}", sha256):
+                raise ValueError("sha256 must be 64 hex characters")
+            if data is not None and _sha256(data) != sha256:
+                raise ValueError("sha256 does not match the bytes")
         entry = {
             "id": rid,
             "sha256": sha256 or _sha256(data),
@@ -598,8 +611,17 @@ class Manifest:
         if not isinstance(d, dict) or d.get("spec") != MANIFEST_SPEC:
             raise SystemExit("REFUSED: unknown manifest spec %r (this verifier knows %s)"
                              % (d.get("spec") if isinstance(d, dict) else None, MANIFEST_SPEC))
-        m = cls(d.get("harness", ""), d.get("turn", ""), d.get("minted_at"),
-                d.get("receipts") or {}, d.get("authored_sha256") or [])
+        receipts = d.get("receipts")
+        if receipts is None:
+            receipts = {}
+        authored = d.get("authored_sha256")
+        if authored is None:
+            authored = []
+        if not isinstance(receipts, dict) or not all(isinstance(k, str) for k in receipts):
+            raise SystemExit("REFUSED: manifest receipts must be an object keyed by receipt id")
+        if not isinstance(authored, list) or not all(isinstance(x, str) for x in authored):
+            raise SystemExit("REFUSED: manifest authored_sha256 must be a list of hex strings")
+        m = cls(d.get("harness", ""), d.get("turn", ""), d.get("minted_at"), receipts, authored)
         # the digest the harness wrote, if any. It is checked at resolution time: a manifest that
         # does not re-derive makes every rN UNRESOLVED — the verifier failing to see, never the
         # author lying.
@@ -613,7 +635,19 @@ class Manifest:
     declared_digest: Optional[str] = None
 
     def intact(self) -> bool:
-        return self.declared_digest is None or self.declared_digest == self.digest()
+        """False when the harness's digest does not re-derive — or cannot even be computed,
+        because the manifest carries something no canonical serialisation can hold (a NaN, a
+        non-JSON value). Either way the verifier could not see a sound manifest."""
+        try:
+            return self.declared_digest is None or self.declared_digest == self.digest()
+        except (TypeError, ValueError):
+            return False
+
+    def digest_or_none(self) -> Optional[str]:
+        try:
+            return self.digest()
+        except (TypeError, ValueError):
+            return None
 
 
 class MemoryTree:
@@ -765,7 +799,9 @@ def _parse_receipt(ref: str) -> Tuple[Optional[dict], Optional[str]]:
             target, frag = body.split("#", 1)
         else:
             target, frag = body, None
-        if not target or target.startswith("/") or _PATH_SEG_BAD.search(target):
+        # a leading ':' is git pathspec magic (':/', ':(top)', ':!', ':^') and would let a path
+        # mean something other than the committed file it names; refused at the grammar
+        if not target or target.startswith(("/", ":")) or _PATH_SEG_BAD.search(target):
             return None, "receipt_form"
         if any(seg in ("", ".", "..") for seg in target.split("/")):
             return None, "receipt_form"
@@ -877,10 +913,14 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
         entry = manifest.receipts.get(parsed["id"])
         if entry is None:
             return _Resolved(status="unresolved", reason="manifest_id_missing")
+        if not isinstance(entry, dict):
+            return _Resolved(status="unresolved", reason="manifest_integrity")
         sha = entry.get("sha256")
         if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
             return _Resolved(status="unresolved", reason="manifest_integrity")
         kos = entry.get("kind_of_source")
+        if not isinstance(kos, str):
+            return _Resolved(status="malformed", reason="kind_of_source_unknown")
         if kos in SOURCE_KINDS_AUTHOR or sha in manifest.authored_sha256:
             return _Resolved(status="malformed", reason="receipt_author_minted")
         if kos not in SOURCE_KINDS_EXTERNAL:
@@ -1024,13 +1064,13 @@ def _check_numeric(inner_text: str, res: _Resolved, parsed: dict) -> Tuple[str, 
     if isinstance(leaf, (dict, list)) or leaf is None:
         return "MALFORMED", "leaf_not_scalar", {"leaf_type": type(leaf).__name__}
     if not isinstance(leaf, Decimal) or isinstance(leaf, bool):
-        return "MALFORMED", "leaf_not_numeric", {"leaf": str(leaf)[:80]}
+        return "MALFORMED", "leaf_not_numeric", {"leaf": _safe_text(leaf)}
     if not leaf.is_finite() or leaf.adjusted() > 320:
-        return "MALFORMED", "leaf_not_numeric", {"leaf": str(leaf)[:80]}
+        return "MALFORMED", "leaf_not_numeric", {"leaf": _safe_text(leaf)}
     try:
         lhs, rhs = _canon(leaf, frac), _canon(printed, frac)
     except (InvalidOperation, ValueError):
-        return "MALFORMED", "leaf_not_numeric", {"leaf": str(leaf)[:80]}
+        return "MALFORMED", "leaf_not_numeric", {"leaf": _safe_text(leaf)}
     detail = {"printed_token": tok, "printed": rhs, "receipt": str(leaf), "receipt_rounded": lhs,
               "fractional_digits": frac, "rounding": ROUNDING}
     if lhs == rhs:
@@ -1045,7 +1085,10 @@ def _check_quote(inner: bytes, res: _Resolved) -> Tuple[str, Optional[str], dict
     if res["has_leaf"]:
         if not isinstance(res["leaf"], str):
             return "MALFORMED", "leaf_not_string", {}
-        hay = res["leaf"].encode("utf-8")
+        try:
+            hay = res["leaf"].encode("utf-8")
+        except UnicodeEncodeError:                  # a lone surrogate is not text this can compare
+            return "MALFORMED", "leaf_not_string", {"note": "leaf is not encodable as UTF-8"}
     else:
         hay = res["slice"] if res["slice"] is not None else res["bytes"]
     detail = {"needle_bytes": len(needle), "haystack_bytes": len(hay)}
@@ -1232,7 +1275,7 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
         emb = sidecar.get("manifest") or {}
         if emb.get("receipts"):
             embedded = Manifest.from_dict(emb)
-            if manifest is not None and manifest.digest() != embedded.digest():
+            if manifest is not None and manifest.digest_or_none() != embedded.digest_or_none():
                 raise SystemExit("REFUSED: the supplied manifest disagrees with the embedded one")
             manifest = manifest or embedded
     if raw is None:
@@ -1277,7 +1320,7 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
         "document": {"name": name, "inline_sha256": _sha256(raw),
                      "canonical_sha256": _sha256(sc["canonical"]) if sc["canonical"] is not None else None},
         "commit": commit,
-        "manifest_digest": manifest.digest() if manifest is not None else None,
+        "manifest_digest": manifest.digest_or_none() if manifest is not None else None,
         "spans": verdicts,
         "counts": counts,
         "sworn_total": sworn_total,
