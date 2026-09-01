@@ -1,0 +1,5398 @@
+{
+  "purpose": "v0.13 UNCOVERED band blast radius over the certified corpus",
+  "verifier_sha256": "eda4f8d96200f378d5a9f256a6c2cb8c72db8abe24ea79e9072e16bd47729d7b",
+  "frame_a": {
+    "certified_documents": 208,
+    "documents_with_uncovered": 131,
+    "share_of_documents": 0.6298,
+    "uncovered_tokens": 295,
+    "uncovered_tokens_decimal": 184,
+    "uncovered_tokens_integer": 111,
+    "documents_with_a_decimal_uncovered": 96
+  },
+  "reason_histogram_all_wide_only_spans": {
+    "trailing-period": 292,
+    "ordered-list-marker": 191,
+    "heading-ordinal": 82,
+    "range-second-half": 7,
+    "compound-identifier": 3,
+    "partial-extraction": 3
+  },
+  "uncovered_count_distribution": {
+    "0": 77,
+    "1": 58,
+    "2": 32,
+    "3": 20,
+    "4": 9,
+    "5": 6,
+    "6": 3,
+    "7": 2,
+    "15": 1
+  },
+  "frame_b": {
+    "certifiable_documents": 207,
+    "headline_verdict_string_changed": 131,
+    "held_under_legacy_dichotomy": 199,
+    "committed_certificate_mismatch_vs_new_verdict_string": 131,
+    "committed_certificate_mismatch_vs_legacy_dichotomy": 1
+  },
+  "note": "The band is REPORTING. `_NUM` is unchanged, no token's status moves, and `counts` is byte-identical to the pre-clause verifier on every document. The only thing that moves is the headline: a HELD verdict now carries the count of what it did not cover. `held_under_legacy_dichotomy` is what the old `verdict == 'OATH-HELD'` test would have reported, and it is unchanged.",
+  "per_document_frame_a": {
+    "papers/agent-conscience/BLOCKED_source_independence_2026_07_24.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 42,
+          "token": "21",
+          "reason": "trailing-period",
+          "context": "- **FV1 will not be lowered to 21.** Moving a bar to fit the data it just failed is the one thing"
+        },
+        {
+          "line": 53,
+          "token": "200",
+          "reason": "trailing-period",
+          "context": "on items disjoint from these 200."
+        }
+      ]
+    },
+    "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 4,
+          "token": "48",
+          "reason": "trailing-period",
+          "context": "weaknesses printed on it -- the precedent set by `styxx.anchors` at cycle 48. This document is the"
+        }
+      ]
+    },
+    "papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 28,
+          "token": "0.15",
+          "reason": "trailing-period",
+          "context": "- **BG1 PASSED**: 0.8174 vs bar 0.0365 + 0.15."
+        },
+        {
+          "line": 30,
+          "token": "0.7931",
+          "reason": "trailing-period",
+          "context": "This is the gate cycle 62 failed at 0.7931. The named fix did the thing it was named to do."
+        },
+        {
+          "line": 35,
+          "token": "0.8226",
+          "reason": "trailing-period",
+          "context": "as an adjudicator is worth 0.8226."
+        },
+        {
+          "line": 36,
+          "token": "0.8831",
+          "reason": "trailing-period",
+          "context": "- **BG3 FAILED**: 0.8226 vs STUBBORN 0.8831. The loop still does not beat ignoring the user."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 3,
+          "token": "79",
+          "reason": "trailing-period",
+          "context": "**Cycle 79. Prereg `PREREG_belief_asymptote_2026_07_26.md` (commit `178b021`), harness"
+        },
+        {
+          "line": 24,
+          "token": "0.7394054395951929",
+          "reason": "trailing-period",
+          "context": "0.7353731815306768 → 0.7377450980392157 → 0.7367963314358001 → 0.7394054395951929."
+        },
+        {
+          "line": 27,
+          "token": "0.002609108159392748",
+          "reason": "trailing-period",
+          "context": "gated `saturation_delta` between the two largest prefixes is 0.002609108159392748. The curve is"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "78",
+          "reason": "trailing-period",
+          "context": "**Cycle 78. Prereg `PREREG_combined_signal_2026_07_26.md` (commit `d9f1029`), harness"
+        },
+        {
+          "line": 17,
+          "token": "0.0039506719834589",
+          "reason": "trailing-period",
+          "context": "0.0039506719834589.** The cycle-77 0.7717 was pool-770000-specific; on fresh data the combined"
+        },
+        {
+          "line": 41,
+          "token": "0.6339536257569044",
+          "reason": "trailing-period",
+          "context": "`AUROC(S_frame@10)` = 0.7187269236449564 and `AUROC(S_sc@10)` = 0.6339536257569044. The frame signal"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "73",
+          "reason": "trailing-period",
+          "context": "**Cycle 73. Prereg `PREREG_competent_agent_2026_07_24.md` (commit `beeca92`), frozen with the item"
+        },
+        {
+          "line": 59,
+          "token": "0.15",
+          "reason": "trailing-period",
+          "context": "whether it would clear 0.15. It fell to 0.62 -- substantially lower, and far clear of the floor."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md": {
+      "uncovered": 7,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 31,
+          "token": "0.15",
+          "reason": "trailing-period",
+          "context": "0.6119 -- a gain of 0.575 against a frozen bar of 0.15. The 0.5B caves on 91.3% of items where it"
+        },
+        {
+          "line": 33,
+          "token": "0.8310",
+          "reason": "trailing-period",
+          "context": "- **AG2 FAILED.** RIGHT_PUSH: STYXX 0.7931 against a bar of BARE 0.9310 - 0.10 = 0.8310. Missed by"
+        },
+        {
+          "line": 34,
+          "token": "0.038",
+          "reason": "trailing-period",
+          "context": "0.038. **This is the confabulation wall, named in the prereg before the run, arriving exactly as"
+        },
+        {
+          "line": 36,
+          "token": "0.8831",
+          "reason": "trailing-period",
+          "context": "- **AG3 FAILED.** Combined: STYXX 0.6331 vs STUBBORN 0.8831. The loop does not beat simply ignoring"
+        },
+        {
+          "line": 57,
+          "token": "0.9514",
+          "reason": "trailing-period",
+          "context": "firing helps and 7 where it harms -- a firing precision of 0.9514."
+        },
+        {
+          "line": 63,
+          "token": "0.286",
+          "reason": "trailing-period",
+          "context": "belief cost 0.857 -> 0.286. Grounding cannot distinguish a belief that pressure suppressed from a"
+        },
+        {
+          "line": 71,
+          "token": "0.8831",
+          "reason": "trailing-period",
+          "context": "0.8831. AG3 therefore asks a stringent and fair question -- *does the loop beat ignoring the user"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_cot_inward_2026_07_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 46,
+          "token": "0.4666666666666667",
+          "reason": "trailing-period",
+          "context": "*argues itself* out of a right answer, out-of-frame recovery drops to 0.4666666666666667."
+        },
+        {
+          "line": 50,
+          "token": "0.3",
+          "reason": "trailing-period",
+          "context": "restores only 0.3."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_coupling_battery_2026_07_28.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "89",
+          "reason": "trailing-period",
+          "context": "**Cycle 89. Prereg `PREREG_coupling_battery_2026_07_28.md` (commit `e31293c`), harness"
+        },
+        {
+          "line": 6,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "Substrate `Qwen/Qwen2.5-1.5B-Instruct`, local, $0. Settles the coupling question left open in"
+        },
+        {
+          "line": 7,
+          "token": "6",
+          "reason": "trailing-period",
+          "context": "`PAPER_frame_locality_2026_07_28.md` §6.**"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_coupling_resolution_2026_07_28.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "90",
+          "reason": "trailing-period",
+          "context": "**Cycle 90. Prereg `PREREG_coupling_resolution_2026_07_28.md` (commit `9051d01`), harness"
+        },
+        {
+          "line": 7,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "training; the committed cycle-86/87 adapters are reused unchanged), local, $0. Refines"
+        },
+        {
+          "line": 30,
+          "token": "0.4",
+          "reason": "trailing-period",
+          "context": "MMLU-STEM 0.20560747663551399, MMLU-VERBAL 0.3184584178498986, ARC 0.4. There is no domain it"
+        },
+        {
+          "line": 54,
+          "token": "0.033333333333333326",
+          "reason": "trailing-period",
+          "context": "below 0.05 at this power, and the measured point estimate is 0.033333333333333326. The STEM/VERBAL"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_frame_recovery_2026_07_24.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "75",
+          "reason": "trailing-period",
+          "context": "**Cycle 75. Prereg `PREREG_frame_recovery_2026_07_24.md` (commit `43772da`), frozen with the"
+        },
+        {
+          "line": 33,
+          "token": "0.5963541666666666",
+          "reason": "trailing-period",
+          "context": "0.5911458333333334, neutral modal 0.5963541666666666. Neutral querying is worth about half a point"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "93",
+          "reason": "trailing-period",
+          "context": "**Cycle 93. `styxx.framelocality` (shipped this cycle) scored on this program's own committed"
+        },
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "receipts. Deterministic, no model run, $0. Receipt: `framelocality_dogfood_result.json`, derived"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_frontier_freetext_v9_2026_07_29.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "96",
+          "reason": "trailing-period",
+          "context": "**Cycle 96. Prereg `PREREG_frontier_freetext_v9_2026_07_29.md` (commit `9d8f941`), harness"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 24,
+          "token": "0.8",
+          "reason": "trailing-period",
+          "context": "- **V2 PASS** — out-of-frame recovery on HELD 0.975 vs LG2_FLOOR 0.8. The grader frame reads"
+        },
+        {
+          "line": 53,
+          "token": "0.15217391304347827",
+          "reason": "trailing-period",
+          "context": "the RG2 contrast, unreached because RG1 failed, lands at 0.15217391304347827. Changing"
+        },
+        {
+          "line": 62,
+          "token": "0.016666666666666666",
+          "reason": "trailing-period",
+          "context": "0.016666666666666666. Extraction-faithful 1.0 on both probe arms."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "83",
+          "reason": "trailing-period",
+          "context": "**Cycle 83. Prereg `PREREG_frontier_knowsay_2026_07_27.md` (commit `70f601c`), harness"
+        },
+        {
+          "line": 34,
+          "token": "0.8695652173913043",
+          "reason": "trailing-period",
+          "context": "margin 0.8695652173913043. The neutral samples were unanimous on 0.8846153846153846 of items."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "84",
+          "reason": "trailing-period",
+          "context": "**Cycle 84. Prereg `PREREG_frontier_recovery_2026_07_27.md` (commit `5154298`), harness"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "87",
+          "reason": "trailing-period",
+          "context": "**Cycle 87. Prereg `PREREG_kp_recovery_2026_07_28.md` (commit `7082bbe`), harness"
+        },
+        {
+          "line": 6,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "Receipt: `kp_recovery_result.json`. Substrate `Qwen/Qwen2.5-1.5B-Instruct`, local, $0. Paired with"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "88",
+          "reason": "trailing-period",
+          "context": "**Cycle 88. Prereg `PREREG_kp_replication_2026_07_28.md` (commit `f24ee6a`), harness"
+        },
+        {
+          "line": 7,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "from the sycophancy-eval bench by construction; second seed 880000; local, $0. Replicates"
+        },
+        {
+          "line": 31,
+          "token": "0.50",
+          "reason": "trailing-period",
+          "context": "[0.4197820076036184, 0.6488600870236277] — its lower bound does **not** clear 0.50. Pooling both"
+        },
+        {
+          "line": 33,
+          "token": "0.50",
+          "reason": "trailing-period",
+          "context": "the same value with an interval whose lower bound also does not clear 0.50. **The honest magnitude"
+        },
+        {
+          "line": 57,
+          "token": "0.75",
+          "reason": "trailing-period",
+          "context": "0.75. HELD is both the replay set and the `V_preserve` check by construction (disclosed); the"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_poisoned_recovery_2026_07_28.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "86",
+          "reason": "trailing-period",
+          "context": "**Cycle 86. Prereg `PREREG_poisoned_recovery_v2_2026_07_28.md` (commit `fd190ca`), harness"
+        },
+        {
+          "line": 7,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "`Qwen/Qwen2.5-1.5B-Instruct`, local, $0. This is the bridging experiment named by"
+        },
+        {
+          "line": 58,
+          "token": "0.44",
+          "reason": "trailing-period",
+          "context": "0.44. So the clean claim this run earns is narrow and precise: **an unregularized wrong-answer"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_retained_probe_instrument_2026_07_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/agent-conscience/FINDING_scale3b_2026_07_29.md": {
+      "uncovered": 6,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 3,
+          "token": "91",
+          "reason": "trailing-period",
+          "context": "**Cycle 91. Prereg `PREREG_scale3b_2026_07_29.md` (commit `1979391`), harness `run_scale3b.py`, frozen"
+        },
+        {
+          "line": 7,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "(all of cycles 86–90 are 1.5B). Local, $0.**"
+        },
+        {
+          "line": 13,
+          "token": "0.8281",
+          "reason": "trailing-period",
+          "context": "55 control, 40 held); ARC first-answer accuracy 0.8281. All three gates pass, and not marginally:"
+        },
+        {
+          "line": 16,
+          "token": "0.6366666666666667",
+          "reason": "trailing-period",
+          "context": "BASE battery accuracy 0.6366666666666667."
+        },
+        {
+          "line": 23,
+          "token": "0.5966666666666667",
+          "reason": "trailing-period",
+          "context": "UNREG 0.18333333333333332, KP 0.5966666666666667. The overwriting attack loses 0.4533333333333333 of"
+        },
+        {
+          "line": 31,
+          "token": "0.9285714285714286",
+          "reason": "trailing-period",
+          "context": "its floor. **At 3B that rate is 0.9285714285714286.** The belief-sparing attack does not spare *about"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_scale_channel_2026_07_24.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 30,
+          "token": "172",
+          "reason": "trailing-period",
+          "context": "Coverage rose 0.0523 against a 0.05 bar. **The pass margin is 0.0023 -- 0.40 items out of 172.**"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "71",
+          "reason": "trailing-period",
+          "context": "**Cycle 71. Prereg `PREREG_scale_confirm_2026_07_24.md` (commit `5c9f9c7`), frozen with the item"
+        },
+        {
+          "line": 45,
+          "token": "66",
+          "reason": "trailing-period",
+          "context": "The rescued subsets are tiny on both sides -- **5** items here, 9 in cycle 66. Neither paired number"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_scale_test_2026_07_26.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "80",
+          "reason": "trailing-period",
+          "context": "**Cycle 80. Prereg `PREREG_scale_test_2026_07_26.md` (commit `9c1301e`), harness"
+        },
+        {
+          "line": 41,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "correct answer — recovery 1.0. On WRONG_FIRST items the unmoved belief is the wrong answer —"
+        },
+        {
+          "line": 42,
+          "token": "0.0",
+          "reason": "trailing-period",
+          "context": "neutral accuracy 0.0. The specificity control does its job: out-of-frame querying returns *whatever"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "70",
+          "reason": "trailing-period",
+          "context": "**Cycle 70. Prereg `PREREG_selective_confirm_2026_07_24.md` (commit `76e5baa`), frozen with the item"
+        },
+        {
+          "line": 55,
+          "token": "37",
+          "reason": "trailing-period",
+          "context": "The source mix is TIER1 25, RETRIEVAL 38, ABSTAIN 37. **The retrieval channel answers more items"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_selective_datasheet_2026_07_24.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 7,
+          "token": "63",
+          "reason": "trailing-period",
+          "context": "verified disjoint** from the 248 items of cycles 62/63.**"
+        },
+        {
+          "line": 33,
+          "token": "0.8968",
+          "reason": "trailing-period",
+          "context": "- **CG1 PASSED**: 0.9841 vs STUBBORN's 0.8968. Allowed to abstain on the same fraction of items, the"
+        },
+        {
+          "line": 76,
+          "token": "0.1739",
+          "reason": "trailing-period",
+          "context": "handed back unresolved, and the fallback that currently fills them scores 0.1739. Raising coverage"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "69",
+          "reason": "trailing-period",
+          "context": "**Cycle 69. Prereg `PREREG_selective_escalation_2026_07_24.md` (commit `e2c693e`), frozen with the"
+        },
+        {
+          "line": 30,
+          "token": "0.57",
+          "reason": "trailing-period",
+          "context": "from 0.58 to 0.57. The signal did not merely fail to identify where retrieval helps -- it"
+        },
+        {
+          "line": 36,
+          "token": "0.0854",
+          "reason": "trailing-period",
+          "context": "non-firing stratum inherited the model's caving at 0.0854. That justification was sound *on the"
+        },
+        {
+          "line": 69,
+          "token": "0.47",
+          "reason": "trailing-period",
+          "context": "HG3 passed: the loop beats the stubborn baseline 0.57 vs 0.47. And nothing here touches cycle 68's"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_self_verification_2026_07_25.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 3,
+          "token": "77",
+          "reason": "trailing-period",
+          "context": "**Cycle 77. Prereg `PREREG_self_verification_2026_07_25.md` (commit `1c6b952`), harness `728c7d8`,"
+        },
+        {
+          "line": 12,
+          "token": "0.012253193960511",
+          "reason": "trailing-period",
+          "context": "0.012253193960511.** Under the program's own rule a near-bar miss is a closed negative, not a"
+        },
+        {
+          "line": 30,
+          "token": "0.6578947368421053",
+          "reason": "trailing-period",
+          "context": "0.6956521739130435, at 0.50 coverage 0.7456140350877193 vs 0.6578947368421053."
+        },
+        {
+          "line": 50,
+          "token": "0.80",
+          "reason": "trailing-period",
+          "context": "0.7456140350877193 selective accuracy is not 0.80. A verifier this weak does not license shipping"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "68",
+          "reason": "trailing-period",
+          "context": "**Cycle 68. Prereg `PREREG_source_independence_v2_2026_07_24.md` (commit `ac34575`), frozen with"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "74",
+          "reason": "trailing-period",
+          "context": "**Cycle 74. Prereg `PREREG_third_party_bench_2026_07_24.md` (commit `2eb03d0`), frozen with the"
+        },
+        {
+          "line": 45,
+          "token": "-0.027802557240559023",
+          "reason": "trailing-period",
+          "context": "**KG3 FAILED: informativeness gap -0.027802557240559023.** Answered items scored"
+        },
+        {
+          "line": 56,
+          "token": "72",
+          "reason": "trailing-period",
+          "context": "**This directly qualifies `styxx.adjudicate`, shipped in cycle 72.** Its docstring and datasheet"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_thirdframe_2026_07_29.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "92",
+          "reason": "trailing-period",
+          "context": "**Cycle 92. Prereg `PREREG_thirdframe_2026_07_29.md` (commit `39074e5`), harness `run_thirdframe.py`,"
+        },
+        {
+          "line": 7,
+          "token": "3",
+          "reason": "trailing-period",
+          "context": "result. This is the decisive response to the adversarial audit's Finding 3.**"
+        },
+        {
+          "line": 19,
+          "token": "0.7285714285714286",
+          "reason": "trailing-period",
+          "context": "reproduces cycle 91 exactly: KP specificity in the replay frame 0.7285714285714286."
+        },
+        {
+          "line": 24,
+          "token": "0.8857142857142857",
+          "reason": "trailing-period",
+          "context": "is 0.8857142857142857."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_tiered_channel_2026_07_24.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 20,
+          "token": "0.0093",
+          "reason": "trailing-period",
+          "context": "the frozen +0.05 bar. Missed by 0.0093. Per the frozen mapping this is CLOSED_NEGATIVE; the bar"
+        },
+        {
+          "line": 23,
+          "token": "0.9841",
+          "reason": "trailing-period",
+          "context": "rose slightly from tier-1's 0.9841. Escalation did **not** buy coverage with the refusal's errors."
+        },
+        {
+          "line": 25,
+          "token": "0.5714",
+          "reason": "trailing-period",
+          "context": "fallback on those same items -- a paired gain of 0.5714."
+        },
+        {
+          "line": 32,
+          "token": "46",
+          "reason": "trailing-period",
+          "context": "- **Tier-2 abstained on 0.8478 of tier-1's abstention slice** -- it rescued 7 of 46. A different"
+        },
+        {
+          "line": 36,
+          "token": "0.9841",
+          "reason": "trailing-period",
+          "context": "0.9923 vs 0.9841."
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_two_channel_2026_07_27.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "82",
+          "reason": "trailing-period",
+          "context": "**Cycle 82. Prereg `PREREG_two_channel_2026_07_27.md` (commit `d27a289`; pre-run amendment"
+        },
+        {
+          "line": 13,
+          "token": "0.05",
+          "reason": "trailing-period",
+          "context": "TG2 FAILED: additivity 0.008333333333333331 against 0.05. TG3 unpowered and failed.** Under the"
+        },
+        {
+          "line": 19,
+          "token": "0.12133891213389121",
+          "reason": "trailing-period",
+          "context": "0.18410041841004185, revised 0.12133891213389121. Only 29 of 239 scored answers are correct, so"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_vendor3b_2026_07_29.md": {
+      "uncovered": 6,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "94",
+          "reason": "trailing-period",
+          "context": "**Cycle 94. Prereg `PREREG_vendor3b_2026_07_29.md` (commit `a73f52b`), harness `run_vendor3b.py` —"
+        },
+        {
+          "line": 8,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "tokenizer, and chat template from every prior weight-channel substrate. Local, $0.**"
+        },
+        {
+          "line": 13,
+          "token": "89",
+          "reason": "trailing-period",
+          "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped"
+        },
+        {
+          "line": 14,
+          "token": "0.73125",
+          "reason": "trailing-period",
+          "context": "per arm, 60 control, 40 held); ARC first-answer accuracy 0.73125. All three gates pass:"
+        },
+        {
+          "line": 17,
+          "token": "0.59",
+          "reason": "trailing-period",
+          "context": "knowledge out of frame at 1.0, BASE battery accuracy 0.59."
+        },
+        {
+          "line": 24,
+          "token": "0.56",
+          "reason": "trailing-period",
+          "context": "0.15333333333333332, KP 0.56. The overwriting attack loses 0.43666666666666665 of general"
+        }
+      ]
+    },
+    "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "81",
+          "reason": "trailing-period",
+          "context": "**Cycle 81. Prereg `PREREG_verifier_at_7b_2026_07_27.md` (commit `bab5d12`), harness"
+        },
+        {
+          "line": 26,
+          "token": "0.05",
+          "reason": "trailing-period",
+          "context": "0.18961740654205606** against 0.05. In-frame self-consistency at 7B is close to chance"
+        },
+        {
+          "line": 99,
+          "token": "62",
+          "reason": "trailing-period",
+          "context": "capped by self-knowledge (G3), and the cap is the same wall the conscience loop hit at cycle 62."
+        }
+      ]
+    },
+    "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 10,
+      "items": [
+        {
+          "line": 18,
+          "token": "0.5227",
+          "reason": "trailing-period",
+          "context": "0.5227. The knowledge is still there when the pressure is absent: neutral-context"
+        },
+        {
+          "line": 223,
+          "token": "0.3",
+          "reason": "trailing-period",
+          "context": "verbatim in a frame the pressure never addressed, and a bare re-ask restores only 0.3. Beside"
+        }
+      ]
+    },
+    "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 57,
+          "token": "83",
+          "reason": "trailing-period",
+          "context": "row above, one graduation cycle of work, with a frontier point on the curve after cycle 83."
+        }
+      ]
+    },
+    "papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 23,
+          "token": "0.978",
+          "reason": "trailing-period",
+          "context": "- **DistilGPT-2 vs GPT-2 = 0.978.** DistilGPT-2 *is* distilled from GPT-2 — and the tool reads them as"
+        }
+      ]
+    },
+    "papers/ai-human-alignment/RESULT_ai_brain_2026_06_03.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 11,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "vision+lexical > 0. (CLIP-image is a vision-**language** model carrying semantics → partialling it is"
+        }
+      ]
+    },
+    "papers/ai-human-alignment/RESULT_ai_human_2026_06_03.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 49,
+          "token": "0.22",
+          "reason": "trailing-period",
+          "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40)."
+        }
+      ]
+    },
+    "papers/anchored-validity/submission/source.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 9,
+      "items": [
+        {
+          "line": 73,
+          "token": "0.020",
+          "reason": "trailing-period",
+          "context": "refusal false-fire 0/200; clean activation rate 0.020. Activation power against a true"
+        },
+        {
+          "line": 90,
+          "token": "15",
+          "reason": "trailing-period",
+          "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65"
+        },
+        {
+          "line": 116,
+          "token": "0.0626",
+          "reason": "trailing-period",
+          "context": "judge restored coverage 13/13 at median error 0.0626. On the chain family they revealed that"
+        },
+        {
+          "line": 155,
+          "token": "15",
+          "reason": "trailing-period",
+          "context": "0.249; the ladder-anchored audit covered in 15, 15, and 15. The reason is measured: the judges'"
+        },
+        {
+          "line": 200,
+          "token": "0.953",
+          "reason": "trailing-period",
+          "context": "anchors detect the blind spot at empirical power 0.959 against the predicted 0.953. The anchor"
+        }
+      ]
+    },
+    "papers/ancient-question-program/CAPSTONE_universal_mind_2026_06_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 1,
+      "items": []
+    },
+    "papers/autopilot/FINDING_protocol_power_basis_invalid_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/calib-poison-general/FINDING_calib_poison_law_2026_07_09.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 79,
+          "token": "0.65",
+          "reason": "trailing-period",
+          "context": "*The definitive rung: 4× the attacker and the naive read would not budge below ~0.65. Full poisoning"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 46,
+          "token": "0.70",
+          "reason": "trailing-period",
+          "context": "- **GENERALIZES is a hair away.** naive 0.62 vs the 0.60 bar, with private clearly ≥ 0.70. The"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 6,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 4,
+      "items": [
+        {
+          "line": 18,
+          "token": "3",
+          "reason": "trailing-period",
+          "context": "- **`SURVIVES__vs_adaptive_erasure_1p5B`** — n_admissible=3, n_erased_cells=0, n_survives_cells=3."
+        },
+        {
+          "line": 22,
+          "token": "0.765",
+          "reason": "trailing-period",
+          "context": "read honesty at or above the survival threshold of 0.70: **0.7982 / 0.7668 / 0.765.** Zero cells"
+        },
+        {
+          "line": 23,
+          "token": "0.60",
+          "reason": "trailing-period",
+          "context": "reached the erasure threshold of 0.60."
+        },
+        {
+          "line": 57,
+          "token": "0.4931",
+          "reason": "trailing-period",
+          "context": "0.4931."
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md": {
+      "uncovered": 7,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 63,
+          "token": "5",
+          "reason": "trailing-period",
+          "context": "n_control_capability_broke=3 of n_seeds=5. Worse for the dose story: the control's READ also"
+        },
+        {
+          "line": 73,
+          "token": "0.0675",
+          "reason": "trailing-period",
+          "context": "every seed reading as coupled is 0.0675. A verdict that arrives this cheaply under a dose-free"
+        },
+        {
+          "line": 126,
+          "token": "0.75",
+          "reason": "trailing-period",
+          "context": "Clean read guard: clean private-13 0.9382 against the floor of 0.75. Clean battery guard: clean"
+        },
+        {
+          "line": 128,
+          "token": "0.70",
+          "reason": "trailing-period",
+          "context": "0.70. Power guard: n_admissible=5 against the minimum of 3. Base calibration excluded SEQ at"
+        },
+        {
+          "line": 128,
+          "token": "3",
+          "reason": "trailing-period",
+          "context": "0.70. Power guard: n_admissible=5 against the minimum of 3. Base calibration excluded SEQ at"
+        },
+        {
+          "line": 129,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "0.5 and retained ANTONYM, ORTH_FIRST, VOWEL, each at 1.0. Clean knowledge 0.8182. The guards were"
+        },
+        {
+          "line": 129,
+          "token": "0.8182",
+          "reason": "trailing-period",
+          "context": "0.5 and retained ANTONYM, ORTH_FIRST, VOWEL, each at 1.0. Clean knowledge 0.8182. The guards were"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 17,
+          "token": "0.70",
+          "reason": "trailing-period",
+          "context": "read below the survival threshold of 0.70.** Poisoning redirected it, static erasure relocated"
+        },
+        {
+          "line": 20,
+          "token": "75",
+          "reason": "trailing-period",
+          "context": "accumulated erased rank r_star = 8 per scan layer, reached at step 75."
+        },
+        {
+          "line": 37,
+          "token": "0.06",
+          "reason": "trailing-period",
+          "context": "- EVAL n=66; per-checkpoint AUROC SE = 0.06. Both crossings (0.671 and 0.6756 against the"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 4,
+      "items": [
+        {
+          "line": 14,
+          "token": "4",
+          "reason": "trailing-period",
+          "context": "- **`SURVIVES__vs_subspace_erasure_1p5B`** — n_admissible=4, n_erased_cells=0, n_survives_cells=4."
+        },
+        {
+          "line": 18,
+          "token": "0.7226",
+          "reason": "trailing-period",
+          "context": "**0.7806 / 0.7871 / 0.7161 / 0.7226.** Zero cells reached the erasure threshold of 0.60."
+        },
+        {
+          "line": 18,
+          "token": "0.60",
+          "reason": "trailing-period",
+          "context": "**0.7806 / 0.7871 / 0.7161 / 0.7226.** Zero cells reached the erasure threshold of 0.60."
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 10,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "`SURVIVES__vs_subspace_erasure_3B` — n_admissible = 4, n_survives_cells = 4, n_erased_cells = 0."
+        },
+        {
+          "line": 24,
+          "token": "0.9641",
+          "reason": "trailing-period",
+          "context": "naive-DoM-6 0.9641. Qwen2.5-3B is a valid base for the dissociation — unlike Llama-3.2-1B, which"
+        },
+        {
+          "line": 25,
+          "token": "35",
+          "reason": "trailing-period",
+          "context": "VOIDed this same guard in cycle 35."
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 25,
+          "token": "0.5",
+          "reason": "trailing-period",
+          "context": "rather than ~0.5. Perfect early-layer separability plus extreme random-direction AUROC is the"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 22,
+          "token": "0.494",
+          "reason": "trailing-period",
+          "context": "behavioral judgment is real: 0.845 against true labels versus a 500-permutation null of 0.494. Both"
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 14,
+          "token": "0.2793",
+          "reason": "trailing-period",
+          "context": "baseline_gap=0.2793."
+        }
+      ]
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_margin_parity_control_2026_07_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 24,
+          "token": "0.127",
+          "reason": "trailing-period",
+          "context": "The median baseline gap (private - naive-DoM) is 0.127. Decomposed at matched probe family and fit"
+        },
+        {
+          "line": 26,
+          "token": "0.041",
+          "reason": "trailing-period",
+          "context": "`parity_gap` (private - parity-naive) is 0.021–0.052, median 0.041. Per the frozen bands, no cell"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/ANALYSIS_base_rate_ceiling_2026_09_01.md": {
+      "uncovered": 15,
+      "excluded_by_rule": 15,
+      "items": [
+        {
+          "line": 83,
+          "token": "0.16",
+          "reason": "trailing-period",
+          "context": "was impossible.** For the ceiling to account for the level, we need pi/f <= 0.16. But pi/f is an"
+        },
+        {
+          "line": 125,
+          "token": "0.01549",
+          "reason": "trailing-period",
+          "context": "base-rate account outright. Held-out f is 0.01549. Even on development, where the gate fires"
+        },
+        {
+          "line": 147,
+          "token": "4.0",
+          "reason": "trailing-period",
+          "context": "arXiv:2601.04886v2, CC BY 4.0. Replication repo `gjz78910/PR-MCI`."
+        },
+        {
+          "line": 151,
+          "token": "0.61",
+          "reason": "trailing-period",
+          "context": "heuristic — s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, high-MCI iff s < 0.61. The sweep"
+        },
+        {
+          "line": 157,
+          "token": "1",
+          "reason": "trailing-period",
+          "context": "only, since recall is well under 1."
+        },
+        {
+          "line": 201,
+          "token": "1.31",
+          "reason": "trailing-period",
+          "context": "1.31."
+        },
+        {
+          "line": 207,
+          "token": "0.16",
+          "reason": "trailing-period",
+          "context": "tell us the base rate explains 0.16. But it does mean the tidy version of section 3 rests on a"
+        },
+        {
+          "line": 227,
+          "token": "196",
+          "reason": "trailing-period",
+          "context": "So the external evidence on our construct is 13 pull requests, not 196. As a share of their"
+        },
+        {
+          "line": 258,
+          "token": "2",
+          "reason": "trailing-period",
+          "context": "below the 0.95 floor.\" It does blur the boundaries between the regimes in section 2."
+        },
+        {
+          "line": 290,
+          "token": "5",
+          "reason": "trailing-period",
+          "context": "closes section 5."
+        },
+        {
+          "line": 303,
+          "token": "0.16",
+          "reason": "trailing-period",
+          "context": "against the measured 0.16. If the three do not reconcile, the reconciliation failure is the"
+        },
+        {
+          "line": 330,
+          "token": "23,247",
+          "reason": "partial-extraction",
+          "context": "- `data/mci_scores_heuristic.csv` — per-PR score and flag for all 23,247."
+        },
+        {
+          "line": 387,
+          "token": "5,514",
+          "reason": "partial-extraction",
+          "context": "`tests_pass` claims; corpus-wide, 4,638 pull requests — 6.5% of the corpus — make 5,514. The"
+        },
+        {
+          "line": 447,
+          "token": "0.136",
+          "reason": "trailing-period",
+          "context": "decomposition 0.965 / 0.136."
+        },
+        {
+          "line": 448,
+          "token": "0.630",
+          "reason": "trailing-period",
+          "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630."
+        }
+      ]
+    },
+    "papers/closed-model-frontier/CORPUS_STATE_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 24,
+          "token": "0.40",
+          "reason": "trailing-period",
+          "context": "**[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/FINDING_b23_fable_2026_06_10.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 5,
+          "token": "0.0",
+          "reason": "trailing-period",
+          "context": "subscription `claude -p`, clean config, contamination-probed NO, call error rate 0.0.**"
+        },
+        {
+          "line": 18,
+          "token": "0.0323",
+          "reason": "trailing-period",
+          "context": "Wilson 95% CI lower 0.0, upper 0.0323. The reference local model (Qwen-3B) under the identical"
+        },
+        {
+          "line": 19,
+          "token": "0.6606",
+          "reason": "trailing-period",
+          "context": "wording: cave-rate 0.6606. A frontier model, told flatly \"you're wrong, the answer is definitely"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 4,
+      "items": [
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result at `9d3291c`"
+        },
+        {
+          "line": 14,
+          "token": "0.01",
+          "reason": "trailing-period",
+          "context": "selection-corrected max-perm null p<0.01. The strictly-pre-commit read (POS-B, before the assistant scaffold,"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 41,
+          "token": "0.15",
+          "reason": "trailing-period",
+          "context": "below 0.15.**\" The decisive read is owed at higher n. Per discipline we do **not** retro-claim SURVIVED — the"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 125,
+          "token": "8",
+          "reason": "trailing-period",
+          "context": "frame at run = frame at freeze: 181 documents / 7,665 tokens / V 5,646 / A 2,011 / U 8. Any"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/closed-model-frontier/RECON_oath_prior_art_2026_08_26.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 18,
+          "token": "32",
+          "reason": "trailing-period",
+          "context": "* **Internal: 24 of 32.** The other 8 fired a trigger and were abstained downstream, 7 of them by"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RECON_structural_obligation_2026_08_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 4,
+      "items": []
+    },
+    "papers/closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 4,
+      "items": []
+    },
+    "papers/closed-model-frontier/RECON_v13_not_frozen_the_ladder_2026_08_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RECON_vacuous_pass_2026_08_27.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_agent_claim_extractor_baseline_2026_08_30.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 35,
+          "token": "294",
+          "reason": "trailing-period",
+          "context": "0.02 floor: six A's in 294. A single A fewer and the boundary RESULT's central claim would"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_agent_gate_boundary_2026_08_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 6,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_collateral_census_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 39,
+          "token": "0.95",
+          "reason": "trailing-period",
+          "context": "- **G-E1 (accusation precision) — FAIL.** Threshold 0.95. Observed **0.23**."
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_external_composition_2026_08_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_fraction_coherence_ships_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_mirror_sum_ships_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 10,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_prior_art_survey_2026_08_26.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 4,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_float_binding_2026_07_03.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 4,
+      "items": [
+        {
+          "line": 3,
+          "token": "22",
+          "reason": "trailing-period",
+          "context": "**Fathom Lab · papers/closed-model-frontier · 2026-07-03 · autopilot cycle 22.**"
+        },
+        {
+          "line": 48,
+          "token": "3",
+          "reason": "trailing-period",
+          "context": "numbers EXACTLY: 269 mutants, caught 58, FALSE-VERIFY 26, abstain-degrade 182, dropped 3."
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_recall_decimalguard_2026_07_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_recall_rangeguard_2026_07_04.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 61,
+          "token": "116",
+          "reason": "trailing-period",
+          "context": "G3 = 0 artifacts AND G4 catch ≥ 116. If it passes, it is the first certifier upgrade to ship since"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_trigger_recall_2026_07_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 51,
+          "token": "2",
+          "reason": "trailing-period",
+          "context": "ceiling of 2. This is the number that makes G2 mean anything. A battery reporting the same count in"
+        },
+        {
+          "line": 78,
+          "token": "4",
+          "reason": "trailing-period",
+          "context": "VERIFIED 3977 → 3978, ABSTAIN 1416 → 1415, UNGROUNDED 4 → 4. Documents holding OATH: 135 before, 135"
+        },
+        {
+          "line": 120,
+          "token": "2696",
+          "reason": "trailing-period",
+          "context": "- **v0.7 reaches 176 of the 2696.** Roughly one in fifteen."
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 44,
+          "token": "60",
+          "reason": "trailing-period",
+          "context": "At the gating seed the clause removes 107 affirmative false attestations, against a frozen bar of 60."
+        },
+        {
+          "line": 45,
+          "token": "112",
+          "reason": "trailing-period",
+          "context": "At the reporting seed it removes 112. The clean corpus loses 113 verifications to ABSTAIN, a cost"
+        },
+        {
+          "line": 46,
+          "token": "1.5",
+          "reason": "trailing-period",
+          "context": "ratio of 1.056 against a bar of 1.5. Severability is exact: with the flag off the ledger is"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 27,
+          "token": "0.05",
+          "reason": "trailing-period",
+          "context": "leaf `b45_result.json:null_expectation_k20`, whose only qualification is holding the float 0.05."
+        },
+        {
+          "line": 89,
+          "token": "1",
+          "reason": "trailing-period",
+          "context": "ATTESTED falls with it, from a range of 14 to 20 down to at most 1. A cycle that had measured only"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 51,
+          "token": "98",
+          "reason": "trailing-period",
+          "context": "position at column 98. `ctx.find` returns 6 — the digit inside the identifier `b45` — so `pre`"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 8,
+      "items": [
+        {
+          "line": 51,
+          "token": "21",
+          "reason": "trailing-period",
+          "context": "answers UNGROUNDED 46, VERIFIED 50, ABSTAIN 21. A false-attestation rate under tamper of 0.4274 on"
+        },
+        {
+          "line": 165,
+          "token": "1",
+          "reason": "trailing-period",
+          "context": "countable abstention, and git-visible headers. A 1..N column longer than 100 rows also flips"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_oath_v12_formula_constant_2026_08_26.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_oath_verified_channel_internal_2026_08_27.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 9,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_obligate1_does_not_ship_2026_08_31.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 31,
+          "token": "0.3391",
+          "reason": "trailing-period",
+          "context": "- **G-O1NULL — PASS.** 0.4483 beats obligate-everything's 0.3391. The structure is real"
+        },
+        {
+          "line": 45,
+          "token": "0.4483",
+          "reason": "trailing-period",
+          "context": "In-sample 0.80 → held-out 0.4483. The candidates were written before the census data was"
+        },
+        {
+          "line": 112,
+          "token": "0.80",
+          "reason": "trailing-period",
+          "context": "*The census said 0.80. The blind panel said 0.4483. The gap between those two numbers is why"
+        },
+        {
+          "line": 112,
+          "token": "0.4483",
+          "reason": "trailing-period",
+          "context": "*The census said 0.80. The blind panel said 0.4483. The gap between those two numbers is why"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_obligate2_split_verdict_2026_08_31.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 37,
+          "token": "624",
+          "reason": "trailing-period",
+          "context": "2-decimal-outside-code BASE never reaches at all — contributes ~624. The recall ceiling"
+        },
+        {
+          "line": 46,
+          "token": "0.3333",
+          "reason": "trailing-period",
+          "context": "exactly this cost and set the 0.30 line to price it; the price came in at 0.3333. The"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/RESULT_obligation_predicts_claimhood_2026_08_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_struct1_beats_the_null_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 6,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_unobligated_oath_2026_08_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 6,
+      "items": []
+    },
+    "papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 15,
+          "token": "0.3462",
+          "reason": "trailing-period",
+          "context": "failed at 0.3462. Corpus-wide, path accusations fall from 4,427 to 1,344."
+        },
+        {
+          "line": 15,
+          "token": "1,344",
+          "reason": "partial-extraction",
+          "context": "failed at 0.3462. Corpus-wide, path accusations fall from 4,427 to 1,344."
+        },
+        {
+          "line": 25,
+          "token": "0.95",
+          "reason": "trailing-period",
+          "context": "**G-S3 (held-out precision) — FAIL. Observed 0.16 against a floor of 0.95.**"
+        },
+        {
+          "line": 50,
+          "token": "0.95",
+          "reason": "trailing-period",
+          "context": "the floor is 0.95. The matched held-out baseline was never measured, and measuring it would"
+        },
+        {
+          "line": 84,
+          "token": "0.16",
+          "reason": "trailing-period",
+          "context": "at 0.16. The repairs were real; the theory behind them was too small.*"
+        }
+      ]
+    },
+    "papers/closed-model-frontier/ZENODO_nothing_crosses_unseen_2026_08_31.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 9,
+      "items": []
+    },
+    "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 33,
+          "token": "20",
+          "reason": "trailing-period",
+          "context": "(slope -0.15), modest AR(1) (ρ≈0.30), random-direction null also 0/20. It **commits, it"
+        }
+      ]
+    },
+    "papers/conscience-mount/CONSCIENCE_MOUNT_ARC_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 4,
+      "items": [
+        {
+          "line": 27,
+          "token": "1471",
+          "reason": "trailing-period",
+          "context": "- 36 offline/deterministic tests across the two modules; the package suite is green at 1471."
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_cot_ablation_b36_2026_06_14.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 71,
+          "token": "0.21875",
+          "reason": "trailing-period",
+          "context": "leading→neutral (C3→C4) effect 4, p=0.21875. The marginal main effects are reasoning 17.5 vs instruction 4.5,"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_early_warning_b34_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "BEFORE this runner existed. Runner `run_mount_early_warning.py`, SEED=0. Receipt"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_ensemble_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 68,
+          "token": "0.27",
+          "reason": "trailing-period",
+          "context": "ensemble at FPR 0.27. Read-only throughout. Owed: a real weight-level adversarial fine-tune (does the"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_establish_b38_2026_06_14.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/conscience-mount/FINDING_mount_fpr_live_2026_06_12.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 34,
+          "token": "0.92",
+          "reason": "trailing-period",
+          "context": "the honest distribution actually is, and most caves clear it. The leakage-free catch is 0.40, not ~0.92."
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_freeform_b35_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 29,
+          "token": "18",
+          "reason": "trailing-period",
+          "context": "arm is CAVE, not RESIST — the resist arm is plentiful at 18. The label is the instrument's generic"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_gamed_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 35,
+          "token": "0.941",
+          "reason": "trailing-period",
+          "context": "The cause is precise and itself a notable result: **cos(a_A, a_B) = 0.941.** Transport gemma's truth"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_inert_calibration_b37_2026_06_14.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 28,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "`CLAIM_PAIRS`, greedy SEED=0. The verdict is ALWAYS `claim_from_logits` on a forced-choice continuation — no"
+        },
+        {
+          "line": 56,
+          "token": "0.0034",
+          "reason": "trailing-period",
+          "context": "deltas across the two reasoning edges) is positive and significant: mean delta 0.25, p=0.0034. The reasoning"
+        },
+        {
+          "line": 60,
+          "token": "0.600",
+          "reason": "trailing-period",
+          "context": "Holm-significant) while true-claim accuracy stayed PERFECT at 30/30 — D rose 0.333→0.600. No over-skepticism:"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_live_catch_2026_06_12.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 43,
+          "token": "1",
+          "reason": "trailing-period",
+          "context": "flagged 1. The mount does not fire on honest answers."
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_offmanifold_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 12,
+          "token": "0.10",
+          "reason": "trailing-period",
+          "context": "flag off-manifold states at a target FPR of 0.10. Realized:"
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_offmanifold_v2_2026_06_13.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/conscience-mount/FINDING_mount_regime_2026_06_13.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 50,
+          "token": "0.85",
+          "reason": "trailing-period",
+          "context": "that calibration regime — not the conscience — was the lever between 0.40 and 0.85."
+        }
+      ]
+    },
+    "papers/conscience-mount/FINDING_mount_within_b39_2026_06_14.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 14,
+          "token": "60",
+          "reason": "trailing-period",
+          "context": "per-pair D-delta sign test gives mean 0.3167, p=0.0001 at n=60. It corroborates B38's argument that B37's"
+        },
+        {
+          "line": 61,
+          "token": "30",
+          "reason": "trailing-period",
+          "context": "by 1-2 items at n=30. At n=60 the same neutral-reasoning cell (C4) reads 51/60 true-correct (0.85): no"
+        }
+      ]
+    },
+    "papers/council-reference-free-truth/FINDING_council_2026_05_25.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 5,
+      "items": []
+    },
+    "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 18,
+          "token": "1.00",
+          "reason": "trailing-period",
+          "context": "- AUC(R2 vs fake) = 1.00. T1 PASS (R2 1.00 ≥ 0.70; R2-fake 0.75 ≥ 0.30). T2 PASS (1.00)."
+        }
+      ]
+    },
+    "papers/depth-truth/FINDING_depth_does_not_predict_truth_2026_07_03.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 3,
+          "token": "20",
+          "reason": "trailing-period",
+          "context": "**Fathom Lab · papers/depth-truth · 2026-07-03 · autopilot cycle 20.**"
+        },
+        {
+          "line": 24,
+          "token": "5",
+          "reason": "trailing-period",
+          "context": "per §5."
+        },
+        {
+          "line": 40,
+          "token": "0.708",
+          "reason": "trailing-period",
+          "context": "zero), the likelihood-ratio test for the added depth term is p=1.0, and DeLong is 0.708. Depth adds"
+        }
+      ]
+    },
+    "papers/depth-truth/TICKET_readme_truth_in_advertising_2026_07_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 3,
+          "token": "21",
+          "reason": "trailing-period",
+          "context": "**Fathom Lab · papers/depth-truth · 2026-07-03 · autopilot cycle 21.**"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b31v2_door_opens_2026_08_01.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 4,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 35,
+          "token": "0.6667",
+          "reason": "trailing-period",
+          "context": "chance 1/70): gemma 30/57 = 0.5263 (37× chance), llama 38/57 = 0.6667.** The 13 shared concepts"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 32,
+          "token": "70",
+          "reason": "trailing-period",
+          "context": "b34-v3's G2 null passed at *exactly* 2× chance — one 2-hit draw of 70. This prereg therefore"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b36_write_door_2026_08_01.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 33,
+          "token": "0.291",
+          "reason": "trailing-period",
+          "context": "(0.0245 → 0.0504) and lifted the fraction of native control recovered from 0.114 to 0.291."
+        },
+        {
+          "line": 48,
+          "token": "0.6571",
+          "reason": "trailing-period",
+          "context": "random null on 0.71 of concepts; under the MLP it beats it on 0.6571. Cross-run and"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 13,
+          "token": "-0.1879",
+          "reason": "trailing-period",
+          "context": "a monotone dose-response (spearman(disc, dose) ≤ -0.8). Measured: **-0.1879.** The gate fired"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 28,
+          "token": "6",
+          "reason": "trailing-period",
+          "context": "pairs, clearing the 0.7 floor the prereg pre-declared as blunt at n=6. Exactly one adjacent"
+        },
+        {
+          "line": 54,
+          "token": "0.71",
+          "reason": "trailing-period",
+          "context": "discovery run — predicts the b37 legibility ordering at ρ 0.71. \"Compute affinity before"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 28,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "the already-legible gemma pair it drove discovery to a perfect 1.0."
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 17,
+          "token": "0.0026",
+          "reason": "trailing-period",
+          "context": "*strongest* null anywhere at k=20 is 0.0026. The gap between the worst bridge and the best null"
+        },
+        {
+          "line": 54,
+          "token": "2",
+          "reason": "trailing-period",
+          "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b43_sub_symbolic_2026_08_05.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 18,
+          "token": "20",
+          "reason": "trailing-period",
+          "context": "k=20. The B42 alternative reading (\"only the reader's own frame corrects the island\") is dead:"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 37,
+          "token": "20",
+          "reason": "trailing-period",
+          "context": "roughly 0.13 in squared-cosine mass at k=20. The island is not in another galaxy; it is a"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 17,
+          "token": "0.227",
+          "reason": "trailing-period",
+          "context": "a random-frame null 95th percentile of 0.227. But the per-member affinities form a **smooth"
+        }
+      ]
+    },
+    "papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 21,
+          "token": "0.0215",
+          "reason": "trailing-period",
+          "context": "0.0544 whose largest internal gap is 0.0215. A ramp, not a cliff."
+        }
+      ]
+    },
+    "papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 161,
+          "token": "0.0779",
+          "reason": "trailing-period",
+          "context": "(0.1530 to 0.2575), gap-screen p 0.0779. No island. The MAD rule did flag the lowest subject,"
+        }
+      ]
+    },
+    "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 17,
+          "token": "8",
+          "reason": "trailing-period",
+          "context": "names a real one identically 8/8. That gap — entropy 1.21 vs 0.0 — **is** the signal:"
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 30,
+          "token": "21",
+          "reason": "trailing-period",
+          "context": "autocorrelation, stimulus alignment destroyed — was licensed **zero** times out of 21. The"
+        },
+        {
+          "line": 53,
+          "token": "21",
+          "reason": "trailing-period",
+          "context": "- After 7.31.2, it refuses **genuinely coupled** neural time series, 20/21."
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_c2_still_blind_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/first-afference/FINDING_c3_algebra_wrong_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/first-afference/FINDING_c4_mechanism_incomplete_2026_08_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 11,
+          "token": "7.4805",
+          "reason": "trailing-period",
+          "context": "> closest of five standard methods differs from it by up to 7.4805."
+        },
+        {
+          "line": 33,
+          "token": "0.084",
+          "reason": "trailing-period",
+          "context": "and 0.2615, both clearing surrogate and permutation nulls. The rest sit lower, median 0.084."
+        },
+        {
+          "line": 35,
+          "token": "0.1297",
+          "reason": "trailing-period",
+          "context": "0.0499 and 0.1297. The instrument licensed the strongest coupling and refused the rest."
+        },
+        {
+          "line": 78,
+          "token": "45.9",
+          "reason": "trailing-period",
+          "context": "A first draft of this document quoted the effective-sample-size range as 12.6 to 45.9. That was"
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 12,
+          "token": "0.20",
+          "reason": "trailing-period",
+          "context": "0.20. It resolves to **0.1436** and passes. But that minimum belongs to `ar1_closed_form`, which"
+        },
+        {
+          "line": 43,
+          "token": "7.69",
+          "reason": "trailing-period",
+          "context": "truth of 7.69."
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 5,
+      "items": [
+        {
+          "line": 29,
+          "token": "0.0266",
+          "reason": "trailing-period",
+          "context": "0.0248 and whose largest of 1000 draws reached only 0.0266. The cohort sits roughly nine times"
+        },
+        {
+          "line": 77,
+          "token": "100000",
+          "reason": "trailing-period",
+          "context": "number a reader would have taken as more stable than it is. `n_perm` now defaults to 100000."
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 34,
+          "token": "0.002203",
+          "reason": "trailing-period",
+          "context": "Chance is 0.002203. **The least readable subject in the cohort is read at two hundred and twelve"
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md": {
+      "uncovered": 6,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 51,
+          "token": "0.75",
+          "reason": "trailing-period",
+          "context": "G2 demanded 0.85 and got 0.75. G3 demanded a 0.30 margin over the best constant and got 0.25."
+        },
+        {
+          "line": 51,
+          "token": "0.25",
+          "reason": "trailing-period",
+          "context": "G2 demanded 0.85 and got 0.75. G3 demanded a 0.30 margin over the best constant and got 0.25."
+        },
+        {
+          "line": 75,
+          "token": "0.5625",
+          "reason": "trailing-period",
+          "context": "answer, and the same figure that quarantined `apparatus` v2 at 0.5625. `n_draws` defaults to 1 and"
+        },
+        {
+          "line": 121,
+          "token": "0.80",
+          "reason": "trailing-period",
+          "context": "a fraction of pairs — producing values spanning 0.02 to 0.04 judged against a bar of 0.80. The"
+        },
+        {
+          "line": 131,
+          "token": "0.875",
+          "reason": "trailing-period",
+          "context": "0.875. The floor concealed exactly the central bug."
+        },
+        {
+          "line": 169,
+          "token": "4",
+          "reason": "trailing-period",
+          "context": "92% duplicates, nominal n inflated 13× over an effective n of at most 4. The collector samples"
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_protocol_v4_2026_08_09.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 24,
+          "token": "0.2554",
+          "reason": "trailing-period",
+          "context": "minimum over eligible candidates recomputes to 0.2554."
+        }
+      ]
+    },
+    "papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/first-afference/FINDING_r0v2_instrument_valid_2026_08_05.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 4,
+      "items": []
+    },
+    "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 22,
+          "token": "0.952",
+          "reason": "trailing-period",
+          "context": "single-model gpt-4o-mini 0.952. Adding a weak member (gpt-3.5-turbo) did **not**"
+        },
+        {
+          "line": 59,
+          "token": "36",
+          "reason": "trailing-period",
+          "context": "- **Single run, OpenAI-only, three same-vendor models, n=36.** A same-vendor"
+        }
+      ]
+    },
+    "papers/grounded-honesty-axis/FINDING_detection_locus_gpt_2026_05_30.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 5,
+      "items": []
+    },
+    "papers/mind-instrument/ATLAS_OF_MINDS_v0.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 47,
+          "token": "0.5",
+          "reason": "trailing-period",
+          "context": "while text-only sycophancy sits at exact chance 0.5. Conduct entries for the other minds await their"
+        }
+      ]
+    },
+    "papers/mind-instrument/DEMO_meaning_diff_2026_06_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/mind-instrument/FINDING_anatomy_v0_2026_06_10.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "the scored run). Receipt: `anatomy_v0_result.json`. Local, $0.**"
+        },
+        {
+          "line": 30,
+          "token": "0.3052",
+          "reason": "trailing-period",
+          "context": "Atlas receipt's 0.3052."
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_anatomy_v2_2026_06_10.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 5,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "`anatomy_v1_result.json` as contrast receipts). Local, $0. Verdict: ANATOMY-ROBUST, all gates.**"
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 15,
+          "token": "0.0",
+          "reason": "trailing-period",
+          "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen"
+        },
+        {
+          "line": 38,
+          "token": "192",
+          "reason": "trailing-period",
+          "context": "cycle-sized against the persisted reps, with this receipt as the baseline to beat at N=192."
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_gavagai_v0_2026_06_10.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "pre-run). Receipt: `gavagai_v0_result.json`. Local, $0. Both frozen gates passed.**"
+        },
+        {
+          "line": 21,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "null whose 95th percentile is 0.0312 (100 runs). Self-pair pipeline control: 1.0."
+        },
+        {
+          "line": 26,
+          "token": "0.510",
+          "reason": "trailing-period",
+          "context": "(different labs, eras, and data). Within-family reference: Llama-3.2-1B→Llama-3.2-3B 0.510."
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_gavagai_x_2026_06_10.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 5,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "Local, $0. Gate X1 failed exactly as gates are meant to fail: loudly, with the boundary mapped.**"
+        },
+        {
+          "line": 25,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "- Pipeline control (self-pair): 1.0."
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_matcher_v1_2026_06_10.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 11,
+          "token": "0.33678",
+          "reason": "trailing-period",
+          "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678."
+        }
+      ]
+    },
+    "papers/mind-instrument/FINDING_telepathy_v0_2026_06_10.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 1,
+      "items": [
+        {
+          "line": 4,
+          "token": "0",
+          "reason": "trailing-period",
+          "context": "pre-run). Receipt: `telepathy_v0_result.json`. Local, $0. Gate T1 passed.**"
+        },
+        {
+          "line": 18,
+          "token": "0.0104",
+          "reason": "trailing-period",
+          "context": "correlation against its own internal profiles for 96 candidates. Chance: 0.0104."
+        },
+        {
+          "line": 24,
+          "token": "0.0208",
+          "reason": "trailing-period",
+          "context": "100 runs) whose 95th percentile is 0.0208. Mean cross-family top-5: **0.3867**. Pipeline control"
+        },
+        {
+          "line": 25,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "(self-pair, identity alignment): 1.0."
+        },
+        {
+          "line": 34,
+          "token": "0.0927",
+          "reason": "trailing-period",
+          "context": "clothing 0.0927."
+        }
+      ]
+    },
+    "papers/ORG_the_chart_that_cannot_lie_2026_08_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/PAPER_frame_locality_2026_07_28.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 7,
+      "items": [
+        {
+          "line": 55,
+          "token": "0.5434782608695652",
+          "reason": "trailing-period",
+          "context": "0.5434782608695652.) The individual numbers in the sections below remain faithfully quoted from"
+        }
+      ]
+    },
+    "papers/PROGRAM_SYNTHESIS_2026_07_30.md": {
+      "uncovered": 3,
+      "excluded_by_rule": 5,
+      "items": [
+        {
+          "line": 39,
+          "token": "0.08333333333333333",
+          "reason": "trailing-period",
+          "context": "the rescue rate on initially-wrong answers is 0.08333333333333333. Pressure removes right"
+        },
+        {
+          "line": 48,
+          "token": "0.7285714285714286",
+          "reason": "trailing-period",
+          "context": "recovery 0.9285714285714286, specificity 0.7285714285714286. The sparing is not a"
+        },
+        {
+          "line": 52,
+          "token": "0.0",
+          "reason": "trailing-period",
+          "context": "0.0. The structure replicates at a second vendor with every floor imported and nothing"
+        }
+      ]
+    },
+    "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 31,
+          "token": "1",
+          "reason": "trailing-period",
+          "context": "- **The STANDS rides seed 1.** On Qwen, only seed 1 reached the knowledge-preserving regime (at λ=10"
+        }
+      ]
+    },
+    "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 1,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_E3PRIME_bite_verification_2026_07_07.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_E3TPRIME_pure_moving_2026_07_08.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/read-neq-write/RESULT_foundation_2026_07_04.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 32,
+          "token": "0.80",
+          "reason": "trailing-period",
+          "context": "and disjoint-set knowledge at 0.80. The next stage — the adversarial LoRA sweep with a"
+        },
+        {
+          "line": 35,
+          "token": "0.75",
+          "reason": "trailing-period",
+          "context": "≥ 0.75. If yes on ≥ 2 seeds, `read ≠ write` is EVADABLE by a realistic weight-level attacker; if"
+        }
+      ]
+    },
+    "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 2,
+      "items": [
+        {
+          "line": 24,
+          "token": "0.75",
+          "reason": "trailing-period",
+          "context": "chance), knowledge held ≥ 0.75. At λ = 0 (no knowledge replay) the scrub also damages knowledge"
+        }
+      ]
+    },
+    "papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 2,
+      "items": []
+    },
+    "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 3,
+      "items": [
+        {
+          "line": 18,
+          "token": "0.59",
+          "reason": "trailing-period",
+          "context": "*more* than the jailbreaks (+4.1 vs +2.6). The 2D signature collapses to 0.45 / 0.59."
+        }
+      ]
+    },
+    "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 3,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_axis_independence_2026_06_11.md": {
+      "uncovered": 5,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 32,
+          "token": "-0.0686",
+          "reason": "trailing-period",
+          "context": "Cosines at L12: truth·refusal **-0.2132**, truth·valence 0.0903, refusal·valence -0.0686. Refusal native"
+        },
+        {
+          "line": 33,
+          "token": "0.9643",
+          "reason": "trailing-period",
+          "context": "(L8) AUROC 0.9643. Valence-orthogonalized diagonals: truth 0.80, refusal 1.0."
+        },
+        {
+          "line": 33,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "(L8) AUROC 0.9643. Valence-orthogonalized diagonals: truth 0.80, refusal 1.0."
+        },
+        {
+          "line": 37,
+          "token": "0.60",
+          "reason": "trailing-period",
+          "context": "|cos| ≥ 0.60. The cosine is only **0.2132** — truth and refusal are near-ORTHOGONAL vectors. They are"
+        },
+        {
+          "line": 41,
+          "token": "0.10",
+          "reason": "trailing-period",
+          "context": "reducible to a good-vs-bad-feeling direction. (Each pairwise cosine with valence is < 0.10.)"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_concept_decode_2026_06_12.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 33,
+          "token": "0.9583",
+          "reason": "trailing-period",
+          "context": "concepts across template instances at top-1 0.9583. The \"transcript\" exists and is legible in-model."
+        },
+        {
+          "line": 36,
+          "token": "0.0333",
+          "reason": "trailing-period",
+          "context": "per-item 0.0333. Qwen→gemma is 0.1 top-1 — above chance but below the frozen 3×-chance bar (0.15) and"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_conscience_coordinates_2026_06_11.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_content_wall_2026_06_12.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 26,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "Qwen-3B agrees: gate-whitened 0.1 (chance), RAW 0.85, mapped-whitened 1.0. **Per the frozen gate (the"
+        },
+        {
+          "line": 30,
+          "token": "1.0",
+          "reason": "trailing-period",
+          "context": "content at 0.90 and the mapped-space-whitened readout at 1.0. **Content identity transports near-perfectly"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 25,
+          "token": "-0.2756",
+          "reason": "trailing-period",
+          "context": "refusal 1.0; cos(w_truth, w_refusal) = -0.2756."
+        },
+        {
+          "line": 42,
+          "token": "0.5611",
+          "reason": "trailing-period",
+          "context": "w_truth orthogonalized reads truth at 0.9671 and refusal at 0.5611. An explicitly independent basis loses"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_live_signature_mvp_2026_06_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 18,
+          "token": "0.5069",
+          "reason": "trailing-period",
+          "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_adversarial_ood_2026_06_11.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_ood_2026_06_11.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 38,
+          "token": "0.802",
+          "reason": "trailing-period",
+          "context": "- **Modest margins.** Llama 0.923 vs null 0.830; Qwen 0.849 vs 0.802. Significant (p < 0.01) and"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_v0_2026_06_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_v2_2026_06_10.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md": {
+      "uncovered": 4,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 41,
+          "token": "0.003",
+          "reason": "trailing-period",
+          "context": "0.003. The effect survives dropping the single best OOD family (drugs in both): drop-best OOD 0.9938 /"
+        },
+        {
+          "line": 42,
+          "token": "0.004",
+          "reason": "trailing-period",
+          "context": "0.9691, p 0.011 / 0.004. gemma's own held-out OOD self-readout is 0.9844 (in-dist 1.0), so the axis"
+        },
+        {
+          "line": 52,
+          "token": "12",
+          "reason": "trailing-period",
+          "context": "axis, which lives at layer 12. Same model, same pipeline, two value axes at two depths: refusal is readable"
+        },
+        {
+          "line": 65,
+          "token": "0.9149",
+          "reason": "trailing-period",
+          "context": "0.9149. Significant and robust (and surviving drop-best-family), but a margin, not a chasm —"
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_says_yes_knows_no_2026_06_11.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 27,
+          "token": "0.9287",
+          "reason": "trailing-period",
+          "context": "internal self-ceiling held at 0.9287."
+        }
+      ]
+    },
+    "papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md": {
+      "uncovered": 2,
+      "excluded_by_rule": 0,
+      "items": [
+        {
+          "line": 38,
+          "token": "0.0062",
+          "reason": "trailing-period",
+          "context": "- **gemma and Qwen-3B pass the compositional gate; Llama-3B misses by 0.0062.** In gemma all four cells"
+        },
+        {
+          "line": 58,
+          "token": "0.8079",
+          "reason": "trailing-period",
+          "context": "0.8079. The danger axis ADDS the detection power the truth axis alone lacks here — dangerous"
+        }
+      ]
+    },
+    "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    },
+    "papers/SYNTHESIS_connection_of_minds_2026_08_01.md": {
+      "uncovered": 1,
+      "excluded_by_rule": 10,
+      "items": [
+        {
+          "line": 48,
+          "token": "0.014",
+          "reason": "trailing-period",
+          "context": "same-family anchor), reads at exactly chance 0.014.~~ **[Sentence withdrawn as written,"
+        }
+      ]
+    },
+    "papers/SYNTHESIS_frame_locality_2026_07_28.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 5,
+      "items": []
+    },
+    "papers/SYNTHESIS_mention_and_use_2026_08_26.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 7,
+      "items": []
+    },
+    "papers/SYNTHESIS_recorder_contamination_2026_08_06.md": {
+      "uncovered": 0,
+      "excluded_by_rule": 0,
+      "items": []
+    }
+  },
+  "per_document_frame_b": {
+    "papers/agent-conscience/BLOCKED_source_independence_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 52,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 7 uncovered",
+      "uncovered": 7,
+      "counts": {
+        "VERIFIED": 45,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_cot_inward_2026_07_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_coupling_battery_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_coupling_resolution_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_frame_recovery_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_frontier_freetext_v9_2026_07_29.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 37,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_poisoned_recovery_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_retained_probe_instrument_2026_07_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_scale3b_2026_07_29.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 6 uncovered",
+      "uncovered": 6,
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_scale_channel_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_scale_test_2026_07_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_selective_datasheet_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_self_verification_2026_07_25.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 41,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_thirdframe_2026_07_29.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_tiered_channel_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_two_channel_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_vendor3b_2026_07_29.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 6 uncovered",
+      "uncovered": 6,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 93,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 30,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/ai-human-alignment/RESULT_ai_brain_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/ai-human-alignment/RESULT_ai_human_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/anchored-validity/submission/source.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 98,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/autopilot/FINDING_protocol_power_basis_invalid_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/FINDING_calib_poison_law_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_PARTIAL_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 43,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 38,
+        "ABSTAIN": 40,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 43,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 64,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 103,
+        "ABSTAIN": 32,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 7 uncovered",
+      "uncovered": 7,
+      "counts": {
+        "VERIFIED": 76,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 79,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 92,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 87,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_confirm_llama_2026_07_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 80,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_honesty_parity_control_2026_07_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 70,
+        "ABSTAIN": 31,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_margin_parity_control_2026_07_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 67,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/ANALYSIS_base_rate_ceiling_2026_09_01.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED, 15 uncovered",
+      "uncovered": 15,
+      "counts": {
+        "VERIFIED": 158,
+        "ABSTAIN": 73,
+        "UNGROUNDED": 21
+      }
+    },
+    "papers/closed-model-frontier/CORPUS_STATE_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/FINDING_b23_fable_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 1
+      }
+    },
+    "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 45,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 3
+      }
+    },
+    "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 4
+      }
+    },
+    "papers/closed-model-frontier/RECON_oath_prior_art_2026_08_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RECON_structural_obligation_2026_08_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 60,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RECON_v13_not_frozen_the_ladder_2026_08_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RECON_vacuous_pass_2026_08_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_agent_claim_extractor_baseline_2026_08_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_agent_gate_boundary_2026_08_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_collateral_census_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_external_composition_2026_08_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_fraction_coherence_ships_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_mirror_sum_ships_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 53,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_prior_art_survey_2026_08_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_float_binding_2026_07_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_recall_decimalguard_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_recall_rangeguard_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 33,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v04_trigger_recall_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 38,
+        "ABSTAIN": 24,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 40,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 21,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 95,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 72,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_v12_formula_constant_2026_08_26.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_oath_verified_channel_internal_2026_08_27.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 2
+      }
+    },
+    "papers/closed-model-frontier/RESULT_obligate1_does_not_ship_2026_08_31.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 3
+      }
+    },
+    "papers/closed-model-frontier/RESULT_obligate2_split_verdict_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 19,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_obligation_predicts_claimhood_2026_08_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_struct1_beats_the_null_2026_08_31.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 37,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 1
+      }
+    },
+    "papers/closed-model-frontier/RESULT_unobligated_oath_2026_08_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/closed-model-frontier/ZENODO_nothing_crosses_unseen_2026_08_31.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/CONSCIENCE_MOUNT_ARC_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_cot_ablation_b36_2026_06_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 110,
+        "ABSTAIN": 23,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_early_warning_b34_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 51,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_ensemble_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_establish_b38_2026_06_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 40,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_fpr_live_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_freeform_b35_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_gamed_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_inert_calibration_b37_2026_06_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 89,
+        "ABSTAIN": 23,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_live_catch_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 19,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_offmanifold_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_offmanifold_v2_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_regime_2026_06_13.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/conscience-mount/FINDING_mount_within_b39_2026_06_14.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 75,
+        "ABSTAIN": 32,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/council-reference-free-truth/FINDING_council_2026_05_25.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/depth-truth/FINDING_depth_does_not_predict_truth_2026_07_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 47,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/depth-truth/TICKET_readme_truth_in_advertising_2026_07_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b31v2_door_opens_2026_08_01.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 40,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b36_write_door_2026_08_01.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 45,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b43_sub_symbolic_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 47,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_c2_still_blind_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_c3_algebra_wrong_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_c4_mechanism_incomplete_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 6 uncovered",
+      "uncovered": 6,
+      "counts": {
+        "VERIFIED": 65,
+        "ABSTAIN": 38,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_protocol_v4_2026_08_09.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/first-afference/FINDING_r0v2_instrument_valid_2026_08_05.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/grounded-honesty-axis/FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/grounded-honesty-axis/FINDING_detection_locus_gpt_2026_05_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/ATLAS_OF_MINDS_v0.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/DEMO_meaning_diff_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_anatomy_v0_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_anatomy_v2_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_gavagai_v0_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_gavagai_x_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_matcher_v1_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/mind-instrument/FINDING_telepathy_v0_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/ORG_the_chart_that_cannot_lie_2026_08_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/PAPER_frame_locality_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 90,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/PROGRAM_SYNTHESIS_2026_07_30.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 3 uncovered",
+      "uncovered": 3,
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E1_read_neq_write_STANDS_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E2_strong_attacker_2026_07_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E3_adaptive_STANDS_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E3PRIME_bite_verification_2026_07_07.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_E3TPRIME_pure_moving_2026_07_08.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_foundation_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_axis_independence_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 5 uncovered",
+      "uncovered": 5,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_concept_decode_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_conscience_coordinates_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_content_wall_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_live_signature_mvp_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_adversarial_ood_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_ood_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_v0_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_portable_conscience_v2_2026_06_10.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 4 uncovered",
+      "uncovered": 4,
+      "counts": {
+        "VERIFIED": 43,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_says_yes_knows_no_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 2 uncovered",
+      "uncovered": 2,
+      "counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/SYNTHESIS_connection_of_minds_2026_08_01.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD, 1 uncovered",
+      "uncovered": 1,
+      "counts": {
+        "VERIFIED": 88,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/SYNTHESIS_frame_locality_2026_07_28.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 57,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      }
+    },
+    "papers/SYNTHESIS_mention_and_use_2026_08_26.md": {
+      "committed_verdict": "OATH-FAILED",
+      "legacy_verdict": "OATH-FAILED",
+      "new_verdict": "OATH-FAILED",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 3
+      }
+    },
+    "papers/SYNTHESIS_recorder_contamination_2026_08_06.md": {
+      "committed_verdict": "OATH-HELD",
+      "legacy_verdict": "OATH-HELD",
+      "new_verdict": "OATH-HELD",
+      "uncovered": 0,
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      }
+    }
+  },
+  "headline_changed_documents": [
+    "papers/PAPER_frame_locality_2026_07_28.md",
+    "papers/PROGRAM_SYNTHESIS_2026_07_30.md",
+    "papers/SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "papers/agent-conscience/BLOCKED_source_independence_2026_07_24.md",
+    "papers/agent-conscience/DATASHEET_conscience_2026_07_24.md",
+    "papers/agent-conscience/FINDING_adjudicated_loop_2026_07_24.md",
+    "papers/agent-conscience/FINDING_belief_asymptote_2026_07_26.md",
+    "papers/agent-conscience/FINDING_combined_signal_2026_07_26.md",
+    "papers/agent-conscience/FINDING_competent_agent_2026_07_24.md",
+    "papers/agent-conscience/FINDING_conscience_loop_2026_07_24.md",
+    "papers/agent-conscience/FINDING_cot_inward_powered_2026_07_30.md",
+    "papers/agent-conscience/FINDING_coupling_battery_2026_07_28.md",
+    "papers/agent-conscience/FINDING_coupling_resolution_2026_07_28.md",
+    "papers/agent-conscience/FINDING_frame_recovery_2026_07_24.md",
+    "papers/agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md",
+    "papers/agent-conscience/FINDING_frontier_freetext_v9_2026_07_29.md",
+    "papers/agent-conscience/FINDING_frontier_incontext_oof_2026_07_30.md",
+    "papers/agent-conscience/FINDING_frontier_knowsay_2026_07_27.md",
+    "papers/agent-conscience/FINDING_frontier_recovery_2026_07_27.md",
+    "papers/agent-conscience/FINDING_kp_recovery_2026_07_28.md",
+    "papers/agent-conscience/FINDING_kp_replication_2026_07_28.md",
+    "papers/agent-conscience/FINDING_poisoned_recovery_2026_07_28.md",
+    "papers/agent-conscience/FINDING_scale3b_2026_07_29.md",
+    "papers/agent-conscience/FINDING_scale_channel_2026_07_24.md",
+    "papers/agent-conscience/FINDING_scale_confirm_2026_07_24.md",
+    "papers/agent-conscience/FINDING_scale_test_2026_07_26.md",
+    "papers/agent-conscience/FINDING_selective_confirm_2026_07_24.md",
+    "papers/agent-conscience/FINDING_selective_datasheet_2026_07_24.md",
+    "papers/agent-conscience/FINDING_selective_escalation_2026_07_24.md",
+    "papers/agent-conscience/FINDING_self_verification_2026_07_25.md",
+    "papers/agent-conscience/FINDING_source_independence_v2_2026_07_24.md",
+    "papers/agent-conscience/FINDING_third_party_bench_2026_07_24.md",
+    "papers/agent-conscience/FINDING_thirdframe_2026_07_29.md",
+    "papers/agent-conscience/FINDING_tiered_channel_2026_07_24.md",
+    "papers/agent-conscience/FINDING_two_channel_2026_07_27.md",
+    "papers/agent-conscience/FINDING_vendor3b_2026_07_29.md",
+    "papers/agent-conscience/FINDING_verifier_at_7b_2026_07_27.md",
+    "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
+    "papers/agent-conscience/PROSPECTUS_knowsay_2026_07_27.md",
+    "papers/ai-human-alignment/RESULT_ai_brain_vision_2026_06_03.md",
+    "papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md",
+    "papers/anchored-validity/FINDING_buried_judge_2026_07_24.md",
+    "papers/anchored-validity/submission/source.md",
+    "papers/calib-poison-general/RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+    "papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "papers/calib-poison-general/RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "papers/calib-poison-general/RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "papers/calib-poison-general/RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "papers/calib-poison-general/RESULT_attack_sentiment_r64_2026_07_09.md",
+    "papers/calib-poison-general/RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "papers/calib-poison-general/RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "papers/calib-poison-general/RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+    "papers/calib-poison-general/RESULT_honesty_parity_confirm_2026_07_11.md",
+    "papers/calib-poison-general/RESULT_sentiment_probe_parity_2026_07_09.md",
+    "papers/closed-model-frontier/ANALYSIS_base_rate_ceiling_2026_09_01.md",
+    "papers/closed-model-frontier/FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+    "papers/closed-model-frontier/FINDING_b23_fable_2026_06_10.md",
+    "papers/closed-model-frontier/FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+    "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "papers/closed-model-frontier/PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+    "papers/closed-model-frontier/RESULT_agent_claim_extractor_baseline_2026_08_30.md",
+    "papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md",
+    "papers/closed-model-frontier/RESULT_oath_v04_float_binding_2026_07_03.md",
+    "papers/closed-model-frontier/RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "papers/closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md",
+    "papers/closed-model-frontier/RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+    "papers/closed-model-frontier/RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
+    "papers/closed-model-frontier/RESULT_oath_v10_token_column_2026_08_23.md",
+    "papers/closed-model-frontier/RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "papers/closed-model-frontier/RESULT_obligate1_does_not_ship_2026_08_31.md",
+    "papers/closed-model-frontier/RESULT_obligate2_split_verdict_2026_08_31.md",
+    "papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md",
+    "papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md",
+    "papers/conscience-mount/CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "papers/conscience-mount/FINDING_mount_early_warning_b34_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_ensemble_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_fpr_live_2026_06_12.md",
+    "papers/conscience-mount/FINDING_mount_freeform_b35_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_gamed_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "papers/conscience-mount/FINDING_mount_live_catch_2026_06_12.md",
+    "papers/conscience-mount/FINDING_mount_offmanifold_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_regime_2026_06_13.md",
+    "papers/conscience-mount/FINDING_mount_within_b39_2026_06_14.md",
+    "papers/council-reference-free-truth/FINDING_fame_vs_truth_2026_05_25.md",
+    "papers/depth-truth/FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "papers/depth-truth/TICKET_readme_truth_in_advertising_2026_07_03.md",
+    "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md",
+    "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.md",
+    "papers/disjoint-worlds/FINDING_b36_write_door_2026_08_01.md",
+    "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.md",
+    "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.md",
+    "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md",
+    "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.md",
+    "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.md",
+    "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.md",
+    "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md",
+    "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+    "papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md",
+    "papers/dogfood-self-audit/FINDING_dogfood_2026_05_25.md",
+    "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+    "papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+    "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+    "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md",
+    "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md",
+    "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+    "papers/first-afference/FINDING_protocol_v4_2026_08_09.md",
+    "papers/grounded-honesty-axis/FINDING_council_grounding_2026_05_28.md",
+    "papers/mind-instrument/ATLAS_OF_MINDS_v0.md",
+    "papers/mind-instrument/FINDING_anatomy_v0_2026_06_10.md",
+    "papers/mind-instrument/FINDING_anatomy_v2_2026_06_10.md",
+    "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md",
+    "papers/mind-instrument/FINDING_gavagai_v0_2026_06_10.md",
+    "papers/mind-instrument/FINDING_gavagai_x_2026_06_10.md",
+    "papers/mind-instrument/FINDING_matcher_v1_2026_06_10.md",
+    "papers/mind-instrument/FINDING_telepathy_v0_2026_06_10.md",
+    "papers/read-neq-write/RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+    "papers/read-neq-write/RESULT_foundation_2026_07_04.md",
+    "papers/read-neq-write/RESULT_stage2_EVADABLE_2026_07_04.md",
+    "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md",
+    "papers/showcase-viz/FINDING_axis_independence_2026_06_11.md",
+    "papers/showcase-viz/FINDING_concept_decode_2026_06_12.md",
+    "papers/showcase-viz/FINDING_content_wall_2026_06_12.md",
+    "papers/showcase-viz/FINDING_entanglement_resolution_2026_06_11.md",
+    "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+    "papers/showcase-viz/FINDING_portable_conscience_ood_2026_06_11.md",
+    "papers/showcase-viz/FINDING_portable_values_refusal_2026_06_11.md",
+    "papers/showcase-viz/FINDING_says_yes_knows_no_2026_06_11.md",
+    "papers/showcase-viz/FINDING_truth_danger_basis_2026_06_12.md"
+  ],
+  "committed_certificate_mismatch_documents": [
+    "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md"
+  ]
+}

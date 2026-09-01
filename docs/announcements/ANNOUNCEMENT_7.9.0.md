@@ -1,3 +1,27 @@
+> **⚠ Ceiling erratum (2026-09-01).** The near-perfect AUC figures quoted below -- including the
+> headline triple **0.998** (HaluEval-QA hallucination), **0.976** (XSTest refusal, out-of-family)
+> and **0.943** (BFCL v3 tool-call drift) -- are **register detectors at a construct ceiling**, and
+> this document quotes them without saying so. Recorded here rather than corrected in place:
+>
+> - **What the figures are.** Cross-validated separations, on the benchmarks named, between outputs
+>   whose *register* differs: confabulated vs grounded, refusing vs complying, drifted vs on-task.
+>   The numbers are not withdrawn and are not edited below.
+> - **What they are not.** They are not a measure of honesty under adversarial pressure. The same
+>   construct scores **0.498** -- chance -- on text-only deception detection, against **0.966** for
+>   sampling-divergence grounding of factual self-claims. A near-perfect AUC on these benchmarks
+>   does not license the claim that the instrument catches a model that is trying not to be caught.
+> - **Where the bound is published.** `papers/THESIS_the_honesty_standard_2026_05_31.md`, which
+>   names "a construct ceiling the program had hit four times", and the scope erratum at the top of
+>   `papers/every-mind-leaves-vitals.md`, which applies the same correction to this lab's own
+>   strongest claim.
+> - **Status of this document.** Preserved as written. Nothing below is edited, softened or
+>   renumbered. Whether this document was sent, published or circulated is not decided here, and
+>   this erratum is correct either way.
+>
+> *We measure behaviour and representation, never minds. The boundary is the product.*
+
+---
+
 # styxx 7.9.0 — `honest`: one line that makes any LLM verifiably honest
 
 honesty tools measure your model after the fact. `styxx.honest` decides, inline, whether to let an

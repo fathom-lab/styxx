@@ -35,7 +35,7 @@ import re
 import sys
 from pathlib import Path
 
-__all__ = ["extract_numbers", "receipt_values", "certify_doc"]
+__all__ = ["extract_numbers", "receipt_values", "certify_doc", "uncovered_spans"]
 
 # ---------------------------------------------------------------- numeric extraction (doc side)
 
@@ -90,6 +90,58 @@ def _table_rows(lines: list[str]) -> dict[int, int]:
     return rows
 
 
+def _scrub_line(line: str) -> str:
+    """The searchable form of an ALREADY U+2212-normalized source line.
+
+    The single definition of the scrub, read by `extract_numbers` and by the v0.13 uncovered
+    scanner. Lifted verbatim out of `extract_numbers`; the substitutions and their order are
+    unchanged. Same doctrine as `_table_rows`: the scanner READS this machinery, it never
+    copies it, so the scanner's frame and extraction's frame cannot diverge.
+
+    v0.10 (PREREG_oath_v10_token_column): `re.sub(pat, " ", s)` collapses each match to ONE
+    space, so a 40-char sha shifts every token to its right 39 columns left and `m.start()` is
+    NOT the source column. `V10_TOKEN_COLUMN` blanks one space PER MATCHED CHARACTER instead,
+    which is what makes the recorded `col` an address rather than an approximation. Measured
+    pre-fix over all 1,073 documents under papers/ (48,097 tokens): length preservation changes
+    the extracted token sequence on ZERO lines (battery gate G2).
+    """
+    _blank = (lambda m: " " * (m.end() - m.start())) if V10_TOKEN_COLUMN else " "
+    scrub = _SHAISH.sub(_blank, line)
+    scrub = _DATEISH.sub(_blank, scrub)
+    scrub = _VERSIONISH.sub(_blank, scrub)
+    return scrub
+
+
+def _drop_reason(raw: str, scrub: str, start: int, end: int, line: str):
+    """Why `extract_numbers` discards a matched numeric span, or None to keep it.
+
+    The single definition of the post-regex filter chain, lifted verbatim out of
+    `extract_numbers` (same tests, same order, same inputs) and read by the v0.13 uncovered
+    scanner. A span the extractor would have dropped ANYWAY is not "unexamined" merely because
+    `_NUM` also failed to reach it, and the scanner has to be able to say which — without a
+    second copy of these rules that could drift away from the first.
+    """
+    if _YEAR.match(raw.lstrip("+-")):
+        return "year"
+    # markdown heading/bullet artifacts: a bare int at the start of a
+    # STRUCTURE line only — and never a slash-pair numerator ("7/12").
+    if (start <= 2 and "." not in raw and abs(int(raw)) < 10
+            and scrub[end:end + 1] != "/"
+            and _MD_STRUCTURE.match(line)):
+        return "md-structure"
+    if _FORMULA_AFTER.match(scrub[end:]):
+        return "formula-notation"   # notation like '1−syc' — not a numeric claim
+    if start >= 2 and scrub[start - 1] in "–-−" and scrub[start - 2].isdigit():
+        return "range-second-half"  # second half of a numeric range ('L27–31')
+    if start >= 2 and scrub[start - 1] == "-" and scrub[start - 2].isalpha():
+        return "compound-identifier"  # 'shared-48', 'POS-A29': a label, not a claim
+    try:
+        float(raw)
+    except ValueError:
+        return "unparseable"
+    return None
+
+
 def extract_numbers(text: str) -> list[dict]:
     """All groundable number tokens with line context. Filters dates/SHAs/versions/years/markdown
     artifacts and formula notation; keeps order and position so the ledger is reviewable.
@@ -106,38 +158,13 @@ def extract_numbers(text: str) -> list[dict]:
         # claim could be accused (the v0.6.1 G3 kill). En-dash ranges (U+2013) are untouched.
         line = line.replace("−", "-")
         # drop fenced/sha/date/version spans from the searchable line.
-        # v0.10 (PREREG_oath_v10_token_column): `re.sub(pat, " ", s)` collapses each match to ONE
-        # space, so a 40-char sha shifts every token to its right 39 columns left and `m.start()`
-        # is NOT the source column. `V10_TOKEN_COLUMN` blanks one space PER MATCHED CHARACTER
-        # instead, which is what makes the recorded `col` below an address rather than an
-        # approximation. Measured pre-fix over all 1,073 documents under papers/ (48,097 tokens):
-        # length preservation changes the extracted token sequence on ZERO lines, so this buys
-        # correct columns without moving extraction (battery gate G2).
-        _blank = (lambda m: " " * (m.end() - m.start())) if V10_TOKEN_COLUMN else " "
-        scrub = _SHAISH.sub(_blank, line)
-        scrub = _DATEISH.sub(_blank, scrub)
-        scrub = _VERSIONISH.sub(_blank, scrub)
+        scrub = _scrub_line(line)
         for m in _NUM.finditer(scrub):
             tok = m.group(0)
             raw = tok.replace(",", "")
-            if _YEAR.match(raw.lstrip("+-")):
+            if _drop_reason(raw, scrub, m.start(), m.end(), line) is not None:
                 continue
-            # markdown heading/bullet artifacts: a bare int at the start of a
-            # STRUCTURE line only — and never a slash-pair numerator ("7/12").
-            if (m.start() <= 2 and "." not in raw and abs(int(raw)) < 10
-                    and scrub[m.end():m.end() + 1] != "/"
-                    and _MD_STRUCTURE.match(line)):
-                continue
-            if _FORMULA_AFTER.match(scrub[m.end():]):
-                continue   # notation like '1−syc' — not a numeric claim
-            if m.start() >= 2 and scrub[m.start() - 1] in "–-−" and scrub[m.start() - 2].isdigit():
-                continue   # second half of a numeric range ('L27–31'): notation, not a claim
-            if m.start() >= 2 and scrub[m.start() - 1] == "-" and scrub[m.start() - 2].isalpha():
-                continue   # compound identifier ('shared-48', 'POS-A29'): a label, not a claim
-            try:
-                val = float(raw)
-            except ValueError:
-                continue
+            val = float(raw)
             entry = {"line": ln_no, "token": tok, "value": val, "decimals": _decimals(raw),
                      "context": line.strip()[:160]}
             if V10_TOKEN_COLUMN:
@@ -149,6 +176,150 @@ def extract_numbers(text: str) -> list[dict]:
             if ln_no in header_for:
                 entry["binding_context"] = (header_for[ln_no] + " " + line.strip())[:320]
             out.append(entry)
+    return out
+
+
+# ---------------------------------------------------------------- v0.13: the UNCOVERED band
+#
+# The vacuous-pass class, turned on this verifier.
+#
+# THE DEFECT. Every alternative of `_NUM` ends with `(?![\w.])`, so a numeric span followed by a
+# PERIOD never matches at all. "precision of 0.55." extracts ZERO tokens; delete the period and it
+# extracts one. Such a span is not VERIFIED, not ABSTAIN and not UNGROUNDED — it is absent from the
+# ledger, so the certificate's counts are silent about it and the verdict reads OATH-HELD with
+# nothing examined. Measured over the certified corpus: 131 of 208 documents (63.0%) carry at least
+# one, 295 spans in all, 184 of them decimals
+# (`papers/closed-model-frontier/oath_v13_uncovered_band_census_result.json`). One of them is
+# `SYNTHESIS_connection_of_minds_2026_08_01.md` L48 — a withdrawn `chance 0.014.` — in a document
+# whose gemma-reads-at-chance sentence later work refuted and which ships verbatim in both arXiv
+# copies.
+#
+# THE SECOND MODE, found by this clause's own tripwire and not by the census that motivated it.
+# The trailing period does not always silence a span — on a thousands-separated number it
+# MUTILATES one. In `all 23,247.` the thousands alternative dies on the period and the bare-integer
+# alternative then matches the FIRST GROUP ALONE, so the ledger receives the token `23`, value
+# 23.0, and swears or accuses on it under a real status. Three occurrences in the certified corpus.
+# Silence is at least countable; this is a wrong value wearing a genuine verdict.
+#
+# WHAT SHIPS IS REPORTING, NOT RE-ADJUDICATION. `_NUM` IS DELIBERATELY NOT CHANGED. Widening
+# extraction would push 295 new tokens through the whole obligation ladder and silently
+# re-adjudicate 208 committed documents — that is a preregistered measurement with its own battery,
+# not a patch. This clause adds a COUNT and a COORDINATE LIST and changes no token's status:
+# `counts` is byte-identical to the pre-clause verifier on every document in the corpus, and the
+# legacy `counts["UNGROUNDED"] == 0` dichotomy holds 199 of 207 certifiable documents before and
+# after. What moves is the headline, which is the point.
+#
+# NOT EXAMINED vs EXAMINED AND EXCLUDED. A span the extractor's own filter chain would have dropped
+# (a year, a markdown structure artifact, formula notation, a range's second half, a compound
+# identifier) was DECIDED ABOUT, by a named rule with a recorded reason. It is reported separately
+# and is NOT in the band. Only spans no rule accounts for are UNCOVERED. Both populations are
+# enumerated in the certificate; neither is silent.
+#
+# DISCLOSED SCOPE — the band's own boundary, stated because an UNCOVERED=0 must not be read as
+# "fully covered". `_WIDE_NUM` widens `_NUM`'s RIGHT guard from `(?![\w.])` to `(?!\w)` and NOTHING
+# else. That is exactly the named defect and no more. Other extractor blind spots are NOT counted
+# and remain undisclosed by this field: scientific notation (`1e-5`), letter-glued numbers
+# (`p0.05`, `n=12` written `n12`), non-ASCII digit forms, numerals inside fenced code blocks, and
+# anything the sha/date/version scrub blanks. A successor cycle owes each of those its own census.
+#
+# The right guard is `(?!\w)(?!\.\d)`, not a bare `(?!\w)`. The second half is load-bearing and was
+# added after measurement, not before: with `(?!\w)` alone the BARE-INTEGER alternative matches the
+# integer part of a decimal carrying a letter suffix — `0.5B agent` yields the span `0`, `3.1M`
+# yields `3`, `1.36e-14` yields `1` — because the `.` that stopped it is no longer forbidden. That
+# is a defect manufactured by the widening itself, and it put 105 phantom spans into the band
+# across the certified corpus (416 -> 311) before it was caught by reading the band's own contents.
+# `(?!\.\d)` says: a period followed by a digit means this span is not finished, so this is not the
+# span. It also repaired the two named exclusions it had been inflating — `range-second-half` 93 ->
+# 7 and `compound-identifier` 13 -> 3 were phantom spans too.
+_WIDE_TAIL = r"(?!\w)(?!\.\d)"
+_WIDE_NUM = re.compile(r"(?<![\w.])[-+]?\d{1,3}(?:,\d{3})+(?:\.\d+)?" + _WIDE_TAIL
+                       + r"|(?<![\w.])[-+]?\d+\.\d+" + _WIDE_TAIL
+                       + r"|(?<![\w.])[-+]?\.\d+" + _WIDE_TAIL
+                       + r"|(?<![\w.])[-+]?\d+" + _WIDE_TAIL)
+
+# A STRUCTURAL ORDINAL: the `1.` of an ordered list item, or the `1.` of a numbered section
+# heading (`## 1. The question, honestly stated`), optionally inside a blockquote. `_NUM` never
+# matched either — the same trailing period blocks them — so `_MD_STRUCTURE` never needed to name
+# them and does not: its line-start clause requires the token at column <= 2, and a heading ordinal
+# sits at column 3 or beyond.
+#
+# Both are LABELS. They have no truth condition, so neither VERIFIED nor UNGROUNDED is meaningful
+# for them and neither is "unexamined" in the sense this band means — exactly the category v0.11
+# spent a cycle retracting for markdown row ordinals. Excluded by name and enumerated, never
+# silently dropped.
+#
+# Measured, because an exclusion has to earn its place rather than be asserted. Without this rule
+# the corpus-wide band is 273 structural ordinals larger (191 list markers + 82 heading ordinals)
+# than the 295 spans it actually reports — the noise would be the majority of the signal. The
+# clearest single case: 9 of the 11 hits this scanner first produced on
+# `SYNTHESIS_connection_of_minds_2026_08_01.md` were the headings `## 1.` through `## 10.`, while
+# the token the band exists to surface — the withdrawn `chance 0.014.` on L48 — was one row among
+# them. A band that fires on every heading in the corpus distinguishes nothing.
+#
+# The residual is NOT claimed to be clean, and the band is NOT a claim detector. Section and cycle
+# references written in prose (`**Cycle 84. Prereg ...`, `closes section 5.`, `§6.`) are numbers no
+# rule reaches, so they are counted: 36 of the 295 are preceded by cycle/section/§. They are
+# unexamined numbers, which is all the band ever asserts about anything in it.
+_STRUCT_ORDINAL = re.compile(r"^(?P<lead>\s{0,3}(?:>\s?)*\s*(?:#{1,6}\s+|[-*+]\s+)?[*_]{0,2}\s*)"
+                             r"(?P<n>\d+)[.)](?=\s|$)")
+
+# The reasons that COUNT toward UNCOVERED. Everything else is a named exclusion. This split is the
+# clause's whole discretion and it is written here, in one place, rather than buried in a branch.
+_UNCOVERED_COUNTED = frozenset({"trailing-period", "partial-extraction", "unexplained"})
+
+
+def uncovered_spans(text: str) -> list[dict]:
+    """Numeric spans present in *text* that `extract_numbers` never produced a token for.
+
+    A pure function of the document bytes: it consults no receipts, no ledger and no verdict, so
+    the band cannot be softened by what the document happens to cite. Each item carries the
+    coordinate (`line`, `col`), the span text, whether it COUNTS toward the band, and the machine
+    reason it was not examined — silence loud, never omission.
+    """
+    out: list[dict] = []
+    lines = text.splitlines()
+    for ln_no, raw_line in enumerate(lines, 1):
+        line = raw_line.replace("−", "-")
+        scrub = _scrub_line(line)
+        narrow = {(m.start(), m.end()) for m in _NUM.finditer(scrub)}
+        narrow_starts = {s for s, _ in narrow}
+        ol = _STRUCT_ORDINAL.match(line)
+        ol_span = (ol.start("n"), ol.end("n")) if ol else None
+        ol_reason = ("heading-ordinal" if ol and "#" in ol.group("lead")
+                     else "ordered-list-marker")
+        narrow_at = {m.start(): m.group(0) for m in _NUM.finditer(scrub)}
+        for m in _WIDE_NUM.finditer(scrub):
+            span = (m.start(), m.end())
+            if span in narrow:
+                continue                     # the extractor reached this span
+            tok = m.group(0)
+            token_raw = tok.replace(",", "")
+            partial = None
+            if m.start() in narrow_starts:
+                # PARTIAL EXTRACTION — the second, worse mode of the same `_NUM` defect, found by
+                # this scanner's own tripwire rather than by anyone's census. On `23,247.` the
+                # thousands alternative dies on the trailing period, and the BARE-INTEGER
+                # alternative then matches the first group alone: the ledger receives the token
+                # `23`, value 23.0, and adjudicates it under a real status. The trailing period
+                # does not silence a thousands-separated number, it MUTILATES it — a wrong value
+                # carrying a genuine VERIFIED/ABSTAIN/UNGROUNDED verdict. Counted: the SPAN was
+                # never examined, and what was examined instead is recorded beside it.
+                partial = narrow_at[m.start()]
+                reason = "partial-extraction"
+            elif (drop := _drop_reason(token_raw, scrub, m.start(), m.end(), line)) is not None:
+                reason = drop                # examined-and-excluded by a NAMED extractor rule
+            elif ol_span == span:
+                reason = ol_reason           # structural label: list marker or heading ordinal
+            elif scrub[m.end():m.end() + 1] == ".":
+                reason = "trailing-period"      # THE defect: `_NUM`'s right guard rejects it
+            else:
+                reason = "unexplained"          # tripwire: no rule accounts for this span
+            item = {"line": ln_no, "col": m.start(), "token": tok,
+                    "counted": reason in _UNCOVERED_COUNTED, "reason": reason,
+                    "context": line.strip()[:160]}
+            if partial is not None:
+                item["extracted_instead"] = partial
+            out.append(item)
     return out
 
 
@@ -1099,6 +1270,41 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
 
     counts = {s: sum(1 for c in ledger if c["status"] == s) for s in ("VERIFIED", "ABSTAIN", "UNGROUNDED")}
     summary = _epistemics_summary(ledger, counts)
+
+    # v0.13 UNCOVERED band. A NEW field — no existing key is repurposed, and no token's status
+    # moves. `uncovered` is the count of numeric spans in this document that the extractor never
+    # examined; `uncovered_items` gives every one of them by coordinate.
+    spans = uncovered_spans(text)
+    uncovered_items = [s for s in spans if s["counted"]]
+    excluded_items = [s for s in spans if not s["counted"]]
+    n_uncov = len(uncovered_items)
+    # A span the extractor never produced cannot ALSO be a ledger row. Asserted rather than
+    # assumed: a certificate must fail to issue rather than double-count one token as both
+    # examined and unexamined.
+    #
+    # The test is on the full coordinate (line, col, token), NOT on (line, col). Sharing a START
+    # with a ledger row is the `partial-extraction` class and is real: `23,247.` puts the token
+    # `23` in the ledger at the same column the unexamined span begins at. That is a collision of
+    # addresses, not of tokens, and the first version of this assertion — which tested the start
+    # alone — refused to issue two certificates because of it. It was right to fire.
+    if V10_TOKEN_COLUMN:
+        _rows = {(c["line"], c["col"], c["token"]) for c in ledger if "col" in c}
+        assert not any((s["line"], s["col"], s["token"]) in _rows for s in spans),             "uncovered band: a span collides with a ledger row"
+
+    # THE VERDICT RULE, and the reason it is a string and not a flag. A document carrying numbers
+    # the verifier never looked at has NOT been fully examined. A header that reads OATH-HELD
+    # without saying so is the vacuous pass this lab named and then shipped inside its own
+    # verifier, so the count travels IN the verdict: a reader cannot see the verdict without
+    # seeing what it did not cover.
+    #
+    # DISCLOSED, because it is the load-bearing conservatism: this does NOT change which documents
+    # pass. `counts["UNGROUNDED"] == 0` is unchanged and remains the exact legacy HELD/FAILED
+    # dichotomy for any consumer that needs it; `main()`'s exit code still keys off it. What
+    # changes is that the headline can no longer be read as a clean pass.
+    verdict = "OATH-HELD" if counts["UNGROUNDED"] == 0 else "OATH-FAILED"
+    if n_uncov:
+        verdict = f"{verdict}, {n_uncov} uncovered"
+
     cert = {
         "oath": "styxx OATH v0 (numeric-claim certificate)",
         "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
@@ -1108,7 +1314,28 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "counts": counts,
         "epistemics_summary": summary,
-        "verdict": "OATH-HELD" if counts["UNGROUNDED"] == 0 else "OATH-FAILED",
+        "uncovered": n_uncov,
+        "uncovered_items": uncovered_items,
+        "uncovered_excluded_by_rule": excluded_items,
+        "uncovered_policy": {
+            "schema": "styxx-oath/uncovered-band/v1",
+            "note": ("numeric spans present in the document text that the extractor never "
+                     "examined — neither VERIFIED nor ABSTAIN nor UNGROUNDED. Reporting only: "
+                     "_NUM is unchanged and no token's status moves."),
+            "counted_reasons": sorted(_UNCOVERED_COUNTED),
+            "excluded_reasons_note": ("spans a NAMED rule already decided about (year, "
+                                      "md-structure, formula-notation, range-second-half, "
+                                      "compound-identifier, unparseable, ordered-list-marker, "
+                                      "heading-ordinal); listed in uncovered_excluded_by_rule, "
+                                      "not in the band"),
+            "excluded_by_rule": len(excluded_items),
+            "scope_limit": ("this band detects ONE extractor blind spot — a numeric span followed "
+                            "by a period, which _NUM's right guard (?![\\w.]) rejects. It does NOT "
+                            "detect scientific notation, letter-glued numbers, non-ASCII digits, "
+                            "numerals in fenced code, or spans blanked by the sha/date/version "
+                            "scrub. uncovered=0 does NOT mean fully covered."),
+        },
+        "verdict": verdict,
         "ungrounded": [c for c in ledger if c["status"] == "UNGROUNDED"],
         "abstained": [{"line": c["line"], "token": c["token"]} for c in ledger if c["status"] == "ABSTAIN"],
         "ledger": ledger,
@@ -1126,8 +1353,10 @@ def main(argv=None) -> int:
     out = Path(a.out) if a.out else Path(a.doc).with_suffix(".certificate.json")
     out.write_text(json.dumps(cert, indent=2) + "\n", encoding="utf-8")
     c = cert["counts"]
+    # UNCOVERED sits ON the header line, beside the counts, because that is the line a reader
+    # actually reads. A verdict cannot be seen here without seeing what it did not cover.
     print(f"{cert['verdict']}  verified={c['VERIFIED']} abstained={c['ABSTAIN']} "
-          f"contradicted={c['UNGROUNDED']}  -> {out.name}")
+          f"contradicted={c['UNGROUNDED']}  UNCOVERED={cert['uncovered']}  -> {out.name}")
     # A verified count alone is the green-checkmark half-truth this instrument exists to reject:
     # it says nothing about how much of what was sworn was ever obligated. Print the split so the
     # boundary is visible without opening the JSON.
@@ -1141,7 +1370,14 @@ def main(argv=None) -> int:
               f"({round(unobl / es['total'] * 100)}%) — {weakest} by value match alone")
     for bad in cert["ungrounded"]:
         print(f"  UNGROUNDED L{bad['line']}: {bad['token']}  | {bad['context'][:100]}")
-    return 0 if cert["verdict"] == "OATH-HELD" else 1
+    for u in cert["uncovered_items"]:
+        print(f"  UNCOVERED  L{u['line']}: {u['token']}  ({u['reason']})  | {u['context'][:100]}")
+    # The exit code deliberately does NOT move. This cycle ships REPORTING: `_NUM` is unchanged,
+    # no token's status changed, and an uncovered span is a gap in what was examined, not a
+    # contradiction found. Making it fail the process would re-adjudicate the corpus through the
+    # exit code instead of through a preregistered measurement — which is the thing this clause
+    # exists to refuse. The header and the verdict string carry the count; CI keeps its meaning.
+    return 0 if cert["counts"]["UNGROUNDED"] == 0 else 1
 
 
 if __name__ == "__main__":
