@@ -910,10 +910,10 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
             return _Resolved(status="unresolved", reason="manifest_absent")
         if not manifest.intact():
             return _Resolved(status="unresolved", reason="manifest_integrity")
-        entry = manifest.receipts.get(parsed["id"])
-        if entry is None:
+        if parsed["id"] not in manifest.receipts:
             return _Resolved(status="unresolved", reason="manifest_id_missing")
-        if not isinstance(entry, dict):
+        entry = manifest.receipts[parsed["id"]]
+        if not isinstance(entry, dict):                  # present, but not a receipt entry
             return _Resolved(status="unresolved", reason="manifest_integrity")
         sha = entry.get("sha256")
         if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
