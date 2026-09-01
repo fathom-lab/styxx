@@ -1211,3 +1211,63 @@ class TestReceiptHardening:
             m.add("r2", b"bytes", "file_read", sha256="0" * 64)      # a lie about the bytes
         with pytest.raises(ValueError):
             m.add("r3", None, "file_read", sha256="not-hex")
+
+
+class TestGamingLens:
+    """The author wants a clean verdict without being right. Every route must close from the
+    bytes alone: a MALFORMED that depended on evidence could be turned into an UNRESOLVED by
+    pointing at a receipt that is not there."""
+
+    @pytest.mark.parametrize("doc,reason", [
+        ("<sworn>x</sworn>", "tag_syntax"),
+        (sp("a " + sp("b", "r2")), "nesting"),
+        ("x </sworn>", "stray_closer"),
+        ('<sworn r="r1" k="numeric">never', "unclosed"),
+        (sp(""), "empty_span"),
+        (sp("a" * 301, kind="quote"), "length_cap"),
+        (sp("1", "nope"), "receipt_form"),
+        (sp("1", "r1#/x"), "receipt_form"),
+        (sp("1", "path:x.json#"), "receipt_form"),
+        (sp("1", kind="Numeric"), "kind_unknown"),
+        (sp("1", kind="exec"), "kind_reserved"),
+        (sp("1 and 2"), "number_count"),
+        (sp("v1.2 shipped"), "number_grammar"),
+        (sp("no needle", kind="quote"), "needle_count"),
+        (sp("`  `", kind="quote"), "needle_empty"),
+        (sp("no digest here", kind="hash"), "digest_form"),
+        (sp("no `x`", "path:a.json#/y", "absent"), "absent_over_partial"),
+        (sp("a" * 64, "path:a.json#L1", "hash"), "hash_over_partial"),
+    ])
+    def test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree(self, doc, reason):
+        core = verify(doc.encode(), name="d.md")           # manifest=None, tree=None
+        reasons = [s["reason"] for s in core["spans"] if s["verdict"] == "MALFORMED"]
+        assert reason in reasons, (doc, core["spans"])
+        assert core["counts"]["UNRESOLVED"] == 0, "a broken declaration must not hide as unresolved"
+        assert core["document_verdict"] == "SWORN-FAILED"
+
+    def test_breaking_your_own_failed_span_does_not_make_it_narrative(self):
+        good = sp("0.6").encode()
+        assert verify(good, name="d.md", manifest=manifest(r1=b"0.5"))["document_verdict"] == "SWORN-FAILED"
+        for broken in (b'<sworn r="r1" k="numeric" >0.6</sworn>', b'<SWORN r="r1" k="numeric">0.6</sworn>',
+                       b'<sworn r=r1 k=numeric>0.6</sworn>', b'<sworn r="r1" k="numeric"/>0.6</sworn>'):
+            core = verify(broken, name="d.md", manifest=manifest(r1=b"0.5"))
+            assert core["document_verdict"] == "SWORN-FAILED" and core["counts"]["MALFORMED"] >= 1, broken
+
+    def test_a_manifest_tampered_inside_the_sidecar_resolves_nothing(self):
+        m = manifest(r1=b"0.5")
+        side = json.loads(json.dumps(to_sidecar(sp("0.5").encode(), "d.md", None, m)))
+        assert verify(sidecar=side)["spans"][0]["verdict"] == "HELD"
+        side["manifest"]["receipts"]["r1"]["complete"] = False            # edited after minting
+        core = verify(sidecar=json.loads(json.dumps(side)))
+        assert (core["spans"][0]["verdict"], core["spans"][0]["reason"]) == ("UNRESOLVED", "manifest_integrity")
+        side["manifest"]["receipts"]["r1"]["bytes"] = sworn._b64(b"0.6")  # and the bytes too
+        core = verify(sidecar=json.loads(json.dumps(side)))
+        assert core["spans"][0]["verdict"] == "UNRESOLVED"
+
+    def test_swearing_only_trivia_prints_its_coverage_beside_the_verdict(self):
+        doc = (sp("`2026-09-01`", "r1", "quote") + sp("`7.47.0`", "r2", "quote")
+               + " Rewrote styxx/certify.py. Deleted tests/test_gate.py. Added docs/x.md.\n").encode()
+        core = verify(doc, name="d.md", manifest=manifest(r1=b"2026-09-01", r2=b"7.47.0"))
+        assert core["document_verdict"] == "SWORN-HELD"
+        head = sworn._headline(core)
+        assert "coverage≈0.40" in head and "unsworn-claims≈3" in head
