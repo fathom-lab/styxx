@@ -1,0 +1,169 @@
+{
+  "purpose": "handedness (h) of styxx.certify's obligation predicate, per declared mapping",
+  "mapping_schema": "styxx-oath/h-mapping/v1",
+  "mapping_sha256": "b9c541b9b10dd2caa314d1afc2cdc142861fcae2a68bd46f792bfa1aeecb3a91",
+  "verifier_sha256": "a588a722a60bb3ab08fb7607ec9b62f799d6fc3a5157dc63edb818753e82769d",
+  "sources": {
+    "emittable_by_this_verifier": [
+      "n-glued",
+      "precision",
+      "range-correlation",
+      "range-sanity",
+      "vocabulary"
+    ],
+    "declared_in_mapping": [
+      "n-glued",
+      "precision",
+      "range-correlation",
+      "range-sanity",
+      "structural-precision",
+      "vocabulary"
+    ],
+    "observed_nonzero_in_either_population": [
+      "n-glued",
+      "precision",
+      "range-correlation",
+      "vocabulary"
+    ],
+    "emittable_but_zero_in_both_populations": [
+      "range-sanity"
+    ],
+    "declared_but_not_emittable": [
+      "structural-precision"
+    ]
+  },
+  "population_PRINTED": {
+    "what": "the committed certificates, as they stand; nothing re-certified",
+    "certificates_on_disk": 208,
+    "distinct_verifier_builds_on_disk": 15,
+    "certificates_with_epistemics_summary_v1": 16,
+    "summary_obligated_total": 226,
+    "summary_obligation_sources": {
+      "vocabulary": 209,
+      "n-glued": 7,
+      "range-correlation": 8,
+      "precision": 2,
+      "range-sanity": 0
+    },
+    "summary_source_share_of_obligated": {
+      "vocabulary": 0.9248,
+      "n-glued": 0.031,
+      "range-correlation": 0.0354,
+      "precision": 0.0088,
+      "range-sanity": 0.0
+    },
+    "certificates_with_per_token_epistemics": 18,
+    "ledger_tokens": 616,
+    "obligated_tokens": 233,
+    "token_obligation_sources": {
+      "vocabulary": 215,
+      "range-correlation": 8,
+      "precision": 2,
+      "n-glued": 8
+    },
+    "token_source_share_of_obligated": {
+      "vocabulary": 0.9227,
+      "range-correlation": 0.0343,
+      "precision": 0.0086,
+      "n-glued": 0.0343
+    },
+    "handedness_share_of_obligated": {
+      "object_form": {
+        "tokens": 2,
+        "share": 0.0086
+      },
+      "object_text": {
+        "tokens": 231,
+        "share": 0.9914
+      }
+    },
+    "coverage_note": "16 of 208 committed certificates carry the v1 summary and 18 carry per-token epistemics; every other certificate is silent about who handed it its targets. Absence is pre-annotation, never zero."
+  },
+  "population_LIVE": {
+    "what": "every certifiable document re-certified at the current verifier",
+    "documents_recertified": 207,
+    "documents_skipped_unresolvable": 1,
+    "ledger_tokens": 8583,
+    "verified_tokens": 6300,
+    "obligated_tokens": 3148,
+    "obligation_sources": {
+      "vocabulary": 2612,
+      "precision": 242,
+      "range-correlation": 210,
+      "n-glued": 84
+    },
+    "source_share_of_obligated": {
+      "vocabulary": 0.8297,
+      "precision": 0.0769,
+      "range-correlation": 0.0667,
+      "n-glued": 0.0267
+    },
+    "verified_obligated_by_source": {
+      "vocabulary": 2216,
+      "precision": 235,
+      "range-correlation": 188
+    },
+    "source_share_of_verified": {
+      "vocabulary": 0.3517,
+      "precision": 0.0373,
+      "range-correlation": 0.0298
+    },
+    "by_source_and_status": {
+      "n-glued|ABSTAIN": 84,
+      "precision|ABSTAIN": 5,
+      "precision|UNGROUNDED": 2,
+      "precision|VERIFIED": 235,
+      "range-correlation|ABSTAIN": 22,
+      "range-correlation|VERIFIED": 188,
+      "vocabulary|ABSTAIN": 360,
+      "vocabulary|UNGROUNDED": 36,
+      "vocabulary|VERIFIED": 2216
+    },
+    "handedness_share_of_obligated": {
+      "object_form": {
+        "tokens": 242,
+        "share": 0.0769
+      },
+      "object_text": {
+        "tokens": 2906,
+        "share": 0.9231
+      }
+    }
+  },
+  "instrument_level": {
+    "what": "a classification PER INSTRUMENT of where its targets come from. It is a different population from the token histogram above: an instrument is one row whatever its token count, and a hypothesis about instruments (handed-target instruments collapse held-out; found-target ones do not) is tested on THIS table, never on token shares.",
+    "rows": {
+      "styxx.certify obligation predicate": {
+        "handed_by": [
+          "object_text",
+          "object_form"
+        ],
+        "finds_its_own_target": false,
+        "measured_held_out": "false-accusation 0.2596 across 140 repositories (RESULT_oath_external_corpus_2026_08_27)"
+      },
+      "styxx.diffgate path-claim accuser": {
+        "handed_by": [
+          "object_text"
+        ],
+        "finds_its_own_target": true,
+        "measured_held_out": "0.16 precision against a 0.95 floor (RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01); accusing branch deleted"
+      },
+      "styxx.claimdetect STRUCT-1": {
+        "handed_by": [
+          "object_text"
+        ],
+        "finds_its_own_target": true,
+        "measured_held_out": "0.4211 precision, n=38 (RESULT_struct1_beats_the_null_2026_08_31)"
+      },
+      "styxx.sworn (sworn/0.1)": {
+        "handed_by": [
+          "external"
+        ],
+        "finds_its_own_target": false,
+        "measured_held_out": "NONE — unmeasured by design of the spec; the author binds the target at write time"
+      }
+    },
+    "do_not_conflate": "token-level h is a share over tokens inside one instrument; instrument-level h is a label over instruments. Drawing the test of an instrument-level hypothesis from the token histogram measures the wrong population — the one the certificates print rather than the one the hypothesis is about."
+  },
+  "never_pool": "PRINTED and LIVE are different populations under different verifier builds. No key in this receipt combines them, and a rate quoted from one must name it."
+}
