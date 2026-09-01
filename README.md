@@ -11,7 +11,7 @@
            · · · nothing crosses unseen · · ·
 ```
 
-### the measurement layer for machine minds
+### verification for the agent era
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=ff2330&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
 [![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=ff2330&label=python&style=flat-square)](https://pypi.org/project/styxx/)
@@ -24,7 +24,7 @@
 
 ### one idea, three layers
 
-styxx is a measurement layer for machine minds. Every instrument in it is built on a single
+styxx is a verification layer for the agent era. Every instrument in it is built on a single
 principle, and the principle is the product:
 
 > **An instrument that cannot refuse cannot be trusted.**
@@ -52,7 +52,7 @@ humility as branding; it is the only reason the passes mean anything.
 
 ---
 
-### VERIFY — an agent's summary cannot lie about its diff
+### VERIFY — check a summary against the bytes, and abstain when you cannot
 
 ```bash
 pip install styxx
@@ -101,6 +101,20 @@ are named in [CHANGELOG.md](CHANGELOG.md) with the regression test that closed e
 four are not closed** — they are open, reproducible with the command above, and owed a fix with
 its own preregistration. They are stated here rather than behind a number, because a headline
 that keeps asserting itself in the present tense is how the old one went wrong.
+
+**2026-08-31 — the path-claim accusation is switched off in shipped code.** The four false
+accusations above were found on two small internal corpora. We then ran the gate over 71,016
+agent-authored pull requests from a corpus this lab did not collect
+([AIDev](https://huggingface.co/datasets/hao-li/AIDev), the MSR 2026 mining-challenge dataset),
+preregistered a precision floor of 0.95 before touching the data, and sealed the adjudication key
+before any answer existed. A blind three-seat panel — which called 30 of 30 hidden decoys
+correctly — put the observed precision at **0.23**. The preregistered consequence was paid the
+same day: `file_created` / `file_deleted` / `file_touched` now return `UNCHECKABLE` with the
+accusation *withheld*, and four tests that pinned real catches are marked `xfail(strict=True)` so
+the repair cannot land silently. A first repair attempt recovered 34.6% of the false accusations
+against a 66.7% bar and **also failed**. Counts, symbol and prefix claims are unaffected and still
+accuse. The full record, including two corrections to our own diagnosis, is in
+[RESULT_external1_the_gate_fails_in_the_wild](papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md).
 
 ### MEASURE — two minds can share a geometry and still be unable to read each other
 
