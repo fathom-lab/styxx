@@ -108,12 +108,16 @@ def test_the_agent_sweep_defect_is_catalogued_not_forgotten():
     so the catalogued defect is not forgotten, only un-weaponised. When the
     repair lands, this test flips back to asserting CONTRADICTED for genuinely
     false sentences, in the same commit that cites its gate.
+
+    V14 (PREREG_v14_repair_2026_08_31) changed the REASON string for bare
+    names without changing the class, so this pin now asserts the property it
+    always meant -- no accusation -- rather than matching one phrasing of it.
     """
     for sentence in _AGENT_SWEEP_SENTENCES:
         g = gate_diff_text(sentence, TOUCHED)
         assert g.claims, f"extraction stopped firing on {sentence!r}"
-        assert any("WITHHELD" in (c.why or "") for c in g.claims), (
-            f"accusation state changed on {sentence!r} without this pin flipping")
+        assert all(c.verdict != "CONTRADICTED" for c in g.claims), (
+            f"accusation returned on {sentence!r} without this pin flipping")
 
 
 # ── and the gate must still catch actual lies ─────────────────────────────
