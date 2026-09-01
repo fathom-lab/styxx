@@ -2,9 +2,9 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "CORPUS_STATE_2026_08_31.md",
-  "document_sha256": "2d60317abfad671ca8a94eac5d391110bb8caa6621365deb9f341b129b78ba31",
+  "document_sha256": "9a2ed3ad65fe3825acdcdfc3e3a4d5d35eb0085ff9f022cbbd5dd978b617a8a2",
   "receipts_sha256": {
-    "corpus_census.json": "6c656fb063bb1b4b8c01e5dec2b8d8cce515dede925f8a1f086cc97aafaa0b55"
+    "corpus_census.json": "f42749a9094a27973c098476f5175f6be88483291ddd899afdb2e1b616b192ef"
   },
   "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
   "counts": {
@@ -55,10 +55,10 @@
   "ledger": [
     {
       "line": 10,
-      "token": "203",
-      "value": 203.0,
+      "token": "206",
+      "value": 206.0,
       "decimals": 0,
-      "context": "The census holds 203 stored certificates. Of these, 197 were sworn OATH-HELD at",
+      "context": "The census holds 206 stored certificates. Of these, 200 were sworn OATH-HELD at",
       "col": 17,
       "status": "VERIFIED",
       "receipt_ref": "corpus_census.json:totals.certificates",
@@ -71,10 +71,10 @@
     },
     {
       "line": 10,
-      "token": "197",
-      "value": 197.0,
+      "token": "200",
+      "value": 200.0,
       "decimals": 0,
-      "context": "The census holds 203 stored certificates. Of these, 197 were sworn OATH-HELD at",
+      "context": "The census holds 206 stored certificates. Of these, 200 were sworn OATH-HELD at",
       "col": 52,
       "status": "VERIFIED",
       "receipt_ref": "corpus_census.json:totals.held",
