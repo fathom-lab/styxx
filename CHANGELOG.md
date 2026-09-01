@@ -43,9 +43,15 @@ definition, never accused. The verifier is handed commitments, not a target.
   (`DECISIONS`, pinned by tests). `sworn` is not on the package surface and does not shadow
   `styxx.parrhesia`.
 - **Dogfood:** `DECLARATION_h_mapping_2026_09_01.md` is the first sworn document in the tree
-  (25 counts bound to its census receipt at a commit; SWORN-HELD), `tests/test_sworn_dogfood.py`
-  re-derives every committed sworn document, and `papers/sworn/harness_pytest.py` is the harness
-  that mints a manifest from a pytest run.
+  (25 counts bound to its census receipt at a commit; SWORN-HELD) and
+  `papers/sworn/RESULT_sworn_v01_ships_2026_09_01.md` the second — bound to the manifest
+  `papers/sworn/harness_pytest.py` minted from the test run, to the verifier's own bytes by hash,
+  and to the frozen spec by content address (SWORN-HELD, 13 held, 0 unresolved).
+  `tests/test_sworn_dogfood.py` re-derives every committed sworn document.
+- **Hardened by an adversarial pass** (three independent attackers, lexer / receipts / gaming):
+  a sidecar the loader refuses is never emitted, every bad shape is refused rather than crashed
+  on, git pathspec magic and globs never reach the tree, a tampered receipt FAILS rather than
+  crashing or refusing, and the commit the document names is authoritative over the tree handle.
 - **Owed, unchanged:** no measurement of sworn output exists; nothing here is evidence that
   authors bind the sentences that matter. The `rN` form carries no pointer, so a numeric span
   against an `rN` needs a one-number capture — a v0.2 usability item. Tags inside HTML comments
