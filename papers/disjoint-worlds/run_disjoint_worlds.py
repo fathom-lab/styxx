@@ -65,9 +65,23 @@ def train_sgns(centers, contexts, d, seed):
 
 
 def distmat(E):
+    """Normalised pairwise distances, in O(n^2) memory rather than O(n^2 d).
+
+    The original form built the (n, n, d) difference tensor, which for the
+    committed concept banks is 1.2-2.4 GiB per call and raised MemoryError
+    partway through the b37 legibility matrix on an ordinary laptop — the very
+    run that issue #38 advertises as a good first issue. Replaced with the
+    identity ||a-b||^2 = ||a||^2 + ||b||^2 - 2a.b, verified against the original
+    on all four banks before the change: worst deviation 4.5e-07, which is
+    float32 rounding. The published b37 numbers are unaffected and were
+    re-derived after this edit.
+    """
     E = E - E.mean(0, keepdims=True)
     E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
-    D = np.sqrt(np.maximum(((E[:, None, :] - E[None, :, :]) ** 2).sum(-1), 0))
+    sq = (E * E).sum(1)
+    D2 = sq[:, None] + sq[None, :] - 2.0 * (E @ E.T)
+    np.fill_diagonal(D2, 0.0)          # exact zeros on the diagonal, not -1e-8
+    D = np.sqrt(np.maximum(D2, 0))
     return D / (D.mean() + 1e-9)
 
 
