@@ -1,0 +1,206 @@
+{
+ "prereg": "PREREG_collateral_census_2026_08_31.md",
+ "corpus": {
+  "dataset": "hao-li/AIDev",
+  "license": "CC-BY-4.0"
+ },
+ "contains_accusation": false,
+ "pull_requests": 69654,
+ "excluded": {
+  "no_file_records": 92,
+  "empty_filename": 23330,
+  "no_usable_files": 1931
+ },
+ "changed_files": 1386104,
+ "by_class": {
+  "substantive": 1234247,
+  "migration": 6737,
+  "lockfile": 9596,
+  "whitespace-equivalent": 39720,
+  "snapshot": 20178,
+  "generated": 75626
+ },
+ "share_of_files": {
+  "substantive": 0.8904,
+  "migration": 0.0049,
+  "lockfile": 0.0069,
+  "whitespace-equivalent": 0.0287,
+  "snapshot": 0.0146,
+  "generated": 0.0546
+ },
+ "prs_containing_class": {
+  "substantive": 69348,
+  "lockfile": 6360,
+  "migration": 1312,
+  "whitespace-equivalent": 6629,
+  "snapshot": 1019,
+  "generated": 4245
+ },
+ "share_of_prs": {
+  "substantive": 0.9956,
+  "lockfile": 0.0913,
+  "migration": 0.0188,
+  "whitespace-equivalent": 0.0952,
+  "snapshot": 0.0146,
+  "generated": 0.0609
+ },
+ "per_agent": {
+  "Claude_Code": {
+   "files": {
+    "substantive": 65395,
+    "lockfile": 521,
+    "generated": 1634,
+    "whitespace-equivalent": 2922,
+    "snapshot": 620,
+    "migration": 648
+   },
+   "share_of_files": {
+    "substantive": 0.9116,
+    "lockfile": 0.0073,
+    "generated": 0.0228,
+    "whitespace-equivalent": 0.0407,
+    "snapshot": 0.0086,
+    "migration": 0.009
+   },
+   "prs_containing": {
+    "substantive": 1911,
+    "generated": 110,
+    "lockfile": 374,
+    "whitespace-equivalent": 333,
+    "snapshot": 68,
+    "migration": 96
+   }
+  },
+  "Copilot": {
+   "files": {
+    "substantive": 473529,
+    "whitespace-equivalent": 22855,
+    "lockfile": 4216,
+    "snapshot": 17105,
+    "generated": 52725,
+    "migration": 1598
+   },
+   "share_of_files": {
+    "substantive": 0.8278,
+    "whitespace-equivalent": 0.04,
+    "lockfile": 0.0074,
+    "snapshot": 0.0299,
+    "generated": 0.0922,
+    "migration": 0.0028
+   },
+   "prs_containing": {
+    "substantive": 21429,
+    "whitespace-equivalent": 3544,
+    "snapshot": 577,
+    "lockfile": 2844,
+    "generated": 1598,
+    "migration": 279
+   }
+  },
+  "Cursor": {
+   "files": {
+    "substantive": 69852,
+    "whitespace-equivalent": 2092,
+    "lockfile": 719,
+    "generated": 3816,
+    "snapshot": 685,
+    "migration": 652
+   },
+   "share_of_files": {
+    "substantive": 0.8977,
+    "whitespace-equivalent": 0.0269,
+    "lockfile": 0.0092,
+    "generated": 0.049,
+    "snapshot": 0.0088,
+    "migration": 0.0084
+   },
+   "prs_containing": {
+    "substantive": 4030,
+    "whitespace-equivalent": 593,
+    "generated": 167,
+    "lockfile": 557,
+    "snapshot": 48,
+    "migration": 177
+   }
+  },
+  "Devin": {
+   "files": {
+    "substantive": 145670,
+    "migration": 2643,
+    "lockfile": 2082,
+    "whitespace-equivalent": 3143,
+    "snapshot": 402,
+    "generated": 3268
+   },
+   "share_of_files": {
+    "substantive": 0.9266,
+    "migration": 0.0168,
+    "lockfile": 0.0132,
+    "whitespace-equivalent": 0.02,
+    "snapshot": 0.0026,
+    "generated": 0.0208
+   },
+   "prs_containing": {
+    "substantive": 6132,
+    "lockfile": 1169,
+    "migration": 476,
+    "whitespace-equivalent": 636,
+    "snapshot": 100,
+    "generated": 169
+   }
+  },
+  "Google_Jules": {
+   "files": {
+    "substantive": 7241,
+    "whitespace-equivalent": 175,
+    "lockfile": 117,
+    "generated": 32,
+    "snapshot": 4,
+    "migration": 81
+   },
+   "share_of_files": {
+    "substantive": 0.9465,
+    "whitespace-equivalent": 0.0229,
+    "lockfile": 0.0153,
+    "generated": 0.0042,
+    "snapshot": 0.0005,
+    "migration": 0.0106
+   },
+   "prs_containing": {
+    "substantive": 484,
+    "whitespace-equivalent": 48,
+    "lockfile": 83,
+    "generated": 13,
+    "snapshot": 3,
+    "migration": 17
+   }
+  },
+  "OpenAI_Codex": {
+   "files": {
+    "substantive": 472560,
+    "lockfile": 1941,
+    "whitespace-equivalent": 8533,
+    "snapshot": 1362,
+    "migration": 1115,
+    "generated": 14151
+   },
+   "share_of_files": {
+    "substantive": 0.9458,
+    "lockfile": 0.0039,
+    "whitespace-equivalent": 0.0171,
+    "snapshot": 0.0027,
+    "migration": 0.0022,
+    "generated": 0.0283
+   },
+   "prs_containing": {
+    "substantive": 35362,
+    "lockfile": 1333,
+    "whitespace-equivalent": 1475,
+    "snapshot": 223,
+    "migration": 267,
+    "generated": 2188
+   }
+  }
+ },
+ "note": "whitespace-equivalent is a LOWER BOUND on formatting churn \u2014 reformatting that reorders tokens or rewraps lines is classified substantive here. No claim was read; nothing is accused."
+}
