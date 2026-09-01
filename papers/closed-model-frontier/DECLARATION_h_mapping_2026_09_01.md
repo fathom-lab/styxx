@@ -5,6 +5,8 @@ covers this document and it carries no headline finding. It declares a mapping �
 `obligation_source` the verifier can emit to the party that handed the verifier its target —
 and it counts the corpus under that mapping in the two populations that must never be pooled.
 Mapping: `h_mapping.json`. Receipt: `h_mapping_census_result.json`. Gate: `tests/test_h_mapping.py`.
+Sworn: every count below is bound to that receipt at commit `ed084cef8811` by `sworn/0.1`; the sidecar
+and verdict receipt sit beside this file, and `tests/test_sworn_dogfood.py` re-derives them.
 
 ## Why a mapping has to be declared
 
@@ -65,18 +67,19 @@ already obligated by vocabulary, and under first-writer recording the earlier so
 
 `h_mapping_census.py` folds the mapping over the corpus twice and writes both folds under
 separate keys. Verifier at the time: `styxx/certify.py` sha256 `a588a722…`. The corpus on disk
-was written by **15 distinct verifier builds**.
+was written by <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/distinct_verifier_builds_on_disk" k="numeric">**15 distinct verifier builds**</sworn>.
 
-**PRINTED — what the committed certificates say.** Of 208 certificates on disk, 16 carry the
-`styxx-oath/epistemics-summary/v1` block and 18 carry per-token epistemics. Those 18 hold 233
-obligated tokens: `vocabulary` 215, `range-correlation` 8, `n-glued` 8, `precision` 2. Handed by
-object_text 0.9914, by object_form 0.0086. This is the *only* population a reader of the
-committed certificates can see, and it is 9% of the corpus.
+**PRINTED — what the committed certificates say.** <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_on_disk" k="numeric">There are 208 certificates on disk.</sworn> <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_with_epistemics_summary_v1" k="numeric">Only 16 of them carry the epistemics-summary block</sworn>, and <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/certificates_with_per_token_epistemics" k="numeric">only 18 carry per-token epistemics.</sworn>
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/obligated_tokens" k="numeric">Those ledgers hold 233 obligated tokens</sworn>: <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/vocabulary" k="numeric">`vocabulary` 215</sworn>, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/range-correlation" k="numeric">`range-correlation` 8</sworn>,
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/n-glued" k="numeric">`n-glued` 8</sworn>, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/token_obligation_sources/precision" k="numeric">`precision` 2</sworn>. Handed by <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/handedness_share_of_obligated/object_text/share" k="numeric">object_text 0.9914</sworn> and by
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_PRINTED/handedness_share_of_obligated/object_form/share" k="numeric">object_form 0.0086</sworn>. This is the *only* population a reader of the
+committed certificates can see, and it is under a tenth of the corpus.
 
-**LIVE — every certifiable document re-certified at the current verifier.** 207 documents
-(1 skipped as unresolvable), 8583 ledger tokens, 6300 VERIFIED, 3148 obligated. Of the obligated:
-`vocabulary` 2612, `precision` 242, `range-correlation` 210, `n-glued` 84. Handed by object_text
-0.9231, by object_form 0.0769. Every one of the 84 `n-glued` tokens is ABSTAIN — the register
+**LIVE — every certifiable document re-certified at the current verifier.** <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/documents_recertified" k="numeric">207 documents were re-certified</sworn>
+(<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/documents_skipped_unresolvable" k="numeric">1 skipped as unresolvable</sworn>), yielding <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/ledger_tokens" k="numeric">8583 ledger tokens</sworn>, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/verified_tokens" k="numeric">6300 VERIFIED</sworn> and
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligated_tokens" k="numeric">3148 obligated</sworn>. Of the obligated: <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/vocabulary" k="numeric">`vocabulary` 2612</sworn>, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/precision" k="numeric">`precision` 242</sworn>,
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/range-correlation" k="numeric">`range-correlation` 210</sworn>, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/obligation_sources/n-glued" k="numeric">`n-glued` 84</sworn>. Handed by <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/handedness_share_of_obligated/object_text/share" k="numeric">object_text 0.9231</sworn> and by
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/handedness_share_of_obligated/object_form/share" k="numeric">object_form 0.0769</sworn>. <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/by_source_and_status/n-glued|ABSTAIN" k="numeric">Every one of the 84 `n-glued` tokens is ABSTAIN</sworn> — the register
 obligates and never binds in this corpus.
 
 The two populations disagree on object_form by a factor of nine (0.0086 vs 0.0769), and neither
@@ -88,8 +91,8 @@ handed-target error one level up.
 
 "Bound" has meant two things in this lane. In `certify.py`, `bound` is **OBLIGATED** — an
 obligation clause fired. In the RESULT prose, "the number binds" is **VERIFIED** — a value
-matched. On the same live run, `vocabulary` is 0.8297 of obligated tokens and 0.3517 of
-VERIFIED tokens. The figure carried into this cycle as *vocabulary is 35.4% of bound tokens* is
+matched. On the same live run, <sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/source_share_of_obligated/vocabulary" k="numeric">`vocabulary` is 0.8297 of obligated tokens</sworn> and
+<sworn r="path:papers/closed-model-frontier/h_mapping_census_result.json#/population_LIVE/source_share_of_verified/vocabulary" k="numeric">0.3517 of VERIFIED tokens</sworn>. The figure carried into this cycle as *vocabulary is 35.4% of bound tokens* is
 the second of these — vocabulary-obligated VERIFIED tokens over all VERIFIED tokens — and it is
 the handedness figure the v1 epistemics summary already prints per certificate as the obligated
 half of `verified.value_match`. The receipt keys both shares by their denominator
