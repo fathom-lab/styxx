@@ -1,5 +1,7 @@
 # FINDING — the model-card binding gap (M1, rung 1)
 
+> **Back-pointer, added 2026-09-01.** The extractor this document says does not exist yet was the existing grounding audit all along, hours later — see `FINDING_selfbind_2026_07_02.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **Fathom Lab · 2026-07-02 · prereg: `PREREG_model_card_certification_2026_07_02.md` (committed before any card
 was read, `ae51f0f`). Publishes regardless of verdict — and the verdict is OATH-FAILED.**
 

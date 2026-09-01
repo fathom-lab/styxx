@@ -1,5 +1,7 @@
 # FINDING — the cross-model basis CLEARS: cycle-5's miss was a source-whitening artifact (BASIS-CLEARED)
 
+> **Back-pointer, added 2026-09-01.** The sentence below that cross-model content identity still does not transport was retracted the same day, in this directory — see `FINDING_content_wall_2026_06_12.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **2026-06-12 · Fathom Lab / styxx. Pre-registered: `PREREG_mapped_whitening_2026_06_12.md` (frozen
 pre-run, committed 891b8fa). Receipt: `mapped_whitening_result.json`. Backlog B29. Cycle 5
 (`FINDING_truth_danger_basis_2026_06_12.md`) cleared the (truth × danger) basis in gemma and Qwen-3B but

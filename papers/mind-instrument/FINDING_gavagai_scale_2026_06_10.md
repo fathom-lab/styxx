@@ -1,5 +1,7 @@
 # FINDING — structure loses to search space at this matcher (STRUCTURE-LOSES)
 
+> **Back-pointer, added 2026-09-01.** The unsupervised matcher named below as the bottleneck was broken by label-free discovery and then by the bridge — see `papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.md` and `papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **2026-06-10 · Fathom Lab / styxx. Pre-registered: `PREREG_gavagai_scale_2026_06_10.md` (frozen
 pre-run). Receipt: `gavagai_scale_result.json`. Local, $0, no new model runs.**
 

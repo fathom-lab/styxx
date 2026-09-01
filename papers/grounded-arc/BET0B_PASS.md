@@ -1,5 +1,7 @@
 # Bet-0b H1b — PASS
 
+> **Back-pointer, added 2026-09-01.** The PASS below was later read as a low-variance fluke, not signal — see `FINDING_crossmodel_2026_05_24.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 One-shot confirmatory run on the holdout hashed before scoring (sha256 `8f70d17def1db5c91453c0960e65055505375c5665b439e2a76b6c517cf291fd`).
 
 - n = 450; signal = mean token logprob of fresh gpt-4o-mini responses; gold = detect_refusal; instrument = refuse_check.

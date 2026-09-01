@@ -1,5 +1,7 @@
 # FINDING — The Inaccessible Thought: a planted concept is legible to a lens but not to the mind
 
+> **Back-pointer, added 2026-09-01.** The flagship table below certifies an injected trace, not a held thought, and the council map reduces it to one qualifying model — see `FINDING_v3_scale_2026_06_06.md`, `FINDING_council_demarcation_map_2026_06_07.md` and `SYNTHESIS_legibility_of_mind_2026_06_07.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **2026-06-06. Fathom Lab / styxx. PREREG_introspection_fc_2026_06_06.md.**
 Verdict: **REPORT_AS_LANDED_null** on grounded introspective access — *with the apparatus
 validated* (the abort gate passed on every model). Answer keys SHA-256-hashed pre-scoring.

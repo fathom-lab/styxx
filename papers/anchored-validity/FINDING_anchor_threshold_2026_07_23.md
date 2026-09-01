@@ -1,5 +1,7 @@
 # FINDING (exploratory) — The anchor threshold: the price of catching a shared blind spot — 2026-07-23
 
+> **Back-pointer, added 2026-09-01.** The anchor count the table below recommends was superseded the same day by a smaller one from the power instrument; the direction is conservative, the table is stale — see `FINDING_anchor_power_instrument_2026_07_23.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 Script: `EXPLORE_anchor_threshold_2026_07_23.py` (numpy/scipy; deterministic). **Exploratory, not a
 gated claim.** A quantitative sharpening of the paper's identification result
 (`PAPER_gold_anchors_license_nothing`, sec. 1: "at three judges a correlated and an independent panel

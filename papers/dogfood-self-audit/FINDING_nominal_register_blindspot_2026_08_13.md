@@ -1,5 +1,7 @@
 # The gates went silent on the case they were built for
 
+> **Back-pointer, added 2026-09-01.** The instance count below is one of three live counts of the same ledger; the other two are in these files — see `DAY_2026_08_13.md` and `THESIS_silence_ambiguity_2026_08_13.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **Date:** 2026-08-13, end of day. **Instances 15 and 16** of the day's defect class.
 
 A status report arrived from the agent. Its opening work item:

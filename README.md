@@ -102,7 +102,7 @@ four are not closed** — they are open, reproducible with the command above, an
 its own preregistration. They are stated here rather than behind a number, because a headline
 that keeps asserting itself in the present tense is how the old one went wrong.
 
-**2026-08-31 — the path-claim accusation is switched off in shipped code.** The four false
+**2026-08-31 — the path-claim accusation is switched off in shipped code.** *(2026-09-01: the accusing branch was then deleted outright, not disabled — commit `5e225b49`.)* The four false
 accusations above were found on two small internal corpora. We then ran the gate over 71,016
 agent-authored pull requests from a corpus this lab did not collect
 ([AIDev](https://huggingface.co/datasets/hao-li/AIDev), the MSR 2026 mining-challenge dataset),

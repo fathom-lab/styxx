@@ -1,5 +1,7 @@
 # The Honesty Standard
 
+> **Back-pointer, added 2026-09-01.** The model-strength gradient marked as held below was falsified the same day; the apparent scaling was a difficulty confound — see `grounded-honesty-axis/FINDING_honesty_scaling_law_2026_05_31.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 ### A falsifiable instrument for AI honesty — and the practice of turning it on its makers
 
 *Fathom Lab · 2026-05-31 · the synthesis of the styxx grounded-honesty arc*
