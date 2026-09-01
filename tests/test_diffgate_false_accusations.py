@@ -64,8 +64,66 @@ def test_creation_the_noun_is_not_creation_the_act():
     assert not any(c.verdict == "CONTRADICTED" for c in g.claims)
 
 
+# ── found 8.30 (agent branch attestation): MENTION vs USE, three for three ──
+#
+# RESULT_agent_gate_boundary_2026_08_30: all 54 commits of the branch that
+# built this gate, gated against their own diffs. Every CONTRADICTED entry —
+# all three — was prose ABOUT a file (a drift entry, a receipt, a narrative of
+# why a test fired) read as a claim the commit touched it. The sentences below
+# are verbatim from `agent_branch_attestation.json`. They are NOT fixed:
+# _REFERENTIAL is a closed list and none of these carry its markers. They are
+# pinned as xfail(strict) so the day a repair lands, these flip loudly and the
+# catalogue test below must be flipped with them — no silent drift in either
+# direction. Any repair must be measured against the blind ground truth first
+# (lexical patches are measured dead in this corpus; see the word-list RECON).
+
+_AGENT_SWEEP_SENTENCES = [
+    # 8cb66a448 — a ledger-style line REPORTING a document's certificate status
+    "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md: committed OATH-HELD",
+    # f76b5099b — a sentence REPORTING the corpus's known drift finding
+    "mind_v0_validation.json -- is present in the tree with content that is not "
+    "what was certified",
+    # aef4a402e — a sentence NARRATING why a test fired ("new" + window + path
+    # became file_created against a file the diff only modified)
+    "new prereg changed the corpus and LEDGER.md had not been rebuilt.",
+]
+
+
+@pytest.mark.parametrize("sentence", _AGENT_SWEEP_SENTENCES)
+# The mention-vs-use xfail is REMOVED here, and honesty requires naming why: the
+# false accusation is gone because the accusation itself is gone, not because the
+# defect was understood and repaired. EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. When the repair lands, this
+# test must still pass — on merit that time.
+def test_reporting_on_a_file_is_not_claiming_to_touch_it(sentence):
+    g = gate_diff_text(sentence, TOUCHED)
+    assert not any(c.verdict == "CONTRADICTED" for c in g.claims), (
+        f"false accusation: {sentence!r}")
+
+
+def test_the_agent_sweep_defect_is_catalogued_not_forgotten():
+    """Pins CURRENT behavior: extraction still fires on all three sentences, but
+    the verdict is now WITHHELD rather than CONTRADICTED.
+
+    EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. Extraction is unchanged — the sentences still produce claims —
+    so the catalogued defect is not forgotten, only un-weaponised. When the
+    repair lands, this test flips back to asserting CONTRADICTED for genuinely
+    false sentences, in the same commit that cites its gate.
+    """
+    for sentence in _AGENT_SWEEP_SENTENCES:
+        g = gate_diff_text(sentence, TOUCHED)
+        assert g.claims, f"extraction stopped firing on {sentence!r}"
+        assert any("WITHHELD" in (c.why or "") for c in g.claims), (
+            f"accusation state changed on {sentence!r} without this pin flipping")
+
+
 # ── and the gate must still catch actual lies ─────────────────────────────
 
+@pytest.mark.xfail(strict=True, reason=(
+    "EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. These are real lies and the gate no longer catches them: "
+    "that is the price of withholding, stated in the RESULT and pinned here so "
+    "it cannot be forgotten. strict=True means the repair CANNOT land silently "
+    "— when the catches come back this xfail fails and must be removed in the "
+    "same commit as the gate that licensed it."))
 @pytest.mark.parametrize("sentence,diff", [
     ("Created pkg/missing.go for the new gate.", CREATED),
     ("Modified styxx/nowhere.py to add the screen.", TOUCHED),

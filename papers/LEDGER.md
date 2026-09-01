@@ -11,13 +11,30 @@ ratio is visible without reading 158 cycle entries.
 | | |
 |---|---|
 | cycles logged | **163** |
-| preregistrations frozen | **367** (40 carrying a machine-scored gates block) |
-| OATH certificates | **178** |
+| preregistrations frozen | **378** (40 carrying a machine-scored gates block) |
+| OATH certificates | **206** |
 | trust-stack seals | **34** |
 | cycles ending in a refusal, null, retraction or INVALID | **62** of 163 |
-| verdicts that were literally `INVALID__*` — the machinery refusing its own run | **16** |
+| verdicts that were literally `INVALID__*` — the machinery refusing its own run | **9** |
 | gates declaring a power basis | 9 of 40 gated preregs |
 | — of those frozen *since* the field existed | **8 of 8** |
+
+**The negatives row is not yet a measurement, and is published anyway.** The
+62 is produced by matching a keyword list against each cycle's free-prose
+verdict field, so a cycle counts as a loss whenever its commentary happens to contain one
+of those words — the same defect that put `SHIPPED` in the refusal list below. Scoping the
+identical keywords to the verdict's opening clause instead yields far fewer. Neither
+number is right: the field is prose, and no keyword test over prose is a classifier. The
+honest fix is a machine-readable verdict token per cycle. That mechanism now exists —
+`verdict_token` on a cycle record, carrying verbatim the string the scorer emitted — and
+**0 of 163** cycles carry one. Until those two
+numbers are equal the row above stays a keyword count, and this line is how a reader can
+tell which it is. An unadjudicated cycle is reported as unadjudicated rather than guessed:
+defaulting unknown tokens either way would flatter, in one direction or the other.
+The figure above is left standing rather than quietly restated because it has already been
+cited in a frozen preregistration, which can never be edited; moving it here without
+adjudicating all 163 cycles would replace a disclosed error with an undisclosed one.
+Measured in `papers/ledger_classifier_audit.py`.
 
 Both power-basis rows are reported because either alone misleads. A frozen
 preregistration is never edited, so the preregs written before `power_basis` existed can
@@ -25,7 +42,7 @@ never acquire one and their denominator can never move; quoting only the first r
 understates the discipline, and quoting only the second hides how much of the corpus
 predates it.
 
-Certificate verdicts: `OATH-HELD` × 178
+Certificate verdicts: `OATH-HELD` × 200, `OATH-FAILED` × 6
 
 Seal verdicts: `SEALED` × 33, `REFUSED` × 1
 
@@ -38,19 +55,22 @@ one cost real compute and produced no claim.
 - **cycle 67** (2026-07-24) — `INVALID__underpowered`
 - **cycle 85** (2026-07-28) — `INVALID__underpowered`
 - **cycle 101** (2026-07-30) — `INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report`
-- **cycle 110** (2026-08-01) — `TWO`
-- **cycle 115** (2026-08-03) — `TWO`
+- **cycle 110** (2026-08-01) — `INVALID__pipeline_broken`
+- **cycle 115** (2026-08-03) — `INVALID__null_artifact`, `INVALID__second_source_discovery_broken`
 - **cycle 117** (2026-08-04) — `INVALID__dose_response_nonmonotone`
 - **cycle 118** (2026-08-04) — `INVALID__whitening_breaks_the_clique`
 - **cycle 132** (2026-08-06) — `INVALID__null_leaks`
-- **cycle 133** (2026-08-06) — `SHIPPED`
-- **cycle 134** (2026-08-06) — `PRODUCT`
-- **cycle 142** (2026-08-06) — `INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated`
 - **cycle 149** (2026-08-07) — `INVALID__breaks_existing_preregs`
-- **cycle 152** (2026-08-07) — `DO`
-- **cycle 154** (2026-08-07) — `REWRITTEN`
-- **cycle 156** (2026-08-07) — `BUILT`
-- **cycle 157** (2026-08-08) — `NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize`
+
+A further **7** cycles mention an `INVALID__*` verdict in their own
+commentary without having returned one, and are deliberately not listed here. Until
+2026-08-26 they were, and the defect was visible in this file: the selection test was a
+substring match over a free-prose verdict field, and the renderer printed only that
+field's first word — so this section listed `SHIPPED`, `PRODUCT`, `DO`, `REWRITTEN` and
+`BUILT` as runs the machinery refused, including the cycle that built this file, counted
+as a loss because its verdict quotes this file's own negatives count. Measured in
+`papers/ledger_classifier_audit.py`; the same mention-versus-use defect is documented in
+the OATH verifier in `closed-model-frontier/RECON_oath_external_reach_2026_08_26.md`.
 
 ## The rule, measured
 

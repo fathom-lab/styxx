@@ -1,0 +1,326 @@
+{
+ "census": "can widening the trigger vocabulary fix the miss rate?",
+ "status": "RECON. Licenses no clause, no bar, no repair.",
+ "ground_truth": "majority verdicts of three blind seats over every abstained token in both 2026-08-27 panels; the first hand-adjudicated miss set this lane has had",
+ "population": {
+  "abstained_tokens_adjudicated": 225,
+  "addressable_by_vocabulary": 212,
+  "of_which_real_claims_MISSED": 85,
+  "of_which_correctly_abstained": 127,
+  "not_addressable_fired_a_trigger_already": 13
+ },
+ "null_rule": {
+  "rule": "obligate every number; no vocabulary test at all",
+  "misses_caught": 85,
+  "non_claims_obligated": 127,
+  "cost_per_catch": 1.494,
+  "why_it_is_the_ceiling": "No word list can catch more misses than obligating everything, and none can cost less than the words it adds. The null rule's trade bounds every candidate."
+ },
+ "candidates_IN_SAMPLE": {
+  "add_top_1_words": {
+   "k": 1,
+   "misses_caught": 8,
+   "non_claims_obligated": 2,
+   "cost_per_catch": 0.25,
+   "words": [
+    "tok"
+   ]
+  },
+  "add_top_3_words": {
+   "k": 3,
+   "misses_caught": 13,
+   "non_claims_obligated": 2,
+   "cost_per_catch": 0.154,
+   "words": [
+    "gpt-oss",
+    "rouge-l",
+    "tok"
+   ]
+  },
+  "add_top_5_words": {
+   "k": 5,
+   "misses_caught": 16,
+   "non_claims_obligated": 2,
+   "cost_per_catch": 0.125,
+   "words": [
+    "deepfashion",
+    "gpt-oss",
+    "in-shop",
+    "rouge-l",
+    "tok"
+   ]
+  },
+  "add_top_10_words": {
+   "k": 10,
+   "misses_caught": 22,
+   "non_claims_obligated": 4,
+   "cost_per_catch": 0.182,
+   "words": [
+    "best",
+    "deepfashion",
+    "gpt-oss",
+    "in-shop",
+    "items",
+    "llama",
+    "rouge-l",
+    "significant",
+    "tok",
+    "win"
+   ]
+  },
+  "add_top_20_words": {
+   "k": 20,
+   "misses_caught": 36,
+   "non_claims_obligated": 4,
+   "cost_per_catch": 0.111,
+   "words": [
+    "best",
+    "deepfashion",
+    "effect",
+    "false",
+    "first",
+    "gpt-oss",
+    "in-shop",
+    "items",
+    "llama",
+    "llm",
+    "nano-omni-",
+    "nemotron-",
+    "ollama",
+    "prompts",
+    "real",
+    "residual",
+    "rouge-l",
+    "significant",
+    "tok",
+    "win"
+   ]
+  },
+  "add_top_40_words": {
+   "k": 40,
+   "misses_caught": 55,
+   "non_claims_obligated": 11,
+   "cost_per_catch": 0.2,
+   "words": [
+    "abstentions",
+    "acon",
+    "active",
+    "aggregate",
+    "api",
+    "attributes",
+    "average",
+    "backward_compatible",
+    "base",
+    "best",
+    "deepfashion",
+    "effect",
+    "false",
+    "first",
+    "flash",
+    "full",
+    "gpt-oss",
+    "in-shop",
+    "items",
+    "llama",
+    "llm",
+    "nano-omni-",
+    "nemotron-",
+    "ollama",
+    "pass",
+    "prompts",
+    "qwopus",
+    "real",
+    "residual",
+    "returns",
+    "rouge-l",
+    "satisfaction",
+    "scale",
+    "sep",
+    "significant",
+    "tok",
+    "tool",
+    "trafilatura",
+    "user",
+    "win"
+   ]
+  }
+ },
+ "candidates_HELD_OUT": {
+  "add_top_1_words": {
+   "k": 1,
+   "misses_caught": 0,
+   "non_claims_obligated": 0,
+   "cost_per_catch": null,
+   "recall_of_misses": 0.0
+  },
+  "add_top_3_words": {
+   "k": 3,
+   "misses_caught": 0,
+   "non_claims_obligated": 0,
+   "cost_per_catch": null,
+   "recall_of_misses": 0.0
+  },
+  "add_top_5_words": {
+   "k": 5,
+   "misses_caught": 0,
+   "non_claims_obligated": 0,
+   "cost_per_catch": null,
+   "recall_of_misses": 0.0
+  },
+  "add_top_10_words": {
+   "k": 10,
+   "misses_caught": 0,
+   "non_claims_obligated": 1,
+   "cost_per_catch": null,
+   "recall_of_misses": 0.0
+  },
+  "add_top_20_words": {
+   "k": 20,
+   "misses_caught": 1,
+   "non_claims_obligated": 1,
+   "cost_per_catch": 1.0,
+   "recall_of_misses": 0.012
+  },
+  "add_top_40_words": {
+   "k": 40,
+   "misses_caught": 4,
+   "non_claims_obligated": 3,
+   "cost_per_catch": 0.75,
+   "recall_of_misses": 0.047
+  }
+ },
+ "in_sample_warning": "candidates_IN_SAMPLE ranks and scores words on the SAME tokens and is optimistic by construction. Read candidates_HELD_OUT, which fits the word list on one half of the DOCUMENTS and scores it on the other. The split is by document because tokens from one README share vocabulary and a token-level split leaks across folds.",
+ "discrimination_in_sample": {
+  "columns": {
+   "misses_caught": {
+    "verdict": "NULL_TIES_BEST",
+    "direction": "higher_is_better",
+    "control": 85,
+    "beats_control": [],
+    "distinct_values": 7,
+    "spread": [
+     8,
+     85
+    ]
+   },
+   "non_claims_obligated": {
+    "verdict": "SEPARATES",
+    "direction": "lower_is_better",
+    "control": 127,
+    "beats_control": [
+     "add_top_10_words",
+     "add_top_1_words",
+     "add_top_20_words",
+     "add_top_3_words",
+     "add_top_40_words",
+     "add_top_5_words"
+    ],
+    "distinct_values": 4,
+    "spread": [
+     2,
+     127
+    ]
+   }
+  },
+  "accusations": [],
+  "deciding": [
+   "non_claims_obligated"
+  ],
+  "share_of_control": {
+   "add_top_1_words": {
+    "misses_caught": 0.0941,
+    "non_claims_obligated": 0.0157
+   },
+   "add_top_3_words": {
+    "misses_caught": 0.1529,
+    "non_claims_obligated": 0.0157
+   },
+   "add_top_5_words": {
+    "misses_caught": 0.1882,
+    "non_claims_obligated": 0.0157
+   },
+   "add_top_10_words": {
+    "misses_caught": 0.2588,
+    "non_claims_obligated": 0.0315
+   },
+   "add_top_20_words": {
+    "misses_caught": 0.4235,
+    "non_claims_obligated": 0.0315
+   },
+   "add_top_40_words": {
+    "misses_caught": 0.6471,
+    "non_claims_obligated": 0.0866
+   }
+  },
+  "share_of_control_note": "Per candidate, its score divided by the null rule's on each column. A candidate that beats the control on a cost column while retaining almost none of its benefit is a rule that does nothing cheaply. Read these before believing a cost-column pass.",
+  "holds": true
+ },
+ "discrimination_held_out": {
+  "columns": {
+   "misses_caught": {
+    "verdict": "NULL_TIES_BEST",
+    "direction": "higher_is_better",
+    "control": 85,
+    "beats_control": [],
+    "distinct_values": 4,
+    "spread": [
+     0,
+     85
+    ]
+   },
+   "non_claims_obligated": {
+    "verdict": "SEPARATES",
+    "direction": "lower_is_better",
+    "control": 127,
+    "beats_control": [
+     "add_top_10_words",
+     "add_top_1_words",
+     "add_top_20_words",
+     "add_top_3_words",
+     "add_top_40_words",
+     "add_top_5_words"
+    ],
+    "distinct_values": 4,
+    "spread": [
+     0,
+     127
+    ]
+   }
+  },
+  "accusations": [],
+  "deciding": [
+   "non_claims_obligated"
+  ],
+  "share_of_control": {
+   "add_top_1_words": {
+    "misses_caught": 0.0,
+    "non_claims_obligated": 0.0
+   },
+   "add_top_3_words": {
+    "misses_caught": 0.0,
+    "non_claims_obligated": 0.0
+   },
+   "add_top_5_words": {
+    "misses_caught": 0.0,
+    "non_claims_obligated": 0.0
+   },
+   "add_top_10_words": {
+    "misses_caught": 0.0,
+    "non_claims_obligated": 0.0079
+   },
+   "add_top_20_words": {
+    "misses_caught": 0.0118,
+    "non_claims_obligated": 0.0079
+   },
+   "add_top_40_words": {
+    "misses_caught": 0.0471,
+    "non_claims_obligated": 0.0236
+   }
+  },
+  "share_of_control_note": "Per candidate, its score divided by the null rule's on each column. A candidate that beats the control on a cost column while retaining almost none of its benefit is a rule that does nothing cheaply. Read these before believing a cost-column pass.",
+  "holds": true
+ },
+ "the_finding": "Vocabulary widening does NOT generalise. In-sample the top-20 rule catches 36 of 85 misses at a cost of 4, a cost-per-catch of 0.111 that reads as a triumph. Fitted on one half of the documents and scored on the other, the same rule catches ONE, a recall of 0.012. The words that separate misses from non-claims in one set of documents do not transfer to another set. The obvious repair is dead, and it would have looked like a success to anyone who stopped at the in-sample table.",
+ "and_the_instrument_did_not_catch_it": "styxx-discriminates PASSES the in-sample candidates: every one beats the null rule on the deciding column. It asks whether a candidate beats doing nothing, which is a different question from whether the candidate was fitted on the data it is scored on. A held-out split is not something that check can substitute for, and this is the first cycle to demonstrate it.",
+ "what_this_does_not_show": "Whether a STRUCTURAL predicate could separate these populations. This census scores lexical rules only, and its negative result is about vocabulary, not about the repairability of the obligation predicate."
+}

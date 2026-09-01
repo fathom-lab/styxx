@@ -1,0 +1,705 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_structural_obligation_2026_08_28.md",
+  "document_sha256": "7c7d3680c6d400c0d1d654207cd25153973a647d1f4e3ed3cd82d05e5beec5c7",
+  "receipts_sha256": {
+    "oath_structural_obligation_census.json": "8393f2f8d5de9cb4f3c882974ca675e5373466843623cb83482911b05a67ac4d",
+    "oath_obligation_repair_census.json": "701103b3beabeeaf3df0c6a69cbef7ce8b9d09a8d3d23935a10ffd42d2860915"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 60,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 40,
+      "token": "1.0"
+    },
+    {
+      "line": 44,
+      "token": "2"
+    },
+    {
+      "line": 96,
+      "token": "212"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 28,
+      "token": "85",
+      "value": 85.0,
+      "decimals": 0,
+      "context": "2026-08-27 panels: 85 missed claims against 127 correct abstentions. **The base rate of claims",
+      "col": 19,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:population.claims_MISSED"
+    },
+    {
+      "line": 28,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "2026-08-27 panels: 85 missed claims against 127 correct abstentions. **The base rate of claims",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:population.correctly_abstained"
+    },
+    {
+      "line": 29,
+      "token": "0.4009",
+      "value": 0.4009,
+      "decimals": 4,
+      "context": "among abstained tokens is `0.4009`** \u2014 that is what a rule has to beat to carry information.",
+      "col": 27,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision"
+    },
+    {
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| rule | recall | precision | fold 0 | fold 1 |",
+      "col": 35,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_0.rules.STRUCT_markdown_emphasis.misses_caught"
+    },
+    {
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| rule | recall | precision | fold 0 | fold 1 |",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.recall"
+    },
+    {
+      "line": 33,
+      "token": "0.3765",
+      "value": 0.3765,
+      "decimals": 4,
+      "context": "| `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "col": 33,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.recall"
+    },
+    {
+      "line": 33,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "| `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "col": 44,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 33,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "| `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "col": 52,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_comparative.precision"
+    },
+    {
+      "line": 33,
+      "token": "0.8667",
+      "value": 0.8667,
+      "decimals": 4,
+      "context": "| `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "col": 58,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_and_outside_code` | 0.3765 | **0.8** | 0.6 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 34,
+      "token": "0.3765",
+      "value": 0.3765,
+      "decimals": 4,
+      "context": "| `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "col": 20,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.recall"
+    },
+    {
+      "line": 34,
+      "token": "0.7805",
+      "value": 0.7805,
+      "decimals": 4,
+      "context": "| `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "col": 31,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 34,
+      "token": "0.5455",
+      "value": 0.5455,
+      "decimals": 4,
+      "context": "| `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "col": 42,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_0.rules.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 34,
+      "token": "0.8667",
+      "value": 0.8667,
+      "decimals": 4,
+      "context": "| `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "col": 51,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `precision_2dp` | 0.3765 | **0.7805** | 0.5455 | 0.8667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 35,
+      "token": "0.5412",
+      "value": 0.5412,
+      "decimals": 4,
+      "context": "| `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "col": 27,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_table_not_first_cell.recall"
+    },
+    {
+      "line": 35,
+      "token": "0.6765",
+      "value": 0.6765,
+      "decimals": 4,
+      "context": "| `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "col": 38,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 35,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "| `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "col": 49,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_0.rules.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 35,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "| `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "col": 56,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `table_not_first_cell` | 0.5412 | **0.6765** | 0.75 | 0.6667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 36,
+      "token": "0.9882",
+      "value": 0.9882,
+      "decimals": 4,
+      "context": "| `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "col": 24,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_outside_code_span.recall"
+    },
+    {
+      "line": 36,
+      "token": "0.4308",
+      "value": 0.4308,
+      "decimals": 4,
+      "context": "| `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "col": 33,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_outside_code_span.precision"
+    },
+    {
+      "line": 36,
+      "token": "0.3387",
+      "value": 0.3387,
+      "decimals": 4,
+      "context": "| `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "col": 42,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_0.rules.STRUCT_outside_code_span.precision"
+    },
+    {
+      "line": 36,
+      "token": "0.4737",
+      "value": 0.4737,
+      "decimals": 4,
+      "context": "| `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "col": 51,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `outside_code_span` | 0.9882 | 0.4308 | 0.3387 | 0.4737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.STRUCT_outside_code_span.precision"
+    },
+    {
+      "line": 37,
+      "token": "0.0471",
+      "value": 0.0471,
+      "decimals": 4,
+      "context": "| `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "col": 24,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_markdown_emphasis.recall"
+    },
+    {
+      "line": 37,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "col": 33,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.recall"
+    },
+    {
+      "line": 37,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "col": 43,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | `markdown_emphasis` | 0.0471 | 1.0 | \u2014 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.recall"
+    },
+    {
+      "line": 38,
+      "token": "0.0235",
+      "value": 0.0235,
+      "decimals": 4,
+      "context": "| **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "col": 33,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_reporting_verb.recall"
+    },
+    {
+      "line": 38,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "| **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "col": 44,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision"
+    },
+    {
+      "line": 38,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "col": 52,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_markdown_emphasis.recall"
+    },
+    {
+      "line": 38,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "col": 58,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_reporting_verb`** | 0.0235 | **0.4** | 0.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.recall"
+    },
+    {
+      "line": 39,
+      "token": "0.0588",
+      "value": 0.0588,
+      "decimals": 4,
+      "context": "| **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "col": 30,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_comparative.recall"
+    },
+    {
+      "line": 39,
+      "token": "0.5556",
+      "value": 0.5556,
+      "decimals": 4,
+      "context": "| **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "col": 39,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_comparative.precision"
+    },
+    {
+      "line": 39,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "| **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "col": 48,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_table_not_first_cell.recall"
+    },
+    {
+      "line": 39,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "| **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "col": 54,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | **`LEXICAL_comparative`** | 0.0588 | 0.5556 | 0.5 | 0.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_comparative.precision"
+    },
+    {
+      "line": 40,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| null: obligate everything | 1.0 | 0.4009 | \u2014 | \u2014 |",
+      "col": 30,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | null: obligate everything | 1.0 | 0.4009 | \u2014 | \u2014 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.4009",
+      "value": 0.4009,
+      "decimals": 4,
+      "context": "| null: obligate everything | 1.0 | 0.4009 | \u2014 | \u2014 |",
+      "col": 36,
+      "binding_context": "| rule | recall | precision | fold 0 | fold 1 | | null: obligate everything | 1.0 | 0.4009 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision"
+    },
+    {
+      "line": 42,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "Read the two lexical rows first, because they are the control. `reporting_verb` lands at `0.4` \u2014",
+      "col": 90,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.LEXICAL_reporting_verb.precision"
+    },
+    {
+      "line": 44,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "are `0.0` and `1.0`, which is what n=2 looks like. `comparative` is barely above base rate on nine",
+      "col": 5,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.LEXICAL_comparative.recall"
+    },
+    {
+      "line": 44,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "are `0.0` and `1.0`, which is what n=2 looks like. `comparative` is barely above base rate on nine",
+      "col": 15,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.recall"
+    },
+    {
+      "line": 44,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "are `0.0` and `1.0`, which is what n=2 looks like. `comparative` is barely above base rate on nine",
+      "col": 37,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "The structural rules do not. Decimal precision reaches `0.78` and, conjoined with \"not inside a",
+      "col": 56,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 48,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "code span\", `0.80` \u2014 twice the base rate. Table position reaches `0.68` at the highest usable",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_and_outside_code.precision"
+    },
+    {
+      "line": 48,
+      "token": "0.68",
+      "value": 0.68,
+      "decimals": 2,
+      "context": "code span\", `0.80` \u2014 twice the base rate. Table position reaches `0.68` at the highest usable",
+      "col": 66,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 49,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "recall of any rule, and it is the most **fold-stable** thing here: `0.75` and `0.6667`, which is",
+      "col": 68,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_0.rules.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 49,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "recall of any rule, and it is the most **fold-stable** thing here: `0.75` and `0.6667`, which is",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:by_fold.fold_1.rules.STRUCT_table_not_first_cell.precision"
+    },
+    {
+      "line": 59,
+      "token": "5909",
+      "value": 5909.0,
+      "decimals": 0,
+      "context": "Projected over all `5909` abstained tokens in both corpora, multiplying the corpus-wide fire count",
+      "col": 20,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.abstained_tokens_corpus_wide"
+    },
+    {
+      "line": 64,
+      "token": "1120",
+      "value": 1120.0,
+      "decimals": 0,
+      "context": "| `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "col": 33,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_and_outside_code.fires_on_abstained_corpus_wide"
+    },
+    {
+      "line": 64,
+      "token": "0.1895",
+      "value": 0.1895,
+      "decimals": 4,
+      "context": "| `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "col": 40,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_and_outside_code.share_of_abstained_corpus"
+    },
+    {
+      "line": 64,
+      "token": "896",
+      "value": 896.0,
+      "decimals": 0,
+      "context": "| `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "col": 49,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_and_outside_code.projected_claims_recovered"
+    },
+    {
+      "line": 64,
+      "token": "224",
+      "value": 224.0,
+      "decimals": 0,
+      "context": "| `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "col": 55,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_and_outside_code` | 1120 | 0.1895 | 896 | 224 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_and_outside_code.projected_non_claims_obligated"
+    },
+    {
+      "line": 65,
+      "token": "1167",
+      "value": 1167.0,
+      "decimals": 0,
+      "context": "| `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "col": 20,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_2dp.fires_on_abstained_corpus_wide"
+    },
+    {
+      "line": 65,
+      "token": "0.1975",
+      "value": 0.1975,
+      "decimals": 4,
+      "context": "| `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "col": 27,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_2dp.share_of_abstained_corpus"
+    },
+    {
+      "line": 65,
+      "token": "911",
+      "value": 911.0,
+      "decimals": 0,
+      "context": "| `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "col": 36,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_2dp.projected_claims_recovered"
+    },
+    {
+      "line": 65,
+      "token": "256",
+      "value": 256.0,
+      "decimals": 0,
+      "context": "| `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "col": 42,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `precision_2dp` | 1167 | 0.1975 | 911 | 256 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_2dp.projected_non_claims_obligated"
+    },
+    {
+      "line": 66,
+      "token": "1727",
+      "value": 1727.0,
+      "decimals": 0,
+      "context": "| `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "col": 27,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_table_not_first_cell.fires_on_abstained_corpus_wide"
+    },
+    {
+      "line": 66,
+      "token": "0.2923",
+      "value": 0.2923,
+      "decimals": 4,
+      "context": "| `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "col": 34,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_table_not_first_cell.share_of_abstained_corpus"
+    },
+    {
+      "line": 66,
+      "token": "1168",
+      "value": 1168.0,
+      "decimals": 0,
+      "context": "| `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "col": 43,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_table_not_first_cell.projected_claims_recovered"
+    },
+    {
+      "line": 66,
+      "token": "559",
+      "value": 559.0,
+      "decimals": 0,
+      "context": "| `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "col": 50,
+      "binding_context": "| rule | fires | share of abstentions | \u2248 claims recovered | \u2248 non-claims obligated | | `table_not_first_cell` | 1727 | 0.2923 | 1168 | 559 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_table_not_first_cell.projected_non_claims_obligated"
+    },
+    {
+      "line": 69,
+      "token": "212",
+      "value": 212.0,
+      "decimals": 0,
+      "context": "precision measured over the 212 addressable adjudicated tokens, and the fold-to-fold swing is",
+      "col": 28,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:population.addressable"
+    },
+    {
+      "line": 75,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "**`markdown_emphasis` must not be read from that table.** Its `1.0` precision rests on four",
+      "col": 63,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_markdown_emphasis.precision"
+    },
+    {
+      "line": 76,
+      "token": "101",
+      "value": 101.0,
+      "decimals": 0,
+      "context": "catches and zero costs, and the projection of \"101 claims, 0 non-claims\" is arithmetic on a",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_markdown_emphasis.fires_on_abstained_corpus_wide"
+    },
+    {
+      "line": 76,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "catches and zero costs, and the projection of \"101 claims, 0 non-claims\" is arithmetic on a",
+      "col": 59,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_markdown_emphasis.non_claims_obligated"
+    },
+    {
+      "line": 88,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "**Precision of `0.80` means one newly obligated token in five is not a claim.** At the projected",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_and_outside_code.precision"
+    },
+    {
+      "line": 89,
+      "token": "224",
+      "value": 224.0,
+      "decimals": 0,
+      "context": "scale that is roughly 224 new obligations on non-claims, each of which becomes either a false",
+      "col": 22,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.STRUCT_precision_and_outside_code.projected_non_claims_obligated"
+    },
+    {
+      "line": 96,
+      "token": "212",
+      "value": 212.0,
+      "decimals": 0,
+      "context": "**The ground truth is three correlated LLM seats over 212 tokens.** Every number above inherits",
+      "col": 54,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

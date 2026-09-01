@@ -1,0 +1,783 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_obligate2_split_verdict_2026_08_31.md",
+  "document_sha256": "64d2500733d4c6395eebd392e111c5e632b8bd9ce7f923a916379261e6929cc6",
+  "receipts_sha256": {
+    "obligate2_result.json": "ccc5a7bd6c6cd025ddbd796b8e88f729d62818e94b3acc1dfa185cbe063a9603",
+    "obligate2_packets.json": "3e4a7b813dbabb86ccf8e7ecd60f2d33dda1e416544b36fe9284e74637905a1e",
+    "obligate1_result.json": "7a392d9c722f23f87b12cd6b672f453bbcc21641059e64b2f6e7be9dda58ed95",
+    "obligate2_dev_eval.json": "c1274af0b112d8be4c76b0304da70d89a29c2dcff7db4229d922666a9197dc94"
+  },
+  "verifier_sha256": "a6a120e0c3416213ec29835ffdd1fc65b7ab157661cf492df6996194c1e71a27",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 19,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 11,
+      "notation": 0,
+      "derived": 2,
+      "unbound-field": 0,
+      "value-match": 20,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 8
+    },
+    "verified": {
+      "total": 22,
+      "derived": {
+        "obligated": 2,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 0,
+        "obligated_integer_filter_na": 7,
+        "unobligated_integer_filter_ran": 3,
+        "unobligated_integer_filter_na": 10
+      }
+    },
+    "obligated_total": 12,
+    "obligation_sources": {
+      "vocabulary": 11,
+      "n-glued": 1,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "30"
+    },
+    {
+      "line": 23,
+      "token": "0.70"
+    },
+    {
+      "line": 24,
+      "token": "0.5678"
+    },
+    {
+      "line": 24,
+      "token": "0.4483"
+    },
+    {
+      "line": 25,
+      "token": "0.10"
+    },
+    {
+      "line": 26,
+      "token": "0.30"
+    },
+    {
+      "line": 29,
+      "token": "0.4483"
+    },
+    {
+      "line": 36,
+      "token": "111"
+    },
+    {
+      "line": 44,
+      "token": "0.9850"
+    },
+    {
+      "line": 44,
+      "token": "0.9341"
+    },
+    {
+      "line": 56,
+      "token": "15"
+    },
+    {
+      "line": 56,
+      "token": "10"
+    },
+    {
+      "line": 70,
+      "token": "44"
+    },
+    {
+      "line": 70,
+      "token": "59"
+    },
+    {
+      "line": 70,
+      "token": "44"
+    },
+    {
+      "line": 70,
+      "token": "59"
+    },
+    {
+      "line": 90,
+      "token": "59"
+    },
+    {
+      "line": 90,
+      "token": "30"
+    },
+    {
+      "line": 90,
+      "token": "29"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "`obligate2_dev_eval.json`. Nine fresh seats, every one 16 of 16 on decoys, unanimity 0.9881,",
+      "col": 55,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:seat_validity.p1-seat1.correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 5,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "`obligate2_dev_eval.json`. Nine fresh seats, every one 16 of 16 on decoys, unanimity 0.9881,",
+      "col": 61,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:seat_validity.p1-seat1.correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 5,
+      "token": "0.9881",
+      "value": 0.9881,
+      "decimals": 4,
+      "context": "`obligate2_dev_eval.json`. Nine fresh seats, every one 16 of 16 on decoys, unanimity 0.9881,",
+      "col": 85,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:verdicts.unanimity_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 13,
+      "token": "0.0916",
+      "value": 0.0916,
+      "decimals": 4,
+      "context": "- G-O2R: *\"the clause is a rounding error on the gap\"* \u2014 weighted recall 0.0916 against the",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2R.weighted_recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 14,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "0.10 floor.",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2R.bar",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 16,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "adjudicated 10/30 CLAIM against a 0.30 maximum. One adjudication over the line, and a",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:arms.barband.claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 16,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "adjudicated 10/30 CLAIM against a 0.30 maximum. One adjudication over the line, and a",
+      "col": 17,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 16,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "adjudicated 10/30 CLAIM against a 0.30 maximum. One adjudication over the line, and a",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[1].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 23,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "col": 20,
+      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 23,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "col": 38,
+      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "status": "VERIFIED",
+      "receipt_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive",
+      "epistemics": {
+        "branch": "derived",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 23,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "col": 41,
+      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "status": "VERIFIED",
+      "receipt_ref": "derived-fraction:44/59=0.7458@obligate2_result.json:arms.positive",
+      "epistemics": {
+        "branch": "derived",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 23,
+      "token": "0.7458",
+      "value": 0.7458,
+      "decimals": 4,
+      "context": "| G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "col": 48,
+      "binding_context": "| gate | outcome | number | | G-O2P precision \u2265 0.70 | **PASS** | 44/59 \u2192 **0.7458** |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.7458",
+      "value": 0.7458,
+      "decimals": 4,
+      "context": "| G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "col": 46,
+      "binding_context": "| gate | outcome | number | | G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.5678",
+      "value": 0.5678,
+      "decimals": 4,
+      "context": "| G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "col": 55,
+      "binding_context": "| gate | outcome | number | | G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 24,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "| G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "col": 75,
+      "binding_context": "| gate | outcome | number | | G-O2NULL beats null AND corpse | **PASS** | 0.7458 > 0.5678 (null) and > 0.4483 (OBLIGATE-1) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| G-O2R weighted recall \u2265 0.10 | **FAIL** | 0.0916 |",
+      "col": 26,
+      "binding_context": "| gate | outcome | number | | G-O2R weighted recall \u2265 0.10 | **FAIL** | 0.0916 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.0916",
+      "value": 0.0916,
+      "decimals": 4,
+      "context": "| G-O2R weighted recall \u2265 0.10 | **FAIL** | 0.0916 |",
+      "col": 44,
+      "binding_context": "| gate | outcome | number | | G-O2R weighted recall \u2265 0.10 | **FAIL** | 0.0916 |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2R.weighted_recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| G-O2BAR bar-band CLAIM < 0.30 | **FAIL** | 0.3333 |",
+      "col": 27,
+      "binding_context": "| gate | outcome | number | | G-O2BAR bar-band CLAIM < 0.30 | **FAIL** | 0.3333 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 26,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "| G-O2BAR bar-band CLAIM < 0.30 | **FAIL** | 0.3333 |",
+      "col": 45,
+      "binding_context": "| gate | outcome | number | | G-O2BAR bar-band CLAIM < 0.30 | **FAIL** | 0.3333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:arms.barband.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 28,
+      "token": "0.7458",
+      "value": 0.7458,
+      "decimals": 4,
+      "context": "**0.7458 is the first held-out precision survival in the structural obligation family.** The",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 29,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "word lists died at 0.40; OBLIGATE-1 died at 0.4483; the bar-markers carried the same base",
+      "col": 19,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:positive_arm_not_claims_every_one[27].token",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 29,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "word lists died at 0.40; OBLIGATE-1 died at 0.4483; the bar-markers carried the same base",
+      "col": 44,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 30,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "over the 0.70 line on fresh blind tokens. The bar-blindness diagnosis was correct: removing",
+      "col": 9,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.bar",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 36,
+      "token": "111",
+      "value": 111.0,
+      "decimals": 0,
+      "context": "discarded bar-band contributes ~111 weighted claims, but the general remainder \u2014 tokens the",
+      "col": 32,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 44,
+      "token": "0.9850",
+      "value": 0.985,
+      "decimals": 4,
+      "context": "0.9850 against a 0.9341 bar\"* carry a result inside a bar's blast radius, and window-based",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 44,
+      "token": "0.9341",
+      "value": 0.9341,
+      "decimals": 4,
+      "context": "0.9850 against a 0.9341 bar\"* carry a result inside a bar's blast radius, and window-based",
+      "col": 17,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 46,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "exactly this cost and set the 0.30 line to price it; the price came in at 0.3333. The",
+      "col": 30,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2BAR.max",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 50,
+      "token": "0.4483",
+      "value": 0.4483,
+      "decimals": 4,
+      "context": "The fresh negative arm also adjudicated 0.4483 CLAIM \u2014 far above the first cycle's 0.2281 \u2014",
+      "col": 40,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:arms.negative.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 50,
+      "token": "0.2281",
+      "value": 0.2281,
+      "decimals": 4,
+      "context": "The fresh negative arm also adjudicated 0.4483 CLAIM \u2014 far above the first cycle's 0.2281 \u2014",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate1_result.json:arms.negative.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 56,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "All 15 positive-arm false flags and all 10 discarded bar-band claims are enumerated in the",
+      "col": 4,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 56,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "All 15 positive-arm false flags and all 10 discarded bar-band claims are enumerated in the",
+      "col": 40,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 64,
+      "token": "0.7458",
+      "value": 0.7458,
+      "decimals": 4,
+      "context": "(c) precision-grade structural obligation is **possible** \u2014 0.7458 held-out proves the",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 70,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "The certificate accuses `44` and `59` inside the gate table's \"44/59\" \u2014 correct values, both",
+      "col": 25,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 70,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "The certificate accuses `44` and `59` inside the gate table's \"44/59\" \u2014 correct values, both",
+      "col": 34,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 70,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "The certificate accuses `44` and `59` inside the gate table's \"44/59\" \u2014 correct values, both",
+      "col": 63,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 70,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "The certificate accuses `44` and `59` inside the gate table's \"44/59\" \u2014 correct values, both",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 90,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "n=59/30/29 per arm; no significance claimed anywhere; one model family throughout; seats saw",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    },
+    {
+      "line": 90,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "n=59/30/29 per arm; no significance claimed anywhere; one model family throughout; seats saw",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 90,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "n=59/30/29 per arm; no significance claimed anywhere; one model family throughout; seats saw",
+      "col": 8,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 91,
+      "token": "0.8462",
+      "value": 0.8462,
+      "decimals": 4,
+      "context": "one line of context; DEV telemetry (0.8462 on spent tokens) predictably exceeded the fresh",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_dev_eval.json:positive.precision_dev",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 98,
+      "token": "0.7458",
+      "value": 0.7458,
+      "decimals": 4,
+      "context": "0.7458, held out, blind \u2014 and two frozen gates that still said no. The instrument is winning",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "obligate2_result.json:gates.G-O2P.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    }
+  ]
+}

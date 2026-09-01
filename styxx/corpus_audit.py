@@ -48,7 +48,81 @@ def discover_certificates(root: Path) -> list[Path]:
     on disk, so auditing those copies reports phantom MISSING_DOC entries for documents whose
     canonical certificates are audited at their real location.
     """
-    return sorted(p for p in root.rglob("*.certificate.json") if "anc" not in p.parts)
+    return sorted(p for p in _search(root, "*.certificate.json") if "anc" not in p.parts)
+
+
+# Directory names that are never part of the corpus: build outputs, virtualenvs, caches — and
+# `.claude`, which is the one that actually bit.
+#
+# `.claude/worktrees/` holds agent scratch clones of this repository. A worktree is a full copy,
+# so EVERY receipt in the tree has a byte-identical phantom twin inside each one: 1,611 JSON files
+# at the time this was written, against 0 tracked JSON under `.claude` (its only tracked file is a
+# skill markdown). The receipt search had no exclusions at all and walked straight into them.
+#
+# The cost was paid twice, and the larger half was the DENOMINATOR. `discover_certificates` had the
+# same unscoped rglob, so the audit enumerated 365 certificates of which 178 — 49% — were phantoms
+# from one stale worktree. Every corpus-wide number this module printed was computed over a
+# population that was half ephemeral clone, and every finding was reported twice. Scoping the run
+# to `papers/` (what REPLICATIONS.md documents, and what CI does on a fresh checkout) dodged it
+# entirely, which is exactly why it survived: the published numbers were right and the numbers on
+# a working copy were not.
+#
+# The other half was a HIDDEN FINDING. CAPSTONE_universal_mind's `mind_v0_validation.json`
+# is present-and-CHANGED — one real file whose content is not what was certified. The phantom twin
+# made two candidates out of one, so `classify_missing` reported `ambiguous` ("several candidates,
+# no non-arbitrary choice") instead of `changed`, and the audit printed `receipt-changed 0` over a
+# receipt it could see had drifted. The comment in `_resolve_receipts` had said "present and
+# changed" about this exact file since it was written; the classifier disagreed with it because
+# its search population included files that are not in the corpus.
+#
+# Same defect as everything else found on 2026-08-27: the measurement's population was defined by
+# what a glob matched rather than by what the thing is. Exclusion is by directory NAME anywhere in
+# the path, which is deliberately blunt — a receipt that exists ONLY inside one of these stays
+# unresolved and is reported `absent`, which is the honest answer, not resolved from scratch space.
+_EXCLUDED_DIRS = frozenset({
+    ".git", ".claude", ".venv", "venv", "node_modules", "__pycache__",
+    ".pytest_cache", ".mypy_cache", ".ruff_cache", ".tox", "build", "dist",
+})
+
+
+def _search(root: Path, name: str):
+    """`root.rglob(name)`, minus paths through a directory that is not part of the corpus."""
+    for p in root.rglob(name):
+        if _EXCLUDED_DIRS.isdisjoint(p.parts):
+            yield p
+
+
+def _receipt_sha_matches(raw: bytes, recorded: str) -> bool:
+    """Does *raw* hash to *recorded*, on ANY platform's line endings?
+
+    THE DEFECT THIS CLOSES. Receipt JSONs are stored in git as LF and checked out as CRLF on
+    Windows, and every `receipts_sha256` in this corpus was recorded from a Windows working
+    tree — so the pinned hashes are CRLF hashes. On Linux the same committed bytes hash
+    differently, the cross-directory branch below finds no match, the receipt reports as
+    `missing`, and the document is silently DROPPED from the drift guard.
+
+    That is not hypothetical and it is not new. `.gitattributes` carries a note about the
+    identical bug hitting `styxx/centroids/*.json` — "the pin was a CRLF-rendered hash, so the
+    LF Linux CI checkout failed to verify" — fixed there with `-text` and nowhere else. It
+    recurred here, and it was found when CI went red on a document that passes on Windows.
+
+    A receipt is a JSON document. Its meaning does not depend on its line endings, so a hash
+    that does is pinning the wrong thing: it makes a certificate platform-dependent, which
+    defeats the whole promise that anyone can re-run it. This compares the raw bytes first and
+    falls back to both newline normalisations.
+
+    DISCLOSED WEAKENING: two files differing ONLY in line endings now resolve as the same
+    receipt. That is intended — they carry identical JSON — but it does mean the sha no longer
+    certifies byte-identity, only content-identity-modulo-newlines. The stricter alternative is
+    to re-record every certificate's hashes from normalised bytes, which is a corpus migration
+    and needs its own preregistration.
+    """
+    if hashlib.sha256(raw).hexdigest() == recorded:
+        return True
+    lf = raw.replace(b"\r\n", b"\n")
+    if hashlib.sha256(lf).hexdigest() == recorded:
+        return True
+    return hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest() == recorded
 
 
 def _resolve_receipts(cert_path: Path, cert: dict,
@@ -56,12 +130,12 @@ def _resolve_receipts(cert_path: Path, cert: dict,
     """Receipt filenames recorded in the cert, resolved to real files.
 
     Resolution order: (1) next to the doc — the common case; (2) if absent there, search
-    ``search_root`` for a file of that name whose sha256 MATCHES the recorded one. Step 2 is
-    strictly stricter than location-trust: a same-named file only resolves if its content is
-    byte-identical to what was certified. Cross-directory receipts (a synthesis citing arcs
-    from several folders) previously reported as ``missing``, which re-certified the document
-    against a crippled receipt set and produced spurious OATH-FAILED verdicts on documents
-    whose committed certificates are HELD.
+    ``search_root`` for a file of that name whose sha256 matches the recorded one, on any
+    platform's line endings (see ``_receipt_sha_matches``). Step 2 is stricter than
+    location-trust: a same-named file only resolves if its CONTENT is what was certified.
+    Cross-directory receipts (a synthesis citing arcs from several folders) previously reported
+    as ``missing``, which re-certified the document against a crippled receipt set and produced
+    spurious OATH-FAILED verdicts on documents whose committed certificates are HELD.
 
     Returns (existing_paths, missing_names, sha_drifted_names).
     """
@@ -69,24 +143,81 @@ def _resolve_receipts(cert_path: Path, cert: dict,
     for name, sha in cert.get("receipts_sha256", {}).items():
         rp = cert_path.parent / name
         if rp.exists():
-            if hashlib.sha256(rp.read_bytes()).hexdigest() != sha:
+            if not _receipt_sha_matches(rp.read_bytes(), sha):
                 drift.append(name)
             paths.append(rp)
             continue
-        found = None
+        found, candidates = None, []
         if search_root is not None:
-            for cand in search_root.rglob(name):
+            for cand in _search(search_root, name):
                 try:
-                    if hashlib.sha256(cand.read_bytes()).hexdigest() == sha:
+                    if _receipt_sha_matches(cand.read_bytes(), sha):
                         found = cand
                         break
+                    candidates.append(cand)
                 except OSError:
                     continue
-        if found is None:
-            missing.append(name)
-        else:
+        if found is not None:
             paths.append(found)
+        else:
+            # PRESENT-BUT-CHANGED still reports as `missing`, and that is DELIBERATE.
+            #
+            # It is tempting to resolve a lone same-named candidate and flag it as drift, so the
+            # document stays examinable instead of vanishing from the guard — a version of this
+            # function did exactly that for about ten minutes. It is wrong. `tests/test_corpus_audit.py`
+            # pins the reason: "a same-named file with DIFFERENT content must NOT satisfy the
+            # receipt — the search is stricter than location-trust, not looser." This repository
+            # is full of files called `*_result.json`, and resolving one whose content does not
+            # match would certify a document against ANOTHER EXPERIMENT'S data while reporting
+            # success. That is a worse failure than invisibility, and it is the failure this
+            # whole programme exists to prevent.
+            #
+            # The visibility problem it created was real, and it was fixed WITHOUT touching this
+            # strictness: `classify_missing` below says whether an unresolved receipt is genuinely
+            # absent or present-and-changed, and `audit_document` reports `incomplete_receipts`,
+            # so a verdict computed from a partial receipt set can no longer print like a clean
+            # one. A reporting channel, not a resolution change. The live instance that motivated
+            # it: CAPSTONE_universal_mind's `mind_v0_validation.json`, present and changed.
+            # Catalogued as VP-C in RECON_vacuous_pass_2026_08_27.md.
+            missing.append(name)
     return paths, missing, drift
+
+
+def classify_missing(cert_path: Path, cert: dict, missing: list,
+                     search_root: Path | None = None) -> dict:
+    """Why is each unresolved receipt unresolved — genuinely absent, or present and CHANGED?
+
+    `_resolve_receipts` deliberately refuses to resolve a same-named file whose content differs
+    from what was certified (see the comment there, and
+    `tests/test_corpus_audit.py::test_cross_directory_wrong_sha_does_not_resolve`). That
+    strictness is correct and stays. What was missing is the ability to SAY WHY, so a changed
+    receipt and an absent one were indistinguishable to every caller — which let the audit print
+    `receipt-drift 0` over a receipt sitting in the tree with different content.
+
+    This is the reporting channel, not a resolution change. Nothing here decides what gets
+    certified; it decides what a reader is told.
+
+      absent      no file of that name under the search root
+      changed     exactly one candidate exists and its content is not what was certified
+      ambiguous   several candidates exist, none matching — no non-arbitrary choice
+    """
+    out = {}
+    for name in missing:
+        cands = []
+        if search_root is not None:
+            cands = [p for p in _search(search_root, name) if p.is_file()]
+        local = cert_path.parent / name
+        if local.exists() and local not in cands:
+            cands.append(local)
+        if not cands:
+            status = "absent"
+        elif len(cands) == 1:
+            status = "changed"
+        else:
+            status = "ambiguous"
+        out[name] = {"status": status,
+                     "candidates": [str(p) for p in cands[:4]]}
+    return out
 
 
 def mutate_token(tok: str, rng: random.Random) -> str:
@@ -116,12 +247,22 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
     rec["receipt_drift"] = drift
     rec["missing_receipts"] = missing
+    # WHY each one is missing, and whether this verdict is being computed from partial evidence.
+    # A document certified against 11 of its 12 receipts used to print exactly like one certified
+    # against all 12; `incomplete_receipts` is what stops that.
+    rec["missing_detail"] = classify_missing(cert_path, cert, missing, search_root)
+    rec["incomplete_receipts"] = bool(missing) and bool(receipts)
+    rec["receipt_changed"] = sorted(n for n, d in rec["missing_detail"].items()
+                                    if d["status"] == "changed")
     if not receipts:
         rec.update(status="NO_RECEIPTS", live_verdict=None)
         return rec
     live = certify_doc(doc, receipts)
     rec["live_verdict"] = live["verdict"]
     rec["counts"] = live["counts"]
+    # The auditor reads the verifier's own epistemics_summary rather than re-deriving anything;
+    # it may only ADD corpus totals, never touch a verdict or an existing count.
+    rec["epistemics_summary"] = live.get("epistemics_summary")
     rec["verdict_changed"] = (live["verdict"] != cert.get("verdict"))
     rec["status"] = "OK"
     if tamper:
@@ -161,6 +302,50 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     return rec
 
 
+def _fold_epistemics(docs: list) -> dict:
+    """Corpus-wide composition, summed from every certificate's own epistemics_summary.
+
+    Answers, over a whole corpus, the question a single certificate now answers per token: of what
+    this corpus swears to, how much was the verifier ever OBLIGATED to examine, and how much is the
+    weakest form -- a volunteered value coincidence no binding filter touched. Additive: reads the
+    summary, sums it, invents nothing. A certificate predating epistemics_summary v1 contributes
+    nothing (older certificates carry no block) and is counted in `certificates_without_summary`.
+    """
+    ver = 0
+    obligated_ver = 0
+    weakest = 0            # unobligated value-match, no integer filter
+    accusations = 0
+    without = 0
+    for d in docs:
+        s = d.get("epistemics_summary")
+        if not s or s.get("schema") != "styxx-oath/epistemics-summary/v1":
+            without += 1
+            continue
+        vm = s["verified"]["value_match"]
+        der = s["verified"]["derived"]
+        ver += s["verified"]["total"]
+        obligated_ver += (vm["obligated_integer_filter_ran"] + vm["obligated_integer_filter_na"]
+                          + der["obligated"])
+        weakest += vm["unobligated_integer_filter_na"]
+        accusations += s["by_branch"]["obligated-accusation"]
+    unobligated = ver - obligated_ver
+    return {
+        "certificates_with_summary": len(docs) - without,
+        "certificates_without_summary": without,
+        "verified_total": ver,
+        "verified_obligated": obligated_ver,
+        "verified_unobligated": unobligated,
+        "unobligated_oath_rate": round(unobligated / ver, 4) if ver else None,
+        "weakest_attestations": weakest,
+        "weakest_share": round(weakest / ver, 4) if ver else None,
+        "accusations": accusations,
+        "reading": ("unobligated_oath_rate is the share of this corpus's VERIFIED tokens that "
+                    "nothing obligated the verifier to examine; weakest_share is the subset that "
+                    "is value-match alone with no binding filter. Both are composition, not "
+                    "quality -- claim-share is the panel's job, not the auditor's."),
+    }
+
+
 def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     """Audit every certificate under *root*; return per-doc records + a corpus summary."""
     docs = [audit_document(cp, tamper, seed, search_root=root)
@@ -170,8 +355,14 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     unresolved = sum(1 for d in docs if d.get("status") in ("MISSING_DOC", "NO_RECEIPTS"))
     changed = sum(1 for d in docs if d.get("verdict_changed"))
     drifted = sum(1 for d in docs if d.get("receipt_drift"))
+    # A verdict computed from a partial receipt set is not a clean verdict, and until these two
+    # counters existed it printed like one.
+    incomplete = sum(1 for d in docs if d.get("incomplete_receipts"))
+    changed_receipts = sum(1 for d in docs if d.get("receipt_changed"))
     summary = {"root": str(root), "n_certificates": len(docs), "held": held, "failed": failed,
-               "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted}
+               "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted,
+               "incomplete_receipts": incomplete, "receipt_changed": changed_receipts,
+               "epistemics": _fold_epistemics(docs)}
     if tamper:
         tot = {"n_mutants": 0, "caught": 0, "false_verify": 0, "abstain_degrade": 0}
         for d in docs:
@@ -195,12 +386,24 @@ def main(argv=None) -> int:
     s = report["summary"]
     print(f"corpus {s['root']}: {s['n_certificates']} certificates | "
           f"HELD {s['held']}  FAILED {s['failed']}  unresolved {s['unresolved']}  "
-          f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}")
+          f"verdict-drift {s['verdict_changed']}  receipt-drift {s['receipt_drift']}  "
+          f"incomplete {s['incomplete_receipts']}  receipt-changed {s['receipt_changed']}")
+    ep = s.get("epistemics", {})
+    if ep.get("verified_total"):
+        print(f"  epistemics: {ep['verified_total']} verified | "
+              f"obligated {ep['verified_obligated']} unobligated {ep['verified_unobligated']} "
+              f"(rate {ep['unobligated_oath_rate']}) | weakest {ep['weakest_attestations']} "
+              f"({ep['weakest_share']}) | {ep['certificates_without_summary']} pre-v1")
     for d in report["documents"]:
-        if d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed") or d.get("receipt_drift"):
+        if (d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
+                or d.get("receipt_drift") or d.get("incomplete_receipts")):
             tag = d.get("live_verdict") or d.get("status")
             extra = " receipt-drift" if d.get("receipt_drift") else ""
             extra += " verdict-CHANGED" if d.get("verdict_changed") else ""
+            if d.get("incomplete_receipts"):
+                det = d.get("missing_detail", {})
+                why = ",".join(sorted({v["status"] for v in det.values()})) or "?"
+                extra += f" INCOMPLETE-RECEIPTS({why})"
             print(f"  [{tag}]{extra}  {d['document']}")
     if a.tamper and "tamper" in s:
         t = s["tamper"]

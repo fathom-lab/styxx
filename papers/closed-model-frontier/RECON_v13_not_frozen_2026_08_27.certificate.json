@@ -1,0 +1,63 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_v13_not_frozen_2026_08_27.md",
+  "document_sha256": "1e56e6acbcc5d126e232e56f7f49c69fe199a18b4a33d061c99846e28c6c222d",
+  "receipts_sha256": {
+    "formula_span_census.json": "5882b852ba4dd3101a10ec034089d22f25d4989f1700d0e5396d093a530bfcb5"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 0,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 55,
+      "token": "0.043"
+    },
+    {
+      "line": 57,
+      "token": "0.30"
+    },
+    {
+      "line": 158,
+      "token": "5,159"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 55,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "- a measured cross-substrate cosine, written `$\\cos \\approx 0.043$`, on which its sentence's",
+      "col": 60,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "- a bound written `$\\mathrm{AlignDepth} \\leq 0.30$`;",
+      "col": 45,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 158,
+      "token": "5,159",
+      "value": 5159.0,
+      "decimals": 0,
+      "context": "destroys 5,159 nominal verifications, and **all five candidates beat it.** The column",
+      "col": 9,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

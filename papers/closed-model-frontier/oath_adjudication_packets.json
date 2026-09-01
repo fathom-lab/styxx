@@ -1,0 +1,5793 @@
+{
+ "protocol": "papers/closed-model-frontier/PROTOCOL_oath_external_corpus_2026_08_27.md",
+ "frozen_before_ledger_was_read": true,
+ "seed": 20260827,
+ "packet_size": 25,
+ "panel": 3,
+ "question": "Is this token a CLAIM whose truth a reader could check against the cited receipts?\n\nAnswer CLAIM if the number asserts something about a measurement, result, dataset, or outcome that the document is reporting — something a reader could look up in the receipts and find to be right or wrong.\n\nAnswer NOT_A_CLAIM if the number is anything else: a version, a date, a hyperparameter or configuration value, a file path or index, a count of items in a list, a citation, a URL fragment, a table row number, a quantity quoted FROM somewhere else rather than asserted, or a number inside a formula or code snippet that names no measured quantity.\n\nAnswer UNSURE only if you genuinely cannot tell from the line and its context. UNSURE is counted against the instrument, so use it honestly rather than defensively.",
+ "composition": {
+  "accused": 366,
+  "abstain_decoys": 150,
+  "verified_decoys": 75,
+  "total_items": 591,
+  "packets": 24
+ },
+ "available": {
+  "accused": 366,
+  "abstained": 4238,
+  "verified": 575
+ },
+ "blinding": "Items from all three arms are shuffled together and presented identically. An adjudicator cannot infer the verifier's decision from membership.",
+ "packets": [
+  [
+   {
+    "id": "T0559",
+    "repo": "stanford-oval/Churro",
+    "line": 56,
+    "token": "22",
+    "context": "- Churro-DS dataset contains ~100K pages from 155 historical collections spanning 22 centuries and 46 language clusters.",
+    "obligating_words": [],
+    "id_shuffled_position": 0
+   },
+   {
+    "id": "T0311",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 141,
+    "token": "15",
+    "context": "For files where the best candidate has most tests passing but a few failures, the orchestrator uses surgical fixes. As of v1.2, edit repair uses **grammar-constrained structured output** — a JSON sche",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 1
+   },
+   {
+    "id": "T0282",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 589,
+    "token": "3000",
+    "context": "2. Run grafana container: ```docker run -dt -p 3000:3000 grafana/grafana:latest```",
+    "obligating_words": [],
+    "id_shuffled_position": 2
+   },
+   {
+    "id": "T0199",
+    "repo": "hopit-ai/Moda",
+    "line": 414,
+    "token": "3.66",
+    "context": "19. **Binary codes plus Hamming rerank match fp32 retrieval at 32 bytes per vector** -- FP16 and int8 quantization cost nothing on Fine R@1. Binary alone loses 3.66 points. Binary plus a Hamming-dista",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 3
+   },
+   {
+    "id": "T0567",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "1",
+    "context": "Task 1: Calculator (Level 2)             → ✅ PASS  5/5 tests,   1 iter,  7m",
+    "obligating_words": [],
+    "id_shuffled_position": 4
+   },
+   {
+    "id": "T0298",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 149,
+    "token": "1.2",
+    "context": "**Memtrace takes a different approach:** it indexes 1,500 files in 1.2–1.8 seconds for $0.00 — no LLM calls, no API costs, no rate limits. Native Tree-sitter AST parsers resolve deterministic symbol r",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 5
+   },
+   {
+    "id": "T0438",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 715,
+    "token": "20",
+    "context": "| Qwopus3.5-9B | 5050s | 10 | OK | -- | -- | -- | -- | 25/80 | 4/20 | **29/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 6
+   },
+   {
+    "id": "T0263",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "0.878",
+    "context": "- **F1**: 0.886 | **Precision**: 0.878 | **Speed**: 104 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 7
+   },
+   {
+    "id": "T0239",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "4",
+    "context": "| 4 | gemma3:4b | 0.859 | 0.784 | 1.022 | 312 tok/s | 3.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 8
+   },
+   {
+    "id": "T0157",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+0.01883",
+    "context": "| KAGL | 0.27687 | **0.29074** | +5.01% | [+0.00894, +0.01883] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 9
+   },
+   {
+    "id": "T0133",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0560",
+    "context": "| Image tower only (FashionCLIP vision) | 0.0305 | 0.0560 | 0.0148 |",
+    "obligating_words": [],
+    "id_shuffled_position": 10
+   },
+   {
+    "id": "T0586",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.5",
+    "context": "| SPLADE + Dense (0.5/0.5) hybrid | 0.0556 | 0.0662 | 0.0201 |",
+    "obligating_words": [],
+    "id_shuffled_position": 11
+   },
+   {
+    "id": "T0059",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0559",
+    "context": "| **Full pipeline (Hybrid + CE rerank)** | **0.0543** | **[.0537-.0550]** | **0.0569** | **0.0164** | **0.0559** |",
+    "obligating_words": [],
+    "id_shuffled_position": 12
+   },
+   {
+    "id": "T0079",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+121",
+    "context": "+121% nDCG, +206% MRR, +220% Recall@10. SPLADE's learned expansion does what manual synonym lists and NER boosts attempted to do for BM25, but better and without manual rules.",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 13
+   },
+   {
+    "id": "T0412",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 240,
+    "token": "3",
+    "context": "uv run python -m deepseek.pipeline.cli run --backend rust --gpus 3 --pp-size 3 --max-steps 3000",
+    "obligating_words": [],
+    "id_shuffled_position": 14
+   },
+   {
+    "id": "T0489",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 352,
+    "token": "0.268",
+    "context": "- **ROUGE-L**: 0.268 | **Speed**: 256 tok/s | **Size**: 13GB (21B MoE, 3B active)",
+    "obligating_words": [],
+    "id_shuffled_position": 15
+   },
+   {
+    "id": "T0401",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 135,
+    "token": "7",
+    "context": "7) h2q_project/h2q_server.py",
+    "obligating_words": [],
+    "id_shuffled_position": 16
+   },
+   {
+    "id": "T0546",
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "76.00",
+    "context": "| CONDITIONALQA | JSON | 100 | 76.00% | 0.9180 | 0.8750 | 0.8960 | 89.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 17
+   },
+   {
+    "id": "T0464",
+    "repo": "aalto-ui/aim",
+    "line": 16,
+    "token": "1",
+    "context": "The backend is written in Python using the [Tornado](http://www.tornadoweb.org/) web application framework having [MongoDB](https://www.mongodb.com/) as a database, whereas the frontend is built with ",
+    "obligating_words": [],
+    "id_shuffled_position": 18
+   },
+   {
+    "id": "T0173",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "0.18637",
+    "context": "| Atlas | 0.18264 | 0.18637 | +2.05% | [-0.00017, +0.00775] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 19
+   },
+   {
+    "id": "T0280",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 171,
+    "token": "8888",
+    "context": "docker run -dt -p 8888:8888 --mount type=bind,source=/path/to/config.yaml,target=/exporter/config.yaml --mount type=bind,source=/path/to/cacert.pem,target=/exporter/cacert.pem --name citrix-adc-export",
+    "obligating_words": [],
+    "id_shuffled_position": 20
+   },
+   {
+    "id": "T0293",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 79,
+    "token": "15.4",
+    "context": "| Graph callers recall (Django) | **81.6%** | GitNexus: 5.3% | **15.4×** |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 21
+   },
+   {
+    "id": "T0539",
+    "repo": "stanford-oval/Churro",
+    "line": 224,
+    "token": "2.5",
+    "context": "<img src=\"static/readme_examples/gallery/portuguese.jpg\" alt=\"Portuguese historical page example where Churro beats Gemini 2.5 Pro\" width=\"100%\" />",
+    "obligating_words": [],
+    "id_shuffled_position": 22
+   },
+   {
+    "id": "T0014",
+    "repo": "sbhooley/ainativelang",
+    "line": 133,
+    "token": "1.7",
+    "context": "| Authoring density (LLM-style verbose Python) | **~1.7× mean / up to 2.5×** fewer source tokens vs verbose baselines | [`scripts/benchmark_authoring_density.py`](scripts/benchmark_authoring_density.p",
+    "obligating_words": [
+     "mean"
+    ],
+    "id_shuffled_position": 23
+   },
+   {
+    "id": "T0393",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 712,
+    "token": "80",
+    "context": "| 🆕 Mistral-Medium-3.5-128B Q2_K (DGX Spark) | 7293s | 3 | OK | -- | OK(API) | OK(API) | -- | 45/80 | 4/20 | **49/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 24
+   }
+  ],
+  [
+   {
+    "id": "T0179",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "+1.87",
+    "context": "| DeepFashion Multimodal | 0.01477 | 0.01504 | +1.87% | [-0.00121, +0.00192] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 25
+   },
+   {
+    "id": "T0287",
+    "repo": "karpathy/jobs",
+    "line": 16,
+    "token": "9",
+    "context": "- It does **not** predict that a job will disappear. Software developers score 9/10 because AI is transforming their work — but demand for software could easily *grow* as each developer becomes more p",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 26
+   },
+   {
+    "id": "T0468",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 80,
+    "token": "5090",
+    "context": "| 🆕 | **Qwen3.5-9B** (公式) | 0.492 | 197 tok/s (5090) | 5.4GB | S+ |",
+    "obligating_words": [],
+    "id_shuffled_position": 27
+   },
+   {
+    "id": "T0243",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "312",
+    "context": "| 4 | gemma3:4b | 0.859 | 0.784 | 1.022 | 312 tok/s | 3.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 28
+   },
+   {
+    "id": "T0442",
+    "repo": "sbhooley/ainativelang",
+    "line": 1413,
+    "token": "1",
+    "context": "AINL_RUNTIME_ASYNC=1 AINL_OBSERVABILITY=1 AINL_OBSERVABILITY_JSONL=/tmp/ainl-reactive-metrics.jsonl \\",
+    "obligating_words": [],
+    "id_shuffled_position": 29
+   },
+   {
+    "id": "T0235",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.880",
+    "context": "| 3 | SmallThinker-21BA3B | 0.880 | 0.883 | 0.900 | 280 tok/s | 13GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 30
+   },
+   {
+    "id": "T0571",
+    "repo": "hopit-ai/Moda",
+    "line": 81,
+    "token": "6",
+    "context": "| [Blog 6](blog_post_phase5.md) | Beating FashionSigLIP | Cross-domain fine-tuning on LookBench | Fine R@1 = 67.68 (+3.84 over baseline) |",
+    "obligating_words": [],
+    "id_shuffled_position": 31
+   },
+   {
+    "id": "T0015",
+    "repo": "sbhooley/ainativelang",
+    "line": 133,
+    "token": "2.5",
+    "context": "| Authoring density (LLM-style verbose Python) | **~1.7× mean / up to 2.5×** fewer source tokens vs verbose baselines | [`scripts/benchmark_authoring_density.py`](scripts/benchmark_authoring_density.p",
+    "obligating_words": [
+     "mean"
+    ],
+    "id_shuffled_position": 32
+   },
+   {
+    "id": "T0391",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 48,
+    "token": "12,000",
+    "context": "seconds, yielding **i)** up to 12,000× lower overhead than full fine-tuning, **ii)** average",
+    "obligating_words": [],
+    "id_shuffled_position": 33
+   },
+   {
+    "id": "T0460",
+    "repo": "opendatalab/WebMainBench",
+    "line": 106,
+    "token": "0.7309",
+    "context": "| Trafilatura | Html+MD | 0.6402 | 0.7309 | 0.6417 | 0.5466 |",
+    "obligating_words": [],
+    "id_shuffled_position": 34
+   },
+   {
+    "id": "T0221",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "256",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 35
+   },
+   {
+    "id": "T0230",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.886",
+    "context": "| 2 | mistral-small | 0.886 | 0.878 | 0.928 | 104 tok/s | 14.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 36
+   },
+   {
+    "id": "T0104",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "+137",
+    "context": "| nDCG@10 | 0.0229 | 0.0542 | +137% |",
+    "obligating_words": [],
+    "id_shuffled_position": 37
+   },
+   {
+    "id": "T0445",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 392,
+    "token": "-15.2",
+    "context": "- **Without Real Encoders**: -15.2% overall performance",
+    "obligating_words": [],
+    "id_shuffled_position": 38
+   },
+   {
+    "id": "T0432",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1603,
+    "token": "0.302",
+    "context": "| ROUGE-L | 0.234 / (0.260) | **0.302** | +29% / (+16%) |",
+    "obligating_words": [],
+    "id_shuffled_position": 39
+   },
+   {
+    "id": "T0020",
+    "repo": "sbhooley/ainativelang",
+    "line": 1187,
+    "token": "0",
+    "context": "The emitted server includes **structured logging** (request_id, method, path, status, duration_ms) and optional **rate limiting** via env `RATE_LIMIT` (requests per minute per client; 0 = off). **Kube",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 40
+   },
+   {
+    "id": "T0085",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0172",
+    "context": "| Off-shelf CE (ms-marco-MiniLM-L6) | 0.0639 | 0.0648 | 0.0172 | $0 |",
+    "obligating_words": [],
+    "id_shuffled_position": 41
+   },
+   {
+    "id": "T0370",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 148,
+    "token": "8501",
+    "context": "docker run -p 8501:8501 microbial-forecasting",
+    "obligating_words": [],
+    "id_shuffled_position": 42
+   },
+   {
+    "id": "T0548",
+    "repo": "nextcloud/whiteboard",
+    "line": 234,
+    "token": "0.2",
+    "context": "- Expect roughly 0.2% CPU per connected collaborator; reserve additional headroom for presenters or rapid drawing.",
+    "obligating_words": [],
+    "id_shuffled_position": 43
+   },
+   {
+    "id": "T0288",
+    "repo": "karpathy/jobs",
+    "line": 16,
+    "token": "10",
+    "context": "- It does **not** predict that a job will disappear. Software developers score 9/10 because AI is transforming their work — but demand for software could easily *grow* as each developer becomes more p",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 44
+   },
+   {
+    "id": "T0441",
+    "repo": "connor-makowski/scgraph",
+    "line": 299,
+    "token": "-87.6298",
+    "context": "{\"latitude\": 41.8781, \"longitude\": -87.6298},   # Chicago",
+    "obligating_words": [],
+    "id_shuffled_position": 45
+   },
+   {
+    "id": "T0417",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 365,
+    "token": "5",
+    "context": "5       | IP stats                  | \"protocolip\"",
+    "obligating_words": [],
+    "id_shuffled_position": 46
+   },
+   {
+    "id": "T0193",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "1.07",
+    "context": "13. **Beating FashionSigLIP on LookBench by +3.84 points** -- Cross-domain fine-tuning on shop↔consumer pairs plus a test-time ensemble with FashionCLIP lifts Fine R@1 from 63.84 to 67.68, at twice th",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 47
+   },
+   {
+    "id": "T0162",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "0.15865",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | +3.19% | [+0.00304, +0.00710] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 48
+   },
+   {
+    "id": "T0319",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 35,
+    "token": "52",
+    "context": "A post that cites a win rate or stat but uses it to make a debatable point (\"Yuumi has 52% winrate which proves Riot can't balance\") is `discussion`, not `guide`. The reasoning is assertive/opinionate",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 49
+   }
+  ],
+  [
+   {
+    "id": "T0152",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "10,000",
+    "context": "Blogs 5 to 7 beat FashionSigLIP on image-to-image. Phase 7 closes the series by beating it on text-to-image, the task it was built for, without adding a single parameter. Instead of training a new mod",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 50
+   },
+   {
+    "id": "T0436",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 57,
+    "token": "8",
+    "context": "hamming_distance: 8  # larger hamming distance threshold for short texts",
+    "obligating_words": [],
+    "id_shuffled_position": 51
+   },
+   {
+    "id": "T0364",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 148,
+    "token": "8501",
+    "context": "docker run -p 8501:8501 microbial-forecasting",
+    "obligating_words": [],
+    "id_shuffled_position": 52
+   },
+   {
+    "id": "T0032",
+    "repo": "hopit-ai/Moda",
+    "line": 28,
+    "token": "+5.4",
+    "context": "| **Text to image** | `moda-duo` routes each query by its shape and beats **both** its constituents on a mixed workload: **+5.0% / +5.4%** pooled over 12,000 queries | both significant under a paired ",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 53
+   },
+   {
+    "id": "T0070",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0748",
+    "context": "| **SPLADE + Dense + off-shelf CE** | **0.0748** | **0.0738** | **0.0215** |",
+    "obligating_words": [],
+    "id_shuffled_position": 54
+   },
+   {
+    "id": "T0189",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "+3.84",
+    "context": "13. **Beating FashionSigLIP on LookBench by +3.84 points** -- Cross-domain fine-tuning on shop↔consumer pairs plus a test-time ensemble with FashionCLIP lifts Fine R@1 from 63.84 to 67.68, at twice th",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 55
+   },
+   {
+    "id": "T0011",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 192,
+    "token": "167.052877",
+    "context": "mean       167.052877",
+    "obligating_words": [
+     "mean"
+    ],
+    "id_shuffled_position": 56
+   },
+   {
+    "id": "T0479",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 535,
+    "token": ".2",
+    "context": "services_tot_request_bytes{nsip=\"10.0.0.2\",service_ip=\"20.0.0.60\",servicegroup_name=\"svcgrp2\"} 344.0",
+    "obligating_words": [],
+    "id_shuffled_position": 57
+   },
+   {
+    "id": "T0378",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 35,
+    "token": "2",
+    "context": "- [ ] DPO Dataset Part 2 (Takeover in CAVE)",
+    "obligating_words": [],
+    "id_shuffled_position": 58
+   },
+   {
+    "id": "T0106",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "0.0505",
+    "context": "| MRR | 0.0208 | 0.0505 | +143% |",
+    "obligating_words": [],
+    "id_shuffled_position": 59
+   },
+   {
+    "id": "T0587",
+    "repo": "DebarghaG/proofofthought",
+    "line": 254,
+    "token": "95.83",
+    "context": "| PROOFWRITER | JSON | 96 | 95.83% | 1.0000 | 1.0000 | 1.0000 | 95.83% |",
+    "obligating_words": [],
+    "id_shuffled_position": 60
+   },
+   {
+    "id": "T0462",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 333,
+    "token": "20",
+    "context": "| ML/RL Signals | 20 | Feature extraction, RL env, PPO trainer |",
+    "obligating_words": [],
+    "id_shuffled_position": 61
+   },
+   {
+    "id": "T0108",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "0.0433",
+    "context": "| Recall@10 | 0.0433 | 0.0811 | +87% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 62
+   },
+   {
+    "id": "T0208",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "2,345",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 63
+   },
+   {
+    "id": "T0346",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 236,
+    "token": "91.2",
+    "context": "- **Tool Selection**: 91.2% accuracy in context-appropriate tool choice",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 64
+   },
+   {
+    "id": "T0345",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 235,
+    "token": "94.5",
+    "context": "- **Intent Recognition**: 94.5% accuracy across Hindi-English inputs",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 65
+   },
+   {
+    "id": "T0278",
+    "repo": "AaronSpieler/elmneuron",
+    "line": 20,
+    "token": "0.9827",
+    "context": "| AUC       | 0.9437 | 0.9582 | 0.9558 | 0.9757 | 0.9827 | 0.9878 | 0.9915 | 0.9922 | 0.9926 | 0.9929 | 0.9934 | 0.9934 | 0.9938 | 0.9935 |",
+    "obligating_words": [
+     "auc"
+    ],
+    "id_shuffled_position": 66
+   },
+   {
+    "id": "T0555",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 348,
+    "token": "256",
+    "context": "| Experts | 256 with K=8 | Diminishing returns beyond 256 |",
+    "obligating_words": [],
+    "id_shuffled_position": 67
+   },
+   {
+    "id": "T0517",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 34,
+    "token": "103",
+    "context": "Task 5: Expense Tracker + Auth (Level 6) → ✅ PASS  86/103 tests, 1 iter, 61m",
+    "obligating_words": [],
+    "id_shuffled_position": 68
+   },
+   {
+    "id": "T0127",
+    "repo": "hopit-ai/Moda",
+    "line": 224,
+    "token": "0.1103",
+    "context": "Best config: **SPLADE(0.3) + FT-FashionCLIP(0.7) + LLM CE = nDCG@10 = 0.1063**, 95% CI [0.1023, 0.1103]. The project best.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 69
+   },
+   {
+    "id": "T0520",
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "0.7",
+    "context": "11. **Fusion weights track the capability gap** -- As the dense retriever got better across phases, the optimal SPLADE-vs-Dense weight shifted from 0.5/0.5 (Blog 2) to 0.4/0.6 (Blog 3) to 0.3/0.7 (Blo",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 70
+   },
+   {
+    "id": "T0428",
+    "repo": "hopit-ai/Moda",
+    "line": 312,
+    "token": "86.05",
+    "context": "| 512d | 67.42 | 86.05 | 57.91 | +3.58 |",
+    "obligating_words": [],
+    "id_shuffled_position": 71
+   },
+   {
+    "id": "T0508",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 50,
+    "token": "30",
+    "context": "│  └─ test_cli.py    ⚠️  (best of 4: 28/30 → edit repair)",
+    "obligating_words": [],
+    "id_shuffled_position": 72
+   },
+   {
+    "id": "T0136",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0656",
+    "context": "| Combined towers (alpha=0.3) | 0.0350 | 0.0656 | 0.0185 |",
+    "obligating_words": [],
+    "id_shuffled_position": 73
+   },
+   {
+    "id": "T0410",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 135,
+    "token": "99",
+    "context": "./build/bin/llama-cli -m Qwen3.5-9B.Q4_K_M.gguf -p \"要約してください...\" -ngl 99",
+    "obligating_words": [],
+    "id_shuffled_position": 74
+   }
+  ],
+  [
+   {
+    "id": "T0469",
+    "repo": "feyninc/tokie",
+    "line": 117,
+    "token": "0",
+    "context": "pair.type_ids          # [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1]",
+    "obligating_words": [],
+    "id_shuffled_position": 75
+   },
+   {
+    "id": "T0590",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "1.00",
+    "context": "| `guide` |1.00|0.67|0.80|12|",
+    "obligating_words": [],
+    "id_shuffled_position": 76
+   },
+   {
+    "id": "T0313",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 193,
+    "token": "9",
+    "context": "## 9 ML Models — Scored and Ranked",
+    "obligating_words": [
+     "scored"
+    ],
+    "id_shuffled_position": 77
+   },
+   {
+    "id": "T0244",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "5",
+    "context": "| 5 | gemma3:12b | 0.837 | 0.772 | 0.983 | 148 tok/s | 8.1GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 78
+   },
+   {
+    "id": "T0027",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 270,
+    "token": "18888",
+    "context": "docker run --rm -it -d -p 18888:18888 -p 4317:18889 --name aspire-dashboard \\",
+    "obligating_words": [],
+    "id_shuffled_position": 79
+   },
+   {
+    "id": "T0314",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "922",
+    "context": "**922 backend tests + 245 frontend = 1,167 total.** 0 failures. CI on every push. 0 open issues.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 80
+   },
+   {
+    "id": "T0038",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "53.85",
+    "context": "| `HopitAI/moda-fashion-distilled` | 768 | 775 MB | **67.63** | 53.85 | **+3.79** | **Best accuracy.** Drop-in replacement for FashionSigLIP at the same dimension. Distilled from a 3-model ensemble in",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 81
+   },
+   {
+    "id": "T0297",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 149,
+    "token": "1,500",
+    "context": "**Memtrace takes a different approach:** it indexes 1,500 files in 1.2–1.8 seconds for $0.00 — no LLM calls, no API costs, no rate limits. Native Tree-sitter AST parsers resolve deterministic symbol r",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 82
+   },
+   {
+    "id": "T0100",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "25",
+    "context": "| **Best hybrid + LLM CE (SPLADE 0.4 + Dense 0.6)** | **0.0976** | **0.0931** | **0.0268** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 83
+   },
+   {
+    "id": "T0039",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "+3.79",
+    "context": "| `HopitAI/moda-fashion-distilled` | 768 | 775 MB | **67.63** | 53.85 | **+3.79** | **Best accuracy.** Drop-in replacement for FashionSigLIP at the same dimension. Distilled from a 3-model ensemble in",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 84
+   },
+   {
+    "id": "T0574",
+    "repo": "opendatalab/WebMainBench",
+    "line": 89,
+    "token": "0",
+    "context": "All scores are in **[0, 1]**; higher is better.",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 85
+   },
+   {
+    "id": "T0254",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.652",
+    "context": "| 🆕 | **Bonsai-8B** | 0.652 | 0.622 | 0.800 | 383 tok/s | 1.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 86
+   },
+   {
+    "id": "T0455",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 119,
+    "token": "1.262384",
+    "context": "truthfulqa_mc:1.262384",
+    "obligating_words": [],
+    "id_shuffled_position": 87
+   },
+   {
+    "id": "T0238",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "280",
+    "context": "| 3 | SmallThinker-21BA3B | 0.880 | 0.883 | 0.900 | 280 tok/s | 13GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 88
+   },
+   {
+    "id": "T0005",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "50",
+    "context": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of acci",
+    "obligating_words": [
+     "rate",
+     "score"
+    ],
+    "id_shuffled_position": 89
+   },
+   {
+    "id": "T0143",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.0766",
+    "context": "| Blog 4 best (text-only, SPLADE+FT-CLIP+LLM CE) | **0.1063** | 0.0766 | 0.0265 |",
+    "obligating_words": [],
+    "id_shuffled_position": 90
+   },
+   {
+    "id": "T0405",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 740,
+    "token": "3",
+    "context": "| qwen3.6:27b | 4 | 4 | 4 | 5 | 3 | **4** | 16/20 |",
+    "obligating_words": [],
+    "id_shuffled_position": 91
+   },
+   {
+    "id": "T0408",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 135,
+    "token": "50",
+    "context": "| **Multi-modal Debate** | Quant persona reads the K-line image alongside the numbers via Claude Vision. Lift harness compares vision-vs-text decision agreement against forward returns; cron runs nigh",
+    "obligating_words": [],
+    "id_shuffled_position": 92
+   },
+   {
+    "id": "T0580",
+    "repo": "AdilzhanB/StockRL",
+    "line": 67,
+    "token": "157.07",
+    "context": "| **AAPL** | -74.02% | 0.65 | 157.07% | 7.01% | ⚠️ Underperform |",
+    "obligating_words": [],
+    "id_shuffled_position": 93
+   },
+   {
+    "id": "T0048",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0106",
+    "context": "| Dense only (FashionCLIP) | 0.0265 | [.0261-.0269] | 0.0369 | 0.0106 | 0.0462 |",
+    "obligating_words": [],
+    "id_shuffled_position": 94
+   },
+   {
+    "id": "T0126",
+    "repo": "hopit-ai/Moda",
+    "line": 224,
+    "token": "0.1023",
+    "context": "Best config: **SPLADE(0.3) + FT-FashionCLIP(0.7) + LLM CE = nDCG@10 = 0.1063**, 95% CI [0.1023, 0.1103]. The project best.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 95
+   },
+   {
+    "id": "T0474",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 372,
+    "token": "12",
+    "context": "12      | System info stats         | \"system\"",
+    "obligating_words": [],
+    "id_shuffled_position": 96
+   },
+   {
+    "id": "T0506",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 711,
+    "token": "49",
+    "context": "| Ling-2.6-flash MLX 4bit | 1612s | 3 | OK | -- | OK | OK | -- | 45/80 | 4/20 | **49/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 97
+   },
+   {
+    "id": "T0056",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": ".0537",
+    "context": "| **Full pipeline (Hybrid + CE rerank)** | **0.0543** | **[.0537-.0550]** | **0.0569** | **0.0164** | **0.0559** |",
+    "obligating_words": [],
+    "id_shuffled_position": 98
+   },
+   {
+    "id": "T0353",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "91.2",
+    "context": "- **SFT + Dial-DPO**: Tool accuracy 91.2%, Response quality 4.2/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 99
+   }
+  ],
+  [
+   {
+    "id": "T0371",
+    "repo": "connor-makowski/scgraph",
+    "line": 322,
+    "token": "31.23",
+    "context": "origin_node={\"latitude\": 31.23, \"longitude\": 121.47},",
+    "obligating_words": [],
+    "id_shuffled_position": 100
+   },
+   {
+    "id": "T0232",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.928",
+    "context": "| 2 | mistral-small | 0.886 | 0.878 | 0.928 | 104 tok/s | 14.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 101
+   },
+   {
+    "id": "T0501",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 108,
+    "token": "0",
+    "context": "![image.png](https://cdn.nlark.com/yuque/0/2024/png/39012277/1710730349461-627349f3-77f3-41bf-aa98-2099683c66bd.png#averageHue=%23e9e6e4&clientId=u70d5b72a-a20d-4&from=paste&height=446&id=u889f10e5&or",
+    "obligating_words": [],
+    "id_shuffled_position": 102
+   },
+   {
+    "id": "T0046",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": ".0261",
+    "context": "| Dense only (FashionCLIP) | 0.0265 | [.0261-.0269] | 0.0369 | 0.0106 | 0.0462 |",
+    "obligating_words": [],
+    "id_shuffled_position": 103
+   },
+   {
+    "id": "T0355",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "5",
+    "context": "- **SFT + Dial-DPO**: Tool accuracy 91.2%, Response quality 4.2/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 104
+   },
+   {
+    "id": "T0053",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0121",
+    "context": "| Hybrid (BM25x0.4 + Densex0.6) | 0.0328 | [.0324-.0333] | 0.0429 | 0.0121 | 0.0457 |",
+    "obligating_words": [],
+    "id_shuffled_position": 105
+   },
+   {
+    "id": "T0343",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 22,
+    "token": "2",
+    "context": "2) 测试与 CI 状态",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 106
+   },
+   {
+    "id": "T0566",
+    "repo": "stanford-oval/Churro",
+    "line": 228,
+    "token": "51.6",
+    "context": "<sub>Churro 52.0 vs Gemini 51.6 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 107
+   },
+   {
+    "id": "T0276",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "468",
+    "context": "- **F1**: 0.788 | **Precision**: 0.716 | **Speed**: 468 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 108
+   },
+   {
+    "id": "T0409",
+    "repo": "feyninc/tokie",
+    "line": 81,
+    "token": "1",
+    "context": "println!(\"{:?}\", encoding.attention_mask);  // [1, 1, 1, 1, 1, 1]",
+    "obligating_words": [],
+    "id_shuffled_position": 109
+   },
+   {
+    "id": "T0332",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "12",
+    "context": "| `guide` |1.00|0.67|0.80|12|",
+    "obligating_words": [],
+    "id_shuffled_position": 110
+   },
+   {
+    "id": "T0537",
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 247,
+    "token": "20",
+    "context": "--episodes 20 \\",
+    "obligating_words": [],
+    "id_shuffled_position": 111
+   },
+   {
+    "id": "T0331",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "0.80",
+    "context": "| `guide` |1.00|0.67|0.80|12|",
+    "obligating_words": [],
+    "id_shuffled_position": 112
+   },
+   {
+    "id": "T0561",
+    "repo": "nextcloud/whiteboard",
+    "line": 241,
+    "token": "100",
+    "context": "| 100 | ~20% (~0.20% per user) | ~0.36 GB | ~96.6 MB total (≈12.9 Mbps) | 4 vCPU / 2 GB RAM |",
+    "obligating_words": [],
+    "id_shuffled_position": 113
+   },
+   {
+    "id": "T0042",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0227",
+    "context": "| BM25 only | 0.0186 | [.0183-.0190] | 0.0227 | 0.0059 | 0.0251 |",
+    "obligating_words": [],
+    "id_shuffled_position": 114
+   },
+   {
+    "id": "T0240",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "0.859",
+    "context": "| 4 | gemma3:4b | 0.859 | 0.784 | 1.022 | 312 tok/s | 3.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 115
+   },
+   {
+    "id": "T0471",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1118,
+    "token": "3",
+    "context": "| 🆕 Jackrong Qwopus3.6-27B-v2 Q8_0 + MTP n=3 | 782s | 77.6 | 5 (上限) | 45/80 | 45/100 |",
+    "obligating_words": [],
+    "id_shuffled_position": 116
+   },
+   {
+    "id": "T0117",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.1063",
+    "context": "| **Baseline SPLADE + FT-CLIP** | **0.1063** | **0.0766** | **0.0265** |",
+    "obligating_words": [],
+    "id_shuffled_position": 117
+   },
+   {
+    "id": "T0386",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 109,
+    "token": "216",
+    "context": "![image.png](https://cdn.nlark.com/yuque/0/2024/png/39012277/1710730348975-f84b1c2c-d6c8-405b-b01f-f33d6a845945.png#averageHue=%23e9e8e8&clientId=u70d5b72a-a20d-4&from=paste&height=82&id=u664387f4&ori",
+    "obligating_words": [],
+    "id_shuffled_position": 118
+   },
+   {
+    "id": "T0283",
+    "repo": "nextcloud/whiteboard",
+    "line": 64,
+    "token": "3002",
+    "context": "docker run -e JWT_SECRET_KEY=some-random-secret -e NEXTCLOUD_URL=https://nextcloud.local -p 3002:3002 --rm ghcr.io/nextcloud-releases/whiteboard:stable",
+    "obligating_words": [],
+    "id_shuffled_position": 119
+   },
+   {
+    "id": "T0093",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0735",
+    "context": "| **FT-CE-L12 on 194K Sonnet labels** | **0.0735** | **0.0751** | **0.0217** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 120
+   },
+   {
+    "id": "T0211",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "67.68",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 121
+   },
+   {
+    "id": "T0270",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "312",
+    "context": "- **F1**: 0.859 | **Precision**: 0.784 | **Speed**: 312 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 122
+   },
+   {
+    "id": "T0023",
+    "repo": "sbhooley/ainativelang",
+    "line": 1379,
+    "token": "1",
+    "context": "- **Fine-tune**: `bash scripts/setup_finetune_env.sh`, `.venv-ci-smoke/bin/python scripts/finetune_ainl.py --profile fast --epochs 1 --seed 42`",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 123
+   },
+   {
+    "id": "T0325",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "6",
+    "context": "| `discussion` |0.67|1.00|0.80|6|",
+    "obligating_words": [],
+    "id_shuffled_position": 124
+   }
+  ],
+  [
+   {
+    "id": "T0373",
+    "repo": "kunal12203/webify-mcp",
+    "line": 112,
+    "token": "15",
+    "context": "| Earthquake & tsunamis | 13/15 | 15/15 |",
+    "obligating_words": [],
+    "id_shuffled_position": 125
+   },
+   {
+    "id": "T0327",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.89",
+    "context": "| `advice_request` |0.85|0.89|0.87|19|",
+    "obligating_words": [],
+    "id_shuffled_position": 126
+   },
+   {
+    "id": "T0358",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "+22.8",
+    "context": "| Tool Selection Accuracy | 68.4% | 91.2% | +22.8% |",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 127
+   },
+   {
+    "id": "T0250",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "0.788",
+    "context": "| 6 | llama3.2:3b | 0.788 | 0.716 | 1.017 | 468 tok/s | 2.0GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 128
+   },
+   {
+    "id": "T0140",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0272",
+    "context": "| 3T + SPLADE + LLM CE (3T best) | **0.0833** | 0.0899 | 0.0272 |",
+    "obligating_words": [],
+    "id_shuffled_position": 129
+   },
+   {
+    "id": "T0296",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "14.4",
+    "context": "| Incremental re-index p95 | **42.5 ms** | CodeGrapher: 613.7 ms | 14.4× |",
+    "obligating_words": [
+     "p95"
+    ],
+    "id_shuffled_position": 130
+   },
+   {
+    "id": "T0130",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0657",
+    "context": "| Text tower only (FashionCLIP) | 0.0355 | 0.0657 | 0.0196 |",
+    "obligating_words": [],
+    "id_shuffled_position": 131
+   },
+   {
+    "id": "T0159",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "0.19510",
+    "context": "| Fashion200K | 0.18577 | **0.19510** | +5.02% | [+0.00382, +0.01477] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 132
+   },
+   {
+    "id": "T0185",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "3",
+    "context": "9. **Fine-tuning the retriever on its own mistakes doubles dense retrieval (+137%)** -- We mined hard negatives from FashionCLIP's top-20 failures, graded them with GPT-4o-mini ($3), and trained on 24",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 133
+   },
+   {
+    "id": "T0281",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 573,
+    "token": "9090",
+    "context": "```docker run -dt -p 9090:9090 -v /path/to/prometheus.cfg:/etc/prometheus/prometheus.cfg prom/prometheus:latest --config.file=/etc/prometheus/prometheus.cfg```",
+    "obligating_words": [],
+    "id_shuffled_position": 134
+   },
+   {
+    "id": "T0051",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": ".0324",
+    "context": "| Hybrid (BM25x0.4 + Densex0.6) | 0.0328 | [.0324-.0333] | 0.0429 | 0.0121 | 0.0457 |",
+    "obligating_words": [],
+    "id_shuffled_position": 135
+   },
+   {
+    "id": "T0062",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0695",
+    "context": "| SPLADE standalone | 0.0464 | 0.0695 | 0.0189 |",
+    "obligating_words": [],
+    "id_shuffled_position": 136
+   },
+   {
+    "id": "T0099",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0268",
+    "context": "| **Best hybrid + LLM CE (SPLADE 0.4 + Dense 0.6)** | **0.0976** | **0.0931** | **0.0268** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 137
+   },
+   {
+    "id": "T0535",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 255,
+    "token": "0.1",
+    "context": "`ORALLEXA_MULTIMODAL_SAMPLE=0.0..1.0` controls vision-augmented debate sampling. Default `0` is off (zero behavior change vs text-only). Setting e.g. `0.2` runs the Quant Researcher with both text and",
+    "obligating_words": [],
+    "id_shuffled_position": 138
+   },
+   {
+    "id": "T0231",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.878",
+    "context": "| 2 | mistral-small | 0.886 | 0.878 | 0.928 | 104 tok/s | 14.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 139
+   },
+   {
+    "id": "T0329",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "19",
+    "context": "| `advice_request` |0.85|0.89|0.87|19|",
+    "obligating_words": [],
+    "id_shuffled_position": 140
+   },
+   {
+    "id": "T0379",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 905,
+    "token": "3.3",
+    "context": "| 生成速度 | 3.3 tok/s |",
+    "obligating_words": [],
+    "id_shuffled_position": 141
+   },
+   {
+    "id": "T0473",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 870,
+    "token": "5090",
+    "context": "#### qwen3.6:27b（80点 / リトライ2回）🥇 - RTX 5090",
+    "obligating_words": [],
+    "id_shuffled_position": 142
+   },
+   {
+    "id": "T0530",
+    "repo": "skadio/text2model",
+    "line": 61,
+    "token": "0",
+    "context": "text2model --problem-ids 0 1 nlp4lp_58 --strategies cot --model gpt-4 --output-dir my_results",
+    "obligating_words": [],
+    "id_shuffled_position": 143
+   },
+   {
+    "id": "T0466",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1401,
+    "token": "0.215",
+    "context": "| codestral:22b | 12GB | 21.6s | 37.7 | 0.534 | 0.201 | 0.215 |",
+    "obligating_words": [],
+    "id_shuffled_position": 144
+   },
+   {
+    "id": "T0337",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 306,
+    "token": "-80325.282",
+    "context": "\"Avg Score\": -80325.282,",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 145
+   },
+   {
+    "id": "T0275",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "0.716",
+    "context": "- **F1**: 0.788 | **Precision**: 0.716 | **Speed**: 468 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 146
+   },
+   {
+    "id": "T0228",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "225",
+    "context": "| 1 | **qwen3:8b** | **0.899** | 0.956 | 0.883 | 225 tok/s | 5.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 147
+   },
+   {
+    "id": "T0073",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0186",
+    "context": "| BM25 standalone | 0.0186 | 0.0227 | 0.0059 |",
+    "obligating_words": [],
+    "id_shuffled_position": 148
+   },
+   {
+    "id": "T0389",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1723,
+    "token": "2.0",
+    "context": "[Jackrong/Qwen3.5-9B-DeepSeek-V4-Flash](https://huggingface.co/Jackrong/Qwen3.5-9B-DeepSeek-V4-Flash-GGUF) は **Qwen3.5-9B をベースに DeepSeek-V4-Flash の reasoning trace で SFT (Unsloth、8000 サンプル distillatio",
+    "obligating_words": [],
+    "id_shuffled_position": 149
+   }
+  ],
+  [
+   {
+    "id": "T0359",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "3.1",
+    "context": "| Argument Quality Score | 3.1/5 | 4.2/5 | +35.5% |",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 150
+   },
+   {
+    "id": "T0377",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 701,
+    "token": "12",
+    "context": "| **gpt-oss:20b** | 258s | 3 | OK | OK | OK | OK | **OK** | 75/80 | 12/20 | **87/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 151
+   },
+   {
+    "id": "T0072",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0215",
+    "context": "| **SPLADE + Dense + off-shelf CE** | **0.0748** | **0.0738** | **0.0215** |",
+    "obligating_words": [],
+    "id_shuffled_position": 152
+   },
+   {
+    "id": "T0339",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 308,
+    "token": "-72401.308",
+    "context": "\"Max Score\": -72401.308,",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 153
+   },
+   {
+    "id": "T0533",
+    "repo": "nextcloud/whiteboard",
+    "line": 223,
+    "token": "10",
+    "context": "- Apple M4 (10 logical cores, 16 GB RAM), Node v24.8.0",
+    "obligating_words": [],
+    "id_shuffled_position": 154
+   },
+   {
+    "id": "T0138",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0833",
+    "context": "| 3T + SPLADE + LLM CE (3T best) | **0.0833** | 0.0899 | 0.0272 |",
+    "obligating_words": [],
+    "id_shuffled_position": 155
+   },
+   {
+    "id": "T0356",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "68.4",
+    "context": "| Tool Selection Accuracy | 68.4% | 91.2% | +22.8% |",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 156
+   },
+   {
+    "id": "T0496",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 138,
+    "token": "1123",
+    "context": "| [HAD HRI](https://usa.honda-ri.com/had)  | Supports research on driver behavior, takeover intention,<br> and human-automation responsibility modeling.  | 4319 videos of 20 seconds long with textual ",
+    "obligating_words": [],
+    "id_shuffled_position": 157
+   },
+   {
+    "id": "T0146",
+    "repo": "hopit-ai/Moda",
+    "line": 331,
+    "token": "256",
+    "context": "**MODA-SigLIP-Matryoshka is on HuggingFace**, MIT licensed. Deployment recipe in the model card: choose your dimension (recommended: 256), choose your precision (recommended: binary + fp16 rerank for ",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 158
+   },
+   {
+    "id": "T0507",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 90,
+    "token": "0.292",
+    "context": "| 5 | qwen3:14b | 0.292 | 128 tok/s | 9.3GB | A |",
+    "obligating_words": [],
+    "id_shuffled_position": 159
+   },
+   {
+    "id": "T0129",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0355",
+    "context": "| Text tower only (FashionCLIP) | 0.0355 | 0.0657 | 0.0196 |",
+    "obligating_words": [],
+    "id_shuffled_position": 160
+   },
+   {
+    "id": "T0277",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1120,
+    "token": "38",
+    "context": "¹ baseline の `tokens_per_second` は `coding_benchmark.py` 元実装の **content-only 計測**(streamed `delta.content` チャンクのみカウント)。reasoning_content まで含めた combined metric は速度ベンチの ~38 tok/s 側を参照。",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 161
+   },
+   {
+    "id": "T0450",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 524,
+    "token": ".57",
+    "context": "services_tot_requests{nsip=\"10.0.0.2\",service_ip=\"20.0.0.57\",servicegroup_name=\"svcgrp\"} 11.0",
+    "obligating_words": [],
+    "id_shuffled_position": 162
+   },
+   {
+    "id": "T0440",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 755,
+    "token": "1",
+    "context": "| Qwen3.5-9B-DeepSeek-V4-Flash (エラー画面) | 1 | 1 | 1 | 1 | 1 | **1** | 4/20 |",
+    "obligating_words": [],
+    "id_shuffled_position": 163
+   },
+   {
+    "id": "T0418",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 726,
+    "token": "15",
+    "context": "² Nemotron Q8_0 は **Login 画面は実際に描画されている**(紫の Sign Up ボタン + Username/Password フォーム + \"Modern React Chat Application\" タイトル)が、**friends.png / dm.png / chat.png はいずれも同じ Login 画面のスクリーンショット**(Playwright が L",
+    "obligating_words": [],
+    "id_shuffled_position": 164
+   },
+   {
+    "id": "T0521",
+    "repo": "feyninc/tokie",
+    "line": 205,
+    "token": "9.1",
+    "context": "| Qwen 3 | 45 KB | 0.13 ms | 9.1 ms | **68x** |",
+    "obligating_words": [],
+    "id_shuffled_position": 165
+   },
+   {
+    "id": "T0111",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "0.168",
+    "context": "| Recall@100 | 0.168 | 0.244 | +45% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 166
+   },
+   {
+    "id": "T0176",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "+0.00775",
+    "context": "| Atlas | 0.18264 | 0.18637 | +2.05% | [-0.00017, +0.00775] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 167
+   },
+   {
+    "id": "T0017",
+    "repo": "sbhooley/ainativelang",
+    "line": 412,
+    "token": "3.10",
+    "context": "# Clone and create an isolated env (match CI: Python 3.10)",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 168
+   },
+   {
+    "id": "T0585",
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 189,
+    "token": "20",
+    "context": "--episodes-per-arm 20 \\",
+    "obligating_words": [],
+    "id_shuffled_position": 169
+   },
+   {
+    "id": "T0205",
+    "repo": "hopit-ai/Moda",
+    "line": 631,
+    "token": "2",
+    "context": "**nDCG@k** uses the full grade scale (2 > 1 > 0). **MRR/Recall/P@k** treat any labeled item (grade > 0) as relevant.",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 170
+   },
+   {
+    "id": "T0505",
+    "repo": "painezeng/CSharpAndSolidWorks",
+    "line": 283,
+    "token": "1",
+    "context": "**方法 1：使用 Visual Studio 自动注册（开发模式）**",
+    "obligating_words": [],
+    "id_shuffled_position": 171
+   },
+   {
+    "id": "T0202",
+    "repo": "hopit-ai/Moda",
+    "line": 466,
+    "token": "9200",
+    "context": "docker run -d -p 9200:9200 -e \"discovery.type=single-node\" \\",
+    "obligating_words": [],
+    "id_shuffled_position": 172
+   },
+   {
+    "id": "T0472",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1481,
+    "token": "100",
+    "context": "**コーディングベンチマーク**: 55/100（視覚評価スキップのためFunctionalのみ、55/80）。Build/Server/ログイン/フレンドOK、DM送受信とリアルタイム更新が4試行とも未達成。総生成時間2,655s（15〜29 tok/s）。49.86GBのMistral-Medium-3.5-128B Q2_K（45/100、7,293s）を、1/7のモデルサイズ・1/3の時間",
+    "obligating_words": [],
+    "id_shuffled_position": 173
+   },
+   {
+    "id": "T0156",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+0.00894",
+    "context": "| KAGL | 0.27687 | **0.29074** | +5.01% | [+0.00894, +0.01883] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 174
+   }
+  ],
+  [
+   {
+    "id": "T0444",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1578,
+    "token": "10",
+    "context": "| Coding bench | **25/100** (10 retry, build OK のみ得点) |",
+    "obligating_words": [],
+    "id_shuffled_position": 175
+   },
+   {
+    "id": "T0161",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "+0.01477",
+    "context": "| Fashion200K | 0.18577 | **0.19510** | +5.02% | [+0.00382, +0.01477] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 176
+   },
+   {
+    "id": "T0380",
+    "repo": "sbhooley/ainativelang",
+    "line": 92,
+    "token": "3",
+    "context": "**Just want something working on your desktop in under 3 minutes?**",
+    "obligating_words": [],
+    "id_shuffled_position": 177
+   },
+   {
+    "id": "T0422",
+    "repo": "hopit-ai/Moda",
+    "line": 127,
+    "token": "0.2137",
+    "context": "| **pooled, 12,000 queries** | 0.1975 | 0.2035 | 0.2026 | **0.2137** |",
+    "obligating_words": [],
+    "id_shuffled_position": 178
+   },
+   {
+    "id": "T0096",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "25",
+    "context": "| **FT-CE-L12 on 194K Sonnet labels** | **0.0735** | **0.0751** | **0.0217** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 179
+   },
+   {
+    "id": "T0516",
+    "repo": "stanford-oval/Churro",
+    "line": 175,
+    "token": "93.3",
+    "context": "<sub>Churro 93.3 vs Gemini 88.3 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 180
+   },
+   {
+    "id": "T0124",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.0741",
+    "context": "| FT-SPLADE + FT-CLIP | 0.1017 | 0.0741 | 0.0258 |",
+    "obligating_words": [],
+    "id_shuffled_position": 181
+   },
+   {
+    "id": "T0357",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "91.2",
+    "context": "| Tool Selection Accuracy | 68.4% | 91.2% | +22.8% |",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 182
+   },
+   {
+    "id": "T0480",
+    "repo": "ShiZhengyan/DePT",
+    "line": 52,
+    "token": "256",
+    "context": "MAX_LENGTH=256",
+    "obligating_words": [],
+    "id_shuffled_position": 183
+   },
+   {
+    "id": "T0310",
+    "repo": "feyninc/tokie",
+    "line": 242,
+    "token": "74",
+    "context": "<summary><b>View full accuracy table (74 models)</b></summary>",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 184
+   },
+   {
+    "id": "T0573",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 339,
+    "token": "1",
+    "context": "uv run python scripts/ablation/run_mtp_ablation.py          # MTP depth D=0,1,2,3",
+    "obligating_words": [],
+    "id_shuffled_position": 185
+   },
+   {
+    "id": "T0413",
+    "repo": "ludwig-ai/ludwig",
+    "line": 190,
+    "token": "8000",
+    "context": "# POST http://localhost:8000/predict",
+    "obligating_words": [],
+    "id_shuffled_position": 186
+   },
+   {
+    "id": "T0335",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 158,
+    "token": "200",
+    "context": "Claude was used to help design and stress-test the label taxonomy and edge case rules before annotation began, including working through specific ambiguous examples (e.g. the Camille support pick-rate",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 187
+   },
+   {
+    "id": "T0082",
+    "repo": "hopit-ai/Moda",
+    "line": 190,
+    "token": "22,855",
+    "context": "### Phase 3: Training the cross-encoder with LLM labels (22,855 held-out test queries)",
+    "obligating_words": [
+     "held"
+    ],
+    "id_shuffled_position": 188
+   },
+   {
+    "id": "T0077",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0695",
+    "context": "| **SPLADE standalone** | **0.0412** | **0.0695** | **0.0189** |",
+    "obligating_words": [],
+    "id_shuffled_position": 189
+   },
+   {
+    "id": "T0234",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "3",
+    "context": "| 3 | SmallThinker-21BA3B | 0.880 | 0.883 | 0.900 | 280 tok/s | 13GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 190
+   },
+   {
+    "id": "T0376",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1253,
+    "token": "0.333",
+    "context": "**結論**: RTX 5060 8GBでは **Qwopus3.5-9B** が最適（ROUGE-L 0.533、5.4GB）。llama.cppが必要だが、235Bモデルを超える精度を実現。Ollamaで使いたい場合は **qwen3:8b**（ROUGE-L 0.333）が次点。超軽量を求めるなら **Bonsai-8B**（1.2GB、325 tok/s）が最速。",
+    "obligating_words": [],
+    "id_shuffled_position": 191
+   },
+   {
+    "id": "T0522",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1193,
+    "token": "0",
+    "context": "- **llm-jp-4-32B-a3B-thinking** は Q4_K_M / Q8_0 とも(retry 0 / 5 / 10 と条件を変えて 4 試行)、Build と server-start は通るが **生成された React アプリが UI を一切描画せず blank document を返す**。Playwright の test_friends / test_messagin",
+    "obligating_words": [],
+    "id_shuffled_position": 192
+   },
+   {
+    "id": "T0334",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 131,
+    "token": "16",
+    "context": "The fine-tuned model scored 83.8% accuracy against a zero-shot baseline of 91.9% - on the surface, a regression. The test set, however, is only 37 examples, which makes this comparison noisy: a swing ",
+    "obligating_words": [
+     "accuracy",
+     "scored",
+     "surface"
+    ],
+    "id_shuffled_position": 193
+   },
+   {
+    "id": "T0300",
+    "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+    "line": 207,
+    "token": "4",
+    "context": "Add these boot parameters to enable unified memory while reserving a minimum of 4 GiB for the OS (max 124 GiB for iGPU):",
+    "obligating_words": [
+     "boot"
+    ],
+    "id_shuffled_position": 194
+   },
+   {
+    "id": "T0216",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "128",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 195
+   },
+   {
+    "id": "T0213",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "768",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 196
+   },
+   {
+    "id": "T0510",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 78,
+    "token": "1",
+    "context": "| Exact symbol query (acc@1, lat) | **96.6% · 0.07 ms** | GitNexus: 97.0% · 8.95 ms | 128× lower latency |",
+    "obligating_words": [],
+    "id_shuffled_position": 197
+   },
+   {
+    "id": "T0400",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1127,
+    "token": "86",
+    "context": "- **🆕 Jackrong Qwopus3.6-27B-v2 (Qwen3.6 + Opus 蒸留 chat fine-tune) は同じ Q8_0 サイズでも ggml-org base より速度・コーディング能力ともに劣る** (45/100, 5回上限到達)。Opus 風応答に最適化された fine-tune が大規模 React+Express 1-shot プロンプトで破綻しやすく、r",
+    "obligating_words": [],
+    "id_shuffled_position": 198
+   },
+   {
+    "id": "T0562",
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "100",
+    "context": "| CONDITIONALQA | JSON | 100 | 76.00% | 0.9180 | 0.8750 | 0.8960 | 89.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 199
+   }
+  ],
+  [
+   {
+    "id": "T0560",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 33,
+    "token": "4",
+    "context": "Task 4: Bookmark Manager API (Level 5)   → ✅ PASS  73/86 tests, 2 iter, 41m",
+    "obligating_words": [],
+    "id_shuffled_position": 200
+   },
+   {
+    "id": "T0266",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "0.883",
+    "context": "- **F1**: 0.880 | **Precision**: 0.883 | **Speed**: 280 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 201
+   },
+   {
+    "id": "T0342",
+    "repo": "K-RED90/Cropify-AI",
+    "line": 111,
+    "token": "89",
+    "context": "All the answers given by our AgroAssist were marked as correct, except for the queries that required the model to call the weather API. Since we did not provide the GPT-3.5-turbo-0125 model with acces",
+    "obligating_words": [
+     "accuracy",
+     "score"
+    ],
+    "id_shuffled_position": 202
+   },
+   {
+    "id": "T0425",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 457,
+    "token": "9",
+    "context": "│   ├── NEW_MODULES.md          # 11+ Phase 7/8/9 modules with enable steps",
+    "obligating_words": [],
+    "id_shuffled_position": 203
+   },
+   {
+    "id": "T0301",
+    "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+    "line": 207,
+    "token": "124",
+    "context": "Add these boot parameters to enable unified memory while reserving a minimum of 4 GiB for the OS (max 124 GiB for iGPU):",
+    "obligating_words": [
+     "boot"
+    ],
+    "id_shuffled_position": 204
+   },
+   {
+    "id": "T0326",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.85",
+    "context": "| `advice_request` |0.85|0.89|0.87|19|",
+    "obligating_words": [],
+    "id_shuffled_position": 205
+   },
+   {
+    "id": "T0463",
+    "repo": "hopit-ai/Moda",
+    "line": 101,
+    "token": "768",
+    "context": "| `HopitAI/moda-fashion-vision-fp16` | 768 | **186 MB** | 67.42 | 53.87 | +3.58 | **Smallest deployment.** Vision-only encoder, fp16 weights. 4.2x smaller than the full CLIP variant, only -0.21 points",
+    "obligating_words": [],
+    "id_shuffled_position": 206
+   },
+   {
+    "id": "T0577",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 2,
+    "token": "100",
+    "context": "<img src=\"docs/memtrace-hero.svg\" alt=\"Memtrace — structural memory for AI coding agents\" width=\"100%\"/>",
+    "obligating_words": [],
+    "id_shuffled_position": 207
+   },
+   {
+    "id": "T0279",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 142,
+    "token": "8888",
+    "context": "docker run -dt -p 8888:8888 --mount type=bind,source=/path/to/config.yaml,target=/exporter/config.yaml --name citrix-adc-exporter quay.io/citrix/citrix-adc-metrics-exporter:1.4.9 --target-nsip=10.0.0.",
+    "obligating_words": [],
+    "id_shuffled_position": 208
+   },
+   {
+    "id": "T0002",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "40",
+    "context": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training step",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 209
+   },
+   {
+    "id": "T0541",
+    "repo": "feyninc/tokie",
+    "line": 231,
+    "token": "10.6",
+    "context": "| Llama 3.2 | 10.6 ms | 261 ms | **25x** |",
+    "obligating_words": [],
+    "id_shuffled_position": 210
+   },
+   {
+    "id": "T0195",
+    "repo": "hopit-ai/Moda",
+    "line": 404,
+    "token": "24",
+    "context": "14. **Fashion-specific pretraining is essential for image-to-image retrieval** -- DINOv2-Base (general self-supervised vision features) scored 39.49 Fine R@1 on LookBench, 24 points below FashionSigLI",
+    "obligating_words": [
+     "scored"
+    ],
+    "id_shuffled_position": 211
+   },
+   {
+    "id": "T0518",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 37,
+    "token": "5",
+    "context": "5/5 tasks passing — 217/249 tests (87%). All DoD criteria met across every level. The system handles everything from simple classes to complex multi-file REST APIs with JWT auth, budget limits, and CS",
+    "obligating_words": [],
+    "id_shuffled_position": 212
+   },
+   {
+    "id": "T0095",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0217",
+    "context": "| **FT-CE-L12 on 194K Sonnet labels** | **0.0735** | **0.0751** | **0.0217** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 213
+   },
+   {
+    "id": "T0116",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0253",
+    "context": "| Baseline SPLADE + Baseline CLIP | 0.0946 | 0.0660 | 0.0253 |",
+    "obligating_words": [],
+    "id_shuffled_position": 214
+   },
+   {
+    "id": "T0509",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1233,
+    "token": "2",
+    "context": "#### Sample 2: メディアと市民参加",
+    "obligating_words": [],
+    "id_shuffled_position": 215
+   },
+   {
+    "id": "T0150",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "7",
+    "context": "Blogs 5 to 7 beat FashionSigLIP on image-to-image. Phase 7 closes the series by beating it on text-to-image, the task it was built for, without adding a single parameter. Instead of training a new mod",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 216
+   },
+   {
+    "id": "T0406",
+    "repo": "parinzee/seed-free-synthetic-instruct",
+    "line": 112,
+    "token": "979",
+    "context": "ISBN = \"979-8-89176-097-4\",",
+    "obligating_words": [],
+    "id_shuffled_position": 217
+   },
+   {
+    "id": "T0006",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "7.96",
+    "context": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of acci",
+    "obligating_words": [
+     "rate",
+     "score"
+    ],
+    "id_shuffled_position": 218
+   },
+   {
+    "id": "T0021",
+    "repo": "sbhooley/ainativelang",
+    "line": 1191,
+    "token": "3.10",
+    "context": "See [docs/INSTALL.md](docs/INSTALL.md) for full setup details. At a minimum: Python 3.10+, pip and virtual environment support, Docker for container-based deployment flows. **Match CI:** use a 3.10 ve",
+    "obligating_words": [
+     "bootstrap",
+     "ci"
+    ],
+    "id_shuffled_position": 219
+   },
+   {
+    "id": "T0333",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 131,
+    "token": "6",
+    "context": "The fine-tuned model scored 83.8% accuracy against a zero-shot baseline of 91.9% - on the surface, a regression. The test set, however, is only 37 examples, which makes this comparison noisy: a swing ",
+    "obligating_words": [
+     "accuracy",
+     "scored",
+     "surface"
+    ],
+    "id_shuffled_position": 220
+   },
+   {
+    "id": "T0010",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 180,
+    "token": "637.879562",
+    "context": "mean       637.879562",
+    "obligating_words": [
+     "mean"
+    ],
+    "id_shuffled_position": 221
+   },
+   {
+    "id": "T0225",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.899",
+    "context": "| 1 | **qwen3:8b** | **0.899** | 0.956 | 0.883 | 225 tok/s | 5.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 222
+   },
+   {
+    "id": "T0411",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1188,
+    "token": "75",
+    "context": "- **gpt-oss:20b** が次点（75/100）。3回のリトライでエラーを自力修正し、リアルタイム更新含む全機能を実装。UIはシンプルだが完全に動作",
+    "obligating_words": [],
+    "id_shuffled_position": 223
+   },
+   {
+    "id": "T0299",
+    "repo": "nhadaututtheky/neural-memory",
+    "line": 142,
+    "token": "2",
+    "context": "nmem recall \"database decision\" --depth 2",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 224
+   }
+  ],
+  [
+   {
+    "id": "T0076",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0412",
+    "context": "| **SPLADE standalone** | **0.0412** | **0.0695** | **0.0189** |",
+    "obligating_words": [],
+    "id_shuffled_position": 225
+   },
+   {
+    "id": "T0047",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0369",
+    "context": "| Dense only (FashionCLIP) | 0.0265 | [.0261-.0269] | 0.0369 | 0.0106 | 0.0462 |",
+    "obligating_words": [],
+    "id_shuffled_position": 226
+   },
+   {
+    "id": "T0416",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 336,
+    "token": "47",
+    "context": "| Unit Tests | 47 | DecisionOutput, BehaviorMemory, risk, scalping |",
+    "obligating_words": [],
+    "id_shuffled_position": 227
+   },
+   {
+    "id": "T0519",
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "2",
+    "context": "11. **Fusion weights track the capability gap** -- As the dense retriever got better across phases, the optimal SPLADE-vs-Dense weight shifted from 0.5/0.5 (Blog 2) to 0.4/0.6 (Blog 3) to 0.3/0.7 (Blo",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 228
+   },
+   {
+    "id": "T0291",
+    "repo": "karpathy/jobs",
+    "line": 35,
+    "token": "342",
+    "context": "| `scores.json` | AI exposure scores (0-10) with rationales for all 342 occupations |",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 229
+   },
+   {
+    "id": "T0094",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0751",
+    "context": "| **FT-CE-L12 on 194K Sonnet labels** | **0.0735** | **0.0751** | **0.0217** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 230
+   },
+   {
+    "id": "T0248",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "148",
+    "context": "| 5 | gemma3:12b | 0.837 | 0.772 | 0.983 | 148 tok/s | 8.1GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 231
+   },
+   {
+    "id": "T0404",
+    "repo": "feyninc/tokie",
+    "line": 233,
+    "token": "310",
+    "context": "| o200k | 23.2 ms | 310 ms | **13x** |",
+    "obligating_words": [],
+    "id_shuffled_position": 232
+   },
+   {
+    "id": "T0110",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "+87",
+    "context": "| Recall@10 | 0.0433 | 0.0811 | +87% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 233
+   },
+   {
+    "id": "T0538",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 280,
+    "token": "0.006",
+    "context": "- rouge2: 0.006",
+    "obligating_words": [],
+    "id_shuffled_position": 234
+   },
+   {
+    "id": "T0091",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0190",
+    "context": "| FT on 9.8K GPT-4o-mini labels | 0.0689 | 0.0701 | 0.0190 | ~$2 |",
+    "obligating_words": [],
+    "id_shuffled_position": 235
+   },
+   {
+    "id": "T0553",
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "0.8000",
+    "context": "| STRATEGYQA | SMT2 | 100 | 84.00% | 0.8205 | 0.7805 | 0.8000 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 236
+   },
+   {
+    "id": "T0503",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 591,
+    "token": "30",
+    "context": "python keyword_benchmark.py --host <ollama-host> --models qwen3:8b gemma3:4b --samples 30",
+    "obligating_words": [],
+    "id_shuffled_position": 237
+   },
+   {
+    "id": "T0431",
+    "repo": "opendatalab/WebMainBench",
+    "line": 104,
+    "token": "0.7121",
+    "context": "| magic-html | Html+MD | 0.7138 | 0.7857 | 0.7121 | 0.6434 |",
+    "obligating_words": [],
+    "id_shuffled_position": 238
+   },
+   {
+    "id": "T0069",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0201",
+    "context": "| SPLADE + Dense (0.5/0.5) hybrid | 0.0556 | 0.0662 | 0.0201 |",
+    "obligating_words": [],
+    "id_shuffled_position": 239
+   },
+   {
+    "id": "T0504",
+    "repo": "AaronSpieler/elmneuron",
+    "line": 17,
+    "token": "50",
+    "context": "|  $d_m$    | 1      | 2      | 3      | 5      | 7      | 10     | 15     | 20     | 25     | 30     | 40     | 50     | 75     | 100    |",
+    "obligating_words": [],
+    "id_shuffled_position": 240
+   },
+   {
+    "id": "T0188",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "24.4",
+    "context": "9. **Fine-tuning the retriever on its own mistakes doubles dense retrieval (+137%)** -- We mined hard negatives from FashionCLIP's top-20 failures, graded them with GPT-4o-mini ($3), and trained on 24",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 241
+   },
+   {
+    "id": "T0348",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 240,
+    "token": "92.1",
+    "context": "- **Hindi Language**: 92.1% accuracy in native Hindi conversation",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 242
+   },
+   {
+    "id": "T0309",
+    "repo": "feyninc/tokie",
+    "line": 193,
+    "token": "10",
+    "context": "All results on Apple M3, single-string encode, median of 10 runs.",
+    "obligating_words": [
+     "median"
+    ],
+    "id_shuffled_position": 243
+   },
+   {
+    "id": "T0249",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "6",
+    "context": "| 6 | llama3.2:3b | 0.788 | 0.716 | 1.017 | 468 tok/s | 2.0GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 244
+   },
+   {
+    "id": "T0212",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "3.84",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 245
+   },
+   {
+    "id": "T0528",
+    "repo": "stanford-oval/Churro",
+    "line": 143,
+    "token": "2.5",
+    "context": "<img src=\"static/readme_examples/gallery/german.jpg\" alt=\"German historical page example where Churro beats Gemini 2.5 Pro\" width=\"100%\" />",
+    "obligating_words": [],
+    "id_shuffled_position": 246
+   },
+   {
+    "id": "T0424",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 90,
+    "token": "16",
+    "context": "- **Hyperparameters:** [epochs = 5(default 3), learning rate = 2e-5, batch size = 16]",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 247
+   },
+   {
+    "id": "T0532",
+    "repo": "hopit-ai/Moda",
+    "line": 573,
+    "token": "6",
+    "context": "│   ├── eval_matryoshka_lookbench.py <- Phase 6: per-slice LookBench eval for Matryoshka student",
+    "obligating_words": [],
+    "id_shuffled_position": 248
+   },
+   {
+    "id": "T0556",
+    "repo": "stanford-oval/Churro",
+    "line": 180,
+    "token": "2.5",
+    "context": "<img src=\"static/readme_examples/gallery/japanese.jpg\" alt=\"Japanese historical page example where Churro beats Gemini 2.5 Pro\" width=\"100%\" />",
+    "obligating_words": [],
+    "id_shuffled_position": 249
+   }
+  ],
+  [
+   {
+    "id": "T0083",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0639",
+    "context": "| Off-shelf CE (ms-marco-MiniLM-L6) | 0.0639 | 0.0648 | 0.0172 | $0 |",
+    "obligating_words": [],
+    "id_shuffled_position": 250
+   },
+   {
+    "id": "T0447",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1156,
+    "token": "3",
+    "context": "| ggml-org Q8_0 baseline | ggml-org Q8_0 + MTP n=3 | Unsloth Q4_K_XL + MTP n=3 | 🆕 Qwopus3.6 v2 Q8_0 + MTP n=3 |",
+    "obligating_words": [],
+    "id_shuffled_position": 251
+   },
+   {
+    "id": "T0338",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 307,
+    "token": "-91727",
+    "context": "\"Min Score\": -91727,",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 252
+   },
+   {
+    "id": "T0227",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.883",
+    "context": "| 1 | **qwen3:8b** | **0.899** | 0.956 | 0.883 | 225 tok/s | 5.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 253
+   },
+   {
+    "id": "T0194",
+    "repo": "hopit-ai/Moda",
+    "line": 404,
+    "token": "39.49",
+    "context": "14. **Fashion-specific pretraining is essential for image-to-image retrieval** -- DINOv2-Base (general self-supervised vision features) scored 39.49 Fine R@1 on LookBench, 24 points below FashionSigLI",
+    "obligating_words": [
+     "scored"
+    ],
+    "id_shuffled_position": 254
+   },
+   {
+    "id": "T0547",
+    "repo": "AdilzhanB/StockRL",
+    "line": 68,
+    "token": "0.00",
+    "context": "| **GOOGL** | 0.00% | 0.00 | 0.00% | 0.00% | 🔄 No Activity |",
+    "obligating_words": [],
+    "id_shuffled_position": 255
+   },
+   {
+    "id": "T0118",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.0766",
+    "context": "| **Baseline SPLADE + FT-CLIP** | **0.1063** | **0.0766** | **0.0265** |",
+    "obligating_words": [],
+    "id_shuffled_position": 256
+   },
+   {
+    "id": "T0078",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0189",
+    "context": "| **SPLADE standalone** | **0.0412** | **0.0695** | **0.0189** |",
+    "obligating_words": [],
+    "id_shuffled_position": 257
+   },
+   {
+    "id": "T0089",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0689",
+    "context": "| FT on 9.8K GPT-4o-mini labels | 0.0689 | 0.0701 | 0.0190 | ~$2 |",
+    "obligating_words": [],
+    "id_shuffled_position": 258
+   },
+   {
+    "id": "T0131",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0196",
+    "context": "| Text tower only (FashionCLIP) | 0.0355 | 0.0657 | 0.0196 |",
+    "obligating_words": [],
+    "id_shuffled_position": 259
+   },
+   {
+    "id": "T0419",
+    "repo": "opendatalab/WebMainBench",
+    "line": 47,
+    "token": "0.22",
+    "context": "| Portuguese | 17 | 0.22 |",
+    "obligating_words": [],
+    "id_shuffled_position": 260
+   },
+   {
+    "id": "T0576",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 31,
+    "token": "2",
+    "context": "Task 2: Miniqueue (Level 3)              → ✅ PASS  16/16 tests, 2 iter, 39m",
+    "obligating_words": [],
+    "id_shuffled_position": 261
+   },
+   {
+    "id": "T0493",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 420,
+    "token": "10",
+    "context": "| Disk | 5 GB free | 10–20 GB free |",
+    "obligating_words": [],
+    "id_shuffled_position": 262
+   },
+   {
+    "id": "T0220",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 263
+   },
+   {
+    "id": "T0273",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "148",
+    "context": "- **F1**: 0.837 | **Precision**: 0.772 | **Speed**: 148 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 264
+   },
+   {
+    "id": "T0262",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "0.886",
+    "context": "- **F1**: 0.886 | **Precision**: 0.878 | **Speed**: 104 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 265
+   },
+   {
+    "id": "T0215",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "64",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 266
+   },
+   {
+    "id": "T0305",
+    "repo": "kunal12203/webify-mcp",
+    "line": 92,
+    "token": "15",
+    "context": "Blind A/B test against Claude's Deep Research — 15 unseen queries, randomized order, Sonnet judge scoring accuracy + completeness + specificity (1–5 each).",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 267
+   },
+   {
+    "id": "T0242",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "1.022",
+    "context": "| 4 | gemma3:4b | 0.859 | 0.784 | 1.022 | 312 tok/s | 3.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 268
+   },
+   {
+    "id": "T0390",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 624,
+    "token": "4",
+    "context": "| 4 | Victorian London | 7.82s | 407 | ✅ |",
+    "obligating_words": [],
+    "id_shuffled_position": 269
+   },
+   {
+    "id": "T0066",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0106",
+    "context": "| Dense standalone (FashionCLIP) | 0.0265 | 0.0369 | 0.0106 |",
+    "obligating_words": [],
+    "id_shuffled_position": 270
+   },
+   {
+    "id": "T0524",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 549,
+    "token": "0.2",
+    "context": "| Training Loss | ~2.5 | ±0.2 |",
+    "obligating_words": [],
+    "id_shuffled_position": 271
+   },
+   {
+    "id": "T0043",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0059",
+    "context": "| BM25 only | 0.0186 | [.0183-.0190] | 0.0227 | 0.0059 | 0.0251 |",
+    "obligating_words": [],
+    "id_shuffled_position": 272
+   },
+   {
+    "id": "T0055",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0543",
+    "context": "| **Full pipeline (Hybrid + CE rerank)** | **0.0543** | **[.0537-.0550]** | **0.0569** | **0.0164** | **0.0559** |",
+    "obligating_words": [],
+    "id_shuffled_position": 273
+   },
+   {
+    "id": "T0029",
+    "repo": "kssteven418/LTP",
+    "line": 98,
+    "token": "0",
+    "context": "You can also assign negative number for `token_keep_rate` and, in that case, the keep rate of each layer will be assigned as `max(0, keep_rate)`.",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 274
+   }
+  ],
+  [
+   {
+    "id": "T0557",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1142,
+    "token": ".0",
+    "context": "--host 0.0.0.0 --port 8080 \\",
+    "obligating_words": [],
+    "id_shuffled_position": 275
+   },
+   {
+    "id": "T0147",
+    "repo": "hopit-ai/Moda",
+    "line": 331,
+    "token": "32",
+    "context": "**MODA-SigLIP-Matryoshka is on HuggingFace**, MIT licensed. Deployment recipe in the model card: choose your dimension (recommended: 256), choose your precision (recommended: binary + fp16 rerank for ",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 276
+   },
+   {
+    "id": "T0182",
+    "repo": "hopit-ai/Moda",
+    "line": 392,
+    "token": "100",
+    "context": "8. **The pool size trap** -- Bigger candidate pools for the reranker make things worse. 100 candidates beats 200 beats 500. Cross-encoders have a signal-to-noise floor, and false positives leak in fas",
+    "obligating_words": [
+     "floor"
+    ],
+    "id_shuffled_position": 277
+   },
+   {
+    "id": "T0482",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 719,
+    "token": "80",
+    "context": "| gemma4:e4b | 937s | 10 | -- | -- | -- | -- | -- | 0/80 | 0/20 | **0/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 278
+   },
+   {
+    "id": "T0360",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "5",
+    "context": "| Argument Quality Score | 3.1/5 | 4.2/5 | +35.5% |",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 279
+   },
+   {
+    "id": "T0267",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "280",
+    "context": "- **F1**: 0.880 | **Precision**: 0.883 | **Speed**: 280 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 280
+   },
+   {
+    "id": "T0260",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "225",
+    "context": "- **F1**: 0.899 | **Precision**: 0.956 | **Speed**: 225 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 281
+   },
+   {
+    "id": "T0487",
+    "repo": "scaleapi/SWE-bench_Pro-os",
+    "line": 18,
+    "token": "7",
+    "context": "(1/7) We have fixed an issue with tutao instances where they take a long time to eval. The relevant run scripts are updated.",
+    "obligating_words": [],
+    "id_shuffled_position": 282
+   },
+   {
+    "id": "T0365",
+    "repo": "haddybhaiya/sem-i-con",
+    "line": 103,
+    "token": "98",
+    "context": "- **Overall Accuracy:** 84.46%(on noise test dataset) else 98% to favourable",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 283
+   },
+   {
+    "id": "T0584",
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "0.9907",
+    "context": "| PRONTOQA | JSON | 100 | 99.00% | 1.0000 | 0.9815 | 0.9907 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 284
+   },
+   {
+    "id": "T0286",
+    "repo": "karpathy/jobs",
+    "line": 9,
+    "token": "342",
+    "context": "The BLS OOH covers **342 occupations** spanning every sector of the US economy, with detailed data on job duties, work environment, education requirements, pay, and employment projections. We scraped ",
+    "obligating_words": [
+     "median"
+    ],
+    "id_shuffled_position": 285
+   },
+   {
+    "id": "T0265",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "0.880",
+    "context": "- **F1**: 0.880 | **Precision**: 0.883 | **Speed**: 280 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 286
+   },
+   {
+    "id": "T0151",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "768",
+    "context": "Blogs 5 to 7 beat FashionSigLIP on image-to-image. Phase 7 closes the series by beating it on text-to-image, the task it was built for, without adding a single parameter. Instead of training a new mod",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 287
+   },
+   {
+    "id": "T0304",
+    "repo": "kunal12203/webify-mcp",
+    "line": 86,
+    "token": "3,000",
+    "context": "Scores nodes against your query, returns only the relevant subtree — 80–300 tokens instead of the 3,000–15,000 tokens of full page text WebFetch puts in context.",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 288
+   },
+   {
+    "id": "T0052",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0429",
+    "context": "| Hybrid (BM25x0.4 + Densex0.6) | 0.0328 | [.0324-.0333] | 0.0429 | 0.0121 | 0.0457 |",
+    "obligating_words": [],
+    "id_shuffled_position": 289
+   },
+   {
+    "id": "T0128",
+    "repo": "hopit-ai/Moda",
+    "line": 228,
+    "token": "22,855",
+    "context": "### Phase 4: Three-Tower multimodal retriever (22,855 held-out test queries)",
+    "obligating_words": [
+     "held"
+    ],
+    "id_shuffled_position": 290
+   },
+   {
+    "id": "T0068",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0662",
+    "context": "| SPLADE + Dense (0.5/0.5) hybrid | 0.0556 | 0.0662 | 0.0201 |",
+    "obligating_words": [],
+    "id_shuffled_position": 291
+   },
+   {
+    "id": "T0241",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "0.784",
+    "context": "| 4 | gemma3:4b | 0.859 | 0.784 | 1.022 | 312 tok/s | 3.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 292
+   },
+   {
+    "id": "T0570",
+    "repo": "stanford-oval/Churro",
+    "line": 258,
+    "token": "97.9",
+    "context": "<sub>Churro 97.9 vs Gemini 78.5 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 293
+   },
+   {
+    "id": "T0439",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 239,
+    "token": "0.305",
+    "context": "| 2 | 23.2s | 76.0 | 0.305 | 170字 |",
+    "obligating_words": [],
+    "id_shuffled_position": 294
+   },
+   {
+    "id": "T0399",
+    "repo": "connor-makowski/scgraph",
+    "line": 521,
+    "token": "2",
+    "context": "print(output)  #=> {'path': [0, 2, 1, 3, 5], 'length': 10}",
+    "obligating_words": [],
+    "id_shuffled_position": 295
+   },
+   {
+    "id": "T0307",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 47,
+    "token": "39.10",
+    "context": "| GPT-2 125M       |     125.0M |         39.10% |      +1.91 pp |",
+    "obligating_words": [],
+    "id_shuffled_position": 296
+   },
+   {
+    "id": "T0142",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.1063",
+    "context": "| Blog 4 best (text-only, SPLADE+FT-CLIP+LLM CE) | **0.1063** | 0.0766 | 0.0265 |",
+    "obligating_words": [],
+    "id_shuffled_position": 297
+   },
+   {
+    "id": "T0542",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "4",
+    "context": "| **Rust+GPU** | 3× H100 80GB | ~4 min | **13.5** | **1.18** |",
+    "obligating_words": [],
+    "id_shuffled_position": 298
+   },
+   {
+    "id": "T0160",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "+5.02",
+    "context": "| Fashion200K | 0.18577 | **0.19510** | +5.02% | [+0.00382, +0.01477] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 299
+   }
+  ],
+  [
+   {
+    "id": "T0060",
+    "repo": "hopit-ai/Moda",
+    "line": 170,
+    "token": "22,855",
+    "context": "### Phase 2B: SPLADE swap (22,855 held-out test queries)",
+    "obligating_words": [
+     "held"
+    ],
+    "id_shuffled_position": 300
+   },
+   {
+    "id": "T0041",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": ".0183",
+    "context": "| BM25 only | 0.0186 | [.0183-.0190] | 0.0227 | 0.0059 | 0.0251 |",
+    "obligating_words": [],
+    "id_shuffled_position": 301
+   },
+   {
+    "id": "T0558",
+    "repo": "stanford-oval/Churro",
+    "line": 73,
+    "token": "93.9",
+    "context": "<sub>Churro 93.9 vs Gemini 92.3 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 302
+   },
+   {
+    "id": "T0141",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "4",
+    "context": "| Blog 4 best (text-only, SPLADE+FT-CLIP+LLM CE) | **0.1063** | 0.0766 | 0.0265 |",
+    "obligating_words": [],
+    "id_shuffled_position": 303
+   },
+   {
+    "id": "T0081",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+220",
+    "context": "+121% nDCG, +206% MRR, +220% Recall@10. SPLADE's learned expansion does what manual synonym lists and NER boosts attempted to do for BM25, but better and without manual rules.",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 304
+   },
+   {
+    "id": "T0222",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 305
+   },
+   {
+    "id": "T0097",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0976",
+    "context": "| **Best hybrid + LLM CE (SPLADE 0.4 + Dense 0.6)** | **0.0976** | **0.0931** | **0.0268** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 306
+   },
+   {
+    "id": "T0057",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0569",
+    "context": "| **Full pipeline (Hybrid + CE rerank)** | **0.0543** | **[.0537-.0550]** | **0.0569** | **0.0164** | **0.0559** |",
+    "obligating_words": [],
+    "id_shuffled_position": 307
+   },
+   {
+    "id": "T0030",
+    "repo": "hopit-ai/Moda",
+    "line": 27,
+    "token": "+10.9",
+    "context": "| **Text to image** | `moda-pro-lite-plus` leads the ≤250M class on catalogue search: **KAGL +10.9%, Polyvore +8.7%** over MODA | both significant under a paired bootstrap |",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 308
+   },
+   {
+    "id": "T0415",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1470,
+    "token": "99",
+    "context": "**llama-bench (CUDA, -ngl 99, -fa 1)**",
+    "obligating_words": [],
+    "id_shuffled_position": 309
+   },
+   {
+    "id": "T0449",
+    "repo": "feyninc/tokie",
+    "line": 99,
+    "token": "128",
+    "context": "tokenizer.enable_padding(length=128, pad_id=0)",
+    "obligating_words": [],
+    "id_shuffled_position": 310
+   },
+   {
+    "id": "T0135",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0350",
+    "context": "| Combined towers (alpha=0.3) | 0.0350 | 0.0656 | 0.0185 |",
+    "obligating_words": [],
+    "id_shuffled_position": 311
+   },
+   {
+    "id": "T0459",
+    "repo": "hopit-ai/Moda",
+    "line": 306,
+    "token": "1",
+    "context": "| Slice | Fine R@1 | Coarse R@1 | nDCG@5 | Δ vs SigLIP @ 768 |",
+    "obligating_words": [],
+    "id_shuffled_position": 312
+   },
+   {
+    "id": "T0540",
+    "repo": "AdilzhanB/StockRL",
+    "line": 66,
+    "token": "-0.22",
+    "context": "| **TSLA** | 109.91% | -0.22 | **145.29%** | 44.76% | ⚡ Volatile |",
+    "obligating_words": [],
+    "id_shuffled_position": 313
+   },
+   {
+    "id": "T0102",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "0.0229",
+    "context": "| nDCG@10 | 0.0229 | 0.0542 | +137% |",
+    "obligating_words": [],
+    "id_shuffled_position": 314
+   },
+   {
+    "id": "T0155",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+5.01",
+    "context": "| KAGL | 0.27687 | **0.29074** | +5.01% | [+0.00894, +0.01883] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 315
+   },
+   {
+    "id": "T0233",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "104",
+    "context": "| 2 | mistral-small | 0.886 | 0.878 | 0.928 | 104 tok/s | 14.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 316
+   },
+   {
+    "id": "T0168",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "0.37191",
+    "context": "| Polyvore | 0.36645 | **0.37191** | +1.49% | [+0.00086, +0.01014] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 317
+   },
+   {
+    "id": "T0075",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0059",
+    "context": "| BM25 standalone | 0.0186 | 0.0227 | 0.0059 |",
+    "obligating_words": [],
+    "id_shuffled_position": 318
+   },
+   {
+    "id": "T0040",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0186",
+    "context": "| BM25 only | 0.0186 | [.0183-.0190] | 0.0227 | 0.0059 | 0.0251 |",
+    "obligating_words": [],
+    "id_shuffled_position": 319
+   },
+   {
+    "id": "T0437",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1729,
+    "token": "0.212",
+    "context": "| ROUGE-1 / 2 / **L** | 0.460 / 0.210 / **0.212** |",
+    "obligating_words": [],
+    "id_shuffled_position": 320
+   },
+   {
+    "id": "T0461",
+    "repo": "sbhooley/ainativelang",
+    "line": 1680,
+    "token": "0",
+    "context": "| **`token-budget-alert`** | Daily (`0 23 * * *` UTC): `## Token Usage Report` append, monitor-cache **stat** / optional **prune** when cache is large, **one consolidated** notify (`Daily AINL Status ",
+    "obligating_words": [],
+    "id_shuffled_position": 321
+   },
+   {
+    "id": "T0403",
+    "repo": "AdilzhanB/StockRL",
+    "line": 210,
+    "token": "2",
+    "context": "elif action_type == 2:  # Sell",
+    "obligating_words": [],
+    "id_shuffled_position": 322
+   },
+   {
+    "id": "T0003",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "60",
+    "context": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training step",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 323
+   },
+   {
+    "id": "T0121",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0925",
+    "context": "| FT-SPLADE + Baseline CLIP | 0.0983 | 0.0925 | 0.0268 |",
+    "obligating_words": [],
+    "id_shuffled_position": 324
+   }
+  ],
+  [
+   {
+    "id": "T0180",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "-0.00121",
+    "context": "| DeepFashion Multimodal | 0.01477 | 0.01504 | +1.87% | [-0.00121, +0.00192] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 325
+   },
+   {
+    "id": "T0499",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1117,
+    "token": "71.0",
+    "context": "| unsloth UD-Q4_K_XL + MTP n=3 | 821s | 71.0 | 5 (上限) | 45/80 | 45/100 |",
+    "obligating_words": [],
+    "id_shuffled_position": 326
+   },
+   {
+    "id": "T0352",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "5",
+    "context": "- **SFT Baseline**: Tool accuracy 68.4%, Response quality 3.1/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 327
+   },
+   {
+    "id": "T0384",
+    "repo": "feyninc/tokie",
+    "line": 204,
+    "token": "900",
+    "context": "| Llama 3 | 900 KB | 2.49 ms | 195 ms | **78x** |",
+    "obligating_words": [],
+    "id_shuffled_position": 328
+   },
+   {
+    "id": "T0294",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "42.5",
+    "context": "| Incremental re-index p95 | **42.5 ms** | CodeGrapher: 613.7 ms | 14.4× |",
+    "obligating_words": [
+     "p95"
+    ],
+    "id_shuffled_position": 329
+   },
+   {
+    "id": "T0383",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 719,
+    "token": "100",
+    "context": "| gemma4:e4b | 937s | 10 | -- | -- | -- | -- | -- | 0/80 | 0/20 | **0/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 330
+   },
+   {
+    "id": "T0105",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "0.0208",
+    "context": "| MRR | 0.0208 | 0.0505 | +143% |",
+    "obligating_words": [],
+    "id_shuffled_position": 331
+   },
+   {
+    "id": "T0361",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "4.2",
+    "context": "| Argument Quality Score | 3.1/5 | 4.2/5 | +35.5% |",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 332
+   },
+   {
+    "id": "T0088",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0180",
+    "context": "| FT on 1.5M purchase labels | 0.0664 | 0.0678 | 0.0180 | $0 (flat) |",
+    "obligating_words": [],
+    "id_shuffled_position": 333
+   },
+   {
+    "id": "T0144",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.0265",
+    "context": "| Blog 4 best (text-only, SPLADE+FT-CLIP+LLM CE) | **0.1063** | 0.0766 | 0.0265 |",
+    "obligating_words": [],
+    "id_shuffled_position": 334
+   },
+   {
+    "id": "T0170",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+0.00086",
+    "context": "| Polyvore | 0.36645 | **0.37191** | +1.49% | [+0.00086, +0.01014] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 335
+   },
+   {
+    "id": "T0137",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0185",
+    "context": "| Combined towers (alpha=0.3) | 0.0350 | 0.0656 | 0.0185 |",
+    "obligating_words": [],
+    "id_shuffled_position": 336
+   },
+   {
+    "id": "T0074",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0227",
+    "context": "| BM25 standalone | 0.0186 | 0.0227 | 0.0059 |",
+    "obligating_words": [],
+    "id_shuffled_position": 337
+   },
+   {
+    "id": "T0457",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 32,
+    "token": "4",
+    "context": "4) 当前建议的开源协作姿态",
+    "obligating_words": [],
+    "id_shuffled_position": 338
+   },
+   {
+    "id": "T0175",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "-0.00017",
+    "context": "| Atlas | 0.18264 | 0.18637 | +2.05% | [-0.00017, +0.00775] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 339
+   },
+   {
+    "id": "T0218",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "384",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 340
+   },
+   {
+    "id": "T0443",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 242,
+    "token": "5",
+    "context": "| 5 | 39.0s | 74.1 | 0.355 | 158字 |",
+    "obligating_words": [],
+    "id_shuffled_position": 341
+   },
+   {
+    "id": "T0190",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "63.84",
+    "context": "13. **Beating FashionSigLIP on LookBench by +3.84 points** -- Cross-domain fine-tuning on shop↔consumer pairs plus a test-time ensemble with FashionCLIP lifts Fine R@1 from 63.84 to 67.68, at twice th",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 342
+   },
+   {
+    "id": "T0214",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 343
+   },
+   {
+    "id": "T0172",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "0.18264",
+    "context": "| Atlas | 0.18264 | 0.18637 | +2.05% | [-0.00017, +0.00775] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 344
+   },
+   {
+    "id": "T0103",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "0.0542",
+    "context": "| nDCG@10 | 0.0229 | 0.0542 | +137% |",
+    "obligating_words": [],
+    "id_shuffled_position": 345
+   },
+   {
+    "id": "T0549",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1637,
+    "token": ".0",
+    "context": "--host 0.0.0.0 --port 18091",
+    "obligating_words": [],
+    "id_shuffled_position": 346
+   },
+   {
+    "id": "T0526",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "1.18",
+    "context": "| **Rust+GPU** | 3× H100 80GB | ~4 min | **13.5** | **1.18** |",
+    "obligating_words": [],
+    "id_shuffled_position": 347
+   },
+   {
+    "id": "T0167",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "0.36645",
+    "context": "| Polyvore | 0.36645 | **0.37191** | +1.49% | [+0.00086, +0.01014] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 348
+   },
+   {
+    "id": "T0026",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 93,
+    "token": "5432",
+    "context": "docker run -d -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=LocalPasswordOnly pgvector/pgvector:pg17",
+    "obligating_words": [],
+    "id_shuffled_position": 349
+   }
+  ],
+  [
+   {
+    "id": "T0001",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "300,000",
+    "context": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training step",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 350
+   },
+   {
+    "id": "T0084",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0648",
+    "context": "| Off-shelf CE (ms-marco-MiniLM-L6) | 0.0639 | 0.0648 | 0.0172 | $0 |",
+    "obligating_words": [],
+    "id_shuffled_position": 351
+   },
+   {
+    "id": "T0363",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "+35.5",
+    "context": "| Argument Quality Score | 3.1/5 | 4.2/5 | +35.5% |",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 352
+   },
+   {
+    "id": "T0217",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "256",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 353
+   },
+   {
+    "id": "T0201",
+    "repo": "hopit-ai/Moda",
+    "line": 435,
+    "token": "0",
+    "context": "| LLM labeling | `openai/gpt-4o-mini` and `claude-sonnet-4.6` via [PaleblueDot AI](https://palebluedot.ai) | REST API | Graded relevance scores (0-3) |",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 354
+   },
+   {
+    "id": "T0257",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "383",
+    "context": "| 🆕 | **Bonsai-8B** | 0.652 | 0.622 | 0.800 | 383 tok/s | 1.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 355
+   },
+   {
+    "id": "T0476",
+    "repo": "AdilzhanB/StockRL",
+    "line": 346,
+    "token": "14",
+    "context": "*Generated on: 2025-07-04 17:14:46 UTC*",
+    "obligating_words": [],
+    "id_shuffled_position": 356
+   },
+   {
+    "id": "T0452",
+    "repo": "apple/ml-tweak",
+    "line": 2,
+    "token": "2311.09467",
+    "context": "This software accompanies the paper [Thinking While Effectively Articulating Knowledge](https://arxiv.org/abs/2311.09467)",
+    "obligating_words": [],
+    "id_shuffled_position": 357
+   },
+   {
+    "id": "T0302",
+    "repo": "stanford-oval/Churro",
+    "line": 59,
+    "token": "75",
+    "context": "<img src=\"static/performance_cost.png\" alt=\"Cost vs Performance comparison showing Churro's accuracy advantage at significantly lower cost\" width=\"75%\" />",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 358
+   },
+   {
+    "id": "T0488",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 748,
+    "token": "2501.12948",
+    "context": "- [DeepSeek-R1 Technical Report](https://arxiv.org/abs/2501.12948)",
+    "obligating_words": [],
+    "id_shuffled_position": 359
+   },
+   {
+    "id": "T0122",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0268",
+    "context": "| FT-SPLADE + Baseline CLIP | 0.0983 | 0.0925 | 0.0268 |",
+    "obligating_words": [],
+    "id_shuffled_position": 360
+   },
+   {
+    "id": "T0092",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "2",
+    "context": "| FT on 9.8K GPT-4o-mini labels | 0.0689 | 0.0701 | 0.0190 | ~$2 |",
+    "obligating_words": [],
+    "id_shuffled_position": 361
+   },
+   {
+    "id": "T0336",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 177,
+    "token": "7860",
+    "context": "docker run --rm -p 7860:7860 research-assistant-mm-rag",
+    "obligating_words": [],
+    "id_shuffled_position": 362
+   },
+   {
+    "id": "T0369",
+    "repo": "KMnO4-zx/huanhuan-chat",
+    "line": 98,
+    "token": "96",
+    "context": "> 西游记白话文原始数据：[*西游记*](https://github.com/KMnO4-zx/huanhuan-chat/blob/master/dataset/input/wukong/%E8%A5%BF%E6%B8%B8%E8%AE%B0%E7%99%BD%E8%AF%9D%E6%96%87.txt)",
+    "obligating_words": [],
+    "id_shuffled_position": 363
+   },
+   {
+    "id": "T0245",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.837",
+    "context": "| 5 | gemma3:12b | 0.837 | 0.772 | 0.983 | 148 tok/s | 8.1GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 364
+   },
+   {
+    "id": "T0303",
+    "repo": "kunal12203/webify-mcp",
+    "line": 86,
+    "token": "80",
+    "context": "Scores nodes against your query, returns only the relevant subtree — 80–300 tokens instead of the 3,000–15,000 tokens of full page text WebFetch puts in context.",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 365
+   },
+   {
+    "id": "T0324",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "0.80",
+    "context": "| `discussion` |0.67|1.00|0.80|6|",
+    "obligating_words": [],
+    "id_shuffled_position": 366
+   },
+   {
+    "id": "T0004",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "72.18",
+    "context": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of acci",
+    "obligating_words": [
+     "rate",
+     "score"
+    ],
+    "id_shuffled_position": 367
+   },
+   {
+    "id": "T0306",
+    "repo": "kunal12203/webify-mcp",
+    "line": 92,
+    "token": "1",
+    "context": "Blind A/B test against Claude's Deep Research — 15 unseen queries, randomized order, Sonnet judge scoring accuracy + completeness + specificity (1–5 each).",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 368
+   },
+   {
+    "id": "T0397",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "0.15865",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | **+3.19%** | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 369
+   },
+   {
+    "id": "T0204",
+    "repo": "hopit-ai/Moda",
+    "line": 605,
+    "token": "6",
+    "context": "│   │   ├── quantized_eval.json              <- Phase 6: precision sweep at 256d",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 370
+   },
+   {
+    "id": "T0025",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 87,
+    "token": "6379",
+    "context": "docker run -d -p 6379:6379 redis:7-alpine",
+    "obligating_words": [],
+    "id_shuffled_position": 371
+   },
+   {
+    "id": "T0264",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "104",
+    "context": "- **F1**: 0.886 | **Precision**: 0.878 | **Speed**: 104 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 372
+   },
+   {
+    "id": "T0583",
+    "repo": "stanford-oval/Churro",
+    "line": 267,
+    "token": "20",
+    "context": "<td width=\"20%\" valign=\"top\" align=\"center\">",
+    "obligating_words": [],
+    "id_shuffled_position": 373
+   },
+   {
+    "id": "T0058",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0164",
+    "context": "| **Full pipeline (Hybrid + CE rerank)** | **0.0543** | **[.0537-.0550]** | **0.0569** | **0.0164** | **0.0559** |",
+    "obligating_words": [],
+    "id_shuffled_position": 374
+   }
+  ],
+  [
+   {
+    "id": "T0434",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 81,
+    "token": "304",
+    "context": "![image.png](https://cdn.nlark.com/yuque/0/2024/png/39012277/1710730349102-16b2eb57-7909-44d3-b3ce-11902143aa0c.png#averageHue=%23dce6f4&clientId=u70d5b72a-a20d-4&from=paste&height=152&id=ufde938fa&or",
+    "obligating_words": [],
+    "id_shuffled_position": 375
+   },
+   {
+    "id": "T0022",
+    "repo": "sbhooley/ainativelang",
+    "line": 1191,
+    "token": "3.10",
+    "context": "See [docs/INSTALL.md](docs/INSTALL.md) for full setup details. At a minimum: Python 3.10+, pip and virtual environment support, Docker for container-based deployment flows. **Match CI:** use a 3.10 ve",
+    "obligating_words": [
+     "bootstrap",
+     "ci"
+    ],
+    "id_shuffled_position": 376
+   },
+   {
+    "id": "T0187",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "16.8",
+    "context": "9. **Fine-tuning the retriever on its own mistakes doubles dense retrieval (+137%)** -- We mined hard negatives from FashionCLIP's top-20 failures, graded them with GPT-4o-mini ($3), and trained on 24",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 377
+   },
+   {
+    "id": "T0414",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1172,
+    "token": "55",
+    "context": "| TOTAL | **55/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 378
+   },
+   {
+    "id": "T0134",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0148",
+    "context": "| Image tower only (FashionCLIP vision) | 0.0305 | 0.0560 | 0.0148 |",
+    "obligating_words": [],
+    "id_shuffled_position": 379
+   },
+   {
+    "id": "T0578",
+    "repo": "nextcloud/whiteboard",
+    "line": 242,
+    "token": "500",
+    "context": "| 500* | ~203% (≈2 cores) | ~3.6–4.5 GB | ~9.2 GB total (≈1.2 Gbps) | ≥8 vCPU / ≥8 GB RAM per node + Redis + ≥2 nodes |",
+    "obligating_words": [],
+    "id_shuffled_position": 380
+   },
+   {
+    "id": "T0381",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 130,
+    "token": "0.938272",
+    "context": "Common Sense:0.938272",
+    "obligating_words": [],
+    "id_shuffled_position": 381
+   },
+   {
+    "id": "T0465",
+    "repo": "stanford-oval/Churro",
+    "line": 154,
+    "token": "71.2",
+    "context": "<sub>Churro 81.2 vs Gemini 71.2 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 382
+   },
+   {
+    "id": "T0109",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "0.0811",
+    "context": "| Recall@10 | 0.0433 | 0.0811 | +87% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 383
+   },
+   {
+    "id": "T0268",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "0.859",
+    "context": "- **F1**: 0.859 | **Precision**: 0.784 | **Speed**: 312 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 384
+   },
+   {
+    "id": "T0246",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.772",
+    "context": "| 5 | gemma3:12b | 0.837 | 0.772 | 0.983 | 148 tok/s | 8.1GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 385
+   },
+   {
+    "id": "T0395",
+    "repo": "hopit-ai/Moda",
+    "line": 594,
+    "token": "5",
+    "context": "│   ├── lookbench/                       <- Phase 5 image-to-image retrieval results",
+    "obligating_words": [],
+    "id_shuffled_position": 386
+   },
+   {
+    "id": "T0098",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0931",
+    "context": "| **Best hybrid + LLM CE (SPLADE 0.4 + Dense 0.6)** | **0.0976** | **0.0931** | **0.0268** | **~$25** |",
+    "obligating_words": [],
+    "id_shuffled_position": 387
+   },
+   {
+    "id": "T0375",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 713,
+    "token": "20",
+    "context": "| llm-jp-4-32B-a3B-thinking (Q8_0)¹ | 138s | 0 | OK | -- | --¹ | --¹ | -- | 45/80¹ | 4/20 | **49/100**¹ |",
+    "obligating_words": [],
+    "id_shuffled_position": 388
+   },
+   {
+    "id": "T0149",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "7",
+    "context": "Blogs 5 to 7 beat FashionSigLIP on image-to-image. Phase 7 closes the series by beating it on text-to-image, the task it was built for, without adding a single parameter. Instead of training a new mod",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 389
+   },
+   {
+    "id": "T0063",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0189",
+    "context": "| SPLADE standalone | 0.0464 | 0.0695 | 0.0189 |",
+    "obligating_words": [],
+    "id_shuffled_position": 390
+   },
+   {
+    "id": "T0374",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1460,
+    "token": "0.001",
+    "context": "| qwen3.5:9b | 300s | 0.0 | 0.017 | 0.001 | 0.007 | 全サンプルタイムアウト |",
+    "obligating_words": [],
+    "id_shuffled_position": 391
+   },
+   {
+    "id": "T0495",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 265,
+    "token": "26",
+    "context": "######################## on line 26-28 in ...<dataset_name>.py ########################",
+    "obligating_words": [],
+    "id_shuffled_position": 392
+   },
+   {
+    "id": "T0454",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "+3.19",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | **+3.19%** | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 393
+   },
+   {
+    "id": "T0255",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.622",
+    "context": "| 🆕 | **Bonsai-8B** | 0.652 | 0.622 | 0.800 | 383 tok/s | 1.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 394
+   },
+   {
+    "id": "T0350",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "68.4",
+    "context": "- **SFT Baseline**: Tool accuracy 68.4%, Response quality 3.1/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 395
+   },
+   {
+    "id": "T0312",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 186,
+    "token": "+4.3",
+    "context": "| AST-aware RAG chunking | cAST research (+4.3 Recall@5) | Semantic code chunks for retrieval |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 396
+   },
+   {
+    "id": "T0018",
+    "repo": "sbhooley/ainativelang",
+    "line": 539,
+    "token": "90",
+    "context": "**Intelligence layer (after bootstrap):** `install-mcp` / `./install.sh` wires **MCP** and **`ainl-run`**; **bridge cron, env profiles, and `run_intelligence`** still need the one-time operator pass i",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 397
+   },
+   {
+    "id": "T0045",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0265",
+    "context": "| Dense only (FashionCLIP) | 0.0265 | [.0261-.0269] | 0.0369 | 0.0106 | 0.0462 |",
+    "obligating_words": [],
+    "id_shuffled_position": 398
+   },
+   {
+    "id": "T0080",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+206",
+    "context": "+121% nDCG, +206% MRR, +220% Recall@10. SPLADE's learned expansion does what manual synonym lists and NER boosts attempted to do for BM25, but better and without manual rules.",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 399
+   }
+  ],
+  [
+   {
+    "id": "T0388",
+    "repo": "WillyEverGreen/acon",
+    "line": 101,
+    "token": "90",
+    "context": "*   ⚡ **Static-First Discovery**: Acon probes pages with raw HTTP first. It only launches a browser if the site is a SPA, saving 90% of compute on standard sites.",
+    "obligating_words": [],
+    "id_shuffled_position": 400
+   },
+   {
+    "id": "T0178",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "0.01504",
+    "context": "| DeepFashion Multimodal | 0.01477 | 0.01504 | +1.87% | [-0.00121, +0.00192] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 401
+   },
+   {
+    "id": "T0112",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "0.244",
+    "context": "| Recall@100 | 0.168 | 0.244 | +45% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 402
+   },
+   {
+    "id": "T0347",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 237,
+    "token": "89.3",
+    "context": "- **Multimodal Understanding**: 89.3% accuracy in image-text fusion tasks",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 403
+   },
+   {
+    "id": "T0019",
+    "repo": "sbhooley/ainativelang",
+    "line": 1114,
+    "token": "403",
+    "context": "- **Policy-gated execution** — the `/run` endpoint validates compiled IR against the effective policy (derived from the grant) before execution. Forbidden adapters, effects, privilege tiers, and destr",
+    "obligating_words": [
+     "gated"
+    ],
+    "id_shuffled_position": 404
+   },
+   {
+    "id": "T0534",
+    "repo": "stanford-oval/Churro",
+    "line": 191,
+    "token": "23.3",
+    "context": "<sub>Churro 27.7 vs Gemini 23.3 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 405
+   },
+   {
+    "id": "T0582",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 112,
+    "token": "12.3",
+    "context": "- **macOS 12.3+** (for Metal/MPS) or **Linux with CUDA**",
+    "obligating_words": [],
+    "id_shuffled_position": 406
+   },
+   {
+    "id": "T0295",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "613.7",
+    "context": "| Incremental re-index p95 | **42.5 ms** | CodeGrapher: 613.7 ms | 14.4× |",
+    "obligating_words": [
+     "p95"
+    ],
+    "id_shuffled_position": 407
+   },
+   {
+    "id": "T0028",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 270,
+    "token": "4317",
+    "context": "docker run --rm -it -d -p 18888:18888 -p 4317:18889 --name aspire-dashboard \\",
+    "obligating_words": [],
+    "id_shuffled_position": 408
+   },
+   {
+    "id": "T0292",
+    "repo": "karpathy/jobs",
+    "line": 43,
+    "token": "342",
+    "context": "[`prompt.md`](prompt.md) packages all the data — aggregate statistics, tier breakdowns, exposure by pay/education, BLS growth projections, and all 342 occupations with their scores and rationales — in",
+    "obligating_words": [
+     "grounded",
+     "scores"
+    ],
+    "id_shuffled_position": 409
+   },
+   {
+    "id": "T0259",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "0.956",
+    "context": "- **F1**: 0.899 | **Precision**: 0.956 | **Speed**: 225 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 410
+   },
+   {
+    "id": "T0154",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "0.29074",
+    "context": "| KAGL | 0.27687 | **0.29074** | +5.01% | [+0.00894, +0.01883] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 411
+   },
+   {
+    "id": "T0341",
+    "repo": "K-RED90/Cropify-AI",
+    "line": 87,
+    "token": "77.27",
+    "context": "The evaluation process involves comparing the model's predictions with the actual annotated images. The accuracy score `(77.27%)` represents the overall performance of the image analysis model across ",
+    "obligating_words": [
+     "accuracy",
+     "score"
+    ],
+    "id_shuffled_position": 412
+   },
+   {
+    "id": "T0502",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1816,
+    "token": "2",
+    "context": "| ROUGE-1 / 2 / **L** | 0.465 / 0.230 / **0.227** |",
+    "obligating_words": [],
+    "id_shuffled_position": 413
+   },
+   {
+    "id": "T0382",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 338,
+    "token": "14",
+    "context": "| i18n (en/zh/ja) | 14 | Trilingual coverage + placeholder consistency |",
+    "obligating_words": [],
+    "id_shuffled_position": 414
+   },
+   {
+    "id": "T0087",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0678",
+    "context": "| FT on 1.5M purchase labels | 0.0664 | 0.0678 | 0.0180 | $0 (flat) |",
+    "obligating_words": [],
+    "id_shuffled_position": 415
+   },
+   {
+    "id": "T0367",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1222,
+    "token": "0.246",
+    "context": "| 6 | llama3.2:3b | 0.246 | 427 tok/s | 2.0GB | 軽量・高速 |",
+    "obligating_words": [],
+    "id_shuffled_position": 416
+   },
+   {
+    "id": "T0550",
+    "repo": "hopit-ai/Moda",
+    "line": 292,
+    "token": "5",
+    "context": "The Phase 5 best uses an ensemble of two models. For deployment, that's two encoder forward passes per image at index time and 2x the storage. Phase 6 collapses the ensemble's quality into a single di",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 417
+   },
+   {
+    "id": "T0236",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.883",
+    "context": "| 3 | SmallThinker-21BA3B | 0.880 | 0.883 | 0.900 | 280 tok/s | 13GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 418
+   },
+   {
+    "id": "T0565",
+    "repo": "hopit-ai/Moda",
+    "line": 76,
+    "token": "1",
+    "context": "| [Blog 1](blog_post.md) | Building a zero-shot fashion search pipeline | BM25 + Dense + CE reranking | nDCG@10 = 0.0543 |",
+    "obligating_words": [],
+    "id_shuffled_position": 419
+   },
+   {
+    "id": "T0086",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0664",
+    "context": "| FT on 1.5M purchase labels | 0.0664 | 0.0678 | 0.0180 | $0 (flat) |",
+    "obligating_words": [],
+    "id_shuffled_position": 420
+   },
+   {
+    "id": "T0065",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0369",
+    "context": "| Dense standalone (FashionCLIP) | 0.0265 | 0.0369 | 0.0106 |",
+    "obligating_words": [],
+    "id_shuffled_position": 421
+   },
+   {
+    "id": "T0016",
+    "repo": "sbhooley/ainativelang",
+    "line": 274,
+    "token": "01",
+    "context": "- **Wishlist examples + CI**: **`05b_unified_llm_offline_config.ainl`** — unified **`llm`** path vs **`llm_query`** mock in **`05_route_then_llm_mock.ainl`**; **`parser-compat`** runs strict wishlist ",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 422
+   },
+   {
+    "id": "T0012",
+    "repo": "eliasjacob/paper_brcad5",
+    "line": 12,
+    "token": "0.3688",
+    "context": "Legal scholars have been trying to predict the outcomes of trials for a long time. In recent years, researchers have been harnessing advancements in machine learning to predict the behavior of natural",
+    "obligating_words": [],
+    "id_shuffled_position": 423
+   },
+   {
+    "id": "T0387",
+    "repo": "painezeng/CSharpAndSolidWorks",
+    "line": 435,
+    "token": "0",
+    "context": "195, 0.000508, 0.01, 0, 0, 0, 0, null, null, null, null, null, null, null);",
+    "obligating_words": [],
+    "id_shuffled_position": 424
+   }
+  ],
+  [
+   {
+    "id": "T0125",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.0258",
+    "context": "| FT-SPLADE + FT-CLIP | 0.1017 | 0.0741 | 0.0258 |",
+    "obligating_words": [],
+    "id_shuffled_position": 425
+   },
+   {
+    "id": "T0475",
+    "repo": "hopit-ai/Moda",
+    "line": 319,
+    "token": "1",
+    "context": "| Variant | Bytes per vector | Fine R@1 | Coarse R@1 | nDCG@5 |",
+    "obligating_words": [],
+    "id_shuffled_position": 426
+   },
+   {
+    "id": "T0330",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "0.67",
+    "context": "| `guide` |1.00|0.67|0.80|12|",
+    "obligating_words": [],
+    "id_shuffled_position": 427
+   },
+   {
+    "id": "T0316",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "0",
+    "context": "**922 backend tests + 245 frontend = 1,167 total.** 0 failures. CI on every push. 0 open issues.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 428
+   },
+   {
+    "id": "T0344",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 227,
+    "token": "31",
+    "context": "- **Argument Quality**: 31% better parameter extraction accuracy",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 429
+   },
+   {
+    "id": "T0398",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 342,
+    "token": "4",
+    "context": "| Historical Cache | 37 | get_prices, period helper, 4 wired call sites |",
+    "obligating_words": [],
+    "id_shuffled_position": 430
+   },
+   {
+    "id": "T0274",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "0.788",
+    "context": "- **F1**: 0.788 | **Precision**: 0.716 | **Speed**: 468 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 431
+   },
+   {
+    "id": "T0366",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 246,
+    "token": "75.9",
+    "context": "| 9 | 33.3s | 75.9 | 0.226 | 176字 |",
+    "obligating_words": [],
+    "id_shuffled_position": 432
+   },
+   {
+    "id": "T0169",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+1.49",
+    "context": "| Polyvore | 0.36645 | **0.37191** | +1.49% | [+0.00086, +0.01014] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 433
+   },
+   {
+    "id": "T0200",
+    "repo": "hopit-ai/Moda",
+    "line": 420,
+    "token": "768",
+    "context": "22. **You can beat FashionSigLIP on text-to-image without training anything** -- A zero-added-parameter multi-view encoding and late-fusion recipe over the frozen FashionSigLIP checkpoint wins 4 of 6 ",
+    "obligating_words": [
+     "bootstrap",
+     "scored"
+    ],
+    "id_shuffled_position": 434
+   },
+   {
+    "id": "T0009",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 128,
+    "token": "1.598064",
+    "context": "score:1.598064",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 435
+   },
+   {
+    "id": "T0145",
+    "repo": "hopit-ai/Moda",
+    "line": 261,
+    "token": "+0.85",
+    "context": "reported data: **selection penalty +0.00**, margin +0.85 over second place.",
+    "obligating_words": [
+     "margin"
+    ],
+    "id_shuffled_position": 436
+   },
+   {
+    "id": "T0448",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 293,
+    "token": "70",
+    "context": "| Walk-Forward Eval | No | 70 strategy-ticker pairs, OOS Sharpe |",
+    "obligating_words": [],
+    "id_shuffled_position": 437
+   },
+   {
+    "id": "T0269",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "0.784",
+    "context": "- **F1**: 0.859 | **Precision**: 0.784 | **Speed**: 312 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 438
+   },
+   {
+    "id": "T0515",
+    "repo": "hopit-ai/Moda",
+    "line": 121,
+    "token": "0.2769",
+    "context": "| KAGL | 0.2769 | 0.2887 | **0.3201** | **0.3201** |",
+    "obligating_words": [],
+    "id_shuffled_position": 439
+   },
+   {
+    "id": "T0525",
+    "repo": "DebarghaG/proofofthought",
+    "line": 250,
+    "token": "0.9375",
+    "context": "| CONDITIONALQA | SMT2 | 100 | 83.00% | 0.9375 | 0.8219 | 0.8759 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 440
+   },
+   {
+    "id": "T0209",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "67.63",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 441
+   },
+   {
+    "id": "T0184",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "+137",
+    "context": "9. **Fine-tuning the retriever on its own mistakes doubles dense retrieval (+137%)** -- We mined hard negatives from FashionCLIP's top-20 failures, graded them with GPT-4o-mini ($3), and trained on 24",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 442
+   },
+   {
+    "id": "T0478",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "0.16371",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | **+3.19%** | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 443
+   },
+   {
+    "id": "T0523",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 7,
+    "token": "35,072,768",
+    "context": "BarunLM-35M achieves **41.01%** on a fixed, decontaminated nine-task zero-shot benchmark at **35,072,768 parameters**. It outperforms **LFM2.5-230M-Base** by **1.81 percentage points** while using **6",
+    "obligating_words": [],
+    "id_shuffled_position": 444
+   },
+   {
+    "id": "T0013",
+    "repo": "eliasjacob/paper_brcad5",
+    "line": 12,
+    "token": "0.1253",
+    "context": "Legal scholars have been trying to predict the outcomes of trials for a long time. In recent years, researchers have been harnessing advancements in machine learning to predict the behavior of natural",
+    "obligating_words": [],
+    "id_shuffled_position": 445
+   },
+   {
+    "id": "T0177",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "0.01477",
+    "context": "| DeepFashion Multimodal | 0.01477 | 0.01504 | +1.87% | [-0.00121, +0.00192] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 446
+   },
+   {
+    "id": "T0494",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 705,
+    "token": "63",
+    "context": "| Nemotron-3-Nano-Omni-30B (Q8_0) | 45s | 0 | OK | OK² | OK² | OK² | -- | 55/80² | 8/20 | **63/100**² |",
+    "obligating_words": [],
+    "id_shuffled_position": 447
+   },
+   {
+    "id": "T0226",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.956",
+    "context": "| 1 | **qwen3:8b** | **0.899** | 0.956 | 0.883 | 225 tok/s | 5.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 448
+   },
+   {
+    "id": "T0229",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "2",
+    "context": "| 2 | mistral-small | 0.886 | 0.878 | 0.928 | 104 tok/s | 14.3GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 449
+   }
+  ],
+  [
+   {
+    "id": "T0554",
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "1.0000",
+    "context": "| PRONTOQA | JSON | 100 | 99.00% | 1.0000 | 0.9815 | 0.9907 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 450
+   },
+   {
+    "id": "T0183",
+    "repo": "hopit-ai/Moda",
+    "line": 392,
+    "token": "200",
+    "context": "8. **The pool size trap** -- Bigger candidate pools for the reranker make things worse. 100 candidates beats 200 beats 500. Cross-encoders have a signal-to-noise floor, and false positives leak in fas",
+    "obligating_words": [
+     "floor"
+    ],
+    "id_shuffled_position": 451
+   },
+   {
+    "id": "T0067",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0556",
+    "context": "| SPLADE + Dense (0.5/0.5) hybrid | 0.0556 | 0.0662 | 0.0201 |",
+    "obligating_words": [],
+    "id_shuffled_position": 452
+   },
+   {
+    "id": "T0033",
+    "repo": "hopit-ai/Moda",
+    "line": 28,
+    "token": "12,000",
+    "context": "| **Text to image** | `moda-duo` routes each query by its shape and beats **both** its constituents on a mixed workload: **+5.0% / +5.4%** pooled over 12,000 queries | both significant under a paired ",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 453
+   },
+   {
+    "id": "T0101",
+    "repo": "hopit-ai/Moda",
+    "line": 202,
+    "token": "22,855",
+    "context": "### Phase 3C: Training the retrievers on their own mistakes (22,855 held-out test queries)",
+    "obligating_words": [
+     "held"
+    ],
+    "id_shuffled_position": 454
+   },
+   {
+    "id": "T0569",
+    "repo": "stanford-oval/Churro",
+    "line": 120,
+    "token": "2.5",
+    "context": "<img src=\"static/readme_examples/gallery/english.jpg\" alt=\"English historical page example where Churro beats Gemini 2.5 Pro\" width=\"100%\" />",
+    "obligating_words": [],
+    "id_shuffled_position": 455
+   },
+   {
+    "id": "T0171",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+0.01014",
+    "context": "| Polyvore | 0.36645 | **0.37191** | +1.49% | [+0.00086, +0.01014] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 456
+   },
+   {
+    "id": "T0512",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 94,
+    "token": "0.258",
+    "context": "| 9 | ELYZA 8B | 0.258 | 241 tok/s | 4.9GB | B |",
+    "obligating_words": [],
+    "id_shuffled_position": 457
+   },
+   {
+    "id": "T0317",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "0",
+    "context": "**922 backend tests + 245 frontend = 1,167 total.** 0 failures. CI on every push. 0 open issues.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 458
+   },
+   {
+    "id": "T0572",
+    "repo": "stanford-oval/Churro",
+    "line": 223,
+    "token": "20",
+    "context": "<td width=\"20%\" valign=\"top\" align=\"center\">",
+    "obligating_words": [],
+    "id_shuffled_position": 459
+   },
+   {
+    "id": "T0165",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+0.00304",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | +3.19% | [+0.00304, +0.00710] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 460
+   },
+   {
+    "id": "T0551",
+    "repo": "s4nkar/SoundSense",
+    "line": 63,
+    "token": ".0",
+    "context": "uvicorn server:app --host 0.0.0.0 --port 8000",
+    "obligating_words": [],
+    "id_shuffled_position": 461
+   },
+   {
+    "id": "T0123",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.1017",
+    "context": "| FT-SPLADE + FT-CLIP | 0.1017 | 0.0741 | 0.0258 |",
+    "obligating_words": [],
+    "id_shuffled_position": 462
+   },
+   {
+    "id": "T0579",
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "84.00",
+    "context": "| STRATEGYQA | SMT2 | 100 | 84.00% | 0.8205 | 0.7805 | 0.8000 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 463
+   },
+   {
+    "id": "T0031",
+    "repo": "hopit-ai/Moda",
+    "line": 27,
+    "token": "+8.7",
+    "context": "| **Text to image** | `moda-pro-lite-plus` leads the ≤250M class on catalogue search: **KAGL +10.9%, Polyvore +8.7%** over MODA | both significant under a paired bootstrap |",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 464
+   },
+   {
+    "id": "T0321",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 85,
+    "token": "78.4",
+    "context": "**Note on input format**: an early version of the baseline classified on title text alone and scored 78.4% accuracy, with no unparseable responses (confirming the prompt clearly communicated the task)",
+    "obligating_words": [
+     "accuracy",
+     "precision",
+     "scored"
+    ],
+    "id_shuffled_position": 465
+   },
+   {
+    "id": "T0581",
+    "repo": "stanford-oval/Churro",
+    "line": 207,
+    "token": "20",
+    "context": "<td width=\"20%\" valign=\"top\" align=\"center\">",
+    "obligating_words": [],
+    "id_shuffled_position": 466
+   },
+   {
+    "id": "T0186",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "0.0229",
+    "context": "9. **Fine-tuning the retriever on its own mistakes doubles dense retrieval (+137%)** -- We mined hard negatives from FashionCLIP's top-20 failures, graded them with GPT-4o-mini ($3), and trained on 24",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 467
+   },
+   {
+    "id": "T0290",
+    "repo": "karpathy/jobs",
+    "line": 35,
+    "token": "0",
+    "context": "| `scores.json` | AI exposure scores (0-10) with rationales for all 342 occupations |",
+    "obligating_words": [
+     "scores"
+    ],
+    "id_shuffled_position": 468
+   },
+   {
+    "id": "T0253",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "468",
+    "context": "| 6 | llama3.2:3b | 0.788 | 0.716 | 1.017 | 468 tok/s | 2.0GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 469
+   },
+   {
+    "id": "T0206",
+    "repo": "hopit-ai/Moda",
+    "line": 633,
+    "token": "20",
+    "context": "> Purchase does not equal perfect relevance. A user searching \"black dress\" sees 20 good options but buys one. The other 19 are scored as negatives. This suppresses all absolute metric values. The _re",
+    "obligating_words": [
+     "scored"
+    ],
+    "id_shuffled_position": 470
+   },
+   {
+    "id": "T0545",
+    "repo": "DebarghaG/proofofthought",
+    "line": 248,
+    "token": "100",
+    "context": "| FOLIO | SMT2 | 100 | 69.00% | 0.6949 | 0.7736 | 0.7321 | 99.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 471
+   },
+   {
+    "id": "T0456",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 205,
+    "token": "134",
+    "context": "| `standalone_session.py` | 134 | Session state persistence (JSON) |",
+    "obligating_words": [],
+    "id_shuffled_position": 472
+   },
+   {
+    "id": "T0196",
+    "repo": "hopit-ai/Moda",
+    "line": 412,
+    "token": "256",
+    "context": "18. **Fine Recall@1 saturates at 256 dimensions on LookBench** -- The Matryoshka student, trained so any prefix is a valid retrieval vector, hits 67.42 at 256d and does not improve at higher dims on t",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 473
+   },
+   {
+    "id": "T0544",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 17,
+    "token": "1",
+    "context": "* A **3:1 local-to-global attention schedule**",
+    "obligating_words": [],
+    "id_shuffled_position": 474
+   }
+  ],
+  [
+   {
+    "id": "T0421",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 141,
+    "token": "6",
+    "context": "Notably, all 6 misclassified examples carried relatively low model confidence (ranging from 0.43 to 0.66) rather than confident wrong answers. This is a meaningfully different failure mode than confid",
+    "obligating_words": [],
+    "id_shuffled_position": 475
+   },
+   {
+    "id": "T0589",
+    "repo": "connor-makowski/scgraph",
+    "line": 308,
+    "token": "0.0",
+    "context": "#  [2502.89, 2637.58, 1913.19, 0.0 ],",
+    "obligating_words": [],
+    "id_shuffled_position": 476
+   },
+   {
+    "id": "T0158",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "0.18577",
+    "context": "| Fashion200K | 0.18577 | **0.19510** | +5.02% | [+0.00382, +0.01477] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 477
+   },
+   {
+    "id": "T0470",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 753,
+    "token": "1",
+    "context": "| Mellum2-12B-A2.5B-Thinking BF16 (白紙) | 1 | 1 | 1 | 1 | 1 | **1** | 4/20 |",
+    "obligating_words": [],
+    "id_shuffled_position": 478
+   },
+   {
+    "id": "T0514",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 57,
+    "token": "1706.03762",
+    "context": "It was sourced from [here](https://arxiv.org/pdf/1706.03762).",
+    "obligating_words": [],
+    "id_shuffled_position": 479
+   },
+   {
+    "id": "T0132",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0305",
+    "context": "| Image tower only (FashionCLIP vision) | 0.0305 | 0.0560 | 0.0148 |",
+    "obligating_words": [],
+    "id_shuffled_position": 480
+   },
+   {
+    "id": "T0256",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.800",
+    "context": "| 🆕 | **Bonsai-8B** | 0.652 | 0.622 | 0.800 | 383 tok/s | 1.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 481
+   },
+   {
+    "id": "T0396",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 20,
+    "token": "90",
+    "context": "<b>Get your fleet on shared structural memory in under 90 seconds.</b>",
+    "obligating_words": [],
+    "id_shuffled_position": 482
+   },
+   {
+    "id": "T0490",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 348,
+    "token": "200",
+    "context": "-            (128, max_text_length, 384), (128, 200, 300),",
+    "obligating_words": [],
+    "id_shuffled_position": 483
+   },
+   {
+    "id": "T0223",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "32",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 484
+   },
+   {
+    "id": "T0071",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0738",
+    "context": "| **SPLADE + Dense + off-shelf CE** | **0.0748** | **0.0738** | **0.0215** |",
+    "obligating_words": [],
+    "id_shuffled_position": 485
+   },
+   {
+    "id": "T0261",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 500,
+    "token": "0.956",
+    "context": "- ✅ 最高精度（Precision 0.956）",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 486
+   },
+   {
+    "id": "T0289",
+    "repo": "karpathy/jobs",
+    "line": 25,
+    "token": "0",
+    "context": "4. **Score** (`score.py`) — Sends each occupation's Markdown description to an LLM with a scoring rubric. Each occupation gets an AI Exposure score from 0-10 with a rationale. Results saved to `scores",
+    "obligating_words": [
+     "score",
+     "scores"
+    ],
+    "id_shuffled_position": 487
+   },
+   {
+    "id": "T0529",
+    "repo": "DebarghaG/proofofthought",
+    "line": 247,
+    "token": "100",
+    "context": "| PRONTOQA | SMT2 | 100 | 100.00% | 1.0000 | 1.0000 | 1.0000 | 100.00% |",
+    "obligating_words": [],
+    "id_shuffled_position": 488
+   },
+   {
+    "id": "T0207",
+    "repo": "hopit-ai/Moda",
+    "line": 633,
+    "token": "19",
+    "context": "> Purchase does not equal perfect relevance. A user searching \"black dress\" sees 20 good options but buys one. The other 19 are scored as negatives. This suppresses all absolute metric values. The _re",
+    "obligating_words": [
+     "scored"
+    ],
+    "id_shuffled_position": 489
+   },
+   {
+    "id": "T0163",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "0.16371",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | +3.19% | [+0.00304, +0.00710] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 490
+   },
+   {
+    "id": "T0588",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 46,
+    "token": "+1.81",
+    "context": "| LFM2.5-230M-Base |     229.7M |         39.20% |      +1.81 pp |",
+    "obligating_words": [],
+    "id_shuffled_position": 491
+   },
+   {
+    "id": "T0323",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "0.67",
+    "context": "| `discussion` |0.67|1.00|0.80|6|",
+    "obligating_words": [],
+    "id_shuffled_position": 492
+   },
+   {
+    "id": "T0486",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 348,
+    "token": "14",
+    "context": "| UI Components | 245 | All 14 component suites + hooks + mock data |",
+    "obligating_words": [],
+    "id_shuffled_position": 493
+   },
+   {
+    "id": "T0467",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1097,
+    "token": "22673",
+    "context": "llama.cpp [PR #22673](https://github.com/ggml-org/llama.cpp/pull/22673) で `master` にマージされた **MTP (Multi-Token Prediction) speculative decoding** を A100 80GB で検証。MTP head 付き GGUF (`ggml-org/Qwen3.6-27B",
+    "obligating_words": [],
+    "id_shuffled_position": 494
+   },
+   {
+    "id": "T0477",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 920,
+    "token": "131072",
+    "context": "- DGX Spark (119GB unified) では `num_ctx=131072` のままだと 134GB 要求で OOM。**`num_ctx=32768` に下げて回避**",
+    "obligating_words": [],
+    "id_shuffled_position": 495
+   },
+   {
+    "id": "T0174",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "+2.05",
+    "context": "| Atlas | 0.18264 | 0.18637 | +2.05% | [-0.00017, +0.00775] | inconclusive |",
+    "obligating_words": [],
+    "id_shuffled_position": 496
+   },
+   {
+    "id": "T0392",
+    "repo": "nextcloud/whiteboard",
+    "line": 224,
+    "token": "8192",
+    "context": "- Single websocket process, `NODE_OPTIONS=--max-old-space-size=8192`, `STORAGE_STRATEGY=lru`",
+    "obligating_words": [],
+    "id_shuffled_position": 497
+   },
+   {
+    "id": "T0198",
+    "repo": "hopit-ai/Moda",
+    "line": 414,
+    "token": "32",
+    "context": "19. **Binary codes plus Hamming rerank match fp32 retrieval at 32 bytes per vector** -- FP16 and int8 quantization cost nothing on Fine R@1. Binary alone loses 3.66 points. Binary plus a Hamming-dista",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 498
+   },
+   {
+    "id": "T0340",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 309,
+    "token": "8271.131",
+    "context": "\"Score Std Dev\": 8271.131",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 499
+   }
+  ],
+  [
+   {
+    "id": "T0164",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+3.19",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | +3.19% | [+0.00304, +0.00710] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 500
+   },
+   {
+    "id": "T0429",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 75,
+    "token": "3",
+    "context": "│  GPUs 1+2+3 (48GB VRAM)          GPU 0 (16GB)              │",
+    "obligating_words": [],
+    "id_shuffled_position": 501
+   },
+   {
+    "id": "T0368",
+    "repo": "kunal12203/webify-mcp",
+    "line": 239,
+    "token": "3",
+    "context": "result = webify.smart_lookup(\"https://docs.python.org/3/library/json.html\", \"parse JSON\")",
+    "obligating_words": [],
+    "id_shuffled_position": 502
+   },
+   {
+    "id": "T0322",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 90,
+    "token": "3",
+    "context": "- **Hyperparameters:** [epochs = 5(default 3), learning rate = 2e-5, batch size = 16]",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 503
+   },
+   {
+    "id": "T0050",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0328",
+    "context": "| Hybrid (BM25x0.4 + Densex0.6) | 0.0328 | [.0324-.0333] | 0.0429 | 0.0121 | 0.0457 |",
+    "obligating_words": [],
+    "id_shuffled_position": 504
+   },
+   {
+    "id": "T0054",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0457",
+    "context": "| Hybrid (BM25x0.4 + Densex0.6) | 0.0328 | [.0324-.0333] | 0.0429 | 0.0121 | 0.0457 |",
+    "obligating_words": [],
+    "id_shuffled_position": 505
+   },
+   {
+    "id": "T0007",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "15",
+    "context": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of acci",
+    "obligating_words": [
+     "rate",
+     "score"
+    ],
+    "id_shuffled_position": 506
+   },
+   {
+    "id": "T0354",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "4.2",
+    "context": "- **SFT + Dial-DPO**: Tool accuracy 91.2%, Response quality 4.2/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 507
+   },
+   {
+    "id": "T0120",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0983",
+    "context": "| FT-SPLADE + Baseline CLIP | 0.0983 | 0.0925 | 0.0268 |",
+    "obligating_words": [],
+    "id_shuffled_position": 508
+   },
+   {
+    "id": "T0497",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 247,
+    "token": "35",
+    "context": "- **Improvement**: 23% better tool selection, 35% higher user satisfaction",
+    "obligating_words": [],
+    "id_shuffled_position": 509
+   },
+   {
+    "id": "T0318",
+    "repo": "AdilzhanB/StockRL",
+    "line": 91,
+    "token": "0.0003",
+    "context": "Learning Rate: 0.0003",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 510
+   },
+   {
+    "id": "T0119",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.0265",
+    "context": "| **Baseline SPLADE + FT-CLIP** | **0.1063** | **0.0766** | **0.0265** |",
+    "obligating_words": [],
+    "id_shuffled_position": 511
+   },
+   {
+    "id": "T0197",
+    "repo": "hopit-ai/Moda",
+    "line": 412,
+    "token": "67.42",
+    "context": "18. **Fine Recall@1 saturates at 256 dimensions on LookBench** -- The Matryoshka student, trained so any prefix is a valid retrieval vector, hits 67.42 at 256d and does not improve at higher dims on t",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 512
+   },
+   {
+    "id": "T0351",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "3.1",
+    "context": "- **SFT Baseline**: Tool accuracy 68.4%, Response quality 3.1/5",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 513
+   },
+   {
+    "id": "T0148",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "5",
+    "context": "Blogs 5 to 7 beat FashionSigLIP on image-to-image. Phase 7 closes the series by beating it on text-to-image, the task it was built for, without adding a single parameter. Instead of training a new mod",
+    "obligating_words": [
+     "bootstrap"
+    ],
+    "id_shuffled_position": 514
+   },
+   {
+    "id": "T0453",
+    "repo": "karpathy/jobs",
+    "line": 22,
+    "token": "342",
+    "context": "1. **Scrape** (`scrape.py`) — Playwright (non-headless, BLS blocks bots) downloads raw HTML for all 342 occupation pages into `html/`.",
+    "obligating_words": [],
+    "id_shuffled_position": 515
+   },
+   {
+    "id": "T0251",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "0.716",
+    "context": "| 6 | llama3.2:3b | 0.788 | 0.716 | 1.017 | 468 tok/s | 2.0GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 516
+   },
+   {
+    "id": "T0284",
+    "repo": "nextcloud/whiteboard",
+    "line": 100,
+    "token": "3002",
+    "context": "docker run -e JWT_SECRET_KEY=some-random-secret -p 3002:3002 --rm ghcr.io/nextcloud-releases/whiteboard:stable",
+    "obligating_words": [],
+    "id_shuffled_position": 517
+   },
+   {
+    "id": "T0483",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 123,
+    "token": "3.610803",
+    "context": "scrolls_summscreenfd:3.610803",
+    "obligating_words": [],
+    "id_shuffled_position": 518
+   },
+   {
+    "id": "T0402",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 198,
+    "token": "5510.001000",
+    "context": "max       5510.001000",
+    "obligating_words": [],
+    "id_shuffled_position": 519
+   },
+   {
+    "id": "T0531",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 79,
+    "token": "5.3",
+    "context": "| Graph callers recall (Django) | **81.6%** | GitNexus: 5.3% | **15.4×** |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 520
+   },
+   {
+    "id": "T0037",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "67.63",
+    "context": "| `HopitAI/moda-fashion-distilled` | 768 | 775 MB | **67.63** | 53.85 | **+3.79** | **Best accuracy.** Drop-in replacement for FashionSigLIP at the same dimension. Distilled from a 3-model ensemble in",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 521
+   },
+   {
+    "id": "T0315",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "245",
+    "context": "**922 backend tests + 245 frontend = 1,167 total.** 0 failures. CI on every push. 0 open issues.",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 522
+   },
+   {
+    "id": "T0349",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 241,
+    "token": "87.4",
+    "context": "- **Code-switching**: 87.4% accuracy in mixed Hindi-English inputs",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 523
+   },
+   {
+    "id": "T0035",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "768",
+    "context": "| `HopitAI/moda-fashion-distilled` | 768 | 775 MB | **67.63** | 53.85 | **+3.79** | **Best accuracy.** Drop-in replacement for FashionSigLIP at the same dimension. Distilled from a 3-model ensemble in",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 524
+   }
+  ],
+  [
+   {
+    "id": "T0044",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0251",
+    "context": "| BM25 only | 0.0186 | [.0183-.0190] | 0.0227 | 0.0059 | 0.0251 |",
+    "obligating_words": [],
+    "id_shuffled_position": 525
+   },
+   {
+    "id": "T0500",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 284,
+    "token": "0",
+    "context": "| ML Models | 0 (LLM-only) | 9 (RF, XGB, EMAformer, MOIRAI-2, Chronos-2, DDPM, PPO RL, GNN, LR) |",
+    "obligating_words": [],
+    "id_shuffled_position": 526
+   },
+   {
+    "id": "T0139",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0899",
+    "context": "| 3T + SPLADE + LLM CE (3T best) | **0.0833** | 0.0899 | 0.0272 |",
+    "obligating_words": [],
+    "id_shuffled_position": 527
+   },
+   {
+    "id": "T0423",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 209,
+    "token": "693",
+    "context": "| `librarian.py` | 693 | Post-session curation using 7B model |",
+    "obligating_words": [],
+    "id_shuffled_position": 528
+   },
+   {
+    "id": "T0008",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 116,
+    "token": "1.554562",
+    "context": "score:1.554562",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 529
+   },
+   {
+    "id": "T0285",
+    "repo": "nextcloud/whiteboard",
+    "line": 244,
+    "token": "30",
+    "context": "\\*500-user test saturated a single instance and dropped ~30% of simulated clients. Treat this as an upper bound and plan to run multiple websocket workers behind a sticky load balancer with `STORAGE_S",
+    "obligating_words": [
+     "dropped"
+    ],
+    "id_shuffled_position": 530
+   },
+   {
+    "id": "T0320",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 85,
+    "token": "78.4",
+    "context": "**Note on input format**: an early version of the baseline classified on title text alone and scored 78.4% accuracy, with no unparseable responses (confirming the prompt clearly communicated the task)",
+    "obligating_words": [
+     "accuracy",
+     "precision",
+     "scored"
+    ],
+    "id_shuffled_position": 531
+   },
+   {
+    "id": "T0107",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "+143",
+    "context": "| MRR | 0.0208 | 0.0505 | +143% |",
+    "obligating_words": [],
+    "id_shuffled_position": 532
+   },
+   {
+    "id": "T0536",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 93,
+    "token": "1.41",
+    "context": "| rsi_reversal | INTC | **1.41** | PASS | 0.002 |",
+    "obligating_words": [],
+    "id_shuffled_position": 533
+   },
+   {
+    "id": "T0458",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1167,
+    "token": "33.6",
+    "context": "| 速度ベンチ (3 prompts, BF16, A100 単 GPU) | **33.6 tok/s** aggregate (BF16, transformers TextIteratorStreamer) |",
+    "obligating_words": [],
+    "id_shuffled_position": 534
+   },
+   {
+    "id": "T0090",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0701",
+    "context": "| FT on 9.8K GPT-4o-mini labels | 0.0689 | 0.0701 | 0.0190 | ~$2 |",
+    "obligating_words": [],
+    "id_shuffled_position": 535
+   },
+   {
+    "id": "T0258",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "0.899",
+    "context": "- **F1**: 0.899 | **Precision**: 0.956 | **Speed**: 225 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 536
+   },
+   {
+    "id": "T0511",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 718,
+    "token": "29",
+    "context": "| Nemotron-3-Nano-Omni-30B (Q4_K_M-UD) | 68s | 0 | OK | -- | -- | -- | -- | 25/80 | 4/20 | **29/100** |",
+    "obligating_words": [],
+    "id_shuffled_position": 537
+   },
+   {
+    "id": "T0492",
+    "repo": "kssteven418/LTP",
+    "line": 47,
+    "token": "2",
+    "context": "The learnable mode consists of 2 stages: soft threshold and hard threshold.",
+    "obligating_words": [],
+    "id_shuffled_position": 538
+   },
+   {
+    "id": "T0568",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 103,
+    "token": "83.8",
+    "context": "| Fine-tuned | 83.8% |",
+    "obligating_words": [],
+    "id_shuffled_position": 539
+   },
+   {
+    "id": "T0064",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0265",
+    "context": "| Dense standalone (FashionCLIP) | 0.0265 | 0.0369 | 0.0106 |",
+    "obligating_words": [],
+    "id_shuffled_position": 540
+   },
+   {
+    "id": "T0433",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 386,
+    "token": "+34.4",
+    "context": "| User Satisfaction | 3.2/5 | 4.3/5 | +34.4% |",
+    "obligating_words": [],
+    "id_shuffled_position": 541
+   },
+   {
+    "id": "T0372",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 90,
+    "token": "20",
+    "context": "\"logit_0\": \" Jenna picked 20/2 = <<20/2=10>>10 apples\\nThey both picked 10+20 = <<10+20=30>>30 apples\\n####",
+    "obligating_words": [],
+    "id_shuffled_position": 542
+   },
+   {
+    "id": "T0552",
+    "repo": "stanford-oval/Churro",
+    "line": 105,
+    "token": "20",
+    "context": "<td width=\"20%\" valign=\"top\" align=\"center\">",
+    "obligating_words": [],
+    "id_shuffled_position": 543
+   },
+   {
+    "id": "T0036",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "775",
+    "context": "| `HopitAI/moda-fashion-distilled` | 768 | 775 MB | **67.63** | 53.85 | **+3.79** | **Best accuracy.** Drop-in replacement for FashionSigLIP at the same dimension. Distilled from a 3-model ensemble in",
+    "obligating_words": [
+     "accuracy"
+    ],
+    "id_shuffled_position": 544
+   },
+   {
+    "id": "T0426",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 744,
+    "token": "4",
+    "context": "| gpt-oss:20b | 3 | 2 | 3 | 4 | 2 | **3** | 12/20 |",
+    "obligating_words": [],
+    "id_shuffled_position": 545
+   },
+   {
+    "id": "T0219",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "512",
+    "context": "The default is 768 dimensions, matching FashionSigLIP. The Matryoshka model can be sliced to 64, 128, 256, 384, 512 or 768 dimensions at query time. On LookBench, 256 dimensions matches 768 on Fine Re",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 546
+   },
+   {
+    "id": "T0308",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 47,
+    "token": "+1.91",
+    "context": "| GPT-2 125M       |     125.0M |         39.10% |      +1.91 pp |",
+    "obligating_words": [],
+    "id_shuffled_position": 547
+   },
+   {
+    "id": "T0394",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 49,
+    "token": "12",
+    "context": "│  ├─ test_models.py ✅ (1st candidate, 12/12 tests pass)",
+    "obligating_words": [],
+    "id_shuffled_position": 548
+   },
+   {
+    "id": "T0491",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 744,
+    "token": "3",
+    "context": "| gpt-oss:20b | 3 | 2 | 3 | 4 | 2 | **3** | 12/20 |",
+    "obligating_words": [],
+    "id_shuffled_position": 549
+   }
+  ],
+  [
+   {
+    "id": "T0427",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1462,
+    "token": "27.8",
+    "context": "- **gpt-oss:20b**: 27.8 tok/sで安定動作。ROUGE-L 0.310はA100（88 tok/s）の1/3の速度だが品質は同等",
+    "obligating_words": [],
+    "id_shuffled_position": 550
+   },
+   {
+    "id": "T0061",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0464",
+    "context": "| SPLADE standalone | 0.0464 | 0.0695 | 0.0189 |",
+    "obligating_words": [],
+    "id_shuffled_position": 551
+   },
+   {
+    "id": "T0435",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 109,
+    "token": "591",
+    "context": "![image.png](https://cdn.nlark.com/yuque/0/2024/png/39012277/1710730348975-f84b1c2c-d6c8-405b-b01f-f33d6a845945.png#averageHue=%23e9e8e8&clientId=u70d5b72a-a20d-4&from=paste&height=82&id=u664387f4&ori",
+    "obligating_words": [],
+    "id_shuffled_position": 552
+   },
+   {
+    "id": "T0564",
+    "repo": "AdilzhanB/StockRL",
+    "line": 64,
+    "token": "7,243.44",
+    "context": "| **MSFT** | **7,243.44%** | 0.56 | 164.60% | **52.11%** | 🏆 Best Overall |",
+    "obligating_words": [],
+    "id_shuffled_position": 553
+   },
+   {
+    "id": "T0224",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "1",
+    "context": "| 1 | **qwen3:8b** | **0.899** | 0.956 | 0.883 | 225 tok/s | 5.2GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 554
+   },
+   {
+    "id": "T0328",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.87",
+    "context": "| `advice_request` |0.85|0.89|0.87|19|",
+    "obligating_words": [],
+    "id_shuffled_position": 555
+   },
+   {
+    "id": "T0192",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "67.63",
+    "context": "13. **Beating FashionSigLIP on LookBench by +3.84 points** -- Cross-domain fine-tuning on shop↔consumer pairs plus a test-time ensemble with FashionCLIP lifts Fine R@1 from 63.84 to 67.68, at twice th",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 556
+   },
+   {
+    "id": "T0166",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+0.00710",
+    "context": "| DeepFashion In-Shop | 0.15865 | **0.16371** | +3.19% | [+0.00304, +0.00710] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 557
+   },
+   {
+    "id": "T0451",
+    "repo": "hopit-ai/Moda",
+    "line": 284,
+    "token": "39.49",
+    "context": "| DINOv2-Base (general vision FM) | 39.49 | -24.35 | General self-supervised features miss fashion's fine-grained attributes |",
+    "obligating_words": [],
+    "id_shuffled_position": 558
+   },
+   {
+    "id": "T0498",
+    "repo": "karpathy/jobs",
+    "line": 76,
+    "token": "8000",
+    "context": "cd site && python -m http.server 8000",
+    "obligating_words": [],
+    "id_shuffled_position": 559
+   },
+   {
+    "id": "T0272",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "0.772",
+    "context": "- **F1**: 0.837 | **Precision**: 0.772 | **Speed**: 148 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 560
+   },
+   {
+    "id": "T0210",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "768",
+    "context": "On image-to-image retrieval (LookBench, 2,345 queries), the released single model `moda-fashion-distilled` reaches Fine Recall@1 of 67.63 at 768 dimensions, against a reproduced FashionSigLIP baseline",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 561
+   },
+   {
+    "id": "T0446",
+    "repo": "WillyEverGreen/acon",
+    "line": 35,
+    "token": "100",
+    "context": "| **Wikipedia** | 100 | **8** | **92.0%** | **93.7%** | `low_information_gain` |",
+    "obligating_words": [],
+    "id_shuffled_position": 562
+   },
+   {
+    "id": "T0181",
+    "repo": "hopit-ai/Moda",
+    "line": 366,
+    "token": "100",
+    "context": "| CE rerank (100 candidates) | 50.9ms | 47.7ms | 73.3ms |",
+    "obligating_words": [],
+    "id_shuffled_position": 563
+   },
+   {
+    "id": "T0527",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 27,
+    "token": "1,854",
+    "context": "* **Contamination-aware evaluation:** Benchmark results exclude **1,854 contaminated samples** detected using a correctness-blind 13-token exact-match scan across the complete training corpus.",
+    "obligating_words": [],
+    "id_shuffled_position": 564
+   },
+   {
+    "id": "T0362",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "5",
+    "context": "| Argument Quality Score | 3.1/5 | 4.2/5 | +35.5% |",
+    "obligating_words": [
+     "score"
+    ],
+    "id_shuffled_position": 565
+   },
+   {
+    "id": "T0034",
+    "repo": "hopit-ai/Moda",
+    "line": 62,
+    "token": "253,685",
+    "context": "**MODA fills that gap.** We built a complete retrieval pipeline (BM25 + SPLADE + dense + hybrid + NER + cross-encoder reranking), ran it against 253,685 H&M purchase-grounded queries, isolated the con",
+    "obligating_words": [
+     "grounded"
+    ],
+    "id_shuffled_position": 566
+   },
+   {
+    "id": "T0575",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 63,
+    "token": "35,072,768",
+    "context": "| Parameters             | 35,072,768                      |",
+    "obligating_words": [],
+    "id_shuffled_position": 567
+   },
+   {
+    "id": "T0153",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "0.27687",
+    "context": "| KAGL | 0.27687 | **0.29074** | +5.01% | [+0.00894, +0.01883] | significant win |",
+    "obligating_words": [],
+    "id_shuffled_position": 568
+   },
+   {
+    "id": "T0247",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.983",
+    "context": "| 5 | gemma3:12b | 0.837 | 0.772 | 0.983 | 148 tok/s | 8.1GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 569
+   },
+   {
+    "id": "T0420",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 956,
+    "token": "80",
+    "context": "Mac Studio M3 Ultra (512GB) + Ollama v0.22.0 でテスト。**機能テスト満点（80/80）を初回で達成**。",
+    "obligating_words": [],
+    "id_shuffled_position": 570
+   },
+   {
+    "id": "T0024",
+    "repo": "sbhooley/ainativelang",
+    "line": 1379,
+    "token": "42",
+    "context": "- **Fine-tune**: `bash scripts/setup_finetune_env.sh`, `.venv-ci-smoke/bin/python scripts/finetune_ainl.py --profile fast --epochs 1 --seed 42`",
+    "obligating_words": [
+     "ci"
+    ],
+    "id_shuffled_position": 571
+   },
+   {
+    "id": "T0271",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "0.837",
+    "context": "- **F1**: 0.837 | **Precision**: 0.772 | **Speed**: 148 tok/s",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 572
+   },
+   {
+    "id": "T0049",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0462",
+    "context": "| Dense only (FashionCLIP) | 0.0265 | [.0261-.0269] | 0.0369 | 0.0106 | 0.0462 |",
+    "obligating_words": [],
+    "id_shuffled_position": 573
+   },
+   {
+    "id": "T0203",
+    "repo": "hopit-ai/Moda",
+    "line": 574,
+    "token": "6",
+    "context": "│   ├── eval_lookbench_quantized.py  <- Phase 6: precision sweep (fp32/fp16/int8/binary/binary+rerank)",
+    "obligating_words": [
+     "precision"
+    ],
+    "id_shuffled_position": 574
+   }
+  ],
+  [
+   {
+    "id": "T0430",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 50,
+    "token": "75.7",
+    "context": "- Exceedance sensitivity up to 67.0% (increasing to 75.7% in 2023–2024)",
+    "obligating_words": [],
+    "id_shuffled_position": 575
+   },
+   {
+    "id": "T0481",
+    "repo": "opendatalab/WebMainBench",
+    "line": 43,
+    "token": "0.57",
+    "context": "| Russian | 45 | 0.57 |",
+    "obligating_words": [],
+    "id_shuffled_position": 576
+   },
+   {
+    "id": "T0237",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.900",
+    "context": "| 3 | SmallThinker-21BA3B | 0.880 | 0.883 | 0.900 | 280 tok/s | 13GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 577
+   },
+   {
+    "id": "T0115",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0660",
+    "context": "| Baseline SPLADE + Baseline CLIP | 0.0946 | 0.0660 | 0.0253 |",
+    "obligating_words": [],
+    "id_shuffled_position": 578
+   },
+   {
+    "id": "T0485",
+    "repo": "feyninc/tokie",
+    "line": 117,
+    "token": "0",
+    "context": "pair.type_ids          # [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1]",
+    "obligating_words": [],
+    "id_shuffled_position": 579
+   },
+   {
+    "id": "T0252",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "1.017",
+    "context": "| 6 | llama3.2:3b | 0.788 | 0.716 | 1.017 | 468 tok/s | 2.0GB |",
+    "obligating_words": [],
+    "id_shuffled_position": 580
+   },
+   {
+    "id": "T0191",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "67.68",
+    "context": "13. **Beating FashionSigLIP on LookBench by +3.84 points** -- Cross-domain fine-tuning on shop↔consumer pairs plus a test-time ensemble with FashionCLIP lifts Fine R@1 from 63.84 to 67.68, at twice th",
+    "obligating_words": [
+     "delta"
+    ],
+    "id_shuffled_position": 581
+   },
+   {
+    "id": "T0407",
+    "repo": "connor-makowski/scgraph",
+    "line": 544,
+    "token": "1181",
+    "context": "{1: 1439, 2: 1181},                 # Rome -> Paris, Berlin",
+    "obligating_words": [],
+    "id_shuffled_position": 582
+   },
+   {
+    "id": "T0484",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 374,
+    "token": "14",
+    "context": "14      | AAA stats                 | \"aaa\"",
+    "obligating_words": [],
+    "id_shuffled_position": 583
+   },
+   {
+    "id": "T0385",
+    "repo": "feyninc/tokie",
+    "line": 116,
+    "token": "1",
+    "context": "pair.attention_mask    # [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+    "obligating_words": [],
+    "id_shuffled_position": 584
+   },
+   {
+    "id": "T0543",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "5",
+    "context": "Task 1: Calculator (Level 2)             → ✅ PASS  5/5 tests,   1 iter,  7m",
+    "obligating_words": [],
+    "id_shuffled_position": 585
+   },
+   {
+    "id": "T0563",
+    "repo": "stanford-oval/Churro",
+    "line": 205,
+    "token": "69.7",
+    "context": "<sub>Churro 69.7 vs Gemini 65.3 NLS</sub>",
+    "obligating_words": [],
+    "id_shuffled_position": 586
+   },
+   {
+    "id": "T0114",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0946",
+    "context": "| Baseline SPLADE + Baseline CLIP | 0.0946 | 0.0660 | 0.0253 |",
+    "obligating_words": [],
+    "id_shuffled_position": 587
+   },
+   {
+    "id": "T0513",
+    "repo": "opendatalab/WebMainBench",
+    "line": 119,
+    "token": "0.7819",
+    "context": "| trafilatura (txt) | 2.0.0 | 0.3718 | 0.7819 | 0.0000 | 0.6389 | 0.1278 | 0.3106 |",
+    "obligating_words": [],
+    "id_shuffled_position": 588
+   },
+   {
+    "id": "T0000",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "100,000",
+    "context": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training step",
+    "obligating_words": [
+     "rate"
+    ],
+    "id_shuffled_position": 589
+   },
+   {
+    "id": "T0113",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "+45",
+    "context": "| Recall@100 | 0.168 | 0.244 | +45% |",
+    "obligating_words": [
+     "recall"
+    ],
+    "id_shuffled_position": 590
+   }
+  ]
+ ]
+}

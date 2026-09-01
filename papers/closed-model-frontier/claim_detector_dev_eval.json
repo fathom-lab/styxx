@@ -1,0 +1,58 @@
+{
+ "stage": "1 — DEV telemetry (NOT results; the gate is Stage 2's fresh blind panel)",
+ "prereg": "PREREG_claim_detector_2026_08_30.md",
+ "struct1_version": "struct-1/2026-08-30",
+ "dev_composition": {
+  "C": 162,
+  "A": 4,
+  "B": 33
+ },
+ "struct1": {
+  "flagged": 2,
+  "true_positive": 2,
+  "false_positive": 0,
+  "missed_A": 2,
+  "precision": 1.0,
+  "recall": 0.5
+ },
+ "null_n1_path_regex": {
+  "flagged": 9,
+  "true_positive": 2,
+  "false_positive": 7,
+  "missed_A": 2,
+  "precision": 0.2222,
+  "recall": 0.5
+ },
+ "null_n2_verb_stems": {
+  "flagged": 19,
+  "true_positive": 2,
+  "false_positive": 17,
+  "missed_A": 2,
+  "precision": 0.1053,
+  "recall": 0.5
+ },
+ "bar_from_baseline_weighted": 0.2061,
+ "result_band": {
+  "panel_B_total": 33,
+  "caught_as_RESULT": 4,
+  "miscalled_as_CLAIM": 0
+ },
+ "missed_A_with_failing_conjunct": [
+  {
+   "id": "p1-013",
+   "text": "9 new tests.",
+   "failed_conjuncts": [
+    "action_head"
+   ]
+  },
+  {
+   "id": "p2-040",
+   "text": "The rung ladder is untouched.",
+   "failed_conjuncts": [
+    "concrete_object"
+   ]
+  }
+ ],
+ "false_positives_every_one": [],
+ "note": "DEV precision/recall may not be quoted as a result. The prereg's gate is a fresh blind panel over STRUCT-1's own flags (Stage 2); these numbers only tell the builder whether Stage 2 is worth running."
+}

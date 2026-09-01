@@ -1,0 +1,27 @@
+                    ┌───────────────────────────┐
+                    │   one .capsule.html file  │
+                    ├───────────────────────────┤
+                    │  document bytes           │
+                    │  receipt bytes            │
+                    │  the certificate          │
+                    └─────────────┬─────────────┘
+                                  │
+              ┌───────────────────┴───────────────────┐
+              │                                       │
+      ╔═══════╧═══════╗                       ╔═══════╧═══════╗
+      ║    LAYER 1    ║                       ║    LAYER 2    ║
+      ║  any browser  ║                       ║  one command  ║
+      ╚═══════╤═══════╝                       ╚═══════╤═══════╝
+              │                                       │
+   re-hashes every byte                  re-runs the real verifier
+   offline, zero requests                over the embedded bytes
+              │                                       │
+   ┌──────────┴──────────┐                 ┌──────────┴──────────┐
+   │ tamper-evidence     │                 │ reproducibility     │
+   │ change one digit    │                 │ the verdict is      │
+   │ and it turns on you │                 │ re-derived, not     │
+   │                     │                 │ taken on trust      │
+   └─────────────────────┘                 └─────────────────────┘
+
+        what neither proves: that the receipts record reality.
+        a capsule is a portable binding, not an oath of origin.

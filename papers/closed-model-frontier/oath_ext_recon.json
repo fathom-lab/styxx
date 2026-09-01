@@ -1,0 +1,669 @@
+{
+  "recon": "OATH-EXT — the shipped verifier on claim documents this lab did not write",
+  "status": "RECON. LICENSES NO CLAIM. Sizes a class; its numbers are inputs to a future preregistration's bars, not results.",
+  "ground_truth_standard": "styxx does not adjudicate whether the external authors are right. The only thing measured is whether a number in a repository's own claim document grounds in that repository's own committed receipt. Inherited verbatim from SP-EXT.",
+  "selection": {
+    "queries": [
+      "filename:all_results.json",
+      "filename:eval_results.json"
+    ],
+    "rule": "first N DISTINCT repositories in the GitHub code-search API's own returned order; no inspection, no substitution",
+    "max_repos": 14,
+    "disclosure": "GitHub's default ordering is 'best match', not random. This is a CONVENIENCE SAMPLE of a mechanically-defined population and supports no inference about base rates anywhere. Reported because a mechanically-selected sample is auditable and a hand-picked one is not."
+  },
+  "safety": "External repositories were cloned and READ. No external code was imported or executed; this harness opens files and nothing else.",
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "repos_selected": 14,
+  "repos_certified": 12,
+  "repos_no_pair": 2,
+  "repos_failed": 0,
+  "documents_held": 8,
+  "documents_failed": 4,
+  "tokens_total": 507,
+  "status_counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 477,
+    "UNGROUNDED": 13
+  },
+  "status_share": {
+    "VERIFIED": 0.0335,
+    "ABSTAIN": 0.9408,
+    "UNGROUNDED": 0.0256
+  },
+  "accusations_total": 13,
+  "verifications_total": 17,
+  "verifications_structurally_coincident": 5,
+  "verification_roster": [
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 112,
+      "token": "12.3",
+      "receipt_ref": "all_results.json:rope.results[10].metric_history.perplexity[1]",
+      "terminal": "perplexity",
+      "structurally_coincident": true,
+      "context": "- **macOS 12.3+** (for Metal/MPS) or **Linux with CUDA**"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 237,
+      "token": "100",
+      "receipt_ref": "all_results.json:rope.results[0].metric_history.step[1]",
+      "terminal": "step",
+      "structurally_coincident": true,
+      "context": "uv run modal run src/deepseek/cloud/modal/ray_cluster.py::run_rust --scale initial --max-steps 100"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 244,
+      "token": "8",
+      "receipt_ref": "all_results.json:rope.config.base_config.num_heads",
+      "terminal": "num_heads",
+      "structurally_coincident": false,
+      "context": "**GPU Configuration:** Standard config uses 8 A100-40GB GPUs with DualPipe (TP=2, PP=2, DP=2). For scaled runs (>8 GPUs),"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 348,
+      "token": "256",
+      "receipt_ref": "all_results.json:rope.config.base_config.d_model",
+      "terminal": "d_model",
+      "structurally_coincident": false,
+      "context": "| Experts | 256 with K=8 | Diminishing returns beyond 256 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 348,
+      "token": "256",
+      "receipt_ref": "all_results.json:rope.config.base_config.d_model",
+      "terminal": "d_model",
+      "structurally_coincident": false,
+      "context": "| Experts | 256 with K=8 | Diminishing returns beyond 256 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 351,
+      "token": "2.4",
+      "receipt_ref": "all_results.json:rope.results[0].metric_history.loss[2]",
+      "terminal": "loss",
+      "structurally_coincident": true,
+      "context": "| Precision | FP8 per-block | 2.4× throughput, minimal accuracy loss |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 361,
+      "token": "3",
+      "receipt_ref": "all_results.json:rope.aggregated.standard.final_loss.n",
+      "terminal": "n",
+      "structurally_coincident": false,
+      "context": "| **Rust+GPU** | 3× H100 80GB | ~4 min | **13.5** | **1.18** |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 361,
+      "token": "4",
+      "receipt_ref": "all_results.json:rope.results[13].config.num_layers",
+      "terminal": "num_layers",
+      "structurally_coincident": false,
+      "context": "| **Rust+GPU** | 3× H100 80GB | ~4 min | **13.5** | **1.18** |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 362,
+      "token": "3",
+      "receipt_ref": "all_results.json:rope.aggregated.standard.final_loss.n",
+      "terminal": "n",
+      "structurally_coincident": false,
+      "context": "| **Python+GPU** | 3× H100 80GB | ~5 min | 10.2 | 1.37 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 363,
+      "token": "1.85",
+      "receipt_ref": "all_results.json:rope.results[17].metrics.final_loss",
+      "terminal": "final_loss",
+      "structurally_coincident": false,
+      "context": "| **MLX** | Apple M1/M2/M3 | ~15 min | 3.3 | 1.85 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 414,
+      "token": "2.0",
+      "receipt_ref": "all_results.json:rope.config.variations.linear_2x.rope_scale",
+      "terminal": "rope_scale",
+      "structurally_coincident": false,
+      "context": "├── LICENSE                      # Apache 2.0 License"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 539,
+      "token": "42",
+      "receipt_ref": "all_results.json:rope.config.seeds[0]",
+      "terminal": "seeds",
+      "structurally_coincident": true,
+      "context": "uv run python scripts/train_tiny.py --seed 42 --max-steps 1000"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 549,
+      "token": "2.5",
+      "receipt_ref": "all_results.json:rope.results[0].metrics.attention_entropy",
+      "terminal": "attention_entropy",
+      "structurally_coincident": false,
+      "context": "| Training Loss | ~2.5 | ±0.2 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 549,
+      "token": "0.2",
+      "receipt_ref": "all_results.json:rope.aggregated.standard.runtime.mean",
+      "terminal": "mean",
+      "structurally_coincident": false,
+      "context": "| Training Loss | ~2.5 | ±0.2 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 550,
+      "token": "2.7",
+      "receipt_ref": "all_results.json:rope.results[0].metric_history.loss[1]",
+      "terminal": "loss",
+      "structurally_coincident": true,
+      "context": "| Validation Loss | ~2.7 | ±0.2 |"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "doc": "README.md",
+      "line": 550,
+      "token": "0.2",
+      "receipt_ref": "all_results.json:rope.aggregated.standard.runtime.mean",
+      "terminal": "mean",
+      "structurally_coincident": false,
+      "context": "| Validation Loss | ~2.7 | ±0.2 |"
+    },
+    {
+      "repo": "Jyoti-Ranjan-Das845/gaia-nexus-leaderboard",
+      "sha": "97caface78bf449186cf2dfe258f9c355344d5a7",
+      "doc": "README.md",
+      "line": 38,
+      "token": "1",
+      "receipt_ref": "all_results.json:[0].level",
+      "terminal": "level",
+      "structurally_coincident": false,
+      "context": "- **Level**: GAIA difficulty level (1, 2, or 3)"
+    }
+  ],
+  "accusation_roster": [
+    {
+      "repo": "ShiZhengyan/DePT",
+      "sha": "f0266a774a45c62ce32f159e2182583f1878546c",
+      "doc": "README.md",
+      "line": 93,
+      "token": "100,000",
+      "decimals": 0,
+      "full_line": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training steps. This might introduce some additional computational overhead during the hyperparameter optimization phase of model training. It is important to search over all these hyperparameters to get the optim",
+      "obligated_by": {
+        "triggers": [
+          "rate"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "ShiZhengyan/DePT",
+      "sha": "f0266a774a45c62ce32f159e2182583f1878546c",
+      "doc": "README.md",
+      "line": 93,
+      "token": "300,000",
+      "decimals": 0,
+      "full_line": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training steps. This might introduce some additional computational overhead during the hyperparameter optimization phase of model training. It is important to search over all these hyperparameters to get the optim",
+      "obligated_by": {
+        "triggers": [
+          "rate"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "ShiZhengyan/DePT",
+      "sha": "f0266a774a45c62ce32f159e2182583f1878546c",
+      "doc": "README.md",
+      "line": 93,
+      "token": "40",
+      "decimals": 0,
+      "full_line": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training steps. This might introduce some additional computational overhead during the hyperparameter optimization phase of model training. It is important to search over all these hyperparameters to get the optim",
+      "obligated_by": {
+        "triggers": [
+          "rate"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "ShiZhengyan/DePT",
+      "sha": "f0266a774a45c62ce32f159e2182583f1878546c",
+      "doc": "README.md",
+      "line": 93,
+      "token": "60",
+      "decimals": 0,
+      "full_line": "As we dicussed in the paper, one of the potential limitations of this work is the introduction of extra hyperparameters for tuning, *e.g.*, the learning rate of the low-rank matrices and training steps. This might introduce some additional computational overhead during the hyperparameter optimization phase of model training. It is important to search over all these hyperparameters to get the optim",
+      "obligated_by": {
+        "triggers": [
+          "rate"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "FanGShiYuu/CoReVLA",
+      "sha": "155f493991509ec421caee5b2afe9b40e3851865",
+      "doc": "README.md",
+      "line": 16,
+      "token": "72.18",
+      "decimals": 2,
+      "full_line": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of accidents. Vision-Language Action (VLA) models have strong reasoning abilities and offer a potential solution, but their effectiveness is limited by the lack of high-quality data and inefficient learning ",
+      "obligated_by": {
+        "triggers": [
+          "rate",
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "FanGShiYuu/CoReVLA",
+      "sha": "155f493991509ec421caee5b2afe9b40e3851865",
+      "doc": "README.md",
+      "line": 16,
+      "token": "50",
+      "decimals": 0,
+      "full_line": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of accidents. Vision-Language Action (VLA) models have strong reasoning abilities and offer a potential solution, but their effectiveness is limited by the lack of high-quality data and inefficient learning ",
+      "obligated_by": {
+        "triggers": [
+          "rate",
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "FanGShiYuu/CoReVLA",
+      "sha": "155f493991509ec421caee5b2afe9b40e3851865",
+      "doc": "README.md",
+      "line": 16,
+      "token": "7.96",
+      "decimals": 2,
+      "full_line": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of accidents. Vision-Language Action (VLA) models have strong reasoning abilities and offer a potential solution, but their effectiveness is limited by the lack of high-quality data and inefficient learning ",
+      "obligated_by": {
+        "triggers": [
+          "rate",
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "FanGShiYuu/CoReVLA",
+      "sha": "155f493991509ec421caee5b2afe9b40e3851865",
+      "doc": "README.md",
+      "line": 16,
+      "token": "15",
+      "decimals": 0,
+      "full_line": "Autonomous Driving (AD) systems have made notable progress, but their performance in long-tail, safety-critical scenarios remains limited. These rare cases contribute a disproportionate number of accidents. Vision-Language Action (VLA) models have strong reasoning abilities and offer a potential solution, but their effectiveness is limited by the lack of high-quality data and inefficient learning ",
+      "obligated_by": {
+        "triggers": [
+          "rate",
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "heyblackC/BetterMixture-Top1-Solution",
+      "sha": "1cbeae9360e41fc029c36275071c1300c5181985",
+      "doc": "README.md",
+      "line": 116,
+      "token": "1.554562",
+      "decimals": 6,
+      "full_line": "score:1.554562",
+      "obligated_by": {
+        "triggers": [
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "heyblackC/BetterMixture-Top1-Solution",
+      "sha": "1cbeae9360e41fc029c36275071c1300c5181985",
+      "doc": "README.md",
+      "line": 128,
+      "token": "1.598064",
+      "decimals": 6,
+      "full_line": "score:1.598064",
+      "obligated_by": {
+        "triggers": [
+          "score"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "heyblackC/BetterMixture-Top1-Solution",
+      "sha": "1cbeae9360e41fc029c36275071c1300c5181985",
+      "doc": "README.md",
+      "line": 180,
+      "token": "637.879562",
+      "decimals": 6,
+      "full_line": "mean       637.879562",
+      "obligated_by": {
+        "triggers": [
+          "mean"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "heyblackC/BetterMixture-Top1-Solution",
+      "sha": "1cbeae9360e41fc029c36275071c1300c5181985",
+      "doc": "README.md",
+      "line": 192,
+      "token": "167.052877",
+      "decimals": 6,
+      "full_line": "mean       167.052877",
+      "obligated_by": {
+        "triggers": [
+          "mean"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    },
+    {
+      "repo": "waefrebeorn/GradRetentionNet",
+      "sha": "e7cd38ff845af258b3f296c4b431598c8ee6b13c",
+      "doc": "README.md",
+      "line": 67,
+      "token": "1",
+      "decimals": 0,
+      "full_line": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2_{\\text{grad}}}{\\sigma^2_{\\text{grad}}}\\right)",
+      "obligated_by": {
+        "triggers": [
+          "delta"
+        ],
+        "triggers_corr": [],
+        "n_equals": false
+      }
+    }
+  ],
+  "per_repo": [
+    {
+      "repo": "KMnO4-zx/huanhuan-chat",
+      "sha": "2d6c72909d6c3b35e3435cd7ce5658306737bfbd",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "dataset/output/all_results.json",
+        "dataset/output/train_results.json"
+      ],
+      "tokens": 14,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "DevJadhav/deepseek-from-scratch",
+      "sha": "88d9ee5f8709af3ffaa9a0951c50d5473d45c760",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "ablation_results/all_results.json"
+      ],
+      "tokens": 91,
+      "counts": {
+        "VERIFIED": 16,
+        "ABSTAIN": 75,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "jerryliang24/Drag-and-Drop-LLMs",
+      "sha": "0310b89856f048fc9d39b959721d1e1b62c3b078",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "configs/Qwen1.5/all_results.json",
+        "configs/Qwen7B/all_results.json"
+      ],
+      "tokens": 83,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 83,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "francescovallone/serinus",
+      "sha": "d55cd192265642ed0202bf34cd073898fd4fc72e",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "benchmarks/all_results.json"
+      ],
+      "tokens": 6,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "dwzhu-pku/LongEmbed",
+      "sha": "033dc4a18e2da7b87d0e388c5b975cabe19c2fdc",
+      "status": "NO_PAIR",
+      "docs": 1,
+      "receipts": 0
+    },
+    {
+      "repo": "ShiZhengyan/DePT",
+      "sha": "f0266a774a45c62ce32f159e2182583f1878546c",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "checkpoints/cola/all_results.json",
+        "checkpoints/hotpotqa/all_results.json",
+        "checkpoints/mnli/all_results.json",
+        "checkpoints/mrpc/all_results.json",
+        "checkpoints/newsqa/all_results.json",
+        "checkpoints/nq/all_results.json",
+        "checkpoints/qnli/all_results.json",
+        "checkpoints/qqp/all_results.json",
+        "checkpoints/rte/all_results.json",
+        "checkpoints/searchqa/all_results.json",
+        "checkpoints/sst2/all_results.json",
+        "checkpoints/stsb/all_results.json"
+      ],
+      "tokens": 22,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 4
+      },
+      "verdict": "OATH-FAILED"
+    },
+    {
+      "repo": "pfmonville/whole_history_rating",
+      "sha": "7650c35dc86322a450407a2c8be0f42983d94ae1",
+      "status": "NO_PAIR",
+      "docs": 1,
+      "receipts": 0
+    },
+    {
+      "repo": "CRAFT-THU/RoDe",
+      "sha": "f446e29802015df3d2fd9cc904f4cbe0cce97f3a",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "result/all_results.json"
+      ],
+      "tokens": 1,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "apple/ml-tweak",
+      "sha": "bff9b5a45f67612408d7c0d853bd0f46d43e8ce4",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "src/evaluator/all_results.json"
+      ],
+      "tokens": 79,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 79,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "FanGShiYuu/CoReVLA",
+      "sha": "155f493991509ec421caee5b2afe9b40e3851865",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "checkpoint/all_results.json",
+        "checkpoint/train_results.json"
+      ],
+      "tokens": 21,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 4
+      },
+      "verdict": "OATH-FAILED"
+    },
+    {
+      "repo": "Jyoti-Ranjan-Das845/gaia-nexus-leaderboard",
+      "sha": "97caface78bf449186cf2dfe258f9c355344d5a7",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "results/all_results.json"
+      ],
+      "tokens": 3,
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "tsinghua-fib-lab/Token_Signature",
+      "sha": "767dc78a44b614616d9c786b41a6041fc9657ee0",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "dynamic_cot/All_results.json",
+        "model transfer/All_results.json"
+      ],
+      "tokens": 5,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict": "OATH-HELD"
+    },
+    {
+      "repo": "heyblackC/BetterMixture-Top1-Solution",
+      "sha": "1cbeae9360e41fc029c36275071c1300c5181985",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "output/lora_model/all_results.json",
+        "output/lora_model/train_results.json"
+      ],
+      "tokens": 178,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 174,
+        "UNGROUNDED": 4
+      },
+      "verdict": "OATH-FAILED"
+    },
+    {
+      "repo": "waefrebeorn/GradRetentionNet",
+      "sha": "e7cd38ff845af258b3f296c4b431598c8ee6b13c",
+      "status": "CERTIFIED",
+      "document": "README.md",
+      "receipts": [
+        "results/all_results.json"
+      ],
+      "tokens": 4,
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 1
+      },
+      "verdict": "OATH-FAILED"
+    }
+  ],
+  "elapsed_s": 62.8,
+  "what_this_does_not_show": [
+    "Whether any accusation is CORRECT. Every UNGROUNDED token here is unadjudicated, and the v0.11 cycle exists precisely because four of this lab's own accusations turned out not to be claims at all. The roster is for hand adjudication.",
+    "Any base rate. The sample is a convenience sample of one file-naming idiom.",
+    "Whether OATH is deployable on external documents. That needs a frozen prereg with a false-accusation bar, and this RECON exists to tell that prereg what to freeze."
+  ]
+}

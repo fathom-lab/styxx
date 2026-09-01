@@ -1,0 +1,8 @@
+{
+ "gate": "G-C1 fidelity",
+ "fixtures": 15,
+ "classification_misses": [],
+ "status_fold_cases": 5,
+ "status_fold_misses": [],
+ "pass": true
+}

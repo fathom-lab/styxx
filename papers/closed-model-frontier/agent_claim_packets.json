@@ -1,0 +1,1659 @@
+{
+ "prereg": "PREREG_agent_claim_extractor_baseline_2026_08_30.md",
+ "pin": {
+  "base": "origin/main",
+  "head": "a6994ac",
+  "commits": 57,
+  "sentences": 2824
+ },
+ "counts": {
+  "flagged": 6,
+  "unflagged_remainder": 2818,
+  "sampled": 294,
+  "decoys_per_packet": 30,
+  "packets": 3
+ },
+ "split": {
+  "dev_commits": [
+   "04f7531e6",
+   "112735e7e",
+   "15ccbfffe",
+   "184bcd366",
+   "2286dcb94",
+   "2425572c4",
+   "30f9ddb09",
+   "3cf04f829",
+   "3dda7ee2a",
+   "3f8fd535a",
+   "41eb20b4a",
+   "44bd505f6",
+   "57130d0b4",
+   "58642aaa4",
+   "58b70b3a4",
+   "59c9cd718",
+   "5bc30514a",
+   "68b7b6ba8",
+   "7378d3285",
+   "744285074",
+   "7db0bb275",
+   "8bfd62268",
+   "912e411f5",
+   "936fcf178",
+   "9a7cac719",
+   "9d09ef302",
+   "a6994ac4c",
+   "ab924fbb8",
+   "aef4a402e",
+   "b970dcf99",
+   "c73058623",
+   "ca2218bc5",
+   "e0f8a0eff",
+   "e42503a24",
+   "e932aebad",
+   "eddf6de5a",
+   "f2e7e248c",
+   "f48b0642d"
+  ],
+  "heldout_commits": [
+   "085f5983f",
+   "09026b2d9",
+   "113480e71",
+   "1c18d3869",
+   "20147128a",
+   "5ec4c9eb1",
+   "67412eaed",
+   "76530b433",
+   "77b8c85c3",
+   "801773f5b",
+   "8cb66a448",
+   "96fabd8f9",
+   "9aa580b32",
+   "c937030ad",
+   "eb33de836",
+   "ef9679ac0",
+   "f19bfc834",
+   "f42c9c90b",
+   "f76b5099b"
+  ]
+ },
+ "packets": [
+  {
+   "packet": 1,
+   "n": 130,
+   "sentences": [
+    {
+     "id": "p1-001",
+     "text": "binding at this verifier version."
+    },
+    {
+     "id": "p1-002",
+     "text": "I demoted one unfailable gate before freezing and wrote that counting it"
+    },
+    {
+     "id": "p1-003",
+     "text": "It"
+    },
+    {
+     "id": "p1-004",
+     "text": "That is narrower than \"trust is a measurement\" and considerably more defensible,"
+    },
+    {
+     "id": "p1-005",
+     "text": "That"
+    },
+    {
+     "id": "p1-006",
+     "text": "implementation (DESIGN_epistemics_summary_schema_2026_08_30.md, committed"
+    },
+    {
+     "id": "p1-007",
+     "text": "embedded rubric."
+    },
+    {
+     "id": "p1-008",
+     "text": "recursive; both were iterated to a fixed point before this commit."
+    },
+    {
+     "id": "p1-009",
+     "text": "\"beats\" it while catching one token in eighty-five."
+    },
+    {
+     "id": "p1-010",
+     "text": "firing on the left margin of a pasted describe() table, `score` firing on console"
+    },
+    {
+     "id": "p1-011",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "p1-012",
+     "text": "is reclassified as an ABSENT one and the whole document drops out of the drift"
+    },
+    {
+     "id": "p1-013",
+     "text": "9 new tests."
+    },
+    {
+     "id": "p1-014",
+     "text": "Correlated error is NOT solved."
+    },
+    {
+     "id": "p1-015",
+     "text": "The external cycle found only about half of external OATH-VERIFIED tokens"
+    },
+    {
+     "id": "p1-016",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p1-017",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p1-018",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "p1-019",
+     "text": "corpus papers: 195 certificates, HELD"
+    },
+    {
+     "id": "p1-020",
+     "text": "first -- is the broad-detector catastrophe in its purest form: 501 genuine"
+    },
+    {
+     "id": "p1-021",
+     "text": "On a corpus where the verifier abstains"
+    },
+    {
+     "id": "p1-022",
+     "text": "`OATH_CONTRACT.md` — nine rules, each one learned by getting it wrong, each naming"
+    },
+    {
+     "id": "p1-023",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "p1-024",
+     "text": "place for an omission to hide; a computed one is not."
+    },
+    {
+     "id": "p1-025",
+     "text": "whether it is a CLAIM."
+    },
+    {
+     "id": "p1-026",
+     "text": "The poster stylesheet"
+    },
+    {
+     "id": "p1-027",
+     "text": "including both disclosed failures."
+    },
+    {
+     "id": "p1-028",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "p1-029",
+     "text": "That is mention-versus-use: a predicate that reads a line cannot tell you what the"
+    },
+    {
+     "id": "p1-030",
+     "text": "CAPSTONE_universal_mind cites twelve receipts, eleven"
+    },
+    {
+     "id": "p1-031",
+     "text": "`classify_missing` says WHY an unresolved receipt did not resolve -- absent, or"
+    },
+    {
+     "id": "p1-032",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "p1-033",
+     "text": "prereg rather than as a side effect (it will LOWER a published recall score, which"
+    },
+    {
+     "id": "p1-034",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "p1-035",
+     "text": "guard."
+    },
+    {
+     "id": "p1-036",
+     "text": "history required newline tolerance."
+    },
+    {
+     "id": "p1-037",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    },
+    {
+     "id": "p1-038",
+     "text": "A status column that cannot report a"
+    },
+    {
+     "id": "p1-039",
+     "text": "That turns a"
+    },
+    {
+     "id": "p1-040",
+     "text": "defect this lane has now catalogued nine times."
+    },
+    {
+     "id": "p1-041",
+     "text": "The population boundary is a judgement -- the same kind this"
+    },
+    {
+     "id": "p1-042",
+     "text": "touched here."
+    },
+    {
+     "id": "p1-043",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "p1-044",
+     "text": "handful of documents, and the typical external repository is untouched."
+    },
+    {
+     "id": "p1-045",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "p1-046",
+     "text": "gate returned INVALID__*\" it listed:"
+    },
+    {
+     "id": "p1-047",
+     "text": "in one direction or the other."
+    },
+    {
+     "id": "p1-048",
+     "text": "sibling docs updated by regeneration where their fixtures re-certify."
+    },
+    {
+     "id": "p1-049",
+     "text": "for landing it."
+    },
+    {
+     "id": "p1-050",
+     "text": "\"would have inflated this preregistration's apparent rigour by one.\" It was"
+    },
+    {
+     "id": "p1-051",
+     "text": "inputs to a successor's bars, not results."
+    },
+    {
+     "id": "p1-052",
+     "text": "free-prose field, so it is not a measurement -- the same mention-versus-use defect"
+    },
+    {
+     "id": "p1-053",
+     "text": "the same thing."
+    },
+    {
+     "id": "p1-054",
+     "text": "build."
+    },
+    {
+     "id": "p1-055",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "p1-056",
+     "text": "CONSISTENCY: weighting the join's claim-shares (0.7826 obligated / 0.3654"
+    },
+    {
+     "id": "p1-057",
+     "text": "VERIFIED were judged claims at all."
+    },
+    {
+     "id": "p1-058",
+     "text": "Each mention-only entry records why it is not a"
+    },
+    {
+     "id": "p1-059",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "p1-060",
+     "text": "before   365 certificates  HELD 358  FAILED 7  verdict-drift 4"
+    },
+    {
+     "id": "p1-061",
+     "text": "author, which is why G7 is blind, its ties resolve against the clause, and the"
+    },
+    {
+     "id": "p1-062",
+     "text": "cycle 154 - REWRITTEN"
+    },
+    {
+     "id": "p1-063",
+     "text": "2490 passed, 8 skipped."
+    },
+    {
+     "id": "p1-064",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "p1-065",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "p1-066",
+     "text": "drift entry)."
+    },
+    {
+     "id": "p1-067",
+     "text": "rather than explained afterwards:"
+    },
+    {
+     "id": "p1-068",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "p1-069",
+     "text": "The honest read: the category is not new, and the north star's \"for the whole of"
+    },
+    {
+     "id": "p1-070",
+     "text": "`_obligating_words` reads the raw line, but certify also obligates on"
+    },
+    {
+     "id": "p1-071",
+     "text": "VACUITY."
+    },
+    {
+     "id": "p1-072",
+     "text": "per-arm, with token counts and an obligation-surface"
+    },
+    {
+     "id": "p1-073",
+     "text": "## What is owed"
+    },
+    {
+     "id": "p1-074",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "p1-075",
+     "text": "coincident bindings the dogfood instrument found, with per-token advice."
+    },
+    {
+     "id": "p1-076",
+     "text": "RECON_v13 states the"
+    },
+    {
+     "id": "p1-077",
+     "text": "Scoring out of five would have flattered by choice of"
+    },
+    {
+     "id": "p1-078",
+     "text": "no frozen prereg is the move this lab does not make."
+    },
+    {
+     "id": "p1-079",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p1-080",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "p1-081",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p1-082",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p1-083",
+     "text": "Two of the four items owed after the prior-art survey."
+    },
+    {
+     "id": "p1-084",
+     "text": "negatives count."
+    },
+    {
+     "id": "p1-085",
+     "text": "verifications."
+    },
+    {
+     "id": "p1-086",
+     "text": "metrics.json                      9 repos   287 tok  abst 0.986  acc 0.0139"
+    },
+    {
+     "id": "p1-087",
+     "text": "checked and is silent about coverage, and the silence is not small."
+    },
+    {
+     "id": "p1-088",
+     "text": "none matches."
+    },
+    {
+     "id": "p1-089",
+     "text": "It SWORE AN OATH to them."
+    },
+    {
+     "id": "p1-090",
+     "text": "The pass is scored on what it ADDS."
+    },
+    {
+     "id": "p1-091",
+     "text": "the author and the verifier."
+    },
+    {
+     "id": "p1-092",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "p1-093",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "p1-094",
+     "text": "Four die."
+    },
+    {
+     "id": "p1-095",
+     "text": "now quotes NO census count anywhere -- only verdicts, which are stable under"
+    },
+    {
+     "id": "p1-096",
+     "text": "arXiVeri (Shin, Xie & Albanie, 2023) matches a target table to its cited source"
+    },
+    {
+     "id": "p1-097",
+     "text": "contradictions, and hand-adjudicating all four finds every one is a false"
+    },
+    {
+     "id": "p1-098",
+     "text": "silent-pass benchmark was a silent pass, and nothing in the suite said so,"
+    },
+    {
+     "id": "p1-099",
+     "text": "Published"
+    },
+    {
+     "id": "p1-100",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "p1-101",
+     "text": "that formula in inline-code backticks and the prereg writes it as an indented code"
+    },
+    {
+     "id": "p1-102",
+     "text": "Same broken method -- keyword"
+    },
+    {
+     "id": "p1-103",
+     "text": "author declared decisive that returns anything"
+    },
+    {
+     "id": "p1-104",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "p1-105",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "p1-106",
+     "text": "The pilot"
+    },
+    {
+     "id": "p1-107",
+     "text": "LEXICAL_reporting_verb          0.0235  0.40    0.0     1.0"
+    },
+    {
+     "id": "p1-108",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "p1-109",
+     "text": "That is RECEIPT_NAMES standing in for the class \"machine-readable results"
+    },
+    {
+     "id": "p1-110",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "p1-111",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "p1-112",
+     "text": "INVALID__*, or when its verdict opens by announcing invalids (\"TWO HONEST"
+    },
+    {
+     "id": "p1-113",
+     "text": "table; `delta` on \\Delta inside a LaTeX formula, accusing a mathematical"
+    },
+    {
+     "id": "p1-114",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "p1-115",
+     "text": "TIE DIRECTION."
+    },
+    {
+     "id": "p1-116",
+     "text": "2026-08-27 blind panels: ~1 in 5 volunteered oaths on foreign text land on"
+    },
+    {
+     "id": "p1-117",
+     "text": "drift visible -- and it is wrong."
+    },
+    {
+     "id": "p1-118",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "p1-119",
+     "text": "skip deltas rather than pass/fail."
+    },
+    {
+     "id": "p1-120",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "p1-121",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "p1-122",
+     "text": "Twelve"
+    },
+    {
+     "id": "p1-123",
+     "text": "The population was unsatisfiable the moment it was"
+    },
+    {
+     "id": "p1-124",
+     "text": "corpus papers: 192 certificates, HELD 187 FAILED 5."
+    },
+    {
+     "id": "p1-125",
+     "text": "Two artifacts close that:"
+    },
+    {
+     "id": "p1-126",
+     "text": "supposed to be about."
+    },
+    {
+     "id": "p1-127",
+     "text": "a COST rather than for a class"
+    },
+    {
+     "id": "p1-128",
+     "text": "filter run -- for decimals it never does (v0.8"
+    },
+    {
+     "id": "p1-129",
+     "text": "before collection, that entire arm would simply have been absent, and two"
+    },
+    {
+     "id": "p1-130",
+     "text": "RESULT v0.12: V12_UNDERREACH — the clause could not reach the example its own prereg quotes"
+    }
+   ]
+  },
+  {
+   "packet": 2,
+   "n": 130,
+   "sentences": [
+    {
+     "id": "p2-001",
+     "text": "chart on which every lamp is green is the same genre of lie as a lamp nobody"
+    },
+    {
+     "id": "p2-002",
+     "text": "new prereg changed the corpus and LEDGER.md had not been rebuilt."
+    },
+    {
+     "id": "p2-003",
+     "text": "declared control, and it is deliberately the box the source diagram drew:"
+    },
+    {
+     "id": "p2-004",
+     "text": "Frozen: same question, same tie direction, same seed as the external run."
+    },
+    {
+     "id": "p2-005",
+     "text": "A retraction that lives"
+    },
+    {
+     "id": "p2-006",
+     "text": "## What is owed"
+    },
+    {
+     "id": "p2-007",
+     "text": "OATH-FAILED, accused on the tokens it quotes as examples."
+    },
+    {
+     "id": "p2-008",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "p2-009",
+     "text": "It was"
+    },
+    {
+     "id": "p2-010",
+     "text": "2575 passed, 11 skipped, 3 xfailed."
+    },
+    {
+     "id": "p2-011",
+     "text": "Presentation is"
+    },
+    {
+     "id": "p2-012",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "p2-013",
+     "text": "never were -- PILOT_REPOS was only a flag."
+    },
+    {
+     "id": "p2-014",
+     "text": "empty denominator and was refused by the denominator guard; the loader bound"
+    },
+    {
+     "id": "p2-015",
+     "text": "I did not go looking for this."
+    },
+    {
+     "id": "p2-016",
+     "text": "2.5  `<img src=\"static/readme_examples/...\">` a numeral in an HTML tag"
+    },
+    {
+     "id": "p2-017",
+     "text": "both are the defect class this lane just retracted a headline about: a value"
+    },
+    {
+     "id": "p2-018",
+     "text": "scale the pooled accusation rate is 0.0707 -- nearly THREE TIMES the pilot --"
+    },
+    {
+     "id": "p2-019",
+     "text": "the gate I called the most important negative available."
+    },
+    {
+     "id": "p2-020",
+     "text": "filename standing in for \"machine-readable results file\"."
+    },
+    {
+     "id": "p2-021",
+     "text": "That is"
+    },
+    {
+     "id": "p2-022",
+     "text": "negative control stays clean."
+    },
+    {
+     "id": "p2-023",
+     "text": "The resolver is byte-identical to"
+    },
+    {
+     "id": "p2-024",
+     "text": "That is the correlated-error ceiling disclosed in advance, not"
+    },
+    {
+     "id": "p2-025",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "p2-026",
+     "text": "than argued:"
+    },
+    {
+     "id": "p2-027",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "p2-028",
+     "text": "branch produced every status and whether the token was obligated -- and threw"
+    },
+    {
+     "id": "p2-029",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "p2-030",
+     "text": "nothing: would it find something it should?"
+    },
+    {
+     "id": "p2-031",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "p2-032",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    },
+    {
+     "id": "p2-033",
+     "text": "bound to it, the certificate would be stale in a way the verdict could not"
+    },
+    {
+     "id": "p2-034",
+     "text": "immediately exceeds that floor -- a bare 3 sworn to `aggregated.standard.final_loss`"
+    },
+    {
+     "id": "p2-035",
+     "text": "fault         what is wrong with it, AND THE CITATION IS CHECKED: a"
+    },
+    {
+     "id": "p2-036",
+     "text": "claims extracted              6"
+    },
+    {
+     "id": "p2-037",
+     "text": "its own prereg and panel; a machine-readable verdict token per cycle; and a"
+    },
+    {
+     "id": "p2-038",
+     "text": "\\Delta inside a LaTeX formula, accusing the literal 1 in \\left(1 \\pm ...\\right)."
+    },
+    {
+     "id": "p2-039",
+     "text": "TYPOGRAPHICALLY from a configuration value, before the data was consulted."
+    },
+    {
+     "id": "p2-040",
+     "text": "The rung ladder is untouched."
+    },
+    {
+     "id": "p2-041",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "p2-042",
+     "text": "cards, kept even though bug 1 turned out to be the visible cause -- it is"
+    },
+    {
+     "id": "p2-043",
+     "text": "corpus papers: 186 certificates, HELD 182 FAILED 4,"
+    },
+    {
+     "id": "p2-044",
+     "text": "and must never turn an unresolved receipt into a resolved one."
+    },
+    {
+     "id": "p2-045",
+     "text": "predicate never reads your receipts -- it reads line vocabulary."
+    },
+    {
+     "id": "p2-046",
+     "text": "0    `All scores are in **[0, 1]**`           range notation"
+    },
+    {
+     "id": "p2-047",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "p2-048",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "p2-049",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "p2-050",
+     "text": "corpus the instrument's authors also wrote."
+    },
+    {
+     "id": "p2-051",
+     "text": "styxx/__init__'s exported `certify` FUNCTION instead of the submodule"
+    },
+    {
+     "id": "p2-052",
+     "text": "source change: ALL-GATES-PASS\""
+    },
+    {
+     "id": "p2-053",
+     "text": "differs from what was certified."
+    },
+    {
+     "id": "p2-054",
+     "text": "POSITIONING.md: the value thesis, certified by the product it describes"
+    },
+    {
+     "id": "p2-055",
+     "text": "mismatch reclassified as absence, and a downstream check then passes over nothing,"
+    },
+    {
+     "id": "p2-056",
+     "text": "Result: 1200x1146, ratio 0.95, zero horizontal overflow, footer inside the"
+    },
+    {
+     "id": "p2-057",
+     "text": "queue."
+    },
+    {
+     "id": "p2-058",
+     "text": "54 commits authored by an AI agent, every message gated with"
+    },
+    {
+     "id": "p2-059",
+     "text": "Now re-certified"
+    },
+    {
+     "id": "p2-060",
+     "text": "honestly rather than defensively."
+    },
+    {
+     "id": "p2-061",
+     "text": "The refuters also REFUTED an escalation worth recording: the claim that"
+    },
+    {
+     "id": "p2-062",
+     "text": "predicate's taste -- it is that the affirmative attestation ignores the"
+    },
+    {
+     "id": "p2-063",
+     "text": "Any future attempt should"
+    },
+    {
+     "id": "p2-064",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "p2-065",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p2-066",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "p2-067",
+     "text": "It is the same defect RECON_oath_external_reach_2026_08_26.md"
+    },
+    {
+     "id": "p2-068",
+     "text": "A diagram whose figures are transcribed by"
+    },
+    {
+     "id": "p2-069",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "p2-070",
+     "text": "nobody asked."
+    },
+    {
+     "id": "p2-071",
+     "text": "protocol: it compares candidate RULES on a shared frame, and there is one"
+    },
+    {
+     "id": "p2-072",
+     "text": "makes about itself rests on OATH-HELD certificates over its own papers."
+    },
+    {
+     "id": "p2-073",
+     "text": "it."
+    },
+    {
+     "id": "p2-074",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "p2-075",
+     "text": "Query 2, also a pilot query,"
+    },
+    {
+     "id": "p2-076",
+     "text": "deliberate fix; and the per-entry assertion caught the v0.11/v0.12 early"
+    },
+    {
+     "id": "p2-077",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "p2-078",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "p2-079",
+     "text": "That reframing is worth nothing unless someone outside this lab can act on it, and"
+    },
+    {
+     "id": "p2-080",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "p2-081",
+     "text": "repository content:"
+    },
+    {
+     "id": "p2-082",
+     "text": "What a structural candidate should read instead is not proposed here"
+    },
+    {
+     "id": "p2-083",
+     "text": "on LF bytes the old comparator matched 0 of 4 receipts and the new one matches 4"
+    },
+    {
+     "id": "p2-084",
+     "text": "and a false verification is worse than a false accusation, because the"
+    },
+    {
+     "id": "p2-085",
+     "text": "receipt-drift 0, incomplete 1, receipt-changed 1 -- matching the expected"
+    },
+    {
+     "id": "p2-086",
+     "text": "Second finding, free: this note is itself OATH-FAILED, and is published that way"
+    },
+    {
+     "id": "p2-087",
+     "text": "Its phantom twin made two candidates out"
+    },
+    {
+     "id": "p2-088",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "p2-089",
+     "text": "1."
+    },
+    {
+     "id": "p2-090",
+     "text": "The frozen"
+    },
+    {
+     "id": "p2-091",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p2-092",
+     "text": "The question text says so explicitly so adjudicators use UNSURE"
+    },
+    {
+     "id": "p2-093",
+     "text": "the RESULT's one-line lesson was: freeze the bar against the thing you are going to"
+    },
+    {
+     "id": "p2-094",
+     "text": "- Keeping the contract does NOT fix this."
+    },
+    {
+     "id": "p2-095",
+     "text": "I changed how papers/build_ledger.py classifies a machinery refusal and shipped it"
+    },
+    {
+     "id": "p2-096",
+     "text": "cannot fail must not gate\" -- it refuses a prereg whose gate no outcome row"
+    },
+    {
+     "id": "p2-097",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "p2-098",
+     "text": "Only 127 tokens across 60"
+    },
+    {
+     "id": "p2-099",
+     "text": "is 100% accused tokens: membership leaks the verdict."
+    },
+    {
+     "id": "p2-100",
+     "text": "on the formula it quotes as its own specimen."
+    },
+    {
+     "id": "p2-101",
+     "text": "number, because it is the one that separates calibrated restraint from"
+    },
+    {
+     "id": "p2-102",
+     "text": "alternative is re-recording every certificate from normalised bytes, which is a"
+    },
+    {
+     "id": "p2-103",
+     "text": "affirmative attestation is the entire product."
+    },
+    {
+     "id": "p2-104",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "p2-105",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "p2-106",
+     "text": "results.json                      7 repos   119 tok  (n<200, no comparison)"
+    },
+    {
+     "id": "p2-107",
+     "text": "It is now cancelled, on measurement,"
+    },
+    {
+     "id": "p2-108",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "p2-109",
+     "text": "receipts can be mechanically held to them by anyone, without trusting the author."
+    },
+    {
+     "id": "p2-110",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "p2-111",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "p2-112",
+     "text": "Tenth instance, and it"
+    },
+    {
+     "id": "p2-113",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "p2-114",
+     "text": "styxx-org-poster.png committed as the shareable asset; poster.html is"
+    },
+    {
+     "id": "p2-115",
+     "text": "The pilot reported abstain 0.9408 and 13 accusations over 507 tokens"
+    },
+    {
+     "id": "p2-116",
+     "text": "the certificate's own epistemics_summary; no re-derivation."
+    },
+    {
+     "id": "p2-117",
+     "text": "v0.11's equivalent gate passed vacuously on an empty list until an adversarial"
+    },
+    {
+     "id": "p2-118",
+     "text": "Stated against myself in the text:"
+    },
+    {
+     "id": "p2-119",
+     "text": "effect -- which is the only reason it was found, and an argument for reading"
+    },
+    {
+     "id": "p2-120",
+     "text": "committed."
+    },
+    {
+     "id": "p2-121",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "p2-122",
+     "text": "Re-running after drafting one section moved two of three"
+    },
+    {
+     "id": "p2-123",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "p2-124",
+     "text": "OATH_CONTRACT.md rule 3 published the SAME falsehood as a numbered rule of the"
+    },
+    {
+     "id": "p2-125",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p2-126",
+     "text": "does."
+    },
+    {
+     "id": "p2-127",
+     "text": "inertness."
+    },
+    {
+     "id": "p2-128",
+     "text": "Five naive syntactic candidates scored over 1,482 Python files on what each"
+    },
+    {
+     "id": "p2-129",
+     "text": "The"
+    },
+    {
+     "id": "p2-130",
+     "text": "written this morning, which is why the v0.11 \"certified frame\" is 140 documents"
+    }
+   ]
+  },
+  {
+   "packet": 3,
+   "n": 130,
+   "sentences": [
+    {
+     "id": "p3-001",
+     "text": "Licenses nothing: no clause, no bar, no repair, no version bump."
+    },
+    {
+     "id": "p3-002",
+     "text": "cbd2864 before styxx/certify.py was touched."
+    },
+    {
+     "id": "p3-003",
+     "text": "That is the structural difference"
+    },
+    {
+     "id": "p3-004",
+     "text": "CENSUS: the formula-constant class at SPAN level — the measurement v0.12 should have had"
+    },
+    {
+     "id": "p3-005",
+     "text": "nothing."
+    },
+    {
+     "id": "p3-006",
+     "text": "Rebuilt tests/test_atlas_seam.py after the seam split."
+    },
+    {
+     "id": "p3-007",
+     "text": "AND THE POOLED RATE IS NOT A PROPERTY OF EXTERNAL PROSE."
+    },
+    {
+     "id": "p3-008",
+     "text": "Only touches files under styxx/compliance/."
+    },
+    {
+     "id": "p3-009",
+     "text": "The column SEPARATES."
+    },
+    {
+     "id": "p3-010",
+     "text": "Row 6 read NO_PAIR as \"almost nobody publishes"
+    },
+    {
+     "id": "p3-011",
+     "text": "oathready: wire the volunteered block into the report tail"
+    },
+    {
+     "id": "p3-012",
+     "text": "were checkable claims -- reported medians, preregistered quantities, pass"
+    },
+    {
+     "id": "p3-013",
+     "text": "OMISSION."
+    },
+    {
+     "id": "p3-014",
+     "text": "Same contract as"
+    },
+    {
+     "id": "p3-015",
+     "text": "bad value is not reporting a good one either."
+    },
+    {
+     "id": "p3-016",
+     "text": "The clause is a status-level ABSTAIN with the reason row_ordinal_label at the"
+    },
+    {
+     "id": "p3-017",
+     "text": "Renamed the guard and updated styxx/vitals.py to import it from the new home."
+    },
+    {
+     "id": "p3-018",
+     "text": "bound       grounds at a leaf whose path relates to the line."
+    },
+    {
+     "id": "p3-019",
+     "text": "the abstained band as \"checkable claims the verifier declined to examine\","
+    },
+    {
+     "id": "p3-020",
+     "text": "Created papers/frontier/RECON_seat_drift_2026_07_12.md with the full seat-drift table."
+    },
+    {
+     "id": "p3-021",
+     "text": "Unanimity held at 0.97 across both packets."
+    },
+    {
+     "id": "p3-022",
+     "text": "The panel adjudicated 41 of 50 as claims."
+    },
+    {
+     "id": "p3-023",
+     "text": "Co-Authored-By: Claude Opus 4 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p3-024",
+     "text": "are STAGES: freeze -> red team -> collect -> adjudicate -> certify ->"
+    },
+    {
+     "id": "p3-025",
+     "text": "Modified styxx/provenance.py to thread the salt through both hashers."
+    },
+    {
+     "id": "p3-026",
+     "text": "The drift entry names mind_v1_probe.json and nothing else."
+    },
+    {
+     "id": "p3-027",
+     "text": "worse failure than invisibility and is the precise failure this programme exists"
+    },
+    {
+     "id": "p3-028",
+     "text": "20 repos/query x 7 queries = 140 > 120 total cap."
+    },
+    {
+     "id": "p3-029",
+     "text": "styxx/vitals.py had not been rebuilt when the sweep fired."
+    },
+    {
+     "id": "p3-030",
+     "text": "inside and outside a corpus written to keep it, because the obligation"
+    },
+    {
+     "id": "p3-031",
+     "text": "Published because"
+    },
+    {
+     "id": "p3-032",
+     "text": "Other amendments, each a defect in what I had written:"
+    },
+    {
+     "id": "p3-033",
+     "text": "against the clause, and the accusations \"look false to their author\", which is"
+    },
+    {
+     "id": "p3-034",
+     "text": "Nominal verifications destroyed: ZERO for every surviving candidate."
+    },
+    {
+     "id": "p3-035",
+     "text": "THE OTHER EIGHT WERE"
+    },
+    {
+     "id": "p3-036",
+     "text": "citation pointing at a path that does not exist."
+    },
+    {
+     "id": "p3-037",
+     "text": "TWO of the seven score that column against"
+    },
+    {
+     "id": "p3-038",
+     "text": "claim sit on a truncated line (the drift found today); know that QUOTING a number"
+    },
+    {
+     "id": "p3-039",
+     "text": "certify: collapse the ladder's third rung into spec-or-historical"
+    },
+    {
+     "id": "p3-040",
+     "text": "quantified over \"the five new queries\" when only four could ever run."
+    },
+    {
+     "id": "p3-041",
+     "text": "obligates via the AUC trigger); the whole affirmative case is one formula"
+    },
+    {
+     "id": "p3-042",
+     "text": "standing in for \"this token is a checked claim\"."
+    },
+    {
+     "id": "p3-043",
+     "text": "Base rate of claims among abstained tokens: 0.4009."
+    },
+    {
+     "id": "p3-044",
+     "text": "does pointed at prose never written to carry receipts -- 94% abstention and 13 of"
+    },
+    {
+     "id": "p3-045",
+     "text": "mind_v0_validation.json -- is present in the tree with content that is not"
+    },
+    {
+     "id": "p3-046",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p3-047",
+     "text": "Every row is reachable: v_int is unconstrained by the sampling rule, and the"
+    },
+    {
+     "id": "p3-048",
+     "text": "are downstream of the failed gate."
+    },
+    {
+     "id": "p3-049",
+     "text": "sentences out of 2,738"
+    },
+    {
+     "id": "p3-050",
+     "text": "2311 passed, 9 skipped on the full suite."
+    },
+    {
+     "id": "p3-051",
+     "text": "This scores the alternative."
+    },
+    {
+     "id": "p3-052",
+     "text": "put a lamp on every box reading ONLINE or BOOTING."
+    },
+    {
+     "id": "p3-053",
+     "text": "BLOCKER 1 -- the tool called an unchecked binding a kept contract."
+    },
+    {
+     "id": "p3-054",
+     "text": "That is what a rule has"
+    },
+    {
+     "id": "p3-055",
+     "text": "G4 requires"
+    },
+    {
+     "id": "p3-056",
+     "text": "scrolling page behind an unfamiliar domain collapses to a link card in a"
+    },
+    {
+     "id": "p3-057",
+     "text": "re-certification at the pinned verifier."
+    },
+    {
+     "id": "p3-058",
+     "text": "The stored certificate for RECON_reach_2026_06_30.md is present in the tree with drifted content."
+    },
+    {
+     "id": "p3-059",
+     "text": "to check, how much was a checkable claim."
+    },
+    {
+     "id": "p3-060",
+     "text": "and in both runs what adjudicators actually received is the workflow's"
+    },
+    {
+     "id": "p3-061",
+     "text": "except: pass|continue               327 sites   reaches 1   327 per reach"
+    },
+    {
+     "id": "p3-062",
+     "text": "anything against that column until the frame covers the documents it is"
+    },
+    {
+     "id": "p3-063",
+     "text": "READS the field, so status can never come to depend on it silently."
+    },
+    {
+     "id": "p3-064",
+     "text": "-- notes from the week-two retro, kept verbatim"
+    },
+    {
+     "id": "p3-065",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p3-066",
+     "text": "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+    },
+    {
+     "id": "p3-067",
+     "text": "packets: partition the corpus by seeded shuffle"
+    },
+    {
+     "id": "p3-068",
+     "text": "Second, and this is what the corpus column bought: S5 reaches all six but touches"
+    },
+    {
+     "id": "p3-069",
+     "text": "The ledger now reads"
+    },
+    {
+     "id": "p3-070",
+     "text": "Resolving one whose content does not match would certify a"
+    },
+    {
+     "id": "p3-071",
+     "text": "Dropped the dead import from styxx/diffgate.py."
+    },
+    {
+     "id": "p3-072",
+     "text": "whole document is about getting wrong -- so seventeen is an order of"
+    },
+    {
+     "id": "p3-073",
+     "text": "Extended scripts/sweep_runner.py so the sweep resumes from a pinned sha."
+    },
+    {
+     "id": "p3-074",
+     "text": "now covers both build outputs and the screenshot pattern so the next"
+    },
+    {
+     "id": "p3-075",
+     "text": "Unblock the CI work that never actually needed a workflow token"
+    },
+    {
+     "id": "p3-076",
+     "text": "claims), so it fails the same test the v0.13 gates did -- but REPORTING the"
+    },
+    {
+     "id": "p3-077",
+     "text": "The reference is"
+    },
+    {
+     "id": "p3-078",
+     "text": "a negative is the product too, and this one is unusually clean."
+    },
+    {
+     "id": "p3-079",
+     "text": "does."
+    },
+    {
+     "id": "p3-080",
+     "text": "accused on line 23, on the digits of the formula it quotes as the specimen the"
+    },
+    {
+     "id": "p3-081",
+     "text": "A candidate can beat a control on a COST column by doing almost"
+    },
+    {
+     "id": "p3-082",
+     "text": "else is an accusation, and in strict mode an"
+    },
+    {
+     "id": "p3-083",
+     "text": "Added 4 tests covering the empty-receipt path."
+    },
+    {
+     "id": "p3-084",
+     "text": "math span containing a backslash command, value-blind, never non-extraction."
+    },
+    {
+     "id": "p3-085",
+     "text": "the numbers this verifier chose to obligate, it could bind to a receipt"
+    },
+    {
+     "id": "p3-086",
+     "text": "At n=366 across seven query families the rate is 0.2596."
+    },
+    {
+     "id": "p3-087",
+     "text": "the COST side, run discriminates with share_of_control READ, state a"
+    },
+    {
+     "id": "p3-088",
+     "text": "documents can move, and every one becomes an ACCUSATION."
+    },
+    {
+     "id": "p3-089",
+     "text": "Close the parked CAPSTONE receipt drift: what changed, and what depended on it"
+    },
+    {
+     "id": "p3-090",
+     "text": "The bar structure outranks the retraction."
+    },
+    {
+     "id": "p3-091",
+     "text": "THE POSITIVE CONTROL IS THE ARGUMENT."
+    },
+    {
+     "id": "p3-092",
+     "text": "Process receipts: a second adjudicator, blind to the prior panel and to the"
+    },
+    {
+     "id": "p3-093",
+     "text": "Adds function fold_epistemics to the audit surface."
+    },
+    {
+     "id": "p3-094",
+     "text": "Licenses no fix."
+    },
+    {
+     "id": "p3-095",
+     "text": "before a preregistration was frozen -- which is the whole point of doing the"
+    },
+    {
+     "id": "p3-096",
+     "text": "## What is owed"
+    },
+    {
+     "id": "p3-097",
+     "text": "Rewrote the fold in styxx/corpus_audit.py; the ledger path is untouched."
+    },
+    {
+     "id": "p3-098",
+     "text": "The volunteered rate landed at 0.6102 on the re-run."
+    },
+    {
+     "id": "p3-099",
+     "text": "First, S1 and S4 reach NOTHING."
+    },
+    {
+     "id": "p3-100",
+     "text": "case-sensitive basename set, so the collector then refuses that same file."
+    },
+    {
+     "id": "p3-101",
+     "text": "Withdraw \"every accusation it made was false\" wherever it is published"
+    },
+    {
+     "id": "p3-102",
+     "text": "CI came back 7/7 green on the push."
+    },
+    {
+     "id": "p3-103",
+     "text": "inside HTML tags are carrying OATH-VERIFIED because a value matched a receipt"
+    },
+    {
+     "id": "p3-104",
+     "text": "Two deliberately LEXICAL rules were included as a control on the census's"
+    },
+    {
+     "id": "p3-105",
+     "text": "3 files changed, all under tests/."
+    },
+    {
+     "id": "p3-106",
+     "text": "output, and -- the purest specimen this lab has produced -- `delta` firing on"
+    },
+    {
+     "id": "p3-107",
+     "text": "before any design; and the cheap partial fix that is not a detector at all --"
+    },
+    {
+     "id": "p3-108",
+     "text": "Reproduced exactly: \"The sycophancy rate was 0.5 on the held-out split.\""
+    },
+    {
+     "id": "p3-109",
+     "text": "that the repo was right and I was not."
+    },
+    {
+     "id": "p3-110",
+     "text": "A verification says \"I have checked"
+    },
+    {
+     "id": "p3-111",
+     "text": "external         0.7826  (18/23)        0.3654  (19/52)"
+    },
+    {
+     "id": "p3-112",
+     "text": "verification sworn to an array index or a seed is a gain wearing a loss's clothes:"
+    },
+    {
+     "id": "p3-113",
+     "text": "they return is a literature review of the reviewer's priors."
+    },
+    {
+     "id": "p3-114",
+     "text": "tests/test_atlas_seam.py had been rebuilt in the prior cycle."
+    },
+    {
+     "id": "p3-115",
+     "text": "corpus_audit.py already restores the shadow at import time, so the fold sees the submodule."
+    },
+    {
+     "id": "p3-116",
+     "text": "The motivation was never coverage for its own sake."
+    },
+    {
+     "id": "p3-117",
+     "text": "sentence was arithmetically false when written."
+    },
+    {
+     "id": "p3-118",
+     "text": "NOT that a detector is feasible: nothing was built, and the"
+    },
+    {
+     "id": "p3-119",
+     "text": "Put to a blind panel,"
+    },
+    {
+     "id": "p3-120",
+     "text": "feed with the payload below the fold."
+    },
+    {
+     "id": "p3-121",
+     "text": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md: committed OATH-HELD"
+    },
+    {
+     "id": "p3-122",
+     "text": "that are not in the corpus."
+    },
+    {
+     "id": "p3-123",
+     "text": "Read straight off"
+    },
+    {
+     "id": "p3-124",
+     "text": "Yesterday's survey was one reader and one afternoon, and I said so."
+    },
+    {
+     "id": "p3-125",
+     "text": "was \"almost no vocabulary that separates the two\"."
+    },
+    {
+     "id": "p3-126",
+     "text": "cycle 134 - PRODUCT"
+    },
+    {
+     "id": "p3-127",
+     "text": "Whether those 366 are catches"
+    },
+    {
+     "id": "p3-128",
+     "text": "Deleted styxx/oldpanel.py and folded its two callers into cli.py."
+    },
+    {
+     "id": "p3-129",
+     "text": "FINDING_seat_drift_2026_07_12.md: committed OATH-HELD"
+    },
+    {
+     "id": "p3-130",
+     "text": "SP-1 from our own benchmarks/silent_pass/CORPUS.md, sitting in our own"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+From 518f7df5581785e0c36cba97c864ea62c3f2e190 Mon Sep 17 00:00:00 2001
+From: darkflobi <darkflobi@darkcity.wtf>
+Date: Tue, 18 Aug 2026 22:13:47 -0400
+Subject: [PATCH] ci (LOCAL until a workflow-scoped token exists): telescope
+ skip path -- key check before setup-python, cache post-step gated
+
+The no-keys path was red daily 08-15..08-18: setup-python's cache:'pip' post-job
+step errors when pip never runs. Reorder so setup-python only runs when keys exist.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ .github/workflows/telescope.yml | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/.github/workflows/telescope.yml b/.github/workflows/telescope.yml
+index 07c759d..c22d85d 100644
+--- a/.github/workflows/telescope.yml
++++ b/.github/workflows/telescope.yml
+@@ -40,15 +40,14 @@ jobs:
+     steps:
+       - uses: actions/checkout@v4
+ 
+-      - uses: actions/setup-python@v5
+-        with:
+-          python-version: '3.12'
+-          cache: 'pip'
+-
+       # No vendor keys configured is an expected CONFIGURATION state, not a failure — skip green with a
+       # notice instead of red-Xing the repo daily. The schedule stays armed: add any TELESCOPE_* secret and
+       # the next run scores for real. (run.py exiting 1 on "no usable models" is correct CLI behavior; the
+       # skip belongs here, at the config layer.)
++      #
++      # This check MUST precede setup-python: with cache:'pip', setup-python's post-job step
++      # errors ("Cache folder path ... doesn't exist on disk") when pip never runs, which
++      # red-Xed the skip path daily from 08-15 to 08-18 despite the green notice.
+       - name: check vendor keys
+         id: keys
+         env:
+@@ -63,6 +62,12 @@ jobs:
+             echo "present=true" >> "$GITHUB_OUTPUT"
+           fi
+ 
++      - uses: actions/setup-python@v5
++        if: steps.keys.outputs.present == 'true'
++        with:
++          python-version: '3.12'
++          cache: 'pip'
++
+       - name: install deps
+         if: steps.keys.outputs.present == 'true'
+         run: |
+-- 
+2.52.0.windows.1
+

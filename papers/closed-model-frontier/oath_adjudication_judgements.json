@@ -1,0 +1,8867 @@
+[
+ {
+  "id": "T0559",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0311",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0282",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0199",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0567",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0298",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0438",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0263",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0239",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0157",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0133",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0586",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0059",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0079",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0412",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0489",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0401",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0546",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0464",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0173",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0280",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0293",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0539",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0014",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0393",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0559",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0311",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0282",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0199",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0567",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0298",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0438",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0263",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0239",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0157",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0133",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0586",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0059",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0079",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0412",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0489",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0401",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0546",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0464",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0173",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0280",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0293",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0539",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0014",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0393",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0559",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0311",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0282",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0199",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0567",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0298",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0438",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0263",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0239",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0157",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0133",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0586",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0059",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0079",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0412",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0489",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0401",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0546",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0464",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0173",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0280",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0293",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0539",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0014",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0393",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0179",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0287",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0468",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0243",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0442",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0235",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0571",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0015",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0391",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0460",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0221",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0230",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0104",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0445",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0432",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0020",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0085",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0370",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0548",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0288",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0441",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0417",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0193",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0162",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0319",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0179",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0287",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0468",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0243",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0442",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0235",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0571",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0015",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0391",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0460",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0221",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0230",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0104",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0445",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0432",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0020",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0085",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0370",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0548",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0288",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0441",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0417",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0193",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0162",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0319",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0179",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0287",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0468",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0243",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0442",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0235",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0571",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0015",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0391",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0460",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0221",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0230",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0104",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0445",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0432",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0020",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0085",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0370",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0548",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0288",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0441",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0417",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0193",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0162",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0319",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0152",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0436",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0364",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0032",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0070",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0189",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0011",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0479",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0378",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0106",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0587",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0462",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0108",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0208",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0346",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0345",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0278",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0555",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0517",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0127",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0520",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0428",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0508",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0136",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0410",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0152",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0436",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0364",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0032",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0070",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0189",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0011",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0479",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0378",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0106",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0587",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0462",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0108",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0208",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0346",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0345",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0278",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0555",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0517",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0127",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0520",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0428",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0508",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0136",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0410",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0152",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0436",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0364",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0032",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0070",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0189",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0011",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0479",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0378",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0106",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0587",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0462",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0108",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0208",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0346",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0345",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0278",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0555",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0517",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0127",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0520",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0428",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0508",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0136",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0410",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0469",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0590",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0313",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0244",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0027",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0314",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0038",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0297",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0100",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0039",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0574",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0254",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0455",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0238",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0005",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0143",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0405",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0408",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0580",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0048",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0126",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0474",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0506",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0056",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0353",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0469",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0590",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0313",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0244",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0027",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0314",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0038",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0297",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0100",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0039",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0574",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0254",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0455",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0238",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0005",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0143",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0405",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0408",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0580",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0048",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0126",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0474",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0506",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0056",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0353",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0469",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0590",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0313",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0244",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0027",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0314",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0038",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0297",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0100",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0039",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0574",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0254",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0455",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0238",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0005",
+  "verdict": "UNSURE",
+  "seat": 2
+ },
+ {
+  "id": "T0143",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0405",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0408",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0580",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0048",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0126",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0474",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0506",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0056",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0353",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0371",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0232",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0501",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0046",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0355",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0053",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0343",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0566",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0276",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0409",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0332",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0537",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0331",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0561",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0042",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0240",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0471",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0117",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0386",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0283",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0093",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0211",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0270",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0023",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0325",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0371",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0232",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0501",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0046",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0355",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0053",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0343",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0566",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0276",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0409",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0332",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0537",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0331",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0561",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0042",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0240",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0471",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0117",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0386",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0283",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0093",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0211",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0270",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0023",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0325",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0371",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0232",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0501",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0046",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0355",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0053",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0343",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0566",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0276",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0409",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0332",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0537",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0331",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0561",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0042",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0240",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0471",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0117",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0386",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0283",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0093",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0211",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0270",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0023",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0325",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0373",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0327",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0358",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0250",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0140",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0296",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0130",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0159",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0185",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0281",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0051",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0062",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0099",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0535",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0231",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0329",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0379",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0473",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0530",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0466",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0337",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0275",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0228",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0073",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0389",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0373",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0327",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0358",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0250",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0140",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0296",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0130",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0159",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0185",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0281",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0051",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0062",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0099",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0535",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0231",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0329",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0379",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0473",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0530",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0466",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0337",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0275",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0228",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0073",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0389",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0373",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0327",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0358",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0250",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0140",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0296",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0130",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0159",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0185",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0281",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0051",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0062",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0099",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0535",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0231",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0329",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0379",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0473",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0530",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0466",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0337",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0275",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0228",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0073",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0389",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0359",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0377",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0072",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0339",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0533",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0138",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0356",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0496",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0146",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0507",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0129",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0277",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0450",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0440",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0418",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0521",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0111",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0176",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0017",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0585",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0205",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0505",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0202",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0472",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0156",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0359",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0377",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0072",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0339",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0533",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0138",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0356",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0496",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0146",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0507",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0129",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0277",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0450",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0440",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0418",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0521",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0111",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0176",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0017",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0585",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0205",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0505",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0202",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0472",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0156",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0359",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0377",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0072",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0339",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0533",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0138",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0356",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0496",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0146",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0507",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0129",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0277",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0450",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0440",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0418",
+  "verdict": "UNSURE",
+  "seat": 2
+ },
+ {
+  "id": "T0521",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0111",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0176",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0017",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0585",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0205",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0505",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0202",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0472",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0156",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0444",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0161",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0380",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0422",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0096",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0516",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0124",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0357",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0480",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0310",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0573",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0413",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0335",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0082",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0077",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0234",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0376",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0522",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0334",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0300",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0216",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0213",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0510",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0400",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0562",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0444",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0161",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0380",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0422",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0096",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0516",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0124",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0357",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0480",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0310",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0573",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0413",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0335",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0082",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0077",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0234",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0376",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0522",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0334",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0300",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0216",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0213",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0510",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0400",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0562",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0444",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0161",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0380",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0422",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0096",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0516",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0124",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0357",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0480",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0310",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0573",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0413",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0335",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0082",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0077",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0234",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0376",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0522",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0334",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0300",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0216",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0213",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0510",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0400",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0562",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0560",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0266",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0342",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0425",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0301",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0326",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0463",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0577",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0279",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0002",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0541",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0195",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0518",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0095",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0116",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0509",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0150",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0406",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0006",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0021",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0333",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0010",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0225",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0411",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0299",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0560",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0266",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0342",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0425",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0301",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0326",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0463",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0577",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0279",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0002",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0541",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0195",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0518",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0095",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0116",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0509",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0150",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0406",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0006",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0021",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0333",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0010",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0225",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0411",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0299",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0560",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0266",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0342",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0425",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0301",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0326",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0463",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0577",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0279",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0002",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0541",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0195",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0518",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0095",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0116",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0509",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0150",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0406",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0006",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0021",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0333",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0010",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0225",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0411",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0299",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0076",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0047",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0416",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0519",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0291",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0094",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0248",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0404",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0110",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0538",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0091",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0553",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0503",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0431",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0069",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0504",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0188",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0348",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0309",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0249",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0212",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0528",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0424",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0532",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0556",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0076",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0047",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0416",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0519",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0291",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0094",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0248",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0404",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0110",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0538",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0091",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0553",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0503",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0431",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0069",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0504",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0188",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0348",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0309",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0249",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0212",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0528",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0424",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0532",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0556",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0076",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0047",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0416",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0519",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0291",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0094",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0248",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0404",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0110",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0538",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0091",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0553",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0503",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0431",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0069",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0504",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0188",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0348",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0309",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0249",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0212",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0528",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0424",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0532",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0556",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0083",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0447",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0338",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0227",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0194",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0547",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0118",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0078",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0089",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0131",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0419",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0576",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0493",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0220",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0273",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0262",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0215",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0305",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0242",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0390",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0066",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0524",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0043",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0055",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0029",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0083",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0447",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0338",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0227",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0194",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0547",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0118",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0078",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0089",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0131",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0419",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0576",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0493",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0220",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0273",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0262",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0215",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0305",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0242",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0390",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0066",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0524",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0043",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0055",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0029",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0083",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0447",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0338",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0227",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0194",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0547",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0118",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0078",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0089",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0131",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0419",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0576",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0493",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0220",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0273",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0262",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0215",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0305",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0242",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0390",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0066",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0524",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0043",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0055",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0029",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0557",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0147",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0182",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0482",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0360",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0267",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0260",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0487",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0365",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0584",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0286",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0265",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0151",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0304",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0052",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0128",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0068",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0241",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0570",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0439",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0399",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0307",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0142",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0542",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0160",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0557",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0147",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0182",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0482",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0360",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0267",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0260",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0487",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0365",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0584",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0286",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0265",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0151",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0304",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0052",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0128",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0068",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0241",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0570",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0439",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0399",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0307",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0142",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0542",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0160",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0557",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0147",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0182",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0482",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0360",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0267",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0260",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0487",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0365",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0584",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0286",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0265",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0151",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0304",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0052",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0128",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0068",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0241",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0570",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0439",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0399",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0307",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0142",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0542",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0160",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0060",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0041",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0558",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0141",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0081",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0222",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0097",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0057",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0030",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0415",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0449",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0135",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0459",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0540",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0102",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0155",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0233",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0168",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0075",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0040",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0437",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0461",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0403",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0003",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0121",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0060",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0041",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0558",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0141",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0081",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0222",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0097",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0057",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0030",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0415",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0449",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0135",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0459",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0540",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0102",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0155",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0233",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0168",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0075",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0040",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0437",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0461",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0403",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0003",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0121",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0060",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0041",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0558",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0141",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0081",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0222",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0097",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0057",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0030",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0415",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0449",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0135",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0459",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0540",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0102",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0155",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0233",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0168",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0075",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0040",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0437",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0461",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0403",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0003",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0121",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0180",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0499",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0352",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0384",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0294",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0383",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0105",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0361",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0088",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0144",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0170",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0137",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0074",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0457",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0175",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0218",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0443",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0190",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0214",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0172",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0103",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0549",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0526",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0167",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0026",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0180",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0499",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0352",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0384",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0294",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0383",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0105",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0361",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0088",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0144",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0170",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0137",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0074",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0457",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0175",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0218",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0443",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0190",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0214",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0172",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0103",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0549",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0526",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0167",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0026",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0180",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0499",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0352",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0384",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0294",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0383",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0105",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0361",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0088",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0144",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0170",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0137",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0074",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0457",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0175",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0218",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0443",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0190",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0214",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0172",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0103",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0549",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0526",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0167",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0026",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0001",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0084",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0363",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0217",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0201",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0257",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0476",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0452",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0302",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0488",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0122",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0092",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0336",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0369",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0245",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0303",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0324",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0004",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0306",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0397",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0204",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0025",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0264",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0583",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0058",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0001",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0084",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0363",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0217",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0201",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0257",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0476",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0452",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0302",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0488",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0122",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0092",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0336",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0369",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0245",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0303",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0324",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0004",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0306",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0397",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0204",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0025",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0264",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0583",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0058",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0001",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0084",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0363",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0217",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0201",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0257",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0476",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0452",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0302",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0488",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0122",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0092",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0336",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0369",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0245",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0303",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0324",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0004",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0306",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0397",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0204",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0025",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0264",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0583",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0058",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0434",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0022",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0187",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0414",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0134",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0578",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0381",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0465",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0109",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0268",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0246",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0395",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0098",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0375",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0149",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0063",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0374",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0495",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0454",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0255",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0350",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0312",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0018",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0045",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0080",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0434",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0022",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0187",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0414",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0134",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0578",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0381",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0465",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0109",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0268",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0246",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0395",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0098",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0375",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0149",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0063",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0374",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0495",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0454",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0255",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0350",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0312",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0018",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0045",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0080",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0434",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0022",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0187",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0414",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0134",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0578",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0381",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0465",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0109",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0268",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0246",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0395",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0098",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0375",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0149",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0063",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0374",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0495",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0454",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0255",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0350",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0312",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0018",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0045",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0080",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0388",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0178",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0112",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0347",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0019",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0534",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0582",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0295",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0028",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0292",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0259",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0154",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0341",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0502",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0382",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0087",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0367",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0550",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0236",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0565",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0086",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0065",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0016",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0012",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0387",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0388",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0178",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0112",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0347",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0019",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0534",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0582",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0295",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0028",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0292",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0259",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0154",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0341",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0502",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0382",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0087",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0367",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0550",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0236",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0565",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0086",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0065",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0016",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0012",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0387",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0388",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0178",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0112",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0347",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0019",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0534",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0582",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0295",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0028",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0292",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0259",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0154",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0341",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0502",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0382",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0087",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0367",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0550",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0236",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0565",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0086",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0065",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0016",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0012",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0387",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0125",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0475",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0330",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0316",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0344",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0398",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0274",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0366",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0169",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0200",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0009",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0145",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0448",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0269",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0515",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0525",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0209",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0184",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0478",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0523",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0013",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0177",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0494",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0226",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0229",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0125",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0475",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0330",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0316",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0344",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0398",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0274",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0366",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0169",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0200",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0009",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0145",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0448",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0269",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0515",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0525",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0209",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0184",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0478",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0523",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0013",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0177",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0494",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0226",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0229",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0125",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0475",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0330",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0316",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0344",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0398",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0274",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0366",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0169",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0200",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0009",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0145",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0448",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0269",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0515",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0525",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0209",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0184",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0478",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0523",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0013",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0177",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0494",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0226",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0229",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0554",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0183",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0067",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0033",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0101",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0569",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0171",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0512",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0317",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0572",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0165",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0551",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0123",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0579",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0031",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0321",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0581",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0186",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0290",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0253",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0206",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0545",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0456",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0196",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0544",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0554",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0183",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0067",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0033",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0101",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0569",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0171",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0512",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0317",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0572",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0165",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0551",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0123",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0579",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0031",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0321",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0581",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0186",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0290",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0253",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0206",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0545",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0456",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0196",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0544",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0554",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0183",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0067",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0033",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0101",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0569",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0171",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0512",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0317",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0572",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0165",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0551",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0123",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0579",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0031",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0321",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0581",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0186",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0290",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0253",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0206",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0545",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0456",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0196",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0544",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0421",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0589",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0158",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0470",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0514",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0132",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0256",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0396",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0490",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0223",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0071",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0261",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0289",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0529",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0207",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0163",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0588",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0323",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0486",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0467",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0477",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0174",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0392",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0198",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0340",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0421",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0589",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0158",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0470",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0514",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0132",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0256",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0396",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0490",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0223",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0071",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0261",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0289",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0529",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0207",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0163",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0588",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0323",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0486",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0467",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0477",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0174",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0392",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0198",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0340",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0421",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0589",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0158",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0470",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0514",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0132",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0256",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0396",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0490",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0223",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0071",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0261",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0289",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0529",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0207",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0163",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0588",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0323",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0486",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0467",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0477",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0174",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0392",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0198",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0340",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0164",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0429",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0368",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0322",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0050",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0054",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0007",
+  "verdict": "UNSURE",
+  "seat": 0
+ },
+ {
+  "id": "T0354",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0120",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0497",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0318",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0119",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0197",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0351",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0148",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0453",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0251",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0284",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0483",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0402",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0531",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0037",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0315",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0349",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0035",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0164",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0429",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0368",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0322",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0050",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0054",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0007",
+  "verdict": "UNSURE",
+  "seat": 1
+ },
+ {
+  "id": "T0354",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0120",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0497",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0318",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0119",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0197",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0351",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0148",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0453",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0251",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0284",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0483",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0402",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0531",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0037",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0315",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0349",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0035",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0164",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0429",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0368",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0322",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0050",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0054",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0007",
+  "verdict": "UNSURE",
+  "seat": 2
+ },
+ {
+  "id": "T0354",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0120",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0497",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0318",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0119",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0197",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0351",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0148",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0453",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0251",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0284",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0483",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0402",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0531",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0037",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0315",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0349",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0035",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0044",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0500",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0139",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0423",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0008",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0285",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0320",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0107",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0536",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0458",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0090",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0258",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0511",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0492",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0568",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0064",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0433",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0372",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0552",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0036",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0426",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0219",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0308",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0394",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0491",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0044",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0500",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0139",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0423",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0008",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0285",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0320",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0107",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0536",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0458",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0090",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0258",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0511",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0492",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0568",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0064",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0433",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0372",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0552",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0036",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0426",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0219",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0308",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0394",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0491",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0044",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0500",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0139",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0423",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0008",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0285",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0320",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0107",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0536",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0458",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0090",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0258",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0511",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0492",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0568",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0064",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0433",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0372",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0552",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0036",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0426",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0219",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0308",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0394",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0491",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0427",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0061",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0435",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0564",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0224",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0328",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0192",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0166",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0451",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0498",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0272",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0210",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0446",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0181",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0527",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0362",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0034",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0575",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0153",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0247",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0420",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0024",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0271",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0049",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0203",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0427",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0061",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0435",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0564",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0224",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0328",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0192",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0166",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0451",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0498",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0272",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0210",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0446",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0181",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0527",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0362",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0034",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0575",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0153",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0247",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0420",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0024",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0271",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0049",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0203",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0427",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0061",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0435",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0564",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0224",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0328",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0192",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0166",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0451",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0498",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0272",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0210",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0446",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0181",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0527",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0362",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0034",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0575",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0153",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0247",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0420",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0024",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0271",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0049",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0203",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0430",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0481",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0237",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0115",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0485",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0252",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0191",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0407",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0484",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0385",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0543",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0563",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0114",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0513",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0000",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0113",
+  "verdict": "CLAIM",
+  "seat": 0
+ },
+ {
+  "id": "T0430",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0481",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0237",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0115",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0485",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0252",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0191",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0407",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0484",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0385",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0543",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0563",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0114",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0513",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0000",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0113",
+  "verdict": "CLAIM",
+  "seat": 1
+ },
+ {
+  "id": "T0430",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0481",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0237",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0115",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0485",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0252",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0191",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0407",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0484",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0385",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0543",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0563",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0114",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0513",
+  "verdict": "CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0000",
+  "verdict": "NOT_A_CLAIM",
+  "seat": 2
+ },
+ {
+  "id": "T0113",
+  "verdict": "CLAIM",
+  "seat": 2
+ }
+]

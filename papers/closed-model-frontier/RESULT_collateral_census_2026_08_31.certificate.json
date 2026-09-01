@@ -1,0 +1,282 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_collateral_census_2026_08_31.md",
+  "document_sha256": "65159915fc57c0db9185f52290d196b411cc9949a814ed50f67c2831627b72a4",
+  "receipts_sha256": {
+    "collateral_census.json": "f291be97ca7f4c0212e9d708aee94972bd90c068c20a6f03a14e1f65f701bdcc",
+    "collateral_census_fidelity.json": "882def0204fa441e747eecd04139088a6d6d88486956839944b578ef6b3ef74f"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 12,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 1
+    },
+    "verified": {
+      "total": 12,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 0,
+        "obligated_integer_filter_na": 0,
+        "unobligated_integer_filter_ran": 0,
+        "unobligated_integer_filter_na": 12
+      }
+    },
+    "obligated_total": 0,
+    "obligation_sources": {
+      "vocabulary": 0,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "10.5281"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "`hao-li/AIDev`, CC-BY-4.0; Zenodo 10.5281/zenodo.16919272).",
+      "col": 34,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 27,
+      "token": "0.69",
+      "value": 0.69,
+      "decimals": 2,
+      "context": "| lockfile | 0.69% | 9.13% |",
+      "col": 13,
+      "binding_context": "| class | share of files | share of PRs containing it | | lockfile | 0.69% | 9.13% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.lockfile",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 27,
+      "token": "9.13",
+      "value": 9.13,
+      "decimals": 2,
+      "context": "| lockfile | 0.69% | 9.13% |",
+      "col": 21,
+      "binding_context": "| class | share of files | share of PRs containing it | | lockfile | 0.69% | 9.13% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_prs.lockfile",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 28,
+      "token": "5.46",
+      "value": 5.46,
+      "decimals": 2,
+      "context": "| generated | 5.46% | 6.09% |",
+      "col": 14,
+      "binding_context": "| class | share of files | share of PRs containing it | | generated | 5.46% | 6.09% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.generated",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 28,
+      "token": "6.09",
+      "value": 6.09,
+      "decimals": 2,
+      "context": "| generated | 5.46% | 6.09% |",
+      "col": 22,
+      "binding_context": "| class | share of files | share of PRs containing it | | generated | 5.46% | 6.09% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_prs.generated",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 29,
+      "token": "1.46",
+      "value": 1.46,
+      "decimals": 2,
+      "context": "| snapshot | 1.46% | 1.46% |",
+      "col": 13,
+      "binding_context": "| class | share of files | share of PRs containing it | | snapshot | 1.46% | 1.46% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.snapshot",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 29,
+      "token": "1.46",
+      "value": 1.46,
+      "decimals": 2,
+      "context": "| snapshot | 1.46% | 1.46% |",
+      "col": 21,
+      "binding_context": "| class | share of files | share of PRs containing it | | snapshot | 1.46% | 1.46% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.snapshot",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 30,
+      "token": "0.49",
+      "value": 0.49,
+      "decimals": 2,
+      "context": "| migration | 0.49% | 1.88% |",
+      "col": 14,
+      "binding_context": "| class | share of files | share of PRs containing it | | migration | 0.49% | 1.88% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.migration",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 30,
+      "token": "1.88",
+      "value": 1.88,
+      "decimals": 2,
+      "context": "| migration | 0.49% | 1.88% |",
+      "col": 22,
+      "binding_context": "| class | share of files | share of PRs containing it | | migration | 0.49% | 1.88% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_prs.migration",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 31,
+      "token": "2.87",
+      "value": 2.87,
+      "decimals": 2,
+      "context": "| whitespace-equivalent | 2.87% | 9.52% |",
+      "col": 26,
+      "binding_context": "| class | share of files | share of PRs containing it | | whitespace-equivalent | 2.87% | 9.52% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.whitespace-equivalent",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 31,
+      "token": "9.52",
+      "value": 9.52,
+      "decimals": 2,
+      "context": "| whitespace-equivalent | 2.87% | 9.52% |",
+      "col": 34,
+      "binding_context": "| class | share of files | share of PRs containing it | | whitespace-equivalent | 2.87% | 9.52% |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_prs.whitespace-equivalent",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 32,
+      "token": "89.04",
+      "value": 89.04,
+      "decimals": 2,
+      "context": "| **substantive** | **89.04%** | **99.56%** |",
+      "col": 22,
+      "binding_context": "| class | share of files | share of PRs containing it | | **substantive** | **89.04%** | **99.56%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_files.substantive",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 32,
+      "token": "99.56",
+      "value": 99.56,
+      "decimals": 2,
+      "context": "| **substantive** | **89.04%** | **99.56%** |",
+      "col": 35,
+      "binding_context": "| class | share of files | share of PRs containing it | | **substantive** | **89.04%** | **99.56%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "collateral_census.json:share_of_prs.substantive",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    }
+  ]
+}

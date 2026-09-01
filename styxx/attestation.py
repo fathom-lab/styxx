@@ -61,6 +61,7 @@ __all__ = [
     "AttestationChain",
     "ChainVerificationResult",
     "CHAIN_VERSION",
+    "jcs",
 ]
 
 ATTESTATION_VERSION = "1.0"
@@ -276,6 +277,16 @@ def _jcs(obj: Any) -> str:
         )
         return "{" + ",".join(parts) + "}"
     raise TypeError(f"not JCS-serializable: {type(obj).__name__}")
+
+
+def jcs(obj: Any) -> str:
+    """Public RFC 8785 canonical serialization (same domain limits as _jcs).
+
+    Exposed for consumers that hash styxx artifacts outside this module — the
+    capsule's `sha256-jcs` binding uses exactly this form, so the two can never
+    drift apart.
+    """
+    return _jcs(obj)
 
 
 def _portable_canonical_payload(artifact: dict[str, Any]) -> str:

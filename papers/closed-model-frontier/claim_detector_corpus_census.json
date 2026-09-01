@@ -1,0 +1,593 @@
+{
+ "census": "STRUCT-1 over the pinned corpus and over diffgate's never-read band",
+ "status": "DESCRIPTIVE — the gate is Stage 2's fresh blind panel",
+ "prereg": "PREREG_claim_detector_2026_08_30.md",
+ "pin": {
+  "base": "origin/main",
+  "head": "a6994ac",
+  "commits": 57,
+  "sentences": 2824
+ },
+ "struct1_bands": {
+  "NEITHER": 2720,
+  "RESULT": 62,
+  "CLAIM": 42
+ },
+ "struct1_claim_rate": 0.0149,
+ "null_flags": {
+  "n1_path_regex": 109,
+  "n2_verb_stems": 288,
+  "n1_rate": 0.0386,
+  "n2_rate": 0.102
+ },
+ "gate_vs_detector": {
+  "templates_parsed_total": 7,
+  "never_read_total": 2818,
+  "structurally_checkable_but_unparsed": 40,
+  "reading_multiple": 5.71
+ },
+ "unparsed_claims_every_one": [
+  {
+   "sha": "9aa580b32",
+   "text": "this morning and went straight past `cycle 133 - SHIPPED`."
+  },
+  {
+   "sha": "912e411f5",
+   "text": "regenerates LEDGER.md and fails on a changed character -- which proves the"
+  },
+  {
+   "sha": "912e411f5",
+   "text": "how the refusal list came to print `SHIPPED`."
+  },
+  {
+   "sha": "3dda7ee2a",
+   "text": "firewall.py reads git history and exits non-zero, wired as a required status check"
+  },
+  {
+   "sha": "76530b433",
+   "text": "reports as `missing`, and `_resolvable()` drops the document."
+  },
+  {
+   "sha": "76530b433",
+   "text": "checkout failed to verify\" -- fixed there with `-text`, and nowhere else."
+  },
+  {
+   "sha": "76530b433",
+   "text": "REPLICATIONS.md's expected corpus-audit output is updated to the current four"
+  },
+  {
+   "sha": "20147128a",
+   "text": "REPLICATIONS.md's expected corpus-audit output updated again (184 certificates,"
+  },
+  {
+   "sha": "41eb20b4a",
+   "text": "only a sha match and otherwise falls through to `missing`, so a CHANGED receipt"
+  },
+  {
+   "sha": "7db0bb275",
+   "text": "`corpus_audit` does not drop a document whose"
+  },
+  {
+   "sha": "7db0bb275",
+   "text": "[OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_universal_mind_2026_06_10.md"
+  },
+  {
+   "sha": "7db0bb275",
+   "text": "VP-C in RECON_vacuous_pass_2026_08_27.md now has a fix for its reporting half."
+  },
+  {
+   "sha": "085f5983f",
+   "text": "commit that line is `if not PANEL.exists():` and the vacuous bars are forty lines"
+  },
+  {
+   "sha": "5ec4c9eb1",
+   "text": "from RECON_vacuous_pass_2026_08_27.md, committed the same day, by that"
+  },
+  {
+   "sha": "5ec4c9eb1",
+   "text": "formula_span_census.py   permissive control added; the_column_that_decides"
+  },
+  {
+   "sha": "7378d3285",
+   "text": "Changes no certificate, so no preregistration was needed -- same class as"
+  },
+  {
+   "sha": "3f8fd535a",
+   "text": "non-arbitrary choice\") and the audit printed `receipt-changed 0` over a"
+  },
+  {
+   "sha": "3f8fd535a",
+   "text": "test_receipt_only_in_scratch_is_absent: this fix makes the search NARROWER"
+  },
+  {
+   "sha": "3f8fd535a",
+   "text": "REPLICATIONS.md's expected line moves 185 -> 186 certificates, HELD 181 ->"
+  },
+  {
+   "sha": "936fcf178",
+   "text": "REPLICATIONS.md expected line updated 186 -> 187."
+  },
+  {
+   "sha": "113480e71",
+   "text": "REPLICATIONS.md updated to six expected exceptions, four of them deliberate."
+  },
+  {
+   "sha": "15ccbfffe",
+   "text": "reporting_verb lands at 0.40 -- the base rate"
+  },
+  {
+   "sha": "ef9679ac0",
+   "text": "Landing them is `git am ci-pending/*.patch && git push` from"
+  },
+  {
+   "sha": "3cf04f829",
+   "text": "The unshallow first landed inside test_ledger.py,"
+  },
+  {
+   "sha": "f48b0642d",
+   "text": "So `--poster` emits a fixed 1200px frame built to be screenshotted, rendered"
+  },
+  {
+   "sha": "f48b0642d",
+   "text": "styxx-org-poster.png committed as the shareable asset; poster.html is"
+  },
+  {
+   "sha": "f76b5099b",
+   "text": "Exactly two fields moved -- `instrument_sha256` and"
+  },
+  {
+   "sha": "f76b5099b",
+   "text": "instrument_sha256 moves is attesting to a different artifact; had any claim"
+  },
+  {
+   "sha": "f76b5099b",
+   "text": "`git show commit:path` returns the blob"
+  },
+  {
+   "sha": "77b8c85c3",
+   "text": "Remove scratch files committed by an over-broad `git add -A`"
+  },
+  {
+   "sha": "77b8c85c3",
+   "text": "`add -A` cannot repeat it."
+  },
+  {
+   "sha": "f19bfc834",
+   "text": "No clause exists, no bar was frozen, certify.py is untouched."
+  },
+  {
+   "sha": "f19bfc834",
+   "text": "`bound` where obligating them changes nothing."
+  },
+  {
+   "sha": "e42503a24",
+   "text": "change status, receipt_ref, or verdict; the corpus audit line must be"
+  },
+  {
+   "sha": "b970dcf99",
+   "text": "Stored certificates untouched; verifier_sha256 moving is the"
+  },
+  {
+   "sha": "c937030ad",
+   "text": "implementation (DESIGN_epistemics_summary_schema_2026_08_30.md, committed"
+  },
+  {
+   "sha": "c937030ad",
+   "text": "landed: the range-sanity clause clobbered obligation_source unconditionally"
+  },
+  {
+   "sha": "44bd505f6",
+   "text": "re-certified at the pinned annotated verifier, epistemics_summary folded:"
+  },
+  {
+   "sha": "f2e7e248c",
+   "text": "Now it folds each certificate's epistemics_summary into a corpus total,"
+  },
+  {
+   "sha": "ab924fbb8",
+   "text": "sentences promoted to first-class the way epistemics_summary promoted the"
+  }
+ ],
+ "per_commit": [
+  {
+   "sha": "9d09ef302",
+   "subject": "OATH v0.11: an accusation is itself a claim, and four accusations had ",
+   "templates_parsed": 0,
+   "never_read": 63,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "eb33de836",
+   "subject": "RECON OATH-EXT: the verifier does not transfer, and this note is OATH-",
+   "templates_parsed": 0,
+   "never_read": 63,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "9aa580b32",
+   "subject": "LEDGER: the refusal list said SHIPPED, and the ledger counted itself a",
+   "templates_parsed": 0,
+   "never_read": 48,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "8cb66a448",
+   "subject": "the drift guard could not see 36 of 178 certificates, and one of them ",
+   "templates_parsed": 1,
+   "never_read": 44,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "9a7cac719",
+   "subject": "OATH is a contract, not a detector — so ship the contract and the chec",
+   "templates_parsed": 1,
+   "never_read": 58,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "eddf6de5a",
+   "subject": "SYNTHESIS: four instruments, one defect — this lab cannot tell a menti",
+   "templates_parsed": 0,
+   "never_read": 65,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "96fabd8f9",
+   "subject": "RECON: the OATH lane never surveyed its own prior art, and the neighbo",
+   "templates_parsed": 0,
+   "never_read": 68,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "58b70b3a4",
+   "subject": "freeze the prior-art search protocol BEFORE running it",
+   "templates_parsed": 0,
+   "never_read": 23,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "912e411f5",
+   "subject": "the ledger's refusal classifier had no test, so give it 32",
+   "templates_parsed": 1,
+   "never_read": 23,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "3dda7ee2a",
+   "subject": "RESULT: the frozen survey fired DISCIPLINE_PRIOR_ART and retired yeste",
+   "templates_parsed": 0,
+   "never_read": 53,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "68b7b6ba8",
+   "subject": "north star: withdraw \"the first time trust can be a measurement\"",
+   "templates_parsed": 0,
+   "never_read": 29,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "59c9cd718",
+   "subject": "adopt honest-signal's vacuity check, and give the negatives ratio a pa",
+   "templates_parsed": 0,
+   "never_read": 50,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "58642aaa4",
+   "subject": "CENSUS + PREREG v0.12: the mention/use class, sized — and four of five",
+   "templates_parsed": 0,
+   "never_read": 51,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "76530b433",
+   "subject": "a certificate must mean the same thing on Linux as it does on Windows",
+   "templates_parsed": 0,
+   "never_read": 46,
+   "unparsed_claims": 3
+  },
+  {
+   "sha": "20147128a",
+   "subject": "RESULT v0.12: V12_UNDERREACH — the clause could not reach the example ",
+   "templates_parsed": 0,
+   "never_read": 63,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "2286dcb94",
+   "subject": "RECON: the silent-pass detector does not see the silent passes in our ",
+   "templates_parsed": 0,
+   "never_read": 58,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "41eb20b4a",
+   "subject": "a fifth vacuous pass, and the repair that was refused",
+   "templates_parsed": 0,
+   "never_read": 40,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "7db0bb275",
+   "subject": "a verdict computed from a partial receipt set no longer prints like a ",
+   "templates_parsed": 0,
+   "never_read": 38,
+   "unparsed_claims": 3
+  },
+  {
+   "sha": "085f5983f",
+   "subject": "the arithmetic came first this time, and it says do not build the dete",
+   "templates_parsed": 0,
+   "never_read": 48,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "184bcd366",
+   "subject": "CENSUS: the formula-constant class at SPAN level — the measurement v0.",
+   "templates_parsed": 0,
+   "never_read": 40,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "5ec4c9eb1",
+   "subject": "NO-FREEZE v0.13: the census column that decided nothing",
+   "templates_parsed": 0,
+   "never_read": 42,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "7378d3285",
+   "subject": "styxx.discriminates: score the null rule, or your deciding column is a",
+   "templates_parsed": 0,
+   "never_read": 61,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "3f8fd535a",
+   "subject": "corpus_audit: the audited population was 49% scratch clone",
+   "templates_parsed": 0,
+   "never_read": 53,
+   "unparsed_claims": 3
+  },
+  {
+   "sha": "744285074",
+   "subject": "Apply discriminates retrospectively: the decision that mattered surviv",
+   "templates_parsed": 0,
+   "never_read": 62,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "e0f8a0eff",
+   "subject": "FREEZE: the external corpus protocol, amended by a red team before col",
+   "templates_parsed": 0,
+   "never_read": 106,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "112735e7e",
+   "subject": "FREEZE: adjudication packets, written while the collection was still r",
+   "templates_parsed": 0,
+   "never_read": 56,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "ca2218bc5",
+   "subject": "CORPUS: 140 repositories collected, and the pilot's headline does not ",
+   "templates_parsed": 0,
+   "never_read": 71,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "2425572c4",
+   "subject": "DIAGNOSTIC: NO_RECEIPT measured a filename list, not the absence of re",
+   "templates_parsed": 0,
+   "never_read": 40,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "936fcf178",
+   "subject": "RESULT: the sanity gate failed, and OATH swears oaths to command-line ",
+   "templates_parsed": 0,
+   "never_read": 95,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "67412eaed",
+   "subject": "Withdraw \"every accusation it made was false\" wherever it is published",
+   "templates_parsed": 0,
+   "never_read": 30,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "30f9ddb09",
+   "subject": "SYNTHESIS: ten instances, and the tenth inverts the risk model",
+   "templates_parsed": 0,
+   "never_read": 49,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "801773f5b",
+   "subject": "FREEZE: does the verified channel fail inside this laboratory too?",
+   "templates_parsed": 0,
+   "never_read": 52,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "5bc30514a",
+   "subject": "Internal arm: ledger, packets, and two deviations disclosed before sco",
+   "templates_parsed": 0,
+   "never_read": 41,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "113480e71",
+   "subject": "RESULT: the defect is in our own certificates, and the contract buys l",
+   "templates_parsed": 0,
+   "never_read": 70,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "09026b2d9",
+   "subject": "RECON: the obvious repair to the obligation predicate does not general",
+   "templates_parsed": 0,
+   "never_read": 89,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "1c18d3869",
+   "subject": "Correct what OATH-HELD promises, where adopters actually read it",
+   "templates_parsed": 0,
+   "never_read": 41,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "15ccbfffe",
+   "subject": "RECON: structure separates where vocabulary did not",
+   "templates_parsed": 0,
+   "never_read": 73,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "ef9679ac0",
+   "subject": "Unblock the CI work that never actually needed a workflow token",
+   "templates_parsed": 0,
+   "never_read": 71,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "3cf04f829",
+   "subject": "The silent-pass benchmark was itself a silent pass",
+   "templates_parsed": 0,
+   "never_read": 51,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "f42c9c90b",
+   "subject": "ORG: an org chart whose status lamps are measured, with a control that",
+   "templates_parsed": 0,
+   "never_read": 63,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "57130d0b4",
+   "subject": "Chart improvements: generate it from the receipt, and measure self-dis",
+   "templates_parsed": 0,
+   "never_read": 49,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "f48b0642d",
+   "subject": "Poster mode: a shareable frame, and three layout bugs found by measuri",
+   "templates_parsed": 0,
+   "never_read": 41,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "f76b5099b",
+   "subject": "Close the parked CAPSTONE receipt drift: what changed, and what depend",
+   "templates_parsed": 1,
+   "never_read": 49,
+   "unparsed_claims": 3
+  },
+  {
+   "sha": "77b8c85c3",
+   "subject": "Remove scratch files committed by an over-broad `git add -A`",
+   "templates_parsed": 0,
+   "never_read": 17,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "aef4a402e",
+   "subject": "Fix two confirmed blockers an adversarial merge review found in oathre",
+   "templates_parsed": 2,
+   "never_read": 52,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "f19bfc834",
+   "subject": "v0.13 NOT FROZEN: obligation does not gate verification, it gates accu",
+   "templates_parsed": 0,
+   "never_read": 74,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "e42503a24",
+   "subject": "FREEZE the invariant before touching certify.py: epistemics annotation",
+   "templates_parsed": 0,
+   "never_read": 6,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "b970dcf99",
+   "subject": "Epistemics annotation: the certificate now says which door every token",
+   "templates_parsed": 0,
+   "never_read": 63,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "e932aebad",
+   "subject": "RESULT: obligation predicts claimhood -- the verified-channel defect l",
+   "templates_parsed": 0,
+   "never_read": 53,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "c937030ad",
+   "subject": "epistemics_summary v1: the certificate now exposes its own composition",
+   "templates_parsed": 0,
+   "never_read": 47,
+   "unparsed_claims": 2
+  },
+  {
+   "sha": "44bd505f6",
+   "subject": "RESULT: abroad, the volunteer channel IS the certificate -- external u",
+   "templates_parsed": 0,
+   "never_read": 37,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "8bfd62268",
+   "subject": "Add the volunteered-oath exhibit image (tweet asset)",
+   "templates_parsed": 0,
+   "never_read": 10,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "f2e7e248c",
+   "subject": "corpus_audit reads epistemics: the whole corpus's unobligated rate in ",
+   "templates_parsed": 0,
+   "never_read": 29,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "04f7531e6",
+   "subject": "certify CLI prints the obligation split, not just the count",
+   "templates_parsed": 0,
+   "never_read": 18,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "ab924fbb8",
+   "subject": "RESULT: the agent-gate audited the agent that built it -- and read 6 s",
+   "templates_parsed": 0,
+   "never_read": 47,
+   "unparsed_claims": 1
+  },
+  {
+   "sha": "c73058623",
+   "subject": "POSITIONING.md: the value thesis, certified by the product it describe",
+   "templates_parsed": 1,
+   "never_read": 15,
+   "unparsed_claims": 0
+  },
+  {
+   "sha": "a6994ac4c",
+   "subject": "diffgate: the never-read band is first-class; the 8.30 accusations pin",
+   "templates_parsed": 0,
+   "never_read": 24,
+   "unparsed_claims": 0
+  }
+ ],
+ "note": "STRUCT-1 flags are UNADJUDICATED. Its DEV precision is telemetry on n=2. These counts size the blind spot; they do not certify that every flagged sentence is a true claim — that is exactly what Stage 2 measures."
+}

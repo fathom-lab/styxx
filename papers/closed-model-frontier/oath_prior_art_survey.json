@@ -1,0 +1,412 @@
+{
+  "survey": "OATH prior-art systematic pass",
+  "protocol": "papers/closed-model-frontier/PROTOCOL_oath_prior_art_survey_2026_08_26.md",
+  "status": "RESULT of a frozen protocol. Scores the pre-committed outcome table.",
+  "run_date": "2026-08-26",
+  "queries_frozen": 13,
+  "sources_recorded": 18,
+  "sources_survived_independent_refetch": 18,
+  "sources_dropped": 0,
+  "new_non_pilot": 18,
+  "by_subquestion": {
+    "Q3": 4,
+    "Q1": 6,
+    "Q2": 8
+  },
+  "verification": {
+    "independent_refetch": true,
+    "checks_run": 18,
+    "note": "every source re-fetched by an agent that did not record it"
+  },
+  "could_not_verify_count": 20,
+  "could_not_verify": [
+    "FDAAA TrialsTracker methods paper, bioRxiv 10.1101/266452v4 — server returned HTTP 429; the mechanism was instead verified directly from the deployed tracker's own FAQ page, which is what I recorded.",
+    "Lakens & DeBruine, 'Improving Transparency, Falsifiability, and Rigor by Making Hypothesis Tests Machine-Readable', Advances in Methods and Practices in Psychological Science, doi 10.1177/2515245920970949 — SAGE returned HTTP 403; the scienceverse mechanism was instead verified from the package documentation and repository, which is what I recorded. The journal article itself is NOT recorded as a source.",
+    "A claim surfaced in search results that the authors of 'Agentic Witnessing' (arXiv 2604.24203) audited their own draft paper and codebase as a self-audit. I fetched the abstract page and it did not confirm self-application, so the self-application claim is unverified and the source is not recorded (it is also a Q2 item, outside my family).",
+    "HalluCiteChecker (arXiv 2604.26835), ReproAudit (reproaudit.com), CheckYourself (github.com/KyaniteLabs/checkyourself) and 'LLM-Assisted Replication for Quantitative Social Science' (arXiv 2602.18453) all surfaced and may qualify under Q1, but I did not fetch them — outside my family, flagged for the Q1 agent.",
+    "None of the four pilot sources (statcheck, arXiVeri, arXiv 2509.06902, arXiv 2604.24658) surfaced in any of my four queries or follow-ups. I did not fetch them and have not recorded them.",
+    "statcheck (Nuijten et al.) — pilot source; surfaced repeatedly (statcheck.io, LSE Impact blog) but I did not fetch it, so it is not recorded",
+    "Proof-Carrying Numbers, arXiv 2509.06902 — pilot source; surfaced as a top hit on query 4 but not fetched by me",
+    "arXiVeri (Shin, Xie & Albanie 2023), arXiv 2306.07968 — pilot source; surfaced on query 1 but not fetched by me",
+    "Agent-Native Research Artifacts, arXiv 2604.24658 — pilot source; surfaced on query 3 but not fetched by me",
+    "LongTracer — described in a search snippet as an open-source RAG hallucination-detection SDK verifying LLM claims against source documents; I could not locate a canonical URL to fetch and therefore did not record it",
+    "Ripeta — named as a deployed journal-side rigor-screening tool but I never fetched a Ripeta page",
+    "effectcheck R package — ESCIMate's stated open-source engine; I confirmed it only from the ESCIMate page, never fetched a CRAN/GitHub page for the package itself",
+    "'The Data Says Otherwise' full PDF (faculty.cc.gatech.edu and ACM DL) — the Georgia Tech PDF exceeded the fetch size limit; I recorded the paper from the arXiv abstract page instead, which I did fetch",
+    "Peerispect (arXiv 2604.17667), DeepSciVerify (arXiv 2605.27710), PaperTrail (arXiv 2602.21045), SciClaimHunt (arXiv 2502.10003), Neuro-Symbolic Verification of LLM Outputs (arXiv 2605.26942) — surfaced but not fetched; on their search snippets they read as text/citation claim verification or as benchmark datasets, which the protocol excludes",
+    "Certifying Provenance of Scientific Datasets with Self-sovereign Identity and Verifiable Credentials (Barclay, Radha, Preece, Taylor, Nabrzyski; IWSG 2020, arXiv 2004.02796) — abstract page fetched but too thin to confirm whether a dataset hash is bound into the credential or whether later re-verification detects change; the PDF at arxiv.org/pdf/2004.02796 returned unreadable binary. Suspected relevant to Q2; deliberately not recorded.",
+    "RO-Crate 1.1 specification integrity/checksum provisions — only the specification index page was reachable at researchobject.org/ro-crate/specification/1.1/, which contains no integrity section; could not confirm or deny that RO-Crate carries checksums or a validator, so RO-Crate is NOT recorded either way.",
+    "sigstore / Rekor transparency log — named in scope by the task, not fetched in this pass. Whether a Rekor inclusion proof supports later re-verification with drift as the output is unresolved here.",
+    "in-toto USENIX Security 2019 paper (Torres-Arias et al.) — not fetched; the in-toto entry above rests only on the attestation Statement spec and the in-toto-verify CLI docs, which were thin on failure semantics.",
+    "PopperCI: Automated reproducibility validation (Jimenez et al.) and the IPDPSW 2017 Popper paper — alumni.soe.ucsc.edu PDF host refused the connection (ECONNREFUSED), IEEE Xplore and ResearchGate not fetched. The Popper entry rests on the readthedocs concepts page only.",
+    "W3C Verifiable Credential Data Integrity 1.0/1.1 — surfaced by query 6, not fetched. Judged likely out of scope anyway (a proof format over a credential, not machinery checking a claim against external evidence), but that judgement is untested."
+  ],
+  "search_notes": [
+    "VERDICT FOR Q3: OCCUPIED. Say it plainly — the pre-committed outcome table's DISCIPLINE_PRIOR_ART row fires.\n\ngithub.com/alexcard3/honest-signal implements exactly the mechanism the brief told me to hunt for: software that refuses to produce a result unless a preregistration is committed and immutable. Not a writing aid, not a registry, not a journal policy. firewall.py reads git history and exits 1 — wired as a required GitHub status check so the PR will not merge — when the preregistration is missing, does not strictly precede the result commit, has been edited since (checked in both history and working tree), or names a vacuous kill criterion. I fetched the repo page, the raw README, the raw FALSIFICATIONS.md and the raw firewall.py separately; all four agree and the code-level fetch confirms the exit conditions rather than just the README's claims about them.\n\nIt also occupies the other two legs of Q3 in the same repository. Negatives record: FALSIFICATIONS.md, 18 hypotheses, 16 certified dead, each row naming what killed it. Self-audit: the record turns the instrument on itself and reports the unflattering number — only rows 14, 17 and 18 went through the full advertised protocol, '3 of 18', and row 16 was committed after the firewall existed yet lacks its own firewall commit. That is an instrument audited against its own standard, publishing its own non-compliance.\n\nWhat survives for OATH after this. honest-signal gates the MERGE; OATH's scorer withholds the VERDICT. That is a real difference in where the refusal sits but it is a difference of placement, not of mechanism, and I do not think it can carry a novelty claim on its own. The genuinely unoccupied thing in what I saw is Q2: honest-signal emits audit/badge.json and audit/report.txt but nothing that binds document hash, receipt hashes and verifier hash into one persisted object, so it has no drift signal — a certificate that stops holding is not a thing it can detect. Its own README concedes the boundary: 'This does not make you honest. It makes retrofitting visible and expensive,' and the gate cannot catch a preregistration tuned before committing. Note also that honest-signal is a small independent single-author repo (26 commits, v0.3.1) with no associated paper — it is prior art in the plain sense that it exists, is public and does the thing, but it is not established literature.\n\nCount for the outcome table: 4 new qualifying sources, none of them pilot sources. That is over the ≥3 threshold, so the pilot is declared insufficient by the protocol's own rule and any outward claim should wait for human review. Note that I hit the ≥3 line within my family alone, on four queries — which is itself evidence the pilot was thin rather than evidence the field is empty.\n\nTwo boundary calls I made, stated so they can be overruled. (1) I INCLUDED arXiv 2606.27687 though it builds no machinery, because the inclusion rule admits a PROTOCOL and it is the only Q3 hit that self-applies; if the reviewer reads the second inclusion criterion strictly it should be dropped, which would leave 3 new sources and still clear the threshold. (2) I EXCLUDED COS/OSF Preregistration despite fetching cos.io/initiatives/prereg, because it has no checking machinery. That fetch is worth recording as negative evidence: the page states outright that 'in the event that you need to conduct an unplanned analysis, preregistration does not prevent you from doing so' and that it 'simply makes clear which analyses were planned and which were not'. The canonical registry explicitly disclaims enforcement. I also excluded arXiv 2606.28694 (a catalogue of 28 verification mechanisms, monitoring not blocking) and arXiv 2606.04220 (a position paper that proposes null-result databases but implements none).\n\nOn search power: three of my four verbatim queries returned mostly noise, and the one direct hit came from a follow-up query I wrote after seeing the verbatim ones fail. The frozen queries did not find honest-signal; a re-spelled query did. That is worth recording about the protocol's queries, not just its results.",
+    "All five frozen Q1 queries were run verbatim, then seven follow-up queries aimed specifically at DEPLOYED tooling (CRAN, PyPI, GitHub Actions, journal-integrated checkers). Every source recorded above has a URL I actually fetched in this session; nothing is recorded from memory. None of the four pilot sources is recorded — several surfaced in results but I did not fetch any of them, and the protocol's rule is that an unfetched source is not a source.\n\nHeadline for the outcome table: Q1 is occupied, thoroughly, and by more than the pilot found. Seven qualifying sources, all new relative to the pilot, which alone crosses the protocol's \">=3 new qualifying sources\" threshold — on the frozen rules that means the pilot is declared insufficient and any outward claim waits for a human-reviewed survey.\n\nTwo of the seven reach past Q1 and should be read by whoever scores Q2. arXiv 2606.27934 (Self-Verifying Measurement Records) binds every quantity in a paper to an observation by content hash, publishes the evidence graph and a SHA-256 manifest, and is explicitly designed for offline third-party verification without trusting the producer — I filed it under Q2 rather than Q1 precisely so it is not lost in a Q1 pile. arXiv 2606.09500 (Deterministic Integrity Gates) matches extracted numeric claims against manifest-locked analysis tables and produces a content-hash-manifested, re-executable audit trail. I filed it Q1 because that is its primary mechanism, but the Q2 scorer should look at it. My honest reading is that the drift/certificate argument is in more contested territory than a Q1-only search would suggest, and the Q2 agent should treat these two as priority targets rather than assume the neighbourhood is empty.\n\nStructural distinction worth keeping in the final write-up: the recomputation family (ESCIMate, JATSdecoder, and the pilot's statcheck) checks a document's numbers against themselves; only Aletheia, 2606.09500 and 2606.27934 check a stated number against an artifact external to the document. OATH sits in the second group.\n\nA real null worth recording: I found no CRAN package, no PyPI package, and no GitHub Action that takes a prose document plus a machine-readable results file and checks the document's numbers against that file. The PyPI and GitHub-Action sweeps returned nothing on target (LaTeX tooling and markdown link checkers respectively). This is a genuine gap in the deployed-tooling layer, not a claim that none exists — two queries is thin evidence.\n\nFetched but NOT recorded, because the fetched content did not support the inclusion rule: metacheck (https://github.com/scienceverse/metacheck and https://www.scienceverse.org/metacheck/, the successor to papercheck by DeBruine and Lakens, installable R package, experimental v0.1.0). It is plainly a relevant deployed manuscript-checking framework and is adjacent to Q3 as well — Lakens has a June 2025 post on retrieving planned sample sizes from AsPredicted preregistrations, which would be a number-vs-external-preregistration check — but neither fetched page listed a module that checks a reported number against an external artifact, and the blog post itself returned truncated content I could not read. Recording it would have meant asserting something the fetch did not show. Flagging it here so a later pass can chase it properly; it is the single most likely thing I left on the table, and it may matter more to Q3 than to Q1.\n\nAlso fetched-adjacent but excluded on the frozen rules: SciScore (journal-integrated, deployed at American Heart Association titles) screens for reporting-standard elements — blinding, randomization, RRIDs — and emits a rigor score out of 10. That is checklist compliance, not a numeric claim checked against external evidence, so it fails the inclusion test despite being the most widely deployed thing in this area. I did not fetch sciscore.com directly and have not recorded it.\"",
+    "Seven sources recorded, all fetched, none of them one of the four pilot sources (statcheck, arXiVeri, PCN 2509.06902, ANRA 2604.24658 did not surface on any of the four Q2 queries).\n\nQuery-by-query yield, honestly: query 6 produced the most (C2PA, CertifiedData, the arXiv VC paper). Query 7 returned almost entirely USPTO patent PDFs and vendor blog posts on hardware remote attestation — nothing qualifying was fetched from it. Query 8, run verbatim, returned ONLY ML model-drift material (IBM, Statsig, logz.io, a drift-detection arXiv paper). Every hit was about statistical drift in deployed models, not about a published result ceasing to reproduce. That is a real null for query 8 as written: the phrase 'drift' is fully colonized by the MLOps sense, and the scholarly-reproducibility sense had to be reached by a follow-up (Popper). Query 9 returned the classical proof-carrying code literature (Necula, Appel, Chiesa's Proof-Carrying Data) — foundational analogy but not systems that check stated claims against external evidence, so excluded — plus the one genuinely strong hit, Proof-Carrying Agent Actions.\n\nOn the distinction the task flagged, precisely: FOUR of the seven support later re-verification where failure is the output — C2PA, in-toto attestation, CertifiedData, and PCAA. THREE do not, in different ways — CODECHECK persists a certificate with checker identity and a DOI but no hashes, so it cannot be recomputed at all; Popper re-checks continuously but persists no certificate; SLSA matches digests but is specified as point-in-time and its own spec has no notion of provenance that stops holding.\n\nThe sharpest result for the pre-committed outcome table: arXiv 2606.04104 (Proof-Carrying Agent Actions, June 2026) implements a certificate that recomputes the POLICY SNAPSHOT alongside the evidence manifest and explicitly names the output 'drift', with manifest mismatch as a failure class. That is checker-identity-plus-evidence binding with later failure as the signal — the same construction as OATH's certificate, in a different domain (agent runtime governance rather than numeric claims in a document). If Q2 is scored on mechanism rather than domain, this source occupies it. I am flagging that rather than deciding it, since the outcome table is the scorer's to apply. Note also that 2606.04104 is three months old relative to today's date and was fetched as arXiv HTML v1; it warrants especially careful re-fetch by the second agent.\n\nDomain gap that survives all seven: not one source extracts numeric claims from a prose document and binds each to a cited receipt file. Every certificate found binds an artifact to its own provenance (C2PA, in-toto, SLSA, CertifiedData), a re-execution to a repository (CODECHECK, Popper), or an action to a policy (PCAA)."
+  ],
+  "sources": [
+    {
+      "title": "honest-signal — pre-registration firewall plus an independent recomputation agent",
+      "authors": "Alessandro Cardurani (independent researcher)",
+      "venue_and_date": "GitHub repository, release v0.3.1; repo carries its own pre-registration P-TOOL-1 with a kill-date of 2026-09-08; fetched 2026-08-26",
+      "url_fetched": "https://github.com/alexcard3/honest-signal",
+      "bears_on": "Q3",
+      "what_it_checks": "A Python gate (firewall.py, fetched separately at raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py) inspects git history and fails the build unless, for every commit that claims a result: (a) a pre-registration exists, (b) its commit strictly precedes the result commit (same-commit registration fails — 'prediction and verdict in one commit prove nothing about which came first'), (c) it has not been edited since, checked against both committed history and the working tree, and (d) its kill criterion is non-vacuous (must carry a number, procedure or date; rejects 'tbd', 'we will see'). Rule (e) prints the registration-to-result time gap but never judges it. The script exits 1 on any (a)-(d) violation and on shallow clones; it is wired as a required GitHub status check, so the pull request does not merge. Separately the method requires a second, independent agent to recompute the decisive number from raw data with its own code, never trusting the executor's report; the README states this moat 'already caught a real fabrication'. FALSIFICATIONS.md (fetched separately) is a published negatives record of 18 hypotheses, 16 certified dead, each row recording what was tested, what was committed before the data, who checked it, and what killed it.",
+      "artifact_produced": "audit/badge.json and audit/report.txt; the pre-registration commits themselves as git-history objects; FALSIFICATIONS.md as the itemised negatives ledger.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "It gates the merge rather than the verdict, and it emits no certificate binding document hash, evidence hash and checker hash together — so it has no drift signal — whereas OATH's scorer refuses to emit the verdict itself and persists a re-checkable certificate.",
+      "pilot": false
+    },
+    {
+      "title": "FDAAA TrialsTracker — live public tracking of unreported clinical trial results",
+      "authors": "Bennett Institute for Applied Data Science (formerly EBM DataLab), University of Oxford",
+      "venue_and_date": "Live deployed web service, fdaaa.trialstracker.net; the FAQ page fetched on 2026-08-26 showed data last updated 25 August 2026 and next update planned 28 August 2026",
+      "url_fetched": "https://fdaaa.trialstracker.net/faq/",
+      "bears_on": "Q3",
+      "what_it_checks": "Automatically determines, from publicly available ClinicalTrials.gov data, which trials are legally due to report results under FDAAA 2007 (using key dates such as primary completion date plus the 12-month window) and which have not done so. It runs daily against the registry rather than against anything the sponsor supplies, so a sponsor's silence is itself the detected signal. Determinations are revised when a sponsor later posts results ('we will show them as reported'). Website and analysis code are open on GitHub.",
+      "artifact_produced": "A public, continuously-refreshed ledger of compliant and non-compliant trials, per-sponsor, with a published overall compliance ratio.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "It is a negatives/non-reporting ledger computed against a public registry, not a verifier of numeric claims inside a document, and it produces no per-claim certificate binding claim, evidence and checker identity.",
+      "pilot": false
+    },
+    {
+      "title": "scienceverse — machine-readable study descriptions with automated evaluation of preregistered predictions",
+      "authors": "Daniël Lakens and Lisa M. DeBruine",
+      "venue_and_date": "R package, docs at scienceverse.org and repo at github.com/scienceverse/scienceverse (177 commits at fetch); underlying preprint cited on the repo as Lakens & DeBruine (2020-01-27); both pages fetched 2026-08-26",
+      "url_fetched": "https://www.scienceverse.org/scienceverse/articles/demo.html",
+      "bears_on": "Q3",
+      "what_it_checks": "A researcher writes a machine-readable study description in which each hypothesis carries explicit criteria (e.g. bounds on t and r) and an evaluation expression combining them into corroborate/falsify conditions. The package then runs the specified analyses over the supplied data and mechanically evaluates whether each prediction was corroborated — the demo prints 'Conclusion: corroborate * Corroborate ((t_lo & t_hi) | (r_lo & r_hi)): TRUE'. The repo frames the payoff as 'automatic evaluation of results against machine-readable specifications of statistical hypotheses' and 'automated reproducibility allows journals to compare pre-registered hypotheses with the conclusions in the final manuscript'. Critically, it does not refuse to run when no preregistration exists — the preregistration is an input, not a precondition.",
+      "artifact_produced": "prereg.json (the committed machine-readable prediction) and postreg.json (the same object with results and the corroborate/falsify conclusion attached), plus an HTML preregistration export.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "The preregistration is consumed as data rather than enforced as a precondition — nothing blocks a verdict when it is missing — and the JSON carries no hashes of document, data or the evaluating code, so a later divergence is not mechanically detectable.",
+      "pilot": false
+    },
+    {
+      "title": "Mitigating LLM-based p-Hacking by Preregistering for the Next LLM",
+      "venue_and_date": "arXiv preprint 2606.27687, June 2026",
+      "url_fetched": "https://arxiv.org/abs/2606.27687",
+      "bears_on": "Q3",
+      "what_it_checks": "A procedural protocol, not software: 'preregistering the experiment and eligible models, and then running it on the first eligible LLM that is released after the preregistration'. The binding it creates is temporal — the target model does not exist when the plan is fixed, so configurations cannot have been tuned against it, and a third party can check the registration timestamp against the model's release date. Recorded here because it is the only Q3 hit that self-applies: 'putting money where our mouth is, we followed our own protocol and preregistered our experiment'. Included as a protocol with a deployed self-application; it explicitly has no technical enforcement — no software prevents deviation from the registered plan.",
+      "artifact_produced": "A public preregistration naming the experiment and the set of eligible future models; plus the authors' own registration of the paper's experiment.",
+      "recheckable_later": "unclear",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "Enforcement is entirely procedural and voluntary — nothing refuses to produce a result — where OATH's scorer withholds the verdict outright until the prereg is in git history.",
+      "pilot": false
+    },
+    {
+      "title": "Deterministic Integrity Gates for LLM-Assisted Clinical Manuscript Preparation: An Auditable Biomedical Informatics Architecture",
+      "authors": "Yoojin Nam, Jinhoon Jeong, Namkug Kim",
+      "venue_and_date": "arXiv preprint 2606.09500, submitted 2026-06-08, revised 2026-06-14",
+      "url_fetched": "https://arxiv.org/abs/2606.09500",
+      "bears_on": "Q1",
+      "what_it_checks": "Extracts candidate claims from a clinical manuscript, isolates the numerical ones, and matches each by exact/partial match against values in a manifest-locked analysis table; 21 deterministic detectors plus prose-level probes gate each stage transition with halt-on-failure. The stated audit-trail probe result: 249 candidate claims from three manuscripts, 136 numerical, 74 (54%) exact-matched to a locked table value, 48 (35%) partial, 14 (10%) untraceable.",
+      "artifact_produced": "An \"auditable, re-executable trail\" with content-hash manifest verification, shipped as the MIT-licensed MedSci Skills v3.8.0 toolchain.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "This is the closest neighbour found on Q1 and it also reaches into Q2 — deterministic claim extraction, a content-hash manifest, and a re-executable trail — but it is framed as an in-pipeline integrity gate for the author's own manuscript preparation rather than as a third-party-re-checkable certificate whose later failure is itself the signal, and it does not hash the verifier.",
+      "pilot": false
+    },
+    {
+      "title": "Self-Verifying Measurement Records: Hash-Linked Evidence Graphs for Hardware Benchmarking",
+      "authors": "Faruk Alpay, Baris Basaran",
+      "venue_and_date": "arXiv preprint 2606.27934, submitted 2026-06-26",
+      "url_fetched": "https://arxiv.org/abs/2606.27934",
+      "bears_on": "Q2",
+      "what_it_checks": "Binds every quantity appearing in the text, a table, or a figure by its content hash to the underlying observation and to the verification behind it, in an append-only hash-linked transparency log; a verifier re-hashes each member against a SHA-256 manifest and recomputes reductions from the raw observations, with Freivalds' algorithm for matrix-product results and algebraic checksums elsewhere.",
+      "artifact_produced": "A published hash-linked evidence graph plus SHA-256 manifest, raw observations and verifier source, released as arXiv ancillary files; each quantity carries a measured reproducibility class and a tolerance calibrated to the device's own residual floor.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "Filed under Q2 rather than Q1 because it is the strongest certificate-shaped hit of this family — a persisted, offline-verifiable binding of paper numbers to hashed evidence — though it is scoped to hardware benchmark measurements, its drift notion is measurement-tolerance recurrence on the same device rather than a certificate that stops holding, and the abstract does not claim the verifier's own hash is part of the record.",
+      "pilot": false
+    },
+    {
+      "title": "Evidence-Bound Autonomous Research (EviBound): A Governance Framework for Eliminating False Claims",
+      "authors": "Ruiying Chen",
+      "venue_and_date": "arXiv preprint 2511.05524, submitted 2025-10-28",
+      "url_fetched": "https://arxiv.org/abs/2511.05524",
+      "bears_on": "Q1",
+      "what_it_checks": "Refuses to let an autonomous research agent's claim propagate unless it is accompanied by machine-checkable evidence — a queryable MLflow run ID, the required artifacts present at expected paths, and FINISHED status — validated by a post-execution Verification Gate, with an Approval Gate validating acceptance-criteria schemas before code runs. Reported: 0% hallucination, 7/8 tasks verified and 1 blocked at the approval gate, ~8.3% overhead.",
+      "artifact_produced": "MLflow run IDs and artifact/metric records for every verified task, shipped as a reproducibility package.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "Occupies the gate-the-claim-on-evidence idea and a pre-execution schema precondition that rhymes with OATH's prereg gate, but the binding is a live MLflow query rather than a self-contained hashed certificate, and re-verification depends on the tracking server still existing rather than on hashes anyone can recompute.",
+      "pilot": false
+    },
+    {
+      "title": "ESCIMate — statistical consistency checker for research papers",
+      "authors": "Scirenity (tool vendor; individual authors not stated on the page)",
+      "venue_and_date": "Deployed web tool, version 0.7.7, page fetched 2026-08-26",
+      "url_fetched": "https://escimate.app/",
+      "bears_on": "Q1",
+      "what_it_checks": "Reads APA-formatted results straight out of a PDF, DOCX or pasted text and independently recomputes every plausible effect size, p-value and confidence interval (20+ effect-size variants; t, F, correlation, chi-square, z, Mann-Whitney U, Wilcoxon W, Kruskal-Wallis H, regression coefficients), then compares the recomputation against what was reported.",
+      "artifact_produced": "A per-result verdict from PASS / OK / NOTE / WARN / ERROR / SKIP, each accompanied by reproducible R code for the exact computation; powered by the open-source effectcheck R package.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "A deployed, in-use instrument in the same neighbourhood as the pilot's statcheck but substantially broader, and notable because it emits re-runnable R code rather than a prose verdict — however it checks the document's numbers against themselves (recomputation from reported statistics), never against an external receipt file, and emits no persisted, hash-bound certificate.",
+      "pilot": false
+    },
+    {
+      "title": "Evaluation of JATSdecoder as an automated text extraction tool for statistical results in scientific reports",
+      "authors": "Ingmar Böschen",
+      "venue_and_date": "Scientific Reports 11, 19525 (2021)",
+      "url_fetched": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8484375/",
+      "bears_on": "Q1",
+      "what_it_checks": "Its get.stats() function extracts all reported statistical results from a manuscript's text and recomputes p-values for most standard test results, classifying each extracted result as checkable, computable, or uncomputable.",
+      "artifact_produced": "Structured data frames splitting test statistic, degrees of freedom, effect size and reported vs recomputed p-value into columns, for automated consistency checking; released open-source at github.com/ingmarboeschen/JATSdecoder with a web front end at get-stats.app.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "A deployed extraction-plus-recomputation instrument with a peer-reviewed evaluation of its own extraction accuracy — the closest thing found to OATH's self-audit instinct — but it checks internal arithmetic consistency only, binds nothing to an external artifact, and produces a data frame rather than a persisted certificate.",
+      "pilot": false
+    },
+    {
+      "title": "\"The Data Says Otherwise\" — Towards Automated Fact-checking and Communication of Data Claims (Aletheia)",
+      "authors": "Yu Fu, Shunan Guo, Jane Hoffswell, Victor S. Bursztyn, Ryan Rossi, John Stasko",
+      "venue_and_date": "UIST 2024 (37th ACM Symposium on User Interface Software and Technology); arXiv 2409.10713, submitted 2024-09-16, revised 2024-12-23",
+      "url_fetched": "https://arxiv.org/abs/2409.10713",
+      "bears_on": "Q1",
+      "what_it_checks": "Aletheia verifies natural-language data claims (numeric/statistical statements derived from structured data) against an actual dataset, using a pre-trained LLM to parse claim semantics for evidence retrieval, then surfaces the retrieved evidence.",
+      "artifact_produced": "Retrieved data evidence rendered in two designed representations — data tables and visualizations matched to the data-fact type — for a human reader to assess; evaluated on a curated set of 400 data claims.",
+      "recheckable_later": "unclear",
+      "requires_claimant_cooperation": "unclear",
+      "differs_from_oath": "Genuinely checks stated numbers against an external dataset rather than against themselves, but it is a human-in-the-loop communication interface whose output is a presentation of evidence for a reader to judge; the fetched abstract does not claim any persisted, re-checkable artifact, and nothing is hashed.",
+      "pilot": false
+    },
+    {
+      "title": "sciwrite-lint: Verification Infrastructure for the Age of Science Vibe-Writing",
+      "authors": "Sergey V. Samsonau",
+      "venue_and_date": "arXiv preprint 2604.08501, submitted 2026-04-09, revised 2026-05-24",
+      "url_fetched": "https://arxiv.org/abs/2604.08501",
+      "bears_on": "Q1",
+      "what_it_checks": "Applies software-linting discipline to a paper: flags hallucinated references, citation metadata errors and retractions, and checks numbers in text against tables and the abstract against the body, plus statistical results against their verbal interpretation.",
+      "artifact_produced": "A lint report with per-reference reliability scores, produced by open-source code (github.com/authentic-research-partners/sciwrite-lint, CC-BY-4.0) that runs entirely on the researcher's own machine, fast enough to re-lint between revisions.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "The nearest thing found to OATH's framing of verification as a lint/CI step the author reruns, and it is released software — but its numeric checking is document-internal consistency (text vs table, abstract vs body), its citation work is explicitly outside OATH's neighbourhood, and it emits a report rather than a hash-bound certificate.",
+      "pilot": false
+    },
+    {
+      "title": "Proof-Carrying Agent Actions: Model-Agnostic Runtime Governance for Heterogeneous Agent Systems",
+      "authors": "Zexun Wang",
+      "venue_and_date": "arXiv preprint, cs.SE / cs.AI / cs.CR, submitted 2 June 2026",
+      "url_fetched": "https://arxiv.org/html/2606.04104v1",
+      "bears_on": "Q2",
+      "what_it_checks": "Checks an agent action against a policy at five runtime checkpoints and emits an action certificate C(a) = (envelope, runtime receipts, approval receipts, replay/proof state, integrity projection). Verification recomputes the action envelope, risk result, policy snapshot and manifest payload from canonicalized bundle content and explicitly 'checks for drift'; 'manifest mismatch against the canonical replay payload' is a named failure class.",
+      "artifact_produced": "A portable, replay-ready action certificate with manifest material derived from canonicalized bundle content, plus an integrity projection.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "unclear",
+      "differs_from_oath": "It binds an agent's runtime action to policy and receipts rather than binding numeric claims in a prose document to cited data receipts, but it is the one source found that independently implements the same construction — recompute the checker's own snapshot plus the evidence manifest and treat later mismatch as drift.",
+      "pilot": false
+    },
+    {
+      "title": "CODECHECK: an Open Science initiative for the independent execution of computations underlying research articles during peer review to improve reproducibility",
+      "authors": "Daniel Nüst, Stephen J. Eglen",
+      "venue_and_date": "F1000Research, version 2, 20 July 2021",
+      "url_fetched": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8311796/",
+      "what_it_checks": "An independent codechecker re-executes the author-supplied code and compares reproduced outputs against the figures/tables of the paper. Demonstrated with 25 reproductions.",
+      "bears_on": "Q2",
+      "artifact_produced": "A numbered, time-stamped CODECHECK certificate deposited to Zenodo with a DOI, recording the checked paper, the codechecker's identity, the check date, the code/data location, a summary of findings, a manifest of output files (filenames, descriptions, file sizes) and reproduced outputs.",
+      "recheckable_later": "no",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "It persists a citable certificate naming the checker — the closest scholarly analogue to OATH's certificate — but the manifest carries no cryptographic hashes of outputs, code or checker, so nothing can be mechanically recomputed later and a drift is not detectable; the paper only notes that papers changed during review may need rechecking by hand.",
+      "pilot": false
+    },
+    {
+      "title": "C2PA Specification 1.0 (Coalition for Content Provenance and Authenticity)",
+      "authors": "C2PA (Adobe, Microsoft, BBC, Intel, Truepic et al.)",
+      "venue_and_date": "C2PA technical specification, version 1.0",
+      "url_fetched": "https://spec.c2pa.org/specifications/specifications/1.0/specs/C2PA_Specification.html",
+      "bears_on": "Q2",
+      "what_it_checks": "A signed claim gathers assertions about an asset and references each by a hashed_uri_map containing that assertion's hash; at least one assertion must be a data hash (or BMFF-based hash) assertion providing the hard binding to the asset bytes. Any validator can later recompute and compare.",
+      "artifact_produced": "A C2PA Manifest persisted in the asset's Manifest Store, containing the signed claim, assertion hashes, the hard binding to content, and a claim_generator string naming the software that produced the claim.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "It is genuinely a persisted certificate whose later validation failure is the signal, and it even records generator identity — but the claim it binds is about the asset's own bytes and history, not a numeric assertion checked against separately-cited evidence files, and the generator string is a human-readable name rather than a hash of the checker.",
+      "pilot": false
+    },
+    {
+      "title": "in-toto Attestation Framework — Statement specification v1",
+      "authors": "in-toto project (CNCF)",
+      "venue_and_date": "in-toto/attestation repository, spec/v1/statement.md",
+      "url_fetched": "https://raw.githubusercontent.com/in-toto/attestation/main/spec/v1/statement.md",
+      "bears_on": "Q2",
+      "what_it_checks": "Binds a predicate (the claim about how software was produced) to a subject: 'Set of software artifacts that the attestation applies to. Each element MUST have digest set.' The spec states 'Subject artifacts are matched purely by digest, regardless of content type.'",
+      "artifact_produced": "A signed in-toto Statement (attestation) binding claim to artifact digests; in the wider framework, layout plus signed link metadata released alongside the product and checkable by in-toto-verify, which confirms links are signed by authorized functionaries.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "Digest matching means an attestation mechanically stops holding if the artifact changes, so later failure is detectable — but the spec explicitly leaves verification semantics to implementers ('The semantics are up to the producer and consumer'), defines no drift output, and the claim is about build provenance rather than a numeric assertion in a document.",
+      "pilot": false
+    },
+    {
+      "title": "The Popper Convention / PopperCI (concepts documentation)",
+      "authors": "Ivo Jimenez, Michael Sevilla, Carlos Maltzahn et al. (UC Santa Cruz)",
+      "venue_and_date": "Popper 1.1.2 documentation (convention introduced IPDPSW 2017)",
+      "url_fetched": "https://popper.readthedocs.io/en/v1.1.2/sections/concepts.html",
+      "bears_on": "Q2",
+      "what_it_checks": "Re-executes a self-contained experiment pipeline on CI services and validates codified expectations: 'we can not only check that a pipeline can execute correctly (SUCCESS or FAIL statuses) but we can also verify that the output is the one expected by the original implementers ... (GOLD status).'",
+      "artifact_produced": "A CI validation status per pipeline run (SUCCESS / FAIL / GOLD); the pipeline, its validations and results all live in the same repository.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "This is the closest thing found to drift-as-continuous-signal in the research-reproducibility literature — repeated CI re-execution where a later status regression means the result stopped reproducing — but the fetched page confirms no persisted certificate, no hashes of document, evidence or checker, and no extraction of numeric claims from the manuscript text.",
+      "pilot": false
+    },
+    {
+      "title": "CertifiedData — Verify AI artifacts and signed certificates",
+      "authors": "CertifiedData.io (commercial service; no named authors on the fetched page)",
+      "venue_and_date": "Live service documentation, example certificates dated 2026-03-16",
+      "url_fetched": "https://certifieddata.io/verify",
+      "bears_on": "Q2",
+      "what_it_checks": "Recomputes a dataset's SHA-256 fingerprint and compares it against the certificate record; verifies an Ed25519 signature against a public key published at /.well-known/signing-keys.json. Documented POST /api/verify endpoint, production and sandbox certificate formats.",
+      "artifact_produced": "A signed certificate binding the dataset hash, the issuer identity and generation metadata, retrievable by certificate UUID.",
+      "recheckable_later": "yes",
+      "requires_claimant_cooperation": "no",
+      "differs_from_oath": "It is a deployed certificate whose later mismatch is precisely the signal that the dataset changed, but it certifies a dataset's bytes only — it does not read claims out of a document, does not bind claim to evidence, and does not record the verifier's own hash.",
+      "pilot": false
+    },
+    {
+      "title": "SLSA v1.0 — Verifying artifacts",
+      "authors": "SLSA / OpenSSF",
+      "venue_and_date": "SLSA specification v1.0",
+      "url_fetched": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "bears_on": "Q2",
+      "what_it_checks": "Verification step 1 requires: 'Verify that statement's subject matches the digest of the artifact in question', with no allowance for mismatch; expectations are then checked against the provenance.",
+      "artifact_produced": "A provenance attestation consumed at upload, download or by a monitoring system; 'Consumers can continuously poll a monitor to detect artifacts that do not meet the monitor's expectations.'",
+      "recheckable_later": "unclear",
+      "requires_claimant_cooperation": "yes",
+      "differs_from_oath": "Recorded as a precise negative for the family the task asked about: SLSA verification is specified as point-in-time (upload/download), and the fetched spec contains no mechanism for re-evaluating whether previously-valid provenance still holds — its monitoring concept detects artifacts violating expectations, not provenance decay, so SLSA does not occupy the drift property.",
+      "pilot": false
+    }
+  ],
+  "checks": [
+    {
+      "title": "Proof-Carrying Agent Actions: Model-Agnostic Runtime Governance for Heterogeneous Agent Systems",
+      "url": "https://arxiv.org/html/2606.04104v1",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "CODECHECK: an Open Science initiative for the independent execution of computations underlying research articles during peer review to improve reproducibility",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8311796/",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "C2PA Specification 1.0 (Coalition for Content Provenance and Authenticity)",
+      "url": "https://spec.c2pa.org/specifications/specifications/1.0/specs/C2PA_Specification.html",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "in-toto Attestation Framework — Statement specification v1",
+      "url": "https://raw.githubusercontent.com/in-toto/attestation/main/spec/v1/statement.md",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Both quoted sentences appear verbatim in the fetched spec. Note the fetched page covers only the Statement layer; the additional claims about layout, signed link metadata, and in-toto-verify confirming functionary signatures are from the wider in-toto framework and are NOT on this URL. Those parts of the description are not supported by this specific source, though they are accurate to in-toto generally."
+    },
+    {
+      "title": "The Popper Convention / PopperCI (concepts documentation)",
+      "url": "https://popper.readthedocs.io/en/v1.1.2/sections/concepts.html",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "CertifiedData — Verify AI artifacts and signed certificates",
+      "url": "https://certifieddata.io/verify",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "SLSA v1.0 — Verifying artifacts",
+      "url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "Deterministic Integrity Gates for LLM-Assisted Clinical Manuscript Preparation: An Auditable Biomedical Informatics Architecture",
+      "url": "https://arxiv.org/abs/2606.09500",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Real (arXiv:2606.09500, Nam, Jeong, Kim; v4 June 2026). Abstract confirms 43 skills with a 21-detector deterministic tier, halt-on-failure gating of every stage transition, MIT license, 'auditable, re-executable trail', and content-hash manifest verification. The audit-trail probe in Sec 4.3 of the HTML full text confirms the exact figures: 249 claims extracted, 136 numerical, 74 (54%) exact-matched to locked table values, 48 (35%) partial (rounded/derived restatements), 14 (10%) untraceable. Two minor imprecisions in the extraction, neither material: (a) the 249 claims come from three *demonstrations* built on three public reporting-guideline datasets (STARD, PRISMA, STROBE), not three ordinary 'manuscripts'; (b) the demonstrations ran MedSci Skills v3.7.0 (Zenodo DOI 10.5281/zenodo.20577997) — v3.8.0 (DOI 10.5281/zenodo.20582972) is the evaluation-harness version, so calling the whole toolchain 'v3.8.0' overstates slightly."
+    },
+    {
+      "title": "Self-Verifying Measurement Records: Hash-Linked Evidence Graphs for Hardware Benchmarking",
+      "url": "https://arxiv.org/abs/2606.27934",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "Evidence-Bound Autonomous Research (EviBound): A Governance Framework for Eliminating False Claims",
+      "url": "https://arxiv.org/abs/2511.05524",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "ESCIMate — statistical consistency checker for research papers",
+      "url": "https://escimate.app/",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "Evaluation of JATSdecoder as an automated text extraction tool for statistical results in scientific reports",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8484375/",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "\"The Data Says Otherwise\" — Towards Automated Fact-checking and Communication of Data Claims (Aletheia)",
+      "url": "https://arxiv.org/abs/2409.10713",
+      "exists": true,
+      "supports_description": true,
+      "correction": ""
+    },
+    {
+      "title": "sciwrite-lint: Verification Infrastructure for the Age of Science Vibe-Writing",
+      "url": "https://arxiv.org/abs/2604.08501",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Real (arXiv:2604.08501, Sergey V Samsonau; v1 Apr 2026, v2 May 2026, cs.DL). All claimed checks confirmed in the full text: reference existence, metadata accuracy, retraction status, claim support against the cited paper, numbers in text vs tables, abstract vs body, figure captions vs content, statistical results vs verbal interpretation; per-reference reliability score; runs entirely on the researcher's machine on free public databases, a single consumer GPU and open-weights models; repo github.com/authentic-research-partners/sciwrite-lint. Two qualifications: 'fast enough to re-lint between revisions' understates the cost — an initial run takes roughly 30 minutes and only cached re-runs finish in minutes; and CC-BY-4.0 is the arXiv paper's license, which the extraction attaches to the code (the paper does not clearly state a separate code license). The extraction also omits the paper's headline construct, the SciLint Score (citation-chain integrity plus a contribution component operationalizing five philosophy-of-science frameworks)."
+    },
+    {
+      "title": "honest-signal — pre-registration firewall plus an independent recomputation agent",
+      "url": "https://github.com/alexcard3/honest-signal",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Confirmed in detail. firewall.py (fetched at raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py) inspects git history via git()/commit_that_introduced()/strictly_precedes()/blob_at() and carries rules literally labelled (a)-(e): (a) a result must have a pre-registration; (b) the pre-registration commit must STRICTLY precede the result commit (same-commit fails); (c) the pre-registration must not have changed after registration, checked against both committed history and the working tree; (d) the kill criterion must not be structurally vacuous, requiring a threshold number/procedure/date and rejecting 'tbd'/'to be decided'/'we will see'; (e) prints the gap and never fails on it. It exits 1 on violations and refuses to emit a verdict on shallow clones. README confirms the firewall is wired as a required GitHub status check ('a pull request that claims a result does not merge unless a pre-registration for it exists, provably precedes it, has not been edited since'), with PR #6 cited as a live rejection ('the base branch policy prohibits the merge'), and confirms the independent byte-for-byte recompute agent, stating verbatim: 'It already caught a real fabrication (see incident-log.md).' FALSIFICATIONS.md lists 18 hypotheses with 16 certified dead (17 and 18 under review) and records per row what was tested, the pre-registration evidence, the independent check, and the verdict/gate that killed it. audit/badge.json exists and is machine-emitted (currently schemaVersion 1, label 'proof of precedence', message '4 of 18', color red). Two precision notes, neither contradicting the claim: (1) firewall.py itself does not write audit/badge.json or audit/report.txt — it prints to stdout/stderr and the audit files are emitted by CI; the survey's description attributes the artifacts to the project, not to the script, so this is not an error but should not be restated as 'the script writes them'. (2) The README also concedes the recompute moat is a process fact that 'does not compile' and is not machine-verifiable — worth carrying forward if the survey leans on it as an enforced mechanism."
+    },
+    {
+      "title": "FDAAA TrialsTracker — live public tracking of unreported clinical trial results",
+      "url": "https://fdaaa.trialstracker.net/faq/",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Substance confirmed: the FAQ describes automatic identification of ACTs (trials starting after 18 Jan 2017, under 2016 Final Rule criteria) and pACTs from public ClinicalTrials.gov data, with trials becoming due 12 months after primary completion date plus a 30-day administrative window; determinations are revised on later posting, verbatim 'If full results show up in the meantime, we will show them as reported'; code is open at github.com/ebmdatalab/clinicaltrials-act-tracker and github.com/ebmdatalab/clinicaltrials-act-converter, plus a published methods paper and an API. The /rankings/ page publishes a per-sponsor table with Due / Reported / Percent columns (rows load via JS, so row values were not readable through a plain fetch). One correction: 'runs daily' overstates the FAQ, which says only 'We're planning to refresh the data on this site daily, at first, resources permitting' — an intention, not a commitment. The site footer at fetch time read 'Data last updated 25 August 2026. Next planned update 28 August 2026', i.e. roughly a three-day cadence in practice. The load-bearing point (automated, registry-derived, sponsor-silence-as-signal) is unaffected; recommend the survey say 'refreshed on a rolling automated schedule (daily as stated intent; ~3-day cadence observed 26 Aug 2026)' rather than 'daily'. Also note the homepage headline counters rendered as 'Trials reported: 0 out of 0 / Percent reported: —' to a non-JS fetch, so the overall compliance ratio could not be read directly, only its presence as a published field confirmed."
+    },
+    {
+      "title": "scienceverse — machine-readable study descriptions with automated evaluation of preregistered predictions",
+      "url": "https://www.scienceverse.org/scienceverse/articles/demo.html",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Fully confirmed, including the quoted output. The demo defines a hypothesis ('Cues of kinship will increase prosocial behaviour') with four criteria (t_lo, t_hi, r_lo, r_hi), a corroboration expression '(t_lo & t_hi) | (r_lo & r_hi)' and a falsification expression '!t_hi & !r_hi', and study_analyse() prints verbatim: 'Conclusion: corroborate / * Corroborate ((t_lo & t_hi) | (r_lo & r_hi)): TRUE / * Falsify (!t_hi & !r_hi): FALSE'. The survey's rendering compresses this to one line and omits the Falsify line, which is a formatting compression rather than a misquote. prereg.json and postreg.json are both shown being saved, and study_save(study, 'prereg.html', format = 'prereg') confirms the HTML preregistration export. The claim that a preregistration is an input rather than a precondition is supported: study_analyse() runs off the in-memory study object with no saved prereg required. One sourcing note: the two framing quotes ('automatic evaluation of results against machine-readable specifications of statistical hypotheses' and 'automated reproducibility allows journals to compare pre-registered hypotheses with the conclusions in the final manuscript') are both verbatim in the GitHub README at scienceverse/scienceverse, not on the scienceverse.org landing page — the survey's attribution to 'the repo' is correct, but a reader following only the demo URL will not find them."
+    },
+    {
+      "title": "Mitigating LLM-based p-Hacking by Preregistering for the Next LLM",
+      "url": "https://arxiv.org/abs/2606.27687",
+      "exists": true,
+      "supports_description": true,
+      "correction": "Real paper: arXiv:2606.27687, submitted 26 June 2026, authors Maria Thomas, Kristina Gligoric, Nihar B. Shah. The abstract confirms the protocol (preregister the experiment and eligible models, then run on the first eligible LLM released after the preregistration), reports evaluation over 20 models from four providers blocking transfer of the p-hack in 73.9% and 72.7% of cases, and contains the quoted self-application verbatim: 'Finally, putting money where our mouth is, we followed our own protocol and preregistered our experiment', with 6 of 7 hacking configurations failing to carry over to the first eligible subsequent model. Two corrections. (1) 'it explicitly has no technical enforcement' is not an explicit statement in the paper — the abstract makes no claim either way about enforcement; the absence of software enforcement is a correct inference from the protocol's design, but the word 'explicitly' should be dropped. (2) The claimed artifact — a public preregistration naming the experiment and the set of eligible future models — could NOT be located. The arXiv abstract page contains no link to a registration record (no OSF/AsPredicted/repo pointer), so the existence and public accessibility of the authors' own registration is asserted in the abstract but unverified by me. This is consistent with the survey's own 're-checkable later: unclear' flag; recommend either locating the registration in the full PDF and citing it directly, or downgrading the artifact line to 'a preregistration the authors state they filed; no public pointer found from the abstract page (checked 26 Aug 2026)'."
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+{
+ "chart": "the styxx research org, with every status computed rather than typed",
+ "why": "Personal-AI-org diagrams type their own status lights. This one runs the tests, counts the receipts, and verifies that each disclosed defect's document exists. A box cannot claim ONLINE because someone typed ONLINE.",
+ "human_operator": "one. merges to main, and nothing in this repository merges itself",
+ "roles_total": 11,
+ "status_tally": {
+  "ONLINE_WITH_DISCLOSED_DEFECT": 8,
+  "ONLINE_SELF_DISCLOSES_LIMITS": 2,
+  "ABSENT": 1
+ },
+ "tests_run_here": 231,
+ "tests_failed_here": 0,
+ "roles_disclosing_a_defect": 9,
+ "roles_with_no_defect_disclosed": 0,
+ "roles_self_disclosing_limits_in_source": 4,
+ "positive_control": {
+  "role": "TRADER",
+  "status": "ABSENT",
+  "asserted": "must report ABSENT",
+  "why": "A status column that cannot report a bad value is decoration. This role points at a module that is not on disk. On the first run of this census the column ALSO caught a real error by its author -- a defect citation pointing at papers/REPLICATIONS.md, which is at the repository root -- and reported CITATION_MISSING until it was fixed. The column has now failed twice on purpose and once by accident."
+ },
+ "the_point": "A chart on which every light is green is the same genre of lie as a status nobody checks. Every working role here also says what is wrong with it, and the two roles that disclose nothing are marked as such rather than as healthy.",
+ "roles": [
+  {
+   "role": "PROTOCOL FREEZER",
+   "layer": "orchestration",
+   "job": "refuses to score a cycle whose preregistration is not committed",
+   "module": "styxx/protocol.py",
+   "implemented": true,
+   "loc": 494,
+   "tests": {
+    "ran": true,
+    "passed": 6,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 3.1,
+    "files": [
+     "tests/test_protocol_vacuity.py"
+    ]
+   },
+   "receipts_produced": 10,
+   "disclosed_defect": "its vacuity check is structural only; an unfailable BAR is not detected",
+   "defect_document": "papers/closed-model-frontier/RECON_v13_not_frozen_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "VERIFIER",
+   "layer": "core",
+   "job": "binds every numeric claim in a document to a committed receipt",
+   "module": "styxx/certify.py",
+   "implemented": true,
+   "loc": 955,
+   "tests": {
+    "ran": true,
+    "passed": 84,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 2.7,
+    "files": [
+     "tests/test_certify_row_ordinal.py",
+     "tests/test_certify_recall.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "~1 in 5 of its verifications are sworn to non-claims, and it declines to check 0.4267 of the checkable claims in our own corpus",
+   "defect_document": "papers/closed-model-frontier/RESULT_oath_verified_channel_internal_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "CORPUS AUDITOR",
+   "layer": "core",
+   "job": "re-certifies every committed certificate and reports drift",
+   "module": "styxx/corpus_audit.py",
+   "implemented": true,
+   "loc": 365,
+   "tests": {
+    "ran": true,
+    "passed": 8,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 6.8,
+    "files": [
+     "tests/test_corpus_audit_search_scope.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "was enumerating a population 49% of which was an agent scratch clone; one CAPSTONE receipt remains present-and-changed",
+   "defect_document": "REPLICATIONS.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "NULL-RULE CHECK",
+   "layer": "method",
+   "job": "asks whether a candidate rule beats doing nothing at all",
+   "module": "styxx/discriminates.py",
+   "implemented": true,
+   "loc": 295,
+   "tests": {
+    "ran": true,
+    "passed": 24,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 2.7,
+    "files": [
+     "tests/test_discriminates.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "cannot see overfitting, and a rule that does nothing passes a cost column",
+   "defect_document": "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "The honest limits"
+    ]
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "READINESS CHECK",
+   "layer": "surface",
+   "job": "tells an outside author whether their document can carry a certificate",
+   "module": "styxx/oathready.py",
+   "implemented": true,
+   "loc": 261,
+   "tests": {
+    "ran": true,
+    "passed": 8,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 1.7,
+    "files": [
+     "tests/test_oathready.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "its abstained bucket is not neutral: ~2 in 5 of those rows are unchecked claims",
+   "defect_document": "OATH_CONTRACT.md",
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "The honest limits",
+     "known_limits"
+    ]
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "ABSENCE DETECTOR",
+   "layer": "core",
+   "job": "finds the measurement that was never taken",
+   "module": "styxx/absence.py",
+   "implemented": true,
+   "loc": 562,
+   "tests": {
+    "ran": true,
+    "passed": 18,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 1.6,
+    "files": [
+     "tests/test_absence.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": null,
+   "defect_document": null,
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "LIMITS =",
+     "LIMITS:",
+     "What it CANNOT see"
+    ]
+   },
+   "defect_document_exists": null,
+   "status": "ONLINE_SELF_DISCLOSES_LIMITS"
+  },
+  {
+   "role": "LOOP DETECTOR",
+   "layer": "core",
+   "job": "finds the agent that is repeating itself",
+   "module": "styxx/loops.py",
+   "implemented": true,
+   "loc": 382,
+   "tests": {
+    "ran": true,
+    "passed": 7,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 1.6,
+    "files": [
+     "tests/test_loops.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": null,
+   "defect_document": null,
+   "self_disclosed_limits": {
+    "discloses": true,
+    "markers": [
+     "LIMITS =",
+     "LIMITS:",
+     "What it cannot see"
+    ]
+   },
+   "defect_document_exists": null,
+   "status": "ONLINE_SELF_DISCLOSES_LIMITS"
+  },
+  {
+   "role": "LEDGER",
+   "layer": "record",
+   "job": "regenerates the public record of every cycle from the receipts",
+   "module": "papers/build_ledger.py",
+   "implemented": true,
+   "loc": 186,
+   "tests": {
+    "ran": true,
+    "passed": 52,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 20.4,
+    "files": [
+     "tests/test_ledger.py",
+     "tests/test_ledger_classifier.py"
+    ]
+   },
+   "receipts_produced": 7,
+   "disclosed_defect": "the negatives ratio is a keyword match over prose, and 0 of 163 cycles carry a machine-readable verdict token",
+   "defect_document": "papers/LEDGER.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "SILENT-PASS BENCH",
+   "layer": "method",
+   "job": "the corpus of outcomes that do not happen while every check stays green",
+   "module": "benchmarks/silent_pass/__init__.py",
+   "implemented": true,
+   "loc": 287,
+   "tests": {
+    "ran": true,
+    "passed": 10,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 20.9,
+    "files": [
+     "tests/test_silent_pass_bench.py"
+    ]
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "was itself skipping in CI on every shallow checkout until 2026-08-28",
+   "defect_document": "tests/conftest.py",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "BLIND PANEL",
+   "layer": "method",
+   "job": "three seats adjudicate claimhood, salted with decoys so membership leaks nothing",
+   "module": "papers/closed-model-frontier/oath_adjudication.py",
+   "implemented": true,
+   "loc": 228,
+   "tests": {
+    "ran": true,
+    "passed": 14,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 1.9,
+    "files": [
+     "tests/test_adjudication_packets.py"
+    ]
+   },
+   "receipts_produced": 5,
+   "disclosed_defect": "three seats of one model family; 98% unanimity is a correlated-error ceiling, not agreement between readers",
+   "defect_document": "papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ONLINE_WITH_DISCLOSED_DEFECT"
+  },
+  {
+   "role": "TRADER",
+   "layer": "control",
+   "job": "declared positive control - the aspirational box, drawn to prove ABSENT is reachable",
+   "module": "styxx/trader.py",
+   "implemented": false,
+   "loc": 0,
+   "tests": {
+    "ran": false,
+    "reason": "no test file on disk",
+    "passed": 0,
+    "failed": 0
+   },
+   "receipts_produced": 0,
+   "disclosed_defect": "does not exist. Retail algorithmic trading is a backtest away from the in-sample collapse this lane measured on 2026-08-27, and no edge here transfers to markets",
+   "defect_document": "papers/closed-model-frontier/RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+   "self_disclosed_limits": {
+    "discloses": false,
+    "markers": []
+   },
+   "defect_document_exists": true,
+   "status": "ABSENT"
+  }
+ ]
+}

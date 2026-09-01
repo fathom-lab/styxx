@@ -1,0 +1,10 @@
+{
+ "measure": "accusation identity keyed on PATH alone (kind is deliberately changed by repair 1, so keying on kind mis-reports demotions as new)",
+ "prs_scored": 71016,
+ "paths_gaining_an_accusation": 0,
+ "G_R1_pass": true,
+ "examples": [],
+ "development_paths_before": 1479,
+ "development_paths_after": 967,
+ "development_fraction_removed": 0.3462
+}

@@ -1,0 +1,288 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_agent_gate_boundary_2026_08_30.md",
+  "document_sha256": "d965eea1477512eb7a6d659cb2d4a2d88f5b550de83854cad65363f33eba5b5a",
+  "receipts_sha256": {
+    "agent_branch_attestation.json": "5b44589802ef2a7f06b9f64328cc1fc7bfd40354a118ffb1e7919c01c080b06a",
+    "agent_claim_extractor_baseline.json": "a46f7b71869da0ca02d5b91a8a25ef08a1d45baaf081bc11eb99f77224a2a6fe"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 1,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 8,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 4
+    },
+    "verified": {
+      "total": 8,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 1,
+        "obligated_integer_filter_na": 0,
+        "unobligated_integer_filter_ran": 7,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 2,
+    "obligation_sources": {
+      "vocabulary": 1,
+      "n-glued": 1,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 25,
+      "token": "2,738"
+    },
+    {
+      "line": 46,
+      "token": "4"
+    },
+    {
+      "line": 56,
+      "token": "499"
+    },
+    {
+      "line": 56,
+      "token": "500"
+    },
+    {
+      "line": 81,
+      "token": "3"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 10,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "branch: `54` commits authored by an AI agent, each message dense with concrete assertions, each",
+      "col": 9,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:range.commits",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 18,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "| commits gated | `54` |",
+      "col": 19,
+      "binding_context": "| | | | commits gated | `54` |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:range.commits",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 19,
+      "token": "2732",
+      "value": 2732.0,
+      "decimals": 0,
+      "context": "| **sentences the gate never read** | **`2732`** |",
+      "col": 41,
+      "binding_context": "| | | | **sentences the gate never read** | **`2732`** |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.sentences_never_read",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 20,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| claims extracted | `6` |",
+      "col": 22,
+      "binding_context": "| | | | claims extracted | `6` |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.claims_extracted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 21,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| verified | `3` |",
+      "col": 14,
+      "binding_context": "| | | | verified | `3` |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.verified",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| contradicted (leads) | `3` |",
+      "col": 26,
+      "binding_context": "| | | | contradicted (leads) | `3` |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.contradicted",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 23,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| outside-evidence | `0` |",
+      "col": 22,
+      "binding_context": "| | | | outside-evidence | `0` |",
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.outside_evidence",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 25,
+      "token": "2,738",
+      "value": 2738.0,
+      "decimals": 0,
+      "context": "Coverage of the agent's actual reporting: **six claims out of roughly 2,738 sentences** \u2014 the",
+      "col": 70,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 46,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(`SYNTHESIS_mention_and_use_2026_08_26.md`, instrument #4), firing on the prose of the very agent",
+      "col": 56,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 56,
+      "token": "499",
+      "value": 499.0,
+      "decimals": 0,
+      "context": "declines roughly **499 sentences in 500**.",
+      "col": 19,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 56,
+      "token": "500",
+      "value": 500.0,
+      "decimals": 0,
+      "context": "declines roughly **499 sentences in 500**.",
+      "col": 36,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 77,
+      "token": "2732",
+      "value": 2732.0,
+      "decimals": 0,
+      "context": "knows the gate's idiom exists. The `2732` never-read sentences include boilerplate (co-author",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.sentences_never_read",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 81,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "was not applied to `n=3` and the conflict is stated rather than laundered.",
+      "col": 22,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "n-glued"
+      }
+    }
+  ]
+}

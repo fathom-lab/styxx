@@ -414,6 +414,25 @@ V10_TOKEN_COLUMN = True           # primary: `extract_numbers` records the colum
                                   # Requires the length-preserving scrub in `extract_numbers`; a
                                   # raw m.start() against the shipped collapsing scrub would be a
                                   # NEW wrong column on every line carrying a sha/date/version.
+V11_FRACTION_COHERENCE = True     # PREREG_fraction_coherence_2026_08_31: integer operands of an
+                                  # explicit fraction A/B whose SAME-LINE ratio r satisfies
+                                  # round(A/B, decimals(r)) == r bind JOINTLY iff both values sit
+                                  # under ONE common receipt parent. The shared-subtree requirement
+                                  # replaces the v0.3 path-vocabulary test for exactly this class,
+                                  # because fields named `valid`/`claims` never appear in prose --
+                                  # which is how three consecutive RESULTs were accused on the
+                                  # digits of their own mandated counts statements. RESCUE-ONLY:
+                                  # sets derived_ref, so it can flip UNGROUNDED->VERIFIED and
+                                  # nothing else; a coherent pair that fails joint binding falls
+                                  # through to today's ladder untouched.
+V12_SUM_COHERENCE = True          # PREREG_mirror_sum_2026_08_31: an integer the ladder would
+                                  # otherwise accuse binds iff it equals the EXHAUSTIVE sum of
+                                  # one field f across ALL dict-children of one receipt node G
+                                  # (>=2 integer addends, NOT all equal). The non-uniform rule
+                                  # was forced by grounding done before the freeze: STRUCT-1's
+                                  # quoted "9" coincides with nine seat scores of 1 each — a
+                                  # uniform sum is indistinguishable from counting and never
+                                  # binds. RESCUE-ONLY, same guard as V11 by construction.
 V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does not fire on a
                                   # slash-pair numerator. A value written `a/b` is a count pair,
                                   # never a value of the bounded quantity named to its left.
@@ -565,6 +584,76 @@ def _v11_row_ordinal_label(num: dict, lines: list[str], table_rows: dict[int, in
             and _v11_sole_int(row[span[0]:span[1]]))
 
 
+# v0.12 (PREREG_oath_v12_formula_constant_2026_08_26) -- SHIPPED OFF, killed by its own G2.
+#
+# The defect it aimed at is real and is still open: `extract_numbers` takes numerals out of
+# rendered mathematics, and `\Delta` is trigger vocabulary because `delta` is in `_TRIGGERS`, so
+# the literal `1` in `\left(1 \pm \frac{\Delta \sigma^2}{\sigma^2}\right)` gets accused of being
+# a claim whose truth condition was never met. It is a mathematical constant. It has no truth
+# condition at all -- the same category error v0.11 spent a cycle retracting for row ordinals.
+#
+# THE KILL. The prereg froze G2 on an 11-token roster (3 UNGROUNDED + 8 VERIFIED) taken from the
+# census's LINE-level marker, then specified a SPAN-level clause. Those are different
+# populations and the gap is the whole defect: the clause reaches 6 tokens, not 11, so G2
+# under-fires and the pre-committed outcome is `V12_UNDERREACH` -- revert and publish.
+#
+# What it misses is the part worth remembering: **the prereg's own motivating specimen.** That
+# formula is written as an indented code block, so there is no inline-code span and no `$`
+# delimiter, and conjunct 1 never fires. The prereg pre-committed that if its own certificate
+# failed to flip to OATH-HELD the cycle had under-reached regardless of the other gates. It did
+# not flip. A clause that cannot reach the example its own preregistration quotes has not earned
+# a corpus.
+#
+# Kept in tree behind the flag -- as V05_APPROX_NOTATION and V08_FLOAT_FIELD_BINDING were after
+# their kills -- so the measurement is re-runnable and the negative is not re-attempted. DO NOT
+# widen conjunct 1 to catch indented code blocks and re-run: the prereg says the clause is atomic
+# and forbids post-freeze narrowing or widening, and "no second attempt inside this cycle". A
+# successor needs its own preregistration, frozen against a SPAN-level census rather than a
+# line-level one.
+V12_FORMULA_CONSTANT = False
+
+_V12_BACKSLASH_CMD = re.compile(r"\\[A-Za-z]+")
+_V12_BARE_NUM = re.compile(r"[0-9]+(?:\.[0-9]+)?")
+
+
+def _delimited_spans(line: str, delim: str) -> list:
+    """(start, end) content spans between successive occurrences of *delim*."""
+    out, i = [], 0
+    while True:
+        a = line.find(delim, i)
+        if a < 0:
+            return out
+        b = line.find(delim, a + len(delim))
+        if b < 0:
+            return out
+        out.append((a + len(delim), b))
+        i = b + len(delim)
+
+
+def _v12_formula_constant(num: dict, lines: list[str]) -> bool:
+    """True iff token *num* sits inside a delimited mathematical span (frozen v0.12 conjuncts).
+
+    Conjunct 1: the recorded column lies inside a `$...$` / `$$...$$` span, or inside an
+    inline-code span whose content carries a backslash command. Conjunct 2: that span contains a
+    backslash command -- a `$...$` span without one is a dollar amount or a shell prompt, not
+    rendered mathematics. Conjunct 3: the token is a bare integer or decimal with no thousands
+    comma, because a formula does not contain `100,000`.
+    """
+    if not V12_FORMULA_CONSTANT:
+        return False
+    if not V10_TOKEN_COLUMN or "col" not in num:
+        return False
+    if not _V12_BARE_NUM.fullmatch(num["token"]):
+        return False
+    line = lines[num["line"] - 1].replace("−", "-") if num["line"] - 1 < len(lines) else ""
+    col = num["col"]
+    for delim in ("$$", "$", "`"):
+        for a, b in _delimited_spans(line, delim):
+            if a <= col < b and _V12_BACKSLASH_CMD.search(line[a:b]):
+                return True
+    return False
+
+
 def _ctx_stems(text: str) -> set[str]:
     """The v0.3/v0.6.2 binding-context stem set, lifted to module level for the v0.8 clause.
 
@@ -608,6 +697,66 @@ _TRIGGERS_CORR = re.compile(
     r"convergence|drift|entropy|similarity|variance)\b", re.I)
 
 
+# The ten labels this verifier version can emit, in execution order: two pre-ladder demotions,
+# then the ladder. A new branch or clause is a NEW schema string, never a mutation of v1.
+_EPISTEMICS_BRANCHES = ("row-ordinal-label", "formula-constant", "spec-or-historical",
+                        "notation", "derived", "unbound-field", "value-match",
+                        "ulp-neighbour", "obligated-accusation", "silent")
+_EPISTEMICS_SOURCES = ("vocabulary", "n-glued", "range-correlation", "precision", "range-sanity")
+
+
+def _epistemics_summary(ledger: list, counts: dict) -> dict:
+    """Fold the per-token epistemics into a machine-consumable block.
+
+    Frozen shape: styxx-oath/epistemics-summary/v1, designed and red-teamed 2026-08-30
+    (`papers/closed-model-frontier/DESIGN_epistemics_summary_schema_2026_08_30.md`). Counts only,
+    no rates; every key always present, zeros included; a pure deterministic function of the
+    certificate's own ledger and of nothing else. It counts which door each token came through and
+    says nothing about whether any token is a true claim or a good one.
+
+    The four value-match cells name the MECHANISM, not a virtue: `integer_filter_ran` means the
+    v0.3 count-binding filter executed (decimals == 0); `integer_filter_na` means the token is a
+    float and receives no status-level binding at this verifier version (v0.8 CLOSED_NEGATIVE).
+    `unobligated_integer_filter_na` is the weakest attestation the instrument produces;
+    `obligated_integer_filter_na` is the larger obligated exposure the first draft of this schema
+    hid. Invariants are asserted loudly at issuance -- a certificate must fail to issue rather
+    than carry a self-inconsistent summary.
+    """
+    by_branch = {b: 0 for b in _EPISTEMICS_BRANCHES}
+    sources = {k: 0 for k in _EPISTEMICS_SOURCES}
+    vm = {"obligated_integer_filter_ran": 0, "obligated_integer_filter_na": 0,
+          "unobligated_integer_filter_ran": 0, "unobligated_integer_filter_na": 0}
+    derived = {"obligated": 0, "unobligated": 0}
+    obligated_total = 0
+    for e in ledger:
+        ep = e["epistemics"]
+        by_branch[ep["branch"]] += 1
+        if ep["obligated"]:
+            obligated_total += 1
+            sources[ep["obligation_source"]] += 1
+        if e["status"] == "VERIFIED":
+            if ep["branch"] == "derived":
+                derived["obligated" if ep["obligated"] else "unobligated"] += 1
+            elif ep["branch"] == "value-match":
+                key = ("obligated" if ep["obligated"] else "unobligated") +                       ("_integer_filter_ran" if ep["path_checked"] else "_integer_filter_na")
+                vm[key] += 1
+    total_tokens = counts["VERIFIED"] + counts["ABSTAIN"] + counts["UNGROUNDED"]
+    assert sum(by_branch.values()) == total_tokens, "epistemics_summary: branch sum drifted"
+    assert by_branch["obligated-accusation"] == counts["UNGROUNDED"],         "epistemics_summary: accusation branch != UNGROUNDED count"
+    assert counts["VERIFIED"] == sum(derived.values()) + sum(vm.values()),         "epistemics_summary: verified partition drifted"
+    assert obligated_total == sum(sources.values()), "epistemics_summary: source sum drifted"
+    return {
+        "schema": "styxx-oath/epistemics-summary/v1",
+        "note": ("attestation composition folded from this certificate's own ledger; counts "
+                 "which door each token came through; says nothing about whether any token is a "
+                 "true claim or a good one"),
+        "by_branch": by_branch,
+        "verified": {"total": counts["VERIFIED"], "derived": derived, "value_match": vm},
+        "obligated_total": obligated_total,
+        "obligation_sources": sources,
+    }
+
+
 def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     text = doc_path.read_text(encoding="utf-8")
     receipts = {}
@@ -624,6 +773,23 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     for _rn, _pth, _rv in rvals:
         all_path_stems |= _path_stems(_pth)
 
+    # v0.12 MIRROR-SUM index, computed ONCE per document: every exhaustive same-field sum over
+    # the dict-children of one receipt node. Key: the integer sum. Value: the derivations. Only
+    # non-uniform integer sums with >=2 addends are indexed — the uniform-sum refusal is part of
+    # the clause definition (PREREG_mirror_sum_2026_08_31), not an implementation shortcut.
+    _msums: dict[int, list] = {}
+    if V12_SUM_COHERENCE:
+        _groups: dict[tuple, list] = {}
+        for _rn, _pth, _rv in rvals:
+            _segs = _pth.split(".")
+            if len(_segs) >= 3 and "[" not in _segs[-1] and "[" not in _segs[-2]:
+                _groups.setdefault((_rn, ".".join(_segs[:-2]), _segs[-1]), []).append(_rv)
+        for (_rn, _g, _f), _vals in _groups.items():
+            if (len(_vals) >= 2 and all(float(v) == int(v) for v in _vals)
+                    and len({int(v) for v in _vals}) > 1):
+                _msums.setdefault(int(sum(int(v) for v in _vals)), []).append(
+                    (_rn, _g, _f, sorted((int(v) for v in _vals), reverse=True)))
+
     ledger = []
     doc_lines = text.splitlines()
     table_rows = _table_rows(doc_lines)   # v0.11: the SAME machinery extract_numbers binds by
@@ -634,7 +800,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # number is not a claim whose truth condition was unmet; it has no truth condition, so
         # neither VERIFIED nor UNGROUNDED is meaningful for it.
         if _v11_row_ordinal_label(num, doc_lines, table_rows):
-            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label"})
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "row_ordinal_label",
+                           "epistemics": {"branch": "row-ordinal-label", "obligated": False,
+                                          "obligation_source": None}})
+            continue
+        # v0.12 FORMULA CONSTANT: same tier, same shape — and SHIPPED OFF, killed by its own G2
+        # for under-reaching. Live only so the negative stays re-runnable.
+        if _v12_formula_constant(num, doc_lines):
+            ledger.append({**num, "status": "ABSTAIN", "receipt_ref": "formula_constant",
+                           "epistemics": {"branch": "formula-constant", "obligated": False,
+                                          "obligation_source": None}})
             continue
         # v0.1 SPEC-CONSTANT rule: a number that is a pre-registered bar/threshold, a CI confidence
         # level, or a comparison bound is SPEC, not a measurement -> ABSTAIN (it has no receipt by
@@ -727,16 +902,27 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                         if re.search(r"(^|[._\[])n_|n_held|n_caved|^n(\.|$)|count", pth, re.I)]
         # v0.5 class F: the n= register obligates only its OWN glued token (self-scoped). When the
         # class is OFF, n= falls back to the v0.4 line-wide trigger behavior.
+        #
+        # EPISTEMICS (2026-08-28, annotation only): `_ob_src` records the FIRST clause that set
+        # `bound`, and the ladder below records which arm produced the status. Both land in the
+        # ledger entry so a certificate can say, per token, which epistemic path it took — most
+        # consequentially whether a VERIFIED token was ever obligated at all, which the ladder
+        # RECON showed it need not be. The invariant frozen in
+        # INVARIANT_epistemics_annotation_2026_08_28.md: this may move NOTHING.
+        _voc = bool(_TRIGGERS.search(bctx))
         if V05_SELF_SCOPED_N:
-            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=\s*$", pre, re.I))
+            _ngl = bool(re.search(r"\bn\s*=\s*$", pre, re.I))
         else:
-            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=", bctx, re.I))
+            _ngl = bool(re.search(r"\bn\s*=", bctx, re.I))
+        bound = _voc or _ngl
+        _ob_src = "vocabulary" if _voc else ("n-glued" if _ngl else None)
         # v0.4 decimal+range-guarded recall: the correlation/similarity register obligates a number
         # only when it is a fractional correlation (decimals > 0 and in [−1, 1]) — spares ordinals /
         # counts / API caps / whole-percents, binds RSA 0.264 / reliability 0.735.
         if not bound and num["decimals"] > 0 and -1.0 <= num["value"] <= 1.0 \
                 and _TRIGGERS_CORR.search(bctx):
             bound = True
+            _ob_src = "range-correlation"
         # v0.7 precision obligation: printed precision IS the binding signal, because a number at
         # this width was copied out of a computation rather than typed by a person. `precision_only`
         # records that THIS clause is the sole source of the obligation, which is what scopes the
@@ -745,6 +931,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         precision_only = False
         if not bound and V07_PRECISION_OBLIGATION and num["decimals"] >= V07_PRECISION_DIGITS:
             bound, precision_only = True, True
+            _ob_src = "precision"
         # v0.3 RANGE-SANITY rule: a value sitting directly after bounded-quantity vocabulary cannot
         # leave its possible range — an 'AUC 4.0' is UNGROUNDED no matter what leaf it happens to
         # match (kills the coincidence-verification class of the v0.1 battery misses).
@@ -760,10 +947,62 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if out_of_range:
             hits, bound = [], True
             precision_only = False   # a range-sanity obligation is never ULP-escapable
+            if _ob_src is None:      # first-writer, as the annotation contract documents --
+                _ob_src = "range-sanity"   # range-sanity FORCES the accusation but does not
+                                           # rewrite who obligated the token (caught in schema
+                                           # red-team: this line used to clobber unconditionally)
+        derived_ref = None
+        # v0.11 FRACTION-COHERENCE (PREREG_fraction_coherence_2026_08_31): the denominator
+        # repair. STRICTLY RESCUE-ONLY, enforced by construction: fires only when the
+        # token is bound with zero post-filter hits and range-sanity has not spoken --
+        # i.e. exactly where the ladder would otherwise say UNGROUNDED. The first
+        # implementation fired unconditionally and G-F3 caught it re-attributing
+        # healthy VERIFIED tokens and elevating an ABSTAIN through the degenerate
+        # 0/38 zero-numerator case. The absolute gate exists for exactly that.
+        if V11_FRACTION_COHERENCE and derived_ref is None and bound and not hits \
+                and not out_of_range and num["decimals"] == 0 \
+                and not is_spec and not is_hist and not is_notation and slash_pair:
+            fA = fB = None
+            m_den = re.match(r"\s*/\s*(\d+)", post)      # token is the numerator
+            m_num = re.search(r"(\d+)\s*/\s*$", pre)        # token is the denominator
+            if m_den:
+                fA, fB = num["value"], float(m_den.group(1))
+            elif m_num:
+                fA, fB = float(m_num.group(1)), num["value"]
+            if fA is not None and fB:
+                r_txt = None
+                for rm in re.finditer(r"(?<![\w.])\d+\.(\d+)(?![\w.])", ctx):
+                    rv, dec = float(rm.group(0)), len(rm.group(1))
+                    if abs(round(fA / fB, dec) - rv) < 1e-9:
+                        r_txt = rm.group(0)
+                        break
+                if r_txt is not None:
+                    def _parent(pth):
+                        return pth.rsplit(".", 1)[0] if "." in pth else ""
+                    a_homes = {(rn2, _parent(p2)) for rn2, p2, rv2 in rvals
+                               if _match(fA, 0, rv2, False)}
+                    b_homes = {(rn2, _parent(p2)) for rn2, p2, rv2 in rvals
+                               if _match(fB, 0, rv2, False)}
+                    common = sorted(a_homes & b_homes)
+                    if common:
+                        derived_ref = (f"derived-fraction:{int(fA)}/{int(fB)}={r_txt}@"
+                                       f"{common[0][0]}:{common[0][1] or '<root>'}")
+        # v0.12 MIRROR-SUM (PREREG_mirror_sum_2026_08_31): the pooled-denominator repair.
+        # STRICTLY RESCUE-ONLY under the same guard as V11 — fires only where the ladder
+        # would otherwise accuse. The token must equal an exhaustive, non-uniform,
+        # same-field integer sum indexed once per document above; partial sums never
+        # appear in the index and uniform sums are refused at indexing time.
+        if V12_SUM_COHERENCE and derived_ref is None and bound and not hits \
+                and not out_of_range and num["decimals"] == 0 \
+                and not is_spec and not is_hist and not is_notation:
+            _cands = _msums.get(int(num["value"]), [])
+            if _cands:
+                _rn, _g, _f, _vals = _cands[0]
+                derived_ref = (f"derived-sum:{'+'.join(str(v) for v in _vals)}"
+                               f"={int(num['value'])}@{_rn}:{_g}.*.{_f}")
         # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
         # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
         # receipt values AND 100·a/b rounds to the token at the token's decimals.
-        derived_ref = None
         if V05_DERIVED_PCT and not hits and not is_spec and not is_hist and not is_notation:
             dm = re.match(r"\s*%\s*\(\s*(\d+(?:\.\d+)?)\s*/\s*(\d+(?:\.\d+)?)", post)
             if dm:
@@ -811,17 +1050,22 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                     field_unbound_ref = f"unbound-field:{hits[0][0]}:{hits[0][1]}"
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
+            _branch = "spec-or-historical"
         elif is_notation:
             status, ref = "ABSTAIN", "v05-notation"
+            _branch = "notation"
         elif derived_ref:
             status, ref = "VERIFIED", derived_ref
+            _branch = "derived"
         elif field_unbound_ref:
             # v0.8: the claim's value is in the receipts, but not in any field its context names.
             # The oath is withheld, not inverted -- ABSTAIN names the gap and stays countable.
             status, ref = "ABSTAIN", field_unbound_ref
+            _branch = "unbound-field"
         elif hits:
             status = "VERIFIED"
             ref = f"{hits[0][0]}:{hits[0][1]}"
+            _branch = "value-match"
         elif bound:
             # NOTE (v0.3): a bulk-row match deliberately does NOT soften this to ABSTAIN — letting
             # claims ground in per-item arrays let 13/20 seeded mutants hide in row noise when it
@@ -835,14 +1079,26 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                   if (V07_ULP_ESCAPE and precision_only) else None)
             if nb:
                 status, ref = "ABSTAIN", f"ulp-neighbour:{nb[0]}:{nb[1]}"
+                _branch = "ulp-neighbour"
             else:
                 status, ref = "UNGROUNDED", None
+                _branch = "obligated-accusation"
         else:
             status = "ABSTAIN"
             ref = None
-        ledger.append({**num, "status": status, "receipt_ref": ref})
+            _branch = "silent"
+        # The epistemic path, recorded rather than discarded. `obligated` is `bound` at ladder
+        # time; a VERIFIED entry with obligated=False is an UNOBLIGATED OATH -- the verifier swore
+        # to a value nothing required it to examine. `path_checked` says whether the v0.3 integer
+        # count-binding filter ran; for decimals it never does (v0.8 CLOSED_NEGATIVE), which is
+        # the gpu_memory_fraction class of binding. Annotation only; see the frozen invariant.
+        _ep = {"branch": _branch, "obligated": bool(bound), "obligation_source": _ob_src}
+        if _branch == "value-match":
+            _ep["path_checked"] = num["decimals"] == 0
+        ledger.append({**num, "status": status, "receipt_ref": ref, "epistemics": _ep})
 
     counts = {s: sum(1 for c in ledger if c["status"] == s) for s in ("VERIFIED", "ABSTAIN", "UNGROUNDED")}
+    summary = _epistemics_summary(ledger, counts)
     cert = {
         "oath": "styxx OATH v0 (numeric-claim certificate)",
         "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
@@ -851,6 +1107,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         "receipts_sha256": receipts,
         "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "counts": counts,
+        "epistemics_summary": summary,
         "verdict": "OATH-HELD" if counts["UNGROUNDED"] == 0 else "OATH-FAILED",
         "ungrounded": [c for c in ledger if c["status"] == "UNGROUNDED"],
         "abstained": [{"line": c["line"], "token": c["token"]} for c in ledger if c["status"] == "ABSTAIN"],
@@ -871,6 +1128,17 @@ def main(argv=None) -> int:
     c = cert["counts"]
     print(f"{cert['verdict']}  verified={c['VERIFIED']} abstained={c['ABSTAIN']} "
           f"contradicted={c['UNGROUNDED']}  -> {out.name}")
+    # A verified count alone is the green-checkmark half-truth this instrument exists to reject:
+    # it says nothing about how much of what was sworn was ever obligated. Print the split so the
+    # boundary is visible without opening the JSON.
+    es = cert["epistemics_summary"]["verified"]
+    obl = (es["value_match"]["obligated_integer_filter_ran"]
+           + es["value_match"]["obligated_integer_filter_na"] + es["derived"]["obligated"])
+    if es["total"]:
+        unobl = es["total"] - obl
+        weakest = es["value_match"]["unobligated_integer_filter_na"]
+        print(f"  of {es['total']} verified: {obl} obligated, {unobl} volunteered "
+              f"({round(unobl / es['total'] * 100)}%) — {weakest} by value match alone")
     for bad in cert["ungrounded"]:
         print(f"  UNGROUNDED L{bad['line']}: {bad['token']}  | {bad['context'][:100]}")
     return 0 if cert["verdict"] == "OATH-HELD" else 1

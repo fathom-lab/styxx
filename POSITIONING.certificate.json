@@ -1,0 +1,323 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "POSITIONING.md",
+  "document_sha256": "2bc0b01913fc02c454c0053683b6dbe998c96ca7e51280e074697a6915fe74b1",
+  "receipts_sha256": {
+    "oath_unobligated_oath_census.json": "a996667b3882af8e610616951ec25835bfcb222991d8f80340e8bc87e075fe54",
+    "oath_external_epistemics_census.json": "f163e6992d64e47d87ae13ab95e0c7eb9675af42624cc298567b44513c65f59f",
+    "oath_obligation_claimhood_join.json": "e476eb020888879f4ca6a9a40d70407553d897a8f56610274ddab6afce8802c6",
+    "agent_branch_attestation.json": "5b44589802ef2a7f06b9f64328cc1fc7bfd40354a118ffb1e7919c01c080b06a"
+  },
+  "verifier_sha256": "98fb75f3902922fe226e6d4160b27c936ea77271b6976d172284ae22d0e6654a",
+  "counts": {
+    "VERIFIED": 14,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 14,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 2
+    },
+    "verified": {
+      "total": 14,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 5,
+        "obligated_integer_filter_na": 2,
+        "unobligated_integer_filter_ran": 4,
+        "unobligated_integer_filter_na": 3
+      }
+    },
+    "obligated_total": 7,
+    "obligation_sources": {
+      "vocabulary": 7,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 32,
+      "token": "192"
+    },
+    {
+      "line": 36,
+      "token": "414"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 32,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "- **The unobligated oath, counted.** Across 192 internal certificates re-issued live:",
+      "col": 44,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 33,
+      "token": "5951",
+      "value": 5951.0,
+      "decimals": 0,
+      "context": "5951 verified tokens, of which 3458 were *volunteered* \u2014 an unobligated-oath rate of",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:status_counts.VERIFIED",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 33,
+      "token": "3458",
+      "value": 3458.0,
+      "decimals": 0,
+      "context": "5951 verified tokens, of which 3458 were *volunteered* \u2014 an unobligated-oath rate of",
+      "col": 33,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:headline.unobligated_oaths",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 34,
+      "token": "0.5811",
+      "value": 0.5811,
+      "decimals": 4,
+      "context": "**0.5811**. The weakest cell (value match alone, path never compared) holds 2023 tokens,",
+      "col": 4,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.internal_comparison.unobligated_oath_rate_internal",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 36,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "- **Abroad it is worse.** Over 82 external repositories: 575 verified, 414 volunteered \u2014",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:repos_certified_in_manifest",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 36,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "- **Abroad it is worse.** Over 82 external repositories: 575 verified, 414 volunteered \u2014",
+      "col": 57,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.verified_total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 36,
+      "token": "414",
+      "value": 414.0,
+      "decimals": 0,
+      "context": "- **Abroad it is worse.** Over 82 external repositories: 575 verified, 414 volunteered \u2014",
+      "col": 71,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 37,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "rate **0.72**, with the weakest share at 0.36. Receipt:",
+      "col": 9,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_external_epistemics_census.json:headline.unobligated_oath_rate_external",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 40,
+      "token": "0.8472",
+      "value": 0.8472,
+      "decimals": 4,
+      "context": "obligated oaths land on real claims at 0.8472 internally and 0.7826 externally; volunteered",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.internal.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 40,
+      "token": "0.7826",
+      "value": 0.7826,
+      "decimals": 4,
+      "context": "obligated oaths land on real claims at 0.8472 internally and 0.7826 externally; volunteered",
+      "col": 63,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.obligated.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 41,
+      "token": "0.3654",
+      "value": 0.3654,
+      "decimals": 4,
+      "context": "external oaths collapse to **0.3654**. The boundary object is not bookkeeping \u2014 it predicts",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_claimhood_join.json:arms.external.volunteered.claim_share",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 44,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "- **The gate audited its own author.** All 54 commits on the branch that built this system,",
+      "col": 43,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:range.commits",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 45,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "gated against their own diffs: 6 claims extracted, 3 verified, 3 contradicted (all three",
+      "col": 33,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:documents_most_exposed[7].verified",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 45,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "gated against their own diffs: 6 claims extracted, 3 verified, 3 contradicted (all three",
+      "col": 53,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:documents_most_exposed[10].verified",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 45,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "gated against their own diffs: 6 claims extracted, 3 verified, 3 contradicted (all three",
+      "col": 65,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_unobligated_oath_census.json:documents_most_exposed[10].verified",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 46,
+      "token": "2732",
+      "value": 2732.0,
+      "decimals": 0,
+      "context": "hand-adjudicated as the catalogued mention-vs-use defect), and **2732 sentences never read**.",
+      "col": 67,
+      "status": "VERIFIED",
+      "receipt_ref": "agent_branch_attestation.json:totals.sentences_never_read",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    }
+  ]
+}

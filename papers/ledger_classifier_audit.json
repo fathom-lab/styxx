@@ -1,0 +1,1913 @@
+{
+  "audit": "how build_ledger.py classifies a cycle, and what it gets wrong",
+  "status": "AUDIT. Measures; changes nothing. Inputs to a successor's decision.",
+  "root_cause": "the classifier matches substrings against a FREE-PROSE verdict blob, so it cannot distinguish a cycle that RETURNED a verdict from one that MENTIONS one — the same mention-versus-use defect RECON_oath_external_reach_2026_08_26 documents in the OATH verifier, in a second independent instrument",
+  "cycles_logged": 163,
+  "shipped": {
+    "negatives": 62,
+    "machinery_refusals": 16,
+    "note": "these are the numbers papers/LEDGER.md publishes today"
+  },
+  "head_scoped": {
+    "negatives": 28,
+    "machinery_refusals": 8,
+    "note": "same regexes, applied to the verdict HEAD rather than the whole blob"
+  },
+  "rendered_nonsense_entries": {
+    "n": 9,
+    "detail": [
+      {
+        "cycle": 110,
+        "printed_as": "TWO",
+        "head": "TWO HONEST INVALIDS, FAMILY PARKED PER ITS OWN CLAUSE"
+      },
+      {
+        "cycle": 115,
+        "printed_as": "TWO",
+        "head": "TWO INVALIDS, TWO MECHANISMS, NEITHER GENERALITY CLAIM LICENSED (FINDING OATH-HELD 62/3/0"
+      },
+      {
+        "cycle": 133,
+        "printed_as": "SHIPPED",
+        "head": "SHIPPED to PyPI as 7"
+      },
+      {
+        "cycle": 134,
+        "printed_as": "PRODUCT",
+        "head": "PRODUCT RECALL"
+      },
+      {
+        "cycle": 142,
+        "printed_as": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+        "head": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated (FINDING OATH-HELD 6/5/0"
+      },
+      {
+        "cycle": 152,
+        "printed_as": "DO",
+        "head": "DO NOT SHIP AS-IS -> six defects fixed, finding CORRECTED, now shippable pending re-verification"
+      },
+      {
+        "cycle": 154,
+        "printed_as": "REWRITTEN",
+        "head": "REWRITTEN AND PASSING ITS OWN KILL LIST"
+      },
+      {
+        "cycle": 156,
+        "printed_as": "BUILT",
+        "head": "BUILT AND LINKED FROM BOTH FRONT DOORS"
+      },
+      {
+        "cycle": 157,
+        "printed_as": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+        "head": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize (b48's INVALID__null_leaks SUPERSEDED)"
+      }
+    ],
+    "why": "the printer emits the verdict's FIRST WORD, so these render under the heading 'cycles where a preregistered gate returned INVALID__*' as words like SHIPPED, PRODUCT, DO, REWRITTEN, BUILT, TWO"
+  },
+  "machinery_refusal_false_positives": {
+    "n": 8,
+    "detail": [
+      {
+        "cycle": 110,
+        "head": "TWO HONEST INVALIDS, FAMILY PARKED PER ITS OWN CLAUSE"
+      },
+      {
+        "cycle": 115,
+        "head": "TWO INVALIDS, TWO MECHANISMS, NEITHER GENERALITY CLAIM LICENSED (FINDING OATH-HELD 62/3/0"
+      },
+      {
+        "cycle": 133,
+        "head": "SHIPPED to PyPI as 7"
+      },
+      {
+        "cycle": 134,
+        "head": "PRODUCT RECALL"
+      },
+      {
+        "cycle": 142,
+        "head": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated (FINDING OATH-HELD 6/5/0"
+      },
+      {
+        "cycle": 152,
+        "head": "DO NOT SHIP AS-IS -> six defects fixed, finding CORRECTED, now shippable pending re-verification"
+      },
+      {
+        "cycle": 154,
+        "head": "REWRITTEN AND PASSING ITS OWN KILL LIST"
+      },
+      {
+        "cycle": 156,
+        "head": "BUILT AND LINKED FROM BOTH FRONT DOORS"
+      }
+    ],
+    "why": "the verdict never returned INVALID__; its prose discusses one"
+  },
+  "negative_only_in_commentary": {
+    "n": 34,
+    "detail": [
+      {
+        "cycle": 4,
+        "first_word": "HARM-AXIS-NULL",
+        "head": "HARM-AXIS-NULL (OATH-HELD 27/0)"
+      },
+      {
+        "cycle": 9,
+        "first_word": "LIVE-CAUGHT",
+        "head": "LIVE-CAUGHT (OATH-HELD 12/0) + module shipped to branch"
+      },
+      {
+        "cycle": 14,
+        "first_word": "FPR-UNCONTROLLED",
+        "head": "FPR-UNCONTROLLED (OATH-HELD 5/0) -- honest tooling negative, NOT a layered-defense answer"
+      },
+      {
+        "cycle": 18,
+        "first_word": "PARTIAL-BOUND",
+        "head": "PARTIAL-BOUND (13 written OATH-HELD, all UNGROUNDED=0)"
+      },
+      {
+        "cycle": 29,
+        "first_word": "POISONING_CONFIRMED",
+        "head": "POISONING_CONFIRMED -- read!=write STANDS (RESULT OATH-HELD 19/0)"
+      },
+      {
+        "cycle": 37,
+        "first_word": "SURVIVES__vs_adaptive_erasure_1p5B",
+        "head": "SURVIVES__vs_adaptive_erasure_1p5B (RESULT OATH-HELD 100/0, the arc's highest verified count)"
+      },
+      {
+        "cycle": 43,
+        "first_word": "VOID_COUPLING__battery_lacks_dose_specificity",
+        "head": "VOID_COUPLING__battery_lacks_dose_specificity (RESULT OATH-HELD 72/0)"
+      },
+      {
+        "cycle": 45,
+        "first_word": "SURVIVED__stage_a_green",
+        "head": "SURVIVED__stage_a_green (FINDING OATH-HELD, verified=25 abstained=14 contradicted=0"
+      },
+      {
+        "cycle": 49,
+        "first_word": "SURVIVED__datasheet_fully_sealed",
+        "head": "SURVIVED__datasheet_fully_sealed (FINDING OATH-HELD verified=46 abstained=7 contradicted=0 -- lane record)"
+      },
+      {
+        "cycle": 51,
+        "first_word": "SURVIVED__claim_earned_at_scope",
+        "head": "SURVIVED__claim_earned_at_scope (FINDING OATH-HELD verified=22 abstained=12 contradicted=0"
+      },
+      {
+        "cycle": 60,
+        "first_word": "CLOSED_NEGATIVE__ladder_refuses_on_temporal",
+        "head": "CLOSED_NEGATIVE__ladder_refuses_on_temporal (FINDING OATH-HELD verified=12 abstained=10 contradicted=0)"
+      },
+      {
+        "cycle": 61,
+        "first_word": "SURVIVED__prices_where_covered_refuses_below_gate",
+        "head": "SURVIVED__prices_where_covered_refuses_below_gate (FINDING OATH-HELD verified=62 abstained=13 contradicted=0)"
+      },
+      {
+        "cycle": 62,
+        "first_word": "CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn",
+        "head": "CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn (FINDING OATH-HELD verified=46 abstained=9 contra"
+      },
+      {
+        "cycle": 63,
+        "first_word": "CLOSED_NEGATIVE__BG3_beats_stubborn",
+        "head": "CLOSED_NEGATIVE__BG3_beats_stubborn (FINDING OATH-HELD verified=52 abstained=15 contradicted=0)"
+      },
+      {
+        "cycle": 64,
+        "first_word": "SURVIVED__conscience_loop_is_a_real_selective_predictor",
+        "head": "SURVIVED__conscience_loop_is_a_real_selective_predictor (FINDING OATH-HELD verified=30 abstained=12 contradicted=0)"
+      },
+      {
+        "cycle": 70,
+        "first_word": "SURVIVED__selective_prediction_confirms_in_a_new_domain",
+        "head": "SURVIVED__selective_prediction_confirms_in_a_new_domain (FINDING OATH-HELD verified=14 abstained=15 contradicted=0)"
+      },
+      {
+        "cycle": 71,
+        "first_word": "CLOSED_NEGATIVE__EG3_tier2_earns_its_slice_paired_and_EG4_beats_stubborn",
+        "head": "CLOSED_NEGATIVE__EG3_tier2_earns_its_slice_paired_and_EG4_beats_stubborn (FINDING OATH-HELD verified=28 abstained=18 con"
+      },
+      {
+        "cycle": 75,
+        "first_word": "SURVIVED__caved_beliefs_recover_out_of_frame",
+        "head": "SURVIVED__caved_beliefs_recover_out_of_frame (FINDING OATH-HELD 8/0)"
+      },
+      {
+        "cycle": 77,
+        "first_word": "CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness",
+        "head": "CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness (FINDING OATH-HELD verified=23 abstained=9 contradicted="
+      },
+      {
+        "cycle": 81,
+        "first_word": "CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B",
+        "head": "CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B (FINDING OATH-HELD 15/0)"
+      },
+      {
+        "cycle": 84,
+        "first_word": "SURVIVED__frontier_beliefs_recover_powered",
+        "head": "SURVIVED__frontier_beliefs_recover_powered (FINDING OATH-HELD verified=25 abstained=6 contradicted=0"
+      },
+      {
+        "cycle": 93,
+        "first_word": "DONE__instrument_condemns_its_author_and_clears_the_survivor",
+        "head": "DONE__instrument_condemns_its_author_and_clears_the_survivor (FINDING OATH-HELD 6/0"
+      },
+      {
+        "cycle": 108,
+        "first_word": "DONE__connection_of_minds_synthesized__witness_shipped__b31v2_frozen.",
+        "head": "DONE__connection_of_minds_synthesized__witness_shipped__b31v2_frozen"
+      },
+      {
+        "cycle": 110,
+        "first_word": "TWO",
+        "head": "TWO HONEST INVALIDS, FAMILY PARKED PER ITS OWN CLAUSE"
+      },
+      {
+        "cycle": 112,
+        "first_word": "READ_NEQ_WRITE_SURVIVES_CAPACITY",
+        "head": "READ_NEQ_WRITE_SURVIVES_CAPACITY (FINDING OATH-HELD 23/8/0"
+      },
+      {
+        "cycle": 115,
+        "first_word": "TWO",
+        "head": "TWO INVALIDS, TWO MECHANISMS, NEITHER GENERALITY CLAIM LICENSED (FINDING OATH-HELD 62/3/0"
+      },
+      {
+        "cycle": 130,
+        "first_word": "SHIPPED",
+        "head": "SHIPPED to PyPI as 7"
+      },
+      {
+        "cycle": 133,
+        "first_word": "SHIPPED",
+        "head": "SHIPPED to PyPI as 7"
+      },
+      {
+        "cycle": 135,
+        "first_word": "THREE",
+        "head": "THREE FINDINGS AGAINST US, ALL ACTED ON, shipped as 7"
+      },
+      {
+        "cycle": 141,
+        "first_word": "PUBLISHED",
+        "head": "PUBLISHED FINDING IMPEACHED AND CORRECTED IN PLACE"
+      },
+      {
+        "cycle": 143,
+        "first_word": "CERTIFIED",
+        "head": "CERTIFIED OATH-HELD"
+      },
+      {
+        "cycle": 153,
+        "first_word": "SHIPPED.",
+        "head": "SHIPPED"
+      },
+      {
+        "cycle": 154,
+        "first_word": "REWRITTEN",
+        "head": "REWRITTEN AND PASSING ITS OWN KILL LIST"
+      },
+      {
+        "cycle": 156,
+        "first_word": "BUILT",
+        "head": "BUILT AND LINKED FROM BOTH FRONT DOORS"
+      }
+    ],
+    "why": "counted toward the flagship negatives ratio although the verdict head carries no negative token. NOT automatically a miscount — a cycle can end badly and say so in its second clause — which is exactly why this is published as an audit for adjudication rather than applied as a correction"
+  },
+  "all_cycles": [
+    {
+      "cycle": 0,
+      "date": "2026-06-10",
+      "head": "AUTOPILOT contract written",
+      "first_word": "AUTOPILOT",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 1,
+      "date": "2026-06-11",
+      "head": "VALUES-PORTABLE (OATH-HELD 42/0)",
+      "first_word": "VALUES-PORTABLE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 2,
+      "date": "2026-06-11",
+      "head": "PARTIAL-STRUCTURED (OATH-HELD 29/0)",
+      "first_word": "PARTIAL-STRUCTURED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 3,
+      "date": "2026-06-11",
+      "head": "WHITENING-RESOLVES (OATH-HELD 28/0)",
+      "first_word": "WHITENING-RESOLVES",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 4,
+      "date": "2026-06-11",
+      "head": "HARM-AXIS-NULL (OATH-HELD 27/0)",
+      "first_word": "HARM-AXIS-NULL",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 5,
+      "date": "2026-06-12",
+      "head": "PARTIAL-STRUCTURED near-miss (OATH-HELD 34/0)",
+      "first_word": "PARTIAL-STRUCTURED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 6,
+      "date": "2026-06-12",
+      "head": "CONTENT-WEAK (OATH-HELD 20/0)",
+      "first_word": "CONTENT-WEAK",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 7,
+      "date": "2026-06-12",
+      "head": "BASIS-CLEARED (OATH-HELD 39/0)",
+      "first_word": "BASIS-CLEARED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 8,
+      "date": "2026-06-12",
+      "head": "CONTENT-WALL per the frozen gate, INTERPRETATION CORRECTED (OATH-HELD 29/0)",
+      "first_word": "CONTENT-WALL",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 9,
+      "date": "2026-06-12",
+      "head": "LIVE-CAUGHT (OATH-HELD 12/0) + module shipped to branch",
+      "first_word": "LIVE-CAUGHT",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 10,
+      "date": "2026-06-12",
+      "head": "Module improved (3 leveraged fixes",
+      "first_word": "Module",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 11,
+      "date": "2026-06-13",
+      "head": "LIVE-CAUGHT-FPR (OATH-HELD 30/0)",
+      "first_word": "LIVE-CAUGHT-FPR",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 12,
+      "date": "2026-06-13",
+      "head": "ATTACK-TRANSFERS (OATH-HELD 12/0) -- FALSIFIES the borrowed-conscience MOAT",
+      "first_word": "ATTACK-TRANSFERS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 13,
+      "date": "2026-06-13",
+      "head": "ENSEMBLE-DEFENDS (boundary, OATH-HELD 21/0) -- completes the adversarial trilogy",
+      "first_word": "ENSEMBLE-DEFENDS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 14,
+      "date": "2026-06-13",
+      "head": "FPR-UNCONTROLLED (OATH-HELD 5/0) -- honest tooling negative, NOT a layered-defense answer",
+      "first_word": "FPR-UNCONTROLLED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 15,
+      "date": "2026-06-13",
+      "head": "FPR-UNCONTROLLED AGAIN (OATH-HELD 9/0)",
+      "first_word": "FPR-UNCONTROLLED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 16,
+      "date": "2026-06-13",
+      "head": "CONSCIENCE_MOUNT_ARC_2026_06_13",
+      "first_word": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 17,
+      "date": "2026-06-13",
+      "head": "TWO HONEST NEGATIVES (OATH-HELD 52/0)",
+      "first_word": "TWO",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 18,
+      "date": "2026-07-02",
+      "head": "PARTIAL-BOUND (13 written OATH-HELD, all UNGROUNDED=0)",
+      "first_word": "PARTIAL-BOUND",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 19,
+      "date": "2026-07-03",
+      "head": "TAMPER-EVIDENCE-WEAK (diagnostic audit, not preregistered, no frozen bar -- disclosed in the note)",
+      "first_word": "TAMPER-EVIDENCE-WEAK",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 20,
+      "date": "2026-07-03",
+      "head": "CLOSED_NEGATIVE_NO_TRUTH_SIGNAL (OATH-HELD 30/0)",
+      "first_word": "CLOSED_NEGATIVE_NO_TRUTH_SIGNAL",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 21,
+      "date": "2026-07-03",
+      "head": "DISCHARGED, no correction needed (OATH-HELD 3/0)",
+      "first_word": "DISCHARGED,",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 22,
+      "date": "2026-07-03",
+      "head": "CLOSED_NEGATIVE -- bar B3 missed, change REVERTED, nothing ships (note OATH-HELD 38/0)",
+      "first_word": "CLOSED_NEGATIVE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 23,
+      "date": "2026-07-04",
+      "head": "CLOSED_NEGATIVE -- bar G3 missed, change REVERTED, nothing ships (RESULT note OATH-HELD 36/0)",
+      "first_word": "CLOSED_NEGATIVE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 24,
+      "date": "2026-07-04",
+      "head": "CLOSED_NEGATIVE -- bar G3 missed by ONE, change REVERTED (RESULT OATH-HELD 28/0)",
+      "first_word": "CLOSED_NEGATIVE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 25,
+      "date": "2026-07-04",
+      "head": "SHIPPED -- ALL FIVE BARS PASS (first styxx",
+      "first_word": "SHIPPED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 26,
+      "date": "2026-07-04",
+      "head": "CLOSED_NEGATIVE -- bar R4 missed, addenda REVERTED (certs untouched)",
+      "first_word": "CLOSED_NEGATIVE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 27,
+      "date": "2026-07-04",
+      "head": "FOUNDATION-VALID (OATH-HELD 24/0) -- the clean-model non-degeneracy guards all pass on Qwen2",
+      "first_word": "FOUNDATION-VALID",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 28,
+      "date": "2026-07-04",
+      "head": "EVADABLE under the registered protocol (RESULT OATH-HELD 20/0) -- CONFOUND NAMED, NOT a headline crack",
+      "first_word": "EVADABLE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 29,
+      "date": "2026-07-04",
+      "head": "POISONING_CONFIRMED -- read!=write STANDS (RESULT OATH-HELD 19/0)",
+      "first_word": "POISONING_CONFIRMED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 30,
+      "date": "2026-07-04",
+      "head": "DEFENSE_HOLDS -- read!=write STANDS vs an adaptive-scheme attacker, TWO families (RESULT OATH-HELD 31/0)",
+      "first_word": "DEFENSE_HOLDS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 31,
+      "date": "2026-07-08",
+      "head": "VOID_NO_BITE -- the pure-moving adaptive attacker (frozen anchor removed, whole-stack re-fit-every-10 MIMIC scrub only)",
+      "first_word": "VOID_NO_BITE",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 32,
+      "date": "2026-07-10",
+      "head": "BOUND -- FINDINGS_rhythm_substrate_2026_06_03",
+      "first_word": "BOUND",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 33,
+      "date": "2026-07-11",
+      "head": "PRIVACY_PARTIAL__between_bars (RESULT OATH-HELD 68/0)",
+      "first_word": "PRIVACY_PARTIAL__between_bars",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 34,
+      "date": "2026-07-11",
+      "head": "PARTIAL_CONSOLIDATED__residual_real_but_not_robust (RESULT OATH-HELD 82/0)",
+      "first_word": "PARTIAL_CONSOLIDATED__residual_real_but_not_robust",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 35,
+      "date": "2026-07-12",
+      "head": "VOID_HPCF__clean_guard_failed (RESULT OATH-HELD 73/0)",
+      "first_word": "VOID_HPCF__clean_guard_failed",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 36,
+      "date": "2026-07-12",
+      "head": "SURVIVES__vs_subspace_erasure_1p5B (RESULT OATH-HELD 74/0)",
+      "first_word": "SURVIVES__vs_subspace_erasure_1p5B",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 37,
+      "date": "2026-07-13",
+      "head": "SURVIVES__vs_adaptive_erasure_1p5B (RESULT OATH-HELD 100/0, the arc's highest verified count)",
+      "first_word": "SURVIVES__vs_adaptive_erasure_1p5B",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 38,
+      "date": "2026-07-13",
+      "head": "PARTIAL__oath_v05_classes_dropped (RESULT OATH-HELD 47/0)",
+      "first_word": "PARTIAL__oath_v05_classes_dropped",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 39,
+      "date": "2026-07-14",
+      "head": "TOOLING_SHIPPED__b7_crash_safe_resume + B7_RELAUNCHED_INFLIGHT (no scored verdict this cycle)",
+      "first_word": "TOOLING_SHIPPED__b7_crash_safe_resume",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 40,
+      "date": "2026-07-14",
+      "head": "B7 = SURVIVES__vs_subspace_erasure_3B (OATH-HELD 92/0)",
+      "first_word": "B7",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 41,
+      "date": "2026-07-15",
+      "head": "PREREG_FROZEN + ART_SHIPPED (no scored run, no new FINDING/RESULT to certify)",
+      "first_word": "PREREG_FROZEN",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 42,
+      "date": "2026-07-15",
+      "head": "INSTRUMENT_HARDENED + CHAIN_ARMED (no scored coupling verdict yet -- deliberately not launched into a busy card, and blo",
+      "first_word": "INSTRUMENT_HARDENED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 43,
+      "date": "2026-07-16",
+      "head": "VOID_COUPLING__battery_lacks_dose_specificity (RESULT OATH-HELD 72/0)",
+      "first_word": "VOID_COUPLING__battery_lacks_dose_specificity",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 44,
+      "date": "2026-07-20",
+      "head": "FIXES_LANDED__stage_a_NOT_green (FINDING OATH-HELD, verified=15 abstained=18 contradicted=0)",
+      "first_word": "FIXES_LANDED__stage_a_NOT_green",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 45,
+      "date": "2026-07-20",
+      "head": "SURVIVED__stage_a_green (FINDING OATH-HELD, verified=25 abstained=14 contradicted=0",
+      "first_word": "SURVIVED__stage_a_green",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 46,
+      "date": "2026-07-20",
+      "head": "NO_GO_freeze__repanel_F1_F2 (fatal-fix set CONFIRMED",
+      "first_word": "NO_GO_freeze__repanel_F1_F2",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 47,
+      "date": "2026-07-20",
+      "head": "DATASHEET_SHIPPED__2_gates_closed_negative (FINDING OATH-HELD, verified=42 abstained=10 contradicted=0)",
+      "first_word": "DATASHEET_SHIPPED__2_gates_closed_negative",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 48,
+      "date": "2026-07-20",
+      "head": "R10 = CLOSED_NEGATIVE__repair_incomplete (frozen prediction missed, reported verbatim) + MECHANISM_DECOMPOSED + MODULE_G",
+      "first_word": "R10",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 49,
+      "date": "2026-07-20",
+      "head": "SURVIVED__datasheet_fully_sealed (FINDING OATH-HELD verified=46 abstained=7 contradicted=0 -- lane record)",
+      "first_word": "SURVIVED__datasheet_fully_sealed",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 50,
+      "date": "2026-07-20",
+      "head": "RUNG1 = B2_CLOSED_NEGATIVE__anchor_nontransfer + B1_PASS + B3_PASS + FLAG_WORKED_14_OF_15 (FINDING OATH-HELD verified=27",
+      "first_word": "RUNG1",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 51,
+      "date": "2026-07-20",
+      "head": "SURVIVED__claim_earned_at_scope (FINDING OATH-HELD verified=22 abstained=12 contradicted=0",
+      "first_word": "SURVIVED__claim_earned_at_scope",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 52,
+      "date": "2026-07-21",
+      "head": "SHIPPED__7260_live_on_pypi",
+      "first_word": "SHIPPED__7260_live_on_pypi.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 53,
+      "date": "2026-07-21",
+      "head": "P2K_CONFIRMED + REFUSAL_RESOLUTION + CEILING_EARNED + FOUNDATION_CERTIFIED (FINDING OATH-HELD verified=27 abstained=9 co",
+      "first_word": "P2K_CONFIRMED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 54,
+      "date": "2026-07-21",
+      "head": "PAPER_WRITTEN_AND_CERTIFIED",
+      "first_word": "PAPER_WRITTEN_AND_CERTIFIED:",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 56,
+      "date": "2026-07-21",
+      "head": "MIXED_HONEST",
+      "first_word": "MIXED_HONEST:",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 55,
+      "date": "2026-07-21",
+      "head": "RESOURCE_BLOCKED__no_scored_audit (FINDING OATH-HELD 1/0, honest block)",
+      "first_word": "RESOURCE_BLOCKED__no_scored_audit",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 57,
+      "date": "2026-07-21",
+      "head": "X2_KILL_CONFIRMED_HETEROGENEOUS + X1_PASS + X3_CLOSED_NEGATIVE_gate_mis-specified (FINDING OATH-HELD verified=22 abstain",
+      "first_word": "X2_KILL_CONFIRMED_HETEROGENEOUS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 58,
+      "date": "2026-07-21",
+      "head": "SURVIVED",
+      "first_word": "SURVIVED:",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 59,
+      "date": "2026-07-22",
+      "head": "SURVIVED__pricing_transfers_to_numeric (FINDING OATH-HELD 3/0)",
+      "first_word": "SURVIVED__pricing_transfers_to_numeric",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 60,
+      "date": "2026-07-23",
+      "head": "CLOSED_NEGATIVE__ladder_refuses_on_temporal (FINDING OATH-HELD verified=12 abstained=10 contradicted=0)",
+      "first_word": "CLOSED_NEGATIVE__ladder_refuses_on_temporal",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 61,
+      "date": "2026-07-24",
+      "head": "SURVIVED__prices_where_covered_refuses_below_gate (FINDING OATH-HELD verified=62 abstained=13 contradicted=0)",
+      "first_word": "SURVIVED__prices_where_covered_refuses_below_gate",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 62,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn (FINDING OATH-HELD verified=46 abstained=9 contra",
+      "first_word": "CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 63,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__BG3_beats_stubborn (FINDING OATH-HELD verified=52 abstained=15 contradicted=0)",
+      "first_word": "CLOSED_NEGATIVE__BG3_beats_stubborn",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 64,
+      "date": "2026-07-24",
+      "head": "SURVIVED__conscience_loop_is_a_real_selective_predictor (FINDING OATH-HELD verified=30 abstained=12 contradicted=0)",
+      "first_word": "SURVIVED__conscience_loop_is_a_real_selective_predictor",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 65,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__DG1_coverage_rises (FINDING OATH-HELD verified=19 abstained=9 contradicted=0)",
+      "first_word": "CLOSED_NEGATIVE__DG1_coverage_rises",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 66,
+      "date": "2026-07-24",
+      "head": "SURVIVED__scale_buys_coverage (FINDING OATH-HELD verified=33 abstained=13 contradicted=0) -- but the margin must be read",
+      "first_word": "SURVIVED__scale_buys_coverage",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 67,
+      "date": "2026-07-24",
+      "head": "INVALID__underpowered (BLOCKED report OATH-HELD verified=9 abstained=13 contradicted=0)",
+      "first_word": "INVALID__underpowered",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 68,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__FG3_retrieval_earns_its_slice_paired (FINDING OATH-HELD verified=13 abstained=13 contradicted=0)",
+      "first_word": "CLOSED_NEGATIVE__FG3_retrieval_earns_its_slice_paired",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 69,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__HG1_selective_escalation_earns_its_slice_and_HG2_accuracy_not_degraded (FINDING OATH-HELD verified=21 a",
+      "first_word": "CLOSED_NEGATIVE__HG1_selective_escalation_earns_its_slice_and_HG2_accuracy_not_degraded",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 70,
+      "date": "2026-07-24",
+      "head": "SURVIVED__selective_prediction_confirms_in_a_new_domain (FINDING OATH-HELD verified=14 abstained=15 contradicted=0)",
+      "first_word": "SURVIVED__selective_prediction_confirms_in_a_new_domain",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 71,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__EG3_tier2_earns_its_slice_paired_and_EG4_beats_stubborn (FINDING OATH-HELD verified=28 abstained=18 con",
+      "first_word": "CLOSED_NEGATIVE__EG3_tier2_earns_its_slice_paired_and_EG4_beats_stubborn",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 72,
+      "date": "2026-07-24",
+      "head": "GRADUATED__styxx",
+      "first_word": "GRADUATED__styxx.adjudicate_shipped",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 73,
+      "date": "2026-07-24",
+      "head": "SURVIVED__effect_holds_on_a_competent_agent (FINDING OATH-HELD 28/0)",
+      "first_word": "SURVIVED__effect_holds_on_a_competent_agent",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 74,
+      "date": "2026-07-24",
+      "head": "CLOSED_NEGATIVE__KG3_refusal_is_informative (FINDING OATH-HELD 17/0)",
+      "first_word": "CLOSED_NEGATIVE__KG3_refusal_is_informative",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 75,
+      "date": "2026-07-24",
+      "head": "SURVIVED__caved_beliefs_recover_out_of_frame (FINDING OATH-HELD 8/0)",
+      "first_word": "SURVIVED__caved_beliefs_recover_out_of_frame",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 76,
+      "date": "2026-07-25",
+      "head": "RECONCILED__push_still_BLOCKED",
+      "first_word": "RECONCILED__push_still_BLOCKED.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 77,
+      "date": "2026-07-25",
+      "head": "CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness (FINDING OATH-HELD verified=23 abstained=9 contradicted=",
+      "first_word": "CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 78,
+      "date": "2026-07-26",
+      "head": "CLOSED_NEGATIVE__combined_signal_does_not_predict_correctness (FINDING OATH-HELD verified=32 abstained=15 contradicted=0",
+      "first_word": "CLOSED_NEGATIVE__combined_signal_does_not_predict_correctness",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 79,
+      "date": "2026-07-26",
+      "head": "CLOSED_NEGATIVE__belief_asymptote_below_floor (FINDING OATH-HELD verified=17 abstained=5 contradicted=0)",
+      "first_word": "CLOSED_NEGATIVE__belief_asymptote_below_floor",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 80,
+      "date": "2026-07-26",
+      "head": "SURVIVED__vulnerability_and_recovery_hold_at_7B (FINDING OATH-HELD verified=30 abstained=2 contradicted=0)",
+      "first_word": "SURVIVED__vulnerability_and_recovery_hold_at_7B",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": "81-housekeeping",
+      "date": "2026-07-27",
+      "head": "BLOCKED_NONCONTENDING__bundle_refreshed",
+      "first_word": "BLOCKED_NONCONTENDING__bundle_refreshed.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 81,
+      "date": "2026-07-27",
+      "head": "CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B (FINDING OATH-HELD 15/0)",
+      "first_word": "CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 82,
+      "date": "2026-07-27",
+      "head": "CLOSED_NEGATIVE__two_channel_misses_instrument_floor (FINDING OATH-HELD 8/0) -- AND THE RUN DID NOT ADJUDICATE ITS THESI",
+      "first_word": "CLOSED_NEGATIVE__two_channel_misses_instrument_floor",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": "83-graduation",
+      "date": "2026-07-27",
+      "head": "GRADUATED__styxx",
+      "first_word": "GRADUATED__styxx.knowsay_shipped",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 83,
+      "date": "2026-07-27",
+      "head": "SURVIVED__frontier_caves__recovery_underpowered (FINDING OATH-HELD 17/0)",
+      "first_word": "SURVIVED__frontier_caves__recovery_underpowered",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 84,
+      "date": "2026-07-28",
+      "head": "SURVIVED__frontier_beliefs_recover_powered (FINDING OATH-HELD verified=25 abstained=6 contradicted=0",
+      "first_word": "SURVIVED__frontier_beliefs_recover_powered",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 85,
+      "date": "2026-07-28",
+      "head": "INVALID__underpowered -- the pre-committed sizing-failure outcome, fired honestly",
+      "first_word": "INVALID__underpowered",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 86,
+      "date": "2026-07-28",
+      "head": "CLOSED_NEGATIVE__weight_attack_reaches_the_belief (FINDING OATH-HELD 20/0",
+      "first_word": "CLOSED_NEGATIVE__weight_attack_reaches_the_belief",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 87,
+      "date": "2026-07-28",
+      "head": "SURVIVED__knowledge_preserving_attack_spares_the_belief (FINDING OATH-HELD 14/0",
+      "first_word": "SURVIVED__knowledge_preserving_attack_spares_the_belief",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 88,
+      "date": "2026-07-28",
+      "head": "SURVIVED__kp_dose_result_replicates per the frozen gate (FINDING OATH-HELD 17/0)",
+      "first_word": "SURVIVED__kp_dose_result_replicates",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 89,
+      "date": "2026-07-28",
+      "head": "SURVIVED__belief_rewrite_coupled_to_capability_damage (FINDING OATH-HELD 8/0",
+      "first_word": "SURVIVED__belief_rewrite_coupled_to_capability_damage",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 90,
+      "date": "2026-07-28",
+      "head": "SURVIVED__coupling_replicates__NO_MATERIAL_RESIDUAL__BROAD (FINDING OATH-HELD 8/0",
+      "first_word": "SURVIVED__coupling_replicates__NO_MATERIAL_RESIDUAL__BROAD",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 91,
+      "date": "2026-07-29",
+      "head": "SURVIVED__weight_channel_holds_at_3B (FINDING OATH-HELD 13/0",
+      "first_word": "SURVIVED__weight_channel_holds_at_3B",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 92,
+      "date": "2026-07-29",
+      "head": "SURVIVED__kp_sparing_is_frame_invariant (FINDING OATH-HELD 9/0",
+      "first_word": "SURVIVED__kp_sparing_is_frame_invariant",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 93,
+      "date": "2026-07-29",
+      "head": "DONE__instrument_condemns_its_author_and_clears_the_survivor (FINDING OATH-HELD 6/0",
+      "first_word": "DONE__instrument_condemns_its_author_and_clears_the_survivor",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 94,
+      "date": "2026-07-29",
+      "head": "SURVIVED__weight_channel_holds_at_second_vendor (FINDING OATH-HELD 16/0",
+      "first_word": "SURVIVED__weight_channel_holds_at_second_vendor",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 95,
+      "date": "2026-07-29",
+      "head": "DONE__paper_recertified_two_vendor_scope (PAPER OATH-HELD 34/1/0 -- up from 26 verified, every added vendor number bound",
+      "first_word": "DONE__paper_recertified_two_vendor_scope",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 96,
+      "date": "2026-07-29",
+      "head": "SURVIVED__frontier_caves_free_text (FINDING OATH-HELD 7/0",
+      "first_word": "SURVIVED__frontier_caves_free_text",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 97,
+      "date": "2026-07-29",
+      "head": "DONE__docs_current (PAPER_knowsay_gap OATH-HELD 33/1/0 with frontier_freetext_v9_result",
+      "first_word": "DONE__docs_current",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 98,
+      "date": "2026-07-30",
+      "head": "CLOSED_NEGATIVE__cave_persists_out_of_frame (FINDING OATH-HELD 20/2/0",
+      "first_word": "CLOSED_NEGATIVE__cave_persists_out_of_frame",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 99,
+      "date": "2026-07-30",
+      "head": "DONE__instrument_expresses_the_retained_probe_design (FINDING OATH-HELD 4/7/0 -- abstentions are cycle numbers and signa",
+      "first_word": "DONE__instrument_expresses_the_retained_probe_design",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 100,
+      "date": "2026-07-30",
+      "head": "DONE__certified_program_synthesis (OATH-HELD 9/8/0, zero contradicted",
+      "first_word": "DONE__certified_program_synthesis",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 102,
+      "date": "2026-07-30",
+      "head": "DONE__papers_consistent_and_current (frame-locality OATH-HELD 37/1/0 up from 34v",
+      "first_word": "DONE__papers_consistent_and_current",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 103,
+      "date": "2026-07-30",
+      "head": "DONE__reference_elicitation_shipped (compile-checked",
+      "first_word": "DONE__reference_elicitation_shipped",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 104,
+      "date": "2026-07-30",
+      "head": "DONE__v34_published_and_arxiv_staged",
+      "first_word": "DONE__v34_published_and_arxiv_staged.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 101,
+      "date": "2026-07-30",
+      "head": "INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report (FINDING OATH-HELD 20/0/0 -- every number",
+      "first_word": "INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 105,
+      "date": "2026-07-30",
+      "head": "CLOSED_NEGATIVE__reasoned_cave_has_reach (FINDING OATH-HELD 17/0/0 -- zero abstained, zero contradicted",
+      "first_word": "CLOSED_NEGATIVE__reasoned_cave_has_reach",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 106,
+      "date": "2026-07-31",
+      "head": "DONE__inward_arc_folded_and_recertified__oath_extractor_blindspot_found (paper OATH-HELD 93/6/0)",
+      "first_word": "DONE__inward_arc_folded_and_recertified__oath_extractor_blindspot_found",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 107,
+      "date": "2026-07-31",
+      "head": "DONE__oath_v062_shipped__B33_closed",
+      "first_word": "DONE__oath_v062_shipped__B33_closed.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 108,
+      "date": "2026-08-01",
+      "head": "DONE__connection_of_minds_synthesized__witness_shipped__b31v2_frozen",
+      "first_word": "DONE__connection_of_minds_synthesized__witness_shipped__b31v2_frozen.",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 109,
+      "date": "2026-08-01",
+      "head": "DOOR_OPENS__content_capacity_limited (FINDING OATH-HELD 20/12/0",
+      "first_word": "DOOR_OPENS__content_capacity_limited",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 110,
+      "date": "2026-08-01",
+      "head": "TWO HONEST INVALIDS, FAMILY PARKED PER ITS OWN CLAUSE",
+      "first_word": "TWO",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 111,
+      "date": "2026-08-01",
+      "head": "DONE__trust_stack_live_on_pypi_7_29_1",
+      "first_word": "DONE__trust_stack_live_on_pypi_7_29_1.",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 112,
+      "date": "2026-08-01",
+      "head": "READ_NEQ_WRITE_SURVIVES_CAPACITY (FINDING OATH-HELD 23/8/0",
+      "first_word": "READ_NEQ_WRITE_SURVIVES_CAPACITY",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 113,
+      "date": "2026-08-03",
+      "head": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily (FINDING OATH-HELD 28/14/0",
+      "first_word": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 114,
+      "date": "2026-08-03",
+      "head": "LABELFREE_READ_SEED_STABLE (FINDING OATH-HELD 40/8/0",
+      "first_word": "LABELFREE_READ_SEED_STABLE",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 115,
+      "date": "2026-08-03",
+      "head": "TWO INVALIDS, TWO MECHANISMS, NEITHER GENERALITY CLAIM LICENSED (FINDING OATH-HELD 62/3/0",
+      "first_word": "TWO",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 116,
+      "date": "2026-08-04",
+      "head": "MATRIX LICENSED, LAW NOT (FINDING OATH-HELD 47/4/0",
+      "first_word": "MATRIX",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 117,
+      "date": "2026-08-04",
+      "head": "INVALID__dose_response_nonmonotone (FINDING OATH-HELD 42/7/0",
+      "first_word": "INVALID__dose_response_nonmonotone",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 118,
+      "date": "2026-08-04",
+      "head": "INVALID__whitening_breaks_the_clique (FINDING OATH-HELD 15/2/0",
+      "first_word": "INVALID__whitening_breaks_the_clique",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 119,
+      "date": "2026-08-05",
+      "head": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility (FINDING OATH-HELD 22/4/0",
+      "first_word": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 120,
+      "date": "2026-08-05",
+      "head": "BRIDGE_BUILT__named_contrasts_causally_block_legibility (FINDING OATH-HELD 16/7/0",
+      "first_word": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 121,
+      "date": "2026-08-05",
+      "head": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise (FINDING OATH-HELD 6/1/0",
+      "first_word": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 122,
+      "date": "2026-08-05",
+      "head": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank (FINDING OATH-HELD 41/27/0",
+      "first_word": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 123,
+      "date": "2026-08-05",
+      "head": "SYNTHESIS re-certified OATH-HELD 67/12/0 (was 59/9/0) and re-SEALED with four island receipts added (b37, b41, b42, b43)",
+      "first_word": "SYNTHESIS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 124,
+      "date": "2026-08-05",
+      "head": "SHARED_FRAME__any_clique_frame_corrects_the_island (FINDING OATH-HELD 29/9/0",
+      "first_word": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 125,
+      "date": "2026-08-05",
+      "head": "INSTRUMENT_BLIND__cannot_detect_planted_coupling (FINDING OATH-HELD 9/6/0",
+      "first_word": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 126,
+      "date": "2026-08-05",
+      "head": "INSTRUMENT_VALID__r1v2_licensed (FINDING OATH-HELD",
+      "first_word": "INSTRUMENT_VALID__r1v2_licensed",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 127,
+      "date": "2026-08-06",
+      "head": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away (FINDING OATH-HELD 11/7/0",
+      "first_word": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 128,
+      "date": "2026-08-06",
+      "head": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose (FINDING OATH-HELD 22/12/0",
+      "first_word": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 129,
+      "date": "2026-08-06",
+      "head": "CORPUS FULLY CLEAN FOR THE FIRST TIME",
+      "first_word": "CORPUS",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 130,
+      "date": "2026-08-06",
+      "head": "SHIPPED to PyPI as 7",
+      "first_word": "SHIPPED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 131,
+      "date": "2026-08-06",
+      "head": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort (FINDING OATH-HELD 9/6/0",
+      "first_word": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 132,
+      "date": "2026-08-06",
+      "head": "INVALID__null_leaks (FINDING OATH-HELD 18/9/0",
+      "first_word": "INVALID__null_leaks",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 133,
+      "date": "2026-08-06",
+      "head": "SHIPPED to PyPI as 7",
+      "first_word": "SHIPPED",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 134,
+      "date": "2026-08-06",
+      "head": "PRODUCT RECALL",
+      "first_word": "PRODUCT",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 135,
+      "date": "2026-08-06",
+      "head": "THREE FINDINGS AGAINST US, ALL ACTED ON, shipped as 7",
+      "first_word": "THREE",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 136,
+      "date": "2026-08-06",
+      "head": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous (FINDING OATH-HELD 16/8/0",
+      "first_word": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 137,
+      "date": "2026-08-06",
+      "head": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort (FINDING OATH-HELD 12/16/0",
+      "first_word": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 138,
+      "date": "2026-08-06",
+      "head": "BOTH STATISTICS AGREE, AND OUR SCREEN IS THE MORE LIBERAL ONE -- so our non-flag is the STRONGER statement, not the weak",
+      "first_word": "BOTH",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 139,
+      "date": "2026-08-06",
+      "head": "SHIPPED to PyPI as 7",
+      "first_word": "SHIPPED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 140,
+      "date": "2026-08-06",
+      "head": "SECOND RECALL OF THE DAY",
+      "first_word": "SECOND",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 141,
+      "date": "2026-08-06",
+      "head": "PUBLISHED FINDING IMPEACHED AND CORRECTED IN PLACE",
+      "first_word": "PUBLISHED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 142,
+      "date": "2026-08-06",
+      "head": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated (FINDING OATH-HELD 6/5/0",
+      "first_word": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 143,
+      "date": "2026-08-06",
+      "head": "CERTIFIED OATH-HELD",
+      "first_word": "CERTIFIED",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 144,
+      "date": "2026-08-06",
+      "head": "DO NOT SHIP",
+      "first_word": "DO",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 145,
+      "date": "2026-08-07",
+      "head": "STILL_BLIND__surrogate_does_not_recover_isc (FINDING OATH-HELD 6/4/0",
+      "first_word": "STILL_BLIND__surrogate_does_not_recover_isc",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 146,
+      "date": "2026-08-07",
+      "head": "ALGEBRA_WRONG__linear_statistic_also_blind (FINDING OATH-HELD 5/4/0",
+      "first_word": "ALGEBRA_WRONG__linear_statistic_also_blind",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 147,
+      "date": "2026-08-07",
+      "head": "MECHANISM_INCOMPLETE__signed_statistic_also_blind (OATH-HELD",
+      "first_word": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 148,
+      "date": "2026-08-07",
+      "head": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue AS COMPUTED -- but the finding CONTRADICTS ITS OWN VERDICT NAME, and tha",
+      "first_word": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 149,
+      "date": "2026-08-07",
+      "head": "INVALID__breaks_existing_preregs (FINDING OATH-HELD 4/8/0)",
+      "first_word": "INVALID__breaks_existing_preregs",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 150,
+      "date": "2026-08-07",
+      "head": "PARTIAL__b45_holds_b47_verdict_moves AS COMPUTED -- but the science survives entirely and the second half of that verdic",
+      "first_word": "PARTIAL__b45_holds_b47_verdict_moves",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 151,
+      "date": "2026-08-07",
+      "head": "METRIC_IDENTITY_LANDED__paths_checkable_before_a_run_is_spent -- ALL THREE GATES PASS, the first clean machinery pass in",
+      "first_word": "METRIC_IDENTITY_LANDED__paths_checkable_before_a_run_is_spent",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 152,
+      "date": "2026-08-07",
+      "head": "DO NOT SHIP AS-IS -> six defects fixed, finding CORRECTED, now shippable pending re-verification",
+      "first_word": "DO",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 153,
+      "date": "2026-08-07",
+      "head": "SHIPPED",
+      "first_word": "SHIPPED.",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 154,
+      "date": "2026-08-07",
+      "head": "REWRITTEN AND PASSING ITS OWN KILL LIST",
+      "first_word": "REWRITTEN",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 155,
+      "date": "2026-08-07",
+      "head": "DO NOT SHIP, AND v2 IS WORSE THAN v1",
+      "first_word": "DO",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 156,
+      "date": "2026-08-07",
+      "head": "BUILT AND LINKED FROM BOTH FRONT DOORS",
+      "first_word": "BUILT",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": false,
+      "head_invalid": false
+    },
+    {
+      "cycle": 157,
+      "date": "2026-08-08",
+      "head": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize (b48's INVALID__null_leaks SUPERSEDED)",
+      "first_word": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+      "shipped_negative": true,
+      "shipped_invalid": true,
+      "head_negative": true,
+      "head_invalid": true
+    },
+    {
+      "cycle": 158,
+      "date": "2026-08-08",
+      "head": "DO_NOT_SHIP — styxx",
+      "first_word": "DO_NOT_SHIP",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 159,
+      "date": "2026-08-08",
+      "head": "NOT_ESTIMABLE (operative) — the machinery returned RESOLVED but on a gate of mine that measured the wrong population",
+      "first_word": "NOT_ESTIMABLE",
+      "shipped_negative": true,
+      "shipped_invalid": false,
+      "head_negative": true,
+      "head_invalid": false
+    },
+    {
+      "cycle": 160,
+      "date": "2026-08-09",
+      "head": "SHIPPED on the adversary's explicit verdict -- first instrument to clear the full pre-release gauntlet since the rule wa",
+      "first_word": "SHIPPED",
+      "shipped_negative": false,
+      "shipped_invalid": false,
+      "head_negative": false,
+      "head_invalid": false
+    }
+  ]
+}

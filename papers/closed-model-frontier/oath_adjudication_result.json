@@ -1,0 +1,8307 @@
+{
+ "panel_size": 3,
+ "items_scored": 591,
+ "agreement": {
+  "unanimous": 580,
+  "split": 11,
+  "unanimity_share": 0.9814,
+  "note": "Adjudicators are LLM agents of one family; high unanimity is NOT evidence of correctness, it is the correlated-error ceiling the protocol discloses."
+ },
+ "false_accusation_rate": {
+  "n": 366,
+  "rate": 0.2596,
+  "reading": "of what the verifier ACCUSED, the share no majority called a real claim"
+ },
+ "miss_rate": {
+  "n": 150,
+  "rate": 0.4067,
+  "reading": "of what the verifier DECLINED to check, the share a majority called a checkable claim — restraint if low, blindness if high"
+ },
+ "verified_arm_sanity": {
+  "n": 75,
+  "rate": 0.4933,
+  "reading": "of what the verifier VERIFIED, the share the panel agrees is a claim. If this is low the panel and the instrument disagree about what a claim IS, and every other number here is suspect."
+ },
+ "per_arm_detail": {
+  "UNGROUNDED": [
+   {
+    "id": "T0311",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 141,
+    "token": "15",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0282",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 589,
+    "token": "3000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0199",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 414,
+    "token": "3.66",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0298",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 149,
+    "token": "1.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0263",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "0.878",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0239",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0157",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+0.01883",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0133",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0560",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0059",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0559",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0079",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+121",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0173",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "0.18637",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0280",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 171,
+    "token": "8888",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0293",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 79,
+    "token": "15.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0014",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 133,
+    "token": "1.7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0179",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "+1.87",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0287",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 16,
+    "token": "9",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0243",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "312",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0235",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.880",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0015",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 133,
+    "token": "2.5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0221",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "256",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0230",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.886",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0104",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "+137",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0020",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1187,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0085",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0172",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0288",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 16,
+    "token": "10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0193",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "1.07",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0162",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "0.15865",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0319",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 35,
+    "token": "52",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0152",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "10,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0364",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 148,
+    "token": "8501",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0032",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 28,
+    "token": "+5.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0070",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0748",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0189",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "+3.84",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0011",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 192,
+    "token": "167.052877",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0106",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "0.0505",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0108",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "0.0433",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0208",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "2,345",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0346",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 236,
+    "token": "91.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0345",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 235,
+    "token": "94.5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0278",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AaronSpieler/elmneuron",
+    "line": 20,
+    "token": "0.9827",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0127",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 224,
+    "token": "0.1103",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0136",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0656",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0313",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 193,
+    "token": "9",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0244",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0027",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 270,
+    "token": "18888",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0314",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "922",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0038",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "53.85",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0297",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 149,
+    "token": "1,500",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0100",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "25",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0039",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "+3.79",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0254",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.652",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0238",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "280",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0005",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "UNSURE"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "50",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0143",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.0766",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0048",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0106",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0126",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 224,
+    "token": "0.1023",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0056",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": ".0537",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0353",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "91.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0232",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.928",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0046",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": ".0261",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0355",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0053",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0121",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0343",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 22,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0276",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "468",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0332",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "12",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0331",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "0.80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0042",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0227",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0240",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "0.859",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0117",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.1063",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0283",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "nextcloud/whiteboard",
+    "line": 64,
+    "token": "3002",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0093",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0735",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0211",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "67.68",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0270",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "312",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0023",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1379,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0325",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0327",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.89",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0358",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "+22.8",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0250",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "0.788",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0140",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0272",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0296",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "14.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0130",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0657",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0159",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "0.19510",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0185",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0281",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 573,
+    "token": "9090",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0051",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": ".0324",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0062",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0695",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0099",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0268",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0231",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "0.878",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0329",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "19",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0337",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 306,
+    "token": "-80325.282",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0275",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "0.716",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0228",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "225",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0073",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0186",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0359",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "3.1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0072",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0215",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0339",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 308,
+    "token": "-72401.308",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0138",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0833",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0356",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "68.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0146",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 331,
+    "token": "256",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0129",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0355",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0277",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1120,
+    "token": "38",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0111",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "0.168",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0176",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "+0.00775",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0017",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 412,
+    "token": "3.10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0205",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 631,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0202",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 466,
+    "token": "9200",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0156",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+0.00894",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0161",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "+0.01477",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0096",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "25",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0124",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.0741",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0357",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 383,
+    "token": "91.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0310",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "feyninc/tokie",
+    "line": 242,
+    "token": "74",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0335",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 158,
+    "token": "200",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0082",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 190,
+    "token": "22,855",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0077",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0695",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0234",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0334",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 131,
+    "token": "16",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0300",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+    "line": 207,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0216",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "128",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0213",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0266",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "0.883",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0342",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "K-RED90/Cropify-AI",
+    "line": 111,
+    "token": "89",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0301",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kyuz0/amd-strix-halo-comfyui-toolboxes",
+    "line": 207,
+    "token": "124",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0326",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.85",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0279",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 142,
+    "token": "8888",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0002",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "40",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0195",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 404,
+    "token": "24",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0095",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0217",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0116",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0253",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0150",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0006",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "7.96",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0021",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1191,
+    "token": "3.10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0333",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 131,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0010",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 180,
+    "token": "637.879562",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0225",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.899",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0299",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "nhadaututtheky/neural-memory",
+    "line": 142,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0076",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0412",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0047",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0369",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0291",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 35,
+    "token": "342",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0094",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 197,
+    "token": "0.0751",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0248",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "148",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0110",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "+87",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0091",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0190",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0069",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0201",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0188",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "24.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0348",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 240,
+    "token": "92.1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0309",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "feyninc/tokie",
+    "line": 193,
+    "token": "10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0249",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0212",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "3.84",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0083",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0639",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0338",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 307,
+    "token": "-91727",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0227",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.883",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0194",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 404,
+    "token": "39.49",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0118",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.0766",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0078",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 186,
+    "token": "0.0189",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0089",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0689",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0131",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 234,
+    "token": "0.0196",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0220",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0273",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "148",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0262",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "0.886",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0215",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "64",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0305",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kunal12203/webify-mcp",
+    "line": 92,
+    "token": "15",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0242",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "1.022",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0066",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0106",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0043",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0059",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0055",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0543",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0029",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kssteven418/LTP",
+    "line": 98,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0147",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 331,
+    "token": "32",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0182",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 392,
+    "token": "100",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0360",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0267",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "280",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0260",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "225",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0365",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "haddybhaiya/sem-i-con",
+    "line": 103,
+    "token": "98",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0286",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 9,
+    "token": "342",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0265",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 519,
+    "token": "0.880",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0151",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0304",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kunal12203/webify-mcp",
+    "line": 86,
+    "token": "3,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0052",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0429",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0128",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 228,
+    "token": "22,855",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0068",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0662",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0241",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 473,
+    "token": "0.784",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0307",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 47,
+    "token": "39.10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0142",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.1063",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0160",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "+5.02",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0060",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 170,
+    "token": "22,855",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0041",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": ".0183",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0141",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0081",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+220",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0222",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0097",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0976",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0057",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0569",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0030",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 27,
+    "token": "+10.9",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0135",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0350",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0102",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "0.0229",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0155",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "+5.01",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0233",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "104",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0168",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "0.37191",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0075",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0059",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0040",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0186",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0003",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "60",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0121",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0925",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0180",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "-0.00121",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0352",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0294",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "42.5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0105",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "0.0208",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0361",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "4.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0088",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0180",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0144",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 238,
+    "token": "0.0265",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0170",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+0.00086",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0137",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 236,
+    "token": "0.0185",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0074",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 185,
+    "token": "0.0227",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0175",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "-0.00017",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0218",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "384",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0190",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "63.84",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0214",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0172",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "0.18264",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0103",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 208,
+    "token": "0.0542",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0167",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "0.36645",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0026",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 93,
+    "token": "5432",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0001",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "300,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0084",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 194,
+    "token": "0.0648",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0363",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "+35.5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0217",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "256",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0201",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 435,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0257",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "383",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0302",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "stanford-oval/Churro",
+    "line": 59,
+    "token": "75",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0122",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0268",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0092",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0336",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 177,
+    "token": "7860",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0245",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.837",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0303",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kunal12203/webify-mcp",
+    "line": 86,
+    "token": "80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0324",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "0.80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0004",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "72.18",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0306",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "kunal12203/webify-mcp",
+    "line": 92,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0204",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 605,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0025",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 87,
+    "token": "6379",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0264",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 508,
+    "token": "104",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0058",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 168,
+    "token": "0.0164",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0022",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1191,
+    "token": "3.10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0187",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "16.8",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0134",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0148",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0109",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 210,
+    "token": "0.0811",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0268",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "0.859",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0246",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.772",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0098",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 198,
+    "token": "0.0931",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0149",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0063",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0189",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0255",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.622",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0350",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "68.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0312",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 186,
+    "token": "+4.3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0018",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 539,
+    "token": "90",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0045",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0265",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0080",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 188,
+    "token": "+206",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0178",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "0.01504",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0112",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "0.244",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0347",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 237,
+    "token": "89.3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0019",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1114,
+    "token": "403",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0295",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 80,
+    "token": "613.7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0028",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Azure-Samples/python-agentframework-demos",
+    "line": 270,
+    "token": "4317",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0292",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 43,
+    "token": "342",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0259",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "0.956",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0154",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "0.29074",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0341",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "K-RED90/Cropify-AI",
+    "line": 87,
+    "token": "77.27",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0087",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0678",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0236",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.883",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0086",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 195,
+    "token": "0.0664",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0065",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0369",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0016",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 274,
+    "token": "01",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0012",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "eliasjacob/paper_brcad5",
+    "line": 12,
+    "token": "0.3688",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0125",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.0258",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0330",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "0.67",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0316",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0344",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 227,
+    "token": "31",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0274",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 560,
+    "token": "0.788",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0169",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+1.49",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0200",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 420,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0009",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 128,
+    "token": "1.598064",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0145",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 261,
+    "token": "+0.85",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0269",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 539,
+    "token": "0.784",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0209",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "67.63",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0184",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "+137",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0013",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "eliasjacob/paper_brcad5",
+    "line": 12,
+    "token": "0.1253",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0177",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 344,
+    "token": "0.01477",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0226",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "0.956",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0229",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 471,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0183",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 392,
+    "token": "200",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0067",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.0556",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0033",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 28,
+    "token": "12,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0101",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 202,
+    "token": "22,855",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0171",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 342,
+    "token": "+0.01014",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0317",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0165",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+0.00304",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0123",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 222,
+    "token": "0.1017",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0031",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 27,
+    "token": "+8.7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0321",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 85,
+    "token": "78.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0186",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 394,
+    "token": "0.0229",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0290",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 35,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0253",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "468",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0206",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 633,
+    "token": "20",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0196",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 412,
+    "token": "256",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0158",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 340,
+    "token": "0.18577",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0132",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 235,
+    "token": "0.0305",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0256",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 476,
+    "token": "0.800",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0223",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "32",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0071",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 177,
+    "token": "0.0738",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0261",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 500,
+    "token": "0.956",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0289",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "karpathy/jobs",
+    "line": 25,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0207",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 633,
+    "token": "19",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0163",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "0.16371",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0323",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 111,
+    "token": "0.67",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0174",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 343,
+    "token": "+2.05",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0198",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 414,
+    "token": "32",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0340",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 309,
+    "token": "8271.131",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0164",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+3.19",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0322",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 90,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0050",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0328",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0054",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 167,
+    "token": "0.0457",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0007",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "UNSURE"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 16,
+    "token": "15",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0354",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 246,
+    "token": "4.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0120",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 221,
+    "token": "0.0983",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0318",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AdilzhanB/StockRL",
+    "line": 91,
+    "token": "0.0003",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0119",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 220,
+    "token": "0.0265",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0197",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 412,
+    "token": "67.42",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0351",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 245,
+    "token": "3.1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0148",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 335,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0251",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "0.716",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0284",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "nextcloud/whiteboard",
+    "line": 100,
+    "token": "3002",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0037",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "67.63",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0315",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 317,
+    "token": "245",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0349",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 241,
+    "token": "87.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0035",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0044",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 165,
+    "token": "0.0251",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0139",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 237,
+    "token": "0.0899",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0008",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 116,
+    "token": "1.554562",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0285",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "nextcloud/whiteboard",
+    "line": 244,
+    "token": "30",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0320",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 85,
+    "token": "78.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0107",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 209,
+    "token": "+143",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0090",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 196,
+    "token": "0.0701",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0258",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 489,
+    "token": "0.899",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0064",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 175,
+    "token": "0.0265",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0036",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 99,
+    "token": "775",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0219",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 674,
+    "token": "512",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0308",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 47,
+    "token": "+1.91",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0061",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 174,
+    "token": "0.0464",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0224",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 470,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0328",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 112,
+    "token": "0.87",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0192",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "67.63",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0166",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 341,
+    "token": "+0.00710",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0272",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "0.772",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0210",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 662,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0181",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 366,
+    "token": "100",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0362",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 384,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0034",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 62,
+    "token": "253,685",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0153",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 339,
+    "token": "0.27687",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0247",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 474,
+    "token": "0.983",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0024",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "sbhooley/ainativelang",
+    "line": 1379,
+    "token": "42",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0271",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 548,
+    "token": "0.837",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0049",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 166,
+    "token": "0.0462",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0203",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 574,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0237",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 472,
+    "token": "0.900",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0115",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0660",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0252",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 475,
+    "token": "1.017",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0191",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 402,
+    "token": "67.68",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0114",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 219,
+    "token": "0.0946",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0000",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "ShiZhengyan/DePT",
+    "line": 93,
+    "token": "100,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0113",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "hopit-ai/Moda",
+    "line": 211,
+    "token": "+45",
+    "receipt_ref": null
+   }
+  ],
+  "ABSTAIN": [
+   {
+    "id": "T0438",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 715,
+    "token": "20",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0412",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 240,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0489",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 352,
+    "token": "0.268",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0401",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 135,
+    "token": "7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0464",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "aalto-ui/aim",
+    "line": 16,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0393",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 712,
+    "token": "80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0468",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 80,
+    "token": "5090",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0442",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "sbhooley/ainativelang",
+    "line": 1413,
+    "token": "1",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0391",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 48,
+    "token": "12,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0460",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "opendatalab/WebMainBench",
+    "line": 106,
+    "token": "0.7309",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0445",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 392,
+    "token": "-15.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0432",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1603,
+    "token": "0.302",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0370",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 148,
+    "token": "8501",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0441",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "connor-makowski/scgraph",
+    "line": 299,
+    "token": "-87.6298",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0417",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 365,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0436",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 57,
+    "token": "8",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0479",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 535,
+    "token": ".2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0378",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 35,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0462",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 333,
+    "token": "20",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0428",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 312,
+    "token": "86.05",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0508",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 50,
+    "token": "30",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0410",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 135,
+    "token": "99",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0469",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 117,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0455",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 119,
+    "token": "1.262384",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0405",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 740,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0408",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 135,
+    "token": "50",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0474",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 372,
+    "token": "12",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0506",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 711,
+    "token": "49",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0371",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "connor-makowski/scgraph",
+    "line": 322,
+    "token": "31.23",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0501",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 108,
+    "token": "0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0409",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 81,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0471",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1118,
+    "token": "3",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0386",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 109,
+    "token": "216",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0373",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "kunal12203/webify-mcp",
+    "line": 112,
+    "token": "15",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0379",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 905,
+    "token": "3.3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0473",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 870,
+    "token": "5090",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0466",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1401,
+    "token": "0.215",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0389",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "UNSURE",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1723,
+    "token": "2.0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0377",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 701,
+    "token": "12",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0496",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FanGShiYuu/CoReVLA",
+    "line": 138,
+    "token": "1123",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0507",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 90,
+    "token": "0.292",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0450",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 524,
+    "token": ".57",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0440",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 755,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0418",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "UNSURE"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 726,
+    "token": "15",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0505",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "painezeng/CSharpAndSolidWorks",
+    "line": 283,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0472",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1481,
+    "token": "100",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0444",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1578,
+    "token": "10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0380",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "sbhooley/ainativelang",
+    "line": 92,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0422",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 127,
+    "token": "0.2137",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0480",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "ShiZhengyan/DePT",
+    "line": 52,
+    "token": "256",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0413",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "ludwig-ai/ludwig",
+    "line": 190,
+    "token": "8000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0376",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1253,
+    "token": "0.333",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0510",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 78,
+    "token": "1",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0400",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1127,
+    "token": "86",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0425",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 457,
+    "token": "9",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0463",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 101,
+    "token": "768",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0509",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1233,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0406",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "parinzee/seed-free-synthetic-instruct",
+    "line": 112,
+    "token": "979",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0411",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1188,
+    "token": "75",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0416",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 336,
+    "token": "47",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0404",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 233,
+    "token": "310",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0503",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 591,
+    "token": "30",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0431",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "opendatalab/WebMainBench",
+    "line": 104,
+    "token": "0.7121",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0504",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AaronSpieler/elmneuron",
+    "line": 17,
+    "token": "50",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0424",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 90,
+    "token": "16",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0447",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1156,
+    "token": "3",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0419",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "opendatalab/WebMainBench",
+    "line": 47,
+    "token": "0.22",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0493",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 420,
+    "token": "10",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0390",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 624,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0482",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 719,
+    "token": "80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0487",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "scaleapi/SWE-bench_Pro-os",
+    "line": 18,
+    "token": "7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0439",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 239,
+    "token": "0.305",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0399",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "connor-makowski/scgraph",
+    "line": 521,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0415",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1470,
+    "token": "99",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0449",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 99,
+    "token": "128",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0459",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 306,
+    "token": "1",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0437",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1729,
+    "token": "0.212",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0461",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "sbhooley/ainativelang",
+    "line": 1680,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0403",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AdilzhanB/StockRL",
+    "line": 210,
+    "token": "2",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0499",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1117,
+    "token": "71.0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0384",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 204,
+    "token": "900",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0383",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 719,
+    "token": "100",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0457",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "makai891124-prog/H2Q-Evo",
+    "line": 32,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0443",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 242,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0476",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AdilzhanB/StockRL",
+    "line": 346,
+    "token": "14",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0452",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "apple/ml-tweak",
+    "line": 2,
+    "token": "2311.09467",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0488",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 748,
+    "token": "2501.12948",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0369",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "KMnO4-zx/huanhuan-chat",
+    "line": 98,
+    "token": "96",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0397",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "0.15865",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0434",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 81,
+    "token": "304",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0414",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1172,
+    "token": "55",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0381",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 130,
+    "token": "0.938272",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0465",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "stanford-oval/Churro",
+    "line": 154,
+    "token": "71.2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0395",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 594,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0375",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 713,
+    "token": "20",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0374",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1460,
+    "token": "0.001",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0495",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 265,
+    "token": "26",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0454",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "+3.19",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0388",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "WillyEverGreen/acon",
+    "line": 101,
+    "token": "90",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0502",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1816,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0382",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 338,
+    "token": "14",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0367",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1222,
+    "token": "0.246",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0387",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "painezeng/CSharpAndSolidWorks",
+    "line": 435,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0475",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 319,
+    "token": "1",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0398",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 342,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0366",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 246,
+    "token": "75.9",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0448",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 293,
+    "token": "70",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0515",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 121,
+    "token": "0.2769",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0478",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 135,
+    "token": "0.16371",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0494",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 705,
+    "token": "63",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0512",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 94,
+    "token": "0.258",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0456",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 205,
+    "token": "134",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0421",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 141,
+    "token": "6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0470",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 753,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0514",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 57,
+    "token": "1706.03762",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "T0396",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 20,
+    "token": "90",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0490",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "jerryliang24/Drag-and-Drop-LLMs",
+    "line": 348,
+    "token": "200",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0486",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 348,
+    "token": "14",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0467",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1097,
+    "token": "22673",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0477",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 920,
+    "token": "131072",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0392",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "nextcloud/whiteboard",
+    "line": 224,
+    "token": "8192",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0429",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 75,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0368",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "kunal12203/webify-mcp",
+    "line": 239,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0497",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 247,
+    "token": "35",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0453",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "karpathy/jobs",
+    "line": 22,
+    "token": "342",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0483",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 123,
+    "token": "3.610803",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0402",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 198,
+    "token": "5510.001000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0500",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 284,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0423",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 209,
+    "token": "693",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0458",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1167,
+    "token": "33.6",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0511",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 718,
+    "token": "29",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0492",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "kssteven418/LTP",
+    "line": 47,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0433",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "AnandMayank/Muse_v2",
+    "line": 386,
+    "token": "+34.4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0372",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 90,
+    "token": "20",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0426",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 744,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0394",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 49,
+    "token": "12",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0491",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 744,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0427",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1462,
+    "token": "27.8",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0435",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "heyblackC/BetterMixture-Top1-Solution",
+    "line": 109,
+    "token": "591",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "T0451",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "hopit-ai/Moda",
+    "line": 284,
+    "token": "39.49",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0498",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "karpathy/jobs",
+    "line": 76,
+    "token": "8000",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0446",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "WillyEverGreen/acon",
+    "line": 35,
+    "token": "100",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0420",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 956,
+    "token": "80",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0430",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "asif-jc/Dont-Swim-in-Data",
+    "line": 50,
+    "token": "75.7",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0481",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "opendatalab/WebMainBench",
+    "line": 43,
+    "token": "0.57",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0485",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 117,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0407",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "connor-makowski/scgraph",
+    "line": 544,
+    "token": "1181",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0484",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "netscaler/netscaler-adc-metrics-exporter",
+    "line": 374,
+    "token": "14",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0385",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "feyninc/tokie",
+    "line": 116,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "T0513",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "opendatalab/WebMainBench",
+    "line": 119,
+    "token": "0.7819",
+    "receipt_ref": null
+   }
+  ],
+  "VERIFIED": [
+   {
+    "id": "T0559",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 56,
+    "token": "22",
+    "receipt_ref": "r0_benchmark_results.json:[2].main_language_and_type_metrics.handwriting.Japanese"
+   },
+   {
+    "id": "T0567",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "1",
+    "receipt_ref": "r0_benchmark_results.json:results[0].task_id"
+   },
+   {
+    "id": "T0586",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 176,
+    "token": "0.5",
+    "receipt_ref": "r0_results.json:ours.atlas.map10"
+   },
+   {
+    "id": "T0546",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "76.00",
+    "receipt_ref": "r0_benchmark_results.json:[6].accuracy"
+   },
+   {
+    "id": "T0539",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 224,
+    "token": "2.5",
+    "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+   },
+   {
+    "id": "T0571",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 81,
+    "token": "6",
+    "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.outerwear.n_queries"
+   },
+   {
+    "id": "T0548",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "NOT_A_CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "nextcloud/whiteboard",
+    "line": 234,
+    "token": "0.2",
+    "receipt_ref": "r0_results.json:scenarios[1].cpu.average"
+   },
+   {
+    "id": "T0587",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 254,
+    "token": "95.83",
+    "receipt_ref": "r0_benchmark_results.json:[7].accuracy"
+   },
+   {
+    "id": "T0555",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 348,
+    "token": "256",
+    "receipt_ref": "r0_all_results.json:rope.config.base_config.d_model"
+   },
+   {
+    "id": "T0517",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 34,
+    "token": "103",
+    "receipt_ref": "r0_benchmark_results.json:results[4].tests_total"
+   },
+   {
+    "id": "T0520",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "0.7",
+    "receipt_ref": "r0_results.json:ours.atlas.ci_95[1]"
+   },
+   {
+    "id": "T0590",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 113,
+    "token": "1.00",
+    "receipt_ref": "r0_evaluation_results.json:label_map.advice_request"
+   },
+   {
+    "id": "T0574",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "opendatalab/WebMainBench",
+    "line": 89,
+    "token": "0",
+    "receipt_ref": "r0_evaluation_results.json:[0].sample_results[0].metrics.formula_edit.score"
+   },
+   {
+    "id": "T0580",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "AdilzhanB/StockRL",
+    "line": 67,
+    "token": "157.07",
+    "receipt_ref": "r0_evaluation_results.json:AAPL.metrics.max_drawdown"
+   },
+   {
+    "id": "T0566",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 228,
+    "token": "51.6",
+    "receipt_ref": "r0_benchmark_results.json:[27].main_language_and_type_metrics.handwriting.Spanish"
+   },
+   {
+    "id": "T0537",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 247,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:records[40].episode_index"
+   },
+   {
+    "id": "T0561",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "nextcloud/whiteboard",
+    "line": 241,
+    "token": "100",
+    "receipt_ref": "r0_results.json:scenarios[1].concurrency"
+   },
+   {
+    "id": "T0535",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 255,
+    "token": "0.1",
+    "receipt_ref": "r0_evaluation_results.json:total_evaluated"
+   },
+   {
+    "id": "T0530",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "skadio/text2model",
+    "line": 61,
+    "token": "0",
+    "receipt_ref": "r0_evaluation_results.json:verified_results.gpt-oss:20b.baseline.by_source.complexor.exec_acc"
+   },
+   {
+    "id": "T0533",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "nextcloud/whiteboard",
+    "line": 223,
+    "token": "10",
+    "receipt_ref": "r0_results.json:environment.logicalCores"
+   },
+   {
+    "id": "T0521",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "feyninc/tokie",
+    "line": 205,
+    "token": "9.1",
+    "receipt_ref": "r0_benchmark_results.json:vs_hf[6].hf_ms"
+   },
+   {
+    "id": "T0585",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SHITIANYU-hue/amai_ocl",
+    "line": 189,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:records[40].episode_index"
+   },
+   {
+    "id": "T0516",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 175,
+    "token": "93.3",
+    "receipt_ref": "r0_benchmark_results.json:[1].main_language_and_type_metrics.print.Hindi"
+   },
+   {
+    "id": "T0573",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 339,
+    "token": "1",
+    "receipt_ref": "r7_results.json:[3].metrics.mtp_depth"
+   },
+   {
+    "id": "T0522",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1193,
+    "token": "0",
+    "receipt_ref": "r0_results.json:thinking_length"
+   },
+   {
+    "id": "T0562",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 255,
+    "token": "100",
+    "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+   },
+   {
+    "id": "T0560",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 33,
+    "token": "4",
+    "receipt_ref": "r0_benchmark_results.json:results[2].level"
+   },
+   {
+    "id": "T0577",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 2,
+    "token": "100",
+    "receipt_ref": "r0_benchmark_results.json:summary.memtrace.accuracy_pct"
+   },
+   {
+    "id": "T0541",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "feyninc/tokie",
+    "line": 231,
+    "token": "10.6",
+    "receipt_ref": "r0_benchmark_results.json:loading[2].tokie_ms"
+   },
+   {
+    "id": "T0518",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 37,
+    "token": "5",
+    "receipt_ref": "r0_benchmark_results.json:results[0].tests_passed"
+   },
+   {
+    "id": "T0519",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 398,
+    "token": "2",
+    "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.other.n_queries"
+   },
+   {
+    "id": "T0538",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "ranga4all1/research-assistant-mm-rag",
+    "line": 280,
+    "token": "0.006",
+    "receipt_ref": "r0_evaluation_results.json:answer_metrics.rouge2"
+   },
+   {
+    "id": "T0553",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "0.8000",
+    "receipt_ref": "r0_benchmark_results.json:[4].f1_score"
+   },
+   {
+    "id": "T0528",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 143,
+    "token": "2.5",
+    "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+   },
+   {
+    "id": "T0532",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 573,
+    "token": "6",
+    "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.outerwear.n_queries"
+   },
+   {
+    "id": "T0556",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 180,
+    "token": "2.5",
+    "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+   },
+   {
+    "id": "T0547",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "AdilzhanB/StockRL",
+    "line": 68,
+    "token": "0.00",
+    "receipt_ref": "r0_evaluation_results.json:AMZN.metrics.win_rate"
+   },
+   {
+    "id": "T0576",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 31,
+    "token": "2",
+    "receipt_ref": "r0_benchmark_results.json:results[0].level"
+   },
+   {
+    "id": "T0524",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 549,
+    "token": "0.2",
+    "receipt_ref": "r4_results.json:[9].metrics.dataset_weights.code"
+   },
+   {
+    "id": "T0557",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1142,
+    "token": ".0",
+    "receipt_ref": "r0_results.json:thinking_length"
+   },
+   {
+    "id": "T0584",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "0.9907",
+    "receipt_ref": "r0_benchmark_results.json:[5].f1_score"
+   },
+   {
+    "id": "T0570",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 258,
+    "token": "97.9",
+    "receipt_ref": "r0_benchmark_results.json:[3].main_language_and_type_metrics.print.Czech"
+   },
+   {
+    "id": "T0542",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "4",
+    "receipt_ref": "r0_all_results.json:rope.results[13].config.num_layers"
+   },
+   {
+    "id": "T0558",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 73,
+    "token": "93.9",
+    "receipt_ref": "r0_benchmark_results.json:[2].main_language_and_type_metrics.print.Dutch"
+   },
+   {
+    "id": "T0540",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "AdilzhanB/StockRL",
+    "line": 66,
+    "token": "-0.22",
+    "receipt_ref": "r0_evaluation_results.json:TSLA.metrics.sharpe_ratio"
+   },
+   {
+    "id": "T0549",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "shi3z/japanese-llm-benchmark",
+    "line": 1637,
+    "token": ".0",
+    "receipt_ref": "r0_results.json:thinking_length"
+   },
+   {
+    "id": "T0526",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 361,
+    "token": "1.18",
+    "receipt_ref": "r4_results.json:[0].metrics.final_loss"
+   },
+   {
+    "id": "T0583",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 267,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+   },
+   {
+    "id": "T0578",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "nextcloud/whiteboard",
+    "line": 242,
+    "token": "500",
+    "receipt_ref": "r0_results.json:scenarios[3].concurrency"
+   },
+   {
+    "id": "T0534",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 191,
+    "token": "23.3",
+    "receipt_ref": "r0_benchmark_results.json:[26].main_language_and_type_metrics.handwriting.Persian"
+   },
+   {
+    "id": "T0582",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DevJadhav/deepseek-from-scratch",
+    "line": 112,
+    "token": "12.3",
+    "receipt_ref": "r0_all_results.json:rope.results[10].metric_history.perplexity[1]"
+   },
+   {
+    "id": "T0550",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 292,
+    "token": "5",
+    "receipt_ref": "r0_results.json:ours.polyvore.per_stratum.dresses.n_queries"
+   },
+   {
+    "id": "T0565",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "hopit-ai/Moda",
+    "line": 76,
+    "token": "1",
+    "receipt_ref": "r0_results.json:ours.fashion200k.per_stratum.bottoms.n_queries"
+   },
+   {
+    "id": "T0525",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 250,
+    "token": "0.9375",
+    "receipt_ref": "r0_benchmark_results.json:[3].precision"
+   },
+   {
+    "id": "T0523",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 7,
+    "token": "35,072,768",
+    "receipt_ref": "r0_benchmark_results.json:model.parameters"
+   },
+   {
+    "id": "T0554",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 252,
+    "token": "1.0000",
+    "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+   },
+   {
+    "id": "T0569",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 120,
+    "token": "2.5",
+    "receipt_ref": "r0_benchmark_results.json:[10].main_language_and_type_metrics.handwriting.Khmer"
+   },
+   {
+    "id": "T0572",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 223,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+   },
+   {
+    "id": "T0551",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "s4nkar/SoundSense",
+    "line": 63,
+    "token": ".0",
+    "receipt_ref": "r0_evaluation_results.json:cnn.confusion_matrix[1][3]"
+   },
+   {
+    "id": "T0579",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 251,
+    "token": "84.00",
+    "receipt_ref": "r0_benchmark_results.json:[4].accuracy"
+   },
+   {
+    "id": "T0581",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 207,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+   },
+   {
+    "id": "T0545",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 248,
+    "token": "100",
+    "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+   },
+   {
+    "id": "T0544",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 17,
+    "token": "1",
+    "receipt_ref": "r0_benchmark_results.json:schema_version"
+   },
+   {
+    "id": "T0589",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "connor-makowski/scgraph",
+    "line": 308,
+    "token": "0.0",
+    "receipt_ref": "r0_benchmark_results.json:cache_geograph.single_cached_length_only_ms"
+   },
+   {
+    "id": "T0529",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DebarghaG/proofofthought",
+    "line": 247,
+    "token": "100",
+    "receipt_ref": "r0_benchmark_results.json:[0].total_samples"
+   },
+   {
+    "id": "T0588",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 46,
+    "token": "+1.81",
+    "receipt_ref": "r0_benchmark_results.json:comparisons[0].barunlm_lead"
+   },
+   {
+    "id": "T0531",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "syncable-dev/memtrace-public",
+    "line": 79,
+    "token": "5.3",
+    "receipt_ref": "r0_benchmark_results.json:raw.gitnexus[373].time_ms"
+   },
+   {
+    "id": "T0536",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "alex-jb/orallexa-ai-trading-agent",
+    "line": 93,
+    "token": "1.41",
+    "receipt_ref": "r0_evaluation_results.json:evaluations[1].monte_carlo.original_sharpe"
+   },
+   {
+    "id": "T0568",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "Hluii/ai201-project3-TakeMeter",
+    "line": 103,
+    "token": "83.8",
+    "receipt_ref": "r0_evaluation_results.json:finetuned_accuracy"
+   },
+   {
+    "id": "T0552",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 105,
+    "token": "20",
+    "receipt_ref": "r0_benchmark_results.json:[20].main_language_and_type_metrics.handwriting.Persian"
+   },
+   {
+    "id": "T0564",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "AdilzhanB/StockRL",
+    "line": 64,
+    "token": "7,243.44",
+    "receipt_ref": "r0_evaluation_results.json:MSFT.metrics.total_return"
+   },
+   {
+    "id": "T0527",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 27,
+    "token": "1,854",
+    "receipt_ref": "r0_benchmark_results.json:protocol.decontamination.excluded_samples"
+   },
+   {
+    "id": "T0575",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "harrrshall/barunlm-35m",
+    "line": 63,
+    "token": "35,072,768",
+    "receipt_ref": "r0_benchmark_results.json:model.parameters"
+   },
+   {
+    "id": "T0543",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "TenchiNeko/standalone-orchestrator",
+    "line": 30,
+    "token": "5",
+    "receipt_ref": "r0_benchmark_results.json:results[0].tests_passed"
+   },
+   {
+    "id": "T0563",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "stanford-oval/Churro",
+    "line": 205,
+    "token": "69.7",
+    "receipt_ref": "r0_benchmark_results.json:[21].printed"
+   }
+  ]
+ }
+}

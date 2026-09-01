@@ -1,0 +1,3339 @@
+{
+ "prereg": "papers/closed-model-frontier/PREREG_oath_verified_channel_internal_2026_08_27.md",
+ "items_scored": 236,
+ "verified_claim_share_internal": {
+  "n": 150,
+  "rate": 0.7933
+ },
+ "verified_claim_share_external": {
+  "n": 75,
+  "rate": 0.4933
+ },
+ "gap": 0.3,
+ "miss_rate_internal": {
+  "n": 75,
+  "rate": 0.4267
+ },
+ "false_accusation_rate_internal": {
+  "n": 11,
+  "rate": 0.8182
+ },
+ "agreement": {
+  "unanimous": 227,
+  "split": 9,
+  "unanimity_share": 0.9619,
+  "external_unanimity": 0.9814
+ },
+ "per_arm_detail": {
+  "VERIFIED": [
+   {
+    "id": "I0029",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_conscience_coordinates_2026_06_11.md",
+    "line": 25,
+    "token": "0.4948",
+    "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_refusal_recovers_H"
+   },
+   {
+    "id": "I0115",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_council_2026_05_25.md",
+    "line": 63,
+    "token": "0.75",
+    "receipt_ref": "probe_fame_vs_truth_results.json:T1_truth_not_fame(R2>=0.70 & R2-fake>=0.30)[2]"
+   },
+   {
+    "id": "I0022",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_anatomy_v2_2026_06_10.md",
+    "line": 40,
+    "token": "10000",
+    "receipt_ref": "anatomy_v2_result.json:n_perm"
+   },
+   {
+    "id": "I0009",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "UNSURE",
+     "UNSURE",
+     "UNSURE"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 95,
+    "token": "5",
+    "receipt_ref": "oath_v11_battery_result.json:gates[1].coordinates[4][2]"
+   },
+   {
+    "id": "I0085",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 68,
+    "token": "343",
+    "receipt_ref": "b37_result.json:seed"
+   },
+   {
+    "id": "I0089",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 20,
+    "token": "0.632",
+    "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].frozen_stack_read"
+   },
+   {
+    "id": "I0138",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 38,
+    "token": "0.9285714285714286",
+    "receipt_ref": "scale3b_result.json:dose.KP.recovery"
+   },
+   {
+    "id": "I0033",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_margin_parity_control_2026_07_10.md",
+    "line": 77,
+    "token": "1",
+    "receipt_ref": "margin_parity_control_result.json:seeds[1]"
+   },
+   {
+    "id": "I0114",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 37,
+    "token": "0.6756",
+    "receipt_ref": "b2_coupling_dose_result.json:per_seed.1.read_at_rstar"
+   },
+   {
+    "id": "I0139",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 31,
+    "token": "0.5468",
+    "receipt_ref": "verdict.json:H1.auroc"
+   },
+   {
+    "id": "I0098",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 19,
+    "token": "8",
+    "receipt_ref": "adversarial_curve_v3_result.json:points[0].lam_hide"
+   },
+   {
+    "id": "I0037",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "source.md",
+    "line": 153,
+    "token": "0.70",
+    "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.s_detection_power.rate"
+   },
+   {
+    "id": "I0078",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 32,
+    "token": "45",
+    "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate.break_rule_fired"
+   },
+   {
+    "id": "I0069",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 18,
+    "token": "0.9846153846153847",
+    "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+   },
+   {
+    "id": "I0117",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 107,
+    "token": "28.1",
+    "receipt_ref": "oath_v11_battery_result.json:gates[5].comparison_arm.surfacing_destroyed_mean"
+   },
+   {
+    "id": "I0102",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
+    "line": 35,
+    "token": "0.8299",
+    "receipt_ref": "says_yes_knows_no_v3_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.item_conditional_auroc"
+   },
+   {
+    "id": "I0146",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+    "line": 57,
+    "token": "0.6756",
+    "receipt_ref": "coupling_confirm_result.json:per_seed.1.read_at_rstar"
+   },
+   {
+    "id": "I0034",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_geometry_integrity_2026_06_03.md",
+    "line": 13,
+    "token": "1.00",
+    "receipt_ref": "geometry_mismatch_result.json:per_model.Llama-3.2-1B.neg_footprint_AUC"
+   },
+   {
+    "id": "I0042",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "PAPER_frame_locality_2026_07_28.md",
+    "line": 45,
+    "token": "0.975",
+    "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+   },
+   {
+    "id": "I0091",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 25,
+    "token": "0.9288",
+    "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_recovers_T"
+   },
+   {
+    "id": "I0007",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 53,
+    "token": "1.0",
+    "receipt_ref": "b42_result.json:spearman_medianbridge_vs_k"
+   },
+   {
+    "id": "I0127",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 40,
+    "token": "0.033333333333333326",
+    "receipt_ref": "coupling_resolution_result.json:kp_residual_pooled"
+   },
+   {
+    "id": "I0122",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_third_party_bench_2026_07_24.md",
+    "line": 30,
+    "token": "0.27058823529411763",
+    "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.cave_rate"
+   },
+   {
+    "id": "I0023",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_frame_recovery_2026_07_24.md",
+    "line": 21,
+    "token": "0.9846153846153847",
+    "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+   },
+   {
+    "id": "I0055",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b37_legibility_matrix_2026_08_04.md",
+    "line": 13,
+    "token": "0.0408",
+    "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+   },
+   {
+    "id": "I0086",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 76,
+    "token": "7.4805",
+    "receipt_ref": "e1_result.json:addendum_identification_detail.initial_positive_sequence.max_abs_diff_vs_addendum"
+   },
+   {
+    "id": "I0083",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_adversarial_curve_v3_2026_06_08.md",
+    "line": 30,
+    "token": "28",
+    "receipt_ref": "adversarial_curve_v3_result.json:n_layers"
+   },
+   {
+    "id": "I0133",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+    "line": 68,
+    "token": "0",
+    "receipt_ref": "e3dprime_result.json:seeds[0]"
+   },
+   {
+    "id": "I0080",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 29,
+    "token": "0.0909",
+    "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.paired_gain"
+   },
+   {
+    "id": "I0016",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 35,
+    "token": "0.4848",
+    "receipt_ref": "b2_subspace_erasure_result.json:points[0].naive_dom6_auroc"
+   },
+   {
+    "id": "I0093",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 69,
+    "token": "23",
+    "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+   },
+   {
+    "id": "I0113",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 33,
+    "token": "30",
+    "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+   },
+   {
+    "id": "I0025",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "receipt_ref": "attack_sentiment_result.json:seeds[1]"
+   },
+   {
+    "id": "I0020",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+    "line": 88,
+    "token": "1.0",
+    "receipt_ref": "b2_adaptive_erasure_result.json:attack_subsample_indices[1]"
+   },
+   {
+    "id": "I0081",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_offmanifold_2026_06_13.md",
+    "line": 17,
+    "token": "1.0",
+    "receipt_ref": "mount_offmanifold_result.json:offmanifold_detect_perturbed"
+   },
+   {
+    "id": "I0058",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+    "line": 45,
+    "token": "1.6694",
+    "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.null_output_spread"
+   },
+   {
+    "id": "I0021",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_frontier_recovery_2026_07_27.md",
+    "line": 17,
+    "token": "840000",
+    "receipt_ref": "frontier_recovery_result.json:seed"
+   },
+   {
+    "id": "I0123",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+    "line": 29,
+    "token": "48.8",
+    "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_within_25pct"
+   },
+   {
+    "id": "I0099",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 12,
+    "token": "101",
+    "receipt_ref": "frontier_freetext_v9_result.json:per_item[101].i"
+   },
+   {
+    "id": "I0030",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_h1a_human_single_clique_2026_08_06.md",
+    "line": 20,
+    "token": "907",
+    "receipt_ref": "h1a_result.json:n_shared_images"
+   },
+   {
+    "id": "I0014",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.694",
+    "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.rand_auroc"
+   },
+   {
+    "id": "I0024",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0188",
+    "receipt_ref": "verdict.json:H2.primary.ci_hi"
+   },
+   {
+    "id": "I0018",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_conscience_loop_2026_07_24.md",
+    "line": 50,
+    "token": "0.9545",
+    "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.PASSED.styxx_acc"
+   },
+   {
+    "id": "I0142",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_selective_confirm_2026_07_24.md",
+    "line": 46,
+    "token": "0.4804804804804805",
+    "receipt_ref": "selective_confirm_result.json:loop.informativeness_gap"
+   },
+   {
+    "id": "I0064",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "DATASHEET_conscience_2026_07_24.md",
+    "line": 28,
+    "token": "0.1746031746031746",
+    "receipt_ref": "selective_confirm_result.json:selective_at_matched_coverage.bare.accuracy"
+   },
+   {
+    "id": "I0129",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 94,
+    "token": "0.2151",
+    "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
+   },
+   {
+    "id": "I0031",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 27,
+    "token": "30",
+    "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+   },
+   {
+    "id": "I0149",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 43,
+    "token": "0.7299",
+    "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+   },
+   {
+    "id": "I0072",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+    "line": 35,
+    "token": "0.861",
+    "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
+   },
+   {
+    "id": "I0070",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 32,
+    "token": "0.0026",
+    "receipt_ref": "verdict.json:H2.primary.dAUC"
+   },
+   {
+    "id": "I0088",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+    "line": 32,
+    "token": "0.3742",
+    "receipt_ref": "e1_result.json:c5_strongest_pair_r"
+   },
+   {
+    "id": "I0106",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 105,
+    "token": "0",
+    "receipt_ref": "attack_sentiment_wholestack_result.json:seeds[0]"
+   },
+   {
+    "id": "I0039",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_external_corpus_2026_08_27.md",
+    "line": 85,
+    "token": "0.0274",
+    "receipt_ref": "oath_external_corpus.json:per_arm[0].accusation_share"
+   },
+   {
+    "id": "I0043",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_gavagai_v0_2026_06_10.md",
+    "line": 25,
+    "token": "0.344",
+    "receipt_ref": "gavagai_v0_result.json:pairs[3].cat_normeq"
+   },
+   {
+    "id": "I0118",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 15,
+    "token": "0.4305",
+    "receipt_ref": "mount_ensemble_result.json:cos_member_mean_avg"
+   },
+   {
+    "id": "I0005",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 90,
+    "token": "5",
+    "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+   },
+   {
+    "id": "I0062",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 19,
+    "token": "0.737",
+    "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.human"
+   },
+   {
+    "id": "I0017",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "CAPSTONE_universal_mind_2026_06_10.md",
+    "line": 95,
+    "token": "684",
+    "receipt_ref": "oath_corpus_attestation.json:claim_totals.UNGROUNDED"
+   },
+   {
+    "id": "I0136",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_portable_values_refusal_2026_06_11.md",
+    "line": 44,
+    "token": "0.001",
+    "receipt_ref": "portable_values_refusal_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.p_value"
+   },
+   {
+    "id": "I0001",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 26,
+    "token": "0.867",
+    "receipt_ref": "buried_judge_result.json:cells.0.22.summary.void_rate"
+   },
+   {
+    "id": "I0075",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_stage2_EVADABLE_2026_07_04.md",
+    "line": 25,
+    "token": "0.57",
+    "receipt_ref": "attack_sweep_result.json:points[0].knowledge_acc"
+   },
+   {
+    "id": "I0074",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+    "line": 34,
+    "token": "0.892",
+    "receipt_ref": "attack_sentiment_result.json:points[1].private_relock_auroc"
+   },
+   {
+    "id": "I0013",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+    "line": 27,
+    "token": "0.50",
+    "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG1_FLOOR"
+   },
+   {
+    "id": "I0145",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "line": 40,
+    "token": "0.6166",
+    "receipt_ref": "b7_erasure_3b_result.json:points[1].naive_dom6_auroc"
+   },
+   {
+    "id": "I0097",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 28,
+    "token": "0.9133",
+    "receipt_ref": "b42_result.json:grid.k8_s1001.bridge"
+   },
+   {
+    "id": "I0057",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_attack_sentiment_r64_2026_07_09.md",
+    "line": 24,
+    "token": "1",
+    "receipt_ref": "attack_sentiment_wholestack_result_r64.json:seeds[1]"
+   },
+   {
+    "id": "I0011",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+    "line": 85,
+    "token": "4",
+    "receipt_ref": "mount_cot_ablation_result.json:edges.instr_reason_C3_C4.effect"
+   },
+   {
+    "id": "I0032",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 16,
+    "token": "0.3211111111111111",
+    "receipt_ref": "coupling_resolution_result.json:accuracy_pooled.UNREG"
+   },
+   {
+    "id": "I0104",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_calib_poison_law_2026_07_09.md",
+    "line": 35,
+    "token": "0.616",
+    "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+   },
+   {
+    "id": "I0071",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+    "line": 31,
+    "token": "0.92",
+    "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.plain_ood_auroc"
+   },
+   {
+    "id": "I0130",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b39_whitening_2026_08_04.md",
+    "line": 14,
+    "token": "0.0434",
+    "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__qwen_1p5b"
+   },
+   {
+    "id": "I0095",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 41,
+    "token": "0.2347",
+    "receipt_ref": "b35a_result.json:per_seed[2].llama_1b.seed_acc"
+   },
+   {
+    "id": "I0134",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_thirdframe_2026_07_29.md",
+    "line": 22,
+    "token": "0.7038961038961038",
+    "receipt_ref": "thirdframe_result.json:cells.KP.frames.T3.specificity"
+   },
+   {
+    "id": "I0019",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 39,
+    "token": "0.435",
+    "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.random_map_auroc"
+   },
+   {
+    "id": "I0141",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_dogfood_2026_05_25.md",
+    "line": 43,
+    "token": "0.78",
+    "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[5].overconfidence"
+   },
+   {
+    "id": "I0116",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 35,
+    "token": "0.3321",
+    "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[7].geometry.citizenship_xfam_partial_lex"
+   },
+   {
+    "id": "I0046",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_selective_escalation_2026_07_24.md",
+    "line": 76,
+    "token": "50",
+    "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+   },
+   {
+    "id": "I0054",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_frontier_knowsay_2026_07_27.md",
+    "line": 8,
+    "token": "0",
+    "receipt_ref": "frontier_knowsay_result.json:per_item[0].i"
+   },
+   {
+    "id": "I0103",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 35,
+    "token": "3.0",
+    "receipt_ref": "honesty_parity_confirm_llama_result.json:n_fails_cells"
+   },
+   {
+    "id": "I0125",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v04_recall_decimalguard_2026_07_04.md",
+    "line": 21,
+    "token": "26",
+    "receipt_ref": "cycle25_decimalguard_battery_result.json:false_verify"
+   },
+   {
+    "id": "I0027",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_fpr_live_2026_06_12.md",
+    "line": 47,
+    "token": "0.1799",
+    "receipt_ref": "mount_fpr_live_result.json:scale"
+   },
+   {
+    "id": "I0119",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_gavagai_scale_2026_06_10.md",
+    "line": 15,
+    "token": "1",
+    "receipt_ref": "gavagai_scale_result.json:pairs_improving_192_vs_96"
+   },
+   {
+    "id": "I0049",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+    "line": 35,
+    "token": "-0.0517",
+    "receipt_ref": "verdict.json:H3.dAUC_ood"
+   },
+   {
+    "id": "I0144",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+    "line": 26,
+    "token": "1073",
+    "receipt_ref": "oath_v10_column_census.json:repo_wide.documents"
+   },
+   {
+    "id": "I0100",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_coupling_resolution_2026_07_28.md",
+    "line": 23,
+    "token": "0.033333333333333326",
+    "receipt_ref": "coupling_resolution_result.json:kp_residual_pooled"
+   },
+   {
+    "id": "I0015",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 83,
+    "token": "0.25",
+    "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[15].mutant"
+   },
+   {
+    "id": "I0108",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_scale3b_2026_07_29.md",
+    "line": 13,
+    "token": "55",
+    "receipt_ref": "scale3b_result.json:cells.control"
+   },
+   {
+    "id": "I0048",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_portable_conscience_ood_2026_06_11.md",
+    "line": 27,
+    "token": "0.929",
+    "receipt_ref": "portable_conscience_ood_v2_result.json:gemma_self_ood_auroc"
+   },
+   {
+    "id": "I0041",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 49,
+    "token": "30",
+    "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+   },
+   {
+    "id": "I0124",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 59,
+    "token": "7",
+    "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.aqua_mc.n_correct"
+   },
+   {
+    "id": "I0068",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 24,
+    "token": "0.049",
+    "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+   },
+   {
+    "id": "I0111",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 25,
+    "token": "0.2341",
+    "receipt_ref": "honesty_parity_confirm_result.json:points[2].baseline_gap"
+   },
+   {
+    "id": "I0045",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+    "line": 1,
+    "token": "23",
+    "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.caught"
+   },
+   {
+    "id": "I0131",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_promptopinion_2026_05_24.md",
+    "line": 12,
+    "token": "0.00",
+    "receipt_ref": "results_promptopinion.json:C4.restrained_yes_FPR"
+   },
+   {
+    "id": "I0090",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+    "line": 18,
+    "token": "0.500",
+    "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+   },
+   {
+    "id": "I0008",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_portable_conscience_v0_2026_06_10.md",
+    "line": 38,
+    "token": "0.688",
+    "receipt_ref": "portable_conscience_result.json:random_map_control_paired_acc"
+   },
+   {
+    "id": "I0105",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 53,
+    "token": "0.81",
+    "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.convergence"
+   },
+   {
+    "id": "I0006",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "BLOCKED_source_independence_2026_07_24.md",
+    "line": 29,
+    "token": "0.175",
+    "receipt_ref": "source_independence_result.json:model_tier2.final_coverage"
+   },
+   {
+    "id": "I0067",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 124,
+    "token": "0.9149",
+    "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
+   },
+   {
+    "id": "I0050",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "3",
+    "receipt_ref": "oath_v12_battery_result.json:gates_scored[1].roster_split_expected.UNGROUNDED"
+   },
+   {
+    "id": "I0107",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
+    "line": 44,
+    "token": "2",
+    "receipt_ref": "oath_v11_baseline_ledger.json:counts.papers/agent-conscience/FINDING_scale_test_2026_07_26.md.ABSTAIN"
+   },
+   {
+    "id": "I0120",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_E2_strong_attacker_2026_07_07.md",
+    "line": 18,
+    "token": "0.786",
+    "receipt_ref": "e2_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_frozen_stack_read"
+   },
+   {
+    "id": "I0059",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+    "line": 45,
+    "token": "0.65",
+    "receipt_ref": "entanglement_resolution_result.json:off_ceiling"
+   },
+   {
+    "id": "I0063",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 64,
+    "token": "8",
+    "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].erased_rank"
+   },
+   {
+    "id": "I0047",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+    "line": 15,
+    "token": "0.818",
+    "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
+   },
+   {
+    "id": "I0101",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_cot_inward_2026_07_30.md",
+    "line": 31,
+    "token": "46",
+    "receipt_ref": "frontier_freetext_v9_result.json:strata.caved"
+   },
+   {
+    "id": "I0121",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+    "line": 31,
+    "token": "0.838",
+    "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
+   },
+   {
+    "id": "I0096",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 28,
+    "token": "0.0553",
+    "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+   },
+   {
+    "id": "I0135",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 62,
+    "token": "5",
+    "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+   },
+   {
+    "id": "I0140",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 56,
+    "token": "0.9745",
+    "receipt_ref": "b41_result.json:a1_bridge_disc"
+   },
+   {
+    "id": "I0028",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_e1_not_estimable_2026_08_08.md",
+    "line": 33,
+    "token": "0.50",
+    "receipt_ref": "e1_result.json:grid.rho_0.5.rho"
+   },
+   {
+    "id": "I0087",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b31v2_door_opens_2026_08_01.md",
+    "line": 12,
+    "token": "0.3429",
+    "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
+   },
+   {
+    "id": "I0092",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_tiered_channel_2026_07_24.md",
+    "line": 24,
+    "token": "7",
+    "receipt_ref": "tiered_channel_result.json:rescue.n_rescued"
+   },
+   {
+    "id": "I0044",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "PAPER_knowsay_gap_2026_07_27.md",
+    "line": 116,
+    "token": "0.7394",
+    "receipt_ref": "belief_asymptote_result.json:auroc_by_n.80"
+   },
+   {
+    "id": "I0012",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b48_invalid_null_bar_2026_08_06.md",
+    "line": 29,
+    "token": "45",
+    "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
+   },
+   {
+    "id": "I0004",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 25,
+    "token": "4.0",
+    "receipt_ref": "b2_subspace_erasure_result.json:n_survives_cells"
+   },
+   {
+    "id": "I0038",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+    "line": 24,
+    "token": "0.0",
+    "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.bare_small"
+   },
+   {
+    "id": "I0053",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b40_island_named_2026_08_05.md",
+    "line": 59,
+    "token": "343",
+    "receipt_ref": "b40_result.json:seed"
+   },
+   {
+    "id": "I0084",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_axis_independence_2026_06_11.md",
+    "line": 32,
+    "token": "-0.2132",
+    "receipt_ref": "axis_independence_result.json:cosines_at_common_layer.truth_refusal"
+   },
+   {
+    "id": "I0000",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "PREDICTION_h1_human_islands_2026_08_06.md",
+    "line": 30,
+    "token": "0.9745",
+    "receipt_ref": "b41_result.json:a1_bridge_disc"
+   },
+   {
+    "id": "I0077",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 123,
+    "token": "0.9965",
+    "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+   },
+   {
+    "id": "I0132",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 43,
+    "token": "0.7346",
+    "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].private13"
+   },
+   {
+    "id": "I0036",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 34,
+    "token": "0.7235",
+    "receipt_ref": "honesty_parity_confirm_llama_result.json:points[4].naive_matched13_auroc"
+   },
+   {
+    "id": "I0110",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 156,
+    "token": "+0.002",
+    "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+   },
+   {
+    "id": "I0094",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 43,
+    "token": "0.5281",
+    "receipt_ref": "b42_result.json:grid.k5_s1003.bridge"
+   },
+   {
+    "id": "I0040",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 52,
+    "token": "0.16",
+    "receipt_ref": "cycle38_v05_p4_recert.json:points[1].token"
+   },
+   {
+    "id": "I0126",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_self_verification_2026_07_25.md",
+    "line": 6,
+    "token": "228",
+    "receipt_ref": "self_verification_result.json:n_scored"
+   },
+   {
+    "id": "I0002",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "ATLAS_OF_MINDS_v0.md",
+    "line": 37,
+    "token": "0.1972",
+    "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[1].geometry.citizenship_xfam_partial_lex"
+   },
+   {
+    "id": "I0082",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+    "line": 40,
+    "token": "0.0104",
+    "receipt_ref": "b50_result.json:chance"
+   },
+   {
+    "id": "I0066",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 48,
+    "token": "0.7521",
+    "receipt_ref": "b2_coupling_dose_result.json:curves.0.fixed[3].private13"
+   },
+   {
+    "id": "I0137",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 55,
+    "token": "5",
+    "receipt_ref": "b35a_constants_addendum.json:n_seeds"
+   },
+   {
+    "id": "I0109",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 13,
+    "token": "0.30",
+    "receipt_ref": "buried_judge_result.json:design.alpha_inform"
+   },
+   {
+    "id": "I0079",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+    "line": 19,
+    "token": "0.7092",
+    "receipt_ref": "b38_result.json:curves.gemma[1].disc"
+   },
+   {
+    "id": "I0010",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_cot_inward_powered_2026_07_30.md",
+    "line": 75,
+    "token": "0.08333333333333333",
+    "receipt_ref": "frontier_freetext_v9_result.json:rescue_rate_on_wrong_first"
+   },
+   {
+    "id": "I0128",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_live_catch_2026_06_12.md",
+    "line": 77,
+    "token": "13",
+    "receipt_ref": "mount_live_catch_result.json:caved"
+   },
+   {
+    "id": "I0148",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_establish_b38_2026_06_14.md",
+    "line": 38,
+    "token": "30",
+    "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+   },
+   {
+    "id": "I0076",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+    "line": 19,
+    "token": "0.1429",
+    "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.read_top1"
+   },
+   {
+    "id": "I0056",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 42,
+    "token": "20",
+    "receipt_ref": "mount_freeform_early_warning_result.json:baseline.n_caves"
+   },
+   {
+    "id": "I0035",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 35,
+    "token": "0.433",
+    "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C2_NEUT_IMM"
+   },
+   {
+    "id": "I0112",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 29,
+    "token": "0.0026",
+    "receipt_ref": "b42_result.json:grid.k12_s343.null"
+   },
+   {
+    "id": "I0060",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 35,
+    "token": "51",
+    "receipt_ref": "mount_within_result.json:truecorrect_counts.C4_NEUT_COT"
+   },
+   {
+    "id": "I0061",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 9,
+    "token": "2",
+    "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+   },
+   {
+    "id": "I0026",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 39,
+    "token": "37",
+    "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+   },
+   {
+    "id": "I0073",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_detection_locus_gpt_2026_05_30.md",
+    "line": 30,
+    "token": "0.087",
+    "receipt_ref": "detection_locus_gpt_result.json:means.correct_clean_entropy"
+   },
+   {
+    "id": "I0003",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+    "line": 27,
+    "token": "0.682",
+    "receipt_ref": "e3tprime_result.json:points[3].mimic_refit_auroc"
+   },
+   {
+    "id": "I0052",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "SYNTHESIS_frame_locality_2026_07_28.md",
+    "line": 33,
+    "token": "0.2742",
+    "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
+   },
+   {
+    "id": "I0051",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 26,
+    "token": "0.0909",
+    "receipt_ref": "b2_coupling_dose_result.json:per_seed.0.knowledge_drop"
+   },
+   {
+    "id": "I0065",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "line": 52,
+    "token": "26",
+    "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify"
+   },
+   {
+    "id": "I0147",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "RESULT_ai_brain_2026_06_03.md",
+    "line": 9,
+    "token": "0.002",
+    "receipt_ref": "ai_brain_result.json:per_model.Qwen-1.5B.brain"
+   },
+   {
+    "id": "I0143",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "VERIFIED",
+    "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "line": 51,
+    "token": "1.000",
+    "receipt_ref": "behavioral_sycophancy_result.json:auc_grounded"
+   }
+  ],
+  "ABSTAIN": [
+   {
+    "id": "I0201",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 33,
+    "token": "2",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0176",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b35a_seed_stable_2026_08_03.md",
+    "line": 11,
+    "token": "70",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0177",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_prior_art_survey_2026_08_26.md",
+    "line": 130,
+    "token": "181",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0153",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 8,
+    "token": "60",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0220",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 13,
+    "token": "0.0516",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0215",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 41,
+    "token": "60",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0216",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_p1_third_quarantine_2026_08_08.md",
+    "line": 28,
+    "token": "1.0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0202",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_frontier_incontext_oof_2026_07_30.md",
+    "line": 78,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0178",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_geometry_integrity_2026_06_03.md",
+    "line": 47,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0166",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+    "line": 30,
+    "token": "6",
+    "receipt_ref": "row_ordinal_label"
+   },
+   {
+    "id": "I0196",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+    "line": 52,
+    "token": "10",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0185",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 51,
+    "token": "64",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0187",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+    "line": 37,
+    "token": "36",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0224",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "PAPER_knowsay_gap_2026_07_27.md",
+    "line": 108,
+    "token": "7",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0154",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_v05_precision_2026_07_13.md",
+    "line": 63,
+    "token": "150",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0168",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 41,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0169",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 89,
+    "token": "20",
+    "receipt_ref": "v05-notation"
+   },
+   {
+    "id": "I0151",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
+    "line": 90,
+    "token": "0.682",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0195",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
+    "line": 41,
+    "token": "16",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0188",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b38_cliff_invalid_2026_08_04.md",
+    "line": 69,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0152",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 61,
+    "token": "90",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0217",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_conscience_loop_2026_07_24.md",
+    "line": 55,
+    "token": "137",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0186",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+    "line": 9,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0208",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+    "line": 19,
+    "token": "61",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0191",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_portable_conscience_v2_2026_06_10.md",
+    "line": 18,
+    "token": "0.65",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0167",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_adjudicated_loop_2026_07_24.md",
+    "line": 83,
+    "token": "23",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0190",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+    "line": 97,
+    "token": "0.60",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0218",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_anatomy_v2_2026_06_10.md",
+    "line": 40,
+    "token": "0.0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0157",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 49,
+    "token": "0.3443",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0223",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
+    "line": 10,
+    "token": "32",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0179",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_scale_confirm_2026_07_24.md",
+    "line": 22,
+    "token": "66",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0213",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mapped_whitening_2026_06_12.md",
+    "line": 30,
+    "token": "0.2",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0189",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 67,
+    "token": "0.80",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0155",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_promptopinion_2026_05_24.md",
+    "line": 8,
+    "token": "120",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0159",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_coupling_battery_2026_07_28.md",
+    "line": 14,
+    "token": "74",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0174",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_combined_signal_2026_07_26.md",
+    "line": 17,
+    "token": "0.7717",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0193",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_ai_human_2026_06_03.md",
+    "line": 35,
+    "token": "13",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0180",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_ensemble_2026_06_13.md",
+    "line": 38,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0172",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 12,
+    "token": "20",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0200",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_protocol_metric_identity_2026_08_07.md",
+    "line": 49,
+    "token": "28",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0214",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+    "line": 26,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0150",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_v04_float_binding_2026_07_03.md",
+    "line": 22,
+    "token": "0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0175",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_kp_replication_2026_07_28.md",
+    "line": 56,
+    "token": "16",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0219",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 43,
+    "token": "5",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0199",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_dogfood_2026_05_25.md",
+    "line": 13,
+    "token": "8",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0162",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_scale_confirm_2026_07_24.md",
+    "line": 62,
+    "token": "66",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0158",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 79,
+    "token": "0.0034",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0165",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_axis_independence_2026_06_11.md",
+    "line": 43,
+    "token": "0.65",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0207",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+    "line": 54,
+    "token": "92",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0183",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+    "line": 63,
+    "token": "0.007812",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0203",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_honesty_parity_control_2026_07_11.md",
+    "line": 80,
+    "token": "0.02",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0164",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_council_grounding_2026_05_28.md",
+    "line": 30,
+    "token": "36",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0211",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 8,
+    "token": "30",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0156",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 155,
+    "token": "21",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0160",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_content_wall_2026_06_12.md",
+    "line": 27,
+    "token": "3",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0221",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 101,
+    "token": "0",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0181",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+    "line": 60,
+    "token": "1.0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0184",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_honesty_parity_confirm_2026_07_11.md",
+    "line": 40,
+    "token": "66",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0198",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_ai_brain_2026_06_03.md",
+    "line": 28,
+    "token": "56",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0194",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_early_warning_b34_2026_06_13.md",
+    "line": 21,
+    "token": "60",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0192",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+    "line": 196,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0206",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_oath_v10_token_column_2026_08_23.md",
+    "line": 173,
+    "token": "47",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0212",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_truth_danger_basis_2026_06_12.md",
+    "line": 78,
+    "token": "48",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0170",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_margin_parity_control_2026_07_10.md",
+    "line": 32,
+    "token": "0.70",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0209",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_buried_judge_2026_07_24.md",
+    "line": 49,
+    "token": "0.354",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0173",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+    "line": 10,
+    "token": "110",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0161",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+    "line": 77,
+    "token": "0.06",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0197",
+    "verdict": "CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_llm_breadth_2026_06_03.md",
+    "line": 32,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0204",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_coupling_battery_2026_07_28.md",
+    "line": 22,
+    "token": "0.0",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0171",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "PROSPECTUS_knowsay_2026_07_27.md",
+    "line": 66,
+    "token": "74",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0205",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_b42_dose_curve_2026_08_05.md",
+    "line": 46,
+    "token": "40",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0210",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 28,
+    "token": "2",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0163",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_within_b39_2026_06_14.md",
+    "line": 8,
+    "token": "30",
+    "receipt_ref": "spec-or-historical"
+   },
+   {
+    "id": "I0222",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+    "line": 60,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0182",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "ABSTAIN",
+    "repo": "FINDING_mount_freeform_b35_2026_06_13.md",
+    "line": 24,
+    "token": "2",
+    "receipt_ref": "spec-or-historical"
+   }
+  ],
+  "UNGROUNDED": [
+   {
+    "id": "I0228",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0231",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 103,
+    "token": "5",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0233",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0234",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0226",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "1",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0232",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 103,
+    "token": "3",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0235",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "SYNTHESIS_mention_and_use_2026_08_26.md",
+    "line": 29,
+    "token": "2",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0230",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 78,
+    "token": "300,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0225",
+    "verdict": "CLAIM",
+    "votes": [
+     "CLAIM",
+     "CLAIM",
+     "CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "line": 13,
+    "token": "4",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0229",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "RECON_oath_external_reach_2026_08_26.md",
+    "line": 78,
+    "token": "100,000",
+    "receipt_ref": null
+   },
+   {
+    "id": "I0227",
+    "verdict": "NOT_A_CLAIM",
+    "votes": [
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM",
+     "NOT_A_CLAIM"
+    ],
+    "status": "UNGROUNDED",
+    "repo": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+    "line": 23,
+    "token": "2",
+    "receipt_ref": null
+   }
+  ]
+ }
+}

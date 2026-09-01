@@ -1,0 +1,310 @@
+{
+ "census": "can a STRUCTURAL predicate separate missed claims from non-claims?",
+ "status": "RECON. Licenses no clause, no bar, no repair.",
+ "follows": "RECON_obligation_repair_is_not_lexical_2026_08_27.md",
+ "candidates_were_written_before_the_data_was_consulted": true,
+ "population": {
+  "adjudicated_abstentions": 225,
+  "addressable": 212,
+  "claims_MISSED": 85,
+  "correctly_abstained": 127
+ },
+ "null_rule": {
+  "rule": "obligate every number",
+  "misses_caught": 85,
+  "non_claims_obligated": 127,
+  "recall": 1.0,
+  "precision": 0.4009
+ },
+ "in_sample": {
+  "STRUCT_precision_2dp": {
+   "misses_caught": 32,
+   "non_claims_obligated": 9,
+   "recall": 0.3765,
+   "precision": 0.7805
+  },
+  "STRUCT_markdown_emphasis": {
+   "misses_caught": 4,
+   "non_claims_obligated": 0,
+   "recall": 0.0471,
+   "precision": 1.0
+  },
+  "STRUCT_table_not_first_cell": {
+   "misses_caught": 46,
+   "non_claims_obligated": 22,
+   "recall": 0.5412,
+   "precision": 0.6765
+  },
+  "STRUCT_outside_code_span": {
+   "misses_caught": 84,
+   "non_claims_obligated": 111,
+   "recall": 0.9882,
+   "precision": 0.4308
+  },
+  "STRUCT_precision_and_outside_code": {
+   "misses_caught": 32,
+   "non_claims_obligated": 8,
+   "recall": 0.3765,
+   "precision": 0.8
+  },
+  "STRUCT_precision_or_emphasis": {
+   "misses_caught": 32,
+   "non_claims_obligated": 9,
+   "recall": 0.3765,
+   "precision": 0.7805
+  },
+  "LEXICAL_reporting_verb": {
+   "misses_caught": 2,
+   "non_claims_obligated": 3,
+   "recall": 0.0235,
+   "precision": 0.4
+  },
+  "LEXICAL_comparative": {
+   "misses_caught": 5,
+   "non_claims_obligated": 4,
+   "recall": 0.0588,
+   "precision": 0.5556
+  }
+ },
+ "by_fold": {
+  "fold_0": {
+   "n_claims": 21,
+   "n_nonclaims": 51,
+   "rules": {
+    "STRUCT_precision_2dp": {
+     "misses_caught": 6,
+     "non_claims_obligated": 5,
+     "recall": 0.2857,
+     "precision": 0.5455
+    },
+    "STRUCT_markdown_emphasis": {
+     "misses_caught": 0,
+     "non_claims_obligated": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "STRUCT_table_not_first_cell": {
+     "misses_caught": 6,
+     "non_claims_obligated": 2,
+     "recall": 0.2857,
+     "precision": 0.75
+    },
+    "STRUCT_outside_code_span": {
+     "misses_caught": 21,
+     "non_claims_obligated": 41,
+     "recall": 1.0,
+     "precision": 0.3387
+    },
+    "STRUCT_precision_and_outside_code": {
+     "misses_caught": 6,
+     "non_claims_obligated": 4,
+     "recall": 0.2857,
+     "precision": 0.6
+    },
+    "STRUCT_precision_or_emphasis": {
+     "misses_caught": 6,
+     "non_claims_obligated": 5,
+     "recall": 0.2857,
+     "precision": 0.5455
+    },
+    "LEXICAL_reporting_verb": {
+     "misses_caught": 0,
+     "non_claims_obligated": 3,
+     "recall": 0.0,
+     "precision": 0.0
+    },
+    "LEXICAL_comparative": {
+     "misses_caught": 2,
+     "non_claims_obligated": 2,
+     "recall": 0.0952,
+     "precision": 0.5
+    }
+   }
+  },
+  "fold_1": {
+   "n_claims": 64,
+   "n_nonclaims": 76,
+   "rules": {
+    "STRUCT_precision_2dp": {
+     "misses_caught": 26,
+     "non_claims_obligated": 4,
+     "recall": 0.4062,
+     "precision": 0.8667
+    },
+    "STRUCT_markdown_emphasis": {
+     "misses_caught": 4,
+     "non_claims_obligated": 0,
+     "recall": 0.0625,
+     "precision": 1.0
+    },
+    "STRUCT_table_not_first_cell": {
+     "misses_caught": 40,
+     "non_claims_obligated": 20,
+     "recall": 0.625,
+     "precision": 0.6667
+    },
+    "STRUCT_outside_code_span": {
+     "misses_caught": 63,
+     "non_claims_obligated": 70,
+     "recall": 0.9844,
+     "precision": 0.4737
+    },
+    "STRUCT_precision_and_outside_code": {
+     "misses_caught": 26,
+     "non_claims_obligated": 4,
+     "recall": 0.4062,
+     "precision": 0.8667
+    },
+    "STRUCT_precision_or_emphasis": {
+     "misses_caught": 26,
+     "non_claims_obligated": 4,
+     "recall": 0.4062,
+     "precision": 0.8667
+    },
+    "LEXICAL_reporting_verb": {
+     "misses_caught": 2,
+     "non_claims_obligated": 0,
+     "recall": 0.0312,
+     "precision": 1.0
+    },
+    "LEXICAL_comparative": {
+     "misses_caught": 3,
+     "non_claims_obligated": 2,
+     "recall": 0.0469,
+     "precision": 0.6
+    }
+   }
+  }
+ },
+ "discrimination": {
+  "columns": {
+   "misses_caught": {
+    "verdict": "NULL_TIES_BEST",
+    "direction": "higher_is_better",
+    "control": 85,
+    "beats_control": [],
+    "distinct_values": 7,
+    "spread": [
+     2,
+     85
+    ]
+   },
+   "non_claims_obligated": {
+    "verdict": "SEPARATES",
+    "direction": "lower_is_better",
+    "control": 127,
+    "beats_control": [
+     "LEXICAL_comparative",
+     "LEXICAL_reporting_verb",
+     "STRUCT_markdown_emphasis",
+     "STRUCT_outside_code_span",
+     "STRUCT_precision_2dp",
+     "STRUCT_precision_and_outside_code",
+     "STRUCT_precision_or_emphasis",
+     "STRUCT_table_not_first_cell"
+    ],
+    "distinct_values": 8,
+    "spread": [
+     0,
+     127
+    ]
+   }
+  },
+  "accusations": [],
+  "deciding": [
+   "non_claims_obligated"
+  ],
+  "share_of_control": {
+   "STRUCT_precision_2dp": {
+    "misses_caught": 0.3765,
+    "non_claims_obligated": 0.0709
+   },
+   "STRUCT_markdown_emphasis": {
+    "misses_caught": 0.0471,
+    "non_claims_obligated": 0.0
+   },
+   "STRUCT_table_not_first_cell": {
+    "misses_caught": 0.5412,
+    "non_claims_obligated": 0.1732
+   },
+   "STRUCT_outside_code_span": {
+    "misses_caught": 0.9882,
+    "non_claims_obligated": 0.874
+   },
+   "STRUCT_precision_and_outside_code": {
+    "misses_caught": 0.3765,
+    "non_claims_obligated": 0.063
+   },
+   "STRUCT_precision_or_emphasis": {
+    "misses_caught": 0.3765,
+    "non_claims_obligated": 0.0709
+   },
+   "LEXICAL_reporting_verb": {
+    "misses_caught": 0.0235,
+    "non_claims_obligated": 0.0236
+   },
+   "LEXICAL_comparative": {
+    "misses_caught": 0.0588,
+    "non_claims_obligated": 0.0315
+   }
+  },
+  "share_of_control_note": "Per candidate, its score divided by the null rule's on each column. A candidate that beats the control on a cost column while retaining almost none of its benefit is a rule that does nothing cheaply. Read these before believing a cost-column pass.",
+  "holds": true
+ },
+ "scale_projection": {
+  "abstained_tokens_corpus_wide": 5909,
+  "per_rule": {
+   "STRUCT_precision_2dp": {
+    "fires_on_abstained_corpus_wide": 1167,
+    "share_of_abstained_corpus": 0.1975,
+    "projected_claims_recovered": 911,
+    "projected_non_claims_obligated": 256
+   },
+   "STRUCT_markdown_emphasis": {
+    "fires_on_abstained_corpus_wide": 101,
+    "share_of_abstained_corpus": 0.0171,
+    "projected_claims_recovered": 101,
+    "projected_non_claims_obligated": 0
+   },
+   "STRUCT_table_not_first_cell": {
+    "fires_on_abstained_corpus_wide": 1727,
+    "share_of_abstained_corpus": 0.2923,
+    "projected_claims_recovered": 1168,
+    "projected_non_claims_obligated": 559
+   },
+   "STRUCT_outside_code_span": {
+    "fires_on_abstained_corpus_wide": 5500,
+    "share_of_abstained_corpus": 0.9308,
+    "projected_claims_recovered": 2369,
+    "projected_non_claims_obligated": 3131
+   },
+   "STRUCT_precision_and_outside_code": {
+    "fires_on_abstained_corpus_wide": 1120,
+    "share_of_abstained_corpus": 0.1895,
+    "projected_claims_recovered": 896,
+    "projected_non_claims_obligated": 224
+   },
+   "STRUCT_precision_or_emphasis": {
+    "fires_on_abstained_corpus_wide": 1198,
+    "share_of_abstained_corpus": 0.2027,
+    "projected_claims_recovered": 935,
+    "projected_non_claims_obligated": 263
+   },
+   "LEXICAL_reporting_verb": {
+    "fires_on_abstained_corpus_wide": 94,
+    "share_of_abstained_corpus": 0.0159,
+    "projected_claims_recovered": 38,
+    "projected_non_claims_obligated": 56
+   },
+   "LEXICAL_comparative": {
+    "fires_on_abstained_corpus_wide": 181,
+    "share_of_abstained_corpus": 0.0306,
+    "projected_claims_recovered": 101,
+    "projected_non_claims_obligated": 80
+   }
+  },
+  "caveat": "Projected counts multiply a corpus-wide fire count by a precision measured on 212 adjudicated tokens. They are an order-of-magnitude estimate of what a rule would DO, not a measurement, and the precision's fold-to-fold swing is the honest error bar on them."
+ },
+ "how_to_read_this": "These rules carry no fitted parameters, so unlike a word list they cannot overfit a training half. The two folds are reported to show stability across documents, not as a train/test split. What would still sink a rule is a recall or precision that swings between folds, or a precision at or below the null rule's, which is the base rate of claims among abstained tokens.",
+ "what_this_does_not_show": "Whether any of these rules is implementable inside certify.py without destroying existing verifications. This census scores them only against adjudicated abstentions -- tokens the verifier already declined. It says nothing about what they would do to the tokens it currently obligates, which is where every previous widening died."
+}

@@ -1,0 +1,776 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "PREREG_oath_v12_formula_constant_2026_08_26.md",
+  "document_sha256": "17f5b36d21692df377e963571fc922cee864887c8373c60e8cdc749cd2ce3070",
+  "receipts_sha256": {
+    "oath_mention_use_census.json": "1a13eca73079af3af91bec810589902b18d98ecb9680ef5b16d738872d0da0ee"
+  },
+  "verifier_sha256": "aba199d7887bba356ec77c21db74062a371a18cdb7b3154d18224b681f507128",
+  "counts": {
+    "VERIFIED": 45,
+    "ABSTAIN": 16,
+    "UNGROUNDED": 3
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 23,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 50,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 76,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 86,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "1"
+    },
+    {
+      "line": 61,
+      "token": "90"
+    },
+    {
+      "line": 80,
+      "token": "100,000"
+    },
+    {
+      "line": 90,
+      "token": "100,000"
+    },
+    {
+      "line": 90,
+      "token": "300,000"
+    },
+    {
+      "line": 118,
+      "token": "1"
+    },
+    {
+      "line": 124,
+      "token": "0"
+    },
+    {
+      "line": 132,
+      "token": "0"
+    },
+    {
+      "line": 142,
+      "token": "0"
+    },
+    {
+      "line": 146,
+      "token": "0"
+    },
+    {
+      "line": 149,
+      "token": "11"
+    },
+    {
+      "line": 155,
+      "token": "21"
+    },
+    {
+      "line": 160,
+      "token": "11"
+    },
+    {
+      "line": 165,
+      "token": "0"
+    },
+    {
+      "line": 167,
+      "token": "0"
+    },
+    {
+      "line": 168,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "5,646",
+      "value": 5646.0,
+      "decimals": 0,
+      "context": "7,665-token certified frame (V 5,646 / A 2,011 / U 8). This prereg takes the ONE sliver of that",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.status_counts.VERIFIED"
+    },
+    {
+      "line": 11,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "7,665-token certified frame (V 5,646 / A 2,011 / U 8). This prereg takes the ONE sliver of that",
+      "col": 51,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.status_counts.UNGROUNDED"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(`RECON_oath_external_reach_2026_08_26.md`): the literal `1` in",
+      "col": 58,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 50,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 76,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "\\text{effective\\_lr} = \\text{lr} \\times \\left(1 \\pm \\frac{\\Delta \\sigma^2}{\\sigma^2}\\right)",
+      "col": 86,
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "It is not confined to strangers. In frame, 3 of the 8 standing accusations are digits inside a",
+      "col": 43,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.latex_on_line.accusations_reached"
+    },
+    {
+      "line": 30,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "It is not confined to strangers. In frame, 3 of the 8 standing accusations are digits inside a",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.status_counts.UNGROUNDED"
+    },
+    {
+      "line": 43,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "col": 29,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 43,
+      "token": "540",
+      "value": 540.0,
+      "decimals": 0,
+      "context": "| quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "col": 33,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.quoting_verb_on_line.VERIFIED"
+    },
+    {
+      "line": 43,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "| quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "col": 39,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.quoting_verb_on_line.of_which_coincident"
+    },
+    {
+      "line": 43,
+      "token": "501",
+      "value": 501.0,
+      "decimals": 0,
+      "context": "| quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "col": 44,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | quoting verb on the line | 0 | 540 | 39 | 501 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.quoting_verb_on_line.of_which_nominal"
+    },
+    {
+      "line": 44,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| inline code span | 4 | 46 | 15 | 31 |",
+      "col": 21,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | inline code span | 4 | 46 | 15 | 31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.inline_code.UNGROUNDED"
+    },
+    {
+      "line": 44,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "| inline code span | 4 | 46 | 15 | 31 |",
+      "col": 25,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | inline code span | 4 | 46 | 15 | 31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.inline_code.VERIFIED"
+    },
+    {
+      "line": 44,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| inline code span | 4 | 46 | 15 | 31 |",
+      "col": 30,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | inline code span | 4 | 46 | 15 | 31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.inline_code.of_which_coincident"
+    },
+    {
+      "line": 44,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| inline code span | 4 | 46 | 15 | 31 |",
+      "col": 35,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | inline code span | 4 | 46 | 15 | 31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.inline_code.of_which_nominal"
+    },
+    {
+      "line": 45,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| blockquote | 0 | 17 | 0 | 17 |",
+      "col": 15,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | blockquote | 0 | 17 | 0 | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 45,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| blockquote | 0 | 17 | 0 | 17 |",
+      "col": 19,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | blockquote | 0 | 17 | 0 | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.blockquote.VERIFIED"
+    },
+    {
+      "line": 45,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| blockquote | 0 | 17 | 0 | 17 |",
+      "col": 24,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | blockquote | 0 | 17 | 0 | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 45,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| blockquote | 0 | 17 | 0 | 17 |",
+      "col": 28,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | blockquote | 0 | 17 | 0 | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.blockquote.VERIFIED"
+    },
+    {
+      "line": 46,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| fenced code block | 0 | 1 | 0 | 1 |",
+      "col": 22,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | fenced code block | 0 | 1 | 0 | 1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| fenced code block | 0 | 1 | 0 | 1 |",
+      "col": 26,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | fenced code block | 0 | 1 | 0 | 1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.fenced_block.VERIFIED"
+    },
+    {
+      "line": 46,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| fenced code block | 0 | 1 | 0 | 1 |",
+      "col": 30,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | fenced code block | 0 | 1 | 0 | 1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| fenced code block | 0 | 1 | 0 | 1 |",
+      "col": 34,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | fenced code block | 0 | 1 | 0 | 1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.fenced_block.VERIFIED"
+    },
+    {
+      "line": 47,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "col": 33,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.ABSTAIN"
+    },
+    {
+      "line": 47,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "col": 41,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 47,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "col": 49,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 47,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "col": 57,
+      "binding_context": "| candidate | accusations reached | verifications destroyed | of those, coincident | of those, NOMINAL | | **LaTeX span on the line** | **3** | **8** | **8** | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.blockquote.of_which_coincident"
+    },
+    {
+      "line": 51,
+      "token": "501",
+      "value": 501.0,
+      "decimals": 0,
+      "context": "- **Quoting verb** \u2014 the broad-detector catastrophe again, in its purest form: 501 genuine",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.quoting_verb_on_line.of_which_nominal"
+    },
+    {
+      "line": 54,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "- **Inline code** \u2014 reaches the most accusations and destroys 31 genuine verifications doing it.",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.inline_code.of_which_nominal"
+    },
+    {
+      "line": 60,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "All 8 verifications it would silence are structurally coincident: three sworn to a `seed`, one to",
+      "col": 4,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 61,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "`per_item[90].i`, and five to `verification_roster[\u2026].token` \u2014 a token string inside a receipt.",
+      "col": 10,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 80,
+      "token": "100,000",
+      "value": 100000.0,
+      "decimals": 0,
+      "context": "and no percent marker. A formula does not contain `100,000`.",
+      "col": 54,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "otherwise.** Of the 8 standing accusations, 4 carry NO quotation marker of any kind \u2014 including",
+      "col": 20,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 89,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "otherwise.** Of the 8 standing accusations, 4 carry NO quotation marker of any kind \u2014 including",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.fenced_block.ABSTAIN"
+    },
+    {
+      "line": 90,
+      "token": "100,000",
+      "value": 100000.0,
+      "decimals": 0,
+      "context": "the two that matter most: the DePT hyperparameter values quoted in prose (`100,000`, `300,000`)",
+      "col": 75,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "300,000",
+      "value": 300000.0,
+      "decimals": 0,
+      "context": "the two that matter most: the DePT hyperparameter values quoted in prose (`100,000`, `300,000`)",
+      "col": 86,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 91,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "and the truncated-line `4` in `FINDING_behavioral_sycophancy_blackbox`. A number quoted in running",
+      "col": 24,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:opportunity.accused_in_a_quotation_context"
+    },
+    {
+      "line": 118,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "## Battery + gates (harness `run_oath_v12_battery.py`, to be built; seeds 1\u201310, frozen)",
+      "col": 74,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 124,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **G1 \u2014 INSTRUMENT VALIDITY (VOID-producing).** Extractor replication mismatches = 0 repo-wide;",
+      "col": 84,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 125,
+      "token": "181",
+      "value": 181.0,
+      "decimals": 0,
+      "context": "frame at run = frame at freeze: 181 documents / 7,665 tokens / V 5,646 / A 2,011 / U 8. Any",
+      "col": 34,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.documents"
+    },
+    {
+      "line": 125,
+      "token": "7,665",
+      "value": 7665.0,
+      "decimals": 0,
+      "context": "frame at run = frame at freeze: 181 documents / 7,665 tokens / V 5,646 / A 2,011 / U 8. Any",
+      "col": 50,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.tokens"
+    },
+    {
+      "line": 125,
+      "token": "5,646",
+      "value": 5646.0,
+      "decimals": 0,
+      "context": "frame at run = frame at freeze: 181 documents / 7,665 tokens / V 5,646 / A 2,011 / U 8. Any",
+      "col": 67,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.status_counts.VERIFIED"
+    },
+    {
+      "line": 128,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "11-token roster the census records for `latex_on_line` (3 UNGROUNDED + 8 VERIFIED). A 12th",
+      "col": 58,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.ABSTAIN"
+    },
+    {
+      "line": 128,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "11-token roster the census records for `latex_on_line` (3 UNGROUNDED + 8 VERIFIED). A 12th",
+      "col": 73,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.status_counts.UNGROUNDED"
+    },
+    {
+      "line": 131,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "the 3 enumerated coordinates; VERIFIED\u2192ABSTAIN = exactly the 8 enumerated coordinates;",
+      "col": 6,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.ABSTAIN"
+    },
+    {
+      "line": 131,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "the 3 enumerated coordinates; VERIFIED\u2192ABSTAIN = exactly the 8 enumerated coordinates;",
+      "col": 63,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 132,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "HELD\u2192FAILED = 0 anywhere. Any count off by one \u2192 FAIL. Stated honestly, as v0.11's G3 was:",
+      "col": 16,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 136,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "one of the 8 VERIFIED\u2192ABSTAIN conversions is structurally coincident under the frozen dogfood",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.latex_on_line.VERIFIED"
+    },
+    {
+      "line": 142,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **G5 \u2014 VALUE-BLINDNESS (gated; ten seeds).** `override_missed_mutant` = 0 at every seed:",
+      "col": 74,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 146,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **G6 \u2014 COLLATERAL (gated; ten seeds).** Abstentions lost elsewhere under mutation = 0 at every",
+      "col": 86,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 149,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "to the clause's reason codes, adjudicates all 11 roster tokens plus 10 non-roster tokens drawn",
+      "col": 48,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 149,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "to the clause's reason codes, adjudicates all 11 roster tokens plus 10 non-roster tokens drawn",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:cost.sample[11].token"
+    },
+    {
+      "line": 152,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Bars: (i) all 3 accused targets adjudicate NOTATION \u2014 a CLAIM call \u2192 FAIL,",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.latex_on_line.accusations_reached"
+    },
+    {
+      "line": 153,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "`V12_WARRANT_FAILED`; (ii) zero NOTATION calls among the 10 non-roster draws \u2014 a NOTATION call",
+      "col": 59,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:cost.sample[12].token"
+    },
+    {
+      "line": 155,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "artifact not covering all 21 cases yields INCOMPLETE, never PASS. That guard exists because",
+      "col": 28,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 159,
+      "token": "7,665",
+      "value": 7665.0,
+      "decimals": 0,
+      "context": "- **G9 \u2014 MECHANISM PROOF (gated).** Post-clause extracted token count unchanged at 7,665",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:frame.tokens"
+    },
+    {
+      "line": 160,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "(non-extraction would shrink it); all 11 tokens present by coordinate with status ABSTAIN and",
+      "col": 40,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 165,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **A1** \u2014 HELD\u2192FAILED = 0: by construction of an abstain-only clause. Audited, reported, and",
+      "col": 25,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 167,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **A2** \u2014 ON-arm tamper catches on this class = 0: an identity for a structure-reading clause.",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 168,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Its audit is G5's `override_missed_mutant` = 0, and that audit IS gated.",
+      "col": 47,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 169,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "- **A3** \u2014 the 4 markerless accusations are untouched: true by construction, since the clause",
+      "col": 15,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker.fenced_block.ABSTAIN"
+    },
+    {
+      "line": 187,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "defect remains open and that 4 of 8 accusations were never in scope.",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:per_marker_cost_quality.inline_code.accusations_reached"
+    },
+    {
+      "line": 187,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "defect remains open and that 4 of 8 accusations were never in scope.",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_mention_use_census.json:opportunity.accused_total"
+    }
+  ]
+}

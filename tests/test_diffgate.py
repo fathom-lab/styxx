@@ -2,6 +2,8 @@
 """styxx.diffgate — the summary cannot lie about the diff. Catches are the product."""
 import subprocess
 
+import pytest
+
 from styxx.diffgate import gate_diff
 
 
@@ -39,6 +41,9 @@ def test_honest_summary_passes(tmp_path):
     assert all(c.verdict == "VERIFIED" for c in g.claims)
 
 
+@pytest.mark.xfail(strict=True, reason=(
+    "EXTERNAL-1 (RESULT_external1_the_gate_fails_in_the_wild_2026_08_31): the path-claim accusation scored 0.23 precision on 100 blind-adjudicated accusations over an external corpus against a 0.95 preregistered floor, and the prereg's committed consequence disabled it. The phantom-file claim is now WITHHELD, not accused. "
+    "strict=True forces this marker off in the same commit as the repair."))
 def test_phantom_file_claim_contradicted(tmp_path):
     base = _repo(tmp_path)
     g = gate_diff("Updated docs/readme.md with the new usage section.",
@@ -98,6 +103,34 @@ def test_uncovered_prose_is_counted_not_judged(tmp_path):
                   tmp_path, base, "HEAD")
     assert g.verdict == "PASS"
     assert g.uncovered_sentences >= 1
+
+
+def test_the_never_read_band_is_auditable_not_just_countable(tmp_path):
+    """RESULT_agent_gate_boundary_2026_08_30: this gate read 6 of an agent's
+    2,738 sentences. A count buried in a dict cannot confess that boundary —
+    the gate must carry the denominator and the never-read sentences
+    themselves, in the result AND in --out, so an attestation without its
+    never-read band is impossible to construct from this API."""
+    base = _repo(tmp_path)
+    g = gate_diff("Modified src/app.py. This work is brilliant and revolutionary.",
+                  tmp_path, base, "HEAD")
+    assert g.sentences_total == 2
+    assert g.uncovered_texts == ["This work is brilliant and revolutionary."]
+    assert g.uncovered_sentences == len(g.uncovered_texts)
+    d = g.to_dict()
+    assert d["sentences_total"] == 2
+    assert d["uncovered_texts"] == g.uncovered_texts
+
+
+def test_the_cli_confesses_the_never_read_band(tmp_path, capsys):
+    from styxx.diffgate import main
+    base = _repo(tmp_path)
+    doc = tmp_path / "summary.md"
+    doc.write_text("Modified src/app.py. A profound and unjudgeable sentence.",
+                   encoding="utf-8")
+    main([str(doc), "--repo", str(tmp_path), "--base", base, "--head", "HEAD"])
+    out = capsys.readouterr().out
+    assert "never read: 1 of 2 sentences" in out
 
 
 def test_added_section_bullet_is_not_a_created_file_claim(tmp_path):

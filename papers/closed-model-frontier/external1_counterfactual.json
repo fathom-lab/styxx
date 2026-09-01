@@ -1,0 +1,15 @@
+{
+ "what": "original accusing behaviour over the CORRECTED reconstruction",
+ "eligible_prs": 71016,
+ "prs_with_accusation": 4196,
+ "accusations_by_kind": {
+  "file_created": 1547,
+  "only_touches": 341,
+  "file_deleted": 1488,
+  "file_touched": 2310,
+  "symbol_added": 65,
+  "files_changed_count": 75,
+  "tests_added": 184
+ },
+ "total_accusations": 6010
+}

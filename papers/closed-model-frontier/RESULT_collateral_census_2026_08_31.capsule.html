@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OATH Capsule — RESULT_collateral_census_2026_08_31.md</title>
+<style>
+:root{--paper:#1A0F26;--ink:#F3EBE0;--bone:#D0C5DA;--mute:#5C4E70;--sig:#C4B5FD;
+--ok:#B7E4C7;--warn:#F5C5B0;--bad:#D89886;--rule:#3A2B47;}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);
+font-family:ui-monospace,Consolas,monospace;font-size:14px;line-height:1.6}
+header{padding:18px 24px;border-bottom:1px solid var(--rule);position:sticky;top:0;
+background:var(--paper);z-index:5}
+.badge{display:inline-block;padding:4px 14px;border-radius:2px;font-weight:700;
+letter-spacing:.08em}
+.badge.held{background:var(--ok);color:#123}.badge.failed{background:var(--bad);color:#210}
+.badge.tampered{background:#f33;color:#fff}
+.meta{color:var(--mute);font-size:12px;margin-top:6px}
+main{max-width:1080px;margin:0 auto;padding:24px}
+h2{font-size:13px;letter-spacing:.14em;color:var(--sig);text-transform:uppercase;
+margin:28px 0 10px}
+pre.doc{white-space:pre-wrap;word-wrap:break-word;background:#150c20;border:1px solid
+var(--rule);padding:18px;border-radius:3px;color:var(--bone)}
+.tok{border-radius:2px;padding:0 2px;font-weight:700}
+.tok.vo{background:rgba(196,181,253,.25);color:var(--sig)}
+.tok.vv{background:rgba(196,181,253,.12);color:var(--sig);outline:1px dashed var(--mute)}
+.tok.ab{color:var(--mute);outline:1px dotted var(--mute)}
+.tok.un{background:rgba(216,152,134,.35);color:#ffd9cf}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.card{border:1px solid var(--rule);border-radius:3px;padding:12px;background:#150c20}
+.card b{font-size:20px;display:block}.card span{color:var(--mute);font-size:11px}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--rule);
+padding:6px 8px;text-align:left;font-size:12px}th{color:var(--mute)}
+.hash{color:var(--mute);word-break:break-all;font-size:11px}
+.match{color:var(--ok)}.mismatch{color:#f66;font-weight:700}
+footer{border-top:1px solid var(--rule);margin-top:32px;padding:18px 24px;
+color:var(--mute);font-size:12px;max-width:1080px;margin-left:auto;margin-right:auto}
+.legend span{margin-right:14px}
+#tamper{display:none;background:#f33;color:#fff;padding:14px 24px;font-weight:700}
+</style></head><body>
+<div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Nothing
+below can be trusted.</div>
+<header>
+  <span class="badge" id="verdict">OATH-HELD</span>
+  <span class="badge" id="integrity" style="background:#241830;color:var(--mute)">checking
+  integrity…</span>
+  <div class="meta" id="meta"></div>
+</header>
+<main>
+  <h2>the boundary, up front</h2><div class="grid" id="cards"></div>
+  <h2>document — every number wearing its band</h2>
+  <div class="legend meta"><span class="tok vo">verified·obligated</span>
+  <span class="tok vv">verified·volunteered</span><span class="tok ab">abstained</span>
+  <span class="tok un">accused</span></div>
+  <pre class="doc" id="doc"></pre>
+  <h2>receipts — byte integrity</h2><table id="receipts"><tr><th>receipt</th>
+  <th>sha-256 (recomputed in your browser)</th><th></th></tr></table>
+  <h2>re-run it yourself (layer 2 — the real verifier)</h2>
+  <pre class="doc">pip install styxx==7.47.0
+python -m styxx.capsule verify this_file.html</pre>
+</main>
+<footer id="foot"></footer>
+<script type="application/json" id="oath-capsule">{"spec": "styxx-oath/capsule/v0.1", "created": "2026-09-01T00:37:39Z", "document": {"name": "RESULT_collateral_census_2026_08_31.md", "b64": "IyBSRVNVTFQg4oCUIHRoZSBjb2xsYXRlcmFsIGNlbnN1czogdGhlIGZsb29yIGlzIGxvdywgYW5kIHRoYXQgZGVjaWRlcyBhIGRlc2lnbgoKRmF0aG9tIExhYiDCtyAyMDI2LTA4LTMxIMK3IFByZXJlZzogYFBSRVJFR19jb2xsYXRlcmFsX2NlbnN1c18yMDI2XzA4XzMxLm1kYCwgZnJvemVuIGJlZm9yZQp0aGUgY2xhc3NpZmllciBleGlzdGVkLiBSZWNlaXB0czogYGNvbGxhdGVyYWxfY2Vuc3VzLmpzb25gLApgY29sbGF0ZXJhbF9jZW5zdXNfZmlkZWxpdHkuanNvbmAsIGBjb2xsYXRlcmFsX2NlbnN1cy5weWAuIENvcnB1czogQUlEZXYgKEh1Z2dpbmdGYWNlCmBoYW8tbGkvQUlEZXZgLCBDQy1CWS00LjA7IFplbm9kbyAxMC41MjgxL3plbm9kby4xNjkxOTI3MikuCgoqKk5vIGNsYWltIHdhcyByZWFkIGFuZCBub3RoaW5nIGlzIGFjY3VzZWQuKiogVGhpcyBtZWFzdXJlbWVudCBleHRyYWN0cyBub3RoaW5nIGZyb20gcHJvc2UKYW5kIGlzc3VlcyBubyB2ZXJkaWN0IGFib3V0IGFueSBwdWxsIHJlcXVlc3Qgb3IgYW55IGFnZW50LiBJdCBzb3J0cyBjaGFuZ2VkIGZpbGVzIGJ5IHdoYXQKdGhleSBhcmUuCgojIyBUaGUgZ2F0ZXMKCioqRy1DMSAoZmlkZWxpdHkpIOKAlCBQQVNTKiosIHJ1biBiZWZvcmUgYW55IGNvcnB1cyBudW1iZXIgd2FzIGNvbXB1dGVkOiBldmVyeSBjb25zdHJ1Y3RlZApmaXh0dXJlIGNsYXNzaWZpZWQgY29ycmVjdGx5LCBhbmQgdGhlIGZpbGUtc3RhdHVzIGZvbGRpbmcgdGhhdCB0aGUgc2FtZS1kYXkgY29ycmVjdGlvbiBmb3VuZAp3cm9uZyBpbiB0aGUgRVhURVJOQUwtMSBoYXJuZXNzIHJlLXZlcmlmaWVkIGFnYWluc3QgaXRzIG93biBjYXNlcy4gKipHLUMyIChkZXRlcm1pbmlzbSkqKiwKKipHLUMzIChleGhhdXN0aXZlbmVzcykqKiDigJQgZXZlcnkgY2hhbmdlZCBmaWxlIHJlc29sdmVkIHRvIGV4YWN0bHkgb25lIGNsYXNzIGFuZCB0aGUgY2xhc3MKY291bnRzIHN1bSB0byB0aGUgZmlsZSBjb3VudCwgYXNzZXJ0ZWQgaW4gY29kZSDigJQgYW5kICoqRy1DNCAobm8gYWNjdXNhdGlvbikqKiBob2xkLgoKIyMgV2hhdCBpcyBpbiBhbiBhZ2VudCdzIGNoYW5nZQoKQWNyb3NzIHRoZSBlbGlnaWJsZSBwdWxsIHJlcXVlc3RzLCB0aGUgY2xhc3NpZmllciBzb3J0ZWQgd2VsbCBvdmVyIGEgbWlsbGlvbiBjaGFuZ2VkIGZpbGVzLgpUaGUgc2hhcmVzLCBpbiB0aGUgZnJvemVuIHJlc29sdXRpb24gb3JkZXI6Cgp8IGNsYXNzIHwgc2hhcmUgb2YgZmlsZXMgfCBzaGFyZSBvZiBQUnMgY29udGFpbmluZyBpdCB8CnwtLS18LS0tfC0tLXwKfCBsb2NrZmlsZSB8IDAuNjklIHwgOS4xMyUgfAp8IGdlbmVyYXRlZCB8IDUuNDYlIHwgNi4wOSUgfAp8IHNuYXBzaG90IHwgMS40NiUgfCAxLjQ2JSB8CnwgbWlncmF0aW9uIHwgMC40OSUgfCAxLjg4JSB8Cnwgd2hpdGVzcGFjZS1lcXVpdmFsZW50IHwgMi44NyUgfCA5LjUyJSB8CnwgKipzdWJzdGFudGl2ZSoqIHwgKio4OS4wNCUqKiB8ICoqOTkuNTYlKiogfAoKKipUaGUgY29sbGF0ZXJhbCBmbG9vciBpcyBhYm91dCBvbmUgZmlsZSBpbiBuaW5lLioqIE5lYXJseSBuaW5lIGluIHRlbiBjaGFuZ2VkIGZpbGVzIGFyZQpub25lIG9mIHRoZSByZWNvZ25pc2VkIGluY2lkZW50YWwgY2F0ZWdvcmllcywgYW5kIGVzc2VudGlhbGx5IGV2ZXJ5IHB1bGwgcmVxdWVzdCBjb250YWlucyBhdApsZWFzdCBvbmUgc3VjaCBmaWxlLgoKIyMgV2h5IHRoaXMgbnVtYmVyIHdhcyB3b3J0aCBtZWFzdXJpbmcgYmVmb3JlIGJ1aWxkaW5nIGFueXRoaW5nCgpUaGUgZGVzaWduIHRoaXMgbGFiIHdhcyBtb3ZpbmcgdG93YXJkIOKAlCBhbiBhZ2VudCBkZWNsYXJpbmcgaXRzIGNoYW5nZXMgc3RydWN0dXJhbGx5LCB3aXRoIGEKdGhpcmQgYmFuZCBmb3Igd2hhdCBpdCBjaGFuZ2VkIGFuZCBkaWQgbm90IGRlY2xhcmUg4oCUIGhhcyBvbmUgb2J2aW91cyBwcmFjdGljYWwgb2JqZWN0aW9uLAphbmQgaXQgd2FzIHJhaXNlZCBhcyB0aGUgbGlrZWx5IGZhdGFsIG9uZTogcmVhbCBkaWZmcyBhcmUgZnVsbCBvZiBpbmNpZGVudGFsIGNodXJuIG5vYm9keQp3b3VsZCBldmVyIGRlc2NyaWJlLCBzbyBhICJjaGFuZ2VkIGJ1dCBub3QgZGVjbGFyZWQiIGJhbmQgd291bGQgZHJvd24gaW4gbG9ja2ZpbGVzLApnZW5lcmF0ZWQgb3V0cHV0IGFuZCBmb3JtYXR0aW5nIG5vaXNlIGFuZCBiZSB1c2VsZXNzLgoKVGhhdCBvYmplY3Rpb24gbm93IGhhcyBhIG51bWJlciBhdHRhY2hlZCwgYW5kIHRoZSBudW1iZXIgZG9lcyBub3Qgc3VwcG9ydCBpdC4gRXZlbiByZWFkaW5nCnRoZSBjb2xsYXRlcmFsIHNoYXJlIGdlbmVyb3VzbHkg4oCUIHRoZSB3aGl0ZXNwYWNlLWVxdWl2YWxlbnQgY2xhc3MgaXMgYSAqKmxvd2VyIGJvdW5kKiosIGFzCnRoZSBwcmVyZWdpc3RyYXRpb24gc3RhdGVzLCBiZWNhdXNlIHJlZm9ybWF0dGluZyB0aGF0IHJlb3JkZXJzIHRva2VucyBvciByZXdyYXBzIGxpbmVzIGxhbmRzCmluIGBzdWJzdGFudGl2ZWAg4oCUIGluY2lkZW50YWwgZmlsZXMgYXJlIGEgc21hbGwgbWlub3JpdHkgb2Ygd2hhdCBhZ2VudHMgY2hhbmdlLiBBIGJhbmQKbGlzdGluZyB1bmRlY2xhcmVkIGNoYW5nZXMgd291bGQgYmUgZG9taW5hdGVkIGJ5IG9yZGluYXJ5IGVkaXRlZCBzb3VyY2UsIG5vdCBieSBub2lzZS4KClRoZSByZXZlcnNlIHJlYWRpbmcgaXMgZXF1YWxseSBsb2FkLWJlYXJpbmcgYW5kIGxlc3MgY29tZm9ydGFibGU6IGJlY2F1c2UgY29sbGF0ZXJhbCBpcwpzY2FyY2UsICoqYW4gZXhlbXB0aW9uIGxpc3Qgd291bGQgbm90IGhhdmUgc2F2ZWQgYW55b25lIG11Y2gqKiwgd2hpY2ggcmVtb3ZlcyB0aGUgbWFpbgphcmd1bWVudCBmb3IgYnVpbGRpbmcgb25lIOKAlCBhbmQgYW4gZXhlbXB0aW9uIGxpc3QgaXMgZXhhY3RseSB0aGUgc3RydWN0dXJlIHRoYXQgZ2l2ZXMgYQpkaXNob25lc3QgY2hhbmdlIHNvbWV3aGVyZSB0byBoaWRlLgoKIyMgUGVyIGFnZW50LCBkZXNjcmliZWQgYW5kIG5vdCByYW5rZWQKClRoZSBwZXItYWdlbnQgdGFibGUgaXMgaW4gdGhlIHJlY2VpcHQuIEl0IGRpZmZlcnMgbW9yZSB0aGFuIGV4cGVjdGVkOiBvbmUgYWdlbnQncyBjaGFuZ2VzCmFyZSByb3VnaGx5IGEgZmlmdGggaW5jaWRlbnRhbCB3aGlsZSBhbm90aGVyJ3MgYXJlIGFib3V0IG9uZSBpbiB0d2VudHksIGRyaXZlbiBtb3N0bHkgYnkKZ2VuZXJhdGVkIGZpbGVzIGFuZCBzbmFwc2hvdHMuIFJlYWQgdGhpcyBhcyBhIGRlc2NyaXB0aW9uIG9mIHdoYXQgZGlmZmVyZW50IHRvb2xzIHRvdWNoIOKAlApvbmUgYWdlbnQgd29ya2luZyBpbiByZXBvc2l0b3JpZXMgd2l0aCBoZWF2eSBjb2RlIGdlbmVyYXRpb24gaXMgbm90IG1vcmUgb3IgbGVzcyBob25lc3QgdGhhbgpvbmUgdGhhdCBpcyBub3QuICoqTm8gcmFua2luZyBpcyBwdWJsaXNoZWQgYW5kIG5vbmUgaXMgaW1wbGllZCoqOyBub3RoaW5nIGhlcmUgbWVhc3VyZXMKZGlzY2xvc3VyZSwgYmVjYXVzZSBub3RoaW5nIGhlcmUgcmVhZCBhIGNsYWltLgoKIyMgTmFtZWQgbGltaXRhdGlvbnMKCmB3aGl0ZXNwYWNlLWVxdWl2YWxlbnRgIGlzIGEgZmxvb3Igb24gZm9ybWF0dGluZyBjaHVybiwgbm90IGEgbWVhc3VyZW1lbnQgb2YgaXQg4oCUIHRoZSBob25lc3QKdGVzdCBuZWVkcyBwZXItbGFuZ3VhZ2UgcGFyc2luZyBhbmQgdGhpcyBvbmUgY29tcGFyZXMgY29udGVudCB3aXRoIHdoaXRlc3BhY2UgcmVtb3ZlZC4gVGhlCmdlbmVyYXRlZCBhbmQgbG9ja2ZpbGUgbGlzdHMgYXJlIGNsb3NlZCBhbmQgcXVvdGVkIGluIHRoZSByZWNlaXB0OyBhbnl0aGluZyB0aGV5IG1pc3MgaXMKY291bnRlZCBhcyBzdWJzdGFudGl2ZSwgd2hpY2ggYWdhaW4gYmlhc2VzIHRoZSBjb2xsYXRlcmFsIHNoYXJlICoqZG93bndhcmQqKi4gQW5kIHRoZQpjb3JwdXMncyBvd24gcGF0Y2gtdHJ1bmNhdGlvbiBib3VuZGFyeSBpcyBpbmhlcml0ZWQgZnJvbSB0aGUgZGF0YXNldC4KCk5vbmUgb2YgdGhlc2UgbnVtYmVycyBtYXkgYmUgY2hhcnRlZCBhZ2FpbnN0IEVYVEVSTkFMLTEncyBjb3ZlcmFnZSBmaWd1cmU6IGRpZmZlcmVudApwb3B1bGF0aW9uLCBkaWZmZXJlbnQgZGVub21pbmF0b3IuCgotLS0KCipUd28gaW5zdHJ1bWVudHMgZmFpbGVkIHRvZGF5IGF0IHRoZSBtb21lbnQgcHJvc2UgYmVjb21lcyBhIGNsYWltLiBUaGlzIG9uZSBuZXZlciByZWFjaGVzCnRoYXQgbW9tZW50LCBhbmQgaXQgc3RpbGwgZGVjaWRlcyBzb21ldGhpbmc6IHRoZSBncm91bmQgdW5kZXIgdGhlIG5leHQgZGVzaWduIGlzIG1vc3RseQpyZWFsIGNvZGUsIHNvIHRoZSBiYW5kIHdvcnRoIGJ1aWxkaW5nIGlzIG5vdCBkcm93bmluZyBpbiBub2lzZS4qCg=="}, "receipts": [{"name": "collateral_census.json", "b64": "ew0KICJwcmVyZWciOiAiUFJFUkVHX2NvbGxhdGVyYWxfY2Vuc3VzXzIwMjZfMDhfMzEubWQiLA0KICJjb3JwdXMiOiB7DQogICJkYXRhc2V0IjogImhhby1saS9BSURldiIsDQogICJsaWNlbnNlIjogIkNDLUJZLTQuMCINCiB9LA0KICJjb250YWluc19hY2N1c2F0aW9uIjogZmFsc2UsDQogInB1bGxfcmVxdWVzdHMiOiA2OTY1NCwNCiAiZXhjbHVkZWQiOiB7DQogICJub19maWxlX3JlY29yZHMiOiA5MiwNCiAgImVtcHR5X2ZpbGVuYW1lIjogMjMzMzAsDQogICJub191c2FibGVfZmlsZXMiOiAxOTMxDQogfSwNCiAiY2hhbmdlZF9maWxlcyI6IDEzODYxMDQsDQogImJ5X2NsYXNzIjogew0KICAic3Vic3RhbnRpdmUiOiAxMjM0MjQ3LA0KICAibWlncmF0aW9uIjogNjczNywNCiAgImxvY2tmaWxlIjogOTU5NiwNCiAgIndoaXRlc3BhY2UtZXF1aXZhbGVudCI6IDM5NzIwLA0KICAic25hcHNob3QiOiAyMDE3OCwNCiAgImdlbmVyYXRlZCI6IDc1NjI2DQogfSwNCiAic2hhcmVfb2ZfZmlsZXMiOiB7DQogICJzdWJzdGFudGl2ZSI6IDAuODkwNCwNCiAgIm1pZ3JhdGlvbiI6IDAuMDA0OSwNCiAgImxvY2tmaWxlIjogMC4wMDY5LA0KICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMC4wMjg3LA0KICAic25hcHNob3QiOiAwLjAxNDYsDQogICJnZW5lcmF0ZWQiOiAwLjA1NDYNCiB9LA0KICJwcnNfY29udGFpbmluZ19jbGFzcyI6IHsNCiAgInN1YnN0YW50aXZlIjogNjkzNDgsDQogICJsb2NrZmlsZSI6IDYzNjAsDQogICJtaWdyYXRpb24iOiAxMzEyLA0KICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogNjYyOSwNCiAgInNuYXBzaG90IjogMTAxOSwNCiAgImdlbmVyYXRlZCI6IDQyNDUNCiB9LA0KICJzaGFyZV9vZl9wcnMiOiB7DQogICJzdWJzdGFudGl2ZSI6IDAuOTk1NiwNCiAgImxvY2tmaWxlIjogMC4wOTEzLA0KICAibWlncmF0aW9uIjogMC4wMTg4LA0KICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMC4wOTUyLA0KICAic25hcHNob3QiOiAwLjAxNDYsDQogICJnZW5lcmF0ZWQiOiAwLjA2MDkNCiB9LA0KICJwZXJfYWdlbnQiOiB7DQogICJDbGF1ZGVfQ29kZSI6IHsNCiAgICJmaWxlcyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiA2NTM5NSwNCiAgICAibG9ja2ZpbGUiOiA1MjEsDQogICAgImdlbmVyYXRlZCI6IDE2MzQsDQogICAgIndoaXRlc3BhY2UtZXF1aXZhbGVudCI6IDI5MjIsDQogICAgInNuYXBzaG90IjogNjIwLA0KICAgICJtaWdyYXRpb24iOiA2NDgNCiAgIH0sDQogICAic2hhcmVfb2ZfZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogMC45MTE2LA0KICAgICJsb2NrZmlsZSI6IDAuMDA3MywNCiAgICAiZ2VuZXJhdGVkIjogMC4wMjI4LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAwLjA0MDcsDQogICAgInNuYXBzaG90IjogMC4wMDg2LA0KICAgICJtaWdyYXRpb24iOiAwLjAwOQ0KICAgfSwNCiAgICJwcnNfY29udGFpbmluZyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiAxOTExLA0KICAgICJnZW5lcmF0ZWQiOiAxMTAsDQogICAgImxvY2tmaWxlIjogMzc0LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAzMzMsDQogICAgInNuYXBzaG90IjogNjgsDQogICAgIm1pZ3JhdGlvbiI6IDk2DQogICB9DQogIH0sDQogICJDb3BpbG90Ijogew0KICAgImZpbGVzIjogew0KICAgICJzdWJzdGFudGl2ZSI6IDQ3MzUyOSwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMjI4NTUsDQogICAgImxvY2tmaWxlIjogNDIxNiwNCiAgICAic25hcHNob3QiOiAxNzEwNSwNCiAgICAiZ2VuZXJhdGVkIjogNTI3MjUsDQogICAgIm1pZ3JhdGlvbiI6IDE1OTgNCiAgIH0sDQogICAic2hhcmVfb2ZfZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogMC44Mjc4LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAwLjA0LA0KICAgICJsb2NrZmlsZSI6IDAuMDA3NCwNCiAgICAic25hcHNob3QiOiAwLjAyOTksDQogICAgImdlbmVyYXRlZCI6IDAuMDkyMiwNCiAgICAibWlncmF0aW9uIjogMC4wMDI4DQogICB9LA0KICAgInByc19jb250YWluaW5nIjogew0KICAgICJzdWJzdGFudGl2ZSI6IDIxNDI5LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAzNTQ0LA0KICAgICJzbmFwc2hvdCI6IDU3NywNCiAgICAibG9ja2ZpbGUiOiAyODQ0LA0KICAgICJnZW5lcmF0ZWQiOiAxNTk4LA0KICAgICJtaWdyYXRpb24iOiAyNzkNCiAgIH0NCiAgfSwNCiAgIkN1cnNvciI6IHsNCiAgICJmaWxlcyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiA2OTg1MiwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMjA5MiwNCiAgICAibG9ja2ZpbGUiOiA3MTksDQogICAgImdlbmVyYXRlZCI6IDM4MTYsDQogICAgInNuYXBzaG90IjogNjg1LA0KICAgICJtaWdyYXRpb24iOiA2NTINCiAgIH0sDQogICAic2hhcmVfb2ZfZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogMC44OTc3LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAwLjAyNjksDQogICAgImxvY2tmaWxlIjogMC4wMDkyLA0KICAgICJnZW5lcmF0ZWQiOiAwLjA0OSwNCiAgICAic25hcHNob3QiOiAwLjAwODgsDQogICAgIm1pZ3JhdGlvbiI6IDAuMDA4NA0KICAgfSwNCiAgICJwcnNfY29udGFpbmluZyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiA0MDMwLA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiA1OTMsDQogICAgImdlbmVyYXRlZCI6IDE2NywNCiAgICAibG9ja2ZpbGUiOiA1NTcsDQogICAgInNuYXBzaG90IjogNDgsDQogICAgIm1pZ3JhdGlvbiI6IDE3Nw0KICAgfQ0KICB9LA0KICAiRGV2aW4iOiB7DQogICAiZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogMTQ1NjcwLA0KICAgICJtaWdyYXRpb24iOiAyNjQzLA0KICAgICJsb2NrZmlsZSI6IDIwODIsDQogICAgIndoaXRlc3BhY2UtZXF1aXZhbGVudCI6IDMxNDMsDQogICAgInNuYXBzaG90IjogNDAyLA0KICAgICJnZW5lcmF0ZWQiOiAzMjY4DQogICB9LA0KICAgInNoYXJlX29mX2ZpbGVzIjogew0KICAgICJzdWJzdGFudGl2ZSI6IDAuOTI2NiwNCiAgICAibWlncmF0aW9uIjogMC4wMTY4LA0KICAgICJsb2NrZmlsZSI6IDAuMDEzMiwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMC4wMiwNCiAgICAic25hcHNob3QiOiAwLjAwMjYsDQogICAgImdlbmVyYXRlZCI6IDAuMDIwOA0KICAgfSwNCiAgICJwcnNfY29udGFpbmluZyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiA2MTMyLA0KICAgICJsb2NrZmlsZSI6IDExNjksDQogICAgIm1pZ3JhdGlvbiI6IDQ3NiwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogNjM2LA0KICAgICJzbmFwc2hvdCI6IDEwMCwNCiAgICAiZ2VuZXJhdGVkIjogMTY5DQogICB9DQogIH0sDQogICJHb29nbGVfSnVsZXMiOiB7DQogICAiZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogNzI0MSwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogMTc1LA0KICAgICJsb2NrZmlsZSI6IDExNywNCiAgICAiZ2VuZXJhdGVkIjogMzIsDQogICAgInNuYXBzaG90IjogNCwNCiAgICAibWlncmF0aW9uIjogODENCiAgIH0sDQogICAic2hhcmVfb2ZfZmlsZXMiOiB7DQogICAgInN1YnN0YW50aXZlIjogMC45NDY1LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAwLjAyMjksDQogICAgImxvY2tmaWxlIjogMC4wMTUzLA0KICAgICJnZW5lcmF0ZWQiOiAwLjAwNDIsDQogICAgInNuYXBzaG90IjogMC4wMDA1LA0KICAgICJtaWdyYXRpb24iOiAwLjAxMDYNCiAgIH0sDQogICAicHJzX2NvbnRhaW5pbmciOiB7DQogICAgInN1YnN0YW50aXZlIjogNDg0LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiA0OCwNCiAgICAibG9ja2ZpbGUiOiA4MywNCiAgICAiZ2VuZXJhdGVkIjogMTMsDQogICAgInNuYXBzaG90IjogMywNCiAgICAibWlncmF0aW9uIjogMTcNCiAgIH0NCiAgfSwNCiAgIk9wZW5BSV9Db2RleCI6IHsNCiAgICJmaWxlcyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiA0NzI1NjAsDQogICAgImxvY2tmaWxlIjogMTk0MSwNCiAgICAid2hpdGVzcGFjZS1lcXVpdmFsZW50IjogODUzMywNCiAgICAic25hcHNob3QiOiAxMzYyLA0KICAgICJtaWdyYXRpb24iOiAxMTE1LA0KICAgICJnZW5lcmF0ZWQiOiAxNDE1MQ0KICAgfSwNCiAgICJzaGFyZV9vZl9maWxlcyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiAwLjk0NTgsDQogICAgImxvY2tmaWxlIjogMC4wMDM5LA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAwLjAxNzEsDQogICAgInNuYXBzaG90IjogMC4wMDI3LA0KICAgICJtaWdyYXRpb24iOiAwLjAwMjIsDQogICAgImdlbmVyYXRlZCI6IDAuMDI4Mw0KICAgfSwNCiAgICJwcnNfY29udGFpbmluZyI6IHsNCiAgICAic3Vic3RhbnRpdmUiOiAzNTM2MiwNCiAgICAibG9ja2ZpbGUiOiAxMzMzLA0KICAgICJ3aGl0ZXNwYWNlLWVxdWl2YWxlbnQiOiAxNDc1LA0KICAgICJzbmFwc2hvdCI6IDIyMywNCiAgICAibWlncmF0aW9uIjogMjY3LA0KICAgICJnZW5lcmF0ZWQiOiAyMTg4DQogICB9DQogIH0NCiB9LA0KICJub3RlIjogIndoaXRlc3BhY2UtZXF1aXZhbGVudCBpcyBhIExPV0VSIEJPVU5EIG9uIGZvcm1hdHRpbmcgY2h1cm4gXHUyMDE0IHJlZm9ybWF0dGluZyB0aGF0IHJlb3JkZXJzIHRva2VucyBvciByZXdyYXBzIGxpbmVzIGlzIGNsYXNzaWZpZWQgc3Vic3RhbnRpdmUgaGVyZS4gTm8gY2xhaW0gd2FzIHJlYWQ7IG5vdGhpbmcgaXMgYWNjdXNlZC4iDQp9DQo="}, {"name": "collateral_census_fidelity.json", "b64": "ew0KICJnYXRlIjogIkctQzEgZmlkZWxpdHkiLA0KICJmaXh0dXJlcyI6IDE1LA0KICJjbGFzc2lmaWNhdGlvbl9taXNzZXMiOiBbXSwNCiAic3RhdHVzX2ZvbGRfY2FzZXMiOiA1LA0KICJzdGF0dXNfZm9sZF9taXNzZXMiOiBbXSwNCiAicGFzcyI6IHRydWUNCn0NCg=="}], "certificate": {"oath": "styxx OATH v0 (numeric-claim certificate)", "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md", "document": "RESULT_collateral_census_2026_08_31.md", "document_sha256": "65159915fc57c0db9185f52290d196b411cc9949a814ed50f67c2831627b72a4", "receipts_sha256": {"collateral_census.json": "f291be97ca7f4c0212e9d708aee94972bd90c068c20a6f03a14e1f65f701bdcc", "collateral_census_fidelity.json": "882def0204fa441e747eecd04139088a6d6d88486956839944b578ef6b3ef74f"}, "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159", "counts": {"VERIFIED": 12, "ABSTAIN": 1, "UNGROUNDED": 0}, "epistemics_summary": {"schema": "styxx-oath/epistemics-summary/v1", "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one", "by_branch": {"row-ordinal-label": 0, "formula-constant": 0, "spec-or-historical": 0, "notation": 0, "derived": 0, "unbound-field": 0, "value-match": 12, "ulp-neighbour": 0, "obligated-accusation": 0, "silent": 1}, "verified": {"total": 12, "derived": {"obligated": 0, "unobligated": 0}, "value_match": {"obligated_integer_filter_ran": 0, "obligated_integer_filter_na": 0, "unobligated_integer_filter_ran": 0, "unobligated_integer_filter_na": 12}}, "obligated_total": 0, "obligation_sources": {"vocabulary": 0, "n-glued": 0, "range-correlation": 0, "precision": 0, "range-sanity": 0}}, "verdict": "OATH-HELD", "ungrounded": [], "abstained": [{"line": 6, "token": "10.5281"}], "ledger": [{"line": 6, "token": "10.5281", "value": 10.5281, "decimals": 4, "context": "`hao-li/AIDev`, CC-BY-4.0; Zenodo 10.5281/zenodo.16919272).", "col": 34, "status": "ABSTAIN", "receipt_ref": null, "epistemics": {"branch": "silent", "obligated": false, "obligation_source": null}}, {"line": 27, "token": "0.69", "value": 0.69, "decimals": 2, "context": "| lockfile | 0.69% | 9.13% |", "col": 13, "binding_context": "| class | share of files | share of PRs containing it | | lockfile | 0.69% | 9.13% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.lockfile", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 27, "token": "9.13", "value": 9.13, "decimals": 2, "context": "| lockfile | 0.69% | 9.13% |", "col": 21, "binding_context": "| class | share of files | share of PRs containing it | | lockfile | 0.69% | 9.13% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_prs.lockfile", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 28, "token": "5.46", "value": 5.46, "decimals": 2, "context": "| generated | 5.46% | 6.09% |", "col": 14, "binding_context": "| class | share of files | share of PRs containing it | | generated | 5.46% | 6.09% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.generated", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 28, "token": "6.09", "value": 6.09, "decimals": 2, "context": "| generated | 5.46% | 6.09% |", "col": 22, "binding_context": "| class | share of files | share of PRs containing it | | generated | 5.46% | 6.09% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_prs.generated", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 29, "token": "1.46", "value": 1.46, "decimals": 2, "context": "| snapshot | 1.46% | 1.46% |", "col": 13, "binding_context": "| class | share of files | share of PRs containing it | | snapshot | 1.46% | 1.46% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.snapshot", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 29, "token": "1.46", "value": 1.46, "decimals": 2, "context": "| snapshot | 1.46% | 1.46% |", "col": 21, "binding_context": "| class | share of files | share of PRs containing it | | snapshot | 1.46% | 1.46% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.snapshot", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 30, "token": "0.49", "value": 0.49, "decimals": 2, "context": "| migration | 0.49% | 1.88% |", "col": 14, "binding_context": "| class | share of files | share of PRs containing it | | migration | 0.49% | 1.88% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.migration", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 30, "token": "1.88", "value": 1.88, "decimals": 2, "context": "| migration | 0.49% | 1.88% |", "col": 22, "binding_context": "| class | share of files | share of PRs containing it | | migration | 0.49% | 1.88% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_prs.migration", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 31, "token": "2.87", "value": 2.87, "decimals": 2, "context": "| whitespace-equivalent | 2.87% | 9.52% |", "col": 26, "binding_context": "| class | share of files | share of PRs containing it | | whitespace-equivalent | 2.87% | 9.52% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.whitespace-equivalent", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 31, "token": "9.52", "value": 9.52, "decimals": 2, "context": "| whitespace-equivalent | 2.87% | 9.52% |", "col": 34, "binding_context": "| class | share of files | share of PRs containing it | | whitespace-equivalent | 2.87% | 9.52% |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_prs.whitespace-equivalent", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 32, "token": "89.04", "value": 89.04, "decimals": 2, "context": "| **substantive** | **89.04%** | **99.56%** |", "col": 22, "binding_context": "| class | share of files | share of PRs containing it | | **substantive** | **89.04%** | **99.56%** |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_files.substantive", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}, {"line": 32, "token": "99.56", "value": 99.56, "decimals": 2, "context": "| **substantive** | **89.04%** | **99.56%** |", "col": 35, "binding_context": "| class | share of files | share of PRs containing it | | **substantive** | **89.04%** | **99.56%** |", "status": "VERIFIED", "receipt_ref": "collateral_census.json:share_of_prs.substantive", "epistemics": {"branch": "value-match", "obligated": false, "obligation_source": null, "path_checked": false}}]}, "verifier": {"sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159", "styxx_version": "7.47.0", "pip": "styxx==7.47.0"}}</script>
+<script>
+(async () => {
+  const P = JSON.parse(document.getElementById('oath-capsule').textContent);
+  const C = P.certificate;
+  const b64b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+  const sha = async u8 => hex(await crypto.subtle.digest('SHA-256', u8));
+  const vb = document.getElementById('verdict');
+  vb.className = 'badge ' + (C.verdict === 'OATH-HELD' ? 'held' : 'failed');
+  document.getElementById('meta').textContent =
+    P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
+    ' · verifier styxx ' + P.verifier.styxx_version;
+  document.querySelectorAll('main pre.doc')[1] &&
+    (document.querySelectorAll('main pre.doc')[1].textContent =
+     'pip install ' + P.verifier.pip + '\n' +
+     'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
+
+  // integrity: every embedded byte vs the certificate
+  let tampered = false;
+  const docBytes = b64b(P.document.b64);
+  if (await sha(docBytes) !== C.document_sha256) tampered = true;
+  const rt = document.getElementById('receipts');
+  for (const r of P.receipts) {
+    const h = await sha(b64b(r.b64));
+    const want = (C.receipts_sha256 || {})[r.name];
+    const ok = h === want;
+    if (!ok) tampered = true;
+    rt.insertAdjacentHTML('beforeend',
+      `<tr><td>${r.name}</td><td class="hash">${h}</td>` +
+      `<td class="${ok?'match':'mismatch'}">${ok?'matches certificate':'MISMATCH'}</td></tr>`);
+  }
+  const ib = document.getElementById('integrity');
+  if (tampered) {
+    document.getElementById('tamper').style.display = 'block';
+    ib.textContent = 'INTEGRITY: FAILED'; ib.className = 'badge tampered';
+  } else {
+    ib.textContent = 'integrity: all hashes match'; ib.className = 'badge';
+    ib.style.background = 'rgba(183,228,199,.15)'; ib.style.color = 'var(--ok)';
+  }
+
+  // boundary cards from the certificate itself
+  const es = C.epistemics_summary || {}; const v = (es.verified)||{};
+  const vm = v.value_match || {}; const dv = v.derived || {};
+  const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
+            +(dv.obligated||0);
+  const tot = v.total || C.counts.VERIFIED || 0;
+  const cards = [
+    ['verdict', C.verdict],
+    ['verified', C.counts.VERIFIED],
+    ['abstained', C.counts.ABSTAIN],
+    ['accused', C.counts.UNGROUNDED],
+    ['volunteered share', tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
+  ];
+  document.getElementById('cards').innerHTML = cards.map(
+    ([k,val]) => `<div class="card"><b>${val}</b><span>${k}</span></div>`).join('');
+
+  // paint the document: per-line, per-token bands from the ledger
+  const text = new TextDecoder('utf-8').decode(docBytes);
+  const lines = text.split(/\r\n|\n/);
+  const byLine = {};
+  for (const e of (C.ledger||[])) (byLine[e.line] = byLine[e.line]||[]).push(e);
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const cls = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
+    : (e.epistemics && e.epistemics.obligated) ? 'vo' : 'vv';
+  const out = lines.map((ln, i) => {
+    const es2 = (byLine[i+1]||[]).slice().sort((a,b)=>(b.col||0)-(a.col||0));
+    let s = ln;
+    for (const e of es2) {
+      const t = String(e.token);
+      const at = (typeof e.col === 'number' && s.startsWith(t, e.col)) ? e.col : s.indexOf(t);
+      if (at < 0) continue;
+      s = s.slice(0, at) + '\u0001' + cls(e) + '\u0002' + t + '\u0003' + s.slice(at + t.length);
+    }
+    return esc(s)
+      .replace(/\u0001(vo|vv|ab|un)\u0002/g, '<span class="tok $1">')
+      .replace(/\u0003/g, '</span>');
+  });
+  document.getElementById('doc').innerHTML = out.join('\n');
+
+  document.getElementById('foot').textContent =
+    'What this capsule proves: these exact bytes are what the certificate attested, and the ' +
+    'bands above are drawn faithfully from it (layer 1); the verdict is reproducible by ' +
+    're-running the real verifier over the embedded bytes (layer 2). What it does not prove: ' +
+    'that the receipts truthfully record reality — that chain lives in repository provenance. ' +
+    'A capsule is a portable binding, not a portable oath of origin. Nothing crosses unseen.';
+})();
+</script>
+</body></html>

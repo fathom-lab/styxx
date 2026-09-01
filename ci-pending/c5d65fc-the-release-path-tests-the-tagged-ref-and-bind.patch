@@ -1,0 +1,82 @@
+From c5d65fcb418a04bf9052c6bee01d35c1cbe2f253 Mon Sep 17 00:00:00 2001
+From: darkflobi <darkflobi@darkcity.wtf>
+Date: Wed, 19 Aug 2026 08:18:10 -0400
+Subject: [PATCH] ci (LOCAL until a workflow-scoped token exists): the release
+ path tests the tagged ref and binds tag to version
+
+- publish.yml ran ZERO tests on the tag: 7.35.0 shipped while the tests
+  workflow had been red for days. A test job now gates build->publish.
+- skip-existing:true made a mistagged release a silent green no-op (tag
+  vX.Y.Z on a tree still versioned X.Y.(Z-1) builds the old version, PyPI
+  skips the duplicate, everything is green, nothing shipped). The tag is now
+  asserted against styxx._version before building.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ .github/workflows/publish.yml | 41 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+diff --git a/.github/workflows/publish.yml b/.github/workflows/publish.yml
+index 7887aa4..78be55a 100644
+--- a/.github/workflows/publish.yml
++++ b/.github/workflows/publish.yml
+@@ -34,8 +34,33 @@ permissions:
+   contents: read
+ 
+ jobs:
++  # The release path used to publish to PyPI with ZERO test execution on the
++  # tagged ref — 7.35.0 shipped while the tests workflow had been red for days
++  # (lint masked the matrix). The tag is the last checkpoint before the world.
++  test:
++    name: Test the tagged ref
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          fetch-depth: 0   # test_ledger regenerates from full git history
++
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++          cache: "pip"
++
++      - name: Install with test extras
++        run: |
++          python -m pip install --upgrade pip
++          python -m pip install -e '.[test]'
++
++      - name: Run the suite
++        run: python -X utf8 -m pytest tests/ -q
++
+   build:
+     name: Build sdist + wheel
++    needs: test
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout source
+@@ -53,6 +78,22 @@ jobs:
+           python -m pip install --upgrade pip
+           python -m pip install build twine
+ 
++      # skip-existing:true below makes a MISTAGGED release a silent green
++      # no-op (tag v7.36.0 on a tree whose _version.py still says 7.35.0
++      # builds 7.35.0, PyPI skips the duplicate, everything is green, nothing
++      # shipped). Bind the tag to the version before building.
++      - name: Assert tag matches styxx._version
++        if: startsWith(github.ref, 'refs/tags/')
++        run: |
++          set -e
++          PKG_V=$(python -c "import ast,sys; tree=ast.parse(open('styxx/_version.py').read()); print(next(n.value.value for n in ast.walk(tree) if isinstance(n, ast.Assign) and n.targets[0].id=='__version__'))")
++          TAG_V="${GITHUB_REF_NAME#v}"
++          if [ "$PKG_V" != "$TAG_V" ]; then
++            echo "::error::tag $GITHUB_REF_NAME does not match styxx._version.__version__ = $PKG_V — with skip-existing:true this release would be a silent no-op" >&2
++            exit 1
++          fi
++          echo "tag $GITHUB_REF_NAME == package version $PKG_V"
++
+       - name: Build distribution artifacts
+         run: python -m build
+ 
+-- 
+2.52.0.windows.1
+

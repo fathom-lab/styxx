@@ -1,0 +1,228 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RECON_v13_not_frozen_the_ladder_2026_08_28.md",
+  "document_sha256": "d57ad0ea6fb6a87b424b2271bf6cc364effa06f36930c97af8780bb053f61329",
+  "receipts_sha256": {
+    "oath_obligation_ladder_census.json": "06bb2343ad642f78dc0bb316a76904c2240bd07a05acdc13e62aad1ff5b14215",
+    "oath_structural_obligation_census.json": "8393f2f8d5de9cb4f3c882974ca675e5373466843623cb83482911b05a67ac4d"
+  },
+  "verifier_sha256": "8c15962b5737dac65dd2c899148102527db15a78c6db67e7b7e660c72c28e8c3",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 44,
+      "token": "200"
+    },
+    {
+      "line": 45,
+      "token": "493"
+    },
+    {
+      "line": 47,
+      "token": "0.7933"
+    },
+    {
+      "line": 104,
+      "token": "92"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "`RECON_structural_obligation_2026_08_28.md`, which measured that rule at `0.8` precision against a",
+      "col": 74,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:in_sample.STRUCT_precision_2dp.precision"
+    },
+    {
+      "line": 12,
+      "token": "0.4009",
+      "value": 0.4009,
+      "decimals": 4,
+      "context": "`0.4009` base rate and licensed a preregistration rather than a clause.",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:null_rule.precision"
+    },
+    {
+      "line": 37,
+      "token": "493",
+      "value": 493.0,
+      "decimals": 0,
+      "context": "Measured over the committed corpus: of `2040` abstained tokens the clause fires on `493`. But",
+      "col": 84,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:predicate_fires_on"
+    },
+    {
+      "line": 38,
+      "token": "360",
+      "value": 360.0,
+      "decimals": 0,
+      "context": "`360` of those are `spec-or-historical` and `6` are `v05-notation` \u2014 **intercepted at the top of",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.spec-or-historical"
+    },
+    {
+      "line": 38,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`360` of those are `spec-or-historical` and `6` are `v05-notation` \u2014 **intercepted at the top of",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.v05-notation"
+    },
+    {
+      "line": 39,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "the ladder, above `bound`, where obligating them changes nothing.** Only `127` tokens across `60`",
+      "col": 74,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.NULL"
+    },
+    {
+      "line": 39,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "the ladder, above `bound`, where obligating them changes nothing.** Only `127` tokens across `60`",
+      "col": 94,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:movable_across_documents"
+    },
+    {
+      "line": 44,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "* **G1** required 200 movable tokens. There are `127`. Dead on arrival.",
+      "col": 18,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "* **G1** required 200 movable tokens. There are `127`. Dead on arrival.",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.NULL"
+    },
+    {
+      "line": 45,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "* **G2** would be scored on a sample drawn from a pool of `127`, not the `493` its bar was",
+      "col": 59,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.NULL"
+    },
+    {
+      "line": 45,
+      "token": "493",
+      "value": 493.0,
+      "decimals": 0,
+      "context": "* **G2** would be scored on a sample drawn from a pool of `127`, not the `493` its bar was",
+      "col": 74,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "0.7933",
+      "value": 0.7933,
+      "decimals": 4,
+      "context": "* **G3** \u2014 *\"of newly-obligated tokens that come back VERIFIED, the claim-share must be \u2265 0.7933\"*",
+      "col": 90,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "\u2014 has a **structurally empty denominator**. It would be scored `0/0` and could not fail. It was",
+      "col": 66,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:movable_tokens_that_could_become_VERIFIED"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "\u2014 has a **structurally empty denominator**. It would be scored `0/0` and could not fail. It was",
+      "col": 68,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:movable_tokens_that_could_become_VERIFIED"
+    },
+    {
+      "line": 69,
+      "token": "0.4267",
+      "value": 0.4267,
+      "decimals": 4,
+      "context": "Legal scholars have long argued about 0.4267 in the abstract.",
+      "col": 38,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:obligation_gates_verification_probe.token"
+    },
+    {
+      "line": 72,
+      "token": "0.4267",
+      "value": 0.4267,
+      "decimals": 4,
+      "context": "\u2014 against a receipt holding `{\"whatever\": 0.4267}` returns **VERIFIED**, bound to",
+      "col": 42,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:obligation_gates_verification_probe.token"
+    },
+    {
+      "line": 104,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "`56` transitions over 92 reproducing certificates, the census here reports `127` movable tokens over",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_structural_obligation_census.json:scale_projection.per_rule.LEXICAL_reporting_verb.projected_non_claims_obligated"
+    },
+    {
+      "line": 104,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "`56` transitions over 92 reproducing certificates, the census here reports `127` movable tokens over",
+      "col": 22,
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 104,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "`56` transitions over 92 reproducing certificates, the census here reports `127` movable tokens over",
+      "col": 76,
+      "status": "VERIFIED",
+      "receipt_ref": "oath_obligation_ladder_census.json:by_why_the_token_abstained.NULL"
+    }
+  ]
+}
