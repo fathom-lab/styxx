@@ -2,9 +2,9 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md",
-  "document_sha256": "5320be2caae75fce5ce2aa9904fe6405162ce35e4745c0a6eb29819acba43b78",
+  "document_sha256": "8259c72213cc65fe62c5e899c22e12cfa7c49a53662a482fc70c34dd7fb24483",
   "receipts_sha256": {
-    "external1_summary.json": "d87f6ddcca4c42502b5c2ce1a2cbc80bafc7aeaf6473dcfb7730d5a4b47f8435",
+    "external1_summary.json": "133543d46aa76fc4f3e5b5d473b1c4ab1a67d73275a2499cea7af58d6f616d6a",
     "external1_adjudication.json": "29875cb75de35a3c0f8b29eb1c887044a6b24f7ddcdfdec2986e2c831b70da56",
     "external1_failure_taxonomy.json": "698f45c0458c8b9e93afd86a29ff4c4210f8fba6f05f840ea833ba4e3a0583a5"
   },
@@ -55,13 +55,13 @@
   "ungrounded": [],
   "abstained": [
     {
-      "line": 17,
+      "line": 24,
       "token": "10.5281"
     }
   ],
   "ledger": [
     {
-      "line": 17,
+      "line": 24,
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
@@ -76,7 +76,7 @@
       }
     },
     {
-      "line": 32,
+      "line": 39,
       "token": "0.23",
       "value": 0.23,
       "decimals": 2,

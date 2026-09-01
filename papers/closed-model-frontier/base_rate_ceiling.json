@@ -1,0 +1,78 @@
+{
+ "what": "the arithmetic ANALYSIS_base_rate_ceiling cites, derived rather than asserted",
+ "identity": "precision = pi * r / f  (Bayes); ceiling = min(1, pi/f) since r <= 1",
+ "inputs": {
+  "pi_base_rate": 0.01746,
+  "pi_source": "external_citations.json :: pr_mci_study.high_mci (406/23,247)",
+  "pi_caveat": "This is the FIRING RATE OF A HEURISTIC, not a human-validated prevalence of inconsistency. high-MCI is a threshold on a hand-built score s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, none of whose terms reads a diff against a description. Writing '1.7% of agentic PRs are inconsistent' misquotes this study.",
+  "p_obs": 0.16,
+  "p_obs_source": "v14_adjudication.json \u2014 16 upheld of 100 scored, held-out",
+  "floor": 0.95,
+  "refutation_threshold_on_f": 0.0179
+ },
+ "splits": {
+  "development": {
+   "accused_prs": 339,
+   "prs_scored": 15617,
+   "flag_rate": 0.02171,
+   "ceiling": 0.8046,
+   "ceiling_3dp": 0.805,
+   "ceiling_binding_at_the_floor": true,
+   "ceiling_explains_the_observed": false,
+   "implied_recall_at_observed_precision": 0.1989,
+   "recall_required_to_reach_the_floor": 1.1808,
+   "regime": "B: binding but NOT explanatory"
+  },
+  "held_out": {
+   "accused_prs": 858,
+   "prs_scored": 55399,
+   "flag_rate": 0.01549,
+   "ceiling": 1.0,
+   "ceiling_3dp": 1.0,
+   "ceiling_binding_at_the_floor": false,
+   "ceiling_explains_the_observed": false,
+   "implied_recall_at_observed_precision": 0.1419,
+   "recall_required_to_reach_the_floor": 0.8425,
+   "regime": "A: ceiling not binding \u2014 the floor was attainable"
+  },
+  "corpus_wide": {
+   "accused_prs": 1197,
+   "prs_scored": 71016,
+   "flag_rate": 0.01686,
+   "ceiling": 1.0,
+   "ceiling_3dp": 1.0,
+   "ceiling_binding_at_the_floor": false,
+   "ceiling_explains_the_observed": false,
+   "implied_recall_at_observed_precision": 0.1544,
+   "recall_required_to_reach_the_floor": 0.9169,
+   "regime": "A: ceiling not binding \u2014 the floor was attainable"
+  }
+ },
+ "held_out_verdict": {
+  "flag_rate": 0.01549,
+  "below_refutation_threshold": true,
+  "ceiling": 1.0,
+  "conclusion": "The base-rate account is REFUTED on the split that carries the headline. The ceiling is not binding, so the 0.95 floor was arithmetically reachable and the shortfall is the instrument's."
+ },
+ "unit_matched_pairing": {
+  "note": "Pairing a PER-PR base rate with our CLAIM-CONDITIONAL flag rate is the strongest form of the challenge. It self-refutes: implied recall exceeds 1, which is impossible, so the imported base rate cannot be the one that bounds our claim class.",
+  "claim_conditional_flag_rate": 0.128887,
+  "implied_recall": 1.1808,
+  "impossible": true
+ },
+ "wilson_95_on_the_observed_precision": {
+  "k": 16,
+  "n": 100,
+  "interval": [
+   0.101,
+   0.2442
+  ],
+  "assumption_violated": "Wilson assumes independent draws. The 100 accusations are clustered within PRs and repositories, so the true interval is wider than this. Reported because the analysis cites it; not to be read as a calibrated interval."
+ },
+ "collateral": {
+  "note": "What the flag rate actually buys, which is the finding worth more than the refutation: at held-out f with precision 0.16, most accusations issued are false ones.",
+  "held_out_prs_accused": 858,
+  "expected_justly_accused": 137,
+  "expected_wrongly_accused": 721
+ }
+}

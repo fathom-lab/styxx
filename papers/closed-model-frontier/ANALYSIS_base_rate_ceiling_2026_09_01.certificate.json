@@ -1,0 +1,4632 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "ANALYSIS_base_rate_ceiling_2026_09_01.md",
+  "document_sha256": "95d730b08760fa040c67f6c1d53b34ced17b4ee079d7b56e960014a6bffe033c",
+  "receipts_sha256": {
+    "flag_rate.json": "86708b7f6251ddbda83edda8acc89bdd82ab82a01dbce7f08d2be5141df53e73",
+    "v14_gates.json": "2ae92827abd104dbb4ff3e5e9970d05b86346a377ba1733dbc59bad89025b289",
+    "v14_adjudication.json": "f77ea4326502393070408697cd0953461c789f0675631acf234bb47b4c757d6d",
+    "external_citations.json": "d18d18f0437621998d51d2a0702b5bafc8957ac0f02eef4a424c481e1f6e6527",
+    "base_rate_ceiling.json": "eb267ec703e4f31b24081a16300610c8ad8195894c6779b623e3583005e54934"
+  },
+  "verifier_sha256": "c88889bd3d8788dcef2f5b3c4b1316d961b82e5bc73d760a9d94fbe32cc79159",
+  "counts": {
+    "VERIFIED": 158,
+    "ABSTAIN": 73,
+    "UNGROUNDED": 21
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 30,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 158,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 21,
+      "silent": 43
+    },
+    "verified": {
+      "total": 158,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 35,
+        "obligated_integer_filter_na": 56,
+        "unobligated_integer_filter_ran": 42,
+        "unobligated_integer_filter_na": 25
+      }
+    },
+    "obligated_total": 124,
+    "obligation_sources": {
+      "vocabulary": 119,
+      "n-glued": 0,
+      "range-correlation": 3,
+      "precision": 2,
+      "range-sanity": 0
+    }
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 22,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "base rate was 1.7%, from the MSR'26 mining-challenge paper on message\u2013code inconsistency in",
+      "col": 33,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 43,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "Precision is by definition a property of the accused population. `v14_packet.py:89` draws a",
+      "col": 80,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 116,
+      "token": "0.804",
+      "value": 0.804,
+      "decimals": 3,
+      "context": "| development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "col": 43,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 126,
+      "token": "0.804",
+      "value": 0.804,
+      "decimals": 3,
+      "context": "40% more often, the ceiling is 0.804 \u2014 five times the observed precision.",
+      "col": 31,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 136,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 13,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 136,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 93,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 146,
+      "token": "3793302.3793583",
+      "value": 3793302.3793583,
+      "decimals": 7,
+      "context": "Agent-Authored Pull Requests*, MSR'26 Mining Challenge Track, DOI 10.1145/3793302.3793583,",
+      "col": 74,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "precision"
+      }
+    },
+    {
+      "line": 167,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "per-PR flag rates in section 3 are unit-matched against the 1.7%, but the precision they bound",
+      "col": 29,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 181,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "the identity returns an implied recall of **1.18 \u2014 greater than 1, arithmetically impossible**.",
+      "col": 64,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 199,
+      "token": "1.31",
+      "value": 1.31,
+      "decimals": 2,
+      "context": "approximately **1.31**. The accusation-side ratio in the receipt is 951/858 = 1.108 held-out and",
+      "col": 16,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 207,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "tell us the base rate explains 0.16. But it does mean the tidy version of section 3 rests on a",
+      "col": 82,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 330,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "- `data/mci_scores_heuristic.csv` \u2014 per-PR score and flag for all 23,247.",
+      "col": 66,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 344,
+      "token": "374",
+      "value": 374.0,
+      "decimals": 0,
+      "context": "for stratification only and the three packets the sweep read carry no score, but the 374 batch",
+      "col": 87,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 362,
+      "token": "176",
+      "value": 176.0,
+      "decimals": 0,
+      "context": "| flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "col": 26,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 362,
+      "token": "0.591",
+      "value": 0.591,
+      "decimals": 3,
+      "context": "| flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "col": 44,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 378,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "precision 0.742 / recall 0.548 / F1 0.630, which are the 0.60 operating point. At the deployed",
+      "col": 57,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 402,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "uses our claim-conditional flag rate, the implied recall exceeds 1 and the pairing is",
+      "col": 65,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 427,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 89,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 427,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 92,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 442,
+      "token": "3793302.3793583",
+      "value": 3793302.3793583,
+      "decimals": 7,
+      "context": "- arXiv:2601.04886v2 / DOI 10.1145/3793302.3793583 (CC BY 4.0); repo `gjz78910/PR-MCI`.",
+      "col": 35,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "precision"
+      }
+    },
+    {
+      "line": 465,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "- Our own per-PR precision, which is the quantity the unit-matched ceiling in section 3 actually",
+      "col": 86,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    }
+  ],
+  "abstained": [
+    {
+      "line": 45,
+      "token": "63"
+    },
+    {
+      "line": 67,
+      "token": "1"
+    },
+    {
+      "line": 84,
+      "token": "0.16"
+    },
+    {
+      "line": 85,
+      "token": "0.16"
+    },
+    {
+      "line": 85,
+      "token": "1"
+    },
+    {
+      "line": 112,
+      "token": "23,247"
+    },
+    {
+      "line": 112,
+      "token": "0.01746"
+    },
+    {
+      "line": 112,
+      "token": "4"
+    },
+    {
+      "line": 124,
+      "token": "0.0179"
+    },
+    {
+      "line": 126,
+      "token": "40"
+    },
+    {
+      "line": 130,
+      "token": "0.16"
+    },
+    {
+      "line": 133,
+      "token": "0.95"
+    },
+    {
+      "line": 138,
+      "token": "0.0716"
+    },
+    {
+      "line": 146,
+      "token": "26"
+    },
+    {
+      "line": 146,
+      "token": "10.1145"
+    },
+    {
+      "line": 150,
+      "token": "23,247"
+    },
+    {
+      "line": 151,
+      "token": "0.3"
+    },
+    {
+      "line": 151,
+      "token": "0.4"
+    },
+    {
+      "line": 151,
+      "token": "0.3"
+    },
+    {
+      "line": 152,
+      "token": "0.61"
+    },
+    {
+      "line": 156,
+      "token": "23,247"
+    },
+    {
+      "line": 156,
+      "token": "1.06"
+    },
+    {
+      "line": 194,
+      "token": "5,799"
+    },
+    {
+      "line": 194,
+      "token": "6,750"
+    },
+    {
+      "line": 195,
+      "token": "0.141"
+    },
+    {
+      "line": 197,
+      "token": "0.109"
+    },
+    {
+      "line": 199,
+      "token": "1.108"
+    },
+    {
+      "line": 200,
+      "token": "1.123"
+    },
+    {
+      "line": 219,
+      "token": "13"
+    },
+    {
+      "line": 219,
+      "token": "3.0"
+    },
+    {
+      "line": 221,
+      "token": "45.4"
+    },
+    {
+      "line": 222,
+      "token": "194"
+    },
+    {
+      "line": 223,
+      "token": "0"
+    },
+    {
+      "line": 223,
+      "token": "+0"
+    },
+    {
+      "line": 223,
+      "token": "-0"
+    },
+    {
+      "line": 223,
+      "token": "99.0"
+    },
+    {
+      "line": 227,
+      "token": "13"
+    },
+    {
+      "line": 228,
+      "token": "13"
+    },
+    {
+      "line": 228,
+      "token": "0.056"
+    },
+    {
+      "line": 228,
+      "token": "0.16"
+    },
+    {
+      "line": 228,
+      "token": "0.000559"
+    },
+    {
+      "line": 229,
+      "token": "4.43"
+    },
+    {
+      "line": 229,
+      "token": "1"
+    },
+    {
+      "line": 230,
+      "token": "13"
+    },
+    {
+      "line": 289,
+      "token": "3"
+    },
+    {
+      "line": 292,
+      "token": "0.0179"
+    },
+    {
+      "line": 293,
+      "token": "0.109"
+    },
+    {
+      "line": 293,
+      "token": "0.109"
+    },
+    {
+      "line": 299,
+      "token": "3"
+    },
+    {
+      "line": 333,
+      "token": "32"
+    },
+    {
+      "line": 333,
+      "token": "374"
+    },
+    {
+      "line": 347,
+      "token": "4.0"
+    },
+    {
+      "line": 371,
+      "token": "0.591"
+    },
+    {
+      "line": 377,
+      "token": "0.61"
+    },
+    {
+      "line": 379,
+      "token": "0.719"
+    },
+    {
+      "line": 379,
+      "token": "0.622"
+    },
+    {
+      "line": 387,
+      "token": "5"
+    },
+    {
+      "line": 389,
+      "token": "454"
+    },
+    {
+      "line": 430,
+      "token": "1,299"
+    },
+    {
+      "line": 430,
+      "token": "393"
+    },
+    {
+      "line": 442,
+      "token": "10.1145"
+    },
+    {
+      "line": 442,
+      "token": "4.0"
+    },
+    {
+      "line": 443,
+      "token": "1.746"
+    },
+    {
+      "line": 443,
+      "token": "0.61"
+    },
+    {
+      "line": 444,
+      "token": "194"
+    },
+    {
+      "line": 445,
+      "token": "13"
+    },
+    {
+      "line": 445,
+      "token": "432"
+    },
+    {
+      "line": 446,
+      "token": "0.606"
+    },
+    {
+      "line": 446,
+      "token": "0.803"
+    },
+    {
+      "line": 448,
+      "token": "0.719"
+    },
+    {
+      "line": 448,
+      "token": "0.622"
+    },
+    {
+      "line": 457,
+      "token": "127"
+    },
+    {
+      "line": 480,
+      "token": "89"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "# ANALYSIS \u2014 does a low base rate explain the 0.16?",
+      "col": 46,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 17,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "A reader of RESULT_v14 offered a competing explanation for our held-out precision of 0.16",
+      "col": 85,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 18,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "(`v14_adjudication.json`: `accusations_scored` 100, `upheld` 16, `precision` 0.16, held-out",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:accusations_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 18,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "(`v14_adjudication.json`: `accusations_scored` 100, `upheld` 16, `precision` 0.16, held-out",
+      "col": 61,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 18,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "(`v14_adjudication.json`: `accusations_scored` 100, `upheld` 16, `precision` 0.16, held-out",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 19,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "split, 30/30 decoys correct). The explanation: genuinely misleading claims are rare, so any",
+      "col": 7,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 19,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "split, 30/30 decoys correct). The explanation: genuinely misleading claims are rare, so any",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 22,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "base rate was 1.7%, from the MSR'26 mining-challenge paper on message\u2013code inconsistency in",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 22,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "base rate was 1.7%, from the MSR'26 mining-challenge paper on message\u2013code inconsistency in",
+      "col": 33,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 25,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "The question this file answers: **does that explain the 0.16 better than the explanation we",
+      "col": 56,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 36,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "The intuitive rebuttal is that we sampled inside the accused population \u2014 100 accusations, not",
+      "col": 74,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:accusations_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 37,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "100 pull requests \u2014 so a statement about the prevalence of defects across all pull requests",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 43,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "Precision is by definition a property of the accused population. `v14_packet.py:89` draws a",
+      "col": 80,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 45,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "N_ACC)`); the same design appears at `external1_packet.py:63`. A uniform draw from the accused",
+      "col": 58,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 67,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Since r <= 1:",
+      "col": 11,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 70,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "ceiling = min(1, pi / f)",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 79,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "publish: *\"precision 0.16\" without a denominator is an incomplete receipt by this lab's own",
+      "col": 21,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 82,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "**The regime in which the ceiling would \"explain\" 0.16 is the regime in which observing 0.16",
+      "col": 50,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 82,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "**The regime in which the ceiling would \"explain\" 0.16 is the regime in which observing 0.16",
+      "col": 88,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 84,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "upper bound on precision, so pi/f <= 0.16 says the true precision is at or below the number we",
+      "col": 37,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 85,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "measured \u2014 and the identity then yields an implied recall r = 0.16 * f / pi > 1, which cannot",
+      "col": 62,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 85,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "measured \u2014 and the identity then yields an implied recall r = 0.16 * f / pi > 1, which cannot",
+      "col": 78,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 90,
+      "token": "0.101",
+      "value": 0.101,
+      "decimals": 3,
+      "context": "the Wilson lower bound and the point estimate \u2014 a ceiling in [0.101, 0.16] is compatible with",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.interval[0]",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 90,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "the Wilson lower bound and the point estimate \u2014 a ceiling in [0.101, 0.16] is compatible with",
+      "col": 69,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 91,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "observing 16/100 as sampling noise on the high side. That is a razor-thin explanatory role, and",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 91,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "observing 16/100 as sampling noise on the high side. That is a razor-thin explanatory role, and",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:accusations_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 94,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "What remains is the honest middle case: a ceiling in (0.16, 0.95) would mean **the 0.95 floor",
+      "col": 54,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 94,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "What remains is the honest middle case: a ceiling in (0.16, 0.95) would mean **the 0.95 floor",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 94,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "What remains is the honest middle case: a ceiling in (0.16, 0.95) would mean **the 0.95 floor",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 96,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "at once. Our published explanation survives for the gap; the preregistration's choice of a 0.95",
+      "col": 91,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 101,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "## 3. f is now measured, and on the split that produced the 0.16 the ceiling does not bind",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "range-correlation",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 106,
+      "token": "71,016",
+      "value": 71016.0,
+      "decimals": 0,
+      "context": "71,016 eligible pull requests, matching `v14_gates.json` `prs_scored`; development bucket 15,617",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:population.expected_eligible",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 106,
+      "token": "15,617",
+      "value": 15617.0,
+      "decimals": 0,
+      "context": "71,016 eligible pull requests, matching `v14_gates.json` `prs_scored`; development bucket 15,617",
+      "col": 90,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.prs_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 107,
+      "token": "393",
+      "value": 393.0,
+      "decimals": 0,
+      "context": "matching `development_bucket.prs`; 393 development accusations matching",
+      "col": 35,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 108,
+      "token": "1,344",
+      "value": 1344.0,
+      "decimals": 0,
+      "context": "`development_bucket.after_v13_v14`; 1,344 corpus-wide accusations matching",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 112,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "(406/23,247 = 0.01746 \u2014 see section 4 for why that pairing is questionable regardless):",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 112,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "(406/23,247 = 0.01746 \u2014 see section 4 for why that pairing is questionable regardless):",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 112,
+      "token": "0.01746",
+      "value": 0.01746,
+      "decimals": 5,
+      "context": "(406/23,247 = 0.01746 \u2014 see section 4 for why that pairing is questionable regardless):",
+      "col": 14,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 112,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(406/23,247 = 0.01746 \u2014 see section 4 for why that pairing is questionable regardless):",
+      "col": 36,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 114,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime |",
+      "col": 51,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 116,
+      "token": "339",
+      "value": 339.0,
+      "decimals": 0,
+      "context": "| development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "col": 16,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 116,
+      "token": "15,617",
+      "value": 15617.0,
+      "decimals": 0,
+      "context": "| development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "col": 22,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.prs_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 116,
+      "token": "0.02171",
+      "value": 0.02171,
+      "decimals": 5,
+      "context": "| development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "col": 31,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 116,
+      "token": "0.804",
+      "value": 0.804,
+      "decimals": 3,
+      "context": "| development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "col": 43,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | development | 339 / 15,617 | 0.02171 | **0.804** | binding, non-explanatory |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 117,
+      "token": "858",
+      "value": 858.0,
+      "decimals": 0,
+      "context": "| **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "col": 19,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 117,
+      "token": "55,399",
+      "value": 55399.0,
+      "decimals": 0,
+      "context": "| **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "col": 25,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 117,
+      "token": "0.01549",
+      "value": 0.01549,
+      "decimals": 5,
+      "context": "| **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "col": 38,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 117,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "col": 52,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | **held-out** | **858 / 55,399** | **0.01549** | **1.000** | **not binding** |",
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 118,
+      "token": "1,197",
+      "value": 1197.0,
+      "decimals": 0,
+      "context": "| corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "col": 16,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 118,
+      "token": "71,016",
+      "value": 71016.0,
+      "decimals": 0,
+      "context": "| corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "col": 24,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:population.expected_eligible",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 118,
+      "token": "0.01686",
+      "value": 0.01686,
+      "decimals": 5,
+      "context": "| corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "col": 33,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 118,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "col": 43,
+      "binding_context": "| split | accused PRs / scored | f | ceiling = min(1, pi/f) | regime | | corpus-wide | 1,197 / 71,016 | 0.01686 | 1.000 | not binding |",
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 122,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "The 0.16 was measured held-out. Held-out, **the ceiling is 1.000 \u2014 the base rate imposes no",
+      "col": 4,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 122,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "The 0.16 was measured held-out. Held-out, **the ceiling is 1.000 \u2014 the base rate imposes no",
+      "col": 59,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 123,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "constraint at all**, and a precision of 0.95 was arithmetically reachable. The derivation that",
+      "col": 40,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 124,
+      "token": "0.0179",
+      "value": 0.0179,
+      "decimals": 4,
+      "context": "preceded this analysis fixed its decision thresholds in advance: f <= 0.0179 refutes the",
+      "col": 70,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 126,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "40% more often, the ceiling is 0.804 \u2014 five times the observed precision.",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 126,
+      "token": "0.804",
+      "value": 0.804,
+      "decimals": 3,
+      "context": "40% more often, the ceiling is 0.804 \u2014 five times the observed precision.",
+      "col": 31,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 130,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "- The recall our own numbers imply, at held-out f: r = 0.16 * 0.01549 / 0.01746 = **0.142**.",
+      "col": 55,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 130,
+      "token": "0.01549",
+      "value": 0.01549,
+      "decimals": 5,
+      "context": "- The recall our own numbers imply, at held-out f: r = 0.16 * 0.01549 / 0.01746 = **0.142**.",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 130,
+      "token": "0.01746",
+      "value": 0.01746,
+      "decimals": 5,
+      "context": "- The recall our own numbers imply, at held-out f: r = 0.16 * 0.01549 / 0.01746 = **0.142**.",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 130,
+      "token": "0.142",
+      "value": 0.142,
+      "decimals": 3,
+      "context": "- The recall our own numbers imply, at held-out f: r = 0.16 * 0.01549 / 0.01746 = **0.142**.",
+      "col": 84,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.implied_recall_at_observed_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 131,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "That is under 1 and therefore internally consistent \u2014 the identity reconciles. It simply does",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:population.skipped_reconstruction_roundtrip",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 133,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "- The recall required to have hit the 0.95 floor at this flag rate: r >= 0.95 * 0.01549 /",
+      "col": 38,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 133,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "- The recall required to have hit the 0.95 floor at this flag rate: r >= 0.95 * 0.01549 /",
+      "col": 73,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 133,
+      "token": "0.01549",
+      "value": 0.01549,
+      "decimals": 5,
+      "context": "- The recall required to have hit the 0.95 floor at this flag rate: r >= 0.95 * 0.01549 /",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 134,
+      "token": "0.01746",
+      "value": 0.01746,
+      "decimals": 5,
+      "context": "0.01746 = **0.843**. Demanding, but not forbidden. The distinction between \"hard\" and",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 134,
+      "token": "0.843",
+      "value": 0.843,
+      "decimals": 3,
+      "context": "0.01746 = **0.843**. Demanding, but not forbidden. The distinction between \"hard\" and",
+      "col": 14,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.recall_required_to_reach_the_floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 136,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 13,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 136,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 29,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 136,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 32,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:population.skipped_reconstruction_roundtrip",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 136,
+      "token": "0.101",
+      "value": 0.101,
+      "decimals": 3,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 40,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.interval[0]",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 136,
+      "token": "0.244",
+      "value": 0.244,
+      "decimals": 3,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.interval[1]",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 136,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "- The Wilson 95% interval on 16/100 is [0.101, 0.244] (the derivation's figure; note section 7",
+      "col": 93,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 138,
+      "token": "0.0716",
+      "value": 0.0716,
+      "decimals": 4,
+      "context": ">= 0.0716 \u2014 more than four times what was measured.",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 142,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "## 4. And 1.7% is not our base rate anyway",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 146,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "Agent-Authored Pull Requests*, MSR'26 Mining Challenge Track, DOI 10.1145/3793302.3793583,",
+      "col": 35,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 146,
+      "token": "10.1145",
+      "value": 10.1145,
+      "decimals": 4,
+      "context": "Agent-Authored Pull Requests*, MSR'26 Mining Challenge Track, DOI 10.1145/3793302.3793583,",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 146,
+      "token": "3793302.3793583",
+      "value": 3793302.3793583,
+      "decimals": 7,
+      "context": "Agent-Authored Pull Requests*, MSR'26 Mining Challenge Track, DOI 10.1145/3793302.3793583,",
+      "col": 74,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "precision"
+      }
+    },
+    {
+      "line": 149,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "**The 1.7% is a detector's flag rate, not a validated prevalence.** Verified: the denominator is",
+      "col": 6,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 150,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "23,247 pull requests, the numerator is 406, and the flag is a threshold on a hand-built",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 150,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "23,247 pull requests, the numerator is 406, and the flag is a threshold on a hand-built",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 151,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "heuristic \u2014 s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, high-MCI iff s < 0.61. The sweep",
+      "col": 16,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 151,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "heuristic \u2014 s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, high-MCI iff s < 0.61. The sweep",
+      "col": 30,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 151,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "heuristic \u2014 s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, high-MCI iff s < 0.61. The sweep",
+      "col": 47,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 152,
+      "token": "0.61",
+      "value": 0.61,
+      "decimals": 2,
+      "context": "confirmed that sim < 0.61 reproduces exactly 406 flags and agrees with the shipped",
+      "col": 21,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 152,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "confirmed that sim < 0.61 reproduces exactly 406 flags and agrees with the shipped",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 153,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "`high_mci_heuristic` column on all 23,247 rows. Treating a detector's firing rate as the",
+      "col": 35,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.corpus.prs_analysed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 155,
+      "token": "246",
+      "value": 246.0,
+      "decimals": 0,
+      "context": "multiplier. The authors' own annotators uphold 246 of the 406 strictly (0.606) and 326 loosely",
+      "col": 47,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 155,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "multiplier. The authors' own annotators uphold 246 of the 406 strictly (0.606) and 326 loosely",
+      "col": 58,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 155,
+      "token": "0.606",
+      "value": 0.606,
+      "decimals": 3,
+      "context": "multiplier. The authors' own annotators uphold 246 of the 406 strictly (0.606) and 326 loosely",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 155,
+      "token": "326",
+      "value": 326.0,
+      "decimals": 0,
+      "context": "multiplier. The authors' own annotators uphold 246 of the 406 strictly (0.606) and 326 loosely",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.loose.upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 156,
+      "token": "0.803",
+      "value": 0.803,
+      "decimals": 3,
+      "context": "(0.803), so the human-confirmed strict prevalence is at least 246/23,247 = 1.06% \u2014 a lower bound",
+      "col": 1,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.loose.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 156,
+      "token": "246",
+      "value": 246.0,
+      "decimals": 0,
+      "context": "(0.803), so the human-confirmed strict prevalence is at least 246/23,247 = 1.06% \u2014 a lower bound",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 156,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "(0.803), so the human-confirmed strict prevalence is at least 246/23,247 = 1.06% \u2014 a lower bound",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 156,
+      "token": "1.06",
+      "value": 1.06,
+      "decimals": 2,
+      "context": "(0.803), so the human-confirmed strict prevalence is at least 246/23,247 = 1.06% \u2014 a lower bound",
+      "col": 75,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 165,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "**The units do not match the number we published.** The 1.7% is per pull request. Our 0.16 is",
+      "col": 56,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 165,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "**The units do not match the number we published.** The 1.7% is per pull request. Our 0.16 is",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.k",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 167,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "per-PR flag rates in section 3 are unit-matched against the 1.7%, but the precision they bound",
+      "col": 29,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 167,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "per-PR flag rates in section 3 are unit-matched against the 1.7%, but the precision they bound",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 177,
+      "token": "858",
+      "value": 858.0,
+      "decimals": 0,
+      "context": "The receipt shows how much that conditioning matters. Held-out, 858 of the 6,657 pull requests",
+      "col": 64,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 177,
+      "token": "6,657",
+      "value": 6657.0,
+      "decimals": 0,
+      "context": "The receipt shows how much that conditioning matters. Held-out, 858 of the 6,657 pull requests",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_path_claim_any_verdict",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 178,
+      "token": "0.1289",
+      "value": 0.1289,
+      "decimals": 4,
+      "context": "that make any path claim are accused: a conditional rate of **0.1289** (development 0.1269 \u2014",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate_of_claiming_prs",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 178,
+      "token": "0.1269",
+      "value": 0.1269,
+      "decimals": 4,
+      "context": "that make any path claim are accused: a conditional rate of **0.1289** (development 0.1269 \u2014",
+      "col": 84,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.path_flag_rate_of_claiming_prs",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 180,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "its repairs were designed on). Pair that conditional flag rate with the unconditioned 1.7% and",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 181,
+      "token": "1.18",
+      "value": 1.18,
+      "decimals": 2,
+      "context": "the identity returns an implied recall of **1.18 \u2014 greater than 1, arithmetically impossible**.",
+      "col": 44,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.development.recall_required_to_reach_the_floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 181,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "the identity returns an implied recall of **1.18 \u2014 greater than 1, arithmetically impossible**.",
+      "col": 64,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 190,
+      "token": "951",
+      "value": 951.0,
+      "decimals": 0,
+      "context": "receipt reports accusations (951 held-out) and pull requests making a claim (6,657 held-out),",
+      "col": 29,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 190,
+      "token": "6,657",
+      "value": 6657.0,
+      "decimals": 0,
+      "context": "receipt reports accusations (951 held-out) and pull requests making a claim (6,657 held-out),",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_path_claim_any_verdict",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 193,
+      "token": "951",
+      "value": 951.0,
+      "decimals": 0,
+      "context": "Lower bound on the denominator: accused PRs contribute at least their 951 accusations, and the",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 194,
+      "token": "5,799",
+      "value": 5799.0,
+      "decimals": 0,
+      "context": "5,799 claiming-but-unaccused PRs contribute at least one each, giving >= 6,750 claims and",
+      "col": 0,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 194,
+      "token": "6,750",
+      "value": 6750.0,
+      "decimals": 0,
+      "context": "5,799 claiming-but-unaccused PRs contribute at least one each, giving >= 6,750 claims and",
+      "col": 73,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 195,
+      "token": "0.141",
+      "value": 0.141,
+      "decimals": 3,
+      "context": "therefore **f_claim <= 0.141**.",
+      "col": 23,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 197,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "The impossibility threshold is f_claim >= pi/0.16 = 0.109, which sits *inside* that interval. It",
+      "col": 45,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 197,
+      "token": "0.109",
+      "value": 0.109,
+      "decimals": 3,
+      "context": "The impossibility threshold is f_claim >= pi/0.16 = 0.109, which sits *inside* that interval. It",
+      "col": 52,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 199,
+      "token": "1.31",
+      "value": 1.31,
+      "decimals": 2,
+      "context": "approximately **1.31**. The accusation-side ratio in the receipt is 951/858 = 1.108 held-out and",
+      "col": 16,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 199,
+      "token": "951",
+      "value": 951.0,
+      "decimals": 0,
+      "context": "approximately **1.31**. The accusation-side ratio in the receipt is 951/858 = 1.108 held-out and",
+      "col": 68,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 199,
+      "token": "858",
+      "value": 858.0,
+      "decimals": 0,
+      "context": "approximately **1.31**. The accusation-side ratio in the receipt is 951/858 = 1.108 held-out and",
+      "col": 72,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 199,
+      "token": "1.108",
+      "value": 1.108,
+      "decimals": 3,
+      "context": "approximately **1.31**. The accusation-side ratio in the receipt is 951/858 = 1.108 held-out and",
+      "col": 78,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 200,
+      "token": "1,344",
+      "value": 1344.0,
+      "decimals": 0,
+      "context": "1,344/1,197 = 1.123 corpus-wide. If claims track accusations, the true value plausibly sits below",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 200,
+      "token": "1,197",
+      "value": 1197.0,
+      "decimals": 0,
+      "context": "1,344/1,197 = 1.123 corpus-wide. If claims track accusations, the true value plausibly sits below",
+      "col": 6,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.prs_with_path_accusation",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 200,
+      "token": "1.123",
+      "value": 1.123,
+      "decimals": 3,
+      "context": "1,344/1,197 = 1.123 corpus-wide. If claims track accusations, the true value plausibly sits below",
+      "col": 14,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 207,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "tell us the base rate explains 0.16. But it does mean the tidy version of section 3 rests on a",
+      "col": 82,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 215,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "The challenge is stronger if it uses a construct-matched number instead of 1.7%.",
+      "col": 75,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 219,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "code changes \u2014 published as `misleading_specifics`, **13 of 432 = 3.0%** of the pull requests",
+      "col": 54,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 219,
+      "token": "432",
+      "value": 432.0,
+      "decimals": 0,
+      "context": "code changes \u2014 published as `misleading_specifics`, **13 of 432 = 3.0%** of the pull requests",
+      "col": 60,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.denominator",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 219,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "code changes \u2014 published as `misleading_specifics`, **13 of 432 = 3.0%** of the pull requests",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 221,
+      "token": "196",
+      "value": 196.0,
+      "decimals": 0,
+      "context": "196/432 = 45.4%, is operationally something else entirely: the checkbox the annotators ticked",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 221,
+      "token": "432",
+      "value": 432.0,
+      "decimals": 0,
+      "context": "196/432 = 45.4%, is operationally something else entirely: the checkbox the annotators ticked",
+      "col": 4,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.partial_or_misaligned",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 221,
+      "token": "45.4",
+      "value": 45.4,
+      "decimals": 1,
+      "context": "196/432 = 45.4%, is operationally something else entirely: the checkbox the annotators ticked",
+      "col": 10,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 222,
+      "token": "194",
+      "value": 194.0,
+      "decimals": 0,
+      "context": "defines it as no files actually modified, zero files changed, and 194 of the 196 carry a patch",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 222,
+      "token": "196",
+      "value": 196.0,
+      "decimals": 0,
+      "context": "defines it as no files actually modified, zero files changed, and 194 of the 196 carry a patch",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 223,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "representation of `Scope: 0 files, +0/-0 lines` \u2014 99.0% literally empty diffs. All verified by",
+      "col": 26,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 223,
+      "token": "+0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "representation of `Scope: 0 files, +0/-0 lines` \u2014 99.0% literally empty diffs. All verified by",
+      "col": 35,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 223,
+      "token": "-0",
+      "value": -0.0,
+      "decimals": 0,
+      "context": "representation of `Scope: 0 files, +0/-0 lines` \u2014 99.0% literally empty diffs. All verified by",
+      "col": 38,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 223,
+      "token": "99.0",
+      "value": 99.0,
+      "decimals": 1,
+      "context": "representation of `Scope: 0 files, +0/-0 lines` \u2014 99.0% literally empty diffs. All verified by",
+      "col": 50,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 224,
+      "token": "45.4",
+      "value": 45.4,
+      "decimals": 1,
+      "context": "the sweep against the authors' own files, and the authors' README carries the 45.4% check line",
+      "col": 78,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 227,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "So the external evidence on our construct is 13 pull requests, not 196. As a share of their",
+      "col": 45,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 228,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 15,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 228,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 18,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.corpus.prs_analysed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 228,
+      "token": "0.056",
+      "value": 0.056,
+      "decimals": 3,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 27,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 228,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 63,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 228,
+      "token": "0.01549",
+      "value": 0.01549,
+      "decimals": 5,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 228,
+      "token": "0.000559",
+      "value": 0.000559,
+      "decimals": 6,
+      "context": "corpus that is 13/23,247 = 0.056%. Run the identity on it: r = 0.16 * 0.01549 / 0.000559 =",
+      "col": 80,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 229,
+      "token": "4.43",
+      "value": 4.43,
+      "decimals": 2,
+      "context": "**4.43**, greater than 1 and impossible. That refutes the pairing too \u2014 but it refutes it by",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 229,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "**4.43**, greater than 1 and impossible. That refutes the pairing too \u2014 but it refutes it by",
+      "col": 23,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 230,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "showing the 13 is a severe undercount from an enriched, non-exhaustive annotation with unmeasured",
+      "col": 12,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 239,
+      "token": "1.7",
+      "value": 1.7,
+      "decimals": 1,
+      "context": "RESULT_v14's account rather than displacing it, and it is not the argument the 1.7% was offered",
+      "col": 79,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 255,
+      "token": "0.101",
+      "value": 0.101,
+      "decimals": 3,
+      "context": "- **Clustering.** The Wilson interval [0.101, 0.244] assumes independence that the sampling frame",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.interval[0]",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 255,
+      "token": "0.244",
+      "value": 0.244,
+      "decimals": 3,
+      "context": "- **Clustering.** The Wilson interval [0.101, 0.244] assumes independence that the sampling frame",
+      "col": 46,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.interval[1]",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 257,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "effective sample size is below 100 and the true interval is wider. This does not threaten \"far",
+      "col": 33,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:wilson_95_on_the_observed_precision.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 258,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "below the 0.95 floor.\" It does blur the boundaries between the regimes in section 2.",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 259,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **Panel error.** The 30/30 decoy result (`v14_adjudication.json`) demonstrates competence on",
+      "col": 23,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 259,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **Panel error.** The 30/30 decoy result (`v14_adjudication.json`) demonstrates competence on",
+      "col": 26,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:decoys_correct",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 268,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "be 0.16 that owes nothing to base rates.",
+      "col": 3,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 279,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "says the 0.95 floor was missed. It would then also be true that the floor was unattainable at the",
+      "col": 9,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 280,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "flag rate the gate actually ran at, which makes the preregistration's choice of 0.95 indefensible",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 281,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "in retrospect and makes \"0.16 against a floor of 0.95\" a comparison against a bar that could not",
+      "col": 25,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 281,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "in retrospect and makes \"0.16 against a floor of 0.95\" a comparison against a bar that could not",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.floor",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 289,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "of pull requests with zero path claims. Cheap. Converts section 3 into per-claim units and",
+      "col": 67,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 292,
+      "token": "0.0179",
+      "value": 0.0179,
+      "decimals": 4,
+      "context": "Thresholds fixed in advance by the derivation: f <= 0.0179 refutes the base-rate account;",
+      "col": 55,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 293,
+      "token": "0.0179",
+      "value": 0.0179,
+      "decimals": 4,
+      "context": "0.0179 < f < 0.109 leaves it binding but non-explanatory; f >= 0.109 makes the pairing",
+      "col": 3,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:inputs.refutation_threshold_on_f",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 293,
+      "token": "0.109",
+      "value": 0.109,
+      "decimals": 3,
+      "context": "0.0179 < f < 0.109 leaves it binding but non-explanatory; f >= 0.109 makes the pairing",
+      "col": 16,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 293,
+      "token": "0.109",
+      "value": 0.109,
+      "decimals": 3,
+      "context": "0.0179 < f < 0.109 leaves it binding but non-explanatory; f >= 0.109 makes the pairing",
+      "col": 66,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 298,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "warning to carry into any preregistration: at a prevalence near 0.017 a 200-item panel expects",
+      "col": 67,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 299,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "about 3 positives, which cannot bound pi usefully. Stratify with known weights and reweight, or",
+      "col": 9,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 323,
+      "token": "974",
+      "value": 974.0,
+      "decimals": 0,
+      "context": "- `results/all_annotations_with_taxonomy.csv` \u2014 all 974 annotated pull requests with consensus",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 325,
+      "token": "974",
+      "value": 974.0,
+      "decimals": 0,
+      "context": "- `data/manual_annotations/*.md` \u2014 974 individual packets, each carrying the **full unified diff**",
+      "col": 35,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 330,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "- `data/mci_scores_heuristic.csv` \u2014 per-PR score and flag for all 23,247.",
+      "col": 66,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 332,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "The sweep established that all 406 detector flags are individually annotated with none missing",
+      "col": 31,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 333,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "(32 fall inside the 600-PR validation sample; the 374 additional high-MCI PRs are exactly the",
+      "col": 1,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 333,
+      "token": "374",
+      "value": 374.0,
+      "decimals": 0,
+      "context": "(32 fall inside the 600-PR validation sample; the 374 additional high-MCI PRs are exactly the",
+      "col": 50,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 344,
+      "token": "374",
+      "value": 374.0,
+      "decimals": 0,
+      "context": "for stratification only and the three packets the sweep read carry no score, but the 374 batch",
+      "col": 87,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 347,
+      "token": "4.0",
+      "value": 4.0,
+      "decimals": 1,
+      "context": "is no LICENSE file in the tree. The paper is CC BY 4.0 and the AIDev dataset is CC-BY-4.0, but",
+      "col": 53,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 356,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "Splitting their 406 flags by whether the pull request had any diff at all (sweep's computation",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 361,
+      "token": "230",
+      "value": 230.0,
+      "decimals": 0,
+      "context": "| flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "col": 26,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_a_zero_diff.n",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 361,
+      "token": "0.965",
+      "value": 0.965,
+      "decimals": 3,
+      "context": "| flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "col": 32,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_a_zero_diff.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 361,
+      "token": "0.965",
+      "value": 0.965,
+      "decimals": 3,
+      "context": "| flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "col": 40,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND zero-diff | 230 | 0.965 | 0.965 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_a_zero_diff.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 362,
+      "token": "176",
+      "value": 176.0,
+      "decimals": 0,
+      "context": "| flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "col": 26,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 362,
+      "token": "0.136",
+      "value": 0.136,
+      "decimals": 3,
+      "context": "| flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "col": 34,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_b_non_trivial_strict_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 362,
+      "token": "0.591",
+      "value": 0.591,
+      "decimals": 3,
+      "context": "| flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "col": 44,
+      "binding_context": "| arm | n | strict precision | loose precision | | flagged AND real diff | 176 | **0.136** | 0.591 |",
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 363,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "| all flags | 406 | 0.606 | 0.803 |",
+      "col": 14,
+      "binding_context": "| arm | n | strict precision | loose precision | | all flags | 406 | 0.606 | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.of",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 363,
+      "token": "0.606",
+      "value": 0.606,
+      "decimals": 3,
+      "context": "| all flags | 406 | 0.606 | 0.803 |",
+      "col": 20,
+      "binding_context": "| arm | n | strict precision | loose precision | | all flags | 406 | 0.606 | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 363,
+      "token": "0.803",
+      "value": 0.803,
+      "decimals": 3,
+      "context": "| all flags | 406 | 0.606 | 0.803 |",
+      "col": 28,
+      "binding_context": "| arm | n | strict precision | loose precision | | all flags | 406 | 0.606 | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.loose.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 366,
+      "token": "0.136",
+      "value": 0.136,
+      "decimals": 3,
+      "context": "check. Their non-trivial arm scores 0.136 strict. Our V14 path-claim accusation scored 0.16",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_b_non_trivial_strict_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 366,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "check. Their non-trivial arm scores 0.136 strict. Our V14 path-claim accusation scored 0.16",
+      "col": 87,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 371,
+      "token": "0.136",
+      "value": 0.136,
+      "decimals": 3,
+      "context": "their labels are author-adjudicated rather than blind. Their 0.136 becomes 0.591 if \"partial\"",
+      "col": 61,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_b_non_trivial_strict_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 371,
+      "token": "0.591",
+      "value": 0.591,
+      "decimals": 3,
+      "context": "their labels are author-adjudicated rather than blind. Their 0.136 becomes 0.591 if \"partial\"",
+      "col": 75,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 377,
+      "token": "0.61",
+      "value": 0.61,
+      "decimals": 2,
+      "context": "One citation caution the sweep flagged: the paper states an operating threshold of 0.61 but prints",
+      "col": 83,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 378,
+      "token": "0.742",
+      "value": 0.742,
+      "decimals": 3,
+      "context": "precision 0.742 / recall 0.548 / F1 0.630, which are the 0.60 operating point. At the deployed",
+      "col": 10,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 378,
+      "token": "0.548",
+      "value": 0.548,
+      "decimals": 3,
+      "context": "precision 0.742 / recall 0.548 / F1 0.630, which are the 0.60 operating point. At the deployed",
+      "col": 25,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 378,
+      "token": "0.630",
+      "value": 0.63,
+      "decimals": 3,
+      "context": "precision 0.742 / recall 0.548 / F1 0.630, which are the 0.60 operating point. At the deployed",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.f1",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 378,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "precision 0.742 / recall 0.548 / F1 0.630, which are the 0.60 operating point. At the deployed",
+      "col": 57,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 379,
+      "token": "0.61",
+      "value": 0.61,
+      "decimals": 2,
+      "context": "0.61 the sweep reproduces P 0.719 / R 0.548 / F1 0.622, matching the authors' own",
+      "col": 0,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 379,
+      "token": "0.719",
+      "value": 0.719,
+      "decimals": 3,
+      "context": "0.61 the sweep reproduces P 0.719 / R 0.548 / F1 0.622, matching the authors' own",
+      "col": 28,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 379,
+      "token": "0.548",
+      "value": 0.548,
+      "decimals": 3,
+      "context": "0.61 the sweep reproduces P 0.719 / R 0.548 / F1 0.622, matching the authors' own",
+      "col": 38,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 379,
+      "token": "0.622",
+      "value": 0.622,
+      "decimals": 3,
+      "context": "0.61 the sweep reproduces P 0.719 / R 0.548 / F1 0.622, matching the authors' own",
+      "col": 49,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 380,
+      "token": "0.742",
+      "value": 0.742,
+      "decimals": 3,
+      "context": "`construct_validity_analysis.md`. Cite 0.742 as *reported*, not as the deployed operating point.",
+      "col": 39,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 386,
+      "token": "3,402",
+      "value": 3402.0,
+      "decimals": 0,
+      "context": "`flag_rate.json` also measures the evidence leg's hole. Held-out, 3,402 pull requests make 4,038",
+      "col": 66,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.prs_with_tests_pass_claim",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 386,
+      "token": "4,038",
+      "value": 4038.0,
+      "decimals": 0,
+      "context": "`flag_rate.json` also measures the evidence leg's hole. Held-out, 3,402 pull requests make 4,038",
+      "col": 91,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.tests_pass_claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 387,
+      "token": "4,638",
+      "value": 4638.0,
+      "decimals": 0,
+      "context": "`tests_pass` claims; corpus-wide, 4,638 pull requests \u2014 6.5% of the corpus \u2014 make 5,514. The",
+      "col": 34,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.prs_with_tests_pass_claim",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 387,
+      "token": "6.5",
+      "value": 6.5,
+      "decimals": 1,
+      "context": "`tests_pass` claims; corpus-wide, 4,638 pull requests \u2014 6.5% of the corpus \u2014 make 5,514. The",
+      "col": 56,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.tests_pass_claim_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 387,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "`tests_pass` claims; corpus-wide, 4,638 pull requests \u2014 6.5% of the corpus \u2014 make 5,514. The",
+      "col": 82,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 389,
+      "token": "454",
+      "value": 454.0,
+      "decimals": 0,
+      "context": "With `run` null the gate refuses to take the agent's word (`diffgate.py:454-457`).",
+      "col": 72,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 393,
+      "token": "5,514",
+      "value": 5514.0,
+      "decimals": 0,
+      "context": "the size of the hole \u2014 5,514 claims parked there. Nothing here licenses any statement about how",
+      "col": 23,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.tests_pass_claims",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 401,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "produced the 0.16 (held-out ceiling 1.000, against a measured f of 0.0155). On the pairing that",
+      "col": 13,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 401,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "produced the 0.16 (held-out ceiling 1.000, against a measured f of 0.0155). On the pairing that",
+      "col": 36,
+      "status": "VERIFIED",
+      "receipt_ref": "base_rate_ceiling.json:splits.held_out.ceiling",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 401,
+      "token": "0.0155",
+      "value": 0.0155,
+      "decimals": 4,
+      "context": "produced the 0.16 (held-out ceiling 1.000, against a measured f of 0.0155). On the pairing that",
+      "col": 67,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:held_out.path_flag_rate",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 402,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "uses our claim-conditional flag rate, the implied recall exceeds 1 and the pairing is",
+      "col": 65,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 427,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 38,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:accusations_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 427,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 427,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 83,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_adjudication.json:precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 427,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 89,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 427,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- `v14_adjudication.json` \u2014 held-out, 100 accusations scored, 16 upheld, precision 0.16, 30/30",
+      "col": 92,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 429,
+      "token": "71,016",
+      "value": 71016.0,
+      "decimals": 0,
+      "context": "- `v14_gates.json` \u2014 71,016 PRs scored; 4,427 to 1,344 accusations; development 15,617 PRs,",
+      "col": 21,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.prs_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 429,
+      "token": "4,427",
+      "value": 4427.0,
+      "decimals": 0,
+      "context": "- `v14_gates.json` \u2014 71,016 PRs scored; 4,427 to 1,344 accusations; development 15,617 PRs,",
+      "col": 40,
+      "status": "VERIFIED",
+      "receipt_ref": "v14_gates.json:corpus_wide.accusations_unrepaired",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 429,
+      "token": "1,344",
+      "value": 1344.0,
+      "decimals": 0,
+      "context": "- `v14_gates.json` \u2014 71,016 PRs scored; 4,427 to 1,344 accusations; development 15,617 PRs,",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:corpus_wide.path_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 429,
+      "token": "15,617",
+      "value": 15617.0,
+      "decimals": 0,
+      "context": "- `v14_gates.json` \u2014 71,016 PRs scored; 4,427 to 1,344 accusations; development 15,617 PRs,",
+      "col": 80,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:development.prs_scored",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 430,
+      "token": "1,299",
+      "value": 1299.0,
+      "decimals": 0,
+      "context": "1,299 to 393; G-S1 and G-S2 pass.",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 430,
+      "token": "393",
+      "value": 393.0,
+      "decimals": 0,
+      "context": "1,299 to 393; G-S1 and G-S2 pass.",
+      "col": 11,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 438,
+      "token": "71,016",
+      "value": 71016.0,
+      "decimals": 0,
+      "context": "path-claim and `tests_pass` counts; population 71,016 matching `v14_gates.json`.",
+      "col": 49,
+      "status": "VERIFIED",
+      "receipt_ref": "flag_rate.json:population.expected_eligible",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 442,
+      "token": "10.1145",
+      "value": 10.1145,
+      "decimals": 4,
+      "context": "- arXiv:2601.04886v2 / DOI 10.1145/3793302.3793583 (CC BY 4.0); repo `gjz78910/PR-MCI`.",
+      "col": 27,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 442,
+      "token": "3793302.3793583",
+      "value": 3793302.3793583,
+      "decimals": 7,
+      "context": "- arXiv:2601.04886v2 / DOI 10.1145/3793302.3793583 (CC BY 4.0); repo `gjz78910/PR-MCI`.",
+      "col": 35,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "precision"
+      }
+    },
+    {
+      "line": 442,
+      "token": "4.0",
+      "value": 4.0,
+      "decimals": 1,
+      "context": "- arXiv:2601.04886v2 / DOI 10.1145/3793302.3793583 (CC BY 4.0); repo `gjz78910/PR-MCI`.",
+      "col": 58,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 443,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "- 406/23,247 = 1.746% flag rate; high-MCI = heuristic score < 0.61, reproduced on all 23,247 rows.",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 443,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "- 406/23,247 = 1.746% flag rate; high-MCI = heuristic score < 0.61, reproduced on all 23,247 rows.",
+      "col": 6,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.corpus.prs_analysed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 443,
+      "token": "1.746",
+      "value": 1.746,
+      "decimals": 3,
+      "context": "- 406/23,247 = 1.746% flag rate; high-MCI = heuristic score < 0.61, reproduced on all 23,247 rows.",
+      "col": 15,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 443,
+      "token": "0.61",
+      "value": 0.61,
+      "decimals": 2,
+      "context": "- 406/23,247 = 1.746% flag rate; high-MCI = heuristic score < 0.61, reproduced on all 23,247 rows.",
+      "col": 62,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 443,
+      "token": "23,247",
+      "value": 23247.0,
+      "decimals": 0,
+      "context": "- 406/23,247 = 1.746% flag rate; high-MCI = heuristic score < 0.61, reproduced on all 23,247 rows.",
+      "col": 86,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.corpus.prs_analysed",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 444,
+      "token": "974",
+      "value": 974.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 2,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.total",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 444,
+      "token": "432",
+      "value": 432.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 21,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.partial_or_misaligned",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 444,
+      "token": "196",
+      "value": 196.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 48,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 444,
+      "token": "432",
+      "value": 432.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 52,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.annotations.partial_or_misaligned",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 444,
+      "token": "194",
+      "value": 194.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 73,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 444,
+      "token": "196",
+      "value": 196.0,
+      "decimals": 0,
+      "context": "- 974 annotated PRs; 432 partial-or-misaligned; 196/432 phantom changes, 194/196 zero-diff;",
+      "col": 77,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.phantom_changes.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    },
+    {
+      "line": 445,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "13/432 misleading_specifics.",
+      "col": 2,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 445,
+      "token": "432",
+      "value": 432.0,
+      "decimals": 0,
+      "context": "13/432 misleading_specifics.",
+      "col": 5,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 446,
+      "token": "246",
+      "value": 246.0,
+      "decimals": 0,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 42,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.strict.upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 446,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 46,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 446,
+      "token": "0.606",
+      "value": 0.606,
+      "decimals": 3,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 52,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 446,
+      "token": "326",
+      "value": 326.0,
+      "decimals": 0,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 66,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.precision_over_the_complete_flagged_set.loose.upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 446,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 70,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.high_mci.count",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 446,
+      "token": "0.803",
+      "value": 0.803,
+      "decimals": 3,
+      "context": "- Precision over the complete flagged set 246/406 = 0.606 strict, 326/406 = 0.803 loose; arm",
+      "col": 76,
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical",
+      "epistemics": {
+        "branch": "spec-or-historical",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 447,
+      "token": "0.965",
+      "value": 0.965,
+      "decimals": 3,
+      "context": "decomposition 0.965 / 0.136.",
+      "col": 16,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.the_two_arms.arm_a_zero_diff.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 448,
+      "token": "0.719",
+      "value": 0.719,
+      "decimals": 3,
+      "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630.",
+      "col": 31,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 448,
+      "token": "0.548",
+      "value": 0.548,
+      "decimals": 3,
+      "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630.",
+      "col": 41,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 448,
+      "token": "0.622",
+      "value": 0.622,
+      "decimals": 3,
+      "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630.",
+      "col": 52,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 448,
+      "token": "0.742",
+      "value": 0.742,
+      "decimals": 3,
+      "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630.",
+      "col": 74,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 448,
+      "token": "0.548",
+      "value": 0.548,
+      "decimals": 3,
+      "context": "- Deployed-threshold metrics P 0.719 / R 0.548 / F1 0.622 versus reported 0.742 / 0.548 / 0.630.",
+      "col": 82,
+      "status": "VERIFIED",
+      "receipt_ref": "external_citations.json:pr_mci_study.their_detector.heuristic_as_printed.recall",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": false
+      }
+    },
+    {
+      "line": 457,
+      "token": "127",
+      "value": 127.0,
+      "decimals": 0,
+      "context": "- Provenance of 127 templated taxonomy evidence strings in the validation batch \u2014 templated",
+      "col": 16,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    },
+    {
+      "line": 465,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "- Our own per-PR precision, which is the quantity the unit-matched ceiling in section 3 actually",
+      "col": 86,
+      "status": "UNGROUNDED",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "obligated-accusation",
+        "obligated": true,
+        "obligation_source": "vocabulary"
+      }
+    },
+    {
+      "line": 480,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "source citation of the form `file.py:89`, and the year inside a venue name. The verifier reads",
+      "col": 37,
+      "status": "ABSTAIN",
+      "receipt_ref": null,
+      "epistemics": {
+        "branch": "silent",
+        "obligated": false,
+        "obligation_source": null
+      }
+    }
+  ]
+}

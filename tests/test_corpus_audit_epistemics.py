@@ -72,12 +72,36 @@ def test_the_fold_never_touches_verdict_or_counts():
     assert s["n_certificates"] == s["held"] + s["failed"] + s["unresolved"]
     import re
     rep_text = (ROOT / "REPLICATIONS.md").read_text(encoding="utf-8")
-    m = re.search(r"corpus papers: (\d+) certificates \| HELD (\d+)  FAILED (\d+)", rep_text)
+    m = re.search(r"corpus papers: (\d+) certificates \| HELD (\d+)  FAILED (\d+)"
+                  r"  unresolved (\d+)  verdict-drift (\d+)  receipt-drift (\d+)", rep_text)
     assert m, "REPLICATIONS.md no longer carries the expected audit line"
     assert s["n_certificates"] == int(m.group(1))
     assert s["held"] == int(m.group(2))
     assert s["failed"] == int(m.group(3))
+    assert s["unresolved"] == int(m.group(4))
+    # verdict-drift and receipt-drift were in the pinned line but NOT asserted, so only the
+    # first three numbers were being kept honest. receipt-drift sat at 1 undetected from
+    # 2026-08-31 to 2026-09-01: the CORRECTION commit regenerated `external1_summary.json`
+    # under a certificate that had already sworn to the older bytes. A published paper's
+    # evidence moved and nothing failed. Pinning a number without asserting it is a comment.
+    assert s["verdict_changed"] == int(m.group(5))
+    assert s["receipt_drift"] == int(m.group(6)), (
+        "receipt-drift moved: a receipt changed under a certificate that already swore to it. "
+        "Re-certify against the current receipt and re-issue if the verdict holds -- a receipt "
+        "is history too, and regenerating one in place invalidates every document citing it.")
     assert s["held"] >= 188
+
+    # The pinned EXCEPTION LIST is asserted too, for the same reason. It had gone stale at six
+    # entries while the audit printed nine, because only the counts were ever checked.
+    # `.*?` because an exception line may carry a drift tag between the verdict and the
+    # filename, e.g. "[OATH-HELD] INCOMPLETE-RECEIPTS(changed)  CAPSTONE_....md".
+    listed = set(re.findall(r"^  \[OATH-(?:HELD|FAILED)\].*?(\S+\.md)$", rep_text, re.M))
+    live = {Path(d["document"]).name for d in rep["documents"]
+            if d.get("live_verdict") == "OATH-FAILED" or d.get("verdict_changed")
+            or d.get("receipt_drift") or d.get("incomplete_receipts")}
+    assert listed == live, (
+        f"REPLICATIONS.md's exception list is out of date. "
+        f"missing from the doc: {sorted(live - listed)}; stale in the doc: {sorted(listed - live)}")
 
 
 def test_composition_is_labelled_as_composition_not_quality():

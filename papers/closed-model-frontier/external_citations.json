@@ -1,0 +1,92 @@
+{
+  "what": "Figures cited from outside this lab, recorded as a receipt so that papers citing them are grounded in something a reader can check.",
+  "provenance_warning": "SECOND-HAND. Every number here was transcribed or recomputed from a published external artifact on 2026-09-01. None of it was measured by this lab. Fields tagged as_printed are quoted from the paper; fields tagged recomputed_by_us were derived by re-running arithmetic over the authors' own published CSV files. A transcription is not a measurement and this receipt does not make it one.",
+  "retrieved": "2026-09-01",
+
+  "pr_mci_study": {
+    "identity": "Gong, Pinna, Bian, Zhang. 'Analyzing Message-Code Inconsistency in AI Coding Agent-Authored Pull Requests'. MSR 2026 Mining Challenge Track.",
+    "arxiv": "2601.04886v2",
+    "doi": "10.1145/3793302.3793583",
+    "paper_license": "CC BY 4.0",
+    "replication_repo": "https://github.com/gjz78910/PR-MCI",
+    "replication_repo_license": "NONE FOUND. The GitHub API reports license: null and there is no LICENSE file in the tree. The paper is CC BY 4.0 and AIDev is CC-BY-4.0, but the replication repo itself carries no explicit grant. Cite it; do not redistribute it.",
+
+    "corpus": {
+      "prs_analysed": 23247,
+      "as_printed": true,
+      "derivation": "AIDev-pop subset (33,596 PRs across 2,807 repos with >100 stars), filtered to closed PRs under a permissive licence."
+    },
+
+    "high_mci": {
+      "count": 406,
+      "of": 23247,
+      "rate": 0.01746,
+      "rate_as_printed": "1.7% [1.6, 1.9] Wilson",
+      "recomputed_by_us": true,
+      "WHAT_IT_IS_NOT": "This is the FIRING RATE OF A HEURISTIC, not a human-validated prevalence of inconsistency. high-MCI is a threshold on a hand-built score s = 0.3*s_scope + 0.4*s_filetype + 0.3*s_tasktype, none of whose terms reads a diff against a description. Writing '1.7% of agentic PRs are inconsistent' misquotes this study.",
+      "defensible_phrasing": "1.7% of 23,247 agentic PRs were flagged high-MCI by a heuristic, of which 246 (60.6%) were confirmed misaligned by the authors' own annotators."
+    },
+
+    "annotations": {
+      "total": 974,
+      "composition": "600 validation sample + 374 additional high-MCI PRs",
+      "partial_or_misaligned": 432,
+      "split_of_432": {"partial": 167, "misaligned": 265},
+      "public": true,
+      "location": "results/all_annotations_with_taxonomy.csv (2.14 MB), plus 974 per-PR markdown packets under data/manual_annotations/",
+      "why_this_matters_to_us": "A public human-labelled set means precision against third-party labels can be measured WITHOUT this lab convening its own blind panel. That is a stronger design than the one we have been using, because the labeller has no stake in our instrument."
+    },
+
+    "phantom_changes": {
+      "count": 196,
+      "denominator": 432,
+      "rate": 0.4537,
+      "rate_as_printed": "45.4%",
+      "DENOMINATOR_CORRECTION": "45.4% is of the 432 manually classified partial/misaligned PRs — NOT of 23,247 and NOT of 406. The authors' own README carries the check line 'Verify: Phantom Changes should be 45.4% (196/432)'. Rescaled against the whole corpus it is 196/23,247 = 0.84%.",
+      "operational_definition": "The annotators' checkbox reads verbatim: 'Phantom Changes: Description claims changes were made, but no files were actually modified (zero files changed)'. It is an EMPTY-DIFF test, not a semantic mismatch test.",
+      "enrichment_caveat": "Splitting the 432 by batch, the 134 drawn from the 600-PR validation sample are only 9.7% phantom_changes (13/134), where the top category is understated_scope at 38.8%. The headline 45.4% is therefore substantially an artifact of the detector's enrichment for zero-diff PRs.",
+      "recomputed_by_us": true
+    },
+
+    "their_detector": {
+      "validation_set": 600,
+      "positive_class": "misaligned only (42 of 600); 'partial' collapsed into aligned",
+      "heuristic_as_printed": {"precision": 0.742, "recall": 0.548, "f1": 0.630},
+      "embedding_baseline_f1": 0.150,
+      "THRESHOLD_DISCREPANCY": "The paper states the operating threshold is 0.61 while printing P 0.742 / R 0.548 / F1 0.630, which their own validation/validation_metrics.json labels as the 0.60 operating point. Reported as observed; we have not asked the authors and do not assert which is intended."
+    },
+
+    "precision_over_the_complete_flagged_set": {
+      "note": "NOT a number the paper reports. Recomputed by us by joining their published flags to their published labels. It is measurable at all only because all 406 flags were annotated.",
+      "strict": {"upheld": 246, "of": 406, "precision": 0.606, "rule": "misaligned only"},
+      "loose": {"upheld": 326, "of": 406, "precision": 0.803, "rule": "partial counted as upheld"},
+      "recomputed_by_us": true
+    },
+
+    "the_two_arms": {
+      "note": "The single most decision-relevant finding for this lab. Their accusation is really two instruments with very different precision, separated by whether the PR contains a diff at all.",
+      "arm_a_zero_diff": {"n": 230, "misaligned": 222, "aligned": 8, "precision": 0.965, "reading": "accusing a PR that changed no files is close to trivially correct"},
+      "arm_b_non_trivial_strict_precision": 0.136,
+      "arm_b_reading": "Accusing a PR that ACTUALLY CONTAINS A DIFF scores 0.136 strict against the authors' own annotations.",
+      "COMPARISON_DISCIPLINE": "Our V14 path-claim accusation scored 0.16 against our own blind panel. These two numbers are close, and the convergence is suggestive rather than probative: different corpora slices, different claim units, different labelling instruments, different positive-class rules. Do NOT report them as a replication. What they jointly support is only that the non-trivial case is hard for both.",
+      "recomputed_by_us": true
+    }
+  },
+
+  "aidev_corpus": {
+    "card": "huggingface.co/datasets/hao-li/AIDev",
+    "cited_as": "Li, Zhang, Hassan, 'The Rise of AI Teammates in Software Engineering (SE) 3.0', arXiv 2507.15003",
+    "license": "CC-BY-4.0",
+    "zenodo": "10.5281/zenodo.16919272",
+    "card_version_note": "The card currently describes v4 (2,743,854 PRs, 327,477 repositories). The PR-MCI paper never names the AIDev version, tag or snapshot date it used; that is recorded below as unverified."
+  },
+
+  "unverified": [
+    "Which AIDev version the PR-MCI paper used. The full text names no version, tag or snapshot date.",
+    "Provenance of 127 templated failure_evidence strings in the 432-row taxonomy CSV, all of the form 'Assigned as <category> based on mismatch between description and patch details.'",
+    "Whether a corpus-wide human base rate can be reconstructed from their sampling design; it used two-stage sampling and the weights needed to unbias it were not located.",
+    "Whether the replication repo's annotations are licensed for reuse; no LICENSE file exists.",
+    "Whether the two annotators were blind to the detector score. Sampling-script comments say scores were used for stratification only and three packets read contained no score, but only 3 of 974 packets were inspected.",
+    "Any Claude Code agent-specific rate. The paper's own threats-to-validity notes ~220 Claude Code PRs and 2 high-MCI PRs; no agent-level figure from this study is meaningful for that agent."
+  ]
+}
