@@ -18,15 +18,42 @@ and none of them is the one folklore expected.
 
 ## 2. What crosses between minds: meaning — partially, and not by geometry
 
+> **⚠ Correction / scope erratum (2026-08-03).** The struck sentence below was published
+> without the scope that makes it true. It reports a measurement made through the *linear*
+> map class, but this paragraph never says "linear" — the word does not appear in §2 until the
+> paragraph that follows, and §4 supplies the scope only in retrospect — so as written it reads
+> as a fact about gemma-2-2b rather than about the map. Later pre-registered experiments
+> read the same model far above chance:
+> - **`b31v2_result.json` (2026-08-01)** — a two-layer MLP on 392 true pairs reads gemma at
+>   **0.7857** top-1 over 70 held-out concepts, against the same extractions. That finding's
+>   own verdict: *the rung-2 cliff was a property of the linear map class, not of the minds.*
+> - **`b34v3_result.json` (2026-08-03)** — label-free, zero labels anywhere in fitting, the
+>   same model reads held-out content at **0.5714**.
+> - **What was NOT withdrawn, stated so the correction is not over-read.** The measurement
+>   itself stands *within its class* — b31v2's own M0 linear column reports 0.0143 for this
+>   cell. The bolded conclusion that follows the struck sentence — that representational
+>   similarity is not what carries the readable signal — also stands, and §3 strengthened it
+>   rather than weakening it. What is withdrawn is the unscoped reading: that gemma is
+>   unreadable, rather than unreadable *by that map*.
+>
+> *The sentence is struck, not deleted. A struck sentence a reader can still read is the
+> honest form; a deleted one is a rewrite of history.*
+
 A label-free map (no labels on the target, correspondence recovered from shared-concept
 geometry) reads held-out concepts from a foreign model. Same-family, the read is strong:
 top-1 0.586 against a 0.014 chance floor — 41 times chance
 (`synthesis_minds_addendum.json:read_across_minds`). Across families the signal survives but
-falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive
+falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. ~~And the decisive
 surprise: gemma-2-2b, the *highest*-isometry target in the battery (RSA 0.955, above even the
-same-family anchor), reads at exactly chance 0.014. **Representational similarity is not what
-carries the readable signal.** The prereg's smooth-degradation prediction was falsified and
-recorded; whatever makes one mind legible to another, it is not the RSA-visible geometry.
+same-family anchor), reads at exactly chance 0.014.~~ **[Sentence withdrawn as written,
+2026-08-03 — `b31v2_result.json`, `b34v3_result.json`; scope erratum at the head of this
+section. Struck, never deleted.]** Corrected, with the scope the original omitted: gemma-2-2b,
+the highest-isometry target in the battery (RSA 0.955), reads at exactly chance 0.014 *through
+the label-free linear map*, and at 0.7857 through a two-layer MLP fit on the same extractions
+(`b31v2_result.json`) — the cliff was the map class, not the mind. **Representational
+similarity is not what carries the readable signal.** The prereg's smooth-degradation
+prediction was falsified and recorded; whatever makes one mind legible to another, it is
+not the RSA-visible geometry.
 
 That door has since been opened — twice, each answering a different question. **With paired
 anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 —

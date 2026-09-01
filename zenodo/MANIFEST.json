@@ -1,0 +1,609 @@
+{
+  "schema": "fathom/zenodo-manifest/v1",
+  "generated": "2026-09-01",
+  "generated_from_commit": "0f9b9e3ff96c15839bff39ab4bbf06bca0aa6619",
+  "what_this_is": "One entry per Zenodo deposit this repository cites. It exists because the deposits live outside the release path: nothing in this repo fails when a deposited file is later edited here, so the repo and the permanent record drift apart silently. tests/test_zenodo_manifest.py is the mechanism that was missing.",
+  "what_this_is_not": "This manifest was built entirely from inside the repository. No Zenodo API call was made and no deposit page was fetched. Every statement about what a remote record CONTAINS is either (a) quoted from a deposit receipt this repo committed at deposit time, or (b) marked UNCHECKABLE. Where a receipt exists it is named in `evidence`. Absence of a receipt is not evidence that a deposit is wrong; it means we cannot check it from here.",
+  "hashing_note": "Two hashes are recorded per text file. `sha256_local_bytes` is the sha256 of the bytes in THIS checkout; on Windows with core.autocrlf=true those bytes are CRLF, and the same file checked out on Linux CI is LF, so that hash is NOT portable. `sha256_lf_normalized` (CRLF collapsed to LF before hashing) is the portable content identity and is what the drift test asserts on. This is the same failure the repo's own .gitattributes records for styxx/centroids/*.json, where a CRLF-rendered pin broke an LF CI checkout. For binary files (pdf, png, zip) normalization is meaningless and would corrupt the file, so only `sha256_local_bytes` is recorded and asserted.",
+  "status_vocabulary": {
+    "TRACKED": "A local counterpart exists, is hashed here, and we have no evidence it diverges from the deposited copy.",
+    "DIVERGED": "The deposited copy is known to differ from the repo copy. The evidence is stated in the entry.",
+    "NO_LOCAL_COUNTERPART": "Nothing in this repo corresponds to the deposited content, so there is nothing to hash.",
+    "UNCHECKABLE": "The repo does not record what this deposit contains. We do not guess.",
+    "DRAFT_OR_RESERVED": "The repo records a reserved DOI or a draft deposition id, not a confirmed published record.",
+    "THIRD_PARTY": "Not a Fathom deposit. Cited as a source. Never our drift to fix."
+  },
+  "kind_vocabulary": {
+    "CONCEPT": "A Zenodo concept DOI: resolves to the latest version in its chain.",
+    "VERSION": "A Zenodo version DOI: resolves to one frozen record.",
+    "UNCHECKABLE": "The repo does not say which, and we will not infer it from the number."
+  },
+  "citation_surface_defects": [
+    {
+      "id": "D1",
+      "file": "CITATION.cff",
+      "line": 33,
+      "current_text": "    value: \"10.5281/zenodo.19758619\"",
+      "surrounding_claim": "line 30 comment \"# Concept DOI — always resolves to the latest software release\" and line 34 description \"styxx software (concept DOI — latest version)\"",
+      "defect": "10.5281/zenodo.19758619 is the VERSION DOI of the styxx v6.2.0 software deposit, not a concept DOI. It is frozen at v6.2.0 (2026-04-25) and will never resolve to a later release. Anyone following the 'Cite this repository' widget cites April software.",
+      "evidence": "release/zenodo-deposit-receipt-software-v6.2.0.json records software_doi=10.5281/zenodo.19758619 AND concept_doi=10.5281/zenodo.19758618 for the same deposit.",
+      "should_say": "    value: \"10.5281/zenodo.19758618\"",
+      "staleness": "UNVERIFIED as a release count. The repo ships zenodo bundles for v7.7.7 and v7.7.9 and papers reference styxx 7.47.0, so v6.2.0 is many releases behind, but the exact number of intervening releases was not counted for this entry and the 'around forty releases stale' figure in the task brief is not confirmed here.",
+      "fix_owner": "operator — rewriting a citation identifier is not the agent's call"
+    },
+    {
+      "id": "D2",
+      "file": "CITATION.cff",
+      "line": 46,
+      "current_text": "  doi: \"10.5281/zenodo.19777921\"",
+      "surrounding_claim": "preferred-citation for 'Every Mind Leaves Vitals: A Position on Cognometric Observability'",
+      "defect": "The preferred citation points at a frozen version record deposited 2026-04-26 whose content predates the 2026-06-21 scope erratum that now heads the repo copy. A reader who follows the preferred citation gets the unbounded substrate-independence claim and the cross-family-transfer claim with no erratum attached. The erratum is not a stylistic edit: it records that those claims were bounded or falsified by this program's own pre-registered experiments.",
+      "evidence": "release/zenodo-deposit-receipt-emlv-versioned.json (timestamp 2026-04-26T02:07:10Z, files every-mind-leaves-vitals.md + phase-transition-chart.png); git 36f9ae7 (2026-06-21) added the erratum to papers/every-mind-leaves-vitals.md; scripts/zenodo_version_emlv.py's DESCRIPTION still asserts 'We argue this result is a property of cognition rather than of language models' and 'The substrates differ; the observability does not.'",
+      "should_say": "Either the version DOI of a NEW version carrying the erratum (prepared by scripts/zenodo_deposit_v2_position_paper.py), or the concept DOI 10.5281/zenodo.19703526 so the citation follows the latest version. Which one is the operator's call. Do not simply retarget the line while the remote content is still the April text.",
+      "fix_owner": "operator"
+    },
+    {
+      "id": "D3",
+      "file": "README.md",
+      "line": 447,
+      "current_text": "| DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |",
+      "surrounding_claim": "listed in the repo's own link table directly above the spec DOI, in a table of styxx project links",
+      "defect": "19326174 IS a concept DOI, but it is the concept record of the Fathom research-paper series (v19, v20, v22, v23, v24, v26, v27, v28, v30, v31, v32, v33, v34 ...), not of the styxx software. Presenting it in a project link table as the 'always-latest' DOI implies it resolves to the current software release; it resolves to the most recent PAPER in the chain. The software concept DOI is 10.5281/zenodo.19758618.",
+      "evidence": "release/zenodo-deposit-receipt-spec-v1.0.json concept_recid=19326174 with this_version = the spec v1.0 paper; arxiv/read_neq_write/zenodo-deposit-receipt*.json all carry concept_doi=10.5281/zenodo.19326174 for paper versions v26/v27/v28; papers/DEPOSIT_frame_locality_2026_07_28.md line 87 'Concept record: 19326174 — the Fathom series'.",
+      "should_say": "Label it as the Fathom research-series concept DOI, and if a software always-latest DOI is wanted in that row, use 10.5281/zenodo.19758618.",
+      "fix_owner": "operator"
+    },
+    {
+      "id": "D4",
+      "file": "README.md",
+      "line": 21,
+      "current_text": "[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)",
+      "surrounding_claim": "a badge sitting in the row of PyPI / Python / License / tests badges, i.e. the software badge row",
+      "defect": "Same mislabel as D3, in the badge row, where the surrounding badges are all software badges. This is the more visible of the two.",
+      "evidence": "same as D3",
+      "should_say": "same as D3",
+      "fix_owner": "operator"
+    },
+    {
+      "id": "D5",
+      "file": "papers/foundations-of-cognometric-engineering-v0.1.md",
+      "line": null,
+      "current_text": null,
+      "surrounding_claim": null,
+      "defect": "NOT REPORTED IN THE BRIEF — found while building this manifest. This file is one of the three files deposited in 10.5281/zenodo.19746215 (spec v1.0 / Fathom v20, deposited 2026-04-24) and it was edited on 2026-06-21 by the same erratum-scrub commit that edited the position paper. A 2026-06-21 scope note now bounds the 'orthogonal axes' and 'Fathom Constant' framing as aspirational rather than established. The deposited April copy carries no such note. So the position paper is not the only diverged deposit: 19746215 is diverged too, and nothing flagged it.",
+      "evidence": "release/zenodo-deposit-receipt-spec-v1.0.json uploaded_files includes foundations-of-cognometric-engineering-v0.1.md, timestamp 2026-04-24T21:53:17Z; git 36f9ae7 (2026-06-21) touched exactly three files: papers/cognometry-manifesto.md, papers/every-mind-leaves-vitals.md, papers/foundations-of-cognometric-engineering-v0.1.md.",
+      "should_say": "No citation line is wrong here. What is owed is a new version of 19746215 carrying the scope note, or an explicit decision to leave the April record frozen and say so. That decision is the operator's.",
+      "fix_owner": "operator"
+    }
+  ],
+  "deposits": [
+    {
+      "doi": "10.5281/zenodo.19326174",
+      "kind": "CONCEPT",
+      "kind_evidence": "release/zenodo-deposit-receipt-spec-v1.0.json (concept_recid); arxiv/read_neq_write/zenodo-deposit-receipt.json, -v27.json, -v28.json (concept_doi); papers/DEPOSIT_frame_locality_2026_07_28.md:87",
+      "points_at": "The Fathom research-paper series concept record. Resolves to the latest PAPER version in the v19..v34 chain, not to software.",
+      "chain": null,
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [
+        "README.md:21",
+        "README.md:447",
+        "many papers"
+      ],
+      "deposited_files": [],
+      "notes": "Mislabelled in README as a software always-latest DOI. See defects D3, D4."
+    },
+    {
+      "doi": "10.5281/zenodo.19703526",
+      "kind": "CONCEPT",
+      "kind_evidence": "release/zenodo-deposit-receipt-emlv-versioned.json (concept_recid 19703526, concept_doi)",
+      "points_at": "Concept record whose chain holds the Cognometry Manifesto deposit and, as a later version, the Every Mind Leaves Vitals position paper.",
+      "chain": null,
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "This is the concept DOI a CITATION.cff preferred-citation would use if the intent is 'always the latest version of the position paper'. See defect D2."
+    },
+    {
+      "doi": "10.5281/zenodo.19758618",
+      "kind": "CONCEPT",
+      "kind_evidence": "release/zenodo-deposit-receipt-software-v6.2.0.json (concept_doi, concept_url)",
+      "points_at": "The styxx SOFTWARE concept record. This is the always-latest software DOI.",
+      "chain": null,
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "This is what CITATION.cff line 33 should name instead of 19758619. See defect D1."
+    },
+    {
+      "doi": "10.5281/zenodo.19502715",
+      "kind": "CONCEPT",
+      "kind_evidence": "packages/styxx-js/src/centroids/atlas_v0_3.json (atlas_source: 'Fathom Cognitive Atlas v0.3 (concept DOI 10.5281/zenodo.19502715)'); PATENTS.md",
+      "points_at": "Fathom Cognitive Atlas v0.3 concept record.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Labelled CONCEPT by the repo's own metadata. No deposit receipt is committed for it, so its file list is UNCHECKABLE."
+    },
+    {
+      "doi": "10.5281/zenodo.19703527",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt.json (deposition_id 19703527, uploaded_files)",
+      "points_at": "Cognometry v0 — the 8-benchmark paper deposit, plus the 2026 research agenda.",
+      "chain": "concept 10.5281/zenodo.19703526",
+      "status": "TRACKED",
+      "cited_in": [],
+      "deposited_files": [
+        {
+          "local_path": "papers/cognometry-v0.pdf",
+          "content_kind": "binary",
+          "size_bytes_local": 64951,
+          "sha256_local_bytes": "b8ac4d26176d45223626e392cf8cb6504a365a72f5b6cbb99ceb7848ba5e7610",
+          "sha256_lf_normalized": null,
+          "size_bytes_lf_normalized": null
+        },
+        {
+          "local_path": "papers/cognometry-v0.md",
+          "content_kind": "text",
+          "size_bytes_local": 16424,
+          "sha256_local_bytes": "73482ec6eb3568ad4231bcca82122e39447f969e4c64e79790175671e0531dd1",
+          "sha256_lf_normalized": "ab782145483e7d625044e7da21cc0a8cfd3a0f36e0667b085a0e0be797811539",
+          "size_bytes_lf_normalized": 16059
+        },
+        {
+          "local_path": "papers/cognometry-research-agenda-2026.md",
+          "content_kind": "text",
+          "size_bytes_local": 7296,
+          "sha256_local_bytes": "e5f83a2b81ac007374646cf82034063ff7bda8654264436ed3a5f58c6c01979b",
+          "sha256_lf_normalized": "2fead777edd41e613181749bbec94987a93b65096689b827a92cae9395ba3eaa",
+          "size_bytes_lf_normalized": 7147
+        }
+      ],
+      "notes": "Cited in prose as 'the Cognometry Manifesto'. See open_questions: papers/cognometry-manifesto.md is a DIFFERENT file, it carries a 2026-06-21 erratum, and it is not in this receipt's file list."
+    },
+    {
+      "doi": "10.5281/zenodo.19746215",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-spec-v1.0.json (new_deposition_id 19746215, concept_recid 19326174)",
+      "points_at": "Fathom v20 / styxx v6.2.0: Cognometric Fingerprint Specification v1.0 — Open Reference for Measuring AI Cognition. Deposited 2026-04-24T21:53:17Z.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "DIVERGED",
+      "cited_in": [
+        "README.md:20",
+        "README.md:448",
+        "CITATION.cff:56"
+      ],
+      "deposited_files": [
+        {
+          "local_path": "papers/cognometric-fingerprint-spec-v1.0.md",
+          "content_kind": "text",
+          "size_bytes_local": 36936,
+          "sha256_local_bytes": "bd4bb017f8a0005a3e83efd8d22aa6d6a686a66b426f5d7f7231dc0a5555accb",
+          "sha256_lf_normalized": "6b1a2bd33974b33b6dcaf0bd17014ba760a3762ea301ec38c1c028a68d409844",
+          "size_bytes_lf_normalized": 35999,
+          "note": "unchanged since the deposit-day commit 49522c0 (2026-04-24)"
+        },
+        {
+          "local_path": "papers/foundations-of-cognometric-engineering-v0.1.md",
+          "content_kind": "text",
+          "size_bytes_local": 17303,
+          "sha256_local_bytes": "593e4d6d52b45766e505addce50911461d3215f86c7a8144ce45b95fcd558a23",
+          "sha256_lf_normalized": "5bf6c802c73050f5dfcf19ca4ac819c77ae6e8e481740fd94852f256c5c68af0",
+          "size_bytes_lf_normalized": 16889,
+          "note": "DIVERGED: gained a 2026-06-21 scope note in commit 36f9ae7, after the 2026-04-24 deposit. The deposited copy has no scope note."
+        }
+      ],
+      "notes": "Third deposited file, fingerprint_seed-bench_reference.json, has NO local counterpart anywhere in the repo (searched by filename); it cannot be hashed or checked. Divergence is defect D5 and was not previously reported."
+    },
+    {
+      "doi": "10.5281/zenodo.19758619",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-software-v6.2.0.json (deposit_id 19758619, software_doi, version 6.2.0)",
+      "points_at": "styxx v6.2.0 — Reference Python Implementation. One file: styxx-v6.2.0-source-bundle.zip. Deposited 2026-04-25T09:21:39Z.",
+      "chain": "concept 10.5281/zenodo.19758618",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [
+        "CITATION.cff:33"
+      ],
+      "deposited_files": [],
+      "notes": "The deposited bundle styxx-v6.2.0-source-bundle.zip is not in the repo, so there is nothing to hash. CITATION.cff calls this a concept DOI; it is not. See defect D1."
+    },
+    {
+      "doi": "10.5281/zenodo.19761194",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-v22-robustness.json (doi, version v22, concept_doi)",
+      "points_at": "Fathom v22 / styxx v6.2.0: Cognometric Fingerprint Specification v1.0 — Robustness Supplement (v0.1). Deposited 2026-04-25T11:34:26Z.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "TRACKED",
+      "cited_in": [
+        "CITATION.cff:62"
+      ],
+      "deposited_files": [
+        {
+          "local_path": "packages/styxx-scope/_test_adversarial.js",
+          "content_kind": "text",
+          "size_bytes_local": 19661,
+          "sha256_local_bytes": "e38e5333589fe2c467aa7f25e667b9b390dff0cb0a45ba4284180749ff2c0054",
+          "sha256_lf_normalized": "1062bc1b222c3a9842b9f52de469e25ac68a3ac5f69fcd17b260eb622e200c40",
+          "size_bytes_lf_normalized": 19299
+        },
+        {
+          "local_path": "papers/spec-v1.0-robustness-supplement.md",
+          "content_kind": "text",
+          "size_bytes_local": 15663,
+          "sha256_local_bytes": "ccc4ac753878c201d9e07ba1f7edcfa322774343a28ea81990a4d62bef2a21e4",
+          "sha256_lf_normalized": "dd92e97912d0f60dec9a79c5bf2f50ef66ecac5555e5d6193997f219795d24a6",
+          "size_bytes_lf_normalized": 15308
+        },
+        {
+          "local_path": "packages/styxx-scope/_adversarial_report.json",
+          "content_kind": "text",
+          "size_bytes_local": 8768,
+          "sha256_local_bytes": "3c4eff1e20feb90076c194b57bfd81caff07288a3b732c1ecc7a6c688c267daa",
+          "sha256_lf_normalized": "dcc071aef71b69d57b01367aa6f6eb0cd20cac45c86ce1f2fc6d251b8c724f1a",
+          "size_bytes_lf_normalized": 8418
+        }
+      ],
+      "notes": "All three local counterparts are unchanged since deposit-day commit 91efd12 (2026-04-25)."
+    },
+    {
+      "doi": "10.5281/zenodo.19777361",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-emlv.json (doi); release/zenodo-deposit-receipt-emlv-versioned.json (supersedes_orphan_doi)",
+      "points_at": "Orphan standalone deposit of Every Mind Leaves Vitals, created outside any concept chain and afterwards superseded.",
+      "chain": null,
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "scripts/zenodo_version_emlv.py rewrites this record's title/description to '[SUPERSEDED — see canonical version]' and adds isObsoletedBy. Whether that rewrite actually landed is UNCHECKABLE from here — the script wraps it in try/except and prints rather than raising on failure. Permanent either way: Zenodo does not delete published records."
+    },
+    {
+      "doi": "10.5281/zenodo.19777921",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-emlv-versioned.json (new_deposition_id 19777921, new_doi, concept_recid 19703526); scripts/zenodo_version_emlv.py METADATA version='position-paper-v1'",
+      "points_at": "Every Mind Leaves Vitals: On the Cognometric Layer, Substrate-Independence, and the One-Time Choice We Have. Version label position-paper-v1. Deposited 2026-04-26T02:07:10Z.",
+      "chain": "concept 10.5281/zenodo.19703526",
+      "status": "DIVERGED",
+      "cited_in": [
+        "CITATION.cff:46",
+        "CITATION.cff:47",
+        "README.md:449"
+      ],
+      "deposited_files": [
+        {
+          "local_path": "papers/every-mind-leaves-vitals.md",
+          "content_kind": "text",
+          "size_bytes_local": 16880,
+          "sha256_local_bytes": "4324a354b16ab480819e23f3b88293c4cf31a26aa7f691a19e276934d771fea2",
+          "sha256_lf_normalized": "21599f2f58c0eed36106326174fa3429346bd61e903239d94b6023b61679d70c",
+          "size_bytes_lf_normalized": 16549,
+          "note": "DIVERGED: gained the 2026-06-21 scope erratum in commit 36f9ae7, two months after the 2026-04-26 deposit. The deposited copy has no erratum, and the deposit's own description text (scripts/zenodo_version_emlv.py) asserts exactly what the erratum bounds."
+        },
+        {
+          "local_path": "release/phase-transition-chart.png",
+          "content_kind": "binary",
+          "size_bytes_local": 59178,
+          "sha256_local_bytes": "4f2dab1340fc6ad993ec527fd40d3b6be3b78bf168fad3db44e6a249900955f1",
+          "sha256_lf_normalized": null,
+          "size_bytes_lf_normalized": null,
+          "note": "unchanged since commit 8b4763e (2026-04-26), the release commit that accompanied the deposit"
+        }
+      ],
+      "notes": "This is the deposit named as preferred-citation in CITATION.cff. See defect D2. scripts/zenodo_deposit_v2_position_paper.py prepares the corrected new version (dry run by default)."
+    },
+    {
+      "doi": "10.5281/zenodo.21263158",
+      "kind": "VERSION",
+      "kind_evidence": "arxiv/read_neq_write/zenodo-deposit-receipt-v28.json (series_doi, deposition_id, concept_doi, version 'v28 / v0.3', supersedes 21250272)",
+      "points_at": "Fathom v28 / read≠write v0.3. Uploaded files: main.pdf, source.md, source.certificate.json.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "TRACKED",
+      "cited_in": [],
+      "deposited_files": [
+        {
+          "local_path": "arxiv/read_neq_write/main.pdf",
+          "content_kind": "binary",
+          "size_bytes_local": 312823,
+          "sha256_local_bytes": "8b1536dc581a2e3806c05b46f974d854361acad91f9e5bdb80fc3251156e275f",
+          "sha256_lf_normalized": null,
+          "size_bytes_lf_normalized": null
+        },
+        {
+          "local_path": "arxiv/read_neq_write/source.md",
+          "content_kind": "text",
+          "size_bytes_local": 31162,
+          "sha256_local_bytes": "57188a4c514f436e260b34246f4b18cfc06dbff1ae1eb73bee57f7cd1c1495f4",
+          "sha256_lf_normalized": "8de718cd7eae2b61e7064c5743c2084be69cc79690f225377e405739e22d7263",
+          "size_bytes_lf_normalized": 30671
+        },
+        {
+          "local_path": "arxiv/read_neq_write/source.certificate.json",
+          "content_kind": "text",
+          "size_bytes_local": 81393,
+          "sha256_local_bytes": "936aea5ea70a7ee68a29dd71fd41eb8ec26636f02306e1c785cd38c009455fc6",
+          "sha256_lf_normalized": "68e9353a3ac8d2d1d8ad6bdd15b1abab999c94e9d64f5de274c87228496d79a3",
+          "size_bytes_lf_normalized": 78872
+        }
+      ],
+      "notes": "Local files unchanged since commit cc205a3 (2026-07-08), the commit whose message records this DOI. This is the newest deposit in the read≠write chain, so the local files correspond to it and not to its predecessors."
+    },
+    {
+      "doi": "10.5281/zenodo.21250272",
+      "kind": "VERSION",
+      "kind_evidence": "arxiv/read_neq_write/zenodo-deposit-receipt-v27.json (series_doi, version 'v27 / v0.2', supersedes 21241185)",
+      "points_at": "Fathom v27 / read≠write v0.2. Same three filenames as v28, at their v0.2 content.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Superseded by 21263158. The repo holds only the v0.3 content of those filenames, so the v0.2 bytes are not recoverable from the worktree and are not hashed here."
+    },
+    {
+      "doi": "10.5281/zenodo.21241185",
+      "kind": "VERSION",
+      "kind_evidence": "arxiv/read_neq_write/zenodo-deposit-receipt.json (series_doi, deposition_id, superseded_standalone 21240661)",
+      "points_at": "Fathom v26. Referred to in papers/DEPOSIT_frame_locality_2026_07_28.md:29 as 'calibration poisoning'; the receipt lives in arxiv/read_neq_write/ and lists main.pdf, source.md, source.certificate.json.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "The two in-repo descriptions of what v26 is ('calibration poisoning' vs the read≠write receipt) do not obviously agree. Not resolved from inside the repo."
+    },
+    {
+      "doi": "10.5281/zenodo.21240661",
+      "kind": "VERSION",
+      "kind_evidence": "arxiv/read_neq_write/zenodo-deposit-receipt.json (superseded_standalone)",
+      "points_at": "A standalone read≠write deposit, superseded by 21241185.",
+      "chain": null,
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Second instance of the orphan-then-supersede pattern also seen at 19777361."
+    },
+    {
+      "doi": "10.5281/zenodo.19702475",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-spec-v1.0.json previous_latest {id, doi, title, version}",
+      "points_at": "Fathom v19 / styxx v3.9.1: Cross-Dataset Validated Hallucination Prevention via the Trust Layer. The version 19746215 superseded.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.19701750",
+      "kind": "VERSION",
+      "kind_evidence": "release/v3.8.0-tweet-draft.md:3 'DOI: 10.5281/zenodo.19701750 (concept: 10.5281/zenodo.19326174)'",
+      "points_at": "The styxx v3.8.0 paper deposit.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Kind stated as a version under 19326174 by the repo's own release copy; no deposit receipt is committed, so its file list is UNCHECKABLE."
+    },
+    {
+      "doi": "10.5281/zenodo.20130041",
+      "kind": "VERSION",
+      "kind_evidence": "zenodo/ZENODO_UPLOAD_v7.7.7.md: 'Predecessor: v23 (10.5281/zenodo.20130041) — Fathom v23 / styxx v7.2.0' and its related-identifiers table row 'Is new version of (v23 predecessor)'",
+      "points_at": "Fathom v23 / styxx v7.2.0 — F10 Self-Healing Reflex + Cognometric Inversion.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.20418532",
+      "kind": "VERSION",
+      "kind_evidence": "zenodo/ZENODO_UPLOAD_v7.7.7.md:153 'The release-specific DOI for v7.7.7 is 10.5281/zenodo.20418532 (v24 in the concept chain, published 2026-05-27)'",
+      "points_at": "Fathom v24 / styxx v7.7.7 release deposit.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [
+        {
+          "local_path": "zenodo/styxx-v7.7.7-zenodo-bundle.zip",
+          "content_kind": "binary",
+          "size_bytes_local": 14826030,
+          "sha256_local_bytes": "d9d61b5423a57ce8be355c9b15969d949a33b2ed47709e3f619d06b43c322523",
+          "sha256_lf_normalized": null,
+          "size_bytes_lf_normalized": null,
+          "note": "The bundle zenodo/ZENODO_UPLOAD_v7.7.7.md instructs the operator to upload. Hashed so drift in the local bundle is caught. Whether THIS byte-sequence is what the remote record holds is UNCHECKABLE: the upload was a manual drag-and-drop per that checklist, and no receipt was committed for it."
+        }
+      ],
+      "notes": "Unchanged since commit 5c5bf09 (2026-05-27), the stated publication date."
+    },
+    {
+      "doi": "10.5281/zenodo.20419662",
+      "kind": "VERSION",
+      "kind_evidence": "papers (v7 paper reproducibility section): 'release-specific v25 = 10.5281/zenodo.20419662 for v7.7.9 historical snapshot'",
+      "points_at": "Fathom v25 / styxx v7.7.9 release deposit, frozen at the v7.7.9-as-tagged state.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [
+        {
+          "local_path": "zenodo/styxx-v7.7.9-zenodo-bundle.zip",
+          "content_kind": "binary",
+          "size_bytes_local": 15022919,
+          "sha256_local_bytes": "86d07be3495267f6524e802a71b275bc079c3ef612dbd982b2095f20a9831a7e",
+          "sha256_lf_normalized": null,
+          "size_bytes_lf_normalized": null,
+          "note": "Same caveat as the v7.7.7 bundle: hashed for local drift only; remote content UNCHECKABLE, no committed receipt."
+        }
+      ],
+      "notes": "Unchanged since commit c75cab4 (2026-05-28)."
+    },
+    {
+      "doi": "10.5281/zenodo.20278945",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "memory/project_threshold_law_paper.md:4 'PUBLISHED — DOI 10.5281/zenodo.20278945 — live at https://zenodo.org/records/20278945 (2026-05-18)'",
+      "points_at": "The threshold-law deposit — the result that killed cross-vendor universality and that the position paper's erratum cites.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "papers/threshold-law-2026-05-18.md exists locally but no receipt binds it to this DOI's file list, so it is deliberately not recorded as a deposited file. Recording an unbacked hash would be the same kind of unearned claim this manifest exists to catch."
+    },
+    {
+      "doi": "10.5281/zenodo.21522035",
+      "kind": "VERSION",
+      "kind_evidence": "papers/DEPOSIT_frame_locality_2026_07_28.md:27 'Fathom v30 — 10.5281/zenodo.21522035 (anchored validity)' and :87 'v30 = 21522035 sits under it [concept 19326174]'",
+      "points_at": "Fathom v30 — anchored validity.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "papers/anchored-validity/submission/zenodo_metadata.json exists but does not record a published DOI or a receipt, so no file list is claimed."
+    },
+    {
+      "doi": "10.5281/zenodo.21520429",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "papers/DEPOSIT_frame_locality_2026_07_28.md:46 'Draft id 21520429, reserved DOI 10.5281/zenodo.21520429'",
+      "points_at": "A reserved DOI on a draft deposition. The repo does not record that it was ever published.",
+      "chain": null,
+      "status": "DRAFT_OR_RESERVED",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "A reserved DOI that is never published resolves to nothing. If this repo cites it anywhere as if it were live, that is a defect; it is cited here only as a record of the draft."
+    },
+    {
+      "doi": "10.5281/zenodo.21659191",
+      "kind": "VERSION",
+      "kind_evidence": "papers/DEPOSIT_frame_locality_2026_07_28.md:91 'Reserved version DOI: 10.5281/zenodo.21659191 (activates on publish)'; papers/UPDATE_COPY_frame_locality_2026_07_29.md:6-7 'Record: https://zenodo.org/records/21659191, Version DOI: 10.5281/zenodo.21659191'",
+      "points_at": "Fathom v31 — Frame-Locality: Where Corruption Captures a Language Model's Report, and Where It Reaches the Belief.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "The 07-28 package reserves it; the 07-29 update copy speaks of it as a live record. Taken together the repo implies it was published on 2026-07-29, but no receipt was committed, so the file list is UNCHECKABLE. papers/PAPER_frame_locality_2026_07_28.md is the obvious local counterpart and is deliberately not hashed as 'deposited' without a receipt."
+    },
+    {
+      "doi": "10.5281/zenodo.21679805",
+      "kind": "VERSION",
+      "kind_evidence": "papers/PROGRAM_SYNTHESIS_2026_07_30.md:76 'the control was circular (erratum DOI 10.5281/zenodo.21679805)' and :144 the chain '21679805 → v32 corrected edition (21693636) → v33'",
+      "points_at": "An erratum deposit: the statelessness control was circular.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Named as an erratum DOI in the chain. Its file list is UNCHECKABLE. Worth noting as precedent: this program has deposited an erratum as its own record before, which is one of the options open for the position paper."
+    },
+    {
+      "doi": "10.5281/zenodo.21693636",
+      "kind": "VERSION",
+      "kind_evidence": "papers/DEPOSIT_frame_locality_2026_07_28.md:130 'DOI: 10.5281/zenodo.21693636 (v32, 2026-07-29, concept 10.5281/zenodo.19326174)'",
+      "points_at": "Fathom v32 — the corrected edition following the 21679805 erratum.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.21695691",
+      "kind": "VERSION",
+      "kind_evidence": "papers/DEPOSIT_frame_locality_2026_07_28.md:139 'DOI: 10.5281/zenodo.21695691 (v33) — adds the second-vendor replication'",
+      "points_at": "Fathom v33 — adds the second-vendor replication.",
+      "chain": "concept 10.5281/zenodo.19326174",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.21708738",
+      "kind": "VERSION",
+      "kind_evidence": "papers/arxiv/SUBMIT.md:25 'doi:10.5281/zenodo.21708738 (v34)'",
+      "points_at": "Fathom v34.",
+      "chain": "concept 10.5281/zenodo.19326174 (asserted by series position, not by a receipt)",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.19504993",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "release/v6.0.0-bundle/ANTHROPIC-RESEARCHER-APPLICATION.md 'Prior paper (styxx v3.x): https://doi.org/10.5281/zenodo.19504993'",
+      "points_at": "A prior styxx v3.x paper deposit.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.19609853",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "papers/threshold-law-2026-05-18.md:373 'the most recent permanent deposit (DOI 10.5281/zenodo.19609853)'",
+      "points_at": "Whatever was the most recent permanent Fathom deposit as of the threshold-law paper, linked from that deposit's metadata as IsSupplementTo / IsContinuationOf.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "The repo names the relation but never names the record's title. Not guessed."
+    },
+    {
+      "doi": "10.5281/zenodo.19719347",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "papers/cognometry_methodology_v7.md:290 'Rodabaugh & Flobi, Cognometry v0.5: Three Calibrated Cognometric Instruments, Zenodo 10.5281/zenodo.19719347, 2026-04-23'",
+      "points_at": "Cognometry v0.5: Three Calibrated Cognometric Instruments.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "papers/cognometry-v0.5.md / .pdf exist locally and are the plausible counterparts, but no receipt binds them to this DOI, so no hash is recorded."
+    },
+    {
+      "doi": "10.5281/zenodo.19502716",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "scripts/zenodo_link_threshold_law.py:45 related_identifiers entry {'identifier': '10.5281/zenodo.19502716', 'relation': 'references'} with link text 'Fathom Cognitive Atlas v0.3'",
+      "points_at": "Fathom Cognitive Atlas v0.3, referenced from the threshold-law deposit metadata.",
+      "chain": null,
+      "status": "UNCHECKABLE",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "See open_questions: the adjacent-id pattern suggests this is the version DOI whose concept is 19502715, but that is inference from a number and is not recorded as fact."
+    },
+    {
+      "doi": "10.5281/zenodo.16919272",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "papers/closed-model-frontier/external1_summary.json corpus block {dataset: hao-li/AIDev, license: CC-BY-4.0, zenodo: 10.5281/zenodo.16919272}",
+      "points_at": "The hao-li/AIDev pull-request corpus. Third-party data this repo consumes.",
+      "chain": null,
+      "status": "THIRD_PARTY",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "Not a Fathom deposit. Listed so the manifest is a complete census of cited DOIs, never as something this repo can or should keep in sync."
+    },
+    {
+      "doi": "10.5281/zenodo.20577997",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "a prior-art correction record in papers/ (MedSci Skills v3.7.0)",
+      "points_at": "MedSci Skills v3.7.0, cited in a prior-art verification note about arXiv:2606.09500.",
+      "chain": null,
+      "status": "THIRD_PARTY",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.20582972",
+      "kind": "UNCHECKABLE",
+      "kind_evidence": "the same prior-art correction record (MedSci Skills v3.8.0, evaluation-harness version)",
+      "points_at": "MedSci Skills v3.8.0.",
+      "chain": null,
+      "status": "THIRD_PARTY",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": null
+    }
+  ],
+  "open_questions": [
+    "papers/cognometry-manifesto.md carries a 2026-06-21 erratum and is referred to in prose as 'the Cognometry Manifesto (10.5281/zenodo.19703527)'. The committed receipt for 19703527 lists cognometry-v0.pdf / cognometry-v0.md / cognometry-research-agenda-2026.md and does NOT list cognometry-manifesto.md. Whether the manifesto text is in that deposit under a different filename is UNCHECKABLE from inside the repo. If it is, 19703527 is a third diverged deposit and not merely two.",
+    "10.5281/zenodo.19502716 is attached as a related identifier for 'Fathom Cognitive Atlas v0.3' while 10.5281/zenodo.19502715 is labelled its concept DOI in-repo. The adjacent-id pattern (concept=n, first version=n+1) matches the one confirmed pair 19758618/19758619, but that is inference from a number, not a verified fact, so 19502716's kind is left UNCHECKABLE.",
+    "zenodo/README.md declares this directory STALE and historical. This manifest was placed here because it is where the repo's Zenodo material lives; it is current, not historical. If the operator moves the deposit flow, move this file with it and update tests/test_zenodo_manifest.py's MANIFEST path."
+  ]
+}

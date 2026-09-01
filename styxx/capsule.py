@@ -109,6 +109,32 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     }
     html = _render_html(payload)
     out.write_text(html, encoding="utf-8")
+
+    # A CAPSULE THAT CANNOT VERIFY MUST NOT EXIST.
+    #
+    # The gate above compares only `verdict` and `counts`, and that is strictly weaker
+    # than what verify_capsule checks. On 2026-09-01 that gap minted two capsules of
+    # June papers that failed verification on EVERY token: certificates issued before
+    # the ledger gained `status`/`col`/`receipt_ref` embed a ledger the current verifier
+    # re-derives as None, so `capsule verify` reported a divergence per token while
+    # `capsule create` had reported success. Both were about to be sent to an external
+    # reader as evidence the instrument works.
+    #
+    # Re-verifying what we just wrote is the only gate that cannot drift away from the
+    # verifier, because it IS the verifier. On failure the file is removed rather than
+    # left on disk — a broken capsule that exists will eventually be sent to someone.
+    report = verify_capsule(out)
+    if not report.get("ok"):
+        problems = report.get("problems") or [report.get("error", "unknown")]
+        out.unlink(missing_ok=True)
+        raise SystemExit(
+            "REFUSED: the minted capsule does not verify, so it was not kept.\n"
+            + "\n".join(f"  - {p}" for p in problems[:6])
+            + (f"\n  ... and {len(problems) - 6} more" if len(problems) > 6 else "")
+            + "\n\nIf the ledger diverges on every token, this certificate predates the "
+              "current ledger schema. Re-certify the document first (the verdict is "
+              "expected to be unchanged; a re-issue is a new commit and the drift is "
+              "tracked), then mint again.")
     return out
 
 

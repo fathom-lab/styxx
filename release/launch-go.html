@@ -103,6 +103,33 @@ code { color: #00e5ff; }
 </style>
 </head>
 <body>
+<div style="border:1px solid #664400;background:#1a1405;color:#c8b48a;padding:16px 20px;margin:0 0 24px 0;font-family:'JetBrains Mono','Cascadia Code','Consolas',monospace;font-size:13px;line-height:1.6;">
+<strong style="color:#ffaa00;">⚠ Ceiling erratum (2026-09-01).</strong>
+The near-perfect AUC figures quoted below &mdash; including the headline triple
+<strong>0.998</strong> (HaluEval-QA hallucination), <strong>0.976</strong> (XSTest refusal,
+out-of-family) and <strong>0.943</strong> (BFCL v3 tool-call drift) &mdash; are
+<strong>register detectors at a construct ceiling</strong>, and this page quotes them without
+saying so. Recorded here rather than corrected in place:
+<ul style="margin:10px 0 10px 20px;">
+<li><strong>What the figures are.</strong> Cross-validated separations, on the benchmarks named,
+between outputs whose <em>register</em> differs: confabulated vs grounded, refusing vs complying,
+drifted vs on-task. The numbers are not withdrawn and are not edited below.</li>
+<li><strong>What they are not.</strong> They are not a measure of honesty under adversarial
+pressure. The same construct scores <strong>0.498</strong> &mdash; chance &mdash; on text-only
+deception detection, against <strong>0.966</strong> for sampling-divergence grounding of factual
+self-claims. A near-perfect AUC on these benchmarks does not license the claim that the instrument
+catches a model that is trying not to be caught.</li>
+<li><strong>Where the bound is published.</strong>
+<code>papers/THESIS_the_honesty_standard_2026_05_31.md</code>, which names "a construct ceiling the
+program had hit four times", and the scope erratum at the top of
+<code>papers/every-mind-leaves-vitals.md</code>, which applies the same correction to this lab's
+own strongest claim.</li>
+<li><strong>Status of this document.</strong> Preserved as written. Nothing below is edited,
+softened or renumbered. Whether this document was sent, published or circulated is not decided
+here, and this erratum is correct either way.</li>
+</ul>
+<em>We measure behaviour and representation, never minds. The boundary is the product.</em>
+</div>
 
 <h1>launch: cognometry + styxx 4.0.2</h1>
 <div class="sub">nothing crosses unseen · click each button in order · text pre-filled where possible</div>
