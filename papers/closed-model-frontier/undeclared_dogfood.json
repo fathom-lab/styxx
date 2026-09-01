@@ -1,0 +1,20 @@
+{
+ "spec": "styxx-undeclared/v0.1",
+ "verdict": "UNGATED",
+ "worklog_spec": "styxx-worklog/v0.1",
+ "session": "undeclared-build-2026-09-01",
+ "harness": "claude-code",
+ "files_in_diff": 3,
+ "files_recorded": 2,
+ "attributed": [
+  "styxx/undeclared.py",
+  "tests/test_undeclared.py"
+ ],
+ "unattributed": [
+  "papers/closed-model-frontier/corpus_census.json"
+ ],
+ "recorded_not_in_diff": [],
+ "attributed_share": 0.6667,
+ "boundary": "UNATTRIBUTED means the file is in the diff and was not written through the instrumented surface. It does NOT mean concealment: a formatter, a package manager, a code generator or a merge writes files no agent claimed and none of that is dishonest. This comparison carries no verdict and blocks nothing.",
+ "not_measured": "the precision of UNATTRIBUTED as a signal has never been measured by a blind panel; only its noise floor is known"
+}

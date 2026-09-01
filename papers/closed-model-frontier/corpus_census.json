@@ -1,8 +1,8 @@
 {
  "census": "styxx-corpus/v1",
  "totals": {
-  "certificates": 203,
-  "held": 197,
+  "certificates": 206,
+  "held": 200,
   "failed": 6
  },
  "certificates": {
@@ -744,6 +744,24 @@
    },
    "sha256": "7f280123637a10a8881b8481a3d6930ae8d74b5aa63539f55a51aaf19fb11551"
   },
+  "RESULT_collateral_census_2026_08_31.certificate.json": {
+   "verdict": "OATH-HELD",
+   "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+   },
+   "sha256": "2abf2afb856fc1aa75a94accd8e87ba74a584e01ab5f56bf483a59961c1842cd"
+  },
+  "RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.certificate.json": {
+   "verdict": "OATH-HELD",
+   "counts": {
+    "VERIFIED": 1,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+   },
+   "sha256": "78b827a173b9d3536ee9d99651739869ab0a7cfbbdb3a0e6cd6efa44beb3e5e9"
+  },
   "RESULT_external_composition_2026_08_30.certificate.json": {
    "verdict": "OATH-HELD",
    "counts": {
@@ -932,6 +950,15 @@
     "UNGROUNDED": 0
    },
    "sha256": "353750ed43feb24e4356c6f455f484d9495ebbd100844c77413ffeb7fcc2f6bd"
+  },
+  "RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.certificate.json": {
+   "verdict": "OATH-HELD",
+   "counts": {
+    "VERIFIED": 7,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+   },
+   "sha256": "6b12c9e5bcbcd2493d0d2db24ecee878844e4d22d221dda8955d1b9bc3f31a28"
   },
   "ZENODO_nothing_crosses_unseen_2026_08_31.certificate.json": {
    "verdict": "OATH-HELD",

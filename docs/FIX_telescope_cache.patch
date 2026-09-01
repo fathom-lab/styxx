@@ -1,0 +1,12 @@
+--- a/.github/workflows/telescope.yml
++++ b/.github/workflows/telescope.yml
+@@ -43,7 +43,9 @@
+       - uses: actions/setup-python@v5
+         with:
+           python-version: '3.12'
+-          cache: 'pip'
++          # cache removed 2026-09-01: this job installs no requirements file, so
++          # setup-python's pip cache step fails with "Cache folder path is
++          # retrieved for pip but doesn't exist on disk" and reddens the run.
++          # The workflow itself was otherwise healthy; it had been red for at
++          # least five consecutive days on this one line.
