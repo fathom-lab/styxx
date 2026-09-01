@@ -1,0 +1,582 @@
+{
+ "XP-V14-028": {
+  "kind": "accusation",
+  "v14_id": "V14-028"
+ },
+ "XP-V14-091": {
+  "kind": "accusation",
+  "v14_id": "V14-091"
+ },
+ "XP-V14-080": {
+  "kind": "accusation",
+  "v14_id": "V14-080"
+ },
+ "XP-V14-053": {
+  "kind": "accusation",
+  "v14_id": "V14-053"
+ },
+ "XP-V14-075": {
+  "kind": "accusation",
+  "v14_id": "V14-075"
+ },
+ "XP-V14-097": {
+  "kind": "accusation",
+  "v14_id": "V14-097"
+ },
+ "XP-V14-001": {
+  "kind": "accusation",
+  "v14_id": "V14-001"
+ },
+ "XP-V14-003": {
+  "kind": "accusation",
+  "v14_id": "V14-003"
+ },
+ "XP-V14-023": {
+  "kind": "accusation",
+  "v14_id": "V14-023"
+ },
+ "XP-V14-021": {
+  "kind": "accusation",
+  "v14_id": "V14-021"
+ },
+ "XP-V14-057": {
+  "kind": "accusation",
+  "v14_id": "V14-057"
+ },
+ "XP-V14-018": {
+  "kind": "accusation",
+  "v14_id": "V14-018"
+ },
+ "XP-V14-040": {
+  "kind": "accusation",
+  "v14_id": "V14-040"
+ },
+ "XP-V14-002": {
+  "kind": "accusation",
+  "v14_id": "V14-002"
+ },
+ "XP-V14-030": {
+  "kind": "accusation",
+  "v14_id": "V14-030"
+ },
+ "XP-V14-064": {
+  "kind": "accusation",
+  "v14_id": "V14-064"
+ },
+ "XP-V14-013": {
+  "kind": "accusation",
+  "v14_id": "V14-013"
+ },
+ "XP-V14-071": {
+  "kind": "accusation",
+  "v14_id": "V14-071"
+ },
+ "XP-V14-056": {
+  "kind": "accusation",
+  "v14_id": "V14-056"
+ },
+ "XP-V14-081": {
+  "kind": "accusation",
+  "v14_id": "V14-081"
+ },
+ "XP-V14-063": {
+  "kind": "accusation",
+  "v14_id": "V14-063"
+ },
+ "XP-V14-044": {
+  "kind": "accusation",
+  "v14_id": "V14-044"
+ },
+ "XP-V14-059": {
+  "kind": "accusation",
+  "v14_id": "V14-059"
+ },
+ "XP-V14-041": {
+  "kind": "accusation",
+  "v14_id": "V14-041"
+ },
+ "XP-V14-093": {
+  "kind": "accusation",
+  "v14_id": "V14-093"
+ },
+ "XP-V14-015": {
+  "kind": "accusation",
+  "v14_id": "V14-015"
+ },
+ "XP-V14-060": {
+  "kind": "accusation",
+  "v14_id": "V14-060"
+ },
+ "XP-V14-090": {
+  "kind": "accusation",
+  "v14_id": "V14-090"
+ },
+ "XP-V14-033": {
+  "kind": "accusation",
+  "v14_id": "V14-033"
+ },
+ "XP-V14-089": {
+  "kind": "accusation",
+  "v14_id": "V14-089"
+ },
+ "XP-V14-045": {
+  "kind": "accusation",
+  "v14_id": "V14-045"
+ },
+ "XP-V14-005": {
+  "kind": "accusation",
+  "v14_id": "V14-005"
+ },
+ "XP-V14-017": {
+  "kind": "accusation",
+  "v14_id": "V14-017"
+ },
+ "XP-V14-024": {
+  "kind": "accusation",
+  "v14_id": "V14-024"
+ },
+ "XP-V14-066": {
+  "kind": "accusation",
+  "v14_id": "V14-066"
+ },
+ "XP-V14-051": {
+  "kind": "accusation",
+  "v14_id": "V14-051"
+ },
+ "XP-V14-036": {
+  "kind": "accusation",
+  "v14_id": "V14-036"
+ },
+ "XP-V14-048": {
+  "kind": "accusation",
+  "v14_id": "V14-048"
+ },
+ "XP-V14-014": {
+  "kind": "accusation",
+  "v14_id": "V14-014"
+ },
+ "XP-V14-050": {
+  "kind": "accusation",
+  "v14_id": "V14-050"
+ },
+ "XP-V14-012": {
+  "kind": "accusation",
+  "v14_id": "V14-012"
+ },
+ "XP-V14-032": {
+  "kind": "accusation",
+  "v14_id": "V14-032"
+ },
+ "XP-V14-000": {
+  "kind": "accusation",
+  "v14_id": "V14-000"
+ },
+ "XP-V14-065": {
+  "kind": "accusation",
+  "v14_id": "V14-065"
+ },
+ "XP-V14-099": {
+  "kind": "accusation",
+  "v14_id": "V14-099"
+ },
+ "XP-V14-011": {
+  "kind": "accusation",
+  "v14_id": "V14-011"
+ },
+ "XP-V14-072": {
+  "kind": "accusation",
+  "v14_id": "V14-072"
+ },
+ "XP-V14-079": {
+  "kind": "accusation",
+  "v14_id": "V14-079"
+ },
+ "XP-V14-058": {
+  "kind": "accusation",
+  "v14_id": "V14-058"
+ },
+ "XP-V14-025": {
+  "kind": "accusation",
+  "v14_id": "V14-025"
+ },
+ "XP-V14-094": {
+  "kind": "accusation",
+  "v14_id": "V14-094"
+ },
+ "XP-V14-073": {
+  "kind": "accusation",
+  "v14_id": "V14-073"
+ },
+ "XP-V14-055": {
+  "kind": "accusation",
+  "v14_id": "V14-055"
+ },
+ "XP-V14-038": {
+  "kind": "accusation",
+  "v14_id": "V14-038"
+ },
+ "XP-V14-043": {
+  "kind": "accusation",
+  "v14_id": "V14-043"
+ },
+ "XP-V14-082": {
+  "kind": "accusation",
+  "v14_id": "V14-082"
+ },
+ "XP-V14-052": {
+  "kind": "accusation",
+  "v14_id": "V14-052"
+ },
+ "XP-V14-037": {
+  "kind": "accusation",
+  "v14_id": "V14-037"
+ },
+ "XP-V14-068": {
+  "kind": "accusation",
+  "v14_id": "V14-068"
+ },
+ "XP-V14-092": {
+  "kind": "accusation",
+  "v14_id": "V14-092"
+ },
+ "XP-V14-098": {
+  "kind": "accusation",
+  "v14_id": "V14-098"
+ },
+ "XP-V14-047": {
+  "kind": "accusation",
+  "v14_id": "V14-047"
+ },
+ "XP-V14-035": {
+  "kind": "accusation",
+  "v14_id": "V14-035"
+ },
+ "XP-V14-084": {
+  "kind": "accusation",
+  "v14_id": "V14-084"
+ },
+ "XP-V14-076": {
+  "kind": "accusation",
+  "v14_id": "V14-076"
+ },
+ "XP-V14-026": {
+  "kind": "accusation",
+  "v14_id": "V14-026"
+ },
+ "XP-V14-049": {
+  "kind": "accusation",
+  "v14_id": "V14-049"
+ },
+ "XP-V14-046": {
+  "kind": "accusation",
+  "v14_id": "V14-046"
+ },
+ "XP-V14-077": {
+  "kind": "accusation",
+  "v14_id": "V14-077"
+ },
+ "XP-V14-020": {
+  "kind": "accusation",
+  "v14_id": "V14-020"
+ },
+ "XP-V14-027": {
+  "kind": "accusation",
+  "v14_id": "V14-027"
+ },
+ "XP-V14-029": {
+  "kind": "accusation",
+  "v14_id": "V14-029"
+ },
+ "XP-V14-054": {
+  "kind": "accusation",
+  "v14_id": "V14-054"
+ },
+ "XP-V14-016": {
+  "kind": "accusation",
+  "v14_id": "V14-016"
+ },
+ "XP-V14-019": {
+  "kind": "accusation",
+  "v14_id": "V14-019"
+ },
+ "XP-V14-087": {
+  "kind": "accusation",
+  "v14_id": "V14-087"
+ },
+ "XP-V14-007": {
+  "kind": "accusation",
+  "v14_id": "V14-007"
+ },
+ "XP-V14-061": {
+  "kind": "accusation",
+  "v14_id": "V14-061"
+ },
+ "XP-V14-006": {
+  "kind": "accusation",
+  "v14_id": "V14-006"
+ },
+ "XP-V14-096": {
+  "kind": "accusation",
+  "v14_id": "V14-096"
+ },
+ "XP-V14-062": {
+  "kind": "accusation",
+  "v14_id": "V14-062"
+ },
+ "XP-V14-083": {
+  "kind": "accusation",
+  "v14_id": "V14-083"
+ },
+ "XP-V14-042": {
+  "kind": "accusation",
+  "v14_id": "V14-042"
+ },
+ "XP-V14-070": {
+  "kind": "accusation",
+  "v14_id": "V14-070"
+ },
+ "XP-V14-067": {
+  "kind": "accusation",
+  "v14_id": "V14-067"
+ },
+ "XP-V14-009": {
+  "kind": "accusation",
+  "v14_id": "V14-009"
+ },
+ "XP-V14-008": {
+  "kind": "accusation",
+  "v14_id": "V14-008"
+ },
+ "XP-V14-034": {
+  "kind": "accusation",
+  "v14_id": "V14-034"
+ },
+ "XP-V14-010": {
+  "kind": "accusation",
+  "v14_id": "V14-010"
+ },
+ "XP-V14-004": {
+  "kind": "accusation",
+  "v14_id": "V14-004"
+ },
+ "XP-V14-022": {
+  "kind": "accusation",
+  "v14_id": "V14-022"
+ },
+ "XP-V14-088": {
+  "kind": "accusation",
+  "v14_id": "V14-088"
+ },
+ "XP-V14-074": {
+  "kind": "accusation",
+  "v14_id": "V14-074"
+ },
+ "XP-V14-069": {
+  "kind": "accusation",
+  "v14_id": "V14-069"
+ },
+ "XP-V14-031": {
+  "kind": "accusation",
+  "v14_id": "V14-031"
+ },
+ "XP-V14-039": {
+  "kind": "accusation",
+  "v14_id": "V14-039"
+ },
+ "XP-V14-086": {
+  "kind": "accusation",
+  "v14_id": "V14-086"
+ },
+ "XP-V14-078": {
+  "kind": "accusation",
+  "v14_id": "V14-078"
+ },
+ "XP-V14-085": {
+  "kind": "accusation",
+  "v14_id": "V14-085"
+ },
+ "XP-V14-095": {
+  "kind": "accusation",
+  "v14_id": "V14-095"
+ },
+ "XP-XD-C09": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-109"
+ },
+ "XP-XD-C07": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-107"
+ },
+ "XP-XD-C02": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-102"
+ },
+ "XP-XD-C04": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-104"
+ },
+ "XP-XD-N06": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "quotation",
+  "src": null
+ },
+ "XP-XD-C05": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-105"
+ },
+ "XP-XD-N02": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "negation",
+  "src": null
+ },
+ "XP-XD-C14": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-114"
+ },
+ "XP-XD-N01": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "negation",
+  "src": null
+ },
+ "XP-XD-N09": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "quotation",
+  "src": null
+ },
+ "XP-XD-N07": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "quotation",
+  "src": null
+ },
+ "XP-XD-N08": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "quotation",
+  "src": null
+ },
+ "XP-XD-C01": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-101"
+ },
+ "XP-XD-N05": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "quotation",
+  "src": null
+ },
+ "XP-XD-N04": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "negation",
+  "src": null
+ },
+ "XP-XD-C00": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-100"
+ },
+ "XP-XD-N00": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "negation",
+  "src": null
+ },
+ "XP-XD-N11": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "comparative_reference",
+  "src": null
+ },
+ "XP-XD-C06": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-106"
+ },
+ "XP-XD-N14": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "comparative_reference",
+  "src": null
+ },
+ "XP-XD-N10": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "comparative_reference",
+  "src": null
+ },
+ "XP-XD-C13": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-113"
+ },
+ "XP-XD-N03": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "negation",
+  "src": null
+ },
+ "XP-XD-N12": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "comparative_reference",
+  "src": null
+ },
+ "XP-XD-N13": {
+  "kind": "decoy",
+  "expected": "NOT-A-CLAIM",
+  "frame": "comparative_reference",
+  "src": null
+ },
+ "XP-XD-C11": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-111"
+ },
+ "XP-XD-C03": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-103"
+ },
+ "XP-XD-C08": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-108"
+ },
+ "XP-XD-C10": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-110"
+ },
+ "XP-XD-C12": {
+  "kind": "decoy",
+  "expected": "CLAIM",
+  "frame": null,
+  "src": "V14-112"
+ }
+}
