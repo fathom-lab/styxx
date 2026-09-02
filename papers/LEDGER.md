@@ -17,7 +17,7 @@ ratio is visible without reading 158 cycle entries.
 | cycles ending in a refusal, null, retraction or INVALID | **62** of 163 |
 | verdicts that were literally `INVALID__*` — the machinery refusing its own run | **9** |
 | gates declaring a power basis | 12 of 44 gated preregs |
-| — of those frozen *since* the field existed | **10 of 11** |
+| — of those frozen *since* the field existed | **11 of 12** |
 
 **The negatives row is not yet a measurement, and is published anyway.** The
 62 is produced by matching a keyword list against each cycle's free-prose
