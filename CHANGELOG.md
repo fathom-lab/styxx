@@ -90,6 +90,17 @@ genuine at 0.6391 (n=169); range-sanity accusations 0 for 13. The false accusati
 are, to first order, the line-handed ones — mention-versus-use inside handed-target. The h
 declaration carries a sworn addendum; two INVALID runs before it are shipped as INVALID.
 
+**SYNTHESIS — the grain of the handed target; h-mapping v2.** `papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`
+(sworn, 16 spans, every number bound to the receipt that holds it) reads the day's five preregistered
+verdicts together: a target handed by structure the author committed to (a header, an `n=` register,
+an oath tag, a trained rotation) held against strangers; a target handed by co-occurrence (a line word,
+a rule outside its idiom, a self-built detector) was the false accusation, the capacity in disguise,
+the detector that never earned its parameters. M2 in the audit acquires a grain — an addendum, the
+frozen table untouched. `h_mapping.json` moves to schema v2: `grain` per `object_text` source
+(vocabulary is `mixed`, split per token by `binding_context.header_bound`; `n=` structural; the
+correlation and range-sanity clauses incidental) and `target_grain` per instrument row (sworn is the
+limiting case, all structure). Census re-folded under the new mapping hash; two tests pin the column.
+
 **OATH v0.14, preregistered and SHIP: range-sanity reports instead of accusing.** `V14_RANGE_SANITY_REPORT`
 (default OFF, nothing committed changes) turns the v0.3 out-of-range rule into a reporter. The A/B: on
 the lab's own 207 documents the flag moves 0 of 8,583 tokens; on the rebuilt external corpus it removes
