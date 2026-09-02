@@ -21,7 +21,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))
-import styxx.certify as C                              # noqa: E402  (the submodule, by name)
+import importlib                                       # noqa: E402
+C = importlib.import_module("styxx.certify")          # the SUBMODULE, never the shadowing function
 from styxx.certify import certify_doc                  # noqa: E402
 from styxx.corpus_audit import _resolve_receipts       # noqa: E402
 from styxx.protocol import Experiment                  # noqa: E402

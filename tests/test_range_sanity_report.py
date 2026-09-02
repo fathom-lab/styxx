@@ -10,8 +10,14 @@ import json
 
 import pytest
 
-import styxx.certify as C
+import importlib
+
 from styxx.certify import certify_doc
+
+# the SUBMODULE, never the provenance function styxx/__init__ re-binds over the same name (the
+# name-shadow lesson of RESULT_unobligated_oath_2026_08_28): monkeypatching a function's attribute
+# would leave the module flag untouched and every 'on' test silently reading the 'off' path.
+C = importlib.import_module("styxx.certify")
 
 
 @pytest.fixture
