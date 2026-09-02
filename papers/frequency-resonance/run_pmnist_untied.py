@@ -33,7 +33,7 @@ sys.path.insert(0, str(ROOT))
 from styxx.protocol import Experiment        # noqa: E402
 
 PREREG = HERE / "PREREG_pmnist_untied_2026_09_02.md"
-ANCHORS = {"free": 0.9199, "clamped": 0.6067}     # pmnist_ablation_result.json, seed-mean test accuracy
+ANCHORS = {"free": 0.9195, "clamped": 0.6073}     # pmnist_ablation_result.json /result/free_acc, /result/clamped_acc
 
 
 class RealBank(nn.Module):

@@ -26,7 +26,7 @@ steps of AdamW with cosine decay, batch 64, seeds 0 and 1, full 10,000-image tes
 
 ```gates
 {"gates": {"G_P_anchors": {"metric": "anchor_max_abs_dev", "op": "<=", "value": 0.03,
-                           "power_basis": "FREE and CLAMPED re-run on CPU must land within 0.03 of the committed GPU receipt (0.9199, 0.6067); two seeds of this task moved by under 0.01 between the arc's own runs, and 0.03 is the allowance for device-level nondeterminism in a 784-step scan"},
+                           "power_basis": "FREE and CLAMPED re-run on CPU must land within 0.03 of the committed GPU receipt (0.9195, 0.6073); two seeds of this task moved by under 0.01 between the arc's own runs, and 0.03 is the allowance for device-level nondeterminism in a 784-step scan"},
            "G_C_gap": {"metric": "gap_free_minus_clamped", "op": ">=", "value": 0.15,
                        "power_basis": "the receipt's gap is 0.312; the flagship RESULT's own load-bearing threshold was 0.02 and half the measured gap is a conservative floor for 'the effect this control exists to explain reproduced'"},
            "G_R_recovers": {"metric": "free_minus_real2", "op": "<=", "value": 0.03,
@@ -49,6 +49,12 @@ Toward ROTATION_LOAD_BEARING, because the ordered-copy control recovered nothing
 MNIST is a classification over 784 steps where a spread of decay rates might carry more than it
 does for ordered recall, and the arc's own scarcity result is a warning that easy-task findings do
 not always travel. The bar is frozen either way.
+
+## Amendment, before any data (2026-09-02)
+
+The anchor digits were first typed from the RESULT's rounded prose (0.9199, 0.6067) instead of the
+receipt's own leaves (`/result/free_acc` 0.9195, `/result/clamped_acc` 0.6073). Corrected in the runner
+and above before the smoke or the run; the 0.03 tolerance is unchanged and unaffected.
 
 ## Discipline
 
