@@ -1,0 +1,63 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "b4042f24c97e2c88ea430593bc7657203e508d89",
+ "document": {
+  "name": "RESULT_handedness_v2_INVALID_2026_09_02.md",
+  "sha256": "d6a7dcb2da8c3b5f80b404d5e607f82b55f83475556865f41c026780a81c5cc0"
+ },
+ "text": "# RESULT — token-level h, v2: INVALID, the join was incomplete — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_v2_header_bound_2026_09_02.md`. Receipt:\n`handedness_v2_result.json`, scored through `styxx.protocol`. Corpus rebuilt exactly from pinned\nshas by `oath_external_recertify.py` (`oath_external_recertify_summary.json`: every file\nhash-verified, zero verdict-class drift). The frozen verdict reads `INVALID__join_incomplete`.\n\n## What tripped\n\nThe unresolved share was 0.0683:\n25 accusations join to zero or several ledger rows on the key the\npanel receipt carries, (repository, line, token), and the preregistration allowed 0.05. The\nallowance was frozen without accounting for what the verifier's own v0.10 note records — the same\ntoken string occurs more than once on roughly a tenth of lines — and the panel receipt carries no\ncolumn to break the tie. A rule that could not have been met on this corpus is a defect in the\npreregistration, not in the corpus, and it is shipped as INVALID.\n\n## Exploratory, under an INVALID verdict, and labelled so\n\nAmong header-handed accusations the genuine-claim share was 0.9515\n(n=165);\namong line-handed accusations it was 0.6391\n(n=169); a difference of 0.3124,\ntwice the frozen bar, on the cells the join did resolve. Nothing here is a finding; the gate says\nso, and the next document is the one that decides.\n\n## What follows\n\nv3 freezes the one rule v2 lacked: a token joining several rows takes the single row the verifier\naccuses, because the accused token is the one the panel judged. Bars unchanged. The prior is now\ncontaminated twice and declared twice.\n\n---\n\n*Two plumbing gates in a row, each written to fail first, each failing first. The data have been\nsaying one thing throughout; the rule that lets them say it is the next one frozen.*\n",
+ "spans": [
+  {
+   "start": 407,
+   "end": 459,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 478,
+   "end": 509,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/metrics/unresolved_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 511,
+   "end": 525,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 1090,
+   "end": 1156,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/header/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1158,
+   "end": 1163,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/header/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1166,
+   "end": 1209,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/line/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1211,
+   "end": 1216,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/line/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1219,
+   "end": 1241,
+   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/metrics/delta_header_minus_line",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}
