@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "DECLARATION_h_mapping_2026_09_01.md",
-  "inline_sha256": "9b8ebe43e35b93c8cdba8952c7d4c97e3d0cf5e87791c531c19188616ba16dbf",
-  "canonical_sha256": "6fef1ac1896406826747371af140b96de8063ccc2d7d6b21a52e660b8424b2ce"
+  "inline_sha256": "e955d50f3bc3feacb7c00a71825ff900c76fc7b56600b112429706ae88c8f3d2",
+  "canonical_sha256": "a1edcb3dc58ad93dd6afeaec3d41918d02c3826d0cfc7afd8f710d369f77145d"
  },
- "commit": "b1a6326ef35b894065c81f722800d1c4de0f8bc8",
+ "commit": "841f232ba875390f928fe1728654ea420354a1f6",
  "manifest_digest": null,
  "spans": [
   {
@@ -25,7 +25,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 5501,
@@ -43,7 +43,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 5672,
@@ -61,7 +61,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 5882,
@@ -79,7 +79,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6071,
@@ -97,7 +97,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6243,
@@ -115,7 +115,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6411,
@@ -133,7 +133,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6591,
@@ -151,7 +151,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6751,
@@ -169,7 +169,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 6925,
@@ -187,7 +187,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 7113,
@@ -205,7 +205,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 7491,
@@ -223,7 +223,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 7657,
@@ -241,7 +241,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 7836,
@@ -259,7 +259,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 7981,
@@ -277,7 +277,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8126,
@@ -295,7 +295,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8288,
@@ -313,7 +313,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8448,
@@ -331,7 +331,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8605,
@@ -349,7 +349,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8778,
@@ -367,7 +367,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 8940,
@@ -385,7 +385,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 9125,
@@ -403,7 +403,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 9304,
@@ -421,7 +421,7 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 10128,
@@ -439,7 +439,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 10323,
@@ -457,7 +457,7 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "ad90b27a82af06c8321f5d506b810a4b27161129b2e7bfa51e7e0b05545764ec"
+   "resolved_sha256": "36db21b511967556483cfd5a2f98686fcf44f8f1b4eafc6304382d2b3a68eb2e"
   },
   {
    "at": 12296,
@@ -563,6 +563,6 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "094b6ccf603164ed7f83de6342684918a53d6d11ff3e4305e7be213a1d554854",
- "timestamp": "2026-09-02T00:34:17Z"
+ "digest": "5e6674bf8b950072300b9726e3a05709067a1fa7569a01de062b1469ea5a9c4a",
+ "timestamp": "2026-09-02T00:58:01Z"
 }
