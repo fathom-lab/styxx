@@ -1,0 +1,40 @@
+{
+  "prereg": "PREREG_range_sanity_report_2026_09_02.md",
+  "smoke": false,
+  "internal": {
+    "documents": 207,
+    "tokens": 8583,
+    "tokens_moved": 0,
+    "moves": {},
+    "held_to_failed": 0,
+    "failed_to_held": 0,
+    "flipped": []
+  },
+  "external": {
+    "repos": 82,
+    "unresolved_repos": 0,
+    "accusations_removed": 13,
+    "removed_moves": {
+      "UNGROUNDED->ABSTAIN": 13
+    },
+    "removed_genuine_by_panel": 0,
+    "accusations_remaining": 353,
+    "remaining_false_by_panel": 82
+  },
+  "false_accusation_rate_before": 0.2596,
+  "false_accusation_rate_after": 0.2323,
+  "metrics": {
+    "internal_held_to_failed": 0,
+    "external_unresolved_repos": 0,
+    "removed_genuine_share": 0.0,
+    "false_accusation_rate_gain": 0.0273
+  },
+  "verdict": "SHIP__range_sanity_reports",
+  "gates": {
+    "G_P_external": true,
+    "G_REG_internal": true,
+    "G_K_removed_false": true,
+    "G_GAIN": true
+  },
+  "verifier_sha256": "65194cc64b8078b6d4a169932921b101d9f0c980d95c4f2773f953bd501e9151"
+}
