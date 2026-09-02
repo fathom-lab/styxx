@@ -72,6 +72,22 @@ framework-agnostic and tested without torch: it decomposes a trained model's sco
 static-oscillation reliance and adaptation reliance, and says in its own output that it diagnoses a
 model and never licenses a primitive.
 
+**Token-level h on the blind panel: INVALID, shipped as INVALID, and a v2 frozen against the real
+documents.** `PREREG_handedness_accusations_2026_09_02.md` joined the 366 panel-judged external
+accusations to the obligation source re-derived from the harness ledger; its own plumbing gate
+tripped (half the accusations reach no clause from the ledger — the verifier obligates table cells
+through their header, the ledger recorded the row) and the RESULT ships as
+`INVALID__rederivation_diverged`, with the object_form cell found empty on this corpus.
+`oath_external_recertify.py` rebuilds the pinned corpus from raw GitHub, hash-verified, cached
+outside the tree, and re-certifies it with the current verifier so every token carries the
+verifier's own source; `PREREG_handedness_v2_header_bound_2026_09_02.md` freezes the hypothesis this
+corpus can hold — header-handed against line-handed accusations — with its contaminated prior declared.
+
+**The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
+clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
+magnitude. REAL2 — a real bank with 2D independent magnitudes, exactly FREE's state and parameters —
+separates rotation from timescale diversity on the rhythm-rescue task.
+
 **The eleven-instrument census, with receipts.** `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`
 (sworn) and `prose_claimhood_census.json` (built by `prose_claimhood_census.py`, which resolves
 every pointer): the audit's eleven prose-reading instruments, each with the document that measured
