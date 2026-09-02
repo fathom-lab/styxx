@@ -64,7 +64,9 @@ experiment together: at every width measured, a static bank with fewer parameter
 adaptive-frequency model beats it (0.460 vs 0.375 at D=4 against a D=8 static bank; 0.678 vs 0.545
 at D=8 against a D=16 static bank, which beats the D=8 oracle too). The adaptive line's last positive
 was capacity in disguise. Not preregistered, said so, every number sworn; the frozen rule is
-`PREREG_efficiency_control_2026_09_02.md`, whose D=26 matched arm is run on CPU in minutes.
+`PREREG_efficiency_control_2026_09_02.md`, run on CPU the same day: **CAPACITY_IN_DISGUISE** under
+the frozen gates (`RESULT_efficiency_control_2026_09_02.md`, sworn) — the matched static bank at D=26 beats
+RICH at D=8 by 0.196 and beats the D=8 oracle; at D=4 the matched bank beats RICH by 0.305.
 `styxx/resonance.py` (NEW) is the resonance profiler the audit listed as built and never shipped,
 framework-agnostic and tested without torch: it decomposes a trained model's score into decay floor,
 static-oscillation reliance and adaptation reliance, and says in its own output that it diagnoses a

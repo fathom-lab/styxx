@@ -1,5 +1,7 @@
 # RESULT — ENTRAIN-RICH: WEAK at D=8, GREENLIGHT at D=4 — the detector IS the bottleneck — 2026-07-23
 
+> **Back-pointer, added 2026-09-02.** The WEAK advantage at the primary width and the clean win at the narrow one were capacity in disguise: a static bank with the same parameter budget beats RICH at both widths under a frozen rule — see `RESULT_efficiency_control_2026_09_02.md`. The text below is unchanged.
+
 Frozen by `PREREG_entrain_rich_2026_07_23.md`. Receipt: `entrain_rich_result.json`. Runner:
 `run_entrain_rich.py` (parallel scan; red-team `scan==seq`, `κ=0==STATIC` bit-for-bit). 3 seeds, 1500
 steps, RTX 4070. **Verdict: WEAK** at the pre-registered primary D=8 — real, mechanism-tied, below the

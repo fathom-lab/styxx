@@ -1,5 +1,7 @@
 # RESULT — the efficiency control, answered from the receipts: adaptive frequency was capacity in disguise
 
+> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISGUISE, and its verdict outranks this document's — see `RESULT_efficiency_control_2026_09_02.md`. The text below is unchanged.
+
 Fathom Lab · 2026-09-02 · **A recombination of committed evidence, not a new measurement, and not
 preregistered.** `RESULT_entrain_rich_2026_07_23.md` named "a param-matched wider static bank" as
 the honest next control for its +0.085 (D=8) and +0.129 (D=4) adaptive-frequency advantages. That

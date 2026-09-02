@@ -2,108 +2,86 @@
  "schema": "styxx.sworn.verdict-receipt/v0",
  "format": "sworn/0.1",
  "document": {
-  "name": "RESULT_efficiency_control_from_receipts_2026_09_02.md",
-  "inline_sha256": "1f96b6e9a0353b7565c3b2aeb95052191f8ca7dd2cda9d4f4f242de3743b00b1",
-  "canonical_sha256": "eff7953735e6b610ac02fe2ee366531222d504f9661da33c329128024a538911"
+  "name": "RESULT_efficiency_control_2026_09_02.md",
+  "inline_sha256": "941767a8c52d32dec562b229fec68ebf5756a495a44677167af63682f17d34d8",
+  "canonical_sha256": "6956b802e98abf7511cceda2223fc130f4c6ec0e8e42226ae341db2c4074da46"
  },
- "commit": "575e51f1d115eee26d7106ed00910e7a2be3d7f0",
+ "commit": "3b14f4208e304ae9e3824984fc0decdf540dc9d2",
  "manifest_digest": null,
  "spans": [
   {
-   "at": 1597,
-   "start": 1597,
-   "end": 1621,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/params/4/rich",
+   "at": 458,
+   "start": 458,
+   "end": 503,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/verdict",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 20,
+    "haystack_bytes": 20
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 679,
+   "start": 578,
+   "end": 653,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/anchor_max_abs_dev",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "3184",
-    "printed": "3184",
-    "receipt": "3184",
-    "receipt_rounded": "3184",
+    "printed_token": "0.0227",
+    "printed": "0.0227",
+    "receipt": "0.0227",
+    "receipt_rounded": "0.0227",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 953,
+   "start": 730,
+   "end": 782,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/oracle_minus_static_8",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.162",
+    "printed": "0.162",
+    "receipt": "0.162",
+    "receipt_rounded": "0.162",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 1243,
+   "start": 895,
+   "end": 938,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/8/static_matched",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "5850",
+    "printed": "5850",
+    "receipt": "5850",
+    "receipt_rounded": "5850",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 1729,
-   "start": 1626,
-   "end": 1660,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/4/rich",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.3752",
-    "printed": "0.3752",
-    "receipt": "0.37521106998125714",
-    "receipt_rounded": "0.3752",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
-  },
-  {
-   "at": 1867,
-   "start": 1662,
-   "end": 1708,
-   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/params/8/static",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "2052",
-    "printed": "2052",
-    "receipt": "2052",
-    "receipt_rounded": "2052",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
-  },
-  {
-   "at": 2030,
-   "start": 1721,
-   "end": 1734,
-   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/8/static",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.4604",
-    "printed": "0.4604",
-    "receipt": "0.4604337016741435",
-    "receipt_rounded": "0.4604",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
-  },
-  {
-   "at": 2183,
-   "start": 1771,
-   "end": 1823,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/gate/rich_advantage_by_D/4",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.1286",
-    "printed": "0.1286",
-    "receipt": "0.1286",
-    "receipt_rounded": "0.1286",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
-  },
-  {
-   "at": 2429,
-   "start": 1901,
-   "end": 1925,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/params/8/rich",
+   "at": 1416,
+   "start": 949,
+   "end": 960,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/8/rich",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -115,136 +93,195 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 2561,
-   "start": 1930,
-   "end": 1943,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/8/rich",
+   "at": 1542,
+   "start": 966,
+   "end": 986,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/static_matched_minus_rich_8",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.5451",
-    "printed": "0.5451",
-    "receipt": "0.5451151927312216",
-    "receipt_rounded": "0.5451",
+    "printed_token": "0.1959",
+    "printed": "0.1959",
+    "receipt": "0.1959",
+    "receipt_rounded": "0.1959",
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 2678,
-   "start": 1945,
-   "end": 1997,
-   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/params/16/static",
+   "at": 2081,
+   "start": 1374,
+   "end": 1392,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/rich",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "3580",
-    "printed": "3580",
-    "receipt": "3580",
-    "receipt_rounded": "3580",
+    "printed_token": "0.5560",
+    "printed": "0.5560",
+    "receipt": "0.5559939543406168",
+    "receipt_rounded": "0.5560",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 2209,
+   "start": 1394,
+   "end": 1418,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/oracle",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.6451",
+    "printed": "0.6451",
+    "receipt": "0.6450705726941427",
+    "receipt_rounded": "0.6451",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 2345,
+   "start": 1420,
+   "end": 1457,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/static_matched",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.7519",
+    "printed": "0.7519",
+    "receipt": "0.7518961032231649",
+    "receipt_rounded": "0.7519",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
+  },
+  {
+   "at": 2789,
+   "start": 1746,
+   "end": 1789,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/4/static_matched",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "3375",
+    "printed": "3375",
+    "receipt": "3375",
+    "receipt_rounded": "3375",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 2848,
-   "start": 2010,
-   "end": 2023,
-   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/16/static",
+   "at": 2960,
+   "start": 1798,
+   "end": 1809,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/4/rich",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.6781",
-    "printed": "0.6781",
-    "receipt": "0.6781367460886637",
-    "receipt_rounded": "0.6781",
-    "fractional_digits": 4,
+    "printed_token": "3184",
+    "printed": "3184",
+    "receipt": "3184",
+    "receipt_rounded": "3184",
+    "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 2986,
-   "start": 2044,
-   "end": 2063,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/gate/rich_minus_static",
+   "at": 3086,
+   "start": 1815,
+   "end": 1835,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/reported_static_matched_minus_rich_4",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.0847",
-    "printed": "0.0847",
-    "receipt": "0.0847",
-    "receipt_rounded": "0.0847",
+    "printed_token": "0.3049",
+    "printed": "0.3049",
+    "receipt": "0.3049",
+    "receipt_rounded": "0.3049",
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 3274,
-   "start": 2220,
-   "end": 2323,
-   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/8/oracle",
+   "at": 3248,
+   "start": 1837,
+   "end": 1850,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/4/static_matched",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.6307",
-    "printed": "0.6307",
-    "receipt": "0.6306845943133036",
-    "receipt_rounded": "0.6307",
+    "printed_token": "0.6648",
+    "printed": "0.6648",
+    "receipt": "0.6647679011027018",
+    "receipt_rounded": "0.6648",
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   },
   {
-   "at": 3610,
-   "start": 2452,
-   "end": 2495,
-   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/16/oracle",
+   "at": 3388,
+   "start": 1859,
+   "end": 1870,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/4/rich",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.8950",
-    "printed": "0.8950",
-    "receipt": "0.8950320283571879",
-    "receipt_rounded": "0.8950",
+    "printed_token": "0.3599",
+    "printed": "0.3599",
+    "receipt": "0.35986361900965375",
+    "receipt_rounded": "0.3599",
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf"
   }
  ],
  "counts": {
-  "HELD": 12,
+  "HELD": 14,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 12,
+ "sworn_total": 14,
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "coverage": {
-  "estimate": 0.9231,
-  "unsworn_claims_estimate": 1,
+  "estimate": 0.875,
+  "unsworn_claims_estimate": 2,
   "unsworn_claims": [
    {
-    "start": 110,
-    "end": 327,
-    "text": "> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISGUISE, and its verdict outranks this document's — see `RESULT_efficiency_control_"
+    "start": 74,
+    "end": 171,
+    "text": "Fathom Lab · 2026-09-02 · Frozen by `PREREG_efficiency_control_2026_09_02.md` (committed before"
+   },
+   {
+    "start": 3028,
+    "end": 3122,
+    "text": "real LinOSS or Mamba checkpoints; the profiler now shipped in `styxx/resonance.py` is how that"
    }
   ],
   "advisory": true,
@@ -283,6 +320,6 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "398bf0cbeb2a9c9d7c219e0eec4928c7010092b2e8490159177cdfe94aa7b222",
+ "digest": "0f6b4753d12409d59c81ff2dc6504f423312b7208df23a96b5d6e7697a03a9e5",
  "timestamp": "2026-09-02T00:15:05Z"
 }
