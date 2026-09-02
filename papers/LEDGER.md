@@ -11,12 +11,12 @@ ratio is visible without reading 158 cycle entries.
 | | |
 |---|---|
 | cycles logged | **163** |
-| preregistrations frozen | **389** (45 carrying a machine-scored gates block) |
+| preregistrations frozen | **390** (46 carrying a machine-scored gates block) |
 | OATH certificates | **208** |
 | trust-stack seals | **34** |
 | cycles ending in a refusal, null, retraction or INVALID | **62** of 163 |
 | verdicts that were literally `INVALID__*` — the machinery refusing its own run | **9** |
-| gates declaring a power basis | 13 of 45 gated preregs |
+| gates declaring a power basis | 14 of 46 gated preregs |
 | — of those frozen *since* the field existed | **12 of 13** |
 
 **The negatives row is not yet a measurement, and is published anyway.** The
