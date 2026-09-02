@@ -1,0 +1,111 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "a5b0328ea21268c847db60713f17b24e73dec3e3",
+ "document": {
+  "name": "SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md",
+  "sha256": "20f081a1af30ba3ddaa251fbd598853c9a0206612d0eca9ae9f5b1e0380dcfc1"
+ },
+ "text": "# SYNTHESIS — the grain of the handed target: structure hands a claim, co-occurrence hands a coin — 2026-09-02\n\nFathom Lab · 2026-09-02 · **A synthesis, not a result.** It measures nothing; it reads five\npreregistered verdicts issued today, three of them HELD and two of them the INVALIDs that\npreceded a HELD, and says what they jointly mean. Every number in it is sworn to the receipt that\nholds it at commit `a5b0328ea212`; the reading is the author's and is the part a reader should argue\nwith. Mechanism M2 in `AUDIT_the_whole_program_2026_09_01.md` — *a number measured where the\ntarget was supplied collapses when the instrument must find it* — was found eleven times and\nnamed once. Today it acquired a grain.\n\n## The thesis\n\n*Handed* was one word for two things. A target can be handed to an instrument by **structure** —\na label the author chose and committed to, a column header, an oath tag, a rotation the weights\nwere trained to use — or by **co-occurrence** — a word that happened to be nearby, a rule written\nfor one idiom and fired in another, a detector guessing at a rhythm it was not given. Instruments\ntrusting the first kind held today under frozen bars. Instruments trusting the second kind were\nthe false accusations, the capacity in disguise, and the detector that never earned its\nparameters. The prose-versus-artifact split the audit examined was a proxy for handed-versus-found;\nhanded-versus-found is itself a proxy for **structure-versus-co-occurrence**, and that is the line\nthe receipts draw.\n\n## The five verdicts, as receipts\n\n**1. On the verifier's accusations, the structure is a column header.**\nThe frozen verdict was `HEADER_HANDED_ACCUSES_TRUER`:\naccusations handed by a table header were genuine at 0.9515\n(n=165), and\naccusations handed by a trigger word in the line were genuine at 0.6391\n(n=169), on the 2026-08-27 external blind panel with no token\nre-judged. Both are `object_text` under the handedness declaration; only one is structure.\n\n**2. On the verifier's rules, a rule outside its idiom is co-occurrence.**\nThe frozen verdict was `SHIP__range_sanity_reports`: the v0.3 out-of-range\nrule, written for this lab's prose, moved 0 of the lab's own tokens\nand accused 13 tokens on foreign READMEs of which\n0 were genuine; turning it into a reporter takes\nthe external false-accusation rate to 0.2323. A bounded\nword before a number is a handed target; on a README it is a coin.\n\n**3. On the verifier's oaths, the same line was drawn on 2026-08-30.** The join RESULT found that\nobligated oaths on foreign text were claims at 0.7826\nwhile volunteered oaths were claims at 0.3654.\nAn obligation is a handed target; a volunteered value match is a coincidence the verifier found\non its own. Found, here, was the worse half — and today's grain says why the handed half was\nstill only 0.78: some of its handing was co-occurrence.\n\n**4. On the sequence model, the clever detector was co-occurrence and the rotation was\nstructure.** The efficiency control's frozen verdict was `CAPACITY_IN_DISGUISE`:\na static bank spending the adaptive detector's parameters on more modes beat it by\n0.1959 at the primary width — a detector that\nguesses the input's rhythm is a target the model handed itself. And\nthe untied-magnitudes verdict was `ROTATION_LOAD_BEARING__beyond_diversity`:\na real bank with twice the independent timescales recovered\na fraction 0.0 of the clamped bank's lost capacity. The\nrotation the weights were trained to use is not a guess. It is the structure, and nothing the\nmodel could infer replaced it.\n\n**5. On the format, sworn output is the limiting case: all structure, no co-occurrence.** The\nauthor binds one sentence to one receipt leaf at write time; the verifier is handed a\ncommitment, never a target to find. This document is written in it, and its own verdict is the\ndemonstration that the reading above rests on bytes an author could not have written.\n\n## What the grain changes\n\nThe handedness declaration's classes stay as declared — `object_text`, `object_form`, `receipt`,\n`external` — but `object_text` now owes a split: **structural** (a label the author chose: a\nheader, a tag, a declared field) against **incidental** (a word that co-occurred). The mapping's\nnext version names it, and the instrument-level table gains a column: does this instrument take\nits targets from structure the author committed to, or from co-occurrence it inferred? Read down\nthat column, the eleven prose-claimhood instruments of the census are all incidental readers,\nand the instruments that survived their strangers — the oath's obligated half, the header-handed\naccusations, the phase clamp, sworn — all read structure.\n\n## What this synthesis does not say\n\nThat structure is truth: a header can label a column of fabricated numbers, and a sworn span can\nbind a trivial sentence — invariant 4 of the spec exists because of exactly that. That the\nsequence-model results and the verifier results share a mechanism rather than a shape; the\nanalogy is the author's, and the receipts are silent on it. That anything here was measured\nagainst strangers in more than one panel of one model family. The five verdicts are each bounded\nin their own documents, and this synthesis inherits every bound.\n\n---\n\n*The verifier trusted words it found near numbers and the model trusted a detector it built for\nitself, and both were coins. What held was what had been chosen and committed to before the\ninstrument looked: the header, the oath, the rotation. Handed is not one thing. Structure hands a\nclaim; co-occurrence hands a coin.*\n",
+ "spans": [
+  {
+   "start": 1649,
+   "end": 1701,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1703,
+   "end": 1762,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1764,
+   "end": 1769,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1776,
+   "end": 1847,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1849,
+   "end": 1854,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2077,
+   "end": 2128,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2194,
+   "end": 2219,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/internal/tokens_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 2232,
+   "end": 2260,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/accusations_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2270,
+   "end": 2284,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/removed_genuine_by_panel",
+   "kind": "numeric"
+  },
+  {
+   "start": 2357,
+   "end": 2363,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/false_accusation_rate_after",
+   "kind": "numeric"
+  },
+  {
+   "start": 2541,
+   "end": 2594,
+   "receipt": "path:papers/closed-model-frontier/oath_obligation_claimhood_join.json#/arms/external/obligated/claim_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 2601,
+   "end": 2640,
+   "receipt": "path:papers/closed-model-frontier/oath_obligation_claimhood_join.json#/arms/external/volunteered/claim_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 2990,
+   "end": 3056,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 3141,
+   "end": 3147,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/static_matched_minus_rich_8",
+   "kind": "numeric"
+  },
+  {
+   "start": 3257,
+   "end": 3332,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 3394,
+   "end": 3408,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/recovery_fraction",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}
