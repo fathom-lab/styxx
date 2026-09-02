@@ -1,0 +1,151 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7",
+ "document": {
+  "name": "RESULT_sworn_v02_ships_2026_09_02.md",
+  "sha256": "12854a3153367662d5c20cfb4644f92f5c6743fbe13338f185a750a1c32fb4fc"
+ },
+ "text": "# RESULT — sworn output v0.2 ships: the format is attacked, pays four rules, and withdraws the number it printed beside every verdict\n\nFathom Lab · 2026-09-02 · Spec: `SPEC_sworn_output_v02_2026_09_02.md`, frozen before any line of\n`styxx/sworn.py` changed. Battery: `ATTACKS_sworn_v01_battery_2026_09_02.md`. Harness:\n`harness_pytest.py`, turn `turn_2026_09_02_sworn_v02`, rung L1. **This document is itself sworn**:\nevery count in it is bound to a receipt the author could not have written — the manifest the\nharness minted from the test run, or a file at the commit the sidecar names — and its sidecar and\nverdict receipt sit beside it. Nothing here is a measurement of sworn output. That is owed item 3\nof the v0.1 spec, redesigned in `DESIGN_sworn_measurement_v2_2026_09_02.md`, and still owed.\n\n## What was built\n\nThe spec's opening rule reads `The rules, each with its attack`, and there are nine of them.\nFour repair the battery: fragments on manifest receipts (`rN#/pointer`, `rN#Ln-Lm`); a tag inside\nan HTML comment is MALFORMED `hidden_commitment`; a short `quote` needle over a whole receipt is\nMALFORMED `short_needle`, with pointer leaves, line anchors and `absent` exempt; the span cap\ncounts code points. Three print the trust boundary: an `attestation` source kind whose bytes are\na receipt and whose signature is never checked; a manifest that declares its rung, L1 or L2, L3\nreserved; provenance on every span and a rung count on every receipt. One withdraws a number: the\ncoverage estimate, whose denominator was a diff-claim detector fired on result-shaped prose, is\nreplaced by two counts that cannot flatter. One moves the receipt: schema v1 digests the core\nwithout coverage, so a receipt re-derives wherever the observer differs, and every committed v0\nreceipt has been re-issued under it in a new commit with no span verdict moving.\n\nAt the commit this document names the verifier's bytes hash to f75aff8a47656ce74fbc34b6a566e17bb9e23c56da45eed3d28ca55503ca22f1.\nIt is 1789 lines long.\nThe harness ran the three sworn suites and 358 tests passed.\n0 failed.\npytest's output carries no `failed`.\nruff printed `All checks passed!`\nThe interpreter was `3.12.10`.\nThe manifest declares rung `L1`.\n\nTwo of those receipts are the new form at work: `r5#/sworn_lines` names a leaf inside the\nharness's own JSON capture, where v0.1 needed a one-number receipt per number. The rung is the\nhonest part: this harness is a committed script on the author's machine, and every span above\nthat rests on it prints L1 beside its verdict.\n\n## The re-issue\n\nThe v0.1 RESULT's receipt now carries schema `styxx.sworn.verdict-receipt/v1`.\nOf its spans, 9 rest on committed objects\nand 4 on a manifest that declared no rung —\nthe v0.1 harness predates rungs, and the receipt says `undeclared` rather than guessing.\nIts coverage floor reads 0.1667\nwhere its v0.1 receipt printed an estimate of 0.9286 — the same document, the same spans, two\ndenominators, and the census in the battery document says which one was measuring what.\nAll 12 committed sworn documents were re-issued\nby `reissue_receipts_v1.py`, which refuses if any span verdict moves; none did. The v0 receipts\nremain in history and still check on their core.\n\n## What this does not say\n\nThat the format works: no panel has read a sworn document, and the six attacks the battery could\nnot repair are priced only by a measurement that has not run. That the floor is coverage: it\ntreats every narrative sentence as load-bearing and is printed as a floor. That any rung above L1\nexists in this tree: the only harness is this script, and L2 is what a CI runner would be. That\nthe attacker was independent: the builder ran the battery, which is the weakest attacker there\nis. That anyone can `pip install` this: `styxx.sworn` is unreleased and a stranger needs a clone\nat a named commit.\n\n## Owed\n\nThe measurement, redesigned (`DESIGN_sworn_measurement_v2_2026_09_02.md`) and waiting on a\nsignature. Conformance vectors before any second verifier. The prior-art survey before any\n\"we know of no other\". Harness adapters at L1 and L2, each printing its rung. A release.\n\n---\n\n*The first sworn document about v0.2 swears to what the test runner printed, to the hash of its\nown verifier, and to the rung it stood on — and says, beside every number, how little that\nproves.*\n",
+ "spans": [
+  {
+   "start": 828,
+   "end": 891,
+   "receipt": "prereg:d3f4f852acf3cb8acf7c3aa769cc28b0f2d1574a282b6ae3aa3aee6cf867f4b5",
+   "kind": "quote"
+  },
+  {
+   "start": 1869,
+   "end": 1997,
+   "receipt": "path:styxx/sworn.py",
+   "kind": "hash"
+  },
+  {
+   "start": 1998,
+   "end": 2020,
+   "receipt": "r5#/sworn_lines",
+   "kind": "numeric"
+  },
+  {
+   "start": 2021,
+   "end": 2081,
+   "receipt": "r1",
+   "kind": "numeric"
+  },
+  {
+   "start": 2082,
+   "end": 2091,
+   "receipt": "r4",
+   "kind": "numeric"
+  },
+  {
+   "start": 2092,
+   "end": 2128,
+   "receipt": "r2",
+   "kind": "absent"
+  },
+  {
+   "start": 2129,
+   "end": 2162,
+   "receipt": "r3",
+   "kind": "quote"
+  },
+  {
+   "start": 2163,
+   "end": 2193,
+   "receipt": "r5#/python",
+   "kind": "quote"
+  },
+  {
+   "start": 2194,
+   "end": 2226,
+   "receipt": "r5#/rung",
+   "kind": "quote"
+  },
+  {
+   "start": 2572,
+   "end": 2650,
+   "receipt": "path:papers/sworn/RESULT_sworn_v01_ships_2026_09_01.sworn-receipt.json#/schema",
+   "kind": "quote"
+  },
+  {
+   "start": 2651,
+   "end": 2692,
+   "receipt": "path:papers/sworn/RESULT_sworn_v01_ships_2026_09_01.sworn-receipt.json#/rungs/committed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2693,
+   "end": 2734,
+   "receipt": "path:papers/sworn/RESULT_sworn_v01_ships_2026_09_01.sworn-receipt.json#/rungs/undeclared",
+   "kind": "numeric"
+  },
+  {
+   "start": 2828,
+   "end": 2859,
+   "receipt": "path:papers/sworn/RESULT_sworn_v01_ships_2026_09_01.sworn-receipt.json#/coverage/sentence_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 3044,
+   "end": 3091,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/documents",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "harness": "papers/sworn/harness_pytest.py",
+  "turn": "turn_2026_09_02_sworn_v02",
+  "minted_at": "2026-09-02T17:33:41Z",
+  "authored_sha256": [],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "62a0eae98b9fc0bd0ad941ae07ae5e2af545a64c8ddc43407bdfe6ae82addb4c",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "MzU4",
+    "harness_note": "passed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "351dabcba62ded4ad8e831f993b8d8f0ee2726a781e2cecc83c2f9767d37fc74",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgMjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNDAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgODAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLiAgIFsxMDAlXQ0KMzU4IHBhc3NlZCBpbiAzMC40MHMNCg==",
+    "harness_note": "python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r3": {
+    "id": "r3",
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "QWxsIGNoZWNrcyBwYXNzZWQhCg==",
+    "harness_note": "python -m ruff check styxx/sworn.py tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r4": {
+    "id": "r4",
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "MA==",
+    "harness_note": "failed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r5": {
+    "id": "r5",
+    "sha256": "73794c27838b382fb664cf0dede68d6ef487719732f2d8a0be2f00d103638a81",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "ewogICJ3aGF0IjogInN3b3JuIHRlc3QgcnVuLCByZWNvcmRlZCBieSBwYXBlcnMvc3dvcm4vaGFybmVzc19weXRlc3QucHkgYXQgcnVuZyBMMSIsCiAgInR1cm4iOiAidHVybl8yMDI2XzA5XzAyX3N3b3JuX3YwMiIsCiAgInRhcmdldHMiOiBbCiAgICAidGVzdHMvdGVzdF9zd29ybi5weSIsCiAgICAidGVzdHMvdGVzdF9zd29ybl9hdHRhY2tzLnB5IiwKICAgICJ0ZXN0cy90ZXN0X3N3b3JuX2RvZ2Zvb2QucHkiCiAgXSwKICAicGFzc2VkIjogMzU4LAogICJmYWlsZWQiOiAwLAogICJweXRlc3Rfc3VtbWFyeV9saW5lIjogIjM1OCBwYXNzZWQgaW4gMzAuNDBzIiwKICAicnVmZl9jbGVhbiI6IHRydWUsCiAgInN3b3JuX3NoYTI1NiI6ICI3OGVhYzRiZmE4ODFkZDMyMTIxZjBhZTY1MGIzNzIzYmRkMDM5YjJiMjRlY2JjNmZkOGFhMDIwYTg5OTg4NTY1IiwKICAic3dvcm5fbGluZXMiOiAxNzg5LAogICJweXRob24iOiAiMy4xMi4xMCIsCiAgInJ1bmciOiAiTDEiCn0K",
+    "harness_note": "the test-run result JSON this harness wrote, byte for byte"
+   }
+  },
+  "rung": "L1",
+  "digest": "560104a0d4e4def24d74bacc55bbb19ed4f2b2df38c17caa220d0f77d8f6e5b0"
+ }
+}

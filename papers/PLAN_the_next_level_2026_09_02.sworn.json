@@ -1,0 +1,187 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7",
+ "document": {
+  "name": "PLAN_the_next_level_2026_09_02.md",
+  "sha256": "ea65c980994da52ab105ac23b71bd517f80b7a8330bd42182bd58f878c56a402"
+ },
+ "text": "# PLAN — the next level: the format leaves the builder's hands, and every sentence about it waits for a number\n\nFathom Lab · 2026-09-02 · **A plan, not a result.** Decided by a six-lens design panel and nine\nadversarial reviews run the same day (workflow `wf_3d0d4bca-ea3`; the reviews are the record, the\nplan is the author's reading of them). It makes no numeric claim of its own: every number below\nis sworn to the receipt that already holds it, and every sentence about what the lab may say is\nwritten so it can be argued with. Successor to `closed-model-frontier/PLAN_prior_art_and_the_next_move_2026_08_31.md`,\nwhich it does not edit.\n\n## The directive, and what the receipts allow it to mean\n\nThe operator asked for the utmost ambition: breakthroughs in science and technology as a whole,\nand a lab that leads the agentic race. This plan takes that the only way this program takes\nanything — by receipts — and the receipts say where the ceiling is.\n\nEvery instrument this lab built to *find* a claim in a stranger's prose died against a blind\npanel. The shipped gate scored 0.23 precision on agent pull requests it had never seen.\nAfter three repair cycles the held-out figure was 0.16.\nThe document verifier's false-accusation rate abroad was 0.2596,\nand 0.2323 after its range rule was turned into a reporter.\nThe best structural claim detector reached 0.4211 precision\non 38 sentences.\nAnd the account that would have excused the adjudicator was tested and lost:\nthe extraction term came back at 0.55,\nthe adjudication term at 0.20,\nand the frozen gate read `REFUTED` —\nwith only 11 upheld accusations sitting among the sentences the panel called claims\nout of 55,\nso the identity that named the term does not close, and the correct form carries a third term\nfor accusations upheld against sentences that made no claim.\n\nWhat held against strangers was a target the author had committed to by structure:\nheader-handed accusations were genuine at 0.9515\nagainst 0.6391 for line-handed ones —\nread with the confound now receipted rather than rumoured:\nreweighted to the line cell's token-kind mix the gap is 0.1695,\nexploratory, one family, one repository supplying most rows. Sworn output is that surviving\nmechanism's limiting case — the author hands the verifier a commitment, never a target — and the\nreceipts on sworn itself say two things. The verifier keeps the author's word on the spans bound:\n358 tests passed in the harness run this plan swears to.\nAnd nothing yet shows the author binds the spans that matter:\nacross the 12 sworn documents committed before this cycle\nthe coverage number the verifier printed ran from 0.6667\nto 1.0,\nand it meant nothing, because its denominator was a diff-claim detector that never reads a\nmeasured rate as a claim;\nthe floor that replaces it runs from 0.0156\nto 0.2185\non the same documents, and it is a floor, not coverage.\n\nSo the ceiling is not a smarter detector, not a new attestation rail (in-toto, SLSA, sigstore,\nC2PA occupy those), not a \"wire\" or a \"protocol\" (nothing outside this lab has minted a manifest),\nand not a number about strangers (no panel of two model families has read a sworn document). The\nceiling is a format that has been attacked, a measurement that has been designed so it cannot be\npassed by the failure it exists to detect, and engineering shipped under labels narrow enough to\nsurvive the next reviewer. That is the whole move, and it is stated in the lab's own words:\n**maximal in scope, minimal in claim.**\n\n## The move, in four legs\n\n**Leg 1 — the format hardens before it leaves (done this cycle).** Twelve attacks, four rules,\nthe coverage number withdrawn, provenance and rungs printed on every span, receipts re-issued\nunder a digest that no longer depends on the observer. `SPEC_sworn_output_v02_2026_09_02.md`,\n`ATTACKS_sworn_v01_battery_2026_09_02.md`, `RESULT_sworn_v02_ships_2026_09_02.md`. The attacker\nwas the builder, which the battery says in its last paragraph; the next attacker should not be.\n\n**Leg 2 — the measurement, repaired, preregistered, run on this box.** The v0.1 design is\nredesigned in `DESIGN_sworn_measurement_v2_2026_09_02.md` with every repair the reviews named:\nseats from two model families, both available on this machine without API credits (Claude through\nthe subscription CLI transport already used in `run_b23_fable.py`; a local open-weight instruct\nmodel on CPU), so the credit block the backlog records no longer binds a panel; per-family\ntwo-sided sealed decoys; the headline reported in three cells — load-bearing and bindable under\nthe kinds, load-bearing but unbindable, not load-bearing — so a miss is titled *authors leave\nbindable sentences unbound* and never more; a receipt-seeing panel so the pairing question (does\nthe leaf evidence the sentence?) has a producer, which the v0.1 design's false-accusation gate\nlacked; a seeded-canary arm of harness-inserted known-false spans so the verifier's FAILED\nprecision is a count with a denominator rather than a vacuous zero; the HELD-but-false cell\npreregistered as a quantity of its own, because the extraction RESULT showed the lab had\nforgotten that term once already; the in-house arm first (eight sworn RESULTs already in the tree\nwere written about other arcs by authors who had read the bars, and the design says so), a\nCI-bound pilot second where receipts other than a diff exist, and the diff-only external arm\nlast, titled as binding behaviour under a diff-only receipt pool with the receipt-availability\nceiling reported first. **What blocks it is one signature on the bars.** A lock hash that reads\n\"TBD\" is the shape the audit named the worst of both, so the design stays a DESIGN until the\noperator signs, and then it is a PREREG in a commit and the panel runs the same week.\n\n**Leg 3 — engineering, each piece under its own narrow label, in this order.**\n\n| # | artifact | path | label it ships under | days |\n|---|---|---|---|---|\n| 1 | OATH certificates resolve receipts by digest at the issuing commit; `corpus_audit` distinguishes *receipt regenerated under a certificate* from *certificate wrong*; a census over the 213 tracked certificates with *issuing commit unrecoverable* as its own cell; no corpus re-issue | `styxx/certify.py`, `styxx/corpus_audit.py`, `tests/test_certify_by_digest.py` | the audit's one ADVANCE, and the general repair of \"a receipt is history too\" | 2 |\n| 2 | conformance vectors generated from `tests/test_sworn.py` — document bytes, manifest, tree snapshot, expected receipt core — content-addressed by one digest | `conformance/sworn/` | the precondition for any second verifier; no claim | 1 |\n| 3 | harness adapters at L1 and L2: a Claude Code hook pair (PostToolUse and Stop) minting `tool_stdout` / `file_read` receipts and recording `authored_sha256` for Write and Edit, documented as blind to shell-written files; a JUnit adapter through `styxx.evidence`; a GitHub event adapter | `integrations/claude-code/sworn-hooks/`, `styxx/harness/` | adapters, never a recorder (in-toto Witness records); L1 printed as weak on every manifest | 3 |\n| 4 | a report-only sworn action in its own subdirectory (the root action is diffgate's), the runner minting the manifest after the turn at L2, exit 0 on every verdict, the README stating that on pull requests from forks the minting job is the claimant's | `sworn/action.yml`, `sworn/sworn_action.py` | report-only until the measurement prices FAILED; dogfooded only after the operator merges the workflow | 2 |\n| 5 | a browser verifier held to the vectors for `rN` and embedded blobs only, and a capsule profile that seals document, manifest and receipt and fails closed | `styxx/_data/sworn_verify.js`, `styxx/capsule.py` | \"re-derives sworn span verdicts offline; a forger controlling the whole file passes both browser layers; the package at the named commit is the check\" — never *self-verifying* | 3 |\n| 6 | the prior-art survey the v0.1 spec owes, with Proof-Carrying Numbers, Self-Verifying Measurement Records, Deterministic Integrity Gates, nanopublications, knitr/Quarto inline values, Registered Reports and honest-signal read in full | `papers/sworn/SURVEY_sworn_neighbours_2026_09.md` | the gate on every \"we know of no other\" | 2 |\n| 7 | a release carrying `styxx.sworn`, and a cold-start target that says *clone at a pinned commit*, not *pip install*, until it does | `styxx/_version.py`, `REPLICATIONS.md` | operator-gated | — |\n\n**Leg 4 — the science move, preregistered and cheap.** The provenance reading of the handedness\nresult — that who handed the verifier its target bounds what a verdict can mean, independently of\nthe token's form — is now a testable law with its contaminated prior committed\n(`EXPLORATORY_handedness_by_kind_2026_09_02.md`). Its preregistration needs a fresh corpus disjoint\nfrom the repositories already used, integer cells sized above thirty, two families of seats, and\npublication with and without the dominant repository. If it holds, the field gets a number it does\nnot have: the extraction ceiling of any free-prose claim verifier is predictable from its\ntarget-provenance mix before a panel is convened, and cannot be raised by a better judge, only by\nmoving the target up the ladder — which is what a format the author commits to does. If it fails,\nthe grain synthesis loses its mechanism in public. Either way it is a result about verification\nitself, and it costs a corpus fetch and one panel.\n\n## The claim ledger\n\n**May be said now.** That sworn output survived a twelve-attack battery at the price of four rules,\nwith the six unrepaired attacks named. That the coverage estimate v0.1 printed was near-vacuous\nbeside result-shaped documents, with the census. That the verifier keeps an author's word on the\nspans it bound, re-derivable offline at a named commit. That every number the lab has published\nabout finding claims in strangers' prose failed a frozen bar, with the receipts.\n\n**Only with the qualifier, and only after leg 3 item 6.** *We know of no other format that binds\nwhole sentences of a free-text retrospective report — numbers, quotes, hashes and negatives — to\nbytes minted by a party other than the author, with a distinct verdict for a document that bound\nnothing and the unbound sentences counted beside every verdict.* Proof-Carrying Numbers does this\nfor numerals in a renderer; Cucumber for controlled steps the author executes; in-toto and Witness\nfor artifacts, not sentences; Registered Reports bind the bar, not the sentence. Each clause is\noccupied; only the conjunction is not, and the survey prices it.\n\n**Must not be said.** \"First.\" \"Nobody.\" \"Wire\", \"protocol\", \"the contract every agent's claims\nare checked against\" — until a harness outside this lab mints a manifest. \"Self-verifying.\" \"Zero\nfalse accusations.\" \"Sworn makes agents honest.\" Any bound-recall number before the panel runs.\nAny \"0.117\". Any use of the sworn documents in this tree as evidence that the format works — they\nare specimens chosen to pass, written by the builder or by authors who had read the bars.\n\n## What \"lead the agentic race\" and \"breakthroughs in science\" mean here, honestly\n\nThey are conditionals, and the plan states the condition. If the measurement clears its bars with\ntwo families of seats, the lab may say that an agent's report can arrive with its load-bearing\nsentences bound to bytes the agent could not have written, the unbound share printed beside the\nverdict, and every verdict re-derivable by a stranger — and that it measured how much of what\nmattered such reports leave in narrative, which is the number any adoption argument has to cite.\nIf the provenance law holds, the lab may say that verification of claims made by minds has a\nmeasurable ceiling set by who handed the target, and that the only way past it is a format the\nauthor commits to. Neither sentence is licensed today. The plan's ambition is that both are\nfalsifiable within the month on hardware this lab already owns.\n\n## What this plan does not say\n\nThat any of it is replicated outside the lab (external replications remain zero). That the two\nmodel families on this machine are independent judges (correlated error across families is the\nceiling, and only an external seat moves it). That the measurement will pass — the design's own\nfirst paragraph says the most likely outcome of the external arm is that agents leave what\nmatters in narrative, and that result publishes under that title. That the audit's other\nrecommendations are discharged: the three arcs it said to close, the back-pointers it said to\nadd, and the machine-readable verdict tokens it said the ledger owes are not in this plan and\nremain owed.\n\n---\n\n*The panel wanted a wire, a science, a price list, an adversary, a pipe and a law, and the nine\nreviews that followed took a clause from each until what was left could be sworn. What is left is\na format that has been attacked, a measurement that cannot be passed by the failure it exists to\ndetect, and a ledger of what the lab may say. That is the level the receipts allow. The next\nlevel is a number.*\n",
+ "spans": [
+  {
+   "start": 1065,
+   "end": 1145,
+   "receipt": "path:papers/closed-model-frontier/external1_adjudication.json#/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 1146,
+   "end": 1201,
+   "receipt": "path:papers/closed-model-frontier/v14_adjudication.json#/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 1202,
+   "end": 1265,
+   "receipt": "path:papers/closed-model-frontier/oath_adjudication_result.json#/false_accusation_rate/rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 1267,
+   "end": 1326,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/false_accusation_rate_after",
+   "kind": "numeric"
+  },
+  {
+   "start": 1327,
+   "end": 1386,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/arms/flagged/A_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1387,
+   "end": 1403,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/arms/flagged/total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1481,
+   "end": 1518,
+   "receipt": "path:papers/closed-model-frontier/extraction_panel_result.json#/decomposition/E",
+   "kind": "numeric"
+  },
+  {
+   "start": 1520,
+   "end": 1549,
+   "receipt": "path:papers/closed-model-frontier/extraction_panel_result.json#/decomposition/A",
+   "kind": "numeric"
+  },
+  {
+   "start": 1551,
+   "end": 1585,
+   "receipt": "path:papers/closed-model-frontier/extraction_panel_result.json#/decomposition/G_E3_verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1590,
+   "end": 1673,
+   "receipt": "path:papers/closed-model-frontier/extraction_panel_result.json#/decomposition/upheld_among_claim",
+   "kind": "numeric"
+  },
+  {
+   "start": 1674,
+   "end": 1683,
+   "receipt": "path:papers/closed-model-frontier/extraction_panel_result.json#/decomposition/n_claim",
+   "kind": "numeric"
+  },
+  {
+   "start": 1924,
+   "end": 1972,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1973,
+   "end": 2008,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 2072,
+   "end": 2134,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/kind_adjusted_gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 2427,
+   "end": 2483,
+   "receipt": "r1",
+   "kind": "numeric"
+  },
+  {
+   "start": 2546,
+   "end": 2603,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/documents",
+   "kind": "numeric"
+  },
+  {
+   "start": 2604,
+   "end": 2660,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/v01_estimate_min",
+   "kind": "numeric"
+  },
+  {
+   "start": 2661,
+   "end": 2667,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/v01_estimate_max",
+   "kind": "numeric"
+  },
+  {
+   "start": 2786,
+   "end": 2829,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/floor_min",
+   "kind": "numeric"
+  },
+  {
+   "start": 2830,
+   "end": 2839,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/floor_max",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "harness": "papers/sworn/harness_pytest.py",
+  "turn": "turn_2026_09_02_sworn_v02",
+  "minted_at": "2026-09-02T17:33:41Z",
+  "authored_sha256": [],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "62a0eae98b9fc0bd0ad941ae07ae5e2af545a64c8ddc43407bdfe6ae82addb4c",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "MzU4",
+    "harness_note": "passed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "351dabcba62ded4ad8e831f993b8d8f0ee2726a781e2cecc83c2f9767d37fc74",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgMjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNDAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgODAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLiAgIFsxMDAlXQ0KMzU4IHBhc3NlZCBpbiAzMC40MHMNCg==",
+    "harness_note": "python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r3": {
+    "id": "r3",
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "QWxsIGNoZWNrcyBwYXNzZWQhCg==",
+    "harness_note": "python -m ruff check styxx/sworn.py tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r4": {
+    "id": "r4",
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "MA==",
+    "harness_note": "failed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+   },
+   "r5": {
+    "id": "r5",
+    "sha256": "73794c27838b382fb664cf0dede68d6ef487719732f2d8a0be2f00d103638a81",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-02T17:34:13Z",
+    "complete": true,
+    "bytes": "ewogICJ3aGF0IjogInN3b3JuIHRlc3QgcnVuLCByZWNvcmRlZCBieSBwYXBlcnMvc3dvcm4vaGFybmVzc19weXRlc3QucHkgYXQgcnVuZyBMMSIsCiAgInR1cm4iOiAidHVybl8yMDI2XzA5XzAyX3N3b3JuX3YwMiIsCiAgInRhcmdldHMiOiBbCiAgICAidGVzdHMvdGVzdF9zd29ybi5weSIsCiAgICAidGVzdHMvdGVzdF9zd29ybl9hdHRhY2tzLnB5IiwKICAgICJ0ZXN0cy90ZXN0X3N3b3JuX2RvZ2Zvb2QucHkiCiAgXSwKICAicGFzc2VkIjogMzU4LAogICJmYWlsZWQiOiAwLAogICJweXRlc3Rfc3VtbWFyeV9saW5lIjogIjM1OCBwYXNzZWQgaW4gMzAuNDBzIiwKICAicnVmZl9jbGVhbiI6IHRydWUsCiAgInN3b3JuX3NoYTI1NiI6ICI3OGVhYzRiZmE4ODFkZDMyMTIxZjBhZTY1MGIzNzIzYmRkMDM5YjJiMjRlY2JjNmZkOGFhMDIwYTg5OTg4NTY1IiwKICAic3dvcm5fbGluZXMiOiAxNzg5LAogICJweXRob24iOiAiMy4xMi4xMCIsCiAgInJ1bmciOiAiTDEiCn0K",
+    "harness_note": "the test-run result JSON this harness wrote, byte for byte"
+   }
+  },
+  "rung": "L1",
+  "digest": "560104a0d4e4def24d74bacc55bbb19ed4f2b2df38c17caa220d0f77d8f6e5b0"
+ }
+}
