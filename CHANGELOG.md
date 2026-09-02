@@ -93,7 +93,10 @@ declaration carries a sworn addendum; two INVALID runs before it are shipped as 
 **The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
 clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
 magnitude. REAL2 — a real bank with 2D independent magnitudes, exactly FREE's state and parameters —
-separates rotation from timescale diversity on the rhythm-rescue task.
+separates rotation from timescale diversity on the rhythm-rescue task. Run on CPU the same day:
+**ROTATION_LOAD_BEARING__beyond_diversity** (`RESULT_untied_magnitudes_2026_09_02.md`, sworn) — anchors
+reproduce the GPU receipt to the digit, and the untied real bank lands exactly on CLAMPED (recovery 0.0).
+The arc's headline survives its own confound; the permuted-MNIST re-run is the owed next preregistration.
 
 **The eleven-instrument census, with receipts.** `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`
 (sworn) and `prose_claimhood_census.json` (built by `prose_claimhood_census.py`, which resolves
