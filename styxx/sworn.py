@@ -294,6 +294,20 @@ def _sha256(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+def _write_json_lf(path, obj) -> Path:
+    """Write a byte-pinned JSON artifact with LF line endings on every platform.
+
+    A text-mode write on Windows translates LF to CRLF; a sidecar or receipt written that way
+    hashes differently from the same artifact written on Linux, and the CRLF lesson has already
+    cost this repository once (styxx/centroids, then papers/sworn/**). Every JSON this module
+    writes goes through here.
+    """
+    p = Path(path)
+    with open(p, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(obj, indent=1, ensure_ascii=False) + "\n")
+    return p
+
+
 def _safe_text(x: Any, limit: int = 80) -> str:
     """A detail string that can always be serialised: lone surrogates from JSON escapes are
     replaced, never allowed to crash a receipt."""
@@ -731,10 +745,7 @@ class Manifest:
         return d
 
     def write(self, path) -> Path:
-        p = Path(path)
-        p.write_text(json.dumps(self.to_dict(), indent=1, ensure_ascii=False) + "\n",
-                     encoding="utf-8")
-        return p
+        return _write_json_lf(path, self.to_dict())
 
     @classmethod
     def from_dict(cls, d: dict) -> "Manifest":
@@ -1728,7 +1739,7 @@ def main(argv=None) -> int:
         mf = Manifest.load(a.manifest) if a.manifest else None
         side = to_sidecar(raw, Path(a.doc).name, a.commit, mf)
         out = Path(a.out) if a.out else Path(a.doc).with_suffix(".sworn.json")
-        out.write_text(json.dumps(side, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        _write_json_lf(out, side)
         print("canonical: %d spans, text sha256 %s -> %s"
               % (len(side["spans"]), side["document"]["sha256"][:12], out.name))
         return 0
@@ -1761,8 +1772,7 @@ def main(argv=None) -> int:
             for cl in core["coverage"]["unsworn_claims"][:20]:
                 print("  UNSWORN-CLAIM? @%d: %s" % (cl["start"], cl["text"][:100]))
             if a.out:
-                Path(a.out).write_text(json.dumps(rec, indent=1, ensure_ascii=False) + "\n",
-                                       encoding="utf-8")
+                _write_json_lf(a.out, rec)
                 print("receipt %s -> %s" % (rec["digest"][:12], a.out))
             return 0
         rec = json.loads(Path(a.receipt).read_text(encoding="utf-8"))

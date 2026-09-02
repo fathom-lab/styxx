@@ -231,6 +231,23 @@ class TestRules:
                            "--rung", "L2"]) == 0
         assert json.loads((tmp_path / "m.json").read_text(encoding="utf-8"))["rung"] == "L2"
 
+    def test_every_json_the_cli_writes_is_lf_on_every_platform(self, tmp_path):
+        """A byte-pinned format whose own CLI CRLF-translated its sidecars on Windows would hash
+        the same document differently per platform. Every write goes through _write_json_lf."""
+        doc = tmp_path / "d.md"
+        doc.write_bytes(sp("296 tests passed.", "r1#/passed").encode() + b"\n")
+        mpath, side, rec = tmp_path / "m.json", tmp_path / "d.sworn.json", tmp_path / "rec.json"
+        assert sworn.main(["manifest", "new", str(mpath), "--harness", "h", "--turn", "t", "--rung", "L1"]) == 0
+        r = tmp_path / "r.json"
+        r.write_bytes(REC)
+        assert sworn.main(["manifest", "add", str(mpath), "--id", "r1", "--file", str(r),
+                           "--kind", "test_report", "--complete", "--note", "canned"]) == 0
+        assert sworn.main(["canon", str(doc), "--manifest", str(mpath), "--out", str(side)]) == 0
+        assert sworn.main(["verify", str(side), "--out", str(rec)]) == 0
+        for p in (mpath, side, rec):
+            assert b"\r" not in p.read_bytes(), p.name
+        assert json.loads(mpath.read_text(encoding="utf-8"))["receipts"]["r1"]["harness_note"] == "canned"
+
     def test_r9_the_v1_receipt_re_derives_without_its_coverage_block(self):
         m = harness(r1=(REC, "test_report"))
         doc = sp("296 tests passed.", "r1#/passed").encode()
