@@ -1,0 +1,764 @@
+{
+  "what": "external OATH corpus re-certified at the current verifier, from pinned shas",
+  "verifier_sha256": "a588a722a60bb3ab08fb7607ec9b62f799d6fc3a5157dc63edb818753e82769d",
+  "repos_certified_in_manifest": 82,
+  "repos_recertified": 82,
+  "repos_skipped": {},
+  "files": {
+    "fetched": 244
+  },
+  "status_counts": {
+    "ABSTAIN": 4238,
+    "VERIFIED": 575,
+    "UNGROUNDED": 366
+  },
+  "obligation_sources": {
+    "vocabulary": 567,
+    "range-correlation": 2,
+    "range-sanity": 13,
+    "n-glued": 13
+  },
+  "header_bound_obligations": 270,
+  "verdict_class_drift": [],
+  "per_repo": {
+    "KMnO4-zx/huanhuan-chat": {
+      "verdict": "OATH-HELD, 5 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 5
+    },
+    "DevJadhav/deepseek-from-scratch": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 59,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "jerryliang24/Drag-and-Drop-LLMs": {
+      "verdict": "OATH-HELD, 1 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 83,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 1
+    },
+    "francescovallone/serinus": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "ShiZhengyan/DePT": {
+      "verdict": "OATH-FAILED, 3 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 3
+    },
+    "CRAFT-THU/RoDe": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "apple/ml-tweak": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 79,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "FanGShiYuu/CoReVLA": {
+      "verdict": "OATH-FAILED, 24 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 24
+    },
+    "Jyoti-Ranjan-Das845/gaia-nexus-leaderboard": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "heyblackC/BetterMixture-Top1-Solution": {
+      "verdict": "OATH-FAILED, 4 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 174,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 4
+    },
+    "waefrebeorn/GradRetentionNet": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "eliasjacob/paper_brcad5": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 0
+    },
+    "MAGICS-LAB/GenoArmory": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "periode/software-art-text": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "sbhooley/ainativelang": {
+      "verdict": "OATH-FAILED, 1 uncovered",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 143,
+        "UNGROUNDED": 11
+      },
+      "uncovered": 1
+    },
+    "scaleapi/SWE-bench_Pro-os": {
+      "verdict": "OATH-HELD, 1 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 1
+    },
+    "Azure-Samples/python-agentframework-demos": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 0
+    },
+    "kssteven418/LTP": {
+      "verdict": "OATH-FAILED, 2 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 48,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 2
+    },
+    "mbzuai-nlp/AudioJailbreak": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "hist0613/arxivbot": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "hopit-ai/Moda": {
+      "verdict": "OATH-FAILED, 12 uncovered",
+      "counts": {
+        "VERIFIED": 65,
+        "ABSTAIN": 385,
+        "UNGROUNDED": 194
+      },
+      "uncovered": 12
+    },
+    "Neon549/Alpha_stock": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "849261680/chat-resume": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "shi3z/japanese-llm-benchmark": {
+      "verdict": "OATH-FAILED, 6 uncovered",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 1276,
+        "UNGROUNDED": 54
+      },
+      "uncovered": 6
+    },
+    "AaronSpieler/elmneuron": {
+      "verdict": "OATH-FAILED, 1 uncovered",
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 30,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 1
+    },
+    "lavanet/lava": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "cisco-ie/telemetry-staging-ansible": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "giantswarm/dashboards": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "painezeng/CSharpAndSolidWorks": {
+      "verdict": "OATH-HELD, 8 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 47,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 8
+    },
+    "netscaler/netscaler-adc-metrics-exporter": {
+      "verdict": "OATH-FAILED, 5 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 122,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 5
+    },
+    "RedHatProductSecurity/cvss-v4-calculator": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "aalto-ui/aim": {
+      "verdict": "OATH-HELD, 1 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 1
+    },
+    "abajwa-hw/ambari-nifi-service": {
+      "verdict": "OATH-HELD, 2 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 65,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 2
+    },
+    "cisco-ie/pipeline-gnmi": {
+      "verdict": "OATH-HELD, 2 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 2
+    },
+    "nextcloud/whiteboard": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 60,
+        "UNGROUNDED": 3
+      },
+      "uncovered": 0
+    },
+    "splunk/splunk-sdk-java": {
+      "verdict": "OATH-HELD, 2 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 2
+    },
+    "chhantyal/py3readiness": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "kyuz0/amd-r9700-ai-toolboxes": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "eviltester/automating-rest-api": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "elvisun/newsjack": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "OpenNewsLabs/elex-webVideoTextCrawler": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "karpathy/jobs": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 7
+      },
+      "uncovered": 0
+    },
+    "gabrielsr/bomberman-libgdx": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "c17hawke/FSDS_NOV_deepCNNClassifier": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "entbappy/MLOPs-Production-Ready-Deep-Learning-Project": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "entbappy/Chest-Disease-Classification-from-Chest-CT-Scan-Image": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "yh0ro/Deep_CNN_Classifier": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "potherca-blog/Google-Doodle-Champion-Island": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "Krishgit2005/Space-typing-game": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "ludwig-ai/ludwig": {
+      "verdict": "OATH-HELD, 2 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 19,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 2
+    },
+    "SHITIANYU-hue/amai_ocl": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "syncable-dev/memtrace-public": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 43,
+        "UNGROUNDED": 6
+      },
+      "uncovered": 0
+    },
+    "DebarghaG/proofofthought": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "nhadaututtheky/neural-memory": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 3,
+        "ABSTAIN": 26,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 0
+    },
+    "jolars/panache": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "yadnuses/Academic-Detective": {
+      "verdict": "OATH-HELD, 6 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 6
+    },
+    "kyuz0/amd-strix-halo-comfyui-toolboxes": {
+      "verdict": "OATH-FAILED, 10 uncovered",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 34,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 10
+    },
+    "stanford-oval/Churro": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 104,
+        "ABSTAIN": 50,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 0
+    },
+    "lee101/stock-prediction": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "connor-makowski/scgraph": {
+      "verdict": "OATH-HELD, 1 uncovered",
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 265,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 1
+    },
+    "kunal12203/webify-mcp": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 48,
+        "UNGROUNDED": 4
+      },
+      "uncovered": 0
+    },
+    "CosmoNaught/claude-code-cmv": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "harrrshall/barunlm-35m": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 0
+    },
+    "feyninc/tokie": {
+      "verdict": "OATH-FAILED, 1 uncovered",
+      "counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 155,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 1
+    },
+    "neul-labs/fast-litellm": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "WillyEverGreen/acon": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 30,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "TenchiNeko/standalone-orchestrator": {
+      "verdict": "OATH-FAILED, 1 uncovered",
+      "counts": {
+        "VERIFIED": 52,
+        "ABSTAIN": 110,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 1
+    },
+    "alex-jb/orallexa-ai-trading-agent": {
+      "verdict": "OATH-FAILED, 3 uncovered",
+      "counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 134,
+        "UNGROUNDED": 5
+      },
+      "uncovered": 3
+    },
+    "opendatalab/WebMainBench": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 122,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "parinzee/seed-free-synthetic-instruct": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "AdilzhanB/StockRL": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 59,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 0
+    },
+    "Hluii/ai201-project3-TakeMeter": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 36,
+        "UNGROUNDED": 17
+      },
+      "uncovered": 0
+    },
+    "dimzachar/Parthenon-RAG-Game": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "ranga4all1/research-assistant-mm-rag": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 6,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 5
+      },
+      "uncovered": 0
+    },
+    "K-RED90/Cropify-AI": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 2
+      },
+      "uncovered": 0
+    },
+    "makai891124-prog/H2Q-Evo": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 37,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 0
+    },
+    "AnandMayank/Muse_v2": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 40,
+        "UNGROUNDED": 20
+      },
+      "uncovered": 0
+    },
+    "asif-jc/Dont-Swim-in-Data": {
+      "verdict": "OATH-FAILED, 1 uncovered",
+      "counts": {
+        "VERIFIED": 4,
+        "ABSTAIN": 41,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 1
+    },
+    "haddybhaiya/sem-i-con": {
+      "verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 1
+      },
+      "uncovered": 0
+    },
+    "skadio/text2model": {
+      "verdict": "OATH-HELD, 2 uncovered",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 20,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 2
+    },
+    "s4nkar/SoundSense": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 1,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    },
+    "ConceptualCode/ci-cd-for-machine-learning": {
+      "verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 0,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "uncovered": 0
+    }
+  },
+  "tokens": 5179
+}
