@@ -1,0 +1,17 @@
+{
+  "what": "sworn test run, recorded by papers/sworn/harness_pytest.py at rung L1",
+  "turn": "turn_2026_09_02_sworn_v02",
+  "targets": [
+    "tests/test_sworn.py",
+    "tests/test_sworn_attacks.py",
+    "tests/test_sworn_dogfood.py"
+  ],
+  "passed": 358,
+  "failed": 0,
+  "pytest_summary_line": "358 passed in 30.40s",
+  "ruff_clean": true,
+  "sworn_sha256": "78eac4bfa881dd32121f0ae650b3723bdd039b2b24ecbc6fd8aa020a89988565",
+  "sworn_lines": 1789,
+  "python": "3.12.10",
+  "rung": "L1"
+}

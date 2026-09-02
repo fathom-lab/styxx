@@ -191,28 +191,56 @@ class TestLexer:
         core = verify(doc, name="d.md")
         assert core["counts"]["MALFORMED"] == 1
 
-    def test_a_tag_inside_an_html_comment_is_recognised_pinned_decision(self):
-        """The spec's lexical rules are closed: only fences and code spans suppress recognition.
-        A hidden commitment inflating coverage is recorded as an owed v0.2 item in DECISIONS."""
+    def test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2(self):
+        """v0.1 recognised it like any other tag and named the hidden commitment as owed. v0.2 R2:
+        MALFORMED hidden_commitment — never HELD (it would inflate every count while rendering as
+        nothing), never narrative (a broken tag is never narrative), and it fails the document."""
         doc = ("<!-- %s -->\n" % sp("0.55")).encode()
-        d, _ = one(doc, manifest=manifest(r1=b"0.55"))
+        d, core = one(doc, manifest=manifest(r1=b"0.55"))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "hidden_commitment")
+        assert core["document_verdict"] == "SWORN-FAILED" and core["sworn_total"] == 1
+        assert "hidden_commitment" in DECISIONS and "html_comments" in DECISIONS
+        # the same tag outside the comment is an ordinary span
+        d, _ = one(("<!-- note --> %s\n" % sp("0.55")).encode(), manifest=manifest(r1=b"0.55"))
         assert d["verdict"] == "HELD"
-        assert "html_comments" in DECISIONS
+        # comments never nest; an unterminated comment runs to the end of the document
+        d, _ = one(("<!-- <!-- --> %s\n" % sp("0.55")).encode(), manifest=manifest(r1=b"0.55"))
+        assert d["verdict"] == "HELD"
+        d, _ = one(("<!-- %s\n" % sp("0.55")).encode(), manifest=manifest(r1=b"0.55"))
+        assert d["reason"] == "hidden_commitment"
+        # a comment inside a fence or a code span is literal text and suppresses nothing
+        d, _ = one(("```\n<!--\n```\n%s\n" % sp("0.55")).encode(), manifest=manifest(r1=b"0.55"))
+        assert d["verdict"] == "HELD"
+        d, _ = one(("`<!--` %s\n" % sp("0.55")).encode(), manifest=manifest(r1=b"0.55"))
+        assert d["verdict"] == "HELD"
+        # a hidden span still canonicalises and round-trips: the sidecar is honest about it
+        side = to_sidecar(doc, "d.md", C40, manifest(r1=b"0.55"))
+        assert render(side) == doc
+        assert verify(sidecar=side)["spans"][0]["reason"] == "hidden_commitment"
+
+    def test_an_unclosed_tag_inside_a_comment_is_unclosed_and_refuses_the_sidecar(self):
+        doc = b'<!-- <sworn r="r1" k="numeric">0.55\n'
+        core = verify(doc, name="d.md", manifest=manifest(r1=b"0.55"))
+        assert core["spans"][0]["reason"] == "unclosed" and not scan(doc)["lexical_ok"]
+        with pytest.raises(SystemExit):
+            to_sidecar(doc, "d.md")
 
     @pytest.mark.parametrize("inner,expected", [
         ("a" * 300, None),
         ("a" * 301, "length_cap"),
-        ("字" * 100, None),                   # 100 x 3 bytes = 300
-        ("字" * 100 + "a", "length_cap"),      # 301 bytes
-        ("字" * 99 + "aaa", None),             # 300 bytes in 102 characters
-        ("a" * 299 + "字", "length_cap"),      # 300 characters, 302 bytes: a character cap would pass it
+        ("字" * 300, None),                    # 300 code points, 900 bytes: v0.1 would have refused it
+        ("字" * 301, "length_cap"),
+        ("😀" * 300, None),                    # 300 code points, 1200 bytes
+        ("😀" * 300 + "a", "length_cap"),
+        ("a" * 299 + "字", None),              # 300 code points, 302 bytes
     ])
-    def test_the_cap_is_three_hundred_bytes_of_utf8_never_characters(self, inner, expected):
+    def test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4(self, inner, expected):
         d, _ = one(sp(inner, kind="quote").encode())
         if expected is None:
             assert d["reason"] != "length_cap"
         else:
             assert (d["verdict"], d["reason"]) == ("MALFORMED", expected)
+            assert d["detail"]["code_points"] == len(inner) and d["detail"]["cap"] == 300
         assert d["end"] - d["start"] == len(inner.encode("utf-8"))
 
     def test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind(self):
@@ -238,7 +266,7 @@ class TestCanonical:
         assert [s["receipt"] for s in side["spans"]] == ["r2", "r1"]
         assert side["text"] == "a b"
         assert side["document"]["sha256"] == sworn._sha256(b"a b")
-        assert side["manifest"]["spec"] == "sworn/manifest/0.1"
+        assert side["manifest"]["spec"] == "sworn/manifest/0.2"
 
     def test_adjacent_spans_sharing_an_offset_round_trip_byte_for_byte(self):
         doc = (sp("a", "r1") + sp("b", "r2")).encode()
@@ -335,7 +363,7 @@ class TestCanonical:
 # ============================================================================ receipts
 
 class TestReceipts:
-    @pytest.mark.parametrize("ref", ["r0", "r01", "R1", "r1#/x", "r", "1", "path:", "path:/abs",
+    @pytest.mark.parametrize("ref", ["r0", "r01", "R1", "r1#", "r1#x", "r1#L0", "r", "1", "path:", "path:/abs",
                                      "path:a/../b", "path:a\\b", "path:a b", "path:a.json#",
                                      "path:a.json#L0", "path:a.json#L5-L3", "path:a.json#x",
                                      "prereg:abc", "prereg:" + "g" * 64, "http://x", ""])
@@ -454,12 +482,12 @@ class TestReceipts:
         assert (d["verdict"], d["reason"]) == ("MALFORMED", "anchor_out_of_range")
 
     def test_prereg_receipts_are_content_addressed(self):
-        bar = b"# PREREG\nfloor 0.95\n"
+        bar = b"# PREREG\nthe floor is 0.95 and frozen\n"
         tree = MemoryTree({"papers/PREREG_x.md": bar, "other.md": b"x"}, commit=C40)
         digest = sworn._sha256(bar)
-        d, _ = one(sp("floor `0.95`", "prereg:" + digest.upper(), "quote").encode(), tree=tree)
+        d, _ = one(sp("`the floor is 0.95 and frozen`", "prereg:" + digest.upper(), "quote").encode(), tree=tree)
         assert d["verdict"] == "HELD"
-        d, _ = one(sp("floor `0.95`", "prereg:" + "0" * 64, "quote").encode(), tree=tree)
+        d, _ = one(sp("`the floor is 0.95 and frozen`", "prereg:" + "0" * 64, "quote").encode(), tree=tree)
         assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "prereg_not_in_tree")
 
 
@@ -501,7 +529,9 @@ class TestGitTree:
     def test_a_prereg_digest_is_found_in_the_tree_at_the_commit(self, git_repo):
         repo, sha = git_repo
         digest = sworn._sha256(b"bar 0.95\n")
-        d, _ = one(sp("the bar `0.95`", "prereg:" + digest, "quote").encode(), tree=GitTree(repo, sha))
+        # a nine-byte receipt cannot hold a sixteen-byte needle; the author narrows the haystack
+        # with a line anchor and the short needle is then exempt from R3
+        d, _ = one(sp("the bar `bar 0.95`", "prereg:" + digest + "#L1", "quote").encode(), tree=GitTree(repo, sha))
         assert d["verdict"] == "HELD"
 
     def test_a_directory_is_not_a_blob(self, git_repo, tmp_path):
@@ -656,9 +686,9 @@ class TestNumeric:
 class TestQuoteHashAbsent:
     def test_quote_needle_is_the_one_backtick_span_bytes_verbatim(self):
         m = manifest(r1=b'{"note": "the  erratum is attached"}')
-        d, _ = one(sp("says `the  erratum`", kind="quote").encode(), manifest=m)
+        d, _ = one(sp("says `the  erratum is attached`", kind="quote").encode(), manifest=m)
         assert d["verdict"] == "HELD"
-        d, _ = one(sp("says `the erratum`", kind="quote").encode(), manifest=m)
+        d, _ = one(sp("says `the erratum is attached`", kind="quote").encode(), manifest=m)
         assert (d["verdict"], d["reason"]) == ("FAILED", "needle_missing")
 
     @pytest.mark.parametrize("text,reason", [("no needle here", "needle_count"),
@@ -670,10 +700,30 @@ class TestQuoteHashAbsent:
         assert d["verdict"] == "MALFORMED", (text, d)
 
     def test_quote_does_no_unicode_normalisation(self):
-        nfc, nfd = "é".encode("utf-8"), b"e\xcc\x81"
+        nfc, nfd = "café résumé naïve".encode("utf-8"), "café résumé naïve".encode("utf-8")
         d, _ = one(('<sworn r="r1" k="quote">the name `%s`</sworn>' % nfc.decode()).encode(),
                    manifest=manifest(r1=nfd))
         assert (d["verdict"], d["reason"]) == ("FAILED", "needle_missing")
+
+    def test_a_short_quote_needle_over_a_whole_receipt_is_malformed_v02_r3(self):
+        """A10: a one-byte needle HELDs against almost any receipt. The attack is the haystack
+        size, so a haystack the author narrowed — a pointer leaf, a line anchor — is exempt, and
+        so is `absent`, whose short needle is the stronger oath."""
+        big = b"x" * 5000 + b"passed" + b"y" * 100
+        d, _ = one(sp("it says `passed`", kind="quote").encode(), manifest=manifest(r1=big))
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "short_needle")
+        assert d["detail"] == {"needle_bytes": 6, "minimum_bytes": 16}
+        d, _ = one(sp("it says `passed` and it does", kind="absent").encode(), manifest=manifest(r1=b"nothing here"))
+        assert d["verdict"] == "HELD"
+        tree = MemoryTree({"a.json": b'{"s": "passed", "n": 3}', "f.md": b"alpha\npassed\n"}, commit=C40)
+        d, _ = one(sp("`passed`", "path:a.json#/s", "quote").encode(), tree=tree)
+        assert d["verdict"] == "HELD"
+        d, _ = one(sp("`passed`", "path:f.md#L2", "quote").encode(), tree=tree)
+        assert d["verdict"] == "HELD"
+        d, _ = one(sp("`passed`", "path:f.md", "quote").encode(), tree=tree)
+        assert d["reason"] == "short_needle"
+        d, _ = one(sp("`the sixteen-byte needle`", kind="quote").encode(), manifest=manifest(r1=big + b"the sixteen-byte needle"))
+        assert d["verdict"] == "HELD" and d["detail"]["occurrences"] == 1
 
     def test_quote_against_a_pointer_needs_a_string_leaf(self):
         tree = MemoryTree({"a.json": b'{"s": "hello world", "n": 3}'}, commit=C40)
@@ -736,8 +786,8 @@ class TestDocument:
         assert core["counts"] == {"HELD": 0, "FAILED": 0, "UNRESOLVED": 0, "MALFORMED": 0, "WITHHELD": 0}
 
     def test_sworn_held_iff_no_failed_no_malformed_and_at_least_one_span(self):
-        core = verify((sp("0.5", "r1") + " " + sp("`ok`", "r2", "quote")).encode(), name="d.md",
-                      manifest=manifest(r1=b"0.5", r2=b"ok"))
+        core = verify((sp("0.5", "r1") + " " + sp("`ok, all tests passed`", "r2", "quote")).encode(),
+                      name="d.md", manifest=manifest(r1=b"0.5", r2=b"ok, all tests passed"))
         assert core["document_verdict"] == "SWORN-HELD" and core["sworn_total"] == 2
 
     def test_one_failed_span_fails_the_document(self):
@@ -772,21 +822,31 @@ class TestDocument:
 
 
 class TestCoverage:
-    def test_coverage_is_always_advisory_and_null_on_an_empty_denominator(self):
+    def test_coverage_is_always_advisory_and_the_estimate_is_gone_v02_r8(self):
         core = verify(b"Nothing claim-shaped, nothing sworn.\n", name="d.md")
         cov = core["coverage"]
-        assert cov["advisory"] is True and cov["estimate"] is None
-        assert "0.4211" in cov["ceiling_note"]
+        assert cov["schema"] == "sworn/coverage/1" and cov["advisory"] is True
+        assert "estimate" not in cov and "unsworn_claims_estimate" not in cov
+        assert "0.4211" in cov["ceiling_note"] and "result-shaped" in cov["ceiling_note"]
+        # nothing sworn, one narrative sentence: the floor is 0/1, not undefined and not one
+        assert cov["sworn_total"] == 0 and cov["narrative_sentences"] == 1
+        assert cov["sentence_share"] == 0.0 and cov["diff_claim_sentences"] == 0
 
-    def test_unsworn_claim_bearing_sentences_are_listed_by_canonical_offset(self):
-        doc = (sp("0.5") + " held. Added tests/test_x.py and rewrote styxx/certify.py.\n").encode()
+    def test_the_floor_counts_every_narrative_sentence_and_the_diff_count_is_labelled(self):
+        """The v0.1 estimate printed ~1.0 beside result-shaped documents because STRUCT-1 never
+        reads a measured rate as a claim. The floor cannot flatter: every narrative sentence
+        counts, whatever it says."""
+        doc = (sp("0.5") + " held. Precision was 0.16 on 100 items. Every accusation upheld. "
+               "Added tests/test_x.py and rewrote styxx/certify.py.\n").encode()
         core = verify(doc, name="d.md", manifest=manifest(r1=b"0.5"))
         cov = core["coverage"]
-        assert cov["unsworn_claims_estimate"] == 1
+        assert cov["narrative_sentences"] == 4                    # 'held.' is a sentence too
+        assert cov["sentence_share"] == round(1 / 5, 4)
+        assert cov["diff_claim_sentences"] == 1 and cov["diff_claim_share"] == 0.5
+        assert "pull-request prose" in cov["diff_claim_idiom"]
         claim, = cov["unsworn_claims"]
         canonical = scan(doc)["canonical"]
         assert canonical[claim["start"]:claim["end"]].decode().startswith("Added tests/test_x.py")
-        assert cov["estimate"] == 0.5
         assert core["document_verdict"] == "SWORN-HELD"          # coverage never gates
 
     def test_a_quoted_number_in_narrative_gets_no_verdict_mention_versus_use(self):
@@ -797,7 +857,8 @@ class TestCoverage:
     def test_fenced_code_is_not_counted_in_the_denominator(self):
         doc = (sp("0.5") + "\n```\nAdded tests/test_x.py\n```\n").encode()
         core = verify(doc, name="d.md", manifest=manifest(r1=b"0.5"))
-        assert core["coverage"]["unsworn_claims_estimate"] == 0
+        assert core["coverage"]["diff_claim_sentences"] == 0
+        assert core["coverage"]["narrative_sentences"] == 0 and core["coverage"]["sentence_share"] == 1.0
 
 
 # ============================================================================ the receipt
@@ -807,8 +868,13 @@ class TestVerdictReceipt:
         doc = sp("0.5").encode()
         m = manifest(r1=b"0.5")
         rec = issue_receipt(verify(doc, name="d.md", manifest=m), timestamp="2026-09-01T00:00:00Z")
-        assert rec["schema"] == "styxx.sworn.verdict-receipt/v0"
-        assert verify_receipt(rec, doc, manifest=m)["status"] == "VERIFIED"
+        assert rec["schema"] == "styxx.sworn.verdict-receipt/v1"
+        res = verify_receipt(rec, doc, manifest=m)
+        assert res["status"] == "VERIFIED" and res["coverage_reproduces"] is True
+        # v0.2 R9: coverage is outside the digest and carries its own hash
+        assert rec["coverage_sha256"] == sworn._sha256(sworn._jcs(rec["coverage"]).encode())
+        stripped = {k: v for k, v in rec.items() if k not in ("digest", "timestamp", "coverage", "coverage_sha256")}
+        assert rec["digest"] == sworn._sha256(sworn._jcs(stripped).encode())
         again = issue_receipt(verify(doc, name="d.md", manifest=m), timestamp="2030-01-01T00:00:00Z")
         assert again["digest"] == rec["digest"], "the timestamp is outside the digest"
 
@@ -865,7 +931,7 @@ class TestInvariants:
         core = verify(sp("`v`", "r1", "quote").encode() + b" Rewrote styxx/x.py. Deleted tests/y.py.",
                       name="d.md", manifest=manifest(r1=b"v"))
         head = sworn._headline(core)
-        assert "coverage≈0.33" in head and "unsworn-claims≈2" in head
+        assert "coverage-floor≈0.33" in head and "diff-claims≈2" in head and "rungs" in head
 
     def test_receipt_shopping_moves_oath_but_cannot_move_sworn(self, tmp_path):
         """The charon RECON attack: an OATH verdict on fixed bytes moves with the receipt set the
@@ -896,7 +962,8 @@ class TestCLI:
         doc = tmp_path / "d.md"
         doc.write_bytes((sp("0.55") + " narrative.\n").encode())
         mpath = tmp_path / "m.json"
-        assert sworn.main(["manifest", "new", str(mpath), "--harness", "pytest", "--turn", "1"]) == 0
+        assert sworn.main(["manifest", "new", str(mpath), "--harness", "pytest", "--turn", "1",
+                           "--rung", "L1"]) == 0
         r1 = tmp_path / "r1.txt"
         r1.write_bytes(b"0.55")
         assert sworn.main(["manifest", "add", str(mpath), "--id", "r1", "--file", str(r1),
@@ -932,8 +999,11 @@ class TestCLI:
 class TestDoctrine:
     def test_the_three_spec_strings_are_pinned_verbatim(self):
         assert sworn.SPEC == "sworn/0.1"
-        assert sworn.MANIFEST_SPEC == "sworn/manifest/0.1"
-        assert sworn.RECEIPT_SCHEMA == "styxx.sworn.verdict-receipt/v0"
+        assert sworn.MANIFEST_SPEC == "sworn/manifest/0.2"
+        assert sworn.RECEIPT_SCHEMA == "styxx.sworn.verdict-receipt/v1"
+        # the old strings are still LOADED and never EMITTED (M7)
+        assert sworn.MANIFEST_SPECS == ("sworn/manifest/0.1", "sworn/manifest/0.2")
+        assert sworn.RECEIPT_SCHEMAS == ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1")
 
     def test_sworn_is_not_on_the_package_surface_and_does_not_shadow_parrhesia(self):
         import styxx
@@ -1022,18 +1092,21 @@ class TestDoctrine:
         monkeypatch.setattr(cd, "detect", lambda s: _R())
         always = verify(doc, name="d.md", manifest=m)
         assert always["document_verdict"] == base["document_verdict"] == "SWORN-HELD"
-        assert always["coverage"]["unsworn_claims_estimate"] == 1
+        assert always["coverage"]["diff_claim_sentences"] == 1
 
         def boom(s):
             raise RuntimeError("observer down")
         monkeypatch.setattr(cd, "detect", boom)
         down = verify(doc, name="d.md", manifest=m)
         assert down["document_verdict"] == "SWORN-HELD"
-        assert down["coverage"]["estimate"] is None and "raised" in down["coverage"]["note"]
+        assert down["coverage"]["diff_claim_sentences"] is None and "raised" in down["coverage"]["note"]
+        # the floor does not depend on the observer at all
+        assert down["coverage"]["sentence_share"] == always["coverage"]["sentence_share"] == 0.5
 
-    def test_coverage_of_an_unsworn_document_with_no_claims_is_undefined_not_one(self):
+    def test_coverage_of_an_unsworn_document_is_a_zero_floor_not_undefined(self):
         cov = verify(b"Weather was fine.\n", name="d.md")["coverage"]
-        assert cov["estimate"] is None and cov["unsworn_claims_estimate"] == 0
+        assert cov["sentence_share"] == 0.0 and cov["diff_claim_sentences"] == 0
+        assert verify(b"", name="d.md")["coverage"]["sentence_share"] is None        # 0/0
 
     def test_a_refusal_writes_nothing(self, tmp_path):
         doc = tmp_path / "d.md"
@@ -1203,9 +1276,10 @@ class TestReceiptHardening:
 
     def test_the_modules_own_add_mints_only_entries_it_can_resolve(self):
         m = Manifest("h", "t")
-        e = m.add("r1", b"bytes", "file_read", complete=True, sha256=sworn._sha256(b"bytes").upper())
-        assert e["sha256"] == sworn._sha256(b"bytes")
-        d, _ = one(sp("`byt`", kind="quote").encode(), manifest=m)
+        e = m.add("r1", b"bytes of the record", "file_read", complete=True,
+                  sha256=sworn._sha256(b"bytes of the record").upper())
+        assert e["sha256"] == sworn._sha256(b"bytes of the record")
+        d, _ = one(sp("`bytes of the record`", kind="quote").encode(), manifest=m)
         assert d["verdict"] == "HELD"
         with pytest.raises(ValueError):
             m.add("r2", b"bytes", "file_read", sha256="0" * 64)      # a lie about the bytes
@@ -1226,7 +1300,7 @@ class TestGamingLens:
         (sp(""), "empty_span"),
         (sp("a" * 301, kind="quote"), "length_cap"),
         (sp("1", "nope"), "receipt_form"),
-        (sp("1", "r1#/x"), "receipt_form"),
+        (sp("1", "r1#"), "receipt_form"),
         (sp("1", "path:x.json#"), "receipt_form"),
         (sp("1", kind="Numeric"), "kind_unknown"),
         (sp("1", kind="exec"), "kind_reserved"),
@@ -1265,12 +1339,22 @@ class TestGamingLens:
         assert core["spans"][0]["verdict"] == "UNRESOLVED"
 
     def test_swearing_only_trivia_prints_its_coverage_beside_the_verdict(self):
-        doc = (sp("`2026-09-01`", "r1", "quote") + sp("`7.47.0`", "r2", "quote")
+        """Two trivial counts sworn, three load-bearing sentences left in narrative: the floor
+        prints 0.40 beside the SWORN-HELD, and the diff-claim count prints 3 beside it."""
+        doc = (sp("3 files changed.", "r1") + " " + sp("1 commit.", "r2")
                + " Rewrote styxx/certify.py. Deleted tests/test_gate.py. Added docs/x.md.\n").encode()
-        core = verify(doc, name="d.md", manifest=manifest(r1=b"2026-09-01", r2=b"7.47.0"))
+        core = verify(doc, name="d.md", manifest=manifest(r1=b"3", r2=b"1"))
         assert core["document_verdict"] == "SWORN-HELD"
         head = sworn._headline(core)
-        assert "coverage≈0.40" in head and "unsworn-claims≈3" in head
+        assert "coverage-floor≈0.40" in head and "diff-claims≈3" in head
+
+    def test_a_short_trivial_quote_is_malformed_not_held(self):
+        """The v0.1 version of the test above swore `7.47.0` against a whole receipt. Under R3 a
+        six-byte quote over a whole receipt is not an oath the verifier will count."""
+        doc = (sp("`7.47.0`", "r1", "quote") + "\n").encode()
+        core = verify(doc, name="d.md", manifest=manifest(r1=b"7.47.0 released 2026-08-31"))
+        assert core["document_verdict"] == "SWORN-FAILED"
+        assert core["spans"][0]["reason"] == "short_needle"
 
 
 class TestGamingLensFromTheAttackPass:

@@ -1,5 +1,5 @@
 {
- "schema": "styxx.sworn.verdict-receipt/v0",
+ "schema": "styxx.sworn.verdict-receipt/v1",
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_efficiency_control_from_receipts_2026_09_02.md",
@@ -25,7 +25,11 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 1729,
@@ -43,7 +47,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 1867,
@@ -61,7 +69,11 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2030,
@@ -79,7 +91,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2183,
@@ -97,7 +113,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2429,
@@ -115,7 +135,11 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2561,
@@ -133,7 +157,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2678,
@@ -151,7 +179,11 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2848,
@@ -169,7 +201,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 2986,
@@ -187,7 +223,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 3274,
@@ -205,7 +245,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda"
+   "resolved_sha256": "b962cd0db947c0f86696475beeed03f8671f09bc2d64f9830531bd6340df3bda",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   },
   {
    "at": 3610,
@@ -223,7 +267,11 @@
     "fractional_digits": 4,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf"
+   "resolved_sha256": "9414ae406079e7738525f1541a440de49fa1ff6716c8a07ab23b1f477a6febcf",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 575e51f1d115eee26d7106ed00910e7a2be3d7f0; authorship unchecked"
+   }
   }
  ],
  "counts": {
@@ -237,24 +285,12 @@
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
- "coverage": {
-  "estimate": 0.9231,
-  "unsworn_claims_estimate": 1,
-  "unsworn_claims": [
-   {
-    "start": 110,
-    "end": 327,
-    "text": "> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISGUISE, and its verdict outranks this document's — see `RESULT_efficiency_control_"
-   }
-  ],
-  "advisory": true,
-  "ceiling_note": "advisory: the denominator is counted by styxx.claimdetect (STRUCT-1), measured at precision 0.4211 on n=38 with two known recall misses; false flags bias coverage low, misses bias it high; never a gate, never a measurement",
-  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
-  "claimdetect_version": "struct-1/2026-08-30"
+ "rungs": {
+  "committed": 12
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "358064ecd58f47f1d9e45ba240fbb01d85c859d2557b6cd31b39dd0ffb54c96c",
+  "sworn_sha256": "78eac4bfa881dd32121f0ae650b3723bdd039b2b24ecbc6fd8aa020a89988565",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -272,17 +308,44 @@
    "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
    "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
    "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
-   "rn_grammar": "^r[1-9][0-9]*$, no fragment",
+   "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+   "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`<!--` … `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment — never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+   "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+   "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+   "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent — weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+   "provenance": "since v0.2 R7: every span verdict carries `provenance` — for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at <commit>; authorship unchecked` — and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+   "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
    "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
    "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
    "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
    "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
-   "coverage": "numerator sworn_total; denominator adds sentences of the narrative (canonical text minus sworn spans minus fenced regions) that styxx.claimdetect reads as claims; the splitter is diffgate's `(?<=[.!?])\\s+|\\n+`; 0/0 is null; ALWAYS advisory",
+   "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) — a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter — and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
    "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
-   "html_comments": "a tag inside an HTML comment is recognised like any other (the spec's lexical rules are closed); a hidden commitment inflating coverage is an owed v0.2 item"
+   "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
   }
  },
- "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "398bf0cbeb2a9c9d7c219e0eec4928c7010092b2e8490159177cdfe94aa7b222",
- "timestamp": "2026-09-02T00:15:05Z"
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "e6ebc2b61a17a6755b776282c2222abc66ff5bb2bea9b24067f3673c1be695a7",
+ "coverage": {
+  "schema": "sworn/coverage/1",
+  "advisory": true,
+  "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
+  "sworn_total": 12,
+  "narrative_sentences": 74,
+  "sentence_share": 0.1395,
+  "diff_claim_sentences": 1,
+  "diff_claim_share": 0.9231,
+  "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+  "unsworn_claims": [
+   {
+    "start": 110,
+    "end": 327,
+    "text": "> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISGUISE, and its verdict outranks this document's — see `RESULT_efficiency_control_"
+   }
+  ],
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "coverage_sha256": "678f4db420415fe1869d4ba2e9f4c155119a9549fc4e38de5e88613a0899ae22",
+ "timestamp": "2026-09-02T17:31:27Z"
 }
