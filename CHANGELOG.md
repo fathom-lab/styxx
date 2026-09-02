@@ -58,6 +58,18 @@ definition, never accused. The verifier is handed commitments, not a target.
   are recognised (the spec's lexical rules are closed); a hidden commitment inflating coverage
   is a v0.2 item.
 
+**The frequency arc: the efficiency control the arc owed itself, and the profiler shipped.**
+`RESULT_efficiency_control_from_receipts_2026_09_02.md` reads two committed receipts of one
+experiment together: at every width measured, a static bank with fewer parameters than the
+adaptive-frequency model beats it (0.460 vs 0.375 at D=4 against a D=8 static bank; 0.678 vs 0.545
+at D=8 against a D=16 static bank, which beats the D=8 oracle too). The adaptive line's last positive
+was capacity in disguise. Not preregistered, said so, every number sworn; the frozen rule is
+`PREREG_efficiency_control_2026_09_02.md`, whose D=26 matched arm is run on CPU in minutes.
+`styxx/resonance.py` (NEW) is the resonance profiler the audit listed as built and never shipped,
+framework-agnostic and tested without torch: it decomposes a trained model's score into decay floor,
+static-oscillation reliance and adaptation reliance, and says in its own output that it diagnoses a
+model and never licenses a primitive.
+
 **The eleven-instrument census, with receipts.** `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`
 (sworn) and `prose_claimhood_census.json` (built by `prose_claimhood_census.py`, which resolves
 every pointer): the audit's eleven prose-reading instruments, each with the document that measured
