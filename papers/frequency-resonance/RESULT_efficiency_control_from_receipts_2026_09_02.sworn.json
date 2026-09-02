@@ -1,0 +1,87 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "575e51f1d115eee26d7106ed00910e7a2be3d7f0",
+ "document": {
+  "name": "RESULT_efficiency_control_from_receipts_2026_09_02.md",
+  "sha256": "7675ae2a4924df5e23f32cb5c3fbea8a5b784e8b9501c606353f32686e150fd5"
+ },
+ "text": "# RESULT — the efficiency control, answered from the receipts: adaptive frequency was capacity in disguise\n\nFathom Lab · 2026-09-02 · **A recombination of committed evidence, not a new measurement, and not\npreregistered.** `RESULT_entrain_rich_2026_07_23.md` named \"a param-matched wider static bank\" as\nthe honest next control for its +0.085 (D=8) and +0.129 (D=4) adaptive-frequency advantages. That\ncontrol turns out to be already in the tree: `entrainment_result.json` carries a STATIC arm at D=16 on\nthe identical task (L=96, three segments, periods [3,12], 1500 steps, seeds 0/1/2), and its STATIC\narms at D=4 and D=8 reproduce `entrain_rich_result.json`'s to the last digit, so the two receipts\nare one experiment. No rule was frozen before these numbers were read — the author read the receipts\nand then wrote this — which is why this is a RESULT in the join precedent\n(`RESULT_obligation_predicts_claimhood_2026_08_30.md`) and not a preregistered verdict. The\npreregistration that would make it one is `PREREG_efficiency_control_2026_09_02.md`, frozen after\nthis document and runnable by anyone with a GPU or a patient CPU.\n\n## The comparison\n\nThe question the arc left open: do the parameters RICH spends on its frequency detector buy more as\nextra static modes? Every number below is sworn to the receipt that holds it.\n\n**D=4.** RICH has 3184 parameters and\nscores 0.3752 on the drifting task.\na static bank one width up has 2052 parameters, fewer, and\nscores 0.4604. The \"GREENLIGHT-level\" D=4 win —\nan advantage of 0.1286 over static at the same width — is\nbeaten by a smaller static bank.\n\n**D=8, the preregistered primary.** RICH has 5652 parameters\nand scores 0.5451. a static bank at twice the width has 3580 parameters,\nfewer, and scores 0.6781. The WEAK verdict's\nadvantage of 0.0847 is not merely matched by a\nparameter-matched static bank; it is exceeded by a static bank with sixty-three percent of the\nparameters.\n\n**The oracle, too.** The oracle at the primary width — a diverse bank locked to the true drifting period — scores 0.6307,\nbelow static D=16's 0.6781. A bank that adapts perfectly at eight modes loses to a bank that does not\nadapt at all at sixteen. The oracle at twice the width scores 0.8950, so the\nadaptation prize is real and grows with width; it is the *learned* detector that never earns its\nparameters, at any width measured.\n\nDerived, not sworn: the static model's parameter count is `2D² + 143D + 780` (checked against the\nreceipts at D=4, 8, 16), so the smallest static width with at least RICH-at-D=8's parameter count is\nD=26, at 5850. That arm was never run. It does not need to be for the conclusion above, because a\nnarrower static bank already wins; it is the confirmatory arm the preregistration names.\n\n## Reading\n\nThe adaptive-frequency line of the arc ended in three verdicts: KILL (single-projection detector),\nWEAK at D=8 and a clean win at D=4 (windowed conv), and ABSTAIN with a falsified scaling curve on the\nharder task. This control closes the one residual positive. **Spent as modes rather than as a\ndetector, the same parameters buy more, at every width the arc measured.** The synthesis's line for\nnested coupling — capacity comes from more modes, not cleverer coupling — now covers adaptation as\nwell, on this task family. What remains live is the oracle's prize, which no learned detector has\nreached, and the profiler, which measures reliance rather than earning it.\n\n## What this does not say\n\nNothing about scale beyond D=16 or beyond L=96; nothing about real LinOSS or Mamba checkpoints;\nnothing about the harder task, where the receipts hold no static arm wider than the RICH arm it\nwould be compared with. The comparison is on seed-averaged accuracy with three seeds and no\ninterval. And, once more: the rule was not frozen before the numbers were read. The preregistration\nbeside this document is what fixes that, and its verdict, when someone runs it, outranks this one.\n\n---\n\n*The control the arc owed itself was already paid for. The parameters the detector spent would have\nbought more as modes — which is the arc's own finding, said one more time, about the one lever it\nhad hoped was different.*\n",
+ "spans": [
+  {
+   "start": 1349,
+   "end": 1373,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/params/4/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1378,
+   "end": 1412,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/4/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1414,
+   "end": 1460,
+   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/params/8/static",
+   "kind": "numeric"
+  },
+  {
+   "start": 1473,
+   "end": 1486,
+   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/8/static",
+   "kind": "numeric"
+  },
+  {
+   "start": 1523,
+   "end": 1575,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/gate/rich_advantage_by_D/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 1653,
+   "end": 1677,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/params/8/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1682,
+   "end": 1695,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/8/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1697,
+   "end": 1749,
+   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/params/16/static",
+   "kind": "numeric"
+  },
+  {
+   "start": 1762,
+   "end": 1775,
+   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/16/static",
+   "kind": "numeric"
+  },
+  {
+   "start": 1796,
+   "end": 1815,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/gate/rich_minus_static",
+   "kind": "numeric"
+  },
+  {
+   "start": 1972,
+   "end": 2075,
+   "receipt": "path:papers/frequency-resonance/entrain_rich_result.json#/drift/8/oracle",
+   "kind": "numeric"
+  },
+  {
+   "start": 2204,
+   "end": 2247,
+   "receipt": "path:papers/frequency-resonance/entrainment_result.json#/drift/16/oracle",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}
