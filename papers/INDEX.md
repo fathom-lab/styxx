@@ -18,7 +18,7 @@ its own later work, the falsified version is what appears below.
 
 ---
 
-## 1. THE 48 ARCS (47 at the 2026-09-01 audit; `sworn` opened later that day)
+## 1. THE 49 ARCS (47 at the 2026-09-01 audit; `sworn` opened later that day; `charon` on 2026-09-02)
 
 | arc | terminal RESULT, one sentence | status | core-idea tags | ships in | DOI / OSF |
 |---|---|---|---|---|---|
@@ -65,6 +65,7 @@ its own later work, the falsified version is what appears below.
 | representational-integrity | The white-box geometry manipulation detector is dead — it detects meta or behavioural instruction, not malice (0.63/0.67, near chance). | NEGATIVE-RESULT | representational-geometry, policy-gating, benchmark-construct, preregistration | NONE (explicitly not shipped) | NONE |
 | rhythm-rescue | Clamping eigenvalue phase halves an LRU's ordered-memory capacity (6.0 → 2.67), establishing oscillation as real but non-necessary and attention-dominated. | SUPERSEDED | oscillation-dynamics, handed-target, preregistration, benchmark-construct | NONE | NONE |
 | showcase-viz | Cross-model content identity does transport through a label-free linear map (0.90 raw top-1); the arc's own "value thermometer, not a content transcript" wall was two stacked artifacts and is retracted. | SUPERSEDED | cross-model-transfer, representational-geometry, deception-honesty, calibration | `styxx/crossmind.py` (with owed changes) | NONE |
+| charon | The lab's whole record — 18 sworn documents, 12 capsules, 210 certificates — re-derived from bytes into one chained log a stranger re-runs with one command; the receipt-set size sits on every line so a verdict bought with volume is visible, and a moved verifier reads as SKEW, not drift; ten lines already record that their artifact's own verdict no longer reproduces under the installed verifier. | LIVE | receipt-integrity, self-verification, agent-provenance | `styxx/charon.py` | NONE |
 | sworn | The author binds a sentence to bytes it could not have written and the verifier is never handed a target; v0.2 survived a twelve-attack battery at the price of four rules and withdrew its coverage estimate (its denominator was a diff-claim detector fired on result-shaped prose); sixteen documents in the tree are sworn, and no measurement exists of whether authors bind the sentences that matter. | LIVE (unmeasured) | handed-target, receipt-integrity, agent-provenance, mention-vs-use, preregistration | `styxx/sworn.py` | NONE |
 | sycophancy-target-gate | A grammatical self-versus-other attachment gate fixed self-apology false positives and shipped; every lexical route to the restrained-technical false positive is closed-negative because opinion-versus-fact is irreducibly semantic. | LIVE | mention-vs-use, handed-target, sycophancy-pressure, calibration, policy-gating | `styxx/guardrail/self_directed_gate.py` | cites 10.5281/zenodo.19777921 |
 | three-axis-sendtime-gate | A locked seven-hypothesis send-time protocol, pre-data: nothing scored, stopping rule never fired. | UNCLEAR (pre-data) | preregistration, introspection, self-verification, oscillation-dynamics | `styxx/three_axis/` (env-gated; 3 of 6 modules unimported) | NONE |

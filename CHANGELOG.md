@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — charon v0.1: the ferry log — every verdict this lab issued, re-derived from bytes, chained
+
+**`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, frozen first.**
+Charon is the log of crossings: an append-only, hash-chained record in which every line is a
+verdict re-derived from bytes by one of the three verifiers the lab already has — a sworn
+document at the commit its sidecar names, a capsule, an OATH certificate with its receipts.
+Charon reproduces; it never adjudicates, never accuses, never fetches, never signs.
+- **The receipt-set size is on every line.** The 2026-09-01 dogfood showed an OATH verdict on
+  fixed bytes moving FAILED → HELD as more receipts were supplied; Charon prints `receipts.n` and
+  every receipt digest beside every verdict so a HELD bought with volume is visible. In the
+  first log 10 of 227 HELD-class lines rest on ten or more receipts, max 21.
+- **SKEW is not DRIFT.** `verify` re-derives every line under the installed verifier and
+  distinguishes a verdict that moved because the verifier's bytes moved (SKEW) from one that
+  moved under the same build (DRIFT), beside UNRESOLVED (bytes unavailable — never an
+  accusation) and TAMPER (the chain broke — the only non-zero exit). Every corpus audit before
+  this called the first two one word.
+- **The first log**: `papers/charon/charon.log.jsonl`, 240 lines — 18 sworn documents, 12
+  capsules, 210 tracked certificates — head `7eec6b2f…`; `charon_verify_result.json`: 240
+  REPRODUCED, 0 of anything else. At ingest, 10 lines recorded that their artifact's own verdict
+  did not reproduce under the installed verifier, with the reason on the line: six OATH capsules
+  and one diffgate capsule minted under an older verifier (the UNCOVERED suffix; the retired
+  path-claim branch), and three certificates — one whose receipt changed, one incomplete, and one
+  staged arXiv copy (`arxiv/read_neq_write/source.md`) that re-certifies OATH-FAILED where it
+  recorded OATH-HELD, outside the `papers/` tree the corpus audit walks.
+- **The page**: `papers/charon/index.html`, one static file, no script, no request; every line
+  with the command that re-derives it.
+- Tests: `tests/test_charon.py` — entry ids stable across timestamps; tamper by edit and by
+  removal; SKEW vs DRIFT vs MOVED_VERIFIER under a monkeypatched verifier; UNRESOLVED on an
+  absent commit; LF everywhere; no `<script`.
+- **What it does not say:** that any verdict is true; who wrote any line; that a receipt set was
+  not chosen to pass; that anything is immutable or self-verifying. `capsule.py`'s verifier
+  compares verdict strings where the corpus auditor compares classes, which is why six sound
+  capsules read as not-reproduced — a repair owed to `capsule.py`, not made here.
+
+Also this cycle: `papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.md` (sworn) —
+leg 4 of the plan, a total gates table under `styxx.protocol` with its contaminated prior cited
+by digest; licenses nothing until signed.
+
 ## [Unreleased] — sworn output v0.2: attacked twelve ways, four rules paid, the coverage number withdrawn
 
 **The adversarial pass the standing rule requires, run before any sentence about the format
