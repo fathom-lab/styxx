@@ -604,6 +604,16 @@ V12_SUM_COHERENCE = True          # PREREG_mirror_sum_2026_08_31: an integer the
                                   # quoted "9" coincides with nine seat scores of 1 each — a
                                   # uniform sum is indistinguishable from counting and never
                                   # binds. RESCUE-ONLY, same guard as V11 by construction.
+V14_RANGE_SANITY_REPORT = False   # PREREG_range_sanity_report_2026_09_02: when True, a value that
+                                  # leaves the range of the bounded-quantity word before it is
+                                  # REPORTED on its ledger entry (`range_flag`) and the ladder runs
+                                  # as if range-sanity had not spoken -- no forced accusation, no
+                                  # obligation of its own. Motivated by the external blind panel:
+                                  # thirteen of thirteen range-sanity-source accusations on foreign
+                                  # READMEs were judged not claims
+                                  # (RESULT_handedness_v3_header_handed_2026_09_02). Default OFF:
+                                  # every committed certificate is unchanged until the prereg's
+                                  # gates say otherwise and the corpus is re-issued.
 V10_SLASHPAIR_RANGE_GUARD = True  # companion: the v0.3 range-sanity rule does not fire on a
                                   # slash-pair numerator. A value written `a/b` is a count pair,
                                   # never a value of the bounded quantity named to its left.
@@ -1115,6 +1125,10 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # named to its left. '(stability 5/5)' is five of five, not a stability of 5.0.
         if V10_SLASHPAIR_RANGE_GUARD and slash_pair:
             out_of_range = False
+        _range_flag = "out-of-range" if out_of_range else None
+        if out_of_range and V14_RANGE_SANITY_REPORT:
+            out_of_range = False     # reported below, not adjudicated: the ladder proceeds as if
+                                     # the rule had not spoken (v0.11/v0.12 rescue guards included)
         if out_of_range:
             hits, bound = [], True
             precision_only = False   # a range-sanity obligation is never ULP-escapable
@@ -1266,7 +1280,10 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         _ep = {"branch": _branch, "obligated": bool(bound), "obligation_source": _ob_src}
         if _branch == "value-match":
             _ep["path_checked"] = num["decimals"] == 0
-        ledger.append({**num, "status": status, "receipt_ref": ref, "epistemics": _ep})
+        _entry = {**num, "status": status, "receipt_ref": ref, "epistemics": _ep}
+        if V14_RANGE_SANITY_REPORT and _range_flag:
+            _entry["range_flag"] = _range_flag       # a NEW field, present only under the flag
+        ledger.append(_entry)
 
     counts = {s: sum(1 for c in ledger if c["status"] == s) for s in ("VERIFIED", "ABSTAIN", "UNGROUNDED")}
     summary = _epistemics_summary(ledger, counts)

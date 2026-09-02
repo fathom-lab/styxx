@@ -20,3 +20,29 @@ papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.sworn-receipt.json
 # its LF bytes, so a CRLF checkout makes the pin fail on Windows only.
 papers/closed-model-frontier/h_mapping.json -text
 papers/closed-model-frontier/h_mapping_census_result.json -text
+
+# sworn documents outside papers/sworn: byte-pinned, same reason as above
+papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02.md -text
+papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02.sworn.json -text
+papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02.sworn-receipt.json -text
+papers/frequency-resonance/RESULT_efficiency_control_2026_09_02.md -text
+papers/frequency-resonance/RESULT_efficiency_control_2026_09_02.sworn.json -text
+papers/frequency-resonance/RESULT_efficiency_control_2026_09_02.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02.md -text
+papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02.sworn.json -text
+papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02.md -text
+papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02.sworn.json -text
+papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02.md -text
+papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02.sworn.json -text
+papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02.sworn-receipt.json -text
+papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md -text
+papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.sworn.json -text
+papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02.md -text
+papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02.sworn.json -text
+papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02.sworn-receipt.json -text
+papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md -text
+papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.sworn.json -text
+papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.sworn-receipt.json -text

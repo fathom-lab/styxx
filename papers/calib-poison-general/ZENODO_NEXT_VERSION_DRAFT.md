@@ -1,5 +1,7 @@
 # DRAFT — next Zenodo version (the erasure-bound arc). GATED, DO NOT DEPOSIT YET.
 
+> **Back-pointer, added 2026-09-01.** The coupling constant staged below as shippable was VOIDed and the bound has no number; this draft is already marked DO NOT DEPOSIT — see `RESULT_B2_coupling_confirm_VOID_2026_07_16.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **This is staging, not a publication. It exists so the next deposit under concept DOI
 `10.5281/zenodo.19326174` is one operator login away when the gate clears. Autopilot does NOT
 deposit to Zenodo (operator-gated, and the login/token flow the agent cannot drive).**

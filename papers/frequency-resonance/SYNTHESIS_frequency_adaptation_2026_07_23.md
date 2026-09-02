@@ -1,5 +1,7 @@
 # SYNTHESIS — The Adaptive-Frequency Ceiling in State-Space Models — 2026-07-23
 
+> **Back-pointer, added 2026-09-01.** The ENTRAIN-RICH greenlight named below as the next step was worse than static at every budget, the same day — see `RESULT_scarcity_scale_2026_07_23.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 Three controlled causal ablations of oscillation in sequence models, run in one day on one 8 GB GPU,
 each frozen before data, each with a firing positive control, each OATH-certified. This is the first
 *within-architecture* causal map of adaptive and nested frequency in state-space models — the

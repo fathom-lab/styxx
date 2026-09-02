@@ -200,6 +200,22 @@ available on the same receipts.
 
 ---
 
+### Addendum, 2026-09-02 — M2 acquires a grain
+
+**Handed by structure, or handed by co-occurrence.** M2 was named above as one mechanism. Five
+preregistered verdicts issued on 2026-09-02 split it: a target handed by a label the author
+chose and committed to (a column header, an `n=` register, an oath tag, a rotation the weights
+were trained to use) survived its strangers; a target handed by a word that happened to be nearby
+(a trigger word on the line, a bounded-quantity rule fired on a foreign README, a detector
+guessing at a rhythm it was not given) did not. Header-handed accusations were genuine at 0.9515
+against line-handed at 0.6391 on the same blind panel; the range-sanity rule accused 13 foreign
+tokens, 0 genuine, and moved 0 of the lab's own; the adaptive-frequency detector was capacity in
+disguise and the rotation no diversity recovered. The prose/artifact split §8.1 examined was a
+proxy for handed-versus-found; that is itself a proxy for structure-versus-co-occurrence. Sworn
+to the receipts in `SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`; declared as
+`grain` in `closed-model-frontier/h_mapping.json` v2. Added as an addendum so the count above
+stays readable as published; nothing in the frozen table is edited.
+
 ## 3. WHAT IS SETTLED, WITH RECEIPTS
 
 Settled here means: preregistered, scored against a frozen bar, and not contradicted by anything

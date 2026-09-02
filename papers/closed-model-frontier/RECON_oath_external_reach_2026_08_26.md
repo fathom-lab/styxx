@@ -1,5 +1,7 @@
 # RECON — OATH-EXT: what the verifier does on documents this lab did not write
 
+> **Back-pointer, added 2026-09-01.** The false-accusation claim this document makes was withdrawn the following day; the measured rate on foreign text is published there as an upper bound — see `RESULT_oath_external_corpus_2026_08_27.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 Fathom Lab · 2026-08-26 · **RECON. This document licenses no claim.** It sizes a class and
 reports a boundary. Its numbers are inputs to a future preregistration's bars, not results.
 Receipt: `oath_ext_recon.json`. Harness: `oath_ext_recon.py`, deterministic, re-runnable.

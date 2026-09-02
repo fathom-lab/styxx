@@ -1,0 +1,555 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v0",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "CENSUS_prose_claimhood_instruments_2026_09_01.md",
+  "inline_sha256": "df47d46ba82a4602eed593fc18179f929163421dc4f3bd970a0013eda1282b3c",
+  "canonical_sha256": "5ce2df45feaf39719d6e4ed9422d22969fedef3408cdf20b5e1b6dc8f882ee35"
+ },
+ "commit": "508d839e3b9daeb83363909f202cf47fc338ab79",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 886,
+   "start": 886,
+   "end": 924,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_direction_1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "11",
+    "printed": "11",
+    "receipt": "11",
+    "receipt_rounded": "11",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2b9296c426af86e139a85e84476469bf26f601c5f4b43b42afc06d97bfc07ebc"
+  },
+  {
+   "at": 1028,
+   "start": 925,
+   "end": 996,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_rows_whose_headline_has_a_json_receipt",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "9",
+    "printed": "9",
+    "receipt": "9",
+    "receipt_rounded": "9",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2b9296c426af86e139a85e84476469bf26f601c5f4b43b42afc06d97bfc07ebc"
+  },
+  {
+   "at": 1231,
+   "start": 998,
+   "end": 1039,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/audit_rows_whose_headline_rests_on_prose",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "2",
+    "printed": "2",
+    "receipt": "2",
+    "receipt_rounded": "2",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2b9296c426af86e139a85e84476469bf26f601c5f4b43b42afc06d97bfc07ebc"
+  },
+  {
+   "at": 1472,
+   "start": 1113,
+   "end": 1137,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/counts/rows_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "13",
+    "printed": "13",
+    "receipt": "13",
+    "receipt_rounded": "13",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2b9296c426af86e139a85e84476469bf26f601c5f4b43b42afc06d97bfc07ebc"
+  },
+  {
+   "at": 2148,
+   "start": 1693,
+   "end": 1731,
+   "receipt": "path:papers/closed-model-frontier/v14_adjudication.json#/precision",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.16",
+    "printed": "0.16",
+    "receipt": "0.16",
+    "receipt_rounded": "0.16",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4e68983581448bd5cc6f0a613ec675c6ae2e7b1b6f392921faafa8434901b5f6"
+  },
+  {
+   "at": 2415,
+   "start": 1862,
+   "end": 1936,
+   "receipt": "path:papers/closed-model-frontier/external1_adjudication.json#/precision",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.23",
+    "printed": "0.23",
+    "receipt": "0.23",
+    "receipt_rounded": "0.23",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "ebfa43abd65afe67d09a6919e55b60361c9cb8a2d82a50d41216616256ef0b02"
+  },
+  {
+   "at": 2676,
+   "start": 2019,
+   "end": 2081,
+   "receipt": "path:papers/closed-model-frontier/oath_adjudication_result.json#/false_accusation_rate/rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.2596",
+    "printed": "0.2596",
+    "receipt": "0.2596",
+    "receipt_rounded": "0.2596",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "b33908dd0788e2b6a7f24c7e5b01f45ffa468ce30c163332b37621d88b8f5d79"
+  },
+  {
+   "at": 2863,
+   "start": 2083,
+   "end": 2150,
+   "receipt": "path:papers/closed-model-frontier/oath_adjudication_result.json#/verified_arm_sanity/rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.4933",
+    "printed": "0.4933",
+    "receipt": "0.4933",
+    "receipt_rounded": "0.4933",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "b33908dd0788e2b6a7f24c7e5b01f45ffa468ce30c163332b37621d88b8f5d79"
+  },
+  {
+   "at": 3147,
+   "start": 2246,
+   "end": 2287,
+   "receipt": "path:papers/closed-model-frontier/agent_claim_extractor_baseline.json#/E1/precision",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.3333",
+    "printed": "0.3333",
+    "receipt": "0.3333",
+    "receipt_rounded": "0.3333",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "99ade3d5e8148f1d919726f7112149579acbbd2bfda52f7fce044f08e6a5f980"
+  },
+  {
+   "at": 3305,
+   "start": 2289,
+   "end": 2328,
+   "receipt": "path:papers/closed-model-frontier/agent_claim_extractor_baseline.json#/E2/recall_corpus_level_ESTIMATE_not_measurement",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.0336",
+    "printed": "0.0336",
+    "receipt": "0.033621",
+    "receipt_rounded": "0.0336",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "99ade3d5e8148f1d919726f7112149579acbbd2bfda52f7fce044f08e6a5f980"
+  },
+  {
+   "at": 3690,
+   "start": 2524,
+   "end": 2587,
+   "receipt": "path:papers/agent-self-audit/FINDING_dogfood_binding_stack_2026_07_04.md",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 61,
+    "haystack_bytes": 3051
+   },
+   "resolved_sha256": "9d0bcd46903b45451f49948aa1b68db31da9b9e5787156bc0d1297ec63360897"
+  },
+  {
+   "at": 3980,
+   "start": 2712,
+   "end": 2788,
+   "receipt": "path:papers/ledger_classifier_audit.json#/rendered_nonsense_entries/detail/2/printed_as",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 7,
+    "haystack_bytes": 7
+   },
+   "resolved_sha256": "aec06021bf7ce25013a676ed0ea50d511335fa7c5b5e6b0d2eda4537856820e3"
+  },
+  {
+   "at": 4182,
+   "start": 2797,
+   "end": 2824,
+   "receipt": "path:papers/ledger_classifier_audit.json#/rendered_nonsense_entries/n",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "9",
+    "printed": "9",
+    "receipt": "9",
+    "receipt_rounded": "9",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "aec06021bf7ce25013a676ed0ea50d511335fa7c5b5e6b0d2eda4537856820e3"
+  },
+  {
+   "at": 4436,
+   "start": 2950,
+   "end": 3002,
+   "receipt": "path:papers/deception-correction-gate/results.json#/fixed/correction_fire",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.17",
+    "printed": "0.17",
+    "receipt": "0.167",
+    "receipt_rounded": "0.17",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "eccb90f6c193b75802e981eb8c8a74bc6f2df6b4aba1cf9387486d0748254fe1"
+  },
+  {
+   "at": 4758,
+   "start": 3167,
+   "end": 3198,
+   "receipt": "path:papers/decoupled-diagonal-capstone/results.json#/joint/correction_fire",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.15",
+    "printed": "0.15",
+    "receipt": "0.15",
+    "receipt_rounded": "0.15",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7d485e937fcfe066cfcc79802a6cb760a796655a7104d873e6723522960d285f"
+  },
+  {
+   "at": 4960,
+   "start": 3262,
+   "end": 3299,
+   "receipt": "path:papers/decoupled-diagonal-capstone/FINDING_2026_05_25.md",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 35,
+    "haystack_bytes": 3818
+   },
+   "resolved_sha256": "f1eb65ac42f34f550ff20d62cde8c0ec1ae2011d95f2e1c9a529d18419b3ec16"
+  },
+  {
+   "at": 5168,
+   "start": 3379,
+   "end": 3435,
+   "receipt": "path:papers/sycophancy-target-gate/results_promptopinion.json#/detector_by_class/agreement_cf",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.47",
+    "printed": "0.47",
+    "receipt": "0.467",
+    "receipt_rounded": "0.47",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fd5acabf2094cc752b6a246c5f508508dbde489b30a368b2d7ee0c55ffb042a6"
+  },
+  {
+   "at": 5385,
+   "start": 3471,
+   "end": 3503,
+   "receipt": "path:papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 30,
+    "haystack_bytes": 3644
+   },
+   "resolved_sha256": "8ec3a0b541804ac1910c68566a7d70c3e2fff239de1405885449b6342405504e"
+  },
+  {
+   "at": 5648,
+   "start": 3634,
+   "end": 3668,
+   "receipt": "path:experiments/critique_detector_on_paper_2026_05_28/results.json#/n_propositions",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "18",
+    "printed": "18",
+    "receipt": "18",
+    "receipt_rounded": "18",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "e59e9794139449674d91dfe4320e8967964f3afa8d6e1737c2db3158d0c64aca"
+  },
+  {
+   "at": 5831,
+   "start": 3702,
+   "end": 3729,
+   "receipt": "path:experiments/critique_detector_on_paper_2026_05_28/results.json#/results/0/observed_p_no",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.0",
+    "printed": "0.0",
+    "receipt": "0.0",
+    "receipt_rounded": "0.0",
+    "fractional_digits": 1,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "e59e9794139449674d91dfe4320e8967964f3afa8d6e1737c2db3158d0c64aca"
+  },
+  {
+   "at": 6122,
+   "start": 3869,
+   "end": 3900,
+   "receipt": "path:papers/dogfood-self-audit/FINDING_nominal_register_blindspot_2026_08_13.md",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 29,
+    "haystack_bytes": 5969
+   },
+   "resolved_sha256": "34ea1224d7de5756e2fc1031f908902a3d534e6202a090c23498bd645d6d82ff"
+  },
+  {
+   "at": 6352,
+   "start": 3990,
+   "end": 4039,
+   "receipt": "path:papers/grounded-honesty-axis/grounded_honesty_result.json#/auc_text_only_deception",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.4983",
+    "printed": "0.4983",
+    "receipt": "0.4983",
+    "receipt_rounded": "0.4983",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "0a65adc73325d712a666700535bf3971be21a24cb11c941e65d93c336f5bbcc5"
+  },
+  {
+   "at": 6658,
+   "start": 4177,
+   "end": 4193,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/arms/flagged/A_share",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.4211",
+    "printed": "0.4211",
+    "receipt": "0.4211",
+    "receipt_rounded": "0.4211",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2d43f7b3ba767533aa1f21302dc0a626f28f2535578d997f86be36a6787e8fed"
+  },
+  {
+   "at": 6789,
+   "start": 4202,
+   "end": 4229,
+   "receipt": "path:papers/closed-model-frontier/stage2_result.json#/gates/G-S2P/bar",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.2061",
+    "printed": "0.2061",
+    "receipt": "0.2061",
+    "receipt_rounded": "0.2061",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "2d43f7b3ba767533aa1f21302dc0a626f28f2535578d997f86be36a6787e8fed"
+  },
+  {
+   "at": 7120,
+   "start": 4432,
+   "end": 4508,
+   "receipt": "path:papers/closed-model-frontier/oath_unobligated_oath_census.json#/headline/unobligated_oath_rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.5811",
+    "printed": "0.5811",
+    "receipt": "0.5811",
+    "receipt_rounded": "0.5811",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "32622024153d3aed69bd60c7d97866e7fed7fd540e93324f5790c9c1bba6101a"
+  },
+  {
+   "at": 7329,
+   "start": 4510,
+   "end": 4572,
+   "receipt": "path:papers/closed-model-frontier/oath_unobligated_oath_census.json#/headline/weakest_share_of_verified",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.3399",
+    "printed": "0.3399",
+    "receipt": "0.3399",
+    "receipt_rounded": "0.3399",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "32622024153d3aed69bd60c7d97866e7fed7fd540e93324f5790c9c1bba6101a"
+  }
+ ],
+ "counts": {
+  "HELD": 26,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 26,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "coverage": {
+  "estimate": 0.7647,
+  "unsworn_claims_estimate": 8,
+  "unsworn_claims": [
+   {
+    "start": 744,
+    "end": 840,
+    "text": "`prose_claimhood_census.json` if one fails; this document's sidecar binds to that file at commit"
+   },
+   {
+    "start": 1570,
+    "end": 1665,
+    "text": "**diffgate path-claim accuser** — `styxx/diffgate.py`; the accusing branch is deleted and the"
+   },
+   {
+    "start": 1939,
+    "end": 2018,
+    "text": "**OATH obligation predicate on external text** — `styxx/certify.py`, shipped."
+   },
+   {
+    "start": 2409,
+    "end": 2477,
+    "text": "**`styxx.agent_audit` extract_claims** — shipped; no JSON receipt."
+   },
+   {
+    "start": 2854,
+    "end": 2949,
+    "text": "**the deception NLI** — `styxx/guardrail/deception_v2.py`; the prompt-aware fix was reverted."
+   },
+   {
+    "start": 3578,
+    "end": 3633,
+    "text": "**critique_detector** — `styxx/critique.py`, shipped."
+   },
+   {
+    "start": 3903,
+    "end": 3989,
+    "text": "**text-only deception** — `styxx/attack/fingerprint.py`, shipped as a register axis."
+   },
+   {
+    "start": 4082,
+    "end": 4158,
+    "text": "**STRUCT-1 claimdetect** — `styxx/claimdetect.py`, shipped as an observer."
+   }
+  ],
+  "advisory": true,
+  "ceiling_note": "advisory: the denominator is counted by styxx.claimdetect (STRUCT-1), measured at precision 0.4211 on n=38 with two known recall misses; false flags bias coverage low, misses bias it high; never a gate, never a measurement",
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "358064ecd58f47f1d9e45ba240fbb01d85c859d2557b6cd31b39dd0ffb54c96c",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, no fragment",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "numerator sworn_total; denominator adds sentences of the narrative (canonical text minus sworn spans minus fenced regions) that styxx.claimdetect reads as claims; the splitter is diffgate's `(?<=[.!?])\\s+|\\n+`; 0/0 is null; ALWAYS advisory",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "a tag inside an HTML comment is recognised like any other (the spec's lexical rules are closed); a hidden commitment inflating coverage is an owed v0.2 item"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "2e6c9608fb537137b0f0d5a79abaaf53488ba854854f697817f58b41a04a1bd0",
+ "timestamp": "2026-09-01T23:34:10Z"
+}

@@ -1,0 +1,99 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "3b14f4208e304ae9e3824984fc0decdf540dc9d2",
+ "document": {
+  "name": "RESULT_efficiency_control_2026_09_02.md",
+  "sha256": "6956b802e98abf7511cceda2223fc130f4c6ec0e8e42226ae341db2c4074da46"
+ },
+ "text": "# RESULT — the efficiency control, preregistered: CAPACITY_IN_DISGUISE\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_efficiency_control_2026_09_02.md` (committed before\nthe run). Runner: `run_efficiency_control.py`, which imports the arc's `run_entrain_rich.py`\nverbatim. Receipt: `efficiency_control_result.json`, scored through `styxx.protocol`. Device: CPU,\nthree seeds, 1500 steps. Every number below is sworn to the receipt at commit `3b14f4208e30`.\nThe frozen verdict is `CAPACITY_IN_DISGUISE`.\n\n## The gates, in the order the preregistration reads them\n\n**Plumbing.** The anchors re-run on CPU landed within 0.0227 of the committed GPU receipt,\nunder the frozen 0.03: this is the same experiment.\n\n**Positive control.** The oracle beat static by 0.162 at the primary width,\nover the arc's standing 0.10 bar: the adaptation prize is present, as it was on the receipt.\n\n**The control.** The matched static bank has 5850 parameters, at least\nRICH's 5652, and beats RICH by 0.1959\non drift accuracy. The bar for CAPACITY_IN_DISGUISE was zero.\n\n## The numbers at the primary width\n\n| arm | width | params | drift accuracy |\n|---|---|---|---|\n| STATIC | eight | 2052 | 0.4831 |\n| RICH (adaptive frequency) | eight | 5652 | 0.5560 |\n| ORACLE (locked to the true period) | eight | 2052 | 0.6451 |\n| STATIC, parameter-matched | twenty-six | 5850 | 0.7519 |\n\nRead as spans: RICH scored 0.5560;\nthe oracle scored 0.6451;\nthe matched static bank scored 0.7519.\nThe static bank with RICH's parameter budget does not merely match the adaptive model — it beats\nthe oracle that adapts perfectly, by a wide margin. Adaptation at eight modes is worth less than\neighteen more modes that never adapt.\n\n## The secondary width, reported not gated\n\nAt D=4, the matched static bank has 3375 parameters against\nRICH's 3184, and\nbeats RICH by 0.3049\n(static 0.6648 against\nRICH 0.3599). The \"clean mode-scarcity win\" the arc reported\nat D=4 was the same parameters spent worse.\n\n## What this closes, and what it does not\n\nThis is the frozen-rule confirmation of `RESULT_efficiency_control_from_receipts_2026_09_02.md`,\nwhich reached the same reading from committed receipts without a rule and said so; under the\npreregistration this verdict outranks it. It closes the adaptive-frequency line's last positive:\nacross `RESULT_entrainment`, `RESULT_entrain_rich`, `RESULT_entrain_harm` and\n`RESULT_scarcity_scale`, no learned frequency detector has earned the parameters it costs, at any\nwidth or task the arc measured. The synthesis's line for nested coupling — capacity comes from more\nmodes, not cleverer coupling — now covers adaptation.\n\nIt does not touch the arc's headline, which stands: the phase clamp showed oscillation itself is\ncausally load-bearing (`RESULT_pmnist_ablation`, +0.312), and the oracle's prize is real and grows\nwith width. What died is the claim that a *learned* adapter captures that prize efficiently. Scope:\ntoy (L=96, D≤26, integer symbols, three seeds, no interval, one task family). Nothing here is about\nreal LinOSS or Mamba checkpoints; the profiler now shipped in `styxx/resonance.py` is how that\nquestion gets asked next.\n\n---\n\n*The control the arc owed itself, paid: the parameters spent on listening for the rhythm would have\nbought more as more strings. The rhythm is real. The listener was not worth its cost.*\n",
+ "spans": [
+  {
+   "start": 458,
+   "end": 503,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 578,
+   "end": 653,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/anchor_max_abs_dev",
+   "kind": "numeric"
+  },
+  {
+   "start": 730,
+   "end": 782,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/oracle_minus_static_8",
+   "kind": "numeric"
+  },
+  {
+   "start": 895,
+   "end": 938,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/8/static_matched",
+   "kind": "numeric"
+  },
+  {
+   "start": 949,
+   "end": 960,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/8/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 966,
+   "end": 986,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/static_matched_minus_rich_8",
+   "kind": "numeric"
+  },
+  {
+   "start": 1374,
+   "end": 1392,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1394,
+   "end": 1418,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/oracle",
+   "kind": "numeric"
+  },
+  {
+   "start": 1420,
+   "end": 1457,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/8/static_matched",
+   "kind": "numeric"
+  },
+  {
+   "start": 1746,
+   "end": 1789,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/4/static_matched",
+   "kind": "numeric"
+  },
+  {
+   "start": 1798,
+   "end": 1809,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/params/4/rich",
+   "kind": "numeric"
+  },
+  {
+   "start": 1815,
+   "end": 1835,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/reported_static_matched_minus_rich_4",
+   "kind": "numeric"
+  },
+  {
+   "start": 1837,
+   "end": 1850,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/4/static_matched",
+   "kind": "numeric"
+  },
+  {
+   "start": 1859,
+   "end": 1870,
+   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/drift/4/rich",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}

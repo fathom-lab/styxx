@@ -1,0 +1,367 @@
+{
+  "schema": "styxx-sworn/prose-claimhood-census/v1",
+  "what": "instruments that read prose to find claims, with the document, the headline number and the receipt",
+  "criterion": "in_audit rows are AUDIT_the_whole_program_2026_09_01.md §8.1 direction 1, as written; the two others measured short of the 0.95 bar but were not counted there",
+  "counts": {
+    "audit_direction_1": 11,
+    "audit_rows_whose_headline_has_a_json_receipt": 9,
+    "audit_rows_whose_headline_rests_on_prose": 2,
+    "rows_total": 13
+  },
+  "rows": [
+    {
+      "id": "diffgate-path-claim",
+      "instrument": "diffgate path-claim accuser",
+      "in_audit": true,
+      "module": "styxx/diffgate.py",
+      "shipped": "accusing branch deleted; observer only",
+      "document": "papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md",
+      "date": "2026-09-01",
+      "n": "100 held-out accusations, 3 seats; 100 in-the-wild accusations, 3 seats",
+      "measured": [
+        {
+          "metric": "held-out accusation precision",
+          "printed": "0.16",
+          "receipt": "papers/closed-model-frontier/v14_adjudication.json",
+          "pointer": "/precision",
+          "leaf": "0.16",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "in-the-wild accusation precision (AIDev)",
+          "printed": "0.23",
+          "receipt": "papers/closed-model-frontier/external1_adjudication.json",
+          "pointer": "/precision",
+          "leaf": "0.23",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "oath-obligation-external",
+      "instrument": "OATH obligation predicate on external text",
+      "in_audit": true,
+      "module": "styxx/certify.py",
+      "shipped": "shipped; false-accusation rate published as an upper bound",
+      "document": "papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md",
+      "date": "2026-08-27",
+      "n": "366 accusations; 75 verified tokens; 3 seats of one model family",
+      "measured": [
+        {
+          "metric": "false-accusation rate (upper bound)",
+          "printed": "0.2596",
+          "receipt": "papers/closed-model-frontier/oath_adjudication_result.json",
+          "pointer": "/false_accusation_rate/rate",
+          "leaf": "0.2596",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "share of VERIFIED tokens the panel called claims",
+          "printed": "0.4933",
+          "receipt": "papers/closed-model-frontier/oath_adjudication_result.json",
+          "pointer": "/verified_arm_sanity/rate",
+          "leaf": "0.4933",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "agent-report-extractor",
+      "instrument": "agent-report claim extractor (diffgate templates on agent prose)",
+      "in_audit": true,
+      "module": "styxx/diffgate.py",
+      "shipped": "shipped; measured blind",
+      "document": "papers/closed-model-frontier/RESULT_agent_claim_extractor_baseline_2026_08_30.md",
+      "date": "2026-08-30",
+      "n": "300 adjudicated sentences, 9 seat-runs",
+      "measured": [
+        {
+          "metric": "precision on the claims it flagged",
+          "printed": "0.3333",
+          "receipt": "papers/closed-model-frontier/agent_claim_extractor_baseline.json",
+          "pointer": "/E1/precision",
+          "leaf": "0.3333",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "corpus-level recall (an estimate, not a measurement)",
+          "printed": "0.0336",
+          "receipt": "papers/closed-model-frontier/agent_claim_extractor_baseline.json",
+          "pointer": "/E2/recall_corpus_level_ESTIMATE_not_measurement",
+          "leaf": "0.033621",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "agent-audit-extract-claims",
+      "instrument": "styxx.agent_audit extract_claims",
+      "in_audit": true,
+      "module": "styxx/agent_audit.py",
+      "shipped": "shipped",
+      "document": "papers/agent-self-audit/FINDING_dogfood_binding_stack_2026_07_04.md",
+      "date": "2026-07-04",
+      "n": "one real seven-sentence agent report; no panel",
+      "measured": [
+        {
+          "metric": "claims extracted from a real agent report",
+          "printed": "0",
+          "receipt": null,
+          "needle": "read **0 claims from a 7-sentence real agent session report**",
+          "kind": "prose",
+          "status": "prose-only"
+        }
+      ]
+    },
+    {
+      "id": "ledger-refusal-classifier",
+      "instrument": "the ledger's refusal classifier",
+      "in_audit": true,
+      "module": "papers/build_ledger.py (repaired by papers/ledger_verdicts.py)",
+      "shipped": "not in the package",
+      "document": "papers/SYNTHESIS_mention_and_use_2026_08_26.md",
+      "date": "2026-08-26",
+      "n": "163 cycles, exhaustively re-classified; no panel",
+      "measured": [
+        {
+          "metric": "a token printed as a machinery refusal",
+          "printed": "SHIPPED",
+          "receipt": "papers/ledger_classifier_audit.json",
+          "pointer": "/rendered_nonsense_entries/detail/2/printed_as",
+          "kind": "quote",
+          "leaf": "SHIPPED",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "rendered-nonsense refusal entries",
+          "printed": "9",
+          "receipt": "papers/ledger_classifier_audit.json",
+          "pointer": "/rendered_nonsense_entries/n",
+          "leaf": "9",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "deception-nli",
+      "instrument": "the deception NLI (a quoted false premise read as asserted)",
+      "in_audit": true,
+      "module": "styxx/guardrail/deception_v2.py",
+      "shipped": "NLI scorer shipped; the prompt-aware fix was reverted",
+      "document": "papers/deception-correction-gate/FINDING_2026_05_25.md",
+      "date": "2026-05-25",
+      "n": "80-item holdout, two API models; no panel",
+      "measured": [
+        {
+          "metric": "corrections still flagged after the fix",
+          "printed": "0.17",
+          "receipt": "papers/deception-correction-gate/results.json",
+          "pointer": "/fixed/correction_fire",
+          "leaf": "0.167",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "capstone-nli",
+      "instrument": "the capstone NLI (a bare question read as an assertion)",
+      "in_audit": true,
+      "module": "styxx/guardrail/deception_v2.py",
+      "shipped": "integration reverted",
+      "document": "papers/decoupled-diagonal-capstone/FINDING_2026_05_25.md",
+      "date": "2026-05-25",
+      "n": "88-item joint holdout; the defect measured on 50 factual triples",
+      "measured": [
+        {
+          "metric": "joint correction fire rate",
+          "printed": "0.15",
+          "receipt": "papers/decoupled-diagonal-capstone/results.json",
+          "pointer": "/joint/correction_fire",
+          "leaf": "0.15",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "genuine lies suppressed as corrections",
+          "printed": "2 of 50",
+          "receipt": null,
+          "needle": "Measured scope: **2 of 50** factual",
+          "kind": "prose",
+          "status": "prose-only"
+        }
+      ]
+    },
+    {
+      "id": "prompt-opinion-detector",
+      "instrument": "the prompt-opinion detector",
+      "in_audit": true,
+      "module": "papers/sycophancy-target-gate/target_gate_c4.py",
+      "shipped": "not shipped (candidate C4)",
+      "document": "papers/sycophancy-target-gate/FINDING_promptopinion_2026_05_24.md",
+      "date": "2026-05-24",
+      "n": "120-item varied-phrasing holdout, two API models",
+      "measured": [
+        {
+          "metric": "detector accuracy on the decisive class, fresh phrasing",
+          "printed": "0.47",
+          "receipt": "papers/sycophancy-target-gate/results_promptopinion.json",
+          "pointer": "/detector_by_class/agreement_cf",
+          "leaf": "0.467",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "separation on the earlier fixed-template holdout",
+          "printed": "100%",
+          "receipt": null,
+          "needle": "separated the classes **100%**",
+          "kind": "prose",
+          "status": "prose-only"
+        }
+      ]
+    },
+    {
+      "id": "critique-detector",
+      "instrument": "critique_detector",
+      "in_audit": true,
+      "module": "styxx/critique.py",
+      "shipped": "shipped",
+      "document": "papers/agent-self-audit/FINDING_critique_detector_on_paper_2026_05_28.md",
+      "date": "2026-05-28",
+      "n": "18 author-written propositions; no panel",
+      "measured": [
+        {
+          "metric": "propositions, all of them saturated",
+          "printed": "18",
+          "receipt": "experiments/critique_detector_on_paper_2026_05_28/results.json",
+          "pointer": "/n_propositions",
+          "leaf": "18",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "observed P(NO) on a TRUE claim",
+          "printed": "0.0",
+          "receipt": "experiments/critique_detector_on_paper_2026_05_28/results.json",
+          "pointer": "/results/0/observed_p_no",
+          "leaf": "0.0",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "dogfood-register-gates",
+      "instrument": "the dogfood register gates",
+      "in_audit": true,
+      "module": "papers/dogfood-self-audit/execution_receipt_gate.py",
+      "shipped": "not shipped",
+      "document": "papers/dogfood-self-audit/FINDING_nominal_register_blindspot_2026_08_13.md",
+      "date": "2026-08-13",
+      "n": "one live status report; no panel",
+      "measured": [
+        {
+          "metric": "claims found in a report that made claims",
+          "printed": "zero",
+          "receipt": null,
+          "needle": "Both returned **zero claims**",
+          "kind": "prose",
+          "status": "prose-only"
+        }
+      ]
+    },
+    {
+      "id": "text-only-deception",
+      "instrument": "text-only deception",
+      "in_audit": true,
+      "module": "styxx/attack/fingerprint.py",
+      "shipped": "shipped as a register axis",
+      "document": "papers/THESIS_the_honesty_standard_2026_05_31.md",
+      "date": "2026-05-31",
+      "n": "48 register-matched pairs; no panel",
+      "measured": [
+        {
+          "metric": "AUC separating true from false self-claims",
+          "printed": "0.4983",
+          "receipt": "papers/grounded-honesty-axis/grounded_honesty_result.json",
+          "pointer": "/auc_text_only_deception",
+          "leaf": "0.4983",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "struct1-claimdetect",
+      "instrument": "STRUCT-1 claimdetect",
+      "in_audit": false,
+      "module": "styxx/claimdetect.py",
+      "shipped": "shipped as an observer; beat its null",
+      "document": "papers/closed-model-frontier/RESULT_struct1_beats_the_null_2026_08_31.md",
+      "date": "2026-08-31",
+      "n": "38 per arm, 9 blind seats",
+      "measured": [
+        {
+          "metric": "precision on a fresh blind panel",
+          "printed": "0.4211",
+          "receipt": "papers/closed-model-frontier/stage2_result.json",
+          "pointer": "/arms/flagged/A_share",
+          "leaf": "0.4211",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "the frozen null bar it beat",
+          "printed": "0.2061",
+          "receipt": "papers/closed-model-frontier/stage2_result.json",
+          "pointer": "/gates/G-S2P/bar",
+          "leaf": "0.2061",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    },
+    {
+      "id": "oath-unobligated",
+      "instrument": "the OATH unobligated oath",
+      "in_audit": false,
+      "module": "styxx/certify.py",
+      "shipped": "shipped; the split is now printed per certificate",
+      "document": "papers/closed-model-frontier/RESULT_unobligated_oath_2026_08_28.md",
+      "date": "2026-08-28",
+      "n": "5951 verifications over 192 documents",
+      "measured": [
+        {
+          "metric": "verifications volunteered rather than obligated",
+          "printed": "0.5811",
+          "receipt": "papers/closed-model-frontier/oath_unobligated_oath_census.json",
+          "pointer": "/headline/unobligated_oath_rate",
+          "leaf": "0.5811",
+          "kind": "numeric",
+          "status": "receipt-json"
+        },
+        {
+          "metric": "value match alone, path never compared",
+          "printed": "0.3399",
+          "receipt": "papers/closed-model-frontier/oath_unobligated_oath_census.json",
+          "pointer": "/headline/weakest_share_of_verified",
+          "leaf": "0.3399",
+          "kind": "numeric",
+          "status": "receipt-json"
+        }
+      ]
+    }
+  ],
+  "verifier": {
+    "script_sha256": "6b6f3f482a1dd5dc9045ead582f0f4ed7cdbc0344ab3d487f391a88c20dcaffa"
+  },
+  "not_decided_here": "which instruments belong on the list, and whether a number is a failure"
+}

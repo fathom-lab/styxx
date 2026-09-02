@@ -1,5 +1,7 @@
 # RESULT — Phase-clamp ablation: oscillation is a capacity-extending MECHANISM, not a hard requirement
 
+> **Forward-pointer, added 2026-09-02.** The knob this document turns also ties each mode's two real channels to one magnitude; a preregistered control with the magnitudes untied recovered none of the capacity, so the gap below is rotation's — see `RESULT_untied_magnitudes_2026_09_02.md`. The text below is unchanged.
+
 **Date:** 2026-06-03 · **Reading: ADVANTAGE** (oscillation helps substantially but is not
 strictly necessary). Frozen gate: `PREREG_rhythm_rescue_2026_06_03.md`. Two complex-diagonal
 LRU nets, identical init except eigenvalue phase θ (FREE = can rotate/oscillate; CLAMPED =

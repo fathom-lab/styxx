@@ -1,0 +1,105 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "b1a6326ef35b894065c81f722800d1c4de0f8bc8",
+ "document": {
+  "name": "RESULT_handedness_v3_header_handed_2026_09_02.md",
+  "sha256": "81b3d210de936ec8460733062a6ebcac54b5c407f8320fb52fcca04311e54aea"
+ },
+ "text": "# RESULT — token-level h: an accusation handed by a table header is true; one handed by the line is a coin with a thumb on it — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_v3_join_rule_2026_09_02.md`, committed\nbefore the join was computed. Receipt: `handedness_v3_result.json`, scored through\n`styxx.protocol`. Panel: the 2026-08-27 external adjudication, three seats, decoy-gated, 366\naccusations; **no token was re-judged**. Corpus: rebuilt from pinned shas and re-certified at the\ncurrent verifier (`oath_external_recertify_summary.json`), so every token's obligation source is\nthe verifier's own. Every number below is sworn to a receipt at commit `b1a6326ef35b`.\nThe frozen verdict reads `HEADER_HANDED_ACCUSES_TRUER`.\n\n## The gates\n\nThe unresolved share was 0.0464 under the frozen 0.05\n(17 accusations joined to no row or to several accused rows).\nThe smaller cell held 165 accusations, over the floor of 20.\nThe header cell's genuine share exceeded the line cell's by 0.3124,\ntwice the frozen 0.15.\n\n## The finding\n\nOf the accusations the verifier was handed by a table header, 0.9515 were genuine claims\n(n=165). Of those it was handed by a trigger word in the line's own prose, 0.6391 were\n(n=169). Both are object_text under the handedness declaration; the\nmapping is right that neither is found. But they are not the same handing. A column header is a\nlabel the author chose for a column of numbers — *Accuracy*, *Score* — and a number under it is\na reported quantity almost by construction. A trigger word on a prose line is a co-occurrence:\nthe word *rate* two clauses away from a number that is a version, a count, a date. That is\nmention-versus-use (M1) living inside handed-target (M2): the verifier's false accusations on\nforeign text are, to first order, the line-handed ones. The join RESULT of 2026-08-30 found the\nvolunteered oaths were the weak half of verification; this finds the line-handed accusations are\nthe weak half of accusation, on the same panel.\n\nReported, not gated: range-sanity accusations were genuine at 0.0\n(n=13; Wilson upper bound 0.228). The v0.3 out-of-range rule\n— *an AUC of 4.0 cannot be* — accused thirteen tokens on foreign READMEs and the panel called\nevery one not a claim. On this corpus that rule is a false-accusation generator, and it is the\nsmallest obligation source in the tree; a preregistration that reads it as a report rather than\nan accusation outside the lab's own idiom is owed.\n\n## The corpus, as rebuilt\n\n82 repositories re-certified from\n244 pinned files, every byte hash-verified against the manifest,\n5179 tokens — the 2026-08-27 count to the digit — and\n270 obligations that came through a table header. The\n2026-08-27 harness ledger recorded trigger words from the row alone, which is why the first\nattempt at this study diverged on half the accusations: the corpus did not move; the ledger had\nnever seen the headers.\n\n## What this does not say\n\nOne panel of three seats of one model family, with correlated error as the ceiling both source\ndocuments disclose. One repository holds 194 of the 366 accusations, and its weight in each cell\nis printed in the receipt rather than hidden. The hypothesis was frozen after two INVALID runs\nwhose exploratory numbers pointed here; the prior was contaminated and declared so in the\npreregistration, and the bar did not move. No claim about the object_form class: no accused\ntoken on this corpus printed seven fractional digits, so the question the brief asked — form\nagainst text — has no cell here, and the question this corpus can answer is the one it\nanswered. Nothing about verification: this is accusation only.\n\n---\n\n*Handed is not one thing. A label the author chose hands the verifier a claim; a word that\nhappened to be nearby hands it a coin. The mapping said object_text; the panel says the text has\na grain.*\n",
+ "spans": [
+  {
+   "start": 698,
+   "end": 753,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 769,
+   "end": 800,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/metrics/unresolved_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 824,
+   "end": 838,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 885,
+   "end": 922,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/metrics/min_cell_n",
+   "kind": "numeric"
+  },
+  {
+   "start": 946,
+   "end": 1012,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/metrics/delta_header_minus_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 1054,
+   "end": 1142,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1144,
+   "end": 1149,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1152,
+   "end": 1229,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1231,
+   "end": 1236,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2037,
+   "end": 2081,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/range-sanity/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 2083,
+   "end": 2087,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/range-sanity/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2511,
+   "end": 2539,
+   "receipt": "path:papers/closed-model-frontier/oath_external_recertify_summary.json#/repos_recertified",
+   "kind": "numeric"
+  },
+  {
+   "start": 2545,
+   "end": 2561,
+   "receipt": "path:papers/closed-model-frontier/oath_external_recertify_summary.json#/files/fetched",
+   "kind": "numeric"
+  },
+  {
+   "start": 2610,
+   "end": 2621,
+   "receipt": "path:papers/closed-model-frontier/oath_external_recertify_summary.json#/tokens",
+   "kind": "numeric"
+  },
+  {
+   "start": 2668,
+   "end": 2716,
+   "receipt": "path:papers/closed-model-frontier/oath_external_recertify_summary.json#/header_bound_obligations",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}

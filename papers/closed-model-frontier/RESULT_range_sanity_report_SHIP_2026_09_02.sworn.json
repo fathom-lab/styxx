@@ -1,0 +1,81 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "48d4d5494bc8ee0b6ba1d6681acbab33de67f67f",
+ "document": {
+  "name": "RESULT_range_sanity_report_SHIP_2026_09_02.md",
+  "sha256": "b9111d427b9f703d582477f18cc41c99f77334813a0f56b5977bcde452a0fe4c"
+ },
+ "text": "# RESULT — OATH v0.14: range-sanity should report, not accuse — SHIP — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_range_sanity_report_2026_09_02.md`, committed with\nthe flag before the A/B ran. Runner: `range_sanity_report_ab.py`. Receipt:\n`range_sanity_report_ab_result.json`, scored through `styxx.protocol`. Every number below is\nsworn to the receipt at commit `48d4d5494bc8`. **The flag ships OFF; this RESULT recommends, it does\nnot flip.** The frozen verdict reads `SHIP__range_sanity_reports`.\n\n## The gates\n\n**Internal regression.** 207 committed documents and\n8583 ledger tokens were certified with the flag off and on:\n0 tokens moved, and\n0 documents moved from HELD to FAILED. The\nrange-sanity rule never fires on this lab's own prose: every out-of-range token here was already\nobligated by vocabulary and already carried a receipt, or was never a token at all. The rule's\nwhole effect lives outside the corpus it was written for.\n\n**What the flag removes.** On the rebuilt external corpus,\n13 accusations were removed, every one to ABSTAIN with\nits out-of-range flag on the ledger, and the share of them the panel had judged genuine claims was 0.0.\nThe bar was a quarter.\n\n**The gain.** 353 accusations remain, of which\n82 the panel judged not claims:\na false-accusation rate of 0.2323 against the\n2026-08-27 rate of 0.2596, a gain of 0.0273 on\na bar of a point.\n\n## Reading\n\nThe v0.3 rule was right about this lab and wrong about the world: *precision 4.0* is a typo in a\nRESULT and a version string, a count or a configuration value in a README. As an accuser outside\nthe lab's idiom it produced thirteen false accusations and not one catch; as a reporter it costs\nnothing anywhere the corpus tests can see, because on the corpus that trained it the rule never\ndecides anything. This is the header-vs-line finding again, one clause down: a bounded word is a\nhanded target, and a handed target from free prose is a coin.\n\n## What this does not say\n\nThe flag is OFF and stays OFF in this cycle. Flipping it is a corpus re-issue — every certificate\ngains a field only under the flag, and the M7 addendum to the program audit says what a new field\ndoes to a corpus — and that is the operator's release decision, with `OATH_CONTRACT.md` owed a\nsentence when it lands. The gain is measured on one panel of one model family, on 82 READMEs\ndrawn by seven queries with one repository holding half the accusations; the receipt prints its\nweight. The prior was strong and contaminated, and the internal gate was the one that could have\nkilled it; it did not.\n\n---\n\n*A rule that never fires at home and only fires wrongly abroad is not a verifier's rule. It is a\nreport, and now it can be one.*\n",
+ "spans": [
+  {
+   "start": 467,
+   "end": 521,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 562,
+   "end": 585,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/internal/documents",
+   "kind": "numeric"
+  },
+  {
+   "start": 590,
+   "end": 608,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/internal/tokens",
+   "kind": "numeric"
+  },
+  {
+   "start": 650,
+   "end": 664,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/internal/tokens_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 670,
+   "end": 707,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/metrics/internal_held_to_failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1023,
+   "end": 1050,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/accusations_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1119,
+   "end": 1180,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/metrics/removed_genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1220,
+   "end": 1242,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/accusations_remaining",
+   "kind": "numeric"
+  },
+  {
+   "start": 1253,
+   "end": 1283,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/remaining_false_by_panel",
+   "kind": "numeric"
+  },
+  {
+   "start": 1285,
+   "end": 1318,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/false_accusation_rate_after",
+   "kind": "numeric"
+  },
+  {
+   "start": 1358,
+   "end": 1374,
+   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/metrics/false_accusation_rate_gain",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.1",
+  "receipts": {}
+ }
+}

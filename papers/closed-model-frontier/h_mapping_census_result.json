@@ -1,8 +1,8 @@
 {
   "purpose": "handedness (h) of styxx.certify's obligation predicate, per declared mapping",
-  "mapping_schema": "styxx-oath/h-mapping/v1",
-  "mapping_sha256": "b9c541b9b10dd2caa314d1afc2cdc142861fcae2a68bd46f792bfa1aeecb3a91",
-  "verifier_sha256": "a588a722a60bb3ab08fb7607ec9b62f799d6fc3a5157dc63edb818753e82769d",
+  "mapping_schema": "styxx-oath/h-mapping/v2",
+  "mapping_sha256": "6e47a58e7e56730727ff956a846a4195c23e8a1f00451d89dbd6744a4709433f",
+  "verifier_sha256": "65194cc64b8078b6d4a169932921b101d9f0c980d95c4f2773f953bd501e9151",
   "sources": {
     "emittable_by_this_verifier": [
       "n-glued",
@@ -139,31 +139,49 @@
           "object_form"
         ],
         "finds_its_own_target": false,
-        "measured_held_out": "false-accusation 0.2596 across 140 repositories (RESULT_oath_external_corpus_2026_08_27)"
+        "measured_held_out": "false-accusation 0.2596 across 140 repositories (RESULT_oath_external_corpus_2026_08_27)",
+        "target_grain": [
+          "structural",
+          "incidental"
+        ],
+        "target_grain_note": "header-bound and n-glued obligations are structural; line-word, correlation-word and range-sanity obligations are incidental. Its held-out figure pools both; v3 unpooled them."
       },
       "styxx.diffgate path-claim accuser": {
         "handed_by": [
           "object_text"
         ],
         "finds_its_own_target": true,
-        "measured_held_out": "0.16 precision against a 0.95 floor (RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01); accusing branch deleted"
+        "measured_held_out": "0.16 precision against a 0.95 floor (RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01); accusing branch deleted",
+        "target_grain": [
+          "incidental"
+        ],
+        "target_grain_note": "a path-shaped string co-occurring in prose; no author commitment names it as a claim."
       },
       "styxx.claimdetect STRUCT-1": {
         "handed_by": [
           "object_text"
         ],
         "finds_its_own_target": true,
-        "measured_held_out": "0.4211 precision, n=38 (RESULT_struct1_beats_the_null_2026_08_31)"
+        "measured_held_out": "0.4211 precision, n=38 (RESULT_struct1_beats_the_null_2026_08_31)",
+        "target_grain": [
+          "incidental"
+        ],
+        "target_grain_note": "its structure is sentence shape the detector infers (verb stems, path tokens), not a label the author committed to."
       },
       "styxx.sworn (sworn/0.1)": {
         "handed_by": [
           "external"
         ],
         "finds_its_own_target": false,
-        "measured_held_out": "NONE — unmeasured by design of the spec; the author binds the target at write time"
+        "measured_held_out": "NONE — unmeasured by design of the spec; the author binds the target at write time",
+        "target_grain": [
+          "structural"
+        ],
+        "target_grain_note": "the limiting case: the author's tag is the whole target and nothing co-occurs."
       }
     },
-    "do_not_conflate": "token-level h is a share over tokens inside one instrument; instrument-level h is a label over instruments. Drawing the test of an instrument-level hypothesis from the token histogram measures the wrong population — the one the certificates print rather than the one the hypothesis is about."
+    "do_not_conflate": "token-level h is a share over tokens inside one instrument; instrument-level h is a label over instruments. Drawing the test of an instrument-level hypothesis from the token histogram measures the wrong population — the one the certificates print rather than the one the hypothesis is about.",
+    "target_grain": "a column over instruments, 2026-09-02: does the instrument take its targets from labels the author committed to (structural) or from co-occurrence it inferred (incidental)? An instrument can do both. Same population as the rows: one label per instrument, never a token share."
   },
   "never_pool": "PRINTED and LIVE are different populations under different verifier builds. No key in this receipt combines them, and a rate quoted from one must name it."
 }

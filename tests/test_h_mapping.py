@@ -87,3 +87,26 @@ def test_the_declaration_cites_its_mapping_receipt_and_gate():
     for needle in ("h_mapping.json", "h_mapping_census_result.json", "tests/test_h_mapping.py",
                    "UNVERIFIED"):
         assert needle in txt, needle
+
+
+def test_object_text_sources_declare_a_grain_and_object_form_sources_do_not(mapping):
+    # 2026-09-02: object_text splits by structural (a label the author committed to) against
+    # incidental (a word that co-occurred). object_form reads no words, so it has no grain.
+    grains = {"structural", "incidental", "mixed"}
+    assert set(mapping["object_text_grain"]) >= grains
+    for name, src in mapping["declared_sources"].items():
+        if src["handed_by"] == "object_text":
+            assert src["grain"] in grains, (name, src.get("grain"))
+        else:
+            assert src["grain"] is None, name
+        assert src["grain_note"], name
+
+
+def test_every_instrument_row_carries_a_target_grain(mapping):
+    il = mapping["instrument_level"]
+    assert "target_grain" in il
+    for name, row in il["rows"].items():
+        assert row["target_grain"] and set(row["target_grain"]) <= {"structural", "incidental"}, name
+        assert row["target_grain_note"], name
+    sworn = next(v for k, v in il["rows"].items() if "sworn" in k)
+    assert sworn["target_grain"] == ["structural"]

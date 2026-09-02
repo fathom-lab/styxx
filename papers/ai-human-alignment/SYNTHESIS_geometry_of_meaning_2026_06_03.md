@@ -1,4 +1,6 @@
 # The Geometry of Meaning Across Machines and Minds
+
+> **Back-pointer, added 2026-09-01.** The brain-match claim the scoreboard marks SURVIVED was deflated the same day: an older shallow embedding matches the brain equally and the deep model's unique contribution is negligible — see `RESULT_edge_deflation_2026_06_03.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
 ### A five-experiment, pre-registered arc — and what survived the discipline
 **2026-06-03 · fathom-lab/styxx · `papers/real-convergence/` + `papers/ai-human-alignment/`**
 

@@ -58,6 +58,81 @@ definition, never accused. The verifier is handed commitments, not a target.
   are recognised (the spec's lexical rules are closed); a hidden commitment inflating coverage
   is a v0.2 item.
 
+**The frequency arc: the efficiency control the arc owed itself, and the profiler shipped.**
+`RESULT_efficiency_control_from_receipts_2026_09_02.md` reads two committed receipts of one
+experiment together: at every width measured, a static bank with fewer parameters than the
+adaptive-frequency model beats it (0.460 vs 0.375 at D=4 against a D=8 static bank; 0.678 vs 0.545
+at D=8 against a D=16 static bank, which beats the D=8 oracle too). The adaptive line's last positive
+was capacity in disguise. Not preregistered, said so, every number sworn; the frozen rule is
+`PREREG_efficiency_control_2026_09_02.md`, run on CPU the same day: **CAPACITY_IN_DISGUISE** under
+the frozen gates (`RESULT_efficiency_control_2026_09_02.md`, sworn) — the matched static bank at D=26 beats
+RICH at D=8 by 0.196 and beats the D=8 oracle; at D=4 the matched bank beats RICH by 0.305.
+`styxx/resonance.py` (NEW) is the resonance profiler the audit listed as built and never shipped,
+framework-agnostic and tested without torch: it decomposes a trained model's score into decay floor,
+static-oscillation reliance and adaptation reliance, and says in its own output that it diagnoses a
+model and never licenses a primitive.
+
+**Token-level h on the blind panel: INVALID, shipped as INVALID, and a v2 frozen against the real
+documents.** `PREREG_handedness_accusations_2026_09_02.md` joined the 366 panel-judged external
+accusations to the obligation source re-derived from the harness ledger; its own plumbing gate
+tripped (half the accusations reach no clause from the ledger — the verifier obligates table cells
+through their header, the ledger recorded the row) and the RESULT ships as
+`INVALID__rederivation_diverged`, with the object_form cell found empty on this corpus.
+`oath_external_recertify.py` rebuilds the pinned corpus from raw GitHub, hash-verified, cached
+outside the tree, and re-certifies it with the current verifier so every token carries the
+verifier's own source; `PREREG_handedness_v2_header_bound_2026_09_02.md` freezes the hypothesis this
+corpus can hold — header-handed against line-handed accusations — with its contaminated prior declared.
+
+**Token-level h, v3, preregistered and HELD: HEADER_HANDED_ACCUSES_TRUER.** On the 366 panel-judged
+external accusations, rebuilt from pinned shas and re-certified: accusations the verifier was handed
+by a table header are genuine at 0.9515 (n=165); those handed by a trigger word in the line are
+genuine at 0.6391 (n=169); range-sanity accusations 0 for 13. The false accusations on foreign text
+are, to first order, the line-handed ones — mention-versus-use inside handed-target. The h
+declaration carries a sworn addendum; two INVALID runs before it are shipped as INVALID.
+
+**SYNTHESIS — the grain of the handed target; h-mapping v2.** `papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`
+(sworn, 16 spans, every number bound to the receipt that holds it) reads the day's five preregistered
+verdicts together: a target handed by structure the author committed to (a header, an `n=` register,
+an oath tag, a trained rotation) held against strangers; a target handed by co-occurrence (a line word,
+a rule outside its idiom, a self-built detector) was the false accusation, the capacity in disguise,
+the detector that never earned its parameters. M2 in the audit acquires a grain — an addendum, the
+frozen table untouched. `h_mapping.json` moves to schema v2: `grain` per `object_text` source
+(vocabulary is `mixed`, split per token by `binding_context.header_bound`; `n=` structural; the
+correlation and range-sanity clauses incidental) and `target_grain` per instrument row (sworn is the
+limiting case, all structure). Census re-folded under the new mapping hash; two tests pin the column.
+
+**OATH v0.14, preregistered and SHIP: range-sanity reports instead of accusing.** `V14_RANGE_SANITY_REPORT`
+(default OFF, nothing committed changes) turns the v0.3 out-of-range rule into a reporter. The A/B: on
+the lab's own 207 documents the flag moves 0 of 8,583 tokens; on the rebuilt external corpus it removes
+exactly the 13 accusations the panel called non-claims, taking the external false-accusation rate from
+0.2596 to 0.2323. The RESULT recommends the flip; the flip is the release cycle's.
+
+**The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
+clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
+magnitude. REAL2 — a real bank with 2D independent magnitudes, exactly FREE's state and parameters —
+separates rotation from timescale diversity on the rhythm-rescue task. Run on CPU the same day:
+**ROTATION_LOAD_BEARING__beyond_diversity** (`RESULT_untied_magnitudes_2026_09_02.md`, sworn) — anchors
+reproduce the GPU receipt to the digit, and the untied real bank lands exactly on CLAMPED (recovery 0.0).
+The arc's headline survives its own confound; the permuted-MNIST re-run is the owed next preregistration.
+
+**The eleven-instrument census, with receipts.** `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`
+(sworn) and `prose_claimhood_census.json` (built by `prose_claimhood_census.py`, which resolves
+every pointer): the audit's eleven prose-reading instruments, each with the document that measured
+it, its headline number, and the JSON receipt and pointer when one exists — so "eleven" is now a
+count of a receipt rather than a phrase, and the rows that rest on prose alone are named as such.
+
+**The measurement, designed and not faked.** `papers/sworn/DESIGN_sworn_measurement_2026_09_01.md`:
+bound recall, trivial swearing, coverage error and the gaming price (spec items 3 and 4), with the
+panel reading the canonical text so it cannot be handed the author's target, five gates proposed
+with reasons, and the builder's own documents excluded as specimens chosen to pass. Deliberately a
+DESIGN, to be frozen as a PREREG by signature — a lock hash of "TBD" is the shape the audit named
+as the worst of both.
+
+**Back-pointers.** Fourteen documents the audit's staleness table lists as killed by a document
+that names them now carry one blockquote line under the title naming the killer and the date;
+text unchanged, no numbers added, certified documents keep their verdicts. README's "switched off"
+now says the branch was later deleted.
+
 **corpus_audit.** Since the UNCOVERED band a verdict reads `OATH-HELD, N uncovered`; the auditor
 compared whole strings, put 131 of 208 certificates in neither HELD nor FAILED and read every one
 as verdict drift. `verdict_class()` buckets and drift-detects on the class; the corpus uncovered

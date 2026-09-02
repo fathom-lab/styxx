@@ -115,6 +115,10 @@ the token histogram measures the wrong population: the one the certificates prin
 the one the hypothesis is about. The two are kept in separate keys of one receipt for that
 reason, and no key in the receipt combines them.
 
+## Addendum, 2026-09-02 — object_text has a grain
+
+`RESULT_handedness_v3_header_handed_2026_09_02.md`, preregistered, on the external blind panel: <sworn r="path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/genuine_share" k="numeric">accusations handed by a table header were genuine at 0.9515</sworn> and <sworn r="path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/genuine_share" k="numeric">accusations handed by a trigger word in the line were genuine at 0.6391</sworn>. Both are `object_text` under this mapping, which stays as declared; but the class splits by whether the handing was a structural label the author chose or a word that co-occurred, and the next version of this mapping owes that split a name. Paid the same day: `h_mapping.json` v2 carries `grain` per `object_text` source and `target_grain` per instrument row, and the reading across the day's verdicts is `../SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`.
+
 ## What this does not say
 
 No token is graded. `object_text` does not mean wrong and `object_form` does not mean right; the

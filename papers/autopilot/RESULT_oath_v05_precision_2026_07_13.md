@@ -1,5 +1,7 @@
 # RESULT — OATH v0.5 certifier precision: five of six classes SHIP, class A dropped by the battery
 
+> **Back-pointer, added 2026-09-01.** The zero-false-accusation property this document names as the basis of deployability did not hold on documents this lab did not write — see `papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md`. Inserted per the staleness table of `AUDIT_the_whole_program_2026_09_01.md`; the text below is unchanged.
+
 **Fathom Lab · papers/autopilot · 2026-07-13. Verdict against the frozen gates of
 `PREREG_oath_v05_precision_2026_07_13.md` (frozen `7e54d0b`, committed BEFORE any `certify.py`
 change). Six severable false-positive-elimination classes were composed, measured against the
