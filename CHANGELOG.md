@@ -90,6 +90,12 @@ genuine at 0.6391 (n=169); range-sanity accusations 0 for 13. The false accusati
 are, to first order, the line-handed ones — mention-versus-use inside handed-target. The h
 declaration carries a sworn addendum; two INVALID runs before it are shipped as INVALID.
 
+**OATH v0.14, preregistered and SHIP: range-sanity reports instead of accusing.** `V14_RANGE_SANITY_REPORT`
+(default OFF, nothing committed changes) turns the v0.3 out-of-range rule into a reporter. The A/B: on
+the lab's own 207 documents the flag moves 0 of 8,583 tokens; on the rebuilt external corpus it removes
+exactly the 13 accusations the panel called non-claims, taking the external false-accusation rate from
+0.2596 to 0.2323. The RESULT recommends the flip; the flip is the release cycle's.
+
 **The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
 clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
 magnitude. REAL2 — a real bank with 2D independent magnitudes, exactly FREE's state and parameters —
