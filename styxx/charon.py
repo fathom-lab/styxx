@@ -31,8 +31,10 @@ DECISIONS the spec left open, stated once here:
   * A sworn entry whose commit is not in the repository, a certificate whose document or
     receipts are gone: written as ``verdict UNRESOLVED`` with the reason in
     ``counts.reason`` — never skipped.
-  * ``verdict_class``: sworn → HELD/FAILED/UNSWORN; OATH → ``corpus_audit.verdict_class``;
-    diffgate capsule → PASS/FAIL; UNRESOLVED stays UNRESOLVED.
+  * ``verdict_class``: sworn → HELD/FAILED/UNSWORN; OATH → ``corpus_audit.verdict_class``, which
+    returns ``OATH-HELD``/``OATH-FAILED`` with the coverage suffix stripped (the prefix is kept
+    so an OATH class is never confused with a sworn one); diffgate capsule → PASS/FAIL;
+    UNRESOLVED stays UNRESOLVED.
   * Timestamps are outside every digest. Two ingests of one artifact at the same ``seq``/``prev``
     produce one ``entry_id``.
   * Exit status: 0 for every verify outcome except TAMPER (the log is not what it says it is).
@@ -441,8 +443,24 @@ def verify_log(log: Path, repo: Optional[Path]) -> dict:
         by_status[row["status"]] += 1
         builds.setdefault(e["verifier"]["module"], set()).add(e["verifier"]["module_sha256"][:12])
         lines.append(row)
+    # what the log says about itself, summarised so a RESULT can swear to it: how many lines
+    # reproduced their artifact's own verdict at ingest, and how large the receipt sets were —
+    # the number a bought HELD hides in and the reason receipts.n is on every line
+    rep_by_kind: Dict[str, Dict[str, int]] = {}
+    for e in entries:
+        d = rep_by_kind.setdefault(e["kind"], {"reproduced": 0, "not_reproduced": 0})
+        d["reproduced" if e["reproduced"] else "not_reproduced"] += 1
+    ns = [e["receipts"]["n"] for e in entries]
+    held_classes = ("HELD", "OATH-HELD", "PASS")
+    receipts_n = {
+        "min": min(ns) if ns else None, "max": max(ns) if ns else None,
+        "entries_with_10_or_more": sum(1 for x in ns if x >= 10),
+        "held_with_10_or_more": sum(1 for e in entries if e["verdict_class"] in held_classes and e["receipts"]["n"] >= 10),
+        "held_total": sum(1 for e in entries if e["verdict_class"] in held_classes),
+    }
     return {"schema": VERIFY_SCHEMA, "log": log.name, "head": head_of(entries), "entries": len(entries),
             "chain_problems": tamper, "by_status": by_status, "by_kind": by_kind,
+            "reproduced_at_ingest": rep_by_kind, "receipts_n": receipts_n,
             "verifier_builds_recorded": {k: sorted(v) for k, v in builds.items()},
             "lines": lines, "certifies": _CERTIFIES,
             "note": ("SKEW = the verdict moved and the verifier's bytes moved (the instrument changed); "
@@ -462,7 +480,7 @@ main{max-width:1200px;margin:0 auto;padding:20px 24px}
 .card b{display:block;font-size:20px;color:var(--cy)}.card span{color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
 table{border-collapse:collapse;width:100%;margin-top:14px}th,td{border-bottom:1px solid #063;padding:5px 8px;text-align:left;vertical-align:top;font-size:12px}
 th{color:var(--mute);font-weight:normal;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
-.v-HELD,.v-PASS{color:var(--fg)}.v-FAILED,.v-FAIL{color:var(--bad)}.v-UNSWORN,.v-UNRESOLVED{color:var(--warn)}
+.v-HELD,.v-OATH-HELD,.v-PASS{color:var(--fg)}.v-FAILED,.v-OATH-FAILED,.v-FAIL{color:var(--bad)}.v-UNSWORN,.v-UNRESOLVED{color:var(--warn)}
 .id{color:var(--mute);font-size:11px}.cmd{color:var(--cy);font-size:11px;white-space:nowrap}
 .no{color:var(--bad)}.yes{color:var(--fg)}
 footer{border-top:1px solid var(--dim);margin-top:30px;padding:18px 24px;color:var(--mute);font-size:12px;white-space:pre-wrap;max-width:1200px;margin-left:auto;margin-right:auto}

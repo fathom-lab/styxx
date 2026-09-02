@@ -18,6 +18,31 @@
   "capsule-diffgate": 2,
   "oath-certificate": 210
  },
+ "reproduced_at_ingest": {
+  "sworn": {
+   "reproduced": 18,
+   "not_reproduced": 0
+  },
+  "capsule-oath": {
+   "reproduced": 4,
+   "not_reproduced": 6
+  },
+  "capsule-diffgate": {
+   "reproduced": 1,
+   "not_reproduced": 1
+  },
+  "oath-certificate": {
+   "reproduced": 207,
+   "not_reproduced": 3
+  }
+ },
+ "receipts_n": {
+  "min": 0,
+  "max": 21,
+  "entries_with_10_or_more": 10,
+  "held_with_10_or_more": 10,
+  "held_total": 227
+ },
  "verifier_builds_recorded": {
   "styxx.sworn": [
    "8eee80a4c1a6"
