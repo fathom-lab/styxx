@@ -83,6 +83,13 @@ outside the tree, and re-certifies it with the current verifier so every token c
 verifier's own source; `PREREG_handedness_v2_header_bound_2026_09_02.md` freezes the hypothesis this
 corpus can hold — header-handed against line-handed accusations — with its contaminated prior declared.
 
+**Token-level h, v3, preregistered and HELD: HEADER_HANDED_ACCUSES_TRUER.** On the 366 panel-judged
+external accusations, rebuilt from pinned shas and re-certified: accusations the verifier was handed
+by a table header are genuine at 0.9515 (n=165); those handed by a trigger word in the line are
+genuine at 0.6391 (n=169); range-sanity accusations 0 for 13. The false accusations on foreign text
+are, to first order, the line-handed ones — mention-versus-use inside handed-target. The h
+declaration carries a sworn addendum; two INVALID runs before it are shipped as INVALID.
+
 **The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
 clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
 magnitude. REAL2 — a real bank with 2D independent magnitudes, exactly FREE's state and parameters —
