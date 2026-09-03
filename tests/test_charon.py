@@ -156,11 +156,38 @@ class TestCapsuleAndCertificate:
         assert d["receipts"]["n"] == 3                          # summary, diff, gate bindings
 
     def test_a_certificate_line_carries_resolved_and_cited_receipts(self):
+        """Both sets, and they are allowed to differ.
+
+        The resolved digests are content identity modulo newlines (`_content_sha256`), so the line
+        reads the same on a CRLF checkout as on an LF one. The cited digests are whatever the
+        certificate recorded, and every `receipts_sha256` in this corpus was recorded from a
+        Windows working tree — CRLF hashes, as `corpus_audit._receipt_sha_matches` documents. So
+        the two sets differ on both platforms, the line carries both, and the certificate still
+        reproduces because the auditor compares content, not bytes."""
         d = charon.derive(CERT, ROOT)
         assert d["kind"] == "oath-certificate" and d["verdict_class"].startswith("OATH-")
         assert d["receipts"]["cited"]["n"] == 4 and d["receipts"]["n"] == 4
-        assert d["receipts"]["sha256"] == d["receipts"]["cited"]["sha256"]
-        assert d["counts"]["pinned_verifier_sha256"]
+        assert d["reproduced"] is True and d["counts"]["pinned_verifier_sha256"]
+
+    def test_a_certificate_line_reads_the_same_on_crlf_and_on_lf(self, tmp_path):
+        """The promise the log makes is that a stranger re-derives the same lines. A raw hash of a
+        working-tree document would break it on the other platform's checkout: 213 OATH lines would
+        read as moved. This is that guarantee, pinned."""
+        cert = json.loads(CERT.read_text(encoding="utf-8"))
+        doc_lf = (ROOT / "POSITIONING.md").read_bytes().replace(b"\r\n", b"\n")
+        names = list(cert.get("receipts_sha256") or {})
+        for eol in (b"\n", b"\r\n"):
+            d = tmp_path / eol.hex()
+            d.mkdir()
+            (d / "POSITIONING.md").write_bytes(doc_lf.replace(b"\n", eol))
+            (d / "POSITIONING.certificate.json").write_text(json.dumps(cert), encoding="utf-8")
+            for n in names:
+                src = next(p for p in ROOT.rglob(n) if ".claude" not in p.parts)
+                (d / n).write_bytes(src.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", eol))
+        a = charon.derive(tmp_path / b"\n".hex() / "POSITIONING.certificate.json", tmp_path / b"\n".hex())
+        b = charon.derive(tmp_path / b"\r\n".hex() / "POSITIONING.certificate.json", tmp_path / b"\r\n".hex())
+        assert a["subject"]["sha256"] == b["subject"]["sha256"]
+        assert a["receipts"]["sha256"] == b["receipts"]["sha256"]
 
     def test_a_certificate_whose_document_is_gone_is_a_line_not_a_skip(self, tmp_path):
         cert = json.loads(CERT.read_text(encoding="utf-8"))

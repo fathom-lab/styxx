@@ -131,6 +131,28 @@ def _sha256(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+def _content_sha256(b: bytes) -> str:
+    """Content identity modulo newlines, for bytes read from a WORKING TREE.
+
+    `styxx.corpus_audit._receipt_sha_matches` already states the doctrine this follows: a hash
+    that depends on line endings is pinning the wrong thing, because it makes the record
+    platform-dependent and defeats the promise that anyone can re-run it. A repository checked
+    out on Windows holds CRLF where Linux holds LF, so a raw hash of a working-tree document or
+    receipt differs between two strangers reading the same commit — and every OATH line would
+    read as moved on the other platform.
+
+    Applied to: the document an OATH certificate certifies, the receipt bytes handed to that
+    certification, and a capsule file. NOT applied to a sworn document: the sworn format refuses
+    newline normalisation by design, its bytes are pinned by `.gitattributes`, and its digest is
+    an identity claim about exact bytes. Digests that come from git plumbing or from embedded
+    base64 are already platform-stable and are used as they are.
+
+    DISCLOSED, as the auditor discloses it: two files differing only in line endings hash the
+    same here, so this certifies content identity, not byte identity.
+    """
+    return hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest()
+
+
 def _now() -> str:
     return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -297,12 +319,13 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     from styxx.corpus_audit import verdict_class
     rel = _rel(path, repo)
     raw = path.read_bytes()
+    raw_id = _content_sha256(raw)          # platform-stable identity of the file
     payload = _capsule_payload(path)
     if payload is None:
-        return _unresolved("capsule-oath", path.name, rel, "no_capsule_payload", _sha256(raw))
+        return _unresolved("capsule-oath", path.name, rel, "no_capsule_payload", raw_id)
     spec = payload.get("spec")
     if spec not in (_cap.SPEC, _cap.SPEC_V02):
-        return _unresolved("capsule-oath", path.name, rel, "unknown_capsule_spec: %r" % spec, _sha256(raw))
+        return _unresolved("capsule-oath", path.name, rel, "unknown_capsule_spec: %r" % spec, raw_id)
     rep = _cap.verify_capsule(path)
     kind = "capsule-diffgate" if spec == _cap.SPEC_V02 else "capsule-oath"
     problems = [str(x) for x in (rep.get("problems") or [])]
@@ -317,14 +340,14 @@ def derive_capsule(path: Path, repo: Path) -> dict:
         shas = sorted({_sha256(base64.b64decode(r["b64"])) for r in payload.get("receipts") or [] if r.get("b64")})
         recorded = str(cert.get("verdict"))
     if binding_broken:
-        out = _unresolved(kind, path.name, rel, "capsule_binding: " + problems[0][:160], _sha256(raw),
+        out = _unresolved(kind, path.name, rel, "capsule_binding: " + problems[0][:160], raw_id,
                           recorded=recorded)
         out["receipts"] = {"n": len(shas), "sha256": shas, "cited": None, "vacuous": False}
         return out
     live, live_counts = (_capsule_live_v02(payload) if spec == _cap.SPEC_V02 else _capsule_live_v01(payload))
     if live is None:
         out = _unresolved(kind, path.name, rel, "capsule_live_failed: %s" % (live_counts or {}).get("live_error"),
-                          _sha256(raw), recorded=recorded)
+                          raw_id, recorded=recorded)
         out["receipts"] = {"n": len(shas), "sha256": shas, "cited": None, "vacuous": False}
         return out
     counts = dict(live_counts or {})
@@ -335,7 +358,7 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     klass = live if spec == _cap.SPEC_V02 else verdict_class(live)
     if spec == _cap.SPEC_V02 and live not in ("PASS", "FAIL"):
         klass = "UNRESOLVED"
-    return {"kind": kind, "subject": {"name": path.name, "path": rel, "sha256": _sha256(raw)},
+    return {"kind": kind, "subject": {"name": path.name, "path": rel, "sha256": raw_id},
             "at": {"commit": None, "manifest_digest": None, "document_at_commit": None},
             "receipts": {"n": len(shas), "sha256": shas, "cited": None, "vacuous": False},
             "verifier": _verifier(kind),
@@ -356,13 +379,13 @@ def derive_certificate(cert_path: Path, repo: Path) -> dict:
         return _unresolved("oath-certificate", doc.name, rel, "certificate_unreadable: %s" % e)
     cited_list = sorted({v for v in (cert.get("receipts_sha256") or {}).values() if isinstance(v, str)})
     cited = {"n": len(cited_list), "sha256": cited_list}
-    doc_sha = _sha256(doc.read_bytes()) if doc.exists() else None
+    doc_sha = _content_sha256(doc.read_bytes()) if doc.exists() else None
     rec = audit_document(cert_path, search_root=repo)
     if rec.get("status") != "OK":
         return _unresolved("oath-certificate", doc.name, rel, str(rec.get("status")), doc_sha, cited=cited,
                            recorded=cert.get("verdict"))
     resolved_paths, _missing, _drift = _resolve_receipts(cert_path, cert, repo)
-    resolved = sorted({_sha256(Path(p).read_bytes()) for p in resolved_paths if Path(p).exists()})
+    resolved = sorted({_content_sha256(Path(p).read_bytes()) for p in resolved_paths if Path(p).exists()})
     counts = dict(rec.get("counts") or {})
     counts["recorded_verdict"] = cert.get("verdict")
     counts["pinned_verifier_sha256"] = cert.get("verifier_sha256")

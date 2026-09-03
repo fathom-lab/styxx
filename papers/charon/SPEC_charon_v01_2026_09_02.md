@@ -222,3 +222,18 @@ them.
 **E14 — the name.** Three shipping projects are called `charon` (a distributed-validator client,
 an account-management service, the strongSwan IKE daemon). None is in the attestation ecosystem;
 two are verification-adjacent command-line tools. The module keeps the name inside `styxx.`.
+
+**E15 — every digest Charon computes over WORKING-TREE bytes is content identity modulo
+newlines.** A raw hash of a document or a receipt read from a checkout differs between a Windows
+reader and a Linux one, so 213 OATH lines would have read as moved on the other platform and the
+promise that a stranger re-derives the same lines would have been false. `_content_sha256`
+normalises CRLF to LF before hashing, which is the doctrine
+`styxx.corpus_audit._receipt_sha_matches` already states for certificates: a hash that depends on
+line endings is pinning the wrong thing. It applies to an OATH certificate's document and its
+resolved receipts, and to a capsule file. It does **not** apply to a sworn document, whose format
+refuses newline normalisation by design and whose bytes are pinned by `.gitattributes`, nor to
+digests that arrive from git plumbing or embedded base64, which are already platform-stable.
+Disclosed exactly as the auditor discloses it: two files differing only in line endings hash the
+same, so this certifies content identity and not byte identity. A consequence a reader will see:
+`receipts.sha256` and `receipts.cited.sha256` differ on an OATH line, because every
+`receipts_sha256` in this corpus was recorded from a Windows tree. Both sets are on the line.
