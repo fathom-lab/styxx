@@ -3,53 +3,34 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_charon_v01_ships_2026_09_02.sworn.json",
-  "inline_sha256": "2ccded6e0c828a8341d8f298a6493f73eb953c66be4ae80487e4eaad6972f27f",
-  "canonical_sha256": "ed497227dc3390cf451ae75310ee748a5ebd1014f4b6c221aaffd0e72cb72a2e"
+  "inline_sha256": "7b2325d2addfb293ebb208ce54f6ff04d7990238189deeb0f3387e74843253b3",
+  "canonical_sha256": "82da49cdcc55a5bac77e8ccaa43311e14e7b08740642df60f12dbfd49801bb32"
  },
- "commit": "6b61f121f67e4bea234a1051d8d4cf3fb4fbc076",
+ "commit": "16e30effe1f31f3a2e0355298c3e355e1af78d4b",
  "manifest_digest": null,
  "spans": [
   {
-   "at": 668,
-   "start": 668,
-   "end": 751,
-   "receipt": "prereg:88b3fa3b1762730b49beaa0fc612cf73e3bb28f54623ea030526b2ed32bec55b",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 46,
-    "haystack_bytes": 9683,
-    "occurrences": 1
-   },
-   "resolved_sha256": "88b3fa3b1762730b49beaa0fc612cf73e3bb28f54623ea030526b2ed32bec55b",
-   "provenance": {
-    "form": "prereg",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
-   }
-  },
-  {
-   "at": 1670,
-   "start": 1569,
-   "end": 1692,
+   "at": 1480,
+   "start": 1480,
+   "end": 1603,
    "receipt": "path:papers/charon/charon.log.jsonl",
    "kind": "hash",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "stated": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
-    "receipt_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102"
+    "stated": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+    "receipt_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783"
    },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
+   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 1858,
-   "start": 1693,
-   "end": 1772,
+   "at": 1668,
+   "start": 1604,
+   "end": 1683,
    "receipt": "path:papers/charon/charon_verify_result.json#/head",
    "kind": "quote",
    "verdict": "HELD",
@@ -59,38 +40,104 @@
     "haystack_bytes": 64,
     "occurrences": 1
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2018,
-   "start": 1773,
-   "end": 1794,
+   "at": 1828,
+   "start": 1684,
+   "end": 1704,
    "receipt": "path:papers/charon/charon_verify_result.json#/entries",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "240",
-    "printed": "240",
-    "receipt": "240",
-    "receipt_rounded": "240",
+    "printed_token": "243",
+    "printed": "243",
+    "receipt": "243",
+    "receipt_rounded": "243",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2125,
-   "start": 1795,
-   "end": 1862,
+   "at": 1934,
+   "start": 1705,
+   "end": 1731,
+   "receipt": "path:papers/charon/charon_verify_result.json#/distinct_subjects",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "243",
+    "printed": "243",
+    "receipt": "243",
+    "receipt_rounded": "243",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 2057,
+   "start": 1733,
+   "end": 1758,
+   "receipt": "path:papers/charon/charon_verify_result.json#/malformed_lines",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 2176,
+   "start": 1759,
+   "end": 1784,
+   "receipt": "path:papers/charon/charon_verify_result.json#/by_kind/oath-certificate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "213",
+    "printed": "213",
+    "receipt": "213",
+    "receipt_rounded": "213",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 2388,
+   "start": 1869,
+   "end": 1926,
    "receipt": "path:papers/charon/charon_verify_result.json#/by_kind/sworn",
    "kind": "numeric",
    "verdict": "HELD",
@@ -103,16 +150,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2285,
-   "start": 1864,
-   "end": 1884,
+   "at": 2538,
+   "start": 1928,
+   "end": 1948,
    "receipt": "path:papers/charon/charon_verify_result.json#/by_kind/capsule-oath",
    "kind": "numeric",
    "verdict": "HELD",
@@ -125,16 +172,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2405,
-   "start": 1886,
-   "end": 1909,
+   "at": 2658,
+   "start": 1950,
+   "end": 1983,
    "receipt": "path:papers/charon/charon_verify_result.json#/by_kind/capsule-diffgate",
    "kind": "numeric",
    "verdict": "HELD",
@@ -147,60 +194,38 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2532,
-   "start": 1911,
-   "end": 1973,
-   "receipt": "path:papers/charon/charon_verify_result.json#/by_kind/oath-certificate",
+   "at": 2794,
+   "start": 1984,
+   "end": 2050,
+   "receipt": "path:papers/charon/charon_verify_result.json#/by_status/SAME_LINE",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "210",
-    "printed": "210",
-    "receipt": "210",
-    "receipt_rounded": "210",
+    "printed_token": "243",
+    "printed": "243",
+    "receipt": "243",
+    "receipt_rounded": "243",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 2768,
-   "start": 2045,
-   "end": 2118,
-   "receipt": "path:papers/charon/charon_verify_result.json#/by_status/REPRODUCED",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "240",
-    "printed": "240",
-    "receipt": "240",
-    "receipt_rounded": "240",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
-   }
-  },
-  {
-   "at": 2940,
-   "start": 2119,
-   "end": 2158,
+   "at": 2958,
+   "start": 2051,
+   "end": 2094,
    "receipt": "path:papers/charon/charon_verify_result.json#/by_status/TAMPER",
    "kind": "numeric",
    "verdict": "HELD",
@@ -213,34 +238,34 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 3074,
-   "start": 2159,
-   "end": 2257,
+   "at": 3287,
+   "start": 2286,
+   "end": 2377,
    "receipt": "path:styxx/charon.py",
    "kind": "hash",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "stated": "ade9001d5e91cb3d68ba572e709f1ee6d4377f83147aad5b11846f1c6718c591",
-    "receipt_sha256": "ade9001d5e91cb3d68ba572e709f1ee6d4377f83147aad5b11846f1c6718c591"
+    "stated": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb",
+    "receipt_sha256": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb"
    },
-   "resolved_sha256": "ade9001d5e91cb3d68ba572e709f1ee6d4377f83147aad5b11846f1c6718c591",
+   "resolved_sha256": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 3312,
-   "start": 2348,
-   "end": 2394,
+   "at": 3809,
+   "start": 2759,
+   "end": 2805,
    "receipt": "path:papers/charon/charon_verify_result.json#/receipts_n/max",
    "kind": "numeric",
    "verdict": "HELD",
@@ -253,16 +278,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 3451,
-   "start": 2395,
-   "end": 2442,
+   "at": 3948,
+   "start": 2806,
+   "end": 2853,
    "receipt": "path:papers/charon/charon_verify_result.json#/receipts_n/held_total",
    "kind": "numeric",
    "verdict": "HELD",
@@ -275,16 +300,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 3599,
-   "start": 2444,
-   "end": 2476,
+   "at": 4096,
+   "start": 2855,
+   "end": 2886,
    "receipt": "path:papers/charon/charon_verify_result.json#/receipts_n/held_with_10_or_more",
    "kind": "numeric",
    "verdict": "HELD",
@@ -297,83 +322,61 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 4085,
-   "start": 2821,
-   "end": 2880,
-   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/sworn/reproduced",
+   "at": 4238,
+   "start": 2888,
+   "end": 2915,
+   "receipt": "path:papers/charon/charon_verify_result.json#/receipts_n/by_kind/oath-certificate/held_10_or_more",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "18",
-    "printed": "18",
-    "receipt": "18",
-    "receipt_rounded": "18",
+    "printed_token": "8",
+    "printed": "8",
+    "receipt": "8",
+    "receipt_rounded": "8",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 4260,
-   "start": 2881,
-   "end": 2973,
-   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-oath/not_reproduced",
+   "at": 4395,
+   "start": 2916,
+   "end": 2938,
+   "receipt": "path:papers/charon/charon_verify_result.json#/receipts_n/by_kind/sworn/held_10_or_more",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "6",
-    "printed": "6",
-    "receipt": "6",
-    "receipt_rounded": "6",
+    "printed_token": "2",
+    "printed": "2",
+    "receipt": "2",
+    "receipt_rounded": "2",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 4480,
-   "start": 2975,
-   "end": 3009,
-   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-diffgate/not_reproduced",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "1",
-    "printed": "1",
-    "receipt": "1",
-    "receipt_rounded": "1",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
-   }
-  },
-  {
-   "at": 5155,
-   "start": 3520,
-   "end": 3576,
-   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/oath-certificate/not_reproduced",
+   "at": 5160,
+   "start": 3563,
+   "end": 3628,
+   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/oath-certificate/false",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -385,125 +388,190 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "3a01582c5311fa4b51e7a4de473991edda29b7979a9d1369af43978700ce7ae9",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 5400,
-   "start": 3635,
-   "end": 3719,
-   "receipt": "path:papers/charon/charon.log.jsonl#L86",
-   "kind": "quote",
+   "at": 5348,
+   "start": 3630,
+   "end": 3670,
+   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/oath-certificate/null",
+   "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 46,
-    "haystack_bytes": 1853,
-    "occurrences": 1
+    "printed_token": "3",
+    "printed": "3",
+    "receipt": "3",
+    "receipt_rounded": "3",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 5606,
-   "start": 3772,
-   "end": 3814,
-   "receipt": "path:papers/charon/charon.log.jsonl#L114",
-   "kind": "quote",
+   "at": 5510,
+   "start": 3672,
+   "end": 3728,
+   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-diffgate/false",
+   "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 31,
-    "haystack_bytes": 1329,
-    "occurrences": 1
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 5719,
-   "start": 3815,
-   "end": 3871,
-   "receipt": "path:papers/charon/charon.log.jsonl#L114",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 37,
-    "haystack_bytes": 1329,
-    "occurrences": 1
-   },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
-   }
-  },
-  {
-   "at": 5953,
-   "start": 3979,
-   "end": 4044,
-   "receipt": "path:papers/charon/charon.log.jsonl#L33",
+   "at": 5732,
+   "start": 3773,
+   "end": 3853,
+   "receipt": "path:papers/charon/charon.log.jsonl#L3",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
     "needle_bytes": 40,
-    "haystack_bytes": 1509,
+    "haystack_bytes": 2516,
     "occurrences": 1
    },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
+   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   },
   {
-   "at": 6088,
-   "start": 4045,
-   "end": 4098,
-   "receipt": "path:papers/charon/charon.log.jsonl#L33",
+   "at": 5883,
+   "start": 3856,
+   "end": 3909,
+   "receipt": "path:papers/charon/charon.log.jsonl#L3",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
     "needle_bytes": 38,
-    "haystack_bytes": 1509,
+    "haystack_bytes": 2516,
     "occurrences": 1
    },
-   "resolved_sha256": "228460be35365b88906815e0041be19b7cc0df14d8040118577e90616a0a9102",
+   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
    "provenance": {
     "form": "path",
-    "note": "committed object at 6b61f121f67e4bea234a1051d8d4cf3fb4fbc076; authorship unchecked"
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 6361,
+   "start": 4266,
+   "end": 4348,
+   "receipt": "path:papers/charon/charon.log.jsonl#L59",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 46,
+    "haystack_bytes": 3092,
+    "occurrences": 1
+   },
+   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 6850,
+   "start": 4686,
+   "end": 4772,
+   "receipt": "path:papers/charon/charon.log.jsonl#L96",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 36,
+    "haystack_bytes": 1839,
+    "occurrences": 1
+   },
+   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 7605,
+   "start": 5372,
+   "end": 5405,
+   "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-oath/true",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "10",
+    "printed": "10",
+    "receipt": "10",
+    "receipt_rounded": "10",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+   }
+  },
+  {
+   "at": 8322,
+   "start": 5973,
+   "end": 6066,
+   "receipt": "path:papers/charon/ATTACKS_charon_v01_battery_2026_09_02.md",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163",
+    "receipt_sha256": "3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163"
+   },
+   "resolved_sha256": "3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 23,
+  "HELD": 26,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 23,
+ "sworn_total": 26,
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 23
+  "committed": 26
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "8eee80a4c1a637ec47481ab28fb75da4e1b9562f7a14c474eb79b1e2a7dd896b",
+  "sworn_sha256": "94f854e1dae5e5a3fa88688d95c5bec980ef1670652287e7dc00d995574ad0eb",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -538,42 +606,37 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "de92eb20fdf69649f9c9f8ffbaec6f4cd0c5ac901b5dbc9930ce8bcd41012130",
+ "digest": "ea4538c75a2fe4147a350117781e23c4943e33beb3bfb57ea658d7b29e574b82",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 23,
-  "narrative_sentences": 83,
-  "sentence_share": 0.217,
-  "diff_claim_sentences": 4,
-  "diff_claim_share": 0.8519,
+  "sworn_total": 26,
+  "narrative_sentences": 129,
+  "sentence_share": 0.1677,
+  "diff_claim_sentences": 3,
+  "diff_claim_share": 0.8966,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
-    "start": 317,
-    "end": 409,
-    "text": "is bound to `charon_verify_result.json` or to a line of `charon.log.jsonl` at the commit the"
+    "start": 134,
+    "end": 232,
+    "text": "Fathom Lab · 2026-09-02 · Spec: `SPEC_charon_v01_2026_09_02.md`, committed before the module was"
    },
    {
-    "start": 753,
-    "end": 848,
+    "start": 664,
+    "end": 759,
     "text": "Charon calls the three verifiers this lab already has — `styxx.sworn` at the commit a sidecar"
    },
    {
-    "start": 4733,
-    "end": 4812,
-    "text": "capsules are wrong: the verifier moved, and the repair belongs to `capsule.py`."
-   },
-   {
-    "start": 5134,
-    "end": 5217,
-    "text": "The `capsule.py` class-comparison repair, preregistered like every verifier change."
+    "start": 4410,
+    "end": 4441,
+    "text": "Its verdict class did not move."
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "5a29ca84ac1dd5607a0abeb00b891948f9a48cabb88ef202a339c3ba40b093b0",
- "timestamp": "2026-09-02T22:18:47Z"
+ "coverage_sha256": "c4e9836f0da35af5ba754c2a50ca9e68ecb77c8f1b24365dd7cba2137892695e",
+ "timestamp": "2026-09-03T15:38:43Z"
 }
