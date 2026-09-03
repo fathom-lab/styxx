@@ -159,3 +159,66 @@ RESULT over that receipt; `papers/charon/index.html`.
 *The river already had oaths, capsules and certificates. It did not have a log of crossings a
 stranger could re-derive, or a line that said how many receipts a verdict cost. Now it does, and
 the line that says it is itself a pure function of the bytes.*
+
+---
+
+## ERRATA — 2026-09-02, after the adversarial pass
+
+This section is appended; nothing above it is edited. The pass is
+`ATTACKS_charon_v01_battery_2026_09_02.md`; the schemas move to `styxx.charon/log/v1` and
+`styxx.charon/entry/v1`, and the v0 log written before the pass stays in history at `a5cf9ec`.
+
+**E1 — "frozen before any code exists" is corrected to "committed before the module was
+committed."** The record shows the spec commit six minutes before the module commit, which is
+consistent with the code existing first. The weaker sentence is the one the bytes support.
+
+**E2 — the chain's guarantee is narrower than the Verify table implied.** A forger who rebuilds
+`seq`, `prev` and `entry_id` down the file produces a chain that checks. The chain binds order
+and content **to the head**; a rebuilt or truncated log is a different log with a different head.
+`verify` and `status` take `--expect-head`, `HEAD_MISMATCH` joins the status vocabulary, and
+without an expected head a report establishes internal consistency only.
+
+**E3 — the header is chained.** Entry 1's `prev` is `sha256("styxx.charon/log/v1\n" + jcs(header))`,
+domain-separated so a header can never masquerade as an entry. An edited header is TAMPER.
+
+**E4 — capsule verdicts are re-derived, not copied.** `derive_capsule` re-runs the pure function
+the capsule verifier runs and puts that verdict on the line; the embedded string is
+`counts.recorded_verdict`.
+
+**E5 — `verify` compares the whole core.** REPRODUCED is renamed `SAME_LINE` and requires every
+compared field to match; `fields_changed`, `subject_moved` and `receipts_moved` print on every row.
+
+**E6 — the verifier is a path, not a file.** `verifier.modules` carries every module the
+derivation ran through, Charon included, each with its bytes; `verifier.digest` is over that list.
+SKEW detection is bounded by the hashed set and a change outside it reads as DRIFT.
+
+**E7 — the receipt set on an OATH line is the RESOLVED one**, hashed from the bytes handed to the
+verifier; the certificate's cited digests travel beside it as `receipts.cited`.
+
+**E8 — `reproduced` is three-valued.** `true`/`false`/`null`; for a sworn line it is
+`styxx.sworn.verify_receipt`, not a string comparison; `null` means no recorded verdict exists.
+
+**E9 — the shipped verdict-class vocabulary** is HELD, FAILED, UNSWORN, OATH-HELD, OATH-FAILED,
+PASS, FAIL, UNRESOLVED. The entry table above names a shorter set; the OATH prefix is kept so an
+OATH class is never confused with a sworn one.
+
+**E10 — `subject.sha256` for a sworn line is the sidecar as presented at ingest**, not the
+document at the named commit; `at.document_at_commit` answers that question separately and is
+false for seventeen of the eighteen sworn lines, because a document is committed with its sidecar.
+
+**E11 — the population is a script.** `papers/charon/build_log.py` enumerates it and the header
+carries the rule. The arXiv staging certificates enter as UNRESOLVED lines rather than as
+absences. The one exclusion is the sworn RESULT that describes the log: a snapshot cannot contain
+its own description, the rule the corpus census already pays.
+
+**E12 — scope.** Charon covers three verdict-bearing formats. The thirty-four `*.seal.json`
+artifacts in the tree have no deriver and appear on no line; "the record over three formats" is
+the claim, not "every verdict".
+
+**E13 — a malformed line is TAMPER, never a traceback**, and duplicates are permitted: a line is
+a crossing, not an artifact, so every count is of lines and `distinct_subjects` is reported beside
+them.
+
+**E14 — the name.** Three shipping projects are called `charon` (a distributed-validator client,
+an account-management service, the strongSwan IKE daemon). None is in the attestation ecosystem;
+two are verification-adjacent command-line tools. The module keeps the name inside `styxx.`.

@@ -26,10 +26,22 @@ import base64
 import datetime as _dt
 import hashlib
 import json
+import re
 import sys
 import tempfile
 from pathlib import Path
 from typing import List
+
+# The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
+# COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
+# untouched and no token's status moved (styxx.corpus_audit.verdict_class learned this on
+# 2026-09-01, when bucketing on the whole string put 131 certificates in neither class). Layer 2
+# compares verdict CLASSES for the same reason; the strings are still reported side by side.
+_UNCOVERED_SUFFIX = re.compile(r",\s*\d+\s+uncovered\s*$")
+
+
+def _verdict_class(verdict) -> str:
+    return _UNCOVERED_SUFFIX.sub("", str(verdict))
 
 __all__ = ["create_capsule", "create_capsule_diffgate", "verify_capsule", "main"]
 
@@ -164,6 +176,7 @@ def verify_capsule(path: Path) -> dict:
                              f"{SPEC} and {SPEC_V02}"]}
 
     problems: List[str] = []
+    advisory: List[str] = []
     cert = payload["certificate"]
     doc_bytes = base64.b64decode(payload["document"]["b64"])
     if _sha256(doc_bytes) != cert.get("document_sha256"):
@@ -187,9 +200,13 @@ def verify_capsule(path: Path) -> dict:
                 rp.write_bytes(rb)
                 rps.append(rp)
             live = certify_doc(d, rps)
-        if live["verdict"] != cert["verdict"]:
+        if _verdict_class(live["verdict"]) != _verdict_class(cert["verdict"]):
             problems.append(f"verdict not reproduced: live {live['verdict']} "
                             f"vs embedded {cert['verdict']}")
+        elif live["verdict"] != cert["verdict"]:
+            advisory.append(f"verdict string moved without a class change: live {live['verdict']!r} "
+                            f"vs embedded {cert['verdict']!r} — a coverage suffix the installed "
+                            f"verifier appends; not a verdict change")
         if live["counts"] != cert["counts"]:
             problems.append(f"counts not reproduced: live {live['counts']} "
                             f"vs embedded {cert['counts']}")
@@ -202,8 +219,9 @@ def verify_capsule(path: Path) -> dict:
                 if fresh.get(k) != s:
                     problems.append(f"ledger divergence at line {k[0]} token {k[2]!r}: "
                                     f"embedded {s} vs live {fresh.get(k)}")
-    return {"ok": not problems, "problems": problems,
+    return {"ok": not problems, "problems": problems, "advisory": advisory,
             "verdict": cert.get("verdict"), "counts": cert.get("counts"),
+            "live_verdict": None if live is None else live.get("verdict"),
             "document": payload["document"]["name"],
             "spec": payload.get("spec"),
             "reproduced_at": None if live is None else "installed verifier"}
