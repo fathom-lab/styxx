@@ -21,8 +21,8 @@ an accusation), HEAD_MISMATCH, TAMPER.
 
 ## The log
 
-<sworn r="path:papers/charon/charon.log.jsonl" k="hash">At the commit this document names the log's bytes hash to 74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783.</sworn>
-<sworn r="path:papers/charon/charon_verify_result.json#/head" k="quote">Its head is `bcffbebc4152374f4b3301ec07aa05fd26bea39f2c31bf748f4a91507d179dc6`.</sworn>
+<sworn r="path:papers/charon/charon.log.jsonl" k="hash">At the commit this document names the log's bytes hash to fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318.</sworn>
+<sworn r="path:papers/charon/charon_verify_result.json#/head" k="quote">Its head is `1647a26abadb35d00bc44a98f4e0833e0b0a1ddd5a499ac3c09718c6e9edc692`.</sworn>
 <sworn r="path:papers/charon/charon_verify_result.json#/entries" k="numeric">It carries 243 lines</sworn>
 <sworn r="path:papers/charon/charon_verify_result.json#/distinct_subjects" k="numeric">over 243 distinct subjects</sworn>,
 <sworn r="path:papers/charon/charon_verify_result.json#/malformed_lines" k="numeric">of which 0 are malformed.</sworn>
@@ -35,7 +35,7 @@ every certificate `git ls-files` reports, the arXiv staging copies included —
 <sworn r="path:papers/charon/charon_verify_result.json#/by_status/TAMPER" k="numeric">and the chain check found 0 tampered lines.</sworn>
 That is a determinism check and not a stability result: `verify` ran under the same builds as
 `ingest`, on the same tree, minutes later. Any other outcome would have been a defect in Charon.
-<sworn r="path:styxx/charon.py" k="hash">Charon's own bytes hash to 10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb</sworn>,
+<sworn r="path:styxx/charon.py" k="hash">Charon's own bytes hash to 2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452</sworn>,
 and that digest is inside every line's `verifier.modules`, so a Charon that counts differently
 tomorrow reads as a moved instrument rather than as moved bytes.
 
@@ -49,7 +49,10 @@ The population is not a sentence. It is `papers/charon/build_log.py`, which anyo
 <sworn r="path:papers/charon/charon_verify_result.json#/receipts_n/held_with_10_or_more" k="numeric">10 rest on ten or more receipts</sworn>:
 <sworn r="path:papers/charon/charon_verify_result.json#/receipts_n/by_kind/oath-certificate/held_10_or_more" k="numeric">8 of them OATH certificates</sworn>
 <sworn r="path:papers/charon/charon_verify_result.json#/receipts_n/by_kind/sworn/held_10_or_more" k="numeric">and 2 sworn documents.</sworn>
-Only the first eight are the shape the 2026-09-01 dogfood warned about: for an OATH verdict the
+Every digest Charon takes over working-tree bytes is content identity modulo newlines, so an
+OATH line reads the same on a CRLF checkout as on an LF one; the certificate's cited digests are
+whatever it recorded, which in this corpus is a Windows tree, so the two sets differ and both are
+on the line. Only the first eight are the shape the 2026-09-01 dogfood warned about: for an OATH verdict the
 verifier value-matches over every leaf, so a larger set makes HELD strictly easier, and those
 eight are the lines a reader should read with that dogfood in mind. For a sworn document the
 author named the leaf, so volume buys nothing; for a handoff capsule the count is bindings, not

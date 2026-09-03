@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_charon_v01_ships_2026_09_02.sworn.json",
-  "inline_sha256": "7b2325d2addfb293ebb208ce54f6ff04d7990238189deeb0f3387e74843253b3",
-  "canonical_sha256": "82da49cdcc55a5bac77e8ccaa43311e14e7b08740642df60f12dbfd49801bb32"
+  "inline_sha256": "7490001f6f03275943f42acafe27a7e7b4e442da0667cd9630c18a7ed6d9cd82",
+  "canonical_sha256": "eaea2de45b11d7f8c1baf3f6bfcecc5615292e0685f26c70e3e06441549c4ce7"
  },
- "commit": "16e30effe1f31f3a2e0355298c3e355e1af78d4b",
+ "commit": "dd78bc2376ad703a72ff5fca0b1b75f7e4859af8",
  "manifest_digest": null,
  "spans": [
   {
@@ -18,13 +18,13 @@
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "stated": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
-    "receipt_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783"
+    "stated": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
+    "receipt_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318"
    },
-   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "resolved_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -40,10 +40,10 @@
     "haystack_bytes": 64,
     "occurrences": 1
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -62,10 +62,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -84,10 +84,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -106,10 +106,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -128,10 +128,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -150,10 +150,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -172,10 +172,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -194,10 +194,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -216,10 +216,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -238,10 +238,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -253,13 +253,13 @@
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "stated": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb",
-    "receipt_sha256": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb"
+    "stated": "2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452",
+    "receipt_sha256": "2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452"
    },
-   "resolved_sha256": "10b633c74f4e2b2b99287b66aed05cda4403c689d38509009fb03f7603f0f9eb",
+   "resolved_sha256": "2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -278,10 +278,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -300,10 +300,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -322,10 +322,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -344,10 +344,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
@@ -366,16 +366,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 5160,
-   "start": 3563,
-   "end": 3628,
+   "at": 5461,
+   "start": 3864,
+   "end": 3929,
    "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/oath-certificate/false",
    "kind": "numeric",
    "verdict": "HELD",
@@ -388,16 +388,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 5348,
-   "start": 3630,
-   "end": 3670,
+   "at": 5649,
+   "start": 3931,
+   "end": 3971,
    "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/oath-certificate/null",
    "kind": "numeric",
    "verdict": "HELD",
@@ -410,16 +410,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 5510,
-   "start": 3672,
-   "end": 3728,
+   "at": 5811,
+   "start": 3973,
+   "end": 4029,
    "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-diffgate/false",
    "kind": "numeric",
    "verdict": "HELD",
@@ -432,16 +432,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 5732,
-   "start": 3773,
-   "end": 3853,
+   "at": 6033,
+   "start": 4074,
+   "end": 4154,
    "receipt": "path:papers/charon/charon.log.jsonl#L3",
    "kind": "quote",
    "verdict": "HELD",
@@ -451,16 +451,16 @@
     "haystack_bytes": 2516,
     "occurrences": 1
    },
-   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "resolved_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 5883,
-   "start": 3856,
-   "end": 3909,
+   "at": 6184,
+   "start": 4157,
+   "end": 4210,
    "receipt": "path:papers/charon/charon.log.jsonl#L3",
    "kind": "quote",
    "verdict": "HELD",
@@ -470,16 +470,16 @@
     "haystack_bytes": 2516,
     "occurrences": 1
    },
-   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "resolved_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 6361,
-   "start": 4266,
-   "end": 4348,
+   "at": 6662,
+   "start": 4567,
+   "end": 4649,
    "receipt": "path:papers/charon/charon.log.jsonl#L59",
    "kind": "quote",
    "verdict": "HELD",
@@ -489,16 +489,16 @@
     "haystack_bytes": 3092,
     "occurrences": 1
    },
-   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "resolved_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 6850,
-   "start": 4686,
-   "end": 4772,
+   "at": 7151,
+   "start": 4987,
+   "end": 5073,
    "receipt": "path:papers/charon/charon.log.jsonl#L96",
    "kind": "quote",
    "verdict": "HELD",
@@ -508,16 +508,16 @@
     "haystack_bytes": 1839,
     "occurrences": 1
    },
-   "resolved_sha256": "74ee3ffd95b95f9181563c00b680c1e69eeae7fff8a10aba0244ad5ffd37f783",
+   "resolved_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 7605,
-   "start": 5372,
-   "end": 5405,
+   "at": 7906,
+   "start": 5673,
+   "end": 5706,
    "receipt": "path:papers/charon/charon_verify_result.json#/reproduced_at_ingest/capsule-oath/true",
    "kind": "numeric",
    "verdict": "HELD",
@@ -530,16 +530,16 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1f673fe18e35729b7946313d8c9760d6da46ef075d7ed5f8cbe49c52aa5292d6",
+   "resolved_sha256": "a49766a6a3a17a8bc25dccb92fe319eea2739c91c92cc0febd938c6ed3bbcc53",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   },
   {
-   "at": 8322,
-   "start": 5973,
-   "end": 6066,
+   "at": 8623,
+   "start": 6274,
+   "end": 6367,
    "receipt": "path:papers/charon/ATTACKS_charon_v01_battery_2026_09_02.md",
    "kind": "hash",
    "verdict": "HELD",
@@ -551,7 +551,7 @@
    "resolved_sha256": "3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163",
    "provenance": {
     "form": "path",
-    "note": "committed object at 16e30effe1f31f3a2e0355298c3e355e1af78d4b; authorship unchecked"
+    "note": "committed object at dd78bc2376ad703a72ff5fca0b1b75f7e4859af8; authorship unchecked"
    }
   }
  ],
@@ -606,14 +606,14 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "ea4538c75a2fe4147a350117781e23c4943e33beb3bfb57ea658d7b29e574b82",
+ "digest": "4851516118b5792107133ffdae5b90e9d53c4576c6d2e12f2528a18c345cdb04",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 26,
-  "narrative_sentences": 129,
-  "sentence_share": 0.1677,
+  "narrative_sentences": 133,
+  "sentence_share": 0.1635,
   "diff_claim_sentences": 3,
   "diff_claim_share": 0.8966,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
@@ -629,14 +629,14 @@
     "text": "Charon calls the three verifiers this lab already has — `styxx.sworn` at the commit a sidecar"
    },
    {
-    "start": 4410,
-    "end": 4441,
+    "start": 4711,
+    "end": 4742,
     "text": "Its verdict class did not move."
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "c4e9836f0da35af5ba754c2a50ca9e68ecb77c8f1b24365dd7cba2137892695e",
- "timestamp": "2026-09-03T15:38:43Z"
+ "coverage_sha256": "1fa1b59c813e451a2b34a08bff077e73ac4580b55d3e34bd25e9d824fc9aad21",
+ "timestamp": "2026-09-03T16:03:06Z"
 }
