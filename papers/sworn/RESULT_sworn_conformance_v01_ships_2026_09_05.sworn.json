@@ -1,0 +1,93 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "7add6fff7748a2726629464d00f72cfbc6d417a1",
+ "document": {
+  "name": "RESULT_sworn_conformance_v01_ships_2026_09_05.md",
+  "sha256": "475c3836dd9db0eab1b7c3e65e32f05364d9997c0adf5b35776ba57e0caf2758"
+ },
+ "text": "# RESULT — sworn conformance vectors v0.1 ship: the tests are bytes now, under one digest\n\nFathom Lab · 2026-09-05 · Spec: `SPEC_sworn_conformance_vectors_v01_2026_09_05.md`, frozen in its\nown commit before any code, with a dated ERRATA section appended in the commit that carries this\ndocument. Module addition: `styxx.sworn.SnapshotTree`. Set: `conformance/sworn/`. Tests:\n`tests/test_sworn_conformance.py` and `tests/test_sworn.py::TestSnapshotTree`. Leg 3, item 2 of\n`papers/PLAN_the_next_level_2026_09_02.md`, under the plan's own label: **the precondition for any\nsecond verifier; no claim.** **This document is itself sworn**: every count in it is a leaf of\n`conformance/sworn/index.json` at the commit the sidecar names, a file the generator wrote and the\nauthor did not edit, and its sidecar and verdict receipt sit beside it. Nothing here is a\nmeasurement of anything, and nothing here says a second verifier exists.\n\n## What the set is\n\nThe index carries the plan's label verbatim: `the precondition for any second verifier; no claim`.\nThe set holds 3618 vectors.\nThey fall into 20 families, each named by the test class that produced its lowest source id.\nTogether they name 3977 byte objects, every one keyed by its own digest and carried in the blob store.\nThe seeded fuzz corpus is carried in full, 3158 vectors, because a capped corpus with the same seed would be a different set.\nOf the outcomes, 2067 are verdict cores pinned by the digest of their canonical text, and 1256 are refusals pinned by a code from the table the index carries.\nOnly 116 vectors need a tree snapshot; every other vector is one a verifier for harness receipts and embedded blobs must pass.\nThe 16 receipt checks carry the issuing build's verifier block inside their inputs by construction, which the spec's errata records.\nThe recorder listed 3 calls the set cannot carry, each with its test id and its reason, and dropped nothing silently.\nThe one verdict no vector produces is `WITHHELD`, which has no producer in the verifier.\nEvery manifest and every fixture commit in the set was minted at `2026-09-01T00:00:00Z`, the pinned clock.\nOne digest pins every byte transitively: `85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f`.\n\n## What this does not say\n\nThat agreement on these vectors makes a verifier correct: it makes a verifier agree with this one\non inputs two test files chose. That the vectors cover the format: they cover what the tests\nexercise, and the tests were written by the builder, the weakest attacker there is. That the fuzz\nfamily is adversarial: it is a seeded random walk over a fixed list of atoms. That any second\nverifier exists, or is easier to write because of this. That any number above is a measurement of\nanything: each is a count of what a generator wrote, sworn so that the count cannot drift from the\nfile.\n\n## Owed\n\nThe spec's own list, unchanged: a `committed` family from `tests/test_sworn_dogfood.py`; a `refusal`\nattribute on the verifier's `SystemExit` if a second verifier needs codes at the source; the\n`verdict_core()` split of `verify()`; the lone-surrogate row for the next attack pass; and the\nPython-versus-JavaScript semantics the vectors pin and item 5 must implement.\n\n---\n\n*A verifier that only its author has run is a verifier whose behaviour lives in one head. These\nbytes are that behaviour, under one digest, so that the next verifier can be shown where it\ndisagrees before anyone is asked to trust it — and so that this set, once sworn to, is never\nregenerated in place.*\n",
+ "spans": [
+  {
+   "start": 952,
+   "end": 1050,
+   "receipt": "path:conformance/sworn/index.json#/label",
+   "kind": "quote"
+  },
+  {
+   "start": 1051,
+   "end": 1078,
+   "receipt": "path:conformance/sworn/index.json#/vector_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 1079,
+   "end": 1171,
+   "receipt": "path:conformance/sworn/index.json#/family_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 1172,
+   "end": 1274,
+   "receipt": "path:conformance/sworn/index.json#/blobs/count",
+   "kind": "numeric"
+  },
+  {
+   "start": 1275,
+   "end": 1400,
+   "receipt": "path:conformance/sworn/index.json#/families/fuzz/count",
+   "kind": "numeric"
+  },
+  {
+   "start": 1401,
+   "end": 1486,
+   "receipt": "path:conformance/sworn/index.json#/outcomes/core",
+   "kind": "numeric"
+  },
+  {
+   "start": 1487,
+   "end": 1559,
+   "receipt": "path:conformance/sworn/index.json#/outcomes/refused",
+   "kind": "numeric"
+  },
+  {
+   "start": 1560,
+   "end": 1686,
+   "receipt": "path:conformance/sworn/index.json#/requires/tree",
+   "kind": "numeric"
+  },
+  {
+   "start": 1687,
+   "end": 1819,
+   "receipt": "path:conformance/sworn/index.json#/modes/receipt_check",
+   "kind": "numeric"
+  },
+  {
+   "start": 1820,
+   "end": 1937,
+   "receipt": "path:conformance/sworn/index.json#/unvectored/skipped_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 1938,
+   "end": 2026,
+   "receipt": "path:conformance/sworn/index.json#/unvectored/verdicts/0",
+   "kind": "quote"
+  },
+  {
+   "start": 2027,
+   "end": 2133,
+   "receipt": "path:conformance/sworn/index.json#/clock",
+   "kind": "quote"
+  },
+  {
+   "start": 2134,
+   "end": 2242,
+   "receipt": "path:conformance/sworn/index.json#/set_sha256",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

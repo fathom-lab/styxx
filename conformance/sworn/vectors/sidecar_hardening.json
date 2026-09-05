@@ -1,0 +1,771 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "sidecar_hardening",
+ "count": 30,
+ "vectors": [
+  {
+   "id": "02ed92442d2fc071ef7ef4343e79ea606c4b96a828eb2296c0530111b7126bb8",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_placing_a_span_where_the_lexer_sees_none_is_refused"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "5c3ef63974ae9107e44db43874951337777ad8e5fb63027bf6735c64cacd7941",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "d5fa073d1c82efe1a234fbc7cd3de674a8ddf5ac0d8a5f068ad032a0171eed1f",
+    "sidecar": "3668d9be16692fecb264b25f6f69b92b90b7e5dbc411a650a9ddf10de6f6569a"
+   }
+  },
+  {
+   "id": "13ac92f68920f9364ef67d3e60114aaa9a10725586ef0b7f10b63131c21cd3c4",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_zero_byte_span_is_malformed_inline_and_refuses_the_sidecar"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9d1624b445d82cd738b35dd418981d6e8f8d7ae335d62aa642ee415d8c6ed100",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "fa128c626baefcc928e37071b64e63b24cf2de68469f418f2d0a84ee9cd15fd8",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 3,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "2297aa73afe2253439f2560271e0547e71317929252eef898a8312f87d405031",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>16]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "614d029c25578110526611e04e2144e205ca758ab6148487c905fd3e5f8f11ab",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "25c305c86cb6b742dd34bf8e538c40a222629359f2645ec4a57914ffb91c22b7",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>7]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "d540457836de35af871d6a15181fc3940a1802d631f32ffb1f78df8407c88611",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_document_shape",
+     "match": "sidecar document must carry a string name and a string sha256"
+    }
+   }
+  },
+  {
+   "id": "2a52a4a3f6141ecac38b806b3aa0a54b423270e4c175aae4e4d638a0cf87eb48",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>6]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "a9f6851152f80c42e8d18c54fe073890bb4abce77dcdc9dd616b3cd2b64a8c7a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_shape",
+     "match": "is not an object with exactly start/end/receipt/kind"
+    }
+   }
+  },
+  {
+   "id": "2b6ce9746f2d4a31de69c2e0c0cbc9bf1a10c7339948ee44f76061e224c694ad",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>14]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "461e8e7429f0a643e846c05c55dbf9e82982776daeba67eef2597f6bd24c7b7e",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_manifest_shape",
+     "match": "sidecar manifest is not a"
+    }
+   }
+  },
+  {
+   "id": "31bcff896e4a06bd12ebc5315e371aa8a43ca53b59c4ace5c00c3909b2c74690",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>18]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "cd90cf46323dac01ffce2631dfddec2d7855301eb753bad2e83c4007da4617ba",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "39aa852a1f9a9a7a0d9302b0b94d293cd109021697036b9c4de07aa5a3fca4a6",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_whose_text_has_no_canonical_form_is_refused"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "ef5c9fd4ce97263693ec71a167b23131f8e96a6d11a245012be0d55bf57278a2",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_no_canonical_form",
+     "match": "the sidecar text has no canonical form"
+    }
+   }
+  },
+  {
+   "id": "5aa288e124c3d67b29091c6811e94dc933e95e0c73d2dfe7541ba1b100d86186",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>10]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "c4089876f99ab1c1eb3a62781734ef28171a19cb2c310e0a677a3718f85d2f30",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_commit_form",
+     "match": "sidecar commit must be a full lowercase hex object id or null"
+    }
+   }
+  },
+  {
+   "id": "642d04fc6e2b6a668c80655281b5b973cdf8d9ce2cd7d26f3b846740a35504c8",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>15]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "7eacaca7a7558cda6dc442af0acf7b22bedf4d7039d029f55bab3e1462fae678",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_range",
+     "match": "are not a non-empty range in the text"
+    }
+   }
+  },
+  {
+   "id": "67c8aa096436be3467b8636cef56dc34e10da3bb82f489b4028d45f6f691277e",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>5]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "1a3e863e3d4523bb08d78f51aeb10caa055cbda1db7ea5f925a5d5d456f72454",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_shape",
+     "match": "is not an object with exactly start/end/receipt/kind"
+    }
+   }
+  },
+  {
+   "id": "6eeb53261af62b9d9a46229183c1ba17cb2ba92ab9724d0b5507d79b27d8c828",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_placing_a_span_where_the_lexer_sees_none_is_refused"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "ccec240bc9c87966d34220f0592cb3931c534303d2844f2428694d64cd52c555",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_spans_not_reproduced",
+     "match": "does not reproduce its spans"
+    }
+   }
+  },
+  {
+   "id": "759ec0c5621780994b06b1e6c54a5d49665eec8e88c4b4956e4efdde54d8f47d",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>3]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "9c5d64bcb334f8a923dbc3c7c005796b56d25b43f90650078411a10e8ebcd001",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_spans_not_list",
+     "match": "sidecar spans must be a list"
+    }
+   }
+  },
+  {
+   "id": "7604f97b5258d85aac4a68ae0f12f825f8e05486da97e5b96346a73c16f01def",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>4]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "c0cdaf92529cb55f7c663c50b42d0b1e3260ca28705fa3e87a2b3d105ec2a016",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_shape",
+     "match": "is not an object with exactly start/end/receipt/kind"
+    }
+   }
+  },
+  {
+   "id": "7af9fac99b3200ff3fef03697ede2b8dcdec0725bb00ea1cbfb05c424b4a6354",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>17]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "3ddca0dfdbde09c456ae6e6d96f73c7385801ce3d20e3ee9260e64feb8aaa276",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "7ca62ffea9f54840082206768ff0b12590d2b266f44d0252b2e769e8c21aafe5",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>9]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "2375f0cda908c7c4cad6df6d0ecc18fb5fc1e03de0ac25d33bab91742b6ca08c",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_document_shape",
+     "match": "sidecar document must carry a string name and a string sha256"
+    }
+   }
+  },
+  {
+   "id": "9895e06a5645e470c6bcab870eb81e66011df1423ff21b7d5f073fbefa904f7e",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>11]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "6f736ec2bbccec07183f81cd3c913d9f9b5c53e676da336f18190505ff3f46df",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_manifest_shape",
+     "match": "sidecar manifest is not a"
+    }
+   }
+  },
+  {
+   "id": "9fb03f3190ddd6c142019b5e7b67941e43b3ac9448d06334ab3b792d92329ba6",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>13]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "92f87d259fcad10d7ff9f91cb8f4c29f91b514749f16933d539c98b3942651a1",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_manifest_shape",
+     "match": "sidecar manifest is not a"
+    }
+   }
+  },
+  {
+   "id": "a23cf425a3dab95f2e94ee7e80c35d8b1a6e8d7aba03439cf4aba4443448c36c",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>20]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "5b66dcf2be50453c537d168ca0ce3b25a8bedb95a0990723dc3db321ba72a3d5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "a4e8a7e500ee99bc8da63d06cf4cc19e2b0bb92f6914032e8e150ecfcef6dd7a",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>12]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "d50f71118b5bb7bca0ffc1a3bedf1fc5ae00add81ba71c9b1f0bfe6a6377a89f",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_manifest_shape",
+     "match": "sidecar manifest is not a"
+    }
+   }
+  },
+  {
+   "id": "abfc5cead161617bfd7923248e97d910ee6ed6a0c17036fdb2686db7c59c8c34",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_to_sidecar_never_emits_a_commit_its_loader_refuses"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": "abc",
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "commit_form",
+     "match": "commit must be a full lowercase hex object id or None"
+    }
+   }
+  },
+  {
+   "id": "bee092c27dfe06ffac48e563b8a100971a92f1666d5f5d7a774e0a10ac55fd2a",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_zero_byte_span_is_malformed_inline_and_refuses_the_sidecar"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9d1624b445d82cd738b35dd418981d6e8f8d7ae335d62aa642ee415d8c6ed100",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "cd7633220cca31cc61e59d9efbca0c5d1f9c6a9a76ec54c83e56a468e0e863f2",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>8]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "9dc44d55dd8da3d22f3e2c69a2ebc71c0e4612bbdd33b0deb8ae1a55040076d4",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_document_shape",
+     "match": "sidecar document must carry a string name and a string sha256"
+    }
+   }
+  },
+  {
+   "id": "ce9899856722d24443515200597d26925815dbc357fb73c37b9dfb1c3a8b8f39",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_to_sidecar_never_emits_a_commit_its_loader_refuses"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": 5,
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "commit_form",
+     "match": "commit must be a full lowercase hex object id or None"
+    }
+   }
+  },
+  {
+   "id": "cf14cb12a026e75ab05e1f025f092f4749d7fc871b9e039950dcf3ccfa6b8358",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_to_sidecar_never_emits_a_commit_its_loader_refuses"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": "HEAD",
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "commit_form",
+     "match": "commit must be a full lowercase hex object id or None"
+    }
+   }
+  },
+  {
+   "id": "d17025d6e193b155ff0bb07d2e6585e82990418878807e5fb6bbec1953e0fb07",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_to_sidecar_never_emits_a_commit_its_loader_refuses"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "commit_form",
+     "match": "commit must be a full lowercase hex object id or None"
+    }
+   }
+  },
+  {
+   "id": "daac7db63e45842eb96d57882899e78d88d64103f45338e22bbc3e2ec10b7ba9",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>1]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "80bb9eeccbb0fd00646dea049457b639e33bde7643241cb1e5f868ac5ba78fb5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_text_not_string",
+     "match": "sidecar text must be a string"
+    }
+   }
+  },
+  {
+   "id": "e44f4e752d5d84383539bd3fe8f38555118b2d19f476e34b24a9dd47bc0ba521",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>19]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "47072155e6cfd87f51ce582acc370afcdf869baab26012275cc227e84d45bf2b",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "e8bcd8ad68e98a489c2c0e6cb7f670a0a2abd42e3dd38c821ff32bc40513e882",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>21]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "a1394b5d6ea1937f284830f87b3d22de7350c8c6cbc20a3474b4fcd353cd62c5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_span_attribute",
+     "match": "cannot be carried by the inline tag grammar"
+    }
+   }
+  },
+  {
+   "id": "f244bc2c81cdb23a074573e7ef1cc9bbe9ea97a53c41d8a4453649cf09202de6",
+   "family": "sidecar_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>0]"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "c682baf47dcab277338bd6d5e4ff29523393728c55b1e8db67cab77a47782cdb",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_text_not_string",
+     "match": "sidecar text must be a string"
+    }
+   }
+  }
+ ]
+}
