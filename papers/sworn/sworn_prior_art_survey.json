@@ -1,0 +1,328 @@
+{
+ "survey": "sworn output: the neighbours of one sentence",
+ "protocol": "papers/sworn/PROTOCOL_sworn_prior_art_2026_09_02.md",
+ "run_by": "one agent, one pass, no independent re-fetch",
+ "run_date": "2026-09-05",
+ "status": "IN_PROGRESS",
+ "counts": {
+  "sources_in_list": 19,
+  "sources_scored": 5,
+  "read": 5,
+  "skimmed": 0,
+  "unfetchable": 0,
+  "leads_not_scored": 0
+ },
+ "clauses": {},
+ "conjunction": {},
+ "sentence": {},
+ "sources": [
+  {
+   "id": "S01",
+   "source": "Proof-Carrying Numbers",
+   "title_as_reported": "Proof-Carrying Numbers (PCN): A Protocol for Trustworthy Numeric Answers from LLMs via Claim Verification",
+   "authors": "Aivin V. Solatorio",
+   "venue_and_date": "arXiv:2509.06902v1, submitted 2025-09-08, no revision listed",
+   "what_it_is": "A presentation-layer scheme in which numeric spans of model output are emitted as claim-bound tokens and a verifier sitting in the renderer checks each token against a finite claim set under a declared policy; unmarked numbers default to unverified.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "numeric",
+    "other: rounding policy",
+    "other: alias equivalence",
+    "other: tolerance with qualifiers"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2509.06902",
+    "https://arxiv.org/html/2509.06902v1"
+   ],
+   "fetched_at": "2026-09-05T23:02:00Z",
+   "quote": "places verification in the renderer, not the model",
+   "quote_url": "https://arxiv.org/abs/2509.06902",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The claim-bound token wraps a numeric span, not a sentence; the checked object is the numeral and the surrounding prose is untouched."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is free prose emitted by a model at answer time, not a template or a controlled language; it is not a retrospective report about work the writer did, so the host is different in kind though free-text in form."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind of the four: an exact numeral under a declared policy (equality, rounding, alias, tolerance). Quote, hash and absence checks are not part of the scheme; hashes appear only as an optional cryptographic-commitment extension."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The claim set is resolved by a retriever from structured sources the emitting model cannot write to, and the verifier runs in the renderer rather than in the model. The split is model-versus-application, not author-versus-runner: the human who builds the application still controls the claim set."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Marks are per numeral and per token; there is no document verdict, so a document that bound nothing is indistinguishable from one whose every number was checked except by looking at the marks one at a time.",
+   "text_sha256": "82a652ccd1c198ea0fe7d64f0eec5737dd9e5381e1461f0c05186f42a9a4593c",
+   "text_bytes": 287957,
+   "text_saved_as": "S01_pcn_html.html"
+  },
+  {
+   "id": "S02",
+   "source": "Self-Verifying Measurement Records",
+   "title_as_reported": "Self-Verifying Measurement Records: Hash-Linked Evidence Graphs for Hardware Benchmarking",
+   "authors": "Faruk Alpay, Baris Basaran",
+   "venue_and_date": "arXiv:2606.27934v1, submitted 2026-06-26",
+   "what_it_is": "A hardware-benchmarking record in which every reported quantity in the text, a table or a figure is bound by content hash to the observation and the check behind it, in an append-only hash-linked structure a reader audits offline from committed seeds without trusting the producer.",
+   "q1_binds": [
+    "numeral",
+    "record"
+   ],
+   "q2_mints": "author",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "numeric",
+    "hash",
+    "other: Freivalds probabilistic identity",
+    "other: algebraic checksum",
+    "other: reproducibility class"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2606.27934",
+    "https://arxiv.org/html/2606.27934v1"
+   ],
+   "fetched_at": "2026-09-05T23:06:00Z",
+   "quote": "a verifier need not trust the party that produced the data",
+   "quote_url": "https://arxiv.org/html/2606.27934v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The bound object is a reported quantity, not a sentence. Narrative prose is never bound; the paper's own line is that every quantity in the text, a table or a figure is bound by its content hash."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is exactly this clause's host: a paper written after the runs, in the authors' own prose, not a template or a form. This is the closest occupant of C2 found in this pass; only the object bound inside that prose differs."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Two of the four kinds over quantities: an exact numeral under a derived tolerance, and a content hash. There is no substring check over evidence bytes and no check that a substring is absent; the bit-identity test between devices is a numeric difference, not an absence check."
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": "The evidence bytes are the authors' own instrumented runs. The reader's independence comes from re-deriving the check offline from committed seeds and from a challenge derived from the claimed output, not from a minter the author could not write to. It reaches a comparable end by a different route and does not do what this clause asserts."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the nearest neighbour on the host and the strongest on the hash kind, and it is the reason the trust question can be answered without a non-author minter at all: re-derivability from committed seeds substitutes for the rung ladder. It has no verdict for a record that bound nothing and prints no unbound count, and it never binds a sentence.",
+   "text_sha256": "8ea89d1de61b70e7036bd2ea596afffcf12aa4804e239faf4d6f4762a2e09f34",
+   "text_bytes": 346716,
+   "text_saved_as": "S02_svmr_html.html"
+  },
+  {
+   "id": "S03",
+   "source": "Deterministic Integrity Gates",
+   "title_as_reported": "Deterministic Integrity Gates for LLM-Assisted Clinical Manuscript Preparation: An Auditable Biomedical Informatics Architecture",
+   "authors": "Yoojin Nam, Jinhoon Jeong, Namkug Kim",
+   "venue_and_date": "arXiv:2606.09500, 2026 (v2 HTML read)",
+   "what_it_is": "A pipeline of deterministic gates over an LLM-assisted clinical manuscript: candidate claims are extracted from the manuscript by script, numerical claims are reconciled three ways against a content-hash manifest of every input and derived table, citations are checked against PubMed and CrossRef, and each stage halts on failure.",
+   "q1_binds": [
+    "assertion",
+    "numeral",
+    "artifact"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "numeric",
+    "quote",
+    "hash",
+    "absent",
+    "other: arithmetic identity"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/html/2606.09500v2"
+   ],
+   "fetched_at": "2026-09-05T23:10:00Z",
+   "quote": "249 manuscript claims extracted; of 136 numerical claims, 74 (54%) exact-match a manifest-locked analysis table",
+   "quote_url": "https://arxiv.org/html/2606.09500v2",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "This is the closest thing this pass found to a check reaching statements of a free-text report, and the reason C1 survives is a distinction C1's own wording does not carry: the gates EXTRACT candidate claims from the manuscript by script and then match them, while the clause is about a span the author bound at write time. The object checked is an extracted claim, downstream of a detector that chose it."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a clinical manuscript, prose written after the analysis in the authors' own words. Same host as the clause; different object inside it."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "The widest kind coverage of any source read: exact numerals against a manifest-locked table, citation-key and cross-reference substring checks, SHA-256 over every input and derived table, and absence-shaped guards (a missing citation, a structural zero). The kinds land on extracted claims and on artifacts rather than on author-bound sentences, and the text does not establish an absence check over declared evidence bytes in the sworn sense."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Citation existence and author cross-checks run against PubMed and CrossRef, which the manuscript's author cannot write to. The analysis tables under the hash manifest are the author's own pipeline, so the non-author bytes cover one gate, not the numbers."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "It prints an untraced share (14 of 136 numerical claims, 10%) beside the traced ones. The denominator is the detector's own extraction, not every sentence of the manuscript, and the figure is reported once in an evaluation probe rather than printed beside every verdict at run time. This is the shape sworn v0.2 withdrew when it replaced coverage_estimate with a floor."
+    }
+   },
+   "differs_from_sworn": "The architecture is the mirror image: a detector chooses what to check and the author writes nothing, so a manuscript that declared nothing still gets a report, and the coverage figure it prints is against what the detector found rather than against the prose. It is the strongest occupant on kinds and the only source read that prints an unverified share.",
+   "text_sha256": "8b605a51d5133794eafe9e70d7a7842cb14c5a2e7105e74ee0b7183911b27e36",
+   "text_bytes": 179176,
+   "text_saved_as": "S03_dig_html.html"
+  },
+  {
+   "id": "S04",
+   "source": "Proof-Carrying Certificates for LLM Pipelines",
+   "title_as_reported": "Proof-Carrying Certificates for LLM Pipelines: A Trust-Boundary Architecture",
+   "authors": "George Koomullil",
+   "venue_and_date": "arXiv:2605.16407v1, submitted 2026-05-13",
+   "existence_check": "The identifier resolves and the title matches the one the source list expected.",
+   "what_it_is": "Certificate families compiled in Lean 4 that sit above a trust boundary: once an LLM output has become structured, the downstream computation carries a machine-checkable record with decidable proof fields, and a Universal Assurance Card reports one of four verdicts for the pipeline.",
+   "q1_binds": [
+    "assertion",
+    "step",
+    "record"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "yes",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "numeric",
+    "hash",
+    "other: decidable Lean predicates"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2605.16407",
+    "https://arxiv.org/html/2605.16407v1"
+   ],
+   "fetched_at": "2026-09-05T23:14:00Z",
+   "quote": "at every interface where an LLM output becomes structured, the downstream computation can be made machine-checkable",
+   "quote_url": "https://arxiv.org/html/2605.16407v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "Certificates attach to Lean records and pipeline steps with decidable proof fields; the object is a structured claim set, never a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": "The architecture draws its trust boundary above free text on purpose: certificates consume typed inputs from the formal layer, so a free-text report is never the host."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Exact numeric predicates (weights summing to one) and a SHA-256 digest over model output, plus decidable structural predicates. No substring check over evidence bytes and no absence check."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Tiered oracles require held-out benchmarks with expert equivalence labels the pipeline author did not mint, and an auditor outside the pipeline re-runs the Lean kernel and the axiom check."
+    },
+    "C5": {
+     "verdict": "OCCUPIES",
+     "why": "The assurance card carries one of four verdicts (Certified, Partial, Residue, Abstain), so a pipeline that carries no certificate is reported as its own state rather than as a pass. The object is a pipeline under a declared assurance mode, not a document, and the tokens are not a document verdict over bound spans."
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The residue operator audit-logs the claims it dropped, so what fell outside certification is counted. The count is over claims an operator discarded, not over sentences of a host document, and it is a log rather than a figure printed beside every verdict."
+    }
+   },
+   "differs_from_sworn": "It is the only source read with a four-token verdict vocabulary at the document-ish level and an explicit residue count, and it reaches both by refusing the free-text host entirely: the certificate begins where the prose ends.",
+   "text_sha256": "62a73a39327a2b64f3f3e395bf2d990f34400bde9d04e05984beb7a5d874a954",
+   "text_bytes": 1435718,
+   "text_saved_as": "S04_pcc_html.html"
+  },
+  {
+   "id": "S05",
+   "source": "citation-attribution evaluators",
+   "title_as_reported": "Cited but Not Verified: Parsing and Evaluating Source Attribution in LLM Deep Research Agents",
+   "authors": "Hailey Onweller, Elias Lumer, Austin Huber, Pia Ramchandani, Vamse Kumar Subbiah, Corey Feld",
+   "venue_and_date": "arXiv:2605.06635v1, submitted 2026-05-07",
+   "existence_check": "The identifier resolves. The source list named it only by topic; it is recorded under the title arXiv reports and scored as that paper.",
+   "what_it_is": "An evaluation harness that parses a model-written Markdown research report with an AST parser, segments it into sentence-level claims paired with their inline citations, retrieves each cited URL, and scores link accessibility, topical relevance and factual accuracy, the last two by an LLM judge calibrated against human review.",
+   "q1_binds": [
+    "sentence",
+    "assertion"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "other: link accessibility",
+    "other: LLM relevance judgement",
+    "other: LLM fact check"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2605.06635",
+    "https://arxiv.org/html/2605.06635v1"
+   ],
+   "fetched_at": "2026-09-05T23:18:00Z",
+   "quote": "sentence-level segmentation to split continuous text into individual claims",
+   "quote_url": "https://arxiv.org/html/2605.06635v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit judged is a sentence of a free-text report, which is this clause's own object. What differs is the verb: the parser segments and an LLM judge decides, so no span is bound by the writer at write time and no verdict is a function of bytes. Together with S03 this is why the clause survives only on the word bind."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a free-text Markdown research report rather than a template. It is written by the agent as its answer, not by a party reporting retrospectively on work it did."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Each cited URL is retrieved and its content extracted, so the bytes a claim is scored against are the cited source's, which the report's writer did not mint. The comparison itself is a model's judgement rather than a byte check."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It reaches sentences of a free-text report and third-party bytes at once, and stops short of every remaining clause: no deterministic kind, no document verdict, no uncited-sentence count, and a judge in the loop. Its link-accessibility test is an existence check over a URL, not an absence check over evidence bytes.",
+   "text_sha256": "d3761c8399462e7868c31ce0b18d016b77eef613502c95a677a03b2139045f7f",
+   "text_bytes": 140456,
+   "text_saved_as": "S05_cite_html.html"
+  }
+ ],
+ "leads_not_scored": []
+}
