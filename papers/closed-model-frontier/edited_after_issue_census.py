@@ -160,6 +160,8 @@ def charon_reconciliation(census: dict) -> dict:
             moved.append("receipt at issue")
         if (r.get("document") or {}).get("cell") == "at_issue":
             moved.append("document at issue")
+        elif (r.get("document") or {}).get("note"):
+            moved.append("document found by the certificate's own document field, elsewhere in the tree")
         if ch is True and st is True:
             cat = "both_reproduce"
         elif ch is False and st is True:
@@ -188,8 +190,11 @@ def charon_reconciliation(census: dict) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--census", default=str(CENSUS),
+                    help="the committed receipt-binding census to read (never written)")
     a = ap.parse_args(argv)
     out = Path(a.out).resolve()
+    census_path = Path(a.census).resolve()
     try:
         repo = rb.Repo(ROOT)
     except rb.RepoUnavailable as e:
@@ -200,7 +205,7 @@ def main(argv=None) -> int:
             print(f"REFUSED: {out} is tracked; a committed census is history — use --out", file=sys.stderr)
             return 2
         head = repo.head()
-        census = json.loads(CENSUS.read_text(encoding="utf-8"))
+        census = json.loads(census_path.read_text(encoding="utf-8"))
         edited = edited_documents(repo, census, head)
         recon = charon_reconciliation(census)
     finally:
@@ -223,7 +228,7 @@ def main(argv=None) -> int:
     }
     result = {
         "schema": "styxx-oath/edited-after-issue-census/v1",
-        "inputs": {"census": "papers/closed-model-frontier/receipt_binding_census_result.json",
+        "inputs": {"census": repo.rel_or_none(census_path) or str(census_path),
                    "census_head": census.get("head"),
                    "charon_log": "papers/charon/charon.log.jsonl"},
         "head": head,

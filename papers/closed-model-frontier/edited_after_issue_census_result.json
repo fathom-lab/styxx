@@ -1,14 +1,14 @@
 {
  "schema": "styxx-oath/edited-after-issue-census/v1",
  "inputs": {
-  "census": "papers/closed-model-frontier/receipt_binding_census_result.json",
-  "census_head": "00b2f7d9a07c72cc10c51b2e8b05dcd8ebdcaf97",
+  "census": "papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json",
+  "census_head": "2857b62d724565f38baaf8903ca4b686b99002cf",
   "charon_log": "papers/charon/charon.log.jsonl"
  },
- "head": "053380361973cc494b8ba50b17097c0d0112039d",
+ "head": "2857b62d724565f38baaf8903ca4b686b99002cf",
  "totals": {
-  "documents_at_issue": 10,
-  "with_working_document": 10,
+  "documents_at_issue": 8,
+  "with_working_document": 8,
   "without_working_document": 0,
   "lines_removed_total": 9,
   "lines_added_total": 82,
@@ -18,7 +18,7 @@
   "ledger_rows_removed_total": 4,
   "documents_with_numbers_added": 2,
   "numbers_added_total": 26,
-  "live_class_equals_recorded": 10,
+  "live_class_equals_recorded": 8,
   "live_class_differs": 0
  },
  "documents": [
@@ -196,56 +196,6 @@
       "token": "0.7857"
      }
     ]
-   },
-   "live_class_over_working_document": "OATH-HELD",
-   "live_class_equals_recorded": true
-  },
-  {
-   "certificate": "papers/arxiv/frame-locality/submission/anc/source.certificate.json",
-   "sworn_document": "papers/PAPER_frame_locality_2026_07_28.md",
-   "issuing_commit": "2c7dd0513170f8a7b452e17024b0d1c4a6fbb694",
-   "working_document": "papers/PAPER_frame_locality_2026_07_28.md",
-   "recorded_class": "OATH-HELD",
-   "stands_over_sworn_bytes": true,
-   "edited_at": "62b3fc429ac1a13e386a60062951819da9c2feac 2026-07-30T14:16:27-04:00",
-   "status": "EDITED",
-   "lines_removed": 0,
-   "lines_added": 0,
-   "ledger_rows_on_removed_lines": {
-    "total": 0,
-    "VERIFIED": 0,
-    "ABSTAIN": 0,
-    "UNGROUNDED": 0,
-    "tokens": []
-   },
-   "numbers_on_added_lines": {
-    "total": 0,
-    "tokens": []
-   },
-   "live_class_over_working_document": "OATH-HELD",
-   "live_class_equals_recorded": true
-  },
-  {
-   "certificate": "papers/arxiv/knowsay-gap/submission/anc/source.certificate.json",
-   "sworn_document": "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
-   "issuing_commit": "2c7dd0513170f8a7b452e17024b0d1c4a6fbb694",
-   "working_document": "papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
-   "recorded_class": "OATH-HELD",
-   "stands_over_sworn_bytes": true,
-   "edited_at": "31c0b388da99d1a5d07c3948b09bf2c4bf9f0e67 2026-07-31T22:34:10-04:00",
-   "status": "EDITED",
-   "lines_removed": 0,
-   "lines_added": 0,
-   "ledger_rows_on_removed_lines": {
-    "total": 0,
-    "VERIFIED": 0,
-    "ABSTAIN": 0,
-    "UNGROUNDED": 0,
-    "tokens": []
-   },
-   "numbers_on_added_lines": {
-    "total": 0,
-    "tokens": []
    },
    "live_class_over_working_document": "OATH-HELD",
    "live_class_equals_recorded": true
@@ -452,7 +402,7 @@
     "census_stands": true,
     "census_reason": null,
     "what_moved": [
-     "document at issue"
+     "document found by the certificate's own document field, elsewhere in the tree"
     ],
     "category": "charon_unresolved_census_stands"
    },
@@ -463,7 +413,7 @@
     "census_stands": true,
     "census_reason": null,
     "what_moved": [
-     "document at issue"
+     "document found by the certificate's own document field, elsewhere in the tree"
     ],
     "category": "charon_unresolved_census_stands"
    },
