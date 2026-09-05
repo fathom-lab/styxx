@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — sworn output v0.2: attacked twelve ways, four rules paid, the coverage number withdrawn
+
+**The adversarial pass the standing rule requires, run before any sentence about the format
+left the tree.** `papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02.md` (sworn) tries twelve
+attacks against `styxx.sworn` as committed at `320b303`, in memory; every row is pinned by
+`tests/test_sworn_attacks.py`. Four are repaired, six are not repaired and say so beside the
+verdict, two survived v0.1 unchanged. Spec frozen first:
+`papers/sworn/SPEC_sworn_output_v02_2026_09_02.md`; the v0.1 spec is untouched.
+- **R1** `rN#/pointer` and `rN#Ln-Lm`: a numeric span names a leaf inside a harness capture.
+- **R2** a tag inside an HTML comment is MALFORMED `hidden_commitment` — never HELD, never narrative.
+- **R3** a `quote` needle under 16 bytes over a whole receipt is MALFORMED `short_needle`; pointer
+  leaves, line anchors and `absent` are exempt (the attack is the haystack, not the needle).
+- **R4** the span cap counts 300 code points, not bytes (the v0.1 disclosed inequity).
+- **R5** `attestation` joins the closed source vocabulary; no signature is checked, and the
+  `certifies` sentence now says so.
+- **R6** manifest `sworn/manifest/0.2` declares a rung — L1 (a local hook sharing a filesystem
+  with the agent, weak) or L2 (a runner after the turn); L3 reserved and refused; a 0.1 manifest
+  still loads and resolves at `undeclared`, never L2.
+- **R7** every span verdict carries `provenance`; every receipt carries a `rungs` count.
+- **R8 — the coverage ESTIMATE is withdrawn.** Its denominator, `styxx.claimdetect` (STRUCT-1),
+  is a diff-claim detector for agent pull-request prose that never reads a measured rate as a
+  claim. `papers/sworn/coverage_census_v01.py` (read through git plumbing at `320b303`) shows it
+  printed 0.6667–1.0 beside all twelve committed sworn documents while counting 20 of 932
+  narrative sentences; the grain synthesis printed 0.9412 with one fragment counted against 98
+  sentences. `sworn/coverage/1` prints `narrative_sentences`, `sentence_share` (a floor that
+  treats every narrative sentence as load-bearing and so cannot flatter — 0.0156–0.2185 across
+  the same twelve) and STRUCT-1's count labelled with its idiom. Neither is bound recall.
+- **R9** verdict receipt `styxx.sworn.verdict-receipt/v1`: the digest covers the core without
+  coverage; coverage travels beside it under `coverage_sha256`; `verify_receipt` is schema-aware
+  and a `/v0` receipt still checks on its core. All twelve committed receipts re-issued under v1
+  by `reissue_receipts_v1.py`, which refuses if any span verdict moves; none did.
+- Every JSON the CLI writes is LF on every platform (`_write_json_lf`); a Windows text-mode write
+  would have CRLF'd a byte-pinned sidecar. `manifest new` requires `--rung`; `manifest add`
+  takes `--note`.
+- Dogfood: `RESULT_sworn_v02_ships_2026_09_02.md` (sworn to the harness manifest at rung L1 and
+  to the verifier's own blob hash) and `EXPLORATORY_handedness_by_kind_2026_09_02.md` (sworn to
+  `handedness_v3_by_kind_result.json`: the token-kind split of the v3 rows that a same-day
+  objection cited as "kind-adjusted 0.117" with no receipt — the receipt says 0.1695, integer
+  stratum odds ratio 3.11, one repository supplying 184 of 334 rows; exploratory, never a result).
+- **Owed, unchanged and restated:** the measurement (`DESIGN_sworn_measurement_v2_2026_09_02.md`,
+  waiting on the operator's signature); conformance vectors before any second verifier; the
+  prior-art survey before any "we know of no other"; L1/L2 harness adapters; a release —
+  `styxx.sworn` is not in 7.47.0 and a stranger cannot `pip install` it.
+
 ## [Unreleased] — sworn output v0.1: the author declares, the receipt disposes
 
 **Sworn output (`styxx.sworn`, NEW).** Spec frozen first —

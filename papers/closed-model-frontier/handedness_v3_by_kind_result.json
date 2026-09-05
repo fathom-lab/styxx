@@ -1,0 +1,80 @@
+{
+ "what": "EXPLORATORY token-kind stratification of handedness_v3_result.json rows; not a result, not preregistered; may not be quoted as a finding",
+ "source": "papers/closed-model-frontier/handedness_v3_result.json",
+ "source_verdict": "HEADER_HANDED_ACCUSES_TRUER",
+ "panel_labels_observed": [
+  "CLAIM",
+  "NOT_A_CLAIM"
+ ],
+ "genuine_rule": "panel label not in the NOT_A_CLAIM family",
+ "kind_rule": "decimal iff the printed token contains '.'; integer otherwise",
+ "rows_considered": 334,
+ "cells": {
+  "header/decimal": {
+   "n": 142,
+   "genuine": 142,
+   "genuine_share": 1.0,
+   "wilson95": [
+    0.9737,
+    1.0
+   ]
+  },
+  "header/integer": {
+   "n": 23,
+   "genuine": 15,
+   "genuine_share": 0.6522,
+   "wilson95": [
+    0.4489,
+    0.8119
+   ]
+  },
+  "line/decimal": {
+   "n": 76,
+   "genuine": 73,
+   "genuine_share": 0.9605,
+   "wilson95": [
+    0.8903,
+    0.9865
+   ]
+  },
+  "line/integer": {
+   "n": 93,
+   "genuine": 35,
+   "genuine_share": 0.3763,
+   "wilson95": [
+    0.2846,
+    0.4779
+   ]
+  }
+ },
+ "raw_cells_recomputed": {
+  "header": {
+   "n": 165,
+   "genuine_share": 0.9515
+  },
+  "line": {
+   "n": 169,
+   "genuine_share": 0.6391
+  }
+ },
+ "raw_gap_header_minus_line": 0.3124,
+ "header_decimal_mix": 0.8606,
+ "line_decimal_mix": 0.4497,
+ "kind_adjusted_header_share": 0.8086,
+ "kind_adjusted_gap": 0.1695,
+ "odds_ratio_header_over_line": {
+  "integer_stratum": 3.1071,
+  "decimal_stratum": 13.5714
+ },
+ "top_repository": {
+  "repo": "hopit-ai/Moda",
+  "rows": 184,
+  "share_of_rows": 0.5509
+ },
+ "what_this_is_not": [
+  "not a result: computed after the v3 verdict was read, on the rows that produced it",
+  "not a measurement of structure: a header cell is also a table cell in benchmark idiom, and the panel saw table rows as rows",
+  "one panel of one model family judged every row (the v3 RESULT's own limit)",
+  "the kind-adjusted gap reweights one cell to the other's mix; it is a description, not an estimate of a causal effect"
+ ]
+}

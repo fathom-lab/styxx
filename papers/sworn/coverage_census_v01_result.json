@@ -1,0 +1,181 @@
+{
+ "what": "CENSUS of the v0.1 coverage estimate beside every committed sworn document, read at one commit via git plumbing; counts, not a measurement of load-bearingness",
+ "commit": "320b30322d804923dc89b8eaf6e63dfa8e3f45f2",
+ "documents": 12,
+ "v01_estimate_min": 0.6667,
+ "v01_estimate_max": 1.0,
+ "v01_unsworn_claims_total": 20,
+ "narrative_sentences_total": 932,
+ "sworn_total": 167,
+ "floor_min": 0.0156,
+ "floor_max": 0.2185,
+ "rows": [
+  {
+   "document": "SYNTHESIS_the_grain_of_the_handed_target_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 16,
+   "v01_coverage_estimate": 0.9412,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "`external` — but `object_text` now owes a split: **structural** (a label the author chose: a"
+   ],
+   "narrative_sentences": 98,
+   "sentence_share_floor": 0.1404
+  },
+  {
+   "document": "DECLARATION_h_mapping_2026_09_01",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 27,
+   "v01_coverage_estimate": 0.9,
+   "v01_unsworn_claims_estimate": 3,
+   "v01_unsworn_claim_texts": [
+    "| `structural-precision` | OBLIGATE-1: ≥ 2 fractional digits AND outside a code span | object_form | **no** — defined in",
+    "`h_mapping_census.py` folds the mapping over the corpus twice and writes both folds under",
+    "accuser (object_text; finds its own target; 0.16 held-out against a 0.95 floor; deleted), STRUCT-1"
+   ],
+   "narrative_sentences": 146,
+   "sentence_share_floor": 0.1561
+  },
+  {
+   "document": "RESULT_handedness_accusations_INVALID_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 12,
+   "v01_coverage_estimate": 1.0,
+   "v01_unsworn_claims_estimate": 0,
+   "v01_unsworn_claim_texts": [],
+   "narrative_sentences": 60,
+   "sentence_share_floor": 0.1667
+  },
+  {
+   "document": "RESULT_handedness_v2_INVALID_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 8,
+   "v01_coverage_estimate": 1.0,
+   "v01_unsworn_claims_estimate": 0,
+   "v01_unsworn_claim_texts": [],
+   "narrative_sentences": 33,
+   "sentence_share_floor": 0.1951
+  },
+  {
+   "document": "RESULT_handedness_v3_header_handed_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 15,
+   "v01_coverage_estimate": 0.9375,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "Fathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_v3_join_rule_2026_09_02.md`, committed"
+   ],
+   "narrative_sentences": 70,
+   "sentence_share_floor": 0.1765
+  },
+  {
+   "document": "RESULT_range_sanity_report_SHIP_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 11,
+   "v01_coverage_estimate": 0.9167,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "Fathom Lab · 2026-09-02 · Frozen by `PREREG_range_sanity_report_2026_09_02.md`, committed with"
+   ],
+   "narrative_sentences": 53,
+   "sentence_share_floor": 0.1719
+  },
+  {
+   "document": "RESULT_efficiency_control_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 14,
+   "v01_coverage_estimate": 0.875,
+   "v01_unsworn_claims_estimate": 2,
+   "v01_unsworn_claim_texts": [
+    "Fathom Lab · 2026-09-02 · Frozen by `PREREG_efficiency_control_2026_09_02.md` (committed before",
+    "real LinOSS or Mamba checkpoints; the profiler now shipped in `styxx/resonance.py` is how that"
+   ],
+   "narrative_sentences": 63,
+   "sentence_share_floor": 0.1818
+  },
+  {
+   "document": "RESULT_efficiency_control_from_receipts_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 12,
+   "v01_coverage_estimate": 0.9231,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISG"
+   ],
+   "narrative_sentences": 74,
+   "sentence_share_floor": 0.1395
+  },
+  {
+   "document": "RESULT_untied_magnitudes_2026_09_02",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 11,
+   "v01_coverage_estimate": 0.9167,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "Fathom Lab · 2026-09-02 · Frozen by `PREREG_untied_magnitudes_2026_09_02.md`, committed before the"
+   ],
+   "narrative_sentences": 51,
+   "sentence_share_floor": 0.1774
+  },
+  {
+   "document": "CENSUS_prose_claimhood_instruments_2026_09_01",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 26,
+   "v01_coverage_estimate": 0.7647,
+   "v01_unsworn_claims_estimate": 8,
+   "v01_unsworn_claim_texts": [
+    "`prose_claimhood_census.json` if one fails; this document's sidecar binds to that file at commit",
+    "**diffgate path-claim accuser** — `styxx/diffgate.py`; the accusing branch is deleted and the",
+    "**OATH obligation predicate on external text** — `styxx/certify.py`, shipped.",
+    "**`styxx.agent_audit` extract_claims** — shipped; no JSON receipt.",
+    "**the deception NLI** — `styxx/guardrail/deception_v2.py`; the prompt-aware fix was reverted.",
+    "**critique_detector** — `styxx/critique.py`, shipped.",
+    "**text-only deception** — `styxx/attack/fingerprint.py`, shipped as a register axis.",
+    "**STRUCT-1 claimdetect** — `styxx/claimdetect.py`, shipped as an observer."
+   ],
+   "narrative_sentences": 93,
+   "sentence_share_floor": 0.2185
+  },
+  {
+   "document": "DESIGN_sworn_measurement_2026_09_01",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 2,
+   "v01_coverage_estimate": 0.6667,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "**The panel reads the canonical text, never the inline form.** `styxx.sworn` strips every tag to"
+   ],
+   "narrative_sentences": 126,
+   "sentence_share_floor": 0.0156
+  },
+  {
+   "document": "RESULT_sworn_v01_ships_2026_09_01",
+   "receipt_schema": "styxx.sworn.verdict-receipt/v0",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 13,
+   "v01_coverage_estimate": 0.9286,
+   "v01_unsworn_claims_estimate": 1,
+   "v01_unsworn_claim_texts": [
+    "`tests/test_sworn_dogfood.py` renders every committed sidecar back to"
+   ],
+   "narrative_sentences": 65,
+   "sentence_share_floor": 0.1667
+  }
+ ],
+ "what_this_is_not": [
+  "not a measurement of bound recall: nobody judged which sentences were load-bearing",
+  "the floor treats every narrative sentence as load-bearing and so understates coverage by construction",
+  "the v0.1 estimate used STRUCT-1, a diff-claim detector, on result-shaped prose — the census records what it printed, not what it should have"
+ ]
+}

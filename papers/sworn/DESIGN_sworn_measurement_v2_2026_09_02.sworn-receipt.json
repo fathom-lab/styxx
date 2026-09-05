@@ -2,204 +2,28 @@
  "schema": "styxx.sworn.verdict-receipt/v1",
  "format": "sworn/0.1",
  "document": {
-  "name": "RESULT_handedness_v2_INVALID_2026_09_02.md",
-  "inline_sha256": "05560e39c5eb1cd28cc537b4e1c94ea90412243944386b03f6e72032cecb8d22",
-  "canonical_sha256": "d6a7dcb2da8c3b5f80b404d5e607f82b55f83475556865f41c026780a81c5cc0"
+  "name": "DESIGN_sworn_measurement_v2_2026_09_02.sworn.json",
+  "inline_sha256": "102bf1d97afafa855ff56c5a4bb95424443af08678ba59d20969a6ff7782cab0",
+  "canonical_sha256": "102bf1d97afafa855ff56c5a4bb95424443af08678ba59d20969a6ff7782cab0"
  },
- "commit": "b4042f24c97e2c88ea430593bc7657203e508d89",
+ "commit": "5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7",
  "manifest_digest": null,
- "spans": [
-  {
-   "at": 407,
-   "start": 407,
-   "end": 459,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/verdict",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 24,
-    "haystack_bytes": 24,
-    "occurrences": 1
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 576,
-   "start": 478,
-   "end": 509,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/metrics/unresolved_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.0683",
-    "printed": "0.0683",
-    "receipt": "0.0683",
-    "receipt_rounded": "0.0683",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 726,
-   "start": 511,
-   "end": 525,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/unresolved",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "25",
-    "printed": "25",
-    "receipt": "25",
-    "receipt_rounded": "25",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 1408,
-   "start": 1090,
-   "end": 1156,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/header/genuine_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.9515",
-    "printed": "0.9515",
-    "receipt": "0.9515",
-    "receipt_rounded": "0.9515",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 1595,
-   "start": 1158,
-   "end": 1163,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/header/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "165",
-    "printed": "165",
-    "receipt": "165",
-    "receipt_rounded": "165",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 1710,
-   "start": 1166,
-   "end": 1209,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/line/genuine_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.6391",
-    "printed": "0.6391",
-    "receipt": "0.6391",
-    "receipt_rounded": "0.6391",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 1872,
-   "start": 1211,
-   "end": 1216,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/cells/line/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "169",
-    "printed": "169",
-    "receipt": "169",
-    "receipt_rounded": "169",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  },
-  {
-   "at": 1985,
-   "start": 1219,
-   "end": 1241,
-   "receipt": "path:papers/closed-model-frontier/handedness_v2_result.json#/metrics/delta_header_minus_line",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.3124",
-    "printed": "0.3124",
-    "receipt": "0.3124",
-    "receipt_rounded": "0.3124",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "e8443507374c84875342c4c9c072785f2efe83b70ebd2bb260a3239e3109dbde",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at b4042f24c97e2c88ea430593bc7657203e508d89; authorship unchecked"
-   }
-  }
- ],
+ "spans": [],
  "counts": {
-  "HELD": 8,
+  "HELD": 0,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 8,
+ "sworn_total": 0,
  "unresolved": 0,
- "document_verdict": "SWORN-HELD",
+ "document_verdict": "UNSWORN",
  "document_malformed": null,
- "rungs": {
-  "committed": 8
- },
+ "rungs": {},
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "78eac4bfa881dd32121f0ae650b3723bdd039b2b24ecbc6fd8aa020a89988565",
+  "sworn_sha256": "8eee80a4c1a637ec47481ab28fb75da4e1b9562f7a14c474eb79b1e2a7dd896b",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -234,21 +58,37 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "c2a4fb2fd82fc1c479860d9305bc19252904eb3c3f281ff1797f1c74f4a4a9e2",
+ "digest": "b474d589e5cb15cf79a3ecb65c3f314d4daa1889aaecdc4fafec0c716cf39002",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 8,
-  "narrative_sentences": 33,
-  "sentence_share": 0.1951,
-  "diff_claim_sentences": 0,
-  "diff_claim_share": 1.0,
+  "sworn_total": 0,
+  "narrative_sentences": 84,
+  "sentence_share": 0.0,
+  "diff_claim_sentences": 3,
+  "diff_claim_share": 0.0,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
-  "unsworn_claims": [],
+  "unsworn_claims": [
+   {
+    "start": 186,
+    "end": 248,
+    "text": "`DESIGN_sworn_measurement_2026_09_01.md`, which is not edited."
+   },
+   {
+    "start": 281,
+    "end": 377,
+    "text": "lab's next move (workflow `wf_3d0d4bca-ea3`) found eight defects in the v0.1 design; each repair"
+   },
+   {
+    "start": 3474,
+    "end": 4192,
+    "text": "| 6 | external arm: eight AIDev PRs, \"the PR diff and CI log are the receipt pool\" | the shelf carries diffs and file lists only; no CI log exists for any PR; a diff-only pool makes Q1 a receipt-avail"
+   }
+  ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "d7e9804b4b859222c1a854fce10946b283b351d15a1bc37011e27ec27f00792f",
- "timestamp": "2026-09-02T17:31:22Z"
+ "coverage_sha256": "3a53b99ad83beea4a3c4076ef97cf64c20c3c5af4d4f4c6d59ce8f7e908581c0",
+ "timestamp": "2026-09-02T17:43:07Z"
 }

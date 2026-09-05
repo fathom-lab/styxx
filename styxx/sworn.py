@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
-"""styxx.sworn — sworn output v0.1: the author declares, the receipt disposes.
+"""styxx.sworn — sworn output: the author declares, the receipt disposes.
 
-Spec: ``papers/sworn/SPEC_sworn_output_v01_2026_09_01.md``, frozen before this file existed.
-Format ``sworn/0.1``. Manifest ``sworn/manifest/0.1``. Verdict receipt
-``styxx.sworn.verdict-receipt/v0``.
+Spec: ``papers/sworn/SPEC_sworn_output_v01_2026_09_01.md``, frozen before this file existed, and
+``papers/sworn/SPEC_sworn_output_v02_2026_09_02.md``, frozen before the v0.2 changes below.
+Format ``sworn/0.1`` (the grammar an author writes did not change). Manifest
+``sworn/manifest/0.2`` (0.1 still loads). Verdict receipt ``styxx.sworn.verdict-receipt/v1``
+(v0 still checks).
+
+V0.2, IN ONE PARAGRAPH. The format was attacked twelve ways before any sentence about it left
+the tree (``papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02.md``, pinned by
+``tests/test_sworn_attacks.py``). Four rules were the price: a tag hidden in an HTML comment is
+MALFORMED ``hidden_commitment`` (R2); a short ``quote`` needle over a whole receipt is MALFORMED
+``short_needle`` (R3); the cap counts code points (R4); ``rN#/pointer`` is legal (R1). The manifest
+declares a trust rung and every span prints its provenance (R5–R7). And the coverage ESTIMATE is
+withdrawn (R8): its denominator was counted by a diff-claim detector that never reads a measured
+rate as a claim, so beside every result-shaped document it printed a number near 1.0 that meant
+nothing; two counts that cannot flatter stand in its place. The verdict receipt digests its core
+without coverage (R9), so a receipt re-derives wherever the observer differs.
 
 THE INVARIANT.  *The author chooses what to swear; the author cannot choose what the receipt
 says.*  A ``<sworn r="RECEIPT" k="KIND">…</sworn>`` span binds one sentence, at write time, to
@@ -79,9 +92,29 @@ __all__ = [
 ]
 
 SPEC = "sworn/0.1"
-MANIFEST_SPEC = "sworn/manifest/0.1"
-RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v0"
-SPAN_CAP_BYTES = 300
+# v0.2 (SPEC_sworn_output_v02_2026_09_02.md): the document grammar an author writes is unchanged,
+# so the format string stays. The manifest and the verdict receipt moved; the old strings are
+# still LOADED (M7: absence of a field is never a zero, and a v0 receipt in history must still
+# check) and are never EMITTED.
+MANIFEST_SPEC = "sworn/manifest/0.2"
+MANIFEST_SPECS = ("sworn/manifest/0.1", "sworn/manifest/0.2")
+RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v1"
+RECEIPT_SCHEMAS = ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1")
+COVERAGE_SCHEMA = "sworn/coverage/1"
+# v0.2 R4: the cap counts Unicode code points (v0.1 counted bytes and disclosed the inequity).
+# Still a pure function of bytes — invalid UTF-8 is document-level MALFORMED before any span is
+# measured. The v0.1 name is kept for imports; both names hold the same number.
+SPAN_CAP_CODEPOINTS = 300
+SPAN_CAP_BYTES = SPAN_CAP_CODEPOINTS
+# v0.2 R3: a `quote` needle under this many bytes, searched over a whole receipt or a line slice,
+# is MALFORMED short_needle. A decision, not a measurement; pointer-leaf quotes and `absent` are
+# exempt (the author named the leaf; a short absent needle is the conservative direction).
+SHORT_NEEDLE_BYTES = 16
+# v0.2 R6: the trust ladder a manifest declares. L0 (author-minted) is MALFORMED and has no rung
+# string; L3 is reserved — nothing in v0.2 verifies a signature, so nothing may declare it.
+RUNGS = ("L1", "L2")
+RUNGS_RESERVED = ("L3",)
+RUNG_UNDECLARED = "undeclared"
 KINDS = ("numeric", "quote", "hash", "absent")
 RESERVED_KINDS = ("exec",)
 VERDICTS = ("HELD", "FAILED", "UNRESOLVED", "MALFORMED", "WITHHELD")
@@ -92,8 +125,12 @@ MAX_RECEIPT_BYTES = 64 * 1024 * 1024      # a blob over this is UNRESOLVED recei
 # same turn is the agent swearing to itself. The verifier cannot see the turn; it can see what the
 # harness RECORDED about where the bytes came from, and it refuses author-side kinds by name. An
 # unknown kind is refused too — a kind nobody defined is not a kind the harness attested.
+# v0.2 R5 adds `attestation`: DSSE / in-toto envelope BYTES a harness recorded. The kind names the
+# shape of the bytes. No signature is verified, no key material is consulted, no trust root is
+# pinned — the boundary styxx.evidence states under "WHAT `binding` IS NOT".
 SOURCE_KINDS_EXTERNAL = frozenset({
     "tool_stdout", "tool_stderr", "file_read", "http_fetch", "harness_note", "test_report",
+    "attestation",
 })
 SOURCE_KINDS_AUTHOR = frozenset({"agent_output", "agent_file_write", "agent_message"})
 
@@ -103,6 +140,7 @@ REASONS = (
     "tag_syntax", "nesting", "stray_closer", "unclosed", "empty_span", "length_cap",
     "receipt_form", "kind_unknown", "kind_reserved", "number_count", "number_grammar",
     "needle_count", "needle_empty", "digest_form", "absent_over_partial", "hash_over_partial",
+    "hidden_commitment", "short_needle",
     # decidable from the declaration plus the object the author named (MALFORMED: the author
     # had those exact bytes when it wrote the fragment)
     "pointer_unresolvable", "pointer_ambiguous", "anchor_out_of_range", "leaf_not_scalar",
@@ -110,7 +148,7 @@ REASONS = (
     "kind_of_source_unknown",
     # the verifier could not see the evidence (UNRESOLVED — never an accusation)
     "manifest_absent", "manifest_spec_unknown", "manifest_id_missing", "manifest_integrity",
-    "manifest_bytes_absent", "manifest_no_completeness", "no_repository", "no_commit",
+    "manifest_bytes_absent", "manifest_no_completeness", "rung_unknown", "no_repository", "no_commit",
     "commit_absent", "path_absent", "not_a_blob", "receipt_too_large", "git_unavailable",
     "prereg_not_in_tree",
     # the check ran and did not pass (FAILED)
@@ -168,7 +206,39 @@ DECISIONS = {
     "line_anchor": ("#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, "
                     "interior newlines kept, the final line's terminating LF excluded; a line past "
                     "EOF is MALFORMED; a trailing LF does not begin an empty last line"),
-    "rn_grammar": "^r[1-9][0-9]*$, no fragment",
+    "rn_grammar": ("^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: "
+                   "takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash "
+                   "over a fragment are MALFORMED exactly as over a partial path:"),
+    "hidden_commitment": ("since v0.2 R2: a tag-shaped candidate inside an HTML comment "
+                          "(`<!--` … `-->`, scanned outside fences and code spans, comments never "
+                          "nesting, an unterminated comment running to end of document) is "
+                          "MALFORMED hidden_commitment — never HELD, never narrative; it counts in "
+                          "sworn_total and makes the document SWORN-FAILED"),
+    "short_needle": ("since v0.2 R3: a quote needle under %d bytes searched over a WHOLE receipt "
+                     "is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a "
+                     "line anchor is exempt (the author narrowed the haystack by naming it), and "
+                     "absent is exempt (a short absent needle over a complete object is the "
+                     "stronger oath); occurrences of a quote needle in its haystack are counted "
+                     "into detail, report-only" % SHORT_NEEDLE_BYTES),
+    "length_cap": ("since v0.2 R4: the inner text is capped at %d Unicode code points; a pure "
+                   "function of bytes because invalid UTF-8 is document-MALFORMED first"
+                   % SPAN_CAP_CODEPOINTS),
+    "rung": ("since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem "
+             "and a shell with the agent — weak) or L2 (a runner that minted after the turn ended "
+             "and the agent could not write to); L3 (signed, verified) is reserved and refused; a "
+             "manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an "
+             "unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the "
+             "verifier declining to see a manifest that claims what it cannot check, never an "
+             "accusation against the author"),
+    "provenance": ("since v0.2 R7: every span verdict carries `provenance` — for rN "
+                   "{harness, rung, kind_of_source}; for path: and prereg: the literal `committed "
+                   "object at <commit>; authorship unchecked` — and the receipt carries a `rungs` "
+                   "count; nothing verifies a rung, the verifier prints what the manifest declared"),
+    "receipt_v1": ("since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage "
+                   "travels beside it under coverage_sha256; verify_receipt re-derives the core and "
+                   "reports coverage_reproduces separately (advisory); a /v0 receipt is compared on "
+                   "its core minus coverage minus verifier, its digest still checked over its full "
+                   "body, and the note says so"),
     "path_grammar": ("relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no "
                      "glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path "
                      "names ONE committed file, never a set the verifier would pick from; split at "
@@ -181,32 +251,61 @@ DECISIONS = {
                       "receipt_author_minted; a kind outside the closed vocabulary is MALFORMED "
                       "kind_of_source_unknown; complete missing from an rN used with absent is "
                       "UNRESOLVED manifest_no_completeness, complete:false is MALFORMED"),
-    "coverage": ("numerator sworn_total; denominator adds sentences of the narrative (canonical text "
-                 "minus sworn spans minus fenced regions) that styxx.claimdetect reads as claims; the "
-                 "splitter is diffgate's `(?<=[.!?])\\s+|\\n+`; 0/0 is null; ALWAYS advisory"),
+    "coverage": ("since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument "
+                 "(styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent "
+                 "pull-request prose and by its own docstring never reads result-shaped sentences "
+                 "as claims, so across the twelve committed sworn receipts at 320b303 it printed "
+                 "0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now "
+                 "schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's "
+                 "splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus "
+                 "fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + "
+                 "narrative_sentences) — a FLOOR that treats every narrative sentence as "
+                 "load-bearing and so cannot flatter — and diff_claim_sentences / "
+                 "diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; "
+                 "ALWAYS advisory; never a measurement of bound recall"),
     "exit_codes": ("verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, "
                    "document-level MALFORMED — because sworn reports and never gates; a refusal "
                    "(undecodable document, a sidecar that cannot round-trip or carries an unknown "
                    "shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: "
                    "…'), exit status 1, nothing written; check exits 1 when a receipt does not "
                    "re-derive"),
-    "html_comments": ("a tag inside an HTML comment is recognised like any other (the spec's lexical "
-                      "rules are closed); a hidden commitment inflating coverage is an owed v0.2 item"),
+    "html_comments": ("v0.1 recognised a tag inside an HTML comment like any other and named the "
+                      "hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"),
 }
 
 _CERTIFIES = (
     "the spans the author bound were checked against bytes the author did not write, at the commit "
-    "or manifest the document names — NOT a claim that the document is correct, NOT a claim that the "
-    "right sentences were bound, NOT a check that the tags were written at write time, and only as "
-    "trustworthy as the harness that minted the manifest and the history that holds the commit"
+    "or manifest the document names and at the rung the manifest declares — NOT a claim that the "
+    "document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags "
+    "were written at write time, NOT a check of any signature, and only as trustworthy as the harness "
+    "that minted the manifest and the history that holds the commit"
 )
-_COVERAGE_CEILING = ("advisory: the denominator is counted by styxx.claimdetect (STRUCT-1), measured "
-                     "at precision 0.4211 on n=38 with two known recall misses; false flags bias "
-                     "coverage low, misses bias it high; never a gate, never a measurement")
+_COVERAGE_CEILING = ("advisory, always: sentence_share is a floor computed by diffgate's sentence "
+                     "splitter (the lane's largest false-flag source) that treats every narrative "
+                     "sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect "
+                     "(STRUCT-1), a diff-claim detector for agent pull-request prose measured at "
+                     "precision 0.4211 on n=38 by one model family in-house, which does not read "
+                     "result-shaped sentences (measured rates, test totals) as claims; neither number "
+                     "is bound recall — that is a blind panel's to measure, and it has not")
+_PROVENANCE_COMMITTED = "committed object at %s; authorship unchecked"
 
 
 def _sha256(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
+
+
+def _write_json_lf(path, obj) -> Path:
+    """Write a byte-pinned JSON artifact with LF line endings on every platform.
+
+    A text-mode write on Windows translates LF to CRLF; a sidecar or receipt written that way
+    hashes differently from the same artifact written on Linux, and the CRLF lesson has already
+    cost this repository once (styxx/centroids, then papers/sworn/**). Every JSON this module
+    writes goes through here.
+    """
+    p = Path(path)
+    with open(p, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(obj, indent=1, ensure_ascii=False) + "\n")
+    return p
 
 
 def _safe_text(x: Any, limit: int = 80) -> str:
@@ -250,8 +349,13 @@ class Declaration(dict):
 
 
 class Scan(dict):
-    """What the lexer saw: ``declarations``, ``fenced`` regions, ``document_malformed``,
-    ``canonical`` bytes (None when a lexical MALFORMED makes it undefined), ``lexical_ok``."""
+    """What the lexer saw: ``declarations``, ``fenced`` regions, ``comments`` (HTML comment
+    regions in inline coordinates, v0.2 R2), ``document_malformed``, ``canonical`` bytes (None
+    when a lexical MALFORMED makes it undefined), ``lexical_ok``."""
+
+
+_COMMENT_OPEN = b"<!--"
+_COMMENT_CLOSE = b"-->"
 
 
 def _fenced_regions(raw: bytes) -> Tuple[List[Tuple[int, int]], List[int], bool]:
@@ -289,7 +393,7 @@ def _in_regions(p: int, regions: List[Tuple[int, int]]) -> Optional[int]:
 
 def scan(raw: bytes) -> Scan:
     """Lex an inline sworn document. Pure: bytes in, declarations out. Never raises on content."""
-    out = Scan(declarations=[], fenced=[], document_malformed=None, canonical=None,
+    out = Scan(declarations=[], fenced=[], comments=[], document_malformed=None, canonical=None,
                lexical_ok=True, candidates=0)
     try:
         raw.decode("utf-8", errors="strict")
@@ -308,12 +412,22 @@ def scan(raw: bytes) -> Scan:
     stack: List[Declaration] = []          # open declarations, innermost last
     p = 0
     n = len(raw)
+    comment_end = -1                       # v0.2 R2: end of the HTML comment p is inside, if any
     while p < n:
         skip_to = _in_regions(p, regions)
         if skip_to is not None:
             p = skip_to
             continue
         c = raw[p:p + 1]
+        if c == b"<" and raw.startswith(_COMMENT_OPEN, p) and p >= comment_end:
+            # An HTML comment, met outside fences and code spans. Comments never nest; an
+            # unterminated one runs to the end of the document (HTML semantics). A tag met
+            # before comment_end is a hidden commitment: MALFORMED, never HELD, never narrative.
+            close = raw.find(_COMMENT_CLOSE, p + len(_COMMENT_OPEN))
+            comment_end = n if close < 0 else close + len(_COMMENT_CLOSE)
+            out["comments"].append((p, comment_end))
+            p += len(_COMMENT_OPEN)
+            continue
         if c == b"`":
             run = _TICKS.match(raw, p).end() - p
             nl = raw.find(b"\n", p + run)
@@ -347,6 +461,8 @@ def scan(raw: bytes) -> Scan:
                         for o in stack:
                             o["malformed"] = o["malformed"] or "nesting"
                         d["malformed"] = "nesting"
+                    if p < comment_end:
+                        d["malformed"] = d["malformed"] or "hidden_commitment"
                     stack.append(d)
                     decls.append(d)
                     p = om.end()
@@ -357,10 +473,11 @@ def scan(raw: bytes) -> Scan:
                         d["closer_at"] = p
                         d["closer_end"] = p + len(_CLOSER)
                         d["inner"] = raw[d["opener_end"]:p]
-                        if not d["inner"]:
+                        if not d["inner"] and d["malformed"] in (None, "hidden_commitment"):
                             # zero bytes sworn: MALFORMED from the bytes, and unrepresentable in
-                            # the sidecar (start == end cannot be ordered against a neighbour)
-                            d["malformed"] = d["malformed"] or "empty_span"
+                            # the sidecar (start == end cannot be ordered against a neighbour) —
+                            # so it outranks hidden_commitment, which the sidecar CAN carry
+                            d["malformed"] = "empty_span"
                     else:
                         decls.append(Declaration(at=p, receipt=None, kind=None, inner=None,
                                                  start=None, end=None, malformed="stray_closer",
@@ -378,7 +495,10 @@ def scan(raw: bytes) -> Scan:
                 continue
         p += 1
     for d in stack:
-        d["malformed"] = d["malformed"] or "unclosed"
+        # a declaration still open at end of document is unclosed whatever else it was — a
+        # hidden commitment with no closer has no offsets and cannot be canonicalised
+        if d["malformed"] in (None, "hidden_commitment"):
+            d["malformed"] = "unclosed"
 
     out["declarations"] = decls
     lexical_bad = [d for d in decls
@@ -527,12 +647,12 @@ def load_sidecar(obj: dict) -> dict:
                 _refuse("span %d %s %r cannot be carried by the inline tag grammar" % (i, key, v))
         last_end = b
     man = obj["manifest"]
-    if not (isinstance(man, dict) and man.get("spec") == MANIFEST_SPEC
+    if not (isinstance(man, dict) and man.get("spec") in MANIFEST_SPECS
             and isinstance(man.get("receipts"), dict)
             and all(isinstance(k, str) and isinstance(v, dict) for k, v in man["receipts"].items())
             and isinstance(man.get("authored_sha256", []), list)
             and all(isinstance(x, str) for x in man.get("authored_sha256", []))):
-        _refuse("sidecar manifest is not a %s object" % MANIFEST_SPEC)
+        _refuse("sidecar manifest is not a %s object" % " / ".join(MANIFEST_SPECS))
     return obj
 
 
@@ -550,7 +670,8 @@ class Manifest:
 
     def __init__(self, harness: str = "", turn: str = "", minted_at: Optional[str] = None,
                  receipts: Optional[Dict[str, dict]] = None,
-                 authored_sha256: Optional[List[str]] = None):
+                 authored_sha256: Optional[List[str]] = None,
+                 rung: Optional[str] = None, spec: str = MANIFEST_SPEC):
         self.harness = harness
         self.turn = turn
         self.minted_at = minted_at or _now()
@@ -558,6 +679,21 @@ class Manifest:
         # sha256 of every byte-object the agent produced this turn, as the harness saw them: files
         # written, messages emitted, stdin fed to tools. Invariant 2 becomes set membership.
         self.authored_sha256: List[str] = [x.lower() for x in (authored_sha256 or [])]
+        # v0.2 R6: the rung the harness DECLARES. Stored as given, validated at resolution — a
+        # manifest that loads must never crash the verifier, and a rung it cannot check makes
+        # every rN UNRESOLVED rung_unknown rather than raising here.
+        self.rung: Optional[str] = rung
+        # The spec string this manifest was written under; core() reproduces exactly that shape so
+        # a loaded 0.1 manifest re-derives its own digest.
+        self.spec: str = spec if spec in MANIFEST_SPECS else MANIFEST_SPEC
+
+    def rung_status(self) -> Tuple[str, Optional[str]]:
+        """("ok", rung) | ("undeclared", None) | ("unknown", rung)."""
+        if self.rung is None:
+            return "undeclared", None
+        if self.rung in RUNGS:
+            return "ok", self.rung
+        return "unknown", str(self.rung)
 
     def record_authored(self, data: bytes) -> str:
         h = _sha256(data)
@@ -566,7 +702,8 @@ class Manifest:
         return h
 
     def add(self, rid: str, data: Optional[bytes], kind_of_source: str, complete: bool = False,
-            captured_at: Optional[str] = None, sha256: Optional[str] = None) -> dict:
+            captured_at: Optional[str] = None, sha256: Optional[str] = None,
+            note: Optional[str] = None) -> dict:
         if not re.fullmatch(r"r[1-9][0-9]*", rid):
             raise ValueError("receipt id must match r[1-9][0-9]*: %r" % rid)
         if data is None and not sha256:
@@ -586,13 +723,18 @@ class Manifest:
         }
         if data is not None:
             entry["bytes"] = _b64(data)
+        if note is not None:
+            entry["harness_note"] = str(note)          # v0.2 R6: e.g. the command that printed it
         self.receipts[rid] = entry
         return entry
 
     def core(self) -> dict:
-        return {"spec": MANIFEST_SPEC, "harness": self.harness, "turn": self.turn,
-                "minted_at": self.minted_at, "authored_sha256": sorted(self.authored_sha256),
-                "receipts": self.receipts}
+        d = {"spec": self.spec, "harness": self.harness, "turn": self.turn,
+             "minted_at": self.minted_at, "authored_sha256": sorted(self.authored_sha256),
+             "receipts": self.receipts}
+        if self.spec == "sworn/manifest/0.2":
+            d["rung"] = self.rung
+        return d
 
     def digest(self) -> str:
         return _sha256(_jcs(self.core()).encode("utf-8"))
@@ -603,16 +745,14 @@ class Manifest:
         return d
 
     def write(self, path) -> Path:
-        p = Path(path)
-        p.write_text(json.dumps(self.to_dict(), indent=1, ensure_ascii=False) + "\n",
-                     encoding="utf-8")
-        return p
+        return _write_json_lf(path, self.to_dict())
 
     @classmethod
     def from_dict(cls, d: dict) -> "Manifest":
-        if not isinstance(d, dict) or d.get("spec") != MANIFEST_SPEC:
+        if not isinstance(d, dict) or d.get("spec") not in MANIFEST_SPECS:
             raise SystemExit("REFUSED: unknown manifest spec %r (this verifier knows %s)"
-                             % (d.get("spec") if isinstance(d, dict) else None, MANIFEST_SPEC))
+                             % (d.get("spec") if isinstance(d, dict) else None,
+                                ", ".join(MANIFEST_SPECS)))
         receipts = d.get("receipts")
         if receipts is None:
             receipts = {}
@@ -623,7 +763,8 @@ class Manifest:
             raise SystemExit("REFUSED: manifest receipts must be an object keyed by receipt id")
         if not isinstance(authored, list) or not all(isinstance(x, str) for x in authored):
             raise SystemExit("REFUSED: manifest authored_sha256 must be a list of hex strings")
-        m = cls(d.get("harness", ""), d.get("turn", ""), d.get("minted_at"), receipts, authored)
+        m = cls(d.get("harness", ""), d.get("turn", ""), d.get("minted_at"), receipts, authored,
+                rung=d.get("rung"), spec=d.get("spec"))
         # the digest the harness wrote, if any. It is checked at resolution time: a manifest that
         # does not re-derive makes every rN UNRESOLVED — the verifier failing to see, never the
         # author lying.
@@ -791,9 +932,15 @@ def _parse_receipt(ref: str) -> Tuple[Optional[dict], Optional[str]]:
     """The receipt grammar, decidable from bytes. Returns (parsed, malformed_reason)."""
     if ref is None:
         return None, "receipt_form"
-    if _RN.fullmatch(ref):
-        return {"form": "rn", "id": ref, "fragment": None, "partial": False}, None
-    if ref.startswith("path:"):
+    if _RN.fullmatch(ref.split("#", 1)[0]):
+        # v0.2 R1: an rN may carry the same fragment grammar path: takes, so a numeric span can
+        # name a leaf inside a harness capture instead of needing a one-number capture.
+        form = "rn"
+        if "#" in ref:
+            target, frag = ref.split("#", 1)
+        else:
+            target, frag = ref, None
+    elif ref.startswith("path:"):
         body = ref[5:]
         form = "path"
         target: Any
@@ -837,8 +984,8 @@ def _parse_receipt(ref: str) -> Tuple[Optional[dict], Optional[str]]:
             if b < a:
                 return None, "receipt_form"
             fragment = {"type": "lines", "first": a, "last": b, "raw": frag}
-    return {"form": form, "target": target, "fragment": fragment,
-            "partial": fragment is not None}, None
+    return {"form": form, "target": target, "id": target if form == "rn" else None,
+            "fragment": fragment, "partial": fragment is not None}, None
 
 
 def _line_slice(data: bytes, first: int, last: int) -> Optional[bytes]:
@@ -907,11 +1054,17 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
     data: Optional[bytes] = None
     sha: Optional[str] = None
     complete = False
+    provenance: Dict[str, Any] = {}
     if parsed["form"] == "rn":
         if manifest is None:
             return _Resolved(status="unresolved", reason="manifest_absent")
         if not manifest.intact():
             return _Resolved(status="unresolved", reason="manifest_integrity")
+        rung_state, rung = manifest.rung_status()
+        if rung_state == "unknown":
+            # v0.2 R6: a manifest claiming a rung this verifier cannot check (L3, or a string
+            # nobody defined). The verifier declines to see it; it accuses nobody.
+            return _Resolved(status="unresolved", reason="rung_unknown")
         if parsed["id"] not in manifest.receipts:
             return _Resolved(status="unresolved", reason="manifest_id_missing")
         entry = manifest.receipts[parsed["id"]]
@@ -927,6 +1080,9 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
             return _Resolved(status="malformed", reason="receipt_author_minted")
         if kos not in SOURCE_KINDS_EXTERNAL:
             return _Resolved(status="malformed", reason="kind_of_source_unknown")
+        provenance = {"form": "rn", "harness": manifest.harness,
+                      "rung": rung if rung_state == "ok" else RUNG_UNDECLARED,
+                      "kind_of_source": kos}
         complete = entry.get("complete") if isinstance(entry.get("complete"), bool) else None
         if "bytes" in entry:
             try:
@@ -948,8 +1104,10 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
             return _Resolved(status="unresolved", reason=why)
         sha = _sha256(data)
         complete = True
+        provenance = {"form": parsed["form"],
+                      "note": _PROVENANCE_COMMITTED % (getattr(tree, "commit", None) or "?")}
     res = _Resolved(status="ok", reason=None, bytes=data, sha256=sha, complete=complete,
-                    leaf=None, has_leaf=False, slice=None)
+                    leaf=None, has_leaf=False, slice=None, provenance=provenance)
     frag = parsed.get("fragment")
     if frag is not None and data is not None:
         if frag["type"] == "lines":
@@ -1093,7 +1251,15 @@ def _check_quote(inner: bytes, res: _Resolved) -> Tuple[str, Optional[str], dict
             return "MALFORMED", "leaf_not_string", {"note": "leaf is not encodable as UTF-8"}
     else:
         hay = res["slice"] if res["slice"] is not None else res["bytes"]
-    detail = {"needle_bytes": len(needle), "haystack_bytes": len(hay)}
+        # v0.2 R3: a short needle over a WHOLE receipt HELDs against almost anything; the author
+        # must quote enough bytes to mean something. A pointer leaf (above) and a line slice are
+        # exempt — the author narrowed the haystack by naming it, and the comparison is against
+        # that alone.
+        if res["slice"] is None and len(needle) < SHORT_NEEDLE_BYTES:
+            return "MALFORMED", "short_needle", {"needle_bytes": len(needle),
+                                                 "minimum_bytes": SHORT_NEEDLE_BYTES}
+    detail = {"needle_bytes": len(needle), "haystack_bytes": len(hay),
+              "occurrences": hay.count(needle)}
     if needle in hay:
         return "HELD", None, detail
     return "FAILED", "needle_missing", detail
@@ -1135,6 +1301,8 @@ def _adjudicate(d: Declaration, manifest: Optional[Manifest], tree) -> dict:
         verdict["detail"] = detail or {}
         if res is not None and res.get("sha256"):
             verdict["resolved_sha256"] = res["sha256"]
+        if res is not None and res.get("provenance"):
+            verdict["provenance"] = res["provenance"]          # v0.2 R7
         return verdict
 
     if d["malformed"]:
@@ -1142,8 +1310,10 @@ def _adjudicate(d: Declaration, manifest: Optional[Manifest], tree) -> dict:
     inner: bytes = d["inner"]
     if not inner.strip(b" \t\r\n\f\v"):
         return out("MALFORMED", "empty_span")
-    if len(inner) > SPAN_CAP_BYTES:
-        return out("MALFORMED", "length_cap", {"bytes": len(inner), "cap": SPAN_CAP_BYTES})
+    code_points = len(inner.decode("utf-8"))              # the document decoded strictly already
+    if code_points > SPAN_CAP_CODEPOINTS:                   # v0.2 R4
+        return out("MALFORMED", "length_cap", {"code_points": code_points, "bytes": len(inner),
+                                               "cap": SPAN_CAP_CODEPOINTS})
     kind = d["kind"]
     if kind in RESERVED_KINDS:
         return out("MALFORMED", "kind_reserved", {"kind": kind})
@@ -1205,19 +1375,26 @@ _SENTENCE_SPLIT = re.compile(rb"(?<=[.!?])\s+|\n+")
 
 def _coverage(canonical: Optional[bytes], spans: List[dict], fenced: List[Tuple[int, int]],
               sworn_total: int) -> dict:
-    """Advisory, always. The denominator is counted by an instrument with a documented ceiling."""
-    cov: Dict[str, Any] = {"estimate": None, "unsworn_claims_estimate": None,
-                           "unsworn_claims": [], "advisory": True, "ceiling_note": _COVERAGE_CEILING,
-                           "splitter": "diffgate:(?<=[.!?])\\s+|\\n+", "claimdetect_version": None}
+    """Advisory, always — and since v0.2 R8 an ESTIMATE no longer exists here.
+
+    Two counts are printed instead. ``narrative_sentences`` is the splitter's count over the
+    narrative, and ``sentence_share`` treats every one of them as load-bearing: a floor that cannot
+    flatter a document. ``diff_claim_sentences`` is STRUCT-1's count, labelled with the idiom it
+    was measured on, because it does not read a measured rate as a claim and printing its ratio
+    unlabelled beside a result-shaped document is exactly how v0.1 came to print 0.94.
+    """
+    cov: Dict[str, Any] = {
+        "schema": COVERAGE_SCHEMA, "advisory": True, "ceiling_note": _COVERAGE_CEILING,
+        "sworn_total": sworn_total, "narrative_sentences": None, "sentence_share": None,
+        "diff_claim_sentences": None, "diff_claim_share": None,
+        "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision "
+                            "0.4211 on n=38, one model family, in-house); result-shaped sentences "
+                            "are never counted by it",
+        "unsworn_claims": [], "splitter": "diffgate:(?<=[.!?])\\s+|\\n+", "claimdetect_version": None,
+    }
     if canonical is None:
         cov["note"] = "no canonical text: the document is lexically MALFORMED"
         return cov
-    try:
-        from styxx.claimdetect import STRUCT1_VERSION, detect
-    except Exception:                                        # pragma: no cover - observer optional
-        cov["note"] = "styxx.claimdetect unavailable; denominator not counted"
-        return cov
-    cov["claimdetect_version"] = STRUCT1_VERSION
     # mask sworn regions and fenced regions with spaces so offsets stay canonical
     buf = bytearray(canonical)
     for s in spans:
@@ -1229,32 +1406,47 @@ def _coverage(canonical: Optional[bytes], spans: List[dict], fenced: List[Tuple[
         for i in range(a, b):
             buf[i] = 0x20
     narrative = bytes(buf)
-    claims = []
     pos = 0
     pieces = []
     for m in _SENTENCE_SPLIT.finditer(narrative):
         pieces.append((pos, m.start()))
         pos = m.end()
     pieces.append((pos, len(narrative)))
+    sentences = []
     for a, b in pieces:
         seg = narrative[a:b]
         if not seg.strip():
             continue
         lead = len(seg) - len(seg.lstrip())
-        text = seg.strip().decode("utf-8", errors="replace")
+        sentences.append((a + lead, a + lead + len(seg.strip()), seg.strip()))
+    n_sent = len(sentences)
+    cov["narrative_sentences"] = n_sent
+    denom = sworn_total + n_sent
+    cov["sentence_share"] = (round(sworn_total / denom, 4) if denom else None)
+    try:
+        from styxx.claimdetect import STRUCT1_VERSION, detect
+    except Exception:                                        # pragma: no cover - observer optional
+        cov["note"] = "styxx.claimdetect unavailable; diff-claim count not taken"
+        return cov
+    cov["claimdetect_version"] = STRUCT1_VERSION
+    claims = []
+    for a, b, seg in sentences:
+        text = seg.decode("utf-8", errors="replace")
         try:
             is_claim = bool(detect(text).is_claim)
         except Exception:                               # the observer failing is not a verdict
-            cov["note"] = "styxx.claimdetect raised; denominator not counted"
+            cov["note"] = "styxx.claimdetect raised; diff-claim count not taken"
             cov["unsworn_claims"] = []
+            cov["diff_claim_sentences"] = None
+            cov["diff_claim_share"] = None
             return cov
         if is_claim:
-            claims.append({"start": a + lead, "end": a + lead + len(seg.strip()), "text": text[:200]})
+            claims.append({"start": a, "end": b, "text": text[:200]})
     n_claims = len(claims)
-    denom = sworn_total + n_claims
-    cov["unsworn_claims_estimate"] = n_claims
     cov["unsworn_claims"] = claims
-    cov["estimate"] = (round(sworn_total / denom, 4) if denom else None)
+    cov["diff_claim_sentences"] = n_claims
+    d2 = sworn_total + n_claims
+    cov["diff_claim_share"] = (round(sworn_total / d2, 4) if d2 else None)
     return cov
 
 
@@ -1325,6 +1517,14 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
     else:
         document_verdict = "SWORN-FAILED"
     coverage = _coverage(sc["canonical"], verdicts, sc["fenced"], sworn_total)
+    # v0.2 R7: how many spans stood on which rung. Nothing here verifies a rung; it is what the
+    # manifest declared, counted so a reader sees it at the same prominence as the verdict.
+    rungs: Dict[str, int] = {}
+    for v in verdicts:
+        prov = v.get("provenance") or {}
+        key = prov.get("rung") if prov.get("form") == "rn" else (
+            "committed" if prov.get("form") in ("path", "prereg") else "unresolved")
+        rungs[key] = rungs.get(key, 0) + 1
     from styxx._version import __version__
     core = {
         "schema": RECEIPT_SCHEMA,
@@ -1339,6 +1539,7 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
         "unresolved": counts["UNRESOLVED"],
         "document_verdict": document_verdict,
         "document_malformed": doc_malformed,
+        "rungs": rungs,
         "coverage": coverage,
         "verifier": {"styxx_version": __version__,
                      "sworn_sha256": _sha256(Path(__file__).read_bytes()),
@@ -1348,51 +1549,101 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
     return core
 
 
+_RECEIPT_OUTSIDE_DIGEST = ("digest", "timestamp", "coverage", "coverage_sha256")
+
+
 def issue_receipt(core: dict, timestamp: Optional[str] = None) -> dict:
-    """Content-address a verdict core: ``digest`` over the JCS form of everything but itself and
-    the timestamp. Re-derivable by anyone with the document, manifest and tree."""
-    rec = dict(core)
-    rec.pop("digest", None)
-    rec.pop("timestamp", None)
+    """Content-address a verdict core: ``digest`` over the JCS form of the core WITHOUT
+    coverage (v0.2 R9); coverage travels beside it under its own ``coverage_sha256``. Re-derivable
+    by anyone with the document, manifest and tree — including a verifier with no observer."""
+    rec = {k: v for k, v in core.items() if k not in _RECEIPT_OUTSIDE_DIGEST}
     rec["digest"] = _sha256(_jcs(rec).encode("utf-8"))
+    cov = core.get("coverage")
+    if cov is not None:
+        rec["coverage"] = cov
+        rec["coverage_sha256"] = _sha256(_jcs(cov).encode("utf-8"))
     rec["timestamp"] = timestamp or _now()
     return rec
+
+
+def _v0_shape(fresh: dict) -> dict:
+    """Project a v0.2 core onto the fields a /v0 receipt carried, so a receipt in history is
+    compared on what it said and not on what a later verifier learned to print."""
+    # `certifies` is the verifier's own boundary sentence and moves with the verifier build, so
+    # it is excluded here exactly as the `verifier` block is.
+    out = {k: v for k, v in fresh.items()
+           if k not in ("verifier", "coverage", "rungs", "certifies", "schema")}
+    spans = []
+    for s in out.get("spans", []):
+        s2 = {k: v for k, v in s.items() if k != "provenance"}
+        s2["detail"] = {k: v for k, v in (s.get("detail") or {}).items() if k != "occurrences"}
+        spans.append(s2)
+    out["spans"] = spans
+    return out
 
 
 def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *,
                    manifest: Optional[Manifest] = None, tree=None) -> dict:
     """Re-derive a receipt against the presented document. Trust neither the author (bytes are
-    hashed) nor the verifier that issued it (the verdict is re-run)."""
+    hashed) nor the verifier that issued it (the verdict is re-run).
+
+    Schema-aware (M7: key on the schema string, never on key presence). A /v1 receipt digests
+    its core without coverage and is compared on that core; coverage reproduction is reported
+    beside it, advisory. A /v0 receipt digested everything, so its digest is checked over its
+    full body, and it is compared on its core minus coverage minus verifier, projected onto the
+    shape v0 carried — its coverage block cannot reproduce under this verifier and the note says so.
+    """
+    fail = {"status": "FAILED", "digest_match": False, "verdict_reproduces": False,
+            "coverage_reproduces": None, "same_verifier_build": False, "schema": None}
     if not isinstance(receipt, dict):
-        return {"status": "FAILED", "digest_match": False, "verdict_reproduces": False,
-                "same_verifier_build": False, "note": "not a receipt object"}
-    core = {k: v for k, v in receipt.items() if k not in ("digest", "timestamp")}
+        return dict(fail, note="not a receipt object")
+    schema = receipt.get("schema")
+    if schema not in RECEIPT_SCHEMAS:
+        return dict(fail, schema=schema, note="unknown receipt schema %r (this verifier knows %s)"
+                    % (schema, ", ".join(RECEIPT_SCHEMAS)))
+    v0 = schema == "styxx.sworn.verdict-receipt/v0"
+    digest_body = ({k: v for k, v in receipt.items() if k not in ("digest", "timestamp")} if v0
+                   else {k: v for k, v in receipt.items() if k not in _RECEIPT_OUTSIDE_DIGEST})
     try:
-        digest_ok = receipt.get("digest") == _sha256(_jcs(core).encode("utf-8"))
+        digest_ok = receipt.get("digest") == _sha256(_jcs(digest_body).encode("utf-8"))
     except (TypeError, ValueError):
         digest_ok = False
+    core = {k: v for k, v in receipt.items() if k not in _RECEIPT_OUTSIDE_DIGEST}
     doc = core.get("document") if isinstance(core.get("document"), dict) else {}
     ver = core.get("verifier") if isinstance(core.get("verifier"), dict) else {}
     note = "verify-by-re-derivation: the document is hashed and the verdict is re-run"
+    if v0:
+        note += (" — /v0 receipt: compared on its core minus coverage minus verifier, projected "
+                 "onto the v0 shape; its coverage block predates sworn/coverage/1 and is not compared")
     try:
         fresh = verify(raw, sidecar, name=doc.get("name", ""), manifest=manifest, tree=tree,
                        commit=core.get("commit"))
     except SystemExit as e:
         # a receipt whose fields no longer describe a verifiable document does not re-derive;
         # that is a FAILED re-derivation, not a refusal of the caller
-        return {"status": "FAILED", "digest_match": digest_ok, "verdict_reproduces": False,
-                "same_verifier_build": False, "note": note + " — " + str(e.code)}
+        return dict(fail, digest_match=digest_ok, schema=schema, note=note + " — " + str(e.code))
     # the verifier block names the build; a different build is reported, not hidden
     same_build = fresh["verifier"]["sworn_sha256"] == ver.get("sworn_sha256")
-    cmp_fresh = {k: v for k, v in fresh.items() if k != "verifier"}
-    cmp_core = {k: v for k, v in core.items() if k != "verifier"}
+    if v0:
+        cmp_fresh = _v0_shape(fresh)
+        cmp_core = {k: v for k, v in core.items() if k not in ("verifier", "schema", "certifies")}
+    else:
+        cmp_fresh = {k: v for k, v in fresh.items() if k not in ("verifier", "coverage")}
+        cmp_core = {k: v for k, v in core.items() if k != "verifier"}
     try:
         reproduces = _jcs(cmp_fresh) == _jcs(cmp_core)
     except (TypeError, ValueError):
         reproduces = False
+    coverage_ok: Optional[bool] = None
+    if not v0 and isinstance(receipt.get("coverage"), dict):
+        try:
+            coverage_ok = _jcs(fresh["coverage"]) == _jcs(receipt["coverage"])
+        except (TypeError, ValueError):
+            coverage_ok = False
     return {"status": "VERIFIED" if (digest_ok and reproduces) else "FAILED",
             "digest_match": digest_ok, "verdict_reproduces": reproduces,
-            "same_verifier_build": same_build, "note": note}
+            "coverage_reproduces": coverage_ok, "same_verifier_build": same_build,
+            "schema": schema, "note": note}
 
 
 # =============================================================================================
@@ -1402,12 +1653,15 @@ def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional
 def _headline(core: dict) -> str:
     c = core["counts"]
     cov = core["coverage"]
-    est = "n/a" if cov["estimate"] is None else "%.2f" % cov["estimate"]
-    unsworn = cov["unsworn_claims_estimate"]
+    share = "n/a" if cov.get("sentence_share") is None else "%.2f" % cov["sentence_share"]
+    nsent = cov.get("narrative_sentences")
+    ndiff = cov.get("diff_claim_sentences")
+    rungs = ",".join("%s=%d" % kv for kv in sorted(core.get("rungs", {}).items())) or "none"
     line = ("%s  held=%d failed=%d unresolved=%d malformed=%d  "
-            "coverage≈%s (advisory)  unsworn-claims≈%s"
+            "coverage-floor≈%s (sworn %d / narrative-sentences %s; advisory)  diff-claims≈%s  rungs %s"
             % (core["document_verdict"], c["HELD"], c["FAILED"], c["UNRESOLVED"], c["MALFORMED"],
-               est, "n/a" if unsworn is None else unsworn))
+               share, core["sworn_total"], "n/a" if nsent is None else nsent,
+               "n/a" if ndiff is None else ndiff, rungs))
     if core["document_malformed"]:
         line += "  document-MALFORMED: %s" % core["document_malformed"]["reason"]
     return line
@@ -1467,12 +1721,16 @@ def main(argv=None) -> int:
     mn.add_argument("manifest")
     mn.add_argument("--harness", required=True)
     mn.add_argument("--turn", required=True)
+    mn.add_argument("--rung", required=True, choices=list(RUNGS),
+                    help="L1: a local hook sharing a filesystem with the agent (weak); "
+                         "L2: a runner that minted after the turn, which the agent could not write to")
     ma = msub.add_parser("add")
     ma.add_argument("manifest")
     ma.add_argument("--id", required=True)
     ma.add_argument("--file", required=True)
     ma.add_argument("--kind", required=True, choices=sorted(SOURCE_KINDS_EXTERNAL | SOURCE_KINDS_AUTHOR))
     ma.add_argument("--complete", action="store_true")
+    ma.add_argument("--note", default=None, help="harness note, e.g. the command whose stdout this is")
 
     a = ap.parse_args(argv)
 
@@ -1481,7 +1739,7 @@ def main(argv=None) -> int:
         mf = Manifest.load(a.manifest) if a.manifest else None
         side = to_sidecar(raw, Path(a.doc).name, a.commit, mf)
         out = Path(a.out) if a.out else Path(a.doc).with_suffix(".sworn.json")
-        out.write_text(json.dumps(side, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        _write_json_lf(out, side)
         print("canonical: %d spans, text sha256 %s -> %s"
               % (len(side["spans"]), side["document"]["sha256"][:12], out.name))
         return 0
@@ -1514,8 +1772,7 @@ def main(argv=None) -> int:
             for cl in core["coverage"]["unsworn_claims"][:20]:
                 print("  UNSWORN-CLAIM? @%d: %s" % (cl["start"], cl["text"][:100]))
             if a.out:
-                Path(a.out).write_text(json.dumps(rec, indent=1, ensure_ascii=False) + "\n",
-                                       encoding="utf-8")
+                _write_json_lf(a.out, rec)
                 print("receipt %s -> %s" % (rec["digest"][:12], a.out))
             return 0
         rec = json.loads(Path(a.receipt).read_text(encoding="utf-8"))
@@ -1527,11 +1784,11 @@ def main(argv=None) -> int:
     if a.cmd == "manifest":
         p = Path(a.manifest)
         if a.mcmd == "new":
-            Manifest(a.harness, a.turn).write(p)
-            print("minted %s by %s for turn %s" % (p.name, a.harness, a.turn))
+            Manifest(a.harness, a.turn, rung=a.rung).write(p)
+            print("minted %s by %s for turn %s at rung %s" % (p.name, a.harness, a.turn, a.rung))
             return 0
         mf = Manifest.load(p)
-        e = mf.add(a.id, Path(a.file).read_bytes(), a.kind, a.complete)
+        e = mf.add(a.id, Path(a.file).read_bytes(), a.kind, a.complete, note=a.note)
         mf.write(p)
         print("added %s %s sha256=%s complete=%s" % (e["id"], a.kind, e["sha256"][:12], e["complete"]))
         return 0

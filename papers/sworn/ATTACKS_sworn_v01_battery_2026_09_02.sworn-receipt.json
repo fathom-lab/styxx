@@ -2,371 +2,501 @@
  "schema": "styxx.sworn.verdict-receipt/v1",
  "format": "sworn/0.1",
  "document": {
-  "name": "SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md",
-  "inline_sha256": "3165cd1e54cd509363cafd2dd0c12b79201fa9f7dea62dc03581adb36ec5baa6",
-  "canonical_sha256": "20f081a1af30ba3ddaa251fbd598853c9a0206612d0eca9ae9f5b1e0380dcfc1"
+  "name": "ATTACKS_sworn_v01_battery_2026_09_02.sworn.json",
+  "inline_sha256": "6d9ca8337e4c18eb87115dba39842cbb053291d3d3702ec4683ca9aee5d20de3",
+  "canonical_sha256": "99cc8e1720878f231f127d877882d8fb728693313b04e3d768dee18402d63b8b"
  },
- "commit": "a5b0328ea21268c847db60713f17b24e73dec3e3",
- "manifest_digest": null,
+ "commit": "5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7",
+ "manifest_digest": "560104a0d4e4def24d74bacc55bbb19ed4f2b2df38c17caa220d0f77d8f6e5b0",
  "spans": [
   {
-   "at": 1649,
-   "start": 1649,
-   "end": 1701,
-   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/verdict",
+   "at": 705,
+   "start": 705,
+   "end": 800,
+   "receipt": "prereg:d3f4f852acf3cb8acf7c3aa769cc28b0f2d1574a282b6ae3aa3aee6cf867f4b5",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 27,
-    "haystack_bytes": 27,
+    "needle_bytes": 62,
+    "haystack_bytes": 13700,
     "occurrences": 1
    },
-   "resolved_sha256": "f7f2532fd218121580faae7f6b3031d42982a117463a51e4bbfbb9416981e26c",
+   "resolved_sha256": "d3f4f852acf3cb8acf7c3aa769cc28b0f2d1574a282b6ae3aa3aee6cf867f4b5",
    "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
+    "form": "prereg",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
    }
   },
   {
-   "at": 1801,
-   "start": 1703,
-   "end": 1762,
-   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/genuine_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.9515",
-    "printed": "0.9515",
-    "receipt": "0.9515",
-    "receipt_rounded": "0.9515",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "f7f2532fd218121580faae7f6b3031d42982a117463a51e4bbfbb9416981e26c",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 1981,
-   "start": 1764,
-   "end": 1769,
-   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/header/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "165",
-    "printed": "165",
-    "receipt": "165",
-    "receipt_rounded": "165",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "f7f2532fd218121580faae7f6b3031d42982a117463a51e4bbfbb9416981e26c",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 2100,
-   "start": 1776,
-   "end": 1847,
-   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/genuine_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.6391",
-    "printed": "0.6391",
-    "receipt": "0.6391",
-    "receipt_rounded": "0.6391",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "f7f2532fd218121580faae7f6b3031d42982a117463a51e4bbfbb9416981e26c",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 2290,
-   "start": 1849,
-   "end": 1854,
-   "receipt": "path:papers/closed-model-frontier/handedness_v3_result.json#/cells/line/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "169",
-    "printed": "169",
-    "receipt": "169",
-    "receipt_rounded": "169",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "f7f2532fd218121580faae7f6b3031d42982a117463a51e4bbfbb9416981e26c",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 2623,
-   "start": 2077,
-   "end": 2128,
-   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/verdict",
+   "at": 3970,
+   "start": 3869,
+   "end": 3965,
+   "receipt": "path:tests/test_sworn_attacks.py",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 26,
-    "haystack_bytes": 26,
+    "needle_bytes": 61,
+    "haystack_bytes": 16913,
     "occurrences": 1
    },
-   "resolved_sha256": "a89b37287dc2985846e233280415b706d8156d3dff1a17c9ec99a5e261413e63",
+   "resolved_sha256": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705",
    "provenance": {
     "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
    }
   },
   {
-   "at": 2847,
-   "start": 2194,
-   "end": 2219,
-   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/internal/tokens_moved",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "a89b37287dc2985846e233280415b706d8156d3dff1a17c9ec99a5e261413e63",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 3008,
-   "start": 2232,
-   "end": 2260,
-   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/accusations_removed",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "13",
-    "printed": "13",
-    "receipt": "13",
-    "receipt_rounded": "13",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "a89b37287dc2985846e233280415b706d8156d3dff1a17c9ec99a5e261413e63",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 3176,
-   "start": 2270,
-   "end": 2284,
-   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/external/removed_genuine_by_panel",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "a89b37287dc2985846e233280415b706d8156d3dff1a17c9ec99a5e261413e63",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 3398,
-   "start": 2357,
-   "end": 2363,
-   "receipt": "path:papers/closed-model-frontier/range_sanity_report_ab_result.json#/false_accusation_rate_after",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.2323",
-    "printed": "0.2323",
-    "receipt": "0.2323",
-    "receipt_rounded": "0.2323",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "a89b37287dc2985846e233280415b706d8156d3dff1a17c9ec99a5e261413e63",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 3711,
-   "start": 2541,
-   "end": 2594,
-   "receipt": "path:papers/closed-model-frontier/oath_obligation_claimhood_join.json#/arms/external/obligated/claim_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.7826",
-    "printed": "0.7826",
-    "receipt": "0.7826",
-    "receipt_rounded": "0.7826",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "2cd20b4dedafa3edc6c091720281b5c67a43de4df5250e90929fef073d16335d",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 3909,
-   "start": 2601,
-   "end": 2640,
-   "receipt": "path:papers/closed-model-frontier/oath_obligation_claimhood_join.json#/arms/external/volunteered/claim_share",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.3654",
-    "printed": "0.3654",
-    "receipt": "0.3654",
-    "receipt_rounded": "0.3654",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "2cd20b4dedafa3edc6c091720281b5c67a43de4df5250e90929fef073d16335d",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 4438,
-   "start": 2990,
-   "end": 3056,
-   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/verdict",
+   "at": 4129,
+   "start": 3966,
+   "end": 4060,
+   "receipt": "path:tests/test_sworn_attacks.py",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 20,
-    "haystack_bytes": 20,
+    "needle_bytes": 60,
+    "haystack_bytes": 16913,
     "occurrences": 1
    },
-   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf",
+   "resolved_sha256": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705",
    "provenance": {
     "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
    }
   },
   {
-   "at": 4690,
-   "start": 3141,
-   "end": 3147,
-   "receipt": "path:papers/frequency-resonance/efficiency_control_result.json#/metrics/static_matched_minus_rich_8",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0.1959",
-    "printed": "0.1959",
-    "receipt": "0.1959",
-    "receipt_rounded": "0.1959",
-    "fractional_digits": 4,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "15df99ef1ae343cbc2ef92447efff978a1e2ed486e09c09f0f38aa4b4b096dbf",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
-   }
-  },
-  {
-   "at": 4937,
-   "start": 3257,
-   "end": 3332,
-   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/verdict",
+   "at": 4286,
+   "start": 4061,
+   "end": 4128,
+   "receipt": "path:tests/test_sworn_attacks.py",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "needle_bytes": 39,
-    "haystack_bytes": 39,
+    "needle_bytes": 30,
+    "haystack_bytes": 16913,
     "occurrences": 1
    },
-   "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
+   "resolved_sha256": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705",
    "provenance": {
     "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
    }
   },
   {
-   "at": 5165,
-   "start": 3394,
-   "end": 3408,
-   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/recovery_fraction",
+   "at": 5258,
+   "start": 4971,
+   "end": 5016,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/documents",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0.0",
-    "printed": "0.0",
-    "receipt": "0.0",
-    "receipt_rounded": "0.0",
+    "printed_token": "12",
+    "printed": "12",
+    "receipt": "12",
+    "receipt_rounded": "12",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 5396,
+   "start": 5017,
+   "end": 5075,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/v01_estimate_min",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.6667",
+    "printed": "0.6667",
+    "receipt": "0.6667",
+    "receipt_rounded": "0.6667",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 5554,
+   "start": 5076,
+   "end": 5096,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/v01_estimate_max",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1.0",
+    "printed": "1.0",
+    "receipt": "1.0",
+    "receipt_rounded": "1.0",
     "fractional_digits": 1,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
    "provenance": {
     "form": "path",
-    "note": "committed object at a5b0328ea21268c847db60713f17b24e73dec3e3; authorship unchecked"
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 5674,
+   "start": 5097,
+   "end": 5180,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/v01_unsworn_claims_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "20",
+    "printed": "20",
+    "receipt": "20",
+    "receipt_rounded": "20",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 5865,
+   "start": 5181,
+   "end": 5211,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/narrative_sentences_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "932",
+    "printed": "932",
+    "receipt": "932",
+    "receipt_rounded": "932",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6004,
+   "start": 5212,
+   "end": 5235,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/sworn_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "167",
+    "printed": "167",
+    "receipt": "167",
+    "receipt_rounded": "167",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6171,
+   "start": 5285,
+   "end": 5325,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/rows/0/v01_coverage_estimate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.9412",
+    "printed": "0.9412",
+    "receipt": "0.9412",
+    "receipt_rounded": "0.9412",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6323,
+   "start": 5326,
+   "end": 5370,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/rows/0/v01_unsworn_claims_estimate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6485,
+   "start": 5371,
+   "end": 5401,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/rows/0/narrative_sentences",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "98",
+    "printed": "98",
+    "receipt": "98",
+    "receipt_rounded": "98",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6786,
+   "start": 5563,
+   "end": 5593,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/rows/0/sentence_share_floor",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.1404",
+    "printed": "0.1404",
+    "receipt": "0.1404",
+    "receipt_rounded": "0.1404",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 6928,
+   "start": 5595,
+   "end": 5639,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/floor_min",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.0156",
+    "printed": "0.0156",
+    "receipt": "0.0156",
+    "receipt_rounded": "0.0156",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 7065,
+   "start": 5640,
+   "end": 5650,
+   "receipt": "path:papers/sworn/coverage_census_v01_result.json#/floor_max",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.2185",
+    "printed": "0.2185",
+    "receipt": "0.2185",
+    "receipt_rounded": "0.2185",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "90d9c879ac99cae334765bec2bc26f3a452822f77af31252a2a5319b1a8a6985",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
+   }
+  },
+  {
+   "at": 7428,
+   "start": 5911,
+   "end": 5965,
+   "receipt": "r1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "358",
+    "printed": "358",
+    "receipt": "358",
+    "receipt_rounded": "358",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "62a0eae98b9fc0bd0ad941ae07ae5e2af545a64c8ddc43407bdfe6ae82addb4c",
+   "provenance": {
+    "form": "rn",
+    "harness": "papers/sworn/harness_pytest.py",
+    "rung": "L1",
+    "kind_of_source": "test_report"
+   }
+  },
+  {
+   "at": 7517,
+   "start": 5966,
+   "end": 5975,
+   "receipt": "r4",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+   "provenance": {
+    "form": "rn",
+    "harness": "papers/sworn/harness_pytest.py",
+    "rung": "L1",
+    "kind_of_source": "test_report"
+   }
+  },
+  {
+   "at": 7561,
+   "start": 5976,
+   "end": 6012,
+   "receipt": "r2",
+   "kind": "absent",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 6,
+    "haystack_bytes": 427,
+    "complete": true
+   },
+   "resolved_sha256": "351dabcba62ded4ad8e831f993b8d8f0ee2726a781e2cecc83c2f9767d37fc74",
+   "provenance": {
+    "form": "rn",
+    "harness": "papers/sworn/harness_pytest.py",
+    "rung": "L1",
+    "kind_of_source": "tool_stdout"
+   }
+  },
+  {
+   "at": 7631,
+   "start": 6013,
+   "end": 6046,
+   "receipt": "r3",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 18,
+    "haystack_bytes": 19,
+    "occurrences": 1
+   },
+   "resolved_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+   "provenance": {
+    "form": "rn",
+    "harness": "papers/sworn/harness_pytest.py",
+    "rung": "L1",
+    "kind_of_source": "tool_stdout"
+   }
+  },
+  {
+   "at": 7697,
+   "start": 6047,
+   "end": 6078,
+   "receipt": "r5#/rung",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 2,
+    "haystack_bytes": 2,
+    "occurrences": 1
+   },
+   "resolved_sha256": "73794c27838b382fb664cf0dede68d6ef487719732f2d8a0be2f00d103638a81",
+   "provenance": {
+    "form": "rn",
+    "harness": "papers/sworn/harness_pytest.py",
+    "rung": "L1",
+    "kind_of_source": "test_report"
+   }
+  },
+  {
+   "at": 7909,
+   "start": 6221,
+   "end": 6349,
+   "receipt": "path:styxx/sworn.py",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "f75aff8a47656ce74fbc34b6a566e17bb9e23c56da45eed3d28ca55503ca22f1",
+    "receipt_sha256": "f75aff8a47656ce74fbc34b6a566e17bb9e23c56da45eed3d28ca55503ca22f1"
+   },
+   "resolved_sha256": "f75aff8a47656ce74fbc34b6a566e17bb9e23c56da45eed3d28ca55503ca22f1",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 16,
+  "HELD": 22,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 16,
+ "sworn_total": 22,
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 16
+  "committed": 17,
+  "L1": 5
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "78eac4bfa881dd32121f0ae650b3723bdd039b2b24ecbc6fd8aa020a89988565",
+  "sworn_sha256": "8eee80a4c1a637ec47481ab28fb75da4e1b9562f7a14c474eb79b1e2a7dd896b",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -401,27 +531,42 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "b3e27a38c23c65c6dee4bac23dc187cb8cb1f70002eb2d518f5e1a1e03c1152c",
+ "digest": "90e061aa51651fbd8ab6a7d2c4f2f114f1e9b042127568208187a48d10c0b09e",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 16,
-  "narrative_sentences": 98,
-  "sentence_share": 0.1404,
-  "diff_claim_sentences": 1,
-  "diff_claim_share": 0.9412,
+  "sworn_total": 22,
+  "narrative_sentences": 77,
+  "sentence_share": 0.2222,
+  "diff_claim_sentences": 4,
+  "diff_claim_share": 0.8462,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
-    "start": 4064,
-    "end": 4158,
-    "text": "`external` — but `object_text` now owes a split: **structural** (a label the author chose: a"
+    "start": 478,
+    "end": 575,
+    "text": "is pinned by `tests/test_sworn_attacks.py` at the commit this document names, and every number in"
+   },
+   {
+    "start": 2224,
+    "end": 2453,
+    "text": "| A5 | a `path:` receipt the author itself committed | HELD, nothing said | HELD; provenance printed: *committed object; authorship unchecked* | `test_a5_a_committed_receipt_holds_and_prints_that_its_"
+   },
+   {
+    "start": 2934,
+    "end": 3095,
+    "text": "| A8 | receipt shopping — a larger receipt pool | cannot move a sworn span (v0.1 test) | unchanged | `test_receipt_shopping_moves_oath_but_cannot_move_sworn` |"
+   },
+   {
+    "start": 4844,
+    "end": 4939,
+    "text": "The census (`coverage_census_v01.py`, read through git plumbing at the pre-change commit, never"
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "529c70f06b658ef0b694c04b1af649923b0afa6531a4841b5885d2c352aa59da",
- "timestamp": "2026-09-02T17:31:38Z"
+ "coverage_sha256": "aca966dddee0794fa39361fa2d9003a398318ecd7d7b058f866c254075928abb",
+ "timestamp": "2026-09-02T17:42:51Z"
 }

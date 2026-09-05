@@ -1,0 +1,56 @@
+{
+ "spec": "sworn/manifest/0.2",
+ "harness": "papers/sworn/harness_pytest.py",
+ "turn": "turn_2026_09_02_sworn_v02",
+ "minted_at": "2026-09-02T17:33:41Z",
+ "authored_sha256": [],
+ "receipts": {
+  "r1": {
+   "id": "r1",
+   "sha256": "62a0eae98b9fc0bd0ad941ae07ae5e2af545a64c8ddc43407bdfe6ae82addb4c",
+   "kind_of_source": "test_report",
+   "captured_at": "2026-09-02T17:34:13Z",
+   "complete": true,
+   "bytes": "MzU4",
+   "harness_note": "passed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+  },
+  "r2": {
+   "id": "r2",
+   "sha256": "351dabcba62ded4ad8e831f993b8d8f0ee2726a781e2cecc83c2f9767d37fc74",
+   "kind_of_source": "tool_stdout",
+   "captured_at": "2026-09-02T17:34:13Z",
+   "complete": true,
+   "bytes": "Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgMjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNDAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgNjAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uIFsgODAlXQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLiAgIFsxMDAlXQ0KMzU4IHBhc3NlZCBpbiAzMC40MHMNCg==",
+   "harness_note": "python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+  },
+  "r3": {
+   "id": "r3",
+   "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+   "kind_of_source": "tool_stdout",
+   "captured_at": "2026-09-02T17:34:13Z",
+   "complete": true,
+   "bytes": "QWxsIGNoZWNrcyBwYXNzZWQhCg==",
+   "harness_note": "python -m ruff check styxx/sworn.py tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+  },
+  "r4": {
+   "id": "r4",
+   "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+   "kind_of_source": "test_report",
+   "captured_at": "2026-09-02T17:34:13Z",
+   "complete": true,
+   "bytes": "MA==",
+   "harness_note": "failed count parsed from: python -m pytest -q --no-header -p no:cacheprovider tests/test_sworn.py tests/test_sworn_attacks.py tests/test_sworn_dogfood.py"
+  },
+  "r5": {
+   "id": "r5",
+   "sha256": "73794c27838b382fb664cf0dede68d6ef487719732f2d8a0be2f00d103638a81",
+   "kind_of_source": "test_report",
+   "captured_at": "2026-09-02T17:34:13Z",
+   "complete": true,
+   "bytes": "ewogICJ3aGF0IjogInN3b3JuIHRlc3QgcnVuLCByZWNvcmRlZCBieSBwYXBlcnMvc3dvcm4vaGFybmVzc19weXRlc3QucHkgYXQgcnVuZyBMMSIsCiAgInR1cm4iOiAidHVybl8yMDI2XzA5XzAyX3N3b3JuX3YwMiIsCiAgInRhcmdldHMiOiBbCiAgICAidGVzdHMvdGVzdF9zd29ybi5weSIsCiAgICAidGVzdHMvdGVzdF9zd29ybl9hdHRhY2tzLnB5IiwKICAgICJ0ZXN0cy90ZXN0X3N3b3JuX2RvZ2Zvb2QucHkiCiAgXSwKICAicGFzc2VkIjogMzU4LAogICJmYWlsZWQiOiAwLAogICJweXRlc3Rfc3VtbWFyeV9saW5lIjogIjM1OCBwYXNzZWQgaW4gMzAuNDBzIiwKICAicnVmZl9jbGVhbiI6IHRydWUsCiAgInN3b3JuX3NoYTI1NiI6ICI3OGVhYzRiZmE4ODFkZDMyMTIxZjBhZTY1MGIzNzIzYmRkMDM5YjJiMjRlY2JjNmZkOGFhMDIwYTg5OTg4NTY1IiwKICAic3dvcm5fbGluZXMiOiAxNzg5LAogICJweXRob24iOiAiMy4xMi4xMCIsCiAgInJ1bmciOiAiTDEiCn0K",
+   "harness_note": "the test-run result JSON this harness wrote, byte for byte"
+  }
+ },
+ "rung": "L1",
+ "digest": "560104a0d4e4def24d74bacc55bbb19ed4f2b2df38c17caa220d0f77d8f6e5b0"
+}

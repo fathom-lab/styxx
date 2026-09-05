@@ -1,0 +1,135 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "5d994db4da93f3cbcfdc31aafcc134cf37a5e7a7",
+ "document": {
+  "name": "EXPLORATORY_handedness_by_kind_2026_09_02.md",
+  "sha256": "c87fd09c387e7de10838f4af5e489551600bbb640c27a67f9e85dfebc374f7bc"
+ },
+ "text": "# EXPLORATORY — the token-kind split of the handedness v3 rows: a receipt for a number that circulated without one — 2026-09-02\n\nFathom Lab · 2026-09-02 · **Exploratory, not a result.** Not preregistered; computed after the v3\nverdict was read, on the rows that produced it, by the lab that produced them. It may never be\nquoted as a finding. The only sentence it licenses is that the split now exists as a committed\ntable, so the next preregistration in this lane can declare it as a contaminated prior by digest\nrather than from memory. Script: `handedness_v3_by_kind.py`. Receipt:\n`handedness_v3_by_kind_result.json`. Every number below is sworn to it at the commit this\ndocument names.\n\n## Why this exists\n\n`RESULT_handedness_v3_header_handed_2026_09_02.md` reports header-handed accusations genuine at\n0.9515 against line-handed at 0.6391 and reads the gap as structure. A same-day objection said the\ngap is mostly token *kind* — the header cell is mostly decimals, and a decimal is a claim whoever\nhands it — and that objection circulated with a number attached, a kind-adjusted gap of 0.117,\nand **no receipt**: no stratified file exists anywhere in this repository at `320b303`, on any\nbranch, and neither the RESULT, the grain synthesis nor the changelog carries the number. The\nobjection was right in shape and wrong in the digit, and both facts needed a receipt.\n\n## The table\n\nThe source receipt's frozen verdict is `HEADER_HANDED_ACCUSES_TRUER`.\nThe header and line cells together hold 334 panel-judged rows.\nA token is DECIMAL when it prints a point and INTEGER otherwise; genuine means the panel's label\nwas not in the not-a-claim family.\n\n| cell | n | genuine share |\n|---|---|---|\n| header / decimal | 142 | 1.0 |\n| header / integer | 23 | 0.6522 |\n| line / decimal | 76 | 0.9605 |\n| line / integer | 93 | 0.3763 |\n\nThe raw gap recomputed from the rows is 0.3124.\nThe header cell is decimals at a share of 0.8606\nand the line cell at 0.4497.\nReweighting the header cell to the line cell's kind mix gives a header share of 0.8086,\na kind-adjusted gap of 0.1695 — not the 0.117 that circulated.\nWithin integers the odds ratio of header over line is 3.1071;\nwithin decimals it is 13.5714,\na Haldane-corrected figure over a cell with no misses, which is why it is printed with the\ninterval in the receipt and not read here.\nOne repository, `hopit-ai/Moda`, dominates:\nit supplies 184 of the rows,\na share of 0.5509.\n\n## What this table is and is not\n\nIt is a description of one panel's labels on one corpus, re-cut by a rule chosen after the labels\nwere read. It says the kind confound is real and large — decimals are genuine claims in both\ncells — and that a header residue remains inside the integer stratum, wide-intervalled, on\ntwenty-three rows. It does not say the residue is structure: a header cell is also a table cell\nin benchmark idiom, and the panel saw table rows as rows. It does not say anything measured\nagainst a second model family or a second corpus. A preregistration that wants to test the\nprovenance reading must cite this file by digest as its contaminated prior, size its integer\ncells above thirty, seat two families, and publish with and without the dominant repository.\n\n---\n\n*A number that circulates without a receipt is a rumour with decimals. This one was off by\nfive hundredths, and the receipt says so.*\n",
+ "spans": [
+  {
+   "start": 1399,
+   "end": 1468,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/source_verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1469,
+   "end": 1531,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/rows_considered",
+   "kind": "numeric"
+  },
+  {
+   "start": 1729,
+   "end": 1732,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/header~1decimal/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1735,
+   "end": 1738,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/header~1decimal/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1762,
+   "end": 1764,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/header~1integer/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1767,
+   "end": 1773,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/header~1integer/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1795,
+   "end": 1797,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/line~1decimal/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1800,
+   "end": 1806,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/line~1decimal/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1828,
+   "end": 1830,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/line~1integer/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1833,
+   "end": 1839,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/cells/line~1integer/genuine_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 1843,
+   "end": 1890,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/raw_gap_header_minus_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 1891,
+   "end": 1939,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/header_decimal_mix",
+   "kind": "numeric"
+  },
+  {
+   "start": 1940,
+   "end": 1968,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/line_decimal_mix",
+   "kind": "numeric"
+  },
+  {
+   "start": 1969,
+   "end": 2055,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/kind_adjusted_header_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 2057,
+   "end": 2086,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/kind_adjusted_gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 2122,
+   "end": 2182,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/odds_ratio_header_over_line/integer_stratum",
+   "kind": "numeric"
+  },
+  {
+   "start": 2184,
+   "end": 2213,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/odds_ratio_header_over_line/decimal_stratum",
+   "kind": "numeric"
+  },
+  {
+   "start": 2349,
+   "end": 2391,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/top_repository/repo",
+   "kind": "quote"
+  },
+  {
+   "start": 2393,
+   "end": 2420,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/top_repository/rows",
+   "kind": "numeric"
+  },
+  {
+   "start": 2422,
+   "end": 2440,
+   "receipt": "path:papers/closed-model-frontier/handedness_v3_by_kind_result.json#/top_repository/share_of_rows",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
