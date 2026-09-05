@@ -1,7 +1,7 @@
 {
  "schema": "styxx.sworn.browser-verifier/replay/v1",
  "spec": "papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md",
- "set_sha256": "96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e",
+ "set_sha256": "85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f",
  "in_scope": {
   "modes": [
    "inline"

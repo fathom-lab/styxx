@@ -34,7 +34,7 @@ each counted with its own mode and `requires` as the reason: every mode but `inl
 everything that needs a git tree.
 <sworn r="path:conformance/sworn/replay_js_report.json#/vectors_total" k="numeric">The committed set holds 3618 vectors in all,</sworn>
 and the harness names the set it ran against:
-<sworn r="path:conformance/sworn/replay_js_report.json#/set_sha256" k="quote">`96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e`</sworn>.
+<sworn r="path:conformance/sworn/replay_js_report.json#/set_sha256" k="quote">`85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f`</sworn>.
 <sworn r="path:conformance/sworn/replay_js_report.json#/families/fuzz/ran" k="numeric">1452 of the vectors run are the seeded fuzz corpus,</sworn>
 which is the lexer's conformance and was not capped.
 
