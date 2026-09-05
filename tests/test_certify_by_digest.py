@@ -452,3 +452,27 @@ def test_the_census_output_is_cited_by_no_tracked_certificate():
             continue
     assert "receipt_binding_census_result.json" not in cited
     assert "receipt_binding_census.py" not in cited
+
+
+def test_a_staging_copy_whose_document_lives_elsewhere_reads_same(lab):
+    """The arXiv staging copies: a certificate copied beside a document that is not there, whose
+    `document` field names a file living unchanged under papers/. The second census read two of
+    them as edited-after-issue; the document cell must find the working file by name."""
+    repo, papers, doc, receipt = lab
+    _commit_all(repo, "receipts and document")
+    cp = _issue(doc)
+    staging = repo / "staging"
+    staging.mkdir()
+    copy = staging / "source.certificate.json"
+    copy.write_bytes(cp.read_bytes())
+    _commit_all(repo, "certificate and its staging copy")
+    b = _audit(repo, copy)["receipt_binding"]
+    d = b["document"]
+    assert d["cell"] == "same" and d["path"] == "papers/RESULT_small.md"
+    assert d["note"].startswith("resolved by the certificate's document field")
+    assert d["at_issue_too"] is True
+    assert b["stands_over_sworn_bytes"] is True
+    # and once the document is edited, the staging copy reads at_issue like its original
+    doc.write_text(DOC.replace("0.884", "0.900"), encoding="utf-8", newline="\n")
+    _commit_all(repo, "document edited after issue")
+    assert _audit(repo, copy)["receipt_binding"]["document"]["cell"] == "at_issue"

@@ -442,23 +442,26 @@ def classify_citation(repo: Repo, issuing: Optional[str], name: str, digest: str
     return rec
 
 
-def _classify_document(repo: Repo, cert_path: Path, cert: dict, issuing: Optional[str]) -> dict:
+def _classify_document(repo: Repo, cert_path: Path, cert: dict, issuing: Optional[str],
+                       head: Optional[str] = None) -> dict:
     """Where the DOCUMENT's sworn bytes are (``document_sha256`` is the LF text hash certify
-    took). ``same``: the working document beside the certificate matches; ``at_issue``: a blob
-    at the issuing commit matches (by the certificate's path-derived name, or by the
-    certificate's own ``document`` field); ``moved``: neither; ``unrecoverable``: no issuing
-    commit or no recorded digest."""
+    took). ``same``: the working document beside the certificate matches — or, for a certificate
+    whose ``document`` field names a file that lives elsewhere (an arXiv staging copy), the
+    working file of that name anywhere in the tree at HEAD matches, with a note; ``at_issue``: a
+    blob at the issuing commit matches (by the certificate's path-derived name, or by its
+    ``document`` field); ``moved``: neither; ``unrecoverable``: no issuing commit or no recorded
+    digest."""
     out = {"cell": None, "path": None, "blob": None, "normalisation": None, "at_issue_too": None}
     digest = cert.get("document_sha256")
     if not digest:
         out.update(cell="unrecoverable", reason="no document_sha256 recorded")
         return out
     working = cert_path.with_name(cert_path.name.replace(".certificate.json", ".md"))
+    names = [working.name]
+    if cert.get("document") and cert["document"] != working.name:
+        names.append(cert["document"])
     at_issue = []
     if issuing:
-        names = [working.name]
-        if cert.get("document") and cert["document"] != working.name:
-            names.append(cert["document"])
         seen = set()
         for n in names:
             for p in repo.paths_named(issuing, n):
@@ -469,14 +472,34 @@ def _classify_document(repo: Repo, cert_path: Path, cert: dict, issuing: Optiona
                 norm = _blob_matches(repo, blob, digest, None) if blob else None
                 if norm:
                     at_issue.append((p, blob, norm))
+
+    def _same(path_rel: str, norm: str, note: Optional[str] = None) -> dict:
+        out.update(cell="same", normalisation=norm, path=path_rel, at_issue_too=bool(at_issue))
+        if at_issue:
+            out.update(commit=issuing, blob=at_issue[0][1], blob_path=at_issue[0][0])
+        if note:
+            out["note"] = note
+        return out
+
     if working.exists():
         norm = match_normalisation(working.read_bytes(), digest)
         if norm:
-            out.update(cell="same", normalisation=norm,
-                       path=repo.rel_or_none(working) or str(working), at_issue_too=bool(at_issue))
-            if at_issue:
-                out.update(commit=issuing, blob=at_issue[0][1], blob_path=at_issue[0][0])
-            return out
+            return _same(repo.rel_or_none(working) or str(working), norm)
+    # the certificate's own `document` field may name a file that lives elsewhere in the working
+    # tree (the arXiv staging copies): that is `same`, not `at_issue` — the second census read
+    # two unedited documents as edited-after-issue before this looked
+    head = head or repo.head()
+    if head:
+        for n in names:
+            for p in repo.paths_named(head, n):
+                wp = repo.top / p
+                try:
+                    norm = match_normalisation(wp.read_bytes(), digest) if wp.is_file() else None
+                except OSError:
+                    norm = None
+                if norm:
+                    return _same(p, norm, note="resolved by the certificate's document field, "
+                                               "outside the certificate's directory")
     if issuing is None:
         out.update(cell="unrecoverable", reason="no issuing commit")
         return out
@@ -521,7 +544,7 @@ def classify_certificate(repo: Repo, cert_path: Path, cert: dict, resolved: dict
                               content=content, hint_path=hint_path)
         out["citations"].append(c)
         out["cells"][c["cell"]] += 1
-    out["document"] = _classify_document(repo, cert_path, cert, issuing)
+    out["document"] = _classify_document(repo, cert_path, cert, issuing, head=head)
     return out
 
 
