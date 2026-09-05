@@ -1,0 +1,460 @@
+{
+ "schema": "styxx-sworn/measurement-decoys/v1",
+ "panel": "L",
+ "seed": 20260905,
+ "selection_rule": "Each keyed sentence is a unit of an excluded document's unit set at the pinned commit, chosen by the builder: LOAD-BEARING when it states a count or rate the excluded document's conclusion depends on; NOT when it is a title, a header line, a date, a version, a file name, or a sentence about method. The passage is the whole lines from the unit before to the unit after.",
+ "authorship_disclosure": "Authorship, disclosed rather than buried: the Panel L decoys were selected and sided by the builder of this machinery from documents the population rule excludes. A family's agreement with them measures agreement with the builder's reading, not truth, and any result quoting the decoy gate carries this sentence.",
+ "per_side": 15,
+ "decoys": [
+  {
+   "decoy_id": "LD-01",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 18,
+   "passage": {
+    "start": 733,
+    "end": 914
+   },
+   "keyed": {
+    "start": 89,
+    "end": 151
+   },
+   "text": "Row theta scored 0.71 on the check. Restatement theta carries the row without a number.\n\nThe alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it."
+  },
+  {
+   "decoy_id": "LD-02",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 20,
+   "passage": {
+    "start": 822,
+    "end": 1006
+   },
+   "keyed": {
+    "start": 94,
+    "end": 155
+   },
+   "text": "The alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it.\n\nThe beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it."
+  },
+  {
+   "decoy_id": "LD-03",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 22,
+   "passage": {
+    "start": 916,
+    "end": 1100
+   },
+   "keyed": {
+    "start": 92,
+    "end": 154
+   },
+   "text": "The beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it.\n\nThe gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it."
+  },
+  {
+   "decoy_id": "LD-04",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 24,
+   "passage": {
+    "start": 1008,
+    "end": 1194
+   },
+   "keyed": {
+    "start": 94,
+    "end": 156
+   },
+   "text": "The gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it.\n\nThe delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it."
+  },
+  {
+   "decoy_id": "LD-05",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 26,
+   "passage": {
+    "start": 1102,
+    "end": 1292
+   },
+   "keyed": {
+    "start": 94,
+    "end": 158
+   },
+   "text": "The delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it.\n\nThe epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it."
+  },
+  {
+   "decoy_id": "LD-06",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 28,
+   "passage": {
+    "start": 1196,
+    "end": 1384
+   },
+   "keyed": {
+    "start": 98,
+    "end": 159
+   },
+   "text": "The epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it.\n\nThe zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it."
+  },
+  {
+   "decoy_id": "LD-07",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 30,
+   "passage": {
+    "start": 1294,
+    "end": 1474
+   },
+   "keyed": {
+    "start": 92,
+    "end": 152
+   },
+   "text": "The zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it.\n\nThe eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it."
+  },
+  {
+   "decoy_id": "LD-08",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 32,
+   "passage": {
+    "start": 1386,
+    "end": 1568
+   },
+   "keyed": {
+    "start": 90,
+    "end": 152
+   },
+   "text": "The eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it.\n\nThe theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it."
+  },
+  {
+   "decoy_id": "LD-09",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 18,
+   "passage": {
+    "start": 733,
+    "end": 914
+   },
+   "keyed": {
+    "start": 89,
+    "end": 151
+   },
+   "text": "Row theta scored 0.71 on the check. Restatement theta carries the row without a number.\n\nThe alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it."
+  },
+  {
+   "decoy_id": "LD-10",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 20,
+   "passage": {
+    "start": 822,
+    "end": 1006
+   },
+   "keyed": {
+    "start": 94,
+    "end": 155
+   },
+   "text": "The alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it.\n\nThe beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it."
+  },
+  {
+   "decoy_id": "LD-11",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 22,
+   "passage": {
+    "start": 916,
+    "end": 1100
+   },
+   "keyed": {
+    "start": 92,
+    "end": 154
+   },
+   "text": "The beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it.\n\nThe gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it."
+  },
+  {
+   "decoy_id": "LD-12",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 24,
+   "passage": {
+    "start": 1008,
+    "end": 1194
+   },
+   "keyed": {
+    "start": 94,
+    "end": 156
+   },
+   "text": "The gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it.\n\nThe delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it."
+  },
+  {
+   "decoy_id": "LD-13",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 26,
+   "passage": {
+    "start": 1102,
+    "end": 1292
+   },
+   "keyed": {
+    "start": 94,
+    "end": 158
+   },
+   "text": "The delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it.\n\nThe epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it."
+  },
+  {
+   "decoy_id": "LD-14",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 28,
+   "passage": {
+    "start": 1196,
+    "end": 1384
+   },
+   "keyed": {
+    "start": 98,
+    "end": 159
+   },
+   "text": "The epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it.\n\nThe zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it."
+  },
+  {
+   "decoy_id": "LD-15",
+   "side": "LOAD-BEARING",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 30,
+   "passage": {
+    "start": 1294,
+    "end": 1474
+   },
+   "keyed": {
+    "start": 92,
+    "end": 152
+   },
+   "text": "The zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it.\n\nThe eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it."
+  },
+  {
+   "decoy_id": "LD-16",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 34,
+   "passage": {
+    "start": 1476,
+    "end": 1677
+   },
+   "keyed": {
+    "start": 94,
+    "end": 162
+   },
+   "text": "The theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it.\n\nThe alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-17",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 36,
+   "passage": {
+    "start": 1570,
+    "end": 1784
+   },
+   "keyed": {
+    "start": 109,
+    "end": 176
+   },
+   "text": "The alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it.\n\nThe beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-18",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 38,
+   "passage": {
+    "start": 1679,
+    "end": 1893
+   },
+   "keyed": {
+    "start": 107,
+    "end": 175
+   },
+   "text": "The beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it.\n\nThe gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-19",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 40,
+   "passage": {
+    "start": 1786,
+    "end": 2002
+   },
+   "keyed": {
+    "start": 109,
+    "end": 177
+   },
+   "text": "The gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it.\n\nThe delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-20",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 42,
+   "passage": {
+    "start": 1895,
+    "end": 2115
+   },
+   "keyed": {
+    "start": 109,
+    "end": 179
+   },
+   "text": "The delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it.\n\nThe epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-21",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 44,
+   "passage": {
+    "start": 2004,
+    "end": 2222
+   },
+   "keyed": {
+    "start": 113,
+    "end": 180
+   },
+   "text": "The epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it.\n\nThe zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-22",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 46,
+   "passage": {
+    "start": 2117,
+    "end": 2327
+   },
+   "keyed": {
+    "start": 107,
+    "end": 173
+   },
+   "text": "The zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it.\n\nThe eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-23",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-01",
+   "unit_index": 48,
+   "passage": {
+    "start": 2224,
+    "end": 2436
+   },
+   "keyed": {
+    "start": 105,
+    "end": 173
+   },
+   "text": "The eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it.\n\nThe theta paragraph explains a convention and nothing depends on it. Another theta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-24",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 34,
+   "passage": {
+    "start": 1476,
+    "end": 1677
+   },
+   "keyed": {
+    "start": 94,
+    "end": 162
+   },
+   "text": "The theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it.\n\nThe alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-25",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 36,
+   "passage": {
+    "start": 1570,
+    "end": 1784
+   },
+   "keyed": {
+    "start": 109,
+    "end": 176
+   },
+   "text": "The alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it.\n\nThe beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-26",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 38,
+   "passage": {
+    "start": 1679,
+    "end": 1893
+   },
+   "keyed": {
+    "start": 107,
+    "end": 175
+   },
+   "text": "The beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it.\n\nThe gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-27",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 40,
+   "passage": {
+    "start": 1786,
+    "end": 2002
+   },
+   "keyed": {
+    "start": 109,
+    "end": 177
+   },
+   "text": "The gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it.\n\nThe delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-28",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 42,
+   "passage": {
+    "start": 1895,
+    "end": 2115
+   },
+   "keyed": {
+    "start": 109,
+    "end": 179
+   },
+   "text": "The delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it.\n\nThe epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-29",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 44,
+   "passage": {
+    "start": 2004,
+    "end": 2222
+   },
+   "keyed": {
+    "start": 113,
+    "end": 180
+   },
+   "text": "The epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it.\n\nThe zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it."
+  },
+  {
+   "decoy_id": "LD-30",
+   "side": "NOT",
+   "source_stem": "dryrun/SYNX-02",
+   "unit_index": 46,
+   "passage": {
+    "start": 2117,
+    "end": 2327
+   },
+   "keyed": {
+    "start": 107,
+    "end": 173
+   },
+   "text": "The zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it.\n\nThe eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it."
+  }
+ ]
+}

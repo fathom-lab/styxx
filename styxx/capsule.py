@@ -1022,9 +1022,17 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
         js = b""
     if js and _sha256(js) != (payload["verifier_js"]).get("sha256"):
         problems.append("the sealed browser verifier does not hash to its sealed digest (tamper)")
-    if js and js.decode("utf-8", errors="replace") not in html:
-        problems.append("the browser verifier inlined in the page is not the sealed one (tamper) "
-                        "— layer 1 ran something this capsule did not seal")
+    # Content identity modulo newlines, both sides. `html` came through read_text, which
+    # normalises CRLF to LF, so comparing it against raw sealed bytes accused a correctly minted
+    # capsule of tamper on any checkout that holds the verifier CRLF. The sealed DIGEST above
+    # still pins the exact bytes; this check asks the weaker question it was always asking —
+    # is the code the page runs the code this capsule sealed?
+    if js:
+        inlined = html.replace("\r\n", "\n")
+        sealed_text = js.decode("utf-8", errors="replace").replace("\r\n", "\n")
+        if sealed_text not in inlined:
+            problems.append("the browser verifier inlined in the page is not the sealed one "
+                            "(tamper) — layer 1 ran something this capsule did not seal")
     installed = _sworn_verifier_js()
     if js and js != installed:
         advisory.append("INSTRUMENT SKEW: the sealed browser verifier differs from the installed "

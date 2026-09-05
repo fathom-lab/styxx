@@ -1,0 +1,9 @@
+ec335ef2356b3529ffc12255fbb315fbfa71eb69a020a8d255296189da811c6b  D01.canary-twin.json  canaries=9
+185982875f191038d55f9666da60e36e86538b1cff4abbe0c27dac47910267d1  D02.canary-twin.json  canaries=25
+11e24a464beaed90e5df67bb153565668f1aad53378a67030f471c17fcb6113c  D03.canary-twin.json  canaries=21
+37120b7aa38d8c77db3359580a075eb80236e9c8b53ba8821add553d96c924ca  D04.canary-twin.json  canaries=16
+da462212f5a69cdb48b025cc13b94c953ed98ca307df129bdde750202a8518e8  D05.canary-twin.json  canaries=22
+7009047a7cff6469e8b94a0c933958588d5cd6fde8455be34b1f00020ef4376e  D06.canary-twin.json  canaries=15
+b526914b00fa3b4e4aea1a9b0e40c061901176cb7cff7cad4cdb6148aa7ab7d5  D07.canary-twin.json  canaries=12
+e9e513f61b6242bf03548796a75a834d10556627f96a37d88e0ba1c743178ada  D08.canary-twin.json  canaries=41
+f76ef50d7c39107e045af20a8df53b60c1986e0d7518482050006c521d71ef35  D09.canary-twin.json  canaries=21

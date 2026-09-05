@@ -31,6 +31,7 @@ distinction so this guard cannot acquire the same blind spot.
 """
 import pathlib
 import re
+import subprocess
 import urllib.parse
 
 import pytest
@@ -66,7 +67,29 @@ TEXT_SUFFIXES = {".md", ".markdown", ".txt", ".html", ".htm", ".rst", ".json", "
 # ── scanning ────────────────────────────────────────────────────────────────
 
 
+def _tracked_paths():
+    """Every path git tracks, or None outside a checkout.
+
+    THE POPULATION IS WHAT THE REPOSITORY IS. A walk of the filesystem also finds untracked and
+    git-ignored artifacts — a stale release bundle, a scratch copy — and polices the lab for prose
+    it never published. `styxx/corpus_audit.py` names this defect in its own comments, after a
+    stale worktree made 49% of a corpus census phantom: the population was defined by what a glob
+    matched rather than by what the thing is. It bit here too: an ignored release bundle in one
+    checkout failed this guard while CI, which clones, passed.
+    """
+    try:
+        r = subprocess.run(["git", "-C", str(REPO), "ls-files", "-z"],
+                           capture_output=True, timeout=120)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if r.returncode != 0:
+        return None
+    return {(REPO / p.decode("utf-8", "replace")).resolve()
+            for p in r.stdout.split(b"\0") if p}
+
+
 def _scanned_files():
+    tracked = _tracked_paths()
     for d in SCANNED_DIRS:
         root = REPO / d
         if not root.is_dir():
@@ -78,6 +101,8 @@ def _scanned_files():
                 continue
             if any(p.name.endswith(s) for s in RECEIPT_SUFFIXES):
                 continue
+            if tracked is not None and p.resolve() not in tracked:
+                continue          # untracked or ignored: the lab did not publish it
             yield p
 
 

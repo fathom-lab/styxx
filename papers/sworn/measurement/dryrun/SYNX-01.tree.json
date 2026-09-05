@@ -1,0 +1,3 @@
+{
+ "synx/01/table.json": "{\n \"rows\": [\n  {\n   \"value\": 0.01,\n   \"other\": 0.31,\n   \"name\": \"row alpha\"\n  },\n  {\n   \"value\": 0.11,\n   \"other\": 0.41,\n   \"name\": \"row beta\"\n  },\n  {\n   \"value\": 0.21,\n   \"other\": 0.51,\n   \"name\": \"row gamma\"\n  },\n  {\n   \"value\": 0.31,\n   \"other\": 0.61,\n   \"name\": \"row delta\"\n  },\n  {\n   \"value\": 0.41,\n   \"other\": 0.71,\n   \"name\": \"row epsilon\"\n  },\n  {\n   \"value\": 0.51,\n   \"other\": 0.81,\n   \"name\": \"row zeta\"\n  },\n  {\n   \"value\": 0.61,\n   \"other\": 0.91,\n   \"name\": \"row eta\"\n  },\n  {\n   \"value\": 0.71,\n   \"other\": 1.01,\n   \"name\": \"row theta\"\n  }\n ]\n}\n"
+}

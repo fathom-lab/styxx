@@ -1,0 +1,51 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "document": {
+  "name": "SYN-01.md",
+  "sha256": "2a2e58751cc83035491b9f9155be56603365cf43d10d4c03774cd17e5c7ec4fb"
+ },
+ "text": "# SYN document 01: a synthetic report about nothing\n\nSynthetic Lab, a header line with a date-shaped token 2026-09-05 and a version v0.1.\n\n## What was measured\n\nThe question was whether the synthetic gate holds under the synthetic bar. Precision was 0.61 on the panel. Recall was 0.18 on the same items. The suite ran for 42 minutes on the synthetic box. -\n\nThe harness ran the suite and 296 checks passed. The log reads `synthetic log line seventeen` near its middle. The log carries no `unexpected failure marker`. The runner printed `a phrase that is not in the log` twice.\n\nThe log's bytes hash to c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436. This sentence restates the method without a number. That one is a hedge about scope.\n\n```\ncode. fenced. 0.99 not a unit.\n```\n\n## What this does not say\n\nThat any synthetic number means anything. The conclusion depends on the precision above and on nothing else.\n",
+ "spans": [
+  {
+   "start": 236,
+   "end": 268,
+   "receipt": "path:syn/01/result.json#/rates/precision",
+   "kind": "numeric"
+  },
+  {
+   "start": 269,
+   "end": 303,
+   "receipt": "path:syn/01/result.json#/rates/recall",
+   "kind": "numeric"
+  },
+  {
+   "start": 358,
+   "end": 406,
+   "receipt": "path:syn/01/result.json#/counts/passed",
+   "kind": "numeric"
+  },
+  {
+   "start": 407,
+   "end": 468,
+   "receipt": "path:syn/01/log.txt",
+   "kind": "quote"
+  },
+  {
+   "start": 469,
+   "end": 516,
+   "receipt": "path:syn/01/log.txt",
+   "kind": "absent"
+  },
+  {
+   "start": 578,
+   "end": 667,
+   "receipt": "path:syn/01/log.txt",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

@@ -1,0 +1,662 @@
+{
+ "schema": "styxx-sworn/measurement-packet/v1",
+ "panel": "R",
+ "question": "Here is one sentence from a technical report, the kind of check its author declared for it, and the receipt leaf the author bound it to. Does the leaf evidence the sentence — is what the leaf holds what the sentence says? Answer YES, NO or UNSURE.",
+ "instructions": "TASK. Compare one sentence with one leaf. numeric: the sentence's one number should be the leaf's value at the precision the sentence prints. quote: the text between backticks in the sentence should occur in the leaf. absent: it should not. hash: the sentence's 64-hex digest should equal the leaf's digest.\n\nFORMAT. Answer with one JSON object and nothing else: {\"answer\": \"YES\"}, \"NO\" or \"UNSURE\".\n\nCAUTIONS. Judge the pairing, not the sentence's truth in the world. If the leaf view is marked truncated and the answer would depend on the cut part, answer UNSURE. Do not explain.",
+ "instruction_blocks": {
+  "TASK": "TASK. Compare one sentence with one leaf. numeric: the sentence's one number should be the leaf's value at the precision the sentence prints. quote: the text between backticks in the sentence should occur in the leaf. absent: it should not. hash: the sentence's 64-hex digest should equal the leaf's digest.",
+  "FORMAT": "FORMAT. Answer with one JSON object and nothing else: {\"answer\": \"YES\"}, \"NO\" or \"UNSURE\".",
+  "CAUTIONS": "CAUTIONS. Judge the pairing, not the sentence's truth in the world. If the leaf view is marked truncated and the answer would depend on the cut part, answer UNSURE. Do not explain."
+ },
+ "output_schema": {
+  "type": "object",
+  "properties": {
+   "answer": {
+    "type": "string",
+    "enum": [
+     "YES",
+     "NO",
+     "UNSURE"
+    ]
+   }
+  },
+  "required": [
+   "answer"
+  ],
+  "additionalProperties": false
+ },
+ "built_from": {
+  "population_sha256": "50716b1daee0b9eff2f5ec559ddb5cb2c72c277d983523b6754e7bab39255922",
+  "seed": 20260905,
+  "decoys_sha256": "98cf085af505d8cedde728d651ea7888a304d8c657f59367d906339097a4d937",
+  "leaf_view_max_chars": 2000,
+  "decoy_construction_rule": "The YES side is the first 15 spans, in excluded-document order then span order, whose committed receipt verdict is HELD and whose receipt names a JSON pointer leaf that construction A can retarget; the NO side is the same spans retargeted. Expected answers live in the sealed key."
+ },
+ "key_digest_file": "keys/sworn_measurement_key_R.sha256",
+ "items": [
+  {
+   "id": "R-0001",
+   "sentence": "Row alpha scored 0.01 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/0/value",
+    "lines": null,
+    "value": "0.01",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0002",
+   "sentence": "Row zeta scored 0.51 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/5/value",
+    "lines": null,
+    "value": "0.51",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0003",
+   "sentence": "The log's bytes hash to c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436.",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0004",
+   "sentence": "Row zeta scored 0.51 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/5/other",
+    "lines": null,
+    "value": "0.81",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0005",
+   "sentence": "Precision was 0.72 on the panel.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/precision",
+    "lines": null,
+    "value": "0.72",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0006",
+   "sentence": "The harness ran the suite and 358 checks passed.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/counts/passed",
+    "lines": null,
+    "value": "358",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0007",
+   "sentence": "Row eta scored 0.61 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/6/value",
+    "lines": null,
+    "value": "0.61",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0008",
+   "sentence": "Row beta scored 0.11 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/1/value",
+    "lines": null,
+    "value": "0.11",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0009",
+   "sentence": "The harness ran the suite and 120 checks passed.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/counts/passed",
+    "lines": null,
+    "value": "120",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0010",
+   "sentence": "Row beta scored 0.11 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/1/other",
+    "lines": null,
+    "value": "0.41",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0011",
+   "sentence": "Row epsilon scored 0.41 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/4/value",
+    "lines": null,
+    "value": "0.41",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0012",
+   "sentence": "The log carries no `unexpected failure marker`.",
+   "kind": "absent",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 358 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0013",
+   "sentence": "The log reads `synthetic log line seventeen` near its middle.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 120 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0014",
+   "sentence": "Row beta scored 0.11 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/1/value",
+    "lines": null,
+    "value": "0.11",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0015",
+   "sentence": "Row beta scored 0.11 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/1/other",
+    "lines": null,
+    "value": "0.41",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0016",
+   "sentence": "Row delta scored 0.31 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/3/value",
+    "lines": null,
+    "value": "0.31",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0017",
+   "sentence": "Row eta scored 0.61 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/6/value",
+    "lines": null,
+    "value": "0.61",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0018",
+   "sentence": "Row delta scored 0.31 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/3/other",
+    "lines": null,
+    "value": "0.61",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0019",
+   "sentence": "The log's bytes hash to 7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356.",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0020",
+   "sentence": "Row eta scored 0.61 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/6/other",
+    "lines": null,
+    "value": "0.91",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0021",
+   "sentence": "Row alpha scored 0.01 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/0/other",
+    "lines": null,
+    "value": "0.31",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0022",
+   "sentence": "Row epsilon scored 0.41 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/4/other",
+    "lines": null,
+    "value": "0.71",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0023",
+   "sentence": "Row delta scored 0.31 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/3/value",
+    "lines": null,
+    "value": "0.31",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0024",
+   "sentence": "The log reads `synthetic log line seventeen` near its middle.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 358 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0025",
+   "sentence": "Recall was 0.20 on the same items.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/recall",
+    "lines": null,
+    "value": "0.20",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0026",
+   "sentence": "Row epsilon scored 0.41 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/4/other",
+    "lines": null,
+    "value": "0.71",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0027",
+   "sentence": "Row zeta scored 0.51 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/5/other",
+    "lines": null,
+    "value": "0.81",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0028",
+   "sentence": "Row alpha scored 0.01 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/0/other",
+    "lines": null,
+    "value": "0.31",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0029",
+   "sentence": "Row delta scored 0.31 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/3/other",
+    "lines": null,
+    "value": "0.61",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0030",
+   "sentence": "The log's bytes hash to 3f1ad3ec2c64dbec56ce663e1ce10e9adaa32d13ce66a0b119f05c4c7003cbb9.",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "3f1ad3ec2c64dbec56ce663e1ce10e9adaa32d13ce66a0b119f05c4c7003cbb9",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0031",
+   "sentence": "Row gamma scored 0.21 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/2/value",
+    "lines": null,
+    "value": "0.21",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0032",
+   "sentence": "Precision was 0.47 on the panel.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/precision",
+    "lines": null,
+    "value": "0.47",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0033",
+   "sentence": "Row gamma scored 0.21 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/2/other",
+    "lines": null,
+    "value": "0.51",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0034",
+   "sentence": "Row alpha scored 0.01 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/0/value",
+    "lines": null,
+    "value": "0.01",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0035",
+   "sentence": "Row theta scored 0.71 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/7/other",
+    "lines": null,
+    "value": "1.01",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0036",
+   "sentence": "Row gamma scored 0.21 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/2/value",
+    "lines": null,
+    "value": "0.21",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0037",
+   "sentence": "The log carries no `unexpected failure marker`.",
+   "kind": "absent",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 120 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0038",
+   "sentence": "Row eta scored 0.61 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/6/other",
+    "lines": null,
+    "value": "0.91",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0039",
+   "sentence": "Recall was 0.31 on the same items.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/recall",
+    "lines": null,
+    "value": "0.31",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0040",
+   "sentence": "Row theta scored 0.71 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/7/value",
+    "lines": null,
+    "value": "0.71",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0041",
+   "sentence": "The log carries no `unexpected failure marker`.",
+   "kind": "absent",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 296 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0042",
+   "sentence": "Row zeta scored 0.51 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/5/value",
+    "lines": null,
+    "value": "0.51",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0043",
+   "sentence": "The log reads `synthetic log line seventeen` near its middle.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "log.txt",
+    "pointer": null,
+    "lines": null,
+    "value": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 296 checks\n",
+    "value_kind": "receipt_text",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0044",
+   "sentence": "Row gamma scored 0.21 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/2/other",
+    "lines": null,
+    "value": "0.51",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0045",
+   "sentence": "Recall was 0.18 on the same items.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/recall",
+    "lines": null,
+    "value": "0.18",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0046",
+   "sentence": "Row epsilon scored 0.41 on the check.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "table.json",
+    "pointer": "/rows/4/value",
+    "lines": null,
+    "value": "0.41",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0047",
+   "sentence": "Precision was 0.61 on the panel.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/rates/precision",
+    "lines": null,
+    "value": "0.61",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0048",
+   "sentence": "The harness ran the suite and 296 checks passed.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "result.json",
+    "pointer": "/counts/passed",
+    "lines": null,
+    "value": "296",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  }
+ ]
+}

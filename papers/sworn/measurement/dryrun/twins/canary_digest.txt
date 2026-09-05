@@ -1,0 +1,3 @@
+70b1cae63eb19042c9f9423e667513df9c74474a7ddae3f0856905eef6b6e85f  SYN-01.canary-twin.json  canaries=6
+4102424bd33bd977b6f5251a7130d0fe8f562695f41f70308c55fdcc2973f1d0  SYN-02.canary-twin.json  canaries=6
+ede6485b0337e7e8260b1fced746789b1c5a6feae1d9b201ed0e66fe247694cc  SYN-03.canary-twin.json  canaries=6
