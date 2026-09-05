@@ -71,3 +71,10 @@ papers/sworn/CANNED_harness_junit_2026_09_05.capsule.html -text
 # and every conformance vector that embeds one -- depended on the checkout that produced it.
 # The blob is already LF; this only stops a checkout from changing it.
 styxx/sworn.py -text
+# receipt binding: sworn RESULT triple, byte-pinned like every other sworn artifact
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.md -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn.json -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.md -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.sworn.json -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.sworn-receipt.json -text

@@ -1,0 +1,440 @@
+{
+ "schema": "styxx-oath/edited-after-issue-census/v1",
+ "inputs": {
+  "census": "papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json",
+  "census_head": "2857b62d724565f38baaf8903ca4b686b99002cf",
+  "charon_log": "papers/charon/charon.log.jsonl"
+ },
+ "head": "2857b62d724565f38baaf8903ca4b686b99002cf",
+ "totals": {
+  "documents_at_issue": 8,
+  "with_working_document": 8,
+  "without_working_document": 0,
+  "lines_removed_total": 9,
+  "lines_added_total": 82,
+  "documents_with_ledger_rows_removed": 2,
+  "documents_with_verified_rows_removed": 2,
+  "verified_rows_removed_total": 4,
+  "ledger_rows_removed_total": 4,
+  "documents_with_numbers_added": 2,
+  "numbers_added_total": 26,
+  "live_class_equals_recorded": 8,
+  "live_class_differs": 0
+ },
+ "documents": [
+  {
+   "certificate": "papers/SYNTHESIS_connection_of_minds_2026_08_01.certificate.json",
+   "sworn_document": "papers/SYNTHESIS_connection_of_minds_2026_08_01.md",
+   "issuing_commit": "dc3fc73f150bf610affe0560f6b8443808d7f6d7",
+   "working_document": "papers/SYNTHESIS_connection_of_minds_2026_08_01.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "9f523bdd977d3646e343e4005ea057ec9dd81df9 2026-09-01T15:54:14-04:00",
+   "status": "EDITED",
+   "lines_removed": 4,
+   "lines_added": 31,
+   "ledger_rows_on_removed_lines": {
+    "total": 2,
+    "VERIFIED": 2,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": [
+     {
+      "line": 25,
+      "token": "0.071",
+      "status": "VERIFIED"
+     },
+     {
+      "line": 25,
+      "token": "0.057",
+      "status": "VERIFIED"
+     }
+    ]
+   },
+   "numbers_on_added_lines": {
+    "total": 13,
+    "tokens": [
+     {
+      "line": 23,
+      "token": "2"
+     },
+     {
+      "line": 24,
+      "token": "4"
+     },
+     {
+      "line": 27,
+      "token": "392"
+     },
+     {
+      "line": 28,
+      "token": "0.7857"
+     },
+     {
+      "line": 28,
+      "token": "70"
+     },
+     {
+      "line": 31,
+      "token": "0.5714"
+     },
+     {
+      "line": 33,
+      "token": "0.0143"
+     },
+     {
+      "line": 35,
+      "token": "3"
+     },
+     {
+      "line": 46,
+      "token": "0.071"
+     },
+     {
+      "line": 46,
+      "token": "0.057"
+     },
+     {
+      "line": 51,
+      "token": "0.955"
+     },
+     {
+      "line": 51,
+      "token": "0.014"
+     },
+     {
+      "line": 52,
+      "token": "0.7857"
+     }
+    ]
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/arxiv/connection-of-minds/submission/anc/source.certificate.json",
+   "sworn_document": "papers/SYNTHESIS_connection_of_minds_2026_08_01.md",
+   "issuing_commit": "dc3fc73f150bf610affe0560f6b8443808d7f6d7",
+   "working_document": "papers/SYNTHESIS_connection_of_minds_2026_08_01.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "9f523bdd977d3646e343e4005ea057ec9dd81df9 2026-09-01T15:54:14-04:00",
+   "status": "EDITED",
+   "lines_removed": 4,
+   "lines_added": 31,
+   "ledger_rows_on_removed_lines": {
+    "total": 2,
+    "VERIFIED": 2,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": [
+     {
+      "line": 25,
+      "token": "0.071",
+      "status": "VERIFIED"
+     },
+     {
+      "line": 25,
+      "token": "0.057",
+      "status": "VERIFIED"
+     }
+    ]
+   },
+   "numbers_on_added_lines": {
+    "total": 13,
+    "tokens": [
+     {
+      "line": 23,
+      "token": "2"
+     },
+     {
+      "line": 24,
+      "token": "4"
+     },
+     {
+      "line": 27,
+      "token": "392"
+     },
+     {
+      "line": 28,
+      "token": "0.7857"
+     },
+     {
+      "line": 28,
+      "token": "70"
+     },
+     {
+      "line": 31,
+      "token": "0.5714"
+     },
+     {
+      "line": 33,
+      "token": "0.0143"
+     },
+     {
+      "line": 35,
+      "token": "3"
+     },
+     {
+      "line": 46,
+      "token": "0.071"
+     },
+     {
+      "line": 46,
+      "token": "0.057"
+     },
+     {
+      "line": 51,
+      "token": "0.955"
+     },
+     {
+      "line": 51,
+      "token": "0.014"
+     },
+     {
+      "line": 52,
+      "token": "0.7857"
+     }
+    ]
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.certificate.json",
+   "sworn_document": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+   "issuing_commit": "5cc2e072602b8343f95045a222f7a0d5b3428627",
+   "working_document": "papers/autopilot/RESULT_oath_v05_precision_2026_07_13.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "24ebfd3419fd60a9be71c66994152f813d76a3be 2026-09-01T23:28:45Z",
+   "status": "EDITED",
+   "lines_removed": 0,
+   "lines_added": 2,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.certificate.json",
+   "sworn_document": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+   "issuing_commit": "eb33de836d36e41efc7cc6e4878f6b8ef562ce97",
+   "working_document": "papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md",
+   "recorded_class": "OATH-FAILED",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "24ebfd3419fd60a9be71c66994152f813d76a3be 2026-09-01T23:28:45Z",
+   "status": "EDITED",
+   "lines_removed": 0,
+   "lines_added": 2,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-FAILED",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.certificate.json",
+   "sworn_document": "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md",
+   "issuing_commit": "b1767222ad0487a6cbfc3c662e56abeabc30fdc0",
+   "working_document": "papers/mind-instrument/FINDING_gavagai_scale_2026_06_10.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "24ebfd3419fd60a9be71c66994152f813d76a3be 2026-09-01T23:28:45Z",
+   "status": "EDITED",
+   "lines_removed": 0,
+   "lines_added": 2,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.certificate.json",
+   "sworn_document": "papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+   "issuing_commit": "e4db3f21d2f23a65c0163686a0891a61c39d2064",
+   "working_document": "papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "b4e3b94deb9b7b0958761c05822b9cbe787bada8 2026-07-28T20:31:30-04:00",
+   "status": "EDITED",
+   "lines_removed": 1,
+   "lines_added": 10,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.certificate.json",
+   "sworn_document": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+   "issuing_commit": "7c2066d2a3b9513edc4b2f6db98f6187066aebb5",
+   "working_document": "papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "2acf4f292e245d7597fc94a04fceb17648c90e92 2026-09-02T00:36:18Z",
+   "status": "EDITED",
+   "lines_removed": 0,
+   "lines_added": 2,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  },
+  {
+   "certificate": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.certificate.json",
+   "sworn_document": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+   "issuing_commit": "3098356cf6892bc4969163b2e2c9c26c03e755ed",
+   "working_document": "papers/showcase-viz/FINDING_mapped_whitening_2026_06_12.md",
+   "recorded_class": "OATH-HELD",
+   "stands_over_sworn_bytes": true,
+   "edited_at": "24ebfd3419fd60a9be71c66994152f813d76a3be 2026-09-01T23:28:45Z",
+   "status": "EDITED",
+   "lines_removed": 0,
+   "lines_added": 2,
+   "ledger_rows_on_removed_lines": {
+    "total": 0,
+    "VERIFIED": 0,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0,
+    "tokens": []
+   },
+   "numbers_on_added_lines": {
+    "total": 0,
+    "tokens": []
+   },
+   "live_class_over_working_document": "OATH-HELD",
+   "live_class_equals_recorded": true
+  }
+ ],
+ "charon": {
+  "charon_oath_lines": 213,
+  "census_certificates": 213,
+  "unmatched_charon_lines": [],
+  "categories": {
+   "both_reproduce": 207,
+   "both_not_verifier_moved": 2,
+   "charon_not_reproduced_census_stands": 1,
+   "charon_unresolved_census_stands": 3
+  },
+  "disagreements": [
+   {
+    "document": "arxiv/read_neq_write/source.md",
+    "charon_reproduced": false,
+    "charon_verdict": "OATH-FAILED, 10 uncovered",
+    "census_stands": false,
+    "census_reason": null,
+    "what_moved": [
+     "nothing \u2014 every byte in place"
+    ],
+    "category": "both_not_verifier_moved"
+   },
+   {
+    "document": "papers/ancient-question-program/CAPSTONE_universal_mind_2026_06_10.md",
+    "charon_reproduced": false,
+    "charon_verdict": "OATH-HELD",
+    "census_stands": true,
+    "census_reason": null,
+    "what_moved": [
+     "receipt at issue"
+    ],
+    "category": "charon_not_reproduced_census_stands"
+   },
+   {
+    "document": "papers/arxiv/connection-of-minds/submission/anc/source.md",
+    "charon_reproduced": null,
+    "charon_verdict": "UNRESOLVED",
+    "census_stands": true,
+    "census_reason": null,
+    "what_moved": [
+     "document at issue"
+    ],
+    "category": "charon_unresolved_census_stands"
+   },
+   {
+    "document": "papers/arxiv/frame-locality/submission/anc/source.md",
+    "charon_reproduced": null,
+    "charon_verdict": "UNRESOLVED",
+    "census_stands": true,
+    "census_reason": null,
+    "what_moved": [
+     "document found by the certificate's own document field, elsewhere in the tree"
+    ],
+    "category": "charon_unresolved_census_stands"
+   },
+   {
+    "document": "papers/arxiv/knowsay-gap/submission/anc/source.md",
+    "charon_reproduced": null,
+    "charon_verdict": "UNRESOLVED",
+    "census_stands": true,
+    "census_reason": null,
+    "what_moved": [
+     "document found by the certificate's own document field, elsewhere in the tree"
+    ],
+    "category": "charon_unresolved_census_stands"
+   },
+   {
+    "document": "papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+    "charon_reproduced": false,
+    "charon_verdict": "OATH-FAILED, 1 uncovered",
+    "census_stands": false,
+    "census_reason": null,
+    "what_moved": [
+     "nothing \u2014 every byte in place"
+    ],
+    "category": "both_not_verifier_moved"
+   }
+  ],
+  "reading": "Charon reproduces a certificate over the WORKING tree at ingest and records true/false/null; the census re-derives over the bytes at the ISSUING commit. A line Charon could not reproduce or resolve that the census says stands is a certificate whose receipt or document moved after issue; a line both call false is the verifier having moved with every byte in place."
+ },
+ "reading": "a removed line with a ledger row is a line the published certificate examined and the working document no longer has; an added line with numbers is one the published certificate never examined (the live audit does). Neither is a verdict.",
+ "limits": [
+  "line-level diff; a number moved within a line is not seen",
+  "numbers on added lines are counted by the verifier's own extractor, so its exclusions (years, ids, versions) apply",
+  "one clone, one day"
+ ]
+}
