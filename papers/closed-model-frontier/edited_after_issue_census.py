@@ -243,7 +243,7 @@ def main(argv=None) -> int:
                    "exclusions (years, ids, versions) apply",
                    "one clone, one day"],
     }
-    out.write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8", newline="\n")
+    out.write_bytes((json.dumps(result, indent=1) + "\n").encode("utf-8"))
     t = totals
     print(f"edited after issue: {t['documents_at_issue']} documents ({t['with_working_document']} with a working "
           f"document); lines removed {t['lines_removed_total']}, added {t['lines_added_total']}; "

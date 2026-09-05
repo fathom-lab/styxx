@@ -54,7 +54,7 @@ def lab(tmp_path: Path):
     papers = repo / "papers"
     papers.mkdir()
     doc = papers / "RESULT_small.md"
-    doc.write_text(DOC, encoding="utf-8", newline="\n")
+    doc.write_bytes((DOC).encode("utf-8"))
     receipt = papers / "small_result.json"
     receipt.write_bytes(RECEIPT_V1)
     (papers / "extra_result.json").write_bytes(EXTRA)
@@ -71,7 +71,7 @@ def _issue(doc: Path, *receipts: Path) -> Path:
     receipts = receipts or (doc.parent / "small_result.json", doc.parent / "extra_result.json")
     cert = certify_doc(doc, list(receipts))
     cp = doc.with_suffix(".certificate.json")
-    cp.write_text(json.dumps(cert, indent=2) + "\n", encoding="utf-8", newline="\n")
+    cp.write_bytes((json.dumps(cert, indent=2) + "\n").encode("utf-8"))
     return cp
 
 
@@ -303,15 +303,14 @@ def test_a_document_edited_after_issue_reads_at_issue_and_the_certificate_stands
     _commit_all(repo, "receipts and document")
     cp = _issue(doc)
     _commit_all(repo, "certificate")
-    doc.write_text(DOC.replace("0.884", "0.900"), encoding="utf-8", newline="\n")
+    doc.write_bytes((DOC.replace("0.884", "0.900")).encode("utf-8"))
     _commit_all(repo, "document edited after issue")
     b = _audit(repo, cp)["receipt_binding"]
     assert b["document"]["cell"] == "at_issue"
     assert b["stands_over_sworn_bytes"] is True     # over the document it swore to
     # a cosmetic rewrite of the certificate now moves I(C) past the edit: the document at the
     # new issuing commit is not the sworn one, and the audit says so instead of guessing
-    cp.write_text(json.dumps(json.loads(cp.read_text(encoding="utf-8")), indent=1) + "\n",
-                  encoding="utf-8", newline="\n")
+    cp.write_bytes((json.dumps(json.loads(cp.read_text(encoding="utf-8")), indent=1) + "\n").encode("utf-8"))
     _commit_all(repo, "cosmetic rewrite of the certificate")
     b = _audit(repo, cp)["receipt_binding"]
     assert b["document"]["cell"] == "moved"
@@ -333,7 +332,7 @@ def test_case_insensitive_names_resolve_at_issue(lab):
     cert = json.loads(cp.read_text(encoding="utf-8"))
     cert["receipts_sha256"] = {"SMALL_RESULT.json": cert["receipts_sha256"]["small_result.json"]}
     cert.pop("receipt_binding")
-    cp.write_text(json.dumps(cert, indent=2) + "\n", encoding="utf-8", newline="\n")
+    cp.write_bytes((json.dumps(cert, indent=2) + "\n").encode("utf-8"))
     _commit_all(repo, "certificate with an upper-cased key")
     c = _audit(repo, cp)["receipt_binding"]["citations"][0]
     assert c["cell"] == "same" and c["at_issue_too"] is True and c["blob"]
@@ -477,6 +476,6 @@ def test_a_staging_copy_whose_document_lives_elsewhere_reads_same(lab):
     assert d["at_issue_too"] is True
     assert b["stands_over_sworn_bytes"] is True
     # and once the document is edited, the staging copy reads at_issue like its original
-    doc.write_text(DOC.replace("0.884", "0.900"), encoding="utf-8", newline="\n")
+    doc.write_bytes((DOC.replace("0.884", "0.900")).encode("utf-8"))
     _commit_all(repo, "document edited after issue")
     assert _audit(repo, copy)["receipt_binding"]["document"]["cell"] == "at_issue"

@@ -219,7 +219,7 @@ def main(argv=None) -> int:
         "records": records,
     }
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8", newline="\n")
+    out.write_bytes((json.dumps(result, indent=1) + "\n").encode("utf-8"))
     c, p, d = result["citations"], result["certificates"], result["documents"]
     print(f"census at {head[:8]} (code committed at head: {provenance['code_committed_at_head']}): "
           f"{p['n']} certificates, {c['n']} citations")
