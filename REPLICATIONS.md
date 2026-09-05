@@ -109,7 +109,8 @@ when those bytes cannot all be fetched). On a shallow clone, or with `--history 
 CI never runs this audit, so nothing in CI prints either line; the shallow reason is pinned by
 `tests/test_certify_by_digest.py` on a clone the test builds. **The first line is byte-identical
 in every mode; it is the only line this file pins.** The corpus census over all 213 tracked
-certificates is `papers/closed-model-frontier/receipt_binding_census_result.json`; the census
+certificates is `papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json` (the third run; the
+second, `receipt_binding_census_result.json`, stays as committed); the census
 refuses to overwrite a tracked result, so a new census is a new dated file; its reading is
 `RESULT_oath_receipt_binding_2026_09_05.md`, sworn to its leaves. One thing it settles for the
 block above: `CAPSTONE_universal_mind`'s changed twelfth receipt has its sworn bytes at the

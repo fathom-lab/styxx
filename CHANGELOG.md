@@ -42,17 +42,21 @@ for them, for the document as well as the receipts. No verdict moves; no certifi
   first line is byte-identical in every mode.** CI never runs this audit; on a depth-1 clone it
   prints `binding: history unavailable (shallow clone)`, pinned by a test on a clone the test
   builds. `--history on` exits 2 when history is unavailable.
-- **The census, `receipt_binding_census.py` → `receipt_binding_census_result.json`, over every
-  tracked certificate (213, staging copies included; 631 citations), read in
-  `RESULT_oath_receipt_binding_2026_09_05.md`, which swears to its leaves.** 630 citations
+- **The census, `receipt_binding_census.py` → `receipt_binding_census_result_2026_09_05.json`
+  (the third run, from code committed at its own head; the second run,
+  `receipt_binding_census_result.json`, stays as committed), over every tracked certificate
+  (213, staging copies included; 631 citations), read in `RESULT_oath_receipt_binding_2026_09_05.md`,
+  which swears to its leaves.** 630 citations
   `same`, every one also present at its issuing commit; 1 `at_issue`; 0 `elsewhere`, 0
   `unbacked`, 0 with an unrecoverable issuing commit. The one `at_issue` is
   `CAPSTONE_universal_mind`'s `mind_v0_validation.json` — regenerated seventeen minutes after
   its issuing commit on 2026-06-10 and reported by the audit since 2026-08-27 — whose sworn bytes
   sit at the issuing commit; the certificate **stands over the bytes it swore to**
-  (`regenerated_and_standing` 1). Ten certificates' **documents** were edited after issue (cell
-  `at_issue`, including the three arXiv `anc/` copies, found by the certificate's own `document`
-  field), and all ten stand. `stands_over_sworn_bytes` is true for 211 and false for 2 — both
+  (`regenerated_and_standing` 1). Eight certificates' **documents** were edited after issue (cell
+  `at_issue`) and all eight stand; two arXiv staging copies whose document lives unchanged under
+  `papers/` read `same` with a note — the second census had read them `at_issue`, the
+  edited-after-issue diff caught it, and the document cell now looks for the working file by the
+  certificate's own `document` name anywhere in the tree, as the receipt cells do. `stands_over_sworn_bytes` is true for 211 and false for 2 — both
   with every byte in place, both already known (`FINDING_behavioral_sycophancy_blackbox` in
   `KNOWN_VERDICT_DRIFT`, and the read≠write submission source Charon found) — so both are the
   verifier having moved, not a binding defect; null for none. The census refuses to overwrite a
@@ -63,7 +67,17 @@ for them, for the document as well as the receipts. No verdict moves; no certifi
   predictions the spec made before the run, three were confirmed, two wrong and one half-wrong
   (six recorded digests are LF hashes, so the corpus's digests are not uniformly CRLF); the
   ERRATA scores them.
-- Tests: `tests/test_certify_by_digest.py` (22, plus one NTFS skip) — twenty-one on temporary
+- **`edited_after_issue_census.py` → `edited_after_issue_census_result.json`, read in
+  `RESULT_edited_after_issue_2026_09_05.md` (sworn).** The eight documents that moved under
+  their certificates, diffed against the sworn bytes: 9 lines removed, 82 added; the edits
+  removed 4 ledger rows, all VERIFIED, in the two certificates of one document
+  (`SYNTHESIS_connection_of_minds` and its staging copy — `0.071` and `0.057` on line 25) and
+  added 26 numbers the published certificates never examined, in the same two; the live audit
+  over the working document reproduces the recorded class for all eight. And the census laid
+  beside Charon's log: 213 OATH lines, 207 agree; the 1 line Charon could not reproduce and the
+  3 it left UNRESOLVED stand over their sworn bytes; the 2 both call failed have every byte in
+  place.
+- Tests: `tests/test_certify_by_digest.py` (23, plus one NTFS skip) — twenty-one on temporary
   repositories, one over the tracked corpus by the census's population rule; the existing corpus
   guard and audit tests pass unchanged.
 

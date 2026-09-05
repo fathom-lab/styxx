@@ -2,315 +2,18 @@
  "schema": "styxx.sworn.verdict-receipt/v1",
  "format": "sworn/0.1",
  "document": {
-  "name": "RESULT_oath_receipt_binding_2026_09_05.md",
-  "inline_sha256": "80152771713596de62a8fada40b968b7f107c03aa5f7668a28ec910f9b876cb2",
-  "canonical_sha256": "326df8fdf9a66b9aa819e8fdb4ef2a3d5aa0e271dad23226906ede5b8b4493e2"
+  "name": "RESULT_edited_after_issue_2026_09_05.md",
+  "inline_sha256": "6f43173bdbd659dac3ba9a045d0301db54d9a41ad8977f6e925675cc4909f128",
+  "canonical_sha256": "644a7669f26ec99f9fb51383d9c69411b49215289a3a107e6380a5a92d904d3c"
  },
  "commit": "3c899a55c5ce47814bab5fbc3d239a883aa2e4ac",
  "manifest_digest": null,
  "spans": [
   {
-   "at": 1778,
-   "start": 1778,
-   "end": 1897,
-   "receipt": "path:styxx/receipt_binding.py",
-   "kind": "hash",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "stated": "f3436793167cd2f1e24b8eca933b307363c911d24e9cb0cbb4eb431be99cebbb",
-    "receipt_sha256": "f3436793167cd2f1e24b8eca933b307363c911d24e9cb0cbb4eb431be99cebbb"
-   },
-   "resolved_sha256": "f3436793167cd2f1e24b8eca933b307363c911d24e9cb0cbb4eb431be99cebbb",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 1956,
-   "start": 1898,
-   "end": 1991,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census.py",
-   "kind": "hash",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "stated": "48a20a7639511e3ecce7eb551cb588d839064b804e3c2e4fceda737e7ace9fc4",
-    "receipt_sha256": "48a20a7639511e3ecce7eb551cb588d839064b804e3c2e4fceda737e7ace9fc4"
-   },
-   "resolved_sha256": "48a20a7639511e3ecce7eb551cb588d839064b804e3c2e4fceda737e7ace9fc4",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 2250,
-   "start": 2104,
-   "end": 2126,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/population/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "213",
-    "printed": "213",
-    "receipt": "213",
-    "receipt_rounded": "213",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 2398,
-   "start": 2127,
-   "end": 2163,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/n",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "631",
-    "printed": "631",
-    "receipt": "631",
-    "receipt_rounded": "631",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 2574,
-   "start": 2179,
-   "end": 2265,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/same",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "630",
-    "printed": "630",
-    "receipt": "630",
-    "receipt_rounded": "630",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 2788,
-   "start": 2266,
-   "end": 2385,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/same_at_issue_too",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "630",
-    "printed": "630",
-    "receipt": "630",
-    "receipt_rounded": "630",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3048,
-   "start": 2386,
-   "end": 2414,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/at_issue",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "1",
-    "printed": "1",
-    "receipt": "1",
-    "receipt_rounded": "1",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3208,
-   "start": 2415,
-   "end": 2434,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/elsewhere",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3360,
-   "start": 2435,
-   "end": 2453,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/unbacked",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3510,
-   "start": 2454,
-   "end": 2477,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/unrecoverable",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3670,
-   "start": 2478,
-   "end": 2530,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/issuing_commit_unrecoverable",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 3908,
-   "start": 2562,
-   "end": 2647,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/at_issue/0",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 83,
-    "haystack_bytes": 83,
-    "occurrences": 1
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 4393,
-   "start": 2917,
-   "end": 3001,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/regenerated_and_standing",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "1",
-    "printed": "1",
-    "receipt": "1",
-    "receipt_rounded": "1",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 4896,
-   "start": 3270,
-   "end": 3318,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/same",
-   "kind": "numeric",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "printed_token": "205",
-    "printed": "205",
-    "receipt": "205",
-    "receipt_rounded": "205",
-    "fractional_digits": 0,
-    "rounding": "ROUND_HALF_EVEN"
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 5072,
-   "start": 3319,
-   "end": 3431,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/at_issue",
+   "at": 1280,
+   "start": 1280,
+   "end": 1331,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_at_issue",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -322,61 +25,127 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 5316,
-   "start": 3432,
-   "end": 3513,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/moved",
+   "at": 1462,
+   "start": 1332,
+   "end": 1382,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/with_working_document",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
+    "printed_token": "8",
+    "printed": "8",
+    "receipt": "8",
+    "receipt_rounded": "8",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 5633,
-   "start": 3621,
-   "end": 3673,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/true",
+   "at": 1669,
+   "start": 1406,
+   "end": 1421,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/lines_removed_total",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "211",
-    "printed": "211",
-    "receipt": "211",
-    "receipt_rounded": "211",
+    "printed_token": "9",
+    "printed": "9",
+    "receipt": "9",
+    "receipt_rounded": "9",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 5840,
-   "start": 3674,
-   "end": 3683,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/false",
+   "at": 1816,
+   "start": 1422,
+   "end": 1435,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/lines_added_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "82",
+    "printed": "82",
+    "receipt": "82",
+    "receipt_rounded": "82",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 2001,
+   "start": 1478,
+   "end": 1513,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/ledger_rows_removed_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4",
+    "printed": "4",
+    "receipt": "4",
+    "receipt_rounded": "4",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 2174,
+   "start": 1514,
+   "end": 1544,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/verified_rows_removed_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4",
+    "printed": "4",
+    "receipt": "4",
+    "receipt_rounded": "4",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 2344,
+   "start": 1545,
+   "end": 1562,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_with_verified_rows_removed",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -388,39 +157,118 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 6005,
-   "start": 3684,
-   "end": 3710,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/null",
+   "at": 2538,
+   "start": 1591,
+   "end": 1657,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/certificate",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 64,
+    "haystack_bytes": 64,
+    "occurrences": 1
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 2770,
+   "start": 1697,
+   "end": 1704,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/0/token",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 5,
+    "haystack_bytes": 5,
+    "occurrences": 1
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 2940,
+   "start": 1709,
+   "end": 1716,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/1/token",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 5,
+    "haystack_bytes": 5,
+    "occurrences": 1
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 3114,
+   "start": 1725,
+   "end": 1727,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/0/line",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "0",
-    "printed": "0",
-    "receipt": "0",
-    "receipt_rounded": "0",
+    "printed_token": "25",
+    "printed": "25",
+    "receipt": "25",
+    "receipt_rounded": "25",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 6186,
-   "start": 3711,
-   "end": 3787,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/not_standing_same_only",
+   "at": 3370,
+   "start": 1822,
+   "end": 1864,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/numbers_added_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "26",
+    "printed": "26",
+    "receipt": "26",
+    "receipt_rounded": "26",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 3544,
+   "start": 1865,
+   "end": 1892,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_with_numbers_added",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -432,143 +280,127 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 6503,
-   "start": 3880,
-   "end": 3926,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/not_standing/0",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 44,
-    "haystack_bytes": 44,
-    "occurrences": 1
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 6769,
-   "start": 4012,
-   "end": 4109,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/not_standing/1",
-   "kind": "quote",
-   "verdict": "HELD",
-   "reason": null,
-   "detail": {
-    "needle_bytes": 95,
-    "haystack_bytes": 95,
-    "occurrences": 1
-   },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
-   "provenance": {
-    "form": "path",
-    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
-   }
-  },
-  {
-   "at": 7194,
-   "start": 4303,
-   "end": 4379,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/blob_normalisation/crlf",
+   "at": 3886,
+   "start": 2067,
+   "end": 2163,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/live_class_equals_recorded",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "624",
-    "printed": "624",
-    "receipt": "624",
-    "receipt_rounded": "624",
+    "printed_token": "8",
+    "printed": "8",
+    "receipt": "8",
+    "receipt_rounded": "8",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 7417,
-   "start": 4380,
-   "end": 4446,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/blob_normalisation/raw",
+   "at": 4121,
+   "start": 2164,
+   "end": 2173,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/live_class_differs",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "6",
-    "printed": "6",
-    "receipt": "6",
-    "receipt_rounded": "6",
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 7666,
-   "start": 4484,
-   "end": 4516,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/raw",
+   "at": 4615,
+   "start": 2528,
+   "end": 2554,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/charon_oath_lines",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "625",
-    "printed": "625",
-    "receipt": "625",
-    "receipt_rounded": "625",
+    "printed_token": "213",
+    "printed": "213",
+    "receipt": "213",
+    "receipt_rounded": "213",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 7839,
-   "start": 4517,
-   "end": 4547,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/lf",
+   "at": 4771,
+   "start": 2555,
+   "end": 2578,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/census_certificates",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
    "detail": {
-    "printed_token": "5",
-    "printed": "5",
-    "receipt": "5",
-    "receipt_rounded": "5",
+    "printed_token": "213",
+    "printed": "213",
+    "receipt": "213",
+    "receipt_rounded": "213",
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
    }
   },
   {
-   "at": 8009,
-   "start": 4548,
-   "end": 4580,
-   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/crlf",
+   "at": 4955,
+   "start": 2608,
+   "end": 2627,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/both_reproduce",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "207",
+    "printed": "207",
+    "receipt": "207",
+    "receipt_rounded": "207",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 5112,
+   "start": 2628,
+   "end": 2699,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/charon_not_reproduced_census_stands",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -580,7 +412,51 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "d6c394d9d7380c1869b9b39e6ca0e05753c81da9cf1fe9e202d277758b483b2e",
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 5402,
+   "start": 2760,
+   "end": 2819,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/charon_unresolved_census_stands",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "3",
+    "printed": "3",
+    "receipt": "3",
+    "receipt_rounded": "3",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
+   }
+  },
+  {
+   "at": 5730,
+   "start": 2934,
+   "end": 2949,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/both_not_verifier_moved",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "2",
+    "printed": "2",
+    "receipt": "2",
+    "receipt_rounded": "2",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "4f740d7adcea7a8f2efbf99da49c045ccc0e02ecce0046080821193387cc8c0a",
    "provenance": {
     "form": "path",
     "note": "committed object at 3c899a55c5ce47814bab5fbc3d239a883aa2e4ac; authorship unchecked"
@@ -588,18 +464,18 @@
   }
  ],
  "counts": {
-  "HELD": 27,
+  "HELD": 21,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 27,
+ "sworn_total": 21,
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 27
+  "committed": 21
  },
  "verifier": {
   "styxx_version": "7.47.0",
@@ -638,42 +514,32 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "7cad9a8304270fd2224b9159916684e1133be298a45fcc1ea94e15fd747b1a63",
+ "digest": "f17a0f7e0bde1da84cc163dc6d2c54846274e8f3746ca99fae18cf4328f2eb87",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 27,
-  "narrative_sentences": 85,
-  "sentence_share": 0.2411,
-  "diff_claim_sentences": 4,
-  "diff_claim_share": 0.871,
+  "sworn_total": 21,
+  "narrative_sentences": 61,
+  "sentence_share": 0.2561,
+  "diff_claim_sentences": 2,
+  "diff_claim_share": 0.913,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
-    "start": 452,
-    "end": 546,
-    "text": "`receipt_binding_census_result_2026_09_05.json`, the third run, from code committed at its own"
+    "start": 227,
+    "end": 323,
+    "text": "census (`receipt_binding_census_result_2026_09_05.json`) and Charon's committed log, writing one"
    },
    {
-    "start": 640,
-    "end": 738,
-    "text": "`receipt_binding_census_result.json`, stays as committed; this document was first sworn against it"
-   },
-   {
-    "start": 1377,
-    "end": 1473,
-    "text": "issued from now on carries a `receipt_binding` block naming the content digest and the committed"
-   },
-   {
-    "start": 2649,
-    "end": 2745,
-    "text": "whose `mind_v0_validation.json` was rewritten seventeen minutes after the issuing commit in June"
+    "start": 798,
+    "end": 897,
+    "text": "`document_sha256` they recorded — the document was edited after issue, and the sworn document was"
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "341b5fbe25ea5ae4bb9b261354a50756d9bd86ae266b75e81e5f442eb842c4c4",
- "timestamp": "2026-09-05T15:02:14Z"
+ "coverage_sha256": "80761c63b9267bb1b7a9aaccf3a377fe7f1fc83cd16a7327098ec54b596c01d0",
+ "timestamp": "2026-09-05T15:02:18Z"
 }

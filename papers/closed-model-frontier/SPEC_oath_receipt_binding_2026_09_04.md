@@ -301,3 +301,13 @@ with.
 **Tests.** "Never the corpus" in the preamble is struck: one test reads the tracked corpus, by the
 census's population rule. Test (3) now has two receipts and a HELD fixture, so "same for the rest"
 is asserted rather than vacuous (ES-14). The battery is 22 tests and one platform skip.
+
+**Second note, 2026-09-05, after the edited-after-issue diff.** The document cell the first note
+added looked only beside the certificate and in the tree at I(C). Three arXiv staging copies read
+`at_issue`; the diff against the sworn bytes showed two of them over a document living unchanged
+under `papers/`. The cell now looks for the working file by the certificate's own `document` name
+anywhere in the tree at HEAD before declaring `at_issue`, as the receipt cells do, and records a
+note. The third census, `receipt_binding_census_result_2026_09_05.json`, run from code committed at
+its own head, reads documents 205 `same` / 8 `at_issue` / 0 `moved`; every other cell is the
+second census's. The second census stays as committed; the RESULT was first sworn against it and is
+re-sworn against the third. `edited_after_issue_census.py` is the diff, and its RESULT is sworn.

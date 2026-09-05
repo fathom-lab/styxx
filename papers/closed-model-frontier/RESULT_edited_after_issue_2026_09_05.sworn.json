@@ -1,0 +1,141 @@
+{
+ "spec": "sworn/0.1",
+ "commit": null,
+ "document": {
+  "name": "RESULT_edited_after_issue_2026_09_05.md",
+  "sha256": "644a7669f26ec99f9fb51383d9c69411b49215289a3a107e6380a5a92d904d3c"
+ },
+ "text": "# RESULT — edited after issue: the documents that moved under their certificates, and the census laid beside Charon's log\n\nFathom Lab · 2026-09-05 · Script: `edited_after_issue_census.py`, reading the third receipt-binding\ncensus (`receipt_binding_census_result_2026_09_05.json`) and Charon's committed log, writing one\nreceipt, `edited_after_issue_census_result.json`, which this document swears to. **This document is\nitself sworn**, at the commit its sidecar names. It is a result about bytes: which lines a\ndocument lost or gained after its certificate was issued, and where the two instruments the lab\nhas for the same question agree. It says nothing about whether any number was true.\n\n## The question\n\nThe receipt-binding census found certificates whose document no longer hashes to the\n`document_sha256` they recorded — the document was edited after issue, and the sworn document was\nrecovered from the issuing commit. A reader of the published certificate beside such a document\nneeds two things: which lines the certificate examined are gone, and which lines with numbers\narrived that the certificate never examined. The live corpus audit re-certifies the working\ndocument; this census says what the *published* certificate no longer describes.\n\n## What it found\n\n8 certificates carry a document edited after issue,\nand all 8 have a working document to diff against.\nBetween them the edits\nremoved 9 lines\nand added 82.\n\n**Lines the certificates had examined.**\n4 ledger rows sat on removed lines,\nall 4 of them VERIFIED tokens,\nin 2 certificates\n— both over one document,\n`papers/SYNTHESIS_connection_of_minds_2026_08_01.certificate.json`\nand its arXiv staging copy: the tokens\n`0.071`\nand\n`0.057`\non line\n25\nof the sworn document are not in the working one.\n\n**Lines the certificates never examined.**\n26 numbers sit on lines added after issue,\nin the same 2 certificates.\nThe other six edits added lines without numbers — the back-pointers the whole-program audit asked\nfor — and one removed a line without a ledger row.\n\n**The live audit.**\nFor all 8, the current verifier over the working document reproduces the recorded verdict class;\n0 differ.\nSo no verdict moved; what moved is what the published certificate describes. The 26 numbers are\nexamined by the live audit and by nothing a reader of the certificate file can see.\n\n## The census beside Charon\n\nCharon reproduces a certificate over the working tree at ingest; the census re-derives over the\nbytes at the issuing commit. Laid side by side:\n213 OATH lines in the log,\n213 rows in the census,\nevery line matched to a row.\n207 both reproduce.\n1 line Charon could not reproduce at ingest stands over its sworn bytes\n— the capstone whose receipt was regenerated after issue.\n3 lines Charon left UNRESOLVED stand over their sworn bytes\n— the arXiv staging copies, whose certificate sits beside no document and names one that lives\nunder `papers/`.\n2 fail in both,\nwith every byte in place: the verifier moved, which Charon calls SKEW. The census adds to the log\nexactly what the log could not do — re-derive at the issuing commit — and contradicts it nowhere.\n\n## What this does not say\n\nThat the removed tokens were wrong or the added numbers are unsupported: the live audit holds\nover the working document, and this census reads bytes, not truth. That an edit after issue is\nimproper — the back-pointer edits were asked for by the audit. That the two certificates over\n`SYNTHESIS_connection_of_minds` should be re-issued: that is a decision, and the census places the\nfacts for it. That the line-level diff sees a number changed within a line; it does not. That any\nof this was run outside this lab.\n\n---\n\n*Of the documents that moved under their certificates, one lost two verified tokens and gained\ntwenty-six unexamined numbers; the rest gained a footer. The ferry log and the census agree on\nevery line, and the census places the six the log could only flag.*\n",
+ "spans": [
+  {
+   "start": 1280,
+   "end": 1331,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_at_issue",
+   "kind": "numeric"
+  },
+  {
+   "start": 1332,
+   "end": 1382,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/with_working_document",
+   "kind": "numeric"
+  },
+  {
+   "start": 1406,
+   "end": 1421,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/lines_removed_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1422,
+   "end": 1435,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/lines_added_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1478,
+   "end": 1513,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/ledger_rows_removed_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1514,
+   "end": 1544,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/verified_rows_removed_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1545,
+   "end": 1562,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_with_verified_rows_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1591,
+   "end": 1657,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/certificate",
+   "kind": "quote"
+  },
+  {
+   "start": 1697,
+   "end": 1704,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/0/token",
+   "kind": "quote"
+  },
+  {
+   "start": 1709,
+   "end": 1716,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/1/token",
+   "kind": "quote"
+  },
+  {
+   "start": 1725,
+   "end": 1727,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/documents/0/ledger_rows_on_removed_lines/tokens/0/line",
+   "kind": "numeric"
+  },
+  {
+   "start": 1822,
+   "end": 1864,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/numbers_added_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1865,
+   "end": 1892,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/documents_with_numbers_added",
+   "kind": "numeric"
+  },
+  {
+   "start": 2067,
+   "end": 2163,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/live_class_equals_recorded",
+   "kind": "numeric"
+  },
+  {
+   "start": 2164,
+   "end": 2173,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/totals/live_class_differs",
+   "kind": "numeric"
+  },
+  {
+   "start": 2528,
+   "end": 2554,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/charon_oath_lines",
+   "kind": "numeric"
+  },
+  {
+   "start": 2555,
+   "end": 2578,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/census_certificates",
+   "kind": "numeric"
+  },
+  {
+   "start": 2608,
+   "end": 2627,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/both_reproduce",
+   "kind": "numeric"
+  },
+  {
+   "start": 2628,
+   "end": 2699,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/charon_not_reproduced_census_stands",
+   "kind": "numeric"
+  },
+  {
+   "start": 2760,
+   "end": 2819,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/charon_unresolved_census_stands",
+   "kind": "numeric"
+  },
+  {
+   "start": 2934,
+   "end": 2949,
+   "receipt": "path:papers/closed-model-frontier/edited_after_issue_census_result.json#/charon/categories/both_not_verifier_moved",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
