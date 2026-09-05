@@ -164,3 +164,44 @@ carries no precision; nothing here is a verdict about any document. It does not 
 claims, which the 2026-08-26 survey already retired. It credits by name and does not rank: a
 neighbour that occupies a clause for a narrower object built that thing before this lab did, and
 the survey says so where it is so.
+
+## ERRATA - 2026-09-05, after the pass
+
+This section is appended; nothing above it is edited. It records only what the frozen
+procedure could not foresee, and it changes no rule, adds no source and drops none.
+
+**E1 - the survey's filename.** The header names the survey that runs this procedure
+`SURVEY_sworn_neighbours_2026_09_02.md`, the date the procedure was frozen. The pass ran
+on 2026-09-05 and the survey is dated for the day it ran:
+`SURVEY_sworn_neighbours_2026_09_05.md`. The receipt filename is unchanged.
+
+**E2 - S05 was named by topic.** The source list gives S05 as *citation-attribution
+evaluators* at `arxiv.org/abs/2605.06635` with its existence to be verified. The
+identifier resolves to *Cited but Not Verified: Parsing and Evaluating Source Attribution
+in LLM Deep Research Agents*. Under the existence-check rule the source is recorded under
+the title arXiv reports and scored as that paper. S04's identifier resolved to the title
+the list expected.
+
+**E3 - one planned URL refused this agent.** S11 names both the steward's page and
+Chambers's account. The publisher's page for the Cortex editorial returned 403 on
+2026-09-05. The READ rule for a practice accepts the canonical description by its author
+or steward; the steward's description, including its workflow section, was read end to
+end and the source is scored on that. The record says so.
+
+**E4 - one planned URL served no text.** `doc-detective.com` returns a client-rendered
+shell at every path this agent requested, including its own markdown and index routes.
+The canonical README in the project's repository was read instead, which the READ rule
+for a tool names first.
+
+**E5 - the receipt carries more than the frozen fields.** Every source record also
+carries the time of the fetch and the sha256 of the bytes saved from it. That is added to
+the frozen question list, not substituted for any part of it.
+
+**E6 - what the pricing rule could not separate.** Every one of the nineteen sources was
+scored OCCUPIES on C1. The clause table defines C1 by its object - a sentence of prose
+rather than a numeral, an artifact, a step or a bar - and two sources reach the object
+itself while doing something else to it: S03 extracts claims from a manuscript by script,
+S05 segments a report into sentence-level claims and judges them with a model. Under the
+frozen rule neither can RETIRE, because RETIRES asks for the same thing done to the same
+object and neither binds. The survey records this as the load-bearing distinction rather
+than resolving it here, since resolving it would change a rule after seeing results.
