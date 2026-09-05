@@ -940,14 +940,14 @@ def _epistemics_summary(ledger: list, counts: dict) -> dict:
     }
 
 
-def _receipt_binding_block(receipt_paths: list) -> dict:
+def _receipt_binding_block(receipt_paths: list, near: Path) -> dict:
     """SPEC_oath_receipt_binding_2026_09_04 R1: the certificate names the bytes it swore to —
     content digest modulo newlines, the committed blob when the working bytes ARE the committed
     bytes at HEAD, and `committed: false` when they are not. Forward-only: nothing in
     `receipts_sha256` changes, no verdict reads this block, and a failure here can never block
     a certificate (R7) — it degrades to `head: null` with the reason."""
     try:
-        return _receipt_binding.bind_at_mint(list(receipt_paths))
+        return _receipt_binding.bind_at_mint(list(receipt_paths), near=near)
     except Exception as e:   # noqa: BLE001 — by rule: binding never blocks issuing
         return {"schema": _receipt_binding.SCHEMA, "content_rule": _receipt_binding.CONTENT_RULE,
                 "head": None, "all_receipts_committed": False, "receipts": [],
@@ -1344,7 +1344,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         "document": doc_path.name,
         "document_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
         "receipts_sha256": receipts,
-        "receipt_binding": _receipt_binding_block(receipt_paths),
+        "receipt_binding": _receipt_binding_block(receipt_paths, doc_path.parent),
         "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "counts": counts,
         "epistemics_summary": summary,

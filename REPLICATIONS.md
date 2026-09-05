@@ -97,18 +97,25 @@ above, that is a divergence worth filing.
 **The `binding:` line, and what it is for.** Since `SPEC_oath_receipt_binding_2026_09_04.md`
 the audit prints a third line beneath the verdict line and the uncovered line. On a full clone
 (`--history auto`, the default, or `on`) it reads
-`binding: citations same … at-issue … elsewhere … unbacked … unrecoverable … | certificates: …`
-— for every receipt a certificate cites, where the bytes it swore to are: in the working tree,
-at the certificate's issuing commit, elsewhere in history, nowhere in history, or unanswerable —
-and for every certificate whether the current verifier reproduces the recorded verdict class
-over the bytes at the issuing commit (`stands-over-sworn-bytes`). On a shallow clone, or with
-`--history off`, it reads `binding: history unavailable (…)` and no cell is filled. **The first
-line is byte-identical either way; it is the only line this file pins.** The corpus census over
-all 213 tracked certificates is `papers/closed-model-frontier/receipt_binding_census_result.json`
-and is never regenerated in place; its reading is in the CHANGELOG entry that shipped it. One
-thing it settles for the block above: `CAPSTONE_universal_mind`'s changed twelfth receipt has its
-sworn bytes at the issuing commit, and the certificate stands over the full set — the receipt
-moved; the certificate was right.
+`binding: over N/M certificates — citations same … at-issue … elsewhere … unbacked …
+unrecoverable … | documents same … at-issue … moved … | certificates: …` — for every receipt a
+certificate cites, where the bytes it swore to are: in the working tree (anywhere in it; a
+receipt outside the audit root is `same` with a note), at the certificate's issuing commit,
+elsewhere in history, nowhere in history, or unanswerable; the same for the document; and for
+every certificate whether the current verifier reproduces the recorded verdict class over the
+document and receipt bytes at the issuing commit (`stands-over-sworn-bytes`, null with a reason
+when those bytes cannot all be fetched). On a shallow clone, or with `--history off`, it reads
+`binding: history unavailable (…)` and no cell is filled; `--history on` additionally exits 2.
+CI never runs this audit, so nothing in CI prints either line; the shallow reason is pinned by
+`tests/test_certify_by_digest.py` on a clone the test builds. **The first line is byte-identical
+in every mode; it is the only line this file pins.** The corpus census over all 213 tracked
+certificates is `papers/closed-model-frontier/receipt_binding_census_result.json`; the census
+refuses to overwrite a tracked result, so a new census is a new dated file; its reading is
+`RESULT_oath_receipt_binding_2026_09_05.md`, sworn to its leaves. One thing it settles for the
+block above: `CAPSTONE_universal_mind`'s changed twelfth receipt has its sworn bytes at the
+issuing commit, and the certificate stands over the full set — the receipt moved seventeen
+minutes after issue on 2026-06-10; the certificate stands over the bytes it swore to. Whether
+those bytes were true is not a question this audit answers.
 
 All of it is stated here because a replicator who runs the advertised command and gets an
 unexplained failure has been handed a divergence that is really our undisclosed known state —

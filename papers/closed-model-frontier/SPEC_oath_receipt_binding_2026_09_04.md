@@ -206,3 +206,98 @@ true. That any of this has been run outside this lab.
 *The three breakages had one shape: a certificate that could not say which bytes it meant, and
 an audit that could not look for them. After this the certificate says, the audit looks, and
 the corpus is measured as it is rather than rewritten to pass.*
+
+---
+
+## ERRATA — 2026-09-05, after the adversarial pass
+
+Appended, not edited: the rules above are the frozen text. `ATTACKS_receipt_binding_battery_2026_09_05.md`
+is the record; the ids below are its. Where a sentence above is struck, the replacement is here.
+
+**"Why this exists."** "Three times in two days" is wrong (A5). Twice in two days — `corpus_census.json`
+under `CORPUS_STATE_2026_08_31` (rewritten at 5cdb349, 8.5 h after the certificate landed with it)
+and `external1_summary.json` under `RESULT_external1` (rewritten at 584ff10, two commits after the
+certificate) — and once in June: `mind_v0_validation.json` under `CAPSTONE_universal_mind`,
+rewritten at 10907dd seventeen minutes after the issuing commit. The third item in the paragraph
+was a stale prose pin in REPLICATIONS.md, repaired by an assertion on 2026-09-01, and no
+certificate asserted anything over it. And the document moves too (A4): at the external1 breakage
+the document's own bytes had changed under the certificate, which nothing above looks for. The
+audit now carries a **document cell** (same / at_issue / moved / unrecoverable) on every record,
+decided against `document_sha256` by the same readings.
+
+**R1, the *Attack* sentence.** "The exact shape of the three breakages" is struck (A1, three votes).
+Both receipt breakages happened after receipt and certificate had both landed, in a later commit
+that rewrote the receipt with no certify run; R1's block cannot see that moment and does not claim
+to — R3 and R4 are the instrument for it. What R1 records is whether the receipt was committed at
+mint, which was false once in the corpus (CORPUS_STATE, whose receipt was born in the same commit
+as its certificate) without any edit. The edit-before-landing shape has not been observed.
+
+**R3.** The issuing commit is *the last commit in HEAD's history that touched C's path* — the
+command is the definition; a rename or a cosmetic rewrite counts, which is why the census prints
+I(C) on every record (ES-05). The `at_issue` row's meaning is struck (A6, B-08, ES-06): it read as
+an unconditional claim that the bytes were changed or removed, while the cell was decided relative
+to the audit root. Since the pass a citation reads `same` whenever the sworn bytes sit anywhere in
+the working tree at the repository root (with `note: resolved outside the audit root` when R2 did
+not find them), and `at_issue` means: nothing in the working tree carries the sworn bytes, and a
+path with basename n at I(C) does. The `elsewhere` relation is `before`, `after` or `unrelated` (a
+parallel branch merged later; B-07). The `unrecoverable` row lists too much (ES-08): a citation
+receives it only when the certificate has no issuing commit (untracked, modified, or outside the
+repository); no repository, a shallow clone and git absent are R5's whole-audit state, printed as a
+reason with no cell filled. Matching gains a fourth reading, `content`, tried first for a
+certificate that carries its own block — the only reading a receipt with mixed newlines can
+satisfy; legacy receipts with mixed newlines are a stated limit (B-05). The history search is
+`--full-history -m -z` with glob metacharacters neutralised and basenames case-folded on a
+repository that says `core.ignorecase`, because without each of those a real sworn blob read
+`unbacked` (B-01, B-02, B-03, B-04, B-11).
+
+**R4.** The first sentence is replaced. The audit re-derives whenever every citation's blob is
+known — `same`, `at_issue` **or `elsewhere`** (ES-04: the frozen text left `elsewhere` in neither
+phrase) — and the document's sworn bytes are recoverable: the working document matching
+`document_sha256`, or a blob at I(C) matching it under the certificate's path-derived name or its
+own `document` field (ES-16). Otherwise `stands_over_sworn_bytes` is `null` **with
+`stands_reason`**: no issuing commit; no citations; a citation is unbacked or unrecoverable; the
+document at the issuing commit is not the sworn document; the document is unrecoverable (B-06,
+B-12, ES-01, ES-03). The cosmetic-commit answer in R3 holds for receipts because d is checked and
+holds for the document only because of this check: before it, a cosmetic rewrite of a certificate
+after a document edit flipped stands from true to false with every receipt byte in place (ES-03).
+The two phrases become three: *receipt regenerated under a certificate* = any `at_issue` or
+`elsewhere` citation and stands true; *certificate wrong* = stands false, or any `unbacked`
+citation; *not re-derivable* = stands null, its reason counted. And the reading "false on a
+same-only certificate is the verifier having moved" now says "with every byte in place",
+because a document edited after issue was the other way to get there (ES-01).
+
+**R5.** `replications.yml` is the wrong workflow and CI never runs the corpus audit (A11, ES-11):
+`test.yml` is the depth-1 workflow, and it runs pytest. On a depth-1 clone the audit prints
+`binding: history unavailable (shallow clone)`, pinned by `test_a_shallow_clone_cannot_answer_and_says_so`
+on a clone the test builds. `--history on` additionally exits 2 when history is unavailable;
+`auto` does not (ES-19).
+
+**R6.** The census refuses (exit 2) to overwrite a result that is tracked, and takes `--out` for a
+new dated file (A7); the test that was to enforce R6 asserted citation-absence, which would have
+failed the moment the RESULT cited the file, and now proves the refusal on a temporary repository
+and reads the corpus by the census's own population rule, `git ls-files`, which the earlier glob
+missed two tracked certificates of (ES-15). The census records the blob ids of the code that ran
+beside the blobs at `head`, with `code_committed_at_head` (A8: the first census named the SPEC
+commit as its head while none of the code was committed), and every path in it is
+repository-relative (A9: the first result carried this checkout's absolute paths in 630 citations).
+That first result, committed at 1791527, was removed from the tree in the repair commit; nothing
+had sworn to it.
+
+**"What the cells are expected to show" — the six predictions, scored (ES-12).**
+
+| prediction | outcome |
+|---|---|
+| every match will be `crlf` | half right: the blob-side reading is `crlf` for 624 of 630 and `raw` for 6 (six recorded digests are LF hashes); the working-tree reading is `raw` for 625, `lf` 5, `crlf` 1 |
+| cross-directory citations resolve by name at I(C) | confirmed — and, since the pass, in the working tree at the repository root first |
+| most citations `same` | confirmed: 630 of 631, every one also at its issuing commit |
+| `elsewhere: after` holds `external1_summary.json` | wrong, and self-refuting as written: the re-issue moved I(C) past the regeneration, so the current certificate's citation is `same` and the old certificate is history |
+| `unbacked` holds the arXiv staging receipts | wrong: all `same` |
+| `unrecoverable` zero on a full clone | confirmed |
+
+Unpredicted: ten certificates' **documents** were edited after issue (document cell `at_issue`),
+and all ten stand over the bytes they swore to. The frozen text had no document cell to predict
+with.
+
+**Tests.** "Never the corpus" in the preamble is struck: one test reads the tracked corpus, by the
+census's population rule. Test (3) now has two receipts and a HELD fixture, so "same for the rest"
+is asserted rather than vacuous (ES-14). The battery is 22 tests and one platform skip.

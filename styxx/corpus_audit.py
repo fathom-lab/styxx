@@ -261,11 +261,12 @@ def _binding_for(repo, cert_path: Path, cert: dict, resolved: dict, doc: Path) -
     cl["available"] = True
     cl["stands_over_sworn_bytes"] = None
     try:
-        sworn = _rb.sworn_bytes_at_issue(repo, cert_path, cl, resolved)
+        sworn, why = _rb.sworn_bytes_at_issue(repo, cert_path, cl, resolved)
     except _rb.RepoUnavailable as e:
-        sworn = None
-        cl["stands_error"] = str(e)[:200]
-    if sworn is not None:
+        sworn, why = None, str(e)[:200]
+    if sworn is None:
+        cl["stands_reason"] = why
+    else:
         # The bytes at the issuing commit, re-certified under the CURRENT verifier in a scratch
         # directory outside the repository, so the mint-time binding block finds no repo and
         # the verdict is a pure function of these bytes. Class comparison, as everywhere else.
@@ -283,7 +284,7 @@ def _binding_for(repo, cert_path: Path, cert: dict, resolved: dict, doc: Path) -
                 cl["stands_over_sworn_bytes"] = (verdict_class(at_issue["verdict"])
                                                  == verdict_class(cert.get("verdict")))
             except Exception as e:   # noqa: BLE001 — a re-derivation failure is a null, not a verdict
-                cl["stands_error"] = str(e)[:200]
+                cl["stands_reason"] = f"re-derivation failed: {str(e)[:160]}"
     return cl
 
 
@@ -308,8 +309,10 @@ def _fold_binding(docs: list, repo, why) -> dict:
     if repo is None:
         return {"available": False, "reason": why}
     cells = {c: 0 for c in _rb.CELLS}
+    doc_cells = {c: 0 for c in _rb.DOCUMENT_CELLS}
     stands = {"true": 0, "false": 0, "null": 0}
-    n_unrec = n_regen = n_unbacked = n_not_standing = n_with = 0
+    reasons: dict = {}
+    n_unrec = n_regen = n_unbacked = n_not_standing = n_with = n_doc_moved = 0
     for d in docs:
         b = d.get("receipt_binding")
         if not b or not b.get("available"):
@@ -317,10 +320,17 @@ def _fold_binding(docs: list, repo, why) -> dict:
         n_with += 1
         for c, n in b["cells"].items():
             cells[c] += n
+        dc = (b.get("document") or {}).get("cell")
+        if dc in doc_cells:
+            doc_cells[dc] += 1
+        if dc == "moved":
+            n_doc_moved += 1
         if b.get("issuing_commit") is None:
             n_unrec += 1
         s = b.get("stands_over_sworn_bytes")
         stands["true" if s is True else "false" if s is False else "null"] += 1
+        if s is None and b.get("stands_reason"):
+            reasons[b["stands_reason"]] = reasons.get(b["stands_reason"], 0) + 1
         moved = b["cells"]["at_issue"] + b["cells"]["elsewhere"]
         if moved and s is True:
             n_regen += 1
@@ -328,17 +338,23 @@ def _fold_binding(docs: list, repo, why) -> dict:
             n_unbacked += 1
         if s is False:
             n_not_standing += 1
-    return {"available": True, "certificates_classified": n_with, "citations": cells,
+    return {"available": True, "certificates_total": len(docs), "certificates_classified": n_with,
+            "citations": cells, "documents": doc_cells,
             "certificates_issuing_commit_unrecoverable": n_unrec,
             "certificates_receipt_regenerated_and_standing": n_regen,
             "certificates_with_unbacked_citation": n_unbacked,
+            "certificates_document_moved": n_doc_moved,
             "certificates_not_standing_over_sworn_bytes": n_not_standing,
-            "stands_over_sworn_bytes": stands,
-            "reading": ("a citation's cell says where the bytes the certificate swore to are; "
-                        "stands_over_sworn_bytes says whether the current verifier reproduces "
-                        "the recorded verdict class over those bytes. Neither is a verdict about "
-                        "the document, and false on a same-only certificate is the verifier "
-                        "having moved (SKEW), not a binding defect.")}
+            "stands_over_sworn_bytes": stands, "stands_null_reasons": reasons,
+            "reading": ("a citation's cell says where the bytes the certificate swore to are, "
+                        "relative to the audit root (a receipt that sits outside the root but "
+                        "in the working tree reads same with a note); the document cell says the "
+                        "same of the document; stands_over_sworn_bytes says whether the current "
+                        "verifier reproduces the recorded verdict class over the document and "
+                        "receipt bytes at the issuing commit, and is null with a reason whenever "
+                        "those bytes cannot all be fetched. None of it is a verdict about the "
+                        "document; false with every byte in place is the verifier having moved "
+                        "(SKEW), not a binding defect.")}
 
 
 def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
@@ -352,10 +368,16 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     doc = _doc_for(cert_path)
     rec = {"certificate": cert_path.name, "document": doc.name,
            "recorded_verdict": cert.get("verdict")}
+    receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
+    # SPEC_oath_receipt_binding: computed BEFORE the missing-document and no-receipts returns,
+    # because a certificate whose document or receipts have gone is exactly the one whose
+    # binding history matters most (battery B-10).
+    if history is not None:
+        rec["receipt_binding"] = _binding_for(history, cert_path, cert,
+                                              {p.name: p for p in receipts}, doc)
     if not doc.exists():
         rec.update(status="MISSING_DOC", live_verdict=None)
         return rec
-    receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
     rec["receipt_drift"] = drift
     rec["missing_receipts"] = missing
     # WHY each one is missing, and whether this verdict is being computed from partial evidence.
@@ -365,11 +387,6 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
     rec["incomplete_receipts"] = bool(missing) and bool(receipts)
     rec["receipt_changed"] = sorted(n for n, d in rec["missing_detail"].items()
                                     if d["status"] == "changed")
-    # SPEC_oath_receipt_binding: computed BEFORE the no-receipts return, because a certificate
-    # whose receipts have all gone is exactly the one whose binding history matters most.
-    if history is not None:
-        rec["receipt_binding"] = _binding_for(history, cert_path, cert,
-                                              {p.name: p for p in receipts}, doc)
     if not receipts:
         rec.update(status="NO_RECEIPTS", live_verdict=None)
         return rec
@@ -472,9 +489,10 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1,
                  history: str = "auto") -> dict:
     """Audit every certificate under *root*; return per-doc records + a corpus summary.
 
-    *history* is ``auto`` (binding cells when the root sits in a full git clone), ``on`` (the
-    same, but the reason is reported if it cannot) or ``off``. The summary's verdict counters
-    are identical in every mode — SPEC_oath_receipt_binding R5.
+    *history* is ``auto`` or ``on`` (binding cells when the root sits in a full git clone; the
+    reason printed when it does not — the two differ only in the CLI's exit code, where ``on``
+    exits 2 on an unavailable history) or ``off``. The summary's verdict counters are identical
+    in every mode — SPEC_oath_receipt_binding R5.
     """
     repo, why = open_history(root, history)
     try:
@@ -541,10 +559,13 @@ def main(argv=None) -> int:
         print(f"  binding: history unavailable ({b.get('reason', '?')})")
     else:
         c = b["citations"]
+        dc = b["documents"]
         st = b["stands_over_sworn_bytes"]
-        print(f"  binding: citations same {c['same']}  at-issue {c['at_issue']}  "
+        print(f"  binding: over {b['certificates_classified']}/{b['certificates_total']} "
+              f"certificates — citations same {c['same']}  at-issue {c['at_issue']}  "
               f"elsewhere {c['elsewhere']}  unbacked {c['unbacked']}  "
-              f"unrecoverable {c['unrecoverable']} | certificates: "
+              f"unrecoverable {c['unrecoverable']} | documents same {dc['same']}  "
+              f"at-issue {dc['at_issue']}  moved {dc['moved']} | certificates: "
               f"issuing-commit-unrecoverable {b['certificates_issuing_commit_unrecoverable']}  "
               f"regenerated-and-standing {b['certificates_receipt_regenerated_and_standing']}  "
               f"unbacked {b['certificates_with_unbacked_citation']}  "
@@ -576,6 +597,10 @@ def main(argv=None) -> int:
     if a.json:
         Path(a.json).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(f"-> {a.json}")
+    if a.history == "on" and not (s.get("binding") or {}).get("available"):
+        # a caller who asked for history and did not get it is told so by the exit code, not
+        # only by a line — the verdict counters above are still the audit's answer
+        return 2
     return 1 if s["failed"] else 0
 
 
