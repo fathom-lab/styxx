@@ -86,7 +86,7 @@ __all__ = [
     "DECISIONS", "REASONS",
     "scan", "Scan", "Declaration",
     "to_sidecar", "render", "load_sidecar",
-    "Manifest", "MemoryTree", "GitTree",
+    "Manifest", "MemoryTree", "SnapshotTree", "GitTree",
     "verify", "issue_receipt", "verify_receipt",
     "main",
 ]
@@ -814,6 +814,79 @@ class MemoryTree:
             if _sha256(b) == digest:
                 return b, "ok"
         return None, "prereg_not_in_tree"
+
+
+class SnapshotTree:
+    """A tree snapshot WITH MODES at one commit: ``{path: {mode, size, sha256, bytes}}``.
+
+    ``MemoryTree`` carries bytes and no modes, so it can never say ``not_a_blob``,
+    ``receipt_too_large`` or ``commit_absent``; ``GitTree`` says them but needs a git binary.
+    This handle reproduces every reason ``GitTree`` can return except ``git_unavailable`` from a
+    dict alone, so a recorded tree (SPEC_sworn_conformance_vectors_v01_2026_09_05.md, C10)
+    replays anywhere. Whatever reads git to build one lives outside this module.
+
+    ``snapshot_commit`` is the commit the entries were read at. ``commit`` is the handle's own
+    commit and ``None`` when it names none, exactly ``MemoryTree``'s rule; ``verify()``
+    overwrites it with the document's commit as it does for every handle. A handle whose commit
+    is not the snapshot's, or is not a full lowercase hex id, sees ``commit_absent``: the snapshot
+    was not taken there. An entry whose bytes were not embedded (``bytes`` is ``None``, or
+    ``size`` is over ``MAX_RECEIPT_BYTES``) is ``receipt_too_large``: the bytes are not here.
+    Modes ``040000`` (a tree), ``120000`` (a symlink) and ``160000`` (a gitlink) are
+    ``not_a_blob`` whatever bytes they carry, as ``GitTree`` rules.
+    """
+
+    BLOB_MODES = ("100644", "100755")
+
+    def __init__(self, entries: Dict[str, dict], snapshot_commit: Optional[str],
+                 commit: Optional[str] = None):
+        self.entries: Dict[str, dict] = {p: dict(e) for p, e in entries.items()}
+        self.snapshot_commit = snapshot_commit
+        self.commit = commit
+
+    def _ready(self) -> Optional[str]:
+        if self.commit is None:
+            return "no_commit"
+        if not (isinstance(self.commit, str)
+                and re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", self.commit)):
+            return "commit_absent"
+        if self.commit != self.snapshot_commit:
+            return "commit_absent"
+        return None
+
+    def blob(self, path: str) -> Tuple[Optional[bytes], str]:
+        why = self._ready()
+        if why:
+            return None, why
+        entry = self.entries.get(path)
+        if entry is None:
+            return None, "path_absent"
+        if entry.get("mode") not in self.BLOB_MODES:
+            return None, "not_a_blob"
+        data = entry.get("bytes")
+        size = entry.get("size")
+        if size is None and data is not None:
+            size = len(data)
+        if data is None or (size is not None and size > MAX_RECEIPT_BYTES):
+            return None, "receipt_too_large"
+        return data, "ok"
+
+    def find_sha256(self, digest: str) -> Tuple[Optional[bytes], str]:
+        why = self._ready()
+        if why:
+            return None, why
+        for path in sorted(self.entries):
+            entry = self.entries[path]
+            data = entry.get("bytes")
+            if entry.get("mode") in self.BLOB_MODES and data is not None and _sha256(data) == digest:
+                return data, "ok"
+        return None, "prereg_not_in_tree"
+
+    @classmethod
+    def from_memory(cls, tree: MemoryTree) -> SnapshotTree:
+        """The snapshot a ``MemoryTree`` is: every file a regular blob, at the handle's commit."""
+        entries = {p: {"mode": "100644", "size": len(b), "sha256": _sha256(b), "bytes": b}
+                   for p, b in tree.files.items()}
+        return cls(entries, tree.commit, commit=tree.commit)
 
 
 _PREREG_INDEX: Dict[Tuple[str, str], Dict[str, str]] = {}

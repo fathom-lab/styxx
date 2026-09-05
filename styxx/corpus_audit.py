@@ -29,6 +29,7 @@ import tempfile
 from pathlib import Path
 
 from styxx.certify import certify_doc
+from styxx import receipt_binding as _rb
 
 # restore styxx.certify (the provenance function) over the submodule the line
 # above just setattr'd onto the package — see the twin note in styxx/seal.py.
@@ -250,17 +251,133 @@ def _doc_for(cert_path: Path) -> Path:
     return cert_path.with_name(cert_path.name.replace(".certificate.json", ".md"))
 
 
+def _binding_for(repo, cert_path: Path, cert: dict, resolved: dict, doc: Path) -> dict:
+    """SPEC_oath_receipt_binding R3 + R4: every citation's cell, and whether the certificate
+    stands over the bytes it swore to. Reporting only — no live verdict reads this."""
+    try:
+        cl = _rb.classify_certificate(repo, cert_path, cert, resolved)
+    except _rb.RepoUnavailable as e:
+        return {"available": False, "reason": str(e)}
+    cl["available"] = True
+    cl["stands_over_sworn_bytes"] = None
+    try:
+        sworn, why = _rb.sworn_bytes_at_issue(repo, cert_path, cl, resolved)
+    except _rb.RepoUnavailable as e:
+        sworn, why = None, str(e)[:200]
+    if sworn is None:
+        cl["stands_reason"] = why
+    else:
+        # The bytes at the issuing commit, re-certified under the CURRENT verifier in a scratch
+        # directory outside the repository, so the mint-time binding block finds no repo and
+        # the verdict is a pure function of these bytes. Class comparison, as everywhere else.
+        with tempfile.TemporaryDirectory() as td:
+            tdp = Path(td)
+            d = tdp / doc.name
+            d.write_bytes(sworn["document"])
+            rps = []
+            for name, raw in sworn["receipts"].items():
+                (tdp / name).write_bytes(raw)
+                rps.append(tdp / name)
+            try:
+                at_issue = certify_doc(d, rps)
+                cl["verdict_over_sworn_bytes"] = at_issue["verdict"]
+                cl["stands_over_sworn_bytes"] = (verdict_class(at_issue["verdict"])
+                                                 == verdict_class(cert.get("verdict")))
+            except Exception as e:   # noqa: BLE001 — a re-derivation failure is a null, not a verdict
+                cl["stands_reason"] = f"re-derivation failed: {str(e)[:160]}"
+    return cl
+
+
+def open_history(root: Path, mode: str = "auto"):
+    """SPEC R5. ``(repo, None)`` when history can answer; ``(None, reason)`` when it cannot —
+    disabled, no git, not a repository, or a shallow clone (CI checks out at depth 1)."""
+    if mode == "off":
+        return None, "disabled (--history off)"
+    try:
+        repo = _rb.Repo(Path(root))
+        if repo.shallow:
+            repo.close()
+            return None, "shallow clone"
+        return repo, None
+    except _rb.RepoUnavailable as e:
+        return None, str(e)
+
+
+def _fold_binding(docs: list, repo, why) -> dict:
+    """Corpus totals for the five cells and the stands-over-sworn-bytes split; the
+    `unrecoverable` issuing commit is its own cell, as the plan asked."""
+    if repo is None:
+        return {"available": False, "reason": why}
+    cells = {c: 0 for c in _rb.CELLS}
+    doc_cells = {c: 0 for c in _rb.DOCUMENT_CELLS}
+    stands = {"true": 0, "false": 0, "null": 0}
+    reasons: dict = {}
+    n_unrec = n_regen = n_unbacked = n_not_standing = n_with = n_doc_moved = 0
+    for d in docs:
+        b = d.get("receipt_binding")
+        if not b or not b.get("available"):
+            continue
+        n_with += 1
+        for c, n in b["cells"].items():
+            cells[c] += n
+        dc = (b.get("document") or {}).get("cell")
+        if dc in doc_cells:
+            doc_cells[dc] += 1
+        if dc == "moved":
+            n_doc_moved += 1
+        if b.get("issuing_commit") is None:
+            n_unrec += 1
+        s = b.get("stands_over_sworn_bytes")
+        stands["true" if s is True else "false" if s is False else "null"] += 1
+        if s is None and b.get("stands_reason"):
+            reasons[b["stands_reason"]] = reasons.get(b["stands_reason"], 0) + 1
+        moved = b["cells"]["at_issue"] + b["cells"]["elsewhere"]
+        if moved and s is True:
+            n_regen += 1
+        if b["cells"]["unbacked"]:
+            n_unbacked += 1
+        if s is False:
+            n_not_standing += 1
+    return {"available": True, "certificates_total": len(docs), "certificates_classified": n_with,
+            "citations": cells, "documents": doc_cells,
+            "certificates_issuing_commit_unrecoverable": n_unrec,
+            "certificates_receipt_regenerated_and_standing": n_regen,
+            "certificates_with_unbacked_citation": n_unbacked,
+            "certificates_document_moved": n_doc_moved,
+            "certificates_not_standing_over_sworn_bytes": n_not_standing,
+            "stands_over_sworn_bytes": stands, "stands_null_reasons": reasons,
+            "reading": ("a citation's cell says where the bytes the certificate swore to are, "
+                        "relative to the audit root (a receipt that sits outside the root but "
+                        "in the working tree reads same with a note); the document cell says the "
+                        "same of the document; stands_over_sworn_bytes says whether the current "
+                        "verifier reproduces the recorded verdict class over the document and "
+                        "receipt bytes at the issuing commit, and is null with a reason whenever "
+                        "those bytes cannot all be fetched. None of it is a verdict about the "
+                        "document; false with every byte in place is the verifier having moved "
+                        "(SKEW), not a binding defect.")}
+
+
 def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
-                   search_root: Path | None = None) -> dict:
-    """Re-certify one document under the current verifier. Optionally run the tamper battery."""
+                   search_root: Path | None = None, history=None) -> dict:
+    """Re-certify one document under the current verifier. Optionally run the tamper battery.
+
+    *history* is an open ``receipt_binding.Repo`` (or None): with it, the record carries the
+    SPEC_oath_receipt_binding cells for every citation; without it the field is absent.
+    """
     cert = json.loads(cert_path.read_text(encoding="utf-8"))
     doc = _doc_for(cert_path)
     rec = {"certificate": cert_path.name, "document": doc.name,
            "recorded_verdict": cert.get("verdict")}
+    receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
+    # SPEC_oath_receipt_binding: computed BEFORE the missing-document and no-receipts returns,
+    # because a certificate whose document or receipts have gone is exactly the one whose
+    # binding history matters most (battery B-10).
+    if history is not None:
+        rec["receipt_binding"] = _binding_for(history, cert_path, cert,
+                                              {p.name: p for p in receipts}, doc)
     if not doc.exists():
         rec.update(status="MISSING_DOC", live_verdict=None)
         return rec
-    receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
     rec["receipt_drift"] = drift
     rec["missing_receipts"] = missing
     # WHY each one is missing, and whether this verdict is being computed from partial evidence.
@@ -368,10 +485,22 @@ def _fold_epistemics(docs: list) -> dict:
     }
 
 
-def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
-    """Audit every certificate under *root*; return per-doc records + a corpus summary."""
-    docs = [audit_document(cp, tamper, seed, search_root=root)
-            for cp in discover_certificates(root)]
+def audit_corpus(root: Path, tamper: bool = False, seed: int = 1,
+                 history: str = "auto") -> dict:
+    """Audit every certificate under *root*; return per-doc records + a corpus summary.
+
+    *history* is ``auto`` or ``on`` (binding cells when the root sits in a full git clone; the
+    reason printed when it does not — the two differ only in the CLI's exit code, where ``on``
+    exits 2 on an unavailable history) or ``off``. The summary's verdict counters are identical
+    in every mode — SPEC_oath_receipt_binding R5.
+    """
+    repo, why = open_history(root, history)
+    try:
+        docs = [audit_document(cp, tamper, seed, search_root=root, history=repo)
+                for cp in discover_certificates(root)]
+    finally:
+        if repo is not None:
+            repo.close()
     held = sum(1 for d in docs if verdict_class(d.get("live_verdict")) == "OATH-HELD")
     failed = sum(1 for d in docs if verdict_class(d.get("live_verdict")) == "OATH-FAILED")
     unresolved = sum(1 for d in docs if d.get("status") in ("MISSING_DOC", "NO_RECEIPTS"))
@@ -388,7 +517,8 @@ def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
                "unresolved": unresolved, "verdict_changed": changed, "receipt_drift": drifted,
                "incomplete_receipts": incomplete, "receipt_changed": changed_receipts,
                "uncovered_documents": uncovered_docs, "uncovered_spans": uncovered_spans,
-               "epistemics": _fold_epistemics(docs)}
+               "epistemics": _fold_epistemics(docs),
+               "binding": _fold_binding(docs, repo, why)}
     if tamper:
         tot = {"n_mutants": 0, "caught": 0, "false_verify": 0, "abstain_degrade": 0}
         for d in docs:
@@ -407,8 +537,11 @@ def main(argv=None) -> int:
     ap.add_argument("--tamper", action="store_true", help="also run the single-digit tamper battery")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--json", default=None, help="write the full report to this path")
+    ap.add_argument("--history", choices=("auto", "on", "off"), default="auto",
+                    help="receipt-binding cells from git history (SPEC_oath_receipt_binding); "
+                         "auto = when the root is in a full clone; the verdict line never changes")
     a = ap.parse_args(argv)
-    report = audit_corpus(Path(a.root), tamper=a.tamper, seed=a.seed)
+    report = audit_corpus(Path(a.root), tamper=a.tamper, seed=a.seed, history=a.history)
     s = report["summary"]
     print(f"corpus {s['root']}: {s['n_certificates']} certificates | "
           f"HELD {s['held']}  FAILED {s['failed']}  unresolved {s['unresolved']}  "
@@ -419,6 +552,25 @@ def main(argv=None) -> int:
     print(f"  uncovered: {s.get('uncovered_spans', 0)} numeric spans across "
           f"{s.get('uncovered_documents', 0)} documents that the extractor never examined "
           f"(reporting only; no verdict moved)")
+    # SPEC_oath_receipt_binding R5: the binding line sits beneath the uncovered line and beside
+    # the verdict line, never inside it; when history cannot answer, the reason is printed.
+    b = s.get("binding") or {}
+    if not b.get("available"):
+        print(f"  binding: history unavailable ({b.get('reason', '?')})")
+    else:
+        c = b["citations"]
+        dc = b["documents"]
+        st = b["stands_over_sworn_bytes"]
+        print(f"  binding: over {b['certificates_classified']}/{b['certificates_total']} "
+              f"certificates — citations same {c['same']}  at-issue {c['at_issue']}  "
+              f"elsewhere {c['elsewhere']}  unbacked {c['unbacked']}  "
+              f"unrecoverable {c['unrecoverable']} | documents same {dc['same']}  "
+              f"at-issue {dc['at_issue']}  moved {dc['moved']} | certificates: "
+              f"issuing-commit-unrecoverable {b['certificates_issuing_commit_unrecoverable']}  "
+              f"regenerated-and-standing {b['certificates_receipt_regenerated_and_standing']}  "
+              f"unbacked {b['certificates_with_unbacked_citation']}  "
+              f"stands-over-sworn-bytes {st['true']}/{st['true'] + st['false']} "
+              f"(null {st['null']})")
     ep = s.get("epistemics", {})
     if ep.get("verified_total"):
         print(f"  epistemics: {ep['verified_total']} verified | "
@@ -445,6 +597,10 @@ def main(argv=None) -> int:
     if a.json:
         Path(a.json).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(f"-> {a.json}")
+    if a.history == "on" and not (s.get("binding") or {}).get("available"):
+        # a caller who asked for history and did not get it is told so by the exit code, not
+        # only by a line — the verdict counters above are still the audit's answer
+        return 2
     return 1 if s["failed"] else 0
 
 

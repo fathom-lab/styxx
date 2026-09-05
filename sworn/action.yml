@@ -1,0 +1,111 @@
+name: "styxx sworn (report-only)"
+description: >-
+  Report-only until the measurement prices FAILED. Runs the project's tests after the turn,
+  mints a sworn/manifest/0.2 file from the JUnit report and the event through styxx.harness,
+  verifies the pull request body and every changed sworn document against it at the head commit,
+  and writes a job summary with the rung and the harness string on every row. Exits 0 on every
+  verdict. On a pull request from a fork the minting job is the claimant's, so the manifest
+  declares L1, never L2. No network; nothing is committed; no input can fail the job.
+  Built to papers/sworn/SPEC_sworn_action_v01_2026_09_05.md.
+author: "Fathom Lab"
+branding:
+  icon: "file-text"
+  color: "gray-dark"
+
+inputs:
+  command:
+    description: >-
+      The command that runs the project's tests and writes JUnit XML to the path exported as
+      $SWORN_JUNIT (bash: --junitxml "$SWORN_JUNIT"). It is the workflow's own configuration and
+      the one string a shell sees; its exit status is recorded as a receipt, never inherited.
+    required: true
+  rung:
+    description: >-
+      The rung the workflow declares for the manifest: L2 (a job the base repository configured,
+      minting after the turn) or L1. Declared, never detected; lowered with a printed reason on a
+      fork pull request without base-pinned-workflow, and whenever after-turn-on-base is false.
+    required: false
+    default: "L2"
+  after-turn-on-base:
+    description: >-
+      The declaration L2 rests on: this job ran after the agent's turn ended, on a runner and from
+      a workflow file the agent could not write to. Set false if the agent can push to
+      .github/workflows on the base branch; the manifest is then minted at L1.
+    required: false
+    default: "true"
+  base-pinned-workflow:
+    description: >-
+      Declare that the workflow file came from the base branch. Only a pull_request_target
+      workflow can say so, and this action refuses that event; leave false.
+    required: false
+    default: "false"
+  junit:
+    description: >-
+      Where the command writes its report; exported to the command as $SWORN_JUNIT and handed to
+      the JUnit adapter as given, so it enters r4 as written here. A path relative to the
+      workspace keeps machine paths out of the receipt. Default: <out-dir>/junit.xml.
+    required: false
+    default: ""
+  out-dir:
+    description: "Where the manifests, receipts, documents, run.json and summary.md are written."
+    required: false
+    default: "${{ runner.temp }}/sworn"
+  timeout-minutes:
+    description: "Wall-clock limit for the command; a timeout is recorded (exit status 124), never a failure of the job."
+    required: false
+    default: "30"
+  python-version:
+    description: "Run actions/setup-python with this version before anything else; empty uses the job's Python."
+    required: false
+    default: ""
+  styxx-source:
+    description: >-
+      What to pip install to get styxx.sworn and styxx.harness. Default: the action's own checkout
+      (styxx.sworn is not in any release yet, so the plan says clone at a pinned commit, not pip
+      install). Empty skips the install because the job already installed it.
+    required: false
+    default: "${{ github.action_path }}/.."
+
+outputs:
+  manifest:
+    description: "Path of the composed manifest the documents were verified against."
+    value: ${{ steps.run.outputs.manifest }}
+  receipts-dir:
+    description: "Directory holding one verdict receipt per document."
+    value: ${{ steps.run.outputs.receipts-dir }}
+  out-dir:
+    description: "The output directory (manifests, receipts, documents, run.json, summary.md)."
+    value: ${{ steps.run.outputs.out-dir }}
+  rung:
+    description: "The rung the manifest was minted at (L2, or L1 with the reason in the summary)."
+    value: ${{ steps.run.outputs.rung }}
+  verdicts:
+    description: "JSON object: document name -> document verdict."
+    value: ${{ steps.run.outputs.verdicts }}
+
+runs:
+  using: "composite"
+  steps:
+    - if: ${{ inputs.python-version != '' }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - if: ${{ inputs.styxx-source != '' }}
+      shell: bash
+      env:
+        STYXX_SOURCE: ${{ inputs.styxx-source }}
+      run: python -m pip install --quiet "$STYXX_SOURCE"
+    - id: run
+      shell: bash
+      env:
+        # every input reaches python through the environment; the event payload is read from the
+        # event FILE by python. Attacker-controlled text (the body, file names) never touches a
+        # shell. The command is the workflow's own configuration and is the one string a shell sees.
+        SWORN_COMMAND: ${{ inputs.command }}
+        SWORN_RUNG: ${{ inputs.rung }}
+        SWORN_AFTER_TURN_ON_BASE: ${{ inputs.after-turn-on-base }}
+        SWORN_BASE_PINNED_WORKFLOW: ${{ inputs.base-pinned-workflow }}
+        SWORN_JUNIT: ${{ inputs.junit }}
+        SWORN_OUT_DIR: ${{ inputs.out-dir }}
+        SWORN_TIMEOUT_MINUTES: ${{ inputs.timeout-minutes }}
+      run: python "${{ github.action_path }}/sworn_action.py"

@@ -30,7 +30,7 @@ import re
 import sys
 import tempfile
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
@@ -47,6 +47,7 @@ __all__ = ["create_capsule", "create_capsule_diffgate", "verify_capsule", "main"
 
 SPEC = "styxx-oath/capsule/v0.1"
 SPEC_V02 = "styxx-oath/capsule/v0.2"
+SPEC_SWORN = "styxx-oath/capsule/sworn/v0.1"
 _PAYLOAD_ID = "oath-capsule"
 _BEGIN = f'<script type="application/json" id="{_PAYLOAD_ID}">'
 _END = "</script>"
@@ -170,10 +171,12 @@ def verify_capsule(path: Path) -> dict:
     spec = payload.get("spec")
     if spec == SPEC_V02:
         return _verify_capsule_v02(html, payload)
+    if spec == SPEC_SWORN:
+        return _verify_capsule_sworn(html, payload)
     if spec != SPEC:
         return {"ok": False, "stage": "spec",
                 "problems": [f"unknown capsule spec {spec!r} — this verifier knows "
-                             f"{SPEC} and {SPEC_V02}"]}
+                             f"{SPEC}, {SPEC_V02} and {SPEC_SWORN}"]}
 
     problems: List[str] = []
     advisory: List[str] = []
@@ -866,6 +869,288 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
 # CLI
 # ---------------------------------------------------------------------------------
 
+# =================================================================================
+# the sworn profile (SPEC_sworn_browser_verifier_v01_2026_09_05.md, B6)
+#
+# What it seals: the document bytes, the manifest the spans resolve against, the verdict receipt
+# styxx.sworn issued, and the browser verifier's own bytes. What it claims, and the words are the
+# plan's:
+#
+#     re-derives sworn span verdicts offline; a forger controlling the whole file passes both
+#     browser layers; the package at the named commit is the check
+#
+# Layer 1 (browser) re-derives the PORTABLE core — the receipt minus `verifier` and minus
+# `coverage`, which is the number the conformance vectors pin — and compares its digest to the
+# sealed one. It cannot check `verifier`, because that block names a Python build it has never
+# seen; layer 2 does. Neither layer makes the file honest: a forger who controls the whole file
+# controls both, and the package at the named commit is the check.
+# =================================================================================
+
+SWORN_REFUSALS = ("sworn_no_manifest", "sworn_receipt_mismatch", "sworn_manifest_mismatch",
+                  "sworn_tree_receipt", "sworn_document_mismatch")
+
+_SWORN_LABEL = ("re-derives sworn span verdicts offline; a forger controlling the whole file "
+                "passes both browser layers; the package at the named commit is the check")
+
+# the receipt fields that sit OUTSIDE the portable core: `digest`/`timestamp`/`coverage` travel
+# outside the receipt digest already (sworn R9), and `verifier` names a build a second
+# implementation cannot reproduce.
+_SWORN_OUTSIDE_CORE = ("digest", "timestamp", "coverage", "coverage_sha256", "verifier")
+
+
+def _sworn_verifier_js() -> bytes:
+    """The browser verifier's bytes, from the installed package."""
+    return (Path(__file__).parent / "_data" / "sworn_verify.js").read_bytes()
+
+
+def _sworn_portable_core(receipt: dict) -> dict:
+    return {k: v for k, v in receipt.items() if k not in _SWORN_OUTSIDE_CORE}
+
+
+def _sworn_core_sha256(receipt: dict) -> str:
+    from styxx.attestation import jcs
+    return _sha256(jcs(_sworn_portable_core(receipt)).encode("utf-8"))
+
+
+def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out: Path) -> Path:
+    """Mint a sworn capsule. Refuses, by name, rather than sealing something the browser could
+    only ever call UNRESOLVED — or something that does not re-derive here and now."""
+    from styxx.sworn import Manifest, issue_receipt, scan, verify
+    from styxx._version import __version__
+
+    doc_bytes = doc.read_bytes()
+    rec_obj = json.loads(receipt.read_text(encoding="utf-8"))
+    man_obj = json.loads(manifest.read_text(encoding="utf-8")) if manifest else None
+
+    # sworn_document_mismatch — the sealed bytes must be the bytes the receipt was issued over
+    if _sha256(doc_bytes) != (rec_obj.get("document") or {}).get("inline_sha256"):
+        raise SystemExit("REFUSED sworn_document_mismatch: the document bytes do not hash to the "
+                         "receipt's document.inline_sha256")
+
+    # sworn_tree_receipt — v0.1 seals no tree, so a path:/prereg: span could only be UNRESOLVED
+    sc = scan(doc_bytes)
+    for d in sc["declarations"]:
+        r = d.get("receipt") or ""
+        if r.startswith("path:") or r.startswith("prereg:"):
+            raise SystemExit(f"REFUSED sworn_tree_receipt: the span at {d['at']} names {r!r}; "
+                             "this profile seals no tree and the browser could only call it "
+                             "UNRESOLVED. Seal a document whose spans resolve against the "
+                             "manifest, or wait for a profile that carries a snapshot.")
+
+    # sworn_no_manifest — an rN with nothing to resolve against
+    needs_manifest = any((d.get("receipt") or "").startswith("r") and
+                         not (d.get("receipt") or "").startswith(("path:", "prereg:"))
+                         for d in sc["declarations"] if d.get("receipt"))
+    if needs_manifest and man_obj is None:
+        raise SystemExit("REFUSED sworn_no_manifest: the document binds an rN span and no "
+                         "manifest was given to seal beside it")
+
+    man = Manifest.from_dict(man_obj) if man_obj is not None else None
+
+    # sworn_manifest_mismatch — the receipt must name the manifest being sealed
+    if rec_obj.get("manifest_digest") != (man.digest_or_none() if man is not None else None):
+        raise SystemExit("REFUSED sworn_manifest_mismatch: the receipt names manifest digest "
+                         f"{rec_obj.get('manifest_digest')!r} and the sealed manifest digests to "
+                         f"{man.digest_or_none() if man is not None else None!r}")
+
+    # sworn_receipt_mismatch — the receipt must re-derive from the sealed bytes, here and now
+    live = verify(doc_bytes, name=(rec_obj.get("document") or {}).get("name", ""),
+                  manifest=man, commit=rec_obj.get("commit"))
+    if _sworn_core_sha256(issue_receipt(live)) != _sworn_core_sha256(rec_obj):
+        raise SystemExit("REFUSED sworn_receipt_mismatch: the receipt's core does not re-derive "
+                         "from the sealed bytes at the installed verifier "
+                         f"(live {live['document_verdict']} {live['counts']} vs sealed "
+                         f"{rec_obj.get('document_verdict')} {rec_obj.get('counts')})")
+
+    js = _sworn_verifier_js()
+    payload = {
+        "spec": SPEC_SWORN,
+        "created": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "label": _SWORN_LABEL,
+        "document": {"name": doc.name, "b64": _b64(doc_bytes),
+                     "sha256": _sha256(doc_bytes)},
+        "manifest": man_obj,
+        "receipt": rec_obj,
+        "core_sha256": _sworn_core_sha256(rec_obj),
+        "verifier_js": {"sha256": _sha256(js), "b64": _b64(js)},
+        "verifier": {"styxx_version": __version__,
+                     "sworn_sha256": (rec_obj.get("verifier") or {}).get("sworn_sha256"),
+                     "pip": f"styxx=={__version__}"},
+    }
+    # LF, explicitly: the verifier is sealed as bytes AND inlined in the page, and a
+    # platform newline would make the inlined copy differ from the sealed one on disk.
+    out.write_bytes(_render_html_sworn(payload, js.decode("utf-8")).encode("utf-8"))
+
+    # A CAPSULE THAT CANNOT VERIFY MUST NOT EXIST — the v0.1 rule, kept.
+    report = verify_capsule(out)
+    if not report.get("ok"):
+        problems = report.get("problems") or [report.get("error", "unknown")]
+        out.unlink(missing_ok=True)
+        raise SystemExit("REFUSED: the minted capsule does not verify, so it was not kept.\n"
+                         + "\n".join(f"  - {p}" for p in problems[:6]))
+    return out
+
+
+def _verify_capsule_sworn(html: str, payload: dict) -> dict:
+    """Layer 2: re-run styxx.sworn over the sealed bytes. INSTRUMENT SKEW is named apart from
+    tamper — the first is the instrument having moved, the second is the bytes having moved."""
+    from styxx.sworn import Manifest, issue_receipt, verify
+
+    problems: List[str] = []
+    advisory: List[str] = []
+    rec = payload.get("receipt") or {}
+    out = {"ok": False, "spec": SPEC_SWORN,
+           "document": (payload.get("document") or {}).get("name"),
+           "verdict": rec.get("document_verdict"), "counts": rec.get("counts"),
+           "problems": problems, "advisory": advisory, "label": _SWORN_LABEL}
+
+    try:
+        doc_bytes = base64.b64decode((payload["document"])["b64"], validate=True)
+    except Exception as e:                                  # noqa: BLE001
+        problems.append(f"document bytes are not decodable: {e}")
+        return out
+    if _sha256(doc_bytes) != (payload["document"]).get("sha256"):
+        problems.append("document bytes != payload document.sha256 (tamper)")
+    if _sha256(doc_bytes) != (rec.get("document") or {}).get("inline_sha256"):
+        problems.append("document bytes != receipt document.inline_sha256 (tamper)")
+
+    # the sealed browser verifier must be the one inlined in the page, byte for byte
+    try:
+        js = base64.b64decode((payload["verifier_js"])["b64"], validate=True)
+    except Exception as e:                                  # noqa: BLE001
+        problems.append(f"the sealed browser verifier is not decodable: {e}")
+        js = b""
+    if js and _sha256(js) != (payload["verifier_js"]).get("sha256"):
+        problems.append("the sealed browser verifier does not hash to its sealed digest (tamper)")
+    if js and js.decode("utf-8", errors="replace") not in html:
+        problems.append("the browser verifier inlined in the page is not the sealed one (tamper) "
+                        "— layer 1 ran something this capsule did not seal")
+    installed = _sworn_verifier_js()
+    if js and js != installed:
+        advisory.append("INSTRUMENT SKEW: the sealed browser verifier differs from the installed "
+                        "one; the sealed bytes are what layer 1 ran")
+
+    man_obj = payload.get("manifest")
+    man = None
+    if man_obj is not None:
+        try:
+            man = Manifest.from_dict(man_obj)
+        except SystemExit as e:
+            problems.append(f"the sealed manifest does not load: {e}")
+    if rec.get("manifest_digest") != (man.digest_or_none() if man is not None else None):
+        problems.append("the receipt's manifest_digest is not the sealed manifest's (tamper)")
+
+    try:
+        live = verify(doc_bytes, name=(rec.get("document") or {}).get("name", ""),
+                      manifest=man, commit=rec.get("commit"))
+        live_rec = issue_receipt(live)
+    except SystemExit as e:
+        problems.append(f"the sealed bytes do not verify at the installed instrument: {e}")
+        return out
+
+    sealed_build = (rec.get("verifier") or {}).get("sworn_sha256")
+    live_build = (live_rec.get("verifier") or {}).get("sworn_sha256")
+    same_build = sealed_build == live_build
+    if not same_build:
+        advisory.append("INSTRUMENT SKEW: the receipt was issued by styxx.sworn "
+                        f"{str(sealed_build)[:12]} and this is {str(live_build)[:12]}")
+    if _sworn_core_sha256(live_rec) != _sworn_core_sha256(rec):
+        problems.append(
+            "the verdict core does not re-derive from the sealed bytes"
+            + (" — and the instrument moved, so this is SKEW, not tamper" if not same_build
+               else " under the same build, which is tamper")
+            + f" (live {live['document_verdict']} {live['counts']} vs sealed "
+              f"{rec.get('document_verdict')} {rec.get('counts')})")
+    if payload.get("core_sha256") != _sworn_core_sha256(rec):
+        problems.append("the sealed core_sha256 is not the receipt's own (tamper) — layer 1 "
+                        "compares against it")
+
+    out["ok"] = not problems
+    out["same_build"] = same_build
+    out["core_sha256"] = payload.get("core_sha256")
+    return out
+
+
+def _render_html_sworn(payload: dict, js_source: str) -> str:
+    """The sworn capsule page. Layer 1 loads the sealed verifier and re-derives the portable core
+    in the reader's browser; nothing here is a claim that the file is honest."""
+    body = json.dumps(payload, indent=1).replace("<", "\\u003c")
+    doc_name = (payload.get("document") or {}).get("name", "document")
+    rec = payload.get("receipt") or {}
+    counts = rec.get("counts") or {}
+    return _SWORN_HTML.replace("__PAYLOAD__", body).replace("__JS__", js_source) \
+        .replace("__DOCNAME__", doc_name) \
+        .replace("__VERDICT__", str(rec.get("document_verdict"))) \
+        .replace("__COUNTS__", " ".join(f"{k.lower()}={v}" for k, v in counts.items())) \
+        .replace("__LABEL__", _SWORN_LABEL) \
+        .replace("__PIP__", (payload.get("verifier") or {}).get("pip", "styxx"))
+
+
+_SWORN_HTML = """<!doctype html>
+<meta charset="utf-8">
+<title>sworn capsule — __DOCNAME__</title>
+<style>
+ body{font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;margin:2rem auto;max-width:52rem;
+      color:#111;background:#fff}
+ h1{font-size:1.1rem} .k{color:#555} pre{white-space:pre-wrap;word-break:break-word}
+ .box{border:1px solid #ccc;padding:.8rem 1rem;margin:1rem 0}
+ .ok{border-color:#0a0} .bad{border-color:#c00} .note{color:#555;font-size:.92em}
+ code{background:#f4f4f4;padding:0 .2em}
+</style>
+<h1>sworn capsule — __DOCNAME__</h1>
+<p class="k">sealed verdict <b>__VERDICT__</b> &middot; __COUNTS__</p>
+<div class="box note"><b>What this page is.</b> __LABEL__<br>
+Layer 1 below re-derives the verdict core from the sealed bytes, in your browser, with no network.
+Layer 2 is <code>python -m styxx.capsule verify THIS_FILE</code> after <code>__PIP__</code>, and it
+is the one that checks the build the receipt names.</div>
+<div id="layer1" class="box">layer 1: running…</div>
+<h2 style="font-size:1rem">the document</h2>
+<pre id="doc" class="box"></pre>
+<script type="application/json" id="oath-capsule">__PAYLOAD__</script>
+<script>__JS__</script>
+<script>
+(function () {
+  const api = globalThis.swornVerifyApi;
+  const el = document.getElementById("layer1");
+  const P = JSON.parse(document.getElementById("oath-capsule").textContent);
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const lines = [];
+  let ok = true;
+  try {
+    const doc = b64(P.document.b64);
+    document.getElementById("doc").textContent = new TextDecoder().decode(doc);
+    const jsBytes = b64(P.verifier_js.b64);
+    const jsOk = api.sha256Bytes(jsBytes) === P.verifier_js.sha256;
+    lines.push((jsOk ? "OK  " : "BAD ") + "the sealed verifier hashes to its sealed digest");
+    ok = ok && jsOk;
+    const docOk = api.sha256Bytes(doc) === P.document.sha256;
+    lines.push((docOk ? "OK  " : "BAD ") + "the document hashes to its sealed digest");
+    ok = ok && docOk;
+    const man = P.manifest === null || P.manifest === undefined ? null
+              : api.jsonPlain(JSON.stringify(P.manifest));
+    const core = api.swornVerify(doc, man,
+      { name: P.receipt.document.name, commit: P.receipt.commit });
+    const got = api.coreDigest(core);
+    const coreOk = got === P.core_sha256;
+    lines.push((coreOk ? "OK  " : "BAD ") + "the verdict core re-derives here: " +
+               core.document_verdict + " " + JSON.stringify(core.counts));
+    ok = ok && coreOk;
+    if (!coreOk) lines.push("     sealed " + P.core_sha256 + "\n     here   " + got);
+  } catch (e) {
+    ok = false;
+    lines.push("BAD the browser verifier raised: " + e);
+  }
+  el.className = "box " + (ok ? "ok" : "bad");
+  el.innerHTML = "<b>layer 1 — " + (ok ? "re-derived in this browser" : "DID NOT re-derive") +
+    "</b><pre>" + lines.join("\n").replace(/[&<>]/g, c =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])) + "</pre>" +
+    "<span class=note>A forger controlling this whole file controls this layer too. " +
+    "Layer 2 is the check.</span>";
+})();
+</script>
+"""
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
         prog="styxx.capsule",
@@ -879,15 +1164,23 @@ def main(argv=None) -> int:
     c.add_argument("--cert", default=None, help="certificate JSON — selects v0.1")
     c.add_argument("--gate", default=None,
                    help="optional diffgate GATE.json to cross-check (v0.2)")
+    c.add_argument("--sworn-receipt", default=None,
+                   help="a styxx.sworn verdict receipt — selects the sworn profile; the "
+                        "positionals are then DOC and (optionally) the manifest")
     c.add_argument("--out", default=None)
     v = sub.add_parser("verify", help="layer-2: re-run the real instrument on a capsule")
     v.add_argument("capsule")
     a = ap.parse_args(argv)
 
     if a.cmd == "create":
-        if a.cert and a.gate:
-            ap.error("--cert (v0.1) and --gate (v0.2) are mutually exclusive")
+        if sum(bool(x) for x in (a.cert, a.gate, a.sworn_receipt)) > 1:
+            ap.error("--cert (v0.1), --gate (v0.2) and --sworn-receipt (sworn) are exclusive")
         out = Path(a.out) if a.out else Path(a.document).with_suffix(".capsule.html")
+        if a.sworn_receipt:
+            man = Path(a.inputs[0]) if a.inputs and a.inputs[0] != "-" else None
+            p = create_capsule_sworn(Path(a.document), man, Path(a.sworn_receipt), out)
+            print(f"capsule minted -> {p}")
+            return 0
         if a.cert:
             p = create_capsule(Path(a.document), [Path(r) for r in a.inputs],
                                Path(a.cert), out)
@@ -901,6 +1194,20 @@ def main(argv=None) -> int:
         return 0
 
     rep = verify_capsule(Path(a.capsule))
+    if rep.get("spec") == SPEC_SWORN:
+        print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
+        print(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        for adv in rep.get("advisory", []):
+            print(f"  advisory: {adv}")
+        if rep["ok"]:
+            print("VERIFIED: the sealed bytes re-derive the sealed verdict core at the installed "
+                  "instrument.")
+            print(f"  {rep.get('label')}")
+            return 0
+        print("CAPSULE FAILS VERIFICATION:")
+        for p_ in rep.get("problems", []):
+            print(f"  - {p_}")
+        return 1
     if rep.get("spec") == SPEC_V02:
         print(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
         print(f"embedded gate verdict: {rep.get('verdict')}")
