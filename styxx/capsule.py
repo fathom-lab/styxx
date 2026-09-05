@@ -979,8 +979,7 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
     }
     # LF, explicitly: the verifier is sealed as bytes AND inlined in the page, and a
     # platform newline would make the inlined copy differ from the sealed one on disk.
-    out.write_text(_render_html_sworn(payload, js.decode("utf-8")), encoding="utf-8",
-                   newline="\n")
+    out.write_bytes(_render_html_sworn(payload, js.decode("utf-8")).encode("utf-8"))
 
     # A CAPSULE THAT CANNOT VERIFY MUST NOT EXIST — the v0.1 rule, kept.
     report = verify_capsule(out)

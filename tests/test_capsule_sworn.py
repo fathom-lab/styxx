@@ -53,7 +53,7 @@ def _receipt(tmp: Path, doc: Path, man: Path | None, name="r.sworn-receipt.json"
     m = Manifest.from_dict(json.loads(man.read_text(encoding="utf-8"))) if man else None
     core = verify(doc.read_bytes(), name=doc.name, manifest=m)
     p = tmp / name
-    p.write_text(json.dumps(issue_receipt(core), indent=1) + "\n", encoding="utf-8", newline="\n")
+    p.write_bytes((json.dumps(issue_receipt(core), indent=1) + "\n").encode("utf-8"))
     return p
 
 
@@ -187,7 +187,7 @@ def test_sworn_manifest_mismatch(tmp_path):
     other = json.loads(man.read_text(encoding="utf-8"))
     other["turn"] = "a different turn"                 # a different manifest, a different digest
     m2 = tmp_path / "m2.manifest.json"
-    m2.write_text(json.dumps(other, indent=1) + "\n", encoding="utf-8", newline="\n")
+    m2.write_bytes((json.dumps(other, indent=1) + "\n").encode("utf-8"))
     with pytest.raises(SystemExit) as e:
         create_capsule_sworn(doc, m2, rec, tmp_path / "x.capsule.html")
     assert "sworn_manifest_mismatch" in str(e.value)
@@ -199,7 +199,7 @@ def test_sworn_receipt_mismatch(tmp_path):
     rec = _receipt(tmp_path, doc, man)
     obj = json.loads(rec.read_text(encoding="utf-8"))
     obj["counts"]["HELD"] = 99                          # a receipt that no longer re-derives
-    rec.write_text(json.dumps(obj, indent=1) + "\n", encoding="utf-8", newline="\n")
+    rec.write_bytes((json.dumps(obj, indent=1) + "\n").encode("utf-8"))
     with pytest.raises(SystemExit) as e:
         create_capsule_sworn(doc, man, rec, tmp_path / "x.capsule.html")
     assert "sworn_receipt_mismatch" in str(e.value)
