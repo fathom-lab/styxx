@@ -57,3 +57,10 @@ papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.md -text
 papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.sworn.json -text
 papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.sworn-receipt.json -text
 papers/charon/** -text
+
+# Conformance vectors are BYTE-PINNED: every blob in conformance/sworn/blobs.json is
+# named by its sha256 and the JSON around it is LF; the vectors carry CRLF, lone CR, BOM,
+# NUL and invalid UTF-8 inside base64. This box has core.autocrlf=true, and without this
+# line a checkout would rewrite the JSON and a re-hash would no longer match the index.
+# tests/test_sworn_conformance.py fails if any tracked file under conformance/ is not -text.
+conformance/** -text
