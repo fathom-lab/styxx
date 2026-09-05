@@ -361,7 +361,7 @@
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "6865391718fbbd42640111205abd630781b87da560400d343f7f96e990547e68",
+  "sworn_sha256": "bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -396,7 +396,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "4f68f0967dd63677b5a1546ea2091c91c370e049c55a037d5b87e4dc8bf4346b",
+ "digest": "e0574e541f2bc15ebb042e17961ac88f9d26ec86f6dad24646e77d6cf012254a",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -423,5 +423,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "372343a8883a177f92a1e392dacf416ca83f31ba0aa9b9943c4c3975d571a5dd",
- "timestamp": "2026-09-05T21:16:22Z"
+ "timestamp": "2026-09-05T21:56:02Z"
 }
