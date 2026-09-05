@@ -1,0 +1,10 @@
+{
+ "doc_id": "SYN-03",
+ "family": "claude",
+ "dry_run": true,
+ "transport": "canned",
+ "twin_text_changed": false,
+ "spans_original": 6,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\panel\\papers\\sworn\\measurement\\dryrun\\seat_outputs\\claude\\trivial\\SYN-03.trivial-twin.json"
+}

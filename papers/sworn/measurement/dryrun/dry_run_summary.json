@@ -1,0 +1,337 @@
+{
+ "banner": "DRY RUN - no quotable number",
+ "dry_run": true,
+ "quotable": false,
+ "population": {
+  "documents": 3,
+  "excluded": 2
+ },
+ "packets": {
+  "items_L": 33,
+  "items_R": 48,
+  "windows": 3,
+  "decoys_L": 30,
+  "decoys_R": 30,
+  "oversize_windows": 0
+ },
+ "canaries": {
+  "capacity": {
+   "SYN-01": {
+    "A": 3,
+    "B": 1,
+    "C": 2,
+    "total": 6,
+    "rejected_by_form": 0
+   },
+   "SYN-02": {
+    "A": 3,
+    "B": 1,
+    "C": 2,
+    "total": 6,
+    "rejected_by_form": 0
+   },
+   "SYN-03": {
+    "A": 3,
+    "B": 1,
+    "C": 2,
+    "total": 6,
+    "rejected_by_form": 0
+   }
+  },
+  "pooled_n": 18,
+  "smallest_n_clearing_bar_at_k_eq_n": {
+   "misses_0": 73,
+   "misses_1": 110,
+   "misses_2": 142,
+   "misses_3": 173,
+   "misses_5": 230
+  }
+ },
+ "seats": {
+  "claude/L-seat1": {
+   "items": 33,
+   "unparsed": 0
+  },
+  "local/L-seat1": {
+   "items": 33,
+   "unparsed": 0
+  },
+  "claude/L-seat2": {
+   "items": 33,
+   "unparsed": 1
+  },
+  "local/L-seat2": {
+   "items": 33,
+   "unparsed": 0
+  },
+  "claude/L-seat3": {
+   "items": 33,
+   "unparsed": 0
+  },
+  "local/L-seat3": {
+   "items": 33,
+   "unparsed": 0
+  },
+  "claude/R-seat1": {
+   "items": 48,
+   "unparsed": 0
+  },
+  "local/R-seat1": {
+   "items": 48,
+   "unparsed": 0
+  },
+  "claude/R-seat2": {
+   "items": 48,
+   "unparsed": 0
+  },
+  "local/R-seat2": {
+   "items": 48,
+   "unparsed": 0
+  },
+  "claude/R-seat3": {
+   "items": 48,
+   "unparsed": 0
+  },
+  "local/R-seat3": {
+   "items": 48,
+   "unparsed": 0
+  }
+ },
+ "trivial_twins": {
+  "SYN-01": {
+   "spans_original": 6,
+   "spans_twin": 1,
+   "twin_text_changed": false
+  },
+  "SYN-02": {
+   "spans_original": 6,
+   "spans_twin": 1,
+   "twin_text_changed": false
+  },
+  "SYN-03": {
+   "spans_original": 6,
+   "spans_twin": 1,
+   "twin_text_changed": false
+  }
+ },
+ "gates": {
+  "G_D": {
+   "L": {
+    "claude": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "NOT": {
+       "n": 15,
+       "correct": 15
+      },
+      "LOAD-BEARING": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    },
+    "local": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "NOT": {
+       "n": 15,
+       "correct": 15
+      },
+      "LOAD-BEARING": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    }
+   },
+   "R": {
+    "claude": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "YES": {
+       "n": 15,
+       "correct": 15
+      },
+      "NO": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    },
+    "local": {
+     "present": true,
+     "correct_overall": 0,
+     "n_overall": 30,
+     "per_side": {
+      "YES": {
+       "n": 15,
+       "correct": 0
+      },
+      "NO": {
+       "n": 15,
+       "correct": 0
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": false,
+     "title": "void panel; the void is the result",
+     "proposed_unsigned": true
+    }
+   }
+  },
+  "G_F": {
+   "L": 2,
+   "R": 1
+  },
+  "G_C": {
+   "k": 17,
+   "n": 18,
+   "per_twin": {
+    "SYN-01": {
+     "k": 5,
+     "n": 6,
+     "malformed": 1,
+     "unresolved": 0,
+     "held": 0
+    },
+    "SYN-02": {
+     "k": 6,
+     "n": 6,
+     "malformed": 0,
+     "unresolved": 0,
+     "held": 0
+    },
+    "SYN-03": {
+     "k": 6,
+     "n": 6,
+     "malformed": 0,
+     "unresolved": 0,
+     "held": 0
+    }
+   },
+   "wilson95": [
+    "DRYRUN-NO-RATE",
+    "DRYRUN-NO-RATE"
+   ]
+  },
+  "withheld": [
+   "G_P"
+  ]
+ },
+ "cells": {
+  "final_labels": {
+   "LOAD-BEARING": 21,
+   "NOT": 30,
+   "UNSURE": 0,
+   "NO-MAJORITY": 3,
+   "FAMILY-SPLIT": 0,
+   "NO-LABEL": 0
+  },
+  "labels": "final",
+  "unlocated_brackets": {
+   "claude": 27,
+   "local": 28
+  },
+  "located_brackets": {
+   "claude": 536,
+   "local": 539
+  },
+  "located_by_second_pass": {
+   "claude": 0,
+   "local": 1
+  },
+  "unparsed_items": {
+   "claude": 1,
+   "local": 0
+  },
+  "panel_R_finals": {
+   "YES": 18,
+   "NO": 0,
+   "UNSURE": 0,
+   "NO-MAJORITY": 0,
+   "FAMILY-SPLIT": 0
+  },
+  "panel_R_unparsed_items": {
+   "claude": 0,
+   "local": 0
+  }
+ },
+ "files": {
+  "decoys_L.json": "98cf085af505d8cedde728d651ea7888a304d8c657f59367d906339097a4d937",
+  "dry_run_result.json": "1103e9a865544cee52eb5cdb165cae2b40b599d7eed2cf08a28def2e53ce8a9b",
+  "keys/sworn_measurement_canary_key.sha256": "da561379e6ecc0df44b93e0b23682e4c58401ad493d28a0a9e73c6d3e897414a",
+  "keys/sworn_measurement_key_L.sha256": "aa138b549e9f50d39730911b4f128775a51ac9460db8b9ed97940e99676ec910",
+  "keys/sworn_measurement_key_R.sha256": "40c6209256e34fccc557fc6f9242b784b9662e548b442c643f0a7fef1316f83c",
+  "packet_L.json": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+  "packet_R.json": "a4f8d70fa4380d5a78d87fde788606c1a7031f9263db6554d751c71aab0ed584",
+  "packets_digest.txt": "d6295657f58543cca03d2cf8b65c4fb546f8f41b162ebe96d8427be65b773e8b",
+  "population.json": "50716b1daee0b9eff2f5ec559ddb5cb2c72c277d983523b6754e7bab39255922",
+  "seat_outputs/claude/L-seat1.json": "aef83f1046bfe2068b7964020b789968e9633420fad61d992c5f397a8f69d716",
+  "seat_outputs/claude/L-seat2.json": "8fc070b016020532ac8cfa0d7d16f9a9144b7aff33706a65cf67fbb8407efd8f",
+  "seat_outputs/claude/L-seat3.json": "ce2763df0f57eb976d81922df0edf20d350eeb3b5dfdc5d0cc60fdabbb166044",
+  "seat_outputs/claude/ledger.jsonl": "4a211c4c97e0451f0846793800f79ee67f36eb54b622ae1f64a11dc3af273972",
+  "seat_outputs/claude/R-seat1.json": "e27026e0a1beee7d351279d725d59ce7bce9fcec11b7b9228729cce8953f3835",
+  "seat_outputs/claude/R-seat2.json": "b11c72bb7397be8971007d21f4a99771cec0010564dfd5c6f291043a648ab8af",
+  "seat_outputs/claude/R-seat3.json": "08a4123ecf7314244dadc504ca275e6c27ca9af6deb72e7f976b2de3055faa89",
+  "seat_outputs/claude/trivial/SYN-01.trivial-status.json": "1e90be93aa30a0cefaf6c1aa5ccc77cbf571ad7b45f6b906fad1c47dee6a3b88",
+  "seat_outputs/claude/trivial/SYN-01.trivial-twin.json": "f46b49788bdbf4f83a0c1b995be165a7c02baaafd9f042fe24da2d6c3deaf840",
+  "seat_outputs/claude/trivial/SYN-02.trivial-status.json": "463d98d063cd04bcd3e0ffdacc5b9b254b47637fc6ae8d57336c53e87ae4dfb9",
+  "seat_outputs/claude/trivial/SYN-02.trivial-twin.json": "1e32a3ed48e2f65ec5e6051fbeb39827013418b29060a424f18b6995c67fa837",
+  "seat_outputs/claude/trivial/SYN-03.trivial-status.json": "2c9644f44f7e3dc6a4c24c9ba28c1591c5a33bd9872dbaa578bd56ac9b75a218",
+  "seat_outputs/claude/trivial/SYN-03.trivial-twin.json": "c6171ee2c5b88595c75fdcc7b292c5e834314e930445c2ee24836f0dd4164193",
+  "seat_outputs/local/L-seat1.json": "74aa8faec5f702585fe359b3202bb3f079535ea23c27d65f9577066192d15929",
+  "seat_outputs/local/L-seat2.json": "149e45ce484ce50e185d894ec86c39567aa3c5a4f176f0002f572e0258a89731",
+  "seat_outputs/local/L-seat3.json": "f50bd9ae75e2c40e358b93d52a8662c784e7268004a2c22b9f07e4ebec40525c",
+  "seat_outputs/local/ledger.jsonl": "bb7df66fc155b02592ac28b91e419fe274f9ed67cdf5319be5354f78c9b70b41",
+  "seat_outputs/local/R-seat1.json": "a2ed32a318c84a735177b9017e450677ff46458b992bc57c26620b99985de111",
+  "seat_outputs/local/R-seat2.json": "ac44322c792caf6c05e2d876bbaad085580ca8b399091cdbd942dbf533e4cea6",
+  "seat_outputs/local/R-seat3.json": "8e546687191f1085b60371d561a44dfa52d74fc1e07ee577a43a567586c7892e",
+  "SYN-01.receipt.json": "b9d4a8286a4232a8994a05415ac153a209aa42376d3126be8dcc39ac7287b25c",
+  "SYN-01.syn.json": "c9323e6972ba4560e09acbcef68d1383bb0c2e70e3a56c30a3564f84d8e54620",
+  "SYN-01.tree.json": "306b31bf171360f6664ed875a64fb2ce5d327b440f26beeb2d618d03b39dcfcc",
+  "SYN-02.receipt.json": "e378fd348a71e84de03ee3262cccd508b2808e3848ca59e34912ef8178da16ab",
+  "SYN-02.syn.json": "6be13e80f320956302b1ec72cea23b31e2484e67bab3266267dfd65100d5a193",
+  "SYN-02.tree.json": "7ac6fe5637cb488198c06db7acf231563936f7a322cd01361822b6860452c210",
+  "SYN-03.receipt.json": "353e048db8a7fa5461183db4186a0e9dec5468dc1624a98764e5fd84c9857d15",
+  "SYN-03.syn.json": "b876611df4d69cefce7231ae16e5207566e833b2c4b398abf568886db8ecc92f",
+  "SYN-03.tree.json": "2d2a5d61087ce844beec81a626020eb047d149f5149736df4fde5485f1458408",
+  "SYNX-01.receipt.json": "51d6c913da41aa580b841f2c40f7fd180e53ed8343f24c7cec960f529d3cfc68",
+  "SYNX-01.syn.json": "62dc1474af77418bf53be06a22a354a112049602e28b4ca54706b7d782a5414f",
+  "SYNX-01.tree.json": "145c9973880c866ced50161b92394682e033a919dcf62f18f3a49a192049566b",
+  "SYNX-02.receipt.json": "526e4c3f0c20d63ecb6781dc0d67d7edaaf1997a1b92d28547d916e11bea1991",
+  "SYNX-02.syn.json": "39eb1992e98b11c16870e107b14fa97719376cbadac4b78833e5688c5460059f",
+  "SYNX-02.tree.json": "a41be06dad257a5e527b67665a8058ba4e66c8229c4663e3dce47e083c2f8140",
+  "twins/canary_digest.txt": "e09fa82858747e93df456fb77d8f11ceb1a2ff8ce70cd05583a6a4958de4c761"
+ },
+ "sealed_dir_was_temporary": true
+}

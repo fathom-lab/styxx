@@ -1,0 +1,401 @@
+{
+ "schema": "styxx-sworn/measurement-result/v1",
+ "dry_run": true,
+ "quotable": false,
+ "prereg": null,
+ "lock": {
+  "schema": "styxx-sworn/measurement-inputs/v1",
+  "head": "e2d29c411e59e20e00e54fa480d02043f96b8396",
+  "inputs": [
+   {
+    "path": "score.py",
+    "raw_sha256": "3761d1af5a1da439b8bdc4ad90818b001b5e98d14e72151e232d87cffefdf862",
+    "content_sha256": "3761d1af5a1da439b8bdc4ad90818b001b5e98d14e72151e232d87cffefdf862",
+    "blob": "3a5bdb8cd5057a0cf5eccf7343d9d05ee4ab954d",
+    "committed": true
+   },
+   {
+    "path": "dryrun/packet_L.json",
+    "raw_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+    "content_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+    "blob": "e6afdb0a32a03977b5cc509c4aeb954345bb3001",
+    "committed": false
+   },
+   {
+    "path": "dryrun/packet_R.json",
+    "raw_sha256": "a4f8d70fa4380d5a78d87fde788606c1a7031f9263db6554d751c71aab0ed584",
+    "content_sha256": "a4f8d70fa4380d5a78d87fde788606c1a7031f9263db6554d751c71aab0ed584",
+    "blob": "89a57c42e48f950ea7a5abb89d5ed6e22749e4d9",
+    "committed": false
+   },
+   {
+    "path": "dryrun/twins/canary_digest.txt",
+    "raw_sha256": "e09fa82858747e93df456fb77d8f11ceb1a2ff8ce70cd05583a6a4958de4c761",
+    "content_sha256": "e09fa82858747e93df456fb77d8f11ceb1a2ff8ce70cd05583a6a4958de4c761",
+    "blob": "b9b626f243a28b918f2c97063db025664f49a0e2",
+    "committed": false
+   },
+   {
+    "path": "dryrun/keys/sworn_measurement_canary_key.sha256",
+    "raw_sha256": "da561379e6ecc0df44b93e0b23682e4c58401ad493d28a0a9e73c6d3e897414a",
+    "content_sha256": "da561379e6ecc0df44b93e0b23682e4c58401ad493d28a0a9e73c6d3e897414a",
+    "blob": "bcaaecdf497b44ddb86fe74f178b11a1302565e3",
+    "committed": false
+   },
+   {
+    "path": "dryrun/keys/sworn_measurement_key_L.sha256",
+    "raw_sha256": "aa138b549e9f50d39730911b4f128775a51ac9460db8b9ed97940e99676ec910",
+    "content_sha256": "aa138b549e9f50d39730911b4f128775a51ac9460db8b9ed97940e99676ec910",
+    "blob": "c71de60df35365db3a6f05ca79b381c16a7c694d",
+    "committed": false
+   },
+   {
+    "path": "dryrun/keys/sworn_measurement_key_R.sha256",
+    "raw_sha256": "40c6209256e34fccc557fc6f9242b784b9662e548b442c643f0a7fef1316f83c",
+    "content_sha256": "40c6209256e34fccc557fc6f9242b784b9662e548b442c643f0a7fef1316f83c",
+    "blob": "e80393439194a3deaf1957fdcc2b9caf56d2ba31",
+    "committed": false
+   }
+  ]
+ },
+ "population": {
+  "documents": 3,
+  "sworn_spans": 18,
+  "units": 54,
+  "fragments": 3,
+  "synthetic": true
+ },
+ "families": {
+  "claude": {
+   "model": "claude-fable-5",
+   "transport": "claude-cli clean-config",
+   "dtype": null,
+   "device": null,
+   "quant": null,
+   "named_in_design": true,
+   "block_order": [
+    "TASK",
+    "FORMAT",
+    "CAUTIONS"
+   ]
+  },
+  "local": {
+   "model": "Qwen/Qwen2.5-7B-Instruct",
+   "transport": "transformers",
+   "dtype": "bf16",
+   "device": "cpu",
+   "quant": null,
+   "named_in_design": true,
+   "block_order": [
+    "TASK",
+    "FORMAT",
+    "CAUTIONS"
+   ],
+   "dry_run": true
+  }
+ },
+ "gates": {
+  "G_D": {
+   "L": {
+    "claude": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "NOT": {
+       "n": 15,
+       "correct": 15
+      },
+      "LOAD-BEARING": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    },
+    "local": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "NOT": {
+       "n": 15,
+       "correct": 15
+      },
+      "LOAD-BEARING": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    }
+   },
+   "R": {
+    "claude": {
+     "present": true,
+     "correct_overall": 30,
+     "n_overall": 30,
+     "per_side": {
+      "YES": {
+       "n": 15,
+       "correct": 15
+      },
+      "NO": {
+       "n": 15,
+       "correct": 15
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": true,
+     "title": null,
+     "proposed_unsigned": true
+    },
+    "local": {
+     "present": true,
+     "correct_overall": 0,
+     "n_overall": 30,
+     "per_side": {
+      "YES": {
+       "n": 15,
+       "correct": 0
+      },
+      "NO": {
+       "n": 15,
+       "correct": 0
+      }
+     },
+     "bar": {
+      "overall": 27,
+      "per_side": 9
+     },
+     "pass": false,
+     "title": "void panel; the void is the result",
+     "proposed_unsigned": true
+    }
+   }
+  },
+  "G_F": {
+   "families_clearing": {
+    "L": 2,
+    "R": 1
+   },
+   "bar": "two families, each clearing its decoys",
+   "proposed_unsigned": true,
+   "pass": false,
+   "title": "one-family: counts only, no precision"
+  },
+  "G_S1": {
+   "numerator": 12,
+   "denominator": 18,
+   "labels": "final",
+   "share": "DRYRUN-NO-RATE",
+   "bar": 0.7,
+   "proposed_unsigned": true,
+   "pass": null,
+   "title": null
+  },
+  "G_S1X": {
+   "share": "WITHHELD",
+   "note": "external arm not built in v0.1 (owed)",
+   "bar": 0.5,
+   "proposed_unsigned": true
+  },
+  "G_U": {
+   "count": 3,
+   "labels": "final",
+   "bar": null,
+   "proposed_unsigned": true
+  },
+  "G_S2": {
+   "numerator": 6,
+   "denominator": 18,
+   "labels": "final",
+   "share": "DRYRUN-NO-RATE",
+   "bar": 0.25,
+   "proposed_unsigned": true,
+   "pass": null,
+   "title": null
+  },
+  "G_P": {
+   "numerator": 0,
+   "denominator": 18,
+   "labels": "one-family",
+   "share": "WITHHELD",
+   "bar": 0.1,
+   "proposed_unsigned": true,
+   "pass": null,
+   "title": null
+  },
+  "G_C": {
+   "k": 17,
+   "n": 18,
+   "per_twin": {
+    "SYN-01": {
+     "k": 5,
+     "n": 6,
+     "malformed": 1,
+     "unresolved": 0,
+     "held": 0
+    },
+    "SYN-02": {
+     "k": 6,
+     "n": 6,
+     "malformed": 0,
+     "unresolved": 0,
+     "held": 0
+    },
+    "SYN-03": {
+     "k": 6,
+     "n": 6,
+     "malformed": 0,
+     "unresolved": 0,
+     "held": 0
+    }
+   },
+   "bar": 0.95,
+   "proposed_unsigned": true,
+   "smallest_n_clearing_bar_at_k_eq_n": 73,
+   "note": "MALFORMED and UNRESOLVED canaries count in n and not in k",
+   "wilson95": [
+    "DRYRUN-NO-RATE",
+    "DRYRUN-NO-RATE"
+   ],
+   "pass": null,
+   "title": null
+  },
+  "G_R": {
+   "count": 0,
+   "labels": "one-family",
+   "note": "HELD by the committed receipt and NO by the panel",
+   "proposed_unsigned": true
+  },
+  "G_G1": {
+   "pairs": 3,
+   "lower": 3,
+   "twin_text_changed": 0,
+   "per_pair": {
+    "claude/SYN-01": {
+     "twin": "DRYRUN-NO-RATE",
+     "original": "DRYRUN-NO-RATE",
+     "lower": true
+    },
+    "claude/SYN-02": {
+     "twin": "DRYRUN-NO-RATE",
+     "original": "DRYRUN-NO-RATE",
+     "lower": true
+    },
+    "claude/SYN-03": {
+     "twin": "DRYRUN-NO-RATE",
+     "original": "DRYRUN-NO-RATE",
+     "lower": true
+    }
+   },
+   "bar": 0.8,
+   "proposed_unsigned": true,
+   "note": "a span-count comparison under the v0.2 floor: 'lower' means the twin swore fewer sentences or masked fewer of the narrative, nothing about gaming",
+   "share": "DRYRUN-NO-RATE",
+   "pass": null,
+   "title": null
+  }
+ },
+ "cells": {
+  "final_labels": {
+   "LOAD-BEARING": 21,
+   "NOT": 30,
+   "UNSURE": 0,
+   "NO-MAJORITY": 3,
+   "FAMILY-SPLIT": 0,
+   "NO-LABEL": 0
+  },
+  "labels": "final",
+  "unlocated_brackets": {
+   "claude": 27,
+   "local": 28
+  },
+  "located_brackets": {
+   "claude": 536,
+   "local": 539
+  },
+  "located_by_second_pass": {
+   "claude": 0,
+   "local": 1
+  },
+  "unparsed_items": {
+   "claude": 1,
+   "local": 0
+  },
+  "panel_R_finals": {
+   "YES": 18,
+   "NO": 0,
+   "UNSURE": 0,
+   "NO-MAJORITY": 0,
+   "FAMILY-SPLIT": 0
+  },
+  "panel_R_unparsed_items": {
+   "claude": 0,
+   "local": 0
+  }
+ },
+ "kappa": {
+  "splitter": {
+   "kappa": "DRYRUN-NO-RATE",
+   "n": 51,
+   "excluded": 3
+  },
+  "panel_boundary": {
+   "kappa": "DRYRUN-NO-RATE",
+   "n": 60,
+   "excluded": 0
+  },
+  "note": "dry run: no rate"
+ },
+ "q3": {
+  "SYN-01": {
+   "panel_coverage": "DRYRUN-NO-RATE",
+   "sentence_share": "DRYRUN-NO-RATE",
+   "difference": "DRYRUN-NO-RATE",
+   "lb_narrative_units": 3
+  },
+  "SYN-02": {
+   "panel_coverage": "DRYRUN-NO-RATE",
+   "sentence_share": "DRYRUN-NO-RATE",
+   "difference": "DRYRUN-NO-RATE",
+   "lb_narrative_units": 3
+  },
+  "SYN-03": {
+   "panel_coverage": "DRYRUN-NO-RATE",
+   "sentence_share": "DRYRUN-NO-RATE",
+   "difference": "DRYRUN-NO-RATE",
+   "lb_narrative_units": 3
+  }
+ },
+ "disclosure": [
+  "The authors of the in-house documents knew the bars before writing them; the in-house arm is bar-aware by construction.",
+  "Both families ran on one machine, and one of them is the family that wrote the documents; correlated error is the ceiling, and kappa between families is a description, never validity.",
+  "The Panel L decoys were authored by the builder from documents the population rule excludes; the Panel R decoys were constructed by the same code that plants the canaries.",
+  "Under v0.2, sentence_share = sworn_total / (sworn_total + narrative_sentences) does not know which sentences were sworn; a G-G1 pass says the trivial twin swore fewer sentences, and nothing about whether the floor prices gaming.",
+  "The canaries for the nine existing documents were planted after authorship; a prospective rate for documents not yet written is owed and enforced by a harness that runs before the author sees a verdict.",
+  "Three seats of one deterministic local model under three instruction-block orders are not three judgements; the Claude family's three seats are three fresh sessions under the transport's default sampling."
+ ],
+ "withheld": [
+  "G_P"
+ ],
+ "what_this_is_not": [
+  "DRY RUN over synthetic bytes: no quotable number; every rate is DRYRUN-NO-RATE"
+ ]
+}
