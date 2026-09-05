@@ -74,12 +74,29 @@ def _same(a: Any, b: Any) -> bool:
     return a == b
 
 
+def _why_unrepresentable(e: BaseException) -> str:
+    """The lab's word for why, never the interpreter's.
+
+    A CPython exception message is not stable across versions — py3.9 through py3.11 refused this
+    set while py3.12 accepted it, on nothing but the prose inside two `skipped` entries. The set
+    pins what the format decides, so the reason is classified from the exception type here and the
+    message is left out.
+    """
+    if isinstance(e, UnicodeEncodeError):
+        return "carries text that is not encodable as UTF-8 (a lone surrogate)"
+    if isinstance(e, ValueError):
+        return "carries a value no canonical serialisation can hold (NaN or an infinity)"
+    if isinstance(e, TypeError):
+        return "carries a value JSON has no type for"
+    return "is not JSON-representable"
+
+
 def _jsonable(obj: Any, label: str) -> Any:
     """The object, if a JSON text can carry it and parse back to the same thing; else refused."""
     try:
         text = json.dumps(obj, ensure_ascii=True, allow_nan=False)
     except (TypeError, ValueError) as e:
-        raise Unrepresentable("%s is not JSON-representable: %s" % (label, e))
+        raise Unrepresentable("%s %s" % (label, _why_unrepresentable(e)))
     if not _same(json.loads(text), obj):
         raise Unrepresentable("%s does not survive a JSON round trip" % label)
     return obj
@@ -203,7 +220,8 @@ def _core_outcome(core: dict) -> dict:
         text = sworn._jcs(portable)
         text.encode("utf-8")
     except (TypeError, ValueError) as e:
-        raise Unrepresentable("the core is not JCS-serialisable: %s" % e)
+        raise Unrepresentable("the core is not JCS-serialisable: %s"
+                              % _why_unrepresentable(e))
     floor, observer = _floor_and_observer(core)
     return {"outcome": "core", "core": portable, "core_jcs": text, "floor": floor, "observer": observer}
 
@@ -296,7 +314,8 @@ def _rec_to_sidecar(raw, name, commit=None, manifest=None):
             text = sworn._jcs(obj)
             text.encode("utf-8")
         except (TypeError, ValueError) as e:
-            raise Unrepresentable("the sidecar is not JCS-serialisable: %s" % e)
+            raise Unrepresentable("the sidecar is not JCS-serialisable: %s"
+                                  % _why_unrepresentable(e))
         return {"outcome": "sidecar", "sidecar": obj, "sidecar_jcs": text}
 
     _finish(where, "canon", pre, problem, None, None, outcome)

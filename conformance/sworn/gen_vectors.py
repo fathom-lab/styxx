@@ -275,7 +275,8 @@ def _object_blob(obj: Any, blobs: Dict[str, bytes], label: str) -> str:
     try:
         return _put(blobs, _json_bytes(obj))
     except (TypeError, ValueError) as e:
-        raise Refused("%s is not representable as a JSON blob: %s" % (label, e))
+        raise Refused("%s is not representable as a JSON blob: %s"
+                      % (label, _why_unrepresentable(e)))
 
 
 def make_vector(rec: dict, blobs: Dict[str, bytes]) -> Tuple[dict, Optional[dict]]:
@@ -586,6 +587,19 @@ def _report(index: dict, counts: Dict[str, Dict[str, int]]) -> None:
              index["unvectored"]["reasons"], index["unvectored"]["verdicts"]))
     print("  set_sha256 %s" % index["set_sha256"])
 
+
+
+def _why_unrepresentable(e):
+    """The lab's word for why, never the interpreter's. A CPython exception message is not
+    stable across versions, and this string is pinned by the set's digest: py3.9-3.11
+    refused a set py3.12 accepted, on nothing but this prose."""
+    if isinstance(e, UnicodeEncodeError):
+        return "carries text that is not encodable as UTF-8 (a lone surrogate)"
+    if isinstance(e, ValueError):
+        return "carries a value no canonical serialisation can hold (NaN or an infinity)"
+    if isinstance(e, TypeError):
+        return "carries a value JSON has no type for"
+    return "is not JSON-representable"
 
 
 def _drift_detail(committed: dict, regenerated: dict) -> str:
