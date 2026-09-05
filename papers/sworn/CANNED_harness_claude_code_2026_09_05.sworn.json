@@ -1,0 +1,55 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "d5431e0095cbb845898c6c8bd0fcb6663d91e7de",
+ "document": {
+  "name": "CANNED_harness_claude_code_2026_09_05.md",
+  "sha256": "35455c68a49f0a573250195e8729b018bb35f47ee77bd65957b620f7d27f35e5"
+ },
+ "text": "# CANNED — the Claude Code hook pair's manifest, verified through the command line\n\nFathom Lab · 2026-09-05 · **A canned run, not a result.** No Claude Code session was run. The\nfour payloads under `papers/sworn/canned_harness_claude_code_*.json` were fed on stdin to\n`integrations/claude-code/sworn-hooks/post-tool.py` three times and to `stop.py` once, with\n`--dir` naming a directory outside the payload's `cwd`; the manifest the Stop hook folded is\nembedded in this document's sidecar. The turn they describe is a Bash test run, a Write of\n`summary.txt` and a Read of the same file. One span below is MALFORMED on purpose: it is the\nagent swearing to a file it wrote, and the verifier refuses it by set membership over\n`authored_sha256`, end to end through the command line. Nothing here is a measurement of\nanything.\n\nThe Bash receipt holds the test run's `3 passed in 0.42s`.\nThe file the agent wrote and then read says 3 tests passed.\n\nThe second span resolves MALFORMED `receipt_author_minted` and this document's verdict is\ntherefore SWORN-FAILED, as intended: the receipt beside this document records the refusal, and\nthe RESULT that ships the adapters cites that leaf. The Write minted no receipt. The Bash\nreceipt is HELD at L1, and it would be HELD just the same had a shell command written the file\nthe Read later returned: that is the blindness the manifest's harness string prints.\n",
+ "spans": [
+  {
+   "start": 827,
+   "end": 885,
+   "receipt": "r1",
+   "kind": "quote"
+  },
+  {
+   "start": 886,
+   "end": 945,
+   "receipt": "r2",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "harness": "styxx.harness.claude_code/0.1 · L1 (weak: a local hook sharing a filesystem and a shell with the agent; the agent's shell can write what the hook later reads, and can write to the manifest directory) · blind, permanently, to files written by shell commands: only Write and Edit enter authored_sha256, and a later Read of a shell-written file mints a receipt the verifier will accept · a tool response can differ from the bytes on disk, so set membership over exact bytes can miss a file the agent did write · adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+  "turn": "canned-session",
+  "minted_at": "2026-09-05T14:29:35Z",
+  "authored_sha256": [
+   "4d4915f72f53715bc87fbaa05ca8d6ee1a666a1f17c8010d7332f5a322f81886",
+   "65d84e0d0038218cc812ee4c821d58c1e1da100ecc11b9df04f183b744f1c3fa"
+  ],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "caa5cbd691d61d440a0ce00d6c49fb97909ad154f1bffe446677b2b95f7d4bfb",
+    "kind_of_source": "tool_stdout",
+    "captured_at": "2026-09-05T14:29:34Z",
+    "complete": true,
+    "bytes": "Li4uICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgWzEwMCVdCjMgcGFzc2VkIGluIDAuNDJzCg==",
+    "harness_note": "Bash python -m pytest tests/test_app.py -q · prompt_id=prompt-1 · agent_id=main · tool_use_id=toolu_canned_01"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "4d4915f72f53715bc87fbaa05ca8d6ee1a666a1f17c8010d7332f5a322f81886",
+    "kind_of_source": "file_read",
+    "captured_at": "2026-09-05T14:29:35Z",
+    "complete": true,
+    "bytes": "dGhlIHN1aXRlIHBhc3NlZDogMyB0ZXN0cywgMCBmYWlsdXJlcwo=",
+    "harness_note": "Read C:\\ws\\canned\\summary.txt · prompt_id=prompt-1 · agent_id=main · tool_use_id=toolu_canned_03"
+   }
+  },
+  "rung": "L1",
+  "digest": "e61dd1dbc591badcfffc6c017b5f251f225deb634e855e559cea1dee0af3859b"
+ }
+}

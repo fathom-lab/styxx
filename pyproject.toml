@@ -202,6 +202,7 @@ packages = [
     "styxx.compliance.templates",
     "styxx.fonts",
     "styxx._data",
+    "styxx.harness",
 ]
 
 [tool.setuptools.package-data]

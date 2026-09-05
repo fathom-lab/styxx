@@ -1,0 +1,9 @@
+{
+ "session_id": "canned-session",
+ "transcript_path": "canned.jsonl",
+ "cwd": "C:\\ws\\canned",
+ "permission_mode": "default",
+ "hook_event_name": "Stop",
+ "stop_hook_active": false,
+ "last_assistant_message": "done: the suite passed, and I wrote summary.txt"
+}
