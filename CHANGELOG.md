@@ -7,6 +7,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — receipt binding: a certificate names the bytes it swore to, and the audit says where those bytes went
+
+**SPEC first: `papers/closed-model-frontier/SPEC_oath_receipt_binding_2026_09_04.md`, frozen
+in its own commit before any code, with a dated ERRATA appended after the adversarial pass
+(`ATTACKS_receipt_binding_battery_2026_09_05.md`: 52 constructions, 36 broke a sentence or a
+rule, 12 of them in code, all repaired before this shipped).** Leg 3, item 1 of
+`PLAN_the_next_level_2026_09_02.md` — the one ADVANCE the whole-program audit named. An OATH
+certificate recorded each receipt's digest and then bound by *basename*, so a receipt
+regenerated in place silently invalidated every certificate citing it — twice in two days
+(2026-08-31 → 09-01) and once in June — and the audit could not tell *the receipt moved* from
+*the certificate is wrong*. Now the certificate says which bytes it meant and the audit looks
+for them, for the document as well as the receipts. No verdict moves; no certificate is re-issued.
+- **`styxx.receipt_binding` (NEW)** — the one module that talks to git on a certificate's behalf,
+  subprocess-only (no GitPython): content digests modulo newlines, the committed blob at HEAD,
+  the five cells of SPEC R3 — `same`, `at_issue`, `elsewhere`, `unbacked`, `unrecoverable` —
+  decided by digest in the working tree at the repository root, then against the tree at the
+  certificate's issuing commit, then against every commit that touched a path of that basename
+  (`--full-history -m -z`, because a TREESAME merge, a merge commit and a non-ASCII name each hid
+  a real sworn blob from the first version), and a **document cell** decided the same way against
+  `document_sha256`. Nothing here is a verdict.
+- **`styxx.certify`**: every certificate issued from now on carries a `receipt_binding` block —
+  `content_sha256` (CRLF→LF), the git blob the working bytes equal at HEAD, `committed`
+  true/false per receipt, `all_receipts_committed`, `head`. `receipts_sha256` is untouched.
+  Without git the block degrades to `head: null` with the reason and the certificate is
+  otherwise byte-identical. `--require-committed` refuses to issue (exit 2, names printed) over
+  uncommitted receipt bytes; the default reports, because an unmeasured gate is not shipped.
+- **`styxx.corpus_audit`**: `--history auto|on|off`. With history, every record carries its
+  cells, its document cell, and `stands_over_sworn_bytes` — whether the CURRENT verifier
+  reproduces the recorded verdict class over the document and receipt bytes at the issuing
+  commit, null with a `stands_reason` whenever those bytes cannot all be fetched — and the
+  summary prints a `binding:` line beneath the uncovered line, computed before the
+  missing-document return so the certificates that matter most are not skipped. **The pinned
+  first line is byte-identical in every mode.** CI never runs this audit; on a depth-1 clone it
+  prints `binding: history unavailable (shallow clone)`, pinned by a test on a clone the test
+  builds. `--history on` exits 2 when history is unavailable.
+- **The census, `receipt_binding_census.py` → `receipt_binding_census_result_2026_09_05.json`
+  (the third run, from code committed at its own head; the second run,
+  `receipt_binding_census_result.json`, stays as committed), over every tracked certificate
+  (213, staging copies included; 631 citations), read in `RESULT_oath_receipt_binding_2026_09_05.md`,
+  which swears to its leaves.** 630 citations
+  `same`, every one also present at its issuing commit; 1 `at_issue`; 0 `elsewhere`, 0
+  `unbacked`, 0 with an unrecoverable issuing commit. The one `at_issue` is
+  `CAPSTONE_universal_mind`'s `mind_v0_validation.json` — regenerated seventeen minutes after
+  its issuing commit on 2026-06-10 and reported by the audit since 2026-08-27 — whose sworn bytes
+  sit at the issuing commit; the certificate **stands over the bytes it swore to**
+  (`regenerated_and_standing` 1). Eight certificates' **documents** were edited after issue (cell
+  `at_issue`) and all eight stand; two arXiv staging copies whose document lives unchanged under
+  `papers/` read `same` with a note — the second census had read them `at_issue`, the
+  edited-after-issue diff caught it, and the document cell now looks for the working file by the
+  certificate's own `document` name anywhere in the tree, as the receipt cells do. `stands_over_sworn_bytes` is true for 211 and false for 2 — both
+  with every byte in place, both already known (`FINDING_behavioral_sycophancy_blackbox` in
+  `KNOWN_VERDICT_DRIFT`, and the read≠write submission source Charon found) — so both are the
+  verifier having moved, not a binding defect; null for none. The census refuses to overwrite a
+  tracked result, records the blob ids of the code that ran beside `head` (this one ran from the
+  working tree that the same commit carries: `code_committed_at_head` false, head = the parent),
+  and writes repository-relative paths; the first result, which carried this checkout's absolute
+  paths and named the SPEC commit as its head, was removed before anything swore to it. Of six
+  predictions the spec made before the run, three were confirmed, two wrong and one half-wrong
+  (six recorded digests are LF hashes, so the corpus's digests are not uniformly CRLF); the
+  ERRATA scores them.
+- **`edited_after_issue_census.py` → `edited_after_issue_census_result.json`, read in
+  `RESULT_edited_after_issue_2026_09_05.md` (sworn).** The eight documents that moved under
+  their certificates, diffed against the sworn bytes: 9 lines removed, 82 added; the edits
+  removed 4 ledger rows, all VERIFIED, in the two certificates of one document
+  (`SYNTHESIS_connection_of_minds` and its staging copy — `0.071` and `0.057` on line 25) and
+  added 26 numbers the published certificates never examined, in the same two; the live audit
+  over the working document reproduces the recorded class for all eight. And the census laid
+  beside Charon's log: 213 OATH lines, 207 agree; the 1 line Charon could not reproduce and the
+  3 it left UNRESOLVED stand over their sworn bytes; the 2 both call failed have every byte in
+  place.
+- Tests: `tests/test_certify_by_digest.py` (23, plus one NTFS skip) — twenty-one on temporary
+  repositories, one over the tracked corpus by the census's population rule; the existing corpus
+  guard and audit tests pass unchanged.
 ## [Unreleased] — harness adapters v0.1: manifest minters at L1 and L2, adapters and never a recorder
 
 **`styxx.harness` (NEW), built to `papers/sworn/DESIGN_harness_adapters_2026_09_02.md`, re-sworn and
