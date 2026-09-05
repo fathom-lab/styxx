@@ -1,0 +1,39 @@
+# The workflow the operator copies into .github/workflows/ — the lab writes nothing there.
+# Report-only: exits 0 on every verdict. On a pull request from a fork the minting job is the
+# claimant's and the manifest declares L1; the summary says why.
+name: sworn (report-only)
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]   # edited: the pull request body is a document
+
+permissions:
+  contents: read
+
+jobs:
+  sworn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}   # the commit the author could cite, never the merge ref
+          fetch-depth: 0                                    # the base commit must be present for discovery and the diff
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - id: sworn
+        # This repository dogfoods its own action at the head commit. Another project pins a
+        # commit: uses: fathom-lab/styxx/sworn@<sha>  (styxx.sworn is in no release; clone at a
+        # pinned commit, not pip install). On a pull_request event the workflow file itself comes
+        # from the head either way; that is what the fork rule and the L2 declaration are about.
+        uses: ./sworn
+        with:
+          command: python -m pytest tests -q -p no:cacheprovider --junitxml "$SWORN_JUNIT"
+          styxx-source: ""     # already installed above
+          junit: .sworn-junit.xml   # workspace-relative: no machine path enters r4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sworn-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+          path: ${{ steps.sworn.outputs.out-dir }}

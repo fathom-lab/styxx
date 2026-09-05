@@ -1,0 +1,155 @@
+{
+ "what": "a sworn action run: report-only, exit 0 on every verdict",
+ "action": "sworn-action/0.1",
+ "harness": "sworn/sworn_action.py",
+ "event": "pull_request",
+ "out_dir": ".sworn-action",
+ "command": "python tools/write_junit.py tools/ok.xml",
+ "declared": {
+  "rung": "L2",
+  "after_turn_on_base": true,
+  "base_pinned_workflow": false
+ },
+ "repository": "lab/app",
+ "number": 7,
+ "base": "cb057aa601d96afa4a25dd874175cd2e39b28db0",
+ "head": "f808c3c64056ad99796fc53c7824ae5da08c3268",
+ "fork": false,
+ "turn": "lab/app#7@f808c3c64056ad99796fc53c7824ae5da08c3268",
+ "rung": "L2",
+ "rung_reason": null,
+ "exit_code": 0,
+ "timed_out": false,
+ "junit": ".sworn-action/junit.xml",
+ "junit_present": true,
+ "discovery": "ok",
+ "manifest": {
+  "path": "sworn.manifest.json",
+  "digest": "9c550169b241998aec8e77576f9781f4ae8639230162db46cf2959298c64ce32",
+  "junit": "b7293e237acbe288faf453ceb3d4c0e197c1e8b3ce6207960a857f4588cafe8d",
+  "github": "40081b49a62aa809e3145df680c77e25e59ab8a05ba34a37f3493b34d588ef6d",
+  "authored": 5,
+  "receipts": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6",
+   "r7",
+   "r8",
+   "r9"
+  ]
+ },
+ "documents": [
+  {
+   "name": "pull_request_body.md",
+   "source": "body",
+   "document": "documents/pull_request_body.md",
+   "verdict": "SWORN-HELD",
+   "counts": {
+    "HELD": 1,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "headline": "SWORN-HELD  held=1 failed=0 unresolved=0 malformed=0  coverage-floor≈0.50 (sworn 1 / narrative-sentences 1; advisory)  diff-claims≈0  rungs L2=1",
+   "rungs": {
+    "L2": 1
+   },
+   "receipt": "receipts/pull_request_body.md.sworn-receipt.json",
+   "receipt_digest": "3c3912491a2f7c6ba5b9bc3cfad7442f6c9a01d4758c659dfe4856f0f6735ee0",
+   "non_held": [],
+   "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit"
+  },
+  {
+   "name": "FAILED.md",
+   "source": "changed",
+   "document": "documents/FAILED.md",
+   "verdict": "SWORN-FAILED",
+   "counts": {
+    "HELD": 0,
+    "FAILED": 1,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "headline": "SWORN-FAILED  held=0 failed=1 unresolved=0 malformed=0  coverage-floor≈0.50 (sworn 1 / narrative-sentences 1; advisory)  diff-claims≈0  rungs L2=1",
+   "rungs": {
+    "L2": 1
+   },
+   "receipt": "receipts/FAILED.md.sworn-receipt.json",
+   "receipt_digest": "19ff33280ee01fc22978582a1f59a57e35a454e14b0aa19ca43977e1419ac803",
+   "non_held": [
+    {
+     "verdict": "FAILED",
+     "reason": "value_mismatch",
+     "receipt": "r1",
+     "at": 19
+    }
+   ],
+   "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit"
+  },
+  {
+   "name": "HELD.md",
+   "source": "changed",
+   "document": "documents/HELD.md",
+   "verdict": "SWORN-HELD",
+   "counts": {
+    "HELD": 5,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "headline": "SWORN-HELD  held=5 failed=0 unresolved=0 malformed=0  coverage-floor≈0.83 (sworn 5 / narrative-sentences 1; advisory)  diff-claims≈0  rungs L2=5",
+   "rungs": {
+    "L2": 5
+   },
+   "receipt": "receipts/HELD.md.sworn-receipt.json",
+   "receipt_digest": "a5490783890aaf08598002af6ed4db24a9321045b6627b5a7831430e392e57a5",
+   "non_held": [],
+   "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit"
+  },
+  {
+   "name": "UNRESOLVED.md",
+   "source": "changed",
+   "document": "documents/UNRESOLVED.md",
+   "verdict": "SWORN-HELD",
+   "counts": {
+    "HELD": 0,
+    "FAILED": 0,
+    "UNRESOLVED": 1,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "headline": "SWORN-HELD  held=0 failed=0 unresolved=1 malformed=0  coverage-floor≈0.50 (sworn 1 / narrative-sentences 1; advisory)  diff-claims≈0  rungs unresolved=1",
+   "rungs": {
+    "unresolved": 1
+   },
+   "receipt": "receipts/UNRESOLVED.md.sworn-receipt.json",
+   "receipt_digest": "d2a75a4b8ac1afb2b650f42d9655d32fc8d90e0fa529415fd12f5de8e3fbbfae",
+   "non_held": [
+    {
+     "verdict": "UNRESOLVED",
+     "reason": "manifest_id_missing",
+     "receipt": "r12",
+     "at": 34
+    }
+   ],
+   "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit"
+  }
+ ],
+ "skipped": [
+  {
+   "path": "plain.md",
+   "why": "carries no <sworn tag"
+  },
+  {
+   "path": "stale.sworn.json",
+   "why": "a sidecar is never verified here: its embedded manifest is the one it was sworn against, and the verifier refuses a supplied manifest that disagrees; the repository's own tests re-derive committed sidecars at their commits"
+  }
+ ],
+ "notes": []
+}
