@@ -64,3 +64,4 @@ papers/charon/** -text
 # line a checkout would rewrite the JSON and a re-hash would no longer match the index.
 # tests/test_sworn_conformance.py fails if any tracked file under conformance/ is not -text.
 conformance/** -text
+papers/sworn/CANNED_harness_junit_2026_09_05.capsule.html -text

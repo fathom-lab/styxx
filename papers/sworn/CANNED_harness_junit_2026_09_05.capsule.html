@@ -1,0 +1,1489 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>sworn capsule — CANNED_harness_junit_2026_09_05.md</title>
+<style>
+ body{font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;margin:2rem auto;max-width:52rem;
+      color:#111;background:#fff}
+ h1{font-size:1.1rem} .k{color:#555} pre{white-space:pre-wrap;word-break:break-word}
+ .box{border:1px solid #ccc;padding:.8rem 1rem;margin:1rem 0}
+ .ok{border-color:#0a0} .bad{border-color:#c00} .note{color:#555;font-size:.92em}
+ code{background:#f4f4f4;padding:0 .2em}
+</style>
+<h1>sworn capsule — CANNED_harness_junit_2026_09_05.md</h1>
+<p class="k">sealed verdict <b>SWORN-HELD</b> &middot; held=5 failed=0 unresolved=0 malformed=0 withheld=0</p>
+<div class="box note"><b>What this page is.</b> re-derives sworn span verdicts offline; a forger controlling the whole file passes both browser layers; the package at the named commit is the check<br>
+Layer 1 below re-derives the verdict core from the sealed bytes, in your browser, with no network.
+Layer 2 is <code>python -m styxx.capsule verify THIS_FILE</code> after <code>styxx==7.47.0</code>, and it
+is the one that checks the build the receipt names.</div>
+<div id="layer1" class="box">layer 1: running…</div>
+<h2 style="font-size:1rem">the document</h2>
+<pre id="doc" class="box"></pre>
+<script type="application/json" id="oath-capsule">{
+ "spec": "styxx-oath/capsule/sworn/v0.1",
+ "created": "2026-09-05T21:06:22Z",
+ "label": "re-derives sworn span verdicts offline; a forger controlling the whole file passes both browser layers; the package at the named commit is the check",
+ "document": {
+  "name": "CANNED_harness_junit_2026_09_05.md",
+  "b64": "IyBDQU5ORUQg4oCUIHRoZSBKVW5pdCBhZGFwdGVyJ3MgbWFuaWZlc3QsIHZlcmlmaWVkIHRocm91Z2ggdGhlIGNvbW1hbmQgbGluZQoKRmF0aG9tIExhYiDCtyAyMDI2LTA5LTA1IMK3ICoqQSBjYW5uZWQgcnVuLCBub3QgYSByZXN1bHQuKiogVGhlIG1hbmlmZXN0IGVtYmVkZGVkIGluIHRoaXMKZG9jdW1lbnQncyBzaWRlY2FyIHdhcyBtaW50ZWQgYnkgYHB5dGhvbiAtbSBzdHl4eC5oYXJuZXNzIGp1bml0IHBhcGVycy9zd29ybi9jYW5uZWRfaGFybmVzc19qdW5pdC54bWwgLS1ydW5nIEwxIC0tdHVybiBjYW5uZWRfaGFybmVzc19qdW5pdGAKb3ZlciBhIHJlcG9ydCB3cml0dGVuIGJ5IGhhbmQgZm9yIHRoaXMgcHVycG9zZTogdGhyZWUgcGFzc2luZyB0ZXN0Y2FzZXMgaW4gb25lIHN1aXRlIGFuZCBhCmNvbGxlY3Rpb24gZXJyb3IgaW4gYSBzZWNvbmQsIHNvIHRoYXQgdGhlIHJlYWRlcidzIHNlcGFyYXRpb24gb2YgZmFpbHVyZXMgZnJvbSBoYXJuZXNzIGVycm9ycyBpcwp2aXNpYmxlIGluIHRoZSByZWNlaXB0cy4gRXZlcnkgc2VudGVuY2UgYmVsb3cgaXMgYm91bmQgdG8gdGhhdCBtYW5pZmVzdCBhbmQgdmVyaWZpZWQgd2l0aApgcHl0aG9uIC1tIHN0eXh4LnN3b3JuIHZlcmlmeSAuLi4gLS1tYW5pZmVzdCAuLi5gOyBub3RoaW5nIGhlcmUgaXMgYSBtZWFzdXJlbWVudCBvZiBhbnl0aGluZy4KCjxzd29ybiByPSJyMSIgaz0ibnVtZXJpYyI+VGhlIHJlYWRlciByZXNvbHZlZCAzIHBhc3NlZCB0ZXN0Y2FzZXMuPC9zd29ybj4KPHN3b3JuIHI9InIyIiBrPSJudW1lcmljIj5JdCByZXNvbHZlZCAwIGZhaWx1cmVzLjwvc3dvcm4+Cjxzd29ybiByPSJyNCMvdG90YWxzL2Vycm9ycyIgaz0ibnVtZXJpYyI+VGhlIGNvbGxlY3Rpb24gZXJyb3IgaXMga2VwdCBhcGFydCBhcyAxIGhhcm5lc3MgZXJyb3IuPC9zd29ybj4KPHN3b3JuIHI9InI0Iy9vdXRjb21lIiBrPSJxdW90ZSI+V2l0aCBhIGhhcm5lc3MgZXJyb3Igb24gdGhlIHJlcG9ydCB0aGUgcmVhZGVyJ3Mgb3V0Y29tZSByZWFkcyBgRkFJTEVEYC48L3N3b3JuPgo8c3dvcm4gcj0icjQjL3NvdXJjZXMvMC9mb3JtYXQiIGs9InF1b3RlIj5UaGUgcmVhZGVyIHNuaWZmZWQgdGhlIGZvcm1hdCBganVuaXRgIGZyb20gdGhlIGJ5dGVzLCBuZXZlciBmcm9tIHRoZSBleHRlbnNpb24uPC9zd29ybj4KClRoZSBydW5nIGlzIEwxIGJlY2F1c2UgdGhlIHJlcG9ydCB3YXMgd3JpdHRlbiBhbmQgdGhlIG1hbmlmZXN0IG1pbnRlZCBieSB0aGUgc2FtZSBoYW5kIG9uIHRoZQpzYW1lIG1hY2hpbmU6IGRlY2xhcmVkIGJ5IHRoZSBjYWxsZXIsIHByaW50ZWQgYmVzaWRlIGV2ZXJ5IHZlcmRpY3QgYWJvdmUsIGFuZCBjaGVja2VkIGJ5IG5vdGhpbmcuCg==",
+  "sha256": "48ef60eef955d9e22142c4575d4722ef2a5db35b88ad70c48ea38649a8094139"
+ },
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+  "turn": "canned_harness_junit",
+  "minted_at": "2026-09-05T14:29:33Z",
+  "authored_sha256": [],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T14:29:33Z",
+    "complete": true,
+    "bytes": "Mw==",
+    "harness_note": "passed count resolved by styxx.evidence from papers/sworn/canned_harness_junit.xml (resolved.passed)"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T14:29:33Z",
+    "complete": true,
+    "bytes": "MA==",
+    "harness_note": "failures count resolved by styxx.evidence from papers/sworn/canned_harness_junit.xml (totals.failures; harness errors are kept apart in totals.errors)"
+   },
+   "r3": {
+    "id": "r3",
+    "sha256": "092d6eacb7ea864cc7046102f6073654c3c2d7ff6cc5d77ef33b4b00320f5f63",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T14:29:33Z",
+    "complete": true,
+    "bytes": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHRlc3RzdWl0ZXMgbmFtZT0iY2FubmVkIj48dGVzdHN1aXRlIG5hbWU9Im9rIiB0ZXN0cz0iMyIgZmFpbHVyZXM9IjAiIGVycm9ycz0iMCIgc2tpcHBlZD0iMCI+Cjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3RfYXBwIiBuYW1lPSJ0ZXN0X29uZSIgdGltZT0iMC4wMDEiIC8+Cjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3RfYXBwIiBuYW1lPSJ0ZXN0X3R3byIgdGltZT0iMC4wMDEiIC8+Cjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3RfYXBwIiBuYW1lPSJ0ZXN0X3RocmVlIiB0aW1lPSIwLjAwMSIgLz4KPC90ZXN0c3VpdGU+PHRlc3RzdWl0ZSBuYW1lPSJicm9rZW4iIHRlc3RzPSIwIiBmYWlsdXJlcz0iMCIgZXJyb3JzPSIxIiBza2lwcGVkPSIwIj4KPGVycm9yIG1lc3NhZ2U9IkltcG9ydEVycm9yOiBubyBtb2R1bGUgbmFtZWQgdGhpbmciPmNvbGxlY3Rpb24gZXJyb3IsIG5vdCBhIGZhaWxlZCB0ZXN0PC9lcnJvcj4KPC90ZXN0c3VpdGU+PC90ZXN0c3VpdGVzPgo=",
+    "harness_note": "report bytes as read from papers/sworn/canned_harness_junit.xml"
+   },
+   "r4": {
+    "id": "r4",
+    "sha256": "67fb0d2235188bb9c511a05777d1344fe82f0fd4733f99d063215728c2a87ea8",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T14:29:33Z",
+    "complete": true,
+    "bytes": "eyJiaW5kaW5nX3Blcl9zb3VyY2UiOlt7ImFzc2VydGlvbl9vbmx5Ijp0cnVlLCJjb21taXQiOm51bGwsImNvbW1pdF9hc3NlcnRpb25fbWF0Y2hlcyI6ZmFsc2UsImNvbW1pdF9iaW5kaW5nX3ZlcmlmaWVkIjpmYWxzZSwiZGVncmFkZWRfa2V5IjpudWxsLCJmb3JtYXQiOiJqdW5pdCIsImdpdF9jb21taXRzIjpbXSwiZ2l0X2RpZ2VzdF9rZXlzX3NlZW4iOltdLCJraW5kIjoibm9uZSIsIm5vdGVzIjpbXSwicGF0aCI6InBhcGVycy9zd29ybi9jYW5uZWRfaGFybmVzc19qdW5pdC54bWwiLCJyZXBvcnRfaWRlbnRpdHlfYXNzZXJ0ZWQiOmZhbHNlLCJyZXBvcnRfaWRlbnRpdHlfdmVyaWZpZWQiOmZhbHNlLCJzaWduYXR1cmVfdmVyaWZpZWQiOmZhbHNlLCJzdWJqZWN0c19zZWVuIjowLCJ3aHkiOiJubyBKVW5pdCBkaWFsZWN0IGRlZmluZXMgYW55IHNjaGVtYS1sZXZlbCBmaWVsZCBmb3IgYSBjb21taXQsIHJldmlzaW9uLCBicmFuY2ggb3IgcmVwb3NpdG9yeSDigJQgdmVyaWZpZWQgYWdhaW5zdCBTdXJlZmlyZSdzIFhTRCwgdGhlIEFudC9KZW5raW5zIHJlZmVyZW5jZSwgcHl0ZXN0LCBnby1qdW5pdC1yZXBvcnQsIGplc3QtanVuaXQgYW5kIHRyeDJqdW5pdC4gVGhlIG9ubHkgY2FycmllciBpcyB0aGUgZnJlZS1mb3JtIDxwcm9wZXJ0aWVzPiBjaGFubmVsLCB3aGljaCBpcyB3cml0dGVuIGJ5IHRoZSBzYW1lIGpvYiB0aGF0IHByb2R1Y2VkIHRoZSByZXBvcnQgYW5kIGlzIHRoZXJlZm9yZSBBU1NFUlRFRC1OT1QtQ0hFQ0tFRCBhdCBiZXN0LiJ9XSwiYm91bmRhcnkiOiJUaGlzIG1vZHVsZSByZWFkcyBieXRlcy4gSXQgZG9lcyBOT1QgdmVyaWZ5IGFueSBzaWduYXR1cmUgYW5kIGNvbnN1bHRzIG5vIGtleSBtYXRlcmlhbCBvciB0cnVzdCByb290LCBzbyBpbiBpbi10b3RvJ3Mgb3duIHdvcmRzIHdoYXQgaXQgcmVhZCBpcyBub3QgYXV0aGVudGljYXRlZCBwcmVkaWNhdGUgaW5mb3JtYXRpb24uIEl0IGRvZXMgTk9UIGtub3cgd2hldGhlciB0aGUgcmVwb3J0IGlzIGhvbmVzdDogd2hvZXZlciBjb3VsZCB3cml0ZSB0aGUgZmlsZSBjb3VsZCB3cml0ZSBhbnkgdmVyZGljdCBpbnRvIGl0LCBpbmNsdWRpbmcgb25lIG5hbWluZyB0aGUgcmlnaHQgY29tbWl0LiBJdCBkb2VzIE5PVCBrbm93IHdoZXRoZXIgdGhlIHJ1biB3YXMgY29tcGxldGUg4oCUIG9uZSBtYXRyaXggbGVnLCBhIC1rIHN1YnNldCwgYSAtLW1heGZhaWwgc2hvcnQtY2lyY3VpdCBhbmQgYSB3aG9sZSBncmVlbiBzdWl0ZSBzZXJpYWxpc2UgaWRlbnRpY2FsbHkuIEl0IGRvZXMgTk9UIGtub3cgd2hhdCB3YXMgbmV2ZXIgdXBsb2FkZWQuIEl0IGluaGVyaXRzIHRoZSBDSSdzIHRydXN0IGVudGlyZWx5IGFuZCBhZGRzIG5vbmUgb2YgaXRzIG93bi4gSXQgY2Fubm90IGFjY3VzZTogdGhlIGFjY3VzaW5nIHZlcmRpY3QgaXMgYWJzZW50IGZyb20gaXRzIHZvY2FidWxhcnkuIiwiY29udHJhY3RfZGV2aWF0aW9ucyI6WyJUSEUgQUNDVVNJTkcgVkVSRElDVCBJUyBERUxFVEVELCBOT1QgRElTQUJMRUQuIFZFUkRJQ1RTIGlzICgnVkVSSUZJRUQnLCAnVU5DSEVDS0FCTEUnKSBhbmQgbm8gY29kZSBwYXRoIGluIHRoaXMgbW9kdWxlIHJldHVybnMgYSB0aGlyZCB3b3JkLiBUaGUgZnJvemVuIHRhYmxlJ3MgYWNjdXNpbmcgcm93IGhhcyBubyBpbXBsZW1lbnRhdGlvbjogaXRzIHByZWNpc2lvbiBpcyBzdHJ1Y3R1cmFsbHkgdW5tZWFzdXJhYmxlICgxMSBmaXJpbmdzIGFjcm9zcyAxLDc3NSw3NjUgY2hhbmdlZCBmaWxlcyBjYW5ub3QgZnVybmlzaCBhIDEwMC1pdGVtIGJsaW5kIHBhbmVsKSBhbmQgdGhlIGNoZWNrIHRoYXQgd2FzIHRvIGxpY2Vuc2UgaXQgaXMgYSBzdHJpbmcgY29tcGFyZSBvbiBhdHRhY2tlci13cml0YWJsZSBieXRlcy4gVGhpcyBpcyBhIHBlcm1hbmVudCBkZXNpZ24gZGVjaXNpb24sIG5vdCBhIHN1c3BlbnNpb24uIiwiZXZpZGVuY2Ugb2YgZmFpbHVyZSBpcyByZXR1cm5lZCBpbiB0aGUgcmVwb3J0LW9ubHkgYG9ic2VydmVkYCBiYW5kLiBJdCBpcyBub3QgYSB2ZXJkaWN0LCBub3RoaW5nIGRvd25zdHJlYW0gbWF5IGdhdGUgb24gaXQsIGFuZCBtYWluKCkgbmV2ZXIgZXhpdHMgbm9uLXplcm8gYmVjYXVzZSBvZiBpdC4iLCJyb3cgMSdzIHF1YW50aWZpZXIgKCdFVkVSWSBzb3VyY2UgdW5wYXJzZWQnKSB3b3VsZCBwZXJtaXQgY29uY2x1ZGluZyBvbiBhIHRlbnRoIG9mIHRoZSBldmlkZW5jZS4gSGVyZSBBTlkgdW5wYXJzZWQgc291cmNlIGJsb2NrcyBWRVJJRklFRDogYSBwYXJ0aWFsIHJlYWQgbWF5IGhvbmVzdGx5IGRlY2xpbmUsIGl0IG1heSBub3QgaG9uZXN0bHkgYWZmaXJtLiIsIkVNUFRZIGlzIGNvbXB1dGVkIG92ZXIgRVhFQ1VURUQgdGVzdHMgcmF0aGVyIHRoYW4gZW1pdHRlZCB0ZXN0Y2FzZSByZWNvcmRzLCBzbyBhbiBhbGwtc2tpcHBlZCBydW4gYW5kIGFuIGFsbC1ESVNBQkxFRF8gYmluYXJ5IGFyZSBib3RoIEVNUFRZIGFuZCB0aGVyZWZvcmUgVU5DSEVDS0FCTEUuIFZFUklGSUVEIGFkZGl0aW9uYWxseSByZXF1aXJlcyBwYXNzZWQgPiAwLiIsImFuIGluLXRvdG8gcHJlZGljYXRlJ3MgYmFyZSBgcmVzdWx0YCBzdHJpbmcgbmV2ZXIgc2V0cyB0aGUgb3V0Y29tZSBieSBpdHNlbGYuIFdpdGggbm8gdGVzdC1uYW1lIGxpc3RzIHRoZXJlIGFyZSB6ZXJvIGV4ZWN1dGVkIHRlc3RzIGJlaGluZCBpdCwgYW5kIHplcm8gZXhlY3V0ZWQgdGVzdHMgaXMgRU1QVFkgd2hhdGV2ZXIgdGhlIHN1bW1hcnkgc3RyaW5nIHNheXMuIiwiZXJyb3JzIChhIGhhcm5lc3MgdGhhdCBjb3VsZCBub3QgbG9hZCBhIG1vZHVsZSwgYSBqZXN0IGZpbGUgdGhhdCB3b3VsZCBub3QgcnVuKSBhcmUgQUJTRU5DRSBvZiBldmlkZW5jZSBhbmQgYXJlIGtlcHQgaW4gdGhlaXIgb3duIGNvbHVtbiwgbmV2ZXIgbWVyZ2VkIGludG8gZmFpbHVyZXMuIFRoZXkgY2Fubm90IHByb2R1Y2UgYW55IHZlcmRpY3Q7IHRoZXkgY2FuIG9ubHkgYmxvY2sgVkVSSUZJRUQuIiwidHdvIHNvdXJjZXMgcmVzb2x2aW5nIHRvIGRpZmZlcmVudCBvdXRjb21lcyB5aWVsZCBVTkNIRUNLQUJMRSByYXRoZXIgdGhhbiBhIG1lcmdlLiBBIHN0YWxlIGFydGlmYWN0IGJlc2lkZSBhIGZyZXNoIG9uZSwgYW5kIGEgcmUtcnVuIG9mIGZhaWxlZCBqb2JzLCBib3RoIHByb2R1Y2UgZXhhY3RseSB0aGlzIHNoYXBlIGFuZCBib3RoIGFyZSBncmVlbiBpbiByZWFsaXR5LiIsImJpbmRpbmcgaXMgcmVjb3JkZWQgUEVSIFNPVVJDRS4gVGhlcmUgaXMgbm8gYWdncmVnYXRlIGJpbmRpbmcgZGljdCBzcGFubmluZyB0aGUgbGlzdCwgYmVjYXVzZSBvbmUgYXR0ZXN0ZWQgZmlsZSdzIGRpZ2VzdCBhc3NlcnRpb24gbXVzdCBuZXZlciBhcHBlYXIgdG8gY292ZXIgYW4gdW5hdHRlc3RlZCBzaWJsaW5nIGdsb2JiZWQgb3V0IG9mIHRoZSBzYW1lIGRpcmVjdG9yeS4iLCJgY29tbWl0X2JpbmRpbmdfdmVyaWZpZWRgIGlzIGFuIGFsaWFzIHdob3NlIG5hbWUgdGhlIGZyb3plbiBjb250cmFjdCBmaXhlcyBhbmQgd2hvc2Ugd29yZCAndmVyaWZpZWQnIGlzIGluYWNjdXJhdGUuIEl0IGlzIHNldCBvbmx5IGJ5IGEgc3ViamVjdCBnaXRDb21taXQgZGlnZXN0IEVRVUFMIHRvIHRoZSBjb21taXQgdGhlIGNhbGxlciBuYW1lZCwgYW5kIG5vIHNpZ25hdHVyZSBpcyBjaGVja2VkLCBzbyBpdCBtZWFucyAndGhlIGJ5dGVzIGFzc2VydCB0aGlzJywgbmV2ZXIgJ3RoaXMgaXMgcHJvdmVuJy4gQSBgc2hhMWAgbWF0Y2ggaXMgREVHUkFERUQtS0VZIGFuZCBhIDxwcm9wZXJ0aWVzPiBjb21taXQgaXMgQVNTRVJURUQ7IG5laXRoZXIgc2V0cyBpdC4iLCJ0aGUgZW50aXR5IGRlZmVuY2UgaXMgdGhpcyBtb2R1bGUncyBvd246IGV4cGF0IGlzIGRyaXZlbiBkaXJlY3RseSB3aXRoIGVudGl0eSwgdW5wYXJzZWQtZW50aXR5IGFuZCBub3RhdGlvbiBkZWNsYXJhdGlvbnMgcmVmdXNlZCBhdCB0aGUgZGVjbGFyYXRpb24sIHJlcGxhY2luZyBhIHN1YnN0cmluZyBzd2VlcCB0aGF0IGJvdGggZmFsc2UtcG9zaXRpdmVkIG9uIGdyZWVuIHJlcG9ydHMgY29udGFpbmluZyBIVE1MIGFuZCBmYWxzZS1uZWdhdGl2ZWQgb24gYSBib21iIGhpZGRlbiBiZWhpbmQgYSBsb25nIGNvbW1lbnQuIiwiZXZlcnkgZGV2aWF0aW9uIGFib3ZlIG1vdmVzIHZlcmRpY3RzIHRvd2FyZCBVTkNIRUNLQUJMRS4gTm9uZSBvZiB0aGVtIGNhbiBwcm9kdWNlIGEgY29uY2x1c2lvbiB0aGUgZnJvemVuIHRhYmxlIHdvdWxkIG5vdCwgd2hpY2ggaXMgdGhlIHByb3BlcnR5IHRvIGNoZWNrIHJhdGhlciB0aGFuIHRydXN0LiJdLCJub3RfY2hlY2tlZCI6WyJzaWduYXR1cmVzIOKAlCBubyBrZXkgbWF0ZXJpYWwsIG5vIHBpbm5lZCB0cnVzdCByb290LCBubyBSZWtvciwgbm8gRnVsY2lvOyBhIGhhbGYtdmVyaWZpZWQgY2hhaW4gcmVwb3J0aW5nICd2ZXJpZmllZCcgd291bGQgYmUgdGhlIG1vc3QgZGFuZ2Vyb3VzIGxpbmUgaW4gdGhpcyByZXBvc2l0b3J5LCBzbyBub25lIGlzIGF0dGVtcHRlZC4gVGhpcyBpcyB3aHkgYGJpbmRpbmdgIGlzIGNhbGxlZCBhbiBBU1NFUlRJT04gYW5kIG5ldmVyIGEgY3J5cHRvZ3JhcGhpYyBiaW5kaW5nLiIsIndoZXRoZXIgdGhlIHRlc3RzIG5hbWVkIGFyZSB0aGUgdGVzdHMgdGhhdCBtYXR0ZXIsIG9yIHRoYXQgYW55IHRlc3QgZXhpc3RzIiwid2hldGhlciB0aGUgcmVwb3J0IGlzIGNvbXBsZXRlOiBzaGFyZHMsIG1hdHJpeCBsZWdzLCBjb250aW51ZS1vbi1lcnJvciBsZWdzLCAtayBzZWxlY3Rpb24gYW5kIC0tbWF4ZmFpbCBzaG9ydC1jaXJjdWl0cyBhcmUgYWxsIGludmlzaWJsZSBoZXJlIiwid2hldGhlciBhIGplc3Qgc3VpdGUgdGhhdCBmYWlsZWQgdG8gY29tcGlsZSB3YXMgc2lsZW50bHkgZHJvcHBlZCBmcm9tIHRoZSBYTUwgYnkgdGhlIHJlcG9ydGVyJ3MgZGVmYXVsdCBjb25maWd1cmF0aW9uIiwidGhlIFNDT1BFIG9mIHRoZSBwcm9zZSBjbGFpbSBiZWluZyByZWFkLiBUaGlzIGZ1bmN0aW9uIGlzIGhhbmRlZCBldmlkZW5jZSwgbmV2ZXIgYSBzZW50ZW5jZS4gT24gdGhpcyBsYWIncyBvd24gY29ycHVzIG9ubHkgNDAuOSUgb2YgJ3Rlc3RzIHBhc3MnIG1hdGNoZXMgd2VyZSB1bnF1YWxpZmllZCBhc3NlcnRpb25zOyA0NS41JSBuYW1lZCBhIHN1YnNldCwgMTQuMCUgd2VyZSBQUi10ZW1wbGF0ZSBjaGVja2JveGVzIGFuZCAzLjclIHdlcmUgZXhwbGljaXRseSBhYm91dCB0aGUgYXV0aG9yJ3MgbG9jYWwgbWFjaGluZS4gQSBjYWxsZXIgdGhhdCBmZWVkcyB0aG9zZSBoZXJlIGFzIGJhcmUgY2xhaW1zIGhhcyBhbiBleHRyYWN0aW9uIHByb2JsZW0gdGhpcyBtb2R1bGUgY2Fubm90IHNlZSBhbmQgZG9lcyBub3QgZml4LiJdLCJvYnNlcnZlZCI6eyJlcnJvcnNfbm90ZSI6ImBoYXJuZXNzX2Vycm9yc2AgaXMgQUJTRU5DRSBvZiBldmlkZW5jZSDigJQgYSBtb2R1bGUgdGhhdCB3b3VsZCBub3QgaW1wb3J0LCBhIGplc3QgZmlsZSB0aGF0IHdvdWxkIG5vdCBydW4g4oCUIGFuZCBpcyBkZWxpYmVyYXRlbHkgbm90IG1lcmdlZCBpbnRvIGBmYWlsaW5nX3Rlc3RzYC4iLCJmYWlsaW5nX3Rlc3RzIjowLCJoYXJuZXNzX2Vycm9ycyI6MSwiaW5kZXRlcm1pbmF0ZV90ZXN0cyI6MCwibm90X3J1bl90ZXN0cyI6MCwibm90ZSI6IlJFUE9SVCBPTkxZLiBUaGVzZSBmaWd1cmVzIGFyZSB3aGF0IHRoZSBzdXBwbGllZCBieXRlcyBTQVk7IHRoZXkgYXJlIG5vdCBhIHZlcmRpY3QsIG5vIHZlcmRpY3QgaXMgZGVyaXZlZCBmcm9tIHRoZW0sIGFuZCBub3RoaW5nIGRvd25zdHJlYW0gbWF5IGdhdGUgb24gdGhlbS4gVGhpcyBtb2R1bGUncyB2b2NhYnVsYXJ5IGlzIFZFUklGSUVEIGFuZCBVTkNIRUNLQUJMRSDigJQgc2VlIHRoZSBtb2R1bGUgZG9jc3RyaW5nIGZvciB3aHkgdGhlcmUgaXMgbm8gdGhpcmQgd29yZCBhbmQgd2h5IGl0cyBhYnNlbmNlIGlzIHBlcm1hbmVudCByYXRoZXIgdGhhbiBzdXNwZW5kZWQuIEEgY2FsbGVyIHRoYXQgdHVybnMgYGZhaWxpbmdfdGVzdHMgPiAwYCBpbnRvIGEgZmFpbGluZyBjaGVjayBoYXMgcmVpbnRyb2R1Y2VkLCB3aXRob3V0IG1lYXN1cmVtZW50LCBleGFjdGx5IHRoZSB2ZXJkaWN0IHRoaXMgbW9kdWxlIGRlY2xpbmVzIHRvIHNoaXAuIiwic2tpcHBlZF90ZXN0cyI6MCwic291cmNlc19yZXBvcnRpbmdfZmFpbHVyZSI6WyJwYXBlcnMvc3dvcm4vY2FubmVkX2hhcm5lc3NfanVuaXQueG1sIl19LCJvdXRjb21lIjoiRkFJTEVEIiwicGF0aHNfcmVxdWVzdGVkIjpbInBhcGVycy9zd29ybi9jYW5uZWRfaGFybmVzc19qdW5pdC54bWwiXSwicGVyX3NvdXJjZV9vdXRjb21lcyI6WyJGQUlMRUQiXSwicmVzb2x2ZWQiOnsiZXhlY3V0ZWQiOjQsImluZGV0ZXJtaW5hdGUiOjAsIm5vdHJ1biI6MCwicGFzc2VkIjozfSwic291cmNlcyI6W3siYmluZGluZyI6eyJhc3NlcnRpb25fb25seSI6dHJ1ZSwiY29tbWl0IjpudWxsLCJjb21taXRfYXNzZXJ0aW9uX21hdGNoZXMiOmZhbHNlLCJjb21taXRfYmluZGluZ192ZXJpZmllZCI6ZmFsc2UsImRlZ3JhZGVkX2tleSI6bnVsbCwiZ2l0X2NvbW1pdHMiOltdLCJnaXRfZGlnZXN0X2tleXNfc2VlbiI6W10sImtpbmQiOiJub25lIiwibm90ZXMiOltdLCJyZXBvcnRfaWRlbnRpdHlfYXNzZXJ0ZWQiOmZhbHNlLCJyZXBvcnRfaWRlbnRpdHlfdmVyaWZpZWQiOmZhbHNlLCJzaWduYXR1cmVfdmVyaWZpZWQiOmZhbHNlLCJzdWJqZWN0c19zZWVuIjowLCJ3aHkiOiJubyBKVW5pdCBkaWFsZWN0IGRlZmluZXMgYW55IHNjaGVtYS1sZXZlbCBmaWVsZCBmb3IgYSBjb21taXQsIHJldmlzaW9uLCBicmFuY2ggb3IgcmVwb3NpdG9yeSDigJQgdmVyaWZpZWQgYWdhaW5zdCBTdXJlZmlyZSdzIFhTRCwgdGhlIEFudC9KZW5raW5zIHJlZmVyZW5jZSwgcHl0ZXN0LCBnby1qdW5pdC1yZXBvcnQsIGplc3QtanVuaXQgYW5kIHRyeDJqdW5pdC4gVGhlIG9ubHkgY2FycmllciBpcyB0aGUgZnJlZS1mb3JtIDxwcm9wZXJ0aWVzPiBjaGFubmVsLCB3aGljaCBpcyB3cml0dGVuIGJ5IHRoZSBzYW1lIGpvYiB0aGF0IHByb2R1Y2VkIHRoZSByZXBvcnQgYW5kIGlzIHRoZXJlZm9yZSBBU1NFUlRFRC1OT1QtQ0hFQ0tFRCBhdCBiZXN0LiJ9LCJjb3VudHNfc291cmNlIjoicmVzb2x2ZWQgZnJvbSA8dGVzdGNhc2U+IGNoaWxkIGVsZW1lbnRzIiwiZXJyb3JzIjoxLCJlcnJvcnNfYXJlX2Fic2VuY2UiOnRydWUsImV4ZWN1dGVkIjo0LCJmYWlsdXJlcyI6MCwiZm9ybWF0IjoianVuaXQiLCJpbmRldGVybWluYXRlIjowLCJrbm93bl9ibGluZF9zcG90cyI6WyJqZXN0LWp1bml0IHVuZGVyIGl0cyBkZWZhdWx0IHJlcG9ydFRlc3RTdWl0ZUVycm9yczonZmFsc2UnIERST1BTIGEgc3VpdGUgdGhhdCBmYWlsZWQgdG8gY29tcGlsZSBmcm9tIHRoZSBYTUwgZW50aXJlbHkg4oCUIGEgYnJva2VuIHRlc3QgZmlsZSBwcm9kdWNlcyBhIGZ1bGx5IGdyZWVuIHJlcG9ydCB3aXRoIG5vIHRyYWNlLiBVbnJlY292ZXJhYmxlIGZyb20gdGhlc2UgYnl0ZXMuIiwiYSBzaGFyZCB3aG9zZSByZXBvcnQgd2FzIG5ldmVyIHVwbG9hZGVkIGxlYXZlcyBubyBtYXJrIGFueXdoZXJlIGluIHRoaXMgZG9jdW1lbnQ7IGFic2VuY2Ugb2YgYSBmaWxlIGlzIGludmlzaWJsZSB0byBhIGZpbGUgcmVhZGVyLiIsImB0ZXN0cz1gIGNvdW50cyB0ZXN0Y2FzZSByZWNvcmRzIGVtaXR0ZWQsIG5vdCB0ZXN0cyBleGVjdXRlZDogZ29vZ2xldGVzdCBjb3VudHMgbmV2ZXItcnVuIERJU0FCTEVEXyB0ZXN0cywgcHl0ZXN0IGNvdW50cyBjb2xsZWN0aW9uIGZhaWx1cmVzIHdoZXJlIHplcm8gdGVzdCBib2RpZXMgcmFuLiJdLCJub3RydW4iOjAsIm91dGNvbWUiOiJGQUlMRUQiLCJwYXNzZWQiOjMsInBhdGgiOiJwYXBlcnMvc3dvcm4vY2FubmVkX2hhcm5lc3NfanVuaXQueG1sIiwicHJvZHVjZXJfY29uZmlkZW5jZSI6Im5vbmUiLCJwcm9kdWNlcl9ndWVzcyI6InVua25vd24iLCJyb290X2FzX2ZvdW5kIjp7ImRpc2FibGVkIjpudWxsLCJlcnJvcnMiOm51bGwsImZhaWx1cmVzIjpudWxsLCJza2lwcGVkIjpudWxsLCJ0ZXN0cyI6bnVsbH0sInJvb3RfY2hpbGRyZW5fZGlzYWdyZWUiOmZhbHNlLCJzaGEyNTYiOiIwOTJkNmVhY2I3ZWE4NjRjYzcwNDYxMDJmNjA3MzY1NGMzYzJkN2ZmNmNjNWQ3N2VmMzNiNGIwMDMyMGY1ZjYzIiwic2tpcHBlZCI6MCwic3VpdGVfbGV2ZWxfZXJyb3JzIjoxLCJzdWl0ZXMiOjIsInN1bW1lZF9jaGlsZHJlbl9hc19mb3VuZCI6eyJkaXNhYmxlZCI6bnVsbCwiZXJyb3JzIjoxLCJmYWlsdXJlcyI6MCwic2tpcHBlZCI6MCwidGVzdHMiOjN9LCJ0ZXN0cyI6NCwidW5yZWNvZ25pemVkX2VsZW1lbnRzIjpbXSwieG1sX25vdGVzIjp7ImRvY3R5cGVfc2VlbiI6bnVsbCwiZW50aXR5X2RlZmVuY2UiOiJvdXJzIn19XSwic291cmNlc19kaXNhZ3JlZSI6ZmFsc2UsInNwZWMiOiJzdHl4eC1ldmlkZW5jZS92MC4yIiwidG90YWxzIjp7ImVycm9ycyI6MSwiZmFpbHVyZXMiOjAsInNraXBwZWQiOjAsInRlc3RzIjo0fSwidW5wYXJzZWQiOltdLCJ2ZXJkaWN0X3ZvY2FidWxhcnkiOlsiVkVSSUZJRUQiLCJVTkNIRUNLQUJMRSJdfQo=",
+    "harness_note": "styxx.evidence.load_evidence over papers/sworn/canned_harness_junit.xml, RFC 8785 canonical with one trailing LF, byte for byte"
+   }
+  },
+  "rung": "L1",
+  "digest": "8e1720fbd801cb74224b85c73fdca0b884bd8b0d59b4be9307d6fb99bd520e15"
+ },
+ "receipt": {
+  "schema": "styxx.sworn.verdict-receipt/v1",
+  "format": "sworn/0.1",
+  "document": {
+   "name": "CANNED_harness_junit_2026_09_05.sworn.json",
+   "inline_sha256": "48ef60eef955d9e22142c4575d4722ef2a5db35b88ad70c48ea38649a8094139",
+   "canonical_sha256": "8ce7fb473ed61424c5d442233a38af3459c363f9e0d1123aec7bd5ab1b1f9974"
+  },
+  "commit": "d5431e0095cbb845898c6c8bd0fcb6663d91e7de",
+  "manifest_digest": "8e1720fbd801cb74224b85c73fdca0b884bd8b0d59b4be9307d6fb99bd520e15",
+  "spans": [
+   {
+    "at": 682,
+    "start": 682,
+    "end": 721,
+    "receipt": "r1",
+    "kind": "numeric",
+    "verdict": "HELD",
+    "reason": null,
+    "detail": {
+     "printed_token": "3",
+     "printed": "3",
+     "receipt": "3",
+     "receipt_rounded": "3",
+     "fractional_digits": 0,
+     "rounding": "ROUND_HALF_EVEN"
+    },
+    "resolved_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+    "provenance": {
+     "form": "rn",
+     "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+     "rung": "L1",
+     "kind_of_source": "test_report"
+    }
+   },
+   {
+    "at": 756,
+    "start": 722,
+    "end": 745,
+    "receipt": "r2",
+    "kind": "numeric",
+    "verdict": "HELD",
+    "reason": null,
+    "detail": {
+     "printed_token": "0",
+     "printed": "0",
+     "receipt": "0",
+     "receipt_rounded": "0",
+     "fractional_digits": 0,
+     "rounding": "ROUND_HALF_EVEN"
+    },
+    "resolved_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "provenance": {
+     "form": "rn",
+     "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+     "rung": "L1",
+     "kind_of_source": "test_report"
+    }
+   },
+   {
+    "at": 814,
+    "start": 746,
+    "end": 800,
+    "receipt": "r4#/totals/errors",
+    "kind": "numeric",
+    "verdict": "HELD",
+    "reason": null,
+    "detail": {
+     "printed_token": "1",
+     "printed": "1",
+     "receipt": "1",
+     "receipt_rounded": "1",
+     "fractional_digits": 0,
+     "rounding": "ROUND_HALF_EVEN"
+    },
+    "resolved_sha256": "67fb0d2235188bb9c511a05777d1344fe82f0fd4733f99d063215728c2a87ea8",
+    "provenance": {
+     "form": "rn",
+     "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+     "rung": "L1",
+     "kind_of_source": "test_report"
+    }
+   },
+   {
+    "at": 918,
+    "start": 801,
+    "end": 872,
+    "receipt": "r4#/outcome",
+    "kind": "quote",
+    "verdict": "HELD",
+    "reason": null,
+    "detail": {
+     "needle_bytes": 6,
+     "haystack_bytes": 6,
+     "occurrences": 1
+    },
+    "resolved_sha256": "67fb0d2235188bb9c511a05777d1344fe82f0fd4733f99d063215728c2a87ea8",
+    "provenance": {
+     "form": "rn",
+     "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+     "rung": "L1",
+     "kind_of_source": "test_report"
+    }
+   },
+   {
+    "at": 1031,
+    "start": 873,
+    "end": 952,
+    "receipt": "r4#/sources/0/format",
+    "kind": "quote",
+    "verdict": "HELD",
+    "reason": null,
+    "detail": {
+     "needle_bytes": 5,
+     "haystack_bytes": 5,
+     "occurrences": 1
+    },
+    "resolved_sha256": "67fb0d2235188bb9c511a05777d1344fe82f0fd4733f99d063215728c2a87ea8",
+    "provenance": {
+     "form": "rn",
+     "harness": "styxx.harness/0.1 junit over papers/sworn/canned_harness_junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent \u2014 weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+     "rung": "L1",
+     "kind_of_source": "test_report"
+    }
+   }
+  ],
+  "counts": {
+   "HELD": 5,
+   "FAILED": 0,
+   "UNRESOLVED": 0,
+   "MALFORMED": 0,
+   "WITHHELD": 0
+  },
+  "sworn_total": 5,
+  "unresolved": 0,
+  "document_verdict": "SWORN-HELD",
+  "document_malformed": null,
+  "rungs": {
+   "L1": 5
+  },
+  "verifier": {
+   "styxx_version": "7.47.0",
+   "sworn_sha256": "94f854e1dae5e5a3fa88688d95c5bec980ef1670652287e7dc00d995574ad0eb",
+   "rounding": "ROUND_HALF_EVEN",
+   "decisions": {
+    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+    "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+    "tag_grammar": "exactly `\u003csworn r=\"\u2026\" k=\"\u2026\">` with single spaces, double quotes, lowercase, and `\u003c/sworn>`; any other tag-shaped candidate (`\u003csworn`/`\u003c/sworn` followed by a non-name byte) is MALFORMED, never narrative",
+    "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+    "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+    "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+    "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+    "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-\u2212%/\u00b1:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+\u2212]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, \u00b10.02, \u0663) is MALFORMED \u2014 no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+    "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+    "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED \u2014 a string that happens to spell a number is not parsed, that would be a guess",
+    "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+    "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+    "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+    "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+    "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+    "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes \u2014 `/`-pointer (RFC 6901) or Ln[-Lm] \u2014 since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+    "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`\u003c!--` \u2026 `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment \u2014 never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+    "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+    "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+    "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent \u2014 weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown \u2014 the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+    "provenance": "since v0.2 R7: every span verdict carries `provenance` \u2014 for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at \u003ccommit>; authorship unchecked` \u2014 and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+    "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
+    "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) \u2014 a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+    "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+    "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+    "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+    "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?\u003c=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) \u2014 a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter \u2014 and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
+    "exit_codes": "verify exits 0 for EVERY document verdict \u2014 SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED \u2014 because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: \u2026'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+    "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it \u2014 see `hidden_commitment`"
+   }
+  },
+  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares \u2014 NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+  "digest": "5c154fa065247c4610511ea10cf7fc4cb8348b2fd534e1c9e4a015a1e40d55ab",
+  "coverage": {
+   "schema": "sworn/coverage/1",
+   "advisory": true,
+   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall \u2014 that is a blind panel's to measure, and it has not",
+   "sworn_total": 5,
+   "narrative_sentences": 11,
+   "sentence_share": 0.3125,
+   "diff_claim_sentences": 0,
+   "diff_claim_share": 1.0,
+   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+   "unsworn_claims": [],
+   "splitter": "diffgate:(?\u003c=[.!?])\\s+|\\n+",
+   "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "coverage_sha256": "022316f9b6e36cbe6a0a50248fe02b4b4f237fca089cb3d12ba1c3df16a5f357",
+  "timestamp": "2026-09-05T14:31:08Z"
+ },
+ "core_sha256": "33ff413f2a0af14c6372df896f0ca76bf05722d6f66d125ed60728b277a188a1",
+ "verifier_js": {
+  "sha256": "e633626063e8be9b9c22b1c57c18a542e4751dc69e468ccffd1e50420b9a334b",
+  "b64": "InVzZSBzdHJpY3QiOwovKgogKiBzd29ybl92ZXJpZnkuanMg4oCUIGEgc2Vjb25kIGltcGxlbWVudGF0aW9uIG9mIHRoZSBzd29ybiB2ZXJkaWN0IGNvcmUsIGZvciBhIGJyb3dzZXIuCiAqCiAqIFNQRUM6IHBhcGVycy9zd29ybi9TUEVDX3N3b3JuX2Jyb3dzZXJfdmVyaWZpZXJfdjAxXzIwMjZfMDlfMDUubWQsIGZyb3plbiBiZWZvcmUgdGhpcyBmaWxlLgogKiBIZWxkIHRvIGNvbmZvcm1hbmNlL3N3b3JuLyDigJQgbW9kZSBgaW5saW5lYCwgcmVjZWlwdHMgck4gKGFuZCByTiMvcG9pbnRlcikgYWdhaW5zdCBhbiBlbWJlZGRlZAogKiBtYW5pZmVzdCwgcGF0aDovcHJlcmVnOiB3aXRoIG5vIHRyZWUgKFVOUkVTT0xWRUQgbm9fcmVwb3NpdG9yeSksIGFsbCBmb3VyIGtpbmRzLiBJdCByZXByb2R1Y2VzCiAqIHRoZSBjb3JlIGRpZ2VzdCBvciBpdCBkb2VzIG5vdCBzaGlwOyB0aGUgYmFyIGlzIDE2ODkgdmVjdG9ycyBhbmQgdGhlIGhhcm5lc3MgcHJpbnRzIHRoZSBjb3VudC4KICoKICogVGhlIGxhYmVsLCBmcm9tIHRoZSBwbGFuLCBhbmQgaXQgaXMgdGhlIHdob2xlIGhvbmVzdCBjbGFpbSBmb3IgdGhpcyBmaWxlOgogKgogKiAgICAgcmUtZGVyaXZlcyBzd29ybiBzcGFuIHZlcmRpY3RzIG9mZmxpbmU7IGEgZm9yZ2VyIGNvbnRyb2xsaW5nIHRoZSB3aG9sZSBmaWxlIHBhc3NlcyBib3RoCiAqICAgICBicm93c2VyIGxheWVyczsgdGhlIHBhY2thZ2UgYXQgdGhlIG5hbWVkIGNvbW1pdCBpcyB0aGUgY2hlY2sKICoKICogUFVSRSAoU1BFQyBCNSk6IG9uZSBlbnRyeSBwb2ludCwgYHN3b3JuVmVyaWZ5KGRvY3VtZW50Qnl0ZXMsIG1hbmlmZXN0T2JqZWN0fG51bGwsIG9wdHMpYC4KICogTm8gSS9PLCBubyBjbG9jaywgbm8gZ2xvYmFscywgbm8gbmV0d29yay4gQnl0ZSBvZmZzZXRzIGFyZSBjb21wdXRlZCBvdmVyIFVpbnQ4QXJyYXksIG5ldmVyCiAqIG92ZXIgSlMgc3RyaW5nIGluZGljZXMsIGJlY2F1c2UgdGhlIGZvcm1hdCdzIG9mZnNldHMgYXJlIGJ5dGUgb2Zmc2V0cy4KICoKICogRXZlcnkgcGxhY2Ugd2hlcmUgUHl0aG9uIGFuZCBKYXZhU2NyaXB0IGRpc2FncmVlIGlzIG1hcmtlZCBgW0I0XWAgd2l0aCB0aGUgcm93IG9mIHRoZSBTUEVDJ3MKICogdGFibGUgaXQgaW1wbGVtZW50cy4KICovCgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gc2hhMjU2IChwdXJlLCBzeW5jaHJvbm91cykKICogY3J5cHRvLnN1YnRsZSBpcyBhc3luYy1vbmx5LCBhbmQgYSBjYXBzdWxlJ3MgbGF5ZXIgMSBtdXN0IHJldHVybiBhIHZlcmRpY3Qgd2l0aG91dCBhd2FpdGluZyBhCiAqIHByb21pc2UgY2hhaW4gdGhyb3VnaCB0aGUgbGV4ZXIuIDYwIGxpbmVzIG9mIEZJUFMgMTgwLTQgaXMgdGhlIGNoZWFwZXIgZGVwZW5kZW5jeS4KICovCmNvbnN0IF9LID0gbmV3IFVpbnQzMkFycmF5KFsKICAweDQyOGEyZjk4LCAweDcxMzc0NDkxLCAweGI1YzBmYmNmLCAweGU5YjVkYmE1LCAweDM5NTZjMjViLCAweDU5ZjExMWYxLCAweDkyM2Y4MmE0LCAweGFiMWM1ZWQ1LAogIDB4ZDgwN2FhOTgsIDB4MTI4MzViMDEsIDB4MjQzMTg1YmUsIDB4NTUwYzdkYzMsIDB4NzJiZTVkNzQsIDB4ODBkZWIxZmUsIDB4OWJkYzA2YTcsIDB4YzE5YmYxNzQsCiAgMHhlNDliNjljMSwgMHhlZmJlNDc4NiwgMHgwZmMxOWRjNiwgMHgyNDBjYTFjYywgMHgyZGU5MmM2ZiwgMHg0YTc0ODRhYSwgMHg1Y2IwYTlkYywgMHg3NmY5ODhkYSwKICAweDk4M2U1MTUyLCAweGE4MzFjNjZkLCAweGIwMDMyN2M4LCAweGJmNTk3ZmM3LCAweGM2ZTAwYmYzLCAweGQ1YTc5MTQ3LCAweDA2Y2E2MzUxLCAweDE0MjkyOTY3LAogIDB4MjdiNzBhODUsIDB4MmUxYjIxMzgsIDB4NGQyYzZkZmMsIDB4NTMzODBkMTMsIDB4NjUwYTczNTQsIDB4NzY2YTBhYmIsIDB4ODFjMmM5MmUsIDB4OTI3MjJjODUsCiAgMHhhMmJmZThhMSwgMHhhODFhNjY0YiwgMHhjMjRiOGI3MCwgMHhjNzZjNTFhMywgMHhkMTkyZTgxOSwgMHhkNjk5MDYyNCwgMHhmNDBlMzU4NSwgMHgxMDZhYTA3MCwKICAweDE5YTRjMTE2LCAweDFlMzc2YzA4LCAweDI3NDg3NzRjLCAweDM0YjBiY2I1LCAweDM5MWMwY2IzLCAweDRlZDhhYTRhLCAweDViOWNjYTRmLCAweDY4MmU2ZmYzLAogIDB4NzQ4ZjgyZWUsIDB4NzhhNTYzNmYsIDB4ODRjODc4MTQsIDB4OGNjNzAyMDgsIDB4OTBiZWZmZmEsIDB4YTQ1MDZjZWIsIDB4YmVmOWEzZjcsIDB4YzY3MTc4ZjJdKTsKCmZ1bmN0aW9uIHNoYTI1NkJ5dGVzKGJ5dGVzKSB7CiAgY29uc3QgbWwgPSBieXRlcy5sZW5ndGg7CiAgY29uc3Qgd2l0aE9uZSA9IG1sICsgMTsKICBjb25zdCBwYWRkZWQgPSBuZXcgVWludDhBcnJheShNYXRoLmNlaWwoKHdpdGhPbmUgKyA4KSAvIDY0KSAqIDY0KTsKICBwYWRkZWQuc2V0KGJ5dGVzKTsKICBwYWRkZWRbbWxdID0gMHg4MDsKICBjb25zdCBoaSA9IE1hdGguZmxvb3IoKG1sICogOCkgLyAweDEwMDAwMDAwMCk7CiAgY29uc3QgbG8gPSAobWwgKiA4KSA+Pj4gMDsKICBjb25zdCBkdiA9IG5ldyBEYXRhVmlldyhwYWRkZWQuYnVmZmVyKTsKICBkdi5zZXRVaW50MzIocGFkZGVkLmxlbmd0aCAtIDgsIGhpKTsKICBkdi5zZXRVaW50MzIocGFkZGVkLmxlbmd0aCAtIDQsIGxvKTsKICBjb25zdCBIID0gbmV3IFVpbnQzMkFycmF5KFsweDZhMDllNjY3LCAweGJiNjdhZTg1LCAweDNjNmVmMzcyLCAweGE1NGZmNTNhLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIDB4NTEwZTUyN2YsIDB4OWIwNTY4OGMsIDB4MWY4M2Q5YWIsIDB4NWJlMGNkMTldKTsKICBjb25zdCB3ID0gbmV3IFVpbnQzMkFycmF5KDY0KTsKICBjb25zdCByciA9ICh4LCBuKSA9PiAoeCA+Pj4gbikgfCAoeCA8PCAoMzIgLSBuKSk7CiAgZm9yIChsZXQgb2ZmID0gMDsgb2ZmIDwgcGFkZGVkLmxlbmd0aDsgb2ZmICs9IDY0KSB7CiAgICBmb3IgKGxldCBpID0gMDsgaSA8IDE2OyBpKyspIHdbaV0gPSBkdi5nZXRVaW50MzIob2ZmICsgaSAqIDQpOwogICAgZm9yIChsZXQgaSA9IDE2OyBpIDwgNjQ7IGkrKykgewogICAgICBjb25zdCBzMCA9IHJyKHdbaSAtIDE1XSwgNykgXiBycih3W2kgLSAxNV0sIDE4KSBeICh3W2kgLSAxNV0gPj4+IDMpOwogICAgICBjb25zdCBzMSA9IHJyKHdbaSAtIDJdLCAxNykgXiBycih3W2kgLSAyXSwgMTkpIF4gKHdbaSAtIDJdID4+PiAxMCk7CiAgICAgIHdbaV0gPSAod1tpIC0gMTZdICsgczAgKyB3W2kgLSA3XSArIHMxKSA+Pj4gMDsKICAgIH0KICAgIGxldCBbYSwgYiwgYywgZCwgZSwgZiwgZywgaF0gPSBIOwogICAgZm9yIChsZXQgaSA9IDA7IGkgPCA2NDsgaSsrKSB7CiAgICAgIGNvbnN0IFMxID0gcnIoZSwgNikgXiBycihlLCAxMSkgXiBycihlLCAyNSk7CiAgICAgIGNvbnN0IGNoID0gKGUgJiBmKSBeICh+ZSAmIGcpOwogICAgICBjb25zdCB0MSA9IChoICsgUzEgKyBjaCArIF9LW2ldICsgd1tpXSkgPj4+IDA7CiAgICAgIGNvbnN0IFMwID0gcnIoYSwgMikgXiBycihhLCAxMykgXiBycihhLCAyMik7CiAgICAgIGNvbnN0IG1qID0gKGEgJiBiKSBeIChhICYgYykgXiAoYiAmIGMpOwogICAgICBjb25zdCB0MiA9IChTMCArIG1qKSA+Pj4gMDsKICAgICAgaCA9IGc7IGcgPSBmOyBmID0gZTsgZSA9IChkICsgdDEpID4+PiAwOwogICAgICBkID0gYzsgYyA9IGI7IGIgPSBhOyBhID0gKHQxICsgdDIpID4+PiAwOwogICAgfQogICAgSFswXSA9IChIWzBdICsgYSkgPj4+IDA7IEhbMV0gPSAoSFsxXSArIGIpID4+PiAwOyBIWzJdID0gKEhbMl0gKyBjKSA+Pj4gMDsKICAgIEhbM10gPSAoSFszXSArIGQpID4+PiAwOyBIWzRdID0gKEhbNF0gKyBlKSA+Pj4gMDsgSFs1XSA9IChIWzVdICsgZikgPj4+IDA7CiAgICBIWzZdID0gKEhbNl0gKyBnKSA+Pj4gMDsgSFs3XSA9IChIWzddICsgaCkgPj4+IDA7CiAgfQogIGxldCBvdXQgPSAiIjsKICBmb3IgKGxldCBpID0gMDsgaSA8IDg7IGkrKykgb3V0ICs9IEhbaV0udG9TdHJpbmcoMTYpLnBhZFN0YXJ0KDgsICIwIik7CiAgcmV0dXJuIG91dDsKfQoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09IGJ5dGVzIGFuZCB0ZXh0ICovCgpjb25zdCBfRU5DID0gbmV3IFRleHRFbmNvZGVyKCk7CmNvbnN0IF9ERUNfU1RSSUNUID0gbmV3IFRleHREZWNvZGVyKCJ1dGYtOCIsIHsgZmF0YWw6IHRydWUgfSk7CmNvbnN0IF9ERUNfTE9PU0UgPSBuZXcgVGV4dERlY29kZXIoInV0Zi04Iik7CgpmdW5jdGlvbiB1dGY4KHMpIHsgcmV0dXJuIF9FTkMuZW5jb2RlKHMpOyB9CgovKiogU3RyaWN0IGRlY29kZTogcmV0dXJucyBudWxsIHdoZW4gdGhlIGJ5dGVzIGFyZSBub3QgVVRGLTggKHRoZSBkb2N1bWVudC1sZXZlbCBNQUxGT1JNRUQpLiAqLwpmdW5jdGlvbiBkZWNvZGVTdHJpY3QoYnl0ZXMpIHsKICB0cnkgeyByZXR1cm4gX0RFQ19TVFJJQ1QuZGVjb2RlKGJ5dGVzKTsgfSBjYXRjaCAoZSkgeyByZXR1cm4gbnVsbDsgfQp9CmZ1bmN0aW9uIGRlY29kZUxvb3NlKGJ5dGVzKSB7IHJldHVybiBfREVDX0xPT1NFLmRlY29kZShieXRlcyk7IH0KCi8qKiBUaGUgYnl0ZSBvZmZzZXQgb2YgdGhlIGZpcnN0IGludmFsaWQgVVRGLTggc2VxdWVuY2Ug4oCUIFB5dGhvbidzIFVuaWNvZGVEZWNvZGVFcnJvci5zdGFydC4gKi8KZnVuY3Rpb24gZmlyc3RJbnZhbGlkVXRmOChieXRlcykgewogIGxldCBpID0gMDsKICBjb25zdCBuID0gYnl0ZXMubGVuZ3RoOwogIHdoaWxlIChpIDwgbikgewogICAgY29uc3QgYiA9IGJ5dGVzW2ldOwogICAgbGV0IG5lZWQsIG1pbiwgY3A7CiAgICBpZiAoYiA8IDB4ODApIHsgaSsrOyBjb250aW51ZTsgfQogICAgZWxzZSBpZiAoYiA+PSAweGMyICYmIGIgPD0gMHhkZikgeyBuZWVkID0gMTsgY3AgPSBiICYgMHgxZjsgbWluID0gMHg4MDsgfQogICAgZWxzZSBpZiAoYiA+PSAweGUwICYmIGIgPD0gMHhlZikgeyBuZWVkID0gMjsgY3AgPSBiICYgMHgwZjsgbWluID0gMHg4MDA7IH0KICAgIGVsc2UgaWYgKGIgPj0gMHhmMCAmJiBiIDw9IDB4ZjQpIHsgbmVlZCA9IDM7IGNwID0gYiAmIDB4MDc7IG1pbiA9IDB4MTAwMDA7IH0KICAgIGVsc2UgcmV0dXJuIGk7CiAgICBpZiAoaSArIG5lZWQgPj0gbiArIDAgJiYgaSArIG5lZWQgPiBuIC0gMSkgcmV0dXJuIGk7CiAgICBsZXQgb2sgPSB0cnVlOwogICAgZm9yIChsZXQgayA9IDE7IGsgPD0gbmVlZDsgaysrKSB7CiAgICAgIGNvbnN0IGMgPSBieXRlc1tpICsga107CiAgICAgIGlmIChjID09PSB1bmRlZmluZWQgfHwgKGMgJiAweGMwKSAhPT0gMHg4MCkgeyBvayA9IGZhbHNlOyBicmVhazsgfQogICAgICBjcCA9IChjcCA8PCA2KSB8IChjICYgMHgzZik7CiAgICB9CiAgICBpZiAoIW9rKSByZXR1cm4gaTsKICAgIGlmIChjcCA8IG1pbiB8fCBjcCA+IDB4MTBmZmZmIHx8IChjcCA+PSAweGQ4MDAgJiYgY3AgPD0gMHhkZmZmKSkgcmV0dXJuIGk7CiAgICBpICs9IG5lZWQgKyAxOwogIH0KICByZXR1cm4gMDsKfQoKZnVuY3Rpb24gYnl0ZXNFcXVhbChhLCBiKSB7CiAgaWYgKGEubGVuZ3RoICE9PSBiLmxlbmd0aCkgcmV0dXJuIGZhbHNlOwogIGZvciAobGV0IGkgPSAwOyBpIDwgYS5sZW5ndGg7IGkrKykgaWYgKGFbaV0gIT09IGJbaV0pIHJldHVybiBmYWxzZTsKICByZXR1cm4gdHJ1ZTsKfQoKLyoqIGluZGV4T2YgZm9yIFVpbnQ4QXJyYXkuICovCmZ1bmN0aW9uIGZpbmRCeXRlcyhoYXksIG5lZWRsZSwgZnJvbSkgewogIGNvbnN0IG4gPSBuZWVkbGUubGVuZ3RoOwogIGlmIChuID09PSAwKSByZXR1cm4gZnJvbSB8fCAwOwogIGNvbnN0IGVuZCA9IGhheS5sZW5ndGggLSBuOwogIGZvciAobGV0IGkgPSBmcm9tIHx8IDA7IGkgPD0gZW5kOyBpKyspIHsKICAgIGxldCBvayA9IHRydWU7CiAgICBmb3IgKGxldCBrID0gMDsgayA8IG47IGsrKykgaWYgKGhheVtpICsga10gIT09IG5lZWRsZVtrXSkgeyBvayA9IGZhbHNlOyBicmVhazsgfQogICAgaWYgKG9rKSByZXR1cm4gaTsKICB9CiAgcmV0dXJuIC0xOwp9CmZ1bmN0aW9uIGNvdW50Qnl0ZXMoaGF5LCBuZWVkbGUpIHsKICBsZXQgYyA9IDAsIGkgPSAwOwogIGZvciAoOzspIHsKICAgIGNvbnN0IGogPSBmaW5kQnl0ZXMoaGF5LCBuZWVkbGUsIGkpOwogICAgaWYgKGogPCAwKSByZXR1cm4gYzsKICAgIGMrKzsKICAgIGkgPSBqICsgMTsgICAgICAgICAgICAgICAvLyBQeXRob24gYnl0ZXMuY291bnQgY291bnRzIE5PTi1vdmVybGFwcGluZ+KApgogICAgaSA9IGogKyBuZWVkbGUubGVuZ3RoOyAgIC8vIOKApndoaWNoIGlzIHdoYXQgdGhpcyBsaW5lIGRvZXM7IHRoZSBsaW5lIGFib3ZlIGlzIHN1cGVyc2VkZWQuCiAgfQp9Cgpjb25zdCBfV1NfQllURVMgPSBuZXcgU2V0KFsweDIwLCAweDA5LCAweDBhLCAweDBkLCAweDBjLCAweDBiXSk7CmZ1bmN0aW9uIHN0cmlwV3NCeXRlcyhiKSB7CiAgbGV0IGEgPSAwLCB6ID0gYi5sZW5ndGg7CiAgd2hpbGUgKGEgPCB6ICYmIF9XU19CWVRFUy5oYXMoYlthXSkpIGErKzsKICB3aGlsZSAoeiA+IGEgJiYgX1dTX0JZVEVTLmhhcyhiW3ogLSAxXSkpIHotLTsKICByZXR1cm4gYi5zdWJhcnJheShhLCB6KTsKfQoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09IGRlY2ltYWwgW0I0IHJvd3MgMywgNywgOF0KICogdmFsdWUgPSBzaWduICogY29lZiAqIDEwXmV4cCwgd2l0aCBgZGlnaXRzYCB0aGUgY29lZmZpY2llbnQgRVhBQ1RMWSBhcyB3cml0dGVuLCBiZWNhdXNlCiAqIFB5dGhvbidzIERlY2ltYWwga2VlcHMgdGhlbSBhbmQgc3RyKCkgcHJpbnRzIHRoZW0gKERlY2ltYWwoIjEuNTAiKSBpcyAiMS41MCIsIG5vdCAiMS41IikuCiAqLwpjbGFzcyBEZWMgewogIGNvbnN0cnVjdG9yKHNpZ24sIGRpZ2l0cywgZXhwLCBzcGVjaWFsKSB7CiAgICB0aGlzLnNpZ24gPSBzaWduOyAgICAgICAgICAgIC8vIDEgfCAtMQogICAgdGhpcy5kaWdpdHMgPSBkaWdpdHM7ICAgICAgICAvLyBkaWdpdCBzdHJpbmcsIGFzIHdyaXR0ZW4gKG1heSBjYXJyeSBsZWFkaW5nIHplcm9zKQogICAgdGhpcy5leHAgPSBleHA7ICAgICAgICAgICAgICAvLyBpbnRlZ2VyCiAgICB0aGlzLnNwZWNpYWwgPSBzcGVjaWFsIHx8IG51bGw7ICAgLy8gbnVsbCB8ICJOYU4iIHwgIkluZmluaXR5IgogIH0KICBzdGF0aWMgcGFyc2UodGV4dCkgewogICAgY29uc3QgbSA9IC9eKFstK10/KSg/OihcZCopKD86XC4oXGQqKSk/fCkoPzpbZUVdKFstK10/XGQrKSk/JC8uZXhlYyh0ZXh0KTsKICAgIGlmICghbSkgcmV0dXJuIG51bGw7CiAgICBjb25zdCBzaWduID0gbVsxXSA9PT0gIi0iID8gLTEgOiAxOwogICAgY29uc3QgaXAgPSBtWzJdIHx8ICIiOwogICAgY29uc3QgZnAgPSBtWzNdID09PSB1bmRlZmluZWQgPyBudWxsIDogbVszXTsKICAgIGlmIChpcCA9PT0gIiIgJiYgKGZwID09PSBudWxsIHx8IGZwID09PSAiIikpIHJldHVybiBudWxsOwogICAgY29uc3QgZGlnaXRzID0gaXAgKyAoZnAgfHwgIiIpOwogICAgY29uc3QgZXhwID0gKGZwID8gLWZwLmxlbmd0aCA6IDApICsgKG1bNF0gPyBwYXJzZUludChtWzRdLCAxMCkgOiAwKTsKICAgIHJldHVybiBuZXcgRGVjKHNpZ24sIGRpZ2l0cyA9PT0gIiIgPyAiMCIgOiBkaWdpdHMsIGV4cCwgbnVsbCk7CiAgfQogIGlzU3BlY2lhbCgpIHsgcmV0dXJuIHRoaXMuc3BlY2lhbCAhPT0gbnVsbDsgfQogIGlzRmluaXRlKCkgeyByZXR1cm4gdGhpcy5zcGVjaWFsID09PSBudWxsOyB9CiAgLyoqIFB5dGhvbidzIERlY2ltYWwuYWRqdXN0ZWQoKS4gKi8KICBhZGp1c3RlZCgpIHsgcmV0dXJuIHRoaXMuZXhwICsgdGhpcy5kaWdpdHMubGVuZ3RoIC0gMTsgfQogIGlzWmVybygpIHsgcmV0dXJuIHRoaXMuc3BlY2lhbCA9PT0gbnVsbCAmJiAvXjAqJC8udGVzdCh0aGlzLmRpZ2l0cyk7IH0KICBjb2VmKCkgeyByZXR1cm4gQmlnSW50KHRoaXMuZGlnaXRzIHx8ICIwIik7IH0KICAvKiogUHl0aG9uJ3Mgc3RyKERlY2ltYWwpIOKAlCB0by1zY2llbnRpZmljLXN0cmluZy4gW0I0IHJvdyA3XSAqLwogIHRvU3RyaW5nKCkgewogICAgY29uc3Qgc2lnbiA9IHRoaXMuc2lnbiA8IDAgPyAiLSIgOiAiIjsKICAgIGlmICh0aGlzLnNwZWNpYWwgPT09ICJOYU4iKSByZXR1cm4gc2lnbiArICJOYU4iOwogICAgaWYgKHRoaXMuc3BlY2lhbCA9PT0gIkluZmluaXR5IikgcmV0dXJuIHNpZ24gKyAiSW5maW5pdHkiOwogICAgY29uc3QgaW50ID0gdGhpcy5kaWdpdHM7CiAgICBjb25zdCBsZWZ0ZGlnaXRzID0gdGhpcy5leHAgKyBpbnQubGVuZ3RoOwogICAgbGV0IGRvdHBsYWNlOwogICAgaWYgKHRoaXMuZXhwIDw9IDAgJiYgbGVmdGRpZ2l0cyA+IC02KSBkb3RwbGFjZSA9IGxlZnRkaWdpdHM7CiAgICBlbHNlIGRvdHBsYWNlID0gMTsKICAgIGxldCBpbnRwYXJ0LCBmcmFjcGFydDsKICAgIGlmIChkb3RwbGFjZSA8PSAwKSB7IGludHBhcnQgPSAiMCI7IGZyYWNwYXJ0ID0gIi4iICsgIjAiLnJlcGVhdCgtZG90cGxhY2UpICsgaW50OyB9CiAgICBlbHNlIGlmIChkb3RwbGFjZSA+PSBpbnQubGVuZ3RoKSB7IGludHBhcnQgPSBpbnQgKyAiMCIucmVwZWF0KGRvdHBsYWNlIC0gaW50Lmxlbmd0aCk7IGZyYWNwYXJ0ID0gIiI7IH0KICAgIGVsc2UgeyBpbnRwYXJ0ID0gaW50LnNsaWNlKDAsIGRvdHBsYWNlKTsgZnJhY3BhcnQgPSAiLiIgKyBpbnQuc2xpY2UoZG90cGxhY2UpOyB9CiAgICBsZXQgZXhwID0gIiI7CiAgICBpZiAobGVmdGRpZ2l0cyAhPT0gZG90cGxhY2UpIHsKICAgICAgY29uc3QgZSA9IGxlZnRkaWdpdHMgLSBkb3RwbGFjZTsKICAgICAgZXhwID0gIkUiICsgKGUgPj0gMCA/ICIrIiA6ICItIikgKyBNYXRoLmFicyhlKTsKICAgIH0KICAgIHJldHVybiBzaWduICsgaW50cGFydCArIGZyYWNwYXJ0ICsgZXhwOwogIH0KICAvKiogcXVhbnRpemUgdG8gMTBeLWZyYWMgd2l0aCBST1VORF9IQUxGX0VWRU4sIHRoZW4gZm9ybWF0ICJmIiDigJQgUHl0aG9uJ3MgX2Nhbm9uLiBbQjQgcm93IDhdICovCiAgY2Fub24oZnJhYykgewogICAgaWYgKCF0aGlzLmlzRmluaXRlKCkpIHJldHVybiBudWxsOwogICAgbGV0IGNvZWYgPSB0aGlzLmNvZWYoKTsKICAgIGNvbnN0IHNoaWZ0ID0gdGhpcy5leHAgKyBmcmFjOwogICAgaWYgKHNoaWZ0ID49IDApIHsKICAgICAgY29lZiA9IGNvZWYgKiAoMTBuICoqIEJpZ0ludChzaGlmdCkpOwogICAgfSBlbHNlIHsKICAgICAgY29uc3QgcCA9IDEwbiAqKiBCaWdJbnQoLXNoaWZ0KTsKICAgICAgY29uc3QgcSA9IGNvZWYgLyBwOwogICAgICBjb25zdCByID0gY29lZiAlIHA7CiAgICAgIGNvbnN0IHR3aWNlID0gciAqIDJuOwogICAgICBpZiAodHdpY2UgPiBwIHx8ICh0d2ljZSA9PT0gcCAmJiAocSAlIDJuKSA9PT0gMW4pKSBjb2VmID0gcSArIDFuOwogICAgICBlbHNlIGNvZWYgPSBxOwogICAgfQogICAgbGV0IG5lZyA9IHRoaXMuc2lnbiA8IDA7CiAgICBpZiAoY29lZiA9PT0gMG4pIG5lZyA9IGZhbHNlOyAgICAgICAgICAgICAgICAgLy8gc2lnbmVkIHplcm8gZm9sZGVkLCBhcyBQeXRob24gZG9lcwogICAgbGV0IHMgPSBjb2VmLnRvU3RyaW5nKCk7CiAgICBsZXQgYm9keTsKICAgIGlmIChmcmFjID09PSAwKSBib2R5ID0gczsKICAgIGVsc2UgewogICAgICBpZiAocy5sZW5ndGggPD0gZnJhYykgcyA9ICIwIi5yZXBlYXQoZnJhYyAtIHMubGVuZ3RoICsgMSkgKyBzOwogICAgICBib2R5ID0gcy5zbGljZSgwLCBzLmxlbmd0aCAtIGZyYWMpICsgIi4iICsgcy5zbGljZShzLmxlbmd0aCAtIGZyYWMpOwogICAgfQogICAgcmV0dXJuIChuZWcgPyAiLSIgOiAiIikgKyBib2R5OwogIH0KfQoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09IEpTT04sIFB5dGhvbi1zdHJpY3QgW0I0IHJvd3MgMy02XQogKiBBIHJlYWRlciB0aGF0IGtlZXBzIG51bWJlciB0ZXh0IGFzIERlYywgYWNjZXB0cyBOYU4vSW5maW5pdHkvLUluZmluaXR5IGFzIFB5dGhvbidzIGpzb24gZG9lcywKICogcmVtZW1iZXJzIGR1cGxpY2F0ZSBrZXlzIHBlciBvYmplY3QsIHJlZnVzZXMgYSBCT00sIGFuZCByZWZ1c2VzIHJhdyBjb250cm9sIGNoYXJhY3RlcnMgaW4KICogc3RyaW5ncyAoUHl0aG9uJ3MganNvbiBzdHJpY3Q9VHJ1ZSkuIE9iamVjdHMgYXJlIHJldHVybmVkIGFzIHsgbWFwOiBNYXAsIGR1cHM6IFNldCB9LgogKi8KY2xhc3MgSk9iaiB7CiAgY29uc3RydWN0b3IobWFwLCBkdXBzKSB7IHRoaXMubWFwID0gbWFwOyB0aGlzLmR1cHMgPSBkdXBzOyB9Cn0KCmZ1bmN0aW9uIGpzb25TdHJpY3QodGV4dCkgewogIGlmICh0ZXh0Lmxlbmd0aCAmJiB0ZXh0LmNoYXJDb2RlQXQoMCkgPT09IDB4ZmVmZikgdGhyb3cgbmV3IEVycm9yKCJCT00tcHJlZml4ZWQgSlNPTiIpOwogIGxldCBpID0gMDsKICBjb25zdCBuID0gdGV4dC5sZW5ndGg7CiAgZnVuY3Rpb24gd3MoKSB7IHdoaWxlIChpIDwgbiAmJiAodGV4dFtpXSA9PT0gIiAiIHx8IHRleHRbaV0gPT09ICJcdCIgfHwgdGV4dFtpXSA9PT0gIlxuIiB8fCB0ZXh0W2ldID09PSAiXHIiKSkgaSsrOyB9CiAgZnVuY3Rpb24gZmFpbChtc2cpIHsgdGhyb3cgbmV3IEVycm9yKG1zZyArICIgYXQgIiArIGkpOyB9CiAgZnVuY3Rpb24gcGFyc2VWYWx1ZSgpIHsKICAgIHdzKCk7CiAgICBpZiAoaSA+PSBuKSBmYWlsKCJFeHBlY3RpbmcgdmFsdWUiKTsKICAgIGNvbnN0IGMgPSB0ZXh0W2ldOwogICAgaWYgKGMgPT09ICJ7IikgcmV0dXJuIHBhcnNlT2JqZWN0KCk7CiAgICBpZiAoYyA9PT0gIlsiKSByZXR1cm4gcGFyc2VBcnJheSgpOwogICAgaWYgKGMgPT09ICciJykgcmV0dXJuIHBhcnNlU3RyaW5nKCk7CiAgICBpZiAodGV4dC5zdGFydHNXaXRoKCJ0cnVlIiwgaSkpIHsgaSArPSA0OyByZXR1cm4gdHJ1ZTsgfQogICAgaWYgKHRleHQuc3RhcnRzV2l0aCgiZmFsc2UiLCBpKSkgeyBpICs9IDU7IHJldHVybiBmYWxzZTsgfQogICAgaWYgKHRleHQuc3RhcnRzV2l0aCgibnVsbCIsIGkpKSB7IGkgKz0gNDsgcmV0dXJuIG51bGw7IH0KICAgIGlmICh0ZXh0LnN0YXJ0c1dpdGgoIk5hTiIsIGkpKSB7IGkgKz0gMzsgcmV0dXJuIG5ldyBEZWMoMSwgIjAiLCAwLCAiTmFOIik7IH0KICAgIGlmICh0ZXh0LnN0YXJ0c1dpdGgoIkluZmluaXR5IiwgaSkpIHsgaSArPSA4OyByZXR1cm4gbmV3IERlYygxLCAiMCIsIDAsICJJbmZpbml0eSIpOyB9CiAgICBpZiAodGV4dC5zdGFydHNXaXRoKCItSW5maW5pdHkiLCBpKSkgeyBpICs9IDk7IHJldHVybiBuZXcgRGVjKC0xLCAiMCIsIDAsICJJbmZpbml0eSIpOyB9CiAgICByZXR1cm4gcGFyc2VOdW1iZXIoKTsKICB9CiAgZnVuY3Rpb24gcGFyc2VOdW1iZXIoKSB7CiAgICBjb25zdCBtID0gL14tPyg/OjB8WzEtOV1cZCopKD86XC5cZCspPyg/OltlRV1bLStdP1xkKyk/Ly5leGVjKHRleHQuc2xpY2UoaSkpOwogICAgaWYgKCFtKSBmYWlsKCJFeHBlY3RpbmcgdmFsdWUiKTsKICAgIGkgKz0gbVswXS5sZW5ndGg7CiAgICBjb25zdCBkID0gRGVjLnBhcnNlKG1bMF0pOwogICAgaWYgKGQgPT09IG51bGwpIGZhaWwoIkV4cGVjdGluZyB2YWx1ZSIpOwogICAgcmV0dXJuIGQ7CiAgfQogIGZ1bmN0aW9uIHBhcnNlU3RyaW5nKCkgewogICAgaWYgKHRleHRbaV0gIT09ICciJykgZmFpbCgiRXhwZWN0aW5nIHN0cmluZyIpOwogICAgaSsrOwogICAgbGV0IG91dCA9ICIiOwogICAgZm9yICg7OykgewogICAgICBpZiAoaSA+PSBuKSBmYWlsKCJVbnRlcm1pbmF0ZWQgc3RyaW5nIik7CiAgICAgIGNvbnN0IGMgPSB0ZXh0W2ldOwogICAgICBpZiAoYyA9PT0gJyInKSB7IGkrKzsgcmV0dXJuIG91dDsgfQogICAgICBpZiAoYyA9PT0gIlxcIikgewogICAgICAgIGkrKzsKICAgICAgICBjb25zdCBlID0gdGV4dFtpXTsKICAgICAgICBpKys7CiAgICAgICAgaWYgKGUgPT09ICciJykgb3V0ICs9ICciJzsKICAgICAgICBlbHNlIGlmIChlID09PSAiXFwiKSBvdXQgKz0gIlxcIjsKICAgICAgICBlbHNlIGlmIChlID09PSAiLyIpIG91dCArPSAiLyI7CiAgICAgICAgZWxzZSBpZiAoZSA9PT0gImIiKSBvdXQgKz0gIlxiIjsKICAgICAgICBlbHNlIGlmIChlID09PSAiZiIpIG91dCArPSAiXGYiOwogICAgICAgIGVsc2UgaWYgKGUgPT09ICJuIikgb3V0ICs9ICJcbiI7CiAgICAgICAgZWxzZSBpZiAoZSA9PT0gInIiKSBvdXQgKz0gIlxyIjsKICAgICAgICBlbHNlIGlmIChlID09PSAidCIpIG91dCArPSAiXHQiOwogICAgICAgIGVsc2UgaWYgKGUgPT09ICJ1IikgewogICAgICAgICAgY29uc3QgaCA9IHRleHQuc2xpY2UoaSwgaSArIDQpOwogICAgICAgICAgaWYgKCEvXlswLTlhLWZBLUZdezR9JC8udGVzdChoKSkgZmFpbCgiSW52YWxpZCBcXHVYWFhYIGVzY2FwZSIpOwogICAgICAgICAgb3V0ICs9IFN0cmluZy5mcm9tQ2hhckNvZGUocGFyc2VJbnQoaCwgMTYpKTsKICAgICAgICAgIGkgKz0gNDsKICAgICAgICB9IGVsc2UgZmFpbCgiSW52YWxpZCBcXGVzY2FwZSIpOwogICAgICAgIGNvbnRpbnVlOwogICAgICB9CiAgICAgIGlmIChjLmNoYXJDb2RlQXQoMCkgPCAweDIwKSBmYWlsKCJJbnZhbGlkIGNvbnRyb2wgY2hhcmFjdGVyIik7CiAgICAgIG91dCArPSBjOwogICAgICBpKys7CiAgICB9CiAgfQogIGZ1bmN0aW9uIHBhcnNlT2JqZWN0KCkgewogICAgaSsrOwogICAgY29uc3QgbWFwID0gbmV3IE1hcCgpOwogICAgY29uc3QgZHVwcyA9IG5ldyBTZXQoKTsKICAgIHdzKCk7CiAgICBpZiAodGV4dFtpXSA9PT0gIn0iKSB7IGkrKzsgcmV0dXJuIG5ldyBKT2JqKG1hcCwgZHVwcyk7IH0KICAgIGZvciAoOzspIHsKICAgICAgd3MoKTsKICAgICAgY29uc3QgayA9IHBhcnNlU3RyaW5nKCk7CiAgICAgIHdzKCk7CiAgICAgIGlmICh0ZXh0W2ldICE9PSAiOiIpIGZhaWwoIkV4cGVjdGluZyAnOiciKTsKICAgICAgaSsrOwogICAgICBjb25zdCB2ID0gcGFyc2VWYWx1ZSgpOwogICAgICBpZiAobWFwLmhhcyhrKSkgZHVwcy5hZGQoayk7CiAgICAgIG1hcC5zZXQoaywgdik7CiAgICAgIHdzKCk7CiAgICAgIGlmICh0ZXh0W2ldID09PSAiLCIpIHsgaSsrOyBjb250aW51ZTsgfQogICAgICBpZiAodGV4dFtpXSA9PT0gIn0iKSB7IGkrKzsgcmV0dXJuIG5ldyBKT2JqKG1hcCwgZHVwcyk7IH0KICAgICAgZmFpbCgiRXhwZWN0aW5nICcsJyBkZWxpbWl0ZXIiKTsKICAgIH0KICB9CiAgZnVuY3Rpb24gcGFyc2VBcnJheSgpIHsKICAgIGkrKzsKICAgIGNvbnN0IGFyciA9IFtdOwogICAgd3MoKTsKICAgIGlmICh0ZXh0W2ldID09PSAiXSIpIHsgaSsrOyByZXR1cm4gYXJyOyB9CiAgICBmb3IgKDs7KSB7CiAgICAgIGFyci5wdXNoKHBhcnNlVmFsdWUoKSk7CiAgICAgIHdzKCk7CiAgICAgIGlmICh0ZXh0W2ldID09PSAiLCIpIHsgaSsrOyBjb250aW51ZTsgfQogICAgICBpZiAodGV4dFtpXSA9PT0gIl0iKSB7IGkrKzsgcmV0dXJuIGFycjsgfQogICAgICBmYWlsKCJFeHBlY3RpbmcgJywnIGRlbGltaXRlciIpOwogICAgfQogIH0KICBjb25zdCB2ID0gcGFyc2VWYWx1ZSgpOwogIHdzKCk7CiAgaWYgKGkgIT09IG4pIGZhaWwoIkV4dHJhIGRhdGEiKTsKICByZXR1cm4gdjsKfQoKLyoqIFRoZSBzYW1lIHJlYWRlciwgd2l0aCBudW1iZXJzIGFzIEpTIG51bWJlcnMg4oCUIHdoYXQgUHl0aG9uJ3MgcGxhaW4ganNvbi5sb2FkcyBoYW5kcwogKiAgTWFuaWZlc3QuZnJvbV9kaWN0LiBUaGUgc3RyaWN0IHJlYWRlcidzIERlYyBpcyBmb3IgUkVDRUlQVCBieXRlcywgbmV2ZXIgZm9yIGEgbWFuaWZlc3QuICovCmZ1bmN0aW9uIGpzb25QbGFpbih0ZXh0KSB7CiAgY29uc3QgdiA9IGpzb25TdHJpY3QodGV4dCk7CiAgY29uc3Qgd2FsayA9IHggPT4gewogICAgaWYgKHggaW5zdGFuY2VvZiBEZWMpIHsKICAgICAgaWYgKCF4LmlzRmluaXRlKCkpIHJldHVybiB4LnNwZWNpYWwgPT09ICJOYU4iID8gTmFOCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6ICh4LnNpZ24gPCAwID8gLUluZmluaXR5IDogSW5maW5pdHkpOwogICAgICByZXR1cm4gTnVtYmVyKHgudG9TdHJpbmcoKSk7CiAgICB9CiAgICBpZiAoQXJyYXkuaXNBcnJheSh4KSkgcmV0dXJuIHgubWFwKHdhbGspOwogICAgaWYgKHggaW5zdGFuY2VvZiBKT2JqKSB7CiAgICAgIGNvbnN0IG0gPSBuZXcgTWFwKCk7CiAgICAgIGZvciAoY29uc3QgW2ssIHZhbF0gb2YgeC5tYXApIG0uc2V0KGssIHdhbGsodmFsKSk7CiAgICAgIHJldHVybiBuZXcgSk9iaihtLCB4LmR1cHMpOwogICAgfQogICAgcmV0dXJuIHg7CiAgfTsKICByZXR1cm4gd2Fsayh2KTsKfQoKZnVuY3Rpb24ganNvblBsYWluQnl0ZXMoYnl0ZXMpIHsKICBjb25zdCB0ZXh0ID0gZGVjb2RlU3RyaWN0KGJ5dGVzKTsKICBpZiAodGV4dCA9PT0gbnVsbCkgdGhyb3cgbmV3IEVycm9yKCJub3QgVVRGLTgiKTsKICByZXR1cm4ganNvblBsYWluKHRleHQpOwp9CgpmdW5jdGlvbiBqc29uU3RyaWN0Qnl0ZXMoYnl0ZXMpIHsKICBjb25zdCB0ZXh0ID0gZGVjb2RlU3RyaWN0KGJ5dGVzKTsKICBpZiAodGV4dCA9PT0gbnVsbCkgdGhyb3cgbmV3IEVycm9yKCJub3QgVVRGLTgiKTsKICByZXR1cm4ganNvblN0cmljdCh0ZXh0KTsKfQoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09IEpDUyAoUkZDIDg3ODUpLCBzdHl4eCBkb21haW4gKi8KCmZ1bmN0aW9uIGpjc1N0cmluZyhzKSB7CiAgbGV0IG91dCA9ICciJzsKICBmb3IgKGNvbnN0IGNoIG9mIHMpIHsKICAgIGNvbnN0IGMgPSBjaC5jb2RlUG9pbnRBdCgwKTsKICAgIGlmIChjaCA9PT0gJyInKSBvdXQgKz0gJ1xcIic7CiAgICBlbHNlIGlmIChjaCA9PT0gIlxcIikgb3V0ICs9ICJcXFxcIjsKICAgIGVsc2UgaWYgKGMgPT09IDB4MDgpIG91dCArPSAiXFxiIjsKICAgIGVsc2UgaWYgKGMgPT09IDB4MGMpIG91dCArPSAiXFxmIjsKICAgIGVsc2UgaWYgKGMgPT09IDB4MGEpIG91dCArPSAiXFxuIjsKICAgIGVsc2UgaWYgKGMgPT09IDB4MGQpIG91dCArPSAiXFxyIjsKICAgIGVsc2UgaWYgKGMgPT09IDB4MDkpIG91dCArPSAiXFx0IjsKICAgIGVsc2UgaWYgKGMgPCAweDIwKSBvdXQgKz0gIlxcdSIgKyBjLnRvU3RyaW5nKDE2KS5wYWRTdGFydCg0LCAiMCIpOwogICAgZWxzZSBvdXQgKz0gY2g7CiAgfQogIHJldHVybiBvdXQgKyAnIic7Cn0KCmZ1bmN0aW9uIGpjcyhvYmopIHsKICBpZiAob2JqID09PSB0cnVlKSByZXR1cm4gInRydWUiOwogIGlmIChvYmogPT09IGZhbHNlKSByZXR1cm4gImZhbHNlIjsKICBpZiAob2JqID09PSBudWxsIHx8IG9iaiA9PT0gdW5kZWZpbmVkKSByZXR1cm4gIm51bGwiOwogIGlmICh0eXBlb2Ygb2JqID09PSAic3RyaW5nIikgcmV0dXJuIGpjc1N0cmluZyhvYmopOwogIGlmICh0eXBlb2Ygb2JqID09PSAibnVtYmVyIikgewogICAgaWYgKCFOdW1iZXIuaXNGaW5pdGUob2JqKSkgdGhyb3cgbmV3IEVycm9yKCJzdHl4eCBKQ1MgZG9tYWluOiBOYU4gb3IgSW5maW5pdHkiKTsKICAgIHJldHVybiBTdHJpbmcob2JqKTsgICAgICAgICAgICAgICAgICAgIC8vIEVDTUFTY3JpcHQgTnVtYmVyOjp0b1N0cmluZywgYXMgUkZDIDg3ODUgcmVxdWlyZXMKICB9CiAgaWYgKHR5cGVvZiBvYmogPT09ICJiaWdpbnQiKSByZXR1cm4gb2JqLnRvU3RyaW5nKCk7CiAgaWYgKEFycmF5LmlzQXJyYXkob2JqKSkgcmV0dXJuICJbIiArIG9iai5tYXAoamNzKS5qb2luKCIsIikgKyAiXSI7CiAgaWYgKG9iaiBpbnN0YW5jZW9mIE1hcCkgewogICAgY29uc3Qga2V5cyA9IFsuLi5vYmoua2V5cygpXS5zb3J0KCk7CiAgICByZXR1cm4gInsiICsga2V5cy5tYXAoayA9PiBqY3NTdHJpbmcoaykgKyAiOiIgKyBqY3Mob2JqLmdldChrKSkpLmpvaW4oIiwiKSArICJ9IjsKICB9CiAgaWYgKG9iaiBpbnN0YW5jZW9mIEpPYmopIHJldHVybiBqY3Mob2JqLm1hcCk7CiAgaWYgKHR5cGVvZiBvYmogPT09ICJvYmplY3QiKSB7CiAgICBjb25zdCBrZXlzID0gT2JqZWN0LmtleXMob2JqKS5zb3J0KCk7CiAgICByZXR1cm4gInsiICsga2V5cy5tYXAoayA9PiBqY3NTdHJpbmcoaykgKyAiOiIgKyBqY3Mob2JqW2tdKSkuam9pbigiLCIpICsgIn0iOwogIH0KICB0aHJvdyBuZXcgRXJyb3IoIm5vdCBKQ1Mtc2VyaWFsaXphYmxlIik7Cn0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBjb25zdGFudHMsIGZyb20gdGhlIGZvcm1hdCAqLwoKY29uc3QgQ0VSVElGSUVTID0KICAidGhlIHNwYW5zIHRoZSBhdXRob3IgYm91bmQgd2VyZSBjaGVja2VkIGFnYWluc3QgYnl0ZXMgdGhlIGF1dGhvciBkaWQgbm90IHdyaXRlLCBhdCB0aGUgY29tbWl0ICIgKwogICJvciBtYW5pZmVzdCB0aGUgZG9jdW1lbnQgbmFtZXMgYW5kIGF0IHRoZSBydW5nIHRoZSBtYW5pZmVzdCBkZWNsYXJlcyDigJQgTk9UIGEgY2xhaW0gdGhhdCB0aGUgIiArCiAgImRvY3VtZW50IGlzIGNvcnJlY3QsIE5PVCBhIGNsYWltIHRoYXQgdGhlIHJpZ2h0IHNlbnRlbmNlcyB3ZXJlIGJvdW5kLCBOT1QgYSBjaGVjayB0aGF0IHRoZSB0YWdzICIgKwogICJ3ZXJlIHdyaXR0ZW4gYXQgd3JpdGUgdGltZSwgTk9UIGEgY2hlY2sgb2YgYW55IHNpZ25hdHVyZSwgYW5kIG9ubHkgYXMgdHJ1c3R3b3J0aHkgYXMgdGhlIGhhcm5lc3MgIiArCiAgInRoYXQgbWludGVkIHRoZSBtYW5pZmVzdCBhbmQgdGhlIGhpc3RvcnkgdGhhdCBob2xkcyB0aGUgY29tbWl0IjsKY29uc3QgU1BFQyA9ICJzd29ybi8wLjEiOwpjb25zdCBSRUNFSVBUX1NDSEVNQSA9ICJzdHl4eC5zd29ybi52ZXJkaWN0LXJlY2VpcHQvdjEiOwpjb25zdCBNQU5JRkVTVF9TUEVDUyA9IFsic3dvcm4vbWFuaWZlc3QvMC4xIiwgInN3b3JuL21hbmlmZXN0LzAuMiJdOwpjb25zdCBTUEFOX0NBUF9DT0RFUE9JTlRTID0gMzAwOwpjb25zdCBTSE9SVF9ORUVETEVfQllURVMgPSAxNjsKY29uc3QgUlVOR1MgPSBbIkwxIiwgIkwyIl07CmNvbnN0IFJVTkdfVU5ERUNMQVJFRCA9ICJ1bmRlY2xhcmVkIjsKY29uc3QgS0lORFMgPSBbIm51bWVyaWMiLCAicXVvdGUiLCAiaGFzaCIsICJhYnNlbnQiXTsKY29uc3QgUkVTRVJWRURfS0lORFMgPSBbImV4ZWMiXTsKY29uc3QgVkVSRElDVFMgPSBbIkhFTEQiLCAiRkFJTEVEIiwgIlVOUkVTT0xWRUQiLCAiTUFMRk9STUVEIiwgIldJVEhIRUxEIl07CmNvbnN0IFJPVU5ESU5HID0gIlJPVU5EX0hBTEZfRVZFTiI7CmNvbnN0IFNPVVJDRV9LSU5EU19FWFRFUk5BTCA9IG5ldyBTZXQoWyJ0b29sX3N0ZG91dCIsICJ0b29sX3N0ZGVyciIsICJmaWxlX3JlYWQiLCAiaHR0cF9mZXRjaCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoYXJuZXNzX25vdGUiLCAidGVzdF9yZXBvcnQiLCAiYXR0ZXN0YXRpb24iXSk7CmNvbnN0IFNPVVJDRV9LSU5EU19BVVRIT1IgPSBuZXcgU2V0KFsiYWdlbnRfb3V0cHV0IiwgImFnZW50X2ZpbGVfd3JpdGUiLCAiYWdlbnRfbWVzc2FnZSJdKTsKCmNvbnN0IE9QRU5FUl9SRSA9IC9ePHN3b3JuIHI9IihbXiI8PlxyXG5dKikiIGs9IihbXiI8PlxyXG5dKikiPi87CmNvbnN0IENBTkRJREFURV9SRSA9IC9ePChcLz8pW3NTXVt3V11bb09dW3JSXVtuTl0oPyFbQS1aYS16MC05X1wtXSkvOwpjb25zdCBDTE9TRVIgPSB1dGY4KCI8L3N3b3JuPiIpOwpjb25zdCBDT01NRU5UX09QRU4gPSB1dGY4KCI8IS0tIik7CmNvbnN0IENPTU1FTlRfQ0xPU0UgPSB1dGY4KCItLT4iKTsKCi8vIFtCNCByb3cgMV0gUHl0aG9uJ3MgXHcgaXMgVW5pY29kZS1hbHBoYW51bWVyaWMgcGx1cyB1bmRlcnNjb3JlOyBcZCBpcyBjYXRlZ29yeSBOZC4KY29uc3QgVE9LRU5fUkUgPSAvW1xwe0x9XHB7Tn1fLiwrXC3iiJIlL8KxOl0rL2d1Owpjb25zdCBESUdJVF9SRSA9IC9ccHtOZH0vdTsKY29uc3QgR1JBTV9SRSA9IC9eWy0r4oiSXT8oPzooPzpbMC05XXsxLDN9KD86LFswLTldezN9KSt8WzAtOV0rKSg/OlwuWzAtOV0rKT98XC5bMC05XSspJT8kLzsKY29uc3QgSEVYUlVOX1JFID0gLyg/PCFbQS1aYS16MC05X10pWzAtOUEtRmEtZl0rKD8hW0EtWmEtejAtOV9dKS9nOwpjb25zdCBESUdFU1RfTEVOR1RIUyA9IG5ldyBTZXQoWzMyLCA0MCwgOTYsIDEyOF0pOwpjb25zdCBSTl9SRSA9IC9eclsxLTldWzAtOV0qJC87CmNvbnN0IFBBVEhfU0VHX0JBRF9SRSA9IG5ldyBSZWdFeHAoJ1tcXFxcXFx0XFxuXFx2XFxmXFxyIFxcdTAwYTBcXHUxNjgwXFx1MjAwMC1cXHUyMDBhXFx1MjAyOFxcdTIwMjlcXHUyMDJmXFx1MjA1ZlxcdTMwMDBcXHUwMDAwLVxcdTAwMWZcXHUwMDdmKj9cXFtcXF1dJyk7CmNvbnN0IEhFWDY0X1JFID0gL15bMC05YS1mXXs2NH0kLzsKY29uc3QgSEVYNjRfQU5ZX1JFID0gL15bMC05YS1mQS1GXXs2NH0kLzsKCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSB0aGUgbGV4ZXIgKi8KCmZ1bmN0aW9uIGZlbmNlZFJlZ2lvbnMocmF3KSB7CiAgY29uc3QgcmVnaW9ucyA9IFtdOwogIGNvbnN0IGRlbGltcyA9IFtdOwogIGxldCBvcGVuQXQgPSBudWxsOwogIGxldCBwb3MgPSAwLCBsbiA9IDA7CiAgY29uc3QgbiA9IHJhdy5sZW5ndGg7CiAgd2hpbGUgKHBvcyA8IG4pIHsKICAgIGxuKys7CiAgICBjb25zdCBubCA9IGZpbmRCeXRlcyhyYXcsIHV0ZjgoIlxuIiksIHBvcyk7CiAgICBjb25zdCBlbmQgPSBubCA8IDAgPyBuIDogbmwgKyAxOwogICAgLy8gX0ZFTkNFID0gXiB7MCwzfWB7Myx9CiAgICBsZXQgcCA9IHBvcywgc3BhY2VzID0gMDsKICAgIHdoaWxlIChwIDwgZW5kICYmIHJhd1twXSA9PT0gMHgyMCAmJiBzcGFjZXMgPCAzKSB7IHArKzsgc3BhY2VzKys7IH0KICAgIGxldCB0aWNrcyA9IDA7CiAgICB3aGlsZSAocCArIHRpY2tzIDwgZW5kICYmIHJhd1twICsgdGlja3NdID09PSAweDYwKSB0aWNrcysrOwogICAgaWYgKHRpY2tzID49IDMpIHsKICAgICAgZGVsaW1zLnB1c2gobG4pOwogICAgICBpZiAob3BlbkF0ID09PSBudWxsKSBvcGVuQXQgPSBwb3M7CiAgICAgIGVsc2UgeyByZWdpb25zLnB1c2goW29wZW5BdCwgZW5kXSk7IG9wZW5BdCA9IG51bGw7IH0KICAgIH0KICAgIHBvcyA9IGVuZDsKICB9CiAgaWYgKG9wZW5BdCAhPT0gbnVsbCkgcmV0dXJuIHsgcmVnaW9ucywgZGVsaW1zLCBiYWxhbmNlZDogZmFsc2UgfTsKICByZXR1cm4geyByZWdpb25zLCBkZWxpbXMsIGJhbGFuY2VkOiB0cnVlIH07Cn0KCmZ1bmN0aW9uIGluUmVnaW9ucyhwLCByZWdpb25zKSB7CiAgZm9yIChjb25zdCBbYSwgYl0gb2YgcmVnaW9ucykgaWYgKGEgPD0gcCAmJiBwIDwgYikgcmV0dXJuIGI7CiAgcmV0dXJuIG51bGw7Cn0KCi8qKiBMZW5ndGggb2YgdGhlIHJ1biBvZiBiYWNrdGlja3Mgc3RhcnRpbmcgYXQgcC4gKi8KZnVuY3Rpb24gdGlja1J1bihyYXcsIHApIHsKICBsZXQgayA9IDA7CiAgd2hpbGUgKHAgKyBrIDwgcmF3Lmxlbmd0aCAmJiByYXdbcCArIGtdID09PSAweDYwKSBrKys7CiAgcmV0dXJuIGs7Cn0KLyoqIEZpcnN0IGJhY2t0aWNrIHJ1biBhdCBvciBhZnRlciBwLCBiZWZvcmUgbGltaXQ6IFtzdGFydCwgbGVuXSBvciBudWxsLiAqLwpmdW5jdGlvbiBuZXh0VGlja3MocmF3LCBwLCBsaW1pdCkgewogIGZvciAobGV0IGkgPSBwOyBpIDwgbGltaXQ7IGkrKykgewogICAgaWYgKHJhd1tpXSA9PT0gMHg2MCkgewogICAgICBsZXQgayA9IDA7CiAgICAgIHdoaWxlIChpICsgayA8IHJhdy5sZW5ndGggJiYgcmF3W2kgKyBrXSA9PT0gMHg2MCkgaysrOwogICAgICByZXR1cm4gW2ksIGtdOwogICAgfQogIH0KICByZXR1cm4gbnVsbDsKfQoKZnVuY3Rpb24gc2NhbihyYXcpIHsKICBjb25zdCBvdXQgPSB7IGRlY2xhcmF0aW9uczogW10sIGZlbmNlZDogW10sIGNvbW1lbnRzOiBbXSwgZG9jdW1lbnRfbWFsZm9ybWVkOiBudWxsLAogICAgICAgICAgICAgICAgY2Fub25pY2FsOiBudWxsLCBsZXhpY2FsX29rOiB0cnVlLCBjYW5kaWRhdGVzOiAwIH07CiAgaWYgKGRlY29kZVN0cmljdChyYXcpID09PSBudWxsKSB7CiAgICBvdXQuZG9jdW1lbnRfbWFsZm9ybWVkID0geyByZWFzb246ICJpbnZhbGlkX3V0ZjgiLCBhdDogZmlyc3RJbnZhbGlkVXRmOChyYXcpIH07CiAgICBvdXQubGV4aWNhbF9vayA9IGZhbHNlOwogICAgcmV0dXJuIG91dDsKICB9CiAgY29uc3QgZiA9IGZlbmNlZFJlZ2lvbnMocmF3KTsKICBvdXQuZmVuY2VkID0gZi5yZWdpb25zOwogIGlmICghZi5iYWxhbmNlZCkgewogICAgb3V0LmRvY3VtZW50X21hbGZvcm1lZCA9IHsgcmVhc29uOiAidW5iYWxhbmNlZF9mZW5jZXMiLCBkZWxpbWl0ZXJfbGluZXM6IGYuZGVsaW1zIH07CiAgICBvdXQubGV4aWNhbF9vayA9IGZhbHNlOwogICAgcmV0dXJuIG91dDsKICB9CiAgY29uc3QgZGVjbHMgPSBbXTsKICBjb25zdCBzdGFjayA9IFtdOwogIGxldCBwID0gMDsKICBjb25zdCBuID0gcmF3Lmxlbmd0aDsKICBsZXQgY29tbWVudEVuZCA9IC0xOwogIHdoaWxlIChwIDwgbikgewogICAgY29uc3Qgc2tpcFRvID0gaW5SZWdpb25zKHAsIGYucmVnaW9ucyk7CiAgICBpZiAoc2tpcFRvICE9PSBudWxsKSB7IHAgPSBza2lwVG87IGNvbnRpbnVlOyB9CiAgICBjb25zdCBjID0gcmF3W3BdOwogICAgaWYgKGMgPT09IDB4M2MgJiYgcCA+PSBjb21tZW50RW5kICYmIGZpbmRCeXRlcyhyYXcuc3ViYXJyYXkocCwgcCArIDQpLCBDT01NRU5UX09QRU4sIDApID09PSAwKSB7CiAgICAgIGNvbnN0IGNsb3NlID0gZmluZEJ5dGVzKHJhdywgQ09NTUVOVF9DTE9TRSwgcCArIENPTU1FTlRfT1BFTi5sZW5ndGgpOwogICAgICBjb21tZW50RW5kID0gY2xvc2UgPCAwID8gbiA6IGNsb3NlICsgQ09NTUVOVF9DTE9TRS5sZW5ndGg7CiAgICAgIG91dC5jb21tZW50cy5wdXNoKFtwLCBjb21tZW50RW5kXSk7CiAgICAgIHAgKz0gQ09NTUVOVF9PUEVOLmxlbmd0aDsKICAgICAgY29udGludWU7CiAgICB9CiAgICBpZiAoYyA9PT0gMHg2MCkgewogICAgICBjb25zdCBydW4gPSB0aWNrUnVuKHJhdywgcCk7CiAgICAgIGNvbnN0IG5sID0gZmluZEJ5dGVzKHJhdywgdXRmOCgiXG4iKSwgcCArIHJ1bik7CiAgICAgIGNvbnN0IGxpbmVFbmQgPSBubCA8IDAgPyBuIDogbmw7CiAgICAgIGxldCBxID0gcCArIHJ1bjsKICAgICAgbGV0IGNsb3NlZCA9IG51bGw7CiAgICAgIHdoaWxlIChxIDwgbGluZUVuZCkgewogICAgICAgIGNvbnN0IG0gPSBuZXh0VGlja3MocmF3LCBxLCBsaW5lRW5kKTsKICAgICAgICBpZiAoIW0pIGJyZWFrOwogICAgICAgIGlmIChtWzFdID09PSBydW4pIHsgY2xvc2VkID0gbVswXSArIG1bMV07IGJyZWFrOyB9CiAgICAgICAgcSA9IG1bMF0gKyBtWzFdOwogICAgICB9CiAgICAgIHAgPSBjbG9zZWQgIT09IG51bGwgPyBjbG9zZWQgOiBwICsgcnVuOwogICAgICBjb250aW51ZTsKICAgIH0KICAgIGlmIChjID09PSAweDNjKSB7CiAgICAgIC8vIHRoZSBjYW5kaWRhdGUvb3BlbmVyIHJlZ2V4ZXMgcnVuIG92ZXIgYSBkZWNvZGVkIHdpbmRvdzsgdGhlIHdpbmRvdyBpcyBBU0NJSS1kZWxpbWl0ZWQKICAgICAgY29uc3Qgd2luZG93RW5kID0gTWF0aC5taW4obiwgcCArIDQwOTYpOwogICAgICBjb25zdCB0ZXh0ID0gZGVjb2RlTG9vc2UocmF3LnN1YmFycmF5KHAsIHdpbmRvd0VuZCkpOwogICAgICBjb25zdCBjbSA9IENBTkRJREFURV9SRS5leGVjKHRleHQpOwogICAgICBpZiAoY20pIHsKICAgICAgICBvdXQuY2FuZGlkYXRlcysrOwogICAgICAgIGNvbnN0IG9tID0gT1BFTkVSX1JFLmV4ZWModGV4dCk7CiAgICAgICAgaWYgKG9tKSB7CiAgICAgICAgICBjb25zdCBvcGVuZXJFbmQgPSBwICsgdXRmOChvbVswXSkubGVuZ3RoOwogICAgICAgICAgY29uc3QgZCA9IHsgYXQ6IHAsIG9wZW5lcl9lbmQ6IG9wZW5lckVuZCwgcmVjZWlwdDogb21bMV0sIGtpbmQ6IG9tWzJdLAogICAgICAgICAgICAgICAgICAgICAgY2xvc2VyX2F0OiBudWxsLCBjbG9zZXJfZW5kOiBudWxsLCBpbm5lcjogbnVsbCwKICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0OiBudWxsLCBlbmQ6IG51bGwsIG1hbGZvcm1lZDogbnVsbCB9OwogICAgICAgICAgaWYgKHN0YWNrLmxlbmd0aCkgewogICAgICAgICAgICBmb3IgKGNvbnN0IG8gb2Ygc3RhY2spIG8ubWFsZm9ybWVkID0gby5tYWxmb3JtZWQgfHwgIm5lc3RpbmciOwogICAgICAgICAgICBkLm1hbGZvcm1lZCA9ICJuZXN0aW5nIjsKICAgICAgICAgIH0KICAgICAgICAgIGlmIChwIDwgY29tbWVudEVuZCkgZC5tYWxmb3JtZWQgPSBkLm1hbGZvcm1lZCB8fCAiaGlkZGVuX2NvbW1pdG1lbnQiOwogICAgICAgICAgc3RhY2sucHVzaChkKTsKICAgICAgICAgIGRlY2xzLnB1c2goZCk7CiAgICAgICAgICBwID0gb3BlbmVyRW5kOwogICAgICAgICAgY29udGludWU7CiAgICAgICAgfQogICAgICAgIGlmIChmaW5kQnl0ZXMocmF3LnN1YmFycmF5KHAsIHAgKyBDTE9TRVIubGVuZ3RoKSwgQ0xPU0VSLCAwKSA9PT0gMCkgewogICAgICAgICAgaWYgKHN0YWNrLmxlbmd0aCkgewogICAgICAgICAgICBjb25zdCBkID0gc3RhY2sucG9wKCk7CiAgICAgICAgICAgIGQuY2xvc2VyX2F0ID0gcDsKICAgICAgICAgICAgZC5jbG9zZXJfZW5kID0gcCArIENMT1NFUi5sZW5ndGg7CiAgICAgICAgICAgIGQuaW5uZXIgPSByYXcuc3ViYXJyYXkoZC5vcGVuZXJfZW5kLCBwKTsKICAgICAgICAgICAgaWYgKGQuaW5uZXIubGVuZ3RoID09PSAwICYmIChkLm1hbGZvcm1lZCA9PT0gbnVsbCB8fCBkLm1hbGZvcm1lZCA9PT0gImhpZGRlbl9jb21taXRtZW50IikpIHsKICAgICAgICAgICAgICBkLm1hbGZvcm1lZCA9ICJlbXB0eV9zcGFuIjsKICAgICAgICAgICAgfQogICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgZGVjbHMucHVzaCh7IGF0OiBwLCByZWNlaXB0OiBudWxsLCBraW5kOiBudWxsLCBpbm5lcjogbnVsbCwgc3RhcnQ6IG51bGwsIGVuZDogbnVsbCwKICAgICAgICAgICAgICAgICAgICAgICAgIG1hbGZvcm1lZDogInN0cmF5X2Nsb3NlciIsIHJhdzogIjwvc3dvcm4+IiB9KTsKICAgICAgICAgIH0KICAgICAgICAgIHAgKz0gQ0xPU0VSLmxlbmd0aDsKICAgICAgICAgIGNvbnRpbnVlOwogICAgICAgIH0KICAgICAgICBjb25zdCBndCA9IGZpbmRCeXRlcyhyYXcsIHV0ZjgoIj4iKSwgcCk7CiAgICAgICAgY29uc3QgbmwyID0gZmluZEJ5dGVzKHJhdywgdXRmOCgiXG4iKSwgcCk7CiAgICAgICAgY29uc3Qgc3RvcCA9IE1hdGgubWluKGd0ID49IDAgPyBndCArIDEgOiBuLCBubDIgPj0gMCA/IG5sMiA6IG4sIG4pOwogICAgICAgIGRlY2xzLnB1c2goeyBhdDogcCwgcmVjZWlwdDogbnVsbCwga2luZDogbnVsbCwgaW5uZXI6IG51bGwsIHN0YXJ0OiBudWxsLCBlbmQ6IG51bGwsCiAgICAgICAgICAgICAgICAgICAgIG1hbGZvcm1lZDogInRhZ19zeW50YXgiLCByYXc6IGRlY29kZUxvb3NlKHJhdy5zdWJhcnJheShwLCBzdG9wKSkgfSk7CiAgICAgICAgcCA9IE1hdGgubWF4KHN0b3AsIHAgKyAxKTsKICAgICAgICBjb250aW51ZTsKICAgICAgfQogICAgfQogICAgcCsrOwogIH0KICBmb3IgKGNvbnN0IGQgb2Ygc3RhY2spIHsKICAgIGlmIChkLm1hbGZvcm1lZCA9PT0gbnVsbCB8fCBkLm1hbGZvcm1lZCA9PT0gImhpZGRlbl9jb21taXRtZW50IikgZC5tYWxmb3JtZWQgPSAidW5jbG9zZWQiOwogIH0KICBvdXQuZGVjbGFyYXRpb25zID0gZGVjbHM7CiAgY29uc3QgbGV4aWNhbEJhZCA9IGRlY2xzLmZpbHRlcihkID0+IFsidGFnX3N5bnRheCIsICJuZXN0aW5nIiwgInN0cmF5X2Nsb3NlciIsICJ1bmNsb3NlZCJdCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuaW5jbHVkZXMoZC5tYWxmb3JtZWQpKTsKICBvdXQubGV4aWNhbF9vayA9IGxleGljYWxCYWQubGVuZ3RoID09PSAwOwogIGlmIChvdXQubGV4aWNhbF9vaykgewogICAgY29uc3QgY3V0cyA9IFtdOwogICAgZm9yIChjb25zdCBkIG9mIGRlY2xzKSB7CiAgICAgIGN1dHMucHVzaChbZC5hdCwgZC5vcGVuZXJfZW5kXSk7CiAgICAgIGN1dHMucHVzaChbZC5jbG9zZXJfYXQsIGQuY2xvc2VyX2VuZF0pOwogICAgfQogICAgY3V0cy5zb3J0KCh4LCB5KSA9PiAoeFswXSAtIHlbMF0pIHx8ICh4WzFdIC0geVsxXSkpOwogICAgY29uc3QgcGllY2VzID0gW107CiAgICBsZXQgbGFzdCA9IDAsIHJlbW92ZWQgPSAwOwogICAgY29uc3QgYm91bmRhcmllcyA9IG5ldyBNYXAoKTsKICAgIGZvciAoY29uc3QgW2EsIGJdIG9mIGN1dHMpIHsKICAgICAgcGllY2VzLnB1c2gocmF3LnN1YmFycmF5KGxhc3QsIGEpKTsKICAgICAgYm91bmRhcmllcy5zZXQoYSwgYSAtIHJlbW92ZWQpOwogICAgICByZW1vdmVkICs9IGIgLSBhOwogICAgICBib3VuZGFyaWVzLnNldChiLCBiIC0gcmVtb3ZlZCk7CiAgICAgIGxhc3QgPSBiOwogICAgfQogICAgcGllY2VzLnB1c2gocmF3LnN1YmFycmF5KGxhc3QpKTsKICAgIGxldCB0b3RhbCA9IDA7CiAgICBmb3IgKGNvbnN0IHEgb2YgcGllY2VzKSB0b3RhbCArPSBxLmxlbmd0aDsKICAgIGNvbnN0IGNhbm9uaWNhbCA9IG5ldyBVaW50OEFycmF5KHRvdGFsKTsKICAgIGxldCBvID0gMDsKICAgIGZvciAoY29uc3QgcSBvZiBwaWVjZXMpIHsgY2Fub25pY2FsLnNldChxLCBvKTsgbyArPSBxLmxlbmd0aDsgfQogICAgZm9yIChjb25zdCBkIG9mIGRlY2xzKSB7CiAgICAgIGQuc3RhcnQgPSBib3VuZGFyaWVzLmdldChkLm9wZW5lcl9lbmQpOwogICAgICBkLmVuZCA9IGJvdW5kYXJpZXMuZ2V0KGQuY2xvc2VyX2F0KTsKICAgIH0KICAgIG91dC5jYW5vbmljYWwgPSBjYW5vbmljYWw7CiAgfQogIHJldHVybiBvdXQ7Cn0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSB0aGUgcmVjZWlwdCBncmFtbWFyICovCgpmdW5jdGlvbiBwYXJzZVJlY2VpcHQocmVmKSB7CiAgaWYgKHJlZiA9PT0gbnVsbCB8fCByZWYgPT09IHVuZGVmaW5lZCkgcmV0dXJuIFtudWxsLCAicmVjZWlwdF9mb3JtIl07CiAgY29uc3QgaGVhZCA9IHJlZi5zcGxpdCgiIyIpWzBdOwogIGxldCBmb3JtLCB0YXJnZXQsIGZyYWc7CiAgaWYgKFJOX1JFLnRlc3QoaGVhZCkpIHsKICAgIGZvcm0gPSAicm4iOwogICAgY29uc3QgayA9IHJlZi5pbmRleE9mKCIjIik7CiAgICBpZiAoayA+PSAwKSB7IHRhcmdldCA9IHJlZi5zbGljZSgwLCBrKTsgZnJhZyA9IHJlZi5zbGljZShrICsgMSk7IH0KICAgIGVsc2UgeyB0YXJnZXQgPSByZWY7IGZyYWcgPSBudWxsOyB9CiAgfSBlbHNlIGlmIChyZWYuc3RhcnRzV2l0aCgicGF0aDoiKSkgewogICAgY29uc3QgYm9keSA9IHJlZi5zbGljZSg1KTsKICAgIGZvcm0gPSAicGF0aCI7CiAgICBjb25zdCBrID0gYm9keS5pbmRleE9mKCIjIik7CiAgICBpZiAoayA+PSAwKSB7IHRhcmdldCA9IGJvZHkuc2xpY2UoMCwgayk7IGZyYWcgPSBib2R5LnNsaWNlKGsgKyAxKTsgfQogICAgZWxzZSB7IHRhcmdldCA9IGJvZHk7IGZyYWcgPSBudWxsOyB9CiAgICBpZiAoIXRhcmdldCB8fCB0YXJnZXQuc3RhcnRzV2l0aCgiLyIpIHx8IHRhcmdldC5zdGFydHNXaXRoKCI6IikgfHwgUEFUSF9TRUdfQkFEX1JFLnRlc3QodGFyZ2V0KSkgewogICAgICByZXR1cm4gW251bGwsICJyZWNlaXB0X2Zvcm0iXTsKICAgIH0KICAgIGZvciAoY29uc3Qgc2VnIG9mIHRhcmdldC5zcGxpdCgiLyIpKSBpZiAoc2VnID09PSAiIiB8fCBzZWcgPT09ICIuIiB8fCBzZWcgPT09ICIuLiIpIHsKICAgICAgcmV0dXJuIFtudWxsLCAicmVjZWlwdF9mb3JtIl07CiAgICB9CiAgfSBlbHNlIGlmIChyZWYuc3RhcnRzV2l0aCgicHJlcmVnOiIpKSB7CiAgICBjb25zdCBib2R5ID0gcmVmLnNsaWNlKDcpOwogICAgZm9ybSA9ICJwcmVyZWciOwogICAgY29uc3QgayA9IGJvZHkuaW5kZXhPZigiIyIpOwogICAgaWYgKGsgPj0gMCkgeyB0YXJnZXQgPSBib2R5LnNsaWNlKDAsIGspOyBmcmFnID0gYm9keS5zbGljZShrICsgMSk7IH0KICAgIGVsc2UgeyB0YXJnZXQgPSBib2R5OyBmcmFnID0gbnVsbDsgfQogICAgaWYgKCFIRVg2NF9BTllfUkUudGVzdCh0YXJnZXQpKSByZXR1cm4gW251bGwsICJyZWNlaXB0X2Zvcm0iXTsKICAgIHRhcmdldCA9IHRhcmdldC50b0xvd2VyQ2FzZSgpOwogIH0gZWxzZSB7CiAgICByZXR1cm4gW251bGwsICJyZWNlaXB0X2Zvcm0iXTsKICB9CiAgbGV0IGZyYWdtZW50ID0gbnVsbDsKICBpZiAoZnJhZyAhPT0gbnVsbCkgewogICAgaWYgKGZyYWcgPT09ICIiKSByZXR1cm4gW251bGwsICJyZWNlaXB0X2Zvcm0iXTsKICAgIGlmIChmcmFnLnN0YXJ0c1dpdGgoIi8iKSkgewogICAgICBpZiAoL34oPyFbMDFdKS8udGVzdChmcmFnKSkgcmV0dXJuIFtudWxsLCAicmVjZWlwdF9mb3JtIl07CiAgICAgIGNvbnN0IHRva3MgPSBmcmFnLnNwbGl0KCIvIikuc2xpY2UoMSkKICAgICAgICAubWFwKHQgPT4gdC5yZXBsYWNlKC9+MS9nLCAiLyIpLnJlcGxhY2UoL34wL2csICJ+IikpOwogICAgICBmcmFnbWVudCA9IHsgdHlwZTogInBvaW50ZXIiLCB0b2tlbnM6IHRva3MgfTsKICAgIH0gZWxzZSB7CiAgICAgIGNvbnN0IG0gPSAvXkwoWzEtOV1bMC05XSopKD86LUwoWzEtOV1bMC05XSopKT8kLy5leGVjKGZyYWcpOwogICAgICBpZiAoIW0pIHJldHVybiBbbnVsbCwgInJlY2VpcHRfZm9ybSJdOwogICAgICBjb25zdCBmaXJzdCA9IHBhcnNlSW50KG1bMV0sIDEwKTsKICAgICAgY29uc3QgbGFzdCA9IG1bMl0gPyBwYXJzZUludChtWzJdLCAxMCkgOiBmaXJzdDsKICAgICAgaWYgKGxhc3QgPCBmaXJzdCkgcmV0dXJuIFtudWxsLCAicmVjZWlwdF9mb3JtIl07CiAgICAgIGZyYWdtZW50ID0geyB0eXBlOiAibGluZXMiLCBmaXJzdCwgbGFzdCB9OwogICAgfQogIH0KICByZXR1cm4gW3sgZm9ybSwgdGFyZ2V0LCBpZDogZm9ybSA9PT0gInJuIiA/IHRhcmdldCA6IG51bGwsIGZyYWdtZW50LAogICAgICAgICAgICBwYXJ0aWFsOiBmcmFnbWVudCAhPT0gbnVsbCB9LCBudWxsXTsKfQoKLyoqIDEtYmFzZWQsIGluY2x1c2l2ZSwgTEYtc3BsaXQsIENSIHJldGFpbmVkOyBpbnRlcmlvciBuZXdsaW5lcyBrZXB0LCB0aGUgTEFTVCBzZWxlY3RlZCBsaW5lJ3MKICogIHRlcm1pbmF0aW5nIExGIGV4Y2x1ZGVkLiBudWxsIHdoZW4gYSBsaW5lIGlzIHBhc3QgRU9GLiBPbmx5IDB4MGEgZXZlciBzcGxpdHMuICovCmZ1bmN0aW9uIGxpbmVTbGljZShkYXRhLCBmaXJzdCwgbGFzdCkgewogIGNvbnN0IHBvc2l0aW9ucyA9IFtdOwogIGZvciAobGV0IGkgPSAwOyBpIDwgZGF0YS5sZW5ndGg7IGkrKykgaWYgKGRhdGFbaV0gPT09IDB4MGEpIHBvc2l0aW9ucy5wdXNoKGkpOwogIGNvbnN0IG5MaW5lcyA9IHBvc2l0aW9ucy5sZW5ndGggKwogICAgICAgICAgICAgICAgICgoZGF0YS5sZW5ndGggJiYgZGF0YVtkYXRhLmxlbmd0aCAtIDFdICE9PSAweDBhKSA/IDEgOiAwKTsKICBpZiAoZmlyc3QgPiBuTGluZXMgfHwgbGFzdCA+IG5MaW5lcykgcmV0dXJuIG51bGw7CiAgY29uc3QgYmVnaW4gPSBmaXJzdCA9PT0gMSA/IDAgOiBwb3NpdGlvbnNbZmlyc3QgLSAyXSArIDE7CiAgY29uc3QgZW5kID0gKGxhc3QgLSAxIDwgcG9zaXRpb25zLmxlbmd0aCkgPyBwb3NpdGlvbnNbbGFzdCAtIDFdIDogZGF0YS5sZW5ndGg7CiAgcmV0dXJuIGRhdGEuc3ViYXJyYXkoYmVnaW4sIGVuZCk7Cn0KCmZ1bmN0aW9uIHdhbGtQb2ludGVyKG9iaiwgdG9rZW5zKSB7CiAgZm9yIChjb25zdCB0IG9mIHRva2VucykgewogICAgaWYgKG9iaiBpbnN0YW5jZW9mIEpPYmopIHsKICAgICAgaWYgKCFvYmoubWFwLmhhcyh0KSkgcmV0dXJuIFtudWxsLCAicG9pbnRlcl91bnJlc29sdmFibGUiXTsKICAgICAgaWYgKG9iai5kdXBzLmhhcyh0KSkgcmV0dXJuIFtudWxsLCAicG9pbnRlcl9hbWJpZ3VvdXMiXTsKICAgICAgb2JqID0gb2JqLm1hcC5nZXQodCk7CiAgICB9IGVsc2UgaWYgKEFycmF5LmlzQXJyYXkob2JqKSkgewogICAgICBpZiAoIS9eKDB8WzEtOV1bMC05XSopJC8udGVzdCh0KSB8fCBwYXJzZUludCh0LCAxMCkgPj0gb2JqLmxlbmd0aCkgewogICAgICAgIHJldHVybiBbbnVsbCwgInBvaW50ZXJfdW5yZXNvbHZhYmxlIl07CiAgICAgIH0KICAgICAgb2JqID0gb2JqW3BhcnNlSW50KHQsIDEwKV07CiAgICB9IGVsc2UgewogICAgICByZXR1cm4gW251bGwsICJwb2ludGVyX3VucmVzb2x2YWJsZSJdOwogICAgfQogIH0KICByZXR1cm4gW29iaiwgIm9rIl07Cn0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSB0aGUgbWFuaWZlc3QgKi8KCmZ1bmN0aW9uIGI2NGRlY29kZVN0cmljdChzKSB7CiAgaWYgKHR5cGVvZiBzICE9PSAic3RyaW5nIikgcmV0dXJuIG51bGw7CiAgaWYgKCEvXltBLVphLXowLTkrL10qPXswLDJ9JC8udGVzdChzKSB8fCBzLmxlbmd0aCAlIDQgIT09IDApIHJldHVybiBudWxsOyAgIC8vIHZhbGlkYXRlPVRydWUKICBjb25zdCB0YWJsZSA9ICJBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWmFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1Njc4OSsvIjsKICBjb25zdCBvdXQgPSBbXTsKICBmb3IgKGxldCBpID0gMDsgaSA8IHMubGVuZ3RoOyBpICs9IDQpIHsKICAgIGNvbnN0IGMgPSBbMCwgMSwgMiwgM10ubWFwKGsgPT4gewogICAgICBjb25zdCBjaCA9IHNbaSArIGtdOwogICAgICByZXR1cm4gY2ggPT09ICI9IiA/IC0xIDogdGFibGUuaW5kZXhPZihjaCk7CiAgICB9KTsKICAgIGlmIChjWzBdIDwgMCB8fCBjWzFdIDwgMCkgcmV0dXJuIG51bGw7CiAgICBvdXQucHVzaCgoY1swXSA8PCAyKSB8IChjWzFdID4+IDQpKTsKICAgIGlmIChjWzJdID49IDApIG91dC5wdXNoKCgoY1sxXSAmIDE1KSA8PCA0KSB8IChjWzJdID4+IDIpKTsKICAgIGlmIChjWzNdID49IDApIG91dC5wdXNoKCgoY1syXSAmIDMpIDw8IDYpIHwgY1szXSk7CiAgfQogIHJldHVybiBuZXcgVWludDhBcnJheShvdXQpOwp9CgpjbGFzcyBNYW5pZmVzdCB7CiAgY29uc3RydWN0b3IoZCkgewogICAgLy8gTWlycm9ycyBNYW5pZmVzdC5mcm9tX2RpY3Q6IHRoZSBzYW1lIG5vcm1hbGlzYXRpb24sIHRoZSBzYW1lIHJlZnVzYWxzLgogICAgaWYgKCEoZCBpbnN0YW5jZW9mIEpPYmopKSB0aHJvdyBuZXcgRXJyb3IoIlJFRlVTRUQ6IG1hbmlmZXN0IGlzIG5vdCBhbiBvYmplY3QiKTsKICAgIGNvbnN0IGcgPSBrID0+IGQubWFwLmhhcyhrKSA/IGQubWFwLmdldChrKSA6IHVuZGVmaW5lZDsKICAgIGNvbnN0IHNwZWMgPSBnKCJzcGVjIik7CiAgICBpZiAoIU1BTklGRVNUX1NQRUNTLmluY2x1ZGVzKHNwZWMpKSB0aHJvdyBuZXcgRXJyb3IoIlJFRlVTRUQ6IHVua25vd24gbWFuaWZlc3Qgc3BlYyIpOwogICAgbGV0IHJlY2VpcHRzID0gZygicmVjZWlwdHMiKTsKICAgIGlmIChyZWNlaXB0cyA9PT0gdW5kZWZpbmVkIHx8IHJlY2VpcHRzID09PSBudWxsKSByZWNlaXB0cyA9IG5ldyBKT2JqKG5ldyBNYXAoKSwgbmV3IFNldCgpKTsKICAgIGxldCBhdXRob3JlZCA9IGcoImF1dGhvcmVkX3NoYTI1NiIpOwogICAgaWYgKGF1dGhvcmVkID09PSB1bmRlZmluZWQgfHwgYXV0aG9yZWQgPT09IG51bGwpIGF1dGhvcmVkID0gW107CiAgICBpZiAoIShyZWNlaXB0cyBpbnN0YW5jZW9mIEpPYmopKSB0aHJvdyBuZXcgRXJyb3IoIlJFRlVTRUQ6IG1hbmlmZXN0IHJlY2VpcHRzIG11c3QgYmUgYW4gb2JqZWN0Iik7CiAgICBpZiAoIUFycmF5LmlzQXJyYXkoYXV0aG9yZWQpIHx8ICFhdXRob3JlZC5ldmVyeSh4ID0+IHR5cGVvZiB4ID09PSAic3RyaW5nIikpIHsKICAgICAgdGhyb3cgbmV3IEVycm9yKCJSRUZVU0VEOiBtYW5pZmVzdCBhdXRob3JlZF9zaGEyNTYgbXVzdCBiZSBhIGxpc3Qgb2YgaGV4IHN0cmluZ3MiKTsKICAgIH0KICAgIHRoaXMuc3BlYyA9IHNwZWM7CiAgICB0aGlzLmhhcm5lc3MgPSBnKCJoYXJuZXNzIikgPT09IHVuZGVmaW5lZCA/ICIiIDogZygiaGFybmVzcyIpOwogICAgdGhpcy50dXJuID0gZygidHVybiIpID09PSB1bmRlZmluZWQgPyAiIiA6IGcoInR1cm4iKTsKICAgIHRoaXMubWludGVkX2F0ID0gZygibWludGVkX2F0IikgPT09IHVuZGVmaW5lZCA/IG51bGwgOiBnKCJtaW50ZWRfYXQiKTsKICAgIHRoaXMucmVjZWlwdHMgPSByZWNlaXB0czsKICAgIHRoaXMuYXV0aG9yZWRfc2hhMjU2ID0gYXV0aG9yZWQubWFwKHggPT4geC50b0xvd2VyQ2FzZSgpKTsKICAgIHRoaXMucnVuZyA9IGcoInJ1bmciKSA9PT0gdW5kZWZpbmVkID8gbnVsbCA6IGcoInJ1bmciKTsKICAgIHRoaXMuZGVjbGFyZWRfZGlnZXN0ID0gZygiZGlnZXN0IikgPT09IHVuZGVmaW5lZCA/IG51bGwgOiBnKCJkaWdlc3QiKTsKICB9CiAgY29yZSgpIHsKICAgIGNvbnN0IG0gPSBuZXcgTWFwKCk7CiAgICBtLnNldCgic3BlYyIsIHRoaXMuc3BlYyk7CiAgICBtLnNldCgiaGFybmVzcyIsIHRoaXMuaGFybmVzcyk7CiAgICBtLnNldCgidHVybiIsIHRoaXMudHVybik7CiAgICBtLnNldCgibWludGVkX2F0IiwgdGhpcy5taW50ZWRfYXQpOwogICAgbS5zZXQoImF1dGhvcmVkX3NoYTI1NiIsIFsuLi50aGlzLmF1dGhvcmVkX3NoYTI1Nl0uc29ydCgpKTsKICAgIG0uc2V0KCJyZWNlaXB0cyIsIHRoaXMucmVjZWlwdHMpOwogICAgaWYgKHRoaXMuc3BlYyA9PT0gInN3b3JuL21hbmlmZXN0LzAuMiIpIG0uc2V0KCJydW5nIiwgdGhpcy5ydW5nKTsKICAgIHJldHVybiBtOwogIH0KICBkaWdlc3RPck51bGwoKSB7CiAgICB0cnkgeyByZXR1cm4gc2hhMjU2Qnl0ZXModXRmOChqY3ModGhpcy5jb3JlKCkpKSk7IH0gY2F0Y2ggKGUpIHsgcmV0dXJuIG51bGw7IH0KICB9CiAgaW50YWN0KCkgewogICAgY29uc3QgZCA9IHRoaXMuZGlnZXN0T3JOdWxsKCk7CiAgICBpZiAodGhpcy5kZWNsYXJlZF9kaWdlc3QgPT09IG51bGwgfHwgdGhpcy5kZWNsYXJlZF9kaWdlc3QgPT09IHVuZGVmaW5lZCkgcmV0dXJuIGQgIT09IG51bGw7CiAgICBpZiAoZCA9PT0gbnVsbCkgcmV0dXJuIGZhbHNlOwogICAgcmV0dXJuIHRoaXMuZGVjbGFyZWRfZGlnZXN0ID09PSBkOwogIH0KICBydW5nU3RhdHVzKCkgewogICAgaWYgKHRoaXMucnVuZyA9PT0gbnVsbCB8fCB0aGlzLnJ1bmcgPT09IHVuZGVmaW5lZCkgcmV0dXJuIFsidW5kZWNsYXJlZCIsIG51bGxdOwogICAgaWYgKFJVTkdTLmluY2x1ZGVzKHRoaXMucnVuZykpIHJldHVybiBbIm9rIiwgdGhpcy5ydW5nXTsKICAgIHJldHVybiBbInVua25vd24iLCBTdHJpbmcodGhpcy5ydW5nKV07CiAgfQp9CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gcmVzb2x1dGlvbiAqLwoKZnVuY3Rpb24gcmVzb2x2ZShwYXJzZWQsIGtpbmQsIG1hbmlmZXN0KSB7CiAgaWYgKHBhcnNlZC5mb3JtID09PSAicm4iKSB7CiAgICBpZiAobWFuaWZlc3QgPT09IG51bGwpIHJldHVybiB7IHN0YXR1czogInVucmVzb2x2ZWQiLCByZWFzb246ICJtYW5pZmVzdF9hYnNlbnQiIH07CiAgICBpZiAoIW1hbmlmZXN0LmludGFjdCgpKSByZXR1cm4geyBzdGF0dXM6ICJ1bnJlc29sdmVkIiwgcmVhc29uOiAibWFuaWZlc3RfaW50ZWdyaXR5IiB9OwogICAgY29uc3QgW3J1bmdTdGF0ZSwgcnVuZ10gPSBtYW5pZmVzdC5ydW5nU3RhdHVzKCk7CiAgICBpZiAocnVuZ1N0YXRlID09PSAidW5rbm93biIpIHJldHVybiB7IHN0YXR1czogInVucmVzb2x2ZWQiLCByZWFzb246ICJydW5nX3Vua25vd24iIH07CiAgICBpZiAoIW1hbmlmZXN0LnJlY2VpcHRzLm1hcC5oYXMocGFyc2VkLmlkKSkgewogICAgICByZXR1cm4geyBzdGF0dXM6ICJ1bnJlc29sdmVkIiwgcmVhc29uOiAibWFuaWZlc3RfaWRfbWlzc2luZyIgfTsKICAgIH0KICAgIGNvbnN0IGVudHJ5ID0gbWFuaWZlc3QucmVjZWlwdHMubWFwLmdldChwYXJzZWQuaWQpOwogICAgaWYgKCEoZW50cnkgaW5zdGFuY2VvZiBKT2JqKSkgcmV0dXJuIHsgc3RhdHVzOiAidW5yZXNvbHZlZCIsIHJlYXNvbjogIm1hbmlmZXN0X2ludGVncml0eSIgfTsKICAgIGNvbnN0IGUgPSBrID0+IGVudHJ5Lm1hcC5oYXMoaykgPyBlbnRyeS5tYXAuZ2V0KGspIDogdW5kZWZpbmVkOwogICAgY29uc3Qgc2hhID0gZSgic2hhMjU2Iik7CiAgICBpZiAodHlwZW9mIHNoYSAhPT0gInN0cmluZyIgfHwgIUhFWDY0X1JFLnRlc3Qoc2hhKSkgewogICAgICByZXR1cm4geyBzdGF0dXM6ICJ1bnJlc29sdmVkIiwgcmVhc29uOiAibWFuaWZlc3RfaW50ZWdyaXR5IiB9OwogICAgfQogICAgY29uc3Qga29zID0gZSgia2luZF9vZl9zb3VyY2UiKTsKICAgIGlmICh0eXBlb2Yga29zICE9PSAic3RyaW5nIikgcmV0dXJuIHsgc3RhdHVzOiAibWFsZm9ybWVkIiwgcmVhc29uOiAia2luZF9vZl9zb3VyY2VfdW5rbm93biIgfTsKICAgIGlmIChTT1VSQ0VfS0lORFNfQVVUSE9SLmhhcyhrb3MpIHx8IG1hbmlmZXN0LmF1dGhvcmVkX3NoYTI1Ni5pbmNsdWRlcyhzaGEpKSB7CiAgICAgIHJldHVybiB7IHN0YXR1czogIm1hbGZvcm1lZCIsIHJlYXNvbjogInJlY2VpcHRfYXV0aG9yX21pbnRlZCIgfTsKICAgIH0KICAgIGlmICghU09VUkNFX0tJTkRTX0VYVEVSTkFMLmhhcyhrb3MpKSB7CiAgICAgIHJldHVybiB7IHN0YXR1czogIm1hbGZvcm1lZCIsIHJlYXNvbjogImtpbmRfb2Zfc291cmNlX3Vua25vd24iIH07CiAgICB9CiAgICBjb25zdCBwcm92ZW5hbmNlID0geyBmb3JtOiAicm4iLCBoYXJuZXNzOiBtYW5pZmVzdC5oYXJuZXNzLAogICAgICAgICAgICAgICAgICAgICAgICAgcnVuZzogcnVuZ1N0YXRlID09PSAib2siID8gcnVuZyA6IFJVTkdfVU5ERUNMQVJFRCwKICAgICAgICAgICAgICAgICAgICAgICAgIGtpbmRfb2Zfc291cmNlOiBrb3MgfTsKICAgIGNvbnN0IGNvbXBsZXRlUmF3ID0gZSgiY29tcGxldGUiKTsKICAgIGNvbnN0IGNvbXBsZXRlID0gdHlwZW9mIGNvbXBsZXRlUmF3ID09PSAiYm9vbGVhbiIgPyBjb21wbGV0ZVJhdyA6IG51bGw7CiAgICBsZXQgZGF0YSA9IG51bGw7CiAgICBpZiAoZW50cnkubWFwLmhhcygiYnl0ZXMiKSkgewogICAgICBkYXRhID0gYjY0ZGVjb2RlU3RyaWN0KGUoImJ5dGVzIikpOwogICAgICBpZiAoZGF0YSA9PT0gbnVsbCkgcmV0dXJuIHsgc3RhdHVzOiAidW5yZXNvbHZlZCIsIHJlYXNvbjogIm1hbmlmZXN0X2ludGVncml0eSIgfTsKICAgICAgaWYgKHNoYTI1NkJ5dGVzKGRhdGEpICE9PSBzaGEpIHJldHVybiB7IHN0YXR1czogInVucmVzb2x2ZWQiLCByZWFzb246ICJtYW5pZmVzdF9pbnRlZ3JpdHkiIH07CiAgICB9IGVsc2UgaWYgKGtpbmQgIT09ICJoYXNoIikgewogICAgICByZXR1cm4geyBzdGF0dXM6ICJ1bnJlc29sdmVkIiwgcmVhc29uOiAibWFuaWZlc3RfYnl0ZXNfYWJzZW50IiB9OwogICAgfQogICAgcmV0dXJuIGZpbmlzaFJlc29sdmUoeyBzdGF0dXM6ICJvayIsIHJlYXNvbjogbnVsbCwgYnl0ZXM6IGRhdGEsIHNoYTI1Njogc2hhLCBjb21wbGV0ZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgbGVhZjogbnVsbCwgaGFzX2xlYWY6IGZhbHNlLCBzbGljZTogbnVsbCwgcHJvdmVuYW5jZSB9LCBwYXJzZWQpOwogIH0KICAvLyBwYXRoOiAvIHByZXJlZzogd2l0aCBubyB0cmVlIOKAlCBTUEVDIEIxOiB0aGUgYnJvd3NlciBoYXMgbm8gcmVwb3NpdG9yeSwgYW5kIHNheXMgc28uCiAgcmV0dXJuIHsgc3RhdHVzOiAidW5yZXNvbHZlZCIsIHJlYXNvbjogIm5vX3JlcG9zaXRvcnkiIH07Cn0KCmZ1bmN0aW9uIGZpbmlzaFJlc29sdmUocmVzLCBwYXJzZWQpIHsKICBjb25zdCBmcmFnID0gcGFyc2VkLmZyYWdtZW50OwogIGlmIChmcmFnID09PSBudWxsIHx8IHJlcy5ieXRlcyA9PT0gbnVsbCkgcmV0dXJuIHJlczsKICBpZiAoZnJhZy50eXBlID09PSAibGluZXMiKSB7CiAgICBjb25zdCBzbCA9IGxpbmVTbGljZShyZXMuYnl0ZXMsIGZyYWcuZmlyc3QsIGZyYWcubGFzdCk7CiAgICBpZiAoc2wgPT09IG51bGwpIHJldHVybiB7IHN0YXR1czogIm1hbGZvcm1lZCIsIHJlYXNvbjogImFuY2hvcl9vdXRfb2ZfcmFuZ2UiIH07CiAgICByZXMuc2xpY2UgPSBzbDsKICAgIHJldHVybiByZXM7CiAgfQogIGxldCBvYmo7CiAgdHJ5IHsgb2JqID0ganNvblN0cmljdEJ5dGVzKHJlcy5ieXRlcyk7IH0KICBjYXRjaCAoZSkgeyByZXR1cm4geyBzdGF0dXM6ICJtYWxmb3JtZWQiLCByZWFzb246ICJyZWNlaXB0X25vdF9qc29uIiB9OyB9CiAgY29uc3QgW2xlYWYsIHdoeV0gPSB3YWxrUG9pbnRlcihvYmosIGZyYWcudG9rZW5zKTsKICBpZiAod2h5ICE9PSAib2siKSByZXR1cm4geyBzdGF0dXM6ICJtYWxmb3JtZWQiLCByZWFzb246IHdoeSB9OwogIHJlcy5sZWFmID0gbGVhZjsKICByZXMuaGFzX2xlYWYgPSB0cnVlOwogIHJldHVybiByZXM7Cn0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSB0aGUga2luZHMgKi8KCmZ1bmN0aW9uIG51bWJlclRva2VuKHRleHQpIHsKICBjb25zdCBhbGwgPSB0ZXh0Lm1hdGNoKFRPS0VOX1JFKSB8fCBbXTsKICBjb25zdCBkaWdpdEJlYXJpbmcgPSBhbGwuZmlsdGVyKHQgPT4gRElHSVRfUkUudGVzdCh0KSk7CiAgaWYgKGRpZ2l0QmVhcmluZy5sZW5ndGggIT09IDEpIHJldHVybiBbIm51bWJlcl9jb3VudCIsIG51bGwsIGRpZ2l0QmVhcmluZ107CiAgbGV0IHRvayA9IGRpZ2l0QmVhcmluZ1swXTsKICB0b2sgPSB0b2sucmVwbGFjZSgvWy4sOl0rJC8sICIiKTsgICAgICAgICAgICAgICAgIC8vIFB5dGhvbidzIHJzdHJpcCgiLiw6IikKICBpZiAoIUdSQU1fUkUudGVzdCh0b2spKSByZXR1cm4gWyJudW1iZXJfZ3JhbW1hciIsIG51bGwsIGRpZ2l0QmVhcmluZ107CiAgcmV0dXJuIFtudWxsLCB0b2ssIGRpZ2l0QmVhcmluZ107Cn0KCmZ1bmN0aW9uIG5lZWRsZUluKGlubmVyKSB7CiAgY29uc3Qgc3BhbnMgPSBbXTsKICBsZXQgcCA9IDA7CiAgY29uc3QgbiA9IGlubmVyLmxlbmd0aDsKICB3aGlsZSAocCA8IG4pIHsKICAgIGNvbnN0IG0gPSBuZXh0VGlja3MoaW5uZXIsIHAsIG4pOwogICAgaWYgKCFtKSBicmVhazsKICAgIGNvbnN0IFttc3RhcnQsIHJ1bl0gPSBtOwogICAgY29uc3QgbWVuZCA9IG1zdGFydCArIHJ1bjsKICAgIGNvbnN0IG5sID0gZmluZEJ5dGVzKGlubmVyLCB1dGY4KCJcbiIpLCBtZW5kKTsKICAgIGNvbnN0IGxpbmVFbmQgPSBubCA8IDAgPyBuIDogbmw7CiAgICBsZXQgcSA9IG1lbmQ7CiAgICBsZXQgY2xvc2VkID0gbnVsbDsKICAgIHdoaWxlIChxIDwgbGluZUVuZCkgewogICAgICBjb25zdCBtMiA9IG5leHRUaWNrcyhpbm5lciwgcSwgbGluZUVuZCk7CiAgICAgIGlmICghbTIpIGJyZWFrOwogICAgICBpZiAobTJbMV0gPT09IHJ1bikgeyBjbG9zZWQgPSBtMjsgYnJlYWs7IH0KICAgICAgcSA9IG0yWzBdICsgbTJbMV07CiAgICB9CiAgICBpZiAoY2xvc2VkID09PSBudWxsKSB7IHAgPSBtZW5kOyBjb250aW51ZTsgfQogICAgc3BhbnMucHVzaChpbm5lci5zdWJhcnJheShtZW5kLCBjbG9zZWRbMF0pKTsKICAgIHAgPSBjbG9zZWRbMF0gKyBjbG9zZWRbMV07CiAgfQogIGlmIChzcGFucy5sZW5ndGggIT09IDEpIHJldHVybiBbbnVsbCwgIm5lZWRsZV9jb3VudCJdOwogIGlmIChzdHJpcFdzQnl0ZXMoc3BhbnNbMF0pLmxlbmd0aCA9PT0gMCkgcmV0dXJuIFtudWxsLCAibmVlZGxlX2VtcHR5Il07CiAgcmV0dXJuIFtzcGFuc1swXSwgIm9rIl07Cn0KCmZ1bmN0aW9uIHByaW50ZWREZWNpbWFsKHRvaykgewogIGNvbnN0IHQgPSB0b2sucmVwbGFjZSgvLC9nLCAiIikucmVwbGFjZSgv4oiSL2csICItIikucmVwbGFjZSgvJSskLywgIiIpOwogIGNvbnN0IGQgPSBEZWMucGFyc2UodCk7CiAgY29uc3QgZnJhYyA9IHQuaW5jbHVkZXMoIi4iKSA/IHQuc3BsaXQoIi4iKVsxXS5sZW5ndGggOiAwOwogIHJldHVybiBbZCwgZnJhY107Cn0KCmZ1bmN0aW9uIHNhZmVUZXh0KHgsIGxpbWl0KSB7CiAgY29uc3QgcyA9IFN0cmluZyh4KS5zbGljZSgwLCBsaW1pdCA9PT0gdW5kZWZpbmVkID8gODAgOiBsaW1pdCk7CiAgLy8gUHl0aG9uOiAuZW5jb2RlKCJ1dGYtOCIsIGVycm9ycz0icmVwbGFjZSIpLmRlY29kZSgidXRmLTgiKSDigJQgYSBsb25lIHN1cnJvZ2F0ZSBiZWNvbWVzIFUrRkZGRAogIHJldHVybiBzLnJlcGxhY2UoL1tcdWQ4MDAtXHVkZmZmXSg/IVtcdWRjMDAtXHVkZmZmXSkvZywgIu+/vSIpCiAgICAgICAgICAucmVwbGFjZSgvKF58W15cdWQ4MDAtXHVkYmZmXSlbXHVkYzAwLVx1ZGZmZl0vZywgKG0sIHAxKSA9PiBwMSArICLvv70iKTsKfQoKZnVuY3Rpb24gY2hlY2tOdW1lcmljKGlubmVyVGV4dCwgcmVzKSB7CiAgY29uc3QgW3doeSwgdG9rLCBzZWVuXSA9IG51bWJlclRva2VuKGlubmVyVGV4dCk7CiAgaWYgKHdoeSkgcmV0dXJuIFsiTUFMRk9STUVEIiwgd2h5LCB7IGRpZ2l0X2JlYXJpbmdfdG9rZW5zOiBzZWVuIH1dOwogIGNvbnN0IFtwcmludGVkLCBmcmFjXSA9IHByaW50ZWREZWNpbWFsKHRvayk7CiAgbGV0IGxlYWY7CiAgaWYgKHJlcy5oYXNfbGVhZikgbGVhZiA9IHJlcy5sZWFmOwogIGVsc2UgewogICAgY29uc3Qgc291cmNlID0gcmVzLnNsaWNlICE9PSBudWxsID8gcmVzLnNsaWNlIDogcmVzLmJ5dGVzOwogICAgdHJ5IHsgbGVhZiA9IGpzb25TdHJpY3RCeXRlcyhzb3VyY2UpOyB9CiAgICBjYXRjaCAoZSkgeyByZXR1cm4gWyJNQUxGT1JNRUQiLCAicmVjZWlwdF9ub3RfanNvbiIsIHt9XTsgfQogIH0KICBpZiAobGVhZiBpbnN0YW5jZW9mIEpPYmogfHwgQXJyYXkuaXNBcnJheShsZWFmKSB8fCBsZWFmID09PSBudWxsKSB7CiAgICAvLyBQeXRob24ncyBfanNvbl9zdHJpY3QgYnVpbGRzIG9iamVjdHMgYXMgY2xhc3MgX09iaihkaWN0KTsgdHlwZShsZWFmKS5fX25hbWVfXyBpcyAiX09iaiIKICAgIGNvbnN0IHQgPSBsZWFmID09PSBudWxsID8gIk5vbmVUeXBlIiA6IChBcnJheS5pc0FycmF5KGxlYWYpID8gImxpc3QiIDogIl9PYmoiKTsKICAgIHJldHVybiBbIk1BTEZPUk1FRCIsICJsZWFmX25vdF9zY2FsYXIiLCB7IGxlYWZfdHlwZTogdCB9XTsKICB9CiAgaWYgKCEobGVhZiBpbnN0YW5jZW9mIERlYykpIHsKICAgIHJldHVybiBbIk1BTEZPUk1FRCIsICJsZWFmX25vdF9udW1lcmljIiwgeyBsZWFmOiBzYWZlVGV4dChweVJlcHIobGVhZikpIH1dOwogIH0KICBpZiAoIWxlYWYuaXNGaW5pdGUoKSB8fCBsZWFmLmFkanVzdGVkKCkgPiAzMjApIHsKICAgIHJldHVybiBbIk1BTEZPUk1FRCIsICJsZWFmX25vdF9udW1lcmljIiwgeyBsZWFmOiBzYWZlVGV4dChsZWFmLnRvU3RyaW5nKCkpIH1dOwogIH0KICBjb25zdCBsaHMgPSBsZWFmLmNhbm9uKGZyYWMpOwogIGNvbnN0IHJocyA9IHByaW50ZWQgPT09IG51bGwgPyBudWxsIDogcHJpbnRlZC5jYW5vbihmcmFjKTsKICBpZiAobGhzID09PSBudWxsIHx8IHJocyA9PT0gbnVsbCkgewogICAgcmV0dXJuIFsiTUFMRk9STUVEIiwgImxlYWZfbm90X251bWVyaWMiLCB7IGxlYWY6IHNhZmVUZXh0KGxlYWYudG9TdHJpbmcoKSkgfV07CiAgfQogIGNvbnN0IGRldGFpbCA9IHsgcHJpbnRlZF90b2tlbjogdG9rLCBwcmludGVkOiByaHMsIHJlY2VpcHQ6IGxlYWYudG9TdHJpbmcoKSwKICAgICAgICAgICAgICAgICAgIHJlY2VpcHRfcm91bmRlZDogbGhzLCBmcmFjdGlvbmFsX2RpZ2l0czogZnJhYywgcm91bmRpbmc6IFJPVU5ESU5HIH07CiAgaWYgKGxocyA9PT0gcmhzKSByZXR1cm4gWyJIRUxEIiwgbnVsbCwgZGV0YWlsXTsKICByZXR1cm4gWyJGQUlMRUQiLCAidmFsdWVfbWlzbWF0Y2giLCBkZXRhaWxdOwp9CgovKiogUHl0aG9uJ3Mgc3RyKCkgZm9yIHRoZSBzY2FsYXJzIGEgSlNPTiBsZWFmIGNhbiBob2xkLCBmb3IgdGhlIGBsZWFmYCBkZXRhaWwgc3RyaW5nLiAqLwpmdW5jdGlvbiBweVJlcHIoeCkgewogIGlmICh4ID09PSB0cnVlKSByZXR1cm4gIlRydWUiOwogIGlmICh4ID09PSBmYWxzZSkgcmV0dXJuICJGYWxzZSI7CiAgaWYgKHggPT09IG51bGwpIHJldHVybiAiTm9uZSI7CiAgcmV0dXJuIFN0cmluZyh4KTsKfQoKZnVuY3Rpb24gY2hlY2tRdW90ZShpbm5lciwgcmVzKSB7CiAgY29uc3QgW25lZWRsZSwgd2h5XSA9IG5lZWRsZUluKGlubmVyKTsKICBpZiAobmVlZGxlID09PSBudWxsKSByZXR1cm4gWyJNQUxGT1JNRUQiLCB3aHksIHt9XTsKICBsZXQgaGF5OwogIGlmIChyZXMuaGFzX2xlYWYpIHsKICAgIGlmICh0eXBlb2YgcmVzLmxlYWYgIT09ICJzdHJpbmciKSByZXR1cm4gWyJNQUxGT1JNRUQiLCAibGVhZl9ub3Rfc3RyaW5nIiwge31dOwogICAgLy8gW0I0IHJvdyA5XSBhIGxvbmUgc3Vycm9nYXRlIGlzIG5vdCBlbmNvZGFibGUgYXMgVVRGLTg7IFB5dGhvbiByYWlzZXMgYW5kIHJlZnVzZXMuCiAgICBpZiAoL1tcdWQ4MDAtXHVkYmZmXSg/IVtcdWRjMDAtXHVkZmZmXSl8KD86XnxbXlx1ZDgwMC1cdWRiZmZdKVtcdWRjMDAtXHVkZmZmXS8udGVzdChyZXMubGVhZikpIHsKICAgICAgcmV0dXJuIFsiTUFMRk9STUVEIiwgImxlYWZfbm90X3N0cmluZyIsIHsgbm90ZTogImxlYWYgaXMgbm90IGVuY29kYWJsZSBhcyBVVEYtOCIgfV07CiAgICB9CiAgICBoYXkgPSB1dGY4KHJlcy5sZWFmKTsKICB9IGVsc2UgewogICAgaGF5ID0gcmVzLnNsaWNlICE9PSBudWxsID8gcmVzLnNsaWNlIDogcmVzLmJ5dGVzOwogICAgaWYgKHJlcy5zbGljZSA9PT0gbnVsbCAmJiBuZWVkbGUubGVuZ3RoIDwgU0hPUlRfTkVFRExFX0JZVEVTKSB7CiAgICAgIHJldHVybiBbIk1BTEZPUk1FRCIsICJzaG9ydF9uZWVkbGUiLCB7IG5lZWRsZV9ieXRlczogbmVlZGxlLmxlbmd0aCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWluaW11bV9ieXRlczogU0hPUlRfTkVFRExFX0JZVEVTIH1dOwogICAgfQogIH0KICBjb25zdCBkZXRhaWwgPSB7IG5lZWRsZV9ieXRlczogbmVlZGxlLmxlbmd0aCwgaGF5c3RhY2tfYnl0ZXM6IGhheS5sZW5ndGgsCiAgICAgICAgICAgICAgICAgICBvY2N1cnJlbmNlczogY291bnRCeXRlcyhoYXksIG5lZWRsZSkgfTsKICBpZiAoZmluZEJ5dGVzKGhheSwgbmVlZGxlLCAwKSA+PSAwKSByZXR1cm4gWyJIRUxEIiwgbnVsbCwgZGV0YWlsXTsKICByZXR1cm4gWyJGQUlMRUQiLCAibmVlZGxlX21pc3NpbmciLCBkZXRhaWxdOwp9CgpmdW5jdGlvbiBjaGVja0Fic2VudChpbm5lciwgcmVzKSB7CiAgY29uc3QgW25lZWRsZSwgd2h5XSA9IG5lZWRsZUluKGlubmVyKTsKICBpZiAobmVlZGxlID09PSBudWxsKSByZXR1cm4gWyJNQUxGT1JNRUQiLCB3aHksIHt9XTsKICBjb25zdCBoYXkgPSByZXMuYnl0ZXM7CiAgY29uc3QgZGV0YWlsID0geyBuZWVkbGVfYnl0ZXM6IG5lZWRsZS5sZW5ndGgsIGhheXN0YWNrX2J5dGVzOiBoYXkubGVuZ3RoLCBjb21wbGV0ZTogdHJ1ZSB9OwogIGlmIChmaW5kQnl0ZXMoaGF5LCBuZWVkbGUsIDApID49IDApIHJldHVybiBbIkZBSUxFRCIsICJuZWVkbGVfcHJlc2VudCIsIGRldGFpbF07CiAgcmV0dXJuIFsiSEVMRCIsIG51bGwsIGRldGFpbF07Cn0KCmZ1bmN0aW9uIGhleFJ1bnMoaW5uZXJUZXh0KSB7CiAgSEVYUlVOX1JFLmxhc3RJbmRleCA9IDA7CiAgY29uc3QgcnVucyA9IFtdOwogIGxldCBtOwogIHdoaWxlICgobSA9IEhFWFJVTl9SRS5leGVjKGlubmVyVGV4dCkpICE9PSBudWxsKSBydW5zLnB1c2gobVswXSk7CiAgcmV0dXJuIHJ1bnM7Cn0KCmZ1bmN0aW9uIGNoZWNrSGFzaChpbm5lclRleHQsIHJlcykgewogIGNvbnN0IHJ1bnMgPSBoZXhSdW5zKGlubmVyVGV4dCk7CiAgY29uc3Qgc2l4dHlGb3VyID0gcnVucy5maWx0ZXIociA9PiByLmxlbmd0aCA9PT0gNjQpOwogIGNvbnN0IG90aGVycyA9IHJ1bnMuZmlsdGVyKHIgPT4gRElHRVNUX0xFTkdUSFMuaGFzKHIubGVuZ3RoKSk7CiAgaWYgKHNpeHR5Rm91ci5sZW5ndGggIT09IDEgfHwgb3RoZXJzLmxlbmd0aCkgewogICAgcmV0dXJuIFsiTUFMRk9STUVEIiwgImRpZ2VzdF9mb3JtIiwgeyBoZXhfcnVuczogcnVucy5tYXAociA9PiByLmxlbmd0aCkgfV07CiAgfQogIGNvbnN0IHN0YXRlZCA9IHNpeHR5Rm91clswXS50b0xvd2VyQ2FzZSgpOwogIGNvbnN0IGRldGFpbCA9IHsgc3RhdGVkLCByZWNlaXB0X3NoYTI1NjogcmVzLnNoYTI1NiB9OwogIGlmIChzdGF0ZWQgPT09IHJlcy5zaGEyNTYpIHJldHVybiBbIkhFTEQiLCBudWxsLCBkZXRhaWxdOwogIHJldHVybiBbIkZBSUxFRCIsICJkaWdlc3RfbWlzbWF0Y2giLCBkZXRhaWxdOwp9CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gdGhlIGFkanVkaWNhdG9yICovCgpmdW5jdGlvbiBhZGp1ZGljYXRlKGQsIG1hbmlmZXN0KSB7CiAgY29uc3QgdmVyZGljdCA9IHsgYXQ6IGQuYXQsIHN0YXJ0OiBkLnN0YXJ0ID09PSB1bmRlZmluZWQgPyBudWxsIDogZC5zdGFydCwKICAgICAgICAgICAgICAgICAgICBlbmQ6IGQuZW5kID09PSB1bmRlZmluZWQgPyBudWxsIDogZC5lbmQsCiAgICAgICAgICAgICAgICAgICAgcmVjZWlwdDogZC5yZWNlaXB0ID09PSB1bmRlZmluZWQgPyBudWxsIDogZC5yZWNlaXB0LAogICAgICAgICAgICAgICAgICAgIGtpbmQ6IGQua2luZCA9PT0gdW5kZWZpbmVkID8gbnVsbCA6IGQua2luZCwKICAgICAgICAgICAgICAgICAgICB2ZXJkaWN0OiBudWxsLCByZWFzb246IG51bGwsIGRldGFpbDoge30gfTsKICBjb25zdCBvdXQgPSAodiwgcmVhc29uLCBkZXRhaWwsIHJlcykgPT4gewogICAgdmVyZGljdC52ZXJkaWN0ID0gdjsKICAgIHZlcmRpY3QucmVhc29uID0gcmVhc29uID09PSB1bmRlZmluZWQgPyBudWxsIDogcmVhc29uOwogICAgdmVyZGljdC5kZXRhaWwgPSBkZXRhaWwgfHwge307CiAgICBpZiAocmVzICYmIHJlcy5zaGEyNTYpIHZlcmRpY3QucmVzb2x2ZWRfc2hhMjU2ID0gcmVzLnNoYTI1NjsKICAgIGlmIChyZXMgJiYgcmVzLnByb3ZlbmFuY2UpIHZlcmRpY3QucHJvdmVuYW5jZSA9IHJlcy5wcm92ZW5hbmNlOwogICAgcmV0dXJuIHZlcmRpY3Q7CiAgfTsKICBpZiAoZC5tYWxmb3JtZWQpIHsKICAgIHJldHVybiBvdXQoIk1BTEZPUk1FRCIsIGQubWFsZm9ybWVkLCBkLnJhdyA/IHsgcmF3OiBkLnJhdyB9IDoge30pOwogIH0KICBjb25zdCBpbm5lciA9IGQuaW5uZXI7CiAgaWYgKHN0cmlwV3NCeXRlcyhpbm5lcikubGVuZ3RoID09PSAwKSByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCAiZW1wdHlfc3BhbiIpOwogIGNvbnN0IGlubmVyVGV4dCA9IGRlY29kZVN0cmljdChpbm5lcik7CiAgY29uc3QgY29kZVBvaW50cyA9IFsuLi5pbm5lclRleHRdLmxlbmd0aDsKICBpZiAoY29kZVBvaW50cyA+IFNQQU5fQ0FQX0NPREVQT0lOVFMpIHsKICAgIHJldHVybiBvdXQoIk1BTEZPUk1FRCIsICJsZW5ndGhfY2FwIiwgeyBjb2RlX3BvaW50czogY29kZVBvaW50cywgYnl0ZXM6IGlubmVyLmxlbmd0aCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYXA6IFNQQU5fQ0FQX0NPREVQT0lOVFMgfSk7CiAgfQogIGNvbnN0IGtpbmQgPSBkLmtpbmQ7CiAgaWYgKFJFU0VSVkVEX0tJTkRTLmluY2x1ZGVzKGtpbmQpKSByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCAia2luZF9yZXNlcnZlZCIsIHsga2luZCB9KTsKICBpZiAoIUtJTkRTLmluY2x1ZGVzKGtpbmQpKSByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCAia2luZF91bmtub3duIiwgeyBraW5kIH0pOwogIGNvbnN0IFtwYXJzZWQsIHdoeV0gPSBwYXJzZVJlY2VpcHQoZC5yZWNlaXB0KTsKICBpZiAocGFyc2VkID09PSBudWxsKSByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCB3aHksIHsgcmVjZWlwdDogZC5yZWNlaXB0IH0pOwogIGlmIChraW5kID09PSAiYWJzZW50IiAmJiBwYXJzZWQucGFydGlhbCkgewogICAgcmV0dXJuIG91dCgiTUFMRk9STUVEIiwgImFic2VudF9vdmVyX3BhcnRpYWwiLCB7IHJlY2VpcHQ6IGQucmVjZWlwdCB9KTsKICB9CiAgaWYgKGtpbmQgPT09ICJoYXNoIiAmJiBwYXJzZWQucGFydGlhbCkgewogICAgcmV0dXJuIG91dCgiTUFMRk9STUVEIiwgImhhc2hfb3Zlcl9wYXJ0aWFsIiwgeyByZWNlaXB0OiBkLnJlY2VpcHQgfSk7CiAgfQogIC8vIGJ5dGVzLW9ubHkgZm9ybSBjaGVja3MgcnVuIEJFRk9SRSBhbnkgcmVjZWlwdCBpcyBvcGVuZWQKICBpZiAoa2luZCA9PT0gIm51bWVyaWMiKSB7CiAgICBjb25zdCBbbndoeSwgLCBzZWVuXSA9IG51bWJlclRva2VuKGlubmVyVGV4dCk7CiAgICBpZiAobndoeSkgcmV0dXJuIG91dCgiTUFMRk9STUVEIiwgbndoeSwgeyBkaWdpdF9iZWFyaW5nX3Rva2Vuczogc2VlbiB9KTsKICB9IGVsc2UgaWYgKGtpbmQgPT09ICJxdW90ZSIgfHwga2luZCA9PT0gImFic2VudCIpIHsKICAgIGNvbnN0IFtuZWVkbGUsIG53aHldID0gbmVlZGxlSW4oaW5uZXIpOwogICAgaWYgKG5lZWRsZSA9PT0gbnVsbCkgcmV0dXJuIG91dCgiTUFMRk9STUVEIiwgbndoeSk7CiAgfSBlbHNlIHsKICAgIGNvbnN0IHJ1bnMgPSBoZXhSdW5zKGlubmVyVGV4dCk7CiAgICBpZiAocnVucy5maWx0ZXIociA9PiByLmxlbmd0aCA9PT0gNjQpLmxlbmd0aCAhPT0gMSB8fAogICAgICAgIHJ1bnMuc29tZShyID0+IERJR0VTVF9MRU5HVEhTLmhhcyhyLmxlbmd0aCkgJiYgci5sZW5ndGggIT09IDY0KSkgewogICAgICByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCAiZGlnZXN0X2Zvcm0iLCB7IGhleF9ydW5zOiBydW5zLm1hcChyID0+IHIubGVuZ3RoKSB9KTsKICAgIH0KICB9CiAgY29uc3QgcmVzID0gcmVzb2x2ZShwYXJzZWQsIGtpbmQsIG1hbmlmZXN0KTsKICBpZiAocmVzLnN0YXR1cyA9PT0gInVucmVzb2x2ZWQiKSByZXR1cm4gb3V0KCJVTlJFU09MVkVEIiwgcmVzLnJlYXNvbik7CiAgaWYgKHJlcy5zdGF0dXMgPT09ICJtYWxmb3JtZWQiKSByZXR1cm4gb3V0KCJNQUxGT1JNRUQiLCByZXMucmVhc29uLCBudWxsLCByZXMpOwogIGlmIChraW5kID09PSAiYWJzZW50IikgewogICAgLy8gYSBuZWdhdGl2ZSBpcyBvbmx5IHN3ZWFyYWJsZSBvdmVyIGFuIG9iamVjdCB0aGUgaGFybmVzcyBzYWlkIGl0IGNhcHR1cmVkIHdob2xlCiAgICBpZiAocmVzLmNvbXBsZXRlID09PSBudWxsIHx8IHJlcy5jb21wbGV0ZSA9PT0gdW5kZWZpbmVkKSB7CiAgICAgIHJldHVybiBvdXQoIlVOUkVTT0xWRUQiLCAibWFuaWZlc3Rfbm9fY29tcGxldGVuZXNzIik7CiAgICB9CiAgICBpZiAocmVzLmNvbXBsZXRlICE9PSB0cnVlKSB7CiAgICAgIHJldHVybiBvdXQoIk1BTEZPUk1FRCIsICJhYnNlbnRfb3Zlcl9wYXJ0aWFsIiwgeyBjb21wbGV0ZTogZmFsc2UgfSwgcmVzKTsKICAgIH0KICB9CiAgbGV0IHYsIHJlYXNvbiwgZGV0YWlsOwogIGlmIChraW5kID09PSAibnVtZXJpYyIpIFt2LCByZWFzb24sIGRldGFpbF0gPSBjaGVja051bWVyaWMoaW5uZXJUZXh0LCByZXMpOwogIGVsc2UgaWYgKGtpbmQgPT09ICJxdW90ZSIpIFt2LCByZWFzb24sIGRldGFpbF0gPSBjaGVja1F1b3RlKGlubmVyLCByZXMpOwogIGVsc2UgaWYgKGtpbmQgPT09ICJhYnNlbnQiKSBbdiwgcmVhc29uLCBkZXRhaWxdID0gY2hlY2tBYnNlbnQoaW5uZXIsIHJlcyk7CiAgZWxzZSBbdiwgcmVhc29uLCBkZXRhaWxdID0gY2hlY2tIYXNoKGlubmVyVGV4dCwgcmVzKTsKICByZXR1cm4gb3V0KHYsIHJlYXNvbiwgZGV0YWlsLCByZXMpOwp9CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gdGhlIGVudHJ5IHBvaW50ICovCgovKioKICogUmUtZGVyaXZlIHRoZSB2ZXJkaWN0IGNvcmUuCiAqCiAqIEBwYXJhbSB7VWludDhBcnJheX0gZG9jdW1lbnRCeXRlcyAgdGhlIGlubGluZSBkb2N1bWVudCwgYnl0ZXMKICogQHBhcmFtIHtvYmplY3R8bnVsbH0gbWFuaWZlc3RPYmogICB0aGUgbWFuaWZlc3QgYXMgYSBKT2JqIChmcm9tIGpzb25TdHJpY3RCeXRlcykgb3IgbnVsbAogKiBAcGFyYW0ge29iamVjdH0gb3B0cyAgICAgICAgICAgICAgIHsgbmFtZSwgY29tbWl0IH0KICogQHJldHVybnMge29iamVjdH0gdGhlIGNvcmUsIHdpdGggYHNwYW5zYCwgYGNvdW50c2AsIGBkb2N1bWVudF92ZXJkaWN0YCDigKYgYW5kIG5vIGBjb3ZlcmFnZWAKICogICAgICAgICAgICAgICAgICAgYW5kIG5vIGB2ZXJpZmllcmAg4oCUIHRoZSB0d28gYmxvY2tzIHRoZSBkaWdlc3QgZXhjbHVkZXMuCiAqLwpmdW5jdGlvbiBzd29yblZlcmlmeShkb2N1bWVudEJ5dGVzLCBtYW5pZmVzdE9iaiwgb3B0cykgewogIGNvbnN0IG8gPSBvcHRzIHx8IHt9OwogIGNvbnN0IG5hbWUgPSBvLm5hbWUgPT09IHVuZGVmaW5lZCA/ICIiIDogby5uYW1lOwogIGNvbnN0IGNvbW1pdCA9IG8uY29tbWl0ID09PSB1bmRlZmluZWQgPyBudWxsIDogby5jb21taXQ7CiAgaWYgKGNvbW1pdCAhPT0gbnVsbCAmJiAhKHR5cGVvZiBjb21taXQgPT09ICJzdHJpbmciICYmIC9eKFswLTlhLWZdezQwfXxbMC05YS1mXXs2NH0pJC8udGVzdChjb21taXQpKSkgewogICAgdGhyb3cgbmV3IEVycm9yKCJSRUZVU0VEOiBjb21taXQgbXVzdCBiZSBhIGZ1bGwgbG93ZXJjYXNlIGhleCBvYmplY3QgaWQgb3IgTm9uZSIpOwogIH0KICBsZXQgbWFuaWZlc3QgPSBudWxsOwogIGlmIChtYW5pZmVzdE9iaiAhPT0gbnVsbCAmJiBtYW5pZmVzdE9iaiAhPT0gdW5kZWZpbmVkKSB7CiAgICBtYW5pZmVzdCA9IG1hbmlmZXN0T2JqIGluc3RhbmNlb2YgTWFuaWZlc3QgPyBtYW5pZmVzdE9iaiA6IG5ldyBNYW5pZmVzdChtYW5pZmVzdE9iaik7CiAgfQogIGNvbnN0IHNjID0gc2Nhbihkb2N1bWVudEJ5dGVzKTsKICBjb25zdCB2ZXJkaWN0cyA9IHNjLmRlY2xhcmF0aW9ucy5tYXAoZCA9PiBhZGp1ZGljYXRlKGQsIG1hbmlmZXN0KSk7CiAgdmVyZGljdHMuc29ydCgoYSwgYikgPT4gYS5hdCAtIGIuYXQpOwogIGNvbnN0IGNvdW50cyA9IHt9OwogIGZvciAoY29uc3QgdiBvZiBWRVJESUNUUykgY291bnRzW3ZdID0gMDsKICBmb3IgKGNvbnN0IHYgb2YgdmVyZGljdHMpIGNvdW50c1t2LnZlcmRpY3RdKys7CiAgbGV0IHN3b3JuVG90YWwgPSAwOwogIGZvciAoY29uc3QgdiBvZiBWRVJESUNUUykgc3dvcm5Ub3RhbCArPSBjb3VudHNbdl07CiAgY29uc3QgZG9jTWFsZm9ybWVkID0gc2MuZG9jdW1lbnRfbWFsZm9ybWVkOwogIGxldCBkb2N1bWVudFZlcmRpY3Q7CiAgaWYgKGRvY01hbGZvcm1lZCkgZG9jdW1lbnRWZXJkaWN0ID0gIlNXT1JOLUZBSUxFRCI7CiAgZWxzZSBpZiAoc3dvcm5Ub3RhbCA9PT0gMCkgZG9jdW1lbnRWZXJkaWN0ID0gIlVOU1dPUk4iOwogIGVsc2UgaWYgKGNvdW50cy5GQUlMRUQgPT09IDAgJiYgY291bnRzLk1BTEZPUk1FRCA9PT0gMCkgZG9jdW1lbnRWZXJkaWN0ID0gIlNXT1JOLUhFTEQiOwogIGVsc2UgZG9jdW1lbnRWZXJkaWN0ID0gIlNXT1JOLUZBSUxFRCI7CiAgY29uc3QgcnVuZ3MgPSB7fTsKICBmb3IgKGNvbnN0IHYgb2YgdmVyZGljdHMpIHsKICAgIGNvbnN0IHByb3YgPSB2LnByb3ZlbmFuY2UgfHwge307CiAgICBsZXQga2V5OwogICAgaWYgKHByb3YuZm9ybSA9PT0gInJuIikga2V5ID0gcHJvdi5ydW5nOwogICAgZWxzZSBpZiAocHJvdi5mb3JtID09PSAicGF0aCIgfHwgcHJvdi5mb3JtID09PSAicHJlcmVnIikga2V5ID0gImNvbW1pdHRlZCI7CiAgICBlbHNlIGtleSA9ICJ1bnJlc29sdmVkIjsKICAgIHJ1bmdzW2tleV0gPSAocnVuZ3Nba2V5XSB8fCAwKSArIDE7CiAgfQogIHJldHVybiB7CiAgICBzY2hlbWE6IFJFQ0VJUFRfU0NIRU1BLAogICAgZm9ybWF0OiBTUEVDLAogICAgZG9jdW1lbnQ6IHsgbmFtZSwKICAgICAgICAgICAgICAgIGlubGluZV9zaGEyNTY6IHNoYTI1NkJ5dGVzKGRvY3VtZW50Qnl0ZXMpLAogICAgICAgICAgICAgICAgY2Fub25pY2FsX3NoYTI1Njogc2MuY2Fub25pY2FsICE9PSBudWxsID8gc2hhMjU2Qnl0ZXMoc2MuY2Fub25pY2FsKSA6IG51bGwgfSwKICAgIGNvbW1pdCwKICAgIG1hbmlmZXN0X2RpZ2VzdDogbWFuaWZlc3QgIT09IG51bGwgPyBtYW5pZmVzdC5kaWdlc3RPck51bGwoKSA6IG51bGwsCiAgICBzcGFuczogdmVyZGljdHMsCiAgICBjb3VudHMsCiAgICBzd29ybl90b3RhbDogc3dvcm5Ub3RhbCwKICAgIHVucmVzb2x2ZWQ6IGNvdW50cy5VTlJFU09MVkVELAogICAgZG9jdW1lbnRfdmVyZGljdDogZG9jdW1lbnRWZXJkaWN0LAogICAgZG9jdW1lbnRfbWFsZm9ybWVkOiBkb2NNYWxmb3JtZWQsCiAgICBydW5ncywKICAgIGNlcnRpZmllczogQ0VSVElGSUVTLAogIH07Cn0KCi8qKiBzaGEyNTYodXRmOChqY3MoY29yZSkpKSDigJQgdGhlIG51bWJlciB0aGUgY29uZm9ybWFuY2UgdmVjdG9ycyBwaW4gKFNQRUMgQjIpLiAqLwpmdW5jdGlvbiBjb3JlRGlnZXN0KGNvcmUpIHsKICByZXR1cm4gc2hhMjU2Qnl0ZXModXRmOChqY3MoY29yZSkpKTsKfQoKY29uc3QgX2FwaSA9IHsgc3dvcm5WZXJpZnksIGNvcmVEaWdlc3QsIGpjcywgamNzU3RyaW5nLCBzaGEyNTZCeXRlcywganNvblN0cmljdCwganNvblN0cmljdEJ5dGVzLAogICAgICAgICAgICAgICBqc29uUGxhaW4sIGpzb25QbGFpbkJ5dGVzLAogICAgICAgICAgICAgICBNYW5pZmVzdCwgRGVjLCBKT2JqLCBzY2FuLCBwYXJzZVJlY2VpcHQsIHV0ZjgsIGRlY29kZVN0cmljdCwgTEFCRUw6CiAgInJlLWRlcml2ZXMgc3dvcm4gc3BhbiB2ZXJkaWN0cyBvZmZsaW5lOyBhIGZvcmdlciBjb250cm9sbGluZyB0aGUgd2hvbGUgZmlsZSBwYXNzZXMgYm90aCAiICsKICAiYnJvd3NlciBsYXllcnM7IHRoZSBwYWNrYWdlIGF0IHRoZSBuYW1lZCBjb21taXQgaXMgdGhlIGNoZWNrIiB9OwoKaWYgKHR5cGVvZiBtb2R1bGUgIT09ICJ1bmRlZmluZWQiICYmIG1vZHVsZS5leHBvcnRzKSBtb2R1bGUuZXhwb3J0cyA9IF9hcGk7CmlmICh0eXBlb2YgZ2xvYmFsVGhpcyAhPT0gInVuZGVmaW5lZCIpIGdsb2JhbFRoaXMuc3dvcm5WZXJpZnlBcGkgPSBfYXBpOwo="
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "94f854e1dae5e5a3fa88688d95c5bec980ef1670652287e7dc00d995574ad0eb",
+  "pip": "styxx==7.47.0"
+ }
+}</script>
+<script>"use strict";
+/*
+ * sworn_verify.js — a second implementation of the sworn verdict core, for a browser.
+ *
+ * SPEC: papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md, frozen before this file.
+ * Held to conformance/sworn/ — mode `inline`, receipts rN (and rN#/pointer) against an embedded
+ * manifest, path:/prereg: with no tree (UNRESOLVED no_repository), all four kinds. It reproduces
+ * the core digest or it does not ship; the bar is 1689 vectors and the harness prints the count.
+ *
+ * The label, from the plan, and it is the whole honest claim for this file:
+ *
+ *     re-derives sworn span verdicts offline; a forger controlling the whole file passes both
+ *     browser layers; the package at the named commit is the check
+ *
+ * PURE (SPEC B5): one entry point, `swornVerify(documentBytes, manifestObject|null, opts)`.
+ * No I/O, no clock, no globals, no network. Byte offsets are computed over Uint8Array, never
+ * over JS string indices, because the format's offsets are byte offsets.
+ *
+ * Every place where Python and JavaScript disagree is marked `[B4]` with the row of the SPEC's
+ * table it implements.
+ */
+
+/* ============================================================ sha256 (pure, synchronous)
+ * crypto.subtle is async-only, and a capsule's layer 1 must return a verdict without awaiting a
+ * promise chain through the lexer. 60 lines of FIPS 180-4 is the cheaper dependency.
+ */
+const _K = new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]);
+
+function sha256Bytes(bytes) {
+  const ml = bytes.length;
+  const withOne = ml + 1;
+  const padded = new Uint8Array(Math.ceil((withOne + 8) / 64) * 64);
+  padded.set(bytes);
+  padded[ml] = 0x80;
+  const hi = Math.floor((ml * 8) / 0x100000000);
+  const lo = (ml * 8) >>> 0;
+  const dv = new DataView(padded.buffer);
+  dv.setUint32(padded.length - 8, hi);
+  dv.setUint32(padded.length - 4, lo);
+  const H = new Uint32Array([0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+                             0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]);
+  const w = new Uint32Array(64);
+  const rr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let off = 0; off < padded.length; off += 64) {
+    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rr(w[i - 15], 7) ^ rr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+      const s1 = rr(w[i - 2], 17) ^ rr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let i = 0; i < 64; i++) {
+      const S1 = rr(e, 6) ^ rr(e, 11) ^ rr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + _K[i] + w[i]) >>> 0;
+      const S0 = rr(a, 2) ^ rr(a, 13) ^ rr(a, 22);
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0;
+      d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0;
+    H[3] = (H[3] + d) >>> 0; H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0;
+    H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+  }
+  let out = "";
+  for (let i = 0; i < 8; i++) out += H[i].toString(16).padStart(8, "0");
+  return out;
+}
+
+/* ============================================================ bytes and text */
+
+const _ENC = new TextEncoder();
+const _DEC_STRICT = new TextDecoder("utf-8", { fatal: true });
+const _DEC_LOOSE = new TextDecoder("utf-8");
+
+function utf8(s) { return _ENC.encode(s); }
+
+/** Strict decode: returns null when the bytes are not UTF-8 (the document-level MALFORMED). */
+function decodeStrict(bytes) {
+  try { return _DEC_STRICT.decode(bytes); } catch (e) { return null; }
+}
+function decodeLoose(bytes) { return _DEC_LOOSE.decode(bytes); }
+
+/** The byte offset of the first invalid UTF-8 sequence — Python's UnicodeDecodeError.start. */
+function firstInvalidUtf8(bytes) {
+  let i = 0;
+  const n = bytes.length;
+  while (i < n) {
+    const b = bytes[i];
+    let need, min, cp;
+    if (b < 0x80) { i++; continue; }
+    else if (b >= 0xc2 && b <= 0xdf) { need = 1; cp = b & 0x1f; min = 0x80; }
+    else if (b >= 0xe0 && b <= 0xef) { need = 2; cp = b & 0x0f; min = 0x800; }
+    else if (b >= 0xf0 && b <= 0xf4) { need = 3; cp = b & 0x07; min = 0x10000; }
+    else return i;
+    if (i + need >= n + 0 && i + need > n - 1) return i;
+    let ok = true;
+    for (let k = 1; k <= need; k++) {
+      const c = bytes[i + k];
+      if (c === undefined || (c & 0xc0) !== 0x80) { ok = false; break; }
+      cp = (cp << 6) | (c & 0x3f);
+    }
+    if (!ok) return i;
+    if (cp < min || cp > 0x10ffff || (cp >= 0xd800 && cp <= 0xdfff)) return i;
+    i += need + 1;
+  }
+  return 0;
+}
+
+function bytesEqual(a, b) {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+  return true;
+}
+
+/** indexOf for Uint8Array. */
+function findBytes(hay, needle, from) {
+  const n = needle.length;
+  if (n === 0) return from || 0;
+  const end = hay.length - n;
+  for (let i = from || 0; i <= end; i++) {
+    let ok = true;
+    for (let k = 0; k < n; k++) if (hay[i + k] !== needle[k]) { ok = false; break; }
+    if (ok) return i;
+  }
+  return -1;
+}
+function countBytes(hay, needle) {
+  let c = 0, i = 0;
+  for (;;) {
+    const j = findBytes(hay, needle, i);
+    if (j < 0) return c;
+    c++;
+    i = j + 1;               // Python bytes.count counts NON-overlapping…
+    i = j + needle.length;   // …which is what this line does; the line above is superseded.
+  }
+}
+
+const _WS_BYTES = new Set([0x20, 0x09, 0x0a, 0x0d, 0x0c, 0x0b]);
+function stripWsBytes(b) {
+  let a = 0, z = b.length;
+  while (a < z && _WS_BYTES.has(b[a])) a++;
+  while (z > a && _WS_BYTES.has(b[z - 1])) z--;
+  return b.subarray(a, z);
+}
+
+/* ============================================================ decimal [B4 rows 3, 7, 8]
+ * value = sign * coef * 10^exp, with `digits` the coefficient EXACTLY as written, because
+ * Python's Decimal keeps them and str() prints them (Decimal("1.50") is "1.50", not "1.5").
+ */
+class Dec {
+  constructor(sign, digits, exp, special) {
+    this.sign = sign;            // 1 | -1
+    this.digits = digits;        // digit string, as written (may carry leading zeros)
+    this.exp = exp;              // integer
+    this.special = special || null;   // null | "NaN" | "Infinity"
+  }
+  static parse(text) {
+    const m = /^([-+]?)(?:(\d*)(?:\.(\d*))?|)(?:[eE]([-+]?\d+))?$/.exec(text);
+    if (!m) return null;
+    const sign = m[1] === "-" ? -1 : 1;
+    const ip = m[2] || "";
+    const fp = m[3] === undefined ? null : m[3];
+    if (ip === "" && (fp === null || fp === "")) return null;
+    const digits = ip + (fp || "");
+    const exp = (fp ? -fp.length : 0) + (m[4] ? parseInt(m[4], 10) : 0);
+    return new Dec(sign, digits === "" ? "0" : digits, exp, null);
+  }
+  isSpecial() { return this.special !== null; }
+  isFinite() { return this.special === null; }
+  /** Python's Decimal.adjusted(). */
+  adjusted() { return this.exp + this.digits.length - 1; }
+  isZero() { return this.special === null && /^0*$/.test(this.digits); }
+  coef() { return BigInt(this.digits || "0"); }
+  /** Python's str(Decimal) — to-scientific-string. [B4 row 7] */
+  toString() {
+    const sign = this.sign < 0 ? "-" : "";
+    if (this.special === "NaN") return sign + "NaN";
+    if (this.special === "Infinity") return sign + "Infinity";
+    const int = this.digits;
+    const leftdigits = this.exp + int.length;
+    let dotplace;
+    if (this.exp <= 0 && leftdigits > -6) dotplace = leftdigits;
+    else dotplace = 1;
+    let intpart, fracpart;
+    if (dotplace <= 0) { intpart = "0"; fracpart = "." + "0".repeat(-dotplace) + int; }
+    else if (dotplace >= int.length) { intpart = int + "0".repeat(dotplace - int.length); fracpart = ""; }
+    else { intpart = int.slice(0, dotplace); fracpart = "." + int.slice(dotplace); }
+    let exp = "";
+    if (leftdigits !== dotplace) {
+      const e = leftdigits - dotplace;
+      exp = "E" + (e >= 0 ? "+" : "-") + Math.abs(e);
+    }
+    return sign + intpart + fracpart + exp;
+  }
+  /** quantize to 10^-frac with ROUND_HALF_EVEN, then format "f" — Python's _canon. [B4 row 8] */
+  canon(frac) {
+    if (!this.isFinite()) return null;
+    let coef = this.coef();
+    const shift = this.exp + frac;
+    if (shift >= 0) {
+      coef = coef * (10n ** BigInt(shift));
+    } else {
+      const p = 10n ** BigInt(-shift);
+      const q = coef / p;
+      const r = coef % p;
+      const twice = r * 2n;
+      if (twice > p || (twice === p && (q % 2n) === 1n)) coef = q + 1n;
+      else coef = q;
+    }
+    let neg = this.sign < 0;
+    if (coef === 0n) neg = false;                 // signed zero folded, as Python does
+    let s = coef.toString();
+    let body;
+    if (frac === 0) body = s;
+    else {
+      if (s.length <= frac) s = "0".repeat(frac - s.length + 1) + s;
+      body = s.slice(0, s.length - frac) + "." + s.slice(s.length - frac);
+    }
+    return (neg ? "-" : "") + body;
+  }
+}
+
+/* ============================================================ JSON, Python-strict [B4 rows 3-6]
+ * A reader that keeps number text as Dec, accepts NaN/Infinity/-Infinity as Python's json does,
+ * remembers duplicate keys per object, refuses a BOM, and refuses raw control characters in
+ * strings (Python's json strict=True). Objects are returned as { map: Map, dups: Set }.
+ */
+class JObj {
+  constructor(map, dups) { this.map = map; this.dups = dups; }
+}
+
+function jsonStrict(text) {
+  if (text.length && text.charCodeAt(0) === 0xfeff) throw new Error("BOM-prefixed JSON");
+  let i = 0;
+  const n = text.length;
+  function ws() { while (i < n && (text[i] === " " || text[i] === "\t" || text[i] === "\n" || text[i] === "\r")) i++; }
+  function fail(msg) { throw new Error(msg + " at " + i); }
+  function parseValue() {
+    ws();
+    if (i >= n) fail("Expecting value");
+    const c = text[i];
+    if (c === "{") return parseObject();
+    if (c === "[") return parseArray();
+    if (c === '"') return parseString();
+    if (text.startsWith("true", i)) { i += 4; return true; }
+    if (text.startsWith("false", i)) { i += 5; return false; }
+    if (text.startsWith("null", i)) { i += 4; return null; }
+    if (text.startsWith("NaN", i)) { i += 3; return new Dec(1, "0", 0, "NaN"); }
+    if (text.startsWith("Infinity", i)) { i += 8; return new Dec(1, "0", 0, "Infinity"); }
+    if (text.startsWith("-Infinity", i)) { i += 9; return new Dec(-1, "0", 0, "Infinity"); }
+    return parseNumber();
+  }
+  function parseNumber() {
+    const m = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][-+]?\d+)?/.exec(text.slice(i));
+    if (!m) fail("Expecting value");
+    i += m[0].length;
+    const d = Dec.parse(m[0]);
+    if (d === null) fail("Expecting value");
+    return d;
+  }
+  function parseString() {
+    if (text[i] !== '"') fail("Expecting string");
+    i++;
+    let out = "";
+    for (;;) {
+      if (i >= n) fail("Unterminated string");
+      const c = text[i];
+      if (c === '"') { i++; return out; }
+      if (c === "\\") {
+        i++;
+        const e = text[i];
+        i++;
+        if (e === '"') out += '"';
+        else if (e === "\\") out += "\\";
+        else if (e === "/") out += "/";
+        else if (e === "b") out += "\b";
+        else if (e === "f") out += "\f";
+        else if (e === "n") out += "\n";
+        else if (e === "r") out += "\r";
+        else if (e === "t") out += "\t";
+        else if (e === "u") {
+          const h = text.slice(i, i + 4);
+          if (!/^[0-9a-fA-F]{4}$/.test(h)) fail("Invalid \\uXXXX escape");
+          out += String.fromCharCode(parseInt(h, 16));
+          i += 4;
+        } else fail("Invalid \\escape");
+        continue;
+      }
+      if (c.charCodeAt(0) < 0x20) fail("Invalid control character");
+      out += c;
+      i++;
+    }
+  }
+  function parseObject() {
+    i++;
+    const map = new Map();
+    const dups = new Set();
+    ws();
+    if (text[i] === "}") { i++; return new JObj(map, dups); }
+    for (;;) {
+      ws();
+      const k = parseString();
+      ws();
+      if (text[i] !== ":") fail("Expecting ':'");
+      i++;
+      const v = parseValue();
+      if (map.has(k)) dups.add(k);
+      map.set(k, v);
+      ws();
+      if (text[i] === ",") { i++; continue; }
+      if (text[i] === "}") { i++; return new JObj(map, dups); }
+      fail("Expecting ',' delimiter");
+    }
+  }
+  function parseArray() {
+    i++;
+    const arr = [];
+    ws();
+    if (text[i] === "]") { i++; return arr; }
+    for (;;) {
+      arr.push(parseValue());
+      ws();
+      if (text[i] === ",") { i++; continue; }
+      if (text[i] === "]") { i++; return arr; }
+      fail("Expecting ',' delimiter");
+    }
+  }
+  const v = parseValue();
+  ws();
+  if (i !== n) fail("Extra data");
+  return v;
+}
+
+/** The same reader, with numbers as JS numbers — what Python's plain json.loads hands
+ *  Manifest.from_dict. The strict reader's Dec is for RECEIPT bytes, never for a manifest. */
+function jsonPlain(text) {
+  const v = jsonStrict(text);
+  const walk = x => {
+    if (x instanceof Dec) {
+      if (!x.isFinite()) return x.special === "NaN" ? NaN
+                                                    : (x.sign < 0 ? -Infinity : Infinity);
+      return Number(x.toString());
+    }
+    if (Array.isArray(x)) return x.map(walk);
+    if (x instanceof JObj) {
+      const m = new Map();
+      for (const [k, val] of x.map) m.set(k, walk(val));
+      return new JObj(m, x.dups);
+    }
+    return x;
+  };
+  return walk(v);
+}
+
+function jsonPlainBytes(bytes) {
+  const text = decodeStrict(bytes);
+  if (text === null) throw new Error("not UTF-8");
+  return jsonPlain(text);
+}
+
+function jsonStrictBytes(bytes) {
+  const text = decodeStrict(bytes);
+  if (text === null) throw new Error("not UTF-8");
+  return jsonStrict(text);
+}
+
+/* ============================================================ JCS (RFC 8785), styxx domain */
+
+function jcsString(s) {
+  let out = '"';
+  for (const ch of s) {
+    const c = ch.codePointAt(0);
+    if (ch === '"') out += '\\"';
+    else if (ch === "\\") out += "\\\\";
+    else if (c === 0x08) out += "\\b";
+    else if (c === 0x0c) out += "\\f";
+    else if (c === 0x0a) out += "\\n";
+    else if (c === 0x0d) out += "\\r";
+    else if (c === 0x09) out += "\\t";
+    else if (c < 0x20) out += "\\u" + c.toString(16).padStart(4, "0");
+    else out += ch;
+  }
+  return out + '"';
+}
+
+function jcs(obj) {
+  if (obj === true) return "true";
+  if (obj === false) return "false";
+  if (obj === null || obj === undefined) return "null";
+  if (typeof obj === "string") return jcsString(obj);
+  if (typeof obj === "number") {
+    if (!Number.isFinite(obj)) throw new Error("styxx JCS domain: NaN or Infinity");
+    return String(obj);                    // ECMAScript Number::toString, as RFC 8785 requires
+  }
+  if (typeof obj === "bigint") return obj.toString();
+  if (Array.isArray(obj)) return "[" + obj.map(jcs).join(",") + "]";
+  if (obj instanceof Map) {
+    const keys = [...obj.keys()].sort();
+    return "{" + keys.map(k => jcsString(k) + ":" + jcs(obj.get(k))).join(",") + "}";
+  }
+  if (obj instanceof JObj) return jcs(obj.map);
+  if (typeof obj === "object") {
+    const keys = Object.keys(obj).sort();
+    return "{" + keys.map(k => jcsString(k) + ":" + jcs(obj[k])).join(",") + "}";
+  }
+  throw new Error("not JCS-serializable");
+}
+
+/* ============================================================ constants, from the format */
+
+const CERTIFIES =
+  "the spans the author bound were checked against bytes the author did not write, at the commit " +
+  "or manifest the document names and at the rung the manifest declares — NOT a claim that the " +
+  "document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags " +
+  "were written at write time, NOT a check of any signature, and only as trustworthy as the harness " +
+  "that minted the manifest and the history that holds the commit";
+const SPEC = "sworn/0.1";
+const RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v1";
+const MANIFEST_SPECS = ["sworn/manifest/0.1", "sworn/manifest/0.2"];
+const SPAN_CAP_CODEPOINTS = 300;
+const SHORT_NEEDLE_BYTES = 16;
+const RUNGS = ["L1", "L2"];
+const RUNG_UNDECLARED = "undeclared";
+const KINDS = ["numeric", "quote", "hash", "absent"];
+const RESERVED_KINDS = ["exec"];
+const VERDICTS = ["HELD", "FAILED", "UNRESOLVED", "MALFORMED", "WITHHELD"];
+const ROUNDING = "ROUND_HALF_EVEN";
+const SOURCE_KINDS_EXTERNAL = new Set(["tool_stdout", "tool_stderr", "file_read", "http_fetch",
+                                       "harness_note", "test_report", "attestation"]);
+const SOURCE_KINDS_AUTHOR = new Set(["agent_output", "agent_file_write", "agent_message"]);
+
+const OPENER_RE = /^<sworn r="([^"<>\r\n]*)" k="([^"<>\r\n]*)">/;
+const CANDIDATE_RE = /^<(\/?)[sS][wW][oO][rR][nN](?![A-Za-z0-9_\-])/;
+const CLOSER = utf8("</sworn>");
+const COMMENT_OPEN = utf8("<!--");
+const COMMENT_CLOSE = utf8("-->");
+
+// [B4 row 1] Python's \w is Unicode-alphanumeric plus underscore; \d is category Nd.
+const TOKEN_RE = /[\p{L}\p{N}_.,+\-−%/±:]+/gu;
+const DIGIT_RE = /\p{Nd}/u;
+const GRAM_RE = /^[-+−]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\.[0-9]+)?|\.[0-9]+)%?$/;
+const HEXRUN_RE = /(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])/g;
+const DIGEST_LENGTHS = new Set([32, 40, 96, 128]);
+const RN_RE = /^r[1-9][0-9]*$/;
+const PATH_SEG_BAD_RE = new RegExp('[\\\\\\t\\n\\v\\f\\r \\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\u0000-\\u001f\\u007f*?\\[\\]]');
+const HEX64_RE = /^[0-9a-f]{64}$/;
+const HEX64_ANY_RE = /^[0-9a-fA-F]{64}$/;
+
+/* ============================================================ the lexer */
+
+function fencedRegions(raw) {
+  const regions = [];
+  const delims = [];
+  let openAt = null;
+  let pos = 0, ln = 0;
+  const n = raw.length;
+  while (pos < n) {
+    ln++;
+    const nl = findBytes(raw, utf8("\n"), pos);
+    const end = nl < 0 ? n : nl + 1;
+    // _FENCE = ^ {0,3}`{3,}
+    let p = pos, spaces = 0;
+    while (p < end && raw[p] === 0x20 && spaces < 3) { p++; spaces++; }
+    let ticks = 0;
+    while (p + ticks < end && raw[p + ticks] === 0x60) ticks++;
+    if (ticks >= 3) {
+      delims.push(ln);
+      if (openAt === null) openAt = pos;
+      else { regions.push([openAt, end]); openAt = null; }
+    }
+    pos = end;
+  }
+  if (openAt !== null) return { regions, delims, balanced: false };
+  return { regions, delims, balanced: true };
+}
+
+function inRegions(p, regions) {
+  for (const [a, b] of regions) if (a <= p && p < b) return b;
+  return null;
+}
+
+/** Length of the run of backticks starting at p. */
+function tickRun(raw, p) {
+  let k = 0;
+  while (p + k < raw.length && raw[p + k] === 0x60) k++;
+  return k;
+}
+/** First backtick run at or after p, before limit: [start, len] or null. */
+function nextTicks(raw, p, limit) {
+  for (let i = p; i < limit; i++) {
+    if (raw[i] === 0x60) {
+      let k = 0;
+      while (i + k < raw.length && raw[i + k] === 0x60) k++;
+      return [i, k];
+    }
+  }
+  return null;
+}
+
+function scan(raw) {
+  const out = { declarations: [], fenced: [], comments: [], document_malformed: null,
+                canonical: null, lexical_ok: true, candidates: 0 };
+  if (decodeStrict(raw) === null) {
+    out.document_malformed = { reason: "invalid_utf8", at: firstInvalidUtf8(raw) };
+    out.lexical_ok = false;
+    return out;
+  }
+  const f = fencedRegions(raw);
+  out.fenced = f.regions;
+  if (!f.balanced) {
+    out.document_malformed = { reason: "unbalanced_fences", delimiter_lines: f.delims };
+    out.lexical_ok = false;
+    return out;
+  }
+  const decls = [];
+  const stack = [];
+  let p = 0;
+  const n = raw.length;
+  let commentEnd = -1;
+  while (p < n) {
+    const skipTo = inRegions(p, f.regions);
+    if (skipTo !== null) { p = skipTo; continue; }
+    const c = raw[p];
+    if (c === 0x3c && p >= commentEnd && findBytes(raw.subarray(p, p + 4), COMMENT_OPEN, 0) === 0) {
+      const close = findBytes(raw, COMMENT_CLOSE, p + COMMENT_OPEN.length);
+      commentEnd = close < 0 ? n : close + COMMENT_CLOSE.length;
+      out.comments.push([p, commentEnd]);
+      p += COMMENT_OPEN.length;
+      continue;
+    }
+    if (c === 0x60) {
+      const run = tickRun(raw, p);
+      const nl = findBytes(raw, utf8("\n"), p + run);
+      const lineEnd = nl < 0 ? n : nl;
+      let q = p + run;
+      let closed = null;
+      while (q < lineEnd) {
+        const m = nextTicks(raw, q, lineEnd);
+        if (!m) break;
+        if (m[1] === run) { closed = m[0] + m[1]; break; }
+        q = m[0] + m[1];
+      }
+      p = closed !== null ? closed : p + run;
+      continue;
+    }
+    if (c === 0x3c) {
+      // the candidate/opener regexes run over a decoded window; the window is ASCII-delimited
+      const windowEnd = Math.min(n, p + 4096);
+      const text = decodeLoose(raw.subarray(p, windowEnd));
+      const cm = CANDIDATE_RE.exec(text);
+      if (cm) {
+        out.candidates++;
+        const om = OPENER_RE.exec(text);
+        if (om) {
+          const openerEnd = p + utf8(om[0]).length;
+          const d = { at: p, opener_end: openerEnd, receipt: om[1], kind: om[2],
+                      closer_at: null, closer_end: null, inner: null,
+                      start: null, end: null, malformed: null };
+          if (stack.length) {
+            for (const o of stack) o.malformed = o.malformed || "nesting";
+            d.malformed = "nesting";
+          }
+          if (p < commentEnd) d.malformed = d.malformed || "hidden_commitment";
+          stack.push(d);
+          decls.push(d);
+          p = openerEnd;
+          continue;
+        }
+        if (findBytes(raw.subarray(p, p + CLOSER.length), CLOSER, 0) === 0) {
+          if (stack.length) {
+            const d = stack.pop();
+            d.closer_at = p;
+            d.closer_end = p + CLOSER.length;
+            d.inner = raw.subarray(d.opener_end, p);
+            if (d.inner.length === 0 && (d.malformed === null || d.malformed === "hidden_commitment")) {
+              d.malformed = "empty_span";
+            }
+          } else {
+            decls.push({ at: p, receipt: null, kind: null, inner: null, start: null, end: null,
+                         malformed: "stray_closer", raw: "</sworn>" });
+          }
+          p += CLOSER.length;
+          continue;
+        }
+        const gt = findBytes(raw, utf8(">"), p);
+        const nl2 = findBytes(raw, utf8("\n"), p);
+        const stop = Math.min(gt >= 0 ? gt + 1 : n, nl2 >= 0 ? nl2 : n, n);
+        decls.push({ at: p, receipt: null, kind: null, inner: null, start: null, end: null,
+                     malformed: "tag_syntax", raw: decodeLoose(raw.subarray(p, stop)) });
+        p = Math.max(stop, p + 1);
+        continue;
+      }
+    }
+    p++;
+  }
+  for (const d of stack) {
+    if (d.malformed === null || d.malformed === "hidden_commitment") d.malformed = "unclosed";
+  }
+  out.declarations = decls;
+  const lexicalBad = decls.filter(d => ["tag_syntax", "nesting", "stray_closer", "unclosed"]
+                                        .includes(d.malformed));
+  out.lexical_ok = lexicalBad.length === 0;
+  if (out.lexical_ok) {
+    const cuts = [];
+    for (const d of decls) {
+      cuts.push([d.at, d.opener_end]);
+      cuts.push([d.closer_at, d.closer_end]);
+    }
+    cuts.sort((x, y) => (x[0] - y[0]) || (x[1] - y[1]));
+    const pieces = [];
+    let last = 0, removed = 0;
+    const boundaries = new Map();
+    for (const [a, b] of cuts) {
+      pieces.push(raw.subarray(last, a));
+      boundaries.set(a, a - removed);
+      removed += b - a;
+      boundaries.set(b, b - removed);
+      last = b;
+    }
+    pieces.push(raw.subarray(last));
+    let total = 0;
+    for (const q of pieces) total += q.length;
+    const canonical = new Uint8Array(total);
+    let o = 0;
+    for (const q of pieces) { canonical.set(q, o); o += q.length; }
+    for (const d of decls) {
+      d.start = boundaries.get(d.opener_end);
+      d.end = boundaries.get(d.closer_at);
+    }
+    out.canonical = canonical;
+  }
+  return out;
+}
+
+/* ============================================================ the receipt grammar */
+
+function parseReceipt(ref) {
+  if (ref === null || ref === undefined) return [null, "receipt_form"];
+  const head = ref.split("#")[0];
+  let form, target, frag;
+  if (RN_RE.test(head)) {
+    form = "rn";
+    const k = ref.indexOf("#");
+    if (k >= 0) { target = ref.slice(0, k); frag = ref.slice(k + 1); }
+    else { target = ref; frag = null; }
+  } else if (ref.startsWith("path:")) {
+    const body = ref.slice(5);
+    form = "path";
+    const k = body.indexOf("#");
+    if (k >= 0) { target = body.slice(0, k); frag = body.slice(k + 1); }
+    else { target = body; frag = null; }
+    if (!target || target.startsWith("/") || target.startsWith(":") || PATH_SEG_BAD_RE.test(target)) {
+      return [null, "receipt_form"];
+    }
+    for (const seg of target.split("/")) if (seg === "" || seg === "." || seg === "..") {
+      return [null, "receipt_form"];
+    }
+  } else if (ref.startsWith("prereg:")) {
+    const body = ref.slice(7);
+    form = "prereg";
+    const k = body.indexOf("#");
+    if (k >= 0) { target = body.slice(0, k); frag = body.slice(k + 1); }
+    else { target = body; frag = null; }
+    if (!HEX64_ANY_RE.test(target)) return [null, "receipt_form"];
+    target = target.toLowerCase();
+  } else {
+    return [null, "receipt_form"];
+  }
+  let fragment = null;
+  if (frag !== null) {
+    if (frag === "") return [null, "receipt_form"];
+    if (frag.startsWith("/")) {
+      if (/~(?![01])/.test(frag)) return [null, "receipt_form"];
+      const toks = frag.split("/").slice(1)
+        .map(t => t.replace(/~1/g, "/").replace(/~0/g, "~"));
+      fragment = { type: "pointer", tokens: toks };
+    } else {
+      const m = /^L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$/.exec(frag);
+      if (!m) return [null, "receipt_form"];
+      const first = parseInt(m[1], 10);
+      const last = m[2] ? parseInt(m[2], 10) : first;
+      if (last < first) return [null, "receipt_form"];
+      fragment = { type: "lines", first, last };
+    }
+  }
+  return [{ form, target, id: form === "rn" ? target : null, fragment,
+            partial: fragment !== null }, null];
+}
+
+/** 1-based, inclusive, LF-split, CR retained; interior newlines kept, the LAST selected line's
+ *  terminating LF excluded. null when a line is past EOF. Only 0x0a ever splits. */
+function lineSlice(data, first, last) {
+  const positions = [];
+  for (let i = 0; i < data.length; i++) if (data[i] === 0x0a) positions.push(i);
+  const nLines = positions.length +
+                 ((data.length && data[data.length - 1] !== 0x0a) ? 1 : 0);
+  if (first > nLines || last > nLines) return null;
+  const begin = first === 1 ? 0 : positions[first - 2] + 1;
+  const end = (last - 1 < positions.length) ? positions[last - 1] : data.length;
+  return data.subarray(begin, end);
+}
+
+function walkPointer(obj, tokens) {
+  for (const t of tokens) {
+    if (obj instanceof JObj) {
+      if (!obj.map.has(t)) return [null, "pointer_unresolvable"];
+      if (obj.dups.has(t)) return [null, "pointer_ambiguous"];
+      obj = obj.map.get(t);
+    } else if (Array.isArray(obj)) {
+      if (!/^(0|[1-9][0-9]*)$/.test(t) || parseInt(t, 10) >= obj.length) {
+        return [null, "pointer_unresolvable"];
+      }
+      obj = obj[parseInt(t, 10)];
+    } else {
+      return [null, "pointer_unresolvable"];
+    }
+  }
+  return [obj, "ok"];
+}
+
+/* ============================================================ the manifest */
+
+function b64decodeStrict(s) {
+  if (typeof s !== "string") return null;
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(s) || s.length % 4 !== 0) return null;   // validate=True
+  const table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  const out = [];
+  for (let i = 0; i < s.length; i += 4) {
+    const c = [0, 1, 2, 3].map(k => {
+      const ch = s[i + k];
+      return ch === "=" ? -1 : table.indexOf(ch);
+    });
+    if (c[0] < 0 || c[1] < 0) return null;
+    out.push((c[0] << 2) | (c[1] >> 4));
+    if (c[2] >= 0) out.push(((c[1] & 15) << 4) | (c[2] >> 2));
+    if (c[3] >= 0) out.push(((c[2] & 3) << 6) | c[3]);
+  }
+  return new Uint8Array(out);
+}
+
+class Manifest {
+  constructor(d) {
+    // Mirrors Manifest.from_dict: the same normalisation, the same refusals.
+    if (!(d instanceof JObj)) throw new Error("REFUSED: manifest is not an object");
+    const g = k => d.map.has(k) ? d.map.get(k) : undefined;
+    const spec = g("spec");
+    if (!MANIFEST_SPECS.includes(spec)) throw new Error("REFUSED: unknown manifest spec");
+    let receipts = g("receipts");
+    if (receipts === undefined || receipts === null) receipts = new JObj(new Map(), new Set());
+    let authored = g("authored_sha256");
+    if (authored === undefined || authored === null) authored = [];
+    if (!(receipts instanceof JObj)) throw new Error("REFUSED: manifest receipts must be an object");
+    if (!Array.isArray(authored) || !authored.every(x => typeof x === "string")) {
+      throw new Error("REFUSED: manifest authored_sha256 must be a list of hex strings");
+    }
+    this.spec = spec;
+    this.harness = g("harness") === undefined ? "" : g("harness");
+    this.turn = g("turn") === undefined ? "" : g("turn");
+    this.minted_at = g("minted_at") === undefined ? null : g("minted_at");
+    this.receipts = receipts;
+    this.authored_sha256 = authored.map(x => x.toLowerCase());
+    this.rung = g("rung") === undefined ? null : g("rung");
+    this.declared_digest = g("digest") === undefined ? null : g("digest");
+  }
+  core() {
+    const m = new Map();
+    m.set("spec", this.spec);
+    m.set("harness", this.harness);
+    m.set("turn", this.turn);
+    m.set("minted_at", this.minted_at);
+    m.set("authored_sha256", [...this.authored_sha256].sort());
+    m.set("receipts", this.receipts);
+    if (this.spec === "sworn/manifest/0.2") m.set("rung", this.rung);
+    return m;
+  }
+  digestOrNull() {
+    try { return sha256Bytes(utf8(jcs(this.core()))); } catch (e) { return null; }
+  }
+  intact() {
+    const d = this.digestOrNull();
+    if (this.declared_digest === null || this.declared_digest === undefined) return d !== null;
+    if (d === null) return false;
+    return this.declared_digest === d;
+  }
+  rungStatus() {
+    if (this.rung === null || this.rung === undefined) return ["undeclared", null];
+    if (RUNGS.includes(this.rung)) return ["ok", this.rung];
+    return ["unknown", String(this.rung)];
+  }
+}
+
+/* ============================================================ resolution */
+
+function resolve(parsed, kind, manifest) {
+  if (parsed.form === "rn") {
+    if (manifest === null) return { status: "unresolved", reason: "manifest_absent" };
+    if (!manifest.intact()) return { status: "unresolved", reason: "manifest_integrity" };
+    const [rungState, rung] = manifest.rungStatus();
+    if (rungState === "unknown") return { status: "unresolved", reason: "rung_unknown" };
+    if (!manifest.receipts.map.has(parsed.id)) {
+      return { status: "unresolved", reason: "manifest_id_missing" };
+    }
+    const entry = manifest.receipts.map.get(parsed.id);
+    if (!(entry instanceof JObj)) return { status: "unresolved", reason: "manifest_integrity" };
+    const e = k => entry.map.has(k) ? entry.map.get(k) : undefined;
+    const sha = e("sha256");
+    if (typeof sha !== "string" || !HEX64_RE.test(sha)) {
+      return { status: "unresolved", reason: "manifest_integrity" };
+    }
+    const kos = e("kind_of_source");
+    if (typeof kos !== "string") return { status: "malformed", reason: "kind_of_source_unknown" };
+    if (SOURCE_KINDS_AUTHOR.has(kos) || manifest.authored_sha256.includes(sha)) {
+      return { status: "malformed", reason: "receipt_author_minted" };
+    }
+    if (!SOURCE_KINDS_EXTERNAL.has(kos)) {
+      return { status: "malformed", reason: "kind_of_source_unknown" };
+    }
+    const provenance = { form: "rn", harness: manifest.harness,
+                         rung: rungState === "ok" ? rung : RUNG_UNDECLARED,
+                         kind_of_source: kos };
+    const completeRaw = e("complete");
+    const complete = typeof completeRaw === "boolean" ? completeRaw : null;
+    let data = null;
+    if (entry.map.has("bytes")) {
+      data = b64decodeStrict(e("bytes"));
+      if (data === null) return { status: "unresolved", reason: "manifest_integrity" };
+      if (sha256Bytes(data) !== sha) return { status: "unresolved", reason: "manifest_integrity" };
+    } else if (kind !== "hash") {
+      return { status: "unresolved", reason: "manifest_bytes_absent" };
+    }
+    return finishResolve({ status: "ok", reason: null, bytes: data, sha256: sha, complete,
+                           leaf: null, has_leaf: false, slice: null, provenance }, parsed);
+  }
+  // path: / prereg: with no tree — SPEC B1: the browser has no repository, and says so.
+  return { status: "unresolved", reason: "no_repository" };
+}
+
+function finishResolve(res, parsed) {
+  const frag = parsed.fragment;
+  if (frag === null || res.bytes === null) return res;
+  if (frag.type === "lines") {
+    const sl = lineSlice(res.bytes, frag.first, frag.last);
+    if (sl === null) return { status: "malformed", reason: "anchor_out_of_range" };
+    res.slice = sl;
+    return res;
+  }
+  let obj;
+  try { obj = jsonStrictBytes(res.bytes); }
+  catch (e) { return { status: "malformed", reason: "receipt_not_json" }; }
+  const [leaf, why] = walkPointer(obj, frag.tokens);
+  if (why !== "ok") return { status: "malformed", reason: why };
+  res.leaf = leaf;
+  res.has_leaf = true;
+  return res;
+}
+
+/* ============================================================ the kinds */
+
+function numberToken(text) {
+  const all = text.match(TOKEN_RE) || [];
+  const digitBearing = all.filter(t => DIGIT_RE.test(t));
+  if (digitBearing.length !== 1) return ["number_count", null, digitBearing];
+  let tok = digitBearing[0];
+  tok = tok.replace(/[.,:]+$/, "");                 // Python's rstrip(".,:")
+  if (!GRAM_RE.test(tok)) return ["number_grammar", null, digitBearing];
+  return [null, tok, digitBearing];
+}
+
+function needleIn(inner) {
+  const spans = [];
+  let p = 0;
+  const n = inner.length;
+  while (p < n) {
+    const m = nextTicks(inner, p, n);
+    if (!m) break;
+    const [mstart, run] = m;
+    const mend = mstart + run;
+    const nl = findBytes(inner, utf8("\n"), mend);
+    const lineEnd = nl < 0 ? n : nl;
+    let q = mend;
+    let closed = null;
+    while (q < lineEnd) {
+      const m2 = nextTicks(inner, q, lineEnd);
+      if (!m2) break;
+      if (m2[1] === run) { closed = m2; break; }
+      q = m2[0] + m2[1];
+    }
+    if (closed === null) { p = mend; continue; }
+    spans.push(inner.subarray(mend, closed[0]));
+    p = closed[0] + closed[1];
+  }
+  if (spans.length !== 1) return [null, "needle_count"];
+  if (stripWsBytes(spans[0]).length === 0) return [null, "needle_empty"];
+  return [spans[0], "ok"];
+}
+
+function printedDecimal(tok) {
+  const t = tok.replace(/,/g, "").replace(/−/g, "-").replace(/%+$/, "");
+  const d = Dec.parse(t);
+  const frac = t.includes(".") ? t.split(".")[1].length : 0;
+  return [d, frac];
+}
+
+function safeText(x, limit) {
+  const s = String(x).slice(0, limit === undefined ? 80 : limit);
+  // Python: .encode("utf-8", errors="replace").decode("utf-8") — a lone surrogate becomes U+FFFD
+  return s.replace(/[\ud800-\udfff](?![\udc00-\udfff])/g, "�")
+          .replace(/(^|[^\ud800-\udbff])[\udc00-\udfff]/g, (m, p1) => p1 + "�");
+}
+
+function checkNumeric(innerText, res) {
+  const [why, tok, seen] = numberToken(innerText);
+  if (why) return ["MALFORMED", why, { digit_bearing_tokens: seen }];
+  const [printed, frac] = printedDecimal(tok);
+  let leaf;
+  if (res.has_leaf) leaf = res.leaf;
+  else {
+    const source = res.slice !== null ? res.slice : res.bytes;
+    try { leaf = jsonStrictBytes(source); }
+    catch (e) { return ["MALFORMED", "receipt_not_json", {}]; }
+  }
+  if (leaf instanceof JObj || Array.isArray(leaf) || leaf === null) {
+    // Python's _json_strict builds objects as class _Obj(dict); type(leaf).__name__ is "_Obj"
+    const t = leaf === null ? "NoneType" : (Array.isArray(leaf) ? "list" : "_Obj");
+    return ["MALFORMED", "leaf_not_scalar", { leaf_type: t }];
+  }
+  if (!(leaf instanceof Dec)) {
+    return ["MALFORMED", "leaf_not_numeric", { leaf: safeText(pyRepr(leaf)) }];
+  }
+  if (!leaf.isFinite() || leaf.adjusted() > 320) {
+    return ["MALFORMED", "leaf_not_numeric", { leaf: safeText(leaf.toString()) }];
+  }
+  const lhs = leaf.canon(frac);
+  const rhs = printed === null ? null : printed.canon(frac);
+  if (lhs === null || rhs === null) {
+    return ["MALFORMED", "leaf_not_numeric", { leaf: safeText(leaf.toString()) }];
+  }
+  const detail = { printed_token: tok, printed: rhs, receipt: leaf.toString(),
+                   receipt_rounded: lhs, fractional_digits: frac, rounding: ROUNDING };
+  if (lhs === rhs) return ["HELD", null, detail];
+  return ["FAILED", "value_mismatch", detail];
+}
+
+/** Python's str() for the scalars a JSON leaf can hold, for the `leaf` detail string. */
+function pyRepr(x) {
+  if (x === true) return "True";
+  if (x === false) return "False";
+  if (x === null) return "None";
+  return String(x);
+}
+
+function checkQuote(inner, res) {
+  const [needle, why] = needleIn(inner);
+  if (needle === null) return ["MALFORMED", why, {}];
+  let hay;
+  if (res.has_leaf) {
+    if (typeof res.leaf !== "string") return ["MALFORMED", "leaf_not_string", {}];
+    // [B4 row 9] a lone surrogate is not encodable as UTF-8; Python raises and refuses.
+    if (/[\ud800-\udbff](?![\udc00-\udfff])|(?:^|[^\ud800-\udbff])[\udc00-\udfff]/.test(res.leaf)) {
+      return ["MALFORMED", "leaf_not_string", { note: "leaf is not encodable as UTF-8" }];
+    }
+    hay = utf8(res.leaf);
+  } else {
+    hay = res.slice !== null ? res.slice : res.bytes;
+    if (res.slice === null && needle.length < SHORT_NEEDLE_BYTES) {
+      return ["MALFORMED", "short_needle", { needle_bytes: needle.length,
+                                             minimum_bytes: SHORT_NEEDLE_BYTES }];
+    }
+  }
+  const detail = { needle_bytes: needle.length, haystack_bytes: hay.length,
+                   occurrences: countBytes(hay, needle) };
+  if (findBytes(hay, needle, 0) >= 0) return ["HELD", null, detail];
+  return ["FAILED", "needle_missing", detail];
+}
+
+function checkAbsent(inner, res) {
+  const [needle, why] = needleIn(inner);
+  if (needle === null) return ["MALFORMED", why, {}];
+  const hay = res.bytes;
+  const detail = { needle_bytes: needle.length, haystack_bytes: hay.length, complete: true };
+  if (findBytes(hay, needle, 0) >= 0) return ["FAILED", "needle_present", detail];
+  return ["HELD", null, detail];
+}
+
+function hexRuns(innerText) {
+  HEXRUN_RE.lastIndex = 0;
+  const runs = [];
+  let m;
+  while ((m = HEXRUN_RE.exec(innerText)) !== null) runs.push(m[0]);
+  return runs;
+}
+
+function checkHash(innerText, res) {
+  const runs = hexRuns(innerText);
+  const sixtyFour = runs.filter(r => r.length === 64);
+  const others = runs.filter(r => DIGEST_LENGTHS.has(r.length));
+  if (sixtyFour.length !== 1 || others.length) {
+    return ["MALFORMED", "digest_form", { hex_runs: runs.map(r => r.length) }];
+  }
+  const stated = sixtyFour[0].toLowerCase();
+  const detail = { stated, receipt_sha256: res.sha256 };
+  if (stated === res.sha256) return ["HELD", null, detail];
+  return ["FAILED", "digest_mismatch", detail];
+}
+
+/* ============================================================ the adjudicator */
+
+function adjudicate(d, manifest) {
+  const verdict = { at: d.at, start: d.start === undefined ? null : d.start,
+                    end: d.end === undefined ? null : d.end,
+                    receipt: d.receipt === undefined ? null : d.receipt,
+                    kind: d.kind === undefined ? null : d.kind,
+                    verdict: null, reason: null, detail: {} };
+  const out = (v, reason, detail, res) => {
+    verdict.verdict = v;
+    verdict.reason = reason === undefined ? null : reason;
+    verdict.detail = detail || {};
+    if (res && res.sha256) verdict.resolved_sha256 = res.sha256;
+    if (res && res.provenance) verdict.provenance = res.provenance;
+    return verdict;
+  };
+  if (d.malformed) {
+    return out("MALFORMED", d.malformed, d.raw ? { raw: d.raw } : {});
+  }
+  const inner = d.inner;
+  if (stripWsBytes(inner).length === 0) return out("MALFORMED", "empty_span");
+  const innerText = decodeStrict(inner);
+  const codePoints = [...innerText].length;
+  if (codePoints > SPAN_CAP_CODEPOINTS) {
+    return out("MALFORMED", "length_cap", { code_points: codePoints, bytes: inner.length,
+                                            cap: SPAN_CAP_CODEPOINTS });
+  }
+  const kind = d.kind;
+  if (RESERVED_KINDS.includes(kind)) return out("MALFORMED", "kind_reserved", { kind });
+  if (!KINDS.includes(kind)) return out("MALFORMED", "kind_unknown", { kind });
+  const [parsed, why] = parseReceipt(d.receipt);
+  if (parsed === null) return out("MALFORMED", why, { receipt: d.receipt });
+  if (kind === "absent" && parsed.partial) {
+    return out("MALFORMED", "absent_over_partial", { receipt: d.receipt });
+  }
+  if (kind === "hash" && parsed.partial) {
+    return out("MALFORMED", "hash_over_partial", { receipt: d.receipt });
+  }
+  // bytes-only form checks run BEFORE any receipt is opened
+  if (kind === "numeric") {
+    const [nwhy, , seen] = numberToken(innerText);
+    if (nwhy) return out("MALFORMED", nwhy, { digit_bearing_tokens: seen });
+  } else if (kind === "quote" || kind === "absent") {
+    const [needle, nwhy] = needleIn(inner);
+    if (needle === null) return out("MALFORMED", nwhy);
+  } else {
+    const runs = hexRuns(innerText);
+    if (runs.filter(r => r.length === 64).length !== 1 ||
+        runs.some(r => DIGEST_LENGTHS.has(r.length) && r.length !== 64)) {
+      return out("MALFORMED", "digest_form", { hex_runs: runs.map(r => r.length) });
+    }
+  }
+  const res = resolve(parsed, kind, manifest);
+  if (res.status === "unresolved") return out("UNRESOLVED", res.reason);
+  if (res.status === "malformed") return out("MALFORMED", res.reason, null, res);
+  if (kind === "absent") {
+    // a negative is only swearable over an object the harness said it captured whole
+    if (res.complete === null || res.complete === undefined) {
+      return out("UNRESOLVED", "manifest_no_completeness");
+    }
+    if (res.complete !== true) {
+      return out("MALFORMED", "absent_over_partial", { complete: false }, res);
+    }
+  }
+  let v, reason, detail;
+  if (kind === "numeric") [v, reason, detail] = checkNumeric(innerText, res);
+  else if (kind === "quote") [v, reason, detail] = checkQuote(inner, res);
+  else if (kind === "absent") [v, reason, detail] = checkAbsent(inner, res);
+  else [v, reason, detail] = checkHash(innerText, res);
+  return out(v, reason, detail, res);
+}
+
+/* ============================================================ the entry point */
+
+/**
+ * Re-derive the verdict core.
+ *
+ * @param {Uint8Array} documentBytes  the inline document, bytes
+ * @param {object|null} manifestObj   the manifest as a JObj (from jsonStrictBytes) or null
+ * @param {object} opts               { name, commit }
+ * @returns {object} the core, with `spans`, `counts`, `document_verdict` … and no `coverage`
+ *                   and no `verifier` — the two blocks the digest excludes.
+ */
+function swornVerify(documentBytes, manifestObj, opts) {
+  const o = opts || {};
+  const name = o.name === undefined ? "" : o.name;
+  const commit = o.commit === undefined ? null : o.commit;
+  if (commit !== null && !(typeof commit === "string" && /^([0-9a-f]{40}|[0-9a-f]{64})$/.test(commit))) {
+    throw new Error("REFUSED: commit must be a full lowercase hex object id or None");
+  }
+  let manifest = null;
+  if (manifestObj !== null && manifestObj !== undefined) {
+    manifest = manifestObj instanceof Manifest ? manifestObj : new Manifest(manifestObj);
+  }
+  const sc = scan(documentBytes);
+  const verdicts = sc.declarations.map(d => adjudicate(d, manifest));
+  verdicts.sort((a, b) => a.at - b.at);
+  const counts = {};
+  for (const v of VERDICTS) counts[v] = 0;
+  for (const v of verdicts) counts[v.verdict]++;
+  let swornTotal = 0;
+  for (const v of VERDICTS) swornTotal += counts[v];
+  const docMalformed = sc.document_malformed;
+  let documentVerdict;
+  if (docMalformed) documentVerdict = "SWORN-FAILED";
+  else if (swornTotal === 0) documentVerdict = "UNSWORN";
+  else if (counts.FAILED === 0 && counts.MALFORMED === 0) documentVerdict = "SWORN-HELD";
+  else documentVerdict = "SWORN-FAILED";
+  const rungs = {};
+  for (const v of verdicts) {
+    const prov = v.provenance || {};
+    let key;
+    if (prov.form === "rn") key = prov.rung;
+    else if (prov.form === "path" || prov.form === "prereg") key = "committed";
+    else key = "unresolved";
+    rungs[key] = (rungs[key] || 0) + 1;
+  }
+  return {
+    schema: RECEIPT_SCHEMA,
+    format: SPEC,
+    document: { name,
+                inline_sha256: sha256Bytes(documentBytes),
+                canonical_sha256: sc.canonical !== null ? sha256Bytes(sc.canonical) : null },
+    commit,
+    manifest_digest: manifest !== null ? manifest.digestOrNull() : null,
+    spans: verdicts,
+    counts,
+    sworn_total: swornTotal,
+    unresolved: counts.UNRESOLVED,
+    document_verdict: documentVerdict,
+    document_malformed: docMalformed,
+    rungs,
+    certifies: CERTIFIES,
+  };
+}
+
+/** sha256(utf8(jcs(core))) — the number the conformance vectors pin (SPEC B2). */
+function coreDigest(core) {
+  return sha256Bytes(utf8(jcs(core)));
+}
+
+const _api = { swornVerify, coreDigest, jcs, jcsString, sha256Bytes, jsonStrict, jsonStrictBytes,
+               jsonPlain, jsonPlainBytes,
+               Manifest, Dec, JObj, scan, parseReceipt, utf8, decodeStrict, LABEL:
+  "re-derives sworn span verdicts offline; a forger controlling the whole file passes both " +
+  "browser layers; the package at the named commit is the check" };
+
+if (typeof module !== "undefined" && module.exports) module.exports = _api;
+if (typeof globalThis !== "undefined") globalThis.swornVerifyApi = _api;
+</script>
+<script>
+(function () {
+  const api = globalThis.swornVerifyApi;
+  const el = document.getElementById("layer1");
+  const P = JSON.parse(document.getElementById("oath-capsule").textContent);
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const lines = [];
+  let ok = true;
+  try {
+    const doc = b64(P.document.b64);
+    document.getElementById("doc").textContent = new TextDecoder().decode(doc);
+    const jsBytes = b64(P.verifier_js.b64);
+    const jsOk = api.sha256Bytes(jsBytes) === P.verifier_js.sha256;
+    lines.push((jsOk ? "OK  " : "BAD ") + "the sealed verifier hashes to its sealed digest");
+    ok = ok && jsOk;
+    const docOk = api.sha256Bytes(doc) === P.document.sha256;
+    lines.push((docOk ? "OK  " : "BAD ") + "the document hashes to its sealed digest");
+    ok = ok && docOk;
+    const man = P.manifest === null || P.manifest === undefined ? null
+              : api.jsonPlain(JSON.stringify(P.manifest));
+    const core = api.swornVerify(doc, man,
+      { name: P.receipt.document.name, commit: P.receipt.commit });
+    const got = api.coreDigest(core);
+    const coreOk = got === P.core_sha256;
+    lines.push((coreOk ? "OK  " : "BAD ") + "the verdict core re-derives here: " +
+               core.document_verdict + " " + JSON.stringify(core.counts));
+    ok = ok && coreOk;
+    if (!coreOk) lines.push("     sealed " + P.core_sha256 + "
+     here   " + got);
+  } catch (e) {
+    ok = false;
+    lines.push("BAD the browser verifier raised: " + e);
+  }
+  el.className = "box " + (ok ? "ok" : "bad");
+  el.innerHTML = "<b>layer 1 — " + (ok ? "re-derived in this browser" : "DID NOT re-derive") +
+    "</b><pre>" + lines.join("
+").replace(/[&<>]/g, c =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])) + "</pre>" +
+    "<span class=note>A forger controlling this whole file controls this layer too. " +
+    "Layer 2 is the check.</span>";
+})();
+</script>
