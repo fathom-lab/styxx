@@ -322,7 +322,11 @@ def test_a_document_edited_after_issue_reads_at_issue_and_the_certificate_stands
 def test_case_insensitive_names_resolve_at_issue(lab):
     """Battery B-11: a receipts_sha256 key that differs from the file only by case."""
     repo, papers, doc, receipt = lab
-    if git(repo, "config", "--get", "core.ignorecase") != "true":
+    # `git config --get` exits 1 when the key is unset, which is the ordinary case on a
+    # case-sensitive filesystem — ask without check=True and read the absence as "not true".
+    probe = subprocess.run(["git", "-C", str(repo), "config", "--get", "core.ignorecase"],
+                           capture_output=True, text=True)
+    if probe.stdout.strip() != "true":
         pytest.skip("case-sensitive filesystem")
     _commit_all(repo, "receipts and document")
     cp = _issue(doc, receipt)
