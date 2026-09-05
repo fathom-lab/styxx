@@ -1,0 +1,460 @@
+{
+ "schema": "styxx-sworn/measurement-decoys/v1",
+ "panel": "L",
+ "seed": 20260905,
+ "selection_rule": "Each keyed sentence is a unit of an excluded document's unit set at the pinned commit, chosen by the builder: LOAD-BEARING when it states a count or rate the excluded document's conclusion depends on; NOT when it is a title, a header line, a date, a version, a file name, or a sentence about method. The passage is the whole lines from the unit before to the unit after.",
+ "authorship_disclosure": "Authorship, disclosed rather than buried: the Panel L decoys were selected and sided by the builder of this machinery from documents the population rule excludes. A family's agreement with them measures agreement with the builder's reading, not truth, and any result quoting the decoy gate carries this sentence.",
+ "per_side": 15,
+ "decoys": [
+  {
+   "decoy_id": "LD-01",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "unit_index": 20,
+   "passage": {
+    "start": 1285,
+    "end": 1365
+   },
+   "keyed": {
+    "start": 23,
+    "end": 70
+   },
+   "text": "It is 1541 lines long.\nThe harness ran the suite and 296 tests passed.\n0 failed."
+  },
+  {
+   "decoy_id": "LD-02",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "unit_index": 31,
+   "passage": {
+    "start": 1868,
+    "end": 2015
+   },
+   "keyed": {
+    "start": 28,
+    "end": 106
+   },
+   "text": "## The two sworn documents\n\nThe h declaration binds 25 counts to its census receipt, and all of them held.\nIts document verdict reads `SWORN-HELD`."
+  },
+  {
+   "decoy_id": "LD-03",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "unit_index": 31,
+   "passage": {
+    "start": 1998,
+    "end": 2091
+   },
+   "keyed": {
+    "start": 23,
+    "end": 83
+   },
+   "text": "It is 1789 lines long.\nThe harness ran the three sworn suites and 358 tests passed.\n0 failed."
+  },
+  {
+   "decoy_id": "LD-04",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "unit_index": 51,
+   "passage": {
+    "start": 2956,
+    "end": 3187
+   },
+   "keyed": {
+    "start": 88,
+    "end": 135
+   },
+   "text": "denominators, and the census in the battery document says which one was measuring what.\nAll 12 committed sworn documents were re-issued\nby `reissue_receipts_v1.py`, which refuses if any span verdict moves; none did. The v0 receipts"
+  },
+  {
+   "decoy_id": "LD-05",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 32,
+   "passage": {
+    "start": 1666,
+    "end": 1828
+   },
+   "keyed": {
+    "start": 27,
+    "end": 65
+   },
+   "text": "instrument is an observer. Held-out accusation precision was 0.16\nagainst a floor the preregistration wrote as 0.95 in prose (the floor is not a receipt leaf, and"
+  },
+  {
+   "decoy_id": "LD-06",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 45,
+   "passage": {
+    "start": 2246,
+    "end": 2329
+   },
+   "keyed": {
+    "start": 43,
+    "end": 82
+   },
+   "text": "Precision 0.3333 on the claims it flagged;\ncorpus-level recall estimated at 0.0336,"
+  },
+  {
+   "decoy_id": "LD-07",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 69,
+   "passage": {
+    "start": 3310,
+    "end": 3436
+   },
+   "keyed": {
+    "start": 69,
+    "end": 125
+   },
+   "text": "**the prompt-opinion detector** — a candidate gate, never shipped.\nAccuracy 0.47 on the decisive class under fresh phrasing,"
+  },
+  {
+   "decoy_id": "LD-08",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 84,
+   "passage": {
+    "start": 3903,
+    "end": 4048
+   },
+   "keyed": {
+    "start": 87,
+    "end": 136
+   },
+   "text": "**text-only deception** — `styxx/attack/fingerprint.py`, shipped as a register axis.\nAUC 0.4983 separating true from false self-claims: chance."
+  },
+  {
+   "decoy_id": "LD-09",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 97,
+   "passage": {
+    "start": 4378,
+    "end": 4509
+   },
+   "keyed": {
+    "start": 54,
+    "end": 130
+   },
+   "text": "**the OATH unobligated oath** — `styxx/certify.py`. 0.5811 of the lab's own verifications were volunteered rather than obligated;"
+  },
+  {
+   "decoy_id": "LD-10",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 16,
+   "passage": {
+    "start": 1058,
+    "end": 1201
+   },
+   "keyed": {
+    "start": 7,
+    "end": 87
+   },
+   "text": "panel. The shipped gate scored 0.23 precision on agent pull requests it had never seen.\nAfter three repair cycles the held-out figure was 0.16."
+  },
+  {
+   "decoy_id": "LD-11",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 21,
+   "passage": {
+    "start": 1267,
+    "end": 1403
+   },
+   "keyed": {
+    "start": 60,
+    "end": 119
+   },
+   "text": "and 0.2323 after its range rule was turned into a reporter.\nThe best structural claim detector reached 0.4211 precision\non 38 sentences."
+  },
+  {
+   "decoy_id": "LD-12",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 36,
+   "passage": {
+    "start": 1841,
+    "end": 2012
+   },
+   "keyed": {
+    "start": 83,
+    "end": 131
+   },
+   "text": "What held against strangers was a target the author had committed to by structure:\nheader-handed accusations were genuine at 0.9515\nagainst 0.6391 for line-handed ones —"
+  },
+  {
+   "decoy_id": "LD-13",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 50,
+   "passage": {
+    "start": 2546,
+    "end": 2668
+   },
+   "keyed": {
+    "start": 58,
+    "end": 114
+   },
+   "text": "across the 12 sworn documents committed before this cycle\nthe coverage number the verifier printed ran from 0.6667\nto 1.0,"
+  },
+  {
+   "decoy_id": "LD-14",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02",
+   "unit_index": 54,
+   "passage": {
+    "start": 5076,
+    "end": 5211
+   },
+   "keyed": {
+    "start": 21,
+    "end": 104
+   },
+   "text": "The highest was 1.0.\nAcross all of them the diff-claim detector counted 20 narrative sentences as claims\nout of 932 narrative sentences"
+  },
+  {
+   "decoy_id": "LD-15",
+   "side": "LOAD-BEARING",
+   "source_stem": "papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02",
+   "unit_index": 58,
+   "passage": {
+    "start": 5236,
+    "end": 5370
+   },
+   "keyed": {
+    "start": 49,
+    "end": 89
+   },
+   "text": "The sharpest single case is the grain synthesis:\nit printed a coverage estimate of 0.9412\nwith 1 narrative sentence counted as a claim"
+  },
+  {
+   "decoy_id": "LD-16",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "unit_index": 1,
+   "passage": {
+    "start": 0,
+    "end": 268
+   },
+   "keyed": {
+    "start": 81,
+    "end": 177
+   },
+   "text": "# RESULT — sworn output v0.1 ships: the author declares, the receipt disposes\n\nFathom Lab · 2026-09-01 · Spec: `SPEC_sworn_output_v01_2026_09_01.md`, frozen before any code.\nModule: `styxx/sworn.py`. Tests: `tests/test_sworn.py`. Harness: `harness_pytest.py`, turn"
+  },
+  {
+   "decoy_id": "LD-17",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "unit_index": 3,
+   "passage": {
+    "start": 178,
+    "end": 268
+   },
+   "keyed": {
+    "start": 26,
+    "end": 55
+   },
+   "text": "Module: `styxx/sworn.py`. Tests: `tests/test_sworn.py`. Harness: `harness_pytest.py`, turn"
+  },
+  {
+   "decoy_id": "LD-18",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "unit_index": 25,
+   "passage": {
+    "start": 1437,
+    "end": 1647
+   },
+   "keyed": {
+    "start": 32,
+    "end": 128
+   },
+   "text": "The interpreter was `3.11.15`.\n\nThe four receipts above marked `rN` were minted by `harness_pytest.py` from what pytest and ruff\nwrote, with `kind_of_source` naming where each came from; the harness recorded no"
+  },
+  {
+   "decoy_id": "LD-19",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "unit_index": 3,
+   "passage": {
+    "start": 236,
+    "end": 322
+   },
+   "keyed": {
+    "start": 26,
+    "end": 77
+   },
+   "text": "`styxx/sworn.py` changed. Battery: `ATTACKS_sworn_v01_battery_2026_09_02.md`. Harness:"
+  },
+  {
+   "decoy_id": "LD-20",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "unit_index": 5,
+   "passage": {
+    "start": 236,
+    "end": 421
+   },
+   "keyed": {
+    "start": 87,
+    "end": 150
+   },
+   "text": "`styxx/sworn.py` changed. Battery: `ATTACKS_sworn_v01_battery_2026_09_02.md`. Harness:\n`harness_pytest.py`, turn `turn_2026_09_02_sworn_v02`, rung L1. **This document is itself sworn**:"
+  },
+  {
+   "decoy_id": "LD-21",
+   "side": "NOT",
+   "source_stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "unit_index": 35,
+   "passage": {
+    "start": 2129,
+    "end": 2226
+   },
+   "keyed": {
+    "start": 34,
+    "end": 64
+   },
+   "text": "ruff printed `All checks passed!`\nThe interpreter was `3.12.10`.\nThe manifest declares rung `L1`."
+  },
+  {
+   "decoy_id": "LD-22",
+   "side": "NOT",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 0,
+   "passage": {
+    "start": 0,
+    "end": 157
+   },
+   "keyed": {
+    "start": 0,
+    "end": 59
+   },
+   "text": "# CENSUS — the prose-claimhood instruments, with receipts\n\nFathom Lab · 2026-09-01 · **A census, not a result.** The brief that commissioned sworn output"
+  },
+  {
+   "decoy_id": "LD-23",
+   "side": "NOT",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 6,
+   "passage": {
+    "start": 349,
+    "end": 549
+   },
+   "keyed": {
+    "start": 19,
+    "end": 101
+   },
+   "text": "receipt's reading. The rows are the program audit's own list (`AUDIT_the_whole_program_2026_09_01.md`\n§8.1, direction 1), taken as written, plus the two the audit did not count. Every number below is"
+  },
+  {
+   "decoy_id": "LD-24",
+   "side": "NOT",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 11,
+   "passage": {
+    "start": 646,
+    "end": 840
+   },
+   "keyed": {
+    "start": 26,
+    "end": 97
+   },
+   "text": "document that printed it. `prose_claimhood_census.py` resolves every pointer and refuses to write\n`prose_claimhood_census.json` if one fails; this document's sidecar binds to that file at commit"
+  },
+  {
+   "decoy_id": "LD-25",
+   "side": "NOT",
+   "source_stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "unit_index": 14,
+   "passage": {
+    "start": 841,
+    "end": 924
+   },
+   "keyed": {
+    "start": 17,
+    "end": 43
+   },
+   "text": "`508d839e3b9d`.\n\n## The count, as a receipt\n\nThe audit's list holds 11 instruments."
+  },
+  {
+   "decoy_id": "LD-26",
+   "side": "NOT",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 0,
+   "passage": {
+    "start": 0,
+    "end": 211
+   },
+   "keyed": {
+    "start": 0,
+    "end": 112
+   },
+   "text": "# PLAN — the next level: the format leaves the builder's hands, and every sentence about it waits for a number\n\nFathom Lab · 2026-09-02 · **A plan, not a result.** Decided by a six-lens design panel and nine"
+  },
+  {
+   "decoy_id": "LD-27",
+   "side": "NOT",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 7,
+   "passage": {
+    "start": 502,
+    "end": 644
+   },
+   "keyed": {
+    "start": 34,
+    "end": 118
+   },
+   "text": "written so it can be argued with. Successor to `closed-model-frontier/PLAN_prior_art_and_the_next_move_2026_08_31.md`,\nwhich it does not edit."
+  },
+  {
+   "decoy_id": "LD-28",
+   "side": "NOT",
+   "source_stem": "papers/PLAN_the_next_level_2026_09_02",
+   "unit_index": 67,
+   "passage": {
+    "start": 3474,
+    "end": 3638
+   },
+   "keyed": {
+    "start": 41,
+    "end": 66
+   },
+   "text": "**maximal in scope, minimal in claim.**\n\n## The move, in four legs\n\n**Leg 1 — the format hardens before it leaves (done this cycle).** Twelve attacks, four rules,"
+  },
+  {
+   "decoy_id": "LD-29",
+   "side": "NOT",
+   "source_stem": "papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02",
+   "unit_index": 0,
+   "passage": {
+    "start": 0,
+    "end": 184
+   },
+   "keyed": {
+    "start": 0,
+    "end": 85
+   },
+   "text": "# ATTACKS — the sworn output battery: twelve ways in, four rules out — 2026-09-02\n\nFathom Lab · 2026-09-02 · **An adversarial pass, not a result.** Nothing here was preregistered"
+  },
+  {
+   "decoy_id": "LD-30",
+   "side": "NOT",
+   "source_stem": "papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02",
+   "unit_index": 20,
+   "passage": {
+    "start": 1200,
+    "end": 1321
+   },
+   "keyed": {
+    "start": 30,
+    "end": 99
+   },
+   "text": "Two survived v0.1 unchanged.\n\n| # | attack | at `320b303` (v0.1, probed) | under v0.2 | pinned by |\n|---|---|---|---|---|"
+  }
+ ]
+}

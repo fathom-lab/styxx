@@ -1,0 +1,1207 @@
+{
+ "schema": "styxx-sworn/measurement-seat/v1",
+ "family": "local",
+ "panel": "L",
+ "seat": 3,
+ "substrate": {
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "transport": "transformers",
+  "dtype": "bf16",
+  "device": "cpu",
+  "quant": null,
+  "named_in_design": true,
+  "block_order": [
+   "CAUTIONS",
+   "TASK",
+   "FORMAT"
+  ],
+  "dry_run": true
+ },
+ "packet_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+ "prereg": null,
+ "dry_run": true,
+ "synthetic_packet": true,
+ "contamination_probe": null,
+ "items": [
+  {
+   "id": "L-0001",
+   "raw_sha256": "f029f525a97598c4cad64355c01172b516dba9bdef9cfe306ee3274928b8ee4c",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The theta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another theta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0002",
+   "raw_sha256": "b47aaae065aeece7b42d77679c03952efaa672dce6bb911f6435b8ce6198d942",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0003",
+   "raw_sha256": "558e9e3d37499e0ca7737577457fb33e111b083c3d2f0b149722179109d92d50",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0004",
+   "raw_sha256": "558e9e3d37499e0ca7737577457fb33e111b083c3d2f0b149722179109d92d50",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0005",
+   "raw_sha256": "b47aaae065aeece7b42d77679c03952efaa672dce6bb911f6435b8ce6198d942",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0006",
+   "raw_sha256": "4ab031331df627fd74dfd4d6f9947f08702db2ef79f91f964d00273204b9d648",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0007",
+   "raw_sha256": "cb8abb043aa0e07488d3be26412274e6d4f3ad4fa9626c5e0f1466ec4b141509",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0008",
+   "raw_sha256": "9bef91a78f3a7ad6cfa8ed6b86d08fc8de4327d1e827ac58a3976dd230b61403",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.1.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Precision was 0.61",
+     "closing_words": "on the panel.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Recall was 0.18",
+     "closing_words": "the same items.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "296 checks passed.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0009",
+   "raw_sha256": "a1d015124166dfb7a88dad1525d3f263e9129e64da85f98cbf202232c9678791",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0010",
+   "raw_sha256": "005c236fd7853504a3f5dc37c291ddfea144e5a2c9d9a18d1057bad9fea0874d",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0011",
+   "raw_sha256": "017c0e5cfe05019088ae751180ac2e34ab419b4ba859fcec03a7d41603e259ee",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "Row theta scored",
+     "closing_words": "on the check.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Restatement theta carries",
+     "closing_words": "without a number.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0012",
+   "raw_sha256": "4ab031331df627fd74dfd4d6f9947f08702db2ef79f91f964d00273204b9d648",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0013",
+   "raw_sha256": "ea3fd9b94f67252804a7db5c56925b7d94e6a7fa63ed4833e2b42110cf51efa7",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0014",
+   "raw_sha256": "b928f64d3b7259c85945465d9c53e82ea6fa752154bdb3c73f6173c0f76f812f",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0015",
+   "raw_sha256": "f61f66a11e7717645fbd025779240c7869baa44438bf28e39044999d548cd066",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0016",
+   "raw_sha256": "f61f66a11e7717645fbd025779240c7869baa44438bf28e39044999d548cd066",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0017",
+   "raw_sha256": "cb8abb043aa0e07488d3be26412274e6d4f3ad4fa9626c5e0f1466ec4b141509",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0018",
+   "raw_sha256": "a1d015124166dfb7a88dad1525d3f263e9129e64da85f98cbf202232c9678791",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0019",
+   "raw_sha256": "005c236fd7853504a3f5dc37c291ddfea144e5a2c9d9a18d1057bad9fea0874d",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0020",
+   "raw_sha256": "42ba1074f2eb01fd8bc37cada8e718d7dc81c042ab0cdb62aa0c98abb996046a",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0021",
+   "raw_sha256": "96db24222d877dc9737364235e8b493faefda3c1604a213db9a3968e2c543118",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0022",
+   "raw_sha256": "fdf6146fa488d4800d4ff9eb940fe4d0ec8edcf833da428f45154d9badd463f5",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.2.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Precision was 0.47",
+     "closing_words": "on the panel.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Recall was 0.20",
+     "closing_words": "the same items.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "358 checks passed.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to 7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0023",
+   "raw_sha256": "6c8c090706031f481f02292dda66e30718a5df206e50a8a73e3d220bdf49d945",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0024",
+   "raw_sha256": "c8afa8525b94836333e7a5a2ad10aaf08c602704c6a052812840d34580d9cb61",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0025",
+   "raw_sha256": "fd86e28f2095d1f90c4d2fbeaea436bb68c6f0022cdbbfe7438289104f301357",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0026",
+   "raw_sha256": "fd86e28f2095d1f90c4d2fbeaea436bb68c6f0022cdbbfe7438289104f301357",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0027",
+   "raw_sha256": "ea3fd9b94f67252804a7db5c56925b7d94e6a7fa63ed4833e2b42110cf51efa7",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0028",
+   "raw_sha256": "fceea09e546ee0cf60e24f1ded608a00389f01b1cc0f312138f04326fb6ffe86",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.3.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Precision was 0.72",
+     "closing_words": "on the panel.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Recall was 0.31",
+     "closing_words": "the same items.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "120 checks passed.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to 3f1ad3ec2c64dbec56ce663e1ce10e9adaa32d13ce66a0b119f05c4c7003cbb9.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0029",
+   "raw_sha256": "017c0e5cfe05019088ae751180ac2e34ab419b4ba859fcec03a7d41603e259ee",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "Row theta scored",
+     "closing_words": "on the check.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Restatement theta carries",
+     "closing_words": "without a number.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0030",
+   "raw_sha256": "6c8c090706031f481f02292dda66e30718a5df206e50a8a73e3d220bdf49d945",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0031",
+   "raw_sha256": "42ba1074f2eb01fd8bc37cada8e718d7dc81c042ab0cdb62aa0c98abb996046a",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0032",
+   "raw_sha256": "96db24222d877dc9737364235e8b493faefda3c1604a213db9a3968e2c543118",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  },
+  {
+   "id": "L-0033",
+   "raw_sha256": "c8afa8525b94836333e7a5a2ad10aaf08c602704c6a052812840d34580d9cb61",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "UNSURE"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "UNSURE"
+    }
+   ]
+  }
+ ],
+ "unparsed": [],
+ "errors": [],
+ "timing": [],
+ "verdict": "DRY-RUN"
+}
