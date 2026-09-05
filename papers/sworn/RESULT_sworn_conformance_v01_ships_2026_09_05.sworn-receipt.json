@@ -2,11 +2,11 @@
  "schema": "styxx.sworn.verdict-receipt/v1",
  "format": "sworn/0.1",
  "document": {
-  "name": "RESULT_sworn_conformance_v01_ships_2026_09_05.sworn.json",
-  "inline_sha256": "7cd4d807a27f3667483c68a26830ec008e77f0b4f73af4066b2b48215f513247",
-  "canonical_sha256": "66b2ac1e79d79f21b55964845983a308eedfcd25ee3f471fcbb0a6654e1aba30"
+  "name": "RESULT_sworn_conformance_v01_ships_2026_09_05.md",
+  "inline_sha256": "4b36c5594150c9ec28a898f2fc4e01244e36cfef3339d13ab296393be31ce029",
+  "canonical_sha256": "bf69bcd2668bbd1fcec11c9c377e1b7b99c3989610186727269483f94c0ca959"
  },
- "commit": "b02f3fcaeca6be941f5f24cc5908bd5660aa3489",
+ "commit": "ee4771ef039afe2ff6943ada2cb331d077fb4050",
  "manifest_digest": null,
  "spans": [
   {
@@ -22,10 +22,10 @@
     "haystack_bytes": 50,
     "occurrences": 1
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -44,10 +44,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -66,10 +66,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -88,10 +88,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -110,10 +110,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -132,10 +132,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -154,10 +154,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -176,10 +176,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -198,10 +198,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -220,10 +220,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -239,10 +239,10 @@
     "haystack_bytes": 8,
     "occurrences": 1
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -258,10 +258,10 @@
     "haystack_bytes": 20,
     "occurrences": 1
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   },
   {
@@ -277,10 +277,10 @@
     "haystack_bytes": 64,
     "occurrences": 1
    },
-   "resolved_sha256": "1b5a3d6be3d66b4a3fa6664ab8ba43104a2940b0c0d597671e6ab9b0ec6c5cf1",
+   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
    "provenance": {
     "form": "path",
-    "note": "committed object at b02f3fcaeca6be941f5f24cc5908bd5660aa3489; authorship unchecked"
+    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
    }
   }
  ],
@@ -335,7 +335,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "842f591bb952f37678b138018f33e371cfaded8d7803ac0653753a38ccb2eea9",
+ "digest": "2da5fc1cd719d90e13444030ae989a6aee2a516efaf8a8bf1c9e71ea9795cd0b",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -367,5 +367,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "bd75304918deb6737fc5dac613f385985b0af89dedadb1c5339aa0ea2f816dbb",
- "timestamp": "2026-09-05T15:16:27Z"
+ "timestamp": "2026-09-05T21:49:39Z"
 }
