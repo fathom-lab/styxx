@@ -249,3 +249,24 @@ def test_history_off_keeps_the_pinned_first_line(lab, capsys):
 def test_open_history_outside_a_repository_reports_the_reason(tmp_path):
     r, why = corpus_audit.open_history(tmp_path, "auto")
     assert r is None and "not inside a git repository" in why
+
+
+# ---------------------------------------------------------------- R6
+
+def test_receipt_binding_census_writes_only_its_own_file():
+    """The census is subject to the rule it measures: its one output must be cited by no
+    committed certificate, or running it would regenerate a receipt in place."""
+    root = Path(__file__).resolve().parents[1]
+    census = root / "papers" / "closed-model-frontier" / "receipt_binding_census.py"
+    if not census.exists():
+        pytest.skip("census script not in this checkout")
+    src = census.read_text(encoding="utf-8")
+    assert 'OUT = HERE / "receipt_binding_census_result.json"' in src
+    cited = set()
+    for cp in root.glob("papers/**/*.certificate.json"):
+        try:
+            cited |= set(json.loads(cp.read_text(encoding="utf-8")).get("receipts_sha256", {}))
+        except Exception:
+            continue
+    assert "receipt_binding_census_result.json" not in cited
+    assert "receipt_binding_census.py" not in cited
