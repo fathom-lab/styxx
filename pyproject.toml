@@ -212,7 +212,7 @@ packages = [
 "styxx.attack" = ["signature_calibration_v0.json", "universal_suffixes_v0.json"]
 "styxx.compliance.templates" = ["*.md"]
 "styxx.fonts" = ["*.ttf"]
-"styxx._data" = ["*.json", "*.md", "*.jsonl"]
+"styxx._data" = ["*.json", "*.md", "*.jsonl", "*.js"]
 
 [tool.ruff]
 # styxx supports Python >= 3.9. Pin the target so ruff never suggests (or its

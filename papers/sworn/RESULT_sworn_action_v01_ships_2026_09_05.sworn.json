@@ -1,0 +1,154 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "00595d06ab14c5c2e1962e343e3cf5d8fdb0bfdf",
+ "document": {
+  "name": "RESULT_sworn_action_v01_ships_2026_09_05.md",
+  "sha256": "865411554761b7ab97249c828db79dddbacf7ee51f36e1a3d9d18ade000a6cc1"
+ },
+ "text": "# RESULT — the sworn action ships, report-only: a runner mints the manifest after the turn, and exits zero on every verdict\n\nFathom Lab · 2026-09-05 · Spec: `SPEC_sworn_action_v01_2026_09_05.md`, frozen before any code.\nAction: `sworn/action.yml`, `sworn/sworn_action.py`, `sworn/README.md`, sample workflow at\n`sworn/examples/sworn.yml`. Tests: `tests/test_sworn_action.py`. **This document is itself sworn**:\nits `rN` spans resolve against the manifest the JUnit adapter minted over the run of those tests,\nand its `path:` spans against the sample run committed beside it. Leg 3, item 4 of\n`papers/PLAN_the_next_level_2026_09_02.md`, under the plan's own label: **report-only until the\nmeasurement prices FAILED**.\n\n## What shipped\n\nA composite action in its own subdirectory — the root `action.yml` is diffgate's and is untouched.\nIn a pull-request job it runs the project's own test command, mints a `sworn/manifest/0.2` from the\nreport and the event **after the turn** through `styxx.harness.junit` and `styxx.harness.github`,\nverifies every sworn document the pull request touched against that manifest, writes a job-summary\ntable carrying the rung and the harness string on every row, and exits zero whatever the verdicts\nwere.\nThe sample run records the action as `sworn-action/0.1`,\nminted by `sworn/sworn_action.py`,\nand the job exited 0.\n\n**The command's exit status is a record, never the job's.** A gate this lab has not measured is a\ngate this lab does not ship: the plan prices FAILED only after the measurement runs, and until then\na contradicted span is reported and nothing is blocked.\n\n## The rung, and the fork sentence\n\nThe sample run declares rung `L2`\n— declared by the workflow, never detected by the adapter. The README states the limit the plan\nrequires, and the run's own harness string carries it into every manifest: on a `pull_request` from\na fork the minting job runs the workflow file as it exists in the pull request's head, so the\nmanifest is minted by a party the claimant controls and the sentence L2 rests on does not hold. It\nholds for a workflow pinned to the base branch, or for a manifest attested outside the job.\nEvery blob the turn added or modified at head enters the manifest's authored set, so a document\nswearing to bytes the turn itself wrote is MALFORMED rather than believed:\nthe sample records 5 of them.\n\n## What the sample run shows\n\nThe sample (`sworn_action_sample.py` → `sworn_action_sample.run.json`, `.summary.md`, and the three\nreceipts) drives the action end to end over a temporary repository, with no network.\nThe pull-request body verifies as `SWORN-HELD`\non 1 bound span;\na held document binds 5 spans and holds;\na document that swears something false reads `SWORN-FAILED`\non its 1 contradicted span;\nand a document citing a receipt the runner never minted reads\n1 unresolved span\nrather than an error — the author cited what the harness did not hand over, and the verdict says so\ninstead of the job failing.\nTwo files are skipped and say why: one `carries no <sworn tag`,\nand a committed sidecar is never verified against a supplied manifest, because the manifest it was\nsworn against is the one embedded in it.\nThe manifest the sample minted records its digest as `9c550169b241998aec8e77576f9781f4ae8639230162db46cf2959298c64ce32`.\n\n## The tests\n\n35 tests passed in the run this document swears to,\nwith 0 failures\n— the whole action driven over a fake event file, a fake report and canned documents in a temporary\ngit repository: the summary table, the composed receipt numbering, the fork refusals, a command that\nexits non-zero, a report that never appears, a document that cites `rN` the runner did not mint, and\nexit 0 on every one of them.\nThe evidence reader's own outcome over that report is `PASSED`.\n\n## What this does not say\n\nThat the action has run on GitHub: it has not — no token in this lab can push a workflow file, so\nthe sample workflow at `sworn/examples/sworn.yml` is for the operator to copy, and this repository\nenables nothing. That L2 has been verified: the rung is the workflow's declaration, printed, never\nchecked. That a `SWORN-HELD` document is true — it says the spans its author bound were checked\nagainst bytes the author did not write, at the commit named, and nothing about the sentences the\nauthor left unbound. That the verdicts here should gate anything, today.\n\n---\n\n*The runner mints after the turn, verifies what the author bound, prints the rung beside every\nverdict, and gets out of the way. What it may not do yet is stop anybody — that is the\nmeasurement's to license, and the measurement has not run.*\n",
+ "spans": [
+  {
+   "start": 1241,
+   "end": 1296,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/action",
+   "kind": "quote"
+  },
+  {
+   "start": 1298,
+   "end": 1331,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/harness",
+   "kind": "quote"
+  },
+  {
+   "start": 1333,
+   "end": 1354,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/exit_code",
+   "kind": "numeric"
+  },
+  {
+   "start": 1647,
+   "end": 1680,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/rung",
+   "kind": "quote"
+  },
+  {
+   "start": 2335,
+   "end": 2364,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/manifest/authored",
+   "kind": "numeric"
+  },
+  {
+   "start": 2583,
+   "end": 2629,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/0/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2630,
+   "end": 2646,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/0/counts/HELD",
+   "kind": "numeric"
+  },
+  {
+   "start": 2647,
+   "end": 2687,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/2/counts/HELD",
+   "kind": "numeric"
+  },
+  {
+   "start": 2688,
+   "end": 2747,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/1/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2748,
+   "end": 2775,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/1/counts/FAILED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2838,
+   "end": 2855,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/documents/3/counts/UNRESOLVED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2986,
+   "end": 3048,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/skipped/0/why",
+   "kind": "quote"
+  },
+  {
+   "start": 3190,
+   "end": 3310,
+   "receipt": "path:papers/sworn/sworn_action_sample.run.json#/manifest/digest",
+   "kind": "quote"
+  },
+  {
+   "start": 3326,
+   "end": 3377,
+   "receipt": "r1",
+   "kind": "numeric"
+  },
+  {
+   "start": 3378,
+   "end": 3393,
+   "receipt": "r2",
+   "kind": "numeric"
+  },
+  {
+   "start": 3727,
+   "end": 3790,
+   "receipt": "r4#/outcome",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "harness": "styxx.harness/0.1 junit over papers/sworn/turn_2026_09_05_sworn_action.junit.xml; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent — weak; the agent's shell can write what the hook later reads; authored bytes recorded: none (the caller handed over nothing; the adapter cannot see what the agent wrote); adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+  "turn": "turn_2026_09_05_sworn_action",
+  "minted_at": "2026-09-05T19:49:45Z",
+  "authored_sha256": [],
+  "receipts": {
+   "r1": {
+    "id": "r1",
+    "sha256": "9f14025af0065b30e47e23ebb3b491d39ae8ed17d33739e5ff3827ffb3634953",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T19:49:45Z",
+    "complete": true,
+    "bytes": "MzU=",
+    "harness_note": "passed count resolved by styxx.evidence from papers/sworn/turn_2026_09_05_sworn_action.junit.xml (resolved.passed)"
+   },
+   "r2": {
+    "id": "r2",
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T19:49:45Z",
+    "complete": true,
+    "bytes": "MA==",
+    "harness_note": "failures count resolved by styxx.evidence from papers/sworn/turn_2026_09_05_sworn_action.junit.xml (totals.failures; harness errors are kept apart in totals.errors)"
+   },
+   "r3": {
+    "id": "r3",
+    "sha256": "a21ba885754d14d4f5c9a8c576cd18d572b826f17a3b22c899c7fcdea795ddc5",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T19:49:45Z",
+    "complete": true,
+    "bytes": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48dGVzdHN1aXRlcyBuYW1lPSJweXRlc3QgdGVzdHMiPjx0ZXN0c3VpdGUgbmFtZT0icHl0ZXN0IiBlcnJvcnM9IjAiIGZhaWx1cmVzPSIwIiBza2lwcGVkPSIwIiB0ZXN0cz0iMzUiIHRpbWU9IjM5Ljc4NiIgdGltZXN0YW1wPSIyMDI2LTA5LTA1VDE1OjQ5OjAyLjY2Njc0NC0wNDowMCIgaG9zdG5hbWU9IkZsb2JpIj48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VmVyZGljdHNBcmVSb3dzQW5kRXhpdElzWmVybyIgbmFtZT0idGVzdF9oZWxkX2ZhaWxlZF9hbmRfdW5yZXNvbHZlZF9kb2N1bWVudHNfZWFjaF9nZXRfYV9yb3dfYW5kX2V4aXRfemVybyIgdGltZT0iMS41NzciIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFZlcmRpY3RzQXJlUm93c0FuZEV4aXRJc1plcm8iIG5hbWU9InRlc3RfYV9mYWlsaW5nX2NvbW1hbmRfYW5kX2FfdGltaW5nX291dF9jb21tYW5kX2V4aXRfemVybyIgdGltZT0iMTAuMTY1IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RWZXJkaWN0c0FyZVJvd3NBbmRFeGl0SXNaZXJvIiBuYW1lPSJ0ZXN0X2FuX2VtcHR5X2NvbW1hbmRfaXNfYV91c2FnZV9lcnJvcl9leGl0X3R3byIgdGltZT0iMC40MDAiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFZlcmRpY3RzQXJlUm93c0FuZEV4aXRJc1plcm8iIG5hbWU9InRlc3RfZ2l0aHViX291dHB1dF9jYXJyaWVzX3RoZV9vdXRwdXRzIiB0aW1lPSIxLjI0MSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VGhlQ29tcG9zZWRNYW5pZmVzdCIgbmFtZT0idGVzdF90aGVfY29tcG9zZWRfbWFuaWZlc3RfaXNfdGhlX2FkYXB0ZXJzX2VudHJpZXNfd2l0aF9vbmx5X3RoZV9pZF9jaGFuZ2VkIiB0aW1lPSIxLjM5MCIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VGhlQ29tcG9zZWRNYW5pZmVzdCIgbmFtZT0idGVzdF9ub19yZXBvcnRfbGVhdmVzX3IxX3RvX3I0X2Fic2VudF9hbmRfcjVfdG9fcjlfaW5fcGxhY2UiIHRpbWU9IjEuMjg3IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVDb21wb3NlZE1hbmlmZXN0IiBuYW1lPSJ0ZXN0X2FuX3VucGFyc2VhYmxlX3JlcG9ydF9rZWVwc19yM19hbmRfcjQiIHRpbWU9IjEuMzMyIiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVDb21wb3NlZE1hbmlmZXN0IiBuYW1lPSJ0ZXN0X2FfbGF1bmRlcmVkX3JlcG9ydF9yZWFkc19tYWxmb3JtZWRfcmVjZWlwdF9hdXRob3JfbWludGVkIiB0aW1lPSIxLjMyMSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VGhlQ29tcG9zZWRNYW5pZmVzdCIgbmFtZT0idGVzdF90aGVfcmVwb3J0X3BhdGhfZW50ZXJzX3I0X2FzX2dpdmVuIiB0aW1lPSIxLjI4OSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VGhlUnVuZyIgbmFtZT0idGVzdF9hX2ZvcmtfcHVsbF9yZXF1ZXN0X21pbnRzX2wxX2FuZF9wcmludHNfdGhlX2ZvcmtfcnVsZSIgdGltZT0iMS4yOTciIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFRoZVJ1bmciIG5hbWU9InRlc3RfYV9oZWFkX3JlcG9zaXRvcnlfYWJzZW50X2Zyb21fdGhlX3BheWxvYWRfaXNfdHJlYXRlZF9hc19hX2ZvcmsiIHRpbWU9IjEuMjY2IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVSdW5nIiBuYW1lPSJ0ZXN0X2FfZm9ya193aXRoX2Jhc2VfcGlubmVkX3dvcmtmbG93X2RlY2xhcmVkX21pbnRzX2wyX2FzX3RoZV9hZGFwdGVyX2FjY2VwdHMiIHRpbWU9IjEuMjY2IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVSdW5nIiBuYW1lPSJ0ZXN0X2wyX3dpdGhvdXRfYWZ0ZXJfdHVybl9vbl9iYXNlX21pbnRzX2wxX3dpdGhfdGhlX3JlYXNvbiIgdGltZT0iMS4yNDMiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFRoZVJ1bmciIG5hbWU9InRlc3RfbDFfZGVjbGFyZWRfaXNfbDFfd2l0aF9ub19yZWFzb24iIHRpbWU9IjEuMjU2IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVSdW5nIiBuYW1lPSJ0ZXN0X2FfcnVuZ19vdXRzaWRlX3RoZV9sYWRkZXJfaXNfbG93ZXJlZF9uZXZlcl9yYWlzZWQiIHRpbWU9IjEuMjU4IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RFdmVudHNBbmRDaGVja291dHMiIG5hbWU9InRlc3RfYV9wdXNoX2V2ZW50X3VzZXNfYWZ0ZXJfYW5kX2JlZm9yZSIgdGltZT0iMS4yMjAiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdEV2ZW50c0FuZENoZWNrb3V0cyIgbmFtZT0idGVzdF9vdGhlcl9ldmVudHNfZG9fbm90X3J1bl9hbmRfZXhpdF96ZXJvW3B1bGxfcmVxdWVzdF90YXJnZXRdIiB0aW1lPSIwLjM4NSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0RXZlbnRzQW5kQ2hlY2tvdXRzIiBuYW1lPSJ0ZXN0X290aGVyX2V2ZW50c19kb19ub3RfcnVuX2FuZF9leGl0X3plcm9bd29ya2Zsb3dfZGlzcGF0Y2hdIiB0aW1lPSIwLjQyMyIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0RXZlbnRzQW5kQ2hlY2tvdXRzIiBuYW1lPSJ0ZXN0X290aGVyX2V2ZW50c19kb19ub3RfcnVuX2FuZF9leGl0X3plcm9bXSIgdGltZT0iMC40MjAiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdEV2ZW50c0FuZENoZWNrb3V0cyIgbmFtZT0idGVzdF9hX21pc3NpbmdfaGVhZF9jb21taXRfZG9lc19ub3RfcnVuIiB0aW1lPSIwLjQ2NSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0RXZlbnRzQW5kQ2hlY2tvdXRzIiBuYW1lPSJ0ZXN0X2FfcGF5bG9hZF90aGVfYWRhcHRlcl9jYW5ub3RfcmVhZF9kb2VzX25vdF9ydW4iIHRpbWU9IjAuNDI2IiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RFdmVudHNBbmRDaGVja291dHMiIG5hbWU9InRlc3RfYV9zaGFsbG93X2NoZWNrb3V0X3ZlcmlmaWVzX3RoZV9ib2R5X29ubHlfYW5kX3NheXNfc28iIHRpbWU9IjAuNjcxIiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVEb2N1bWVudHMiIG5hbWU9InRlc3RfdGhlX2JvZHlfaXNfdmVyaWZpZWRfYXNfc3VibWl0dGVkX3dpdGhfaXRzX2xpbmVfZW5kaW5ncyIgdGltZT0iMS4zNTEiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFRoZURvY3VtZW50cyIgbmFtZT0idGVzdF9hX3NpZGVjYXJfYW5kX2FuX3VudGFnZ2VkX21hcmtkb3duX2FyZV9za2lwcGVkX2FuZF9uYW1lZCIgdGltZT0iMS4yNzUiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFRoZURvY3VtZW50cyIgbmFtZT0idGVzdF9hX2NvbW1hbmRfdGhhdF9yZXdyaXRlc19hX2RvY3VtZW50X29uX2Rpc2tfY2hhbmdlc19ub192ZXJkaWN0IiB0aW1lPSIxLjI1MiIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0VGhlRG9jdW1lbnRzIiBuYW1lPSJ0ZXN0X2FfcGF0aF93aXRoX3NwYWNlc19hbmRfcXVvdGVzX2lzX3ZlcmlmaWVkIiB0aW1lPSIxLjUwNSIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0T3V0cHV0c0FuZFNvdXJjZSIgbmFtZT0idGVzdF9ldmVyeV9vdXRwdXRfaXNfbGZfb25seSIgdGltZT0iMS4zMjkiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdE91dHB1dHNBbmRTb3VyY2UiIG5hbWU9InRlc3RfdGhlX3NvdXJjZV9jYXJyaWVzX25vX2Vycm9yX2Fubm90YXRpb25fYW5kX25vX25ldHdvcmtfaW1wb3J0IiB0aW1lPSIwLjAwOCIgLz48dGVzdGNhc2UgY2xhc3NuYW1lPSJ0ZXN0cy50ZXN0X3N3b3JuX2FjdGlvbi5UZXN0T3V0cHV0c0FuZFNvdXJjZSIgbmFtZT0idGVzdF9ub3RoaW5nX3VuZGVyX3N0eXh4X2ltcG9ydHNfdGhlX2FjdGlvbiIgdGltZT0iMC4wNDYiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdE91dHB1dHNBbmRTb3VyY2UiIG5hbWU9InRlc3RfYWN0aW9uX3ltbF9oYXNfbm9fZ2F0ZV9pbnB1dF9hbmRfcGFzc2VzX2lucHV0c190aHJvdWdoX2VudiIgdGltZT0iMC4wMDEiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdE91dHB1dHNBbmRTb3VyY2UiIG5hbWU9InRlc3RfdGhlX3JlYWRtZV9vcGVuc193aXRoX3RoZV90d29fc2VudGVuY2VzX2FuZF9jYXJyaWVzX3RoZV9sYXlvdXQiIHRpbWU9IjAuMDAxIiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RPdXRwdXRzQW5kU291cmNlIiBuYW1lPSJ0ZXN0X3RoZV9leGFtcGxlX3dvcmtmbG93X2NoZWNrc19vdXRfdGhlX2hlYWRfd2l0aF9mdWxsX2hpc3RvcnkiIHRpbWU9IjAuMDAxIiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RPdXRwdXRzQW5kU291cmNlIiBuYW1lPSJ0ZXN0X3RoZV9yb290X2FjdGlvbl9pc191bnRvdWNoZWRfYnlfdGhpc19sZWciIHRpbWU9IjAuMDAxIiAvPjx0ZXN0Y2FzZSBjbGFzc25hbWU9InRlc3RzLnRlc3Rfc3dvcm5fYWN0aW9uLlRlc3RUaGVDb21taXR0ZWRTYW1wbGUiIG5hbWU9InRlc3RfdGhlX2NvbW1pdHRlZF9zYW1wbGVfcmVwcm9kdWNlcyIgdGltZT0iMS4yNzEiIC8+PHRlc3RjYXNlIGNsYXNzbmFtZT0idGVzdHMudGVzdF9zd29ybl9hY3Rpb24uVGVzdFRoZUNvbW1pdHRlZFNhbXBsZSIgbmFtZT0idGVzdF90aGVfc2FtcGxlX3JlZnVzZXNfdG9fb3ZlcndyaXRlX2l0c2VsZiIgdGltZT0iMC4wMDMiIC8+PC90ZXN0c3VpdGU+PC90ZXN0c3VpdGVzPg==",
+    "harness_note": "report bytes as read from papers/sworn/turn_2026_09_05_sworn_action.junit.xml"
+   },
+   "r4": {
+    "id": "r4",
+    "sha256": "a5a9bdc40a39fdde78d9e3e73d33933cb86d13ceacc0541671487dd33a5d96e4",
+    "kind_of_source": "test_report",
+    "captured_at": "2026-09-05T19:49:45Z",
+    "complete": true,
+    "bytes": "eyJiaW5kaW5nX3Blcl9zb3VyY2UiOlt7ImFzc2VydGlvbl9vbmx5Ijp0cnVlLCJjb21taXQiOm51bGwsImNvbW1pdF9hc3NlcnRpb25fbWF0Y2hlcyI6ZmFsc2UsImNvbW1pdF9iaW5kaW5nX3ZlcmlmaWVkIjpmYWxzZSwiZGVncmFkZWRfa2V5IjpudWxsLCJmb3JtYXQiOiJqdW5pdCIsImdpdF9jb21taXRzIjpbXSwiZ2l0X2RpZ2VzdF9rZXlzX3NlZW4iOltdLCJraW5kIjoibm9uZSIsIm5vdGVzIjpbXSwicGF0aCI6InBhcGVycy9zd29ybi90dXJuXzIwMjZfMDlfMDVfc3dvcm5fYWN0aW9uLmp1bml0LnhtbCIsInJlcG9ydF9pZGVudGl0eV9hc3NlcnRlZCI6ZmFsc2UsInJlcG9ydF9pZGVudGl0eV92ZXJpZmllZCI6ZmFsc2UsInNpZ25hdHVyZV92ZXJpZmllZCI6ZmFsc2UsInN1YmplY3RzX3NlZW4iOjAsIndoeSI6Im5vIEpVbml0IGRpYWxlY3QgZGVmaW5lcyBhbnkgc2NoZW1hLWxldmVsIGZpZWxkIGZvciBhIGNvbW1pdCwgcmV2aXNpb24sIGJyYW5jaCBvciByZXBvc2l0b3J5IOKAlCB2ZXJpZmllZCBhZ2FpbnN0IFN1cmVmaXJlJ3MgWFNELCB0aGUgQW50L0plbmtpbnMgcmVmZXJlbmNlLCBweXRlc3QsIGdvLWp1bml0LXJlcG9ydCwgamVzdC1qdW5pdCBhbmQgdHJ4Mmp1bml0LiBUaGUgb25seSBjYXJyaWVyIGlzIHRoZSBmcmVlLWZvcm0gPHByb3BlcnRpZXM+IGNoYW5uZWwsIHdoaWNoIGlzIHdyaXR0ZW4gYnkgdGhlIHNhbWUgam9iIHRoYXQgcHJvZHVjZWQgdGhlIHJlcG9ydCBhbmQgaXMgdGhlcmVmb3JlIEFTU0VSVEVELU5PVC1DSEVDS0VEIGF0IGJlc3QuIn1dLCJib3VuZGFyeSI6IlRoaXMgbW9kdWxlIHJlYWRzIGJ5dGVzLiBJdCBkb2VzIE5PVCB2ZXJpZnkgYW55IHNpZ25hdHVyZSBhbmQgY29uc3VsdHMgbm8ga2V5IG1hdGVyaWFsIG9yIHRydXN0IHJvb3QsIHNvIGluIGluLXRvdG8ncyBvd24gd29yZHMgd2hhdCBpdCByZWFkIGlzIG5vdCBhdXRoZW50aWNhdGVkIHByZWRpY2F0ZSBpbmZvcm1hdGlvbi4gSXQgZG9lcyBOT1Qga25vdyB3aGV0aGVyIHRoZSByZXBvcnQgaXMgaG9uZXN0OiB3aG9ldmVyIGNvdWxkIHdyaXRlIHRoZSBmaWxlIGNvdWxkIHdyaXRlIGFueSB2ZXJkaWN0IGludG8gaXQsIGluY2x1ZGluZyBvbmUgbmFtaW5nIHRoZSByaWdodCBjb21taXQuIEl0IGRvZXMgTk9UIGtub3cgd2hldGhlciB0aGUgcnVuIHdhcyBjb21wbGV0ZSDigJQgb25lIG1hdHJpeCBsZWcsIGEgLWsgc3Vic2V0LCBhIC0tbWF4ZmFpbCBzaG9ydC1jaXJjdWl0IGFuZCBhIHdob2xlIGdyZWVuIHN1aXRlIHNlcmlhbGlzZSBpZGVudGljYWxseS4gSXQgZG9lcyBOT1Qga25vdyB3aGF0IHdhcyBuZXZlciB1cGxvYWRlZC4gSXQgaW5oZXJpdHMgdGhlIENJJ3MgdHJ1c3QgZW50aXJlbHkgYW5kIGFkZHMgbm9uZSBvZiBpdHMgb3duLiBJdCBjYW5ub3QgYWNjdXNlOiB0aGUgYWNjdXNpbmcgdmVyZGljdCBpcyBhYnNlbnQgZnJvbSBpdHMgdm9jYWJ1bGFyeS4iLCJjb250cmFjdF9kZXZpYXRpb25zIjpbIlRIRSBBQ0NVU0lORyBWRVJESUNUIElTIERFTEVURUQsIE5PVCBESVNBQkxFRC4gVkVSRElDVFMgaXMgKCdWRVJJRklFRCcsICdVTkNIRUNLQUJMRScpIGFuZCBubyBjb2RlIHBhdGggaW4gdGhpcyBtb2R1bGUgcmV0dXJucyBhIHRoaXJkIHdvcmQuIFRoZSBmcm96ZW4gdGFibGUncyBhY2N1c2luZyByb3cgaGFzIG5vIGltcGxlbWVudGF0aW9uOiBpdHMgcHJlY2lzaW9uIGlzIHN0cnVjdHVyYWxseSB1bm1lYXN1cmFibGUgKDExIGZpcmluZ3MgYWNyb3NzIDEsNzc1LDc2NSBjaGFuZ2VkIGZpbGVzIGNhbm5vdCBmdXJuaXNoIGEgMTAwLWl0ZW0gYmxpbmQgcGFuZWwpIGFuZCB0aGUgY2hlY2sgdGhhdCB3YXMgdG8gbGljZW5zZSBpdCBpcyBhIHN0cmluZyBjb21wYXJlIG9uIGF0dGFja2VyLXdyaXRhYmxlIGJ5dGVzLiBUaGlzIGlzIGEgcGVybWFuZW50IGRlc2lnbiBkZWNpc2lvbiwgbm90IGEgc3VzcGVuc2lvbi4iLCJldmlkZW5jZSBvZiBmYWlsdXJlIGlzIHJldHVybmVkIGluIHRoZSByZXBvcnQtb25seSBgb2JzZXJ2ZWRgIGJhbmQuIEl0IGlzIG5vdCBhIHZlcmRpY3QsIG5vdGhpbmcgZG93bnN0cmVhbSBtYXkgZ2F0ZSBvbiBpdCwgYW5kIG1haW4oKSBuZXZlciBleGl0cyBub24temVybyBiZWNhdXNlIG9mIGl0LiIsInJvdyAxJ3MgcXVhbnRpZmllciAoJ0VWRVJZIHNvdXJjZSB1bnBhcnNlZCcpIHdvdWxkIHBlcm1pdCBjb25jbHVkaW5nIG9uIGEgdGVudGggb2YgdGhlIGV2aWRlbmNlLiBIZXJlIEFOWSB1bnBhcnNlZCBzb3VyY2UgYmxvY2tzIFZFUklGSUVEOiBhIHBhcnRpYWwgcmVhZCBtYXkgaG9uZXN0bHkgZGVjbGluZSwgaXQgbWF5IG5vdCBob25lc3RseSBhZmZpcm0uIiwiRU1QVFkgaXMgY29tcHV0ZWQgb3ZlciBFWEVDVVRFRCB0ZXN0cyByYXRoZXIgdGhhbiBlbWl0dGVkIHRlc3RjYXNlIHJlY29yZHMsIHNvIGFuIGFsbC1za2lwcGVkIHJ1biBhbmQgYW4gYWxsLURJU0FCTEVEXyBiaW5hcnkgYXJlIGJvdGggRU1QVFkgYW5kIHRoZXJlZm9yZSBVTkNIRUNLQUJMRS4gVkVSSUZJRUQgYWRkaXRpb25hbGx5IHJlcXVpcmVzIHBhc3NlZCA+IDAuIiwiYW4gaW4tdG90byBwcmVkaWNhdGUncyBiYXJlIGByZXN1bHRgIHN0cmluZyBuZXZlciBzZXRzIHRoZSBvdXRjb21lIGJ5IGl0c2VsZi4gV2l0aCBubyB0ZXN0LW5hbWUgbGlzdHMgdGhlcmUgYXJlIHplcm8gZXhlY3V0ZWQgdGVzdHMgYmVoaW5kIGl0LCBhbmQgemVybyBleGVjdXRlZCB0ZXN0cyBpcyBFTVBUWSB3aGF0ZXZlciB0aGUgc3VtbWFyeSBzdHJpbmcgc2F5cy4iLCJlcnJvcnMgKGEgaGFybmVzcyB0aGF0IGNvdWxkIG5vdCBsb2FkIGEgbW9kdWxlLCBhIGplc3QgZmlsZSB0aGF0IHdvdWxkIG5vdCBydW4pIGFyZSBBQlNFTkNFIG9mIGV2aWRlbmNlIGFuZCBhcmUga2VwdCBpbiB0aGVpciBvd24gY29sdW1uLCBuZXZlciBtZXJnZWQgaW50byBmYWlsdXJlcy4gVGhleSBjYW5ub3QgcHJvZHVjZSBhbnkgdmVyZGljdDsgdGhleSBjYW4gb25seSBibG9jayBWRVJJRklFRC4iLCJ0d28gc291cmNlcyByZXNvbHZpbmcgdG8gZGlmZmVyZW50IG91dGNvbWVzIHlpZWxkIFVOQ0hFQ0tBQkxFIHJhdGhlciB0aGFuIGEgbWVyZ2UuIEEgc3RhbGUgYXJ0aWZhY3QgYmVzaWRlIGEgZnJlc2ggb25lLCBhbmQgYSByZS1ydW4gb2YgZmFpbGVkIGpvYnMsIGJvdGggcHJvZHVjZSBleGFjdGx5IHRoaXMgc2hhcGUgYW5kIGJvdGggYXJlIGdyZWVuIGluIHJlYWxpdHkuIiwiYmluZGluZyBpcyByZWNvcmRlZCBQRVIgU09VUkNFLiBUaGVyZSBpcyBubyBhZ2dyZWdhdGUgYmluZGluZyBkaWN0IHNwYW5uaW5nIHRoZSBsaXN0LCBiZWNhdXNlIG9uZSBhdHRlc3RlZCBmaWxlJ3MgZGlnZXN0IGFzc2VydGlvbiBtdXN0IG5ldmVyIGFwcGVhciB0byBjb3ZlciBhbiB1bmF0dGVzdGVkIHNpYmxpbmcgZ2xvYmJlZCBvdXQgb2YgdGhlIHNhbWUgZGlyZWN0b3J5LiIsImBjb21taXRfYmluZGluZ192ZXJpZmllZGAgaXMgYW4gYWxpYXMgd2hvc2UgbmFtZSB0aGUgZnJvemVuIGNvbnRyYWN0IGZpeGVzIGFuZCB3aG9zZSB3b3JkICd2ZXJpZmllZCcgaXMgaW5hY2N1cmF0ZS4gSXQgaXMgc2V0IG9ubHkgYnkgYSBzdWJqZWN0IGdpdENvbW1pdCBkaWdlc3QgRVFVQUwgdG8gdGhlIGNvbW1pdCB0aGUgY2FsbGVyIG5hbWVkLCBhbmQgbm8gc2lnbmF0dXJlIGlzIGNoZWNrZWQsIHNvIGl0IG1lYW5zICd0aGUgYnl0ZXMgYXNzZXJ0IHRoaXMnLCBuZXZlciAndGhpcyBpcyBwcm92ZW4nLiBBIGBzaGExYCBtYXRjaCBpcyBERUdSQURFRC1LRVkgYW5kIGEgPHByb3BlcnRpZXM+IGNvbW1pdCBpcyBBU1NFUlRFRDsgbmVpdGhlciBzZXRzIGl0LiIsInRoZSBlbnRpdHkgZGVmZW5jZSBpcyB0aGlzIG1vZHVsZSdzIG93bjogZXhwYXQgaXMgZHJpdmVuIGRpcmVjdGx5IHdpdGggZW50aXR5LCB1bnBhcnNlZC1lbnRpdHkgYW5kIG5vdGF0aW9uIGRlY2xhcmF0aW9ucyByZWZ1c2VkIGF0IHRoZSBkZWNsYXJhdGlvbiwgcmVwbGFjaW5nIGEgc3Vic3RyaW5nIHN3ZWVwIHRoYXQgYm90aCBmYWxzZS1wb3NpdGl2ZWQgb24gZ3JlZW4gcmVwb3J0cyBjb250YWluaW5nIEhUTUwgYW5kIGZhbHNlLW5lZ2F0aXZlZCBvbiBhIGJvbWIgaGlkZGVuIGJlaGluZCBhIGxvbmcgY29tbWVudC4iLCJldmVyeSBkZXZpYXRpb24gYWJvdmUgbW92ZXMgdmVyZGljdHMgdG93YXJkIFVOQ0hFQ0tBQkxFLiBOb25lIG9mIHRoZW0gY2FuIHByb2R1Y2UgYSBjb25jbHVzaW9uIHRoZSBmcm96ZW4gdGFibGUgd291bGQgbm90LCB3aGljaCBpcyB0aGUgcHJvcGVydHkgdG8gY2hlY2sgcmF0aGVyIHRoYW4gdHJ1c3QuIl0sIm5vdF9jaGVja2VkIjpbInNpZ25hdHVyZXMg4oCUIG5vIGtleSBtYXRlcmlhbCwgbm8gcGlubmVkIHRydXN0IHJvb3QsIG5vIFJla29yLCBubyBGdWxjaW87IGEgaGFsZi12ZXJpZmllZCBjaGFpbiByZXBvcnRpbmcgJ3ZlcmlmaWVkJyB3b3VsZCBiZSB0aGUgbW9zdCBkYW5nZXJvdXMgbGluZSBpbiB0aGlzIHJlcG9zaXRvcnksIHNvIG5vbmUgaXMgYXR0ZW1wdGVkLiBUaGlzIGlzIHdoeSBgYmluZGluZ2AgaXMgY2FsbGVkIGFuIEFTU0VSVElPTiBhbmQgbmV2ZXIgYSBjcnlwdG9ncmFwaGljIGJpbmRpbmcuIiwid2hldGhlciB0aGUgdGVzdHMgbmFtZWQgYXJlIHRoZSB0ZXN0cyB0aGF0IG1hdHRlciwgb3IgdGhhdCBhbnkgdGVzdCBleGlzdHMiLCJ3aGV0aGVyIHRoZSByZXBvcnQgaXMgY29tcGxldGU6IHNoYXJkcywgbWF0cml4IGxlZ3MsIGNvbnRpbnVlLW9uLWVycm9yIGxlZ3MsIC1rIHNlbGVjdGlvbiBhbmQgLS1tYXhmYWlsIHNob3J0LWNpcmN1aXRzIGFyZSBhbGwgaW52aXNpYmxlIGhlcmUiLCJ3aGV0aGVyIGEgamVzdCBzdWl0ZSB0aGF0IGZhaWxlZCB0byBjb21waWxlIHdhcyBzaWxlbnRseSBkcm9wcGVkIGZyb20gdGhlIFhNTCBieSB0aGUgcmVwb3J0ZXIncyBkZWZhdWx0IGNvbmZpZ3VyYXRpb24iLCJ0aGUgU0NPUEUgb2YgdGhlIHByb3NlIGNsYWltIGJlaW5nIHJlYWQuIFRoaXMgZnVuY3Rpb24gaXMgaGFuZGVkIGV2aWRlbmNlLCBuZXZlciBhIHNlbnRlbmNlLiBPbiB0aGlzIGxhYidzIG93biBjb3JwdXMgb25seSA0MC45JSBvZiAndGVzdHMgcGFzcycgbWF0Y2hlcyB3ZXJlIHVucXVhbGlmaWVkIGFzc2VydGlvbnM7IDQ1LjUlIG5hbWVkIGEgc3Vic2V0LCAxNC4wJSB3ZXJlIFBSLXRlbXBsYXRlIGNoZWNrYm94ZXMgYW5kIDMuNyUgd2VyZSBleHBsaWNpdGx5IGFib3V0IHRoZSBhdXRob3IncyBsb2NhbCBtYWNoaW5lLiBBIGNhbGxlciB0aGF0IGZlZWRzIHRob3NlIGhlcmUgYXMgYmFyZSBjbGFpbXMgaGFzIGFuIGV4dHJhY3Rpb24gcHJvYmxlbSB0aGlzIG1vZHVsZSBjYW5ub3Qgc2VlIGFuZCBkb2VzIG5vdCBmaXguIl0sIm9ic2VydmVkIjp7ImVycm9yc19ub3RlIjoiYGhhcm5lc3NfZXJyb3JzYCBpcyBBQlNFTkNFIG9mIGV2aWRlbmNlIOKAlCBhIG1vZHVsZSB0aGF0IHdvdWxkIG5vdCBpbXBvcnQsIGEgamVzdCBmaWxlIHRoYXQgd291bGQgbm90IHJ1biDigJQgYW5kIGlzIGRlbGliZXJhdGVseSBub3QgbWVyZ2VkIGludG8gYGZhaWxpbmdfdGVzdHNgLiIsImZhaWxpbmdfdGVzdHMiOjAsImhhcm5lc3NfZXJyb3JzIjowLCJpbmRldGVybWluYXRlX3Rlc3RzIjowLCJub3RfcnVuX3Rlc3RzIjowLCJub3RlIjoiUkVQT1JUIE9OTFkuIFRoZXNlIGZpZ3VyZXMgYXJlIHdoYXQgdGhlIHN1cHBsaWVkIGJ5dGVzIFNBWTsgdGhleSBhcmUgbm90IGEgdmVyZGljdCwgbm8gdmVyZGljdCBpcyBkZXJpdmVkIGZyb20gdGhlbSwgYW5kIG5vdGhpbmcgZG93bnN0cmVhbSBtYXkgZ2F0ZSBvbiB0aGVtLiBUaGlzIG1vZHVsZSdzIHZvY2FidWxhcnkgaXMgVkVSSUZJRUQgYW5kIFVOQ0hFQ0tBQkxFIOKAlCBzZWUgdGhlIG1vZHVsZSBkb2NzdHJpbmcgZm9yIHdoeSB0aGVyZSBpcyBubyB0aGlyZCB3b3JkIGFuZCB3aHkgaXRzIGFic2VuY2UgaXMgcGVybWFuZW50IHJhdGhlciB0aGFuIHN1c3BlbmRlZC4gQSBjYWxsZXIgdGhhdCB0dXJucyBgZmFpbGluZ190ZXN0cyA+IDBgIGludG8gYSBmYWlsaW5nIGNoZWNrIGhhcyByZWludHJvZHVjZWQsIHdpdGhvdXQgbWVhc3VyZW1lbnQsIGV4YWN0bHkgdGhlIHZlcmRpY3QgdGhpcyBtb2R1bGUgZGVjbGluZXMgdG8gc2hpcC4iLCJza2lwcGVkX3Rlc3RzIjowLCJzb3VyY2VzX3JlcG9ydGluZ19mYWlsdXJlIjpbXX0sIm91dGNvbWUiOiJQQVNTRUQiLCJwYXRoc19yZXF1ZXN0ZWQiOlsicGFwZXJzL3N3b3JuL3R1cm5fMjAyNl8wOV8wNV9zd29ybl9hY3Rpb24uanVuaXQueG1sIl0sInBlcl9zb3VyY2Vfb3V0Y29tZXMiOlsiUEFTU0VEIl0sInJlc29sdmVkIjp7ImV4ZWN1dGVkIjozNSwiaW5kZXRlcm1pbmF0ZSI6MCwibm90cnVuIjowLCJwYXNzZWQiOjM1fSwic291cmNlcyI6W3siYmluZGluZyI6eyJhc3NlcnRpb25fb25seSI6dHJ1ZSwiY29tbWl0IjpudWxsLCJjb21taXRfYXNzZXJ0aW9uX21hdGNoZXMiOmZhbHNlLCJjb21taXRfYmluZGluZ192ZXJpZmllZCI6ZmFsc2UsImRlZ3JhZGVkX2tleSI6bnVsbCwiZ2l0X2NvbW1pdHMiOltdLCJnaXRfZGlnZXN0X2tleXNfc2VlbiI6W10sImtpbmQiOiJub25lIiwibm90ZXMiOltdLCJyZXBvcnRfaWRlbnRpdHlfYXNzZXJ0ZWQiOmZhbHNlLCJyZXBvcnRfaWRlbnRpdHlfdmVyaWZpZWQiOmZhbHNlLCJzaWduYXR1cmVfdmVyaWZpZWQiOmZhbHNlLCJzdWJqZWN0c19zZWVuIjowLCJ3aHkiOiJubyBKVW5pdCBkaWFsZWN0IGRlZmluZXMgYW55IHNjaGVtYS1sZXZlbCBmaWVsZCBmb3IgYSBjb21taXQsIHJldmlzaW9uLCBicmFuY2ggb3IgcmVwb3NpdG9yeSDigJQgdmVyaWZpZWQgYWdhaW5zdCBTdXJlZmlyZSdzIFhTRCwgdGhlIEFudC9KZW5raW5zIHJlZmVyZW5jZSwgcHl0ZXN0LCBnby1qdW5pdC1yZXBvcnQsIGplc3QtanVuaXQgYW5kIHRyeDJqdW5pdC4gVGhlIG9ubHkgY2FycmllciBpcyB0aGUgZnJlZS1mb3JtIDxwcm9wZXJ0aWVzPiBjaGFubmVsLCB3aGljaCBpcyB3cml0dGVuIGJ5IHRoZSBzYW1lIGpvYiB0aGF0IHByb2R1Y2VkIHRoZSByZXBvcnQgYW5kIGlzIHRoZXJlZm9yZSBBU1NFUlRFRC1OT1QtQ0hFQ0tFRCBhdCBiZXN0LiJ9LCJjb3VudHNfc291cmNlIjoicmVzb2x2ZWQgZnJvbSA8dGVzdGNhc2U+IGNoaWxkIGVsZW1lbnRzIiwiZXJyb3JzIjowLCJlcnJvcnNfYXJlX2Fic2VuY2UiOnRydWUsImV4ZWN1dGVkIjozNSwiZmFpbHVyZXMiOjAsImZvcm1hdCI6Imp1bml0IiwiaW5kZXRlcm1pbmF0ZSI6MCwia25vd25fYmxpbmRfc3BvdHMiOlsiamVzdC1qdW5pdCB1bmRlciBpdHMgZGVmYXVsdCByZXBvcnRUZXN0U3VpdGVFcnJvcnM6J2ZhbHNlJyBEUk9QUyBhIHN1aXRlIHRoYXQgZmFpbGVkIHRvIGNvbXBpbGUgZnJvbSB0aGUgWE1MIGVudGlyZWx5IOKAlCBhIGJyb2tlbiB0ZXN0IGZpbGUgcHJvZHVjZXMgYSBmdWxseSBncmVlbiByZXBvcnQgd2l0aCBubyB0cmFjZS4gVW5yZWNvdmVyYWJsZSBmcm9tIHRoZXNlIGJ5dGVzLiIsImEgc2hhcmQgd2hvc2UgcmVwb3J0IHdhcyBuZXZlciB1cGxvYWRlZCBsZWF2ZXMgbm8gbWFyayBhbnl3aGVyZSBpbiB0aGlzIGRvY3VtZW50OyBhYnNlbmNlIG9mIGEgZmlsZSBpcyBpbnZpc2libGUgdG8gYSBmaWxlIHJlYWRlci4iLCJgdGVzdHM9YCBjb3VudHMgdGVzdGNhc2UgcmVjb3JkcyBlbWl0dGVkLCBub3QgdGVzdHMgZXhlY3V0ZWQ6IGdvb2dsZXRlc3QgY291bnRzIG5ldmVyLXJ1biBESVNBQkxFRF8gdGVzdHMsIHB5dGVzdCBjb3VudHMgY29sbGVjdGlvbiBmYWlsdXJlcyB3aGVyZSB6ZXJvIHRlc3QgYm9kaWVzIHJhbi4iXSwibm90cnVuIjowLCJvdXRjb21lIjoiUEFTU0VEIiwicGFzc2VkIjozNSwicGF0aCI6InBhcGVycy9zd29ybi90dXJuXzIwMjZfMDlfMDVfc3dvcm5fYWN0aW9uLmp1bml0LnhtbCIsInByb2R1Y2VyX2NvbmZpZGVuY2UiOiJ3ZWFrIiwicHJvZHVjZXJfZ3Vlc3MiOiJweXRlc3QiLCJyb290X2FzX2ZvdW5kIjp7ImRpc2FibGVkIjpudWxsLCJlcnJvcnMiOm51bGwsImZhaWx1cmVzIjpudWxsLCJza2lwcGVkIjpudWxsLCJ0ZXN0cyI6bnVsbH0sInJvb3RfY2hpbGRyZW5fZGlzYWdyZWUiOmZhbHNlLCJzaGEyNTYiOiJhMjFiYTg4NTc1NGQxNGQ0ZjVjOWE4YzU3NmNkMThkNTcyYjgyNmYxN2EzYjIyYzg5OWM3ZmNkZWE3OTVkZGM1Iiwic2tpcHBlZCI6MCwic3VpdGVfbGV2ZWxfZXJyb3JzIjowLCJzdWl0ZXMiOjEsInN1bW1lZF9jaGlsZHJlbl9hc19mb3VuZCI6eyJkaXNhYmxlZCI6bnVsbCwiZXJyb3JzIjowLCJmYWlsdXJlcyI6MCwic2tpcHBlZCI6MCwidGVzdHMiOjM1fSwidGVzdHMiOjM1LCJ1bnJlY29nbml6ZWRfZWxlbWVudHMiOltdLCJ4bWxfbm90ZXMiOnsiZG9jdHlwZV9zZWVuIjpudWxsLCJlbnRpdHlfZGVmZW5jZSI6Im91cnMifX1dLCJzb3VyY2VzX2Rpc2FncmVlIjpmYWxzZSwic3BlYyI6InN0eXh4LWV2aWRlbmNlL3YwLjIiLCJ0b3RhbHMiOnsiZXJyb3JzIjowLCJmYWlsdXJlcyI6MCwic2tpcHBlZCI6MCwidGVzdHMiOjM1fSwidW5wYXJzZWQiOltdLCJ2ZXJkaWN0X3ZvY2FidWxhcnkiOlsiVkVSSUZJRUQiLCJVTkNIRUNLQUJMRSJdfQo=",
+    "harness_note": "styxx.evidence.load_evidence over papers/sworn/turn_2026_09_05_sworn_action.junit.xml, RFC 8785 canonical with one trailing LF, byte for byte"
+   }
+  },
+  "rung": "L1",
+  "digest": "a9cadae463a24773283672044eb403a8196fd313835036d818f34e86151d1d42"
+ }
+}
