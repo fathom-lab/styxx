@@ -1,0 +1,2366 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "gaming",
+ "count": 51,
+ "vectors": [
+  {
+   "id": "00d3d2d25e2c385d6c2809afbe258e2d2304a782b372c424fb621a01be889cbd",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f0dbd50c3ba93c0f36a804c853c68ad960f21973c946a43424c650a86d6b7135",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3f9a638465c4c08d85da4a8a000b91eabe70c4d18d780f806d3e7ea2e23b6fca",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1#",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "04ac562e22234f4e1772c8c68f9bb5f8a6528d3ca906a4b956f6bbe1bf44a35e",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "6e64a56112d2d736c66cbb5c393c423bd1112c5d4c51003af7deb414fecd47dd",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "33ee68bde5d76f956b12f6c03eafd91f3d0c833993cfde9e0f0e77a9e780ed1d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a.json#/y",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "absent_over_partial"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "0cfecff12c826d8c3bf45913779611c75b1d21733b8e4230c689590d645381f6",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[x"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "7a1104ca3afc020fc00e25b8a3885c5d41d06b04d90eb7e9a88edf5afafa4cb4",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "267652c6c53e60d6f2da41ff0128fd9982eabee7cf28d85fb3b0a59223f44b81",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 2,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "19574fc88a36e64adeb245e3efad38226ae707d43e981cefc817b57ba4140453",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "1bacbb314cb09690e16a7d165c10179ac863d73b57bb465e7f6a330b4048ac3a",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "1d27a1a67d2eaa3992832d14d38968f59c1f3181addaae43bb6ea913f7c02dd1",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_path_names_one_file_never_a_glob_the_verifier_would_pick_from[path:[a].json#/x]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "c917861c26ca22d2e9937ba8c3e37276ec70a0f9cfe4d195016b3db853081fd8",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 8,
+       "sha256": "613fe5aa65343dbb1b9abe6abac6773f5c91bd60d3f2ffb7e2eae69e1db8b227"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b8687416286d2b4779eb603a82733f3d7bb7632c6552ab9a9c2deb9a0512d8c9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:[a].json#/x",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "202bf975562110b59a123dd73c8c369861ea981b61470e76bbfae65f93a44310",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_breaking_your_own_failed_span_does_not_make_it_narrative"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "1cd19d7274e5132d4c27b0f0acc78e4f047e671dd77cacf7ab619150f60e9279",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4668a6083d0df05dee2653b54af10c7d4c3ad517020e8a1a1b5e192a82525cd8",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 25,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "214d3c8fd9e41a2f5ec1e2d9e7de794ea614d95596c437356a287d9e9b51f21f",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+    "document": "a7102f8cc23d1d39077ddc860ef05d45183a91cd37b53746e6aa76ecd32888c3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "13b25090826e1be3a70392e0159057d8525047f057d31ef34591c637497a8395",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2350b8d5e073d6f982f6c6220ed2ae29d0cfb71918854b518bf68b157b592210",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "55203dfba9587ca4cb84e618dbff396c87f35ee97683bcd351ba75655c2377e1",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "bdef704afcff078f509522286f9b11c4f076fecf9d14adad66b7cb41bbfa7d7f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "nesting"
+     },
+     {
+      "at": 28,
+      "receipt": "r2",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "nesting"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "2b3e60b7554674514bbcadef98f99fa41b6e11b3cb5095b580dc3c5423c57655",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "5871c76049ff456c62de2a9c5d58fe2f6c8380108ac5eb8c0e7f9ce6325e7754",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "dda06f5bb42779eba36bf1a2c5266d6029cd9132a63b4d4d7518233b695f4054",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "nope",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2de9ef1fa0f9af504c9adb1d0e5df1112e2ddf49cf115736117d8a7ed0ffece1",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "b4172d2b18cf18037d48772e24760ebcb95f423ec857bf903b47fb6da00bf579",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c2e249332fcb343e40bf189929e6eaa013cdbef68e039aa5808507ec0f4f39f6",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "unclosed"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "30badeaf100d5aad908b4ee982e1978b8ed36cd906fa027365f74a796fa67209",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "bb60818a02ba6b507418668a61c243445da63338bf90d56cddf81d7a156a7c77",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "adc62855124e0af97d08337bb0b3ccf8de3e4fdc54f2439e478b69952a558ecc",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "number_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "35c9dff6ca77c67f864685449e28a450f530d28f51027ad34a016e90a5068523",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_every_ascii_whitespace_only_needle_is_empty[\\x0c]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e444c6c8e8034a41c202bb1e978bf993da70f965ddcb776d31a38c8c39da410d",
+    "manifest": "029e4c9dbedd7e89eb07e1425a34956875035d97238d01c279ee0b70a8390e85",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "bab6a08cee066edc5b4d8c7f294065e007035faa47fcb63d1f2fcb1698160bf9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_empty"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "49922d052c3d494d278acdd2c07991693c80520a6a6f76eb78471b6432a8c7cd",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_a_manifest_tampered_inside_the_sidecar_resolves_nothing"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "452c7cd0b9744c33323465255826e910e23fa26e187a63ec013bb71c9802729f",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "349ce97551f3625ed46420506526bcb8a2d4e7047b6e4d5a5dd6b960a54da922",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "4d051f42f2587a77a8e596cba5f33769ac40115add25bd44def362993eeadeeb",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+    "document": "a7102f8cc23d1d39077ddc860ef05d45183a91cd37b53746e6aa76ecd32888c3",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "27828342aa9ad194863d2f93fcdec90ca8f14fcd86ff1f1e88052a7b2a8c3211",
+    "sidecar": "4706d489141e7278c964ed37ffc7f5f1d767eea77888aa5f342fdb2bf264a37f"
+   }
+  },
+  {
+   "id": "4fd7842bda469666dd7873f89dbb0cf4d30415c54cd60637b142571d97420a4d",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "a86b9471b6c12113a46d999f2fffebbfb998b0254412c70eb4d4ef7784c83302",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "5582912edf0b3dae111adf2b74a07d047a148dc8dbce19cb694ed09455d2bb17",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn",
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "767dcf849e47cd9ab7dee8142f7e9edb665e9966de3aa78e8b1f60068f737d7a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3451182f9a88f84fd4c450780d685da50b376fc85c3809f90e0bf2ec14ce5fbf",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "5a8f89e600920b6f43dd077c367f1bfc66cdf4a72867142ad7a7719adae9b358",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_a_short_trivial_quote_is_malformed_not_held"
+   ],
+   "rules": [
+    "R3"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "b9eb12e49a106569cf66a809a5433d24ab9628184fc15be54771eed8aee4a4d0",
+    "manifest": "cbfd9ab4f17986d5ebb08f23103db5243d35876e57772549ef08e2b00828cbdd",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "ac36850ac0a44820add9c3851d2e8ce864dc65cfc910a02ec82ca7e3f0766c13",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "short_needle"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6239f6b514c944d2f21b6b1f164bf867b11b6ce2d8f9308c06dff7674687c7d0",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "07e0c5aa45d367b2df78ea683d727e80c86a3c99363842c9d46bbd055b2afba8",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4945ac836c5c0e32b0682ebc2b776ed0e31d5211d68efcf255fb4199d321775f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "number_grammar"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "62dd56ccddadeed11f5261a839ef5fffe2b139371e2c66d0c11c9219f44f1148",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_path_names_one_file_never_a_glob_the_verifier_would_pick_from[path:*.json#/x]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "dfbfe4bdc1964cff58d74d1cf47a105c6ed95039ee06a75ba9e8d7496d67cc0a",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 8,
+       "sha256": "613fe5aa65343dbb1b9abe6abac6773f5c91bd60d3f2ffb7e2eae69e1db8b227"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "86d3ff78ca325ddd68c5f243a7236e2184062acc11270acb217f9db7d88f4413",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:*.json#/x",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6ba9f3fd15bf2c5d9f5b3ac6e92e42d2b10aaf2decbb479f5f46d7cab256a09c",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "392cefd883e327de05db5cdc8e8621883231ca0b00cccf2f23eb207d13bf4650",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f5880233b8b9425b8703995aa0008bb4591ff27693c8ed39339eb52454698f89",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6bc379355a6bd3f45e77c7d6fc4904fb6bd375374d3bbf27917e7f9ae2d039b6",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "e57872d487678087013891a25341d1bf7cb4f2cb5862822241db7b4d96942dad",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "7780f1a0eb68252ea833449a9cf049a818775b6cff7dee350afb9734c636f2f3",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e9c4926ee79680c48318c60d3daa5e574e22642a431b8c4e3e80953d73677f1a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "64175ac6aa819b8fb828dae401376fab0536aedb5b6421ad57f8fb335b04b56e",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "hash",
+      "verdict": "MALFORMED",
+      "reason": "digest_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "7cc933818af9a02ee14177be8e082f64ef5c382ff342a8f120b51bbc8b1c7f6a",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "47d1eb0af82a582d98afee1c6733fdf95b94dd5fa3ceb99eb8cf5e9ffa509708",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "5c0dc17fbd07cf214f0d48f2e55f589c16724a5dd10d715d8373aeb579ed72ba",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_empty"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "800a8e87de54964f6041161c4d91328564e7e8d97e074dd7c5ed6c50ae85ce71",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_path_names_one_file_never_a_glob_the_verifier_would_pick_from[path:a]json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "2f01852ef7589c13804311faeac52c890762db96b764c208ed609b4fa7ecd5ff",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 8,
+       "sha256": "613fe5aa65343dbb1b9abe6abac6773f5c91bd60d3f2ffb7e2eae69e1db8b227"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3437dea5fcfa8f1fa05e41092d739dedaed718a2bc17a6265e65f9f2a3e6a6fa",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a]json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "839b36c6f7a2167997697b5be29c11a5c8e002d3241d9478dfe0710df0db1194",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "canon",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09"
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "46eb5dab936e52f11cb47c2ef1f36b8cb6d82d73f8f9f6b5beff494b3ac5a2a9",
+    "sidecar": "392cefd883e327de05db5cdc8e8621883231ca0b00cccf2f23eb207d13bf4650"
+   }
+  },
+  {
+   "id": "9bfbd467d1da1208d2be833937ae8868c4dadd1ccbfbcd7121600f803bcdc694",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_path_names_one_file_never_a_glob_the_verifier_would_pick_from[path:?.json#/x]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e3c233d886a67a0044a9ca0ee45fbd26dc95c8601da7cae3c415b82bf01738d5",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 8,
+       "sha256": "613fe5aa65343dbb1b9abe6abac6773f5c91bd60d3f2ffb7e2eae69e1db8b227"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3fccd4af6b5a21d7e6c8b5de841c7b7c26807611d88da80eefae3f04f7d663ab",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:?.json#/x",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "9c925524b12a8bc8bd3b7e596518bb0104657ee27f2b5af7156e77921d3b2ef6",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_breaking_your_own_failed_span_does_not_make_it_narrative"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "fba53130a00b28bcb7db27631b88952b98ba4d343fd3ce1a9921c085b9fc7035",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "561cfcd71bbf7d8c9ac988cd9ed9ce63dd6135fb12a8e97ec80f48ba78320ad7",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 29,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "9c987ed06e4be5ed0e5e7cae0d4f25d34b0dfaee513f4c2d126b25310acf803a",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "9f68650eb470dec919781d242cece5bb398ef4ca08c90c441ff1e36a03ca79c1",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": null,
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {}
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b02892791c1b60e416ec8b254a069e09761e01dd350214d0a98b4ee4997be11a",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "no_commit"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "a21d731f2699d6de6c731acd2be5470bc1daed4f393c5c417c4a3ecec18b4b68",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "b374a8196dd16746770d6ebd107cda44844949881830a1d8d833ec940e665cea",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "a66e9a50eadc790495d407a8a6b7a6ff2e292e09813f3345176cb40e68d03d45",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_swearing_only_trivia_prints_its_coverage_beside_the_verdict"
+   ],
+   "rules": [
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "78ae325f3c58aa6f6e8ffbb2c46ca10205d4cd9fec187d7d16cf58a1dff2cc47",
+    "manifest": "529d7ad0ac9f1cb8c5793252c37a1dee4b24035a8af1de11a6ed104e00ec8bd1",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b2b01526e3b8d7da44f412f87ea138aa2e7859875764980cf0d818685a22d3d8",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 2,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     },
+     {
+      "at": 51,
+      "receipt": "r2",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": 3,
+     "sentence_share": 0.4
+    }
+   }
+  },
+  {
+   "id": "aa7d7c894676f87748a3676bb54fe3127fde68a8c28efd32710e5f57eef15ad5",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f9f38b10be894f04ffb2ab80ee16d471667b7e75885e031ac3bbb77442bc6a05",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "0b5d5f52b4f2806087231ede1a1fc5acf50063474e8e770fa05696a9e9f0b0a2",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "Numeric",
+      "verdict": "MALFORMED",
+      "reason": "kind_unknown"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "ad1ae008578768f1cb829c8c2fe6b29ce0e61e1b4858da7b42a9e54a0c4ae4e6",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "dfcd4c6179be851c620ee4d2968ab2bb01489b83b9980fe5d39491541c92c16f",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "1c53a1a7b5b14f47716bef42c2069520486bad671a8bb80af206af3afd99042f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "exec",
+      "verdict": "MALFORMED",
+      "reason": "kind_reserved"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "b2cb5c1da53bf99da6ee7ceb0d5b9e634932206c179f117f6c7d86ff7a815605",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "73eafbe57bc0cc293da1ae30345e65305c181aca7f5d455105ed76b7b8cd688d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "51a7f82d6219fb1a2022d57f9b3918e65dacb21bff3f3d4939a9aca0ef916d22",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:x.json#",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "b84da7adde97115bf83c339ea6f909c115fd8ac5cdbf849451d2467f0f82527d",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "e20738600630a559f7f59fe545303824d709d84fbc1944afdb7b73cd55f16f33",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "bd45b829480fb4c0854b289e8d2b6de13130ea3b5a176a5c66b249c74c756930",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "9450e02474102691320067410e671218f09e5cd88efbb85c1a496ae173f97b6e",
+    "document": null,
+    "sidecar": "392cefd883e327de05db5cdc8e8621883231ca0b00cccf2f23eb207d13bf4650",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "c11d1401cd2e4ef91eaaf4e7997cc31028f966a680816730a1335f337616d124",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_breaking_your_own_failed_span_does_not_make_it_narrative"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "caf60181bca2af7792e7415a86255ee3037683d369aa0e44f738b6e0faf88b65",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "e99625bac23caf67847e648eaed4e5a9c5e3840e0fc49ccee24a445fd2b9dbe4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 30,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "c4f38f0d3e4963a862d6579144bd86f25d611b229d14a48b2765f06ddbabc231",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_breaking_your_own_failed_span_does_not_make_it_narrative"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "15152e66992e867fa2a51b759d11b677068bc725641195d90e1a6edcded1f829",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b4e4456b8383f314042a418e7b0c783d072b933e4f9272dcebef6a7fb75a1419",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 30,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "c5bff382844a267ace16690ab8e2ba0555a58833798cfef43e8dfbf1d60eac02",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn>x</sworn>-tag_syntax]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a4084add3956bc1b3b56c05d0e30d31dfb219dcf39617598eb82e523eceaaeb2",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "2a44327c04393b357d075796224ccf1c493e4a08391487d2d32e3653251c97ad",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 8,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "cc0e8199f2a8fe0c734795a3a42c3a5e851a70ce26b7b438ddc28eaffcd5bba1",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_every_ascii_whitespace_only_needle_is_empty[\\x0b]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "4f63cee1f5bd2f1acea06481eb2a41922f4f6975cbe8049a7bab546efe6354ad",
+    "manifest": "734ebcc0d3c8d93cf664f889767cf671c18fd2af9a1c1821800f77cddc0a7233",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "779835975cf4cd3550c7cc49d9b293a6f203beca3459382e096ca72510d5374d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_empty"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "cf22bfb4eec160f420f67b039fa79cf1651a08c4dec889b8bfa8516ef228b315",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_a_manifest_tampered_inside_the_sidecar_resolves_nothing"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "b636b7b231b3fa37f3b066c75c4b28c10a97560eb6cc4049f0cf218ef5d0ac23",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "0a54a8287e29b968ce18e6c68725ab7501d0a975a145a08d164da7e3ecd66972",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "cf6858eca8a7a3999b17a3cb8cc8d3f14ec9333d3644fa259739fcba44f9bf06",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "4706d489141e7278c964ed37ffc7f5f1d767eea77888aa5f342fdb2bf264a37f",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "13b25090826e1be3a70392e0159057d8525047f057d31ef34591c637497a8395",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "d1cdf24384a1012e23690a06998178417dd3a65fd305aba7e78b2fe0ad2a5159",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "5857c65779d733ed5e4162a27758aaf7b074ba734c6508b0bb86f18e1536f448",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "d5f0f7ed6cfc65bd58b48124f589dc883039ff8f6282d4fcce2b777cd0087d58",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a7102f8cc23d1d39077ddc860ef05d45183a91cd37b53746e6aa76ecd32888c3",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "cf5deb54a89c85498ea34a50a15731e8c97ef65b2af46f02f65ff5b21ac16fd1",
+    "sidecar": "9f68650eb470dec919781d242cece5bb398ef4ca08c90c441ff1e36a03ca79c1"
+   }
+  },
+  {
+   "id": "d79d689ec59d6f8d30555ec706a49b949601ecc18da8413ebabc6857c41887c2",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a77de383f04b3eb178075abb624c00f3f04cf3f88b47f9dc673ccef63bc965df",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "104d84e19c1ef13df603228d57097e64d12ea7a77cd9dbcad2e7186294899c4d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "da33aa9e5e9544975a1ff5fe3469394af2b6a86fac82059cd68b9580e0186377",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn",
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-length_cap]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "29252651ac879401422bb0fa3c7b2a7565f627c2a78370adea1fb52914593d19",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "ee6a6c4a20dc83e31a2ad70d6af07b8582f151289eb63b88248aadf5003d8314",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "length_cap"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "efa002fa5612598d8df1372d128c9f7e36774e910c78f980e9973946a9ec6336",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_a_manifest_tampered_inside_the_sidecar_resolves_nothing"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "9f56f1b4eb7f0f505197e61ea0a16e510bf015d6b26a88233139784a84cafab0",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "98c8272d10bbc599c82d698f97dda449edd8b864776b6d033a1101ef1f8d6ccb",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "f21750b50ea853a3a1dfcdbe119f7950bfacd5e5678fe65717e94615250d5846",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_breaking_your_own_failed_span_does_not_make_it_narrative"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ff0dd1d45c486927b28e9011931af84102d50e4d81250d321879cea740cd88db",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "fb76e20175a00ecc3127bd1e242321a69b9d2375e43ed67716410df703187cb7",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "fa15a388166fa2f8d7e853a7c5f33883c6bd9a5d04b8fd869de122fa3173b332",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_every_ascii_whitespace_only_needle_is_empty["
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "813e592e0e86ae9b16fac627757b1827a1788ebe24e04b303f6895c5c0fb97b9",
+    "manifest": "05a41803c116a60184858bd5cc2760b9135a3e3b29b74c56bc2962b09a351312",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "d627af9e210b99e547cc6700ea06697ac38c5a9ff9bb8b2e1fba3ee0339ad94e",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_empty"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "fa436e6272b69e8e143e296044af48779165cdfff597a480745f6e3019372cdf",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_every_bytes_decidable_malformed_is_decided_with_no_manifest_and_no_tree[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "57690d92df2a4c91a5e7e83c5b0a9c00a4aca892d0a377f76a532702322e580b",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4a708020f1330a062edb87d6fb803697c3fd9f6f723b2987c62643581d95dac9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a.json#L1",
+      "kind": "hash",
+      "verdict": "MALFORMED",
+      "reason": "hash_over_partial"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "fbd9841691cd50499b169ca183c3b956340bacbedcd5c4a68b2299e0403b6d11",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "c0da79f6af5f17be1accd3d35c17021ea3a7794ec4feb739ff82ed004517fca7",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "fd2d3f7f37bcf3361232b62cbf54228cc855c52647b479ed08d84006b49aab1a",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLens::test_a_manifest_tampered_inside_the_sidecar_resolves_nothing"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09"
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "346dfddb70cc506a08f9fd80fe9d630c955ae3a83c9edfddbc6e97413d59dadc",
+    "sidecar": "9f56f1b4eb7f0f505197e61ea0a16e510bf015d6b26a88233139784a84cafab0"
+   }
+  }
+ ]
+}

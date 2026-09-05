@@ -1,0 +1,456 @@
+{
+ "schema": "styxx.sworn.conformance/v1",
+ "format": "sworn/0.1",
+ "spec": "papers/sworn/SPEC_sworn_conformance_vectors_v01_2026_09_05.md",
+ "label": "the precondition for any second verifier; no claim",
+ "clock": "2026-09-01T00:00:00Z",
+ "manifest_specs": [
+  "sworn/manifest/0.1",
+  "sworn/manifest/0.2"
+ ],
+ "receipt_schemas": [
+  "styxx.sworn.verdict-receipt/v0",
+  "styxx.sworn.verdict-receipt/v1"
+ ],
+ "core_definition": [
+  "schema",
+  "format",
+  "document",
+  "commit",
+  "manifest_digest",
+  "spans",
+  "counts",
+  "sworn_total",
+  "unresolved",
+  "document_verdict",
+  "document_malformed",
+  "rungs",
+  "certifies"
+ ],
+ "core_rule": "core_sha256 = sha256(utf8(jcs(core))); core = verify() output minus verifier minus coverage",
+ "id_rule": "id = sha256(utf8(jcs({\"mode\": mode, \"inputs\": inputs})))",
+ "set_rule": "set_sha256 = sha256(utf8(jcs(index minus set_sha256 minus provenance)))",
+ "blob_rule": "blobs.json maps sha256 -> base64; every blob hashes to its key; a JSON blob is UTF-8 text, indent 1, LF",
+ "sources": [
+  "tests/test_sworn.py",
+  "tests/test_sworn_attacks.py"
+ ],
+ "sources_note": "widened from the plan row's tests/test_sworn.py: R1's positive case, R5 at L2, R6's L2, rung_unknown and manifest/0.1 cases and R9's v1 re-derivation live only in tests/test_sworn_attacks.py::TestRules (SPEC, 'Why this exists')",
+ "vector_count": 3618,
+ "family_count": 20,
+ "families": {
+  "attacks": {
+   "file": "vectors/attacks.json",
+   "sha256": "dfcd71d95aa1832af9572f7315a997e31232a8a56be2b2b53b1d80374e228980",
+   "count": 17
+  },
+  "canonical": {
+   "file": "vectors/canonical.json",
+   "sha256": "a4d0791d4d0241d8b677ac491e2612da873f6737d8f9ce627bfcd2bfc81bc267",
+   "count": 16
+  },
+  "cli": {
+   "file": "vectors/cli.json",
+   "sha256": "b413b91799d6fe35d495fa465e506a08a88b5d3f8546484e777466dbf885cf66",
+   "count": 9
+  },
+  "coverage": {
+   "file": "vectors/coverage.json",
+   "sha256": "59b091f2d7e180f69cfd141869d2ab9c2f6ba017c664d63ab1cf3e5ab2863c22",
+   "count": 5
+  },
+  "doctrine": {
+   "file": "vectors/doctrine.json",
+   "sha256": "43b5f11adc750b22952f717c244582426cba0093648ff34806db6768bef45bee",
+   "count": 19
+  },
+  "document": {
+   "file": "vectors/document.json",
+   "sha256": "116c45c8f9cf4fa8a16f0957014b7e5b888d29e6791d2f9e1e5b41e950cbf320",
+   "count": 6
+  },
+  "fuzz": {
+   "file": "vectors/fuzz.json",
+   "sha256": "6403e44f72433e2db5793cfca8395725806e0b960e438ab16f2c1c0824fa3c06",
+   "count": 3158
+  },
+  "gaming": {
+   "file": "vectors/gaming.json",
+   "sha256": "a794405f2dca5121ae1f3c3fbd7713990ecaeca322ab0b8bec2d1ecbc239d3c9",
+   "count": 51
+  },
+  "invariants": {
+   "file": "vectors/invariants.json",
+   "sha256": "ad12c5cda29f18692639bea69a80d2306ae0baab7472fce293151f30aa488452",
+   "count": 4
+  },
+  "lexer": {
+   "file": "vectors/lexer.json",
+   "sha256": "a267ec109d04c9ca77a2bf2fcb7e7b52cbd9f677bc39dd03318500581f248c59",
+   "count": 65
+  },
+  "numeric": {
+   "file": "vectors/numeric.json",
+   "sha256": "bcc0110e0342d1f9f9f74c675896f9013fe38bdc33bdea11f8c2f5b3d4ec58f0",
+   "count": 65
+  },
+  "quote_hash_absent": {
+   "file": "vectors/quote_hash_absent.json",
+   "sha256": "a5b7723ac652a75fc2b5242c5b80808f88395029af7eea289747d976471c7331",
+   "count": 29
+  },
+  "receipt_hardening": {
+   "file": "vectors/receipt_hardening.json",
+   "sha256": "223ac78a40d7dce58d9666e55365f6920410e1f03c7387e1fda04a582c312ea9",
+   "count": 22
+  },
+  "receipt_v1": {
+   "file": "vectors/receipt_v1.json",
+   "sha256": "9e8abcad42fa0058eb24fdb517898889b8868ec1d106b0cc7fddd2b76f632581",
+   "count": 5
+  },
+  "receipts": {
+   "file": "vectors/receipts.json",
+   "sha256": "4cabd91b4e71b43aa59c521c2fee31a3cd7afd302a49e5aae9c1e9e6b8f39743",
+   "count": 47
+  },
+  "rules": {
+   "file": "vectors/rules.json",
+   "sha256": "e4be9c07fe4194d49aa9b28a09fd143e09aa4ddce023d3478aa7ae9ee0522929",
+   "count": 22
+  },
+  "sidecar_hardening": {
+   "file": "vectors/sidecar_hardening.json",
+   "sha256": "096629bf1e5ab15abf5b5a95db2787a811b437213f869f8da14704fbee8d51c9",
+   "count": 30
+  },
+  "snapshot": {
+   "file": "vectors/snapshot.json",
+   "sha256": "e584568f4f24d55652474bdf41a158306c7355a6953b6d61c1b12c7422788e6e",
+   "count": 27
+  },
+  "tree": {
+   "file": "vectors/tree.json",
+   "sha256": "f3449d88c575f55747e4da12207f2e5601fb729efd71360ad5a8a54d9e0896f2",
+   "count": 6
+  },
+  "worked_examples": {
+   "file": "vectors/worked_examples.json",
+   "sha256": "68311d9841c25ca3db5db6acd7341058ff127dc634974247de47f8d80f526f1f",
+   "count": 15
+  }
+ },
+ "blobs": {
+  "file": "blobs.json",
+  "sha256": "2cbd1078fbc47d364fa06ed9d4b23f44378cbf930e91817f6ddaeee456eb2e0d",
+  "count": 3977
+ },
+ "observer": {
+  "file": "observer.json",
+  "note": "outside set_sha256: the observer's and the build's numbers (C4)"
+ },
+ "modes": {
+  "canon": 1490,
+  "inline": 1804,
+  "load": 10,
+  "manifest": 11,
+  "receipt_check": 16,
+  "sidecar": 287
+ },
+ "outcomes": {
+  "accepted": 3,
+  "check": 16,
+  "core": 2067,
+  "manifest": 6,
+  "refused": 1256,
+  "sidecar": 270
+ },
+ "requires": {
+  "manifest": 1882,
+  "manifest+tree": 1,
+  "none": 1619,
+  "tree": 116
+ },
+ "requires_legend": {
+  "manifest": "a sworn/manifest/0.x object was given; a second verifier for rN and embedded blobs must pass these",
+  "tree": "a tree snapshot was given (SnapshotTree semantics, C10); a second verifier may skip these and must report how many it skipped, per family",
+  "git": "only a live git object store reproduces this; no vector in v0.1 carries it",
+  "observer": "styxx.claimdetect; never required and never pinned (C4)"
+ },
+ "refusal_codes": {
+  "document_malformed": {
+   "match": "no canonical text exists",
+   "where": [
+    "to_sidecar"
+   ]
+  },
+  "commit_form": {
+   "match": "commit must be a full lowercase hex object id or None",
+   "where": [
+    "to_sidecar"
+   ]
+  },
+  "lexical_malformed": {
+   "match": "cannot carry a lexically MALFORMED declaration",
+   "where": [
+    "to_sidecar"
+   ]
+  },
+  "round_trip": {
+   "match": "canonical round trip does not reproduce the document bytes",
+   "where": []
+  },
+  "sidecar_spec_unknown": {
+   "match": "unknown sidecar spec",
+   "where": [
+    "load_sidecar"
+   ]
+  },
+  "sidecar_keys": {
+   "match": "sidecar keys",
+   "where": [
+    "load_sidecar"
+   ]
+  },
+  "sidecar_commit_form": {
+   "match": "sidecar commit must be a full lowercase hex object id or null",
+   "where": [
+    "load_sidecar",
+    "verify"
+   ]
+  },
+  "sidecar_text_not_string": {
+   "match": "sidecar text must be a string",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_text_not_utf8": {
+   "match": "sidecar text is not encodable as UTF-8",
+   "where": []
+  },
+  "sidecar_document_shape": {
+   "match": "sidecar document must carry a string name and a string sha256",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_text_digest": {
+   "match": "sidecar text does not hash to document.sha256",
+   "where": [
+    "load_sidecar"
+   ]
+  },
+  "sidecar_spans_not_list": {
+   "match": "sidecar spans must be a list",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_span_shape": {
+   "match": "is not an object with exactly start/end/receipt/kind",
+   "where": [
+    "load_sidecar",
+    "verify"
+   ]
+  },
+  "sidecar_span_range": {
+   "match": "are not a non-empty range in the text",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_spans_overlap": {
+   "match": "spans are not ordered and non-overlapping",
+   "where": [
+    "load_sidecar"
+   ]
+  },
+  "sidecar_span_boundary": {
+   "match": "is not on a UTF-8 character boundary",
+   "where": [
+    "load_sidecar"
+   ]
+  },
+  "sidecar_span_attribute": {
+   "match": "cannot be carried by the inline tag grammar",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_manifest_shape": {
+   "match": "sidecar manifest is not a",
+   "where": [
+    "verify"
+   ]
+  },
+  "manifest_spec": {
+   "match": "unknown manifest spec",
+   "where": [
+    "Manifest.from_dict"
+   ]
+  },
+  "manifest_receipts_shape": {
+   "match": "manifest receipts must be an object keyed by receipt id",
+   "where": [
+    "Manifest.from_dict"
+   ]
+  },
+  "manifest_authored_shape": {
+   "match": "manifest authored_sha256 must be a list of hex strings",
+   "where": [
+    "Manifest.from_dict"
+   ]
+  },
+  "sidecar_commit_disagrees": {
+   "match": "and --commit says",
+   "where": []
+  },
+  "manifest_disagrees": {
+   "match": "the supplied manifest disagrees with the embedded one",
+   "where": []
+  },
+  "nothing_to_verify": {
+   "match": "nothing to verify",
+   "where": []
+  },
+  "sidecar_no_canonical_form": {
+   "match": "the sidecar text has no canonical form",
+   "where": [
+    "verify"
+   ]
+  },
+  "sidecar_declaration_unrepresentable": {
+   "match": "carries a declaration the sidecar form cannot represent",
+   "where": []
+  },
+  "sidecar_spans_not_reproduced": {
+   "match": "does not reproduce its spans",
+   "where": [
+    "verify"
+   ]
+  }
+ },
+ "rule_contract": {
+  "R1": {
+   "positive": "a core vector with a span whose receipt is rN#... and whose verdict is HELD",
+   "negative": "a span whose receipt is rN#... and whose verdict is MALFORMED with reason receipt_form, absent_over_partial or hash_over_partial"
+  },
+  "R2": {
+   "positive": "a vector tagged R2 with a span that is not hidden_commitment (the visible tag keeps its verdict)",
+   "negative": "a span MALFORMED hidden_commitment"
+  },
+  "R3": {
+   "positive": "a quote span against a fragment receipt (rN#... or path:...#...) that is HELD",
+   "negative": "a span MALFORMED short_needle"
+  },
+  "R4": {
+   "positive": "a vector tagged R4 with a span that is not length_cap (300 code points pass, whatever their byte length)",
+   "negative": "a span MALFORMED length_cap"
+  },
+  "R5": {
+   "positive": "a HELD span whose provenance kind_of_source is attestation",
+   "negative": "a span MALFORMED kind_of_source_unknown or receipt_author_minted"
+  },
+  "R6": {
+   "positive": "a core whose rungs count L1 or L2",
+   "negative": "a span UNRESOLVED rung_unknown"
+  },
+  "R7": {
+   "positive": "a span whose provenance form is rn, path or prereg",
+   "negative": "a core whose rungs count unresolved"
+  },
+  "R8": {
+   "positive": "a floor whose sentence_share is a number",
+   "negative": "a floor whose sentence_share is null (nothing sworn over no sentences)"
+  },
+  "R9": {
+   "positive": "a check vector with status VERIFIED",
+   "negative": "a check vector with status FAILED"
+  },
+  "A1": {
+   "shows": "a HELD numeric span (the rider clause holds on the number)"
+  },
+  "A2": {
+   "shows": "SWORN-HELD with narrative sentences counted and a sentence_share under 1"
+  },
+  "A3": {
+   "shows": "SWORN-HELD with narrative sentences counted and a sentence_share under 1"
+  },
+  "A4": {
+   "shows": "MALFORMED hidden_commitment and document SWORN-FAILED"
+  },
+  "A5": {
+   "shows": "a HELD span whose provenance form is path"
+  },
+  "A6": {
+   "shows": "a HELD span whose provenance form is prereg"
+  },
+  "A7": {
+   "shows": "a HELD span whose provenance rung is undeclared"
+  },
+  "A8": {
+   "shows": "SWORN-FAILED with a path receipt FAILED value_mismatch (a larger pool offers nothing)"
+  },
+  "A9": {
+   "shows": "FAILED value_mismatch"
+  },
+  "A10": {
+   "shows": "MALFORMED short_needle"
+  },
+  "A11": {
+   "shows": "a HELD span (the certifies sentence is inside the core)"
+  },
+  "A12": {
+   "shows": "a HELD span (the author named the leaf)"
+  }
+ },
+ "unvectored": {
+  "reasons": [
+   "git_unavailable",
+   "manifest_spec_unknown"
+  ],
+  "verdicts": [
+   "WITHHELD"
+  ],
+  "refusal_codes": [
+   "manifest_disagrees",
+   "nothing_to_verify",
+   "round_trip",
+   "sidecar_commit_disagrees",
+   "sidecar_declaration_unrepresentable",
+   "sidecar_text_not_utf8"
+  ],
+  "skipped_count": 3,
+  "skipped": [
+   {
+    "source": "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_no_canonical_form_can_hold_is_manifest_integrity",
+    "where": "verify",
+    "why": "manifest is not JSON-representable: Out of range float values are not JSON compliant: nan"
+   },
+   {
+    "source": "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>2]",
+    "where": "verify",
+    "why": "sidecar is not representable as a JSON blob: 'utf-8' codec can't encode character '\\ud800' in position 167: surrogates not allowed"
+   },
+   {
+    "source": "tests/test_sworn_attacks.py::TestRules::test_r9_a_committed_v0_receipt_still_checks_on_its_core",
+    "where": "verify_receipt",
+    "why": "the tree is the repository this set lives in (C5)"
+   }
+  ]
+ },
+ "provenance": {
+  "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
+  "sworn_sha256": "bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b",
+  "sources_sha256": {
+   "tests/test_sworn.py": "ce4b36e8fc3366eb58cd8f5226b3d53c096638c50e3d13ac8b04536b14e40278",
+   "tests/test_sworn_attacks.py": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705"
+  },
+  "python": "3.12.10",
+  "platform": "win32",
+  "styxx_version": "7.47.0",
+  "pytest_summary": "348 passed"
+ },
+ "set_sha256": "cb5d51480321e999647cd898613defc8e74eb71de2eea9d5a88b4df6bc8e14ff"
+}

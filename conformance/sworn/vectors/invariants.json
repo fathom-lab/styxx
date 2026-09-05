@@ -1,0 +1,224 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "invariants",
+ "count": 4,
+ "vectors": [
+  {
+   "id": "369ae228e6162e1e9fe8ebe8772f03203236f6a16cb666d356172df9863c4555",
+   "family": "invariants",
+   "sources": [
+    "tests/test_sworn.py::TestInvariants::test_receipt_shopping_moves_oath_but_cannot_move_sworn"
+   ],
+   "rules": [
+    "A8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9c95a68fd0e34e9189a6550eb8dd2f1fc4107b52570b6bb1db9fe5b99f547f24",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a_result.json": {
+       "mode": "100644",
+       "size": 10,
+       "sha256": "4ae1a8f1ff2bcadb73cd72940fdd935a7b45b45e8a5326aff1fac416a5f1f4fa"
+      },
+      "b_result.json": {
+       "mode": "100644",
+       "size": 22,
+       "sha256": "641d44612a8918858c8e459c1cdc67df40e91c1a1d52edf6b50af3185fd6faf5"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c0b2803f7839c32c90c8540ba5f6f123915f9699d1a84a83ac5a2cd1027e48a9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a_result.json#/x",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "8591f35fb94ae8c02f713828fc667c060ac287811deb19ef36d58c674ece18cc",
+   "family": "invariants",
+   "sources": [
+    "tests/test_sworn.py::TestInvariants::test_invariant_three_silence_buys_no_badge"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "10f0dae0fc4c56f3431b4873a7d2d83994677c90b682a0c0cc3292b16902444c",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "edd976f5f1225b60c5d5f100d00c5b7f5f99cbe16c65b3885dc6762aea9344ef",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "9014f5e81958d57cd5ab1a1e4b2d38e3525a66f240fee6e75a1bab0bfe79f317",
+   "family": "invariants",
+   "sources": [
+    "tests/test_sworn.py::TestInvariants::test_receipt_shopping_moves_oath_but_cannot_move_sworn"
+   ],
+   "rules": [
+    "A8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9c95a68fd0e34e9189a6550eb8dd2f1fc4107b52570b6bb1db9fe5b99f547f24",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a_result.json": {
+       "mode": "100644",
+       "size": 10,
+       "sha256": "4ae1a8f1ff2bcadb73cd72940fdd935a7b45b45e8a5326aff1fac416a5f1f4fa"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c0b2803f7839c32c90c8540ba5f6f123915f9699d1a84a83ac5a2cd1027e48a9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a_result.json#/x",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "9c4f087d268398aeb717991550f2432e3eb1c20bc8856bb116d5cff8a4871226",
+   "family": "invariants",
+   "sources": [
+    "tests/test_sworn.py::TestInvariants::test_invariant_four_coverage_travels_with_every_verdict"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a67bfdd8116a8463484e961aa6a05399427c39b5b2802ec5962f5f1c1e093838",
+    "manifest": "0ff7583b0d497585b7b5c68df90e5208208e9ad658acfd2fe82c1321b3280928",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f84182410df60eab4be1607f4519a8b3a506855062bb9df599e81b0dd0dc9e92",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "short_needle"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 2,
+     "sentence_share": 0.3333
+    }
+   }
+  }
+ ]
+}

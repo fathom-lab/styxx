@@ -1,0 +1,1144 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "receipt_hardening",
+ "count": 22,
+ "vectors": [
+  {
+   "id": "0d466d43423e709cff30dfaeb0eed31960c1f43fe9af5a8e2bbb97d45295b898",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::^res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9f2b33258ea224b749941db5119b2e1338948574a7aec8b6253ad067a40ade4b",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "res.json": {
+       "mode": "100644",
+       "size": 4,
+       "sha256": "57d11d85094fc3ae6eb63609b29714b7e76feb15342e6c999cbb5433806c6834"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "e6f1301277441fb47f3dfcea93da3fdf383a8f76478964cb2bce6e999c5db52a",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::^res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "1dec6106916c8348ebb4bc200eb5f287413035605cb18fc532b148e5351f016e",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_of_the_wrong_shape_is_refused_not_crashed_on[bad3]"
+   ],
+   "rules": [],
+   "mode": "manifest",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "manifest": "9169b36ff3b201b8fbbfd7d60203662b06cacc60d7bb3813e7decbc2f717d174"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "Manifest.from_dict",
+     "code": "manifest_authored_shape",
+     "match": "manifest authored_sha256 must be a list of hex strings"
+    }
+   }
+  },
+  {
+   "id": "227635d8f982de5bf1d9d409d2ce0ec629465ef4b198ca154ca85e4baa18f2fc",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_of_the_wrong_shape_is_refused_not_crashed_on[bad1]"
+   ],
+   "rules": [],
+   "mode": "manifest",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "manifest": "98ceb7ee84c16a29cf2ada15ce92185d8c0f64537b559f7a1fa0de8510241fa5"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "Manifest.from_dict",
+     "code": "manifest_receipts_shape",
+     "match": "manifest receipts must be an object keyed by receipt id"
+    }
+   }
+  },
+  {
+   "id": "306d6a23ddab2370e85fbac4027ac247bef9d32aefbfabbe17907e497f4ec293",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_string_leaf_holding_a_lone_surrogate_is_not_text_and_never_crashes"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "504d2c7930bf64350de1bf7b120b6551842dc600470a0f790e159c64b0ade28a",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 23,
+       "sha256": "c2034edf0f8de6873fcd48306f61b9c0fdfd5cf61edeb1981c92251ab995659d"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "ea003762b52aaf758b5536b05de86a7f0e0683989673ec7682e101981a9e034e",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a.json#/s",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "leaf_not_string"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "37e1305f3b350796e935e965fa57edf66ad7af56331addd3bc507bd98ec10ea1",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_of_the_wrong_shape_is_refused_not_crashed_on[bad2]"
+   ],
+   "rules": [],
+   "mode": "manifest",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "manifest": "af0c9df7d3543f471248554da93fcee8b636d5c2e25c2e94804d218db69d02b0"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "Manifest.from_dict",
+     "code": "manifest_authored_shape",
+     "match": "manifest authored_sha256 must be a list of hex strings"
+    }
+   }
+  },
+  {
+   "id": "411ad5e36ae1bde364112f8a41648c6510760c7f26f62c3fef6e9202781471b6",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_entry_that_is_not_an_object_is_manifest_integrity[entry3]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "968cd08451ce2cb6ae14406a7eb680532360c1d36cbb8a965949491bde475451",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "972f03468ddc57af0a67dd5976f2fa8a6338f182bc416adff7ccc5a70d4c0f4b",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "51a411252e0bb5e16ef1891bad244c086099382f98984e117af03ee4ab7e8225",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "0bd92de119e2c8d335e921213a01dc34cb878c26543f6c338309d23b30e3d113",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "res.json": {
+       "mode": "100644",
+       "size": 4,
+       "sha256": "57d11d85094fc3ae6eb63609b29714b7e76feb15342e6c999cbb5433806c6834"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4ff52216034fd55611d67c7c148a9c040efc5de5da94480bef7d8402328534c4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "597356b41e526c41a2a7f0b998bf7602b5986a63712dafdf67a83d50237495db",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_entry_that_is_not_an_object_is_manifest_integrity[None]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "301017f97acbc82f089dcb0c31aeeaf820d58d671e569e0cf5b52017174ec4f6",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8855c98a483300418be8b63dab1d45785750bfb9e991549f83c48f6f5bede11b",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "5f4bd78ae928f5f2adbdb5de114588b6195d67661e5c0b3090f227300014e2ba",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "0bd92de119e2c8d335e921213a01dc34cb878c26543f6c338309d23b30e3d113",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "396416e5b54c5a1f63ac9d13fb24cccfb78c26ef9e0e2362f3e563655ee18e3d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6415e0bb5c70a7a1cccbde859c3cfab5f1acd3707c4089b0631c7680869c2f7a",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::!res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "6fb8fe1284aa16f11de62c411ea04f46f236f005a9d1993afa4d08269d1b37c3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3ac57d6eb6a044887761d9cfb13382003766ad25687fa5ae018b672f3cde4ff6",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::!res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "75b3f97a04684c6ef8633ac88b4fa00055cec53f5df2538a7aec12aeeb1df521",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::(top)res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "8e4aa04d79185f4e5c2c9293448b33f981e1f577c04df9dcb6170bd001148ab1",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "d3d4c2bacde7c70d9a5869665ed0980cc6c6b28cf916866141e73e4d375797b4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::(top)res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "7e9920e6f2b39d4a480819126b49dffa0a863e0df88cf400c76c743de8a43fa3",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_kind_of_source_that_is_not_a_string_is_kind_of_source_unknown"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "30b28ae866a7e63ca44e008b19a9085901b141cc339a4e271850f874e099dec5",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "72890fded32a60adc97938e831a7390d17b844141edc3d16263598ff86592c9c",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "kind_of_source_unknown"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "95f4d3f52a135eb98b26dc478514691cbdaefaa2a3bd6ef22b3fcded6d876c1b",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::^res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9f2b33258ea224b749941db5119b2e1338948574a7aec8b6253ad067a40ade4b",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b57eabbc5df61dde3251a59c9b814258dc7fcdc0008156010a8dbbdbf24f951e",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::^res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "978ad886627ccde2c0fa7bf7b2585d8399caaa52cd666bb690b8dd32c30e3a44",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_string_leaf_holding_a_lone_surrogate_is_not_text_and_never_crashes"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9bca6d9e7ccc27a9bf9a22190818c242e2844c860d1c7f9703ce7cb61d1e6377",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "a.json": {
+       "mode": "100644",
+       "size": 23,
+       "sha256": "c2034edf0f8de6873fcd48306f61b9c0fdfd5cf61edeb1981c92251ab995659d"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8ff1bba582c179d585d57a62e3badc9ec550b48dc97eb4f0703f7783c4473301",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:a.json#/s",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "leaf_not_numeric"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "9c9caf5fe956f8c82937067e67a032e68ac2908bf2e427d9746f43fa3c600df2",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_entry_that_is_not_an_object_is_manifest_integrity[abc]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "cd552151d3a3ddd6c99ce4c9848e3e558ea53ecf2d7a624f2ff3458ea7733590",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "1f8656bda7c2f31975b64dd71711970e5ae1a5eec523c443efad1b251bc0fc39",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "ac24628046e8c6c32715fc00968fe7c9929d502375f2347a88e0711adb3a43c5",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_of_the_wrong_shape_is_refused_not_crashed_on[bad0]"
+   ],
+   "rules": [],
+   "mode": "manifest",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "manifest": "65b25b4f601c460322a4e9a0305dec37e2a3c5e49c6a2ee46d1caac50db3d5ac"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "Manifest.from_dict",
+     "code": "manifest_receipts_shape",
+     "match": "manifest receipts must be an object keyed by receipt id"
+    }
+   }
+  },
+  {
+   "id": "b19d62e7d8281b705ecc2855e2c05952aca4c0a47349f35e6206e46ad93bce7e",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::/res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e2447c251631171f9c272a5407f86a100e4ad67229490a04ddc5ded171445cd2",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "d67dbb93c5891f3c66a3e4e8a9f743922eac0e4db61c47b885b7e0b3b58ace12",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::/res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "c0abd2d360aa01739fa5e484c42cc8b38205def4ee7c87fc9a2c0a165dbcd49e",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_the_modules_own_add_mints_only_entries_it_can_resolve"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "7f0577cc2c8eb7ef31b56e13c02b7c11537fff1456bdda5b47a29df2a67af0bc",
+    "manifest": "946f54359469ac5ae40c2b1313a771bbe936772eedf0cd1ac7213f73cb4574e9",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c63acc63af72eee62d73dbe0d489101d76203e5bce7e053fbdda43725ed4d0d2",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "c8f4d6796de40b11dbe8abb9b5d72daefea0289501ce7c3cb47e48c0a834dcc6",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_entry_that_is_not_an_object_is_manifest_integrity[5]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "manifest": "2d02be7b60e7587ce573df0d0dbb0b8f431f7c166d4f3e5c0b9fb9498967fd6b",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "56d3fad66874778b11023460e0fd634d0a8596786ec7016fb1a4b353e8cb8fb8",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "manifest_integrity"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "dec0c609c6737d0539bb23ac7f6cd458851e6d76df1c797871d23b2cbc69500f",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::!res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "6fb8fe1284aa16f11de62c411ea04f46f236f005a9d1993afa4d08269d1b37c3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "res.json": {
+       "mode": "100644",
+       "size": 4,
+       "sha256": "57d11d85094fc3ae6eb63609b29714b7e76feb15342e6c999cbb5433806c6834"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "ddd45f17f15972a160457b0583db6a81e0640a45c51eba4f6ddb7f02630b5247",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::!res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "ed1fdb0f4d8055bf3fbab23bdc4f05d7bf6bf43a04a0414254c35b606c1e1502",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::/res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e2447c251631171f9c272a5407f86a100e4ad67229490a04ddc5ded171445cd2",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "res.json": {
+       "mode": "100644",
+       "size": 4,
+       "sha256": "57d11d85094fc3ae6eb63609b29714b7e76feb15342e6c999cbb5433806c6834"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "d7d20bf9692290fd10c02332066a716306821ebd182a73417a904c6811de39f6",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::/res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "ee80506106c8e23ed340c58d3e574529f8c0e497d6940cb6eede84413c90335f",
+   "family": "receipt_hardening",
+   "sources": [
+    "tests/test_sworn.py::TestReceiptHardening::test_git_pathspec_magic_never_reaches_the_tree[path::(top)res.json]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "8e4aa04d79185f4e5c2c9293448b33f981e1f577c04df9dcb6170bd001148ab1",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "handle_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "entries": {
+      "res.json": {
+       "mode": "100644",
+       "size": 4,
+       "sha256": "57d11d85094fc3ae6eb63609b29714b7e76feb15342e6c999cbb5433806c6834"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "6a97a6a101ca44f56a66ab244e6af8eddcbdcc9d3e3f2677b25f2db14f553fd2",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path::(top)res.json",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  }
+ ]
+}
