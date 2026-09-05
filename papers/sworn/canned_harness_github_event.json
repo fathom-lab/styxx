@@ -1,0 +1,19 @@
+{
+ "action": "synchronize",
+ "number": 7,
+ "pull_request": {
+  "number": 7,
+  "title": "canned: a pull request from a fork",
+  "base": {
+   "ref": "main",
+   "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "repo": {"full_name": "fathom-lab/styxx", "fork": false}
+  },
+  "head": {
+   "ref": "feature",
+   "sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "repo": {"full_name": "someone-else/styxx-fork", "fork": true}
+  }
+ },
+ "repository": {"full_name": "fathom-lab/styxx"}
+}
