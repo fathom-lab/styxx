@@ -1,0 +1,12 @@
+{
+ "session_id": "canned-session",
+ "transcript_path": "canned.jsonl",
+ "cwd": "C:\\ws\\canned",
+ "permission_mode": "default",
+ "hook_event_name": "PostToolUse",
+ "prompt_id": "prompt-1",
+ "tool_name": "Bash",
+ "tool_input": {"command": "python -m pytest tests/test_app.py -q"},
+ "tool_use_id": "toolu_canned_01",
+ "tool_response": {"stdout": "...                                    [100%]\n3 passed in 0.42s\n", "stderr": "", "interrupted": false, "isImage": false}
+}

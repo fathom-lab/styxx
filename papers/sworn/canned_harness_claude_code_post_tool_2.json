@@ -1,0 +1,12 @@
+{
+ "session_id": "canned-session",
+ "transcript_path": "canned.jsonl",
+ "cwd": "C:\\ws\\canned",
+ "permission_mode": "default",
+ "hook_event_name": "PostToolUse",
+ "prompt_id": "prompt-1",
+ "tool_name": "Write",
+ "tool_input": {"file_path": "C:\\ws\\canned\\summary.txt", "content": "the suite passed: 3 tests, 0 failures\n"},
+ "tool_use_id": "toolu_canned_02",
+ "tool_response": {"type": "create", "filePath": "C:\\ws\\canned\\summary.txt", "content": "the suite passed: 3 tests, 0 failures\n"}
+}

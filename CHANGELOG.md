@@ -80,6 +80,57 @@ for them, for the document as well as the receipts. No verdict moves; no certifi
 - Tests: `tests/test_certify_by_digest.py` (23, plus one NTFS skip) — twenty-one on temporary
   repositories, one over the tracked corpus by the census's population rule; the existing corpus
   guard and audit tests pass unchanged.
+## [Unreleased] — harness adapters v0.1: manifest minters at L1 and L2, adapters and never a recorder
+
+**`styxx.harness` (NEW), built to `papers/sworn/DESIGN_harness_adapters_2026_09_02.md`, re-sworn and
+frozen in its own commit before any code.** An adapter turns bytes a harness already holds — a test
+report, a CI event payload and a diff, a tool-hook payload — into a `sworn/manifest/0.2` file that
+`styxx.sworn` resolves `rN` spans against. It signs nothing, fetches nothing, verifies no signature,
+observes no process and produces no verdict; the rung on every manifest is the one the caller
+declared, never one the adapter detected, and L1 is printed as weak on every manifest that declares
+it. `python -m styxx.harness junit|github|claude-code ...`.
+
+- **`styxx.harness.junit`.** One report through `styxx.evidence`: r1 passed and r2 failures as ASCII
+  digits (harness errors kept apart), r3 the report bytes, r4 the reader's output in RFC 8785
+  canonical form so its leaves are addressable. r1 and r2 are withheld when the reader parsed no
+  source — a zero from a report that did not parse is absence printed as a number. A report the
+  caller says the agent wrote enters `authored_sha256`, and any span over it is MALFORMED
+  `receipt_author_minted`, end to end.
+- **`styxx.harness.github`.** An event payload, its base and head shas, the event name and a diff
+  the caller fetched (complete only as the caller asserts, so `absent` over a truncated diff is
+  MALFORMED). The fork caveat is printed into every manifest; L2 needs `--after-turn-on-base`, and on
+  a fork `pull_request` (or one whose head repository is absent) also `--base-pinned-workflow`. No
+  network; the environment is read only as argument defaults at the command line.
+- **`styxx.harness.claude_code` and `integrations/claude-code/sworn-hooks/`.** A PostToolUse stager
+  that imports nothing from `styxx` (one atomic file per event, so parallel tool calls and subagents
+  under one session lose nothing) and a Stop finaliser that folds them once per turn into
+  `<dir>/<session_id>.manifest.json` at L1, deterministically. Write and Edit content, the
+  reconstructed post-edit text, the on-disk file and the last assistant message enter
+  `authored_sha256`; Bash stdout and stderr, Read and WebFetch become receipts with honest
+  completeness marks. The manifest directory must resolve outside `cwd` and `CLAUDE_PROJECT_DIR`.
+  Every entry point exits zero on every input: a hook that blocks is a gate without a measured
+  precision. The README opens with the weak rung and documents the settings block for a user's own
+  settings; this repository enables no hook.
+- **Blind, permanently, to files written by shell commands**, and printed so on every manifest:
+  `cat > f`, a heredoc, `python -c`, `git apply` never enter `authored_sha256`, and a later Read of
+  such a file mints a receipt the verifier accepts.
+- **The purity boundary holds in both directions** (`tests/test_harness_purity_boundary.py`):
+  `styxx/sworn.py`, `styxx/evidence.py` and `styxx/__init__.py` import nothing from the package, by
+  AST, by string constant and by `sys.modules` in a fresh interpreter; the JUnit and GitHub modules
+  reference no ambient module below their command line; the PostToolUse script imports nothing from
+  `styxx`.
+- **Receipts and documents** (`papers/sworn/`): the JUnit adapter's own manifest over pytest's report
+  of the adapter tests (`turn_2026_09_05_harness_adapters`, rung L1); one canned manifest per adapter
+  over committed inputs, each with a short sworn document verified through the command line — the
+  Claude Code one SWORN-FAILED on purpose, the agent swearing to a file it wrote.
+  `RESULT_harness_adapters_ship_2026_09_05.md` is sworn against the turn manifest and says which rung
+  and why.
+- **What it does not say:** that any rung has been verified (R6 prints, nothing checks, L3 is
+  reserved); that an L2 manifest is trustworthy beyond the declaration it rests on; that the hook
+  payload shapes are stable; that a canned run is a result; that the format has been measured.
+- **Owed, recorded as owed:** the adversarial pass against `styxx/harness/` before any announcement,
+  with a dated ERRATA on the design; the Action that consumes the GitHub adapter (leg 3, item 4); a
+  run on a runner the author cannot write to, so a manifest can honestly print L2.
 
 ## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
 
