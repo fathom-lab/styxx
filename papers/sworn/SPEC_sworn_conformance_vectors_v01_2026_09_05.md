@@ -309,3 +309,39 @@ it is a measurement of anything.
 vectors move that behaviour into bytes, under one digest, so that the next verifier — in a
 browser, in another language, by another hand — can be shown where it disagrees, byte by byte,
 before anyone is asked to trust it.*
+
+---
+
+## ERRATA — 2026-09-05, after the set was generated
+
+This section is appended; nothing above it is edited.
+
+**E1 — `receipt_check` inputs name a build.** C7 says an edit to `styxx/sworn.py` that moves no
+core leaves `set_sha256` where it was. That holds for every vector except the `receipt_check`
+mode: a receipt the caller passed carries the issuing build's `verifier` block and its `coverage`
+block, so those vectors' ids move with the build and with the observer, and a regeneration after
+a verifier edit reports them dropped and added rather than moved. Their number is a leaf of the
+index (`conformance/sworn/index.json#/modes/receipt_check`) and the RESULT swears it. The
+generator was not taught to normalise an input, because C2 says a receipt is the object the
+caller passed.
+
+**E2 — a third unrepresentable input.** C5 names the NaN manifest and the whole-repository tree.
+The recorder also met a sidecar holding a lone surrogate, which no UTF-8 text can carry; it is
+listed under `index.unvectored.skipped` with the other two, and the list's length is a leaf
+(`#/unvectored/skipped_count`) the RESULT swears.
+
+**E3 — the contract for battery rows has one shape, not two.** The rule contract gives every v0.2
+rule a positive and a negative shape, as written above. A battery row that is HELD by design
+(A1, A2, A3, A5, A6, A7, A8, A11, A12) has no negative to show, so every row carries one `shows`
+sentence and the replay test asserts that a vector tagged with the row shows it; A4, A9 and A10
+are written the same way for uniformity.
+
+**E4 — refusal codes no test produces.** The table has one row per `SystemExit` site, as written
+above; the vectors produce only the rows the tests reach. The rows produced by no vector are
+listed under `index.unvectored.refusal_codes`, beside the unvectored reasons and verdicts, so a
+second verifier holding itself to `code` knows which codes the set cannot check.
+
+**E5 — `SnapshotTree`'s handle commit defaults to none.** C10 does not say what a handle built
+without a commit argument carries. It carries `None`, which is `MemoryTree`'s rule, so a snapshot
+that knows its own commit still says `no_commit` until a document or a caller names one;
+`from_memory` sets both commits from the `MemoryTree`.

@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — sworn conformance v0.1: the tests become bytes a second verifier can be held to
+
+**`conformance/sworn/` (NEW) and `styxx.sworn.SnapshotTree` (NEW), built to
+`papers/sworn/SPEC_sworn_conformance_vectors_v01_2026_09_05.md`, frozen in its own commit before
+any code, with a dated ERRATA appended in the commit that carries the RESULT.** Leg 3, item 2 of
+`papers/PLAN_the_next_level_2026_09_02.md`, under the plan's own label: *the precondition for any
+second verifier; no claim*. Every call the two sworn test files make into `styxx.sworn` is
+recorded as bytes — the document, the manifest, a tree snapshot with modes, the exact receipt
+core the verdict must reproduce — and addressed by one digest, so that a verifier in another
+language can be shown where it disagrees, byte by byte, before anyone is asked to trust it.
+- **The pinned core follows the code, not the prose (C1).** `core_sha256 = sha256(utf8(jcs(core)))`
+  over the verifier's output minus `verifier` minus `coverage`, `schema` and `format` included;
+  the receipt's own `digest` is build-bound and is never a vector's number.
+- **Six modes, inputs as bytes (C2).** `inline`, `sidecar`, `canon`, `load`, `manifest`,
+  `receipt_check`; a manifest is `core()` plus its declared digest so a tampered digest replays;
+  a tree is a snapshot taken after the call with the handle's own commit beside it.
+- **The clock and the git dates are pinned (C3); the floor is pinned, the observer is not (C4).**
+  `diff_claim_*` and `claimdetect_version` travel in `observer.json`, outside the digest.
+- **Nothing is dropped silently (C5); a moved core refuses regeneration (C6).** The calls the set
+  cannot carry are listed with their test ids; the reasons, verdicts and refusal codes no vector
+  produces are listed; `gen_vectors.py` refuses a moved core or a nondeterministic id in the
+  manner of `reissue_receipts_v1.py`, and `--check` regenerates to the committed digest or exits 1.
+- **`styxx.sworn.SnapshotTree` (C10):** a tree snapshot with modes that reproduces every
+  `GitTree` reason but `git_unavailable` without a git binary; pure, additive, beside
+  `MemoryTree`. Git enters through `conformance/sworn/recorder.py` and nowhere in the verifier.
+- **`tests/test_sworn_conformance.py`**, with nothing skipped: blobs hash to their keys, family
+  files to their index entries, `set_sha256` re-derives, every id re-derives, every vector
+  replays, every rule has both shapes, the closed sets are produced or listed, every file under
+  `conformance/` is `-text` and CR-free, no file wears a suffix another sweep claims, and the
+  committed set regenerates to its own digest.
+- **The RESULT** (`RESULT_sworn_conformance_v01_ships_2026_09_05.md`, sworn) binds every count
+  and the set digest to leaves of `conformance/sworn/index.json` at the commit that carries them;
+  the set is never regenerated in place after it.
+- **What it does not say:** that agreement on these vectors makes a verifier correct, that the
+  vectors cover the format (they cover what two test files exercise, written by the builder),
+  that the fuzz family is adversarial, or that any second verifier exists.
+- **Owed, unchanged and restated:** a `committed` family from `tests/test_sworn_dogfood.py`; a
+  `refusal` attribute on the verifier's `SystemExit` if a second verifier needs codes at the
+  source; the `verdict_core()` split of `verify()`; the Python-versus-JavaScript semantics the
+  vectors pin and item 5 must implement; the measurement, the prior-art survey, the harness
+  adapters and a release, as before.
+
 ## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
 
 **`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, committed before
