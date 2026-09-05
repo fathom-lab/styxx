@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+- **Two things the suite was saying about the machine rather than the repository, both found by
+  building this leg, both fixed here.** A subprocess that dies having written nothing is not a
+  digest that moved: the conformance regeneration check spawns a pytest run, and under this box's
+  memory pressure that child produced no output at all while the assertion reported it as though
+  the committed vector set had drifted. It now names a spawn failure with its exit code and the
+  bytes each stream produced, and skips; only a refusal the tool actually printed is a drift. And
+  a guard's population is what the repository is, not what a glob matched on one machine: the
+  release ceiling guard walked the filesystem, so a git-ignored release bundle sitting in one
+  checkout failed it while CI, which clones, passed. It now intersects with `git ls-files`, proved
+  in both directions before shipping — an ignored file carrying a bare figure no longer fails the
+  guard, and the same file, tracked, still does. Nine other test files still define a population
+  by walking the tree; they are owed, not swept.
+
 ## [Unreleased] — leg 2: the sworn measurement's machinery, built and dry-run, with nothing run as a measurement
 
 **`papers/sworn/measurement/` (NEW), built to `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`,
