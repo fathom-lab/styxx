@@ -587,6 +587,42 @@ def _report(index: dict, counts: Dict[str, Dict[str, int]]) -> None:
     print("  set_sha256 %s" % index["set_sha256"])
 
 
+
+def _drift_detail(committed: dict, regenerated: dict) -> str:
+    """Which part of the set moved. A digest that only says "different" cannot be acted on."""
+    lines = ["  what moved:"]
+    cf = committed.get("families") or {}
+    rf = regenerated.get("families") or {}
+    for name in sorted(set(cf) | set(rf)):
+        c = (cf.get(name) or {}).get("sha256")
+        r = (rf.get(name) or {}).get("sha256")
+        if c != r:
+            lines.append("    family %-20s committed %s  regenerated %s  (count %s -> %s)"
+                         % (name, str(c)[:16], str(r)[:16],
+                            (cf.get(name) or {}).get("count"), (rf.get(name) or {}).get("count")))
+    cb = (committed.get("blobs") or {}).get("sha256")
+    rb = (regenerated.get("blobs") or {}).get("sha256")
+    if cb != rb:
+        lines.append("    blobs.json           committed %s  regenerated %s  (count %s -> %s)"
+                     % (str(cb)[:16], str(rb)[:16], (committed.get("blobs") or {}).get("count"),
+                        (regenerated.get("blobs") or {}).get("count")))
+    skip = {"set_sha256", "provenance", "families", "blobs"}
+    for key in sorted(set(committed) | set(regenerated)):
+        if key in skip:
+            continue
+        if committed.get(key) != regenerated.get(key):
+            lines.append("    index.%-15s committed %s" % (key, _short(committed.get(key))))
+            lines.append("    %-21s regenerated %s" % ("", _short(regenerated.get(key))))
+    if len(lines) == 1:
+        lines.append("    nothing named above differs — the drift is in the index's own shape")
+    return "\n".join(lines)
+
+
+def _short(v) -> str:
+    t = json.dumps(v, sort_keys=True, default=str)
+    return t if len(t) <= 220 else t[:200] + "…(%d chars)" % len(t)
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--sources", nargs="+", default=SOURCES)
@@ -610,8 +646,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             if committed is None:
                 raise Refused("no committed set to check against at %s" % out_dir)
             if committed["set_sha256"] != index["set_sha256"]:
-                raise Refused("set_sha256 drifted: committed %s, regenerated %s"
-                              % (committed["set_sha256"], index["set_sha256"]))
+                raise Refused("set_sha256 drifted: committed %s, regenerated %s\n%s"
+                              % (committed["set_sha256"], index["set_sha256"],
+                                 _drift_detail(committed, index)))
             print("CHECK OK: the set regenerates to its own digest")
             return 0
         if committed is not None:

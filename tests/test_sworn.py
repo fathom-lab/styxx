@@ -1124,7 +1124,14 @@ class TestWorkedExamplesOnTheStruct1Receipt:
 
     @pytest.fixture
     def tree(self):
-        return MemoryTree({"stage2_result.json": STAGE2.read_bytes()}, commit=C40)
+        # Content identity modulo newlines — the corpus doctrine
+        # (corpus_audit._receipt_sha_matches, charon._content_sha256). This receipt is LF in
+        # git and CRLF in a Windows checkout; a conformance vector that embedded the
+        # checkout's copy would not reproduce on another platform, and the file itself may
+        # not be renormalised because three committed certificates cite it. Every assertion
+        # below reads a JSON leaf, so no verdict depends on the newlines.
+        blob = STAGE2.read_bytes().replace(b"\r\n", b"\n")
+        return MemoryTree({"stage2_result.json": blob}, commit=C40)
 
     @pytest.mark.parametrize("text,receipt,expected", [
         ("precision 0.4211", "path:stage2_result.json#/arms/flagged/A_share", "HELD"),

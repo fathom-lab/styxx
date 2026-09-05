@@ -136,13 +136,13 @@
   },
   "worked_examples": {
    "file": "vectors/worked_examples.json",
-   "sha256": "68311d9841c25ca3db5db6acd7341058ff127dc634974247de47f8d80f526f1f",
+   "sha256": "3fe6877788cdeccfef962486b7c2d472b4859bb3884e6a273eb0fa97f79fcae6",
    "count": 15
   }
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "2cbd1078fbc47d364fa06ed9d4b23f44378cbf930e91817f6ddaeee456eb2e0d",
+  "sha256": "cddcd1a5d34b96ef51320d7e3fb55d4d95a6d9ca7da3d30a3581043069eff205",
   "count": 3977
  },
  "observer": {
@@ -444,7 +444,7 @@
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
   "sworn_sha256": "bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b",
   "sources_sha256": {
-   "tests/test_sworn.py": "ce4b36e8fc3366eb58cd8f5226b3d53c096638c50e3d13ac8b04536b14e40278",
+   "tests/test_sworn.py": "5591df490eed02f9090c4fc317f8567605ee08835d5541de4f1b36b098309640",
    "tests/test_sworn_attacks.py": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705"
   },
   "python": "3.12.10",
@@ -452,5 +452,5 @@
   "styxx_version": "7.47.0",
   "pytest_summary": "348 passed"
  },
- "set_sha256": "cb5d51480321e999647cd898613defc8e74eb71de2eea9d5a88b4df6bc8e14ff"
+ "set_sha256": "96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e"
 }

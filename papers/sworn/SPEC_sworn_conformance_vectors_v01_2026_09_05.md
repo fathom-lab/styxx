@@ -345,3 +345,33 @@ second verifier holding itself to `code` knows which codes the set cannot check.
 without a commit argument carries. It carries `None`, which is `MemoryTree`'s rule, so a snapshot
 that knows its own commit still says `no_commit` until a document or a caller names one;
 `from_memory` sets both commits from the `MemoryTree`.
+
+---
+
+## ERRATA — 2026-09-05, after CI ran the set on Linux
+
+**C7 said the set digest pins every byte transitively. It did not say which machine's bytes.** The
+first committed set was generated on Windows and refused to regenerate on Linux: same 3618 vectors,
+same 3977 blobs, every vector replaying, and a different `set_sha256`. The refusal printed two
+digests and nothing else, which cannot be acted on; `gen_vectors.py --check` now names what moved —
+each family whose file hash differs, whether `blobs.json` differs, and any other index field — and
+that report named exactly two things: the `worked_examples` family and the blob store.
+
+**The cause.** `TestWorkedExamplesOnTheStruct1Receipt` is the only fixture whose bytes come off the
+working tree: it reads `papers/closed-model-frontier/stage2_result.json`, which is LF in git and
+CRLF in a Windows checkout, and is not `-text` pinned. The set therefore embedded whichever copy
+the generating machine held.
+
+**The repair, and what it is not.** The file itself is untouched — three committed certificates
+cite it, and a receipt is history. The fixture now reads it with content identity modulo newlines,
+which is what `corpus_audit._receipt_sha_matches` and `charon._content_sha256` already do to every
+receipt in the corpus; every assertion in that class reads a JSON leaf, so no verdict moved. The
+set was regenerated once under C6's stated path, and the digest moved from
+`cb5d51480321e999647cd898613defc8e74eb71de2eea9d5a88b4df6bc8e14ff` to
+`96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e` — **which is the digest the
+Linux run had already produced**, so the two platforms now agree rather than one having been
+declared correct.
+
+**What this ERRATA adds to C7:** a vector's bytes may never come off the working tree unnormalised.
+A fixture that reads a committed file reads it modulo newlines, or the set is a fact about the
+machine that generated it rather than about the format.
