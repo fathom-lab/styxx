@@ -64,3 +64,10 @@ papers/charon/** -text
 # line a checkout would rewrite the JSON and a re-hash would no longer match the index.
 # tests/test_sworn_conformance.py fails if any tracked file under conformance/ is not -text.
 conformance/** -text
+# receipt binding: sworn RESULT triple, byte-pinned like every other sworn artifact
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.md -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn.json -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn-receipt.json -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.md -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.sworn.json -text
+papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.sworn-receipt.json -text
