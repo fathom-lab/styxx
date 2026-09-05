@@ -546,16 +546,22 @@ def smallest_n_clearing(bar: float, misses: int = 0, z: float = WILSON_Z, limit:
 
 def bind_inputs(paths: List[Path], root=None) -> dict:
     root = Path(root or ROOT)
-    head = head_commit(root)
+    try:
+        head = head_commit(root)
+    except SystemExit:                           # no repository here: named, never committed
+        head = None
     rows = []
     for p in paths:
         p = Path(p)
-        rel = p.resolve().relative_to(root.resolve()).as_posix()
+        try:
+            rel = p.resolve().relative_to(root.resolve()).as_posix()
+        except ValueError:                       # outside the repository: named, never committed
+            rel = p.resolve().as_posix()
         raw = p.read_bytes()
         content = raw.replace(b"\r\n", b"\n")
         rc, out = git("hash-object", "--stdin", root=root, stdin=raw)
         blob = out.decode("ascii").strip() if rc == 0 else None
-        rc, out = git("ls-tree", head, "--", rel, root=root)
+        rc, out = git("ls-tree", head or "HEAD", "--", rel, root=root) if head else (1, b"")
         committed_blob = out.split()[2].decode("ascii") if rc == 0 and out.split() else None
         rows.append({"path": rel, "raw_sha256": sha256_bytes(raw), "content_sha256": sha256_bytes(content),
                      "blob": blob, "committed": bool(blob) and blob == committed_blob})

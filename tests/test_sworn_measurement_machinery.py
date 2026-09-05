@@ -462,3 +462,215 @@ class TestCommittedOutputs:
         assert lines and all(len(ln.split()) == 3 for ln in lines)
         assert not list((MEAS / "twins").glob("*.canary-twin.json"))
         assert (MEAS / "keys" / "sworn_measurement_canary_key.sha256").exists()
+
+
+# ============================================================ rung 4: the seats, the scorer, the dry run
+
+import dry_run as DR                                 # noqa: E402
+import score as SCORE                                # noqa: E402
+import seat_claude as SCL                            # noqa: E402
+import seat_local as SL                              # noqa: E402
+
+
+@pytest.fixture(scope="module")
+def dryrun(tmp_path_factory):
+    """One whole dry run under a temp root: the fixture the scorer tests fold.
+
+    It is the same call the committed receipt came from, on its own synthetic bytes, so a change
+    that breaks the ladder breaks this fixture before it reaches a commit.
+    """
+    root = tmp_path_factory.mktemp("dryrun_root")
+    out, sealed = root / "dryrun", root / "sealed"
+    summary = DR.main_run(out, sealed)
+    return {"root": root, "out": out, "sealed": sealed, "summary": summary,
+            "result": json.loads((out / "dry_run_result.json").read_text(encoding="utf-8"))}
+
+
+def _walk(node, path=""):
+    if isinstance(node, dict):
+        for k, v in node.items():
+            for row in _walk(v, path + "/" + str(k)):
+                yield row
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            for row in _walk(v, path + "/%d" % i):
+                yield row
+    else:
+        yield path, node
+
+
+class TestSeatRunners:
+    """No seat reads a real document before the preregistration commit."""
+
+    @pytest.mark.skipif(not (MEAS / "packet_L.json").exists(), reason="packets not built")
+    @pytest.mark.parametrize("mod", [SCL, SL])
+    def test_a_seat_over_the_real_packet_refuses_without_a_prereg(self, mod):
+        with pytest.raises(SystemExit) as ei:
+            mod.run("L", 1, MEAS, dry_run=False)
+        msg = str(ei.value)
+        assert msg.startswith("REFUSED:") and "PREREG" in msg
+
+    @pytest.mark.skipif(not (MEAS / "keys").exists(), reason="keys not built")
+    def test_the_key_digests_are_in_the_tree_before_any_seat_file_is(self):
+        assert sorted(p.name for p in (MEAS / "keys").glob("*.sha256")) == [
+            "sworn_measurement_canary_key.sha256", "sworn_measurement_key_L.sha256",
+            "sworn_measurement_key_R.sha256"]
+        assert not (MEAS / "seat_outputs").exists(), "a seat file exists before the PREREG commit"
+
+    @pytest.mark.skipif(not (MEAS / "packet_L.json").exists(), reason="packets not built")
+    def test_the_transport_check_refuses_a_packet_that_is_not_synthetic(self):
+        with pytest.raises(SystemExit, match="REFUSED"):
+            SCL.run("L", 1, MEAS, transport_check=True, max_items=1)
+
+    def test_a_dry_run_seat_calls_no_transport_writes_once_and_ledgers_every_item(self, dryrun):
+        seat = json.loads((dryrun["out"] / "seat_outputs" / "claude" / "L-seat1.json")
+                          .read_text(encoding="utf-8"))
+        assert seat["verdict"] == "DRY-RUN" and seat["dry_run"] is True
+        assert seat["contamination_probe"] is None and seat["errors"] == []
+        packet = json.loads((dryrun["out"] / "packet_L.json").read_text(encoding="utf-8"))
+        assert len(seat["items"]) == len(packet["items"])
+        ledger = (dryrun["out"] / "seat_outputs" / "claude" / "ledger.jsonl").read_text(encoding="utf-8")
+        rows = [json.loads(ln) for ln in ledger.splitlines()]
+        assert all(r["dry_run"] for r in rows) and not any(r["item_id"] == "PROBE" for r in rows)
+        assert len([r for r in rows if r["panel"] == "L" and r["seat"] == 1]) == len(packet["items"])
+        with pytest.raises(SystemExit, match="written once"):
+            SCL.run("L", 1, dryrun["out"], dry_run=True, root=dryrun["root"])
+
+    def test_an_unparsed_answer_is_recorded_and_not_guessed(self, dryrun):
+        seat = json.loads((dryrun["out"] / "seat_outputs" / "claude" / "L-seat2.json")
+                          .read_text(encoding="utf-8"))
+        assert seat["unparsed"] == ["L-0001"]
+        row = [r for r in seat["items"] if r["id"] == "L-0001"][0]
+        assert row["parsed"] is False and "brackets" not in row
+
+    def test_a_transport_reason_is_this_files_sentence_and_never_the_exceptions(self):
+        import subprocess
+        assert SCL._classify(subprocess.TimeoutExpired("claude", 1)) == \
+            "the transport did not answer inside the timeout"
+        assert SCL._classify(FileNotFoundError(2, "no such file")) == \
+            "the transport executable was not found"
+        assert SCL._classify(ValueError("Expecting value: line 1 column 1")) == \
+            "the transport's bytes were not the JSON envelope the transport promises"
+        assert SCL._classify(ZeroDivisionError("division by zero")) == \
+            "the transport call raised ZeroDivisionError"
+
+
+class TestDryRunRefusals:
+    def test_it_refuses_the_real_sealed_directory(self, tmp_path):
+        with pytest.raises(SystemExit, match="real sealed directory"):
+            DR.main_run(tmp_path / "dryrun", C.SEALED)
+
+    def test_it_refuses_an_output_directory_that_is_not_named_dryrun(self, tmp_path):
+        with pytest.raises(SystemExit, match="only under a directory named dryrun"):
+            DR.main_run(tmp_path / "somewhere", tmp_path / "sealed")
+
+    def test_it_refuses_a_population_entry_that_resolves_to_a_file_in_the_repository(self):
+        real = "papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05"
+        assert (ROOT / (real + ".md")).exists()
+        pop = {"pinned_commit": "a" * 40, "excluded": [],
+               "documents": [{"doc_id": "SYN-99", "stem": real, "source": {"kind": "synthetic"}}]}
+        with pytest.raises(SystemExit, match="resolves to a file in the repository"):
+            DR.refuse_unless_synthetic(pop, ROOT)
+
+    def test_it_refuses_a_doc_id_that_does_not_begin_syn(self):
+        pop = {"pinned_commit": "a" * 40, "excluded": [],
+               "documents": [{"doc_id": "D01", "stem": "dryrun/D01", "source": {"kind": "synthetic"}}]}
+        with pytest.raises(SystemExit, match="does not begin SYN-"):
+            DR.refuse_unless_synthetic(pop, ROOT)
+
+    def test_the_scorer_refuses_to_fold_a_synthetic_population_outside_a_dry_run(self, dryrun):
+        with pytest.raises(SystemExit, match="folds only under --dry-run"):
+            SCORE.fold(dryrun["out"], dryrun["sealed"], dryrun["out"] / "x.json", dry_run=False,
+                       root=dryrun["root"])
+
+    def test_a_second_dry_run_into_the_same_directory_refuses(self, dryrun):
+        with pytest.raises(SystemExit, match="not empty"):
+            DR.main_run(dryrun["out"], dryrun["sealed"])
+
+
+class TestScorer:
+    """Every gate reproduced from the dry run's fixture, and no rate surviving it."""
+
+    def test_every_gate_of_the_spec_is_present_and_marked_proposed_unsigned(self, dryrun):
+        g = dryrun["result"]["gates"]
+        assert sorted(g) == ["G_C", "G_D", "G_F", "G_G1", "G_P", "G_R", "G_S1", "G_S1X", "G_S2", "G_U"]
+        for name, obj in g.items():
+            if name == "G_D":
+                for panel in obj.values():
+                    for fam in panel.values():
+                        assert fam["proposed_unsigned"] is True
+            else:
+                assert obj["proposed_unsigned"] is True, name
+
+    def test_the_dry_run_is_not_quotable_and_says_so_in_its_first_keys(self, dryrun):
+        r = dryrun["result"]
+        assert list(r)[:3] == ["schema", "dry_run", "quotable"]
+        assert r["dry_run"] is True and r["quotable"] is False
+        assert r["prereg"] is None and r["population"]["synthetic"] is True
+
+    def test_no_share_interval_kappa_or_q3_value_survives_a_dry_run(self, dryrun):
+        rate_keys = ("share", "kappa", "wilson95", "difference", "sentence_share",
+                     "panel_coverage", "twin", "original")
+        seen = 0
+        for path, value in _walk(dryrun["result"]):
+            leaf = path.rsplit("/", 1)[-1]
+            if leaf in rate_keys or (leaf.isdigit() and path.rsplit("/", 2)[-2] == "wilson95"):
+                assert value in (SCORE.NORATE, SCORE.WITHHELD), (path, value)
+                seen += 1
+        assert seen > 10
+
+    def test_a_family_that_misses_its_decoys_voids_its_panel_and_the_share_is_withheld(self, dryrun):
+        g = dryrun["result"]["gates"]
+        assert g["G_D"]["R"]["claude"]["pass"] is True
+        assert g["G_D"]["R"]["local"]["pass"] is False
+        assert g["G_D"]["R"]["local"]["title"] == SCORE.TITLES["G_D"]
+        assert g["G_F"]["families_clearing"] == {"L": 2, "R": 1}
+        assert g["G_P"]["share"] == SCORE.WITHHELD and g["G_P"]["labels"] == "one-family"
+        assert g["G_P"]["denominator"] > 0, "the counts stay when the share is withheld"
+        assert "G_P" in dryrun["result"]["withheld"]
+
+    def test_the_two_family_panel_reaches_final_labels_and_the_counts_add_up(self, dryrun):
+        c = dryrun["result"]["cells"]
+        assert c["labels"] == "final"
+        assert c["final_labels"]["LOAD-BEARING"] > 0 and c["final_labels"]["NOT"] > 0
+        pop = dryrun["result"]["population"]
+        assert sum(c["final_labels"].values()) == pop["units"], "every unit takes exactly one final cell"
+        assert c["unlocated_brackets"]["claude"] > 0 and c["located_by_second_pass"]["local"] >= 1
+        assert c["unparsed_items"]["claude"] == 1
+
+    def test_a_malformed_canary_counts_in_n_and_not_in_k(self, dryrun):
+        gc = dryrun["result"]["gates"]["G_C"]
+        per = gc["per_twin"]
+        assert sum(v["k"] for v in per.values()) == gc["k"]
+        assert sum(v["n"] for v in per.values()) == gc["n"]
+        missed = sum(v["malformed"] + v["unresolved"] for v in per.values())
+        assert missed == 1 and gc["n"] - gc["k"] == missed
+        assert gc["smallest_n_clearing_bar_at_k_eq_n"] == 73
+
+    def test_the_lock_binds_the_scorer_the_packets_the_twins_and_the_keys(self, dryrun):
+        names = [Path(row["path"]).name for row in dryrun["result"]["lock"]["inputs"]]
+        for want in ("score.py", "packet_L.json", "packet_R.json", "canary_digest.txt",
+                     "sworn_measurement_key_L.sha256", "sworn_measurement_key_R.sha256",
+                     "sworn_measurement_canary_key.sha256"):
+            assert want in names, want
+        for row in dryrun["result"]["lock"]["inputs"]:
+            assert row["raw_sha256"] and row["content_sha256"]
+
+    def test_the_result_carries_the_disclosures_the_readme_lists_verbatim(self, dryrun):
+        assert dryrun["result"]["disclosure"] == list(SCORE.DISCLOSURE)
+        assert len(SCORE.DISCLOSURE) == 6
+
+    def test_the_dry_run_wrote_no_sworn_artifact_and_every_byte_it_wrote_is_lf(self, dryrun):
+        for p in dryrun["out"].rglob("*"):
+            if not p.is_file():
+                continue
+            assert not p.name.endswith((".sworn.json", ".sworn-receipt.json"))
+            assert not p.name.startswith("PREREG_")
+            if p.suffix in (".json", ".txt", ".jsonl"):
+                assert b"\r" not in p.read_bytes(), p.name
+
+    def test_the_sealed_directory_kept_the_twins_and_the_tree_kept_only_digests(self, dryrun):
+        twins = list((dryrun["sealed"] / CAN.TWINS_DIRNAME).glob("*.canary-twin.json"))
+        assert twins
+        assert not list(dryrun["out"].rglob("*.canary-twin.json"))
+        assert not list((dryrun["out"] / "keys").glob("*.json"))

@@ -88,7 +88,14 @@ def make_document(k: int, rng: random.Random) -> Tuple[bytes, Dict[str, bytes]]:
 
 def make_excluded(k: int, rng: random.Random) -> Tuple[bytes, Dict[str, bytes]]:
     """A synthetic excluded document: eight pointer spans over a table with numeric siblings, eight
-    number-bearing LOAD-BEARING sentences and eight digit-free NOT sentences, for the decoys."""
+    number-bearing LOAD-BEARING sentences and eight digit-free NOT sentences, for the decoys.
+
+    Every narrative sentence opens with three words no other sentence in the document opens with.
+    That is not cosmetic: a Panel L bracket is located by exact byte search of its opening three
+    words, so a document that repeats an opening leaves the bracket unlocated by the rule, and a
+    decoy passage cut across two such paragraphs would gate the panel on the fixture's prose
+    rather than on the seat's answer.
+    """
     base = "synx/%02d" % k
     rows = []
     lines = ["# SYNX document %02d: a synthetic format document" % k, "",
@@ -97,13 +104,15 @@ def make_excluded(k: int, rng: random.Random) -> Tuple[bytes, Dict[str, bytes]]:
         v = Decimal(j) / Decimal(10) + Decimal("0.01")
         rows.append({"value": str(v), "other": str(v + Decimal("0.3")), "name": "row %s" % _NAMES[j]})
         lines.append(_sp("Row %s scored %s on the check." % (_NAMES[j], v), "path:%s/table.json#/rows/%d/value" % (base, j), "numeric")
-                     + " This sentence restates the row without a number.")
+                     + " Restatement %s carries the row without a number." % _NAMES[j])
         lines.append("")
     for j in range(8):
-        lines.append("The gate cleared at 0.%d1 of the items in this paragraph. A sentence about method follows it." % (j + 1))
+        lines.append("The %s gate cleared at 0.%d1 of the items in this paragraph. Method note %s follows it."
+                     % (_NAMES[j], j + 1, _NAMES[j]))
         lines.append("")
     for j in range(8):
-        lines.append("This paragraph explains a convention and nothing depends on it. Another plain sentence sits beside it.")
+        lines.append("The %s paragraph explains a convention and nothing depends on it. Another %s sentence sits beside it."
+                     % (_NAMES[j], _NAMES[j]))
         lines.append("")
     table = json.dumps({"rows": rows}, indent=1)
     for r in rows:
