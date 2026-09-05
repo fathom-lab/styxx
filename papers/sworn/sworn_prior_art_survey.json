@@ -6,8 +6,8 @@
  "status": "IN_PROGRESS",
  "counts": {
   "sources_in_list": 19,
-  "sources_scored": 5,
-  "read": 5,
+  "sources_scored": 10,
+  "read": 10,
   "skimmed": 0,
   "unfetchable": 0,
   "leads_not_scored": 0
@@ -322,6 +322,291 @@
    "text_sha256": "d3761c8399462e7868c31ce0b18d016b77eef613502c95a677a03b2139045f7f",
    "text_bytes": 140456,
    "text_saved_as": "S05_cite_html.html"
+  },
+  {
+   "id": "S06",
+   "source": "honest-signal",
+   "title_as_reported": "honest-signal — a method for doing honest research with AI agents; `firewall`, the pre-registration gate as software",
+   "authors": "alexcard3 (Alessandro Cardurani)",
+   "venue_and_date": "github.com/alexcard3/honest-signal, main at commit 96b6f9c6df0f916ead6f2f00f38990546eda606f, committed 2026-09-04T22:07:37Z",
+   "what_it_is": "A gate wired as a required check that reads the git record and enforces four rules on every claim a repository ships: a result must have a pre-registration, the pre-registration commit must strictly precede the result commit, the pre-registration blob must not have changed since it was registered, and the kill criterion must not be structurally vacuous. The gap between the two commits is printed and never judged.",
+   "q1_binds": [
+    "bar",
+    "assertion"
+   ],
+   "q2_mints": "author",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "hash",
+    "absent",
+    "numeric",
+    "other: strict commit precedence"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/alexcard3/honest-signal/main/README.md",
+    "https://raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py",
+    "https://api.github.com/repos/alexcard3/honest-signal/commits/main"
+   ],
+   "fetched_at": "2026-09-05T23:24:00Z",
+   "quote": "A pre-registration is worth something only if it provably came FIRST. Git can prove that.",
+   "quote_url": "https://raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The gate attaches to a claim id and its kill criterion — a bar with a threshold, a stated measurement and a future date — not to a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Three kind-shaped checks, all over the author's own registration rather than over evidence bytes: the registered blob must be byte-identical to the one first committed (exact-identity, the hash kind's job), the criterion must not contain any of an enumerated set of vacuous phrases (an absence check), and it must name a number (a numeral must be present)."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The evidence is the git record itself: the author writes the commits but cannot make a later one precede an earlier one, nor edit a registered blob, without the gate seeing it. The property this clause wants — bytes the author cannot write to after the fact — is obtained from the version-control system for the object 'when was this promised', not for the numbers a report states."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The project states, row by row rather than as an average, how much of its own record sits outside the gate's coverage — of eighteen hypotheses, four with a provably preceding pre-registration commit, two with prediction and verdict in one commit, twelve registered off-repo. It is authored in the README over hypotheses; the tool itself prints only passed and failed over the claims it found."
+    }
+   },
+   "differs_from_sworn": "It binds when a promise was made, not what a report says, and it is already this lab's named prior art for that. Its empty case is the near-miss worth recording: with no claims found it prints that there is nothing to verify and returns the success code, which is the outcome a distinct verdict for a document that bound nothing exists to prevent.",
+   "text_sha256": "d9de0e34aeabe2496b45386d216469755debcdd47a0c5394b635c129bcce9b1e",
+   "text_bytes": 59684,
+   "text_saved_as": "S06_honest_signal_combined.txt"
+  },
+  {
+   "id": "S07",
+   "source": "nanopublications",
+   "title_as_reported": "Nanopublication Guidelines (working draft) and nanopub.net",
+   "authors": "the Nanopublication community / nanopub.net stewards",
+   "venue_and_date": "nanopub.net, working draft as served 2026-09-05",
+   "what_it_is": "A publication unit of three named RDF graphs — an assertion, the provenance of that assertion, and the provenance of the publication itself — identified by a trusty URI whose integrity key is computed over the serialised content.",
+   "q1_binds": [
+    "assertion",
+    "record"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://nanopub.net/",
+    "https://nanopub.net/guidelines/working_draft/"
+   ],
+   "fetched_at": "2026-09-05T23:28:00Z",
+   "quote": "the recommended way of assigning integrity keys to nanopublications",
+   "quote_url": "https://nanopub.net/guidelines/working_draft/",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The bound object is an RDF assertion — a triple in a named graph, authored as structure. A sentence of prose is never the unit; if one existed it would first have to be rewritten as triples."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind, and pointed the other way: the trusty URI's key is computed over the nanopublication's own serialised bytes, so the hash establishes that the record has not changed rather than that a claim matches evidence bytes held elsewhere."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The format has a slot for who produced what and separates it from the claim: an assertion may be attributed to one identifier and published by another, so the publication-info graph can be minted by a party other than the asserter. Nothing in the format checks the assertion against those bytes."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the strongest format in the survey for saying who said what and proving the record has not moved, and it obtains that by making the claim structure rather than prose. There is no verifier verdict to be distinct or not, and nothing outside the assertion graph is counted.",
+   "text_sha256": "c0cb7bb6ad9f0d82ee9cbaa307a92bb82f0e75339c7ddad4d7dc847698ed6988",
+   "text_bytes": 29709,
+   "text_saved_as": "S07_nanopub_combined.txt"
+  },
+  {
+   "id": "S08",
+   "source": "knitr / Sweave",
+   "title_as_reported": "knitr: Control output — Manipulate six types of chunk output and inline output (Yihui Xie); Sweave User Manual (Friedrich Leisch, R Core Team)",
+   "authors": "Yihui Xie; Friedrich Leisch and the R Core Team",
+   "venue_and_date": "yihui.org/knitr, page dated 2012-01-25, served 2026-09-05; Sweave manual, R-devel utils doc, 15 pages",
+   "what_it_is": "Literate-programming engines for R: code chunks are evaluated when the document is rendered, and an inline expression in the running prose is replaced by the string the expression evaluates to, so a reported value comes from the computation instead of being typed.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://yihui.org/knitr/",
+    "https://yihui.org/knitr/demo/output/",
+    "https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf"
+   ],
+   "fetched_at": "2026-09-05T23:34:00Z",
+   "quote": "\\Sexpr{expr} is replaced by the string resulting from coercing the value of the expression expr to a character vector",
+   "quote_url": "https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a scalar dropped into a sentence — the inline expression is replaced by its own value. The sentence around it is prose the engine never looks at."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is exactly this clause's host: a report written after the analysis, in the author's own prose, with the computed values sitting inside the running text. Alongside S02 this is the closest occupant of the host clause."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the reason a check is needed at all rather than an instance of one: the value is substituted, not compared, so nothing can disagree and there is no verdict to report. The evaluation is the renderer running the author's own code on the author's machine, which is the level the rung ladder calls L0. Whether the same document re-rendered by a runner after the author's turn would change that answer was not scored: no such execution regime is in the frozen source list.",
+   "text_sha256": "bed264e9922ef8df33efa374760678670e21066b297ba080f874dcd5fd0afbc6",
+   "text_bytes": 60729,
+   "text_saved_as": "S08_knitr_sweave_combined.txt"
+  },
+  {
+   "id": "S09",
+   "source": "Quarto inline computed values",
+   "title_as_reported": "Inline Code — Quarto (Guide > Computations > Inline Code)",
+   "authors": "Posit / the Quarto project",
+   "venue_and_date": "quarto.org, page served 2026-09-05",
+   "what_it_is": "A single-backtick inline expression, written in the running markdown and evaluated by the Jupyter, Knitr or OJS engine when the document is rendered, so a value stated in a sentence is the value the code produced.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://quarto.org/docs/computations/inline-code.html"
+   ],
+   "fetched_at": "2026-09-05T23:38:00Z",
+   "quote": "Inline code allows you to execute code within markdown, e.g. to automatically use the most up-to-date computations in narrative.",
+   "quote_url": "https://quarto.org/docs/computations/inline-code.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a pre-computed scalar placed mid-sentence; the guidance is explicit that an inline expression should be a simple value and not do real work. The sentence is not the object."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a narrative document written after the computation, and the stated purpose of the feature is to keep the numbers in that narrative current."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Same shape as S08 across three engines: the number in the sentence is produced rather than checked, the producer is the author's own render, and the finished document carries no mark, no verdict and no count of what was written by hand.",
+   "text_sha256": "b805662a00aa64486052aad229b6aebe50266ccb427fb491ee99e792d9fab98f",
+   "text_bytes": 129148,
+   "text_saved_as": "S09_quarto_inline.html"
+  },
+  {
+   "id": "S10",
+   "source": "Jupyter-Book glue (MyST-NB)",
+   "title_as_reported": "Saving variables to embed (glue) — MyST-NB",
+   "authors": "the Executable Books / MyST-NB project",
+   "venue_and_date": "myst-nb.readthedocs.io/en/latest/render/glue.html, served 2026-09-05",
+   "what_it_is": "A submodule that stores a variable in a notebook's outputs under a key at execution time; the prose then references that key with a role, and the stored output is embedded inline where the reference sits, including from another page.",
+   "q1_binds": [
+    "numeral",
+    "record"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://myst-nb.readthedocs.io/en/latest/render/glue.html"
+   ],
+   "fetched_at": "2026-09-05T23:41:00Z",
+   "quote": "store variables in the notebooks outputs, by keys, then reference those keys to embed the outputs inline of your text content",
+   "quote_url": "https://myst-nb.readthedocs.io/en/latest/render/glue.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a keyed notebook output — a number, a table, an image — pasted where the reference stands. It is the nearest of the report family to a pointer into a stored record rather than an expression re-evaluated in place, and it is still not a sentence."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is narrative page content written around the outputs, in the author's own words."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "The reference is a pointer into an execution record, which is the shape of a receipt pointer, and the resemblance stops there: the pointer resolves by pasting the output, never by comparing it with what the sentence says, and the notebook that produced it was run by the author's own build.",
+   "text_sha256": "931f25b0a24f2af244b79450b6c299392aeb24ba3b99c81c6358cb87dcd0d4c8",
+   "text_bytes": 68680,
+   "text_saved_as": "S10_mystnb_glue.html"
   }
  ],
  "leads_not_scored": []
