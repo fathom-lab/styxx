@@ -1,0 +1,190 @@
+{
+ "schema": "styxx-sworn/measurement-packet/v1",
+ "panel": "L",
+ "question": "For each sentence in the passage below, decide whether it is LOAD-BEARING — a claim the document's conclusion depends on, which could turn out to be right or wrong — or NOT load-bearing — context, method, a date, a version, a file name, a restatement, a hedge, a sentence about what the document does not say — or UNSURE. Draw the sentence boundaries yourself.",
+ "instructions": "TASK. You are reading one passage from a technical report. Label every sentence.\n\nFORMAT. Answer with one JSON object and nothing else: {\"brackets\": [{\"opening_words\": \"...\", \"closing_words\": \"...\", \"label\": \"LOAD-BEARING\"}, ...]}. opening_words is the opening three words of the sentence and closing_words is its closing three words, copied exactly as they appear in the passage including punctuation and capitalisation; a sentence shorter than six words may repeat words in both. label is exactly one of LOAD-BEARING, NOT, UNSURE. Cover every sentence once; do not skip, merge or reorder.\n\nCAUTIONS. A sentence that reports a number, a quoted string, a hash, or the absence of something can still be NOT load-bearing if the conclusion would stand without it. A sentence with no number can be LOAD-BEARING. Use UNSURE honestly; it is counted against the panel, not against you. Do not reproduce the passage; quote only the opening and closing three words.",
+ "instruction_blocks": {
+  "TASK": "TASK. You are reading one passage from a technical report. Label every sentence.",
+  "FORMAT": "FORMAT. Answer with one JSON object and nothing else: {\"brackets\": [{\"opening_words\": \"...\", \"closing_words\": \"...\", \"label\": \"LOAD-BEARING\"}, ...]}. opening_words is the opening three words of the sentence and closing_words is its closing three words, copied exactly as they appear in the passage including punctuation and capitalisation; a sentence shorter than six words may repeat words in both. label is exactly one of LOAD-BEARING, NOT, UNSURE. Cover every sentence once; do not skip, merge or reorder.",
+  "CAUTIONS": "CAUTIONS. A sentence that reports a number, a quoted string, a hash, or the absence of something can still be NOT load-bearing if the conclusion would stand without it. A sentence with no number can be LOAD-BEARING. Use UNSURE honestly; it is counted against the panel, not against you. Do not reproduce the passage; quote only the opening and closing three words."
+ },
+ "output_schema": {
+  "type": "object",
+  "properties": {
+   "brackets": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "opening_words": {
+       "type": "string"
+      },
+      "closing_words": {
+       "type": "string"
+      },
+      "label": {
+       "type": "string",
+       "enum": [
+        "LOAD-BEARING",
+        "NOT",
+        "UNSURE"
+       ]
+      }
+     },
+     "required": [
+      "opening_words",
+      "closing_words",
+      "label"
+     ],
+     "additionalProperties": false
+    }
+   }
+  },
+  "required": [
+   "brackets"
+  ],
+  "additionalProperties": false
+ },
+ "built_from": {
+  "population_sha256": "50716b1daee0b9eff2f5ec559ddb5cb2c72c277d983523b6754e7bab39255922",
+  "seed": 20260905,
+  "decoys_sha256": "98cf085af505d8cedde728d651ea7888a304d8c657f59367d906339097a4d937",
+  "window_max_units": 40,
+  "edge_words": 3
+ },
+ "key_digest_file": "keys/sworn_measurement_key_L.sha256",
+ "items": [
+  {
+   "id": "L-0001",
+   "text": "The eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it.\n\nThe theta paragraph explains a convention and nothing depends on it. Another theta sentence sits beside it."
+  },
+  {
+   "id": "L-0002",
+   "text": "The beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it.\n\nThe gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it."
+  },
+  {
+   "id": "L-0003",
+   "text": "The delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it.\n\nThe epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it."
+  },
+  {
+   "id": "L-0004",
+   "text": "The delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it.\n\nThe epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it."
+  },
+  {
+   "id": "L-0005",
+   "text": "The beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it.\n\nThe gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it."
+  },
+  {
+   "id": "L-0006",
+   "text": "The delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it.\n\nThe epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it."
+  },
+  {
+   "id": "L-0007",
+   "text": "The alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it.\n\nThe beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it."
+  },
+  {
+   "id": "L-0008",
+   "text": "# SYN document 01: a synthetic report about nothing\n\nSynthetic Lab, a header line with a date-shaped token 2026-09-05 and a version v0.1.\n\n## What was measured\n\nThe question was whether the synthetic gate holds under the synthetic bar. Precision was 0.61 on the panel. Recall was 0.18 on the same items. The suite ran for 42 minutes on the synthetic box. -\n\nThe harness ran the suite and 296 checks passed. The log reads `synthetic log line seventeen` near its middle. The log carries no `unexpected failure marker`. The runner printed `a phrase that is not in the log` twice.\n\nThe log's bytes hash to c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436. This sentence restates the method without a number. That one is a hedge about scope.\n\n```\ncode. fenced. 0.99 not a unit.\n```\n\n## What this does not say\n\nThat any synthetic number means anything. The conclusion depends on the precision above and on nothing else.\n"
+  },
+  {
+   "id": "L-0009",
+   "text": "The zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it.\n\nThe eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it."
+  },
+  {
+   "id": "L-0010",
+   "text": "The zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it.\n\nThe eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it."
+  },
+  {
+   "id": "L-0011",
+   "text": "Row theta scored 0.71 on the check. Restatement theta carries the row without a number.\n\nThe alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it."
+  },
+  {
+   "id": "L-0012",
+   "text": "The delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it.\n\nThe epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it."
+  },
+  {
+   "id": "L-0013",
+   "text": "The gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it.\n\nThe delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it."
+  },
+  {
+   "id": "L-0014",
+   "text": "The eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it.\n\nThe theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it."
+  },
+  {
+   "id": "L-0015",
+   "text": "The beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it.\n\nThe gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it."
+  },
+  {
+   "id": "L-0016",
+   "text": "The beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it.\n\nThe gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it."
+  },
+  {
+   "id": "L-0017",
+   "text": "The alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it.\n\nThe beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it."
+  },
+  {
+   "id": "L-0018",
+   "text": "The zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it.\n\nThe eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it."
+  },
+  {
+   "id": "L-0019",
+   "text": "The zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it.\n\nThe eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it."
+  },
+  {
+   "id": "L-0020",
+   "text": "The gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it.\n\nThe delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it."
+  },
+  {
+   "id": "L-0021",
+   "text": "The alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it.\n\nThe beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it."
+  },
+  {
+   "id": "L-0022",
+   "text": "# SYN document 02: a synthetic report about nothing\n\nSynthetic Lab, a header line with a date-shaped token 2026-09-05 and a version v0.2.\n\n## What was measured\n\nThe question was whether the synthetic gate holds under the synthetic bar. Precision was 0.47 on the panel. Recall was 0.20 on the same items. The suite ran for 42 minutes on the synthetic box. -\n\nThe harness ran the suite and 358 checks passed. The log reads `synthetic log line seventeen` near its middle. The log carries no `unexpected failure marker`. The runner printed `a phrase that is not in the log` twice.\n\nThe log's bytes hash to 7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356. This sentence restates the method without a number. That one is a hedge about scope.\n\n```\ncode. fenced. 0.99 not a unit.\n```\n\n## What this does not say\n\nThat any synthetic number means anything. The conclusion depends on the precision above and on nothing else.\n"
+  },
+  {
+   "id": "L-0023",
+   "text": "The theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it.\n\nThe alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it."
+  },
+  {
+   "id": "L-0024",
+   "text": "The epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it.\n\nThe zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it."
+  },
+  {
+   "id": "L-0025",
+   "text": "The epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it.\n\nThe zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it."
+  },
+  {
+   "id": "L-0026",
+   "text": "The epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it.\n\nThe zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it."
+  },
+  {
+   "id": "L-0027",
+   "text": "The gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it.\n\nThe delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it."
+  },
+  {
+   "id": "L-0028",
+   "text": "# SYN document 03: a synthetic report about nothing\n\nSynthetic Lab, a header line with a date-shaped token 2026-09-05 and a version v0.3.\n\n## What was measured\n\nThe question was whether the synthetic gate holds under the synthetic bar. Precision was 0.72 on the panel. Recall was 0.31 on the same items. The suite ran for 42 minutes on the synthetic box. -\n\nThe harness ran the suite and 120 checks passed. The log reads `synthetic log line seventeen` near its middle. The log carries no `unexpected failure marker`. The runner printed `a phrase that is not in the log` twice.\n\nThe log's bytes hash to 3f1ad3ec2c64dbec56ce663e1ce10e9adaa32d13ce66a0b119f05c4c7003cbb9. This sentence restates the method without a number. That one is a hedge about scope.\n\n```\ncode. fenced. 0.99 not a unit.\n```\n\n## What this does not say\n\nThat any synthetic number means anything. The conclusion depends on the precision above and on nothing else.\n"
+  },
+  {
+   "id": "L-0029",
+   "text": "Row theta scored 0.71 on the check. Restatement theta carries the row without a number.\n\nThe alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it."
+  },
+  {
+   "id": "L-0030",
+   "text": "The theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it.\n\nThe alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it."
+  },
+  {
+   "id": "L-0031",
+   "text": "The gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it.\n\nThe delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it."
+  },
+  {
+   "id": "L-0032",
+   "text": "The alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it.\n\nThe beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it."
+  },
+  {
+   "id": "L-0033",
+   "text": "The epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it.\n\nThe zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it."
+  }
+ ]
+}

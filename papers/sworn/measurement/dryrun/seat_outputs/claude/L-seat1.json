@@ -1,0 +1,1205 @@
+{
+ "schema": "styxx-sworn/measurement-seat/v1",
+ "family": "claude",
+ "panel": "L",
+ "seat": 1,
+ "substrate": {
+  "model": "claude-fable-5",
+  "transport": "claude-cli clean-config",
+  "dtype": null,
+  "device": null,
+  "quant": null,
+  "named_in_design": true,
+  "block_order": [
+   "TASK",
+   "FORMAT",
+   "CAUTIONS"
+  ]
+ },
+ "packet_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+ "prereg": null,
+ "dry_run": true,
+ "synthetic_packet": true,
+ "contamination_probe": null,
+ "items": [
+  {
+   "id": "L-0001",
+   "raw_sha256": "34cb19b9fe1a32661451986a20ca7cc2a95c1d3aa054ca69c15ea8904de38aca",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The theta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another theta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0002",
+   "raw_sha256": "1ff05cdb42b1f2623939a18b562e4ca246cb342d82b3aa65c35dd019167e7cb0",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0003",
+   "raw_sha256": "a0550d58cbbac3ddbf70211ece6df7a285558456560c1239a7ddddf3409ae76b",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0004",
+   "raw_sha256": "a0550d58cbbac3ddbf70211ece6df7a285558456560c1239a7ddddf3409ae76b",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0005",
+   "raw_sha256": "1ff05cdb42b1f2623939a18b562e4ca246cb342d82b3aa65c35dd019167e7cb0",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0006",
+   "raw_sha256": "b66f00bb14b75aa04b5fde4fe91262b85542579cf477f5c3ccfebe756f9301c4",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0007",
+   "raw_sha256": "4e04b74557cc8bb520314d8f98bc5a547d4a755600aed1c6ecb61da57bda237f",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0008",
+   "raw_sha256": "28ae354e253f7066fcd0299a0ad0181d1a18ef386d3e989da9449dbd1116ca04",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.1.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Precision was 0.61",
+     "closing_words": "on the panel.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Recall was 0.18",
+     "closing_words": "the same items.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "296 checks passed.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to c975a99f95f931b2255b821b9771d70b76d623d109c5a960550f010409122436.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0009",
+   "raw_sha256": "a8fe578bec53c10aa8d2d104aac48ea1f7cd0e35f84e62d9a13bdb662cea9c96",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0010",
+   "raw_sha256": "a34bfbc50075b98e2020cd03da6bf354cf946e71424e3bf1f280b2320e25d9f2",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0011",
+   "raw_sha256": "59bef33a1fec3892c5b4504e7413a442179c847c7a8b90db34e76bd7aa93a0fc",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "Row theta scored",
+     "closing_words": "on the check.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Restatement theta carries",
+     "closing_words": "without a number.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0012",
+   "raw_sha256": "b66f00bb14b75aa04b5fde4fe91262b85542579cf477f5c3ccfebe756f9301c4",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0013",
+   "raw_sha256": "f327f3d0d22b649962cf10ffdf12c39ba5b372f4032225d1be372095715297e8",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0014",
+   "raw_sha256": "e43196a287647cb0592bfcdffc7f4dadc216e84f6d7838d9078f10cd9ba67984",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0015",
+   "raw_sha256": "6dc8cd774d2f4bf2ec67345713feef9c16acfbb460f39337e000b49454ab1319",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0016",
+   "raw_sha256": "6dc8cd774d2f4bf2ec67345713feef9c16acfbb460f39337e000b49454ab1319",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0017",
+   "raw_sha256": "4e04b74557cc8bb520314d8f98bc5a547d4a755600aed1c6ecb61da57bda237f",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The beta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note beta",
+     "closing_words": "beta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0018",
+   "raw_sha256": "a8fe578bec53c10aa8d2d104aac48ea1f7cd0e35f84e62d9a13bdb662cea9c96",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The eta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note eta",
+     "closing_words": "eta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0019",
+   "raw_sha256": "a34bfbc50075b98e2020cd03da6bf354cf946e71424e3bf1f280b2320e25d9f2",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0020",
+   "raw_sha256": "2914d955f692d4b2663889d2c9e6a659d7b621ba0a5985f54c3d25fcf5f345b8",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0021",
+   "raw_sha256": "b4b0175458aa09db321eec4cad2a97d4eca6f5f23835f4a2ffda60a424c59281",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0022",
+   "raw_sha256": "8ab2c5cf1403dc094b97003424094229e32e7dfc013577e2e15492903b2ad680",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.2.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Precision was 0.47",
+     "closing_words": "on the panel.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Recall was 0.20",
+     "closing_words": "the same items.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "358 checks passed.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to 7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0023",
+   "raw_sha256": "d6db4a8a69bbd92aaa0c6e1214e08502d8ba74e911c83092464bdb7363b289c7",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0024",
+   "raw_sha256": "d50e9c830dfd346885860f9be4f722055639938c3591b41011944a7c5c4b9aed",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0025",
+   "raw_sha256": "d52774d68dac7f9f9b89af6609de7688e368bbc76afe9fe8f920d5d97bd87c98",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0026",
+   "raw_sha256": "d52774d68dac7f9f9b89af6609de7688e368bbc76afe9fe8f920d5d97bd87c98",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note epsilon",
+     "closing_words": "epsilon follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The zeta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note zeta",
+     "closing_words": "zeta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0027",
+   "raw_sha256": "f327f3d0d22b649962cf10ffdf12c39ba5b372f4032225d1be372095715297e8",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another gamma sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The delta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another delta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0028",
+   "raw_sha256": "da9ea404ae380795939964beb22bf90b722d2c609a4d114f351f831189890852",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "# SYN document",
+     "closing_words": "report about nothing",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Synthetic Lab, a",
+     "closing_words": "a version v0.3.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "## What was",
+     "closing_words": "What was measured",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The question was",
+     "closing_words": "the synthetic bar.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Precision was 0.72",
+     "closing_words": "on the panel.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Recall was 0.31",
+     "closing_words": "the same items.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The suite ran",
+     "closing_words": "the synthetic box.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "-",
+     "closing_words": "-",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The harness ran",
+     "closing_words": "120 checks passed.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "The log reads",
+     "closing_words": "near its middle.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log carries",
+     "closing_words": "`unexpected failure marker`.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The runner printed",
+     "closing_words": "the log` twice.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The log's bytes",
+     "closing_words": "hash to 3f1ad3ec2c64dbec56ce663e1ce10e9adaa32d13ce66a0b119f05c4c7003cbb9.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "This sentence restates",
+     "closing_words": "without a number.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That one is",
+     "closing_words": "hedge about scope.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "code.",
+     "closing_words": "code.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "fenced.",
+     "closing_words": "fenced.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "0.99 not a",
+     "closing_words": "not a unit.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "```",
+     "closing_words": "```",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "## What this",
+     "closing_words": "does not say",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "That any synthetic",
+     "closing_words": "number means anything.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The conclusion depends",
+     "closing_words": "on nothing else.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0029",
+   "raw_sha256": "59bef33a1fec3892c5b4504e7413a442179c847c7a8b90db34e76bd7aa93a0fc",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "Row theta scored",
+     "closing_words": "on the check.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Restatement theta carries",
+     "closing_words": "without a number.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The alpha gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note alpha",
+     "closing_words": "alpha follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0030",
+   "raw_sha256": "d6db4a8a69bbd92aaa0c6e1214e08502d8ba74e911c83092464bdb7363b289c7",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The theta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note theta",
+     "closing_words": "theta follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0031",
+   "raw_sha256": "2914d955f692d4b2663889d2c9e6a659d7b621ba0a5985f54c3d25fcf5f345b8",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The gamma gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note gamma",
+     "closing_words": "gamma follows it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The delta gate",
+     "closing_words": "in this paragraph.",
+     "label": "LOAD-BEARING"
+    },
+    {
+     "opening_words": "Method note delta",
+     "closing_words": "delta follows it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0032",
+   "raw_sha256": "b4b0175458aa09db321eec4cad2a97d4eca6f5f23835f4a2ffda60a424c59281",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The alpha paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another alpha sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The beta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another beta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  },
+  {
+   "id": "L-0033",
+   "raw_sha256": "d50e9c830dfd346885860f9be4f722055639938c3591b41011944a7c5c4b9aed",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The epsilon paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another epsilon sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The zeta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another zeta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  }
+ ],
+ "unparsed": [],
+ "errors": [],
+ "verdict": "DRY-RUN"
+}
