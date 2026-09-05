@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the browser verifier v0.1: a second implementation agrees on every vector in scope
+
+**`styxx/_data/sworn_verify.js` (NEW) and the capsule's sworn profile, built to
+`papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md`, frozen in its own commit with its
+acceptance bar written down before any code existed.** Leg 3, item 5 of
+`papers/PLAN_the_next_level_2026_09_02.md`. The label the plan writes is printed in the verifier,
+in the capsule page and in this entry: *re-derives sworn span verdicts offline; a forger
+controlling the whole file passes both browser layers; the package at the named commit is the
+check.*
+- **The conformance set has something held to it.** `conformance/sworn/replay_js.js` runs the
+  JavaScript over the committed vectors and reports, per family, what it ran and what it skipped
+  with the vector's own `requires` as the reason. **1689 vectors in scope, 1689 reproduce the
+  verdict core digest, 0 disagree, 1929 skipped** (every mode but `inline`, and everything needing
+  a git tree); 1452 of those run are the seeded fuzz corpus, uncapped. A test asserts the number
+  run equals the number the spec froze, so a growing set fails rather than re-fitting the bar.
+- **Five disagreements, all found by vectors and all repaired in the JavaScript** — never in
+  `styxx/sworn.py`, which this leg does not touch: the class name Python prints for a parsed JSON
+  object (`_Obj`); the two completeness rules for `absent`; a MALFORMED out of resolution carrying
+  its provenance; a manifest read as plain JSON while receipt bytes are read decimal-exact; and
+  the terminating newline of an `L`-anchor's last line.
+- **The verifier is a pure function of bytes**: no I/O, no clock, no globals, no network, byte
+  offsets over `Uint8Array` and never over string indices, and sha256 implemented in the file
+  because `crypto.subtle` is async-only and a capsule layer must answer without a promise chain.
+  `pyproject.toml` ships `*.js` from `styxx._data`.
+- **The capsule's sworn profile** seals the document bytes, the manifest, the verdict receipt and
+  the verifier's own bytes, written LF-only so the sealed copy and the copy the browser runs are
+  byte-identical. It fails closed on five named refusals — `sworn_document_mismatch`,
+  `sworn_tree_receipt`, `sworn_no_manifest`, `sworn_manifest_mismatch`, `sworn_receipt_mismatch` —
+  and keeps INSTRUMENT SKEW apart from tamper. Layer 1 re-derives the portable core in the
+  reader's browser; layer 2 re-runs `styxx.sworn` and is the one that checks the build the receipt
+  names. The first sworn capsule is committed beside the document it seals.
+- **The label is demonstrated, not asserted.** The tamper battery builds the forger it describes —
+  a page whose inlined verifier quietly un-does the change made to the document — and shows layer 1
+  believing it while layer 2 names the inlined copy as not the sealed one.
+- **What it does not say:** that agreement makes either verifier correct (the same hands wrote
+  both, and that is the objection to press); that the format is covered (1929 vectors are outside
+  this subset); that `path:` receipts can be checked offline (they cannot, and the profile refuses
+  to seal a document carrying one); that anything here is self-verifying.
+
 ## [Unreleased] — the sworn action v0.1: a runner mints the manifest after the turn, and exits zero on every verdict
 
 **`sworn/` (NEW: `action.yml`, `sworn_action.py`, `README.md`, `examples/sworn.yml`), built to
