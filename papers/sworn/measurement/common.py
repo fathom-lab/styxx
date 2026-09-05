@@ -11,6 +11,7 @@ Nothing in this module adjudicates a span. ``styxx/sworn.py`` imports nothing fr
 """
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import os
@@ -37,8 +38,9 @@ __all__ = [
     "block_order", "SCHEMA_L", "SCHEMA_R", "LABELS_L", "LABELS_R", "EXCLUDED_LABELS",
     "write_json_lf", "sha256_bytes", "sha256_file", "key_bytes", "salted_digest", "read_digest_file",
     "git", "show_at", "tracked_at", "head_commit", "ls_files",
-    "load_json_decimal", "pointer_walk", "pointer_escape", "leaf_view",
-    "units_of", "reconcile_units", "windows_of", "bindable", "locate", "project_labels",
+    "load_json_decimal", "pointer_walk", "pointer_escape", "leaf_view", "receipt_bytes",
+    "units_of", "reconcile_units", "windows_of", "line_extent", "passage_around",
+    "bindable", "locate", "project_labels",
     "majority", "family_label", "final_label", "cohen_kappa", "wilson", "smallest_n_clearing",
     "bind_inputs", "prereg_at_head", "refuse_unless_prereg", "open_document",
 ]
@@ -286,6 +288,27 @@ def leaf_view(receipt: str, data: bytes, kind: str) -> dict:
     view["value"] = text
     return view
 
+
+def receipt_bytes(side: dict, tree, receipt: str) -> Tuple[Optional[bytes], str]:
+    """The bytes a receipt names, by form: rN from the sidecar's embedded manifest, path: from the
+    tree at the sidecar's commit, prereg: by digest search. (bytes | None, why)."""
+    parsed, why = sworn._parse_receipt(receipt)
+    if parsed is None:
+        return None, why or "receipt_form"
+    if parsed["form"] == "rn":
+        entry = ((side.get("manifest") or {}).get("receipts") or {}).get(parsed["id"])
+        if not isinstance(entry, dict) or "bytes" not in entry:
+            return None, "manifest_bytes_absent"
+        try:
+            return base64.b64decode(entry["bytes"], validate=True), "ok"
+        except (ValueError, TypeError):
+            return None, "manifest_integrity"
+    if tree is None:
+        return None, "no_repository"
+    if parsed["form"] == "path":
+        return tree.blob(parsed["target"])
+    return tree.find_sha256(parsed["target"])
+
 # ------------------------------------------------------------------------------------------
 # units, fragments, windows (SPEC §Units, fragments and windows)
 # ------------------------------------------------------------------------------------------
@@ -357,6 +380,23 @@ def windows_of(canonical: bytes, units: List[dict], max_units: int = WINDOW_MAX_
     if cur is not None:
         out.append(cur)
     return out
+
+
+def line_extent(canonical: bytes, start: int, end: int) -> Tuple[int, int]:
+    """The byte range of the whole line(s) holding [start, end)."""
+    a = canonical.rfind(b"\n", 0, start) + 1
+    b = canonical.find(b"\n", end)
+    return a, (len(canonical) if b < 0 else b)
+
+
+def passage_around(canonical: bytes, units: List[dict], i: int, before: int = 1, after: int = 1) -> dict:
+    """A decoy passage: the whole lines from unit i-before to unit i+after, with the keyed unit's
+    byte range relative to the passage (SPEC §The packets: two or three sentences, one keyed)."""
+    lo, hi = max(0, i - before), min(len(units) - 1, i + after)
+    a, _ = line_extent(canonical, units[lo]["start"], units[lo]["end"])
+    _, b = line_extent(canonical, units[hi]["start"], units[hi]["end"])
+    return {"start": a, "end": b,
+            "keyed": {"start": units[i]["start"] - a, "end": units[i]["end"] - a}}
 
 # ------------------------------------------------------------------------------------------
 # bindability (SPEC §Projection …) — a byte predicate over three kinds

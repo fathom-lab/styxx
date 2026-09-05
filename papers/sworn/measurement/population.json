@@ -1,0 +1,261 @@
+{
+ "schema": "styxx-sworn/measurement-population/v1",
+ "pinned_commit": "f28d35add060e18b10f8241f5a02cee1a5858449",
+ "rule": "a document is in the in-house arm iff its sidecar is tracked under papers/, its stem starts with RESULT_, FINDING_ or DECLARATION_, and its path is not under papers/sworn/",
+ "seed": 20260905,
+ "documents": [
+  {
+   "doc_id": "D01",
+   "stem": "papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "b4042f24c97e2c88ea430593bc7657203e508d89",
+   "document_sha256": "d6a7dcb2da8c3b5f80b404d5e607f82b55f83475556865f41c026780a81c5cc0",
+   "receipt_digest": "c2a4fb2fd82fc1c479860d9305bc19252904eb3c3f281ff1797f1c74f4a4a9e2",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 8,
+   "counts": {
+    "HELD": 8,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 33,
+   "sentence_share": 0.1951,
+   "units": 41,
+   "fragments": 4,
+   "windows": 2,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D02",
+   "stem": "papers/charon/RESULT_charon_v01_ships_2026_09_02",
+   "role": "prospective",
+   "sidecar_commit": "dd78bc2376ad703a72ff5fca0b1b75f7e4859af8",
+   "document_sha256": "eaea2de45b11d7f8c1baf3f6bfcecc5615292e0685f26c70e3e06441549c4ce7",
+   "receipt_digest": "4851516118b5792107133ffdae5b90e9d53c4576c6d2e12f2528a18c345cdb04",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 26,
+   "counts": {
+    "HELD": 26,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 133,
+   "sentence_share": 0.1635,
+   "units": 159,
+   "fragments": 12,
+   "windows": 6,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D03",
+   "stem": "papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "575e51f1d115eee26d7106ed00910e7a2be3d7f0",
+   "document_sha256": "eff7953735e6b610ac02fe2ee366531222d504f9661da33c329128024a538911",
+   "receipt_digest": "e6ebc2b61a17a6755b776282c2222abc66ff5bb2bea9b24067f3673c1be695a7",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 12,
+   "counts": {
+    "HELD": 12,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 74,
+   "sentence_share": 0.1395,
+   "units": 86,
+   "fragments": 4,
+   "windows": 3,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D04",
+   "stem": "papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "a335bb17d2ee90c64ea7e2b4862054f39468bb4d",
+   "document_sha256": "76e44c8d640362ab743638541d70b7ec03b52a17c2f76649cdf8adeff01e2517",
+   "receipt_digest": "aa8bb51ea770d774411d4e9b8fb5cb90708b424432cc310e88517b3bf27f2c73",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 12,
+   "counts": {
+    "HELD": 12,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 60,
+   "sentence_share": 0.1667,
+   "units": 72,
+   "fragments": 4,
+   "windows": 2,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D05",
+   "stem": "papers/frequency-resonance/RESULT_efficiency_control_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "3b14f4208e304ae9e3824984fc0decdf540dc9d2",
+   "document_sha256": "6956b802e98abf7511cceda2223fc130f4c6ec0e8e42226ae341db2c4074da46",
+   "receipt_digest": "8f6e00ae7bdf5dfed4daae9ece805607f1135ed2d9c747849052f04b9381b15f",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 14,
+   "counts": {
+    "HELD": 14,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 63,
+   "sentence_share": 0.1818,
+   "units": 77,
+   "fragments": 5,
+   "windows": 3,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D06",
+   "stem": "papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "3f4a03eac7a4d1748bc5cbfb8af2a130a274b40d",
+   "document_sha256": "1b5f9810296c85d225763764236b1ad8e17493b38709358889c939b554a050d1",
+   "receipt_digest": "254786e89367d1d50916e4895f528377f034e67dcdb934ddf096870af2d38f8c",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 11,
+   "counts": {
+    "HELD": 11,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 51,
+   "sentence_share": 0.1774,
+   "units": 62,
+   "fragments": 5,
+   "windows": 2,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D07",
+   "stem": "papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "48d4d5494bc8ee0b6ba1d6681acbab33de67f67f",
+   "document_sha256": "b9111d427b9f703d582477f18cc41c99f77334813a0f56b5977bcde452a0fe4c",
+   "receipt_digest": "3f0f7203f7ad2430d50fc6c197c2bacdc4a789bd6597d5c768dd3965afbb829c",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 11,
+   "counts": {
+    "HELD": 11,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 53,
+   "sentence_share": 0.1719,
+   "units": 64,
+   "fragments": 3,
+   "windows": 2,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D08",
+   "stem": "papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01",
+   "role": "design_eight",
+   "sidecar_commit": "841f232ba875390f928fe1728654ea420354a1f6",
+   "document_sha256": "a1edcb3dc58ad93dd6afeaec3d41918d02c3826d0cfc7afd8f710d369f77145d",
+   "receipt_digest": "5d893f9c9935708b9c02da115326080bdb4eec9b6801451d6b8665a58f9187e7",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 27,
+   "counts": {
+    "HELD": 27,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 146,
+   "sentence_share": 0.1561,
+   "units": 173,
+   "fragments": 9,
+   "windows": 6,
+   "receipt_moved": false
+  },
+  {
+   "doc_id": "D09",
+   "stem": "papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02",
+   "role": "design_eight",
+   "sidecar_commit": "b1a6326ef35b894065c81f722800d1c4de0f8bc8",
+   "document_sha256": "81b3d210de936ec8460733062a6ebcac54b5c407f8320fb52fcca04311e54aea",
+   "receipt_digest": "66620d4645c33a7a99bd8b68df83d871df24e46480f62a0c2db9fe0149713c89",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 15,
+   "counts": {
+    "HELD": 15,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 70,
+   "sentence_share": 0.1765,
+   "units": 85,
+   "fragments": 5,
+   "windows": 3,
+   "receipt_moved": false
+  }
+ ],
+ "excluded": [
+  {
+   "stem": "papers/PLAN_the_next_level_2026_09_02",
+   "reason": "stem does not start with RESULT_/FINDING_/DECLARATION_"
+  },
+  {
+   "stem": "papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02",
+   "reason": "stem does not start with RESULT_/FINDING_/DECLARATION_"
+  },
+  {
+   "stem": "papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02",
+   "reason": "stem does not start with RESULT_/FINDING_/DECLARATION_"
+  },
+  {
+   "stem": "papers/closed-model-frontier/EXPLORATORY_handedness_by_kind_2026_09_02",
+   "reason": "stem does not start with RESULT_/FINDING_/DECLARATION_"
+  },
+  {
+   "stem": "papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  },
+  {
+   "stem": "papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  },
+  {
+   "stem": "papers/sworn/DESIGN_sworn_measurement_2026_09_01",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  },
+  {
+   "stem": "papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  },
+  {
+   "stem": "papers/sworn/RESULT_sworn_v01_ships_2026_09_01",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  },
+  {
+   "stem": "papers/sworn/RESULT_sworn_v02_ships_2026_09_02",
+   "reason": "under papers/sworn/ (the builder's format documents)"
+  }
+ ],
+ "what_this_is_not": [
+  "not a sample: the rule selects",
+  "no number here is a measurement"
+ ]
+}

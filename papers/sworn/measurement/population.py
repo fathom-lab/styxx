@@ -13,7 +13,6 @@ Refuses to overwrite an existing population.json: a re-pin is a new file at a ne
 from __future__ import annotations
 
 import argparse
-import json
 import random
 import sys
 from pathlib import Path
@@ -120,6 +119,16 @@ def iter_documents(pop: dict) -> List[dict]:
     """Population entries with the pinned commit attached, ready for common.open_document."""
     out = []
     for d in pop["documents"]:
+        e = dict(d)
+        e["pinned_commit"] = pop["pinned_commit"]
+        out.append(e)
+    return out
+
+
+def iter_excluded(pop: dict) -> List[dict]:
+    """Excluded entries (the decoy sources) with the pinned commit attached."""
+    out = []
+    for d in pop["excluded"]:
         e = dict(d)
         e["pinned_commit"] = pop["pinned_commit"]
         out.append(e)
