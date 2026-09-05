@@ -65,3 +65,9 @@ papers/charon/** -text
 # tests/test_sworn_conformance.py fails if any tracked file under conformance/ is not -text.
 conformance/** -text
 papers/sworn/CANNED_harness_junit_2026_09_05.capsule.html -text
+
+# Every sworn verdict receipt carries verifier.sworn_sha256, which is sha256 of THIS FILE'S
+# WORKING-COPY BYTES. Unpinned, that hash is CRLF on Windows and LF on Linux, so a receipt --
+# and every conformance vector that embeds one -- depended on the checkout that produced it.
+# The blob is already LF; this only stops a checkout from changing it.
+styxx/sworn.py -text

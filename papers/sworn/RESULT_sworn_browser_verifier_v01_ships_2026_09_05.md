@@ -3,7 +3,7 @@
 Fathom Lab · 2026-09-05 · Spec: `SPEC_sworn_browser_verifier_v01_2026_09_05.md`, frozen before any
 code, with the acceptance bar written into it before the verifier existed. Verifier:
 `styxx/_data/sworn_verify.js`. Harness: `conformance/sworn/replay_js.js` →
-`conformance/sworn/replay_js_result.json`. Tests: `tests/test_sworn_verify_js.py`,
+`conformance/sworn/replay_js_report.json`. Tests: `tests/test_sworn_verify_js.py`,
 `tests/test_capsule_sworn.py`. **This document is itself sworn**, at the commit its sidecar names.
 Leg 3, item 5 of `papers/PLAN_the_next_level_2026_09_02.md`, under the label the plan writes and
 this document repeats wherever the artifact is described:
@@ -26,16 +26,16 @@ over the same bytes. It reads no file, fetches nothing, and touches no clock.
 
 The bar the spec froze before the code existed was every in-scope vector, and it named how many
 there were.
-<sworn r="path:conformance/sworn/replay_js_result.json#/ran" k="numeric">1689 vectors are in scope — mode `inline`, with `requires` a subset of `{manifest}`.</sworn>
-<sworn r="path:conformance/sworn/replay_js_result.json#/passed" k="numeric">1689 of them reproduce the verdict core digest.</sworn>
-<sworn r="path:conformance/sworn/replay_js_result.json#/failed" k="numeric">0 disagree.</sworn>
-<sworn r="path:conformance/sworn/replay_js_result.json#/skipped" k="numeric">1929 vectors are out of scope and are skipped,</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/ran" k="numeric">1689 vectors are in scope — mode `inline`, with `requires` a subset of `{manifest}`.</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/passed" k="numeric">1689 of them reproduce the verdict core digest.</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/failed" k="numeric">0 disagree.</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/skipped" k="numeric">1929 vectors are out of scope and are skipped,</sworn>
 each counted with its own mode and `requires` as the reason: every mode but `inline`, and
 everything that needs a git tree.
-<sworn r="path:conformance/sworn/replay_js_result.json#/vectors_total" k="numeric">The committed set holds 3618 vectors in all,</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/vectors_total" k="numeric">The committed set holds 3618 vectors in all,</sworn>
 and the harness names the set it ran against:
-<sworn r="path:conformance/sworn/replay_js_result.json#/set_sha256" k="quote">`cb5d51480321e999647cd898613defc8e74eb71de2eea9d5a88b4df6bc8e14ff`</sworn>.
-<sworn r="path:conformance/sworn/replay_js_result.json#/families/fuzz/ran" k="numeric">1452 of the vectors run are the seeded fuzz corpus,</sworn>
+<sworn r="path:conformance/sworn/replay_js_report.json#/set_sha256" k="quote">`96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e`</sworn>.
+<sworn r="path:conformance/sworn/replay_js_report.json#/families/fuzz/ran" k="numeric">1452 of the vectors run are the seeded fuzz corpus,</sworn>
 which is the lexer's conformance and was not capped.
 
 A test asserts that the number actually run equals the number the spec froze, so a set that grows
