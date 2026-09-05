@@ -47,7 +47,7 @@ OUT = ROOT / "papers" / "index_check.json"
 # NOT here: it carries 33 papers and the index rightly gives it a row.
 # `sworn` left this set on 2026-09-01, the day its first RESULT opened the arc; the spec's owed
 # item 1 (the arc-question declaration against INDEX.md) is discharged by its row.
-NOT_ARCS = {"__pycache__", "assets", "figures", "arxiv", "charon"}
+NOT_ARCS = {"__pycache__", "assets", "figures", "arxiv"}   # charon became an arc on 2026-09-02
 
 # The closed vocabularies. Adding to either is a deliberate act, visible in a diff.
 TAGS = {

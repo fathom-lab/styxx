@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
+
+**`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, committed before
+the module was, with a dated ERRATA appended after the adversarial pass.** Charon is the log of
+crossings: an append-only, hash-chained record in which every line is a verdict re-derived from
+bytes by one of the three verifiers the lab already has — a sworn document at the commit its
+sidecar names, a capsule, an OATH certificate with its receipts. Charon reproduces; it never
+adjudicates, accuses no one, fetches nothing, signs nothing.
+- **The receipt set is on every line, and the kind says what it means.** The 2026-09-01 dogfood
+  showed an OATH verdict on fixed bytes moving FAILED → HELD as receipts were added; the line
+  prints the resolved set and its digests (with the certificate's cited set beside it). 10 of 227
+  held-class lines rest on ten or more receipts, max 21 — 8 OATH certificates, where a larger set
+  makes HELD strictly easier, and 2 sworn documents, where the author named the leaf and volume
+  buys nothing.
+- **SKEW is not DRIFT.** `verify` re-derives every line and separates a core that moved with the
+  instrument's bytes (SKEW) from one that moved under the same build (DRIFT), beside
+  MOVED_VERIFIER, UNRESOLVED (never an accusation), HEAD_MISMATCH and TAMPER. Every corpus audit
+  before this called the first two one word. `verifier.modules` carries the whole derivation
+  path — Charon included — so SKEW is bounded by a stated set rather than by one file.
+- **The log**: `papers/charon/charon.log.jsonl`, 243 lines — 213 certificates (every tracked one,
+  the arXiv staging copies entering as UNRESOLVED lines rather than absences), 18 sworn documents,
+  10 OATH capsules, 2 handoff capsules — head `bcffbebc…`; `charon_verify_result.json`: SAME_LINE
+  243, TAMPER 0, which is a determinism check and not a stability result. The population is
+  `papers/charon/build_log.py`, not a sentence; its one exclusion is the sworn RESULT that
+  describes the log, because a snapshot cannot contain its own description.
+  Seven lines record an artifact that did not reproduce at ingest or had nothing to reproduce
+  against: the read≠write submission source, whose certificate re-certifies OATH-FAILED where it
+  recorded OATH-HELD with every byte and receipt digest matching (the verifier moved, and the
+  document sits outside the directory `REPLICATIONS.md` runs the corpus audit over); the
+  universal-mind capstone, certified over a changed and therefore incomplete receipt set; the
+  black-box sycophancy finding, whose verdict class moved with no receipt missing; the handoff
+  capsule, whose `tests_pass` explanation string grew when the evidence channel shipped; and
+  three arXiv staging certificates whose document was renamed at submission.
+- **The adversarial pass, before any announcement** (`ATTACKS_charon_v01_battery_2026_09_02.md`):
+  three attackers, three lenses. Four sentences the instrument published about itself were false
+  and are repaired — the chain binds order to the **head** and not against rebuilding
+  (`--expect-head`, HEAD_MISMATCH); capsule verdicts were **copied** from the embedded record and
+  are now re-derived; `verify` compared a class and now compares the whole core (`fields_changed`,
+  `subject_moved`, `receipts_moved`, and REPRODUCED renamed SAME_LINE); SKEW saw one file. Also
+  repaired: a chained header, a refused headerless ingest, malformed lines as TAMPER rather than
+  tracebacks, no absolute paths, a refused missing log, resolved-vs-cited receipts, `reproduced`
+  via `styxx.sworn.verify_receipt`, vacuous HELD excluded, and a `derive` subcommand the page
+  prints on every row. Unrepaired attacks are named in the battery with what is printed instead.
+- **The page**: `papers/charon/index.html`, one static file, no script, no handler, no request —
+  asserted on the bytes before they are written.
+- **`styxx.capsule`**: layer 2 compares verdict **classes**, not strings. The v0.13 UNCOVERED band
+  appends `, N uncovered` to a verdict — a coverage report in the headline, not a verdict change —
+  and six sound capsules read as failures because of it. A class change still fails and the string
+  difference is reported as advisory; `tests/test_capsule_uncovered_suffix.py` pins both.
+- **`styxx.sworn`**: `GitTree._index` sizes with `--batch-check` and streams the bodies it keeps.
+  Reading every blob of a tree into one buffer per commit grew a re-derivation to 13 GB and died.
+- **What it does not say:** that any verdict is true; who wrote any line; that a rebuilt or
+  truncated log is detectable without a head pinned outside it; that receipt shopping is
+  prevented (it is printed); that anything is immutable or tamper-proof. Thirty-four `*.seal.json`
+  artifacts have no deriver and appear on no line.
+
+Also this cycle: `papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.md` (sworn) —
+leg 4 of the plan, a total gates table under `styxx.protocol` with its contaminated prior cited
+by digest; licenses nothing until signed.
+
 ## [Unreleased] — sworn output v0.2: attacked twelve ways, four rules paid, the coverage number withdrawn
 
 **The adversarial pass the standing rule requires, run before any sentence about the format

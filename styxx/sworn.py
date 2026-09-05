@@ -886,24 +886,73 @@ class GitTree:
             meta = ent.split(b"\t")[0].split()
             if len(meta) >= 3 and meta[1] == b"blob" and meta[0] != b"120000":
                 shas.append(meta[2].decode("ascii"))
-        idx: Dict[str, str] = {}
-        rc, out, _ = self._git("cat-file", "--batch", stdin=("\n".join(shas) + "\n").encode("ascii"))
+        # Size first, bytes second, and never the whole tree in memory at once: `--batch-check`
+        # names every blob's size without its body, blobs over the receipt cap are never read,
+        # and the bodies that are read stream through one hasher a chunk at a time. Reading the
+        # whole tree into one buffer at every commit a document names once grew a re-derivation
+        # to 13 GB and died (the charon red team, 2026-09-02).
+        rc, out, _ = self._git("cat-file", "--batch-check", stdin=("\n".join(shas) + "\n").encode("ascii"))
         if rc != 0:
             return None
-        pos = 0
-        while pos < len(out):
-            nl = out.find(b"\n", pos)
-            if nl < 0:
-                break
-            header = out[pos:nl].split()
-            pos = nl + 1
-            if len(header) < 3:
-                continue
-            size = int(header[2])
-            body = out[pos:pos + size]
-            pos += size + 1
-            if size <= MAX_RECEIPT_BYTES:
-                idx.setdefault(_sha256(body), header[0].decode("ascii"))
+        wanted = []
+        for line in out.split(b"\n"):
+            parts = line.split()
+            if len(parts) >= 3 and parts[1] == b"blob" and parts[2].isdigit() and int(parts[2]) <= MAX_RECEIPT_BYTES:
+                wanted.append(parts[0].decode("ascii"))
+        idx: Dict[str, str] = {}
+        if not wanted:
+            _PREREG_INDEX[key] = idx
+            return idx
+        try:
+            proc = subprocess.Popen(["git", "-C", str(self.repo), "cat-file", "--batch"],
+                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        except (OSError, ValueError):
+            return None
+        assert proc.stdin is not None and proc.stdout is not None
+        # feed stdin from its own thread: writing thousands of ids into a full pipe while git
+        # blocks on a stdout nobody is reading yet is a deadlock, not a slow run
+        import threading
+        payload = ("\n".join(wanted) + "\n").encode("ascii")
+
+        def _feed():
+            try:
+                proc.stdin.write(payload)
+            except (OSError, ValueError):
+                pass
+            finally:
+                try:
+                    proc.stdin.close()
+                except (OSError, ValueError):
+                    pass
+        feeder = threading.Thread(target=_feed, daemon=True)
+        feeder.start()
+        try:
+            stream = proc.stdout
+            while True:
+                header = stream.readline()
+                if not header:
+                    break
+                parts = header.split()
+                if len(parts) < 3 or parts[1] != b"blob":
+                    continue                                     # "missing" lines carry no body
+                size = int(parts[2])
+                h = hashlib.sha256()
+                remaining = size
+                while remaining > 0:
+                    chunk = stream.read(min(remaining, 1 << 20))
+                    if not chunk:
+                        break
+                    h.update(chunk)
+                    remaining -= len(chunk)
+                stream.read(1)                                   # the trailing LF after each body
+                if remaining == 0:
+                    idx.setdefault(h.hexdigest(), parts[0].decode("ascii"))
+        finally:
+            proc.stdout.close()
+            proc.wait()
+            feeder.join(timeout=5)
+        if proc.returncode != 0:
+            return None
         _PREREG_INDEX[key] = idx
         return idx
 
