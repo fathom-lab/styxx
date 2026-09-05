@@ -20,6 +20,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   guard, and the same file, tracked, still does. Nine other test files still define a population
   by walking the tree; they are owed, not swept.
 
+## [Unreleased] — differential agreement: 150,000 inputs nobody chose, and the two verifiers never once disagreed
+
+**`conformance/sworn/differential.py` (NEW), built to
+`papers/sworn/SPEC_differential_agreement_v01_2026_09_05.md`, frozen with its five gates and its
+seed before any code existed.** The conformance set asks whether a second implementation agrees
+where the lab looked; every one of its 1689 vectors was recorded from a call some author wrote, and
+the JavaScript was repaired five times against those very vectors until it matched. A set you tuned
+against cannot also be the set that measures you. This asks the other question.
+- **The run: 150000 generated documents, both shipped verifiers, 150000 agreements, 0
+  disagreements, and no input on which one side raised and the other did not.** Seed 20260905,
+  named in the spec before the run; each case is a pure function of (seed, index), so a
+  disagreement would travel as two integers.
+- **The census beside the number, because agreement without it measures the generator.** 384717
+  spans adjudicated — 346066 MALFORMED, 31486 UNRESOLVED, 5333 FAILED, 1832 HELD — with 38 distinct
+  MALFORMED reasons against a bar of 12, both document-level refusals reached, and every kind
+  exercised including the three the format refuses.
+- **Neither side is instrumented.** The Python side is `styxx.sworn.verify` as installed, the
+  JavaScript side is `styxx/_data/sworn_verify.js` as shipped, and the harness hashes what each
+  returned and compares two hex strings. Node is spawned once per batch, not once per case.
+- **What it does not say**, and the RESULT says it: that either implementation is correct. They
+  agree, and agreement is not correctness — both may be wrong in the same way, and the same hands
+  wrote both. What it removes is the weaker excuse, *they only agree where we looked*. The HELD
+  path is under two percent of spans, which is the number a successor should raise first.
+
 ## [Unreleased] — leg 2: the sworn measurement's machinery, built and dry-run, with nothing run as a measurement
 
 **`papers/sworn/measurement/` (NEW), built to `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`,
