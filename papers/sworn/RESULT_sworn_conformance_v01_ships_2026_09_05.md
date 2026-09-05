@@ -23,7 +23,7 @@ measurement of anything, and nothing here says a second verifier exists.
 <sworn r="path:conformance/sworn/index.json#/unvectored/skipped_count" k="numeric">The recorder listed 3 calls the set cannot carry, each with its test id and its reason, and dropped nothing silently.</sworn>
 <sworn r="path:conformance/sworn/index.json#/unvectored/verdicts/0" k="quote">The one verdict no vector produces is `WITHHELD`, which has no producer in the verifier.</sworn>
 <sworn r="path:conformance/sworn/index.json#/clock" k="quote">Every manifest and every fixture commit in the set was minted at `2026-09-01T00:00:00Z`, the pinned clock.</sworn>
-<sworn r="path:conformance/sworn/index.json#/set_sha256" k="quote">One digest pins every byte transitively: `96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e`.</sworn>
+<sworn r="path:conformance/sworn/index.json#/set_sha256" k="quote">One digest pins every byte transitively: `85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f`.</sworn>
 
 ## What this does not say
 

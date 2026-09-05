@@ -426,12 +426,12 @@
    {
     "source": "tests/test_sworn.py::TestReceiptHardening::test_a_manifest_no_canonical_form_can_hold_is_manifest_integrity",
     "where": "verify",
-    "why": "manifest is not JSON-representable: Out of range float values are not JSON compliant: nan"
+    "why": "manifest carries a value no canonical serialisation can hold (NaN or an infinity)"
    },
    {
     "source": "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>2]",
     "where": "verify",
-    "why": "sidecar is not representable as a JSON blob: 'utf-8' codec can't encode character '\\ud800' in position 167: surrogates not allowed"
+    "why": "sidecar is not representable as a JSON blob: carries text that is not encodable as UTF-8 (a lone surrogate)"
    },
    {
     "source": "tests/test_sworn_attacks.py::TestRules::test_r9_a_committed_v0_receipt_still_checks_on_its_core",
@@ -452,5 +452,5 @@
   "styxx_version": "7.47.0",
   "pytest_summary": "348 passed"
  },
- "set_sha256": "96dfe15981209b847523687ca3e4854ad9086216fecdc1c055a9c2d38e60797e"
+ "set_sha256": "85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f"
 }

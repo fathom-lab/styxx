@@ -375,3 +375,15 @@ declared correct.
 **What this ERRATA adds to C7:** a vector's bytes may never come off the working tree unnormalised.
 A fixture that reads a committed file reads it modulo newlines, or the set is a fact about the
 machine that generated it rather than about the format.
+
+**Second cause, same shape, found by the same report.** With the fixture repaired, py3.9, 3.10 and
+3.11 still refused a set py3.12 accepted, and the drift report named one field: `index.unvectored`.
+Two of its three `skipped` entries carried a CPython exception message verbatim — the wording of a
+NaN refusal and of a lone-surrogate encode error — and that wording is not stable across
+interpreter versions. The reason is now classified from the exception TYPE into a sentence this lab
+wrote, at every site that records one. The digest moved once more, to
+`85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f`.
+
+**The rule C7 now carries, stated once for both causes:** nothing a set pins may come from outside
+the format — not the checkout's line endings, and not the interpreter's prose. A field that records
+why something could not be vectored records the lab's word for it.
