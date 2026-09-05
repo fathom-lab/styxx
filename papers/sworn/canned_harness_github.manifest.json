@@ -1,0 +1,56 @@
+{
+ "spec": "sworn/manifest/0.2",
+ "harness": "styxx.harness/0.1 github pull_request; fork: true; rung L1 declared by the caller, not detected; L1: a local hook sharing a filesystem and a shell with the agent — weak; the agent's shell can write what the hook later reads; fork caveat: on a pull_request event from a fork, the job that mints the manifest runs the workflow file as it exists in the pull request's head, on a runner the claimant's changes configured; the manifest is then minted by a party the claimant controls, and 'a party other than the claimant' — the sentence L2 rests on — does not hold. It holds only for a workflow pinned to the base branch (pull_request_target, which runs the base's workflow file with the base's secrets and must not check out and execute head content) or for a manifest attested outside the job; adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+ "turn": "canned_harness_github",
+ "minted_at": "2026-09-05T14:29:34Z",
+ "authored_sha256": [],
+ "receipts": {
+  "r1": {
+   "id": "r1",
+   "sha256": "ef001d0f6e2edafd96b7f1e3ac8d142d03fe1e313bd92f290d160067eda5a949",
+   "kind_of_source": "http_fetch",
+   "captured_at": "2026-09-05T14:29:34Z",
+   "complete": true,
+   "bytes": "ZGlmZiAtLWdpdCBhL1JFQURNRS5tZCBiL1JFQURNRS5tZAotLS0gYS9SRUFETUUubWQKKysrIGIvUkVBRE1FLm1kCkBAIC0xLDIgKzEsMyBAQAogIyBjYW5uZWQKK29uZSBhZGRlZCBsaW5lLCBhbmQgbm90aGluZyBsZWZ0IHRvIGRvCiB0aGUgZW5kCg==",
+   "harness_note": "diff supplied by the caller; completeness asserted by the caller, not observed"
+  },
+  "r2": {
+   "id": "r2",
+   "sha256": "e33cdf9c7f7120b98e8c78408953e07f2ecd183006b5606df349b4c212acf43e",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T14:29:34Z",
+   "complete": true,
+   "bytes": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYQ==",
+   "harness_note": "base sha from pull_request event (pull_request.base.sha)"
+  },
+  "r3": {
+   "id": "r3",
+   "sha256": "e26d2da3ab585c9840b157a4a9b5639fda905c2ad33d04d2c598be8883b51236",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T14:29:34Z",
+   "complete": true,
+   "bytes": "YmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYg==",
+   "harness_note": "head sha from pull_request event (pull_request.head.sha)"
+  },
+  "r4": {
+   "id": "r4",
+   "sha256": "ffcfd72fad7954ae5a63628d70ad100d808cb5a3305a1bb20117fbd66e305764",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T14:29:34Z",
+   "complete": true,
+   "bytes": "cHVsbF9yZXF1ZXN0",
+   "harness_note": "GITHUB_EVENT_NAME as given"
+  },
+  "r5": {
+   "id": "r5",
+   "sha256": "980b85a3c51e40de6ac49bf5710455f4c3cf618de74280ba465effb3f303b467",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T14:29:34Z",
+   "complete": true,
+   "bytes": "ewogImFjdGlvbiI6ICJzeW5jaHJvbml6ZSIsCiAibnVtYmVyIjogNywKICJwdWxsX3JlcXVlc3QiOiB7CiAgIm51bWJlciI6IDcsCiAgInRpdGxlIjogImNhbm5lZDogYSBwdWxsIHJlcXVlc3QgZnJvbSBhIGZvcmsiLAogICJiYXNlIjogewogICAicmVmIjogIm1haW4iLAogICAic2hhIjogImFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWEiLAogICAicmVwbyI6IHsiZnVsbF9uYW1lIjogImZhdGhvbS1sYWIvc3R5eHgiLCAiZm9yayI6IGZhbHNlfQogIH0sCiAgImhlYWQiOiB7CiAgICJyZWYiOiAiZmVhdHVyZSIsCiAgICJzaGEiOiAiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYiIsCiAgICJyZXBvIjogeyJmdWxsX25hbWUiOiAic29tZW9uZS1lbHNlL3N0eXh4LWZvcmsiLCAiZm9yayI6IHRydWV9CiAgfQogfSwKICJyZXBvc2l0b3J5IjogeyJmdWxsX25hbWUiOiAiZmF0aG9tLWxhYi9zdHl4eCJ9Cn0K",
+   "harness_note": "GITHUB_EVENT_PATH bytes as given"
+  }
+ },
+ "rung": "L1",
+ "digest": "0a8a84e2a5ab903cc288bed23f439954d31279aa86f6c744dae6f601d5e43b88"
+}
