@@ -94,6 +94,22 @@ merely become invisible. `_resolve_receipts` now compares content modulo line en
 audit gives the same answer on either platform. If you see a different count from the block
 above, that is a divergence worth filing.
 
+**The `binding:` line, and what it is for.** Since `SPEC_oath_receipt_binding_2026_09_04.md`
+the audit prints a third line beneath the verdict line and the uncovered line. On a full clone
+(`--history auto`, the default, or `on`) it reads
+`binding: citations same … at-issue … elsewhere … unbacked … unrecoverable … | certificates: …`
+— for every receipt a certificate cites, where the bytes it swore to are: in the working tree,
+at the certificate's issuing commit, elsewhere in history, nowhere in history, or unanswerable —
+and for every certificate whether the current verifier reproduces the recorded verdict class
+over the bytes at the issuing commit (`stands-over-sworn-bytes`). On a shallow clone, or with
+`--history off`, it reads `binding: history unavailable (…)` and no cell is filled. **The first
+line is byte-identical either way; it is the only line this file pins.** The corpus census over
+all 213 tracked certificates is `papers/closed-model-frontier/receipt_binding_census_result.json`
+and is never regenerated in place; its reading is in the CHANGELOG entry that shipped it. One
+thing it settles for the block above: `CAPSTONE_universal_mind`'s changed twelfth receipt has its
+sworn bytes at the issuing commit, and the certificate stands over the full set — the receipt
+moved; the certificate was right.
+
 All of it is stated here because a replicator who runs the advertised command and gets an
 unexplained failure has been handed a divergence that is really our undisclosed known state —
 which would waste the first thing an outside checker ever does for us.

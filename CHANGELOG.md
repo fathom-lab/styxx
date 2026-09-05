@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — receipt binding: a certificate names the bytes it swore to, and the audit says where those bytes went
+
+**SPEC first: `papers/closed-model-frontier/SPEC_oath_receipt_binding_2026_09_04.md`, frozen
+in its own commit before any code.** Leg 3, item 1 of `PLAN_the_next_level_2026_09_02.md` — the
+one ADVANCE the whole-program audit named. An OATH certificate recorded each receipt's digest
+and then bound by *basename*, so a receipt regenerated in place silently invalidated every
+certificate citing it (three documents in two days, 2026-08-31 → 09-01), and the audit could not
+tell *the receipt moved* from *the certificate is wrong*. Now the certificate says which bytes it
+meant and the audit looks for them. No verdict moves; no certificate is re-issued.
+- **`styxx.receipt_binding` (NEW)** — the one module that talks to git on a certificate's behalf,
+  subprocess-only (no GitPython): content digests modulo newlines, the committed blob at HEAD,
+  and the five cells of SPEC R3 — `same`, `at_issue`, `elsewhere`, `unbacked`, `unrecoverable` —
+  decided by digest against the tree at the certificate's issuing commit and, failing that,
+  against every commit that touched a path of that basename. Nothing here is a verdict.
+- **`styxx.certify`**: every certificate issued from now on carries a `receipt_binding` block —
+  `content_sha256` (CRLF→LF), the git blob the working bytes equal at HEAD, `committed`
+  true/false per receipt, `all_receipts_committed`. `receipts_sha256` is untouched. Without git
+  the block degrades to `head: null` with the reason and the certificate is otherwise
+  byte-identical. `--require-committed` refuses to issue (exit 2, names printed) over
+  uncommitted receipt bytes; the default reports, because an unmeasured gate is not shipped.
+- **`styxx.corpus_audit`**: `--history auto|on|off`. With history, every record carries its
+  cells and `stands_over_sworn_bytes` — whether the CURRENT verifier reproduces the recorded
+  verdict class over the document and receipt bytes at the issuing commit — and the summary
+  prints a `binding:` line beneath the uncovered line. **The pinned first line is byte-identical
+  in every mode**; CI checks out at depth 1 and prints `binding: history unavailable (shallow
+  clone)`, as SPEC R5 says it must.
+- **The census, `receipt_binding_census.py` → `receipt_binding_census_result.json`, over every
+  tracked certificate (213, staging copies included; 631 citations).** 630 citations `same`
+  and every one of them also present at its issuing commit; 1 `at_issue`; 0 `elsewhere`, 0
+  `unbacked`, 0 with an unrecoverable issuing commit. The one `at_issue` is
+  `CAPSTONE_universal_mind`'s `mind_v0_validation.json` — present-and-changed in the tree since
+  2026-08-27, but its sworn bytes sit at the issuing commit and the certificate **stands over
+  them** (`regenerated_and_standing` 1): the receipt moved, the certificate did not lie.
+  `stands_over_sworn_bytes` is true for 208, false for 2 — both `same`-only, both already
+  known (`FINDING_behavioral_sycophancy_blackbox` in `KNOWN_VERDICT_DRIFT`, and the read≠write
+  submission source Charon found), so both are the verifier having moved, not a binding
+  defect — and null for the 3 arXiv `anc/` staging copies whose `source.md` does not exist at
+  the issuing commit. Predictions the spec made before the run and got wrong, kept:
+  `elsewhere: after` was expected to hold `external1_summary.json` (it cannot — the certificate
+  was re-issued, so its current bytes are `same` and the old certificate is history);
+  `unbacked` was expected to hold arXiv staging receipts (all `same`); working-tree matches read
+  `raw`, not `crlf`, on a CRLF checkout (the blob-side reading is `crlf`, recorded separately).
+- Tests: `tests/test_certify_by_digest.py` (12) on a temporary repository; the existing corpus
+  guard and audit tests pass unchanged.
+
 ## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
 
 **`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, committed before
