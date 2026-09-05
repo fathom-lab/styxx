@@ -17,7 +17,7 @@ import pytest
 
 from styxx import sworn
 from styxx.sworn import (DECISIONS, KINDS, REASONS, SPEC, VERDICTS, GitTree,
-                         Manifest, MemoryTree, issue_receipt, load_sidecar, render, scan,
+                         Manifest, MemoryTree, SnapshotTree, issue_receipt, load_sidecar, render, scan,
                          to_sidecar, verify, verify_receipt)
 
 C40 = "a" * 40           # a nominal commit for MemoryTree / sidecars
@@ -1405,3 +1405,174 @@ class TestGamingLensFromTheAttackPass:
         core = verify(sidecar=side, tree=GitTree(repo, sha))
         assert core["commit"] is None
         assert (core["spans"][0]["verdict"], core["spans"][0]["reason"]) == ("UNRESOLVED", "no_commit")
+
+
+# ============================================================================ the snapshot tree
+# SPEC_sworn_conformance_vectors_v01_2026_09_05.md, C10: a tree snapshot with modes that
+# reproduces every GitTree reason but git_unavailable without a git binary, and imports nothing.
+
+def _portable(core):
+    """The core a second verifier reproduces: the verdict minus the build and the observer."""
+    return {k: v for k, v in core.items() if k not in ("verifier", "coverage")}
+
+
+def _snapshot_of_git(repo, sha):
+    """Built the way a recorder builds one: ls-tree -r -t -l at the commit, then cat-file."""
+    entries = {}
+    for line in _git(repo, "ls-tree", "-r", "-t", "-l", "--full-tree", sha).splitlines():
+        meta, path = line.split("\t", 1)
+        mode, kind, oid, size = meta.split()
+        data = None
+        if kind == "blob" and mode != "120000":
+            data = subprocess.run(["git", "-C", str(repo), "cat-file", "blob", oid],
+                                  capture_output=True, check=True).stdout
+        entries[path] = {"mode": mode, "size": int(size) if size.isdigit() else None,
+                         "sha256": sworn._sha256(data) if data is not None else None, "bytes": data}
+    return SnapshotTree(entries, sha, commit=sha)
+
+
+_PREREG_BAR = b"# PREREG\nthe floor is 0.95 and frozen\n"
+_LINES = b"alpha\r\nbeta\ngamma"
+_DUP = b'{"x": 1, "x": 2, "y": 3}'
+_NAN = b'{"x": NaN, "y": 0.5}'
+_ESC = b'{"a/b": {"m~n": [10, 20]}}'
+
+
+class TestSnapshotTree:
+    # every MemoryTree case TestReceipts pins: (document, files, handle commit, verdict, reason)
+    MEMORY_VECTORS = [
+        (sp("0.5", "path:a.json#/x"), {"a.json": b'{"x": 0.5}'}, None, ("UNRESOLVED", "no_commit")),
+        (sp("0.5", "path:a.json#/x"), {"a.json": b'{"x": 0.5}'}, C40, ("HELD", None)),
+        (sp("0.5", "path:missing.json#/x"), {"a.json": b'{"x": 0.5}'}, C40, ("UNRESOLVED", "path_absent")),
+        (sp("20", "path:a.json#/a~1b/m~0n/1"), {"a.json": _ESC}, C40, ("HELD", None)),
+        (sp("20", "path:a.json#/a~1b/m~0n/-"), {"a.json": _ESC}, C40, ("MALFORMED", "pointer_unresolvable")),
+        (sp("20", "path:a.json#/nope"), {"a.json": _ESC}, C40, ("MALFORMED", "pointer_unresolvable")),
+        (sp("1", "path:a.json#/x"), {"a.json": b"not json"}, C40, ("MALFORMED", "receipt_not_json")),
+        (sp("1", "path:a.json#/x"), {"a.json": _DUP}, C40, ("MALFORMED", "pointer_ambiguous")),
+        (sp("3", "path:a.json#/y"), {"a.json": _DUP}, C40, ("HELD", None)),
+        (sp("1", "path:a.json#/x"), {"a.json": _NAN}, C40, ("MALFORMED", "leaf_not_numeric")),
+        (sp("0.5", "path:a.json#/y"), {"a.json": _NAN}, C40, ("HELD", None)),
+        (sp("`beta`", "path:f.md#L2", "quote"), {"f.md": _LINES}, C40, ("HELD", None)),
+        (sp("`alpha`", "path:f.md#L2", "quote"), {"f.md": _LINES}, C40, ("FAILED", "needle_missing")),
+        (sp("`beta`", "path:f.md#L1-L2", "quote"), {"f.md": _LINES}, C40, ("HELD", None)),
+        (sp("`alpha\r\nbeta`", "path:f.md#L1-L2", "quote"), {"f.md": _LINES}, C40, ("MALFORMED", "needle_count")),
+        (sp("`gamma`", "path:f.md#L4", "quote"), {"f.md": _LINES}, C40, ("MALFORMED", "anchor_out_of_range")),
+        (sp("`the floor is 0.95 and frozen`", "prereg:" + sworn._sha256(_PREREG_BAR).upper(), "quote"),
+         {"papers/PREREG_x.md": _PREREG_BAR, "other.md": b"x"}, C40, ("HELD", None)),
+        (sp("`the floor is 0.95 and frozen`", "prereg:" + "0" * 64, "quote"),
+         {"papers/PREREG_x.md": _PREREG_BAR, "other.md": b"x"}, C40, ("UNRESOLVED", "prereg_not_in_tree")),
+    ]
+
+    @pytest.mark.parametrize("doc,files,commit,want", MEMORY_VECTORS)
+    def test_every_memory_tree_vector_in_test_receipts_replays_to_the_same_core(self, doc, files, commit, want):
+        memory = verify(doc.encode(), name="d.md", tree=MemoryTree(files, commit=commit))
+        snapshot = verify(doc.encode(), name="d.md",
+                          tree=SnapshotTree.from_memory(MemoryTree(files, commit=commit)))
+        assert _portable(memory) == _portable(snapshot)
+        assert len(memory["spans"]) == 1
+        assert (memory["spans"][0]["verdict"], memory["spans"][0]["reason"]) == want
+
+    def test_from_memory_carries_the_handle_commit_and_every_file_as_a_regular_blob(self):
+        snap = SnapshotTree.from_memory(MemoryTree({"a": b"1", "b/c": b"22"}, commit=C40))
+        assert snap.commit == C40 and snap.snapshot_commit == C40
+        assert snap.entries == {"a": {"mode": "100644", "size": 1, "sha256": sworn._sha256(b"1"), "bytes": b"1"},
+                                "b/c": {"mode": "100644", "size": 2, "sha256": sworn._sha256(b"22"), "bytes": b"22"}}
+        assert SnapshotTree.from_memory(MemoryTree({"a": b"1"})).commit is None
+
+    def test_a_tree_entry_and_a_symlink_entry_are_not_a_blob(self):
+        entries = {"dir": {"mode": "040000", "size": None, "sha256": None, "bytes": None},
+                   "dir/f": {"mode": "100644", "size": 1, "sha256": sworn._sha256(b"x"), "bytes": b"x"},
+                   "link": {"mode": "120000", "size": 5, "sha256": sworn._sha256(b"dir/f"), "bytes": b"dir/f"},
+                   "sub": {"mode": "160000", "size": None, "sha256": None, "bytes": None}}
+        for path in ("dir", "link", "sub"):
+            d, _ = one(sp("`x`", "path:" + path, "quote").encode(), tree=SnapshotTree(entries, C40, commit=C40))
+            assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "not_a_blob"), path
+        d, _ = one(sp("`x`", "path:dir/f#L1", "quote").encode(), tree=SnapshotTree(entries, C40, commit=C40))
+        assert d["verdict"] == "HELD"
+
+    def test_a_handle_commit_that_is_not_the_snapshot_commit_is_commit_absent(self):
+        entries = {"a.json": {"mode": "100644", "size": 10, "sha256": sworn._sha256(b'{"x": 0.5}'), "bytes": b'{"x": 0.5}'}}
+        d, _ = one(sp("0.5", "path:a.json#/x").encode(), tree=SnapshotTree(entries, C40, commit="b" * 40))
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "commit_absent")
+        # the document's commit wins over the handle's, for this handle as for GitTree
+        handle = SnapshotTree(entries, C40, commit="b" * 40)
+        d, _ = one(sp("0.5", "path:a.json#/x").encode(), tree=handle, commit=C40)
+        assert d["verdict"] == "HELD" and handle.commit == C40
+        # a commit that is not a full lowercase hex id is one the snapshot was not taken at
+        assert SnapshotTree(entries, "HEAD", commit="HEAD").blob("a.json") == (None, "commit_absent")
+        assert SnapshotTree(entries, C40.upper(), commit=C40.upper()).find_sha256("0" * 64) == (None, "commit_absent")
+        assert SnapshotTree(entries, C40, commit=C40[:7]).blob("a.json") == (None, "commit_absent")
+
+    def test_a_handle_commit_of_none_is_no_commit(self):
+        entries = {"a.json": {"mode": "100644", "size": 10, "sha256": sworn._sha256(b'{"x": 0.5}'), "bytes": b'{"x": 0.5}'}}
+        tree = SnapshotTree(entries, C40)
+        assert tree.commit is None
+        d, _ = one(sp("0.5", "path:a.json#/x").encode(), tree=tree)
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "no_commit")
+        assert SnapshotTree(entries, None).find_sha256("0" * 64) == (None, "no_commit")
+        assert SnapshotTree(entries, None).blob("a.json") == (None, "no_commit")
+
+    def test_an_entry_over_the_cap_with_no_bytes_is_receipt_too_large(self):
+        big = {"big.bin": {"mode": "100644", "size": sworn.MAX_RECEIPT_BYTES + 1, "sha256": "0" * 64, "bytes": None}}
+        d, _ = one(sp("1", "path:big.bin#/x").encode(), tree=SnapshotTree(big, C40, commit=C40))
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "receipt_too_large")
+        # bytes a recorder left out for any reason are equally not here
+        small = {"small.bin": {"mode": "100644", "size": 3, "sha256": sworn._sha256(b"abc"), "bytes": None}}
+        assert SnapshotTree(small, C40, commit=C40).blob("small.bin") == (None, "receipt_too_large")
+        # bytes at the cap are served
+        at_cap = {"cap.bin": {"mode": "100644", "size": sworn.MAX_RECEIPT_BYTES, "sha256": None, "bytes": b"x"}}
+        assert SnapshotTree(at_cap, C40, commit=C40).blob("cap.bin") == (b"x", "ok")
+
+    def test_a_prereg_digest_is_found_among_embedded_blobs_and_not_among_unembedded_ones(self):
+        digest = sworn._sha256(_PREREG_BAR)
+        doc = sp("`the floor is 0.95 and frozen`", "prereg:" + digest, "quote").encode()
+        embedded = {"papers/PREREG_x.md": {"mode": "100644", "size": len(_PREREG_BAR), "sha256": digest, "bytes": _PREREG_BAR}}
+        d, _ = one(doc, tree=SnapshotTree(embedded, C40, commit=C40))
+        assert d["verdict"] == "HELD"
+        unembedded = {"papers/PREREG_x.md": {"mode": "100644", "size": len(_PREREG_BAR), "sha256": digest, "bytes": None}}
+        d, _ = one(doc, tree=SnapshotTree(unembedded, C40, commit=C40))
+        assert (d["verdict"], d["reason"]) == ("UNRESOLVED", "prereg_not_in_tree")
+        # a symlink whose target text hashes to the digest is not a blob either
+        link = {"l": {"mode": "120000", "size": len(_PREREG_BAR), "sha256": digest, "bytes": _PREREG_BAR}}
+        assert SnapshotTree(link, C40, commit=C40).find_sha256(digest) == (None, "prereg_not_in_tree")
+
+    def test_the_snapshot_agrees_with_git_tree_and_memory_tree_on_the_fixture_repo(self, git_repo):
+        repo, _ = git_repo
+        (repo / "dir").mkdir()
+        (repo / "dir" / "f").write_text("x")
+        _git(repo, "add", "dir")
+        _git(repo, "commit", "-q", "-m", "two")
+        sha = _git(repo, "rev-parse", "HEAD")
+        snap = _snapshot_of_git(repo, sha)
+        assert set(snap.entries) == {"res.json", "PREREG_bar.md", "dir", "dir/f"}
+        assert snap.entries["dir"]["mode"] == "040000" and snap.entries["dir"]["bytes"] is None
+        assert snap.entries["res.json"]["bytes"] == b'{"recall": 0.91, "name": "v1"}', "the commit, not the working tree"
+        files = {p: e["bytes"] for p, e in snap.entries.items() if e["bytes"] is not None}
+        digest = sworn._sha256(b"bar 0.95\n")
+        cases = [
+            (sp("0.91", "path:res.json#/recall"), sha, ("HELD", None)),
+            (sp("0.10", "path:res.json#/recall"), sha, ("FAILED", "value_mismatch")),
+            (sp("the bar `bar 0.95`", "prereg:" + digest + "#L1", "quote"), sha, ("HELD", None)),
+            (sp("the bar `bar 0.95`", "prereg:" + "0" * 64 + "#L1", "quote"), sha, ("UNRESOLVED", "prereg_not_in_tree")),
+            (sp("1", "path:missing.json#/x"), sha, ("UNRESOLVED", "path_absent")),
+            (sp("1", "path:res.json#/recall"), "b" * 40, ("UNRESOLVED", "commit_absent")),
+            (sp("1", "path:res.json#/recall"), None, ("UNRESOLVED", "no_commit")),
+            (sp("`x`", "path:dir", "quote"), sha, ("UNRESOLVED", "not_a_blob")),
+            (sp("`x`", "path:dir/f#L1", "quote"), sha, ("HELD", None)),
+        ]
+        for doc, commit, want in cases:
+            raw = doc.encode()
+            handles = [("git", GitTree(repo, commit)), ("snapshot", SnapshotTree(snap.entries, sha, commit=commit))]
+            if want[1] not in ("commit_absent", "not_a_blob"):
+                handles.append(("memory", MemoryTree(files, commit=commit)))
+            for label, handle in handles:
+                d, _ = one(raw, tree=handle)
+                assert (d["verdict"], d["reason"]) == want, (label, doc)
+
+    def test_the_snapshot_tree_is_exported_and_reads_neither_git_nor_the_filesystem(self):
+        assert "SnapshotTree" in sworn.__all__
+        src = Path(sworn.__file__).read_text(encoding="utf-8")
+        body = src[src.index("class SnapshotTree"):src.index("_PREREG_INDEX")]
+        for word in ("subprocess", "os.", "open(", "Path(", "_now("):
+            assert word not in body, word
+        assert src.index("class SnapshotTree") < src.index("# 4. the kinds")
