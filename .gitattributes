@@ -57,3 +57,8 @@ papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.md -text
 papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.sworn.json -text
 papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.sworn-receipt.json -text
 papers/charon/** -text
+
+# receipt binding: sworn RESULT triple, byte-pinned like every other sworn artifact
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.md -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn.json -text
+papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05.sworn-receipt.json -text

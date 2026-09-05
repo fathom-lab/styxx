@@ -280,7 +280,7 @@ missed two tracked certificates of (ES-15). The census records the blob ids of t
 beside the blobs at `head`, with `code_committed_at_head` (A8: the first census named the SPEC
 commit as its head while none of the code was committed), and every path in it is
 repository-relative (A9: the first result carried this checkout's absolute paths in 630 citations).
-That first result, committed at 1791527, was removed from the tree in the repair commit; nothing
+That first result, committed at c554ab2, was removed from the tree in the repair commit; nothing
 had sworn to it.
 
 **"What the cells are expected to show" — the six predictions, scored (ES-12).**

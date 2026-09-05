@@ -1,8 +1,8 @@
 # ATTACKS — receipt binding, the battery: three lenses, fifty-two constructions, thirty-six that broke something
 
 Fathom Lab · 2026-09-05 · **A record, not a result.** The adversarial pass over
-`SPEC_oath_receipt_binding_2026_09_04.md` (frozen at 4d75edf), the module and audit changes at
-1791527, the tests, the first census and its result, and the prose that shipped with them. Four
+`SPEC_oath_receipt_binding_2026_09_04.md` (frozen at 69e0e23), the module and audit changes at
+c554ab2, the tests, the first census and its result, and the prose that shipped with them. Four
 attackers were launched (workflow `wf_28464677-1f3`); three returned — *binding semantics*,
 *every sentence*, *does this repair the defect it names* — and the fourth, the *code as code* lens,
 died on the session usage limit before returning anything, as did 95 of the 108 skeptic votes
@@ -27,7 +27,7 @@ edited, and carries a dated ERRATA instead.
 | A5 | "three times in two days … each time the certificate went on asserting" | **BROKEN** (sentence; 1 vote confirms) | the third instance was a stale prose pin in REPLICATIONS.md, not a certificate over a rewritten receipt | ERRATA; CHANGELOG reworded to "twice in two days, and once in June" |
 | A6 | R3 `at_issue` = "changed or removed after" | **BROKEN** (defect; 2 votes confirm) | under root `papers/ancient-question-program` the audit printed `at-issue 12` for eleven receipts sitting unchanged in the working tree of other arcs — the cell was root-relative and the meaning column was not | `classify_citation` now scans the working tree at the repository root for the sworn bytes and reads `same` with a note; the binding line prints `over N/M certificates` |
 | A7 | R6 "never regenerated in place" and the test that was to enforce it | **BROKEN** (design; 1 vote refutes as a claim R6 does not make) | the first census overwrote its committed result silently; the test asserted citation-absence, which fails the moment a RESULT cites the file | the census refuses (exit 2) to overwrite a tracked result and takes `--out`; the test now proves the refusal on a temporary repository and reads the corpus by the census's own population rule |
-| A8 | census `head` names 4d75edf, whose tree holds none of the code that ran | **BROKEN** (sentence; 1 vote refutes as a claim the field does not make) | the first census ran from an uncommitted working tree and named its parent | `provenance.code` blob ids and `code_committed_at_head` on every census; the CHANGELOG says head is the parent of the census's own commit |
+| A8 | census `head` names 69e0e23, whose tree holds none of the code that ran | **BROKEN** (sentence; 1 vote refutes as a claim the field does not make) | the first census ran from an uncommitted working tree and named its parent | `provenance.code` blob ids and `code_committed_at_head` on every census; the CHANGELOG says head is the parent of the census's own commit |
 | A9 | every `same` citation's `path` was the absolute path of this checkout | **BROKEN** (defect; 1 vote refutes the prose reading) | the bytes a RESULT would swear to depended on where the clone sat | repository-relative paths everywhere; the first result was removed from the tree before anything swore to it |
 | A10 | R1 `head` dangles after a rebase | HELD | nothing reads `head` to resolve; the blob ids survive a rebase | — |
 | A11 | R5 names `replications.yml` as the depth-1 workflow | **BROKEN** (sentence) | `replications.yml` never runs the corpus audit; `test.yml` is the depth-1 workflow, and it runs pytest, not the audit | ERRATA; CHANGELOG: CI never runs the audit; the shallow reason is pinned by a test on a clone the test builds |
