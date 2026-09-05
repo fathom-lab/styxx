@@ -6,8 +6,8 @@
  "status": "IN_PROGRESS",
  "counts": {
   "sources_in_list": 19,
-  "sources_scored": 10,
-  "read": 10,
+  "sources_scored": 15,
+  "read": 15,
   "skimmed": 0,
   "unfetchable": 0,
   "leads_not_scored": 0
@@ -607,6 +607,297 @@
    "text_sha256": "931f25b0a24f2af244b79450b6c299392aeb24ba3b99c81c6358cb87dcd0d4c8",
    "text_bytes": 68680,
    "text_saved_as": "S10_mystnb_glue.html"
+  },
+  {
+   "id": "S11",
+   "source": "Registered Reports",
+   "title_as_reported": "Registered Reports: Peer review before results are known to align scientific values and practices — Center for Open Science",
+   "authors": "Center for Open Science, steward of the format; the Registered Reports Committee chaired by Chris Chambers",
+   "venue_and_date": "cos.io/initiatives/registered-reports, served 2026-09-05",
+   "what_it_is": "A publishing format in which a Stage 1 manuscript carrying introduction and methods is reviewed before the outcomes are observed and, if it survives, receives an in-principle acceptance that will not be revoked on the basis of the results; the Stage 2 manuscript adds results and discussion, with any analysis that was not registered confined to a separately titled Exploratory Analyses section.",
+   "q1_binds": [
+    "bar",
+    "step"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://www.cos.io/initiatives/registered-reports"
+   ],
+   "read_note": "The steward's canonical description, including the workflow section, was read end to end. Chambers's own editorial at the publisher's URL returned 403 to this agent on the same date and is not part of the reading; the source is scored on the steward's description, which the READ rule allows for a practice.",
+   "fetched_at": "2026-09-05T23:48:00Z",
+   "quote": "The Results section includes the outcome of the pre-registered analyses together with any additional unregistered analyses in a separate section titled \"Exploratory Analyses\".",
+   "quote_url": "https://www.cos.io/initiatives/registered-reports",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "What is held is the analysis plan — a bar agreed before the outcome, judged afterwards by human reviewers. No span of the Stage 2 prose is attached to anything."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The Stage 2 manuscript is a free-text retrospective report and the format governs it directly: what may be reported as a registered result and what must be labelled otherwise."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The in-principle acceptance is minted by editors and reviewers before the results are known, and cannot be manufactured afterwards by the author. It attaches to the protocol, not to the numbers the report later states."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The format makes what falls outside the binding visible on the face of every Stage 2 report, by requiring unregistered analyses into a separately titled section. It segregates rather than counts, the unit is an analysis rather than a sentence, and the separation is enforced by reviewers rather than printed by an instrument."
+    }
+   },
+   "differs_from_sworn": "It is the strongest neighbour on making the unbound visible and on non-author minting, and it does both with people: the reviewers who grant acceptance and the ones who police the section headings. Nothing mechanical reads the Stage 2 prose, so there is no verdict for a report that registered nothing — such a report is simply not of this format.",
+   "text_sha256": "d0b2a24b2f04d04b94c0deaf51bdda7e7c795cab22bd199713257f1873699397",
+   "text_bytes": 283502,
+   "text_saved_as": "S11_cos_rr.html"
+  },
+  {
+   "id": "S12",
+   "source": "C2PA assertions",
+   "title_as_reported": "C2PA Specification 2.1 — Assertions (§6), Trust Model (§14), Validation (§15)",
+   "authors": "Coalition for Content Provenance and Authenticity",
+   "venue_and_date": "spec.c2pa.org, specification version 2.1, served 2026-09-05",
+   "what_it_is": "A manifest attached to a media asset carrying labelled assertions about how the asset was made or changed, a hard binding of one or more cryptographic hashes over the asset or a portion of it, and a claim signature from a credential on a managed trust list, optionally time-stamped by an authority; a validator returns per-assertion status codes.",
+   "q1_binds": [
+    "artifact",
+    "assertion",
+    "credential"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "yes",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: digital signature over a claim",
+    "other: soft binding by fingerprint or watermark"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://spec.c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html"
+   ],
+   "fetched_at": "2026-09-05T23:54:00Z",
+   "quote": "An assertion is labelled data, typically (though not required to be) in a CBOR-based structure which represents a declaration about an asset.",
+   "quote_url": "https://spec.c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "Assertions declare things about an asset, and a hard binding covers the whole asset or a portion of it. The object is bytes of media, never a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind, worked further than anywhere else in this survey: cryptographic hashes as hard bindings over an asset or a region, a signature over the claim, and soft bindings by fingerprint or watermark for cases where a hash cannot survive. No numeral, substring or absence check over evidence bytes."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The claim is signed under an X.509 credential issued to a signer on a managed trust list, a time-stamp manifest can be signed by a timestamping authority, and some assertions are written by the capturing hardware rather than by a person. The bytes an author cannot mint are the signature and the time, not a measurement."
+    },
+    "C5": {
+     "verdict": "OCCUPIES",
+     "why": "The status vocabulary carries manifest.unknownProvenance and ingredient.unknownProvenance for content that has no manifest at all, and they sit outside the failure-code table. This is the closest thing found to a distinct token for bound nothing, for an asset rather than a document, and it belongs to an ingredient inside a validation report rather than being the report's own headline."
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the most complete answer in the survey to who signed for these bytes and to what has this been attached, and it never touches a sentence: the asset is the subject, provenance is the claim, and there is nothing in it that could be true or false about a report's prose.",
+   "text_sha256": "f5558331e61bb46d1c6883dec802e5405e5f0b1110e392daaa89b50fa7f80331",
+   "text_bytes": 434800,
+   "text_saved_as": "S12_c2pa.txt"
+  },
+  {
+   "id": "S13",
+   "source": "in-toto Test Result predicate",
+   "title_as_reported": "Predicate type: Test Result (in-toto attestation, type URI https://in-toto.io/attestation/test-result/v0.1)",
+   "authors": "Aditya Sirish A Yelgundhalli",
+   "venue_and_date": "github.com/in-toto/attestation, spec/predicates/test-result.md, main as served 2026-09-05, predicate version 0.1.0",
+   "what_it_is": "A statement whose subject is the artifacts tested, carrying one test-suite invocation: an enumerated result, the configuration used, an optional link to the run, and the names of the tests that passed, warned and failed. A supply-chain policy checks the configuration was the expected one and that the failed list is empty.",
+   "q1_binds": [
+    "artifact",
+    "record",
+    "step"
+   ],
+   "q2_mints": "runner after the author's turn",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "absent",
+    "other: enumerated result"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/in-toto/attestation/main/spec/predicates/test-result.md"
+   ],
+   "fetched_at": "2026-09-05T23:58:00Z",
+   "quote": "each attestation corresponds to one invocation of a test suite",
+   "quote_url": "https://raw.githubusercontent.com/in-toto/attestation/main/spec/predicates/test-result.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The subject is the artifacts tested, named by digest, and the predicate describes a run. Prose is not in the model."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "The subject is identified by digest, which is the hash kind for an artifact, and the verification policy asserts that the failed-test list is empty, which is an absence check over a field of the attestation rather than over evidence bytes a sentence points at."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The attestation is written by the test harness in the supply chain after the developer's turn and signed as an envelope, which is exactly the party the rung ladder means by a runner. What it says is that a suite ran, not that a report's sentence is true."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the prior art for the receipt itself — a signed record of a run, produced by a party the author cannot write to — and the lab credits it as such. Its stated use case includes verifying that the tests were in fact run, which is the concern a distinct verdict for a document that bound nothing serves, and it answers that concern with a policy naming the configurations it expected rather than with a token in the result.",
+   "text_sha256": "69908e4283311276f240e8209949a455aebb9ba0622eb0fee190a433682efbd6",
+   "text_bytes": 6412,
+   "text_saved_as": "S13_intoto_testresult.md"
+  },
+  {
+   "id": "S14",
+   "source": "in-toto Witness",
+   "title_as_reported": "Witness — attest and verify software supply chains (in-toto Witness project; witness.dev)",
+   "authors": "The Witness Contributors; originated at TestifySec, donated to the CNCF in-toto ecosystem",
+   "venue_and_date": "github.com/in-toto/witness main README and witness.dev, served 2026-09-05",
+   "what_it_is": "A CLI that wraps steps of a pipeline, records what ran and what it produced as signed in-toto attestations — keyless signing through Sigstore or SPIFFE, timestamps from an RFC3161 authority — and verifies them against an embedded Rego policy engine.",
+   "q1_binds": [
+    "artifact",
+    "step",
+    "record"
+   ],
+   "q2_mints": "runner after the author's turn",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: signature over an attestation",
+    "other: Rego policy predicates"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/in-toto/witness/main/README.md",
+    "https://witness.dev/"
+   ],
+   "fetched_at": "2026-09-06T00:02:00Z",
+   "quote": "create an audit trail for your software's entire journey through the software development lifecycle",
+   "quote_url": "https://raw.githubusercontent.com/in-toto/witness/main/README.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "What is attested is a step of a pipeline and the artifacts it consumed and produced. There is no text object anywhere in the model."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Digests over materials and products, plus signatures; a Rego policy can express further predicates over the attestation's own fields. No check of a numeral, a substring or an absence inside a document."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "This is the clearest instance in the survey of the property the clause names: the attestation is minted by the pipeline as it runs, signed without the developer holding a key, and timestamped by an outside authority. The subject is what the build did, not what a report says."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the rail the rung ladder is modelled on and the lab credits it as such. A missing attestation makes a policy fail; there is no state that says nothing was attested and no accounting of what the pipeline did not cover.",
+   "text_sha256": "6491dad1c4e4e8750c40303bb3146309ef3f3243267c1562d88c39892184b8e5",
+   "text_bytes": 5596,
+   "text_saved_as": "S14_witness_combined.txt"
+  },
+  {
+   "id": "S15",
+   "source": "Cucumber / Gherkin",
+   "title_as_reported": "Gherkin Reference — Cucumber Documentation",
+   "authors": "the Cucumber project (SmartBear)",
+   "venue_and_date": "cucumber.io/docs/gherkin/reference, served 2026-09-05",
+   "what_it_is": "A line-oriented language for feature files: every non-blank line begins with a keyword, steps introduced by Given, When, Then are matched to step definitions and executed, and free-form description lines under Feature, Rule or Scenario are ignored at run time while remaining available to reporters.",
+   "q1_binds": [
+    "step"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://cucumber.io/docs/gherkin/reference"
+   ],
+   "fetched_at": "2026-09-06T00:06:00Z",
+   "quote": "These description lines are ignored by Cucumber at runtime, but are available for reporting",
+   "quote_url": "https://cucumber.io/docs/gherkin/reference",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "A step is the most sentence-shaped object in the survey — a line of ordinary language, in the writer's own words after the keyword — and it is bound because a step definition matches it. It is a controlled language nonetheless: every line must open with a keyword, and a line that matches nothing is an error rather than unbound prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the one format in this survey that marks, line by line inside a single document, which text is executed and which is only read — and the marking runs the other way: the keyword lines are the document and the prose is the aside. What a step means is decided by the step definition the author also wrote, so no kind lives in the format; a Doc String is the nearest thing to a verbatim quote and the format does not say what is done with it.",
+   "text_sha256": "c091f4d2a32fef69cfdf68cb35687e011ff9ed816c54140183cc3b1bfa5b70f9",
+   "text_bytes": 18141,
+   "text_saved_as": "S15_gherkin.txt"
   }
  ],
  "leads_not_scored": []
