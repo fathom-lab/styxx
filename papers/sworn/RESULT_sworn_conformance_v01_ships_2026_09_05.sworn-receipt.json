@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_sworn_conformance_v01_ships_2026_09_05.md",
-  "inline_sha256": "4b36c5594150c9ec28a898f2fc4e01244e36cfef3339d13ab296393be31ce029",
-  "canonical_sha256": "bf69bcd2668bbd1fcec11c9c377e1b7b99c3989610186727269483f94c0ca959"
+  "inline_sha256": "17a6129657351cb0358c47090fcea96bcc89ae4c869afe72e9e33b196af03bda",
+  "canonical_sha256": "475c3836dd9db0eab1b7c3e65e32f05364d9997c0adf5b35776ba57e0caf2758"
  },
- "commit": "ee4771ef039afe2ff6943ada2cb331d077fb4050",
+ "commit": "7add6fff7748a2726629464d00f72cfbc6d417a1",
  "manifest_digest": null,
  "spans": [
   {
@@ -22,10 +22,10 @@
     "haystack_bytes": 50,
     "occurrences": 1
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -44,10 +44,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -66,10 +66,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -88,10 +88,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -110,10 +110,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -132,10 +132,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -154,10 +154,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -176,10 +176,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -198,10 +198,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -220,10 +220,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -239,10 +239,10 @@
     "haystack_bytes": 8,
     "occurrences": 1
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -258,10 +258,10 @@
     "haystack_bytes": 20,
     "occurrences": 1
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   },
   {
@@ -277,10 +277,10 @@
     "haystack_bytes": 64,
     "occurrences": 1
    },
-   "resolved_sha256": "9dcf5f029a55eb47749f6d88f3b8835e3cf9f5456ea39b1e36add993307962d4",
+   "resolved_sha256": "ca17be2bcadf25c304c463d16493ee32285930c630221534124f47a827b1990f",
    "provenance": {
     "form": "path",
-    "note": "committed object at ee4771ef039afe2ff6943ada2cb331d077fb4050; authorship unchecked"
+    "note": "committed object at 7add6fff7748a2726629464d00f72cfbc6d417a1; authorship unchecked"
    }
   }
  ],
@@ -335,7 +335,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "2da5fc1cd719d90e13444030ae989a6aee2a516efaf8a8bf1c9e71ea9795cd0b",
+ "digest": "7cfbe5bbf96908b9a56b8eb6ae52f6be2ff3d7ebaf5d9a27736387e42208fa63",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -367,5 +367,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "bd75304918deb6737fc5dac613f385985b0af89dedadb1c5339aa0ea2f816dbb",
- "timestamp": "2026-09-05T21:49:39Z"
+ "timestamp": "2026-09-05T22:08:18Z"
 }
