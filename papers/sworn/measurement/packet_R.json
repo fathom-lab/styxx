@@ -1,0 +1,2196 @@
+{
+ "schema": "styxx-sworn/measurement-packet/v1",
+ "panel": "R",
+ "question": "Here is one sentence from a technical report, the kind of check its author declared for it, and the receipt leaf the author bound it to. Does the leaf evidence the sentence — is what the leaf holds what the sentence says? Answer YES, NO or UNSURE.",
+ "instructions": "TASK. Compare one sentence with one leaf. numeric: the sentence's one number should be the leaf's value at the precision the sentence prints. quote: the text between backticks in the sentence should occur in the leaf. absent: it should not. hash: the sentence's 64-hex digest should equal the leaf's digest.\n\nFORMAT. Answer with one JSON object and nothing else: {\"answer\": \"YES\"}, \"NO\" or \"UNSURE\".\n\nCAUTIONS. Judge the pairing, not the sentence's truth in the world. If the leaf view is marked truncated and the answer would depend on the cut part, answer UNSURE. Do not explain.",
+ "instruction_blocks": {
+  "TASK": "TASK. Compare one sentence with one leaf. numeric: the sentence's one number should be the leaf's value at the precision the sentence prints. quote: the text between backticks in the sentence should occur in the leaf. absent: it should not. hash: the sentence's 64-hex digest should equal the leaf's digest.",
+  "FORMAT": "FORMAT. Answer with one JSON object and nothing else: {\"answer\": \"YES\"}, \"NO\" or \"UNSURE\".",
+  "CAUTIONS": "CAUTIONS. Judge the pairing, not the sentence's truth in the world. If the leaf view is marked truncated and the answer would depend on the cut part, answer UNSURE. Do not explain."
+ },
+ "output_schema": {
+  "type": "object",
+  "properties": {
+   "answer": {
+    "type": "string",
+    "enum": [
+     "YES",
+     "NO",
+     "UNSURE"
+    ]
+   }
+  },
+  "required": [
+   "answer"
+  ],
+  "additionalProperties": false
+ },
+ "built_from": {
+  "population_sha256": "fb36ef41fb38707c546865df429cf54cba7e3d4114d07b0b9d7821c086920b4a",
+  "seed": 20260905,
+  "decoys_sha256": "2b63f1b09e41eb2c94d55c24a24e1d7b0ea681fdd71fdf90014b13c34db08b2c",
+  "leaf_view_max_chars": 2000,
+  "decoy_construction_rule": "The YES side is the first 15 spans, in excluded-document order then span order, whose committed receipt verdict is HELD and whose receipt names a JSON pointer leaf that construction A can retarget; the NO side is the same spans retargeted. Expected answers live in the sealed key."
+ },
+ "key_digest_file": "keys/sworn_measurement_key_R.sha256",
+ "items": [
+  {
+   "id": "R-0001",
+   "sentence": "184 in all",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/unknown",
+    "lines": null,
+    "value": "184",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0002",
+   "sentence": "`vocabulary` 215",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/token_obligation_sources/vocabulary",
+    "lines": null,
+    "value": "215",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0003",
+   "sentence": "The gap was 3.3333 items",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/metrics/gap_free_minus_clamped",
+    "lines": null,
+    "value": "3.3333",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0004",
+   "sentence": "a gain of 0.0273",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/metrics/false_accusation_rate_gain",
+    "lines": null,
+    "value": "0.0273",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0005",
+   "sentence": "the coverage number the verifier printed ran from 0.6667",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "coverage_census_v01_result.json",
+    "pointer": "/v01_estimate_min",
+    "lines": null,
+    "value": "0.6667",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0006",
+   "sentence": "The shipped gate scored 0.23 precision on agent pull requests it had never seen.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "external1_adjudication.json",
+    "pointer": "/precision",
+    "lines": null,
+    "value": "0.23",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0007",
+   "sentence": "The frozen verdict reads `ROTATION_LOAD_BEARING__beyond_diversity`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"ROTATION_LOAD_BEARING__beyond_diversity\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0008",
+   "sentence": "3.3333 below FREE",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/metrics/free_minus_real2",
+    "lines": null,
+    "value": "3.3333",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0009",
+   "sentence": "`vocabulary` is 0.8297 of obligated tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/source_share_of_obligated/vocabulary",
+    "lines": null,
+    "value": "0.8297",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0010",
+   "sentence": "All 10 now carry reproduced=true.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/reproduced_at_ingest/capsule-oath/true",
+    "lines": null,
+    "value": "10",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0011",
+   "sentence": "17 accusations",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/unresolved",
+    "lines": null,
+    "value": "17",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0012",
+   "sentence": "a false-accusation rate of 0.2323",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/false_accusation_rate_after",
+    "lines": null,
+    "value": "0.2323",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0013",
+   "sentence": "range-sanity accusations were genuine at 0.0",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/range-sanity/genuine_share",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0014",
+   "sentence": "object_form 0.0086",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/handedness_share_of_obligated/object_form/share",
+    "lines": null,
+    "value": "0.0086",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0015",
+   "sentence": "out of 55",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/n_claim",
+    "lines": null,
+    "value": "55",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0016",
+   "sentence": "17 more",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/ambiguous",
+    "lines": null,
+    "value": "17",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0017",
+   "sentence": "The oracle beat static by 0.162 at the primary width",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/metrics/oracle_minus_static_8",
+    "lines": null,
+    "value": "0.162",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0018",
+   "sentence": "The best structural claim detector reached 0.4211 precision",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "stage2_result.json",
+    "pointer": "/arms/flagged/A_share",
+    "lines": null,
+    "value": "0.4211",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0019",
+   "sentence": "Charon's own bytes hash to 2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "charon.py",
+    "pointer": null,
+    "lines": null,
+    "value": "2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0020",
+   "sentence": "Its head is `1647a26abadb35d00bc44a98f4e0833e0b0a1ddd5a499ac3c09718c6e9edc692`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/head",
+    "lines": null,
+    "value": "\"1647a26abadb35d00bc44a98f4e0833e0b0a1ddd5a499ac3c09718c6e9edc692\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0021",
+   "sentence": "the untied bank's capacity was 2.6667 items",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/arms/real2/kcap_mean",
+    "lines": null,
+    "value": "2.6666666666666665",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0022",
+   "sentence": "with only 11 upheld accusations sitting among the sentences the panel called claims",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/n_scored_accusations",
+    "lines": null,
+    "value": "100",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0023",
+   "sentence": "270 obligations that came through a table header",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_external_recertify_summary.json",
+    "pointer": "/header_bound_obligations",
+    "lines": null,
+    "value": "270",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0024",
+   "sentence": "The smaller cell held 165 accusations",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/metrics/min_cell_n",
+    "lines": null,
+    "value": "165",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0025",
+   "sentence": "object_text 0.9914",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/handedness_share_of_obligated/object_text/share",
+    "lines": null,
+    "value": "0.9914",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0026",
+   "sentence": "object_text 0.9231",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/handedness_share_of_obligated/object_text/share",
+    "lines": null,
+    "value": "0.9231",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0027",
+   "sentence": "0 documents moved from HELD to FAILED",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/metrics/internal_held_to_failed",
+    "lines": null,
+    "value": "0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0028",
+   "sentence": "1 skipped as unresolvable",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/documents_skipped_unresolvable",
+    "lines": null,
+    "value": "1",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0029",
+   "sentence": "against 0.6391 for line-handed ones",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/line/genuine_share",
+    "lines": null,
+    "value": "0.6391",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0030",
+   "sentence": "82 repositories re-certified",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_external_recertify_summary.json",
+    "pointer": "/repos_recertified",
+    "lines": null,
+    "value": "82",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0031",
+   "sentence": "0.3517 of VERIFIED tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/source_share_of_verified/vocabulary",
+    "lines": null,
+    "value": "0.3517",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0032",
+   "sentence": "207 committed documents",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/internal/documents",
+    "lines": null,
+    "value": "207",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0033",
+   "sentence": "25 accusations",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/unresolved",
+    "lines": null,
+    "value": "25",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0034",
+   "sentence": "The battery's bytes hash to 3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163.",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "ATTACKS_charon_v01_battery_2026_09_02.md",
+    "pointer": null,
+    "lines": null,
+    "value": "3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0035",
+   "sentence": "and the chain check found 0 tampered lines.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_status/TAMPER",
+    "lines": null,
+    "value": "0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0036",
+   "sentence": "`vocabulary` 2612",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/obligation_sources/vocabulary",
+    "lines": null,
+    "value": "2612",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0037",
+   "sentence": "Of the 227 lines whose class is held or passing",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/receipts_n/held_total",
+    "lines": null,
+    "value": "227",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0038",
+   "sentence": "the adjudication term at 0.20",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/n_claim",
+    "lines": null,
+    "value": "55",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0039",
+   "sentence": "RICH scored 0.5560",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/drift/8/rich",
+    "lines": null,
+    "value": "0.5559939543406168",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0040",
+   "sentence": "and 2 sworn documents.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/receipts_n/by_kind/sworn/held_10_or_more",
+    "lines": null,
+    "value": "2",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0041",
+   "sentence": "The frozen verdict reads `INVALID__rederivation_diverged`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"INVALID__rederivation_diverged\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0042",
+   "sentence": "across the 12 sworn documents committed before this cycle",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "coverage_census_v01_result.json",
+    "pointer": "/documents",
+    "lines": null,
+    "value": "12",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0043",
+   "sentence": "FREE's ordered-memory capacity was 6.0 items",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/arms/free/kcap_mean",
+    "lines": null,
+    "value": "6.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0044",
+   "sentence": "Among tokens the line's own trigger words obligated, the genuine-claim share was 0.6391",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/vocabulary/genuine_share",
+    "lines": null,
+    "value": "0.6391",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0045",
+   "sentence": "The unresolved share was 0.0464",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/metrics/unresolved_share",
+    "lines": null,
+    "value": "0.0464",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0046",
+   "sentence": "The frozen verdict reads `HEADER_HANDED_ACCUSES_TRUER`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"HEADER_HANDED_ACCUSES_TRUER\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0047",
+   "sentence": "accusations handed by a table header were genuine at 0.9515",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/header/genuine_share",
+    "lines": null,
+    "value": "0.9515",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0048",
+   "sentence": "`range-correlation` 8",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/token_obligation_sources/range-correlation",
+    "lines": null,
+    "value": "8",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0049",
+   "sentence": "reweighted to the line cell's token-kind mix the gap is 0.1695",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_by_kind_result.json",
+    "pointer": "/rows_considered",
+    "lines": null,
+    "value": "334",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0050",
+   "sentence": "RICH has 5652 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/params/8/rich",
+    "lines": null,
+    "value": "5652",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0051",
+   "sentence": "`n-glued` 84",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/obligation_sources/n-glued",
+    "lines": null,
+    "value": "84",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0052",
+   "sentence": "The anchors landed 0.0 items from the committed GPU receipt",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/metrics/anchor_max_abs_dev",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0053",
+   "sentence": "n=13",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/range-sanity/n",
+    "lines": null,
+    "value": "13",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0054",
+   "sentence": "on 38 sentences.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "stage2_result.json",
+    "pointer": "/arms/flagged/A_share",
+    "lines": null,
+    "value": "0.4211",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0055",
+   "sentence": "object_form 0.0769",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/handedness_share_of_obligated/object_form/share",
+    "lines": null,
+    "value": "0.0769",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0056",
+   "sentence": "and 2 are agent-handoff capsules.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_kind/capsule-diffgate",
+    "lines": null,
+    "value": "2",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0057",
+   "sentence": "holds 0 tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_class/object_form/n",
+    "lines": null,
+    "value": "0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0058",
+   "sentence": "Every one of the 84 `n-glued` tokens is ABSTAIN",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/by_source_and_status/n-glued|ABSTAIN",
+    "lines": null,
+    "value": "84",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0059",
+   "sentence": "The shipped gate scored 0.23 precision on agent pull requests it had never seen.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "external1_adjudication.json",
+    "pointer": "/decoys_total",
+    "lines": null,
+    "value": "30",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0060",
+   "sentence": "Of the accusations the verifier was handed by a table header, 0.9515 were genuine claims",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/header/genuine_share",
+    "lines": null,
+    "value": "0.9515",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0061",
+   "sentence": "RICH 0.3599",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/drift/4/rich",
+    "lines": null,
+    "value": "0.35986361900965375",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0062",
+   "sentence": "out of 55",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/E",
+    "lines": null,
+    "value": "0.55",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0063",
+   "sentence": "82 the panel judged not claims",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/external/remaining_false_by_panel",
+    "lines": null,
+    "value": "82",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0064",
+   "sentence": "on 38 sentences.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "stage2_result.json",
+    "pointer": "/arms/flagged/total",
+    "lines": null,
+    "value": "38",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0065",
+   "sentence": "The document verifier's false-accusation rate abroad was 0.2596",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_adjudication_result.json",
+    "pointer": "/false_accusation_rate/n",
+    "lines": null,
+    "value": "366",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0066",
+   "sentence": "n=13",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/range-sanity/n",
+    "lines": null,
+    "value": "13",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0067",
+   "sentence": "beats RICH by 0.3049",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/metrics/reported_static_matched_minus_rich_4",
+    "lines": null,
+    "value": "0.3049",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0068",
+   "sentence": "`precision` 2",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/token_obligation_sources/precision",
+    "lines": null,
+    "value": "2",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0069",
+   "sentence": "n=169",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/cells/line/n",
+    "lines": null,
+    "value": "169",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0070",
+   "sentence": "3148 obligated",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/obligated_tokens",
+    "lines": null,
+    "value": "3148",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0071",
+   "sentence": "8583 ledger tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/ledger_tokens",
+    "lines": null,
+    "value": "8583",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0072",
+   "sentence": "a static bank one width up has 2052 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrainment_result.json",
+    "pointer": "/params/8/static",
+    "lines": null,
+    "value": "2052",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0073",
+   "sentence": "0.0 above CLAMPED",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/metrics/real2_minus_clamped",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0074",
+   "sentence": "It carries 243 lines",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/entries",
+    "lines": null,
+    "value": "243",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0075",
+   "sentence": "13 accusations were removed",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/external/accusations_removed",
+    "lines": null,
+    "value": "13",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0076",
+   "sentence": "header-handed accusations were genuine at 0.9515",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/header/n",
+    "lines": null,
+    "value": "165",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0077",
+   "sentence": "across the 12 sworn documents committed before this cycle",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "coverage_census_v01_result.json",
+    "pointer": "/sworn_total",
+    "lines": null,
+    "value": "167",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0078",
+   "sentence": "against 0.6391 for line-handed ones",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/line/genuine",
+    "lines": null,
+    "value": "108",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0079",
+   "sentence": "3 more had no document to certify at all",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/reproduced_at_ingest/oath-certificate/null",
+    "lines": null,
+    "value": "3",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0080",
+   "sentence": "Under the installed verifier 243 lines re-derived to the same core",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_status/SAME_LINE",
+    "lines": null,
+    "value": "243",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0081",
+   "sentence": "The frozen verdict is `CAPACITY_IN_DISGUISE`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"CAPACITY_IN_DISGUISE\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0082",
+   "sentence": "213 are OATH certificates",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_kind/oath-certificate",
+    "lines": null,
+    "value": "213",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0083",
+   "sentence": "CLAMPED's was 2.6667",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/arms/clamped/kcap_mean",
+    "lines": null,
+    "value": "2.6666666666666665",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0084",
+   "sentence": "the extraction term came back at 0.55",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/E",
+    "lines": null,
+    "value": "0.55",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0085",
+   "sentence": "n=165",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/cells/header/n",
+    "lines": null,
+    "value": "165",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0086",
+   "sentence": "static 0.6648",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/drift/4/static_matched",
+    "lines": null,
+    "value": "0.6647679011027018",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0087",
+   "sentence": "advantage of 0.0847",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/gate/rich_minus_static",
+    "lines": null,
+    "value": "0.0847",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0088",
+   "sentence": "6300 VERIFIED",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/verified_tokens",
+    "lines": null,
+    "value": "6300",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0089",
+   "sentence": "353 accusations remain",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/external/accusations_remaining",
+    "lines": null,
+    "value": "353",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0090",
+   "sentence": "and 0.2323 after its range rule was turned into a reporter.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/false_accusation_rate_after",
+    "lines": null,
+    "value": "0.2323",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0091",
+   "sentence": "The largest receipt set behind any line is 21.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/receipts_n/max",
+    "lines": null,
+    "value": "21",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0092",
+   "sentence": "with only 11 upheld accusations sitting among the sentences the panel called claims",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/upheld_among_claim",
+    "lines": null,
+    "value": "11",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0093",
+   "sentence": "FREE's 168524",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/arms/free/params",
+    "lines": null,
+    "value": "168524",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0094",
+   "sentence": "The frozen verdict reads `SHIP__range_sanity_reports`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"SHIP__range_sanity_reports\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0095",
+   "sentence": "an advantage of 0.1286 over static at the same width",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/gate/rich_advantage_by_D/4",
+    "lines": null,
+    "value": "0.1286",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0096",
+   "sentence": "reweighted to the line cell's token-kind mix the gap is 0.1695",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_by_kind_result.json",
+    "pointer": "/kind_adjusted_gap",
+    "lines": null,
+    "value": "0.1695",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0097",
+   "sentence": "and 0.2323 after its range rule was turned into a reporter.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/false_accusation_rate_before",
+    "lines": null,
+    "value": "0.2596",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0098",
+   "sentence": "accusations handed by a trigger word in the line were genuine at 0.6391",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/line/genuine_share",
+    "lines": null,
+    "value": "0.6391",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0099",
+   "sentence": "`precision` 242",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/obligation_sources/precision",
+    "lines": null,
+    "value": "242",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0100",
+   "sentence": "After three repair cycles the held-out figure was 0.16.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "v14_adjudication.json",
+    "pointer": "/precision",
+    "lines": null,
+    "value": "0.16",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0101",
+   "sentence": "8583 ledger tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/internal/tokens",
+    "lines": null,
+    "value": "8583",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0102",
+   "sentence": "over 243 distinct subjects",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/distinct_subjects",
+    "lines": null,
+    "value": "243",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0103",
+   "sentence": "The document verifier's false-accusation rate abroad was 0.2596",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_adjudication_result.json",
+    "pointer": "/false_accusation_rate/rate",
+    "lines": null,
+    "value": "0.2596",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0104",
+   "sentence": "The share that reached none was 0.5027",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/metrics/unknown_or_ambiguous_share",
+    "lines": null,
+    "value": "0.5027",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0105",
+   "sentence": "the adjudication term at 0.20",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/A",
+    "lines": null,
+    "value": "0.2",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0106",
+   "sentence": "5179 tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_external_recertify_summary.json",
+    "pointer": "/tokens",
+    "lines": null,
+    "value": "5179",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0107",
+   "sentence": "n=165",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/header/n",
+    "lines": null,
+    "value": "165",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0108",
+   "sentence": "The oracle at the primary width — a diverse bank locked to the true drifting period — scores 0.6307",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/drift/8/oracle",
+    "lines": null,
+    "value": "0.6306845943133036",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0109",
+   "sentence": "the matched static bank has 3375 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/params/4/static_matched",
+    "lines": null,
+    "value": "3375",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0110",
+   "sentence": "RICH has 3184 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/params/4/rich",
+    "lines": null,
+    "value": "3184",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0111",
+   "sentence": "The header cell's genuine share exceeded the line cell's by 0.3124",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/metrics/delta_header_minus_line",
+    "lines": null,
+    "value": "0.3124",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0112",
+   "sentence": "The frozen verdict reads `INVALID__join_incomplete`.",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/verdict",
+    "lines": null,
+    "value": "\"INVALID__join_incomplete\"",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0113",
+   "sentence": "scores 0.5451",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/drift/8/rich",
+    "lines": null,
+    "value": "0.5451151927312216",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0114",
+   "sentence": "After three repair cycles the held-out figure was 0.16.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "v14_adjudication.json",
+    "pointer": "/decoys_total",
+    "lines": null,
+    "value": "30",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0115",
+   "sentence": "The read≠write submission source at `\"path\": \"arxiv/read_neq_write/source.md\"`",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "charon.log.jsonl",
+    "pointer": null,
+    "lines": "L3",
+    "value": "{\"schema\": \"styxx.charon/entry/v1\", \"seq\": 2, \"prev\": \"626404fd2da15c72cdfd4ae0e215865dde1f5a44cf16e0056af17c97eda8495e\", \"kind\": \"oath-certificate\", \"subject\": {\"name\": \"source.md\", \"path\": \"arxiv/read_neq_write/source.md\", \"sha256\": \"8de718cd7eae2b61e7064c5743c2084be69cc79690f225377e405739e22d7263\"}, \"at\": {\"commit\": null, \"manifest_digest\": null, \"document_at_commit\": null}, \"receipts\": {\"n\": 8, \"sha256\": [\"0f01c70464ba2f7f43c1f03215b451fd3c4d801079df68eff99d849099d76d83\", \"68cbd42c96ca77790fef1a4c561e3daccfcc51d81520519ce01c605802e48777\", \"6ab11e3c34555b41b7aa1b1c7e3dc18129a17403d988d9b296dcce6a3527b6a4\", \"6afa5dfa10c22a759e9e3ee2b95d2ad33ccd7b39080a3a5000ae618e3ad57e76\", \"7485b05379da431ade5a0fe54441bd751e5cf2d0217ce79796070e8e8f965ecb\", \"78562ada08b14ed6ebea871b0bbbd6ad78b019a78f6a2ec3026a4f619b38a217\", \"a02563fe0e5c47f816dbb23df32fd66e87404054bf5754570d7b083585b894ca\", \"faaca8f876e39da89af81e5e2de2a243682d5ec027600453f5daf47e403b4cd8\"], \"cited\": {\"n\": 8, \"sha256\": [\"00978cf4b0ab5c57828cbd731510d9ad793aa330385414810e66f55d82e36a72\", \"145affd35a75beeda289e518f07c216156ef18b42ffdfce5b4abd67eb9e0e0e7\", \"22c5429dd1aad62da29e49050dcbdc38196502df160c89ee5f7ce693095a8d13\", \"6a5c77ceb15ded0547f2ac770a2077a2de7427b6536cc2e2cc17dfcefd82f2b8\", \"95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237\", \"97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9\", \"b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05\", \"b93b9164e7bfa12d8bf73005488aea41f70753b65597788e85a05f558c96b53c\"]}, \"vacuous\": false}, \"verifier\": {\"styxx_version\": \"7.47.0\", \"modules\": [[\"styxx.charon\", \"2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452\"], [\"styxx.corpus_audit\", \"ccb9456663cff3a708f582971c80c8d17be414021900605870d88a4c09dd3c90\"], [\"styxx.certify\", \"fe5854b367fa7ba98e8585b54dd3f2abbaf83631719664e0bfb4ca941a8ec470\"]], \"digest\": \"7bc58398d85fe6c082719c911408ad0354c7e85e0776e4be9572c7c255543dbe\"}, \"verdict\": \"OATH-FAILED, 10 uncovered\", \"verdict_cl",
+    "value_kind": "slice",
+    "truncated": true
+   }
+  },
+  {
+   "id": "R-0116",
+   "sentence": "**15 distinct verifier builds**",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/distinct_verifier_builds_on_disk",
+    "lines": null,
+    "value": "15",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0117",
+   "sentence": "10 rest on ten or more receipts",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/receipts_n/held_with_10_or_more",
+    "lines": null,
+    "value": "10",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0118",
+   "sentence": "All 366 accusations were joined",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/accusations_joined",
+    "lines": null,
+    "value": "366",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0119",
+   "sentence": "only 18 carry per-token epistemics.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/certificates_with_per_token_epistemics",
+    "lines": null,
+    "value": "18",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0120",
+   "sentence": "Those ledgers hold 233 obligated tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/obligated_tokens",
+    "lines": null,
+    "value": "233",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0121",
+   "sentence": "Of those it was handed by a trigger word in the line's own prose, 0.6391 were",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/line/genuine_share",
+    "lines": null,
+    "value": "0.6391",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0122",
+   "sentence": "scores 0.4604",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrainment_result.json",
+    "pointer": "/drift/8/static",
+    "lines": null,
+    "value": "0.4604337016741435",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0123",
+   "sentence": "of which 0 are malformed.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/malformed_lines",
+    "lines": null,
+    "value": "0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0124",
+   "sentence": "scores 0.3752 on the drifting task",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrain_rich_result.json",
+    "pointer": "/drift/4/rich",
+    "lines": null,
+    "value": "0.37521106998125714",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0125",
+   "sentence": "RICH's 5652",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/params/8/rich",
+    "lines": null,
+    "value": "5652",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0126",
+   "sentence": "RICH's 3184",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/params/4/rich",
+    "lines": null,
+    "value": "3184",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0127",
+   "sentence": "among line-handed accusations it was 0.6391",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/cells/line/genuine_share",
+    "lines": null,
+    "value": "0.6391",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0128",
+   "sentence": "The recovery fraction was 0.0",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/metrics/recovery_fraction",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0129",
+   "sentence": "the coverage number the verifier printed ran from 0.6667",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "coverage_census_v01_result.json",
+    "pointer": "/v01_estimate_max",
+    "lines": null,
+    "value": "1.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0130",
+   "sentence": "a static bank at twice the width has 3580 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrainment_result.json",
+    "pointer": "/params/16/static",
+    "lines": null,
+    "value": "3580",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0131",
+   "sentence": "0 tokens moved",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/internal/tokens_moved",
+    "lines": null,
+    "value": "0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0132",
+   "sentence": "Among range-sanity accusations the genuine-claim share was 0.0",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/range-sanity/genuine_share",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0133",
+   "sentence": "3 certificates did not reproduce — by verdict or by receipt set",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/reproduced_at_ingest/oath-certificate/false",
+    "lines": null,
+    "value": "3",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0134",
+   "sentence": "8 of them OATH certificates",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/receipts_n/by_kind/oath-certificate/held_10_or_more",
+    "lines": null,
+    "value": "8",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0135",
+   "sentence": "the matched static bank scored 0.7519",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/drift/8/static_matched",
+    "lines": null,
+    "value": "0.7518961032231649",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0136",
+   "sentence": "a difference of 0.3124",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/metrics/delta_header_minus_line",
+    "lines": null,
+    "value": "0.3124",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0137",
+   "sentence": "re-certifies `\"verdict\": \"OATH-FAILED, 10 uncovered\"`",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "charon.log.jsonl",
+    "pointer": null,
+    "lines": "L3",
+    "value": "{\"schema\": \"styxx.charon/entry/v1\", \"seq\": 2, \"prev\": \"626404fd2da15c72cdfd4ae0e215865dde1f5a44cf16e0056af17c97eda8495e\", \"kind\": \"oath-certificate\", \"subject\": {\"name\": \"source.md\", \"path\": \"arxiv/read_neq_write/source.md\", \"sha256\": \"8de718cd7eae2b61e7064c5743c2084be69cc79690f225377e405739e22d7263\"}, \"at\": {\"commit\": null, \"manifest_digest\": null, \"document_at_commit\": null}, \"receipts\": {\"n\": 8, \"sha256\": [\"0f01c70464ba2f7f43c1f03215b451fd3c4d801079df68eff99d849099d76d83\", \"68cbd42c96ca77790fef1a4c561e3daccfcc51d81520519ce01c605802e48777\", \"6ab11e3c34555b41b7aa1b1c7e3dc18129a17403d988d9b296dcce6a3527b6a4\", \"6afa5dfa10c22a759e9e3ee2b95d2ad33ccd7b39080a3a5000ae618e3ad57e76\", \"7485b05379da431ade5a0fe54441bd751e5cf2d0217ce79796070e8e8f965ecb\", \"78562ada08b14ed6ebea871b0bbbd6ad78b019a78f6a2ec3026a4f619b38a217\", \"a02563fe0e5c47f816dbb23df32fd66e87404054bf5754570d7b083585b894ca\", \"faaca8f876e39da89af81e5e2de2a243682d5ec027600453f5daf47e403b4cd8\"], \"cited\": {\"n\": 8, \"sha256\": [\"00978cf4b0ab5c57828cbd731510d9ad793aa330385414810e66f55d82e36a72\", \"145affd35a75beeda289e518f07c216156ef18b42ffdfce5b4abd67eb9e0e0e7\", \"22c5429dd1aad62da29e49050dcbdc38196502df160c89ee5f7ce693095a8d13\", \"6a5c77ceb15ded0547f2ac770a2077a2de7427b6536cc2e2cc17dfcefd82f2b8\", \"95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237\", \"97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9\", \"b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05\", \"b93b9164e7bfa12d8bf73005488aea41f70753b65597788e85a05f558c96b53c\"]}, \"vacuous\": false}, \"verifier\": {\"styxx_version\": \"7.47.0\", \"modules\": [[\"styxx.charon\", \"2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452\"], [\"styxx.corpus_audit\", \"ccb9456663cff3a708f582971c80c8d17be414021900605870d88a4c09dd3c90\"], [\"styxx.certify\", \"fe5854b367fa7ba98e8585b54dd3f2abbaf83631719664e0bfb4ca941a8ec470\"]], \"digest\": \"7bc58398d85fe6c082719c911408ad0354c7e85e0776e4be9572c7c255543dbe\"}, \"verdict\": \"OATH-FAILED, 10 uncovered\", \"verdict_cl",
+    "value_kind": "slice",
+    "truncated": true
+   }
+  },
+  {
+   "id": "R-0138",
+   "sentence": "Only 16 of them carry the epistemics-summary block",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/certificates_with_epistemics_summary_v1",
+    "lines": null,
+    "value": "16",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0139",
+   "sentence": "`n-glued` 8",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/token_obligation_sources/n-glued",
+    "lines": null,
+    "value": "8",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0140",
+   "sentence": "and 1 handoff capsule did not reproduce its gate record.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/reproduced_at_ingest/capsule-diffgate/false",
+    "lines": null,
+    "value": "1",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0141",
+   "sentence": "The oracle at twice the width scores 0.8950",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrainment_result.json",
+    "pointer": "/drift/16/oracle",
+    "lines": null,
+    "value": "0.8950320283571879",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0142",
+   "sentence": "The unresolved share was 0.0683",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/metrics/unresolved_share",
+    "lines": null,
+    "value": "0.0683",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0143",
+   "sentence": "10 are OATH capsules",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_kind/capsule-oath",
+    "lines": null,
+    "value": "10",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0144",
+   "sentence": "At the commit this document names the log's bytes hash to fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318.",
+   "kind": "hash",
+   "leaf": {
+    "receipt_name": "charon.log.jsonl",
+    "pointer": null,
+    "lines": null,
+    "value": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
+    "value_kind": "sha256",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0145",
+   "sentence": "The universal-mind capstone lists `\"receipt_changed\": [\"mind_v0_validation.json\"]`",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "charon.log.jsonl",
+    "pointer": null,
+    "lines": "L59",
+    "value": "{\"schema\": \"styxx.charon/entry/v1\", \"seq\": 58, \"prev\": \"6af40a3c283664d3f5d455bed6ba870b49ff145debb2480acc422a869423e301\", \"kind\": \"oath-certificate\", \"subject\": {\"name\": \"CAPSTONE_universal_mind_2026_06_10.md\", \"path\": \"papers/ancient-question-program/CAPSTONE_universal_mind_2026_06_10.md\", \"sha256\": \"67c651658021e46d81aab58f41c251a9be3cf6830591e9be691cdcf8c36f8166\"}, \"at\": {\"commit\": null, \"manifest_digest\": null, \"document_at_commit\": null}, \"receipts\": {\"n\": 11, \"sha256\": [\"2727355c8281a1ee4e25225d69e60268105d3ece723edf38a22f78e71b181398\", \"53aa8ed8f67aa355c1f018ab73b6735eb764460de3f83c79965507808c0e3952\", \"5d68fcd7596bf06a4f1d69cab6872f03c4bf66b8cb91ee3c0db4033680c3df55\", \"65614a24d7ca0a40ac6ffdabaf0239e3d8fbcc90094a4a3d8c948c3e70b5d3a1\", \"8262191a63391519193f110ad81fc810aaaa2b0024af18f807bae89ecfc862a2\", \"86c8c418bace30127ceae4a8da9d40c4603b6aaf0a5bcd5f0041f42e4ef81531\", \"aa3d606643ea3d444dbd9d55ea39ff6ad390829cf5441869e7db463ab02a1e66\", \"abbc53cd5f66e65ddd4efd8e3b115297f95a9c9f316ae155f36fad5f0bdfcb54\", \"c3cdd6a1136af2208510dcc80dcfdce78306f47b44d57b613e3939698f860563\", \"f7b2691c04ec9d30ab3988b93be377bc077fb7584498987be19fcda1e91dbbd8\", \"fe43a9da26241edfd07fddd27ceaf0a54b5347072933fcd4b50d34f0b6a8fea8\"], \"cited\": {\"n\": 12, \"sha256\": [\"229393aa7e0eb0ce096ed5417bf9dd926d565a3f38e6c95260007d68fd3b7552\", \"27d3b81e6e3b181dd12bd97d13e38793d63cb3f8464e14b0059abaaefb3fbd89\", \"31aaefa14dca576ca931b2f0d00fbeae6be7143b686cd92a8a0dd03999a87d2f\", \"43e4a5e3c7e320200cfd2165ec88dcf165f0304fa24cfbd9fc5fc9797d4fa2b1\", \"71dc50c80a9a9f594adbe3ea1df621f248a2b2b712956b6b1945be39b3b95389\", \"72f4f5826430504e8c2891d62d05f5eb8690c5bbef58a2351e1c1d3101e71bf1\", \"7fddffd0cbe5ce6cedfb95755173e22d56a87b8bedf09754cb46f1137e75bce4\", \"88631ed6f5155b74441ce52a7fa9ad06a093dcdeb0687bd8f842b10bb014efaa\", \"aff477f9018b99d5aad742394a7bfb2814954d2a6d2038a79c5820a233beaddb\", \"bb76b600e392b0d9bfd6cbca892d38b3f522509ac192aba2000c0e8ca7712026\", \"dd5ec419b308eb21bd64ebfe1bf4fe9d8095ba26ef8cb15de5483aef5a",
+    "value_kind": "slice",
+    "truncated": true
+   }
+  },
+  {
+   "id": "R-0146",
+   "sentence": "18 are sworn documents at the commits their sidecars name",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "charon_verify_result.json",
+    "pointer": "/by_kind/sworn",
+    "lines": null,
+    "value": "18",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0147",
+   "sentence": "the extraction term came back at 0.55",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "extraction_panel_result.json",
+    "pointer": "/decomposition/upheld_among_claim",
+    "lines": null,
+    "value": "11",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0148",
+   "sentence": "The matched static bank has 5850 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/params/8/static_matched",
+    "lines": null,
+    "value": "5850",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0149",
+   "sentence": "Among header-handed accusations the genuine-claim share was 0.9515",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v2_result.json",
+    "pointer": "/cells/header/genuine_share",
+    "lines": null,
+    "value": "0.9515",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0150",
+   "sentence": "There are 208 certificates on disk.",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_PRINTED/certificates_on_disk",
+    "lines": null,
+    "value": "208",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0151",
+   "sentence": "The best structural claim detector reached 0.4211 precision",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "stage2_result.json",
+    "pointer": "/arms/flagged/valid",
+    "lines": null,
+    "value": "38",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0152",
+   "sentence": "168524 parameters",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "untied_control_result.json",
+    "pointer": "/arms/real2/params",
+    "lines": null,
+    "value": "168524",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0153",
+   "sentence": "244 pinned files",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "oath_external_recertify_summary.json",
+    "pointer": "/files/fetched",
+    "lines": null,
+    "value": "244",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0154",
+   "sentence": "the share of them the panel had judged genuine claims was 0.0",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "range_sanity_report_ab_result.json",
+    "pointer": "/metrics/removed_genuine_share",
+    "lines": null,
+    "value": "0.0",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0155",
+   "sentence": "scores 0.6781",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "entrainment_result.json",
+    "pointer": "/drift/16/static",
+    "lines": null,
+    "value": "0.6781367460886637",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0156",
+   "sentence": "The anchors re-run on CPU landed within 0.0227 of the committed GPU receipt",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/metrics/anchor_max_abs_dev",
+    "lines": null,
+    "value": "0.0227",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0157",
+   "sentence": "The handoff capsule's divergence is recorded as `gate.claims not reproduced: embedded`",
+   "kind": "quote",
+   "leaf": {
+    "receipt_name": "charon.log.jsonl",
+    "pointer": null,
+    "lines": "L96",
+    "value": "{\"schema\": \"styxx.charon/entry/v1\", \"seq\": 95, \"prev\": \"1593c8ae6c7233165381199d6f0fb1e17065a9fc6fd2d2b25358325dd5e8c29e\", \"kind\": \"capsule-diffgate\", \"subject\": {\"name\": \"HANDOFF_capsule_v02_2026_08_31.capsule.html\", \"path\": \"papers/closed-model-frontier/HANDOFF_capsule_v02_2026_08_31.capsule.html\", \"sha256\": \"63f5b3c861f03cd8cfeed9c3e98034e38be76e5b4978c12ea70704eae03e8015\"}, \"at\": {\"commit\": null, \"manifest_digest\": null, \"document_at_commit\": null}, \"receipts\": {\"n\": 3, \"sha256\": [\"0ec3c0a870488c7f588f84432045adfd6c29985de326391e44d4c21d5ebac6bd\", \"6ae11bf5daaa889af06b4e5df12bb58b1e1e373bb2b67d8978b967ec74abb72b\", \"8336857629afcd6e9e208620dc0f79df1a817aa569e755c47fcee3738e3fea6b\"], \"cited\": null, \"vacuous\": false}, \"verifier\": {\"styxx_version\": \"7.47.0\", \"modules\": [[\"styxx.charon\", \"2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452\"], [\"styxx.capsule\", \"3ec3ef4a15f850453c02a6abded3a9433868a5676fdf987de1905fba8c7a0107\"], [\"styxx.diffgate\", \"405b7d4263806475064ae1814b8d2847be1f18ca4d82afea659d74c509c0d80f\"], [\"styxx.evidence\", \"a40eb56854ba442c3bad706e91062afbd7835b920cae772a2c5c1f1f1d29645f\"], [\"styxx.claimdetect\", \"ca0fba178e1edda24a8fec6b38cb38282a7556980fc848eeaf8b476a161c1815\"]], \"digest\": \"af5d2f9e2f41cb9448572b83292aad805380bd9806eb23bdb77207b2605cd385\"}, \"verdict\": \"PASS\", \"verdict_class\": \"PASS\", \"counts\": {\"claims\": 4, \"contradicted\": 0, \"uncheckable\": 1, \"recorded_verdict\": \"PASS\", \"problems\": 1, \"problems_detail\": [\"gate.claims not reproduced: embedded [{'kind': 'file_touched', 'text': 'Added tests/test_capsule_v02.py covering the mint refusals, the tamper battery, the', 'd\"], \"pinned_verifier_version\": \"7.47.0\"}, \"floor\": null, \"rungs\": null, \"reproduced\": false, \"entry_id\": \"a2c0cbeb5f769920a4d067b33099e6ca45a0a8e2a1640ecc7c7afb0ae83844d7\", \"timestamp\": \"2026-09-03T15:56:57Z\"}",
+    "value_kind": "slice",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0158",
+   "sentence": "n=169",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/line/n",
+    "lines": null,
+    "value": "169",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0159",
+   "sentence": "the oracle scored 0.6451",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/drift/8/oracle",
+    "lines": null,
+    "value": "0.6450705726941427",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0160",
+   "sentence": "`range-correlation` 210",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/obligation_sources/range-correlation",
+    "lines": null,
+    "value": "210",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0161",
+   "sentence": "beats RICH by 0.1959",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "efficiency_control_result.json",
+    "pointer": "/metrics/static_matched_minus_rich_8",
+    "lines": null,
+    "value": "0.1959",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0162",
+   "sentence": "header-handed accusations were genuine at 0.9515",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_v3_result.json",
+    "pointer": "/cells/header/genuine_share",
+    "lines": null,
+    "value": "0.9515",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0163",
+   "sentence": "n=169",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/vocabulary/n",
+    "lines": null,
+    "value": "169",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0164",
+   "sentence": "207 documents were re-certified",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "h_mapping_census_result.json",
+    "pointer": "/population_LIVE/documents_recertified",
+    "lines": null,
+    "value": "207",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0165",
+   "sentence": "167 accused tokens",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/unknown/n",
+    "lines": null,
+    "value": "167",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  },
+  {
+   "id": "R-0166",
+   "sentence": "Among the tokens no clause reached, the genuine-claim share was 0.9521",
+   "kind": "numeric",
+   "leaf": {
+    "receipt_name": "handedness_accusations_result.json",
+    "pointer": "/by_source/unknown/genuine_share",
+    "lines": null,
+    "value": "0.9521",
+    "value_kind": "leaf",
+    "truncated": false
+   }
+  }
+ ]
+}

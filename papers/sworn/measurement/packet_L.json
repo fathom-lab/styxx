@@ -1,0 +1,294 @@
+{
+ "schema": "styxx-sworn/measurement-packet/v1",
+ "panel": "L",
+ "question": "For each sentence in the passage below, decide whether it is LOAD-BEARING — a claim the document's conclusion depends on, which could turn out to be right or wrong — or NOT load-bearing — context, method, a date, a version, a file name, a restatement, a hedge, a sentence about what the document does not say — or UNSURE. Draw the sentence boundaries yourself.",
+ "instructions": "TASK. You are reading one passage from a technical report. Label every sentence.\n\nFORMAT. Answer with one JSON object and nothing else: {\"brackets\": [{\"opening_words\": \"...\", \"closing_words\": \"...\", \"label\": \"LOAD-BEARING\"}, ...]}. opening_words is the opening three words of the sentence and closing_words is its closing three words, copied exactly as they appear in the passage including punctuation and capitalisation; a sentence shorter than six words may repeat words in both. label is exactly one of LOAD-BEARING, NOT, UNSURE. Cover every sentence once; do not skip, merge or reorder.\n\nCAUTIONS. A sentence that reports a number, a quoted string, a hash, or the absence of something can still be NOT load-bearing if the conclusion would stand without it. A sentence with no number can be LOAD-BEARING. Use UNSURE honestly; it is counted against the panel, not against you. Do not reproduce the passage; quote only the opening and closing three words.",
+ "instruction_blocks": {
+  "TASK": "TASK. You are reading one passage from a technical report. Label every sentence.",
+  "FORMAT": "FORMAT. Answer with one JSON object and nothing else: {\"brackets\": [{\"opening_words\": \"...\", \"closing_words\": \"...\", \"label\": \"LOAD-BEARING\"}, ...]}. opening_words is the opening three words of the sentence and closing_words is its closing three words, copied exactly as they appear in the passage including punctuation and capitalisation; a sentence shorter than six words may repeat words in both. label is exactly one of LOAD-BEARING, NOT, UNSURE. Cover every sentence once; do not skip, merge or reorder.",
+  "CAUTIONS": "CAUTIONS. A sentence that reports a number, a quoted string, a hash, or the absence of something can still be NOT load-bearing if the conclusion would stand without it. A sentence with no number can be LOAD-BEARING. Use UNSURE honestly; it is counted against the panel, not against you. Do not reproduce the passage; quote only the opening and closing three words."
+ },
+ "output_schema": {
+  "type": "object",
+  "properties": {
+   "brackets": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "opening_words": {
+       "type": "string"
+      },
+      "closing_words": {
+       "type": "string"
+      },
+      "label": {
+       "type": "string",
+       "enum": [
+        "LOAD-BEARING",
+        "NOT",
+        "UNSURE"
+       ]
+      }
+     },
+     "required": [
+      "opening_words",
+      "closing_words",
+      "label"
+     ],
+     "additionalProperties": false
+    }
+   }
+  },
+  "required": [
+   "brackets"
+  ],
+  "additionalProperties": false
+ },
+ "built_from": {
+  "population_sha256": "fb36ef41fb38707c546865df429cf54cba7e3d4114d07b0b9d7821c086920b4a",
+  "seed": 20260905,
+  "decoys_sha256": "2b63f1b09e41eb2c94d55c24a24e1d7b0ea681fdd71fdf90014b13c34db08b2c",
+  "window_max_units": 40,
+  "edge_words": 3
+ },
+ "key_digest_file": "keys/sworn_measurement_key_L.sha256",
+ "items": [
+  {
+   "id": "L-0001",
+   "text": "## The two sworn documents\n\nThe h declaration binds 25 counts to its census receipt, and all of them held.\nIts document verdict reads `SWORN-HELD`."
+  },
+  {
+   "id": "L-0002",
+   "text": "82 repositories re-certified from\n244 pinned files, every byte hash-verified against the manifest,\n5179 tokens — the 2026-08-27 count to the digit — and\n270 obligations that came through a table header. The\n2026-08-27 harness ledger recorded trigger words from the row alone, which is why the first\nattempt at this study diverged on half the accusations: the corpus did not move; the ledger had\nnever seen the headers.\n\n## What this does not say\n\nOne panel of three seats of one model family, with correlated error as the ceiling both source\ndocuments disclose. One repository holds 194 of the 366 accusations, and its weight in each cell\nis printed in the receipt rather than hidden. The hypothesis was frozen after two INVALID runs\nwhose exploratory numbers pointed here; the prior was contaminated and declared so in the\npreregistration, and the bar did not move. No claim about the object_form class: no accused\ntoken on this corpus printed seven fractional digits, so the question the brief asked — form\nagainst text — has no cell here, and the question this corpus can answer is the one it\nanswered. Nothing about verification: this is accusation only.\n\n---\n\n*Handed is not one thing. A label the author chose hands the verifier a claim; a word that\nhappened to be nearby hands it a coin. The mapping said object_text; the panel says the text has\na grain.*\n"
+  },
+  {
+   "id": "L-0003",
+   "text": "No token is graded. `object_text` does not mean wrong and `object_form` does not mean right; the\nclasses say who supplied the target, not whether the target was a claim or whether the oath\nheld. No rate here is a measurement of the instrument's quality. The mapping is a declaration\nand can be argued with in its one file; the census is a count anyone can re-run.\n\n---\n\n*Every target this verifier has ever checked was handed to it by the document it was judging.\nThat was already true; now it is written down, in one place, with a test that notices when it\nstops being the whole story.*\n"
+  },
+  {
+   "id": "L-0004",
+   "text": "## The finding\n\nUntying the magnitudes recovers nothing. A real bank with twice FREE's independent timescales\nholds ordered items exactly as poorly as the tied bank, at every K: the two curves lie on each\nother. Whatever the rotation buys, it is not a richer spread of decay rates — it is the rotation.\nThe arc's headline, that oscillation is causally load-bearing in state-space models, survives\nthe sharpest control its own knob admits, and the theta-gamma reading — phase as the code for\norder — is strengthened rather than scoped.\n\n## What this does not say\n\nOne task family (ordered copy), one width, three seeds, no interval, toy scale. The flagship\npermuted-MNIST number (+0.312) was measured with the same knob and carries the same confound; this\nresult makes the diversity reading unlikely there but does not test it, and the permuted-MNIST\nre-run with a REAL2 arm is the next preregistration. Nothing here is about real LinOSS or Mamba\ncheckpoints. The disclosed prior was uncertain and the bet was real; it came out on the side of\nrotation, and the numbers say so at the resolution of a capacity grid.\n\n---\n\n*The knob turned two things; the second turned out to be nothing. The rhythm was the rhythm.*\n"
+  },
+  {
+   "id": "L-0005",
+   "text": "instrument is an observer. Held-out accusation precision was 0.16\nagainst a floor the preregistration wrote as 0.95 in prose (the floor is not a receipt leaf, and"
+  },
+  {
+   "id": "L-0006",
+   "text": "**The receipt set is on the line, and it means different things by kind.**\nThe largest receipt set behind any line is 21.\nOf the 227 lines whose class is held or passing,\n10 rest on ten or more receipts:\n8 of them OATH certificates\nand 2 sworn documents.\nEvery digest Charon takes over working-tree bytes is content identity modulo newlines, so an\nOATH line reads the same on a CRLF checkout as on an LF one; the certificate's cited digests are\nwhatever it recorded, which in this corpus is a Windows tree, so the two sets differ and both are\non the line. Only the first eight are the shape the 2026-09-01 dogfood warned about: for an OATH verdict the\nverifier value-matches over every leaf, so a larger set makes HELD strictly easier, and those\neight are the lines a reader should read with that dogfood in mind. For a sworn document the\nauthor named the leaf, so volume buys nothing; for a handoff capsule the count is bindings, not\nreceipts. The log prints the number and the kind, and the page prints the distinction rather than\nleaving a reader to assume one rule.\n\n**Seven lines record that their artifact did not reproduce at ingest, or had nothing to reproduce\nagainst.**\n3 certificates did not reproduce — by verdict or by receipt set,\n3 more had no document to certify at all,\nand 1 handoff capsule did not reproduce its gate record.\nEach carries its reason on its own line.\n\n"
+  },
+  {
+   "id": "L-0007",
+   "text": "`styxx/sworn.py` changed. Battery: `ATTACKS_sworn_v01_battery_2026_09_02.md`. Harness:\n`harness_pytest.py`, turn `turn_2026_09_02_sworn_v02`, rung L1. **This document is itself sworn**:"
+  },
+  {
+   "id": "L-0008",
+   "text": "**UNVERIFIED — the brief's list.** The commissioning brief for this cycle is recorded as naming\n*six* obligation sources, and the observation that the five values the ledger carries are not\nthat list is what opened this work. The brief itself was not reachable from the session that\nwrote this document (it is not in the tree). The six declared below are therefore the five the\nverifier can emit plus the one the lane has defined and refused to ship — `structural-precision`,\nOBLIGATE-1 — and not a transcription of the brief. If the brief's six differ, `h_mapping.json`\nis the single place to reconcile them and the gate test will hold the reconciliation honest.\n\n## The mapping, as declared\n\n| source | the clause, in `styxx/certify.py` | handed by | emittable |\n|---|---|---|---|\n| `vocabulary` | `_TRIGGERS` matches the token's binding context | object_text | yes |\n| `n-glued` | `n=` glued directly before the token (self-scoped since v0.5) | object_text | yes |\n| `range-correlation` | `_TRIGGERS_CORR` on the context AND decimals > 0 AND value in [−1, 1] | object_text | yes |\n| `precision` | the token prints ≥ 7 fractional digits (`V07_PRECISION_OBLIGATION`) | object_form | yes |\n| `range-sanity` | bounded-quantity vocabulary before the token AND the value leaves its range; recorded only when no earlier clause obligated the token | object_text | yes |\n| `structural-precision` | OBLIGATE-1: ≥ 2 fractional digits AND outside a code span | object_form | **no** — defined in `PREREG_obligate1_2026_08_31.md`, did not ship |\n\n**The classes.** `object_text`: the target was selected by *words of the document under\njudgement*, on or around the token's line — the object hands the verifier its target.\n`object_form`: the target was selected by the *shape of the token itself* (its printed\nprecision), not by any surrounding vocabulary — still the object, not its words. `receipt`: the\ntarget was selected from the evidence side. `external`: the target was declared by a party other\nthan the object's text and the receipt — a preregistration, a panel, or the author binding a\nspan at write time, which is what `sworn/0.1` is. **No obligation source of this verifier is in\neither of the last two classes.** Every target the OATH obligation predicate has ever checked was\nhanded to it by the object it was judging; the only question the mapping can answer inside this\ninstrument is *by the object's words or by the object's form*.\n\n`range-correlation` is a conjunction — a correlation word (necessary) and a numeric guard — and\nis classed by its necessary conjunct: without the word, nothing fires. `range-sanity` is\nemittable and **zero in both populations** on this date; every out-of-range token so far was\nalready obligated by vocabulary, and under first-writer recording the earlier source stands.\n\n## The two populations, counted separately\n\n"
+  },
+  {
+   "id": "L-0009",
+   "text": "across the 12 sworn documents committed before this cycle\nthe coverage number the verifier printed ran from 0.6667\nto 1.0,"
+  },
+  {
+   "id": "L-0010",
+   "text": "**the prompt-opinion detector** — a candidate gate, never shipped.\nAccuracy 0.47 on the decisive class under fresh phrasing,"
+  },
+  {
+   "id": "L-0011",
+   "text": "Precision 0.3333 on the claims it flagged;\ncorpus-level recall estimated at 0.0336,"
+  },
+  {
+   "id": "L-0012",
+   "text": "# RESULT — sworn output v0.1 ships: the author declares, the receipt disposes\n\nFathom Lab · 2026-09-01 · Spec: `SPEC_sworn_output_v01_2026_09_01.md`, frozen before any code.\nModule: `styxx/sworn.py`. Tests: `tests/test_sworn.py`. Harness: `harness_pytest.py`, turn"
+  },
+  {
+   "id": "L-0013",
+   "text": "# RESULT — OATH v0.14: range-sanity should report, not accuse — SHIP — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_range_sanity_report_2026_09_02.md`, committed with\nthe flag before the A/B ran. Runner: `range_sanity_report_ab.py`. Receipt:\n`range_sanity_report_ab_result.json`, scored through `styxx.protocol`. Every number below is\nsworn to the receipt at commit `48d4d5494bc8`. **The flag ships OFF; this RESULT recommends, it does\nnot flip.** The frozen verdict reads `SHIP__range_sanity_reports`.\n\n## The gates\n\n**Internal regression.** 207 committed documents and\n8583 ledger tokens were certified with the flag off and on:\n0 tokens moved, and\n0 documents moved from HELD to FAILED. The\nrange-sanity rule never fires on this lab's own prose: every out-of-range token here was already\nobligated by vocabulary and already carried a receipt, or was never a token at all. The rule's\nwhole effect lives outside the corpus it was written for.\n\n**What the flag removes.** On the rebuilt external corpus,\n13 accusations were removed, every one to ABSTAIN with\nits out-of-range flag on the ledger, and the share of them the panel had judged genuine claims was 0.0.\nThe bar was a quarter.\n\n**The gain.** 353 accusations remain, of which\n82 the panel judged not claims:\na false-accusation rate of 0.2323 against the\n2026-08-27 rate of 0.2596, a gain of 0.0273 on\na bar of a point.\n\n"
+  },
+  {
+   "id": "L-0014",
+   "text": "written so it can be argued with. Successor to `closed-model-frontier/PLAN_prior_art_and_the_next_move_2026_08_31.md`,\nwhich it does not edit."
+  },
+  {
+   "id": "L-0015",
+   "text": "The interpreter was `3.11.15`.\n\nThe four receipts above marked `rN` were minted by `harness_pytest.py` from what pytest and ruff\nwrote, with `kind_of_source` naming where each came from; the harness recorded no"
+  },
+  {
+   "id": "L-0016",
+   "text": "`508d839e3b9d`.\n\n## The count, as a receipt\n\nThe audit's list holds 11 instruments."
+  },
+  {
+   "id": "L-0017",
+   "text": "The highest was 1.0.\nAcross all of them the diff-claim detector counted 20 narrative sentences as claims\nout of 932 narrative sentences"
+  },
+  {
+   "id": "L-0018",
+   "text": "and 0.2323 after its range rule was turned into a reporter.\nThe best structural claim detector reached 0.4211 precision\non 38 sentences."
+  },
+  {
+   "id": "L-0019",
+   "text": "# RESULT — token-level h on the blind panel: INVALID, the re-derivation diverged — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_accusations_2026_09_02.md`. Runner:\n`handedness_accusations.py`. Receipt: `handedness_accusations_result.json`, scored through\n`styxx.protocol`. **The verdict is the plumbing gate's, and it ships as what it is.**\nThe frozen verdict reads `INVALID__rederivation_diverged`.\n\n## What tripped\n\nThe preregistration re-derived each accused token's obligation source from the harness ledger —\nthe recorded trigger words, the 200-character context, the column, the value — in the verifier's\nclause order, and required that 95% of accused tokens reach a named clause, because an accusation\ncannot exist without an obligation. The share that reached none was 0.5027:\n167 accused tokens reached no clause and\n17 more could not be joined to a single ledger row —\n184 in all.\nAll 366 accusations were joined; half of them are invisible\nto the re-derivation.\n\n## Why, as a hypothesis this document does not test\n\nThe verifier obligates a markdown table cell through its column *header* — v0.3's\n`binding_context`, \"table rows bind via their header too\" — while the harness recorded\n`obligating_words` from the row's own line. README benchmark tables are exactly where an\nexternal corpus accuses: a cell under an *Accuracy* or *Score* header, on a line that carries no\ntrigger word of its own. The re-derivation read the line; the verifier read the header. That is\nthe divergence the gate was written to catch, and it caught it. The hypothesis is untested here\nbecause the documents are not in the tree: the harness's fetch cache lived in a temporary\ndirectory, and a re-derivation from a ledger is not a re-certification.\n\n## Exploratory, under an INVALID verdict, and labelled so\n\n"
+  },
+  {
+   "id": "L-0020",
+   "text": "# CENSUS — the prose-claimhood instruments, with receipts\n\nFathom Lab · 2026-09-01 · **A census, not a result.** The brief that commissioned sworn output"
+  },
+  {
+   "id": "L-0021",
+   "text": "# RESULT — the efficiency control, preregistered: CAPACITY_IN_DISGUISE\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_efficiency_control_2026_09_02.md` (committed before\nthe run). Runner: `run_efficiency_control.py`, which imports the arc's `run_entrain_rich.py`\nverbatim. Receipt: `efficiency_control_result.json`, scored through `styxx.protocol`. Device: CPU,\nthree seeds, 1500 steps. Every number below is sworn to the receipt at commit `3b14f4208e30`.\nThe frozen verdict is `CAPACITY_IN_DISGUISE`.\n\n## The gates, in the order the preregistration reads them\n\n**Plumbing.** The anchors re-run on CPU landed within 0.0227 of the committed GPU receipt,\nunder the frozen 0.03: this is the same experiment.\n\n**Positive control.** The oracle beat static by 0.162 at the primary width,\nover the arc's standing 0.10 bar: the adaptation prize is present, as it was on the receipt.\n\n**The control.** The matched static bank has 5850 parameters, at least\nRICH's 5652, and beats RICH by 0.1959\non drift accuracy. The bar for CAPACITY_IN_DISGUISE was zero.\n\n## The numbers at the primary width\n\n| arm | width | params | drift accuracy |\n|---|---|---|---|\n| STATIC | eight | 2052 | 0.4831 |\n| RICH (adaptive frequency) | eight | 5652 | 0.5560 |\n| ORACLE (locked to the true period) | eight | 2052 | 0.6451 |\n| STATIC, parameter-matched | twenty-six | 5850 | 0.7519 |\n\n"
+  },
+  {
+   "id": "L-0022",
+   "text": "Of the accusations the verifier was handed by a table header, 0.9515 were genuine claims\n(n=165). Of those it was handed by a trigger word in the line's own prose, 0.6391 were\n(n=169). Both are object_text under the handedness declaration; the\nmapping is right that neither is found. But they are not the same handing. A column header is a\nlabel the author chose for a column of numbers — *Accuracy*, *Score* — and a number under it is\na reported quantity almost by construction. A trigger word on a prose line is a co-occurrence:\nthe word *rate* two clauses away from a number that is a version, a count, a date. That is\nmention-versus-use (M1) living inside handed-target (M2): the verifier's false accusations on\nforeign text are, to first order, the line-handed ones. The join RESULT of 2026-08-30 found the\nvolunteered oaths were the weak half of verification; this finds the line-handed accusations are\nthe weak half of accusation, on the same panel.\n\nReported, not gated: range-sanity accusations were genuine at 0.0\n(n=13; Wilson upper bound 0.228). The v0.3 out-of-range rule\n— *an AUC of 4.0 cannot be* — accused thirteen tokens on foreign READMEs and the panel called\nevery one not a claim. On this corpus that rule is a false-accusation generator, and it is the\nsmallest obligation source in the tree; a preregistration that reads it as a report rather than\nan accusation outside the lab's own idiom is owed.\n\n## The corpus, as rebuilt\n\n"
+  },
+  {
+   "id": "L-0023",
+   "text": "The sharpest single case is the grain synthesis:\nit printed a coverage estimate of 0.9412\nwith 1 narrative sentence counted as a claim"
+  },
+  {
+   "id": "L-0024",
+   "text": "*Two plumbing gates in a row, each written to fail first, each failing first. The data have been\nsaying one thing throughout; the rule that lets them say it is the next one frozen.*\n"
+  },
+  {
+   "id": "L-0025",
+   "text": "# DECLARATION — h: who hands the verifier its target\n\nFathom Lab · 2026-09-01 · **A declaration and a census, not a result.** No preregistration\ncovers this document and it carries no headline finding. It declares a mapping — from every\n`obligation_source` the verifier can emit to the party that handed the verifier its target —\nand it counts the corpus under that mapping in the two populations that must never be pooled.\nMapping: `h_mapping.json`. Receipt: `h_mapping_census_result.json`. Gate: `tests/test_h_mapping.py`.\nSworn: every count below is bound to that receipt at commit `ed084cef8811` by `sworn/0.1`; the sidecar\nand verdict receipt sit beside this file, and `tests/test_sworn_dogfood.py` re-derives them.\n\n## Why a mapping has to be declared\n\n`AUDIT_the_whole_program_2026_09_01.md` names M2, **handed-target**: an instrument measured\nwhere the target was supplied collapses when it must find the target itself — found eleven\ntimes, named zero. The audit's own verdict on the prose-reading hypothesis reduces to it:\n*instruments that must locate their own target in open-ended prose have failed every time this\nlab measured them against readers who did not write that prose.*\n\nFor `styxx.certify` the question *who handed the verifier this token?* already has a recorded\nanswer. Since 2026-08-28 every obligated ledger entry carries `epistemics.obligation_source`,\nthe clause that made the verifier look. What it does not carry is what that clause **means** for\nhandedness, and the source names (`vocabulary`, `n-glued`, `range-correlation`, `precision`,\n`range-sanity`) are clause names, not a classification. A reader who wants h has to decide, for\neach clause, whether the target came from the document's own words, from the token's own shape,\nfrom the receipt, or from somewhere outside all three — and if two readers decide differently,\nthey publish two different h from one ledger. The mapping is therefore **declared once, in one\nfile, and enforced**: `tests/test_h_mapping.py` fails the moment the verifier can emit a source\nthe mapping does not name. A new obligation clause cannot silently create a new stratum of the\ncorpus that no h accounts for.\n\n"
+  },
+  {
+   "id": "L-0026",
+   "text": "# ATTACKS — the sworn output battery: twelve ways in, four rules out — 2026-09-02\n\nFathom Lab · 2026-09-02 · **An adversarial pass, not a result.** Nothing here was preregistered"
+  },
+  {
+   "id": "L-0027",
+   "text": "# RESULT — the efficiency control, answered from the receipts: adaptive frequency was capacity in disguise\n\n> **Back-pointer, added 2026-09-02.** The preregistered run confirmed this reading under a frozen rule, CAPACITY_IN_DISGUISE, and its verdict outranks this document's — see `RESULT_efficiency_control_2026_09_02.md`. The text below is unchanged.\n\nFathom Lab · 2026-09-02 · **A recombination of committed evidence, not a new measurement, and not\npreregistered.** `RESULT_entrain_rich_2026_07_23.md` named \"a param-matched wider static bank\" as\nthe honest next control for its +0.085 (D=8) and +0.129 (D=4) adaptive-frequency advantages. That\ncontrol turns out to be already in the tree: `entrainment_result.json` carries a STATIC arm at D=16 on\nthe identical task (L=96, three segments, periods [3,12], 1500 steps, seeds 0/1/2), and its STATIC\narms at D=4 and D=8 reproduce `entrain_rich_result.json`'s to the last digit, so the two receipts\nare one experiment. No rule was frozen before these numbers were read — the author read the receipts\nand then wrote this — which is why this is a RESULT in the join precedent\n(`RESULT_obligation_predicts_claimhood_2026_08_30.md`) and not a preregistered verdict. The\npreregistration that would make it one is `PREREG_efficiency_control_2026_09_02.md`, frozen after\nthis document and runnable by anyone with a GPU or a patient CPU.\n\n## The comparison\n\nThe question the arc left open: do the parameters RICH spends on its frequency detector buy more as\nextra static modes? Every number below is sworn to the receipt that holds it.\n\n**D=4.** RICH has 3184 parameters and\nscores 0.3752 on the drifting task.\na static bank one width up has 2052 parameters, fewer, and\nscores 0.4604. The \"GREENLIGHT-level\" D=4 win —\nan advantage of 0.1286 over static at the same width — is\nbeaten by a smaller static bank.\n\n"
+  },
+  {
+   "id": "L-0028",
+   "text": "**text-only deception** — `styxx/attack/fingerprint.py`, shipped as a register axis.\nAUC 0.4983 separating true from false self-claims: chance."
+  },
+  {
+   "id": "L-0029",
+   "text": "document that printed it. `prose_claimhood_census.py` resolves every pointer and refuses to write\n`prose_claimhood_census.json` if one fails; this document's sidecar binds to that file at commit"
+  },
+  {
+   "id": "L-0030",
+   "text": "`styxx/sworn.py` changed. Battery: `ATTACKS_sworn_v01_battery_2026_09_02.md`. Harness:"
+  },
+  {
+   "id": "L-0031",
+   "text": "It is 1789 lines long.\nThe harness ran the three sworn suites and 358 tests passed.\n0 failed."
+  },
+  {
+   "id": "L-0032",
+   "text": "`h_mapping_census.py` folds the mapping over the corpus twice and writes both folds under\nseparate keys. Verifier at the time: `styxx/certify.py` sha256 `a588a722…`. The corpus on disk\nwas written by **15 distinct verifier builds**.\n\n**PRINTED — what the committed certificates say.** There are 208 certificates on disk. Only 16 of them carry the epistemics-summary block, and only 18 carry per-token epistemics.\nThose ledgers hold 233 obligated tokens: `vocabulary` 215, `range-correlation` 8,\n`n-glued` 8, `precision` 2. Handed by object_text 0.9914 and by\nobject_form 0.0086. This is the *only* population a reader of the\ncommitted certificates can see, and it is under a tenth of the corpus.\n\n"
+  },
+  {
+   "id": "L-0033",
+   "text": "- The read≠write submission source at `\"path\": \"arxiv/read_neq_write/source.md\"`\n  re-certifies `\"verdict\": \"OATH-FAILED, 10 uncovered\"` where its certificate\n  recorded OATH-HELD. Its document bytes and all its receipt digests match what the certificate\n  says; the verifier moved. This is the canonical arXiv and Zenodo submission source, not a\n  staging copy, and it sits outside the directory the corpus audit is run over in\n  `REPLICATIONS.md` — which is why no audit had reached it.\n- The universal-mind capstone lists `\"receipt_changed\": [\"mind_v0_validation.json\"]`\n  and is therefore certified over an incomplete receipt set. Its verdict class did not move.\n- The black-box sycophancy finding re-certifies OATH-FAILED where it recorded OATH-HELD, with no\n  receipt missing or changed. Both of the last two are drift flags the corpus audit already\n  carried; Charon puts them on a line with the rest.\n- The handoff capsule's divergence is recorded as `gate.claims not reproduced: embedded`, and\n  the diverging field is the explanation string attached to its `tests_pass` claim, which grew\n  when the evidence channel shipped. Not the retired path-claim branch — an earlier draft of this\n  document said that, and the bytes do not support it.\n- The three certificates with nothing to certify are arXiv staging copies whose document was\n  renamed at submission. They are UNRESOLVED lines rather than absences, because a population\n  defined by what survived the walk is the defect this lane has catalogued nine times.\n\n**Ten OATH capsules reproduce that did not reproduce a commit ago.**\nAll 10 now carry reproduced=true.\nSix of them read as failures until this cycle because `styxx.capsule` compared verdict *strings*\nwhere the corpus auditor compares *classes*, and a later verifier appends a coverage suffix to\nthe string. The comparison is now on classes, the string difference is reported as advisory, and\na forged class still fails — pinned by `tests/test_capsule_uncovered_suffix.py`. That is a\nloosened check, stated as one: it removes a false failure and keeps the true one.\n\n## What the adversarial pass changed\n\n"
+  },
+  {
+   "id": "L-0034",
+   "text": "Nothing about scale beyond D=16 or beyond L=96; nothing about real LinOSS or Mamba checkpoints;\nnothing about the harder task, where the receipts hold no static arm wider than the RICH arm it\nwould be compared with. The comparison is on seed-averaged accuracy with three seeds and no\ninterval. And, once more: the rule was not frozen before the numbers were read. The preregistration\nbeside this document is what fixes that, and its verdict, when someone runs it, outranks this one.\n\n---\n\n*The control the arc owed itself was already paid for. The parameters the detector spent would have\nbought more as modes — which is the arc's own finding, said one more time, about the one lever it\nhad hoped was different.*\n"
+  },
+  {
+   "id": "L-0035",
+   "text": "\"Bound\" has meant two things in this lane. In `certify.py`, `bound` is **OBLIGATED** — an\nobligation clause fired. In the RESULT prose, \"the number binds\" is **VERIFIED** — a value\nmatched. On the same live run, `vocabulary` is 0.8297 of obligated tokens and\n0.3517 of VERIFIED tokens. The figure carried into this cycle as *vocabulary is 35.4% of bound tokens* is\nthe second of these — vocabulary-obligated VERIFIED tokens over all VERIFIED tokens — and it is\nthe handedness figure the v1 epistemics summary already prints per certificate as the obligated\nhalf of `verified.value_match`. The receipt keys both shares by their denominator\n(`source_share_of_obligated`, `source_share_of_verified`) so neither can be quoted as the other.\n\n## Instrument-level h is a different population from token-level h\n\nToken-level h is a share over tokens inside one instrument. Instrument-level h is a label over\ninstruments: one row per instrument whatever its token count, saying where that instrument's\ntargets come from and whether it must find them. `h_mapping.json` carries that table under\n`instrument_level`: the OATH obligation predicate (object_text and object_form; does not find\nits own target; measured held-out at a false-accusation rate of 0.2596), the diffgate path-claim\naccuser (object_text; finds its own target; 0.16 held-out against a 0.95 floor; deleted), STRUCT-1\n(object_text; finds its own target; 0.4211 on n=38), and `sworn/0.1` (external; the author binds\nthe target; unmeasured by construction).\n\nA hypothesis about instruments — that handed-target instruments collapse held-out and\nfound-target ones do not — is tested on that table and on nothing else. Drawing its test from\nthe token histogram measures the wrong population: the one the certificates print rather than\nthe one the hypothesis is about. The two are kept in separate keys of one receipt for that\nreason, and no key in the receipt combines them.\n\n## Addendum, 2026-09-02 — object_text has a grain\n\n`RESULT_handedness_v3_header_handed_2026_09_02.md`, preregistered, on the external blind panel: accusations handed by a table header were genuine at 0.9515 and accusations handed by a trigger word in the line were genuine at 0.6391. Both are `object_text` under this mapping, which stays as declared; but the class splits by whether the handing was a structural label the author chose or a word that co-occurred, and the next version of this mapping owes that split a name. Paid the same day: `h_mapping.json` v2 carries `grain` per `object_text` source and `target_grain` per instrument row, and the reading across the day's verdicts is `../SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`.\n\n## What this does not say\n\n"
+  },
+  {
+   "id": "L-0036",
+   "text": "# RESULT — token-level h: an accusation handed by a table header is true; one handed by the line is a coin with a thumb on it — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_v3_join_rule_2026_09_02.md`, committed\nbefore the join was computed. Receipt: `handedness_v3_result.json`, scored through\n`styxx.protocol`. Panel: the 2026-08-27 external adjudication, three seats, decoy-gated, 366\naccusations; **no token was re-judged**. Corpus: rebuilt from pinned shas and re-certified at the\ncurrent verifier (`oath_external_recertify_summary.json`), so every token's obligation source is\nthe verifier's own. Every number below is sworn to a receipt at commit `b1a6326ef35b`.\nThe frozen verdict reads `HEADER_HANDED_ACCUSES_TRUER`.\n\n## The gates\n\nThe unresolved share was 0.0464 under the frozen 0.05\n(17 accusations joined to no row or to several accused rows).\nThe smaller cell held 165 accusations, over the floor of 20.\nThe header cell's genuine share exceeded the line cell's by 0.3124,\ntwice the frozen 0.15.\n\n## The finding\n\n"
+  },
+  {
+   "id": "L-0037",
+   "text": "It does not touch the arc's headline, which stands: the phase clamp showed oscillation itself is\ncausally load-bearing (`RESULT_pmnist_ablation`, +0.312), and the oracle's prize is real and grows\nwith width. What died is the claim that a *learned* adapter captures that prize efficiently. Scope:\ntoy (L=96, D≤26, integer symbols, three seeds, no interval, one task family). Nothing here is about\nreal LinOSS or Mamba checkpoints; the profiler now shipped in `styxx/resonance.py` is how that\nquestion gets asked next.\n\n---\n\n*The control the arc owed itself, paid: the parameters spent on listening for the rhythm would have\nbought more as more strings. The rhythm is real. The listener was not worth its cost.*\n"
+  },
+  {
+   "id": "L-0038",
+   "text": "Read as spans: RICH scored 0.5560;\nthe oracle scored 0.6451;\nthe matched static bank scored 0.7519.\nThe static bank with RICH's parameter budget does not merely match the adaptive model — it beats\nthe oracle that adapts perfectly, by a wide margin. Adaptation at eight modes is worth less than\neighteen more modes that never adapt.\n\n## The secondary width, reported not gated\n\nAt D=4, the matched static bank has 3375 parameters against\nRICH's 3184, and\nbeats RICH by 0.3049\n(static 0.6648 against\nRICH 0.3599). The \"clean mode-scarcity win\" the arc reported\nat D=4 was the same parameters spent worse.\n\n## What this closes, and what it does not\n\nThis is the frozen-rule confirmation of `RESULT_efficiency_control_from_receipts_2026_09_02.md`,\nwhich reached the same reading from committed receipts without a rule and said so; under the\npreregistration this verdict outranks it. It closes the adaptive-frequency line's last positive:\nacross `RESULT_entrainment`, `RESULT_entrain_rich`, `RESULT_entrain_harm` and\n`RESULT_scarcity_scale`, no learned frequency detector has earned the parameters it costs, at any\nwidth or task the arc measured. The synthesis's line for nested coupling — capacity comes from more\nmodes, not cleverer coupling — now covers adaptation.\n\n"
+  },
+  {
+   "id": "L-0039",
+   "text": "Module: `styxx/sworn.py`. Tests: `tests/test_sworn.py`. Harness: `harness_pytest.py`, turn"
+  },
+  {
+   "id": "L-0040",
+   "text": "What held against strangers was a target the author had committed to by structure:\nheader-handed accusations were genuine at 0.9515\nagainst 0.6391 for line-handed ones —"
+  },
+  {
+   "id": "L-0041",
+   "text": "*The river had oaths, capsules and certificates. It now has a log of crossings that a stranger\nre-derives with one command, in which every line says how many receipts the crossing cost and\nwhich instrument ferried it — and which says, in its own header, that a chain of hashes proves\norder and nothing else.*\n"
+  },
+  {
+   "id": "L-0042",
+   "text": "**D=8, the preregistered primary.** RICH has 5652 parameters\nand scores 0.5451. a static bank at twice the width has 3580 parameters,\nfewer, and scores 0.6781. The WEAK verdict's\nadvantage of 0.0847 is not merely matched by a\nparameter-matched static bank; it is exceeded by a static bank with sixty-three percent of the\nparameters.\n\n**The oracle, too.** The oracle at the primary width — a diverse bank locked to the true drifting period — scores 0.6307,\nbelow static D=16's 0.6781. A bank that adapts perfectly at eight modes loses to a bank that does not\nadapt at all at sixteen. The oracle at twice the width scores 0.8950, so the\nadaptation prize is real and grows with width; it is the *learned* detector that never earns its\nparameters, at any width measured.\n\nDerived, not sworn: the static model's parameter count is `2D² + 143D + 780` (checked against the\nreceipts at D=4, 8, 16), so the smallest static width with at least RICH-at-D=8's parameter count is\nD=26, at 5850. That arm was never run. It does not need to be for the conclusion above, because a\nnarrower static bank already wins; it is the confirmatory arm the preregistration names.\n\n## Reading\n\nThe adaptive-frequency line of the arc ended in three verdicts: KILL (single-projection detector),\nWEAK at D=8 and a clean win at D=4 (windowed conv), and ABSTAIN with a falsified scaling curve on the\nharder task. This control closes the one residual positive. **Spent as modes rather than as a\ndetector, the same parameters buy more, at every width the arc measured.** The synthesis's line for\nnested coupling — capacity comes from more modes, not cleverer coupling — now covers adaptation as\nwell, on this task family. What remains live is the oracle's prize, which no learned detector has\nreached, and the profiler, which measures reliance rather than earning it.\n\n## What this does not say\n\n"
+  },
+  {
+   "id": "L-0043",
+   "text": "Two survived v0.1 unchanged.\n\n| # | attack | at `320b303` (v0.1, probed) | under v0.2 | pinned by |\n|---|---|---|---|---|"
+  },
+  {
+   "id": "L-0044",
+   "text": "ruff printed `All checks passed!`\nThe interpreter was `3.12.10`.\nThe manifest declares rung `L1`."
+  },
+  {
+   "id": "L-0045",
+   "text": "Nothing below is a finding. It is what the receipt shows, printed because hiding it would be\nthe silent omission this lab names as a defect.\nAmong tokens the line's own trigger words obligated, the genuine-claim share was 0.6391\n(n=169). Among range-sanity accusations the genuine-claim share was 0.0\n(n=13): every out-of-range accusation the panel saw was\non something that was not a claim. Among the tokens no clause reached, the genuine-claim share was 0.9521\n— the half the re-derivation could not see is the half the panel most often agreed with. The\nobject_form cell holds 0 tokens: no accused token in this\ncorpus printed seven fractional digits, so the hypothesis as formulated could not have been\ntested on this panel even with perfect plumbing, and the power gate would have been the next to\nfail. That is a finding about the preregistration's design, and it is recorded rather than\nrepaired in place.\n\n## What follows\n\nThe correct v2 is not a looser re-derivation. It is the documents: the corpus manifest pins\nevery file to a commit and a sha256, raw GitHub serves them, and a hash-verified rebuild\nre-certified at the current verifier gives every token its exact `obligation_source` from the\nverifier itself, with no re-derivation to diverge. And the hypothesis needs a cell to live in:\nwith `precision` empty on accusations, token-level h on this corpus is a question about the\nobject_text sources among themselves — vocabulary against range-sanity against n-glued — which\nthe exploratory numbers above suggest is where the separation actually is.\n\n---\n\n*The gate that failed was the one written to fail first. The panel's answer is still there,\nunder half the tokens the ledger could not name.*\n"
+  },
+  {
+   "id": "L-0046",
+   "text": "At the commit this document names the log's bytes hash to fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318.\nIts head is `1647a26abadb35d00bc44a98f4e0833e0b0a1ddd5a499ac3c09718c6e9edc692`.\nIt carries 243 lines\nover 243 distinct subjects,\nof which 0 are malformed.\n213 are OATH certificates —\nevery certificate `git ls-files` reports, the arXiv staging copies included —\n18 are sworn documents at the commits their sidecars name,\n10 are OATH capsules,\nand 2 are agent-handoff capsules.\nUnder the installed verifier 243 lines re-derived to the same core\nand the chain check found 0 tampered lines.\nThat is a determinism check and not a stability result: `verify` ran under the same builds as\n`ingest`, on the same tree, minutes later. Any other outcome would have been a defect in Charon.\nCharon's own bytes hash to 2c0b24331203a2210ad1196ad58b58a01d1ee9e5a7f1604a7e56aaf2a3130452,\nand that digest is inside every line's `verifier.modules`, so a Charon that counts differently\ntomorrow reads as a moved instrument rather than as moved bytes.\n\nThe population is not a sentence. It is `papers/charon/build_log.py`, which anyone can re-run.\n\n## What the log says that no corpus audit said\n\n"
+  },
+  {
+   "id": "L-0047",
+   "text": "# RESULT — token-level h, v2: INVALID, the join was incomplete — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_handedness_v2_header_bound_2026_09_02.md`. Receipt:\n`handedness_v2_result.json`, scored through `styxx.protocol`. Corpus rebuilt exactly from pinned\nshas by `oath_external_recertify.py` (`oath_external_recertify_summary.json`: every file\nhash-verified, zero verdict-class drift). The frozen verdict reads `INVALID__join_incomplete`.\n\n## What tripped\n\nThe unresolved share was 0.0683:\n25 accusations join to zero or several ledger rows on the key the\npanel receipt carries, (repository, line, token), and the preregistration allowed 0.05. The\nallowance was frozen without accounting for what the verifier's own v0.10 note records — the same\ntoken string occurs more than once on roughly a tenth of lines — and the panel receipt carries no\ncolumn to break the tie. A rule that could not have been met on this corpus is a defect in the\npreregistration, not in the corpus, and it is shipped as INVALID.\n\n## Exploratory, under an INVALID verdict, and labelled so\n\nAmong header-handed accusations the genuine-claim share was 0.9515\n(n=165);\namong line-handed accusations it was 0.6391\n(n=169); a difference of 0.3124,\ntwice the frozen bar, on the cells the join did resolve. Nothing here is a finding; the gate says\nso, and the next document is the one that decides.\n\n## What follows\n\nv3 freezes the one rule v2 lacked: a token joining several rows takes the single row the verifier\naccuses, because the accused token is the one the panel judged. Bars unchanged. The prior is now\ncontaminated twice and declared twice.\n\n---\n\n"
+  },
+  {
+   "id": "L-0048",
+   "text": "receipt's reading. The rows are the program audit's own list (`AUDIT_the_whole_program_2026_09_01.md`\n§8.1, direction 1), taken as written, plus the two the audit did not count. Every number below is"
+  },
+  {
+   "id": "L-0049",
+   "text": "panel. The shipped gate scored 0.23 precision on agent pull requests it had never seen.\nAfter three repair cycles the held-out figure was 0.16."
+  },
+  {
+   "id": "L-0050",
+   "text": "# RESULT — the confound in the knob, resolved: rotation is load-bearing beyond timescale diversity — 2026-09-02\n\nFathom Lab · 2026-09-02 · Frozen by `PREREG_untied_magnitudes_2026_09_02.md`, committed before the\nrun. Runner: `run_untied_control.py`, importing `run_rhythm_rescue.py` verbatim. Receipt:\n`untied_control_result.json`, scored through `styxx.protocol`. Device: CPU, three seeds, 4000 steps,\nD=256. Every number below is sworn to the receipt at commit `3f4a03eac7a4`.\nThe frozen verdict reads `ROTATION_LOAD_BEARING__beyond_diversity`.\n\n## The confound, and the arm\n\nThe phase clamp does two things at once: it removes rotation, and it ties each complex mode's two\nreal channels to one magnitude. REAL2 — a real-eigenvalue bank with 2D modes and 2D independent\nmagnitudes, no rotation — has exactly FREE's state size and parameter count\n(168524 parameters against\nFREE's 168524), and strictly more timescale diversity than either\nexisting arm. If the clamp's loss had been diversity, REAL2 would recover it.\n\n## The gates\n\nThe anchors landed 0.0 items from the committed GPU receipt:\nFREE's ordered-memory capacity was 6.0 items and\nCLAMPED's was 2.6667, seed for seed the numbers of 2026-06-03,\non a different device. The gap was 3.3333 items, over the\nfrozen 2.0. the untied bank's capacity was 2.6667 items —\n0.0 above CLAMPED, and\n3.3333 below FREE.\nThe recovery fraction was 0.0.\n\n"
+  },
+  {
+   "id": "L-0051",
+   "text": "denominators, and the census in the battery document says which one was measuring what.\nAll 12 committed sworn documents were re-issued\nby `reissue_receipts_v1.py`, which refuses if any span verdict moves; none did. The v0 receipts"
+  },
+  {
+   "id": "L-0052",
+   "text": "# PLAN — the next level: the format leaves the builder's hands, and every sentence about it waits for a number\n\nFathom Lab · 2026-09-02 · **A plan, not a result.** Decided by a six-lens design panel and nine"
+  },
+  {
+   "id": "L-0053",
+   "text": "# RESULT — charon v0.1 ships: the lab's record over three formats, re-derived from bytes, in one chained log a stranger can re-run\n\nFathom Lab · 2026-09-02 · Spec: `SPEC_charon_v01_2026_09_02.md`, committed before the module was\ncommitted, with a dated ERRATA section appended after the adversarial pass. Battery:\n`ATTACKS_charon_v01_battery_2026_09_02.md`. Module: `styxx/charon.py`. Tests:\n`tests/test_charon.py`. **This document is itself sworn**, and it is the one artifact the log\nexcludes: a snapshot cannot contain its own description, which is the rule the corpus census\nalready pays. Everything else tracked in the tree is a line.\n\n## What Charon is\n\nCharon calls the three verifiers this lab already has — `styxx.sworn` at the commit a sidecar\nnames, `styxx.capsule`, and `styxx.corpus_audit` over `styxx.certify` — and writes what they\nreturn as one line each: a canonical core chained to the line before it, carrying the receipt set\nthe verdict was reproduced against, every module on the derivation path with its bytes, and\nwhether the artifact's own recorded verdict matched. It reproduces; it never adjudicates, never\naccuses, never fetches, never signs. `verify` re-derives every line under the installed verifier\nand names what happened: SAME_LINE, MOVED_VERIFIER, SKEW (the line moved and the instrument's\nbytes moved), DRIFT (the line moved under the same build), UNRESOLVED (bytes unavailable, never\nan accusation), HEAD_MISMATCH, TAMPER.\n\n## The log\n\n"
+  },
+  {
+   "id": "L-0054",
+   "text": "Three attackers ran against the module before any announcement.\nThe battery's bytes hash to 3aed126737ea249b806dcb2771ff486c693c20fd0809e0061ddefa764a4ba163.\nFour sentences the instrument published about itself were false: that the chain catches removal\nand reordering (it catches them only against a head pinned outside the log); that every line's\nverdict is re-derived (capsule verdicts were copied from the embedded record); that `verify`\nre-derives a line (it compared a class); and that a moved verifier reads as SKEW (it saw one file\nof several on the derivation path). All four are repaired in the commit this document names, the\nspec carries a dated errata for each, and the attacks that are **not** repaired — a fully rebuilt\nchain, a truncated prefix, a manufactured UNRESOLVED — are named in the battery with what the\ninstrument prints instead.\n\n## What this does not say\n\nThat any verdict in the log is true: a line says a verifier re-derived it. That the log is\nimmutable, tamper-proof or self-verifying: it is append-only by contract and re-derivable by\nconstruction, and a chain of hashes is a chain of hashes. That a rebuilt or truncated log is\ndetectable without the head: it is not, and `--expect-head` is the whole defence. That anyone in\nparticular wrote any line: nothing is signed. That receipt shopping is prevented: it is printed.\nThat this is every verdict the lab has issued: the tree carries thirty-four `*.seal.json`\nartifacts with no deriver here, absent from every line. That the read≠write paper is wrong: its\ncertificate no longer reproduces under the current verifier, which is a fact about the\ncertificate and the instrument, and what follows is the package owner's decision. That the\nattacker was independent: the builder wrote the attackers' brief.\n\n## Owed\n\nDigest resolution at the issuing commit for OATH lines, after which Charon records recoveries\nrather than the corpus auditor's drift flags. A deriver for `seal.json`. A second log kept by\nsomeone who is not this lab, over artifacts we did not choose. The name survey is discharged in\nthe errata: three shipping projects carry the name, none in the attestation ecosystem.\n\n---\n\n"
+  },
+  {
+   "id": "L-0055",
+   "text": "**the OATH unobligated oath** — `styxx/certify.py`. 0.5811 of the lab's own verifications were volunteered rather than obligated;"
+  },
+  {
+   "id": "L-0056",
+   "text": "It is 1541 lines long.\nThe harness ran the suite and 296 tests passed.\n0 failed."
+  },
+  {
+   "id": "L-0057",
+   "text": "## Reading\n\nThe v0.3 rule was right about this lab and wrong about the world: *precision 4.0* is a typo in a\nRESULT and a version string, a count or a configuration value in a README. As an accuser outside\nthe lab's idiom it produced thirteen false accusations and not one catch; as a reporter it costs\nnothing anywhere the corpus tests can see, because on the corpus that trained it the rule never\ndecides anything. This is the header-vs-line finding again, one clause down: a bounded word is a\nhanded target, and a handed target from free prose is a coin.\n\n## What this does not say\n\nThe flag is OFF and stays OFF in this cycle. Flipping it is a corpus re-issue — every certificate\ngains a field only under the flag, and the M7 addendum to the program audit says what a new field\ndoes to a corpus — and that is the operator's release decision, with `OATH_CONTRACT.md` owed a\nsentence when it lands. The gain is measured on one panel of one model family, on 82 READMEs\ndrawn by seven queries with one repository holding half the accusations; the receipt prints its\nweight. The prior was strong and contaminated, and the internal gate was the one that could have\nkilled it; it did not.\n\n---\n\n*A rule that never fires at home and only fires wrongly abroad is not a verifier's rule. It is a\nreport, and now it can be one.*\n"
+  },
+  {
+   "id": "L-0058",
+   "text": "**LIVE — every certifiable document re-certified at the current verifier.** 207 documents were re-certified\n(1 skipped as unresolvable), yielding 8583 ledger tokens, 6300 VERIFIED and\n3148 obligated. Of the obligated: `vocabulary` 2612, `precision` 242,\n`range-correlation` 210, `n-glued` 84. Handed by object_text 0.9231 and by\nobject_form 0.0769. Every one of the 84 `n-glued` tokens is ABSTAIN — the register\nobligates and never binds in this corpus.\n\nThe two populations disagree on object_form by a factor of nine (0.0086 vs 0.0769), and neither\nis wrong: the printed 18 are the documents that happened to be re-issued after 2026-08-28, and\nthey are not a sample of anything. A rate computed in one and quoted against the other is the\nhanded-target error one level up.\n\n## The two denominators, named\n\n"
+  },
+  {
+   "id": "L-0059",
+   "text": "**maximal in scope, minimal in claim.**\n\n## The move, in four legs\n\n**Leg 1 — the format hardens before it leaves (done this cycle).** Twelve attacks, four rules,"
+  }
+ ]
+}
