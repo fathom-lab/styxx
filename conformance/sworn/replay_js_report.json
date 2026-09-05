@@ -1,0 +1,224 @@
+{
+ "schema": "styxx.sworn.browser-verifier/replay/v1",
+ "spec": "papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md",
+ "set_sha256": "85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f",
+ "in_scope": {
+  "modes": [
+   "inline"
+  ],
+  "requires_subset_of": [
+   "manifest"
+  ]
+ },
+ "vectors_total": 3618,
+ "ran": 1689,
+ "passed": 1689,
+ "failed": 0,
+ "skipped": 1929,
+ "families": {
+  "attacks": {
+   "ran": 1,
+   "passed": 1,
+   "failed": 0,
+   "skipped": 16,
+   "skip_reasons": {
+    "inline requires:tree": 16
+   }
+  },
+  "canonical": {
+   "ran": 0,
+   "passed": 0,
+   "failed": 0,
+   "skipped": 16,
+   "skip_reasons": {
+    "load": 8,
+    "canon requires:manifest": 1,
+    "sidecar": 1,
+    "canon": 6
+   }
+  },
+  "cli": {
+   "ran": 2,
+   "passed": 2,
+   "failed": 0,
+   "skipped": 7,
+   "skip_reasons": {
+    "load": 1,
+    "manifest requires:manifest": 2,
+    "canon requires:manifest": 1,
+    "canon": 1,
+    "receipt_check": 1,
+    "sidecar": 1
+   }
+  },
+  "coverage": {
+   "ran": 4,
+   "passed": 4,
+   "failed": 0,
+   "skipped": 1,
+   "skip_reasons": {
+    "inline requires:tree": 1
+   }
+  },
+  "doctrine": {
+   "ran": 16,
+   "passed": 16,
+   "failed": 0,
+   "skipped": 3,
+   "skip_reasons": {
+    "manifest requires:manifest": 2,
+    "inline requires:manifest+tree": 1
+   }
+  },
+  "document": {
+   "ran": 6,
+   "passed": 6,
+   "failed": 0,
+   "skipped": 0,
+   "skip_reasons": {}
+  },
+  "fuzz": {
+   "ran": 1452,
+   "passed": 1452,
+   "failed": 0,
+   "skipped": 1706,
+   "skip_reasons": {
+    "canon requires:manifest": 254,
+    "canon": 1198,
+    "sidecar": 254
+   }
+  },
+  "gaming": {
+   "ran": 28,
+   "passed": 28,
+   "failed": 0,
+   "skipped": 23,
+   "skip_reasons": {
+    "receipt_check requires:manifest": 7,
+    "inline requires:tree": 5,
+    "sidecar": 4,
+    "canon": 2,
+    "canon requires:manifest": 2,
+    "sidecar requires:tree": 2,
+    "receipt_check": 1
+   }
+  },
+  "invariants": {
+   "ran": 2,
+   "passed": 2,
+   "failed": 0,
+   "skipped": 2,
+   "skip_reasons": {
+    "inline requires:tree": 2
+   }
+  },
+  "lexer": {
+   "ran": 46,
+   "passed": 46,
+   "failed": 0,
+   "skipped": 19,
+   "skip_reasons": {
+    "canon": 17,
+    "sidecar": 1,
+    "canon requires:manifest": 1
+   }
+  },
+  "numeric": {
+   "ran": 62,
+   "passed": 62,
+   "failed": 0,
+   "skipped": 3,
+   "skip_reasons": {
+    "inline requires:tree": 3
+   }
+  },
+  "quote_hash_absent": {
+   "ran": 20,
+   "passed": 20,
+   "failed": 0,
+   "skipped": 9,
+   "skip_reasons": {
+    "inline requires:tree": 9
+   }
+  },
+  "receipt_hardening": {
+   "ran": 6,
+   "passed": 6,
+   "failed": 0,
+   "skipped": 16,
+   "skip_reasons": {
+    "inline requires:tree": 12,
+    "manifest requires:manifest": 4
+   }
+  },
+  "receipt_v1": {
+   "ran": 1,
+   "passed": 1,
+   "failed": 0,
+   "skipped": 4,
+   "skip_reasons": {
+    "receipt_check requires:manifest": 4
+   }
+  },
+  "receipts": {
+   "ran": 29,
+   "passed": 29,
+   "failed": 0,
+   "skipped": 18,
+   "skip_reasons": {
+    "inline requires:tree": 18
+   }
+  },
+  "rules": {
+   "ran": 13,
+   "passed": 13,
+   "failed": 0,
+   "skipped": 9,
+   "skip_reasons": {
+    "receipt_check requires:manifest": 3,
+    "manifest requires:manifest": 3,
+    "canon requires:manifest": 1,
+    "sidecar": 1,
+    "load": 1
+   }
+  },
+  "sidecar_hardening": {
+   "ran": 1,
+   "passed": 1,
+   "failed": 0,
+   "skipped": 29,
+   "skip_reasons": {
+    "canon": 6,
+    "sidecar": 23
+   }
+  },
+  "snapshot": {
+   "ran": 0,
+   "passed": 0,
+   "failed": 0,
+   "skipped": 27,
+   "skip_reasons": {
+    "inline requires:tree": 27
+   }
+  },
+  "tree": {
+   "ran": 0,
+   "passed": 0,
+   "failed": 0,
+   "skipped": 6,
+   "skip_reasons": {
+    "inline requires:tree": 6
+   }
+  },
+  "worked_examples": {
+   "ran": 0,
+   "passed": 0,
+   "failed": 0,
+   "skipped": 15,
+   "skip_reasons": {
+    "inline requires:tree": 15
+   }
+  }
+ },
+ "failures": []
+}

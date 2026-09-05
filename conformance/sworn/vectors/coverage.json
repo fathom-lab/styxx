@@ -1,0 +1,263 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "coverage",
+ "count": 5,
+ "vectors": [
+  {
+   "id": "13c09ffc3a7c42739330d6ee5777c5b1362e951979a2c655b22b15c05aaf1d58",
+   "family": "coverage",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestTheDenominatorWasTheWrongIdiom::test_a_result_shaped_document_no_longer_prints_a_near_one_coverage"
+   ],
+   "rules": [
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "r.md",
+    "commit": null,
+    "document": "4dfd378339a1582509dbc696c702bc483824548c96ab90050d2028b250d9aec3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "2935b45372c2b649f5457ce2172a039147bf071f898cabd9da022d9bb504ed0b",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 4,
+     "sentence_share": 0.2
+    }
+   }
+  },
+  {
+   "id": "25fb32b503dbbc5db82a2416b1840f974de7b248d41d48c2082f725ddd9a3f48",
+   "family": "coverage",
+   "sources": [
+    "tests/test_sworn.py::TestCoverage::test_the_floor_counts_every_narrative_sentence_and_the_diff_count_is_labelled"
+   ],
+   "rules": [
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "527c8a1a3796c3f5fd55c307097b60d0bcfef664cb1ae1e5408d4d00dace0efc",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "e60efa0934b44ffaad0a08be6bb5a5d8d5d4c7aed3e6cb97b6b805366925fb12",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 4,
+     "sentence_share": 0.2
+    }
+   }
+  },
+  {
+   "id": "da656e273ae909387b223e1c96a4826fad23dddfd8406937ef1e7aca609f6d9b",
+   "family": "coverage",
+   "sources": [
+    "tests/test_sworn.py::TestCoverage::test_fenced_code_is_not_counted_in_the_denominator"
+   ],
+   "rules": [
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "13c40473002fe2a3919699a571c2e44c6cd7b53f32336e425ba0900b920e684f",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "42313937526fb65f8d0459dc434c55ce000ff6dfced6af85f8ad76c3e32473d8",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "ef1393e0db259d5f2d7ffa613660e5e60c7d944851d6cca58b0991f4b22949a7",
+   "family": "coverage",
+   "sources": [
+    "tests/test_sworn.py::TestCoverage::test_a_quoted_number_in_narrative_gets_no_verdict_mention_versus_use"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "b5717c1174af7d438f27ce10f1d546a03d5d24d78363119b8d30c23cc7918781",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "72b1ba54f328d3acce613b711ee4d7854580295087b4e3d5c7d4d6cdc3809d61",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "f4b48ee07f9a1e4259e0e3ae133ebe29d82e1c13f961f7295ba3a9912b4758bc",
+   "family": "coverage",
+   "sources": [
+    "tests/test_sworn.py::TestCoverage::test_coverage_is_always_advisory_and_the_estimate_is_gone_v02_r8"
+   ],
+   "rules": [
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9bbc1184cfba54b1db3d238ec324a4bfee40d88190f9f1f1adacd7eb9e1d711a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "271c88c83384e7b45251ed7a617023fc57eefab532a12c65b4548d2d9d730e73",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 1,
+     "sentence_share": 0.0
+    }
+   }
+  }
+ ]
+}

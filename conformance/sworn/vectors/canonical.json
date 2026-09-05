@@ -1,0 +1,367 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "canonical",
+ "count": 16,
+ "vectors": [
+  {
+   "id": "1183a265f94bdff399cce8c06a5feb419c6c127db49acc894eb80aab251a852b",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_the_commit_must_be_a_full_lowercase_sha_or_null"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "ff088f1c42f37a870711500509aaa996525c926431c0f6f7fef4ff55d773b279"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_commit_form",
+     "match": "sidecar commit must be a full lowercase hex object id or null"
+    }
+   }
+  },
+  {
+   "id": "171433fc11655e1ee2c819acd6d00929226fd3f95b2ea92d8a4b2ff0bc8662b6",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "139c8f4482817db6705d92974dda6941b972df3151b1a32d1ff533d602e3fa77"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_spec_unknown",
+     "match": "unknown sidecar spec"
+    }
+   }
+  },
+  {
+   "id": "3d3481c35a9ef5fbebe38eb5ce06f8a05d866aca5dd0adaabed69f987b9a425b",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_spans_overlap_or_carry_a_verdict_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "3390fb7062b9812c55895728659ccdf2f3c1bce78eda1614b200b13e67a54023"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_spans_overlap",
+     "match": "spans are not ordered and non-overlapping"
+    }
+   }
+  },
+  {
+   "id": "495cd627bdb2554d8967b89b1951a1611d894803bd21e15fa1ab177655948a78",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_the_sidecar_has_the_spec_shape_and_spans_sorted_by_start"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "document": "f70fd8ebd3d84ba70924861e524a57fe7b8fb3026ed972fdddef0b1075497ab3",
+    "manifest": "4854e4b40ae722a80869f9cb63fc1ea1f0882f9f9cbae2e3c7adf91d1ba5a3ff"
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "9548076335b566513e31d25d350567e59b58211f5e7f49f6b1ce1dc1cd4094b7",
+    "sidecar": "c43d576e0d94c0bd70bfb30619721851825715aadc0c4b9e0b5596de68a2a7e8"
+   }
+  },
+  {
+   "id": "4f2e6519778f072d3a30d0f73c27d321db44a88ba51c7df79fa522046c18fa43",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_the_commit_must_be_a_full_lowercase_sha_or_null"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "5e0d8317c763cdf85e71b31efd938a82be78a064f187a341ad3b65f8219b83c9"
+   },
+   "expect": {
+    "outcome": "accepted"
+   }
+  },
+  {
+   "id": "59e608b8465636be6aaa7bd49e6d35894d8dbc6b083a32ebb792705ea45c6405",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "942666043307d31b0648c2937b80824de60fc7d918528f986e75ce89bd5b7099"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_keys",
+     "match": "sidecar keys"
+    }
+   }
+  },
+  {
+   "id": "68a1348b54751e78d770937f2a6902f5e113ac5a60fca91b959c46a5eb175c52",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_offset_inside_a_multibyte_character_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "ceae332e7c143f3bcee273a46b6ac9f267629a3eb84386ec5c2e79f243dde5ae"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_span_boundary",
+     "match": "is not on a UTF-8 character boundary"
+    }
+   }
+  },
+  {
+   "id": "6ef50e4ceb6173a0edb6b36725b53eb50b837174a4846c0216a86ad025438e6d",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_span_the_inline_grammar_would_never_recognise_is_refused"
+   ],
+   "rules": [],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "bba13187be35ef0eb5faa8976365af35a268d3ce09fdaa9e7b85c2c34865797e",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "verify",
+     "code": "sidecar_spans_not_reproduced",
+     "match": "does not reproduce its spans"
+    }
+   }
+  },
+  {
+   "id": "7b0c002de7ab365efa176771e4bf59c915404e3a540b7e529286b7e8381589f2",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_offset_inside_a_multibyte_character_is_refused"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "572bb05e3b3b9812c3d66984afe06527a4cef88bf8b3bac0eec0b3a1ce4f3cf6",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "1039dba6ae32b6a4f94d950603f3e53758abcc9fa913e63589a66a821c58b251",
+    "sidecar": "4b6dc9b1151eb7940ce29d3a3a3d7677521605a59fe2867d2aa69c8b4ff4d59b"
+   }
+  },
+  {
+   "id": "801221ed462bb944dfb0c5b26188fd75997552f13dbb740fb745a5cb011a0a63",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_text_does_not_hash_to_its_digest_is_refused",
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>0]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>10]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>11]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>12]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>13]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>14]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>15]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>16]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>17]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>18]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>19]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>1]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>20]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>21]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>2]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>3]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>4]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>5]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>6]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>7]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>8]",
+    "tests/test_sworn.py::TestSidecarHardening::test_a_sidecar_of_any_bad_shape_is_refused_never_crashed_on[<lambda>9]"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "ec5beadf11592bb3aafb85ab9aef5f1214de92fb094bc8071a29a0a6eafea451",
+    "sidecar": "0c931c385511df0ad70457760b5116c13a74bc0558da7407a776f3ac21fe8d3e"
+   }
+  },
+  {
+   "id": "868ce213734786279a02855a4b7e0e38a3b1d0cb6e002bd4e61ceb973cb16059",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_adjacent_spans_sharing_an_offset_round_trip_byte_for_byte"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "1080b8346b82d2410e55a87d57fbc1c27db662102a3d148229a04a27420e55a0",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "ed0bb71e945504296a06411987c5397c28765b9863a008604d3b1ca56f26bafa",
+    "sidecar": "3e9755606434b485fd63a50c4abcb18f3a5f380f5cc6e29836e1d32cb4e9c2ff"
+   }
+  },
+  {
+   "id": "8e302d3770d2a632e3b29347d483dbf3586188736d44b4c3ccd8baa26b30ba04",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_spans_overlap_or_carry_a_verdict_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "89257904cc89fff33e3c7ea78239b4cf4493354e23261f455760146e86be3254"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_span_shape",
+     "match": "is not an object with exactly start/end/receipt/kind"
+    }
+   }
+  },
+  {
+   "id": "ca1f7762dc66a0b86b9b8d4ea06abd573f5cd8e1b6b0c139db30ece439d04e39",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_the_commit_must_be_a_full_lowercase_sha_or_null"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "document": "11b36e50e148cf3d895a79ee5ab25a29c8396df8e292940b8397426577e86fc9",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "75cb95b7002c097c90f2dbc1519eda670baf05c42f6a29912daea07efbf4032d",
+    "sidecar": "5e0d8317c763cdf85e71b31efd938a82be78a064f187a341ad3b65f8219b83c9"
+   }
+  },
+  {
+   "id": "d46787e5ae7931efeed84dc581da991f69485d592f3376c8b09dec6a5d9e7c6b",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_spans_overlap_or_carry_a_verdict_is_refused"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "af2b44317d22011ff58304eff23fcad761b5b8d149d62b5ce21e08c64fcb5d1e",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "f3aa2b244f8be0022a3ccdd58dd002b0ea738213b7f809c22de8b0329210124d",
+    "sidecar": "dc3b0ebbc9d0fbfb524e3a9b0a18f7f8ebf55e3ef923c4aa582782512c107d3f"
+   }
+  },
+  {
+   "id": "e2c0da026a4bc84126d9879d88642bf25f9a535032bbd6ec6dcd34189834403c",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_text_does_not_hash_to_its_digest_is_refused"
+   ],
+   "rules": [],
+   "mode": "load",
+   "requires": [],
+   "inputs": {
+    "sidecar": "693d0d54b19cd88923b35eec03e14f18924fc7c50919c4eff94316c81ddcd95e"
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "load_sidecar",
+     "code": "sidecar_text_digest",
+     "match": "sidecar text does not hash to document.sha256"
+    }
+   }
+  },
+  {
+   "id": "e5482e6597f6ef825cb27d32a909330b8e63be684762dc8bd9f9ceff25ff305a",
+   "family": "canonical",
+   "sources": [
+    "tests/test_sworn.py::TestCanonical::test_a_sidecar_span_the_inline_grammar_would_never_recognise_is_refused"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "03b5214d8e2f736ba4684f1a69af868ee89983f31dc0519677c11179fa9d336d",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "21cdd0fa12593b32433e6919df4dbc7584c6f28718d575ec2f0883edcc320208",
+    "sidecar": "4d9bd864cced1abed38392840d6b91cef528b559b183d6083ea26d64d5635cff"
+   }
+  }
+ ]
+}

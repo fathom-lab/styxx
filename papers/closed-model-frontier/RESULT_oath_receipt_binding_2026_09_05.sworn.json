@@ -1,0 +1,177 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "3c899a55c5ce47814bab5fbc3d239a883aa2e4ac",
+ "document": {
+  "name": "RESULT_oath_receipt_binding_2026_09_05.md",
+  "sha256": "326df8fdf9a66b9aa819e8fdb4ef2a3d5aa0e271dad23226906ede5b8b4493e2"
+ },
+ "text": "# RESULT — receipt binding ships: every tracked certificate now says where its bytes went, and the corpus is measured as it is\n\nFathom Lab · 2026-09-05 · Spec: `SPEC_oath_receipt_binding_2026_09_04.md`, frozen before any\ncode, with a dated ERRATA appended after the pass. Battery:\n`ATTACKS_receipt_binding_battery_2026_09_05.md`. Module: `styxx/receipt_binding.py`. Tests:\n`tests/test_certify_by_digest.py`. Census: `receipt_binding_census.py` →\n`receipt_binding_census_result_2026_09_05.json`, the third run, from code committed at its own\nhead, which this document swears to and which is never regenerated in place. The second run,\n`receipt_binding_census_result.json`, stays as committed; this document was first sworn against it\nand re-sworn against the third after the document cell was repaired (ERRATA, second note). **This document is itself sworn**, at the commit its sidecar names, and\nevery number in it is bound to a leaf of the census or to a blob at that commit. It is a result\nabout this corpus on this day, not a claim about verification in general.\n\n## What shipped\n\nAn OATH certificate recorded each receipt's digest and bound by basename; a receipt rewritten in\nplace invalidated every certificate citing it, and the audit reported *the certificate is wrong*\nwhen the truth was *the receipt moved*. Leg 3, item 1 of the plan closes that: a certificate\nissued from now on carries a `receipt_binding` block naming the content digest and the committed\nblob of every receipt; the audit, given history, gives every citation one of five cells and the\ndocument its own, re-derives the verdict over the bytes at the issuing commit, and prints a\n`binding:` line beneath the verdict line that REPLICATIONS.md pins. No verdict moved. No\ncertificate was re-issued.\nAt the commit this sidecar names the module hashes to f3436793167cd2f1e24b8eca933b307363c911d24e9cb0cbb4eb431be99cebbb.\nThe census script hashes to 48a20a7639511e3ecce7eb551cb588d839064b804e3c2e4fceda737e7ace9fc4.\n\n## What the census found\n\nThe population is every certificate `git ls-files` returns, staging copies included.\nThere are 213 of them.\nBetween them they cite 631 receipts.\n\n**Receipts.**\n630 citations read `same`: the bytes the certificate swore to are in the working tree.\nEvery one of those 630 is also present, byte for byte modulo newlines, in the tree at the certificate's issuing commit.\n1 citation reads `at_issue`.\n0 read `elsewhere`.\n0 read `unbacked`.\n0 read `unrecoverable`.\n0 certificates have an unrecoverable issuing commit.\nThe one `at_issue` citation is\n`papers/ancient-question-program/CAPSTONE_universal_mind_2026_06_10.certificate.json`,\nwhose `mind_v0_validation.json` was rewritten seventeen minutes after the issuing commit in June\nand has been reported present-and-changed by the audit since the counters of late August. Its\nsworn bytes sit at the issuing commit, and the certificate stands over them:\n1 certificate in the corpus is the plan's *receipt regenerated under a certificate*.\nWhether the receipt's content was true is not a question this audit answers.\n\n**Documents.** The battery found that the document moves too, and the audit now looks — by the\ncertificate's own `document` name anywhere in the tree, since the second note of the ERRATA.\n205 certificates' documents are the sworn bytes.\n8 documents were edited after their certificate issued; the sworn document is recovered from the issuing commit.\n0 documents are recoverable from neither the working tree nor the issuing commit.\n\n**Standing.** The current verifier was re-run over the document and receipt bytes at each\nissuing commit.\n211 certificates stand over the bytes they swore to.\n2 do not.\n0 could not be re-derived.\nBoth of the 2 that do not stand have every receipt and the document in place\n— the verifier moved, which Charon calls SKEW and which is not a binding defect. They are\n`arxiv/read_neq_write/source.certificate.json`,\nthe submission source Charon found re-certifying FAILED where it recorded HELD, and\n`papers/closed-model-frontier/FINDING_behavioral_sycophancy_blackbox_2026_06_09.certificate.json`,\nthe entry `KNOWN_VERDICT_DRIFT` has carried since August. Neither is new; both are now placed.\n\n**Newlines.** The spec predicted every match would read `crlf`. On the blob side it nearly did:\n624 committed blobs match their recorded digest only after CRLF is restored,\nand 6 match as stored, because six recorded digests are LF hashes.\nOn the working-tree side it did not:\n625 working files match as read,\n5 only after CRLF is stripped,\nand 1 only after it is restored.\nThe corpus's digests are not uniformly anything; the record says which reading each one needed.\n\n## What the battery changed\n\nFifty-two constructions, thirty-six that broke a sentence or a rule, twelve in code — a merge\nthat hid a sworn blob, a non-ASCII name that read as absent, a document that had moved under a\ncertificate the audit called standing, eleven receipts read `at_issue` while sitting unchanged\nin the working tree of another arc, a census that printed this checkout's absolute paths into the\nfile it meant to be sworn to. All are repaired in the commit this document is sworn at; the\nsentences that were wrong are struck in the ERRATA rather than rewritten, and the six predictions\nthe spec made before the run are scored there. The code lens of the battery did not run.\n\n## What this does not say\n\nThat a certificate is immutable, tamper-proof or self-verifying. That the receipts' contents are\ntrue — binding says which bytes were sworn to. That the two certificates that do not stand are\nwrong in any sense but the verifier's having moved since they issued. That the ten documents\nedited after issue were edited improperly — the audit records the fact and places the sworn\nbytes. That any of this has been run outside this lab, or on Linux. That the census is a\nmeasurement of anything but this corpus at one commit, on a full clone, on one day.\n\n---\n\n*Before this, a certificate could not say which bytes it meant and the audit could not look for\nthem. Now the certificate says, the audit looks, and the corpus turns out to be almost entirely\nwhere it said it was: one receipt moved and one certificate stands over it; eight documents moved\nand their certificates stand over them; two certificates do not stand, and every byte of theirs\nis in place. The next reviewer can re-run the census and get these numbers or file a divergence.*\n",
+ "spans": [
+  {
+   "start": 1778,
+   "end": 1897,
+   "receipt": "path:styxx/receipt_binding.py",
+   "kind": "hash"
+  },
+  {
+   "start": 1898,
+   "end": 1991,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census.py",
+   "kind": "hash"
+  },
+  {
+   "start": 2104,
+   "end": 2126,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/population/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2127,
+   "end": 2163,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 2179,
+   "end": 2265,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/same",
+   "kind": "numeric"
+  },
+  {
+   "start": 2266,
+   "end": 2385,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/same_at_issue_too",
+   "kind": "numeric"
+  },
+  {
+   "start": 2386,
+   "end": 2414,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/at_issue",
+   "kind": "numeric"
+  },
+  {
+   "start": 2415,
+   "end": 2434,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/elsewhere",
+   "kind": "numeric"
+  },
+  {
+   "start": 2435,
+   "end": 2453,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/unbacked",
+   "kind": "numeric"
+  },
+  {
+   "start": 2454,
+   "end": 2477,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/unrecoverable",
+   "kind": "numeric"
+  },
+  {
+   "start": 2478,
+   "end": 2530,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/issuing_commit_unrecoverable",
+   "kind": "numeric"
+  },
+  {
+   "start": 2562,
+   "end": 2647,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/at_issue/0",
+   "kind": "quote"
+  },
+  {
+   "start": 2917,
+   "end": 3001,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/regenerated_and_standing",
+   "kind": "numeric"
+  },
+  {
+   "start": 3270,
+   "end": 3318,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/same",
+   "kind": "numeric"
+  },
+  {
+   "start": 3319,
+   "end": 3431,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/at_issue",
+   "kind": "numeric"
+  },
+  {
+   "start": 3432,
+   "end": 3513,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/documents/moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 3621,
+   "end": 3673,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/true",
+   "kind": "numeric"
+  },
+  {
+   "start": 3674,
+   "end": 3683,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/false",
+   "kind": "numeric"
+  },
+  {
+   "start": 3684,
+   "end": 3710,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/stands_over_sworn_bytes/null",
+   "kind": "numeric"
+  },
+  {
+   "start": 3711,
+   "end": 3787,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/certificates/not_standing_same_only",
+   "kind": "numeric"
+  },
+  {
+   "start": 3880,
+   "end": 3926,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/not_standing/0",
+   "kind": "quote"
+  },
+  {
+   "start": 4012,
+   "end": 4109,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/examples/not_standing/1",
+   "kind": "quote"
+  },
+  {
+   "start": 4303,
+   "end": 4379,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/blob_normalisation/crlf",
+   "kind": "numeric"
+  },
+  {
+   "start": 4380,
+   "end": 4446,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/blob_normalisation/raw",
+   "kind": "numeric"
+  },
+  {
+   "start": 4484,
+   "end": 4516,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/raw",
+   "kind": "numeric"
+  },
+  {
+   "start": 4517,
+   "end": 4547,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/lf",
+   "kind": "numeric"
+  },
+  {
+   "start": 4548,
+   "end": 4580,
+   "receipt": "path:papers/closed-model-frontier/receipt_binding_census_result_2026_09_05.json#/citations/normalisation/crlf",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

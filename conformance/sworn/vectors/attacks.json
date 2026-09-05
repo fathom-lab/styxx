@@ -1,0 +1,1067 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "attacks",
+ "count": 17,
+ "vectors": [
+  {
+   "id": "1610ec62ea0b0d7c55563b53307a1f9bf7b391915477649536c666173f1a63e0",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a2_trivial_swearing_holds_and_the_floor_makes_the_padding_visible"
+   ],
+   "rules": [
+    "A2",
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "a.md",
+    "commit": null,
+    "document": "791b3c1eddfd225fbe4cc43a48c45d641a8816dbb6fd27a61bf489157fa041b0",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8229c5bdf2b2dd57b5897503fd4b5b03d09a3c0c13aa0630d49f0e29364aa859",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 2,
+     "sentence_share": 0.3333
+    }
+   }
+  },
+  {
+   "id": "1946bc248d11a568d0b9810785f5bae24f319a1efefdee4cd7fd1bf610a994ba",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a1_the_rider_clause_holds_on_the_number_and_says_nothing_about_the_qualifier"
+   ],
+   "rules": [
+    "A1"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "693556a25071da01ed3a6c72189afc6fa0d8ef86a516a6a5f1f40283c798d831",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c62bde59633175c68190ea17ffd29f5ea627170b199df6eff730a5618a1a51aa",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/precision",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "1ad77047e87b3ca8c5282e0bf1c22d184f1c9dfad4b7e698a7fc566bb610a586",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a10_a_short_needle_the_author_narrowed_is_exempt"
+   ],
+   "rules": [
+    "A10",
+    "R3"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "fa5d664859d6d0c87237473ab9b5a291537e83f35c0590cbc1cadb4e77cc4991",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "7a675add4d6aceaaa605200f8959a2b1778be21cbba0593ccfa216991c19f6c3",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/note",
+      "kind": "quote",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "255d6ea9858f7d827b06a26150d1b0a1ec25f046161b1b87653c4cc2af5ea19e",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a12_a_coincident_value_at_the_wrong_leaf_holds"
+   ],
+   "rules": [
+    "A12"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "f3d7310225e47fc3ee104ec0bd51a743c7c2a36091888b7cbef36a533b8d2aa8",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "da3a92a24ac36c8c523484ce4ad2ae99c4138c50fe55f617dd39783f88cb69c5",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/passed",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "262480ce57a2934e61914708b5ee1bccf0064275516335e3361ec0b49d654d51",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a10_a_short_needle_the_author_narrowed_is_exempt"
+   ],
+   "rules": [
+    "A10",
+    "R3"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "691468c4844b6a7f0f0f1551a9d1e46fe19e354b6a0577eeed6bf91e2e35ece0",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "log.txt": {
+       "mode": "100644",
+       "size": 27,
+       "sha256": "a61cbd4d3648a798fabd8a5cda3cf1bb52d5f974dde847248909cca7cc7e24d2"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c16b51c25847a370525c5c177e6662b20116c97d97f85961bce7795ea60b845c",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:log.txt#L2",
+      "kind": "quote",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2938c6d45a1801ea453c9a8a7eb0331a9c76a5312171052f0ed2dbfbde10a73d",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a12_a_coincident_value_at_the_wrong_leaf_holds"
+   ],
+   "rules": [
+    "A12"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "f3d7310225e47fc3ee104ec0bd51a743c7c2a36091888b7cbef36a533b8d2aa8",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 25,
+       "sha256": "473587847321030bdfa730c17ff8dec7372d8bd7ed9064d53dd32a628381a75c"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "df07a2dbefa8e821e050325c1d5fed196c679387232263e7e17d2d53ce01ddb7",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/passed",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "3f1bd7b53029038cdd3b4924553334e5b54abcb002cdf228fb7dda286f6137fc",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a4_a_tag_hidden_in_an_html_comment_is_malformed_not_held"
+   ],
+   "rules": [
+    "A4",
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "5df66131328711117300251e5f2b6528bb6b65126d090ceec0a19fdf4a9f13f5",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "895bf534f9ce668a2b3c7be137761127fac46a9171a1fd257b43883d7d2a8022",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 34,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "hidden_commitment"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 2,
+     "sentence_share": 0.3333
+    }
+   }
+  },
+  {
+   "id": "6470000c08ad427088a100624f5bcbac5ba7fe36cde11835eeae0b4521c5dd84",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a7_a_manifest_the_agent_minted_holds_and_the_rung_it_declares_is_printed"
+   ],
+   "rules": [
+    "A7",
+    "R6",
+    "R7"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "9bb2996a2edcf8b9cf305ab4c9ad00d3f8e5656ff72a7cfa456927d2e1cba9a2",
+    "manifest": "cef08682d0ee533222c0573431e19d95e921ee10d144bb6e6d60ff89591a423f",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8a0178a949fcc9bbc50d889a78d676135a2b519e1ec077fc19065368f1f22aa6",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6517402bdcf4b5c63b045406ea86279e37715927974c94e91b2453591a4d9fca",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_the_cap_no_longer_penalises_three_byte_scripts"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "497a2908f9df90a4bad2bb0d9b9ce5ec7ea2a878c00198ce2d592ae39836b75e",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "76c03d6d8397c8cf899c069fcb48eaf479958abb6c33b11518e94af83c596f43",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "length_cap"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "65fb2ee3345f22619a1d3095544372531c5655c19c0dea00d5e9fc16fc6e1a42",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a5_a_committed_receipt_holds_and_prints_that_its_authorship_was_not_checked"
+   ],
+   "rules": [
+    "A5",
+    "R7"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "e35a7cbe7f26acfea7c04d5d4de06d79bd02ac3c6f09b321089ce17eff110e8a",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f628d25e75ec1e2fda9d218ec6a14552b9533c5dfa6c3ebbd9deed7469f01a7a",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/precision",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "7281d943c674d04ae90ffa2ddd41db17983a5e7338eeaca60367bc5eb47043b8",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a9_percent_and_fraction_do_not_coincide_survives_from_v01"
+   ],
+   "rules": [
+    "A9"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "4a73b229901d3786fa5fe2ce9629fd53d4752d99518d5307790ed426a0ed21fe",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "866747d3b940081239a0dfe796ab7fdf1b4b0880a5e05c7fba922c824d91c586",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/precision",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "826be6c6c1de9a0e0eeec7511c27bc463d94041ca0359766e037a1ee0ec282e1",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a11_post_hoc_tagging_is_undetectable_and_the_receipt_says_so"
+   ],
+   "rules": [
+    "A11"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "dddcf5f703bca35edcfc1e1172dcf31c33ceea2e8a3ddcda2bc101cd98aac577",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "6b5480016ef75844c61c3b3f8dd6ba931f0744b6c96196c1a3bc105c0d540a87",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "87bc41398e44cfc31824226bbf4e9ad9debb3b323707b8e1485f2b7271f43393",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a6_a_prereg_digest_proves_content_never_precedence"
+   ],
+   "rules": [
+    "A6",
+    "R7"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "900c3820d4208fc564bce498564e32552652cef99690bd368786c8d574b4221f",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "PREREG_x.md": {
+       "mode": "100644",
+       "size": 53,
+       "sha256": "882c6bfcc3a4e19fefc60237bab4612fafced65e8095945363b6df548e476189"
+      },
+      "result.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "af93bb8e741a97b82553641e1ce69d84faf34ae6b90dc3f9bb20b56d3308ce1b",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "prereg:882c6bfcc3a4e19fefc60237bab4612fafced65e8095945363b6df548e476189",
+      "kind": "quote",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "b9adf3e14eecd74498b7b7fe20147ebe5c254f80045faf66d19eb59007ca478e",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestNotRepairedAndSaidSo::test_a3_the_stative_dodge_no_longer_shrinks_the_floor"
+   ],
+   "rules": [
+    "A3",
+    "R8"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "a.md",
+    "commit": null,
+    "document": "bacd1fbff26c69477fc060e5178a6fc189644efdaec43c943e19b7b2222b28d5",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "95caa52f35667242c7985ff3e80a725ece8dbf5d78c3ebff9357283ceb836250",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 3,
+     "sentence_share": 0.25
+    }
+   }
+  },
+  {
+   "id": "c34871e48dfefa93f672801a9cc613f9941d213804e4682edd8e94c03322262b",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a10_a_one_byte_needle_over_a_whole_receipt_is_malformed"
+   ],
+   "rules": [
+    "A10",
+    "R3"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "34e290fbed91049475fb19d42b4a1fe2893bbd86f8a18faa97797ba4bb607dce",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "40b57afc60a1866c5546cde88638bfb6fd19a8b449a86cb109b8d4c0c3805357",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "short_needle"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "c822edfe87c4bf2f82ef65e914bf360b8d86c1c9387fe59d8aec99520ea83e98",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a10_a_short_needle_the_author_narrowed_is_exempt"
+   ],
+   "rules": [
+    "A10",
+    "R3"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "a7a103edf2e3a601f5f0f7bf2785bd6558ee62c3a7176868dd28d3f8f57f7e5c",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "log.txt": {
+       "mode": "100644",
+       "size": 27,
+       "sha256": "a61cbd4d3648a798fabd8a5cda3cf1bb52d5f974dde847248909cca7cc7e24d2"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "6c6c4b46399d421f4661554222df05839f368561622866365524d1e2667f3cf2",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:log.txt",
+      "kind": "absent",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "eecfe6f6819e821f3617a708c7a1e560df1b378cb8b2e7b79a5916a965abd8e5",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_the_cap_no_longer_penalises_three_byte_scripts"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "472dc67840acf4b3793cbd3919d478bbe72eb7ca8d739f2dc27c60c7f8c806e2",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "a5a654ddfa4fb725b0469f83d1bb9dd93688bc306ec011c0ce4c9af35c807667",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,386 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "tree",
+ "count": 6,
+ "vectors": [
+  {
+   "id": "47c2982cfe88b97d9534f2d11b237bdc882b79a31201513c3052c59259c83c3c",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_a_path_receipt_reads_the_commit_not_the_working_tree"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "b674168599f5f6f69a07c8e35d3c70be1897dfa3d7ac037df23ee596418858ec",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "35fc2b2fea2df2ece62acd2ff77a7a39eb47457747ffc3630c53686af5de181d",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "4a58480111c87008a6cb99d2ecc98fe9d291b3338a9e5b2604644abf5b9cf4b1",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_a_prereg_digest_is_found_in_the_tree_at_the_commit"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e028db69bbac71a14220426d05123fb04905c7757e730d82f67ab3ff5e99a9f3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "16d920f214818d549f2c9f1c89b64d53c7ede0520368dc8cedb9483ba5711409",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "prereg:8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3#L1",
+      "kind": "quote",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "9e75e91fa89c094545d17e48509981a49fd480cae232c0212efd92271e12bd7a",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_a_path_receipt_reads_the_commit_not_the_working_tree"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a7102f8cc23d1d39077ddc860ef05d45183a91cd37b53746e6aa76ecd32888c3",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "handle_commit": "d2341f0e5e7b7ba39b61e2e18cee191b55e2ff7f",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "13b25090826e1be3a70392e0159057d8525047f057d31ef34591c637497a8395",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "FAILED",
+      "reason": "value_mismatch"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "bc8d2e8d4b9e6241211e7b995fa2fb510478f9e53265dc2ffac2014d1c616ac7",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_git_unavailable_or_no_repository_is_unresolved"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ebc7f94de2fa4d15d8495285f9b8427fbc8265848f749f4068eb0aaf90c80d5f",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": null,
+     "handle_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "entries": {}
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "599a9317d2271187ec15ce6a250dfe0f9c63435ff948b481f27909e7dade6e2c",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:x.json",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "commit_absent"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "f35bd1ca40caa2dc48b66627e046092470259712fcf8f2601a2e0acd5f39d17d",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_a_commit_absent_from_the_checkout_is_unresolved"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "b674168599f5f6f69a07c8e35d3c70be1897dfa3d7ac037df23ee596418858ec",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": null,
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {}
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b72c61d5ac63f1994ca12eec4294bb51bc0a11fc3ed94e1ce46f00c5819d4d40",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:res.json#/recall",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "commit_absent"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "f8cb7ed9cad3ced418686870ad7c0484100b5a7232d87882eb4c36b9dc0cb153",
+   "family": "tree",
+   "sources": [
+    "tests/test_sworn.py::TestGitTree::test_a_directory_is_not_a_blob",
+    "tests/test_sworn.py::TestSnapshotTree::test_the_snapshot_agrees_with_git_tree_and_memory_tree_on_the_fixture_repo"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "938c03b9329779e1fb01227ad47e3cb14a2546013a49edb026d1384cebd9497f",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "25a86bdb38d3f2d4bdbc24e9e3abedf7818c6bef",
+     "handle_commit": "25a86bdb38d3f2d4bdbc24e9e3abedf7818c6bef",
+     "entries": {
+      "PREREG_bar.md": {
+       "mode": "100644",
+       "size": 9,
+       "sha256": "8cfac40a9cd16ce1f1745013b1eba249a60792543774c77bfddce887d36db0c3"
+      },
+      "dir": {
+       "mode": "040000",
+       "size": null,
+       "sha256": null
+      },
+      "dir/f": {
+       "mode": "100644",
+       "size": 1,
+       "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881"
+      },
+      "res.json": {
+       "mode": "100644",
+       "size": 30,
+       "sha256": "6909ff0b2eb40f535d9f91222c8fd2e70a9a642a6873ba8ea892bc191ff890ba"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "a9aec6785a3c530af9fe54f029430ffc09f821d8834da7407b365e3b11bc2708",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:dir",
+      "kind": "quote",
+      "verdict": "UNRESOLVED",
+      "reason": "not_a_blob"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  }
+ ]
+}

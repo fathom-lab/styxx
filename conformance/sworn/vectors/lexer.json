@@ -1,0 +1,2750 @@
+{
+ "schema": "styxx.sworn.conformance.family/v1",
+ "family": "lexer",
+ "count": 65,
+ "vectors": [
+  {
+   "id": "004295cc57885c35fc944e0f24f874c642492fbba90a58177b5c58cfdc900bd8",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9829d55f97be80899f5ac5b48cb4244769763caa46564223fd633bdb4ff638da",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "0ae6f3d8f20b63331a94f21a91e70f8f8b86d071eaff3c7e8e9e3c7f26931569",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "hash",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "022ac53a5101a23eee4b63303a2d5df12968f8d0a2d3ed4e648e185d171ef7ff",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn>]"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "7c37c2cd2b86537e4022f6a4ede15f41fd8fa72708909ef363c0ff5102906fc5",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "03797063f3816ba339a4c41c50a9fd388a3d477b2f9954bc8aadcd066a4c527f",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "cdc562bd05b31a437dcf19ce4d32c3bea42c9578ef35d84c65f82e43cfca6757",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "6e7a1f7f5a69ef56abe8d5234b848a32f6a31a010428ce082a1daff39314d26b",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 28,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "07b48f604ef0146bff8be968376c9b84607ce78403a3db8103ff44f5f96b75ca",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_crlf_is_content_offsets_count_the_cr_and_nothing_is_normalised"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "5d910c909cd7f9f6b1cae9130e90ba3efd7086fd615e5c8226d1d41a7533f216",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "11e7df8c1ae894a95dfd40e36a4f2a2dad3005e2a83fb2954a3330d6f3a6e8a2",
+    "sidecar": "f3c985aff0957007831910093e49f786aaf2e567f11393902b1351ea493edc2a"
+   }
+  },
+  {
+   "id": "10ae141dbaae7707b56fa7a743cb4b5adc62a0f7323cbd8d0c012c7558e4403f",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "9ada7206c7dd229a2e524e28f986e0d8833359b273c16aac4126ece82a22d066",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "9e607747ead957e8258134a1de48112ddd3c2083886b1c3e8b172f4d0fdb2cf4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "10d21a3ec14c72cefb5743314ecda393a6bb76ea35c37667224f3877966de30a",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_a_fenced_region_is_literal[````]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "6d58ab7bd6c452f3f811287d01493f6d5125be656008d8a930a6b48257272b7a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "86217563dbacefb6c4fbbc999ac714ca1836554b41ffd78c88b65cf1eeef879b",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "158817a64234ad170066617afa0a5bddbf93faadf5794c45cf7ed2d5f2c99a79",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<SWORN"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e236c9331261dd357aa3ef7f34081c307ce91ab6d7a163d9074cc19a7e3ccd3d",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "1818c8389be11b112c17b255eaff6e5dc1371637223e5a595303f08bc0459415",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e49c7e6b834799432781d947dbd7ee6207735fa6b3761f79e5ae61706893164c",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "eac1875809b21c55544dc972cf09b74e538a9aaaf2fa0676be397b755ed58b33",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 33,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "19a54cad0d0bb43ddc5e3488419a5d9ca102ec569344d134b8fea681b65fe2df",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_invalid_utf8_is_document_level_malformed_never_unsworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ef47c286067e05f81848446bb1e0d65c07fd508038bc2caf3568057c24757050",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "document_malformed",
+     "match": "no canonical text exists"
+    }
+   }
+  },
+  {
+   "id": "1d20fb5f43a9ca075c4bf68e7e4786fe1d6a17e0088d2699badf40132093201b",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "be54baa9ee6fbc7d1193402f114146d35b34842cd9265b7752224eb2b3cff56d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "836cf7ef9626ac5ab56310a54e8cf588cb480d208c4a41af9280d557a2c2786f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "1d622425d7d97b97fbfcab060dd0a32123f07c6bef772b641b66996ba562b641",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_opener_never_closed_is_malformed"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "2b3d72b351d7c1dd2005ab7d30aeb2363ef03fe19df869a391ead11676e8d259",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "2b4d012b6c8e658f5700caa916e720e7a9739ba8355614ae0ecefac08f15d462",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "unclosed"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "1d9e5ae81036a095447f553b0108fdc3261b9fe4a3e169ebff2ab4327c20268f",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_unbalanced_fences_are_document_level_malformed_and_refuse_to_guess"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "fcf1c0a7f56428c1be7612889703b2f0865547d1ae2dea7fc897e4852b1cc152",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c5993a92be2c1fbe86ce141571681966d79e143812ae304c8830c923135bcc9b",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "1dbf3ad0f0e84c1f60a53dbbbc2d7c19c7d0c6cdd312b1319afcb141a4843722",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\u5b57-None]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "722ed0b7811ec1a7356aeb1b2bf6ab6c696dbced613e17c66600a1f966888a44",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "3466c4498175140cacc9d1480f915c2c2c12ce14a1c4bf26ec09a36250d73f63",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2151d4b1f36c5bb77a59e26234bef8a1bc45cdebe2f0cb7d2cd03c1688864bae",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_nested_openers_make_both_spans_malformed"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "fb057164a6aa0fb333566e9516370262bb2dbc5c3558c326a359ddf4cfa9b80c",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8cc732aec0ac5f2f6b097fa28ecf2510db152d2bbf4548e20585390c212915d8",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "nesting"
+     },
+     {
+      "at": 28,
+      "receipt": "r2",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "nesting"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "24e2e97b6c265c74a00eae699a0f524722f51272a51ab0617adb38a3bd739189",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_unbalanced_fences_are_document_level_malformed_and_refuse_to_guess"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "fcf1c0a7f56428c1be7612889703b2f0865547d1ae2dea7fc897e4852b1cc152",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "document_malformed",
+     "match": "no canonical text exists"
+    }
+   }
+  },
+  {
+   "id": "2ce133d757cc62bb7a108257cd50b679a400e928105059c7cee73f68681f9da1",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "278d4d278b752904ee710aa075ef7bee1148957f5cf0f7604559e1e8c856191a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f49978dc51fec2458487d813c17376632185e310b2cb20d170107efff23c7ede",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 27,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "2e65cd72d412ea9d944ca02c0f3d41a950ac598fdc17e5b7987103a34798aa67",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f905a2753eff30543b3d8631d5334d2c4b8e6505ae23e350abcd2e201ee9111e",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c18930f3676f1a7cdb407545fab13133458fb8b78553ef81412de39332a1da6d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 5,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "hidden_commitment"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "2eaf6186c23fea3d9fffa42fc307bf47089f2f72d17c9e28a5cc8ffc7000a0d6",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_newline_inside_a_span_is_allowed_and_counts_toward_the_cap"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f197186d0a567404f96111e6e6ac86146d357a55d41efadac1f6785036fd3c03",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "134a740e414fb525aeae8484f1bc49b87fc35c0b685b1fe35c71e558d09f1ab4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2f1599d3fa574f25e7e5afff16cd6a30379c11dfa5a19eb14359e6f0c7ba0b0a",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_invalid_utf8_is_document_level_malformed_never_unsworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ef47c286067e05f81848446bb1e0d65c07fd508038bc2caf3568057c24757050",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "fbe931d95f19d22632b2595d4dea0805c47583e436ff84ced2f9fc340750478b",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "2fa49621328929cd80bb312b64a9249e96850053134a2d3817a562602c5d4fe4",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600-None]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "072c104619fda556012f92c398c461f93d77e12fa2a390cdbebf318c5c5a669e",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "51c6ea486104b5c6f4cbab1162ca8e1bc032b5b4bccd760095577e7ca3f4dd88",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "318afe6daed2b597bfeaaa4b64bae289256c176363d72541ec4d5ab6c939f2d4",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a397becb1f035ead6747643b75db69734511d23791c9d8c04d126b07cce210a5",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "35a33552a2fe506436b39cfb50e9e781d80f272fcb50c4c575085a2a083f8736",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "cdc562bd05b31a437dcf19ce4d32c3bea42c9578ef35d84c65f82e43cfca6757",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "385ae2bc763d9c51b2281b7c0680ca921635f7acd6f4282876895d56870da105",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "38d09537093dbc52308a8587b92c0020547481eabeb9abcf33129c49623dcb7f",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "04f7bdb725458c3562e0cfe7ff333d5858af25e2ac2bf92b5d6a6b2ceb6bdb1d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "hash",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "3a1f5dc55039c736abdc8d6a82ce4c91609e98000d7fbef79a23995847d6270c",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "sidecar",
+   "requires": [],
+   "inputs": {
+    "name": "",
+    "commit": null,
+    "sidecar": "790dd838969a8ba79c0f22ea9cd5da0672d763b8d02ff5ca4c1d33f94e9b8b38",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "060e206ff21cc37850ac97ab8a138d73fbb31bcfb4f0f7cd15f1a7a23d446d50",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 5,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "hidden_commitment"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "3ac82715bb931ce914895435c5bbb94a80c472891198412f457a569bf86e4313",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "34f82485e98afe1810010d3959bf2c0f90fe3b347c7d7a0881044acf066dd6c5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "2358a1e5a3f6647b3cf629c29f2d23918c8e2ba362d6458392b625d4c5aa092b",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 28,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "3c9e6a05397244d8e558b7f71c1ab07e201cc2498a9cca4f1d56f8c9a2d3d89d",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a397becb1f035ead6747643b75db69734511d23791c9d8c04d126b07cce210a5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "babbba7f17f6123b4e98e6f1c1176449ff93f97d14849394cda8d9cd25cf3b3c",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 27,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "43d0167b4748d2dcef1d72a4c1cd0551706a8b3e2ae9d8733dac5a15e10df04f",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn>]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "7c37c2cd2b86537e4022f6a4ede15f41fd8fa72708909ef363c0ff5102906fc5",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "e54750603a94d71e975622fa5af2f3d550bb0736d65d239d6f448034b44ba487",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 8,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "4485d35d67767e9ff42b87f4e0d3e9327f9b898085e10c2224ca94c3d6c88854",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_swornfoo_is_not_a_candidate"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "1c0e6225cb41ca5548fc61fd5404e6365ec0bad1e2eb18e37f4f3701843d6a94",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "27a9e59190f318d86819d7e344153642b02895247cc299402e4235cd7cf6f4ea",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 1,
+     "sentence_share": 0.0
+    }
+   }
+  },
+  {
+   "id": "4ab8d6bac9217f6f9be3d39bac2fe3e7ab4306fa8881a4dd5e31549e79520428",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f2589d28cd8952053e529883db11d981d73c5db17d7bdbd8add4a361cbd08542",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "4ef8214fe95b5d964b57008e79cc79ad41338adc46a8b9b243febad37cffb082",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "911c57f40a83465cd3e28c8d255d22df7c233ab8ffaaf07748ad0137f67221c9",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "fd2cd6db77546efe312cb251e00317a867e433845350050d68f358fb43dfa09c",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 13,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "52bfa93fdcbc6571bf83276e00ea26ba4819d719b631c6f75a1f29c3bccdc881",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ea7e2521efac40b88576d36e988d8cc1e12fc4b3d962e99d64c81abfd494420c",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8ff655e7d3ce5d80c9ddebe46090d6b74b42d2ec038bba497416ce0714a5adfa",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 5,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "hidden_commitment"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "539e797303df59c7c8c4ee0ec9074edd32bab2b2de4cc14db566c584a3323dd1",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600\\U0001f600a-length_cap]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f0e8a8607aaa800dc1e3ad5851f34bebbe2c4ee15d3b4c4e1722c8a0f83c818f",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "dc7862ef2f35228c0279e9f14c9def754be7bced62d71186d9bba7bc6ef12856",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "length_cap"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "5630c754009cd6ca53d0fab7bef07887e13c5fbd5943fa249b1bd785041929d2",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "aa88b59ebbc099db152c187b99c145918670b41f6eca29d7ba3d7c1cfd0c3e8d",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "57e2a5e655ec03db69daf9d6909f625f239256ee3d86faa7f65bb4ac0ddede95",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "526d2673ae579f7d6f0041dde81a281d44be8039fac6cab3e08d0a82444a41d4",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "6c1b70ca908d7e05e7dca4166cd24414c560792e9ca68cdceeadb892acf3c7ed",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_backtick_inside_an_attribute_value_is_consumed_by_the_tag_candidate"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "4cdfdcac69cbe8fd28eaaabefdd354cbd0d7a055d1bc4472c5acdd88764ec9f6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "25364cfec8df67c5a333590622c70ae502f3f6a138e3aa198ddfdbcf2d55fd4f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r`1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_form"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "6e94abe489b16e116386e52f0586ee0dfa6914802b3e9b91e0db27def27dcfca",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_a_fenced_region_is_literal[```python]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "a568b8ede30c6b0bd63efefb58372eeca0402ed11aa5011b33a13bb19439461d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "00a6834d77afd197c0c208e289701f1c09fe46fde55a7e2a9d6d5ad2a9b473c3",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "6f9c815f299e405eb075f32c8f68203e233380f3745aa3dbf7b38c345d4b3301",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_stray_closer_is_malformed_and_the_good_span_keeps_its_verdict"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "483804dcc6a3435714a374cd4b81fc0faf186e25deb6493d588e7af9a0b2582a",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "7252f53143965a1ae8376573d374b93ce9fce41bb5a0d5e1d27c1700e4f1f010",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "f2589d28cd8952053e529883db11d981d73c5db17d7bdbd8add4a361cbd08542",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "540ceb63de52cda50fa28173a945775d4c2fce6aa15de64deb0b6fbedf3bc990",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 27,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "75c6af6dac08af397aa92fbd108002c73f4fe296538339978c83ba7b3eac395a",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "da4b437df1426db453e8e74a089e5636f4f4e1e79d29679f3a4cfcdeac971011",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "bd6b83977f04dbd0123ba0c50b75e8442d17e1392dceabc6952c4ed3a83f292a",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 28,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "79e2871d7ac56c18ae2b9188bd2355819ffd15c17363be7035ee075a89233617",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "3c6ebc4b91feb7f3e3d78fafff321b46e25b1f7fdf90d04a2dfd9ef9b20b3831",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "5404245a003a8d9f4213023179ddaeb2b30590d17a971b794d50f397a00795f2",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 7,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "8178279095a20cae6896b2c1e0ca15ffb947052adbaec702e57e97caa08099ba",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_entity_escaped_tag_is_narrative_and_the_document_is_unsworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "6c44d869dbc6d80048d791aad4557589830d4ed1298d76481c99e2f136785b98",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "955baf3e1ba87b32e915a8de05fc686bd265ce4de44305a5cbc79df88ec8a572",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 1,
+     "sentence_share": 0.0
+    }
+   }
+  },
+  {
+   "id": "822d3faa71387760dc3b7cdad529e22ba99925f7696d976f1f3800337d231cec",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_stray_closer_is_malformed_and_the_good_span_keeps_its_verdict"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "483804dcc6a3435714a374cd4b81fc0faf186e25deb6493d588e7af9a0b2582a",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "b7d8b97ec06e695b59965205a43c88a10077917a4dc41a3f535e0db0e9d8def8",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1,
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     },
+     {
+      "at": 44,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "8333059decf7caab7ca0b5396958d792bd6fa0b3122da8f000726f53a01b5dd9",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<SWORN"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e236c9331261dd357aa3ef7f34081c307ce91ab6d7a163d9074cc19a7e3ccd3d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c8b9f36e1aa5d2db362cf3fccd7a52876154dfc71666c08995dc2a94cb95c3a9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 27,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "8d93eefd9f8c41ce82120f3ea804bfaf8ba1b19eb592c00cac95ec24ce508e71",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "278d4d278b752904ee710aa075ef7bee1148957f5cf0f7604559e1e8c856191a",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "8e389daac757afe90bb9b11e3e0dd201beb3eed992a284fc87ad8977a5c291c7",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_unclosed_tag_inside_a_comment_is_unclosed_and_refuses_the_sidecar"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "1f3b4539e21fcdff933dbdcaed9184d53fed3e71bbc747914b554660a9892eea",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "8d23f60dc8ee7e4910d34ba22da7524032eb8f38aa2e87b7447150173852a51d",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 5,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "unclosed"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "8e5bca45e5e559fca3bd58ea3e9431f7599b4b0753a7590799c41b72efd195a0",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "34f82485e98afe1810010d3959bf2c0f90fe3b347c7d7a0881044acf066dd6c5",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "9408b7affad09e87711a7dbdd9b250e4d7dea7a105aca2c2eb4c0fd2ebc8b346",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_a_fenced_region_is_literal[```]"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "d69fdff4f3208893e6084aa33e63aca89be3d894cef595354e113b273417f8df",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c2e888093e4efd2c39b2a794e7a14584361d1898653a18ad5a7a23e5bab2fd57",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "9f53cecf0e707c4345a26ba84c7682ca2bc71f9333e9a3bbcc999253763b0e38",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "aa88b59ebbc099db152c187b99c145918670b41f6eca29d7ba3d7c1cfd0c3e8d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "7b56d9af07236d4065f8af1cc7e48f87db2b2be43c49d1912d807d118da00d06",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 29,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "a3dbdd14013dbfbe3d467fc7c0cae401456c33efb617593393e756968e3507b9",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_unclosed_tag_inside_a_comment_is_unclosed_and_refuses_the_sidecar"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "1f3b4539e21fcdff933dbdcaed9184d53fed3e71bbc747914b554660a9892eea",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "a8cdd7c67135b53db7968cfc703c1093ee9bb2463a68aacfeeec6de0ebd7b6b4",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "canon",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "document": "f905a2753eff30543b3d8631d5334d2c4b8e6505ae23e350abcd2e201ee9111e",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4"
+   },
+   "expect": {
+    "outcome": "sidecar",
+    "sidecar_sha256": "cf21ceec54c5b6a78ebf1b78b9f1f84aa44f8f1da7ccf4929c9582208ab5a477",
+    "sidecar": "790dd838969a8ba79c0f22ea9cd5da0672d763b8d02ff5ca4c1d33f94e9b8b38"
+   }
+  },
+  {
+   "id": "a964462d71a65514a562ad11219c84bd2ffbd5deb8d1e8afdfdf06cbb8adfadc",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-None]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "eb55ba1543d7dc3a46b5a2f2796db0d3c0940354534cd90dbf050a10318957bd",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "91eb6ac91ed9c13e067bb134b0caa3ed9397734a0c723619edabef5cdfc342cc",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "aea5cb85a058a12edbede1d09e5aeba8e3c178c03f6bf4841fbbf60629aedd94",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_a_fenced_region_is_literal["
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "3b1aba5dbc8b111d426de46fe439661409d474afcb5afaa278bf8da41d8cfacb",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "5a6d6e559586c65d6901232c2e0d7405f44ecb7b4bb90e0282ed59f53fabe7de",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "afcd8de77ba156e2e7f0e5638e8065ce67ec1b1b85674ca7251d951661ba512a",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57-None]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "3b1f3e2495a3d922e97773f1c8234a13e5bb0906bb61fbd699c767bf465fd32d",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "99c02778c8cd150583651913aba740378e5fe71b8bd66d1c39d6bd463f1ac812",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "needle_count"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "b6f65d065ca552a593de6ffc903f1556603ff7e7f9dff30405f1b6ccc6b85d11",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_the_cap_is_three_hundred_code_points_never_bytes_v02_r4[\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57\\u5b57-length_cap]"
+   ],
+   "rules": [
+    "R4"
+   ],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "d708c4b5276f09507ac9c05e9b8a3dde5ff3c0effd1ec4cbd92b728105e03b14",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "80dc0f36adc5eecdb8e6a54a5fcb5666cbcaa3e60cc80ab74ff7f8825798ced2",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "length_cap"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "b98eb71672174bb8532ce0e79955151956b903bab76d1336b40ed3203372903b",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn\\tr=\"r1\""
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ee27bd0bf6f723edc131e6953eacebd11c5ecbc02818f4588caddc7f964d066a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "17d1d105c69660a4cc2d7ac30446d66711936093f999594e3d0eb8928f37ba78",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 27,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "bc6db2b57756053252e83762380700d0785c608fe5b92141569702e2eaae7049",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "31b6e7a59ffcbe92b9edb59fe9a7ab3e11f061272f510bf12807d6f2ce001269",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "36996be68ba932a7d8b30753c7290352c961ef145ca97184b8d3a2ca34109d20",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "bfd0ed76d779059e64b1514e8dea3d87a5e03c6840de32032e6edfe24305b910",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "8f7f5f3e56336ff1d433149864afe3177de598eef9067c44f13be6277d131ea9",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "bfd4a621bfdd6801b3e46a10d4ef9a03c3c485b868971eb41a2f759d42be527e",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "c9570fc25bbfff6a04de334eeee8da46a5f9c8b8d0b92468b5c855493bdf60b3",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "4d10bec5a6421d4da03930e312b02f216fbd18d55a4c66fa8df8854f8f53b635",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "48946ff7657bdf2be7110d491ba491681fd7d43e7abed8cc4d46a624e59b72b3",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 14,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "d0b773717bb69fce97228eba7ec55ab9853e32defbe7db829a1dc2fcc554ac74",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_a_fenced_region_is_literal["
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "bfe2b3de44f012c90beeeeaaa987dd9b10746f9c4064f81a106c8e0eaa516897",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "18f6b5cfdba4dca407c3ef429250c4110d0c5cdc0df9fb5f25f71e114a87849c",
+    "document_verdict": "UNSWORN",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 0,
+    "unresolved": 0,
+    "rungs": {},
+    "spans": [],
+    "floor": {
+     "sworn_total": 0,
+     "narrative_sentences": 0,
+     "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "d32127cc2e8c611d22b55ea631015993bb5cb3e84d91373f0d331420abda05db",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_an_empty_or_whitespace_only_span_is_malformed_for_every_kind"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "d69d679bd5306c3b83986ff3694d21007b7d8ac9f487b2bca771a24106f7361a",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "764a9c7520fb1f5a72006dae79dd083e40a9397b4ced2fdad7ec38948495836f",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "quote",
+      "verdict": "MALFORMED",
+      "reason": "empty_span"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "dbef64ae5f8f1daa51aaa908fe7dc4ebe7fb665258abba5da067e07cf5f12ade",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "da4b437df1426db453e8e74a089e5636f4f4e1e79d29679f3a4cfcdeac971011",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "e23af46267dd2993bf8f1550aaa097dea6581d8d0ba4621b5e558725ab7538d8",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn\\tr=\"r1\""
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "ee27bd0bf6f723edc131e6953eacebd11c5ecbc02818f4588caddc7f964d066a",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "e8a9228960b46dadd3777b96e14b828623b960f90cdfacaac7e4e793ba6704ae",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_inside_an_html_comment_is_a_hidden_commitment_v02_r2"
+   ],
+   "rules": [
+    "R2"
+   ],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "5aedd391bfd699ed6f2ae37096d2486ad9debf9f4825bc4c2aeb0d11dea6ca7b",
+    "manifest": "a7728e6c9a3b340021aee25783667b34b633b413fe8a26cb9a79451fd129c5f4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "bf756ab15c212421724c9fb228ce7e62ca51207afa915a08a709a2853392e15b",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "undeclared": 1
+    },
+    "spans": [
+     {
+      "at": 14,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 1,
+     "sentence_share": 0.5
+    }
+   }
+  },
+  {
+   "id": "e9c727cd87cd77a931c10ebc57a244af3ff227976661c6c90f10b44406e69220",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "canon",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "e49c7e6b834799432781d947dbd7ee6207735fa6b3761f79e5ae61706893164c",
+    "manifest": null
+   },
+   "expect": {
+    "outcome": "refused",
+    "refusal": {
+     "where": "to_sidecar",
+     "code": "lexical_malformed",
+     "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "eb614029be05c8a80d549da60cebc058720ed98050a4bf27033fdade20d88542",
+   "family": "lexer",
+   "sources": [
+    "tests/test_sworn.py::TestLexer::test_a_tag_shaped_thing_that_is_not_the_pattern_is_malformed_never_narrative[<sworn"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [],
+   "inputs": {
+    "name": "d.md",
+    "commit": null,
+    "document": "526d2673ae579f7d6f0041dde81a281d44be8039fac6cab3e08d0a82444a41d4",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "c6f5647a5b726e22dd0d4f8ed9a58ed68e4f6897cc2b0fcf7734748adb9d10bf",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 2,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 2
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "tag_syntax"
+     },
+     {
+      "at": 28,
+      "receipt": null,
+      "kind": null,
+      "verdict": "MALFORMED",
+      "reason": "stray_closer"
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": null,
+     "sentence_share": null
+    }
+   }
+  }
+ ]
+}

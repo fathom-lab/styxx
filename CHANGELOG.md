@@ -7,6 +7,250 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the browser verifier v0.1: a second implementation agrees on every vector in scope
+
+**`styxx/_data/sworn_verify.js` (NEW) and the capsule's sworn profile, built to
+`papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md`, frozen in its own commit with its
+acceptance bar written down before any code existed.** Leg 3, item 5 of
+`papers/PLAN_the_next_level_2026_09_02.md`. The label the plan writes is printed in the verifier,
+in the capsule page and in this entry: *re-derives sworn span verdicts offline; a forger
+controlling the whole file passes both browser layers; the package at the named commit is the
+check.*
+- **The conformance set has something held to it.** `conformance/sworn/replay_js.js` runs the
+  JavaScript over the committed vectors and reports, per family, what it ran and what it skipped
+  with the vector's own `requires` as the reason. **1689 vectors in scope, 1689 reproduce the
+  verdict core digest, 0 disagree, 1929 skipped** (every mode but `inline`, and everything needing
+  a git tree); 1452 of those run are the seeded fuzz corpus, uncapped. A test asserts the number
+  run equals the number the spec froze, so a growing set fails rather than re-fitting the bar.
+- **Five disagreements, all found by vectors and all repaired in the JavaScript** — never in
+  `styxx/sworn.py`, which this leg does not touch: the class name Python prints for a parsed JSON
+  object (`_Obj`); the two completeness rules for `absent`; a MALFORMED out of resolution carrying
+  its provenance; a manifest read as plain JSON while receipt bytes are read decimal-exact; and
+  the terminating newline of an `L`-anchor's last line.
+- **The verifier is a pure function of bytes**: no I/O, no clock, no globals, no network, byte
+  offsets over `Uint8Array` and never over string indices, and sha256 implemented in the file
+  because `crypto.subtle` is async-only and a capsule layer must answer without a promise chain.
+  `pyproject.toml` ships `*.js` from `styxx._data`.
+- **The capsule's sworn profile** seals the document bytes, the manifest, the verdict receipt and
+  the verifier's own bytes, written LF-only so the sealed copy and the copy the browser runs are
+  byte-identical. It fails closed on five named refusals — `sworn_document_mismatch`,
+  `sworn_tree_receipt`, `sworn_no_manifest`, `sworn_manifest_mismatch`, `sworn_receipt_mismatch` —
+  and keeps INSTRUMENT SKEW apart from tamper. Layer 1 re-derives the portable core in the
+  reader's browser; layer 2 re-runs `styxx.sworn` and is the one that checks the build the receipt
+  names. The first sworn capsule is committed beside the document it seals.
+- **The label is demonstrated, not asserted.** The tamper battery builds the forger it describes —
+  a page whose inlined verifier quietly un-does the change made to the document — and shows layer 1
+  believing it while layer 2 names the inlined copy as not the sealed one.
+- **What it does not say:** that agreement makes either verifier correct (the same hands wrote
+  both, and that is the objection to press); that the format is covered (1929 vectors are outside
+  this subset); that `path:` receipts can be checked offline (they cannot, and the profile refuses
+  to seal a document carrying one); that anything here is self-verifying.
+
+## [Unreleased] — the sworn action v0.1: a runner mints the manifest after the turn, and exits zero on every verdict
+
+**`sworn/` (NEW: `action.yml`, `sworn_action.py`, `README.md`, `examples/sworn.yml`), built to
+`papers/sworn/SPEC_sworn_action_v01_2026_09_05.md`, frozen in its own commit before any code.**
+Leg 3, item 4 of `papers/PLAN_the_next_level_2026_09_02.md`, under the plan's own label:
+*report-only until the measurement prices FAILED*. A composite action in its own subdirectory —
+the root `action.yml` stays diffgate's — that runs the project's own test command, mints a
+`sworn/manifest/0.2` from the report and the event **after the turn** through
+`styxx.harness.junit` and `styxx.harness.github`, verifies every sworn document the pull request
+touched against it, and writes a job-summary table with the rung and the harness string on every
+row.
+- **Exit zero on every verdict.** The command's exit status is a record, never the job's; a
+  contradicted span is reported and nothing is blocked, because a gate this lab has not measured
+  is a gate this lab does not ship.
+- **The composed receipt numbering is stated, not guessed:** `r1`–`r4` are the JUnit adapter's,
+  `r5`–`r9` the GitHub adapter's shifted by four, and the README says what an author may cite
+  before the runner has minted anything. A document citing an `rN` the runner never minted reads
+  UNRESOLVED, not an error.
+- **The fork sentence, printed into every manifest.** On a `pull_request` from a fork the minting
+  job runs the workflow file as it exists in the head, so the manifest is minted by a party the
+  claimant controls and the sentence L2 rests on does not hold; it holds for a workflow pinned to
+  the base branch, or for a manifest attested outside the job. Every blob the turn added or
+  modified at head enters `authored_sha256`, so a document swearing to bytes the turn itself wrote
+  is MALFORMED rather than believed.
+- **A committed sample run** (`sworn_action_sample.py` → `.run.json`, `.summary.md`, three
+  receipts) drives the whole action over a temporary repository with no network: a held body, a
+  five-span held document, a contradicted document read `SWORN-FAILED`, an unresolved citation,
+  two files skipped with their reasons, and exit 0 throughout.
+- **`tests/test_sworn_action.py`**: 35 tests over a fake event file, a fake report and canned
+  documents — the summary table, the composed numbering, the fork refusals, a command that exits
+  non-zero, a report that never appears.
+- **The RESULT** (`RESULT_sworn_action_v01_ships_2026_09_05.md`, sworn, 16 spans) binds its counts
+  to the sample run's leaves and its test counts to the manifest the JUnit adapter minted over the
+  run of those tests.
+- **What it does not say:** that the action has run on GitHub (no token in this lab can push a
+  workflow file; the sample workflow is for the operator to copy and this repository enables
+  nothing), that L2 has been verified (the rung is the workflow's declaration, printed, never
+  checked), or that a held document is true.
+
+## [Unreleased] — sworn conformance v0.1: the tests become bytes a second verifier can be held to
+
+**`conformance/sworn/` (NEW) and `styxx.sworn.SnapshotTree` (NEW), built to
+`papers/sworn/SPEC_sworn_conformance_vectors_v01_2026_09_05.md`, frozen in its own commit before
+any code, with a dated ERRATA appended in the commit that carries the RESULT.** Leg 3, item 2 of
+`papers/PLAN_the_next_level_2026_09_02.md`, under the plan's own label: *the precondition for any
+second verifier; no claim*. Every call the two sworn test files make into `styxx.sworn` is
+recorded as bytes — the document, the manifest, a tree snapshot with modes, the exact receipt
+core the verdict must reproduce — and addressed by one digest, so that a verifier in another
+language can be shown where it disagrees, byte by byte, before anyone is asked to trust it.
+- **The pinned core follows the code, not the prose (C1).** `core_sha256 = sha256(utf8(jcs(core)))`
+  over the verifier's output minus `verifier` minus `coverage`, `schema` and `format` included;
+  the receipt's own `digest` is build-bound and is never a vector's number.
+- **Six modes, inputs as bytes (C2).** `inline`, `sidecar`, `canon`, `load`, `manifest`,
+  `receipt_check`; a manifest is `core()` plus its declared digest so a tampered digest replays;
+  a tree is a snapshot taken after the call with the handle's own commit beside it.
+- **The clock and the git dates are pinned (C3); the floor is pinned, the observer is not (C4).**
+  `diff_claim_*` and `claimdetect_version` travel in `observer.json`, outside the digest.
+- **Nothing is dropped silently (C5); a moved core refuses regeneration (C6).** The calls the set
+  cannot carry are listed with their test ids; the reasons, verdicts and refusal codes no vector
+  produces are listed; `gen_vectors.py` refuses a moved core or a nondeterministic id in the
+  manner of `reissue_receipts_v1.py`, and `--check` regenerates to the committed digest or exits 1.
+- **`styxx.sworn.SnapshotTree` (C10):** a tree snapshot with modes that reproduces every
+  `GitTree` reason but `git_unavailable` without a git binary; pure, additive, beside
+  `MemoryTree`. Git enters through `conformance/sworn/recorder.py` and nowhere in the verifier.
+- **`tests/test_sworn_conformance.py`**, with nothing skipped: blobs hash to their keys, family
+  files to their index entries, `set_sha256` re-derives, every id re-derives, every vector
+  replays, every rule has both shapes, the closed sets are produced or listed, every file under
+  `conformance/` is `-text` and CR-free, no file wears a suffix another sweep claims, and the
+  committed set regenerates to its own digest.
+- **The RESULT** (`RESULT_sworn_conformance_v01_ships_2026_09_05.md`, sworn) binds every count
+  and the set digest to leaves of `conformance/sworn/index.json` at the commit that carries them;
+  the set is never regenerated in place after it.
+- **What it does not say:** that agreement on these vectors makes a verifier correct, that the
+  vectors cover the format (they cover what two test files exercise, written by the builder),
+  that the fuzz family is adversarial, or that any second verifier exists.
+- **Owed, unchanged and restated:** a `committed` family from `tests/test_sworn_dogfood.py`; a
+  `refusal` attribute on the verifier's `SystemExit` if a second verifier needs codes at the
+  source; the `verdict_core()` split of `verify()`; the Python-versus-JavaScript semantics the
+  vectors pin and item 5 must implement; the measurement, the prior-art survey, the harness
+  adapters and a release, as before.
+## [Unreleased] — receipt binding: a certificate names the bytes it swore to, and the audit says where those bytes went
+
+**SPEC first: `papers/closed-model-frontier/SPEC_oath_receipt_binding_2026_09_04.md`, frozen
+in its own commit before any code, with a dated ERRATA appended after the adversarial pass
+(`ATTACKS_receipt_binding_battery_2026_09_05.md`: 52 constructions, 36 broke a sentence or a
+rule, 12 of them in code, all repaired before this shipped).** Leg 3, item 1 of
+`PLAN_the_next_level_2026_09_02.md` — the one ADVANCE the whole-program audit named. An OATH
+certificate recorded each receipt's digest and then bound by *basename*, so a receipt
+regenerated in place silently invalidated every certificate citing it — twice in two days
+(2026-08-31 → 09-01) and once in June — and the audit could not tell *the receipt moved* from
+*the certificate is wrong*. Now the certificate says which bytes it meant and the audit looks
+for them, for the document as well as the receipts. No verdict moves; no certificate is re-issued.
+- **`styxx.receipt_binding` (NEW)** — the one module that talks to git on a certificate's behalf,
+  subprocess-only (no GitPython): content digests modulo newlines, the committed blob at HEAD,
+  the five cells of SPEC R3 — `same`, `at_issue`, `elsewhere`, `unbacked`, `unrecoverable` —
+  decided by digest in the working tree at the repository root, then against the tree at the
+  certificate's issuing commit, then against every commit that touched a path of that basename
+  (`--full-history -m -z`, because a TREESAME merge, a merge commit and a non-ASCII name each hid
+  a real sworn blob from the first version), and a **document cell** decided the same way against
+  `document_sha256`. Nothing here is a verdict.
+- **`styxx.certify`**: every certificate issued from now on carries a `receipt_binding` block —
+  `content_sha256` (CRLF→LF), the git blob the working bytes equal at HEAD, `committed`
+  true/false per receipt, `all_receipts_committed`, `head`. `receipts_sha256` is untouched.
+  Without git the block degrades to `head: null` with the reason and the certificate is
+  otherwise byte-identical. `--require-committed` refuses to issue (exit 2, names printed) over
+  uncommitted receipt bytes; the default reports, because an unmeasured gate is not shipped.
+- **`styxx.corpus_audit`**: `--history auto|on|off`. With history, every record carries its
+  cells, its document cell, and `stands_over_sworn_bytes` — whether the CURRENT verifier
+  reproduces the recorded verdict class over the document and receipt bytes at the issuing
+  commit, null with a `stands_reason` whenever those bytes cannot all be fetched — and the
+  summary prints a `binding:` line beneath the uncovered line, computed before the
+  missing-document return so the certificates that matter most are not skipped. **The pinned
+  first line is byte-identical in every mode.** CI never runs this audit; on a depth-1 clone it
+  prints `binding: history unavailable (shallow clone)`, pinned by a test on a clone the test
+  builds. `--history on` exits 2 when history is unavailable.
+- **The census, `receipt_binding_census.py` → `receipt_binding_census_result_2026_09_05.json`
+  (the third run, from code committed at its own head; the second run,
+  `receipt_binding_census_result.json`, stays as committed), over every tracked certificate
+  (213, staging copies included; 631 citations), read in `RESULT_oath_receipt_binding_2026_09_05.md`,
+  which swears to its leaves.** 630 citations
+  `same`, every one also present at its issuing commit; 1 `at_issue`; 0 `elsewhere`, 0
+  `unbacked`, 0 with an unrecoverable issuing commit. The one `at_issue` is
+  `CAPSTONE_universal_mind`'s `mind_v0_validation.json` — regenerated seventeen minutes after
+  its issuing commit on 2026-06-10 and reported by the audit since 2026-08-27 — whose sworn bytes
+  sit at the issuing commit; the certificate **stands over the bytes it swore to**
+  (`regenerated_and_standing` 1). Eight certificates' **documents** were edited after issue (cell
+  `at_issue`) and all eight stand; two arXiv staging copies whose document lives unchanged under
+  `papers/` read `same` with a note — the second census had read them `at_issue`, the
+  edited-after-issue diff caught it, and the document cell now looks for the working file by the
+  certificate's own `document` name anywhere in the tree, as the receipt cells do. `stands_over_sworn_bytes` is true for 211 and false for 2 — both
+  with every byte in place, both already known (`FINDING_behavioral_sycophancy_blackbox` in
+  `KNOWN_VERDICT_DRIFT`, and the read≠write submission source Charon found) — so both are the
+  verifier having moved, not a binding defect; null for none. The census refuses to overwrite a
+  tracked result, records the blob ids of the code that ran beside `head` (this one ran from the
+  working tree that the same commit carries: `code_committed_at_head` false, head = the parent),
+  and writes repository-relative paths; the first result, which carried this checkout's absolute
+  paths and named the SPEC commit as its head, was removed before anything swore to it. Of six
+  predictions the spec made before the run, three were confirmed, two wrong and one half-wrong
+  (six recorded digests are LF hashes, so the corpus's digests are not uniformly CRLF); the
+  ERRATA scores them.
+- **`edited_after_issue_census.py` → `edited_after_issue_census_result.json`, read in
+  `RESULT_edited_after_issue_2026_09_05.md` (sworn).** The eight documents that moved under
+  their certificates, diffed against the sworn bytes: 9 lines removed, 82 added; the edits
+  removed 4 ledger rows, all VERIFIED, in the two certificates of one document
+  (`SYNTHESIS_connection_of_minds` and its staging copy — `0.071` and `0.057` on line 25) and
+  added 26 numbers the published certificates never examined, in the same two; the live audit
+  over the working document reproduces the recorded class for all eight. And the census laid
+  beside Charon's log: 213 OATH lines, 207 agree; the 1 line Charon could not reproduce and the
+  3 it left UNRESOLVED stand over their sworn bytes; the 2 both call failed have every byte in
+  place.
+- Tests: `tests/test_certify_by_digest.py` (23, plus one NTFS skip) — twenty-one on temporary
+  repositories, one over the tracked corpus by the census's population rule; the existing corpus
+  guard and audit tests pass unchanged.
+## [Unreleased] — harness adapters v0.1: manifest minters at L1 and L2, adapters and never a recorder
+
+**`styxx.harness` (NEW), built to `papers/sworn/DESIGN_harness_adapters_2026_09_02.md`, re-sworn and
+frozen in its own commit before any code.** An adapter turns bytes a harness already holds — a test
+report, a CI event payload and a diff, a tool-hook payload — into a `sworn/manifest/0.2` file that
+`styxx.sworn` resolves `rN` spans against. It signs nothing, fetches nothing, verifies no signature,
+observes no process and produces no verdict; the rung on every manifest is the one the caller
+declared, never one the adapter detected, and L1 is printed as weak on every manifest that declares
+it. `python -m styxx.harness junit|github|claude-code ...`.
+
+- **`styxx.harness.junit`.** One report through `styxx.evidence`: r1 passed and r2 failures as ASCII
+  digits (harness errors kept apart), r3 the report bytes, r4 the reader's output in RFC 8785
+  canonical form so its leaves are addressable. r1 and r2 are withheld when the reader parsed no
+  source — a zero from a report that did not parse is absence printed as a number. A report the
+  caller says the agent wrote enters `authored_sha256`, and any span over it is MALFORMED
+  `receipt_author_minted`, end to end.
+- **`styxx.harness.github`.** An event payload, its base and head shas, the event name and a diff
+  the caller fetched (complete only as the caller asserts, so `absent` over a truncated diff is
+  MALFORMED). The fork caveat is printed into every manifest; L2 needs `--after-turn-on-base`, and on
+  a fork `pull_request` (or one whose head repository is absent) also `--base-pinned-workflow`. No
+  network; the environment is read only as argument defaults at the command line.
+- **`styxx.harness.claude_code` and `integrations/claude-code/sworn-hooks/`.** A PostToolUse stager
+  that imports nothing from `styxx` (one atomic file per event, so parallel tool calls and subagents
+  under one session lose nothing) and a Stop finaliser that folds them once per turn into
+  `<dir>/<session_id>.manifest.json` at L1, deterministically. Write and Edit content, the
+  reconstructed post-edit text, the on-disk file and the last assistant message enter
+  `authored_sha256`; Bash stdout and stderr, Read and WebFetch become receipts with honest
+  completeness marks. The manifest directory must resolve outside `cwd` and `CLAUDE_PROJECT_DIR`.
+  Every entry point exits zero on every input: a hook that blocks is a gate without a measured
+  precision. The README opens with the weak rung and documents the settings block for a user's own
+  settings; this repository enables no hook.
+- **Blind, permanently, to files written by shell commands**, and printed so on every manifest:
+  `cat > f`, a heredoc, `python -c`, `git apply` never enter `authored_sha256`, and a later Read of
+  such a file mints a receipt the verifier accepts.
+- **The purity boundary holds in both directions** (`tests/test_harness_purity_boundary.py`):
+  `styxx/sworn.py`, `styxx/evidence.py` and `styxx/__init__.py` import nothing from the package, by
+  AST, by string constant and by `sys.modules` in a fresh interpreter; the JUnit and GitHub modules
+  reference no ambient module below their command line; the PostToolUse script imports nothing from
+  `styxx`.
+- **Receipts and documents** (`papers/sworn/`): the JUnit adapter's own manifest over pytest's report
+  of the adapter tests (`turn_2026_09_05_harness_adapters`, rung L1); one canned manifest per adapter
+  over committed inputs, each with a short sworn document verified through the command line — the
+  Claude Code one SWORN-FAILED on purpose, the agent swearing to a file it wrote.
+  `RESULT_harness_adapters_ship_2026_09_05.md` is sworn against the turn manifest and says which rung
+  and why.
+- **What it does not say:** that any rung has been verified (R6 prints, nothing checks, L3 is
+  reserved); that an L2 manifest is trustworthy beyond the declaration it rests on; that the hook
+  payload shapes are stable; that a canned run is a result; that the format has been measured.
+- **Owed, recorded as owed:** the adversarial pass against `styxx/harness/` before any announcement,
+  with a dated ERRATA on the design; the Action that consumes the GitHub adapter (leg 3, item 4); a
+  run on a runner the author cannot write to, so a manifest can honestly print L2.
+
 ## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
 
 **`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, committed before
