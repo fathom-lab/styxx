@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_aperture_closure_2026_09_06.md",
-  "inline_sha256": "91f5a61284bb2e97b645aaa3dbcb9d8dcda776ac1a99b9ef23de8bbe35b91c86",
-  "canonical_sha256": "47e8c90296b2c0b558194095f95a538dae767b7383671f87b35d5b5a9b6deea4"
+  "inline_sha256": "26b9dd8edef177f0ac8a20cc00f0f619ba2329ea2daa3ab4a3fe5cd93180a675",
+  "canonical_sha256": "849ba1c6174f3f94be9e693d4407b113a378e943e9ac514befadea8051aa8d02"
  },
- "commit": "a609033b12195c9c37f61f12493da7279685e611",
+ "commit": "e480bfe5b236ff53e7c6c4599bcd98485059546e",
  "manifest_digest": null,
  "spans": [
   {
@@ -43,7 +43,7 @@
    "resolved_sha256": "07c817c21dffbf7e0100c041c15bc90a5159d1757c200a4a3321fa143edca274",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -65,7 +65,7 @@
    "resolved_sha256": "07c817c21dffbf7e0100c041c15bc90a5159d1757c200a4a3321fa143edca274",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -87,7 +87,7 @@
    "resolved_sha256": "5c91e13d523e44f51948dc167953d2737cb2674ddcbeef8113a897cde9b42992",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -109,7 +109,7 @@
    "resolved_sha256": "434a6ac6fe855131a50ede899495ccffc3648e20e7d174ce6d5e0ed3f1ee9db8",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -146,7 +146,7 @@
    "resolved_sha256": "03b52e55aa08102be95c08f6a34e676e6c7035e641abe983b70703785bac8431",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -168,7 +168,7 @@
    "resolved_sha256": "03b52e55aa08102be95c08f6a34e676e6c7035e641abe983b70703785bac8431",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -190,7 +190,7 @@
    "resolved_sha256": "044bc078cd981bc3d4cac80c4ec503cf77a14435c0f4feba67ccf3aa8633ad98",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   },
   {
@@ -212,24 +212,90 @@
    "resolved_sha256": "044bc078cd981bc3d4cac80c4ec503cf77a14435c0f4feba67ccf3aa8633ad98",
    "provenance": {
     "form": "path",
-    "note": "committed object at a609033b12195c9c37f61f12493da7279685e611; authorship unchecked"
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
+   }
+  },
+  {
+   "at": 5891,
+   "start": 4923,
+   "end": 4960,
+   "receipt": "path:conformance/sworn/generator_pairing.json#/cases",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "500",
+    "printed": "500",
+    "receipt": "500",
+    "receipt_rounded": "500",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "262dec8d3291d8d5ac0c10252aef22240743588c2fd6bb50e162b2d96cee2d33",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
+   }
+  },
+  {
+   "at": 6013,
+   "start": 4961,
+   "end": 5014,
+   "receipt": "path:conformance/sworn/generator_pairing.json#/identical_documents",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "51",
+    "printed": "51",
+    "receipt": "51",
+    "receipt_rounded": "51",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "262dec8d3291d8d5ac0c10252aef22240743588c2fd6bb50e162b2d96cee2d33",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
+   }
+  },
+  {
+   "at": 6169,
+   "start": 5019,
+   "end": 5030,
+   "receipt": "path:conformance/sworn/generator_pairing.json#/different_documents",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "449",
+    "printed": "449",
+    "receipt": "449",
+    "receipt_rounded": "449",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "262dec8d3291d8d5ac0c10252aef22240743588c2fd6bb50e162b2d96cee2d33",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at e480bfe5b236ff53e7c6c4599bcd98485059546e; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 7,
+  "HELD": 10,
   "FAILED": 1,
   "UNRESOLVED": 0,
   "MALFORMED": 2,
   "WITHHELD": 0
  },
- "sworn_total": 10,
+ "sworn_total": 13,
  "unresolved": 0,
  "document_verdict": "SWORN-FAILED",
  "document_malformed": null,
  "rungs": {
   "unresolved": 2,
-  "committed": 8
+  "committed": 11
  },
  "verifier": {
   "styxx_version": "7.47.0",
@@ -268,16 +334,16 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "442ecc184196a3516003a8c5fc9d010ec96a9daf5e448880570dc6f243a06391",
+ "digest": "6912bc052513ef967ae883df399714d013db2d060ad0069932c1f0a4255f01f6",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 10,
+  "sworn_total": 13,
   "narrative_sentences": 120,
-  "sentence_share": 0.0769,
+  "sentence_share": 0.0977,
   "diff_claim_sentences": 3,
-  "diff_claim_share": 0.7692,
+  "diff_claim_share": 0.8125,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
@@ -287,18 +353,18 @@
    },
    {
     "start": 4830,
-    "end": 4932,
-    "text": "seeded on `(seed, index)`, every draw advances that stream, and the widening added draws — so of the"
+    "end": 4919,
+    "text": "seeded on `(seed, index)`, every draw advances that stream, and the widening added draws."
    },
    {
-    "start": 6524,
-    "end": 6622,
+    "start": 6533,
+    "end": 6631,
     "text": "evidence; the fix was aimed at a mechanism, and the guards are `tests/test_sworn_bom_agreement.py`"
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "8ca6e993b2b1ff727285e44b6e811b308823b4f4c60ffa182f3eb234a7e00f61",
- "timestamp": "2026-09-06T02:06:08Z"
+ "coverage_sha256": "2714368852108790f6649c387965399e51e602c0c6f34795f79a07a83fcb31a2",
+ "timestamp": "2026-09-06T02:06:59Z"
 }
