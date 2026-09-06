@@ -4,6 +4,33 @@
  "count": 9,
  "vectors": [
   {
+   "id": "18c28390bbdc64404c82e0d7cb19c9104432e4e47a7801bec705b04e9b73febb",
+   "family": "cli",
+   "sources": [
+    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "0ffd7b7603fc303ee0cc34460ccbaefc1a059240075b7d0fa9c8fe1086cf7162",
+    "document": null,
+    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "2b13429fd8d8987e4e0ec7828e07579ff9fe2d24048f6d398692423268ec237c",
    "family": "cli",
    "sources": [
@@ -19,33 +46,6 @@
    },
    "expect": {
     "outcome": "accepted"
-   }
-  },
-  {
-   "id": "332818d2b7ff0b17f93ecc42accd22d33d820a946fca58b6b94d04cb49365131",
-   "family": "cli",
-   "sources": [
-    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "9279948d042bb291f8f75ee63ca65f58e854b227ab9b49d7c69139db8efa10bd",
-    "document": null,
-    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
    }
   },
   {

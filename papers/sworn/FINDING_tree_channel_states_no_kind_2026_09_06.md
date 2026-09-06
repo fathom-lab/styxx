@@ -26,7 +26,7 @@ Three handles can answer, and only one consults history:
 
 | handle | what it checks | can it say `committed` with no history? |
 | --- | --- | --- |
-| `GitTree` | `cat-file -t <commit>` is a commit; reads blobs from git | no |
+| `GitTree` | `cat-file -t <commit>` is a commit; reads blobs from git | **yes** — see the correction below |
 | `SnapshotTree` | the handle's commit equals the commit its own entries were read at | **yes** — a fabricated snapshot satisfies this trivially |
 | `MemoryTree` | nothing; answers from a dict the caller filled | **yes** |
 
@@ -169,3 +169,45 @@ operator.
 
 The last is the one that matters: the guard catches a *new* unbacked receipt entering the corpus,
 not only the ones that were there when it was written.
+
+---
+
+## CORRECTION 2026-09-06 — `GitTree` was not the sound handle
+
+**This finding said `GitTree` is the one handle that consults history and therefore cannot say
+`committed` with no history behind it. That is wrong.** The table above is amended in place rather
+than left standing, and the reason is recorded here.
+
+`GitTree._git` ran `git -C <repo> …` with nothing suppressing object replacement, and git honours
+`refs/replace/*` by default in `cat-file` and `ls-tree` alike. **One local ref makes the verifier
+serve a different commit's bytes under the commit id the document names**, while the provenance note
+still reads `committed object at <the named commit>`:
+
+```
+commit A (the document names this one) = 899d8e045f0c4de99a50c15271fbe1c5679efbdc
+no replace ref:     FAILED needle_missing   doc=SWORN-FAILED
+git replace A B
+with refs/replace:  HELD                    doc=SWORN-HELD
+bytes at f.txt in A (still)            = the precision is 0.9900
+```
+
+No object is written, no history is rewritten, and `git --no-replace-objects` still prints the
+original bytes. Nothing in the receipt shows it.
+
+**This also breaks a defence this document leans on.** The section "What is not wrong" says a third
+party re-deriving with a real `GitTree` would catch an unbacked `committed` from `MemoryTree` or
+`SnapshotTree`. They would not, if the repository they were handed carries a replace ref. That
+sentence should be read as narrower than it was written: re-derivation defends against a fabricated
+*handle*, not against a repository prepared for the re-deriver.
+
+Repaired in `SPEC_tree_ignores_replace_refs_v01_2026_09_06.md` (T1): every `git` call now passes
+`--no-replace-objects` with `GIT_NO_REPLACE_OBJECTS=1` in the environment. That closes the route
+needing no privileges, writing no object, and leaving the repository looking untouched; it does not
+address alternates, a commit-graph that disagrees with the objects, or a different `git` on `PATH`,
+and the spec says so.
+
+**How the error was made, since that is the more useful part.** The handles were classified by
+reading what each one calls — `GitTree` calls git, so it was marked as consulting history. What was
+never asked is the question this corpus asks of everything else: *what would have to be true of the
+environment for that call to answer honestly?* An adversarial reviewer asked it and had the answer
+in one command. The finding was published between those two moments.
