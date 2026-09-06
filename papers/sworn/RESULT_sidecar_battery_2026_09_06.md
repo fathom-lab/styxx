@@ -152,3 +152,49 @@ does not account for it.
 *The suite-power study said this layer was the least defended in the corpus. It was, and attacking it
 turned up something larger: the word at the top of every verdict promises more than the ladder
 underneath it delivers.*
+
+---
+
+## ERRATUM — 2026-09-06: the verdict was not the defect
+
+**Withdrawn: the framing of the first finding.** This document said `SWORN-HELD` ignoring
+`UNRESOLVED` "is the conflation this module's own doctrine refuses," and proposed that `SWORN-HELD`
+should require `UNRESOLVED == 0`, leaving the rename to the operator. Preparing that rename was how
+the error was found, and the measurement caught it before any code was written.
+
+**It is a deliberate, documented decision, and it is right.** `tests/test_sworn.py` carries
+`test_unresolved_only_is_held_and_the_count_travels_in_the_headline`, and the rationale is stated at
+the `rung_unknown` branch of `_resolve`:
+
+> v0.2 R6: a manifest claiming a rung this verifier cannot check (L3, or a string nobody defined).
+> The verifier declines to see it; **it accuses nobody.**
+
+`SWORN-FAILED` means the verifier **caught something wrong**. `UNRESOLVED` means the verifier
+**could not look**. Refusing to conflate those is the same principle this corpus applies as *SKEW is
+not DRIFT* and *a child that never ran is not a digest that moved*. Renaming the verdict would make
+a document read worse because the verifier was unable — precisely what the doctrine refuses. The
+doctrine line this document quoted ("a document that swore nothing is `UNSWORN`, never 'no
+failures'") governs `sworn_total == 0`; it was not about unresolution, and citing it as though it
+were was the overstatement.
+
+**Withdrawn also: the rung-flip as an attack on the format.** The demonstration stands — rung `L2`
+gives SWORN-FAILED and rung `L3` gives SWORN-HELD over the same contradicted receipt — but it
+requires control of the manifest, which the format already declares a trust boundary in
+`Manifest`'s own docstring: *"The turn manifest the HARNESS mints. Never the agent… The manifest is
+only as trustworthy as the harness that wrote it, and every receipt says so."* An adversary who
+writes the manifest is outside the model, and the model says so out loud.
+
+**What stands, unchanged.** The reader-facing hazard is real and is not about attackers: running
+`verify --repo .` without `--commit` gives an honest user SWORN-HELD over a document in which
+nothing was checked. **The headline warning shipped in this leg is the correct and sufficient
+repair**, and it needed no change to the verdict vocabulary. Everything else in this document — the
+49 attacks, the 0 refusals, the round-trip gap between `load_sidecar` and `render`, the rounding
+floor — is unaffected.
+
+**The blast radius that was measured, and what it was measuring.** 68 of 2067 core conformance
+vectors would have moved under the rename. That number was collected to size the change; read
+correctly it is the corpus stating, 68 times over, a behaviour it had already decided on.
+
+*Three times in two days a repair has been aimed at a decision this lab had already made and written
+down — once in a spec's own errata, once in a comment three lines above an assertion, and once here
+in a test's name. The tests are where the decisions live, and reading them is not optional.*
