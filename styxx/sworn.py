@@ -1225,6 +1225,21 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
         if data is None:
             return _Resolved(status="unresolved", reason=why)
         sha = _sha256(data)
+        # Invariant 2 on this branch too. The rN branch refuses a receipt whose sha256 the manifest
+        # lists in authored_sha256 — every byte-object the agent produced this turn — and this
+        # branch computed the same digest and never looked at it. So the same bytes, which the
+        # manifest itself called agent-authored, were refused by id and HELD by path, and `absent`
+        # (the verdict that says *this never happened*) was reachable over the author's own file by
+        # naming it instead of citing it. One rule, three forms, one refusal.
+        #
+        # Only half of the rN refusal has an analogue here: the tree channel has no kind_of_source,
+        # so a file the agent committed under a name the harness never digested is still not
+        # caught. That is a limit of the manifest, and it is stated in the spec rather than solved.
+        if manifest is not None and sha in manifest.authored_sha256:
+            return _Resolved(status="malformed", reason="receipt_author_minted")
+        # A committed blob IS complete — the verifier holds every byte of it. This was never the
+        # defect; the defect was assuming completeness before checking authorship, which the line
+        # above now does first.
         complete = True
         provenance = {"form": parsed["form"],
                       "note": _PROVENANCE_COMMITTED % (getattr(tree, "commit", None) or "?")}
