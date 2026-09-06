@@ -48,7 +48,8 @@ from typing import Dict, List, Optional, Tuple
 
 from styxx.harness import github as github_adapter
 from styxx.harness import junit as junit_adapter
-from styxx.sworn import RUNGS, GitTree, Manifest, _headline, _write_json_lf, issue_receipt, verify
+from styxx.sworn import (RUNGS, GitTree, Manifest, _CANDIDATE, _headline,
+                         _write_json_lf, issue_receipt, verify)
 
 __all__ = ["ACTION_VERSION", "LAYOUT", "FORK_RULE", "REPORT_ONLY", "decide_rung", "compose", "main"]
 
@@ -457,7 +458,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     skipped: List[dict] = []
     if event_name == "pull_request":
         body = (event.get("pull_request") or {}).get("body")
-        if isinstance(body, str) and "<sworn" in body:
+        # C1 (SPEC_action_finds_what_the_lexer_finds_v01_2026_09_06): ask the LEXER what a
+        # tag-shaped candidate is, rather than spelling it a second time. `"<sworn" in body` was
+        # wrong in both directions — case-sensitive, so `<SWORN …>` was reported as "carries no
+        # <sworn tag" for a document the verifier calls SWORN-FAILED; and a substring test, so
+        # `<swornish>` matched where the lexer's negative lookahead does not. A second spelling of
+        # "what a tag looks like" is the drift the U+0085 path-segment defect was.
+        if isinstance(body, str) and _CANDIDATE.search(body.encode("utf-8")):
             docs.append(("pull_request_body.md", body.encode("utf-8"), "body"))
         elif isinstance(body, str) and body.strip():
             skipped.append({"path": "pull_request_body.md", "why": "the body carries no <sworn tag"})
@@ -475,7 +482,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             data, why = tree.blob(path)
             if data is None:
                 skipped.append({"path": path, "why": "could not be read at the head commit: %s" % why})
-            elif b"<sworn" not in data:
+            elif _CANDIDATE.search(data) is None:          # C1: the lexer decides, not a copy
                 skipped.append({"path": path, "why": "carries no <sworn tag"})
             else:
                 docs.append((path, data, "changed"))
