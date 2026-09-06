@@ -1473,10 +1473,24 @@ def _check_quote(inner: bytes, res: _Resolved) -> Tuple[str, Optional[str], dict
         # narrows nothing. The strict reading ("a one-line file is its own whole") is right for a
         # one-line file at or above the floor, where #L1 over a 10 KB minified blob would narrow
         # nothing and mean nothing, and wrong for the tiny fixture the prior decision was about.
+        # SPEC_trailing_blank_lines_do_not_narrow_v01_2026_09_06 B1. "The whole receipt" was
+        # computed with the module's own line convention, in which a receipt ending "\n\n" has TWO
+        # lines, the second empty — so `#L1` differed from the full range by one EMPTY line and
+        # counted as narrowing. A 4-byte needle then rode over a 9020-byte blob: "The run came back
+        # `PASS`." HELD against a receipt reading `overall status: FAIL`, because PASS occurs in it
+        # 600 times. One blank line at the end of a captured log was the whole attack.
+        #
+        # A deliberate divergence from _line_slice's convention, because the two answer different
+        # questions: _line_slice is asked how many lines a file HAS, where a trailing empty line is
+        # one; the exemption asks whether the anchor excluded any CONTENT, where it is not.
         if res["slice"] is not None:
             whole = res["bytes"]
-            n_lines = whole.count(b"\n") + (1 if whole and not whole.endswith(b"\n") else 0)
-            narrowed = (res["slice"] != _line_slice(whole, 1, n_lines)
+            content = whole.rstrip(b"\n")
+            n_content = content.count(b"\n") + (1 if content else 0)
+            full = _line_slice(whole, 1, n_content) if n_content else None
+            # No content lines at all narrows nothing, so the floor applies unless the receipt is
+            # below it — that clause is the lab's documented tiny-fixture decision, untouched.
+            narrowed = ((full is not None and res["slice"] != full)
                         or len(whole) < SHORT_NEEDLE_BYTES)
         else:
             narrowed = False
