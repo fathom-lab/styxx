@@ -244,6 +244,15 @@ def main(argv=None) -> int:
             "javascript": {"module": "styxx/_data/sworn_verify.js", "sha256": _sha(JS_REAL)},
             "note": "content identity modulo newlines, the corpus doctrine",
         },
+        # The generator's own bytes. The differential receipt names the two implementations and NOT
+        # the grammar that produced its cases, so nothing in that file says which grammar reached
+        # 150000/150000 — the provenance exists only because the harness happened to be committed
+        # before the run. A detection rate is a property of the GENERATOR above all, so this receipt
+        # names it, and a strengthened grammar is visibly a different instrument rather than the
+        # same number under new management.
+        "harness": {"module": "conformance/sworn/differential.py",
+                    "sha256": _sha(HERE / "differential.py"),
+                    "note": "the grammar whose detection power this run measures"},
         "counts": {
             "proposed": len(catalogue),
             "controls": len(controls),
