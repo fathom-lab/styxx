@@ -1692,7 +1692,20 @@ def verify(raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *, name:
                              % (sidecar["commit"], commit))
         commit = sidecar["commit"]
         emb = sidecar.get("manifest") or {}
-        if emb.get("receipts"):
+        # SPEC_embedded_manifest_is_not_dropped_v01_2026_09_06 E1. This gated on the TRUTHINESS of
+        # the receipts map, and `{}` is falsy — so an empty receipts map discarded the whole
+        # embedded manifest, `authored_sha256` with it, and invariant 2 never ran. The agent emptied
+        # its receipts map and its own committed bytes stopped being refused. `authored_sha256` is
+        # consulted on both the rN and the tree branch, so a manifest carrying it is load-bearing
+        # whether or not it carries receipts.
+        #
+        # NOT `if emb:`, which is the rule this gate is trying to express. 34 of the 43 committed
+        # sidecars carry `receipts: {}` — the ordinary shape for a document swearing entirely
+        # through the tree channel — and honouring their manifests would move `manifest_digest`
+        # from None to a digest, inside the digested core, so 34 committed receipts would stop
+        # re-deriving. All 34 carry an empty `authored_sha256`, so this leaves them byte-identical.
+        # The broader question is recorded in the spec and left for the operator.
+        if emb.get("receipts") or emb.get("authored_sha256"):
             embedded = Manifest.from_dict(emb)
             if manifest is not None and manifest.digest_or_none() != embedded.digest_or_none():
                 raise SystemExit("REFUSED: the supplied manifest disagrees with the embedded one")
