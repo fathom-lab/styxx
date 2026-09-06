@@ -99,6 +99,37 @@ is SWORN-HELD with unresolved spans, and it is a fixture named `sworn_action_sam
 real document has both HELD and UNRESOLVED spans. The change is small and it is still not mine to
 make.
 
+## A second finding, from the adversary's list of what nobody attacked
+
+The rounding rule quantizes the receipt to the number of fractional digits **the author printed**.
+That is deliberate and it is right: `DECISIONS["rounding"]` documents it, and demanding an exact
+match would FAIL every honestly rounded figure in this corpus.
+
+It has no floor. At zero fractional digits it stops rounding and starts erasing:
+
+| sentence | receipt | compared against | verdict |
+|---|---|---|---|
+| "the A-share is 0.4211." | 0.4211 | 0.4211 | HELD |
+| "the A-share is 0.42." | 0.4211 | 0.42 | HELD |
+| **"the A-share is 0."** | **0.4211** | **0** | **HELD** |
+
+Genuine harness-minted L2 receipt, correct digest, `complete`, nothing malformed, nothing forged.
+The author chooses how much of the receipt's value to round away and may choose all of it.
+
+The verdict is deliberately unchanged — refusing this would break the honest-rounding rule the
+format needs, which would be worse than the problem. The headline counts these spans instead, on a
+line nobody has to argue about: a non-zero receipt whose comparison was against zero carries no
+information about the receipt at all. A receipt genuinely equal to zero erases nothing and is not
+flagged, which is the control that keeps the signal from becoming noise.
+
+**The first attempt at that signal was itself a defect, and this corpus caught it.** It added a
+field to the span's `detail`, which is inside the digested core, so it moved the core digest of
+every affected span and would have put the Python and JavaScript verifiers out of agreement. The
+conformance generator refused the regeneration — *"a moved core is a finding about the verifier,
+never a reason to rewrite the set"* — and the signal was moved to the headline, which is outside the
+digest. A warning that changes what the format digests is a format change wearing a warning's
+clothes.
+
 ## What this does not say
 
 **That the sidecar layer is the problem.** The battery was aimed there and the worst finding is not
