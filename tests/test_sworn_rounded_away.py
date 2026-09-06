@@ -13,10 +13,18 @@ it stops rounding and starts erasing:
 Genuine harness-minted L2 receipt, correct digest, `complete`, nothing malformed, nothing forged.
 The author simply chose how much of the receipt's value to round away, and chose all of it.
 
-The verdict is deliberately NOT changed — that would break the honest-rounding rule the format needs
-— so the span records `rounded_away` and the headline counts them. The line drawn is not a threshold
-anyone has to argue about: it is the case where the printed figure carries no information about the
-receipt at all, a non-zero receipt whose comparison was against zero.
+The verdict is deliberately NOT changed — that would break the honest-rounding rule the format needs.
+The HEADLINE counts these spans instead, derived from `receipt` and `receipt_rounded`, which the
+detail already carries. The line drawn is not a threshold anyone has to argue about: it is the case
+where the printed figure carries no information about the receipt at all, a non-zero receipt whose
+comparison was against zero.
+
+THE FIRST VERSION OF THIS SIGNAL WAS WRONG AND THE CORPUS CAUGHT IT. It added a `rounded_away` field
+to the span's `detail` — and `detail` is INSIDE the digested core, so it moved the core digest of
+every affected span and would have put this side out of agreement with `styxx/_data/sworn_verify.js`,
+which knows nothing about it. The conformance generator refused the regeneration outright: "a moved
+core is a finding about the verifier, never a reason to rewrite the set". A warning that changes what
+the format digests is not a warning, it is a format change wearing a warning's clothes.
 
 Found by the adversary in the sidecar attack battery, in its list of areas nobody had attacked.
 """
@@ -63,7 +71,7 @@ def test_honest_rounding_still_holds_and_is_not_flagged(sentence):
     rounded figure, which would be worse than the problem."""
     _core, s = _span("a_share", sentence)
     assert s["verdict"] == "HELD", s
-    assert "rounded_away" not in (s.get("detail") or {}), s["detail"]
+    assert "WARNING" not in sworn._headline(_core), sworn._headline(_core)
 
 
 def test_a_receipt_rounded_entirely_away_is_flagged():
@@ -71,18 +79,22 @@ def test_a_receipt_rounded_entirely_away_is_flagged():
     core, s = _span("a_share", "the A-share is 0.")
     assert s["verdict"] == "HELD", "the verdict is deliberately unchanged"
     d = s["detail"]
+    # The detail already says it: the receipt and what it was compared against.
     assert d["receipt"] == "0.4211" and d["receipt_rounded"] == "0"
-    assert "rounded_away" in d, (
-        "a HELD span compared against 0 recorded nothing to say so: %r" % d)
-    assert "0.4211" in d["rounded_away"]
-    assert "WARNING" in sworn._headline(core), sworn._headline(core)
+    # ...and nothing was ADDED to detail, because detail is inside the digested core. The first
+    # version of this signal put a field there and moved a conformance vector's core digest; the
+    # generator refused the regeneration and was right to.
+    assert "rounded_away" not in d, (
+        "detail is inside the digested core; a field added here moves it: %r" % d)
+    line = sworn._headline(core)
+    assert "WARNING" in line and "compared against 0" in line, line
 
 
 def test_it_fires_on_a_negative_receipt_too():
     core, s = _span("neg", "the A-share is -0.")
     if s["verdict"] != "HELD":
         pytest.skip("a signed-zero token is not held here; the positive case carries the finding")
-    assert "rounded_away" in s["detail"], s["detail"]
+    assert "WARNING" in sworn._headline(core), sworn._headline(core)
 
 
 def test_a_receipt_that_is_genuinely_zero_is_not_flagged():
@@ -90,20 +102,20 @@ def test_a_receipt_that_is_genuinely_zero_is_not_flagged():
     signal. This is the control that keeps the check honest."""
     _core, s = _span("zero", "the count is 0.")
     assert s["verdict"] == "HELD"
-    assert "rounded_away" not in (s.get("detail") or {}), s["detail"]
+    assert "WARNING" not in sworn._headline(_core), sworn._headline(_core)
 
 
 def test_a_large_receipt_printed_whole_is_not_flagged():
     _core, s = _span("big", "the loss is 4200000.")
     assert s["verdict"] == "HELD"
-    assert "rounded_away" not in (s.get("detail") or {}), s["detail"]
+    assert "WARNING" not in sworn._headline(_core), sworn._headline(_core)
 
 
 def test_a_failing_span_is_not_flagged():
     """rounded_away is about a HELD span that means nothing. A FAILED span already says so."""
     _core, s = _span("big", "the loss is 7.")
     assert s["verdict"] == "FAILED"
-    assert "rounded_away" not in (s.get("detail") or {}), s["detail"]
+    assert "WARNING" not in sworn._headline(_core), sworn._headline(_core)
 
 
 def test_the_headline_is_silent_when_nothing_was_rounded_away():

@@ -1367,11 +1367,15 @@ def _check_numeric(inner_text: str, res: _Resolved, parsed: dict) -> Tuple[str, 
     # rounds to zero. The verdict does not change — that would break the honest-rounding rule this
     # format needs — but the span says so, so a reader of the receipt is not left to notice that
     # `receipt` and `receipt_rounded` disagree by everything.
+    # NOTE: nothing is added to `detail` here, and the first version of this signal did. `detail`
+    # is INSIDE the digested core, so a field added to it moves the core digest of every affected
+    # span — the conformance generator refused the regeneration and said so: "a moved core is a
+    # finding about the verifier, never a reason to rewrite the set". It would also have put this
+    # side out of agreement with styxx/_data/sworn_verify.js, which knows nothing about it.
+    #
+    # `receipt` and `receipt_rounded` are already here and already say it. The signal belongs where
+    # a reader meets the verdict — the headline, which is CLI output and outside the digest.
     if lhs == rhs:
-        if not leaf.is_zero() and Decimal(lhs).is_zero():
-            detail["rounded_away"] = ("the receipt is %s and the sentence printed %d fractional "
-                                      "digits, so the comparison was against 0 — this span says "
-                                      "nothing about the receipt's value" % (str(leaf), frac))
         return "HELD", None, detail
     return "FAILED", "value_mismatch", detail
 
@@ -1816,7 +1820,20 @@ def _headline(core: dict) -> str:
     # A HELD span whose comparison was against zero says nothing about its receipt. It is honest
     # rounding taken past the point where anything survives, and it is invisible on a line that
     # only counts verdicts.
-    _erased = [s for s in core["spans"] if (s.get("detail") or {}).get("rounded_away")]
+    # Derived from what the detail already carries — `receipt` and `receipt_rounded` — rather than
+    # from a field added to it, because detail is inside the digested core and this must not move it.
+    def _erased_span(s):
+        if s.get("verdict") != "HELD":
+            return False
+        d = s.get("detail") or {}
+        if "receipt" not in d or "receipt_rounded" not in d:
+            return False
+        try:
+            return not Decimal(d["receipt"]).is_zero() and Decimal(d["receipt_rounded"]).is_zero()
+        except (InvalidOperation, ValueError, TypeError):
+            return False
+
+    _erased = [s for s in core["spans"] if _erased_span(s)]
     if _erased:
         line += ("\n  WARNING: %d HELD span(s) compared against 0 because the sentence printed no "
                  "fractional digits; they say nothing about the receipt's value" % len(_erased))
