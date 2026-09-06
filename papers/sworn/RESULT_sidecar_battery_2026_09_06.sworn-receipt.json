@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_sidecar_battery_2026_09_06.md",
-  "inline_sha256": "1be8d92be4a5ba8a5ddf3d4f4ed0d77ae2705f4322a7929b8770cc65a610b1bc",
-  "canonical_sha256": "37ee6354d7c7a12c3ae21ffc9264ea1be1744fb1d2c47dd46665a75889561ac4"
+  "inline_sha256": "9045bb416b0b3bb7020bbdec5363df44d31b1d725159bd1ff4342e4348ed72a8",
+  "canonical_sha256": "8282cab824c6b4117c9ba27ceef9989463924b778cd32a4580c2d4adfd90c0e1"
  },
- "commit": "11dec4b86cbada49f3903078cb288533139ac062",
+ "commit": "ea8b727fe7cc34c446930b08f092540cd1dacddb",
  "manifest_digest": null,
  "spans": [
   {
@@ -28,7 +28,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
@@ -50,7 +50,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
@@ -72,7 +72,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
@@ -94,43 +94,57 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
-   "at": 2421,
-   "start": 2018,
-   "end": 2071,
+   "at": 2444,
+   "start": 2041,
+   "end": 2072,
    "receipt": "path:conformance/sworn/sidecar_battery.json#/counts/predictions_correct",
    "kind": "numeric",
-   "verdict": "MALFORMED",
-   "reason": "number_count",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "digit_bearing_tokens": [
-     "7",
-     "49"
-    ]
+    "printed_token": "7",
+    "printed": "7",
+    "receipt": "7",
+    "receipt_rounded": "7",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "97bdfab6092fdfd32c2b8b7c98f18a943cb4ae55aa109091ecabf99fc5e7b554",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
-   "at": 2674,
-   "start": 2168,
-   "end": 2235,
+   "at": 2702,
+   "start": 2196,
+   "end": 2245,
    "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD",
    "kind": "numeric",
-   "verdict": "MALFORMED",
-   "reason": "number_count",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "digit_bearing_tokens": [
-     "42",
-     "49"
-    ]
+    "printed_token": "42",
+    "printed": "42",
+    "receipt": "42",
+    "receipt_rounded": "42",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   },
   {
-   "at": 2847,
-   "start": 2240,
-   "end": 2271,
+   "at": 2857,
+   "start": 2250,
+   "end": 2281,
    "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD_with_nothing_held",
    "kind": "numeric",
    "verdict": "HELD",
@@ -146,28 +160,27 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+    "note": "committed object at ea8b727fe7cc34c446930b08f092540cd1dacddb; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 5,
+  "HELD": 7,
   "FAILED": 0,
   "UNRESOLVED": 0,
-  "MALFORMED": 2,
+  "MALFORMED": 0,
   "WITHHELD": 0
  },
  "sworn_total": 7,
  "unresolved": 0,
- "document_verdict": "SWORN-FAILED",
+ "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 5,
-  "unresolved": 2
+  "committed": 7
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "2a87cfc93f7a48bb48d9b7cfd6359942316468093c7644c54d34b77961ad1312",
+  "sworn_sha256": "b6fcff8c7b6536161b567efac2b6862530f44913e02a6d47ef8bdfe53c687bb1",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -202,14 +215,14 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "28ce94af089a64d859f3d31251bbe6992e379fc32033727ce7a691bc6d949a68",
+ "digest": "5b0d00a85af8b1911436f0888abf0ba166be357c6dfcd3017c562e0c60156289",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 7,
-  "narrative_sentences": 102,
-  "sentence_share": 0.0642,
+  "narrative_sentences": 104,
+  "sentence_share": 0.0631,
   "diff_claim_sentences": 5,
   "diff_claim_share": 0.5833,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
@@ -225,24 +238,24 @@
     "text": "shape `Manifest.add()` would reject — every one was accepted."
    },
    {
-    "start": 3653,
-    "end": 3746,
+    "start": 3663,
+    "end": 3756,
     "text": "Verifying a real committed RESULT from this corpus with `--repo .` and no `--commit` resolves"
    },
    {
-    "start": 4237,
-    "end": 4327,
+    "start": 4247,
+    "end": 4337,
     "text": "The guard is watched to fail — remove the warning and 3 of its 6 tests fail, and the two"
    },
    {
-    "start": 4596,
-    "end": 4691,
+    "start": 4606,
+    "end": 4701,
     "text": "breaking change to a published vocabulary that every consumer of `document_verdict` depends on."
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "23080094e16d39a8a3fcac0c60f4aa12cfc5a5f8ad81299de718d9912ff89fdd",
- "timestamp": "2026-09-06T14:12:14Z"
+ "coverage_sha256": "29d59192c6d8570b35b660dd8ece02dd9614242af7840d86953d976f69fed29b",
+ "timestamp": "2026-09-06T14:13:33Z"
 }
