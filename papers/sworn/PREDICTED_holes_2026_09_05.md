@@ -27,7 +27,7 @@ predicts it is caught.
 
 | # | behaviour | prediction | why |
 |---|---|---|---|
-| P1 | BOM-prefixed JSON payload refusal | **HOLE** | already confirmed missed by the ad-hoc probe; no payload literal begins with `EF BB BF` |
+| P1 | BOM-prefixed JSON payload refusal | **HOLE** | no payload literal begins with `EF BB BF`; an unrecorded probe already saw this one missed |
 | P2 | NaN / Infinity in a JSON payload | **HOLE** | no payload literal contains either token |
 | P3 | invalid UTF-8 *inside a receipt payload* | **HOLE** | all ten payload literals are valid UTF-8; only the *document* reaches invalid bytes |
 | P4 | surrogate escapes (`\udXXX`) in a payload | **HOLE** | no payload literal contains a `\u` escape at all |
@@ -39,11 +39,11 @@ predicts it is caught.
 | P10 | duplicate keys in a JSON payload | SEEN | `{"dup": 1, "dup": 2}` is in the list |
 | P11 | JSON Pointer walking, `~0`/`~1` unescaping | SEEN | pointer forms are drawn in the span receipts and payloads have nested structure |
 | P12 | line slices `#L1`, `#L1-L3` | SEEN | `line one\nline two\nline three\n` is in the list |
-| P13 | the short-needle bound | SEEN | confirmed caught by the ad-hoc probe, 35 disagreements |
-| P14 | the span code-point cap | SEEN | confirmed caught, 260 disagreements |
-| P15 | signed-zero folding in the decimal path | SEEN | confirmed caught, 6 disagreements; `{"neg": -0.0, "e": 1e5}` is in the list |
+| P13 | the short-needle bound | SEEN | an unrecorded probe saw it caught; the study's receipt is where the count belongs |
+| P14 | the span code-point cap | SEEN | same probe, same standing: caught, count unrecorded |
+| P15 | signed-zero folding in the decimal path | SEEN | `{"neg": -0.0, "e": 1e5}` is in the payload list; the same probe saw it caught |
 | P16 | very large integers in the decimal path | SEEN | `{"big": 9…9}` with 400 nines is in the list |
-| P17 | document-level fence balancing and UTF-8 refusal | SEEN | the document generator reaches both; the census counts 15702 and 1524 |
+| P17 | document-level fence balancing and UTF-8 refusal | SEEN | the document generator reaches both, and the differential census records how often |
 
 Nine holes predicted, eight behaviours predicted visible. **The prediction that matters is P1–P9
 sharing one cause**: they are not nine independent weaknesses, they are one — the payload literal
@@ -53,6 +53,18 @@ single change to `_manifest` closes most of it.
 
 If instead the misses scatter across regions with no common cause, this prediction is wrong and the
 harness is weak in a way reading it did not reveal — which is worth strictly more than being right.
+
+## Why no counts appear above
+
+The probe that produced P1, P13, P14 and P15 was a scratch script. It was not recorded, its output
+was not committed, and nothing in this tree can re-derive it. So its numbers do not appear here:
+this document may say *what the probe saw*, because that is a statement about a prediction's
+provenance, and it may not say *how many*, because a count nothing can re-derive is the thing this
+corpus exists to refuse — and it does not become acceptable because the numbers are small, or mine,
+or true.
+
+The mutation-coverage run records every mutation with its disagreement count in a receipt. That is
+where those numbers get a home.
 
 ## What this document does not claim
 
