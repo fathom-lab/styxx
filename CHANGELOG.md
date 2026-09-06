@@ -117,6 +117,34 @@ From the sidecar battery's adversary, in its list of what nobody had attacked.
 - **Not reproduced as described:** `commit: null` blinding the tree channel. With an explicit tree
   handle it resolves; only the CLI path without `--commit` goes blind, which is the UNRESOLVED
   finding already warned about in #71.
+## [Unreleased] — invariant 2 on the tree channel: one refusal on every form a receipt can take
+
+**Built to `papers/sworn/SPEC_tree_channel_authorship_v01_2026_09_06.md`, frozen before the
+repair.** From the sidecar battery's adversary, in its list of what nobody had attacked.
+
+- **The invariant — the agent cannot swear to bytes it minted — was enforced on one channel of
+  three.** `_resolve` refused a receipt whose sha256 the manifest lists in `authored_sha256` on the
+  `rN` branch, at one line. The tree branch — `path:` and `prereg:` — computed the same digest from
+  the resolved bytes and never compared it to anything. Same bytes, same manifest, confirmed by
+  execution: `rN` MALFORMED `receipt_author_minted`; `path:` **HELD**; `prereg:` **HELD**; and
+  `absent` — the verdict that says *this never happened* — **HELD** over the author's own committed
+  file by naming it instead of citing it.
+- **The repair is one comparison**, with the existing reason string. `complete = True` stays on the
+  tree branch: a committed blob is complete, and the defect was never completeness — it was assuming
+  completeness before checking authorship.
+- **Watched to fail, and re-derived from git rather than remembered.** The guard was written first:
+  3 of 10 failed against the shipped verifier (`path`, `prereg`, `absent`-by-path), 0 of 10 after.
+  The 7 that pass in both states give the repair its shape — the `rN` refusal unchanged, an honest
+  committed file still resolving, `absent` still holding over it, an empty list refusing nothing — so
+  a repair that refused every tree receipt would have failed them. `tree_channel_repair_receipt.py`
+  reads the verifier at the repair commit and its parent and runs the guard against each in a
+  scratch copy, so the RESULT's numbers bind to a receipt anyone can regenerate.
+- **The conformance set regenerated with no moved core**, which says it never exercised this case
+  either — consistent with the tree layer measuring 4 of 14 in the suite-power leg. The frozen 1689
+  bar holds; the JavaScript verifier has no tree channel and is untouched.
+- **Stated rather than solved:** the tree channel has no `kind_of_source`, so the other half of the
+  `rN` refusal has no analogue there. A file the agent committed under a name the harness never
+  digested is still not caught. That is a limit of the manifest.
 
 ## [Unreleased] — the sidecar battery: 49 attacks, 0 refused, and a verdict that means less than its name
 

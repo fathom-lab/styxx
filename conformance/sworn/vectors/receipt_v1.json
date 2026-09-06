@@ -4,35 +4,6 @@
  "count": 5,
  "vectors": [
   {
-   "id": "1a47e29e195762eadeecd2c0027c53b712ccb5e1ee2a16856a085c525ca08f47",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "b8c761e7c8ddc7068837c6511d4d8244970097e95d27bed3b1ea1a0f614b8353",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "56e65a789c35d139873391a6ae1bdaeb4022c12d6952135ddecb7bc20e14ba94",
    "family": "receipt_v1",
    "sources": [
@@ -85,10 +56,10 @@
    }
   },
   {
-   "id": "9c96a3f94bcb5106cf3f7ebaca409a3b283a9cf687ee9220ed5cdb783ee6c3b6",
+   "id": "7daf3750da136139bdb4564abb02971eabd1668eb57323712c31b99bd8babec8",
    "family": "receipt_v1",
    "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
    ],
    "rules": [
     "R9"
@@ -98,18 +69,18 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "b3044900562dc93ad9763b826da809c2b71702cc4aa1f4667f5bc4085a307356",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "receipt": "aedf285056c0adfde9b0d2ec54ace40760aafb870a49b8cc600bad71814bfc05",
+    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
    },
    "expect": {
     "outcome": "check",
     "check": {
-     "status": "VERIFIED",
+     "status": "FAILED",
      "digest_match": true,
-     "verdict_reproduces": true
+     "verdict_reproduces": false
     }
    }
   },
@@ -143,7 +114,7 @@
    }
   },
   {
-   "id": "f471f3735ca6e161e1e62913665586d3b0ab8423b9088d0802226d0192116101",
+   "id": "b555cbeabe700522d1eca0120244cb2963f066de52ba681f1c75442adbb6a112",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -156,8 +127,8 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "c3f07679d0e451e0fed40e6518cb150d198a93f7ad559ebf60038de712b885db",
-    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
+    "receipt": "3779e5ab0e1b315d99417f91e5826aefa49564e2a4bb45e121dbe03ab1cfb032",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
@@ -166,8 +137,37 @@
     "outcome": "check",
     "check": {
      "status": "FAILED",
-     "digest_match": true,
+     "digest_match": false,
      "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "e30a940d625e4a3ee7a5920620dd6db9a83ef4472df73a5fbbfa9053ddf5d1b4",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "baf82b6dfda089575532e4e2dd9650db7d00631f222a2eefbff4f85d2a3b0cbf",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
     }
    }
   }
