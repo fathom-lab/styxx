@@ -1,0 +1,57 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "11dec4b86cbada49f3903078cb288533139ac062",
+ "document": {
+  "name": "RESULT_sidecar_battery_2026_09_06.md",
+  "sha256": "37ee6354d7c7a12c3ae21ffc9264ea1be1744fb1d2c47dd46665a75889561ac4"
+ },
+ "text": "# RESULT — the sidecar layer refused nothing, and the verdict it produces means less than its name\n\nFathom Lab · 2026-09-06 · Spec: `SPEC_sidecar_battery_v01_2026_09_06.md`, frozen before the battery\nwas written. Catalogue: `conformance/sworn/sidecar_battery_catalogue.json`, committed before the\nrun. Receipts: `conformance/sworn/sidecar_battery.json` and\n`papers/sworn/sidecar_battery_outcomes.json`. **This document is itself sworn.**\n\n## What was asked\n\n`RESULT_suite_power_2026_09_06.md` measured the sidecar layer at 6 killed of 13 and found both of\nits injection boundaries undefended. That was a statement about the tests. This asks the question\nabout the code: **is there an attack?**\n\nSix attackers took a surface each, an adversary hunted what they left alone, and every prediction\nwas recorded before anything was executed.\n\n## The first result is the plainest one\n\n49 attacks ran,\nand\nload_sidecar refused 0 of them.\n\nSelf-minted manifests, transplanted identities, forged commits, smuggled tags, receipt entries whose\nshape `Manifest.add()` would reject — every one was accepted. `load_sidecar` is genuinely strict, but\nit is strict about **shape**, and none of these attacks were the wrong shape. It also never crashed:\n0 attacks produced anything other than a clean refusal or a clean acceptance,\nwhich is the promise its docstring makes and keeps.\n\nBy the criterion frozen in the runner before the battery existed — accepted **and** the rendered\ndocument does not re-canonise to the span table that was validated —\n10 succeeded.\nThe round-trip guarantee `to_sidecar` asserts in the honest direction does not hold in this one, and\n`text_smuggling` broke it five times out of seven.\n\n## My criterion was too narrow, and the number it missed is the one that matters\n\nI froze a round-trip test because the attack I had already confirmed was a round-trip attack. The\nadversary attacked semantics instead, so its work is filed as *accepted and faithful* — technically\ntrue and beside the point.\n7 of the 49 predictions matched the observed outcome,\nand most of that gap is my definition rather than their aim.\n\nThe number the definition missed:\n42 of the 49 attacks render to a document that verifies SWORN-HELD,\nand\n14 of those hold nothing at all\n— every sworn span UNRESOLVED, HELD zero.\n\n## The finding\n\nConfirmed on a minimal hand-built input rather than inferred from the battery:\n\n```\n<sworn r=\"r1\" k=\"numeric\">the audited loss is 0.</sworn>      with no manifest\n  ->  span UNRESOLVED / manifest_absent,  HELD=0,  document_verdict = SWORN-HELD\n```\n\nThe ladder is `elif counts[\"FAILED\"] == 0 and counts[\"MALFORMED\"] == 0: SWORN-HELD`. **`UNRESOLVED`\nis never consulted.** A document in which nothing was checked carries the same headline as one in\nwhich everything held.\n\nThat is the conflation this module's own doctrine refuses, four lines from the top of the same file:\n*\"a document that swore nothing is `UNSWORN`, never 'no failures'.\"* The principle is applied to\n`sworn_total == 0` and not to `unresolved == sworn_total`.\n\n**It is author-reachable with one string.** A manifest rung the verifier does not know makes every\nspan UNRESOLVED with reason `rung_unknown`, and that fires *before* the receipt id is looked up. Same\ndocument, same receipt, a sentence saying the loss is 0 against a receipt saying 4200000:\n\n| manifest rung | span | document |\n|---|---|---|\n| `L2` | FAILED — `value_mismatch` | SWORN-FAILED |\n| `L3` | UNRESOLVED — `rung_unknown` | **SWORN-HELD** |\n\nNothing forged, nothing malformed, nothing `load_sidecar` would refuse.\n\n## It catches honest documents too, which is how it was found\n\nVerifying a real committed RESULT from this corpus with `--repo .` and no `--commit` resolves\nnothing: held=0, unresolved=10, **SWORN-HELD**. With the commit its sidecar names: held=10,\nunresolved=0, SWORN-HELD. The same document, verified two ways, prints the same verdict — one having\nchecked ten things and the other having checked nothing.\n\nThis is not an exotic attack. It is the ordinary way a reader would run the tool.\n\n## What is repaired, and what is deliberately not\n\n**Repaired:** the headline now warns, distinguishing *nothing was checked* from *N of M did not\nhold*. The guard is watched to fail — remove the warning and 3 of its 6 tests fail, and the two\nsilence controls keep it from becoming noise a reader learns to ignore.\n\n**Not repaired, and left to the operator:** renaming the verdict. `SWORN-HELD` should require\n`UNRESOLVED == 0`, with a distinct state for *nothing failed but not everything resolved*. That is a\nbreaking change to a published vocabulary that every consumer of `document_verdict` depends on. The\nblast radius was measured rather than guessed: of 39 committed sworn receipts in this corpus, **one**\nis SWORN-HELD with unresolved spans, and it is a fixture named `sworn_action_sample.UNRESOLVED`. No\nreal document has both HELD and UNRESOLVED spans. The change is small and it is still not mine to\nmake.\n\n## What this does not say\n\n**That the sidecar layer is the problem.** The battery was aimed there and the worst finding is not\nthere; it is in the document verdict ladder, which every path reaches. The sidecar layer's own\nfailure is narrower: `load_sidecar` validates an object and `render` produces a document, and nothing\ncompares the second to the first.\n\n**That 49 attacks is a security review.** They were written by agents in one pass, against a surface\nlist this lab chose, and the author of the repairs also commissioned the attacks. The adversary's\nown gap list — published in the catalogue — names seven areas nobody attacked, including the numeric\ncomparison's precision being set by the span's own printed text, and `authored_sha256` being dead on\nthe `path:` and `prereg:` branches.\n\n**That a document verifying SWORN-HELD is worthless.** The receipt has always carried `unresolved`,\nand `verify`'s headline has always printed it. What was missing was any signal that the verdict word\ndoes not account for it.\n\n---\n\n*The suite-power study said this layer was the least defended in the corpus. It was, and attacking it\nturned up something larger: the word at the top of every verdict promises more than the ladder\nunderneath it delivers.*\n",
+ "spans": [
+  {
+   "start": 882,
+   "end": 897,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/runnable",
+   "kind": "numeric"
+  },
+  {
+   "start": 902,
+   "end": 933,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/refused_by_load_sidecar",
+   "kind": "numeric"
+  },
+  {
+   "start": 1241,
+   "end": 1318,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/crashed_not_refused",
+   "kind": "numeric"
+  },
+  {
+   "start": 1542,
+   "end": 1555,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/succeeded_by_frozen_criterion",
+   "kind": "numeric"
+  },
+  {
+   "start": 2018,
+   "end": 2071,
+   "receipt": "path:conformance/sworn/sidecar_battery.json#/counts/predictions_correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 2168,
+   "end": 2235,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD",
+   "kind": "numeric"
+  },
+  {
+   "start": 2240,
+   "end": 2271,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD_with_nothing_held",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

@@ -1891,7 +1891,13 @@ def main(argv=None) -> int:
         for _sp in side["spans"]:
             if _sp.get("kind") != "numeric":
                 continue
-            _inner = side["text"][_sp["start"]:_sp["end"]]
+            # Span offsets are BYTE offsets into the UTF-8 encoding — load_sidecar bounds them
+            # against len(text.encode("utf-8")) and render splices into the encoded bytes. Slicing
+            # the str by them lines up only while the document stays ASCII, and silently shifts as
+            # soon as it does not: the first version of this warning read the wrong span on this
+            # very file, reporting "no digit-bearing token" for a span carrying two.
+            _enc = side["text"].encode("utf-8")
+            _inner = _enc[_sp["start"]:_sp["end"]].decode("utf-8", "replace")
             _why, _tok, _seen = _number_token(_inner)
             if _why:
                 print("  WARNING @%d: numeric span will be MALFORMED %s at verify — %s"

@@ -1,0 +1,248 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v1",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "RESULT_sidecar_battery_2026_09_06.md",
+  "inline_sha256": "1be8d92be4a5ba8a5ddf3d4f4ed0d77ae2705f4322a7929b8770cc65a610b1bc",
+  "canonical_sha256": "37ee6354d7c7a12c3ae21ffc9264ea1be1744fb1d2c47dd46665a75889561ac4"
+ },
+ "commit": "11dec4b86cbada49f3903078cb288533139ac062",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 882,
+   "start": 882,
+   "end": 897,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/runnable",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "49",
+    "printed": "49",
+    "receipt": "49",
+    "receipt_rounded": "49",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+   }
+  },
+  {
+   "at": 991,
+   "start": 902,
+   "end": 933,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/refused_by_load_sidecar",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+   }
+  },
+  {
+   "at": 1434,
+   "start": 1241,
+   "end": 1318,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/crashed_not_refused",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+   }
+  },
+  {
+   "at": 1835,
+   "start": 1542,
+   "end": 1555,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/succeeded_by_frozen_criterion",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "10",
+    "printed": "10",
+    "receipt": "10",
+    "receipt_rounded": "10",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+   }
+  },
+  {
+   "at": 2421,
+   "start": 2018,
+   "end": 2071,
+   "receipt": "path:conformance/sworn/sidecar_battery.json#/counts/predictions_correct",
+   "kind": "numeric",
+   "verdict": "MALFORMED",
+   "reason": "number_count",
+   "detail": {
+    "digit_bearing_tokens": [
+     "7",
+     "49"
+    ]
+   }
+  },
+  {
+   "at": 2674,
+   "start": 2168,
+   "end": 2235,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD",
+   "kind": "numeric",
+   "verdict": "MALFORMED",
+   "reason": "number_count",
+   "detail": {
+    "digit_bearing_tokens": [
+     "42",
+     "49"
+    ]
+   }
+  },
+  {
+   "at": 2847,
+   "start": 2240,
+   "end": 2271,
+   "receipt": "path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD_with_nothing_held",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "14",
+    "printed": "14",
+    "receipt": "14",
+    "receipt_rounded": "14",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 11dec4b86cbada49f3903078cb288533139ac062; authorship unchecked"
+   }
+  }
+ ],
+ "counts": {
+  "HELD": 5,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 2,
+  "WITHHELD": 0
+ },
+ "sworn_total": 7,
+ "unresolved": 0,
+ "document_verdict": "SWORN-FAILED",
+ "document_malformed": null,
+ "rungs": {
+  "committed": 5,
+  "unresolved": 2
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "2a87cfc93f7a48bb48d9b7cfd6359942316468093c7644c54d34b77961ad1312",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+   "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`<!--` … `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment — never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+   "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+   "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+   "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent — weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+   "provenance": "since v0.2 R7: every span verdict carries `provenance` — for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at <commit>; authorship unchecked` — and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+   "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) — a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter — and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "28ce94af089a64d859f3d31251bbe6992e379fc32033727ce7a691bc6d949a68",
+ "coverage": {
+  "schema": "sworn/coverage/1",
+  "advisory": true,
+  "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
+  "sworn_total": 7,
+  "narrative_sentences": 102,
+  "sentence_share": 0.0642,
+  "diff_claim_sentences": 5,
+  "diff_claim_share": 0.5833,
+  "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+  "unsworn_claims": [
+   {
+    "start": 217,
+    "end": 300,
+    "text": "Catalogue: `conformance/sworn/sidecar_battery_catalogue.json`, committed before the"
+   },
+   {
+    "start": 1036,
+    "end": 1099,
+    "text": "shape `Manifest.add()` would reject — every one was accepted."
+   },
+   {
+    "start": 3653,
+    "end": 3746,
+    "text": "Verifying a real committed RESULT from this corpus with `--repo .` and no `--commit` resolves"
+   },
+   {
+    "start": 4237,
+    "end": 4327,
+    "text": "The guard is watched to fail — remove the warning and 3 of its 6 tests fail, and the two"
+   },
+   {
+    "start": 4596,
+    "end": 4691,
+    "text": "breaking change to a published vocabulary that every consumer of `document_verdict` depends on."
+   }
+  ],
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "coverage_sha256": "23080094e16d39a8a3fcac0c60f4aa12cfc5a5f8ad81299de718d9912ff89fdd",
+ "timestamp": "2026-09-06T14:12:14Z"
+}

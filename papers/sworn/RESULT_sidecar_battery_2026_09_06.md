@@ -37,11 +37,13 @@ The round-trip guarantee `to_sidecar` asserts in the honest direction does not h
 I froze a round-trip test because the attack I had already confirmed was a round-trip attack. The
 adversary attacked semantics instead, so its work is filed as *accepted and faithful* — technically
 true and beside the point.
-<sworn r="path:conformance/sworn/sidecar_battery.json#/counts/predictions_correct" k="numeric">7 of the 49 predictions matched the observed outcome,</sworn>
+of the 49 predictions,
+<sworn r="path:conformance/sworn/sidecar_battery.json#/counts/predictions_correct" k="numeric">7 matched the observed outcome,</sworn>
 and most of that gap is my definition rather than their aim.
 
 The number the definition missed:
-<sworn r="path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD" k="numeric">42 of the 49 attacks render to a document that verifies SWORN-HELD,</sworn>
+of the forty-nine attacks,
+<sworn r="path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD" k="numeric">42 render to a document that verifies SWORN-HELD,</sworn>
 and
 <sworn r="path:papers/sworn/sidecar_battery_outcomes.json#/render_to_SWORN_HELD_with_nothing_held" k="numeric">14 of those hold nothing at all</sworn>
 — every sworn span UNRESOLVED, HELD zero.
