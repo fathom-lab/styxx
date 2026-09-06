@@ -135,6 +135,20 @@ every prediction was recorded before anything ran.
   `sworn_action_sample.*` stays untouched history; `sworn_action_sample_2026_09_06.*` is what the
   action prints now. **The two summaries differ in exactly one line**, and a test pins that, because
   the pair is the record of the change.
+- **A second finding: the rounding rule has no floor.** `DECISIONS["rounding"]` quantizes the
+  receipt to the fractional digits **the author printed**, which is right — demanding an exact match
+  would FAIL every honestly rounded figure. But at zero fractional digits it stops rounding and
+  starts erasing: a receipt of `0.4211` against the sentence "the A-share is 0." is **HELD**, with a
+  genuine harness-minted L2 receipt and nothing malformed. The verdict is deliberately unchanged;
+  the headline now counts spans whose non-zero receipt was compared against zero, and a receipt
+  genuinely equal to zero is not flagged, which is the control.
+- **The first attempt at that signal was itself a defect, and the corpus refused it.** It added a
+  field to the span's `detail` — which is inside the digested core — so it moved the core digest of
+  every affected span and would have put Python out of agreement with the JavaScript verifier. The
+  conformance generator refused the regeneration outright: *"a moved core is a finding about the
+  verifier, never a reason to rewrite the set"*. A warning that changes what the format digests is a
+  format change wearing a warning's clothes. Derived on the headline instead, from fields `detail`
+  already carried.
 - **A repair to yesterday's repair.** The `canon` warning shipped hours earlier sliced `side["text"]`
   — a `str` — by BYTE offsets. It lines up only while a document stays ASCII and shifts silently
   otherwise; on this leg's own RESULT it read a span forty bytes away and reported "no digit-bearing
