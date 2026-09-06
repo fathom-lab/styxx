@@ -21,7 +21,8 @@ The answer arrived before any of the intended bookkeeping: **the two implementat
 Same seed, same case count, the same `python_digest`, `js_digests`, core and exclusions. Only what
 the generator can produce changed.
 
-<sworn r="path:conformance/sworn/differential_agreement_2.json#/disagree" k="numeric">712 of 150000 disagreed</sworn>
+of the same 150000 cases,
+<sworn r="path:conformance/sworn/differential_agreement_2.json#/disagree" k="numeric">712 disagreed</sworn>
 where the narrower grammar had found none, and
 <sworn r="path:papers/sworn/disagreement_classes_2.json#/verdict_changing_total" k="numeric">5</sworn>
 of the
@@ -58,8 +59,9 @@ After the first repair,
 and
 <sworn r="path:papers/sworn/disagreement_classes_3.json#/verdict_changing_total" k="numeric">0 of them changed a verdict.</sworn>
 After both,
-<sworn r="path:conformance/sworn/differential_agreement_4.json#/disagree" k="numeric">0 of 150000 disagreed,</sworn>
-over
+over the same 150000 cases
+<sworn r="path:conformance/sworn/differential_agreement_4.json#/disagree" k="numeric">0 disagreed,</sworn>
+across
 <sworn r="path:conformance/sworn/differential_agreement_4.json#/census/span_verdicts/HELD" k="numeric">1169 HELD</sworn>
 and
 <sworn r="path:conformance/sworn/differential_agreement_4.json#/census/span_verdicts/FAILED" k="numeric">3347 FAILED</sworn>

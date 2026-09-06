@@ -174,6 +174,10 @@
   }
  ],
  "disagreements_total": 31,
+ "javascript_used": {
+  "rev": "0ddcf3be",
+  "sha256": "140e45e13838cd1ec818f1d564f0d3eb74e021b3a91a28374c37157820c3810e"
+ },
  "receipt": "conformance/sworn/differential_agreement_3.json",
  "recorded_in_full": 31,
  "schema": "styxx.sworn.disagreement-classes/v1",

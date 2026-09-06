@@ -10,7 +10,9 @@ against a receipt alone and would run in a checkout that had never seen `differe
 """
 from __future__ import annotations
 
+import argparse
 import base64
+import hashlib
 import json
 import subprocess
 import sys
@@ -77,8 +79,41 @@ def generalise(path: str) -> str:
     return "/".join("*" if p.isdigit() else p for p in path.split("/"))
 
 
+def _js_for(receipt_obj, rev, work):
+    """The verifier the receipt was RUN with, not the one that happens to be checked out.
+
+    A receipt records the sha256 of both implementations. Re-deriving its cases against different
+    bytes classifies nothing — it compares old inputs to new code — so the digest is checked and a
+    mismatch refuses rather than proceeds quietly.
+    """
+    want = ((receipt_obj.get("implementations") or {}).get("javascript") or {}).get("sha256")
+    if rev:
+        blob = subprocess.run(["git", "-C", str(ROOT), "show",
+                               "%s:styxx/_data/sworn_verify.js" % rev], capture_output=True)
+        if blob.returncode != 0:
+            raise SystemExit("REFUSED: cannot read the verifier at %s" % rev)
+        path = work / "sworn_verify_at_rev.js"
+        path.write_bytes(blob.stdout)
+    else:
+        path = JS
+    got = hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+    if want and got != want:
+        raise SystemExit(
+            "REFUSED: this receipt was run against javascript %s but %s is %s.\n"
+            "         Re-deriving its cases against different bytes classifies nothing.\n"
+            "         Pass --js-rev REV naming a commit whose verifier matches."
+            % (want[:16], "the working tree" if not rev else rev, got[:16]))
+    return path, got
+
+
 def main(argv=None):
-    receipt = Path(argv[0]).resolve() if argv else ROOT / "conformance/sworn/differential_agreement_2.json"
+    ap = argparse.ArgumentParser()
+    ap.add_argument("receipt", nargs="?",
+                    default=str(ROOT / "conformance/sworn/differential_agreement_2.json"))
+    ap.add_argument("--js-rev", default=None,
+                    help="git rev whose styxx/_data/sworn_verify.js the receipt was run against")
+    a = ap.parse_args(argv)
+    receipt = Path(a.receipt).resolve()
     R = json.loads(receipt.read_text(encoding="utf-8"))
     records = R["disagreements"]
     print("receipt: %s" % receipt.name)
@@ -89,11 +124,13 @@ def main(argv=None):
 
     with tempfile.TemporaryDirectory() as td:
         work = Path(td)
+        js_path, js_sha = _js_for(R, a.js_rev, work)
+        print("javascript: %s (%s)\n" % (js_sha[:16], a.js_rev or "working tree"))
         runner = work / "r.js"
         runner.write_text(RUNNER, encoding="utf-8")
         inp, outp = work / "in.json", work / "out.json"
         inp.write_bytes(json.dumps(payload).encode("utf-8"))
-        res = subprocess.run(["node", str(runner), str(JS), str(inp), str(outp)],
+        res = subprocess.run(["node", str(runner), str(js_path), str(inp), str(outp)],
                              capture_output=True, timeout=900)
         if res.returncode != 0 or not outp.exists():
             raise SystemExit("node failed: " + res.stderr.decode("utf-8", "replace")[-400:])
@@ -147,6 +184,7 @@ def main(argv=None):
         "receipt": str(receipt.relative_to(ROOT)).replace("\\", "/"),
         "disagreements_total": R["disagree"],
         "recorded_in_full": len(records),
+        "javascript_used": {"sha256": js_sha, "rev": a.js_rev or "working tree"},
         "by_field": dict(classes),
         "verdict_changing_by_field": dict(verdict_changing),
         "verdict_changing_total": sum(verdict_changing.values()),
