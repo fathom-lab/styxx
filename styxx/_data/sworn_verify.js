@@ -804,7 +804,13 @@ class Manifest {
     if (d === null) return false;
     return this.declared_digest === d;
   }
+  // [B4] v0.2 R6 / SPEC_manifest_01_has_no_rung_v01_2026_09_06 R1: only a manifest/0.2 declares a
+  // rung. core() above digests `rung` for 0.2 alone, and DECISIONS["rung"] says a 0.1 "resolves at
+  // rung `undeclared`, never at L2" — but this read the field for any spec, exactly as sworn.py
+  // did, so both implementations contradicted the same printed decision and the differential
+  // harness could not see it. Repaired on both sides in one commit.
   rungStatus() {
+    if (this.spec !== "sworn/manifest/0.2") return ["undeclared", null];
     if (this.rung === null || this.rung === undefined) return ["undeclared", null];
     if (RUNGS.includes(this.rung)) return ["ok", this.rung];
     return ["unknown", String(this.rung)];
