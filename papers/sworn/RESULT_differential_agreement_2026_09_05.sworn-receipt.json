@@ -3,17 +3,17 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_differential_agreement_2026_09_05.md",
-  "inline_sha256": "7aa5384c892a96d1f8e2cf7c689a026fcde92426a2bbc0ffd0dbb58de07535d9",
-  "canonical_sha256": "d0476dabbc86809052364842dc66fb952d227f217f08e93eca373ef6470aaf60"
+  "inline_sha256": "66e007ed3fbf917c3ae8af22e59a4cddf644810911b326c4939e14272eda9e2b",
+  "canonical_sha256": "8efc942da8914f13831e2df21a25771c21bff2055e8b8da9fa1a1a29f4292630"
  },
- "commit": "854cb8c4f58693962ea0ce154ffb39753a65f5bf",
+ "commit": "e16d933c2be334dc0197f5c8738d7ce85bf89d85",
  "manifest_digest": null,
  "spans": [
   {
-   "at": 1338,
-   "start": 1338,
-   "end": 1416,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/compared",
+   "at": 1331,
+   "start": 1331,
+   "end": 1409,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/compared",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -28,14 +28,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 1516,
-   "start": 1417,
-   "end": 1462,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/agree",
+   "at": 1502,
+   "start": 1410,
+   "end": 1455,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/agree",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -50,14 +50,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 1658,
-   "start": 1463,
-   "end": 1475,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/disagree",
+   "at": 1637,
+   "start": 1456,
+   "end": 1468,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/disagree",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -72,14 +72,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 1770,
-   "start": 1476,
-   "end": 1510,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/gates/G-E/both",
+   "at": 1742,
+   "start": 1469,
+   "end": 1503,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/both",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -94,14 +94,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 1910,
-   "start": 1511,
-   "end": 1547,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/gates/G-E/python_only",
+   "at": 1875,
+   "start": 1504,
+   "end": 1540,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/python_only",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -116,14 +116,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 2059,
-   "start": 1548,
-   "end": 1586,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/gates/G-E/javascript_only",
+   "at": 2017,
+   "start": 1541,
+   "end": 1579,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/javascript_only",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -138,14 +138,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 2456,
-   "start": 1829,
-   "end": 1850,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/seed",
+   "at": 2407,
+   "start": 1822,
+   "end": 1843,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/seed",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -160,14 +160,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 2836,
-   "start": 2114,
-   "end": 2142,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/span_verdicts/MALFORMED",
+   "at": 2780,
+   "start": 2107,
+   "end": 2135,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/MALFORMED",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -182,14 +182,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 2986,
-   "start": 2143,
-   "end": 2165,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/span_verdicts/UNRESOLVED",
+   "at": 2923,
+   "start": 2136,
+   "end": 2158,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/UNRESOLVED",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -204,14 +204,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 3131,
-   "start": 2166,
-   "end": 2183,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/span_verdicts/FAILED",
+   "at": 3061,
+   "start": 2159,
+   "end": 2176,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/FAILED",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -226,14 +226,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 3267,
-   "start": 2184,
-   "end": 2198,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/span_verdicts/HELD",
+   "at": 3190,
+   "start": 2177,
+   "end": 2191,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/HELD",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -248,14 +248,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 3398,
-   "start": 2199,
-   "end": 2243,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/gates/G-R/value",
+   "at": 3314,
+   "start": 2192,
+   "end": 2236,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-R/value",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -270,14 +270,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 3621,
-   "start": 2316,
-   "end": 2353,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/document_malformed/unbalanced_fences",
+   "at": 3530,
+   "start": 2309,
+   "end": 2346,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/document_malformed/unbalanced_fences",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -292,14 +292,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 3797,
-   "start": 2358,
-   "end": 2391,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/census/document_malformed/invalid_utf8",
+   "at": 3699,
+   "start": 2351,
+   "end": 2384,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/document_malformed/invalid_utf8",
    "kind": "numeric",
    "verdict": "HELD",
    "reason": null,
@@ -314,14 +314,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 4294,
-   "start": 2726,
-   "end": 2815,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/implementations/python/sha256",
+   "at": 4189,
+   "start": 2719,
+   "end": 2808,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/implementations/python/sha256",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
@@ -333,14 +333,14 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   },
   {
-   "at": 4506,
-   "start": 2820,
-   "end": 2908,
-   "receipt": "path:conformance/sworn/differential_agreement_result.json#/implementations/javascript/sha256",
+   "at": 4394,
+   "start": 2813,
+   "end": 2901,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/implementations/javascript/sha256",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
@@ -352,7 +352,7 @@
    "resolved_sha256": "6f327081d02c88546e1ef2144163cc3860483fff048e24e4061a540131c85e95",
    "provenance": {
     "form": "path",
-    "note": "committed object at 854cb8c4f58693962ea0ce154ffb39753a65f5bf; authorship unchecked"
+    "note": "committed object at e16d933c2be334dc0197f5c8738d7ce85bf89d85; authorship unchecked"
    }
   }
  ],
@@ -407,7 +407,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "4e65edb4b17eb151d8db03b9bc7f53e4ea72fb2529abe1988946f31e5723c79d",
+ "digest": "cc2e9a7fc337c3e80b2a5eb6472eaf329d22f100a8d5163f7ee911bda0a31d7b",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -423,5 +423,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "193b9d54cf91ae4a54a34139e078723dc935af9c702e62612b7c3f757c232100",
- "timestamp": "2026-09-05T23:30:00Z"
+ "timestamp": "2026-09-06T00:24:59Z"
 }
