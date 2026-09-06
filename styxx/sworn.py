@@ -1355,7 +1355,23 @@ def _check_numeric(inner_text: str, res: _Resolved, parsed: dict) -> Tuple[str, 
         return "MALFORMED", "leaf_not_numeric", {"leaf": _safe_text(leaf)}
     detail = {"printed_token": tok, "printed": rhs, "receipt": str(leaf), "receipt_rounded": lhs,
               "fractional_digits": frac, "rounding": ROUNDING}
+    # DECISIONS["rounding"] is deliberate and it is right: an author writing 0.42 against a receipt
+    # of 0.4211 is honestly rounding, and demanding an exact match would FAIL every rounded figure
+    # in the corpus. But the rule quantizes to the AUTHOR'S printed precision and has no floor, so
+    # at zero fractional digits it stops rounding and starts erasing: a receipt of 0.4211 against
+    # the sentence "the A-share is 0." is HELD, with a genuine harness-minted receipt and nothing
+    # malformed anywhere.
+    #
+    # The line drawn here is not a threshold anyone has to argue about. It is the case where the
+    # printed figure carries NO information about the receipt at all: a non-zero receipt that
+    # rounds to zero. The verdict does not change — that would break the honest-rounding rule this
+    # format needs — but the span says so, so a reader of the receipt is not left to notice that
+    # `receipt` and `receipt_rounded` disagree by everything.
     if lhs == rhs:
+        if not leaf.is_zero() and Decimal(lhs).is_zero():
+            detail["rounded_away"] = ("the receipt is %s and the sentence printed %d fractional "
+                                      "digits, so the comparison was against 0 — this span says "
+                                      "nothing about the receipt's value" % (str(leaf), frac))
         return "HELD", None, detail
     return "FAILED", "value_mismatch", detail
 
@@ -1797,6 +1813,13 @@ def _headline(core: dict) -> str:
     # a sentence contradicting its own receipt goes from SWORN-FAILED to SWORN-HELD by changing one
     # string. Naming the verdict differently is a breaking change to a published vocabulary and is
     # the operator's call; saying so out loud on the line a reader actually reads is not.
+    # A HELD span whose comparison was against zero says nothing about its receipt. It is honest
+    # rounding taken past the point where anything survives, and it is invisible on a line that
+    # only counts verdicts.
+    _erased = [s for s in core["spans"] if (s.get("detail") or {}).get("rounded_away")]
+    if _erased:
+        line += ("\n  WARNING: %d HELD span(s) compared against 0 because the sentence printed no "
+                 "fractional digits; they say nothing about the receipt's value" % len(_erased))
     if core["document_verdict"] == "SWORN-HELD" and c["UNRESOLVED"]:
         if c["HELD"] == 0:
             line += ("\n  WARNING: nothing was checked — all %d sworn spans are UNRESOLVED, and "
