@@ -51,7 +51,7 @@
   },
   "cli": {
    "file": "vectors/cli.json",
-   "sha256": "b413b91799d6fe35d495fa465e506a08a88b5d3f8546484e777466dbf885cf66",
+   "sha256": "3007563b213a487b10146b8fa2131f461d631112838dad9c64812e316ed8d786",
    "count": 9
   },
   "coverage": {
@@ -76,7 +76,7 @@
   },
   "gaming": {
    "file": "vectors/gaming.json",
-   "sha256": "a794405f2dca5121ae1f3c3fbd7713990ecaeca322ab0b8bec2d1ecbc239d3c9",
+   "sha256": "66e0ac1f69de73893b711a645cd5050415159891e61ed1c1a110d15c4a1a37d5",
    "count": 51
   },
   "invariants": {
@@ -106,7 +106,7 @@
   },
   "receipt_v1": {
    "file": "vectors/receipt_v1.json",
-   "sha256": "9e8abcad42fa0058eb24fdb517898889b8868ec1d106b0cc7fddd2b76f632581",
+   "sha256": "7a3d2636eb52c321a34ee61ea49a5899f941bb2fbeb24e9d1a608b75484c01f3",
    "count": 5
   },
   "receipts": {
@@ -116,7 +116,7 @@
   },
   "rules": {
    "file": "vectors/rules.json",
-   "sha256": "e4be9c07fe4194d49aa9b28a09fd143e09aa4ddce023d3478aa7ae9ee0522929",
+   "sha256": "8f3b92ee89cfa47b6fa9434ff85437e80887c8bf4d68379844b8b323495e408c",
    "count": 22
   },
   "sidecar_hardening": {
@@ -142,7 +142,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "cddcd1a5d34b96ef51320d7e3fb55d4d95a6d9ca7da3d30a3581043069eff205",
+  "sha256": "2961cb3591ce30545e834b55906f6499982a9e54a67e42afde0a4c05e78bd121",
   "count": 3977
  },
  "observer": {
@@ -442,15 +442,15 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b",
+  "sworn_sha256": "66a7f7aa7e86c4db63101b0cf2142c8f3186ea4707a2b315ce8835758af7d3e1",
   "sources_sha256": {
-   "tests/test_sworn.py": "5591df490eed02f9090c4fc317f8567605ee08835d5541de4f1b36b098309640",
+   "tests/test_sworn.py": "86efbc2c3576ab52755f2de4b2a4ba16171ee67306b05210f415bbb42b52dfd7",
    "tests/test_sworn_attacks.py": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705"
   },
   "python": "3.12.10",
   "platform": "win32",
   "styxx_version": "7.47.0",
-  "pytest_summary": "348 passed"
+  "pytest_summary": "349 passed"
  },
- "set_sha256": "85e2d3b95b778ad61402225e41727e7844ba42bd80daa36b453bc0247d6e371f"
+ "set_sha256": "4ff865e3da97309fcf8baf860ab5477386b2bc6996d0f2230c4bfecab083e7c5"
 }
