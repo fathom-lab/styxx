@@ -1,0 +1,24 @@
+{
+ "after": {
+  "failed": 0,
+  "failed_ids": [],
+  "passed": 10,
+  "sworn_sha256": "ffcf737fa3bd8320631d325744ba897fd6914530825a7b7140917941a55881d8"
+ },
+ "before": {
+  "failed": 3,
+  "failed_ids": [
+   "tests/test_sworn_tree_channel_authorship.py::test_absent_cannot_be_earned_over_the_authors_own_bytes",
+   "tests/test_sworn_tree_channel_authorship.py::test_author_minted_bytes_are_refused_on_every_form[path]",
+   "tests/test_sworn_tree_channel_authorship.py::test_author_minted_bytes_are_refused_on_every_form[prereg]"
+  ],
+  "passed": 7,
+  "sworn_sha256": "6cf2618af2fab25208fd6ee1ad30503910576bb4c878c65f6099a3b9402d0e7f"
+ },
+ "guard": "tests/test_sworn_tree_channel_authorship.py",
+ "guard_tests": 10,
+ "reading": "the guard fails against the verifier as shipped and passes against it repaired; the tests that pass in BOTH states are the honest-case controls, which a repair that refused every tree receipt would have failed",
+ "repair_commit": "4017224c",
+ "schema": "styxx.sworn.repair-watched-to-fail/v1",
+ "spec": "papers/sworn/SPEC_tree_channel_authorship_v01_2026_09_06.md"
+}
