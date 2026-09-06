@@ -1864,6 +1864,22 @@ def main(argv=None) -> int:
         _write_json_lf(out, side)
         print("canonical: %d spans, text sha256 %s -> %s"
               % (len(side["spans"]), side["document"]["sha256"][:12], out.name))
+        # A numeric span carrying two digit-bearing tokens is MALFORMED number_count at verify
+        # time, and that is decidable HERE: _number_token reads the span's own inner text and
+        # needs no manifest, no repository and no receipt. Saying nothing costs the author a
+        # commit — the sidecar names a commit, so a late repair means re-canon and re-swear.
+        # Reported, never refused: canon's job is a faithful round trip and verify's is the
+        # verdict.
+        for _sp in side["spans"]:
+            if _sp.get("kind") != "numeric":
+                continue
+            _inner = side["text"][_sp["start"]:_sp["end"]]
+            _why, _tok, _seen = _number_token(_inner)
+            if _why:
+                print("  WARNING @%d: numeric span will be MALFORMED %s at verify — %s"
+                      % (_sp.get("start", 0), _why,
+                         ("digit-bearing tokens %r" % (_seen,)) if _seen
+                         else "no digit-bearing token"))
         return 0
 
     if a.cmd == "render":
