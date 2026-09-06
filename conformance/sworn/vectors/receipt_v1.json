@@ -4,10 +4,10 @@
  "count": 5,
  "vectors": [
   {
-   "id": "1ac09fb68db347e5f622a050326cbfa3aec95cbee93a3fd97e0e1e32aa9d42cf",
+   "id": "54d5c12e774b220d0cf9f0418cf317fc1365371ad7354bee8e3cdd7d020f9de4",
    "family": "receipt_v1",
    "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
    ],
    "rules": [
     "R9"
@@ -17,18 +17,18 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "11dcfd4297028220e6a970431970fa2f4f342d90c702f3809ef6ba22a6ee3064",
+    "receipt": "2ff7e776a69a7483c72f5cf7428fe81a87850652c2b3cf5dd6c76d2e85ca17f9",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
     "tree": null
    },
    "expect": {
     "outcome": "check",
     "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
     }
    }
   },
@@ -85,6 +85,35 @@
    }
   },
   {
+   "id": "78e242be88d40bb2c534e76c0c2d11596005598d088a33ea0e8b06983b770838",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "67ab48326b15c904bb4e662856a08f7dd5793cde480eea9183c89d6382c13abe",
+    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
+    "sidecar": null,
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": true,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
    "id": "b17905ec3c1dd099de869fafd1bc77054597d2990d8242434a6f6d1e74dcf9fd",
    "family": "receipt_v1",
    "sources": [
@@ -114,36 +143,7 @@
    }
   },
   {
-   "id": "d2e80be4e06b3ae5ace5a68e8037a6a20364edb997afb900f730f6f3ca4b0ba7",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "2f2afc7f3ac65b0624d7464bec5e48404ace301593dcfb1044d7ae9436880e54",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "ff5dea7c8e7996648c3fcc9540a2f229cdd8d4fd2aaab91f59c92a8d03f013f1",
+   "id": "b3f17c056f2ab548e56ccf07fd3724ad150db5693a598334cb982ceede11affe",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -156,8 +156,8 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "e919488b850d4cf58587bbf2be9f71656122281e2a07120f7dd3ecb081be02b0",
-    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
+    "receipt": "950a09b90c81f50195967f3ead7ac78a6d54b14fc0bf4bf58665bc830ecc4ec8",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
@@ -166,7 +166,7 @@
     "outcome": "check",
     "check": {
      "status": "FAILED",
-     "digest_match": true,
+     "digest_match": false,
      "verdict_reproduces": false
     }
    }

@@ -4,7 +4,7 @@
  "count": 9,
  "vectors": [
   {
-   "id": "18c28390bbdc64404c82e0d7cb19c9104432e4e47a7801bec705b04e9b73febb",
+   "id": "0dedae48e4a3314a529b38da6af90a0102bada86ea3433890bcd0347e9eef8e1",
    "family": "cli",
    "sources": [
     "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
@@ -15,7 +15,7 @@
    "mode": "receipt_check",
    "requires": [],
    "inputs": {
-    "receipt": "0ffd7b7603fc303ee0cc34460ccbaefc1a059240075b7d0fa9c8fe1086cf7162",
+    "receipt": "7a08e174dd49b816fb38029c4bba79202143389110a1d03aa8c28368083a3b7e",
     "document": null,
     "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
     "manifest": null,

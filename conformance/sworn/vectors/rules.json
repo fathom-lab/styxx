@@ -393,7 +393,7 @@
    }
   },
   {
-   "id": "4db52e25020ba547d2630622c21fd90950f4c7f6c42e549d4bba981b0bd41578",
+   "id": "6b2d1ba516a863069bccd11c3943483a55495ff7eea43ce26e0f2d09e8afdb76",
    "family": "rules",
    "sources": [
     "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
@@ -406,7 +406,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "8e1f8272ac5694c9d348e121b35a7b7faa9a26b130e6168d03534440e1a609e7",
+    "receipt": "905fe0aadf57b2c8a825be35cc39ce2fcba32ae3642aff4115cba67e5a5c2f61",
     "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
     "sidecar": null,
     "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
@@ -574,64 +574,6 @@
    }
   },
   {
-   "id": "9a3788085ef5dc116500bd4d376bf88f22ccc9727e39311a3b61b98cd4946c20",
-   "family": "rules",
-   "sources": [
-    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "cdb0a3199afbf068f6caad5ce439ca204d9b7e0d333cc291094e6a2e78274479",
-    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
-    "sidecar": null,
-    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "a6e61a2cdbda5415571094dcd655d94f6c3617287cc75d8371e424dbc5ddb3dd",
-   "family": "rules",
-   "sources": [
-    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "a53b314d350f43075a6f277f753490bf3a1b5181161b99837b602607effa37ab",
-    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
-    "sidecar": null,
-    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "a6fa5c5b4b7f8f57e317bf2cd59a16e8337aff022eee97b0258fb8eb0d09ef96",
    "family": "rules",
    "sources": [
@@ -684,6 +626,35 @@
    }
   },
   {
+   "id": "acf63a10962ed374bc1b8e4f411e0dc34757593dd00e8673a20a030ecf92b502",
+   "family": "rules",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "04fac2172186d29b09102190e39fb981f1b98e0212e7b9d0bfe84e39a599fe49",
+    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
+    "sidecar": null,
+    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "adb95fe1dc9efe4c179046ef7f995857af7512e25313eb156de35835501c8ce2",
    "family": "rules",
    "sources": [
@@ -699,6 +670,35 @@
    },
    "expect": {
     "outcome": "accepted"
+   }
+  },
+  {
+   "id": "ba7a6f3db820511cbdbb670d744949082230e6239af956fbbea7e7026e6756a5",
+   "family": "rules",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "219cd5e4256dfec1e6ec5688d08a77c1dc9b098c6f0c6c0c881d80bd4a1f3b62",
+    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
+    "sidecar": null,
+    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
    }
   },
   {
