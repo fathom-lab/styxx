@@ -1786,6 +1786,24 @@ def _headline(core: dict) -> str:
                "n/a" if ndiff is None else ndiff, rungs))
     if core["document_malformed"]:
         line += "  document-MALFORMED: %s" % core["document_malformed"]["reason"]
+    # SWORN-HELD is decided by `FAILED == 0 and MALFORMED == 0` and does not consult UNRESOLVED, so
+    # a document in which NOTHING was checked carries the same headline as one in which everything
+    # held. That conflation is the one this module's own doctrine refuses four lines from the top of
+    # the file — "a document that swore nothing is UNSWORN, never 'no failures'" — applied to
+    # sworn_total == 0 and not to unresolved == sworn_total.
+    #
+    # It is author-reachable without forging anything: a manifest rung this verifier does not know
+    # makes every span UNRESOLVED with reason `rung_unknown`, BEFORE any receipt id is looked up, so
+    # a sentence contradicting its own receipt goes from SWORN-FAILED to SWORN-HELD by changing one
+    # string. Naming the verdict differently is a breaking change to a published vocabulary and is
+    # the operator's call; saying so out loud on the line a reader actually reads is not.
+    if core["document_verdict"] == "SWORN-HELD" and c["UNRESOLVED"]:
+        if c["HELD"] == 0:
+            line += ("\n  WARNING: nothing was checked — all %d sworn spans are UNRESOLVED, and "
+                     "SWORN-HELD does not mean they held" % c["UNRESOLVED"])
+        else:
+            line += ("\n  WARNING: %d of %d sworn spans are UNRESOLVED and did not hold; "
+                     "SWORN-HELD reports only that none FAILED" % (c["UNRESOLVED"], core["sworn_total"]))
     return line
 
 
