@@ -90,9 +90,12 @@ That is a claim about what a grammar can produce and it needs no pairing to be t
 
 The detection **rate** is a different matter, and the comparison this spec asked for cannot be made.
 `NOTE_unpaired_samples_2026_09_06.md` withdraws it in full. `case(seed, index)` draws from a stream
-seeded on `(seed, index)`, every draw advances that stream, and the widening added draws — so of the
-first 500 cases at the same seed, only 51 produce the same document under both grammars. Two runs
-"at the same seed" were two samples from two distributions. G-S, the gate that would have made the
+seeded on `(seed, index)`, every draw advances that stream, and the widening added draws. Of
+<sworn r="path:conformance/sworn/generator_pairing.json#/cases" k="numeric">the first 500 cases at the same seed,</sworn>
+<sworn r="path:conformance/sworn/generator_pairing.json#/identical_documents" k="numeric">only 51 produce the same document under both grammars</sworn>
+and
+<sworn r="path:conformance/sworn/generator_pairing.json#/different_documents" k="numeric">449 differ.</sworn>
+Two runs "at the same seed" were two samples from two distributions. G-S, the gate that would have made the
 taxonomy refutable, cannot be evaluated for the same reason.
 
 **Any change to a seeded generator, including a purely additive one, changes every case the seed

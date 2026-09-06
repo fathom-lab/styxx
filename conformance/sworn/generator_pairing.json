@@ -1,0 +1,22 @@
+{
+ "cases": 500,
+ "different_documents": 449,
+ "generators": {
+  "after": {
+   "path": "conformance/sworn/differential.py",
+   "rev": "1edbbb24",
+   "sha256": "e6fce6354b1b89e0f39ba42770f3b5dba05ac1a0cfe7b0183cb1cbc70f9e1b32"
+  },
+  "before": {
+   "path": "conformance/sworn/differential.py",
+   "rev": "1edbbb24~1",
+   "sha256": "ecfcb5cf1fac03f7414b2011e8fddb5cb69b10e7f88143dcfef3dda92465ac5a"
+  }
+ },
+ "identical_documents": 51,
+ "identical_whole_cases": 7,
+ "question": "how many cases survive a generator change at the same seed — i.e. whether 'same seed, same size' gives paired samples across generator versions",
+ "reading": "a case is built from a random.Random seeded on (seed, index); every draw advances that stream, so a generator change that ADDS a draw re-randomises every case after it. Fixing the seed does not fix the sample, and a before/after comparison over these two runs is not paired.",
+ "schema": "styxx.sworn.generator-pairing/v1",
+ "seed": 20260905
+}

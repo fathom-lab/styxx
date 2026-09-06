@@ -29,6 +29,8 @@ new draw re-randomises everything after it.**
 Measured, not argued: of the first 500 cases at seed 20260905,
 
 **only 51 produce the same document under both grammars. 449 of 500 are different documents.**
+(Receipt: `conformance/sworn/generator_pairing.json`, which reloads both generators from git by
+commit rather than from the working tree, so it re-derives in any checkout carrying the history.)
 
 So "grammar v1 at seed 20260905" and "grammar v2 at seed 20260905" are not the same 150000 inputs
 with some enriched. They are two samples from two distributions that happen to share a seed. A
