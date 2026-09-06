@@ -82,6 +82,23 @@ def test_a_shallow_clone_accuses_nobody(audit, monkeypatch, capsys):
     assert "INDETERMINATE" in out and "not evidence of a fabricated one" in out
 
 
+def test_it_walks_nested_receipts_not_only_the_top_level(audit):
+    """The first version saw 51 of 2118 receipt-shaped objects and would have called that all."""
+    r = {"spans": [], "document_verdict": "UNSWORN"}
+    doc = {"runs": [{"result": r}, {"result": {"nope": 1}}], "top": r}
+    found = dict(audit._receipts_in(doc))
+    assert set(found) == {"$.runs[0].result", "$.top"}, found
+
+
+def test_the_conformance_vector_exclusion_is_stated_not_silent(audit, capsys):
+    """Coverage that holds by accident is not coverage: say what is skipped, and what it costs."""
+    audit.main([])
+    out = capsys.readouterr().out
+    assert "conformance vectors, not audited" in out
+    assert audit.VECTORS_PREFIX in out
+    assert "make a tree claim" in out
+
+
 def test_it_runs_as_a_command(audit):
     """CLI output is behaviour: the audit must work when invoked the way its docstring says."""
     p = subprocess.run([sys.executable, str(AUDIT)], capture_output=True, cwd=str(ROOT))

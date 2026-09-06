@@ -110,6 +110,27 @@ Three out-of-band lookups become one committed, checked file.
 and it does nothing for a receipt that leaves this repository. The declarations file says so about
 itself: a declaration records that someone decided a claim is a fixture; it does not make it true.
 
+## The guard's own coverage, stated
+
+The audit's first version read only the top level of each tracked JSON file. That is 51 of the
+**2118** receipt-shaped objects in this repository; the other 2067 are nested, and it would have
+reported "every receipt" while seeing 2.4% of them. None of the 2067 carries a tree claim, so
+nothing was slipping through -- but coverage that holds by accident is not coverage, and the next
+artifact to nest a tree-claiming receipt would have passed in silence.
+
+It walks nested receipts now. The 2067 are all conformance vectors: expected verifier outputs over
+synthetic documents, fixtures by construction and history by this lab's rules, so they are not
+claims about the world and are not audited. That exclusion is scoped to `conformance/sworn/vectors/`
+**by name**, and both numbers print on every run:
+
+```
+  conformance vectors, not audited     : 2067 receipt(s) under conformance/sworn/vectors/,
+                                         of which 0 make a tree claim
+```
+
+The second number is the one that matters -- it is what the exclusion currently costs, and it is
+zero. If a vector ever gains a tree claim, the line says so instead of hiding it.
+
 ## An absent commit is not an accusation
 
 The audit's first version would have gone red on its first CI run, accusing all 34 backed receipts
