@@ -29,6 +29,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import textwrap
 import traceback
 from collections import Counter
 from pathlib import Path
@@ -50,9 +51,12 @@ def _sha(b: bytes) -> str:
 def _build(attack: dict):
     """Compile the attack's builder body into a function and call it."""
     body = attack["builder"]
-    src = "def _mk():\n" + "\n".join(
-        ("    " + ln if ln.strip() and not ln.startswith("    ") else ln)
-        for ln in body.splitlines())
+    # textwrap.dedent + indent, NOT a per-line "add four spaces unless it already has them". The
+    # latter collapses a nested `def` onto its own body whenever that body was already indented,
+    # which made ten perfectly good attacks fail to parse and be recorded as unrunnable. A harness
+    # corrupting its own input is the same defect class as a classifier reading the working tree
+    # instead of the bytes a receipt names, and it would have silently shrunk the denominator.
+    src = "def _mk():\n" + textwrap.indent(textwrap.dedent(body), "    ")
     ns = {"sworn": sworn, "json": json, "base64": base64, "hashlib": hashlib}
     exec(compile(src, "<attack:%s>" % attack.get("name", "?")[:40], "exec"), ns)  # noqa: S102
     return ns["_mk"]()
