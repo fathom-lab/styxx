@@ -1,0 +1,39 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "2274cd487f3f1cab38dab089c83b4c16330dd992",
+ "document": {
+  "name": "RESULT_tree_channel_authorship_2026_09_06.md",
+  "sha256": "0cea2305067374d90c29b5cd62f051ababff55b0129b998f48ec65391a128389"
+ },
+ "text": "# RESULT — invariant 2 held on one channel of three, and now holds on all of them\n\nFathom Lab · 2026-09-06 · Spec: `SPEC_tree_channel_authorship_v01_2026_09_06.md`, frozen before\nthe repair. Receipt: `tree_channel_repair.json`, re-derived from git by\n`tree_channel_repair_receipt.py`. **This document is itself sworn.**\n\n## The invariant\n\n**The agent cannot swear to bytes it minted.** A receipt whose `sha256` appears in the manifest's\n`authored_sha256` — every byte-object the agent produced this turn — is refused as\n`receipt_author_minted`. Without this, a verifier is something an author can feed its own output to\nand call evidence.\n\n## Where it was enforced\n\n`_resolve` enforced it on the `rN` branch, at one line. The tree branch — `path:` and `prereg:` —\ncomputed the same digest from the resolved bytes and never compared it to anything. Confirmed by\nexecution: the same bytes, which the manifest itself listed as agent-authored, sworn to three ways.\n\n| form | `numeric` | `absent` |\n|---|---|---|\n| `rN` | MALFORMED `receipt_author_minted` | MALFORMED `receipt_author_minted` |\n| `path:` | **HELD** | **HELD** |\n| `prereg:` | **HELD** | — |\n\nNaming the same bytes by path instead of by id was the whole attack. And `absent` — the verdict that\nsays *this never happened*, the strongest in the format — was reachable over the author's own\ncommitted file that way.\n\nIt came from the sidecar battery's adversary, in its list of what nobody had attacked. The\nconformance set regenerated after the repair with **no moved core**, which says the set never\nexercised this case either — consistent with `RESULT_suite_power_2026_09_06.md` finding the tree\nlayer defended at 4 of 14.\n\n## The repair, and how it was checked\n\nOne comparison on the tree branch, with the existing reason string. `complete = True` stays where\nit was: a committed blob *is* complete, and the defect was never completeness — it was assuming\ncompleteness before checking authorship.\n\nThe guard was written first and run against the verifier as shipped. Of\n10 tests,\n3 failed before the repair\n— `path:`, `prereg:`, and `absent`-by-path — and\n0 failed after.\nThe\n7 that passed in both states\nare the ones that give the repair its shape: the `rN` refusal unchanged, an honest committed file\nstill resolving by path and by digest, `absent` still holding over it, and an empty\n`authored_sha256` refusing nothing. A repair that refused every tree receipt would have failed them.\n\nThe receipt is re-derived from git, not remembered: `tree_channel_repair_receipt.py` reads the\nverifier at the repair commit and at its parent, runs the guard against each in a scratch copy, and\nwrites both counts.\n\n## What this does not say\n\n**That `path:` and `prereg:` are now safe.** The tree channel has no `kind_of_source`, so the other\nhalf of the `rN` refusal — `kos in SOURCE_KINDS_AUTHOR` — has no analogue there. A file the agent\ncommitted under a name the harness never digested is still not caught. `authored_sha256` is the\nmanifest's record of what the agent produced; if the harness recorded no digest, nothing here can\nrefuse it. That is a limit of the manifest, stated rather than solved.\n\n**That this was hard to find.** It was one line, visible by reading the two branches side by side,\nand it was named by an agent asked to list what nobody had attacked. It survived because no test\nand no vector ever swore author-minted bytes by path.\n\n---\n\n*The rule was written once and applied to one branch. Two others computed the same digest, and\nneither looked at it.*\n",
+ "spans": [
+  {
+   "start": 2053,
+   "end": 2062,
+   "receipt": "path:papers/sworn/tree_channel_repair.json#/guard_tests",
+   "kind": "numeric"
+  },
+  {
+   "start": 2063,
+   "end": 2089,
+   "receipt": "path:papers/sworn/tree_channel_repair.json#/before/failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2143,
+   "end": 2158,
+   "receipt": "path:papers/sworn/tree_channel_repair.json#/after/failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2163,
+   "end": 2191,
+   "receipt": "path:papers/sworn/tree_channel_repair.json#/before/passed",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
