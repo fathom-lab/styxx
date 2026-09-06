@@ -79,8 +79,12 @@ function sha256Bytes(bytes) {
 /* ============================================================ bytes and text */
 
 const _ENC = new TextEncoder();
-const _DEC_STRICT = new TextDecoder("utf-8", { fatal: true });
-const _DEC_LOOSE = new TextDecoder("utf-8");
+// ignoreBOM:true is the WHATWG spelling of "do not treat a BOM specially — give it to me as a
+// character". Left at its default of false, TextDecoder STRIPS a leading U+FEFF, which made
+// jsonStrict's BOM refusal below unreachable and made this side accept a BOM-prefixed receipt
+// payload that styxx/sworn.py refuses. Python's bytes.decode never strips one.
+const _DEC_STRICT = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+const _DEC_LOOSE = new TextDecoder("utf-8", { ignoreBOM: true });   // matches decode(errors="replace")
 
 function utf8(s) { return _ENC.encode(s); }
 
