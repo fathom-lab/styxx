@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — prior-art survey: the sentence the plan held back is priced against nineteen fetches
+
+**`papers/sworn/SURVEY_sworn_neighbours_2026_09_05.md`, run against the procedure frozen three
+days earlier in `papers/sworn/PROTOCOL_sworn_prior_art_2026_09_02.md`, which named its nineteen
+sources, its seven clauses, its question list and its outcome table before anything was fetched.**
+Leg 3, item 6 of `papers/PLAN_the_next_level_2026_09_02.md`. It discharges owed item 5 of
+`SPEC_sworn_output_v02_2026_09_02.md`, the same line in `RESULT_sworn_v02_ships_2026_09_02.md`,
+and the entry this file has carried since v0.1: *the prior-art survey before any "we know of no
+other"*.
+- **Every source was read, none was skimmed, none was unfetchable.** Nineteen of nineteen, each
+  with the URLs as fetched, the time of the fetch and the sha256 of the page bytes saved from it,
+  in `papers/sworn/sworn_prior_art_survey.json`. Two readings the 2026-08-26 OATH survey left owed
+  are done: arXiv 2606.27934 in full rather than from its abstract, and arXiv 2509.06902 under a
+  frozen procedure rather than from a one-afternoon pilot. Both identifiers the procedure asked to
+  verify resolve, and the one the list named only by topic is recorded under the title arXiv
+  reports.
+- **No clause was retired and none came back free.** All six are OCCUPIED, so each survives only
+  with a neighbour named beside it, and the surviving sentence is written verbatim in the survey
+  with the companion paragraph rule 4 requires it to travel with.
+- **The two clauses the plan named no occupant for both have occupants.** C2PA carries
+  `manifest.unknownProvenance` for content with no manifest and Proof-Carrying Certificates for LLM
+  Pipelines reports an Abstain verdict on an assurance card; Deterministic Integrity Gates prints
+  an untraced share, honest-signal states row by row what its gate does not cover, and a Registered
+  Report puts every unregistered analysis in a section named as such.
+- **Two sources come within one clause of the whole conjunction.** Deterministic Integrity Gates
+  does everything but the distinct verdict for a document that bound nothing; Proof-Carrying
+  Certificates does everything but the free-text host, which it declines on purpose. Nothing read
+  does all six.
+- **The clause about binding whole sentences survives on one word.** Two sources reach sentences of
+  a free-text report — one extracts claims by script, one segments and judges with a model — and
+  neither binds, so under the frozen rule neither can retire the clause. The survey says so instead
+  of letting the word work quietly.
+- **The reproducible-report family scores silent on the kinds clause, not occupied.** An inline
+  value in knitr, Sweave, Quarto or MyST-NB is substituted rather than compared, so nothing can
+  disagree with it and there is no verdict to report.
+- **A dated errata is appended to the frozen procedure**, editing nothing above it: the survey's
+  filename, the actual title of one source, the two planned URLs that served this agent a 403 and a
+  client-rendered shell, the digest-of-fetched-bytes field the receipt adds, and the
+  extract-versus-bind distinction that decided every cell of the sentences clause.
+- **What it does not say.** That the sentence is true. Nineteen named sources are not the
+  literature; the survey was run by one agent in one pass with no independent re-fetch, unlike the
+  OATH survey; the rows are authored and the script only checks their shape and derives the
+  statuses from the frozen tables. It ranks no one, and credits by name every neighbour that built
+  a piece of this before this lab did.
+- **Owed, unchanged and restated:** a human-reviewed pass before any of it goes outward; an
+  independent re-fetch of the nineteen; a frozen procedure for the two conjunctions this one did
+  not price, the diffgate sentence and the capsule sentence; and the v0.1 second-question sentence,
+  priced properly or retired.
 - **Two things the suite was saying about the machine rather than the repository, both found by
   building this leg, both fixed here.** A subprocess that dies having written nothing is not a
   digest that moved: the conformance regeneration check spawns a pytest run, and under this box's
