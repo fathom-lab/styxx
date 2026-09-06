@@ -1,0 +1,63 @@
+{
+ "killed_by_exactly_one_test": 9,
+ "killed_by_five_or_fewer": 20,
+ "killed_total": 25,
+ "killing_test_files": {
+  "tests/test_sworn.py": 90,
+  "tests/test_sworn_attacks.py": 19,
+  "tests/test_sworn_dogfood.py": 105
+ },
+ "note": "killed_by counts are scraped from pytest's FAILED/ERROR lines; one non-test id was produced by a test that captures `sworn check` output beginning 'FAILED  digest=', and is excluded here by requiring a .py suffix. It never affected a verdict, which comes from the return code.",
+ "question": "a kill rate says a layer is defended; it cannot say by how much",
+ "receipt": "conformance/sworn/suite_power.json",
+ "schema": "styxx.sworn.suite-power-concentration/v1",
+ "single_assertion_defences": [
+  {
+   "layer": "receipt",
+   "name": "same_verifier_build keys on the version string, not the build hash",
+   "test": "tests/test_sworn.py::TestVerdictReceipt::test_a_receipt_from_another_verifier_build_is_reported_not_hidden"
+  },
+  {
+   "layer": "receipt",
+   "name": "a tree handle keeps its own commit when the document names none",
+   "test": "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_the_commit_the_document_names_wins_over_the_tree_handle"
+  },
+  {
+   "layer": "coverage",
+   "name": "0/0 sentence_share reports a perfect floor instead of null",
+   "test": "tests/test_sworn.py::TestDoctrine::test_coverage_of_an_unsworn_document_is_a_zero_floor_not_undefined"
+  },
+  {
+   "layer": "coverage",
+   "name": "an observer that raised publishes its partial count as if complete",
+   "test": "tests/test_sworn.py::TestDoctrine::test_the_observer_cannot_touch_a_verdict"
+  },
+  {
+   "layer": "sidecar",
+   "name": "spec guard turned into a conjunction, so an unknown sidecar spec is accepted",
+   "test": "tests/test_sworn.py::TestCanonical::test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused"
+  },
+  {
+   "layer": "sidecar",
+   "name": "exact-key-set refusal reduced to a missing-key check",
+   "test": "tests/test_sworn.py::TestCanonical::test_a_sidecar_with_an_unknown_spec_or_extra_keys_is_refused"
+  },
+  {
+   "layer": "sidecar",
+   "name": "span ordering allows one byte of overlap",
+   "test": "tests/test_sworn.py::TestCanonical::test_a_sidecar_whose_spans_overlap_or_carry_a_verdict_is_refused"
+  },
+  {
+   "layer": "tree",
+   "name": "SnapshotTree.find_sha256 answers a prereg from a non-blob entry",
+   "test": "tests/test_sworn.py::TestSnapshotTree::test_a_prereg_digest_is_found_among_embedded_blobs_and_not_among_unembedded_ones"
+  },
+  {
+   "layer": "receipt",
+   "name": "verify_receipt reports VERIFIED on the digest alone",
+   "test": "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+  }
+ ],
+ "top_killing_file": "tests/test_sworn_dogfood.py",
+ "top_killing_file_kills": 105
+}

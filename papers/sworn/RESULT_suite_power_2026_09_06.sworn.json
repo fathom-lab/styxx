@@ -1,0 +1,75 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6",
+ "document": {
+  "name": "RESULT_suite_power_2026_09_06.md",
+  "sha256": "0a9bef8c8afeb00d6f3eece829e310459cfd509d5a1b30dae3df356ad9c5933b"
+ },
+ "text": "# RESULT — half the changes to the layers nothing can reach would ship green\n\nFathom Lab · 2026-09-06 · Spec: `SPEC_suite_power_v01_2026_09_06.md`, frozen with its five gates\nbefore any mutant ran. Catalogue: `conformance/sworn/suite_power_catalogue_audited.json`, committed\nbefore the run. Receipt: `conformance/sworn/suite_power.json`. **This document is itself sworn.**\n\n## What this measures and why it had to be this\n\n`RESULT_mutation_coverage_2026_09_05.md` found six blind spots no generator can ever reach. They are\nnot gaps in a grammar — they are whole layers the differential does not touch, because the\nJavaScript verifier has no repository and the sidecar and receipt layers sit outside the compared\nverdict core. `RESULT_aperture_closure_2026_09_06.md` then showed what a blind spot can hide: two\nreal defects, one verdict-changing, in a region two independent instruments called clean.\n\nThese layers are in exactly that condition and have no second implementation to compare against. The\nonly instrument left is the test suite, and the question is the one anybody about to change them\nactually has: **if I broke this line, would anything fail?**\n\n## The result\n\n51 viable mutants were measured\nagainst a bar of twenty-five, across all four layers, and\n25 were killed.\n26 survived\n— a kill rate of\n0.4902.\n\nThe catalogue was clean, so nothing left the denominator quietly:\n0 anchors failed to match\nand\n0 mutants failed to load.\n0 controls were killed,\nwithout which the run would be void and this number would mean nothing.\n\n**Half of what can be broken in these layers can be broken silently.**\n\n## Where, and the order is the finding\n\n| layer | killed / viable | |\n|---|---|---|\n| coverage | 8/11 | 72.7% |\n| receipt | 7/13 | 53.8% |\n| sidecar | 6/13 | 46.2% |\n| **tree** | **4/14** | **28.6%** |\n\nThe weakest layer is the one carrying the entire `UNRESOLVED` reason vocabulary — the code that\ndecides whether a receipt was found, was too large, was not a blob, or names a commit this handle\nwas not taken at. It is also the layer with no second implementation anywhere.\n\nThe survivors are not evenly distributed within a layer, either. Both of the sidecar's **injection\nboundaries** survived: `load_sidecar`'s tag-grammar guard on the `receipt` and `kind` attributes,\nwhich are interpolated straight back into document bytes by `render`, and the upper bound on a span's\nend offset, where Python's slicing clamps rather than raising. Both live on the standalone `render`\npath, where `verify()`'s re-scan reconciliation never runs to catch what they let through.\n\n## How thin the defence is where it exists\n\nA kill rate says a layer is defended. It cannot say by how much.\n\nOf the twenty-five kills,\n9 rest on a single test,\nand\n20 rest on five or fewer.\nEach of those nine is one deleted assertion from joining the survivor list, and the assertion is\nnamed in the receipt.\n\nThe starkest is `verify_receipt reports VERIFIED on the digest alone`. That mutation removes\n`reproduces` from the conjunction that decides whether a receipt verifies — the join to which the\nwhole *trust neither the author nor the verifier* doctrine reduces — and exactly one test notices.\n\n## Who does the defending\n\ntests/test_sworn_dogfood.py accounts for 105 kills,\nmore than any other file. That test does one thing: it re-derives every sworn document committed\nunder `papers/` and fails if any receipt stops re-deriving. **The lab's practice of swearing its own\ndocuments turns out to be its strongest single test**, which is a better argument for dogfooding\nthan an essay about dogfooding.\n\n## Two repairs, and what they cost to find\n\nTwo mutations from the pilot survived the whole oracle, and both are instructive because neither is\nvisible to line coverage — every line involved executes either way.\n\n**The cap constant could be raised a thousandfold.** `test_an_entry_over_the_cap_...` builds its\nfixture as `sworn.MAX_RECEIPT_BYTES + 1`, so the fixture rises with the cap. *A test whose fixture\nderives from the constant under test cannot detect a change to that constant.*\n\n**The size clause could be deleted outright.** The gate is a disjunction, and every fixture in that\ntest reaches `receipt_too_large` through the first disjunct — `big` and `small` both carry\n`bytes: None`, and `at_cap` sits at the cap rather than over it. There was no entry with bytes\npresent and size over the cap, which is the only shape the size clause decides. *A test can be named\nfor a behaviour, assert on that behaviour, pass, and never exercise the branch it is named for.*\n\nBoth are repaired here, and the repair is checked the way this corpus checks everything: re-running\nthe two mutations against the strengthened tests kills both, and the control still survives.\n\n## What this does not say\n\n**That a killed mutant means the code is correct.** It means a change there would be noticed.\n\n**That a survivor is a bug.** It is a place where a bug would be invisible to this oracle. Some\nsurvivors are behaviours nobody has decided are load-bearing; the point is that the decision has not\nbeen made, not that it has been made wrongly.\n\n**That this is the repository's whole defence.** The oracle is five named files, and S1 says so. A\nmutant that survived here may be killed elsewhere — and one from the pilot was: `receipt_too_large`\nis exercised by `test_sworn_conformance.py`, outside the oracle, which is how the two traps above\nwere diagnosed rather than merely counted.\n\n**That the rate is a quality score.** 0.4902 is one catalogue against one oracle. The survivor list\nis the deliverable; the rate is how it was summarised.\n\n**That the catalogue is exhaustive.** The critic's gap list, published in the catalogue file, names\nregions still unmutated after its own additions — including `_coverage`'s advisory binding, which\nno mutation can measure because `coverage_reproduces` is computed and then never consulted by\n`status`.\n\n---\n\n*Two legs measured what an instrument could see. This one measured what the repository can defend\nover the ground no instrument reaches, and the useful half of the answer is the half where it\ncannot.*\n",
+ "spans": [
+  {
+   "start": 1183,
+   "end": 1214,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1273,
+   "end": 1288,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/killed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1289,
+   "end": 1300,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/survived",
+   "kind": "numeric"
+  },
+  {
+   "start": 1320,
+   "end": 1327,
+   "receipt": "path:conformance/sworn/suite_power.json#/gates/G-S/value/rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 1395,
+   "end": 1420,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/anchor_missing",
+   "kind": "numeric"
+  },
+  {
+   "start": 1425,
+   "end": 1450,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/non_viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1451,
+   "end": 1474,
+   "receipt": "path:conformance/sworn/suite_power.json#/counts/controls_killed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2726,
+   "end": 2750,
+   "receipt": "path:papers/sworn/suite_power_concentration.json#/killed_by_exactly_one_test",
+   "kind": "numeric"
+  },
+  {
+   "start": 2755,
+   "end": 2780,
+   "receipt": "path:papers/sworn/suite_power_concentration.json#/killed_by_five_or_fewer",
+   "kind": "numeric"
+  },
+  {
+   "start": 3223,
+   "end": 3274,
+   "receipt": "path:papers/sworn/suite_power_concentration.json#/top_killing_file_kills",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

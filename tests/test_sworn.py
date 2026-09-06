@@ -1542,6 +1542,24 @@ class TestSnapshotTree:
         # bytes at the cap are served
         at_cap = {"cap.bin": {"mode": "100644", "size": sworn.MAX_RECEIPT_BYTES, "sha256": None, "bytes": b"x"}}
         assert SnapshotTree(at_cap, C40, commit=C40).blob("cap.bin") == (b"x", "ok")
+        # ...and bytes OVER it are not, which until now no fixture here asserted. Every case above
+        # reaches receipt_too_large through the `data is None` disjunct, so the size clause was
+        # never the deciding one and could be deleted with this whole file green. A mutation study
+        # found that; line coverage could not, because both lines run either way.
+        over = {"over.bin": {"mode": "100644", "size": sworn.MAX_RECEIPT_BYTES + 1,
+                             "sha256": None, "bytes": b"x" * 3}}
+        assert SnapshotTree(over, C40, commit=C40).blob("over.bin") == (None, "receipt_too_large")
+
+    def test_the_cap_is_the_number_it_says_and_not_whatever_the_fixture_derives(self):
+        """A guard the sibling above cannot be: its fixtures are built from MAX_RECEIPT_BYTES, so
+        they move with it and a changed cap is invisible to them. This pins the value itself.
+
+        64 MiB is not sacred, but it is the number the module documents and the number a reader
+        budgets against; changing it should require changing a test that says so out loud."""
+        assert sworn.MAX_RECEIPT_BYTES == 64 * 1024 * 1024
+        entry = {"b.bin": {"mode": "100644", "size": 64 * 1024 * 1024 + 1, "sha256": None,
+                           "bytes": b"x"}}
+        assert SnapshotTree(entry, C40, commit=C40).blob("b.bin") == (None, "receipt_too_large")
 
     def test_a_prereg_digest_is_found_among_embedded_blobs_and_not_among_unembedded_ones(self):
         digest = sworn._sha256(_PREREG_BAR)
