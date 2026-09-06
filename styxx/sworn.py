@@ -1899,8 +1899,15 @@ def main(argv=None) -> int:
             return 0
         rec = json.loads(Path(a.receipt).read_text(encoding="utf-8"))
         res = verify_receipt(rec, raw, side, manifest=mf, tree=tree)
-        print("%s  digest=%s verdict-reproduces=%s same-build=%s"
-              % (res["status"], res["digest_match"], res["verdict_reproduces"], res["same_verifier_build"]))
+        # VERIFIED answers "does this RECEIPT re-derive", never "did the DOCUMENT hold". Those are
+        # one word apart and the second is the one a reader usually wants; printing only the first
+        # has already been read as the second in this repository, by its own author. The document's
+        # verdict rides on the same line so the two cannot be confused.
+        print("%s  digest=%s verdict-reproduces=%s same-build=%s  document=%s"
+              % (res["status"], res["digest_match"], res["verdict_reproduces"],
+                 res["same_verifier_build"], rec.get("document_verdict", "?")))
+        # The exit code stays a function of the RECEIPT alone. A document that honestly reports
+        # SWORN-FAILED is a working document; `check` reports and never gates.
         return 0 if res["status"] == "VERIFIED" else 1
 
     if a.cmd == "manifest":
