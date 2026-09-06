@@ -57,7 +57,8 @@ path, where `verify()`'s re-scan reconciliation never runs to catch what they le
 
 A kill rate says a layer is defended. It cannot say by how much.
 
-<sworn r="path:papers/sworn/suite_power_concentration.json#/killed_by_exactly_one_test" k="numeric">9 of the 25 kills rest on exactly one test,</sworn>
+Of the twenty-five kills,
+<sworn r="path:papers/sworn/suite_power_concentration.json#/killed_by_exactly_one_test" k="numeric">9 rest on a single test,</sworn>
 and
 <sworn r="path:papers/sworn/suite_power_concentration.json#/killed_by_five_or_fewer" k="numeric">20 rest on five or fewer.</sworn>
 Each of those nine is one deleted assertion from joining the survivor list, and the assertion is
