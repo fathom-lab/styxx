@@ -1,0 +1,111 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "4c9fe24a65faa6dd1ad16b9d592ed86ebd5ebbe0",
+ "document": {
+  "name": "RESULT_measurement_machinery_dry_run_2026_09_05.md",
+  "sha256": "732169c72d5c202a194fffa1f2419ef3aec866f9082de5b36f646ccbfcc2be20"
+ },
+ "text": "# RESULT — the measurement machinery's ladder run over invented bytes: counts of what it built, and not one number about sworn output\n\nFathom Lab · 2026-09-05 · **This is not a measurement of sworn output, and nothing in it may be\nquoted as one.** Every document it read was invented by\n`papers/sworn/measurement/synthetic.py` minutes before the run; every seat answer was a canned\nrule over the item's own text; no model was called and no document of this lab was seated. The\ncounts below are counts of machinery — items built, spans planted, brackets located — bound to\nthe run's own committed output under `papers/sworn/measurement/dryrun/`.\n\nBuilt to `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`, rung 5 of its ladder. The\nbars the counts sit beside belong to `papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md` and\nare proposed and unsigned; the preregistration that would sign one is the operator's commit and\ndoes not exist. No seat runner in this directory will read a document of this lab until it does.\n\n## What the ladder built\n\nThe Panel L packet holds 33 items.\nThe Panel R packet holds 48 items.\nThe document items of Panel L came from 3 windows, cut only at blank lines; the rest are decoys, and no item id says which is which.\nThe synthetic population's unit set holds 54 units.\nOf those, 18 are sworn spans, and the rest are the narrative sentences the splitter cut around them.\n\n## What the ladder exercised\n\nThe canary inserter planted 18 canaries across the twins.\nThe verifier returned FAILED on 17 of them.\nThe one it did not is the canary the harness plants on purpose to come back MALFORMED, and it counts in the denominator, because a planted falsehood the verifier did not fail is a miss whatever the reason.\nThe smallest denominator at which a clean sweep clears the design's proposed lower bound is 73.\nThat number is printed so the signature can be informed, not to argue for a bar.\n\nPanel L was cleared by 2 families, so its labels reach the two-family rule.\nPanel R was cleared by 1 family, which is the void the run was built to walk into: the counts stay, every share on that panel becomes the literal WITHHELD, and nothing is re-run.\nOne family's seats returned 1 answer the parser could not read, recorded as unread rather than guessed.\nA second pass with runs of whitespace collapsed located 1 bracket the exact search had missed, and that count is printed beside the exact one.\n\n## What the run says about itself\n\nThe result file carries `\"quotable\": false` among the keys that open it.\nThe summary signs off with `DRY RUN - no quotable number`.\nNo file the run wrote is named with a `.sworn-receipt.json` suffix.\nThe result file's bytes at this commit reduce to 1103e9a865544cee52eb5cdb165cae2b40b599d7eed2cf08a28def2e53ce8a9b.\n\nEvery share, interval, kappa and Q3 value the scorer would otherwise print was replaced in that\nfile by a literal string saying there is no rate here. That substitution is the point: the\nmachinery can be shown to run without producing anything a reader could mistake for a finding\nabout how this lab swears.\n\n## What this does not say\n\nThat any bar is signed. That the machinery has measured anything: it has read invented bytes and\nanswered itself. That the seats work — no model was called by this run, and what happened when\nthe two transports were tried on this box is recorded in the changelog and not sworn here. That\nthe canary gate speaks to the verifier's recall on falsehoods in the wild: it exercised recall on\nthree named constructions planted by the builder of the verifier, in documents the builder also\nwrote. That the decoy gate speaks to a seat's judgement: the seats were rules, and the rules were\nwritten to clear one panel and miss another.\n",
+ "spans": [
+  {
+   "start": 1070,
+   "end": 1104,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json#/packets/items_L",
+   "kind": "numeric"
+  },
+  {
+   "start": 1105,
+   "end": 1139,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json#/packets/items_R",
+   "kind": "numeric"
+  },
+  {
+   "start": 1180,
+   "end": 1189,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json#/packets/windows",
+   "kind": "numeric"
+  },
+  {
+   "start": 1273,
+   "end": 1324,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/population/units",
+   "kind": "numeric"
+  },
+  {
+   "start": 1325,
+   "end": 1353,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/population/sworn_spans",
+   "kind": "numeric"
+  },
+  {
+   "start": 1457,
+   "end": 1514,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json#/canaries/pooled_n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1515,
+   "end": 1558,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/gates/G_C/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 1765,
+   "end": 1860,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json#/canaries/smallest_n_clearing_bar_at_k_eq_n/misses_0",
+   "kind": "numeric"
+  },
+  {
+   "start": 1943,
+   "end": 1976,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/gates/G_F/families_clearing/L",
+   "kind": "numeric"
+  },
+  {
+   "start": 2019,
+   "end": 2050,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/gates/G_F/families_clearing/R",
+   "kind": "numeric"
+  },
+  {
+   "start": 2198,
+   "end": 2260,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/cells/unparsed_items/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 2302,
+   "end": 2395,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json#/cells/located_by_second_pass/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 2481,
+   "end": 2553,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json",
+   "kind": "quote"
+  },
+  {
+   "start": 2554,
+   "end": 2612,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json",
+   "kind": "quote"
+  },
+  {
+   "start": 2613,
+   "end": 2680,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_summary.json",
+   "kind": "absent"
+  },
+  {
+   "start": 2681,
+   "end": 2795,
+   "receipt": "path:papers/sworn/measurement/dryrun/dry_run_result.json",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

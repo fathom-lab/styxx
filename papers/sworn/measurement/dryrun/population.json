@@ -1,0 +1,125 @@
+{
+ "schema": "styxx-sworn/measurement-population/v1",
+ "pinned_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "rule": "a document is in the in-house arm iff its sidecar is tracked under papers/, its stem starts with RESULT_, FINDING_ or DECLARATION_, and its path is not under papers/sworn/",
+ "seed": 1,
+ "documents": [
+  {
+   "doc_id": "SYN-01",
+   "stem": "dryrun/SYN-02",
+   "role": "synthetic",
+   "sidecar_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document_sha256": "148885f226afe74f56e4e2b38d760f8e8545c89a2cd3452439c640760996708d",
+   "receipt_digest": "68040e198dd25414da16e1b2a6b4c88cc130962f8507f65829960957da58221a",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 6,
+   "counts": {
+    "HELD": 6,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 12,
+   "sentence_share": 0.3333,
+   "units": 18,
+   "fragments": 1,
+   "windows": 1,
+   "receipt_moved": false,
+   "source": {
+    "kind": "synthetic",
+    "sidecar": "dryrun/SYN-02.syn.json",
+    "tree": "dryrun/SYN-02.tree.json",
+    "receipt": "dryrun/SYN-02.receipt.json"
+   }
+  },
+  {
+   "doc_id": "SYN-02",
+   "stem": "dryrun/SYN-03",
+   "role": "synthetic",
+   "sidecar_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document_sha256": "0ca17c884e8fe124640915d35d10f10ebd219a04c6da1a9d6ed949de62153c72",
+   "receipt_digest": "f8e65fb83c369f2be29566f2a921235002feb14ce5f64ab700e068c1733b6840",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 6,
+   "counts": {
+    "HELD": 6,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 12,
+   "sentence_share": 0.3333,
+   "units": 18,
+   "fragments": 1,
+   "windows": 1,
+   "receipt_moved": false,
+   "source": {
+    "kind": "synthetic",
+    "sidecar": "dryrun/SYN-03.syn.json",
+    "tree": "dryrun/SYN-03.tree.json",
+    "receipt": "dryrun/SYN-03.receipt.json"
+   }
+  },
+  {
+   "doc_id": "SYN-03",
+   "stem": "dryrun/SYN-01",
+   "role": "synthetic",
+   "sidecar_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document_sha256": "2a2e58751cc83035491b9f9155be56603365cf43d10d4c03774cd17e5c7ec4fb",
+   "receipt_digest": "b839489dd1356929ba3f97a5d2ac6a1d7ebfeb0fe8c927cdfc00f2c3ce940eee",
+   "document_verdict": "SWORN-HELD",
+   "sworn_total": 6,
+   "counts": {
+    "HELD": 6,
+    "FAILED": 0,
+    "UNRESOLVED": 0,
+    "MALFORMED": 0,
+    "WITHHELD": 0
+   },
+   "narrative_sentences": 12,
+   "sentence_share": 0.3333,
+   "units": 18,
+   "fragments": 1,
+   "windows": 1,
+   "receipt_moved": false,
+   "source": {
+    "kind": "synthetic",
+    "sidecar": "dryrun/SYN-01.syn.json",
+    "tree": "dryrun/SYN-01.tree.json",
+    "receipt": "dryrun/SYN-01.receipt.json"
+   }
+  }
+ ],
+ "excluded": [
+  {
+   "stem": "dryrun/SYNX-01",
+   "role": "synthetic",
+   "source": {
+    "kind": "synthetic",
+    "sidecar": "dryrun/SYNX-01.syn.json",
+    "tree": "dryrun/SYNX-01.tree.json",
+    "receipt": "dryrun/SYNX-01.receipt.json"
+   },
+   "reason": "synthetic format document (the dry run's stand-in for the builder's documents)"
+  },
+  {
+   "stem": "dryrun/SYNX-02",
+   "role": "synthetic",
+   "source": {
+    "kind": "synthetic",
+    "sidecar": "dryrun/SYNX-02.syn.json",
+    "tree": "dryrun/SYNX-02.tree.json",
+    "receipt": "dryrun/SYNX-02.receipt.json"
+   },
+   "reason": "synthetic format document (the dry run's stand-in for the builder's documents)"
+  }
+ ],
+ "what_this_is_not": [
+  "not a sample: the rule selects",
+  "no number here is a measurement",
+  "synthetic: every byte invented by synthetic.py"
+ ],
+ "synthetic": true
+}

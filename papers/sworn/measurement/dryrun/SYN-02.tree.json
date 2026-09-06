@@ -1,0 +1,4 @@
+{
+ "syn/02/result.json": "{\n \"rates\": {\n  \"precision\": 0.47,\n  \"recall\": 0.20,\n  \"label\": \"held-out\",\n  \"n\": 38\n },\n \"counts\": {\n  \"passed\": 358,\n  \"failed\": 0,\n  \"note\": \"counts of a synthetic run\"\n },\n \"note\": \"a string leaf that says nothing\"\n}\n",
+ "syn/02/log.txt": "synthetic log line one\nsynthetic log line seventeen\nsynthetic run complete with 358 checks\n"
+}

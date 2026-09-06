@@ -1,0 +1,63 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "document": {
+  "name": "SYNX-01.md",
+  "sha256": "ac9c91274040e1f886214b9b1a8bac08b14dbf7f4f289dd80e4f290b0f2baa0c"
+ },
+ "text": "# SYNX document 01: a synthetic format document\n\nA synthetic header line about the format, with no number in it.\n\nRow alpha scored 0.01 on the check. Restatement alpha carries the row without a number.\n\nRow beta scored 0.11 on the check. Restatement beta carries the row without a number.\n\nRow gamma scored 0.21 on the check. Restatement gamma carries the row without a number.\n\nRow delta scored 0.31 on the check. Restatement delta carries the row without a number.\n\nRow epsilon scored 0.41 on the check. Restatement epsilon carries the row without a number.\n\nRow zeta scored 0.51 on the check. Restatement zeta carries the row without a number.\n\nRow eta scored 0.61 on the check. Restatement eta carries the row without a number.\n\nRow theta scored 0.71 on the check. Restatement theta carries the row without a number.\n\nThe alpha gate cleared at 0.11 of the items in this paragraph. Method note alpha follows it.\n\nThe beta gate cleared at 0.21 of the items in this paragraph. Method note beta follows it.\n\nThe gamma gate cleared at 0.31 of the items in this paragraph. Method note gamma follows it.\n\nThe delta gate cleared at 0.41 of the items in this paragraph. Method note delta follows it.\n\nThe epsilon gate cleared at 0.51 of the items in this paragraph. Method note epsilon follows it.\n\nThe zeta gate cleared at 0.61 of the items in this paragraph. Method note zeta follows it.\n\nThe eta gate cleared at 0.71 of the items in this paragraph. Method note eta follows it.\n\nThe theta gate cleared at 0.81 of the items in this paragraph. Method note theta follows it.\n\nThe alpha paragraph explains a convention and nothing depends on it. Another alpha sentence sits beside it.\n\nThe beta paragraph explains a convention and nothing depends on it. Another beta sentence sits beside it.\n\nThe gamma paragraph explains a convention and nothing depends on it. Another gamma sentence sits beside it.\n\nThe delta paragraph explains a convention and nothing depends on it. Another delta sentence sits beside it.\n\nThe epsilon paragraph explains a convention and nothing depends on it. Another epsilon sentence sits beside it.\n\nThe zeta paragraph explains a convention and nothing depends on it. Another zeta sentence sits beside it.\n\nThe eta paragraph explains a convention and nothing depends on it. Another eta sentence sits beside it.\n\nThe theta paragraph explains a convention and nothing depends on it. Another theta sentence sits beside it.\n",
+ "spans": [
+  {
+   "start": 114,
+   "end": 149,
+   "receipt": "path:synx/01/table.json#/rows/0/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 203,
+   "end": 237,
+   "receipt": "path:synx/01/table.json#/rows/1/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 290,
+   "end": 325,
+   "receipt": "path:synx/01/table.json#/rows/2/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 379,
+   "end": 414,
+   "receipt": "path:synx/01/table.json#/rows/3/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 468,
+   "end": 505,
+   "receipt": "path:synx/01/table.json#/rows/4/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 561,
+   "end": 595,
+   "receipt": "path:synx/01/table.json#/rows/5/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 648,
+   "end": 681,
+   "receipt": "path:synx/01/table.json#/rows/6/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 733,
+   "end": 768,
+   "receipt": "path:synx/01/table.json#/rows/7/value",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

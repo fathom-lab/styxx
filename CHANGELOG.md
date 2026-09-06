@@ -55,6 +55,67 @@ other"*.
   independent re-fetch of the nineteen; a frozen procedure for the two conjunctions this one did
   not price, the diffgate sentence and the capsule sentence; and the v0.1 second-question sentence,
   priced properly or retired.
+- **Two things the suite was saying about the machine rather than the repository, both found by
+  building this leg, both fixed here.** A subprocess that dies having written nothing is not a
+  digest that moved: the conformance regeneration check spawns a pytest run, and under this box's
+  memory pressure that child produced no output at all while the assertion reported it as though
+  the committed vector set had drifted. It now names a spawn failure with its exit code and the
+  bytes each stream produced, and skips; only a refusal the tool actually printed is a drift. And
+  a guard's population is what the repository is, not what a glob matched on one machine: the
+  release ceiling guard walked the filesystem, so a git-ignored release bundle sitting in one
+  checkout failed it while CI, which clones, passed. It now intersects with `git ls-files`, proved
+  in both directions before shipping — an ignored file carrying a bare figure no longer fails the
+  guard, and the same file, tracked, still does. Nine other test files still define a population
+  by walking the tree; they are owed, not swept.
+
+## [Unreleased] — leg 2: the sworn measurement's machinery, built and dry-run, with nothing run as a measurement
+
+**`papers/sworn/measurement/` (NEW), built to `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`,
+which was frozen in its own commit before any of this code existed.** Leg 2 of
+`papers/PLAN_the_next_level_2026_09_02.md`, to the bars of
+`papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md` — every one of them still proposed and
+unsigned, and marked `proposed_unsigned` in every gate object the scorer writes.
+- **The scorer is committed before any seat can speak.** `score.py` folds every gate as a function
+  of committed inputs, obtains every verdict by calling the verifier or reading a committed
+  receipt, and adjudicates no span itself. A scorer authored after seeing the answers is a scorer
+  with a thumb on it.
+- **The population is a script, the packets are blind, the keys are sealed.** `population.py`
+  applies the design's rule mechanically at a pinned commit and lists what it excluded and why;
+  `build_packets.py` writes items carrying opaque ids and nothing else, and seals the answer keys
+  outside the tree, leaving only salted digests in `keys/`; `canaries.py` plants its twins into the
+  sealed directory and commits their digests, never a twin.
+- **Falsehood is established without the instrument under test.** A canary's receipt is shown not
+  to hold what its sentence says with `Decimal` and `bytes.find` over git plumbing; the verifier
+  is never asked. A canary the verifier reports MALFORMED or UNRESOLVED counts in the denominator
+  and not the numerator: a planted falsehood it did not fail is a miss whatever the reason.
+- **The seat runners refuse.** Neither `seat_claude.py` nor `seat_local.py` will read a document of
+  this lab until `papers/sworn/PREREG_sworn_measurement_<date>.md` is tracked at HEAD and every key
+  digest the packet names is committed. The refusal is a `SystemExit` whose message begins
+  `REFUSED:`, and it is under test.
+- **The dry run walks the paths that matter, on bytes it invented.**
+  `papers/sworn/measurement/dryrun/` is committed whole: both families clearing one panel, one
+  family built to miss the other so the void, the WITHHELD share and the one-family counts run,
+  an answer the parser could not read, a bracket found only after whitespace collapse, and a
+  canary planted to come back MALFORMED. Every share, interval, kappa and Q3 value it would print
+  is replaced by a literal saying there is no rate. Its counts are sworn, and titled as machinery,
+  in `papers/sworn/RESULT_measurement_machinery_dry_run_2026_09_05.md`.
+- **Neither transport answered on this box, and that is recorded rather than smoothed.** The
+  `claude -p` clean-config call returned its error envelope — the CLI reported an expired OAuth
+  session — so the contamination probe came back empty and the runner did what it is built to do:
+  wrote the seat file `VOID-CONTAM` with no items and read nothing. The local family could not be
+  loaded at all: the design's model in bf16, its named fallback, and even a far smaller model each
+  died during load, because another process on this box held most of its memory. Neither outcome
+  is a seat, neither is in the tree, and the local substrate remains undecided.
+- **A recorded reason is now this repository's own sentence.** Transport and substrate failures are
+  classified by exception TYPE into a fixed phrase, never by quoting the exception's message: that
+  text is CPython's and differs between 3.9 and 3.12, and a seat file is a committed artifact.
+
+Owed, and recorded as owed: the preregistration commit — the operator's, never the builder's —
+naming the signed bars, the pooled denominator for the canary gate, the local substrate, the
+cross-family label rule, the model alias, and a lock hash over the scorer, the packets, the canary
+digests and the key digests. Seats run after that commit and not before.
+
+---
 
 ## [Unreleased] — the browser verifier v0.1: a second implementation agrees on every vector in scope
 

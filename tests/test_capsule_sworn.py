@@ -142,7 +142,9 @@ def test_the_sealed_verifier_is_the_installed_one_and_is_inlined_byte_for_byte(t
     p = _payload(cap)
     js = base64.b64decode(p["verifier_js"]["b64"], validate=True)
     assert js == JS.read_bytes()
-    assert js.decode("utf-8") in cap.read_text(encoding="utf-8")
+    # bytes against bytes: read_text would normalise the page's newlines and not the sealed copy
+    page = cap.read_bytes().replace(b"\r\n", b"\n")
+    assert js.replace(b"\r\n", b"\n") in page
 
 
 # ---------------------------------------------------------------- the five refusals (B6)

@@ -1,0 +1,21 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "document": {
+  "name": "SYN-02.md",
+  "sha256": "148885f226afe74f56e4e2b38d760f8e8545c89a2cd3452439c640760996708d"
+ },
+ "text": "# SYN document 02: a synthetic report about nothing\n\nSynthetic Lab, a header line with a date-shaped token 2026-09-05 and a version v0.2.\n\n## What was measured\n\nThe question was whether the synthetic gate holds under the synthetic bar. Precision was 0.47 on the panel. Recall was 0.20 on the same items. The suite ran for 42 minutes on the synthetic box. -\n\nThe harness ran the suite and 358 checks passed. The log reads `synthetic log line seventeen` near its middle. The log carries no `unexpected failure marker`. The runner printed `a phrase that is not in the log` twice.\n\nThe log's bytes hash to 7be784019c5bacdafd9b39854be743d01d0794226f172776bf5f1e75a3ad8356. This sentence restates the method without a number. That one is a hedge about scope.\n\n```\ncode. fenced. 0.99 not a unit.\n```\n\n## What this does not say\n\nThat any synthetic number means anything. The conclusion depends on the precision above and on nothing else.\n",
+ "spans": [
+  {
+   "start": 578,
+   "end": 667,
+   "receipt": "path:syn/02/log.txt",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
