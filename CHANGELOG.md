@@ -88,6 +88,53 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
+## [Unreleased] — suite power: half the changes to the layers nothing can reach would ship green
+
+**Built to `papers/sworn/SPEC_suite_power_v01_2026_09_06.md`, frozen before any mutant ran.** The
+mutation study found six blind spots no generator can ever reach — the three tree handles, the
+sidecar layer and the receipt layer — because the JavaScript verifier has no repository and those
+layers sit outside the compared verdict core. The aperture leg then showed what a blind spot can
+hide. Those layers have no second implementation anywhere, so the only instrument left is the test
+suite, and nobody had measured what it would catch.
+
+- **51 viable mutants, 25 killed, 26 survived — a kill rate of 0.4902.** Valid run: 0 controls
+  killed, the unmutated oracle passes, all four layers represented, 0 anchors unmatched and 0
+  mutants that would not load.
+- **The weakest layer is the one that matters most.** coverage 8/11, receipt 7/13, sidecar 6/13,
+  **tree 4/14 (28.6%)** — and `tree` carries the entire `UNRESOLVED` reason vocabulary.
+- **Both sidecar injection boundaries survived.** `load_sidecar`'s tag-grammar guard on the
+  `receipt` and `kind` attributes — which `render` interpolates straight back into document bytes —
+  and the upper bound on a span's end offset, where Python's slicing clamps rather than raising.
+  Both sit on the standalone `render` path where `verify()`'s re-scan reconciliation never runs.
+  `GitTree._ready` accepting a non-commit object survived too, as did comparing the text-to-digest
+  binding on a 12-character prefix.
+- **Concentration, which a rate cannot show: 9 of the 25 kills rest on exactly one test and 20 rest
+  on five or fewer.** The starkest is `verify_receipt reports VERIFIED on the digest alone` — the
+  join to which the whole *trust neither the author nor the verifier* doctrine reduces — noticed by
+  a single assertion.
+- **`tests/test_sworn_dogfood.py` did 105 of the kills, more than any other file.** The lab's
+  practice of swearing its own documents is its strongest single test.
+- **Three agent-facing repairs, each paid for by a mistake made in this session rather than
+  imagined.** `check` now prints the DOCUMENT's verdict beside the receipt's status, because
+  VERIFIED and SWORN-HELD are one word apart and the first was read as the second. `canon` now warns
+  when a numeric span carries the wrong number of digit-bearing tokens — a purely lexical rule it
+  could always have checked, which cost three documents in one night, each canonised silently and
+  only reported MALFORMED after the sidecar named a commit. And `tests/test_sworn.py` gains the
+  fixture its own name promised.
+- **What the two cap survivals taught, which is worth more than the fix.** The cap constant could be
+  raised a thousandfold because the fixture is built as `MAX_RECEIPT_BYTES + 1` and rises with it —
+  *a test whose fixture derives from the constant under test cannot detect a change to that
+  constant.* And the size clause could be deleted because every fixture reached `receipt_too_large`
+  through the `data is None` disjunct instead — *a test can be named for a behaviour, assert on it,
+  pass, and never exercise the branch it is named for.* Neither is visible to line coverage; both
+  lines execute either way.
+- **A claim from the previous leg WITHDRAWN**, in `papers/sworn/OBSERVATION_gap_prediction_2026_09_06.md`.
+  This lab said an agent reading the source predicted blind spots better than 150000 random cases
+  could find them; that held at p=0.0011 against a differential harness and **did not replicate**
+  against a test suite (p=0.173, pointing the other way but not significantly). The confound is
+  stated: the critic was told to find what nobody had covered and could see the other proposals, so
+  it was differentiating against a list rather than predicting from code alone.
+
 ## [Unreleased] — aperture closure: the blind spot was hiding two real defects, and one changed a verdict
 
 **Built to `papers/sworn/SPEC_aperture_closure_v01_2026_09_05.md`, frozen before the generator was
