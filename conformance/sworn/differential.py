@@ -63,11 +63,22 @@ WORDS = ["the", "battery", "passed", "checks", "precision", "of", "a", "bar", "n
 NEEDLES = (["the harness wrote this"] * 4 + ["STRUCT-1 = 16/38 (A-share 0.4211)"] * 3
            + ["sixteen bytes!!"] * 3 + ["line one\nline two"] * 2 + ["plain bytes, not json"] * 2
            + ["a needle long enough to count", "seventeen bytes!!", "not present anywhere here",
-              "ok", "passed", "x", "", "   ", "All checks passed!", "nan", "éééééééé"])
+              "ok", "passed", "x", "", "   ", "All checks passed!", "nan", "éééééééé",
+              # --- APERTURE_PAYLOAD: a needle that overlaps itself distinguishes an overlapping
+              # count from a non-overlapping one; nothing here did before.
+              "aa", "abab", "aaa", "one\r\ntwo", "one\rtwo", "\U0001f600", "e\u0301"])
 HEXES = ["a" * 64, "0" * 64, "deadbeef" * 8, "A" * 64, "b" * 32, "c" * 40, "d" * 96, "e" * 128,
          "f" * 63, "1234", ""]
 RECEIPTS = (["r1"] * 10 + ["r2"] * 4 + ["r1#/passed"] * 6 + ["r1#/x"] * 4 + ["r1#/y"] * 3
-            + ["r1#L1"] * 3 + ["r1#L1-L3"] * 2 + ["r1#/a/b", "r1#/0", "r1#/missing", "r1#L9",
+            + ["r1#L1"] * 3 + ["r1#L1-L3"] * 2
+            # --- APERTURE_PAYLOAD, the receipt grammar half. A slice that starts past line 1, a
+            # pointer through an escaped key, and an index at an array's last element were all
+            # absent, so the code that handles each of them was compared against nothing.
+            + ["r1#L2"] * 2 + ["r1#L2-L4"] * 2 + ["r1#/a~0b", "r1#/c~1d", "r1#/~1", "r1#/~0",
+                                                  "r1#/a/b/2", "r1#/a/b/0", "r1#/e/0", "r1#/o",
+                                                  "r1#/p", "r1#/t1", "r1#/tiny", "r1#/nan",
+                                                  "prereg:" + "A" * 64]
+            + ["r1#/a/b", "r1#/0", "r1#/missing", "r1#L9",
                                                   "r1#/n", "r1#/t", "r1#/s", "r1#/big", "r1#/neg",
                                                   "r1#/e", "r1#/dup", "r2#/passed", "r3", "r10"]
             # the grammar's minority: forms that cannot resolve or cannot parse
@@ -183,6 +194,23 @@ def _manifest(r: random.Random) -> dict | None:
         rid = "r%d" % i
         payload = r.choice([
             b'{"passed": 12, "note": "the harness wrote this"}\n',
+            # --- APERTURE_PAYLOAD. The strict JSON parser is reached ONLY through these bytes, so
+            # every parser behaviour absent from this list was invisible at any case count.
+            b'\xef\xbb\xbf{"passed": 12}\n',                   # a BOM the reader must refuse
+            b'{"nan": NaN, "inf": Infinity, "ninf": -Infinity}\n',
+            # values sitting exactly on a rounding tie at the printed precision: without one of
+            # these, half-even and half-up are the same function as far as this harness can tell
+            b'{"t1": 0.25, "t2": 1.5, "t3": 2.5, "t4": 0.05, "t5": -0.05, "t6": 2.675}\n',
+            b'{"tiny": 1e-7, "tinier": 1e-320, "huge": 1e320, "edge": 0.00001}\n',
+            b'{"s": "\\ud83d\\ude00", "lone": "\\ud800", "pair": "a\\ud83d\\ude00b"}\n',
+            '{"astral": "\U0001f600\U0001f4a1", "combining": "e\u0301"}\n'.encode("utf-8"),
+            b'{"a~b": 1, "c/d": 2, "~1": 3, "~0": 4, "a~1b": 5}\n',   # pointer-escape keys
+            b'{"o": "aaaa", "p": "abababab", "q": "aaa"}\n',      # needles that overlap themselves
+            b'{"a": {"b": {"c": {"d": {"e": [1, [2, [3, [4]]]]}}}}}\n',
+            b'{"bad": "\xff\xfe not utf-8"}\n',                   # invalid UTF-8 inside a receipt
+            b'{"HEX": "DEADBEEF' + b"0" * 56 + b'"}\n',           # uppercase hex to fold
+            b'{"crlf": "one\r\ntwo", "cr": "one\rtwo", "tab": "a\tb"}\n',
+            b'line one\nline two\nline three\nline four\nline five\n',
             b'{"passed": 12.0, "a": {"b": [1, 2, 3]}}\n',
             b'{"x": 0.4211, "y": "STRUCT-1 = 16/38 (A-share 0.4211)"}\n',
             b'{"n": null, "t": true, "s": "sixteen bytes!!"}\n',
@@ -195,7 +223,12 @@ def _manifest(r: random.Random) -> dict | None:
         ])
         entry = {"id": rid, "sha256": hashlib.sha256(payload).hexdigest(),
                  "kind_of_source": r.choice(SOURCE_KINDS),
-                 "captured_at": "2026-09-01T00:00:00Z"}
+                 # one constant timestamp meant every timestamp path was compared on one value
+                 "captured_at": r.choice(["2026-09-01T00:00:00Z", "2026-09-01T00:00:00.500Z",
+                                          "2026-09-01T00:00:00+02:00", "2026-09-01T00:00:60Z",
+                                          "not a timestamp", ""])}
+        if r.random() < 0.06:
+            entry["sha256"] = entry["sha256"].upper()   # a digest the reader must case-fold
         if r.random() > 0.08:
             entry["complete"] = r.choice([True, True, True, False])
         if r.random() > 0.04:
@@ -206,7 +239,9 @@ def _manifest(r: random.Random) -> dict | None:
             entry = r.choice([5, "not an entry", None, []])
         receipts[rid] = entry
     m = {"spec": r.choice(["sworn/manifest/0.2", "sworn/manifest/0.2", "sworn/manifest/0.1"]),
-         "harness": r.choice(["pytest", "", "harness with é"]),
+         # a JCS string escape is only observable on a string that needs escaping
+         "harness": r.choice(["pytest", "", "harness with é", "two\nlines", 'quote"inside',
+                              "back\\slash", "tab\there", "\U0001f600"]),
          "turn": r.choice(["t", "turn-1", ""]),
          "minted_at": "2026-09-01T00:00:00Z",
          "authored_sha256": [], "receipts": receipts}
@@ -217,6 +252,14 @@ def _manifest(r: random.Random) -> dict | None:
             if isinstance(e, dict) and "bytes" in e:
                 m["authored_sha256"] = [e["sha256"]]
                 break
+    # a one-element list can never show an ordering bug, and a lowercase-only list can never show a
+    # case-folding one; both were true of every manifest the old grammar built
+    if r.random() < 0.10:
+        digs = [e["sha256"] for e in receipts.values() if isinstance(e, dict) and "sha256" in e]
+        if len(digs) > 1:
+            m["authored_sha256"] = list(reversed(digs))
+        if digs and r.random() < 0.5:
+            m["authored_sha256"] = [d.upper() for d in m["authored_sha256"]]
     if r.random() < 0.03:
         m["digest"] = "0" * 64                          # a digest that does not re-derive
     else:
