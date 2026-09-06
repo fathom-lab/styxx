@@ -1006,8 +1006,12 @@ function checkQuote(inner, res) {
       for (let i = 0; i < whole.length; i++) if (whole[i] === 0x0a) nLines++;
       if (whole.length && whole[whole.length - 1] !== 0x0a) nLines++;
       const full = lineSlice(whole, 1, nLines);
-      narrowed = !(full !== null && full.length === res.slice.length &&
-                   full.every((b, i) => b === res.slice[i]));
+      const isWhole = full !== null && full.length === res.slice.length &&
+                      full.every((b, i) => b === res.slice[i]);
+      // ...or the receipt is BELOW the floor, where the floor's danger cannot exist and an anchor
+      // keeps its exemption even though it narrows nothing — the lab's prior, documented decision
+      // for tiny fixtures. Mirrors styxx/sworn.py exactly.
+      narrowed = !isWhole || whole.length < SHORT_NEEDLE_BYTES;
     }
     if (!narrowed && needle.length < SHORT_NEEDLE_BYTES) {
       return ["MALFORMED", "short_needle", { needle_bytes: needle.length,

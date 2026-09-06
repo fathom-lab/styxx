@@ -95,3 +95,30 @@ the same question of the same function, which is what N5 requires.
 
 N1 still stands in its intent — line *counts* would also have been wrong, in the other direction —
 and its stated remedy is withdrawn in favour of the one above.
+
+## ERRATA — 2026-09-06, after the second repair met a prior decision
+
+Appended, not edited.
+
+**The "what this spec does not say" section took a position this lab had already decided the other
+way, and I had not read it.** It said a one-line receipt "is its own whole, and `#L1` over it is now
+the floor's business." Three tests in `tests/test_sworn.py` — the vector sources — use `#L1` over a
+nine-byte receipt with a short needle and expect HELD, and one of them says why in its own comment:
+
+> *a nine-byte receipt cannot hold a sixteen-byte needle; the author narrows the haystack with a line
+> anchor and the short needle is then exempt from R3*
+
+That is a documented prior decision, and it is right on the floor's own terms: two bytes over nine
+do not hold against almost anything. The floor's danger is proportional to the haystack, and a
+receipt below the floor cannot carry it. The second repair broke the sanctioned idiom for exactly
+the case it was sanctioned for, and the conformance generator refused the regeneration because the
+sources no longer passed under the recorder — the right refusal, for the right reason.
+
+**The rule is narrowed, not withdrawn.** A line slice earns the exemption when it narrows — differs
+from the full-range slice — **or** when the receipt it was cut from is itself shorter than
+`SHORT_NEEDLE_BYTES`. `#L1` over a nine-byte prereg stays HELD. `#L1` over a one-line 10 KB blob is
+the floor's business, as the section above intended. `#L1-L3` over a 53-byte receipt is refused,
+which is the finding. Bare receipts are untouched.
+
+The three tests are not changed. The strict position is retained for receipts at or above the floor
+and given up below it, and both halves are pinned in the guard.

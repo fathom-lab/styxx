@@ -51,8 +51,19 @@ def _manifest():
         "spec": "sworn/manifest/0.2", "harness": "ci", "turn": "t",
         "minted_at": "2026-09-01T00:00:00Z", "rung": "L2", "authored_sha256": [],
         "receipts": {"r1": entry("r1", PAYLOAD, DIGEST),
-                     "r2": entry("r2", PAYLOAD_NO_NL, DIGEST_NO_NL)},
+                     "r2": entry("r2", PAYLOAD_NO_NL, DIGEST_NO_NL),
+                     "r3": entry("r3", TINY, hashlib.sha256(TINY).hexdigest()),
+                     "r4": entry("r4", ONE_LONG_LINE, hashlib.sha256(ONE_LONG_LINE).hexdigest())},
     })
+
+
+# The boundary the second erratum draws. TINY is below the floor: the lab's prior, documented
+# decision says #L1 over it keeps the exemption, because two bytes over nine cannot be the danger
+# the floor targets. ONE_LONG_LINE is a single line AT the floor's size and beyond: #L1 over it is
+# the whole receipt, narrows nothing, and is the floor's business.
+TINY = b"ok 0.95\n"                                       # 8 bytes, one line
+ONE_LONG_LINE = b"status ok; loss 0; reserve 5; end of record\n"   # 44 bytes, one line
+assert len(TINY) < sworn.SHORT_NEEDLE_BYTES <= len(ONE_LONG_LINE)
 
 
 def _span(receipt, sentence="the log says `ok` at the top."):
@@ -127,4 +138,40 @@ def test_a_pointer_leaf_is_still_exempt():
 
 def test_a_needle_at_the_floor_holds_over_the_whole_receipt():
     s = _span("r1", "the log begins `line one: status ok` as expected.")
+    assert s["verdict"] == "HELD", s
+
+
+# ---------------------------------------------------------------- the boundary, both halves
+
+def test_an_anchor_over_a_receipt_below_the_floor_keeps_the_exemption():
+    """The lab's prior, documented decision, found in tests/test_sworn.py after the first repair
+    broke it: "a nine-byte receipt cannot hold a sixteen-byte needle; the author narrows the
+    haystack with a line anchor and the short needle is then exempt." Two bytes over eight do not
+    hold against almost anything; the floor's danger is proportional to the haystack and cannot
+    exist below it. #L1 here narrows nothing and is exempt anyway, on purpose."""
+    s = _span("r3#L1", "the receipt says `ok` and nothing else.")
+    assert s["verdict"] == "HELD", (
+        "the sub-floor idiom the source tests depend on was refused: %r" % s)
+
+
+def test_a_bare_receipt_below_the_floor_is_still_refused_without_an_anchor():
+    """The prior decision is about an ANCHOR over a tiny receipt, not about tiny receipts. Bare
+    receipts are untouched by this leg, and a repair that quietly widened the exemption to every
+    small receipt would pass the test above and fail this one."""
+    s = _span("r3", "the receipt says `ok` and nothing else.")
+    assert (s["verdict"], s["reason"]) == ("MALFORMED", "short_needle"), s
+
+
+def test_an_anchor_over_a_one_line_receipt_at_the_floor_is_the_floors_business():
+    """The strict half, kept for receipts at or above the floor. A one-line receipt of forty-four
+    bytes is its own whole; #L1 over it narrows nothing, and a 10 KB minified blob is the same
+    shape at a size where two bytes hold against almost anything."""
+    s = _span("r4#L1", "the record says `ok` in it.")
+    assert (s["verdict"], s["reason"]) == ("MALFORMED", "short_needle"), (
+        "#L1 over a single line at the floor's size bypassed the floor: %r" % s)
+
+
+def test_a_long_needle_over_the_one_line_receipt_still_holds():
+    """And the same receipt is fine once the needle carries enough bytes to mean something."""
+    s = _span("r4#L1", "the record reads `status ok; loss 0; reserve 5` verbatim.")
     assert s["verdict"] == "HELD", s
