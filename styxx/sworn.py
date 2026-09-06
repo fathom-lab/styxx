@@ -1397,7 +1397,24 @@ def _check_quote(inner: bytes, res: _Resolved) -> Tuple[str, Optional[str], dict
         # must quote enough bytes to mean something. A pointer leaf (above) and a line slice are
         # exempt — the author narrowed the haystack by naming it, and the comparison is against
         # that alone.
-        if res["slice"] is None and len(needle) < SHORT_NEEDLE_BYTES:
+        #
+        # "Narrowed" is the operative word, and the check used to ask only whether a slice was
+        # PRESENT. `#L1-L3` over a three-line receipt is the whole receipt with a line anchor on
+        # it: nothing narrowed, floor gone, a two-byte needle HELD.
+        #
+        # The exemption is earned when the slice is NOT what a full-range slice of the receipt
+        # would be. Not a raw byte comparison — _line_slice excludes the last selected line's
+        # terminating LF by design, so a full-range slice of a newline-terminated receipt is one
+        # byte short of the receipt and a length test calls it narrowed. That was the first repair,
+        # and it left the trailing-newline case open. Asking the slicer itself what "everything"
+        # looks like is exact, and the JavaScript side asks the same question of the same function.
+        if res["slice"] is not None:
+            whole = res["bytes"]
+            n_lines = whole.count(b"\n") + (1 if whole and not whole.endswith(b"\n") else 0)
+            narrowed = res["slice"] != _line_slice(whole, 1, n_lines)
+        else:
+            narrowed = False
+        if not narrowed and len(needle) < SHORT_NEEDLE_BYTES:
             return "MALFORMED", "short_needle", {"needle_bytes": len(needle),
                                                  "minimum_bytes": SHORT_NEEDLE_BYTES}
     detail = {"needle_bytes": len(needle), "haystack_bytes": len(hay),

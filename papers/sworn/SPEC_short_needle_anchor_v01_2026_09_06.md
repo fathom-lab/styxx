@@ -73,3 +73,25 @@ without `--commit` goes blind, which is the UNRESOLVED finding already warned ab
 
 *An exemption written for authors who point at less was available to authors who point at
 everything, because the check asked whether they pointed and not at what.*
+
+---
+
+## ERRATA — 2026-09-06, after the first repair
+
+Appended, not edited: the rules above are the frozen text.
+
+**N1 named the right hazard and prescribed the wrong remedy.** It said the comparison must be "on
+the bytes of the slice against the bytes of the receipt" so that a trailing-newline off-by-one could
+not fake a narrowing. The first repair did exactly that, and the guard still failed on the
+newline-terminated receipt — because `_line_slice` **excludes the last selected line's terminating
+LF by design**, so a full-range slice of a 53-byte receipt is 52 bytes, and a length test calls
+that narrowed. The hazard N1 feared was real; the raw byte comparison N1 prescribed is the thing it
+bites.
+
+The repair that holds asks the slicer itself: a slice narrows if and only if it differs from
+`_line_slice(receipt, 1, n_lines)` — what "everything" looks like under the same function. That is
+exact for both the newline-terminated and the unterminated receipt, and the JavaScript side asks
+the same question of the same function, which is what N5 requires.
+
+N1 still stands in its intent — line *counts* would also have been wrong, in the other direction —
+and its stated remedy is withdrawn in favour of the one above.

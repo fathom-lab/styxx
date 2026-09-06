@@ -992,7 +992,24 @@ function checkQuote(inner, res) {
     hay = utf8(res.leaf);
   } else {
     hay = res.slice !== null ? res.slice : res.bytes;
-    if (res.slice === null && needle.length < SHORT_NEEDLE_BYTES) {
+    // The exemption is earned by NARROWING, not by naming a range. A slice that equals the whole
+    // receipt (#L1-L3 over three lines) narrows nothing and the floor applies.
+    //
+    // Not a raw byte-length test: lineSlice excludes the last selected line's terminating LF by
+    // design, so a full-range slice of a newline-terminated receipt is one byte short and a length
+    // comparison calls it narrowed. Ask the slicer what "everything" is and compare to that —
+    // exactly as styxx/sworn.py does, or the differential harness finds the disagreement.
+    let narrowed = false;
+    if (res.slice !== null) {
+      const whole = res.bytes;
+      let nLines = 0;
+      for (let i = 0; i < whole.length; i++) if (whole[i] === 0x0a) nLines++;
+      if (whole.length && whole[whole.length - 1] !== 0x0a) nLines++;
+      const full = lineSlice(whole, 1, nLines);
+      narrowed = !(full !== null && full.length === res.slice.length &&
+                   full.every((b, i) => b === res.slice[i]));
+    }
+    if (!narrowed && needle.length < SHORT_NEEDLE_BYTES) {
       return ["MALFORMED", "short_needle", { needle_bytes: needle.length,
                                              minimum_bytes: SHORT_NEEDLE_BYTES }];
     }
