@@ -76,6 +76,25 @@ class TestRepaired:
         d, _ = one(sp("no `failed` anywhere", "path:log.txt", "absent").encode(), tree=t)
         assert d["verdict"] == "HELD"                         # absent: the stronger oath
 
+    def test_a13_a_directional_override_makes_the_reader_and_the_verifier_disagree(self):
+        """A13, added 2026-09-06: the battery had no control-character row and it needed one.
+
+        U+202E RIGHT-TO-LEFT OVERRIDE around a number was HELD on the LOGICAL order while a UAX #9
+        renderer shows the digits reversed — verdict SWORN-HELD, `printed_token` '100', browser
+        '001'. Same shape as A4: what the verifier reads is not what the reader sees.
+        """
+        rlo, pdf = "‮", "‬"
+        d, core = one(sp("%s100%s items." % (rlo, pdf)).encode(), tree=tree())
+        assert (d["verdict"], d["reason"]) == ("MALFORMED", "directional_override")
+        assert d["detail"]["code_point"] == "U+202E"
+        assert core["document_verdict"] == "SWORN-FAILED"
+
+        # the OVERRIDES only. U+2066-U+2069 are how a numeric run is correctly embedded in Arabic
+        # or Hebrew, and they do not reorder it; refusing them would tax correct authoring.
+        lri, pdi = "⁦", "⁩"
+        d2, _ = one(sp("%s100%s items." % (lri, pdi)).encode(), tree=tree())
+        assert d2["reason"] != "directional_override"
+
     def test_the_cap_no_longer_penalises_three_byte_scripts(self):
         d, _ = one(sp("字" * 300, "path:r.json", "quote").encode(), tree=tree())
         assert d["reason"] != "length_cap"

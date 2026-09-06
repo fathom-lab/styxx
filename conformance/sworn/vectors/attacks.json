@@ -1,7 +1,7 @@
 {
  "schema": "styxx.sworn.conformance.family/v1",
  "family": "attacks",
- "count": 17,
+ "count": 19,
  "vectors": [
   {
    "id": "1610ec62ea0b0d7c55563b53307a1f9bf7b391915477649536c666173f1a63e0",
@@ -803,6 +803,126 @@
       "kind": "quote",
       "verdict": "HELD",
       "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "88a55305a88ad613a3cf09bbab3c687480914efc0f5ed027011e258ff16368cb",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a13_a_directional_override_makes_the_reader_and_the_verifier_disagree"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "4bcb81abb47189404b23e036790b077515bd7714489970c0e3d51e74e0a20177",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4620d359f9e6d4017afc43aa814823e407c251e3aacaa1e2c5dafb3a749da3a3",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "a04db8426d62efa698ad2772d9550562e64e85c8e4f7e15c56f20f94f9ce6984",
+   "family": "attacks",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRepaired::test_a13_a_directional_override_makes_the_reader_and_the_verifier_disagree"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "tree"
+   ],
+   "inputs": {
+    "name": "attack.md",
+    "commit": null,
+    "document": "7cf09b66c20ff46caf4f6ac0caa69ea510830c651ae8077decd8b6a4a45d01d4",
+    "manifest": null,
+    "tree": {
+     "snapshot_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "handle_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "entries": {
+      "r.json": {
+       "mode": "100644",
+       "size": 87,
+       "sha256": "3f8fd20cb50a525f77e017aaf0f679e9ee1af5449528c72ccac8ecd7898f1071"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "a1a1c3ae3a5260d3e3aa636dcc96ee5f98af0adedfbe001d6464c38c699812e9",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:r.json#/n",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "directional_override"
      }
     ],
     "floor": {

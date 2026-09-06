@@ -36,13 +36,13 @@
   "tests/test_sworn_attacks.py"
  ],
  "sources_note": "widened from the plan row's tests/test_sworn.py: R1's positive case, R5 at L2, R6's L2, rung_unknown and manifest/0.1 cases and R9's v1 re-derivation live only in tests/test_sworn_attacks.py::TestRules (SPEC, 'Why this exists')",
- "vector_count": 3618,
+ "vector_count": 3620,
  "family_count": 20,
  "families": {
   "attacks": {
    "file": "vectors/attacks.json",
-   "sha256": "dfcd71d95aa1832af9572f7315a997e31232a8a56be2b2b53b1d80374e228980",
-   "count": 17
+   "sha256": "3f2368d4c48b959916776f62c24aafa7c0d6ce5d841e3734151ea063a30be7e7",
+   "count": 19
   },
   "canonical": {
    "file": "vectors/canonical.json",
@@ -51,7 +51,7 @@
   },
   "cli": {
    "file": "vectors/cli.json",
-   "sha256": "4b0fcedf00442fdfbe16b482d4ac0236e2258a03ddc3667d019bfe26edeb6459",
+   "sha256": "028a51a86b28d1fd02c05f2b9cae23685e16deaac410186b99d83e8a668a696e",
    "count": 9
   },
   "coverage": {
@@ -76,7 +76,7 @@
   },
   "gaming": {
    "file": "vectors/gaming.json",
-   "sha256": "c34b47f68b0a0ec945dda23a81677e813c4fdb553a7619bfa42a192cca6bfd2e",
+   "sha256": "14845eeac2a418585bf08005329986691c68b78c92fe7aa1c2ec68222a72150c",
    "count": 51
   },
   "invariants": {
@@ -106,7 +106,7 @@
   },
   "receipt_v1": {
    "file": "vectors/receipt_v1.json",
-   "sha256": "f162530e47c03a32d74d9fd63f6684dd1f4ad86ba800272d3f5b52c7597cec33",
+   "sha256": "30901cbd4c1ed309a695656ed54b93a4abaf9bd6b2518f8825ef610525616b31",
    "count": 5
   },
   "receipts": {
@@ -116,7 +116,7 @@
   },
   "rules": {
    "file": "vectors/rules.json",
-   "sha256": "555ba3cb77e5a148eb2aa981c009c244688088bdcfe7146a585a125d929d0457",
+   "sha256": "704e6b0fefca86a117476e2b91b1138441c9009bf66509968a7a96c581619abd",
    "count": 22
   },
   "sidecar_hardening": {
@@ -142,8 +142,8 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "e75d058f54ac1cab11d7fa1fa7476c529f26fa0f789b79272898f14e521d95cf",
-  "count": 3977
+  "sha256": "7a680bd02432107f8b22555fe7cbaa6d3807a2ceddcc2c1fda05710d31afc91e",
+  "count": 3981
  },
  "observer": {
   "file": "observer.json",
@@ -151,7 +151,7 @@
  },
  "modes": {
   "canon": 1490,
-  "inline": 1804,
+  "inline": 1806,
   "load": 10,
   "manifest": 11,
   "receipt_check": 16,
@@ -160,7 +160,7 @@
  "outcomes": {
   "accepted": 3,
   "check": 16,
-  "core": 2067,
+  "core": 2069,
   "manifest": 6,
   "refused": 1256,
   "sidecar": 270
@@ -169,7 +169,7 @@
   "manifest": 1882,
   "manifest+tree": 1,
   "none": 1619,
-  "tree": 116
+  "tree": 118
  },
  "requires_legend": {
   "manifest": "a sworn/manifest/0.x object was given; a second verifier for rN and embedded blobs must pass these",
@@ -442,15 +442,15 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "523cc5924a796c5c6d3da40ed9bc80e79f870ab1b5222535558378878c3d1832",
+  "sworn_sha256": "7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526",
   "sources_sha256": {
    "tests/test_sworn.py": "86efbc2c3576ab52755f2de4b2a4ba16171ee67306b05210f415bbb42b52dfd7",
-   "tests/test_sworn_attacks.py": "ca4a40eccdbdb8270d2578b490b1b350c74862b76006535118aa085558f8d705"
+   "tests/test_sworn_attacks.py": "d11e875292627e29566853ca44eb6439ec655e7887e3e5e272b8353776a597a2"
   },
   "python": "3.12.10",
   "platform": "win32",
   "styxx_version": "7.47.0",
-  "pytest_summary": "349 passed"
+  "pytest_summary": "350 passed"
  },
- "set_sha256": "eeb15f38d3b0666a22402c577645cca73b8b8c222b7398c42629212bee91aa22"
+ "set_sha256": "ca5e715ac66ecb4169f7d38a7702badff1fd3498a0249164f152de388a38144d"
 }

@@ -462,6 +462,10 @@ const TOKEN_RE = new RegExp("[\\p{L}\\p{N}_.,+\\-−%/±:" + DASH_BINDS + "]+", 
 const DIGIT_RE = /\p{Nd}/u;
 const GRAM_RE = /^[-+−]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\.[0-9]+)?|\.[0-9]+)%?$/;
 const HEXRUN_RE = /(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])/g;
+// [B4] D1: the two Unicode directional OVERRIDES, U+202D LRO and U+202E RLO. NOT the embeddings
+// and NOT the isolates — the rationale is at the check site, and sworn.py's _DIRECTIONAL_OVERRIDE
+// is this same pair.
+const DIRECTIONAL_OVERRIDE_RE = /[‭‮]/;
 const DIGEST_LENGTHS = new Set([32, 40, 96, 128]);
 const RN_RE = /^r[1-9][0-9]*$/;
 const PATH_SEG_BAD_RE = new RegExp('[\\\\\\t\\n\\v\\f\\r \\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\u0000-\\u001f\\u007f*?\\[\\]]');
@@ -1118,6 +1122,18 @@ function adjudicate(d, manifest) {
     return out("MALFORMED", "hash_over_partial", { receipt: d.receipt });
   }
   // bytes-only form checks run BEFORE any receipt is opened
+  //
+  // [B4] D1 (SPEC_no_directional_override_in_a_span_v01_2026_09_06): a directional OVERRIDE makes
+  // the rendered order differ from the order the verifier reads — U+202E around a number was HELD
+  // on `0.55` while the browser showed `55.0`. Overrides only: UAX #9 X6 resets an overridden run
+  // to strong L or R, which is what reorders ASCII digits; embeddings and isolates do not, and
+  // U+2066-U+2069 stay legal because they are the recommended way to embed a numeric run in
+  // Arabic or Hebrew. Mirrors styxx/sworn.py's _DIRECTIONAL_OVERRIDE exactly.
+  const bidi = DIRECTIONAL_OVERRIDE_RE.exec(innerText);
+  if (bidi !== null) {
+    return out("MALFORMED", "directional_override",
+               { code_point: "U+" + bidi[0].codePointAt(0).toString(16).toUpperCase().padStart(4, "0") });
+  }
   if (kind === "numeric") {
     const [nwhy, , seen] = numberToken(innerText);
     if (nwhy) return out("MALFORMED", nwhy, { digit_bearing_tokens: seen });

@@ -141,7 +141,7 @@ REASONS = (
     "tag_syntax", "nesting", "stray_closer", "unclosed", "empty_span", "length_cap",
     "receipt_form", "kind_unknown", "kind_reserved", "number_count", "number_grammar",
     "needle_count", "needle_empty", "digest_form", "absent_over_partial", "hash_over_partial",
-    "hidden_commitment", "short_needle",
+    "hidden_commitment", "short_needle", "directional_override",
     # decidable from the declaration plus the object the author named (MALFORMED: the author
     # had those exact bytes when it wrote the fragment)
     "pointer_unresolvable", "pointer_ambiguous", "anchor_out_of_range", "leaf_not_scalar",
@@ -1319,6 +1319,9 @@ _TOKEN = re.compile(r"[\w.,+\-−%/±:" + _DASH_BINDS + "]+")
 _DIGIT = re.compile(r"\d")
 _GRAM = re.compile(r"[-+−]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\.[0-9]+)?|\.[0-9]+)%?")
 _HEXRUN = re.compile(r"(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])")
+# D1: the two Unicode directional OVERRIDES. Not the embeddings and not the isolates — see the
+# rationale at the check site in _adjudicate.
+_DIRECTIONAL_OVERRIDE = re.compile("[‭‮]")
 _DIGEST_LENGTHS = {32, 40, 96, 128}
 
 
@@ -1568,6 +1571,23 @@ def _adjudicate(d: Declaration, manifest: Optional[Manifest], tree) -> dict:
     inner_text = inner.decode("utf-8")
     # bytes-only form checks happen BEFORE any receipt is opened, so a MALFORMED never depends
     # on evidence the verifier might not have.
+    #
+    # D1 (SPEC_no_directional_override_in_a_span_v01_2026_09_06): a directional OVERRIDE makes the
+    # rendered order differ from the order the verifier reads. U+202E around a number adjudicated
+    # HELD on `0.55` while Chrome showed `55.0` — the field named `printed_token` did not hold what
+    # was printed. This applies R2's existing policy rather than making new policy: a tag inside an
+    # HTML comment is MALFORMED because it renders as nothing while the verifier sees it, and
+    # styxx/capsule.py already sanitises this code-point range in its viewer.
+    #
+    # Overrides only. UAX #9 X6 resets an overridden run to strong L or R, which is what reorders
+    # ASCII digits (European Number type); embeddings and isolates do not, and were measured not to.
+    # U+2066-U+2069 stay legal deliberately — they are the recommended way to embed a Latin or
+    # numeric run inside Arabic or Hebrew, and refusing them would penalise correct authoring to
+    # defend against an attack they cannot carry.
+    _bad = _DIRECTIONAL_OVERRIDE.search(inner_text)
+    if _bad is not None:
+        return out("MALFORMED", "directional_override",
+                   {"code_point": "U+%04X" % ord(_bad.group(0))})
     if kind == "numeric":
         nwhy, _tok, seen = _number_token(inner_text)
         if nwhy:
