@@ -88,6 +88,53 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
+## [Unreleased] — aperture closure: the blind spot was hiding two real defects, and one changed a verdict
+
+**Built to `papers/sworn/SPEC_aperture_closure_v01_2026_09_05.md`, frozen before the generator was
+touched.** The mutation study's most useful sentence — that 20 of its 29 misses would fall to a
+stronger generator and 9 would not — was the one with no evidence behind it. This widened the
+generator in exactly the places the taxonomy named, changing nothing about the comparison, to find
+out whether the diagnosis was real. The answer arrived before any of the intended bookkeeping.
+
+- **THE TWO IMPLEMENTATIONS DISAGREE.** Same seed, same 150000 cases, same `python_digest`,
+  `js_digests`, core and exclusions — only what the generator can produce changed. Grammar v1: 0
+  disagreements. Grammar v2: **712**. Of the 50 recorded in full, **5 change a verdict**, and one
+  changes it in the direction that matters — the JavaScript verifier reported a span **HELD** that
+  `styxx.sworn` reported **MALFORMED**. A sentence the reference implementation refuses to read at
+  all, the browser verifier vouched for.
+- **Defect 1: the JS decoders ate a leading BOM.** `new TextDecoder("utf-8", { fatal: true })`
+  leaves `ignoreBOM` at `false`, which in WHATWG's inverted naming means the decoder *strips* a
+  leading U+FEFF — so `jsonStrict`'s explicit BOM refusal was unreachable dead code on every bytes
+  path, and a BOM-prefixed receipt payload held on one side and was refused on the other.
+- **Defect 2: `safeText` destroyed astral characters.** Its lone-surrogate fixup matched
+  `[\ud800-\udfff]`, a class spanning high *and* low surrogates, so for a valid pair the LOW half
+  matched and was replaced: U+1F600 came out of every `detail.leaf` as a high surrogate plus U+FFFD.
+  It also used the wrong replacement character (Python's encode-side `errors="replace"` emits `?`)
+  and sliced by UTF-16 code units where Python slices by code points.
+- **After both repairs, 0 of 150000 disagree** over 1169 HELD and 3347 FAILED spans, with an
+  identical span census across all three runs. That zero and the first zero are the same number and
+  not the same fact: the first described a generator, the second describes two implementations.
+- **What no instrument here could see.** The conformance set passed identically before and after
+  both repairs — 1689 ran, 1689 passed, 0 failed, every time. Twice in one session a clean
+  instrument sat beside a live, verdict-changing divergence in the shipped file. A second vector set
+  would not have helped, because the vectors and the differential shared the blind spot.
+- **Both repairs are pinned by guards watched to fail**: `tests/test_sworn_bom_agreement.py` (2 of 5
+  fail with the defect restored) and `tests/test_sworn_astral_agreement.py` (10 of 16). The astral
+  file also records a boundary no repair can reconcile — Python holds two adjacent lone surrogates
+  as two code points where a JavaScript UTF-16 string cannot tell them from one astral character.
+- **A claim this leg made and then WITHDREW**, in `papers/sworn/NOTE_unpaired_samples_2026_09_06.md`.
+  Commit `87581ccd` reported the widening had lowered the detection rate from 0.5857 to 0.5571 and
+  offered dilution as the mechanism. The comparison does not support it: `case(seed, index)` draws
+  from a seeded stream, every draw advances it, and the widening added draws — so of the first 500
+  cases at the same seed **only 51 produce the same document under both grammars**. Two runs "at the
+  same seed" were two samples from two distributions. **Any change to a seeded generator, including
+  a purely additive one, changes every case the seed produces after the insertion point. Fixing the
+  seed does not fix the sample.** The remedy — per-component RNG streams — is written down and
+  deliberately not applied, because it would invalidate the receipts this leg just committed.
+- The taxonomy's structural half held: three misses closed for the reason it gave, not by luck. The
+  old generator emitted no manifest string containing a newline, never more than one
+  `authored_sha256` element, and never an uppercase digest — those inputs existed at no case count.
+
 ## [Unreleased] — mutation coverage: the differential cannot see 29 of 70 changes, and 9 of those no fuzzing would have found
 
 **`conformance/sworn/mutation_coverage.py` and `conformance/sworn/control_audit.py` (NEW), built to
