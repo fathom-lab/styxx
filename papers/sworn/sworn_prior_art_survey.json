@@ -1,0 +1,1364 @@
+{
+ "survey": "sworn output: the neighbours of one sentence",
+ "protocol": "papers/sworn/PROTOCOL_sworn_prior_art_2026_09_02.md",
+ "run_by": "one agent, one pass, no independent re-fetch",
+ "run_date": "2026-09-05",
+ "status": "COMPLETE",
+ "counts": {
+  "sources_in_list": 19,
+  "sources_scored": 19,
+  "read": 19,
+  "skimmed": 0,
+  "unfetchable": 0,
+  "leads_not_scored": 7,
+  "clauses_occupied": 6,
+  "clauses_free": 0
+ },
+ "clauses": {
+  "C1": {
+   "clause": "binds whole sentences",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19"
+   ],
+   "occupied_count": 19,
+   "nearest": [
+    "S05",
+    "S03"
+   ]
+  },
+  "C2": {
+   "clause": "of a free-text retrospective report",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S01",
+    "S02",
+    "S03",
+    "S05",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S16",
+    "S19"
+   ],
+   "occupied_count": 10,
+   "nearest": [
+    "S19",
+    "S02"
+   ]
+  },
+  "C3": {
+   "clause": "numbers, quotes, hashes and negatives",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S06",
+    "S07",
+    "S12",
+    "S13",
+    "S14",
+    "S16",
+    "S17",
+    "S18",
+    "S19"
+   ],
+   "occupied_count": 13,
+   "nearest": [
+    "S03"
+   ]
+  },
+  "C4": {
+   "clause": "to bytes minted by a party other than the author",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S01",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S16",
+    "S17",
+    "S18"
+   ],
+   "occupied_count": 13,
+   "nearest": [
+    "S14",
+    "S18",
+    "S17"
+   ]
+  },
+  "C5": {
+   "clause": "a distinct verdict for a document that bound nothing",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S04",
+    "S12"
+   ],
+   "occupied_count": 2,
+   "nearest": [
+    "S12",
+    "S04"
+   ]
+  },
+  "C6": {
+   "clause": "the unbound sentences counted beside every verdict",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S03",
+    "S04",
+    "S06",
+    "S11"
+   ],
+   "occupied_count": 4,
+   "nearest": [
+    "S03",
+    "S06",
+    "S11"
+   ]
+  }
+ },
+ "conjunction": {
+  "id": "C7",
+  "status": "OCCUPIED",
+  "single_source_spanning_all_six": [],
+  "max_clauses_occupied_by_one_source": 5,
+  "sources_within_one_clause": [
+   "S03",
+   "S04"
+  ],
+  "rule": "C7 is RETIRED only if one READ source RETIRES or OCCUPIES every one of C1-C6 at once; otherwise it takes the weakest status among C1-C6."
+ },
+ "sentence": {
+  "rule_1_applies": false,
+  "clauses_deleted": [],
+  "clauses_surviving_with_a_neighbour_named": [
+   "C1",
+   "C2",
+   "C3",
+   "C4",
+   "C5",
+   "C6"
+  ],
+  "clauses_surviving_free": [],
+  "surviving_sentence": "Among the 19 sources read for this survey on 2026-09-05, we know of no other format that binds whole sentences of a free-text retrospective report - numbers, quotes, hashes and negatives - to bytes minted by a party other than the author, with a distinct verdict for a document that bound nothing and the unbound sentences counted beside every verdict.",
+  "companion_required_by_rule_4": "Every one of those six clauses is occupied separately: sentences of a free-text report are reached by the citation-attribution evaluator of Onweller et al. and by Deterministic Integrity Gates, both of which segment or extract rather than bind; the retrospective report is already the host in statcheck and in Self-Verifying Measurement Records; all four kinds appear in Deterministic Integrity Gates; non-author bytes are the whole subject of in-toto Witness, SCITT and Verifiable Credentials; a distinct state for having bound nothing exists as C2PA's unknownProvenance status and as the Abstain verdict of Proof-Carrying Certificates for LLM Pipelines; and what falls outside the binding is accounted for by Deterministic Integrity Gates' untraced share, by honest-signal's row-by-row coverage statement and by the Exploratory Analyses section a Registered Report requires. Two of them come within one clause of the whole conjunction: Deterministic Integrity Gates lacks only the distinct verdict, and Proof-Carrying Certificates lacks only the free-text host."
+ },
+ "sources": [
+  {
+   "id": "S01",
+   "source": "Proof-Carrying Numbers",
+   "title_as_reported": "Proof-Carrying Numbers (PCN): A Protocol for Trustworthy Numeric Answers from LLMs via Claim Verification",
+   "authors": "Aivin V. Solatorio",
+   "venue_and_date": "arXiv:2509.06902v1, submitted 2025-09-08, no revision listed",
+   "what_it_is": "A presentation-layer scheme in which numeric spans of model output are emitted as claim-bound tokens and a verifier sitting in the renderer checks each token against a finite claim set under a declared policy; unmarked numbers default to unverified.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "numeric",
+    "other: rounding policy",
+    "other: alias equivalence",
+    "other: tolerance with qualifiers"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2509.06902",
+    "https://arxiv.org/html/2509.06902v1"
+   ],
+   "fetched_at": "2026-09-05T23:02:00Z",
+   "quote": "places verification in the renderer, not the model",
+   "quote_url": "https://arxiv.org/abs/2509.06902",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The claim-bound token wraps a numeric span, not a sentence; the checked object is the numeral and the surrounding prose is untouched."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is free prose emitted by a model at answer time, not a template or a controlled language; it is not a retrospective report about work the writer did, so the host is different in kind though free-text in form."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind of the four: an exact numeral under a declared policy (equality, rounding, alias, tolerance). Quote, hash and absence checks are not part of the scheme; hashes appear only as an optional cryptographic-commitment extension."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The claim set is resolved by a retriever from structured sources the emitting model cannot write to, and the verifier runs in the renderer rather than in the model. The split is model-versus-application, not author-versus-runner: the human who builds the application still controls the claim set."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Marks are per numeral and per token; there is no document verdict, so a document that bound nothing is indistinguishable from one whose every number was checked except by looking at the marks one at a time.",
+   "text_sha256": "82a652ccd1c198ea0fe7d64f0eec5737dd9e5381e1461f0c05186f42a9a4593c",
+   "text_bytes": 287957,
+   "text_saved_as": "S01_pcn_html.html"
+  },
+  {
+   "id": "S02",
+   "source": "Self-Verifying Measurement Records",
+   "title_as_reported": "Self-Verifying Measurement Records: Hash-Linked Evidence Graphs for Hardware Benchmarking",
+   "authors": "Faruk Alpay, Baris Basaran",
+   "venue_and_date": "arXiv:2606.27934v1, submitted 2026-06-26",
+   "what_it_is": "A hardware-benchmarking record in which every reported quantity in the text, a table or a figure is bound by content hash to the observation and the check behind it, in an append-only hash-linked structure a reader audits offline from committed seeds without trusting the producer.",
+   "q1_binds": [
+    "numeral",
+    "record"
+   ],
+   "q2_mints": "author",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "numeric",
+    "hash",
+    "other: Freivalds probabilistic identity",
+    "other: algebraic checksum",
+    "other: reproducibility class"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2606.27934",
+    "https://arxiv.org/html/2606.27934v1"
+   ],
+   "fetched_at": "2026-09-05T23:06:00Z",
+   "quote": "a verifier need not trust the party that produced the data",
+   "quote_url": "https://arxiv.org/html/2606.27934v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The bound object is a reported quantity, not a sentence. Narrative prose is never bound; the paper's own line is that every quantity in the text, a table or a figure is bound by its content hash."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is exactly this clause's host: a paper written after the runs, in the authors' own prose, not a template or a form. This is the closest occupant of C2 found in this pass; only the object bound inside that prose differs."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Two of the four kinds over quantities: an exact numeral under a derived tolerance, and a content hash. There is no substring check over evidence bytes and no check that a substring is absent; the bit-identity test between devices is a numeric difference, not an absence check."
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": "The evidence bytes are the authors' own instrumented runs. The reader's independence comes from re-deriving the check offline from committed seeds and from a challenge derived from the claimed output, not from a minter the author could not write to. It reaches a comparable end by a different route and does not do what this clause asserts."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the nearest neighbour on the host and the strongest on the hash kind, and it is the reason the trust question can be answered without a non-author minter at all: re-derivability from committed seeds substitutes for the rung ladder. It has no verdict for a record that bound nothing and prints no unbound count, and it never binds a sentence.",
+   "text_sha256": "8ea89d1de61b70e7036bd2ea596afffcf12aa4804e239faf4d6f4762a2e09f34",
+   "text_bytes": 346716,
+   "text_saved_as": "S02_svmr_html.html"
+  },
+  {
+   "id": "S03",
+   "source": "Deterministic Integrity Gates",
+   "title_as_reported": "Deterministic Integrity Gates for LLM-Assisted Clinical Manuscript Preparation: An Auditable Biomedical Informatics Architecture",
+   "authors": "Yoojin Nam, Jinhoon Jeong, Namkug Kim",
+   "venue_and_date": "arXiv:2606.09500, 2026 (v2 HTML read)",
+   "what_it_is": "A pipeline of deterministic gates over an LLM-assisted clinical manuscript: candidate claims are extracted from the manuscript by script, numerical claims are reconciled three ways against a content-hash manifest of every input and derived table, citations are checked against PubMed and CrossRef, and each stage halts on failure.",
+   "q1_binds": [
+    "assertion",
+    "numeral",
+    "artifact"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "numeric",
+    "quote",
+    "hash",
+    "absent",
+    "other: arithmetic identity"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/html/2606.09500v2"
+   ],
+   "fetched_at": "2026-09-05T23:10:00Z",
+   "quote": "249 manuscript claims extracted; of 136 numerical claims, 74 (54%) exact-match a manifest-locked analysis table",
+   "quote_url": "https://arxiv.org/html/2606.09500v2",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "This is the closest thing this pass found to a check reaching statements of a free-text report, and the reason C1 survives is a distinction C1's own wording does not carry: the gates EXTRACT candidate claims from the manuscript by script and then match them, while the clause is about a span the author bound at write time. The object checked is an extracted claim, downstream of a detector that chose it."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a clinical manuscript, prose written after the analysis in the authors' own words. Same host as the clause; different object inside it."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "The widest kind coverage of any source read: exact numerals against a manifest-locked table, citation-key and cross-reference substring checks, SHA-256 over every input and derived table, and absence-shaped guards (a missing citation, a structural zero). The kinds land on extracted claims and on artifacts rather than on author-bound sentences, and the text does not establish an absence check over declared evidence bytes in the sworn sense."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Citation existence and author cross-checks run against PubMed and CrossRef, which the manuscript's author cannot write to. The analysis tables under the hash manifest are the author's own pipeline, so the non-author bytes cover one gate, not the numbers."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "It prints an untraced share (14 of 136 numerical claims, 10%) beside the traced ones. The denominator is the detector's own extraction, not every sentence of the manuscript, and the figure is reported once in an evaluation probe rather than printed beside every verdict at run time. This is the shape sworn v0.2 withdrew when it replaced coverage_estimate with a floor."
+    }
+   },
+   "differs_from_sworn": "The architecture is the mirror image: a detector chooses what to check and the author writes nothing, so a manuscript that declared nothing still gets a report, and the coverage figure it prints is against what the detector found rather than against the prose. It is the strongest occupant on kinds and the only source read that prints an unverified share.",
+   "text_sha256": "8b605a51d5133794eafe9e70d7a7842cb14c5a2e7105e74ee0b7183911b27e36",
+   "text_bytes": 179176,
+   "text_saved_as": "S03_dig_html.html"
+  },
+  {
+   "id": "S04",
+   "source": "Proof-Carrying Certificates for LLM Pipelines",
+   "title_as_reported": "Proof-Carrying Certificates for LLM Pipelines: A Trust-Boundary Architecture",
+   "authors": "George Koomullil",
+   "venue_and_date": "arXiv:2605.16407v1, submitted 2026-05-13",
+   "existence_check": "The identifier resolves and the title matches the one the source list expected.",
+   "what_it_is": "Certificate families compiled in Lean 4 that sit above a trust boundary: once an LLM output has become structured, the downstream computation carries a machine-checkable record with decidable proof fields, and a Universal Assurance Card reports one of four verdicts for the pipeline.",
+   "q1_binds": [
+    "assertion",
+    "step",
+    "record"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "yes",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "numeric",
+    "hash",
+    "other: decidable Lean predicates"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2605.16407",
+    "https://arxiv.org/html/2605.16407v1"
+   ],
+   "fetched_at": "2026-09-05T23:14:00Z",
+   "quote": "at every interface where an LLM output becomes structured, the downstream computation can be made machine-checkable",
+   "quote_url": "https://arxiv.org/html/2605.16407v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "Certificates attach to Lean records and pipeline steps with decidable proof fields; the object is a structured claim set, never a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": "The architecture draws its trust boundary above free text on purpose: certificates consume typed inputs from the formal layer, so a free-text report is never the host."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Exact numeric predicates (weights summing to one) and a SHA-256 digest over model output, plus decidable structural predicates. No substring check over evidence bytes and no absence check."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Tiered oracles require held-out benchmarks with expert equivalence labels the pipeline author did not mint, and an auditor outside the pipeline re-runs the Lean kernel and the axiom check."
+    },
+    "C5": {
+     "verdict": "OCCUPIES",
+     "why": "The assurance card carries one of four verdicts (Certified, Partial, Residue, Abstain), so a pipeline that carries no certificate is reported as its own state rather than as a pass. The object is a pipeline under a declared assurance mode, not a document, and the tokens are not a document verdict over bound spans."
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The residue operator audit-logs the claims it dropped, so what fell outside certification is counted. The count is over claims an operator discarded, not over sentences of a host document, and it is a log rather than a figure printed beside every verdict."
+    }
+   },
+   "differs_from_sworn": "It is the only source read with a four-token verdict vocabulary at the document-ish level and an explicit residue count, and it reaches both by refusing the free-text host entirely: the certificate begins where the prose ends.",
+   "text_sha256": "62a73a39327a2b64f3f3e395bf2d990f34400bde9d04e05984beb7a5d874a954",
+   "text_bytes": 1435718,
+   "text_saved_as": "S04_pcc_html.html"
+  },
+  {
+   "id": "S05",
+   "source": "citation-attribution evaluators",
+   "title_as_reported": "Cited but Not Verified: Parsing and Evaluating Source Attribution in LLM Deep Research Agents",
+   "authors": "Hailey Onweller, Elias Lumer, Austin Huber, Pia Ramchandani, Vamse Kumar Subbiah, Corey Feld",
+   "venue_and_date": "arXiv:2605.06635v1, submitted 2026-05-07",
+   "existence_check": "The identifier resolves. The source list named it only by topic; it is recorded under the title arXiv reports and scored as that paper.",
+   "what_it_is": "An evaluation harness that parses a model-written Markdown research report with an AST parser, segments it into sentence-level claims paired with their inline citations, retrieves each cited URL, and scores link accessibility, topical relevance and factual accuracy, the last two by an LLM judge calibrated against human review.",
+   "q1_binds": [
+    "sentence",
+    "assertion"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "other: link accessibility",
+    "other: LLM relevance judgement",
+    "other: LLM fact check"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://arxiv.org/abs/2605.06635",
+    "https://arxiv.org/html/2605.06635v1"
+   ],
+   "fetched_at": "2026-09-05T23:18:00Z",
+   "quote": "sentence-level segmentation to split continuous text into individual claims",
+   "quote_url": "https://arxiv.org/html/2605.06635v1",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit judged is a sentence of a free-text report, which is this clause's own object. What differs is the verb: the parser segments and an LLM judge decides, so no span is bound by the writer at write time and no verdict is a function of bytes. Together with S03 this is why the clause survives only on the word bind."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a free-text Markdown research report rather than a template. It is written by the agent as its answer, not by a party reporting retrospectively on work it did."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "Each cited URL is retrieved and its content extracted, so the bytes a claim is scored against are the cited source's, which the report's writer did not mint. The comparison itself is a model's judgement rather than a byte check."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It reaches sentences of a free-text report and third-party bytes at once, and stops short of every remaining clause: no deterministic kind, no document verdict, no uncited-sentence count, and a judge in the loop. Its link-accessibility test is an existence check over a URL, not an absence check over evidence bytes.",
+   "text_sha256": "d3761c8399462e7868c31ce0b18d016b77eef613502c95a677a03b2139045f7f",
+   "text_bytes": 140456,
+   "text_saved_as": "S05_cite_html.html"
+  },
+  {
+   "id": "S06",
+   "source": "honest-signal",
+   "title_as_reported": "honest-signal — a method for doing honest research with AI agents; `firewall`, the pre-registration gate as software",
+   "authors": "alexcard3 (Alessandro Cardurani)",
+   "venue_and_date": "github.com/alexcard3/honest-signal, main at commit 96b6f9c6df0f916ead6f2f00f38990546eda606f, committed 2026-09-04T22:07:37Z",
+   "what_it_is": "A gate wired as a required check that reads the git record and enforces four rules on every claim a repository ships: a result must have a pre-registration, the pre-registration commit must strictly precede the result commit, the pre-registration blob must not have changed since it was registered, and the kill criterion must not be structurally vacuous. The gap between the two commits is printed and never judged.",
+   "q1_binds": [
+    "bar",
+    "assertion"
+   ],
+   "q2_mints": "author",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "yes",
+   "q6_kinds": [
+    "hash",
+    "absent",
+    "numeric",
+    "other: strict commit precedence"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/alexcard3/honest-signal/main/README.md",
+    "https://raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py",
+    "https://api.github.com/repos/alexcard3/honest-signal/commits/main"
+   ],
+   "fetched_at": "2026-09-05T23:24:00Z",
+   "quote": "A pre-registration is worth something only if it provably came FIRST. Git can prove that.",
+   "quote_url": "https://raw.githubusercontent.com/alexcard3/honest-signal/main/firewall.py",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The gate attaches to a claim id and its kill criterion — a bar with a threshold, a stated measurement and a future date — not to a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Three kind-shaped checks, all over the author's own registration rather than over evidence bytes: the registered blob must be byte-identical to the one first committed (exact-identity, the hash kind's job), the criterion must not contain any of an enumerated set of vacuous phrases (an absence check), and it must name a number (a numeral must be present)."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The evidence is the git record itself: the author writes the commits but cannot make a later one precede an earlier one, nor edit a registered blob, without the gate seeing it. The property this clause wants — bytes the author cannot write to after the fact — is obtained from the version-control system for the object 'when was this promised', not for the numbers a report states."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The project states, row by row rather than as an average, how much of its own record sits outside the gate's coverage — of eighteen hypotheses, four with a provably preceding pre-registration commit, two with prediction and verdict in one commit, twelve registered off-repo. It is authored in the README over hypotheses; the tool itself prints only passed and failed over the claims it found."
+    }
+   },
+   "differs_from_sworn": "It binds when a promise was made, not what a report says, and it is already this lab's named prior art for that. Its empty case is the near-miss worth recording: with no claims found it prints that there is nothing to verify and returns the success code, which is the outcome a distinct verdict for a document that bound nothing exists to prevent.",
+   "text_sha256": "d9de0e34aeabe2496b45386d216469755debcdd47a0c5394b635c129bcce9b1e",
+   "text_bytes": 59684,
+   "text_saved_as": "S06_honest_signal_combined.txt"
+  },
+  {
+   "id": "S07",
+   "source": "nanopublications",
+   "title_as_reported": "Nanopublication Guidelines (working draft) and nanopub.net",
+   "authors": "the Nanopublication community / nanopub.net stewards",
+   "venue_and_date": "nanopub.net, working draft as served 2026-09-05",
+   "what_it_is": "A publication unit of three named RDF graphs — an assertion, the provenance of that assertion, and the provenance of the publication itself — identified by a trusty URI whose integrity key is computed over the serialised content.",
+   "q1_binds": [
+    "assertion",
+    "record"
+   ],
+   "q2_mints": "author + third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://nanopub.net/",
+    "https://nanopub.net/guidelines/working_draft/"
+   ],
+   "fetched_at": "2026-09-05T23:28:00Z",
+   "quote": "the recommended way of assigning integrity keys to nanopublications",
+   "quote_url": "https://nanopub.net/guidelines/working_draft/",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The bound object is an RDF assertion — a triple in a named graph, authored as structure. A sentence of prose is never the unit; if one existed it would first have to be rewritten as triples."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind, and pointed the other way: the trusty URI's key is computed over the nanopublication's own serialised bytes, so the hash establishes that the record has not changed rather than that a claim matches evidence bytes held elsewhere."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The format has a slot for who produced what and separates it from the claim: an assertion may be attributed to one identifier and published by another, so the publication-info graph can be minted by a party other than the asserter. Nothing in the format checks the assertion against those bytes."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the strongest format in the survey for saying who said what and proving the record has not moved, and it obtains that by making the claim structure rather than prose. There is no verifier verdict to be distinct or not, and nothing outside the assertion graph is counted.",
+   "text_sha256": "c0cb7bb6ad9f0d82ee9cbaa307a92bb82f0e75339c7ddad4d7dc847698ed6988",
+   "text_bytes": 29709,
+   "text_saved_as": "S07_nanopub_combined.txt"
+  },
+  {
+   "id": "S08",
+   "source": "knitr / Sweave",
+   "title_as_reported": "knitr: Control output — Manipulate six types of chunk output and inline output (Yihui Xie); Sweave User Manual (Friedrich Leisch, R Core Team)",
+   "authors": "Yihui Xie; Friedrich Leisch and the R Core Team",
+   "venue_and_date": "yihui.org/knitr, page dated 2012-01-25, served 2026-09-05; Sweave manual, R-devel utils doc, 15 pages",
+   "what_it_is": "Literate-programming engines for R: code chunks are evaluated when the document is rendered, and an inline expression in the running prose is replaced by the string the expression evaluates to, so a reported value comes from the computation instead of being typed.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://yihui.org/knitr/",
+    "https://yihui.org/knitr/demo/output/",
+    "https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf"
+   ],
+   "fetched_at": "2026-09-05T23:34:00Z",
+   "quote": "\\Sexpr{expr} is replaced by the string resulting from coercing the value of the expression expr to a character vector",
+   "quote_url": "https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a scalar dropped into a sentence — the inline expression is replaced by its own value. The sentence around it is prose the engine never looks at."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is exactly this clause's host: a report written after the analysis, in the author's own prose, with the computed values sitting inside the running text. Alongside S02 this is the closest occupant of the host clause."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the reason a check is needed at all rather than an instance of one: the value is substituted, not compared, so nothing can disagree and there is no verdict to report. The evaluation is the renderer running the author's own code on the author's machine, which is the level the rung ladder calls L0. Whether the same document re-rendered by a runner after the author's turn would change that answer was not scored: no such execution regime is in the frozen source list.",
+   "text_sha256": "bed264e9922ef8df33efa374760678670e21066b297ba080f874dcd5fd0afbc6",
+   "text_bytes": 60729,
+   "text_saved_as": "S08_knitr_sweave_combined.txt"
+  },
+  {
+   "id": "S09",
+   "source": "Quarto inline computed values",
+   "title_as_reported": "Inline Code — Quarto (Guide > Computations > Inline Code)",
+   "authors": "Posit / the Quarto project",
+   "venue_and_date": "quarto.org, page served 2026-09-05",
+   "what_it_is": "A single-backtick inline expression, written in the running markdown and evaluated by the Jupyter, Knitr or OJS engine when the document is rendered, so a value stated in a sentence is the value the code produced.",
+   "q1_binds": [
+    "numeral"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://quarto.org/docs/computations/inline-code.html"
+   ],
+   "fetched_at": "2026-09-05T23:38:00Z",
+   "quote": "Inline code allows you to execute code within markdown, e.g. to automatically use the most up-to-date computations in narrative.",
+   "quote_url": "https://quarto.org/docs/computations/inline-code.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a pre-computed scalar placed mid-sentence; the guidance is explicit that an inline expression should be a simple value and not do real work. The sentence is not the object."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a narrative document written after the computation, and the stated purpose of the feature is to keep the numbers in that narrative current."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Same shape as S08 across three engines: the number in the sentence is produced rather than checked, the producer is the author's own render, and the finished document carries no mark, no verdict and no count of what was written by hand.",
+   "text_sha256": "b805662a00aa64486052aad229b6aebe50266ccb427fb491ee99e792d9fab98f",
+   "text_bytes": 129148,
+   "text_saved_as": "S09_quarto_inline.html"
+  },
+  {
+   "id": "S10",
+   "source": "Jupyter-Book glue (MyST-NB)",
+   "title_as_reported": "Saving variables to embed (glue) — MyST-NB",
+   "authors": "the Executable Books / MyST-NB project",
+   "venue_and_date": "myst-nb.readthedocs.io/en/latest/render/glue.html, served 2026-09-05",
+   "what_it_is": "A submodule that stores a variable in a notebook's outputs under a key at execution time; the prose then references that key with a role, and the stored output is embedded inline where the reference sits, including from another page.",
+   "q1_binds": [
+    "numeral",
+    "record"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://myst-nb.readthedocs.io/en/latest/render/glue.html"
+   ],
+   "fetched_at": "2026-09-05T23:41:00Z",
+   "quote": "store variables in the notebooks outputs, by keys, then reference those keys to embed the outputs inline of your text content",
+   "quote_url": "https://myst-nb.readthedocs.io/en/latest/render/glue.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a keyed notebook output — a number, a table, an image — pasted where the reference stands. It is the nearest of the report family to a pointer into a stored record rather than an expression re-evaluated in place, and it is still not a sentence."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is narrative page content written around the outputs, in the author's own words."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "The reference is a pointer into an execution record, which is the shape of a receipt pointer, and the resemblance stops there: the pointer resolves by pasting the output, never by comparing it with what the sentence says, and the notebook that produced it was run by the author's own build.",
+   "text_sha256": "931f25b0a24f2af244b79450b6c299392aeb24ba3b99c81c6358cb87dcd0d4c8",
+   "text_bytes": 68680,
+   "text_saved_as": "S10_mystnb_glue.html"
+  },
+  {
+   "id": "S11",
+   "source": "Registered Reports",
+   "title_as_reported": "Registered Reports: Peer review before results are known to align scientific values and practices — Center for Open Science",
+   "authors": "Center for Open Science, steward of the format; the Registered Reports Committee chaired by Chris Chambers",
+   "venue_and_date": "cos.io/initiatives/registered-reports, served 2026-09-05",
+   "what_it_is": "A publishing format in which a Stage 1 manuscript carrying introduction and methods is reviewed before the outcomes are observed and, if it survives, receives an in-principle acceptance that will not be revoked on the basis of the results; the Stage 2 manuscript adds results and discussion, with any analysis that was not registered confined to a separately titled Exploratory Analyses section.",
+   "q1_binds": [
+    "bar",
+    "step"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://www.cos.io/initiatives/registered-reports"
+   ],
+   "read_note": "The steward's canonical description, including the workflow section, was read end to end. Chambers's own editorial at the publisher's URL returned 403 to this agent on the same date and is not part of the reading; the source is scored on the steward's description, which the READ rule allows for a practice.",
+   "fetched_at": "2026-09-05T23:48:00Z",
+   "quote": "The Results section includes the outcome of the pre-registered analyses together with any additional unregistered analyses in a separate section titled \"Exploratory Analyses\".",
+   "quote_url": "https://www.cos.io/initiatives/registered-reports",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "What is held is the analysis plan — a bar agreed before the outcome, judged afterwards by human reviewers. No span of the Stage 2 prose is attached to anything."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The Stage 2 manuscript is a free-text retrospective report and the format governs it directly: what may be reported as a registered result and what must be labelled otherwise."
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The in-principle acceptance is minted by editors and reviewers before the results are known, and cannot be manufactured afterwards by the author. It attaches to the protocol, not to the numbers the report later states."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "OCCUPIES",
+     "why": "The format makes what falls outside the binding visible on the face of every Stage 2 report, by requiring unregistered analyses into a separately titled section. It segregates rather than counts, the unit is an analysis rather than a sentence, and the separation is enforced by reviewers rather than printed by an instrument."
+    }
+   },
+   "differs_from_sworn": "It is the strongest neighbour on making the unbound visible and on non-author minting, and it does both with people: the reviewers who grant acceptance and the ones who police the section headings. Nothing mechanical reads the Stage 2 prose, so there is no verdict for a report that registered nothing — such a report is simply not of this format.",
+   "text_sha256": "d0b2a24b2f04d04b94c0deaf51bdda7e7c795cab22bd199713257f1873699397",
+   "text_bytes": 283502,
+   "text_saved_as": "S11_cos_rr.html"
+  },
+  {
+   "id": "S12",
+   "source": "C2PA assertions",
+   "title_as_reported": "C2PA Specification 2.1 — Assertions (§6), Trust Model (§14), Validation (§15)",
+   "authors": "Coalition for Content Provenance and Authenticity",
+   "venue_and_date": "spec.c2pa.org, specification version 2.1, served 2026-09-05",
+   "what_it_is": "A manifest attached to a media asset carrying labelled assertions about how the asset was made or changed, a hard binding of one or more cryptographic hashes over the asset or a portion of it, and a claim signature from a credential on a managed trust list, optionally time-stamped by an authority; a validator returns per-assertion status codes.",
+   "q1_binds": [
+    "artifact",
+    "assertion",
+    "credential"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "yes",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: digital signature over a claim",
+    "other: soft binding by fingerprint or watermark"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://spec.c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html"
+   ],
+   "fetched_at": "2026-09-05T23:54:00Z",
+   "quote": "An assertion is labelled data, typically (though not required to be) in a CBOR-based structure which represents a declaration about an asset.",
+   "quote_url": "https://spec.c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "Assertions declare things about an asset, and a hard binding covers the whole asset or a portion of it. The object is bytes of media, never a span of prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind, worked further than anywhere else in this survey: cryptographic hashes as hard bindings over an asset or a region, a signature over the claim, and soft bindings by fingerprint or watermark for cases where a hash cannot survive. No numeral, substring or absence check over evidence bytes."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The claim is signed under an X.509 credential issued to a signer on a managed trust list, a time-stamp manifest can be signed by a timestamping authority, and some assertions are written by the capturing hardware rather than by a person. The bytes an author cannot mint are the signature and the time, not a measurement."
+    },
+    "C5": {
+     "verdict": "OCCUPIES",
+     "why": "The status vocabulary carries manifest.unknownProvenance and ingredient.unknownProvenance for content that has no manifest at all, and they sit outside the failure-code table. This is the closest thing found to a distinct token for bound nothing, for an asset rather than a document, and it belongs to an ingredient inside a validation report rather than being the report's own headline."
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the most complete answer in the survey to who signed for these bytes and to what has this been attached, and it never touches a sentence: the asset is the subject, provenance is the claim, and there is nothing in it that could be true or false about a report's prose.",
+   "text_sha256": "f5558331e61bb46d1c6883dec802e5405e5f0b1110e392daaa89b50fa7f80331",
+   "text_bytes": 434800,
+   "text_saved_as": "S12_c2pa.txt"
+  },
+  {
+   "id": "S13",
+   "source": "in-toto Test Result predicate",
+   "title_as_reported": "Predicate type: Test Result (in-toto attestation, type URI https://in-toto.io/attestation/test-result/v0.1)",
+   "authors": "Aditya Sirish A Yelgundhalli",
+   "venue_and_date": "github.com/in-toto/attestation, spec/predicates/test-result.md, main as served 2026-09-05, predicate version 0.1.0",
+   "what_it_is": "A statement whose subject is the artifacts tested, carrying one test-suite invocation: an enumerated result, the configuration used, an optional link to the run, and the names of the tests that passed, warned and failed. A supply-chain policy checks the configuration was the expected one and that the failed list is empty.",
+   "q1_binds": [
+    "artifact",
+    "record",
+    "step"
+   ],
+   "q2_mints": "runner after the author's turn",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "absent",
+    "other: enumerated result"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/in-toto/attestation/main/spec/predicates/test-result.md"
+   ],
+   "fetched_at": "2026-09-05T23:58:00Z",
+   "quote": "each attestation corresponds to one invocation of a test suite",
+   "quote_url": "https://raw.githubusercontent.com/in-toto/attestation/main/spec/predicates/test-result.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The subject is the artifacts tested, named by digest, and the predicate describes a run. Prose is not in the model."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "The subject is identified by digest, which is the hash kind for an artifact, and the verification policy asserts that the failed-test list is empty, which is an absence check over a field of the attestation rather than over evidence bytes a sentence points at."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The attestation is written by the test harness in the supply chain after the developer's turn and signed as an envelope, which is exactly the party the rung ladder means by a runner. What it says is that a suite ran, not that a report's sentence is true."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the prior art for the receipt itself — a signed record of a run, produced by a party the author cannot write to — and the lab credits it as such. Its stated use case includes verifying that the tests were in fact run, which is the concern a distinct verdict for a document that bound nothing serves, and it answers that concern with a policy naming the configurations it expected rather than with a token in the result.",
+   "text_sha256": "69908e4283311276f240e8209949a455aebb9ba0622eb0fee190a433682efbd6",
+   "text_bytes": 6412,
+   "text_saved_as": "S13_intoto_testresult.md"
+  },
+  {
+   "id": "S14",
+   "source": "in-toto Witness",
+   "title_as_reported": "Witness — attest and verify software supply chains (in-toto Witness project; witness.dev)",
+   "authors": "The Witness Contributors; originated at TestifySec, donated to the CNCF in-toto ecosystem",
+   "venue_and_date": "github.com/in-toto/witness main README and witness.dev, served 2026-09-05",
+   "what_it_is": "A CLI that wraps steps of a pipeline, records what ran and what it produced as signed in-toto attestations — keyless signing through Sigstore or SPIFFE, timestamps from an RFC3161 authority — and verifies them against an embedded Rego policy engine.",
+   "q1_binds": [
+    "artifact",
+    "step",
+    "record"
+   ],
+   "q2_mints": "runner after the author's turn",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: signature over an attestation",
+    "other: Rego policy predicates"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/in-toto/witness/main/README.md",
+    "https://witness.dev/"
+   ],
+   "fetched_at": "2026-09-06T00:02:00Z",
+   "quote": "create an audit trail for your software's entire journey through the software development lifecycle",
+   "quote_url": "https://raw.githubusercontent.com/in-toto/witness/main/README.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "What is attested is a step of a pipeline and the artifacts it consumed and produced. There is no text object anywhere in the model."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Digests over materials and products, plus signatures; a Rego policy can express further predicates over the attestation's own fields. No check of a numeral, a substring or an absence inside a document."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "This is the clearest instance in the survey of the property the clause names: the attestation is minted by the pipeline as it runs, signed without the developer holding a key, and timestamped by an outside authority. The subject is what the build did, not what a report says."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the rail the rung ladder is modelled on and the lab credits it as such. A missing attestation makes a policy fail; there is no state that says nothing was attested and no accounting of what the pipeline did not cover.",
+   "text_sha256": "6491dad1c4e4e8750c40303bb3146309ef3f3243267c1562d88c39892184b8e5",
+   "text_bytes": 5596,
+   "text_saved_as": "S14_witness_combined.txt"
+  },
+  {
+   "id": "S15",
+   "source": "Cucumber / Gherkin",
+   "title_as_reported": "Gherkin Reference — Cucumber Documentation",
+   "authors": "the Cucumber project (SmartBear)",
+   "venue_and_date": "cucumber.io/docs/gherkin/reference, served 2026-09-05",
+   "what_it_is": "A line-oriented language for feature files: every non-blank line begins with a keyword, steps introduced by Given, When, Then are matched to step definitions and executed, and free-form description lines under Feature, Rule or Scenario are ignored at run time while remaining available to reporters.",
+   "q1_binds": [
+    "step"
+   ],
+   "q2_mints": "renderer running the author's code",
+   "q3_narrative_distinguished": "yes",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://cucumber.io/docs/gherkin/reference"
+   ],
+   "fetched_at": "2026-09-06T00:06:00Z",
+   "quote": "These description lines are ignored by Cucumber at runtime, but are available for reporting",
+   "quote_url": "https://cucumber.io/docs/gherkin/reference",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "A step is the most sentence-shaped object in the survey — a line of ordinary language, in the writer's own words after the keyword — and it is bound because a step definition matches it. It is a controlled language nonetheless: every line must open with a keyword, and a line that matches nothing is an error rather than unbound prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the one format in this survey that marks, line by line inside a single document, which text is executed and which is only read — and the marking runs the other way: the keyword lines are the document and the prose is the aside. What a step means is decided by the step definition the author also wrote, so no kind lives in the format; a Doc String is the nearest thing to a verbatim quote and the format does not say what is done with it.",
+   "text_sha256": "c091f4d2a32fef69cfdf68cb35687e011ff9ed816c54140183cc3b1bfa5b70f9",
+   "text_bytes": 18141,
+   "text_saved_as": "S15_gherkin.txt"
+  },
+  {
+   "id": "S16",
+   "source": "Doc Detective",
+   "title_as_reported": "Doc Detective: The Documentation Testing Framework",
+   "authors": "the Doc Detective project (Manny Silva and contributors)",
+   "venue_and_date": "github.com/doc-detective/doc-detective main README and doc-detective.com, served 2026-09-05",
+   "what_it_is": "A framework that ingests test specifications and text files, parses them for testable actions — follow a link, find an element carrying given text, run a code block or a shell command, call an API — executes those actions against the product in a browser, and emits pass or fail with context as JSON.",
+   "q1_binds": [
+    "step"
+   ],
+   "q2_mints": "runner after the author's turn",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "quote",
+    "other: link status code",
+    "other: element presence",
+    "other: command exit"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/doc-detective/doc-detective/main/README.md",
+    "https://doc-detective.com/"
+   ],
+   "read_note": "doc-detective.com serves a client-rendered shell to this agent at every path, including its own markdown and llms.txt routes; the canonical README in the project repository was read instead, and the site's landing copy was read from the shell's rendered text.",
+   "fetched_at": "2026-09-06T00:12:00Z",
+   "quote": "ingests test specifications and text files, parses them for testable actions, then executes those actions in a browser",
+   "quote_url": "https://raw.githubusercontent.com/doc-detective/doc-detective/main/README.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a step with one action. A sentence of the documentation is the reason a step exists, and the step, not the sentence, is what passes or fails."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a free-text document in the writer's own words, and the test travels inside it rather than in a separate suite. It is instructions written for a reader to follow, not an account of work already done."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "The nearest kind is text presence: an action checks that an element carrying the specified text exists. It reads a live interface rather than recorded evidence bytes, and no numeral, hash or absence kind is offered."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "What answers is the product itself, driven through a browser after the documentation was written, so the bytes a step is judged against are not typed by the writer. They are the product's live responses rather than a receipt anyone can re-read later."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Together with S05 it is the closest working tool to the target: free-text host, non-author bytes, a deterministic pass or fail. What it checks is whether an instruction still works, not whether a statement about finished work is true, and the results are a per-step JSON with nothing said about the prose that carried no step.",
+   "text_sha256": "725e1a9bf8e616616c4a8c9e502a84500a972cd564ef1ec8e52e44330fa21ecb",
+   "text_bytes": 11599,
+   "text_saved_as": "S16_dd_combined.txt"
+  },
+  {
+   "id": "S17",
+   "source": "W3C Verifiable Credentials",
+   "title_as_reported": "Verifiable Credentials Data Model v2.0 (W3C Recommendation)",
+   "authors": "W3C Verifiable Credentials Working Group",
+   "venue_and_date": "w3.org/TR/vc-data-model-2.0, copyright 2025, served 2026-09-05",
+   "what_it_is": "A data model for a set of claims made by an issuer about a subject, expressed as subject-property-value relationships, secured by at least one cryptographic securing mechanism, and exchanged in a three-party ecosystem of issuers, holders and verifiers.",
+   "q1_binds": [
+    "assertion",
+    "credential"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: cryptographic securing mechanism"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://www.w3.org/TR/vc-data-model-2.0/"
+   ],
+   "fetched_at": "2026-09-06T00:16:00Z",
+   "quote": "A claim is a statement about a subject.",
+   "quote_url": "https://www.w3.org/TR/vc-data-model-2.0/",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a claim in the model's own sense — a subject, a property and a value — which is a statement rendered as structure. Prose is not expressible in it without first being rewritten."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind, over the credential rather than over evidence: a securing mechanism that lets a verifier establish that the document is the one the issuer secured. Nothing checks a value inside the credential against bytes held anywhere else."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "This is the clause's idea made into an ecosystem: the issuer is a different party from the holder who presents the credential, and the holder cannot mint what the issuer secured. What is minted is an attestation about a subject, not evidence a statement is measured against."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "The three-party separation is the cleanest statement in the survey of why a party other than the author must mint the bytes, and it stops at the credential: it establishes who said a thing, never whether a document's sentence agrees with a measurement.",
+   "text_sha256": "f0ac2035b807980bb6d294a5347f86d6c004621931b3658526acf29af680a360",
+   "text_bytes": 360863,
+   "text_saved_as": "S17_vc.txt"
+  },
+  {
+   "id": "S18",
+   "source": "SCITT",
+   "title_as_reported": "An Architecture for Trustworthy and Transparent Digital Supply Chains (draft-ietf-scitt-architecture-13)",
+   "authors": "H. Birkholz, A. Delignat-Lavaud, C. Fournet, et al.",
+   "venue_and_date": "IETF SCITT Working Group Internet-Draft, revision 13, June 2025, retrieved 2026-09-05",
+   "what_it_is": "An architecture in which an issuer signs a statement about an artifact, a transparency service applies a registration policy and appends it to a verifiable data structure, and the issuer receives a receipt; a relying party later verifies the proof and inspects the payload.",
+   "q1_binds": [
+    "artifact",
+    "record",
+    "credential"
+   ],
+   "q2_mints": "third party",
+   "q3_narrative_distinguished": "n.a.",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "hash",
+    "other: COSE signature",
+    "other: inclusion proof in a verifiable data structure"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-13.txt"
+   ],
+   "fetched_at": "2026-09-06T00:20:00Z",
+   "quote": "registering a Statement only proves it was produced by an Issuer",
+   "quote_url": "https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-13.txt",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a signed statement about an artifact, carried in an envelope and identified by its subject. It is a payload with a signature over it, not a span of a document that stays readable as prose."
+    },
+    "C2": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "One kind: signatures and inclusion proofs in an append-only structure, establishing that a statement was registered and has not moved. There is no check of the statement's content against other bytes, and the draft says so about itself."
+    },
+    "C4": {
+     "verdict": "OCCUPIES",
+     "why": "The receipt is minted by a transparency service that is neither the issuer nor the relying party, under a registration policy, and the architecture keeps residual properties when some actors are compromised. What it establishes about the payload is authorship and order, not agreement with a measurement."
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "Its own security considerations state the boundary this whole survey turns on: registering a statement only proves an issuer produced it. Everything sworn adds sits on the far side of that line — what the statement says, checked against the bytes it points at.",
+   "text_sha256": "1037365d41d2a91ae66f4a8013bc112df88c4cd985c4a6f3b5bc4a6c8bcdf240",
+   "text_bytes": 91389,
+   "text_saved_as": "S18_scitt.txt"
+  },
+  {
+   "id": "S19",
+   "source": "statcheck",
+   "title_as_reported": "statcheck — a spellchecker for statistics (R package README, devel 1.6.0) and statcheck.io",
+   "authors": "Michèle B. Nuijten and Sacha Epskamp",
+   "venue_and_date": "github.com/MicheleNuijten/statcheck README and statcheck.io, served 2026-09-05",
+   "what_it_is": "A tool that converts an article to plain text, finds null-hypothesis significance tests reported completely and in APA style, recomputes the p-value from the reported test statistic and degrees of freedom, and flags a mismatch as an inconsistency and a mismatch that changes significance as a gross inconsistency.",
+   "q1_binds": [
+    "numeral",
+    "assertion"
+   ],
+   "q2_mints": "none",
+   "q3_narrative_distinguished": "no",
+   "q4_bound_nothing_verdict": "no",
+   "q5_unbound_count_printed": "no",
+   "q6_kinds": [
+    "numeric",
+    "quote"
+   ],
+   "q7_fetch_date": "2026-09-05",
+   "q8_status": "READ",
+   "q9_urls": [
+    "https://raw.githubusercontent.com/MicheleNuijten/statcheck/master/README.md",
+    "http://statcheck.io/"
+   ],
+   "fetched_at": "2026-09-06T00:24:00Z",
+   "quote": "a \"spellchecker\" for statistics",
+   "quote_url": "https://raw.githubusercontent.com/MicheleNuijten/statcheck/master/README.md",
+   "clauses": {
+    "C1": {
+     "verdict": "OCCUPIES",
+     "why": "The unit is a reported test result — a statistic, its degrees of freedom and a p-value — recognised inside the article's own sentences by pattern. The sentence carries it and is never the object."
+    },
+    "C2": {
+     "verdict": "OCCUPIES",
+     "why": "The host is a published article, written after the analysis in the authors' words, and the tool reads it as delivered, in PDF, HTML or DOCX. Of everything read here this is the closest to reading a retrospective report as it stands."
+    },
+    "C3": {
+     "verdict": "OCCUPIES",
+     "why": "Two kinds, both aimed inward: a numeral recomputed and compared under a declared policy that accounts for rounding and for exact or bounded reporting, and a keyword search over the whole text for one-tailed, one-sided or directional, which decides how the numeral is judged."
+    },
+    "C4": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C5": {
+     "verdict": "SILENT",
+     "why": ""
+    },
+    "C6": {
+     "verdict": "SILENT",
+     "why": ""
+    }
+   },
+   "differs_from_sworn": "It is the sharpest case of the opposite architecture: everything it checks comes out of the sentence it is checking, so there is no external byte, no receipt and no party other than the author anywhere in the loop. Its own documentation lists what it cannot detect — results in tables, results not in APA style, results reported incompletely — which is why a detector cannot print how much it missed, and why a coverage figure needs a denominator the detector did not choose.",
+   "text_sha256": "9095154d8b8e9a48b13e365155a70bad22ae7d1cf3d716ce5d7dcadaf15316e2",
+   "text_bytes": 11176,
+   "text_saved_as": "S19_statcheck_combined.txt"
+  }
+ ],
+ "leads_not_scored": [
+  {
+   "lead": "Archivista, attestation storage for Witness",
+   "seen_at": "https://raw.githubusercontent.com/in-toto/witness/main/README.md"
+  },
+  {
+   "lead": "draft-ietf-cose-merkle-tree-proofs, the verifiable data structure SCITT defers its receipt security to",
+   "seen_at": "https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-13.txt"
+  },
+  {
+   "lead": "Trusty URIs, the integrity-key scheme nanopublications recommend",
+   "seen_at": "https://nanopub.net/guidelines/working_draft/"
+  },
+  {
+   "lead": "Nuijten et al. 2017 (doi:10.1525/collabra.102), prediction of statistical inconsistencies",
+   "seen_at": "https://raw.githubusercontent.com/MicheleNuijten/statcheck/master/README.md"
+  },
+  {
+   "lead": "Chambers, Feredoes, Muthukumaraswamy: Registered Reports for AIMS Neuroscience, with 25 common questions answered",
+   "seen_at": "https://www.cos.io/initiatives/registered-reports"
+  },
+  {
+   "lead": "honest-signal's FALSIFICATIONS.md and incident-log.md, and its GitHub Action",
+   "seen_at": "https://raw.githubusercontent.com/alexcard3/honest-signal/main/README.md"
+  },
+  {
+   "lead": "C2PA soft bindings by fingerprint or watermark, specified outside the main document",
+   "seen_at": "https://spec.c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html"
+  }
+ ],
+ "clause_status_counts": {
+  "retired": 0,
+  "unpriced": 0,
+  "occupied": 6,
+  "free": 0
+ },
+ "sentences_not_priced": [
+  {
+   "sentence": "We know of no other format that makes the second question answerable at all.",
+   "where": "papers/sworn/SPEC_sworn_output_v01_2026_09_01.md",
+   "status": "NOT PRICED BY THIS PROCEDURE",
+   "note": "The frozen protocol prices one sentence. The second question this one names is clause C6, which this survey finds OCCUPIED, so the survey does not defend the sentence and does not retire it either."
+  },
+  {
+   "sentence": "the diffgate conjunction about adjudicating an author's free-form claim against non-claimant evidence bytes in CI",
+   "where": "papers/closed-model-frontier/PREREG_evidence_leg_2026_09_01.md",
+   "status": "NOT PRICED BY THIS PROCEDURE",
+   "note": "Shares clauses C2 and C4 with the sentence under test and is a different conjunction; the frozen source list was chosen for the format, not for the gate."
+  },
+  {
+   "sentence": "the capsule sentence about a single self-contained file that re-verifies offline in a reader's browser",
+   "where": "papers/closed-model-frontier/PLAN_prior_art_and_the_next_move_2026_08_31.md",
+   "status": "NOT PRICED BY THIS PROCEDURE",
+   "note": "No source in the frozen list is a browser-side verifier; nothing here bears on it."
+  }
+ ],
+ "limits": [
+  "One agent, one pass, one date. The OATH survey of 2026-08-26 had every source re-fetched by an agent that did not record it; this one does not, and a source recorded from memory would not be caught.",
+  "19 named sources are not the literature. A clause with no occupant would have been a fact about 19 fetches, not about the world; no clause turned out that way.",
+  "The rows are authored. The script checks their shape and derives the statuses; it does not read the pages.",
+  "Nothing here is a verdict about any document, and the procedure cannot return that anything is new."
+ ]
+}
