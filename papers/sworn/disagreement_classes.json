@@ -1,0 +1,1072 @@
+{
+ "by_field": {
+  "/counts/FAILED": 4,
+  "/counts/HELD": 1,
+  "/rungs/L2": 1,
+  "/rungs/undeclared": 1,
+  "/spans/*/detail/leaf": 1,
+  "/spans/*/detail/leaf_type": 5,
+  "/spans/*/reason": 37
+ },
+ "cases": [
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 31,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 1,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 1,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 748,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/rungs/L2",
+   "index": 979,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1066,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1091,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf_type",
+   "index": 1451,
+   "javascript": "'_Obj'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1535,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 2,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 2,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1577,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1680,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 1910,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": true,
+   "field": "/counts/FAILED",
+   "index": 2284,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "0",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 2288,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 2835,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 2851,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 2889,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf_type",
+   "index": 3033,
+   "javascript": "'_Obj'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": true,
+   "field": "/counts/FAILED",
+   "index": 3138,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "0",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 3187,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/rungs/undeclared",
+   "index": 3233,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 3341,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 3481,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 3867,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": true,
+   "field": "/counts/FAILED",
+   "index": 4312,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 1,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "0",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 1,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf_type",
+   "index": 4332,
+   "javascript": "'_Obj'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 4582,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 4727,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 4810,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 4958,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 5111,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 5127,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf_type",
+   "index": 5353,
+   "javascript": "'_Obj'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 5607,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 1,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 1,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 5746,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 5777,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": true,
+   "field": "/counts/HELD",
+   "index": 5991,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 1,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "0",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 6348,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 6648,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf_type",
+   "index": 7316,
+   "javascript": "'_Obj'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "<absent>",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": true,
+   "field": "/counts/FAILED",
+   "index": 7378,
+   "javascript": "1",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "0",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 7523,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 7536,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 7713,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 7907,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 8314,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 8348,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 8519,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 8929,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 9440,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 1,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 9722,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/reason",
+   "index": 9884,
+   "javascript": "'pointer_unresolvable'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'receipt_not_json'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 4,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  }
+ ],
+ "disagreements_total": 712,
+ "receipt": "conformance/sworn/differential_agreement_2.json",
+ "recorded_in_full": 50,
+ "schema": "styxx.sworn.disagreement-classes/v1",
+ "verdict_changing_by_field": {
+  "/counts/FAILED": 4,
+  "/counts/HELD": 1
+ },
+ "verdict_changing_total": 5
+}
