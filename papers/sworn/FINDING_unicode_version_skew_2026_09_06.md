@@ -85,3 +85,54 @@ do on the way past.
 Also left: `GRAM_RE`, which the census does not cover. It is anchored and matches strings rather
 than single characters, so comparing it needs a string generator, not a code-point sweep. That is a
 different instrument and it has not been built.
+
+---
+
+## The agreement is bounded a second time, by the generator's aperture
+
+The Unicode-version condition above is one bound on "the two implementations agree". Running the
+differential harness at a **seed it had never been run at** measures the other.
+
+```
+seed 20260906, 100000 cases
+compared 100000 | agree 100000 | disagree 0 | one-sided errors 0 | reasons 38
+```
+
+A clean sweep — and it is worth almost nothing as evidence about the implementations, because of
+what the generator can emit. Sampled over 25,000 cases at that seed:
+
+```
+distinct code points reachable: 98
+non-ASCII (7): U+00E9, U+0301, U+0663, U+0665, U+2212, U+FEFF, U+1F600
+```
+
+**Seven non-ASCII characters.** Now the miss list — every character-level defect found in this
+audit, against that alphabet:
+
+| defect | code point | reachable by the generator |
+| --- | --- | --- |
+| a dash that dropped a minus sign | `U+2010` and 25 others | **no** |
+| the directional override | `U+202E` | **no** |
+| the path-segment divergence | `U+0085` | **no** |
+| the Unicode-version digit skew | `U+10D40` | **no** |
+
+Four real defects — two of them changing a document verdict between the implementations — and the
+generator cannot produce a single one of them. So `100000 agree, 0 disagree` is not a statement
+about Python and JavaScript. It is a statement that they agree **on a 98-character alphabet**.
+
+This is the lab's own standing warning about itself, now with a receipt: *an agreement number is
+worthless without measuring the generator's detection power.* The number had never been paired with
+its aperture, so it read as far stronger than it was.
+
+### What follows, and what deliberately does not
+
+The obvious move is to widen the grammar until it reaches these characters. **That is not proposed
+here**, for a reason the census makes concrete: a grammar that emits `U+10D40` would make the
+differential harness fail on this machine and pass on one whose runtimes share a Unicode version.
+The harness would stop being a defect detector and start being a runtime-parity detector, reporting
+red for something no edit to either implementation can fix.
+
+The honest sequence is the other order: decide the Unicode-version question first — the operator's
+call, stated above — and only then widen the aperture to whatever the decision makes checkable. What
+is shipped now is the measurement, so the next person to quote `100000 agree` has the alphabet
+printed beside it.
