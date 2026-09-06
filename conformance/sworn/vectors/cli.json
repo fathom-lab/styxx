@@ -22,6 +22,33 @@
    }
   },
   {
+   "id": "332818d2b7ff0b17f93ecc42accd22d33d820a946fca58b6b94d04cb49365131",
+   "family": "cli",
+   "sources": [
+    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "9279948d042bb291f8f75ee63ca65f58e854b227ab9b49d7c69139db8efa10bd",
+    "document": null,
+    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "42fbcbbaa54861c46b7447b5f9616c01f3d342c767ad9b9439da2a7aeb2f9b66",
    "family": "cli",
    "sources": [
@@ -174,33 +201,6 @@
      "where": "to_sidecar",
      "code": "lexical_malformed",
      "match": "cannot carry a lexically MALFORMED declaration"
-    }
-   }
-  },
-  {
-   "id": "ab960cc25f7e7c90f8a6b393eb4b7618644c19559ba753a569a30754105aa62c",
-   "family": "cli",
-   "sources": [
-    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "111e7a63384035e01491ef2b980f418568979b322473f636aad9bfc47c612e67",
-    "document": null,
-    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
     }
    }
   },
