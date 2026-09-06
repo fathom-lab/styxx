@@ -4,35 +4,6 @@
  "count": 5,
  "vectors": [
   {
-   "id": "31771af1c71c245260efdb0d24bae8776862c34819b127e05401096679fa0b3a",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "e42b2184d47de9a161a15f31f4c60bcc2a6d9f48548fb2eb9cf3d74635b10362",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "56e65a789c35d139873391a6ae1bdaeb4022c12d6952135ddecb7bc20e14ba94",
    "family": "receipt_v1",
    "sources": [
@@ -85,36 +56,7 @@
    }
   },
   {
-   "id": "b17905ec3c1dd099de869fafd1bc77054597d2990d8242434a6f6d1e74dcf9fd",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_receipt_from_another_verifier_build_is_reported_not_hidden"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "296e19e2173c434dcde82f96d2ab4eb15d6078bf3d986a789244158c041b9056",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "e840c795ee5a202e53d41c146acdbd0a332e8a5310f6f5a28a071f4f6097c4c9",
+   "id": "72171d4b7ffc4efb02ab21b55806d3effb207b174cbcfb777ec81a6b969342e1",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -127,7 +69,36 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "945c4f6f008ea9daef62a2232fce258bb910b221d4ed05462a64d52767f8a4d6",
+    "receipt": "b7c7d53178ab751b5f4253bdd5ef1aeeebbcf3caeeaf8534011cb0b0085d51d4",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "911154dcb6aae20f65dd69b8b07c4bcf9004dce49e001240ec4940caefeec659",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "5ca54b0d7dc475582f026e58a66110983be130787cd0d31c30067644afb8d334",
     "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
@@ -143,7 +114,7 @@
    }
   },
   {
-   "id": "f32a31cb0afac19f849175c3ec80b152bf544354d7104b04be6bf2b8340ab437",
+   "id": "a47060ce64e603635f331c22c0cc7e28206c6905254ee98226c87fe98c5d4c6c",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
@@ -156,7 +127,36 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "e040ae629136ec4834d09b4da510be1795f036db77e09142d151bff635dc63a5",
+    "receipt": "44f7cb07584fe4ea23c89cade432cc3155bd6eac12fbdbeec6d4a7bb46292762",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "b17905ec3c1dd099de869fafd1bc77054597d2990d8242434a6f6d1e74dcf9fd",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_receipt_from_another_verifier_build_is_reported_not_hidden"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "296e19e2173c434dcde82f96d2ab4eb15d6078bf3d986a789244158c041b9056",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
