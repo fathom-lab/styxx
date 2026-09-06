@@ -688,7 +688,18 @@ class Manifest:
         self.spec: str = spec if spec in MANIFEST_SPECS else MANIFEST_SPEC
 
     def rung_status(self) -> Tuple[str, Optional[str]]:
-        """("ok", rung) | ("undeclared", None) | ("unknown", rung)."""
+        """("ok", rung) | ("undeclared", None) | ("unknown", rung).
+
+        v0.2 R6 / SPEC_manifest_01_has_no_rung_v01_2026_09_06 R1: only a manifest/0.2 declares a
+        rung. DECISIONS["rung"] — which travels inside the digested core — has always said "a
+        manifest/0.1 … resolves at rung `undeclared`, never at L2", and core() has always honoured
+        it by digesting `rung` for 0.2 alone. This did not: it read the field for any spec, so a
+        0.1 was judged by a field its own digest does not cover. Appending one key to a 0.1 turned
+        a false document from SWORN-FAILED to SWORN-HELD with a byte-identical manifest_digest and
+        intact() still true; on a 0.2 the same tamper breaks the digest and is seen.
+        """
+        if self.spec != "sworn/manifest/0.2":
+            return "undeclared", None
         if self.rung is None:
             return "undeclared", None
         if self.rung in RUNGS:
