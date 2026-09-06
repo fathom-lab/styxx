@@ -310,7 +310,7 @@ def main(argv=None) -> int:
     ap.add_argument("--cases", type=int, default=100000)
     ap.add_argument("--seed", type=int, default=20260905)
     ap.add_argument("--batch", type=int, default=2000)
-    ap.add_argument("--out", default=str(HERE / "differential_agreement_result.json"))
+    ap.add_argument("--out", default=str(HERE / "differential_agreement.json"))
     a = ap.parse_args(argv)
 
     out = Path(a.out).resolve()

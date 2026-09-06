@@ -90,3 +90,21 @@ says what it reached. That any of this has run outside this lab.
 
 *The vectors asked whether a second implementation agrees where we looked. This asks whether it
 agrees where nobody looked, and it is written down before the answer is known.*
+
+## ERRATA — 2026-09-05, after the run
+
+Appended, not edited: the rules above are the frozen text.
+
+**D6 names the receipt `differential_agreement_result.json`.** It is committed as
+`conformance/sworn/differential_agreement.json`. The name in D6 was wrong when it was written, and
+the suite said so before the receipt was ever cited outside this branch:
+`test_no_conformance_file_wears_a_suffix_another_sweep_claims` forbids a `conformance/` file from
+wearing a name another sweep claims, and in this corpus `*_result*.json` means *a prereg-scored
+experiment receipt that `test_protocol_v2v3` re-scores through `Experiment`*. This receipt is not
+one — no prereg, no `verdict`, nothing scores it — so it may not wear that name and be believed by
+a sweep that never asked. Nothing else in D6 changes: the file still carries the seed, the counts,
+the census, every disagreement in full and both implementations' digests, it is still written once,
+and a second run is still a second file.
+
+The receipt's bytes are unchanged by the rename, and its sha256 with them. This is the one thing a
+move may not do — change what the receipt says — and it does not.
