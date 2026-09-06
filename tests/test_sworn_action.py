@@ -428,15 +428,50 @@ class TestOutputsAndSource:
 
 
 class TestTheCommittedSample:
-    def test_the_committed_sample_reproduces(self):
-        """papers/sworn/sworn_action_sample.* is what the RESULT cites; it is never regenerated in
-        place, and this is the check that the committed bytes are what the script produces today
-        (manifests, run.json and the summary byte for byte; receipts on their core)."""
+    # The sample the script reproduces TODAY. `sworn_action_sample.*` is the first one and is
+    # history: it records what the action printed before the verify headline warned about a
+    # SWORN-HELD document with unresolved spans, and two sworn documents cite it. When the verifier
+    # changed, the script's own refusal named the remedy — "a sample is history; write a new prefix
+    # at a new commit" — so a second sample was written beside the first rather than over it.
+    CURRENT_SAMPLE = "sworn_action_sample_2026_09_06"
+
+    def _sample_module(self):
         script = ROOT / "papers" / "sworn" / "sworn_action_sample.py"
         spec = importlib.util.spec_from_file_location("sworn_action_sample", script)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        assert mod.check() == 0
+        return mod
+
+    def test_the_committed_sample_reproduces(self):
+        """The current sample is what the script produces today — manifests, run.json and the
+        summary byte for byte; receipts on their core."""
+        assert self._sample_module().check(self.CURRENT_SAMPLE) == 0
+
+    def test_the_first_sample_is_still_here_and_is_not_regenerated(self):
+        """History is kept, not rewritten. The first sample must remain on disk and must NOT
+        reproduce — it cannot, because the headline it captured predates the warning, and a sample
+        that quietly started reproducing again would mean somebody had rewritten it."""
+        here = ROOT / "papers" / "sworn"
+        first = sorted(p.name for p in here.glob("sworn_action_sample.*") if p.suffix != ".py")
+        assert first, "the first sample was deleted; a sample is history"
+        assert (here / "sworn_action_sample.summary.md").exists()
+        assert self._sample_module().check("sworn_action_sample") != 0, (
+            "the first sample reproduces again, which means either it was regenerated in place or "
+            "the warning it predates was removed")
+
+    def test_the_two_samples_differ_only_in_the_warning(self):
+        """The pair IS the record of the change: same action, same fixture, one line apart."""
+        here = ROOT / "papers" / "sworn"
+        old = (here / "sworn_action_sample.summary.md").read_text(encoding="utf-8").splitlines()
+        new = (here / ("%s.summary.md" % self.CURRENT_SAMPLE)).read_text(
+            encoding="utf-8").splitlines()
+        assert len(old) == len(new), "the samples differ in shape, not just in the warning"
+        differing = [i for i, (a, b) in enumerate(zip(old, new)) if a != b]
+        assert len(differing) == 1, "expected exactly one differing line, got %d" % len(differing)
+        i = differing[0]
+        assert "UNRESOLVED.md" in old[i] and "SWORN-HELD" in old[i]
+        assert "WARNING" not in old[i], "the first sample predates the warning"
+        assert "nothing was checked" in new[i], new[i]
 
     def test_the_sample_refuses_to_overwrite_itself(self, capsys):
         script = ROOT / "papers" / "sworn" / "sworn_action_sample.py"
