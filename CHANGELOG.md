@@ -88,6 +88,27 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
+## [Unreleased] — withdrawn: the verdict was a decision, not a defect
+
+- **WITHDRAWN: `SWORN-HELD` ignoring `UNRESOLVED` is a deliberate, documented decision.**
+  `RESULT_sidecar_battery` proposed that `SWORN-HELD` should require `UNRESOLVED == 0` and left the
+  rename operator-gated. Preparing that rename found the error: `tests/test_sworn.py` carries
+  `test_unresolved_only_is_held_and_the_count_travels_in_the_headline`, and `_resolve`'s
+  `rung_unknown` branch states the rationale — *"The verifier declines to see it; it accuses
+  nobody."* `SWORN-FAILED` means the verifier CAUGHT something wrong; `UNRESOLVED` means it COULD
+  NOT LOOK, and refusing to conflate them is the same principle as SKEW-is-not-DRIFT. The doctrine
+  line the RESULT quoted governs `sworn_total == 0`, not unresolution. An erratum is appended to the
+  sworn RESULT; the frozen text is not edited.
+- **Also withdrawn: the rung-flip as an attack on the format.** The demonstration stands but requires
+  control of the manifest, which `Manifest`'s docstring already declares a trust boundary.
+- **What stands: the reader-facing hazard**, which is not about attackers — `verify --repo .` without
+  `--commit` gives an honest user SWORN-HELD over a document where nothing was checked. The headline
+  warning already shipped is the correct and sufficient repair; no vocabulary change is needed. The
+  49 attacks, the 0 refusals, the `load_sidecar`/`render` round-trip gap and the rounding floor are
+  unaffected.
+- Measured before deciding: **68 of 2067 core vectors** would have moved under the rename — the
+  corpus stating, 68 times, a behaviour it had already decided on.
+
 ## [Unreleased] — the short-needle exemption is earned by narrowing, not by naming a range
 
 **Built to `papers/sworn/SPEC_short_needle_anchor_v01_2026_09_06.md`, frozen before the repair.**
