@@ -92,3 +92,55 @@ seed is a second file.
 agrees where nobody looked, one hundred and fifty thousand times, and the answer was yes every
 time. That is not proof the verdict is right. It is the removal of one specific way it could have
 been wrong, and it is written down with the seed that produced it.*
+
+---
+
+## ERRATUM — 2026-09-06: the implementations DO disagree
+
+**Everything above remains true and none of it is retracted.** 150000 documents were compared under
+the grammar this document describes, and 0 of them disagreed. What was wrong is the sentence a
+reader naturally takes away from that — *the two implementations agree* — and it was wrong at the
+moment this was written.
+
+The boundary section above says the grammar's coverage is not claimed. That was honest and it was
+not enough. A caveat about coverage does not tell a reader that two real defects, one of them
+verdict-changing, were sitting inside the uncovered part.
+
+`RESULT_mutation_coverage_2026_09_05.md` measured what this harness could detect and found the
+receipt payload aperture to be its largest blind spot — ten hard-coded byte strings through which
+the JSON parser was the only way in. `SPEC_aperture_closure_v01_2026_09_05.md` widened exactly
+those lists, changing nothing about the comparison. At the same seed and the same size:
+
+<sworn r="path:conformance/sworn/differential_agreement_2.json#/disagree" k="numeric">712 of the 150000 disagreed.</sworn>
+<sworn r="path:papers/sworn/disagreement_classes_2.json#/verdict_changing_total" k="numeric">5 of the 50 recorded in full changed a verdict rather than a label,</sworn>
+and one changed it in the direction that matters: the JavaScript verifier reported a span **HELD**
+that `styxx.sworn` reported **MALFORMED**. A sentence the reference implementation refuses to read
+at all, the browser verifier vouched for.
+
+Two defects, both in `styxx/_data/sworn_verify.js`, both now repaired and pinned by tests:
+
+1. **The decoders ate a leading BOM.** `new TextDecoder("utf-8", { fatal: true })` leaves
+   `ignoreBOM` at `false`, which in WHATWG's inverted naming means the decoder *strips* a leading
+   U+FEFF — so `jsonStrict`'s explicit BOM refusal was unreachable dead code, and a BOM-prefixed
+   receipt payload held on one side and was refused on the other.
+2. **`safeText` destroyed astral characters.** Its lone-surrogate fixup matched a class spanning
+   high *and* low surrogates, so the low half of every valid pair was replaced: U+1F600 came out of
+   a detail field as a high surrogate plus U+FFFD. It also used the wrong replacement character
+   (`?`, not U+FFFD, is what Python's encode-side `errors="replace"` emits) and sliced by UTF-16
+   code units where Python slices by code points.
+
+After both repairs, at the widened grammar and the same seed,
+<sworn r="path:conformance/sworn/differential_agreement_4.json#/disagree" k="numeric">0 of 150000 disagreed</sworn>
+over
+<sworn r="path:conformance/sworn/differential_agreement_4.json#/census/span_verdicts/HELD" k="numeric">1169 HELD</sworn>
+and
+<sworn r="path:conformance/sworn/differential_agreement_4.json#/census/span_verdicts/FAILED" k="numeric">3347 FAILED</sworn>
+spans. That zero and the zero at the top of this document are the same number and not the same
+fact. The first was a statement about what the generator could produce. The second is a statement
+about two implementations, over a generator that reaches the places a mutation study said it could
+not.
+
+**What could not see either defect.** The conformance set passed identically before and after both
+repairs — 1689 vectors ran, 1689 passed, 0 failed, every time. Two independent instruments were
+clean while a live, verdict-changing divergence sat in the shipped file. That is the finding this
+erratum exists to carry, and it is larger than either bug.
