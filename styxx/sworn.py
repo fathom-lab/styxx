@@ -74,6 +74,7 @@ import base64
 import datetime as _dt
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -916,9 +917,24 @@ class GitTree:
         self.commit = commit
 
     def _git(self, *args: str, stdin: Optional[bytes] = None) -> Tuple[int, bytes, bytes]:
+        """git plumbing with object REPLACEMENT off.
+
+        SPEC_tree_ignores_replace_refs_v01_2026_09_06 T1. Git honours `refs/replace/*` by default,
+        in `cat-file` and `ls-tree` alike, so one local ref made this verifier serve a DIFFERENT
+        commit's bytes under the commit id the document names — a false document went SWORN-HELD
+        with the provenance note still naming the commit asked for, while `git
+        --no-replace-objects` printed the original bytes and nothing in the repository looked
+        touched. This class's own docstring says a verdict must be a function of bytes and not of
+        somebody's checkout; without this it was a function of somebody's refs.
+
+        Both the flag and the variable: the flag is the documented mechanism, and the variable also
+        covers any git subprocess a later edit adds without remembering the flag.
+        """
+        env = dict(os.environ)
+        env["GIT_NO_REPLACE_OBJECTS"] = "1"
         try:
-            r = subprocess.run(["git", "-C", str(self.repo), *args], input=stdin,
-                               capture_output=True, check=False)
+            r = subprocess.run(["git", "--no-replace-objects", "-C", str(self.repo), *args],
+                               input=stdin, capture_output=True, check=False, env=env)
         except (OSError, ValueError):
             return 127, b"", b"git unavailable"
         return r.returncode, r.stdout, r.stderr
