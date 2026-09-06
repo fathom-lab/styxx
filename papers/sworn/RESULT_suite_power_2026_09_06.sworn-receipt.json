@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_suite_power_2026_09_06.md",
-  "inline_sha256": "5e88f2f7c9cf2675d2f19d7eca56570c58da3282efa2fc6494df7b188c512fab",
-  "canonical_sha256": "df593fa21ca07571cdc2cfad9e63f38db47442e647b52e3ab05bb8f3a6ca8399"
+  "inline_sha256": "1ba20bd86c39b62508b873e4cc518455d87a3c6b0e9c0b99f6c389aeb383e2e5",
+  "canonical_sha256": "0a9bef8c8afeb00d6f3eece829e310459cfd509d5a1b30dae3df356ad9c5933b"
  },
- "commit": "66ac75954205ea18961d86c2a96653c18d1585a7",
+ "commit": "3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6",
  "manifest_digest": null,
  "spans": [
   {
@@ -28,7 +28,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -50,7 +50,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -72,7 +72,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -94,7 +94,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -116,7 +116,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -138,7 +138,7 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
@@ -160,28 +160,35 @@
    "resolved_sha256": "07a455f6c4951332e7e471939f3ddca232a28106cbd4150fce1f3493a7a83e41",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
-   "at": 3332,
-   "start": 2700,
-   "end": 2743,
+   "at": 3358,
+   "start": 2726,
+   "end": 2750,
    "receipt": "path:papers/sworn/suite_power_concentration.json#/killed_by_exactly_one_test",
    "kind": "numeric",
-   "verdict": "MALFORMED",
-   "reason": "number_count",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "digit_bearing_tokens": [
-     "9",
-     "25"
-    ]
+    "printed_token": "9",
+    "printed": "9",
+    "receipt": "9",
+    "receipt_rounded": "9",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "d25a6d2e2d6f62b10c107cb1320ff231aa8f416db795c359510756f3bacf788b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
-   "at": 3488,
-   "start": 2748,
-   "end": 2773,
+   "at": 3495,
+   "start": 2755,
+   "end": 2780,
    "receipt": "path:papers/sworn/suite_power_concentration.json#/killed_by_five_or_fewer",
    "kind": "numeric",
    "verdict": "HELD",
@@ -197,13 +204,13 @@
    "resolved_sha256": "d25a6d2e2d6f62b10c107cb1320ff231aa8f416db795c359510756f3bacf788b",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   },
   {
-   "at": 4061,
-   "start": 3216,
-   "end": 3267,
+   "at": 4068,
+   "start": 3223,
+   "end": 3274,
    "receipt": "path:papers/sworn/suite_power_concentration.json#/top_killing_file_kills",
    "kind": "numeric",
    "verdict": "HELD",
@@ -219,24 +226,23 @@
    "resolved_sha256": "d25a6d2e2d6f62b10c107cb1320ff231aa8f416db795c359510756f3bacf788b",
    "provenance": {
     "form": "path",
-    "note": "committed object at 66ac75954205ea18961d86c2a96653c18d1585a7; authorship unchecked"
+    "note": "committed object at 3b9c39766f0bc90e1955ac46bfe46ea7e884d0e6; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 9,
+  "HELD": 10,
   "FAILED": 0,
   "UNRESOLVED": 0,
-  "MALFORMED": 1,
+  "MALFORMED": 0,
   "WITHHELD": 0
  },
  "sworn_total": 10,
  "unresolved": 0,
- "document_verdict": "SWORN-FAILED",
+ "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 9,
-  "unresolved": 1
+  "committed": 10
  },
  "verifier": {
   "styxx_version": "7.47.0",
@@ -275,14 +281,14 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "28debf1ed3dccdf5a3a955b5cbe1bb3215e1c177c138af6536e3afad13d0103b",
+ "digest": "fc51434d736de02d0a2de5b994a17d534b7c05eda767fc27904526a9d4e5f553",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 10,
-  "narrative_sentences": 100,
-  "sentence_share": 0.0909,
+  "narrative_sentences": 101,
+  "sentence_share": 0.0901,
   "diff_claim_sentences": 1,
   "diff_claim_share": 0.9091,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
@@ -296,6 +302,6 @@
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "6ebea65c37c79ca417a69f8268ab0752078d8faeef9869a4e664829f670cebda",
- "timestamp": "2026-09-06T04:22:57Z"
+ "coverage_sha256": "5cdf9d44b07f11ea65eb8627c3ec62369a801edfcee71b9aff6e85f9338f918f",
+ "timestamp": "2026-09-06T04:23:17Z"
 }
