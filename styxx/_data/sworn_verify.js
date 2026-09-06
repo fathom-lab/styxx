@@ -468,7 +468,14 @@ const HEXRUN_RE = /(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])/g;
 const DIRECTIONAL_OVERRIDE_RE = /[‭‮]/;
 const DIGEST_LENGTHS = new Set([32, 40, 96, 128]);
 const RN_RE = /^r[1-9][0-9]*$/;
-const PATH_SEG_BAD_RE = new RegExp('[\\\\\\t\\n\\v\\f\\r \\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\u0000-\\u001f\\u007f*?\\[\\]]');
+// [B4] P1 (SPEC_path_segment_class_is_pinned_v01_2026_09_06): this hand-expands Python's `\s`,
+// because neither language's `\s` means the other's — Python's includes U+0085 NEXT LINE and
+// excludes U+FEFF, JavaScript's the reverse. The expansion omitted U+0085, which split the two
+// verifiers on the DOCUMENT VERDICT for a path: target carrying it: SWORN-FAILED here,
+// SWORN-HELD there. 1689 replayed vectors did not see it because none puts a U+0085 in a path.
+// tests/test_sworn_path_segment_parity.py now evaluates BOTH classes over all 1,114,112 scalar
+// values and asserts they agree, lifting this regex out of this file rather than restating it.
+const PATH_SEG_BAD_RE = new RegExp('[\\\\\\t\\n\\v\\f\\r \\u0085\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\u0000-\\u001f\\u007f*?\\[\\]]');
 const HEX64_RE = /^[0-9a-f]{64}$/;
 const HEX64_ANY_RE = /^[0-9a-fA-F]{64}$/;
 
