@@ -1208,6 +1208,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
   },
+  "16bfad441e61e3fa64390433049d5304e57367f33df9fd88c23e1793921cc623": {
+   "coverage_reproduces": null,
+   "same_verifier_build": false
+  },
   "16cc8458125c0291bd3fbce871901d78ccb9658770ebc725f21cb3a48ea5c08c": {
    "diff_claim_sentences": 0,
    "diff_claim_share": null,
@@ -1478,6 +1482,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
+  "1c02de0c93b9062b9607d00317e322c30ddbb665ca29ca51f159a922259e34c6": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
+  },
   "1c02f3605f24805abda8743f4350c7227fee92924e6990df64f036e872160465": {
    "diff_claim_sentences": 0,
    "diff_claim_share": null,
@@ -1567,10 +1575,6 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
-  },
-  "1d5217caa24be763b4fb1e18f5bb8eb4ebbc9c23815320c0d860576bd2cb4e56": {
-   "coverage_reproduces": true,
-   "same_verifier_build": false
   },
   "1d58576fb9d72ffeb3062e89025cf04b5d45e60a6e2a10074cb53c09050388ba": {
    "diff_claim_sentences": 0,
@@ -2118,6 +2122,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
+  "27b01ead90fc4fc04d4ecf54dcb28a83fa880ef6992c7684ca300595789645aa": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
+  },
   "27b5f8b3a438c4f8a81433e3b600023daf8ebebbedcf47d9c9068fed35293894": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -2183,6 +2191,10 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "294391400eb2ea324bcd037c18ccccfb1a60aa7fe6145502194a7f496552c3b8": {
+   "coverage_reproduces": null,
+   "same_verifier_build": false
   },
   "295a0551dd816d608fc813c5f4eea49b9cb29dc16587765b00905d737829353d": {
    "diff_claim_sentences": 0,
@@ -2304,6 +2316,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
+  "2befc1e2208c26fd7ec78b05d6e35bece108e93e28ebd78960ce89ca97085124": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
+  },
   "2bf0a6fcc80d5a17837ee73e0e4bac7a3917fb4254413f078ab1172245d2c011": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -2357,6 +2373,10 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": null
+  },
+  "2d5da36a53350f13ff5a3a110f6f9de04dff308b0d6bf00d17c861282a3cecd9": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
   },
   "2d5fc775c98134077fb0b171e8d23940be68ae724e339c48f7cfa50083b896fb": {
    "diff_claim_sentences": null,
@@ -3984,10 +4004,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "4f8b31fc0351844fd823545891b403894166970a5070f18383ea20b274b6bd95": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "4f97508030decd8d9a4f3a89431b8d5d4b54dbda242494de6c9a1e89278e3e51": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -4048,10 +4064,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
   },
-  "50ad122fb282981cc8ef3274ab4b72f6e49f6c51169b477f5fa7ded37826727a": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "510a8582b778b643b182479ce4a9e481641552400402e9a979e55bd88d85aa9c": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -4093,10 +4105,6 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
-  },
-  "518d51fba870a10b93aad583c150cd512db2a98485933dabe0aef6f2b8381b38": {
-   "coverage_reproduces": false,
-   "same_verifier_build": true
   },
   "51a411252e0bb5e16ef1891bad244c086099382f98984e117af03ee4ab7e8225": {
    "diff_claim_sentences": 0,
@@ -4140,10 +4148,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "5288d6eeb938871bd8d4781a0427956f601525e76b7f4a169e291e703bee8bde": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "529dd5fb3e388a6f52eebd11fb957e5a63a1ffa5f64ebb429283badc9f49c5dc": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -4161,6 +4165,10 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "52da8dbeb28ffec612f50fc77ca85eae61e50a8536669773bab0a5d939511308": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
   },
   "52ee018381db6ae9949c7433c7d716205a53f3f99936553610a010cc17553751": {
    "diff_claim_sentences": null,
@@ -4959,10 +4967,6 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
-  },
-  "62c67972b27be670b0d8bb35b82f93a8c92def9a41b41250914407da0ea049be": {
-   "coverage_reproduces": null,
-   "same_verifier_build": false
   },
   "62dd56ccddadeed11f5261a839ef5fffe2b139371e2c66d0c11c9219f44f1148": {
    "diff_claim_sentences": 0,
@@ -6162,10 +6166,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "7daf3750da136139bdb4564abb02971eabd1668eb57323712c31b99bd8babec8": {
-   "coverage_reproduces": false,
-   "same_verifier_build": true
-  },
   "7dbb507a4f2652017a2c273f0b735b69baa753be5fefe84e8f3ea8eeda4ba197": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -6279,6 +6279,10 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "7f6e86a92b700135cf893e33665c6c8d1e6c9c39df4c0078771533304ea5b735": {
+   "coverage_reproduces": true,
+   "same_verifier_build": false
   },
   "7f7a92358f15e3efe63edeffc7446c53ef2ccb496bb004454e0ac34d1e0b5782": {
    "diff_claim_sentences": null,
@@ -6868,6 +6872,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
   },
+  "8b309c7a890056e298ccb664f770d68faded1b6eb1d7068ae8b31ec7f7e99874": {
+   "coverage_reproduces": false,
+   "same_verifier_build": true
+  },
   "8b58a13bbb8227a16f7dac1b69a621275c3c0bad963df7841b27eb07ffde0ed2": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -7012,6 +7020,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
+  "8ec18815bbeb8d3c97ec34a8890ad2bf911d189a7ff29907085a64ed24dd411e": {
+   "coverage_reproduces": null,
+   "same_verifier_build": false
+  },
   "8ed5f68b98416fe130a2d8d464dbfe59e2d8d9c9928de2fe471abcec2cdf3b2b": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -7041,10 +7053,6 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
-  },
-  "8f3353f390b474db0bb9e3b196c3d06871bfdd43c4e60d2fac9d649fec634142": {
-   "coverage_reproduces": null,
-   "same_verifier_build": false
   },
   "8f4b0598417ead92b584e51fae80ee1a211e1369cd80de3f7d9539bae5f11448": {
    "diff_claim_sentences": null,
@@ -8396,6 +8404,10 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
+  "ab960cc25f7e7c90f8a6b393eb4b7618644c19559ba753a569a30754105aa62c": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
+  },
   "aba7270dcad7b39ab1c86eedf5a68a61bc8a4d26e1defe11a7b0fabf6bc172a3": {
    "diff_claim_sentences": null,
    "diff_claim_share": null,
@@ -9018,10 +9030,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "b555cbeabe700522d1eca0120244cb2963f066de52ba681f1c75442adbb6a112": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "b58657ce12f3dd40205ee3774388a90510b9fabe9e58c585545cf54a0780c9c4": {
    "diff_claim_sentences": 0,
    "diff_claim_share": null,
@@ -9207,6 +9215,10 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": null
+  },
+  "b85b3576234037fd0fbb09067ea37aec890607a03fa3c97a781aae8cccb7d62c": {
+   "coverage_reproduces": false,
+   "same_verifier_build": true
   },
   "b8632be8b69a162e84572a75b8236db56a10423fdf4faa27b5a5d88d12d46803": {
    "diff_claim_sentences": 0,
@@ -10108,10 +10120,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "c9ced889df2081c5cc403a986bb087404d47666a37257d3221d1765db9aece2a": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "c9fb214206b7b3d25fc1389301b0f136b6c7cb74378138206e3cafae8366ba0d": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -10478,10 +10486,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "d2bb23c9d80055775c150c495cdaf57a0f534b93b650bf53317025483735c92a": {
-   "coverage_reproduces": false,
-   "same_verifier_build": true
-  },
   "d2c175486bd07d271ccfb585b41b8f2c0af04da5f47837d748c5f5342962aa36": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -10493,6 +10497,10 @@
    "diff_claim_share": 1.0,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "d2f8c36cb3de5e44336f3ef77cc8e9b148761744dbf6a198f8d33da5de2ddb5b": {
+   "coverage_reproduces": false,
+   "same_verifier_build": true
   },
   "d2fa5b7aab6ceb18769d914d193499167de088e55a50be01008e551d99a745cb": {
    "diff_claim_sentences": null,
@@ -10745,10 +10753,6 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": null
-  },
-  "d8a73b2fc4bd6c6da2c6be3169205d31a52b4aaf14d040de6f5b2b633fea9ccc": {
-   "coverage_reproduces": null,
-   "same_verifier_build": false
   },
   "d8be9e768e160b31699aabb553c4dd0303560c7d2055099e729826b00b83951e": {
    "diff_claim_sentences": 0,
@@ -11044,10 +11048,6 @@
    "unsworn_claims": 0,
    "claimdetect_version": null
   },
-  "e1d65befe911f3579a73b75801b9e6abbe4b02be8c32e2da6bf423c94d9e1da3": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
-  },
   "e1f319ac5ac21987f412835c489185a816837e0fdcae6a95108da356d8ed3ab7": {
    "diff_claim_sentences": 0,
    "diff_claim_share": 1.0,
@@ -11071,10 +11071,6 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": null
-  },
-  "e30a940d625e4a3ee7a5920620dd6db9a83ef4472df73a5fbbfa9053ddf5d1b4": {
-   "coverage_reproduces": true,
-   "same_verifier_build": true
   },
   "e34c924a14600de3591e5da1cac1b4f01b94e60545b3be629a70371c6b16fef3": {
    "diff_claim_sentences": null,
@@ -12035,6 +12031,10 @@
    "diff_claim_share": null,
    "unsworn_claims": 0,
    "claimdetect_version": "struct-1/2026-08-30"
+  },
+  "f6d1ee6834d0c35cbde407b9a45970d60a0238c746b9ec85d8969db79aba9160": {
+   "coverage_reproduces": true,
+   "same_verifier_build": true
   },
   "f6f3517a655a287ba36d9df5bb75c59bf4be64178dfd8bb32069fa4b9c53cb35": {
    "diff_claim_sentences": null,
