@@ -1,0 +1,35 @@
+{
+ "after": {
+  "failed": 0,
+  "failed_ids": [],
+  "files": {
+   "styxx/_data/sworn_verify.js": "052010179847b19aa663808a1d3483b9c36f8c003ed585e5b5f361f876fdc936",
+   "styxx/sworn.py": "f3165daf87269869dac0865aa1bca5e0c796c9482e088e0b4552957de38340d7"
+  },
+  "passed": 8,
+  "rev": "a44698bb"
+ },
+ "before": {
+  "failed": 2,
+  "failed_ids": [
+   "tests/test_sworn_short_needle_anchor.py::test_a_slice_covering_every_line_does_not_exempt_the_floor",
+   "tests/test_sworn_short_needle_anchor.py::test_the_comparison_is_on_bytes_not_line_counts"
+  ],
+  "files": {
+   "styxx/_data/sworn_verify.js": "372b93e1218ca2528ad8c15efada86073f0d01059f6c904f71363d07e1c9f93d",
+   "styxx/sworn.py": "6cf2618af2fab25208fd6ee1ad30503910576bb4c878c65f6099a3b9402d0e7f"
+  },
+  "passed": 6,
+  "rev": "a44698bb~1"
+ },
+ "files_measured": [
+  "styxx/sworn.py",
+  "styxx/_data/sworn_verify.js"
+ ],
+ "guard": "tests/test_sworn_short_needle_anchor.py",
+ "guard_tests": 8,
+ "reading": "the guard fails against the verifier as shipped and passes against it repaired; the tests that pass in BOTH states are the controls, which a repair that over-refused would have failed",
+ "repair_commit": "a44698bb",
+ "schema": "styxx.sworn.repair-watched-to-fail/v1",
+ "spec": "papers/sworn/SPEC_short_needle_anchor_v01_2026_09_06.md"
+}
