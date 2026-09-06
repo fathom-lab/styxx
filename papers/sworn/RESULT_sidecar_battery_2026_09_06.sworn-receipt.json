@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_sidecar_battery_2026_09_06.md",
-  "inline_sha256": "6a8ffbdbf0cb33b42c61681d10a0e0b5cbf548c889bc0b7a39425c40746c050b",
-  "canonical_sha256": "f6aa80b76fe1eb08be0ae030dfb21c7342326dae4eb60ead28068dd3e0f48e73"
+  "inline_sha256": "6321dff1bc1f6580a02aa34b4fd21207709accd281d3e8978b42bb3734838f69",
+  "canonical_sha256": "143f9776584a878d7e3e924b017434552e387a946a61f19dfb5b934cc2c0bad5"
  },
- "commit": "befe193fd94d1556b63c79eec10f7d22375b9194",
+ "commit": "bc74fcd8bc90de4239aa7161b27dffc69b8db60e",
  "manifest_digest": null,
  "spans": [
   {
@@ -28,7 +28,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -50,7 +50,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -72,7 +72,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -94,7 +94,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -116,7 +116,7 @@
    "resolved_sha256": "97bdfab6092fdfd32c2b8b7c98f18a943cb4ae55aa109091ecabf99fc5e7b554",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -138,7 +138,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   },
   {
@@ -160,7 +160,7 @@
    "resolved_sha256": "a62dc2250d005efb5040fd6c9979be132b986fba9fac900c24b7aa770a5b76ec",
    "provenance": {
     "form": "path",
-    "note": "committed object at befe193fd94d1556b63c79eec10f7d22375b9194; authorship unchecked"
+    "note": "committed object at bc74fcd8bc90de4239aa7161b27dffc69b8db60e; authorship unchecked"
    }
   }
  ],
@@ -180,7 +180,7 @@
  },
  "verifier": {
   "styxx_version": "7.47.0",
-  "sworn_sha256": "6cf2618af2fab25208fd6ee1ad30503910576bb4c878c65f6099a3b9402d0e7f",
+  "sworn_sha256": "223b1d0ca6bbe03e421d3caa5694a7401e623af4bb496b05c4bf9051cd743dd6",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -215,16 +215,16 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "752a84793697b3df68fd83e79cfb8a32e1146b05abb50bb5f67eb526689149a0",
+ "digest": "62cc94bd89d08251f2490ec38b0363eb9b053f08ab481f6d7491a98f7c40aab3",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 7,
-  "narrative_sentences": 133,
-  "sentence_share": 0.05,
-  "diff_claim_sentences": 6,
-  "diff_claim_share": 0.5385,
+  "narrative_sentences": 179,
+  "sentence_share": 0.0376,
+  "diff_claim_sentences": 8,
+  "diff_claim_share": 0.4667,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
@@ -256,11 +256,21 @@
     "start": 6412,
     "end": 6507,
     "text": "field to the span's `detail`, which is inside the digested core, so it moved the core digest of"
+   },
+   {
+    "start": 8421,
+    "end": 8490,
+    "text": "should require `UNRESOLVED == 0`, leaving the rename to the operator."
+   },
+   {
+    "start": 10262,
+    "end": 10355,
+    "text": "`verify --repo .` without `--commit` gives an honest user SWORN-HELD over a document in which"
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "81c8401d39523f1c4d38fad7038aa72da7f77b0b5d8fad6eb36a45982f39619c",
- "timestamp": "2026-09-06T14:42:08Z"
+ "coverage_sha256": "6da3c97432f03c2b2d6b2e3f06d16977f2454e422efb8ba075c16acc866287b7",
+ "timestamp": "2026-09-06T16:42:25Z"
 }
