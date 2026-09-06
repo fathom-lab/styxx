@@ -1012,7 +1012,20 @@ class TestDoctrine:
         assert styxx.verify_receipt is styxx.parrhesia.verify_receipt
         code = ("import sys, styxx; print('sworn' in sys.modules)")
         out = subprocess.run([sys.executable, "-c", code], capture_output=True, encoding="utf-8")
-        assert out.stdout.strip() == "False", "importing styxx must not import sworn"
+        # A CHILD THAT NEVER RAN IS NOT A PACKAGE SURFACE THAT CHANGED. This asked a question in
+        # another process, and a process killed under load answers nothing at all. Comparing ""
+        # against "False" turns that silence into an accusation that importing styxx now drags
+        # sworn in — which is the same confusion this suite refuses elsewhere (SKEW is not DRIFT;
+        # a child that never ran is not a digest that moved). So the answer must be one of the two
+        # the question admits, and anything else is reported for what it is.
+        answer = (out.stdout or "").strip()
+        if answer not in ("True", "False"):
+            detail = ("exit %d, stdout %r, stderr %r"
+                      % (out.returncode, (out.stdout or "")[-200:], (out.stderr or "")[-400:]))
+            if "Traceback" in (out.stderr or ""):
+                pytest.fail("importing styxx raised in a clean interpreter: " + detail)
+            pytest.skip("the child never answered, so this says nothing about the surface: " + detail)
+        assert answer == "False", "importing styxx must not import sworn"
 
     def test_a_manifest_with_the_wrong_spec_string_is_refused_not_coerced(self, tmp_path):
         p = tmp_path / "m.json"

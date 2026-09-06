@@ -1,0 +1,289 @@
+{
+ "assignments_with_no_matching_miss": [],
+ "authored": "assignments are a reading of each mutation's own `why`, written by its proposer before the run and without sight of any coverage; they are published per miss so a reader can dispute any one of them",
+ "counts": {
+  "APERTURE_DOCUMENT": 5,
+  "APERTURE_PAYLOAD": 15,
+  "EQUIVALENT": 1,
+  "OUT_OF_SURFACE": 6,
+  "UNREACHABLE": 2
+ },
+ "definitions": {
+  "APERTURE_DOCUMENT": "needs a document shape the grammar does not compose",
+  "APERTURE_PAYLOAD": "needs an input the generator's fixed literal lists cannot produce",
+  "EQUIVALENT": "an equivalent mutant - proved to change no behaviour on any input, so nothing could ever kill it; it stays in the denominator because the spec was frozen without this category, and is named here instead",
+  "OUT_OF_SURFACE": "in code the differential never runs, or whose effect never reaches the compared verdict core",
+  "UNREACHABLE": "no input could catch it: dead code, or a bound no practical input reaches"
+ },
+ "fixable_by_a_stronger_generator": 20,
+ "marginality_of_catches": {
+  "buckets": {
+   "exactly_1": 4,
+   "from_26_to_250": 10,
+   "from_2_to_5": 4,
+   "from_6_to_25": 10,
+   "over_250": 13
+  },
+  "caught_by_five_or_fewer": [
+   {
+    "disagreements": 1,
+    "name": "absent misses a needle sitting at byte offset zero",
+    "region": "kinds",
+    "side": "js"
+   },
+   {
+    "disagreements": 1,
+    "name": "signed-zero folding only applies when fractional digits are printed",
+    "region": "decimal",
+    "side": "js"
+   },
+   {
+    "disagreements": 1,
+    "name": "the working precision in _canon is one digit short",
+    "region": "decimal",
+    "side": "python"
+   },
+   {
+    "disagreements": 1,
+    "name": "a comment can no longer open exactly where the previous one closed",
+    "region": "lexer",
+    "side": "js"
+   },
+   {
+    "disagreements": 2,
+    "name": "fractional-digit count taken from the raw token, before normalisation",
+    "region": "decimal",
+    "side": "python"
+   },
+   {
+    "disagreements": 2,
+    "name": "the tag-candidate lookahead stops excluding _ and -",
+    "region": "lexer",
+    "side": "js"
+   },
+   {
+    "disagreements": 2,
+    "name": "strict JSON parser stops remembering duplicate keys",
+    "region": "jcs",
+    "side": "js"
+   },
+   {
+    "disagreements": 5,
+    "name": "strict JSON reads integers as int rather than Decimal",
+    "region": "jcs",
+    "side": "python"
+   }
+  ],
+  "note": "disagreements produced by each caught mutation, out of 5000 cases. A catch at the low end is a catch the guard nearly missed."
+ },
+ "misses": [
+  {
+   "because": "WITHHELD is declared in the vocabulary and emitted by no code path in either implementation — this is a mutation on dead code",
+   "cause": "UNREACHABLE",
+   "name": "sworn_total stops counting the WITHHELD verdict",
+   "region": "adjudicate",
+   "side": "python"
+  },
+  {
+   "because": "provenance requires a repository tree; the JavaScript side has none, so nothing cross-checks it",
+   "cause": "OUT_OF_SURFACE",
+   "name": "the committed-provenance rung bucket is renamed",
+   "region": "adjudicate",
+   "side": "python"
+  },
+  {
+   "because": "needs a value sitting exactly on a rounding tie at the printed precision; none of the ten payload literals produces one",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "half-even becomes half-up in the JS BigInt rounder",
+   "region": "decimal",
+   "side": "js"
+  },
+  {
+   "because": "needs a leaf with adjusted exponent -5; the payloads carry 1e5 and 0.4211, nothing that small",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "the scientific-notation threshold in Dec.toString moves by one decade",
+   "region": "decimal",
+   "side": "js"
+  },
+  {
+   "because": "the mirror of the above, on the other side, and blind for the same reason",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "Python quantize rounds half-up instead of half-even",
+   "region": "decimal",
+   "side": "python"
+  },
+  {
+   "because": "differs only at an adjusted exponent of exactly 320",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "the adjusted-exponent magnitude gate moves by one",
+   "region": "decimal",
+   "side": "python"
+  },
+  {
+   "because": "only a span of exactly 300 code points changes verdict; the grammar builds over-cap spans by repeating inner text 20-60 times and lands nowhere near it",
+   "cause": "APERTURE_DOCUMENT",
+   "name": "the span code-point cap becomes exclusive (300 now fails)",
+   "region": "lexer",
+   "side": "js"
+  },
+  {
+   "because": "needs a key containing ~ or /; no payload literal has one",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "JSON Pointer unescaping applies ~0 before ~1 (RFC 6901 order reversed)",
+   "region": "pointers",
+   "side": "js"
+  },
+  {
+   "because": "the receipt-id list carries #L1, #L1-L3 and #L9 — no slice starting at line 2",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "line slice starting past line 1 swallows the previous line's LF",
+   "region": "pointers",
+   "side": "js"
+  },
+  {
+   "because": "every prereg: receipt the grammar emits is already lowercase",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "prereg: digests are no longer case-folded",
+   "region": "pointers",
+   "side": "python"
+  },
+  {
+   "because": "needs a pointer at an array's last index; the receipt-id list has no such pointer",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "array index bound in pointer walking is off by one",
+   "region": "pointers",
+   "side": "python"
+  },
+  {
+   "because": "needs CESU-8 style bytes; the invalid-UTF-8 documents the grammar makes are not of that shape",
+   "cause": "APERTURE_DOCUMENT",
+   "name": "the UTF-8 validator stops rejecting encoded surrogates",
+   "region": "bytes",
+   "side": "js"
+  },
+  {
+   "because": "needs a specific overlong encoding the grammar does not emit",
+   "cause": "APERTURE_DOCUMENT",
+   "name": "the three-byte overlong bound drops from U+0800 to U+0080",
+   "region": "bytes",
+   "side": "js"
+  },
+  {
+   "because": "no payload literal begins with EF BB BF — the miss that started this study",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "the JSON reader stops refusing a BOM",
+   "region": "bytes",
+   "side": "js"
+  },
+  {
+   "because": "needs a surrogate escape in a payload; no literal contains a \\u escape at all",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "the lone-surrogate refusal on a pointer leaf is neutered",
+   "region": "bytes",
+   "side": "js"
+  },
+  {
+   "because": "needs an astral character inside a tag opener",
+   "cause": "APERTURE_DOCUMENT",
+   "name": "the opener's end offset is measured in UTF-16 units, not bytes",
+   "region": "bytes",
+   "side": "js"
+  },
+  {
+   "because": "needs a bare CR inside a span's inner text",
+   "cause": "APERTURE_DOCUMENT",
+   "name": "CR stops counting as span whitespace",
+   "region": "bytes",
+   "side": "python"
+  },
+  {
+   "because": "the high word only matters for a message of 2^32 bits, about 512 MB",
+   "cause": "UNREACHABLE",
+   "name": "sha256 drops the high word of the 64-bit length field",
+   "region": "jcs",
+   "side": "js"
+  },
+  {
+   "because": "needs a newline inside a JCS-serialised manifest string; the manifest strings are drawn from three constants, none with a newline",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "JCS emits \n instead of the short \\n escape",
+   "region": "jcs",
+   "side": "js"
+  },
+  {
+   "because": "no payload literal contains either token",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "strict JSON reads NaN/Infinity as float rather than Decimal",
+   "region": "jcs",
+   "side": "python"
+  },
+  {
+   "because": "authored_sha256 is always emitted lowercase by the generator",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "the JS manifest stops case-folding authored_sha256",
+   "region": "audit",
+   "side": "js"
+  },
+  {
+   "because": "the list is always empty or a single element, so order is unobservable",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "manifest core() emits authored_sha256 unsorted",
+   "region": "audit",
+   "side": "js"
+  },
+  {
+   "because": "the tree-handle layer is never exercised by the differential",
+   "cause": "OUT_OF_SURFACE",
+   "name": "SnapshotTree treats a symlink as a blob",
+   "region": "audit",
+   "side": "python"
+  },
+  {
+   "because": "PROVED equivalent, not merely unobserved. The closer's whole range is cut from the canonical text: the builder does boundaries.set(a, a - removed), then removed += b - a, then boundaries.set(b, b - removed). So boundaries.get(closer_at) and boundaries.get(closer_end) both equal closer_at - removed_before, for every document. No input distinguishes this mutant, so its miss is not a hole in the harness",
+   "cause": "EQUIVALENT",
+   "name": "canonical end offset read at the closer's far edge",
+   "region": "audit",
+   "side": "js"
+  },
+  {
+   "because": "the sidecar layer is not on the path the differential compares",
+   "cause": "OUT_OF_SURFACE",
+   "name": "render sorts its events, losing closer-before-opener adjacency",
+   "region": "audit",
+   "side": "python"
+  },
+  {
+   "because": "same layer",
+   "cause": "OUT_OF_SURFACE",
+   "name": "load_sidecar admits a zero-length span",
+   "region": "audit",
+   "side": "python"
+  },
+  {
+   "because": "same layer, same reason",
+   "cause": "OUT_OF_SURFACE",
+   "name": "verify falls back to the tree handle's own commit",
+   "region": "audit",
+   "side": "python"
+  },
+  {
+   "because": "the receipt layer sits outside the verdict core the digest covers",
+   "cause": "OUT_OF_SURFACE",
+   "name": "the receipt digest covers coverage again (R9 undone)",
+   "region": "audit",
+   "side": "python"
+  },
+  {
+   "because": "needs a needle that overlaps itself in the haystack, e.g. aa in aaa",
+   "cause": "APERTURE_PAYLOAD",
+   "name": "occurrences counts overlapping matches",
+   "region": "audit",
+   "side": "js"
+  }
+ ],
+ "misses_total": 29,
+ "not_fixable_by_fuzzing": 9,
+ "receipt": "conformance/sworn/mutation_coverage_2.json",
+ "schema": "styxx.sworn.mutation-miss-taxonomy/v1",
+ "unassigned": []
+}

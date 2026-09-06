@@ -1,0 +1,111 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "e16d933c2be334dc0197f5c8738d7ce85bf89d85",
+ "document": {
+  "name": "RESULT_differential_agreement_2026_09_05.md",
+  "sha256": "8efc942da8914f13831e2df21a25771c21bff2055e8b8da9fa1a1a29f4292630"
+ },
+ "text": "# RESULT — differential agreement: 150,000 inputs nobody chose, and the two verifiers never once disagreed\n\nFathom Lab · 2026-09-05 · Spec: `SPEC_differential_agreement_v01_2026_09_05.md`, frozen before any\ncode, with its five gates and its seed written down before the run. Harness:\n`conformance/sworn/differential.py`. Receipt: `conformance/sworn/differential_agreement.json`,\nwhich this document swears to and which is not regenerated. **This document is itself sworn.**\n\n## The question this answers, and the one it does not\n\n`RESULT_sworn_browser_verifier_v01_ships_2026_09_05.md` reports that a second implementation\nreproduces the verdict core on 1689 conformance vectors, and names its own weakness in its boundary\nsection: the vectors are a **chosen** set, recorded from calls the lab's own authors wrote, and the\nJavaScript was repaired five times against those very vectors until it matched. A set you tuned\nagainst cannot also be the set that measures you.\n\nThis measures agreement on inputs nobody chose. A seeded grammar composes documents out of the\nformat's decision boundaries; both shipped implementations verify each one; the two verdict core\ndigests are compared byte for byte. Neither side is instrumented, and the harness hashes what each\nreturned rather than inspecting how it got there.\n\n## The result\n\n150000 generated documents were verified by both implementations and compared.\n150000 produced the same verdict core digest.\n0 disagreed.\nOn 0 of them did both sides raise,\non 0 did only the Python side raise,\nand on 0 did only the JavaScript side.\nEvery case the two implementations met, they answered the same way, including the ones that are not\nanswers at all — a refusal, a document with no canonical form, a receipt that cannot be opened.\n\nThe run is reproducible from two integers:\nthe seed is 20260905,\nand each case is a pure function of the seed and its index.\n\n## What the run actually explored\n\nA number about agreement means nothing without the census beside it, because a generator that only\nemits documents one implementation handles measures the generator.\n\n346066 spans were MALFORMED,\n31486 were UNRESOLVED,\n5333 were FAILED,\nand 1832 HELD.\n38 distinct MALFORMED reasons were exercised\nagainst a bar of twelve, and both document-level refusals were reached:\n15702 documents had unbalanced fences\nand\n1524 could not be decoded at all.\nThe FAILED and HELD counts matter most: those are the cases where the four kind checks actually\nran, where a decimal is canonicalised on both sides, a needle is searched in bytes, and a digest is\ncompared — the places two languages are most likely to part company.\n\nBoth implementations are named by the bytes they were at the run:\nthe Python verifier is `bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b`\nand\nthe JavaScript one is `e633626063e8be9b9c22b1c57c18a542e4751dc69e468ccffd1e50420b9a334b`,\ncontent identity modulo newlines, which is the doctrine this corpus applies to every receipt.\n\n## What the instrument cost before it could be believed\n\nTwo corrections were made to the harness before any measurement was recorded, and both are the\nreason a number exists at all. The node runner read its arguments one position early and could not\nload the verifier. And the first balanced grammar reached 1184 MALFORMED spans against a single\nHELD and no FAILED — it fuzzed the lexer hard and the adjudicator barely, which is the half where a\ndisagreement would live. A generator that cannot reach HELD cannot find the disagreement it exists\nto find. That is why the frozen spec made the verdict vocabulary a gate rather than a hope, and the\ngate is what caught it.\n\n## What this does not say\n\n**That either implementation is correct.** They agree; agreement is not correctness. Both may be\nwrong in the same way, and the same hands wrote both, which is the objection this result sharpens\nrather than answers — it removes the weaker excuse (*they only agree where we looked*) and leaves\nthe stronger one standing.\n\nThat the generator is adversarial in the sense a person is: it composes boundaries, it does not\nreason about them. A human attacker looking for a disagreement would start where this grammar is\nthinnest — the pointer grammar's escapes, surrogate handling in a leaf, the code-point cap against\nastral characters, and manifests whose digests are close but not equal.\n\nThat the grammar covers the format. It covers what the spec's D2 lists and the census above says\nwhat it reached; the HELD path is under two percent of spans, which is the number a successor\nshould raise first.\n\nThat a run with a different seed would agree. This is one seed, named before the run, and a second\nseed is a second file.\n\n---\n\n*The vectors asked whether a second implementation agrees where we looked. This asked whether it\nagrees where nobody looked, one hundred and fifty thousand times, and the answer was yes every\ntime. That is not proof the verdict is right. It is the removal of one specific way it could have\nbeen wrong, and it is written down with the seed that produced it.*\n",
+ "spans": [
+  {
+   "start": 1331,
+   "end": 1409,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/compared",
+   "kind": "numeric"
+  },
+  {
+   "start": 1410,
+   "end": 1455,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/agree",
+   "kind": "numeric"
+  },
+  {
+   "start": 1456,
+   "end": 1468,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/disagree",
+   "kind": "numeric"
+  },
+  {
+   "start": 1469,
+   "end": 1503,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/both",
+   "kind": "numeric"
+  },
+  {
+   "start": 1504,
+   "end": 1540,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/python_only",
+   "kind": "numeric"
+  },
+  {
+   "start": 1541,
+   "end": 1579,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-E/javascript_only",
+   "kind": "numeric"
+  },
+  {
+   "start": 1822,
+   "end": 1843,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2107,
+   "end": 2135,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/MALFORMED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2136,
+   "end": 2158,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/UNRESOLVED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2159,
+   "end": 2176,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/FAILED",
+   "kind": "numeric"
+  },
+  {
+   "start": 2177,
+   "end": 2191,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/span_verdicts/HELD",
+   "kind": "numeric"
+  },
+  {
+   "start": 2192,
+   "end": 2236,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/gates/G-R/value",
+   "kind": "numeric"
+  },
+  {
+   "start": 2309,
+   "end": 2346,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/document_malformed/unbalanced_fences",
+   "kind": "numeric"
+  },
+  {
+   "start": 2351,
+   "end": 2384,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/census/document_malformed/invalid_utf8",
+   "kind": "numeric"
+  },
+  {
+   "start": 2719,
+   "end": 2808,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/implementations/python/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 2813,
+   "end": 2901,
+   "receipt": "path:conformance/sworn/differential_agreement.json#/implementations/javascript/sha256",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

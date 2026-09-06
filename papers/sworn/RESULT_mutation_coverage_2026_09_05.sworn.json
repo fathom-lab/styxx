@@ -1,0 +1,171 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "5264ea324c6a2dd1418bacc86a3431b38a8a38eb",
+ "document": {
+  "name": "RESULT_mutation_coverage_2026_09_05.md",
+  "sha256": "29e822db595965389d08722623821d973a4fbca6eddbcb491ea1e4f34233793b"
+ },
+ "text": "# RESULT — the differential test cannot see 29 of 70 changes, and 9 of those no amount of fuzzing would have found\n\nFathom Lab · 2026-09-05 · Spec: `SPEC_mutation_coverage_v01_2026_09_05.md`, frozen with its five\ngates before any mutant was run. Catalogue: `conformance/sworn/mutation_catalogue_2.json`, committed\nbefore the run. Receipt: `conformance/sworn/mutation_coverage_2.json`. Taxonomy:\n`mutation_miss_taxonomy.json`. **This document is itself sworn.**\n\n## What this measures, and why the previous result needed it\n\n`RESULT_differential_agreement_2026_09_05.md` reports 150000 generated documents on which two\nindependent implementations produced the same verdict core digest, and zero on which they differed.\nThat sentence has two readings and it cannot tell them apart: the implementations agree, or the\ngenerator cannot produce the inputs on which they differ.\n\nThis measures the second. A mutation is one localised semantic edit to a scratch copy of one\nimplementation; the standing guard's own comparison runs against it; **caught** means a divergence\nthere would be visible, **missed** means it would not.\n\n## The result\n\n70 viable mutants were measured\nagainst a bar of twenty-five, and\n41 were caught.\n29 were missed\n— a detection rate of\n0.5857.\n\nThe catalogue was clean, so nothing left the denominator quietly:\n0 anchors failed to match,\n0 mutants failed to load,\nand\n0 were degenerate.\nThe unmutated pair was checked first and produced\n0 disagreements,\nwithout which a detection rate would be measured over a broken baseline and mean nothing.\n\n## The rate is the summary. The causes are the result.\n\nA bare detection rate invites one reading — that the undetected fraction is a matter of running\nlonger. Sorted by cause, that is false here:\n\n15 misses need an input the generator's fixed literal list cannot produce,\n5 need a document shape the grammar does not compose,\n6 are in code the differential never runs or whose effect never reaches the compared core,\n2 could not be caught by any input at all,\nand\n1 is an equivalent mutant, proved to change no behaviour on any input.\n\nSo\n20 of the misses would fall to a stronger generator\nand\n9 would not.\nThose nine are the part a bigger case count could never have reached, and naming them is the whole\nvalue of running this.\n\n### The six that are outside the compared surface\n\nThis is the finding. The JavaScript verifier has no repository — `SPEC_sworn_browser_verifier_v01`\nB1 makes it answer `no_repository` — so every `path:` and `prereg:` receipt resolves on the Python\nside against nothing on the other. The entire tree-handle layer is therefore compared against\nsilence, and so are the sidecar layer and the receipt layer, which sit outside the verdict core the\ndigest covers. A mutation that makes `SnapshotTree` treat a symlink as a blob, or lets\n`load_sidecar` admit a zero-length span, or undoes R9 so the receipt digest covers `coverage`\nagain, produces no disagreement — not because the implementations agree there, but because only one\nof them is ever asked.\n\n**\"The two implementations agree\" was always a claim about a subset of each implementation, and\nuntil now nobody had said which subset.** That is not a defect the differential introduced; it is a\nscope the differential always had and never stated. It is stated now.\n\n## Where the harness is strong, and where it is blind\n\nThe four kind checks caught 9\nof\n9 —\nthe adjudicator's core is well covered, which is what the frozen G-C gate on the earlier run was\nbuilt to ensure. The lexer follows at\n7\nof\n8.\n\nThe weakest region is not weak by accident:\n1\nof\n10.\nThose ten are the completeness critic's own additions, written after it read both implementations\nand named the regions nobody had proposed a mutation for. Nine of its ten shots landed exactly where\nthe harness cannot see. **An agent reading the source predicted the blind spots better than 150000\nrandom cases could find them**, which is an argument for reading code as well as fuzzing it.\n\nThe decimal region — the most numerically delicate rule in the format — caught\n4\nof\n8.\nAmong the misses: half-even rounding can be changed to half-up **on either side** and nothing\nnotices, because a tie is only observable on a value sitting exactly at one at the printed\nprecision, and none of the ten payload literals produces one.\n\n## How close the catches were\n\nA catch is not a guarantee. Out of\n5000 cases per mutant,\n4 mutations were caught by exactly one disagreement,\nand\n4 more by between two and five.\nEight of the forty-one catches would probably have been misses at a fifth of the size. The guard's\nsize is a choice, and this is the evidence for it rather than a number picked because it felt\ngenerous.\n\n## The run before this one was VOID, and it is in the tree\n\nThe first run failed G-K: a control was caught, and the frozen spec says that voids the run and it\nreports nothing about detection. `conformance/sworn/mutation_coverage.json` is committed unedited\nas a void run, because a study about instruments that flatter their builders does not get to\ndiscard its own failed attempt.\n\nThe gate did its job, though not for the reason it was written. G-K exists to catch a guard that\nfires on every edit. What it caught was a **catalogue** defect: the agent that proposed\n`findBytes(hay, needle, 0) >= 0` → `> 0` labelled it semantics-preserving, and it is nothing of the\nsort — a needle at byte offset zero would report HELD instead of FAILED, a false negative on the one\nkind whose whole purpose is swearing something is absent. Auditing all twelve claimed controls found\na second mislabel pointing the other way, which was missed and so sat outside the denominator hiding\na real miss.\n\nSo the label is no longer taken from whoever proposed it. `conformance/sworn/control_audit.py`\ndecides it from the edit by a criterion fixed before it was applied and applied in both directions —\nan entry mislabelled a mutation is corrected too, even though that can only enlarge the denominator\nand lower the rate. It needed three corrections of its own before it could be trusted, and they are\nrecorded in its docstring, because a classifier that decides a study's denominator has to be audited\nlike anything else.\n\n## What this does not say\n\n**That the two implementations disagree anywhere.** Nothing here found a disagreement. The 150000\nagreements stand exactly as reported; what changes is that their scope is now stated.\n\n**That 58.6% is a property of the format, or of differential testing, or of anything but this\ngenerator at this size against this catalogue.** A different catalogue would give a different\nnumber. The catalogue is 80 entries proposed by eight readers, and the critic's gap list — published\nin the catalogue file — names regions still unmutated after its own additions, including the\nmanifest digest domain and the strict-JSON duplicate-key path on the side that mints receipts.\n\n**That the miss taxonomy is derived rather than authored.** The five causes were defined before the\nmisses were assigned to them, but the assignments are a reading of each mutation's own `why`, and\nthey are published per miss so a reader can dispute any one of them.\n\n**That a caught mutation means the format is correctly implemented.** It means a difference in that\nplace would be visible. That is all it has ever meant.\n\n---\n\n*The previous result asked whether two implementations agree on inputs nobody chose. This asks what\nit would have taken for them to disagree in front of us — and the answer, for nine of the twenty-nine\nplaces we looked, is that nothing we could have generated would have been enough.*\n",
+ "spans": [
+  {
+   "start": 1140,
+   "end": 1171,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1206,
+   "end": 1221,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/caught",
+   "kind": "numeric"
+  },
+  {
+   "start": 1222,
+   "end": 1236,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/missed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1261,
+   "end": 1268,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/gates/G-D/value/rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 1336,
+   "end": 1362,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/anchor_missing",
+   "kind": "numeric"
+  },
+  {
+   "start": 1363,
+   "end": 1388,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/non_viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1393,
+   "end": 1411,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/counts/degenerate",
+   "kind": "numeric"
+  },
+  {
+   "start": 1462,
+   "end": 1478,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/baseline/disagreements",
+   "kind": "numeric"
+  },
+  {
+   "start": 1770,
+   "end": 1844,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/counts/APERTURE_PAYLOAD",
+   "kind": "numeric"
+  },
+  {
+   "start": 1845,
+   "end": 1898,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/counts/APERTURE_DOCUMENT",
+   "kind": "numeric"
+  },
+  {
+   "start": 1899,
+   "end": 1989,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/counts/OUT_OF_SURFACE",
+   "kind": "numeric"
+  },
+  {
+   "start": 1990,
+   "end": 2032,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/counts/UNREACHABLE",
+   "kind": "numeric"
+  },
+  {
+   "start": 2037,
+   "end": 2107,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/counts/EQUIVALENT",
+   "kind": "numeric"
+  },
+  {
+   "start": 2112,
+   "end": 2163,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/fixable_by_a_stronger_generator",
+   "kind": "numeric"
+  },
+  {
+   "start": 2168,
+   "end": 2180,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/not_fixable_by_fuzzing",
+   "kind": "numeric"
+  },
+  {
+   "start": 3380,
+   "end": 3409,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/kinds/caught",
+   "kind": "numeric"
+  },
+  {
+   "start": 3413,
+   "end": 3418,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/kinds/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 3554,
+   "end": 3555,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/lexer/caught",
+   "kind": "numeric"
+  },
+  {
+   "start": 3559,
+   "end": 3561,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/lexer/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 3607,
+   "end": 3608,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/audit/caught",
+   "kind": "numeric"
+  },
+  {
+   "start": 3612,
+   "end": 3615,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/audit/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 4091,
+   "end": 4092,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/decimal/caught",
+   "kind": "numeric"
+  },
+  {
+   "start": 4096,
+   "end": 4098,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/by_region/decimal/viable",
+   "kind": "numeric"
+  },
+  {
+   "start": 4413,
+   "end": 4435,
+   "receipt": "path:conformance/sworn/mutation_coverage_2.json#/cases",
+   "kind": "numeric"
+  },
+  {
+   "start": 4436,
+   "end": 4488,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/marginality_of_catches/buckets/exactly_1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4493,
+   "end": 4524,
+   "receipt": "path:papers/sworn/mutation_miss_taxonomy.json#/marginality_of_catches/buckets/from_2_to_5",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
