@@ -1,0 +1,182 @@
+{
+ "by_field": {
+  "/spans/*/detail/leaf": 8,
+  "cores equal, digests differ (serialisation)": 23
+ },
+ "cases": [
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 8929,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 16350,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 1,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 41491,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 42738,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 52477,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 5,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 120885,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 6,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 141277,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 2,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  },
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 144085,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 3,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  }
+ ],
+ "disagreements_total": 31,
+ "receipt": "conformance/sworn/differential_agreement_3.json",
+ "recorded_in_full": 31,
+ "schema": "styxx.sworn.disagreement-classes/v1",
+ "verdict_changing_by_field": {},
+ "verdict_changing_total": 0
+}

@@ -78,7 +78,7 @@ def generalise(path: str) -> str:
 
 
 def main(argv=None):
-    receipt = Path(argv[0]) if argv else ROOT / "conformance/sworn/differential_agreement_2.json"
+    receipt = Path(argv[0]).resolve() if argv else ROOT / "conformance/sworn/differential_agreement_2.json"
     R = json.loads(receipt.read_text(encoding="utf-8"))
     records = R["disagreements"]
     print("receipt: %s" % receipt.name)
@@ -152,7 +152,7 @@ def main(argv=None):
         "verdict_changing_total": sum(verdict_changing.values()),
         "cases": rows,
     }
-    dest = ROOT / "papers" / "sworn" / "disagreement_classes.json"
+    dest = ROOT / "papers" / "sworn" / ("disagreement_classes_%s.json" % receipt.stem.rsplit("_", 1)[-1])
     dest.write_bytes((json.dumps(out, indent=1, sort_keys=True, ensure_ascii=False)
                       + "\n").encode("utf-8"))
     print("\nwrote %s" % dest.name)

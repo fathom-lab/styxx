@@ -1,0 +1,35 @@
+{
+ "by_field": {
+  "/spans/*/detail/leaf": 1,
+  "cores equal, digests differ (serialisation)": 49
+ },
+ "cases": [
+  {
+   "changes_a_verdict": false,
+   "field": "/spans/*/detail/leaf",
+   "index": 8929,
+   "javascript": "'\\ud83d�'",
+   "javascript_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   },
+   "python": "'😀'",
+   "python_counts": {
+    "FAILED": 0,
+    "HELD": 0,
+    "MALFORMED": 7,
+    "UNRESOLVED": 0,
+    "WITHHELD": 0
+   }
+  }
+ ],
+ "disagreements_total": 712,
+ "receipt": "conformance/sworn/differential_agreement_2.json",
+ "recorded_in_full": 50,
+ "schema": "styxx.sworn.disagreement-classes/v1",
+ "verdict_changing_by_field": {},
+ "verdict_changing_total": 0
+}
