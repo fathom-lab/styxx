@@ -1,0 +1,51 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "814378bec952911a970519888333e2054e1aef60",
+ "document": {
+  "name": "RESULT_short_needle_anchor_2026_09_06.md",
+  "sha256": "e8c93a9fe304cdd131cb0901a1da0564142f397156ef854b031aba0de3adff97"
+ },
+ "text": "# RESULT — an exemption for authors who point at less was open to authors who point at everything\n\nFathom Lab · 2026-09-06 · Spec: `SPEC_short_needle_anchor_v01_2026_09_06.md`, frozen before the\nrepair, with two errata appended — one after the first repair failed, one after the second met a\ndecision this lab had already written down. Receipts: `short_needle_repair.json` and\n`short_needle_repair_2.json`, both re-derived from git by `repair_receipt.py`. **This document is\nitself sworn.**\n\n## The rule and its justification\n\nv0.2 R3: a `quote` needle shorter than sixteen bytes over a whole receipt is refused as\n`short_needle`, because two bytes HELD against almost anything and an oath that cannot fail is not\nan oath. A line slice is exempt, and the code says why: *\"the author narrowed the haystack by naming\nit, and the comparison is against that alone.\"*\n\n## Where the justification was not enforced\n\nThe exemption was keyed on whether a slice was **present**, not on whether it **narrowed**.\nConfirmed by execution — a two-byte needle `` `ok` `` against a three-line, 53-byte receipt:\n\n| receipt | verdict |\n|---|---|\n| `r1` (whole receipt) | MALFORMED `short_needle` |\n| `r1#L1` (one line) | HELD |\n| **`r1#L1-L3` (every line)** | **HELD** |\n| `r1#L1-L400` | MALFORMED `anchor_out_of_range` |\n\n`#L1-L3` over a three-line receipt is the whole receipt with an anchor on it. Nothing narrowed;\nfloor gone. The sidecar battery's adversary named this with the example `#L1-L400` — which is wrong,\nrefused as out of range — but the claim underneath it holds with a range that exactly spans the\nfile, which is the shape an author trying it would reach for.\n\n## Two repairs, and what each one got wrong\n\n**The first repair compared byte lengths**, as N1 of the frozen spec prescribed to dodge a\ntrailing-newline off-by-one. The guard still failed on the newline-terminated receipt — because\n`_line_slice` **excludes the last selected line's terminating LF by design**, so a full-range slice\nof a 53-byte receipt is 52 bytes, and a length test calls that narrowed. N1 named the right hazard\nand prescribed the thing it bites. The first erratum withdraws that remedy: a slice narrows if and\nonly if it differs from `_line_slice(receipt, 1, n_lines)` — what *everything* looks like under the\nsame function.\n\n**The second repair enforced that strictly, and the conformance generator refused it.** Three tests\nin the vector sources broke, and the generator would not regenerate over sources that no longer\npassed under the recorder. All three use `#L1` over a nine-byte receipt with a short needle and\nexpect HELD, and one says why in its own comment: *\"a nine-byte receipt cannot hold a sixteen-byte\nneedle; the author narrows the haystack with a line anchor and the short needle is then exempt.\"*\nThat is a documented prior decision, and it is right on the floor's own terms — two bytes over nine\ndo not hold against almost anything. The spec had taken the opposite position without having read\nit. The second erratum narrows the rule rather than withdrawing it: a line slice earns the exemption\nwhen it narrows, **or** when the receipt it was cut from is itself shorter than the floor, where the\nfloor's danger cannot exist. `#L1` over nine bytes stays HELD. `#L1` over a one-line 44-byte record\nis the floor's business. `#L1-L3` over 53 bytes is refused. Bare receipts are untouched, and the\nthree source tests are not changed.\n\n## How it was checked, in two receipts\n\nThe first receipt measures the finding. The guard as first written had\n8 tests;\n2 failed against the shipped verifier\n— the whole-receipt slice, terminated and unterminated — and\n0 failed after the strict repair.\n\nThe second receipt measures the correction. The guard grew to\n12 tests\nto pin both halves of the boundary;\n1 failed against the strict repair\n— the sub-floor idiom the source tests depend on — and\n0 failed after the sub-floor clause.\n\nThe tests that pass in every state are the controls that give the repair its shape: the bare floor\nstill refuses, one line of three and two of three still earn the exemption, a needle absent from the\nnamed line still FAILs rather than being excused, a pointer leaf is untouched, a needle at the floor\nneeds no exemption — and a bare tiny receipt with no anchor is still refused, so a repair that\nquietly exempted every small receipt would pass the idiom test and fail that one.\n\nNeither receipt is remembered: `repair_receipt.py` reads **both** verifiers at the repair commit\nand at its parent from git and runs the guard against each in a scratch copy, refusing if the guard\nran no tests. The frozen 1689-vector bar holds. The standing differential guard passes with both\nsides changed together. The conformance set regenerated with no moved core.\n\n## What this does not say\n\n**That sixteen bytes is the right floor.** It is the line the lab drew, and this leg enforces it\nwhere it was not enforced; it does not defend the number.\n\n**That the pointer-leaf exemption is sound.** It is out of scope and unexamined.\n\n**That the adversary's list is closed.** `commit: null` was probed alongside and did **not**\nreproduce as described — with an explicit tree handle it resolves; only the CLI path without\n`--commit` goes blind, which is the UNRESOLVED finding already warned about. Recorded as\nnot-reproduced rather than dropped.\n\n**That the spec was right.** It was wrong twice, once about the remedy and once about the boundary,\nand both are in it as errata rather than edits. The second was wrong because I had not read a\ncomment in the tests I was about to break, which is the cheaper of the two mistakes and the one I\nwould rather have avoided.\n\n---\n\n*The check asked whether the author had pointed, and not at what. The first repair measured with a\nruler the slicer disagreed with. The second forgot that someone had already decided what a tiny\nreceipt deserves — and had written it down, in the one place a test failure would make me read.*\n",
+ "spans": [
+  {
+   "start": 3558,
+   "end": 3566,
+   "receipt": "path:papers/sworn/short_needle_repair.json#/guard_tests",
+   "kind": "numeric"
+  },
+  {
+   "start": 3567,
+   "end": 3604,
+   "receipt": "path:papers/sworn/short_needle_repair.json#/before/failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 3670,
+   "end": 3703,
+   "receipt": "path:papers/sworn/short_needle_repair.json#/after/failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 3767,
+   "end": 3775,
+   "receipt": "path:papers/sworn/short_needle_repair_2.json#/guard_tests",
+   "kind": "numeric"
+  },
+  {
+   "start": 3812,
+   "end": 3846,
+   "receipt": "path:papers/sworn/short_needle_repair_2.json#/before/failed",
+   "kind": "numeric"
+  },
+  {
+   "start": 3906,
+   "end": 3942,
+   "receipt": "path:papers/sworn/short_needle_repair_2.json#/after/failed",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
