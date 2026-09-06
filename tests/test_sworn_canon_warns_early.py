@@ -88,3 +88,26 @@ def test_non_numeric_spans_are_left_alone(tmp_path):
         b'<sworn r="r1" k="quote">712 of 150000 is a phrase to find.</sworn>\n')
     assert r.returncode == 0, r.stdout + r.stderr
     assert "WARNING" not in r.stdout, r.stdout
+
+
+def test_the_warning_reads_the_right_span_when_the_document_is_not_ascii(tmp_path):
+    """Span offsets are BYTE offsets into UTF-8; slicing the str by them shifts on any non-ASCII.
+
+    The first version of this warning did exactly that. On a real document it read a span 40-odd
+    bytes away from the one it was warning about and reported "no digit-bearing token" for a span
+    carrying two. It still fired — the doomed span was doomed either way — but its message was
+    about a different piece of text, and with a different shift it would warn about an innocent
+    span or miss a doomed one.
+
+    The em-dashes here are three bytes each, so a character-index slice lands elsewhere.
+    """
+    body = ("a line with an em-dash — and another — before the span.\n"
+            '<sworn r="r1" k="numeric">712 of 150000 disagreed.</sworn>\n').encode("utf-8")
+    r, _ = _canon(tmp_path, body)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "number_count" in r.stdout, r.stdout
+    assert "712" in r.stdout and "150000" in r.stdout, (
+        "the warning named the wrong tokens, so it sliced the wrong span:\n%s" % r.stdout)
+    assert "no digit-bearing token" not in r.stdout, (
+        "the warning read a span with no numbers in it, which is the byte-vs-character bug:\n%s"
+        % r.stdout)

@@ -1,0 +1,44 @@
+{
+ "by_surface": {
+  "digest_binding": {
+   "runnable": 8,
+   "succeeded": 2
+  },
+  "evidence_channel": {
+   "runnable": 10,
+   "succeeded": 0
+  },
+  "manifest": {
+   "runnable": 8,
+   "succeeded": 0
+  },
+  "offsets": {
+   "runnable": 8,
+   "succeeded": 1
+  },
+  "span_table": {
+   "runnable": 8,
+   "succeeded": 2
+  },
+  "text_smuggling": {
+   "runnable": 7,
+   "succeeded": 5
+  }
+ },
+ "crashed_not_refused": 0,
+ "note": "render_to_SWORN_HELD_with_nothing_held counts documents whose every sworn span is UNRESOLVED: HELD=0, FAILED=0, MALFORMED=0. The ladder calls that SWORN-HELD.",
+ "predictions_correct": 7,
+ "question": "the frozen success criterion measures the round trip only; these are the outcomes it does not capture, chiefly what the rendered documents VERIFY as",
+ "receipt": "conformance/sworn/sidecar_battery.json",
+ "refused_by_load_sidecar": 0,
+ "render_to_SWORN_HELD": 42,
+ "render_to_SWORN_HELD_with_nothing_held": 14,
+ "runnable": 49,
+ "schema": "styxx.sworn.sidecar-battery-outcomes/v1",
+ "stop3_verdicts": {
+  "SWORN-FAILED": 5,
+  "SWORN-HELD": 42,
+  "UNSWORN": 2
+ },
+ "succeeded_by_frozen_criterion": 10
+}

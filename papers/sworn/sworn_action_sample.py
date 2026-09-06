@@ -155,13 +155,13 @@ def _run_json_stable(raw: bytes) -> dict:
     return run
 
 
-def check() -> int:
+def check(prefix: str = PREFIX) -> int:
     work = Path(tempfile.mkdtemp(prefix="sworn_sample_check_"))
     try:
         out = generate(work)
         drift: List[str] = []
         for name, fresh in _outputs(out).items():
-            committed = HERE / ("%s.%s" % (PREFIX, name))
+            committed = HERE / ("%s.%s" % (prefix, name))
             if not committed.exists():
                 drift.append("%s: not committed" % name)
                 continue
@@ -175,8 +175,8 @@ def check() -> int:
             if not same:
                 drift.append("%s: differs from the committed sample" % name)
         produced = _outputs(out)
-        for p in HERE.glob(PREFIX + ".*"):
-            if p.suffix != ".py" and p.name[len(PREFIX) + 1:] not in produced:
+        for p in HERE.glob(prefix + ".*"):
+            if p.suffix != ".py" and p.name[len(prefix) + 1:] not in produced:
                 drift.append("%s: committed but not produced" % p.name)
     finally:
         shutil.rmtree(work, ignore_errors=True)
@@ -189,22 +189,28 @@ def check() -> int:
 
 def main(argv=None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
+    prefix = PREFIX
+    if argv and argv[0] == "--prefix" and len(argv) > 1:
+        prefix, argv = argv[1], argv[2:]
     if argv == ["--check"]:
-        return check()
+        return check(prefix)
     if argv:
         print(__doc__)
         return 2
-    existing = [p for p in HERE.glob(PREFIX + ".*") if p.suffix != ".py"]
+    # A sample is history. The refusal below has always named the remedy — "write a new prefix at a
+    # new commit" — and --prefix is how you do it, so a legitimate behaviour change in the verifier
+    # produces a SECOND sample beside the first rather than a rewrite of it.
+    existing = [p for p in HERE.glob(prefix + ".*") if p.suffix != ".py"]
     if existing:
         sys.stderr.write("REFUSED: a sample is already committed under %s.* — a sample is history; "
-                         "write a new prefix at a new commit\n" % PREFIX)
+                         "write a new prefix at a new commit\n" % prefix)
         return 1
     work = Path(tempfile.mkdtemp(prefix="sworn_sample_"))
     try:
         out = generate(work)
         for name, fresh in _outputs(out).items():
-            (HERE / ("%s.%s" % (PREFIX, name))).write_bytes(fresh.read_bytes())
-            print("wrote %s.%s" % (PREFIX, name))
+            (HERE / ("%s.%s" % (prefix, name))).write_bytes(fresh.read_bytes())
+            print("wrote %s.%s" % (prefix, name))
     finally:
         shutil.rmtree(work, ignore_errors=True)
     return 0

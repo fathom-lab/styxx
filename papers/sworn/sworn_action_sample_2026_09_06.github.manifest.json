@@ -1,0 +1,56 @@
+{
+ "spec": "sworn/manifest/0.2",
+ "harness": "styxx.harness/0.1 github pull_request; fork: false; rung L2 declared by the caller, not detected; fork caveat: on a pull_request event from a fork, the job that mints the manifest runs the workflow file as it exists in the pull request's head, on a runner the claimant's changes configured; the manifest is then minted by a party the claimant controls, and 'a party other than the claimant' — the sentence L2 rests on — does not hold. It holds only for a workflow pinned to the base branch (pull_request_target, which runs the base's workflow file with the base's secrets and must not check out and execute head content) or for a manifest attested outside the job; adapters, never a recorder: bytes a harness already holds, turned into a sworn/manifest/0.2 file; nothing signed, fetched, observed or verified",
+ "turn": "lab/app#7@f808c3c64056ad99796fc53c7824ae5da08c3268",
+ "minted_at": "2026-09-05T00:00:00Z",
+ "authored_sha256": [],
+ "receipts": {
+  "r1": {
+   "id": "r1",
+   "sha256": "eab8ac11960941b2a9d253dcd6e1bb8a4fb6f314c99b6a0cc4e49ff26eb90dbc",
+   "kind_of_source": "http_fetch",
+   "captured_at": "2026-09-05T00:00:00Z",
+   "complete": true,
+   "bytes": "ZGlmZiAtLWdpdCBhL0ZBSUxFRC5tZCBiL0ZBSUxFRC5tZApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi42M2RkYjkxCi0tLSAvZGV2L251bGwKKysrIGIvRkFJTEVELm1kCkBAIC0wLDAgKzEsMyBAQAorIyBub3RlcyB0aGF0IGZhaWwKKworPHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5UaGUgcnVubmVyIHJlc29sdmVkIDQgcGFzc2VkIHRlc3RjYXNlcy48L3N3b3JuPgpkaWZmIC0tZ2l0IGEvSEVMRC5tZCBiL0hFTEQubWQKbmV3IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAwMDAwMC4uOGFkYjFlNAotLS0gL2Rldi9udWxsCisrKyBiL0hFTEQubWQKQEAgLTAsMCArMSw3IEBACisjIG5vdGVzIHRoYXQgaG9sZAorCis8c3dvcm4gcj0icjEiIGs9Im51bWVyaWMiPlRoZSBydW5uZXIgcmVzb2x2ZWQgMyBwYXNzZWQgdGVzdGNhc2VzLjwvc3dvcm4+Cis8c3dvcm4gcj0icjIiIGs9Im51bWVyaWMiPkl0IHJlc29sdmVkIDAgZmFpbHVyZXMuPC9zd29ybj4KKzxzd29ybiByPSJyNCMvb3V0Y29tZSIgaz0icXVvdGUiPlRoZSByZWFkZXIncyBvdXRjb21lIG92ZXIgdGhlIHJlcG9ydCByZWFkcyBgUEFTU0VEYC48L3N3b3JuPgorPHN3b3JuIHI9InI2IiBrPSJxdW90ZSI+VGhlIGJhc2Ugc2hhIGlzIGBjYjA1N2FhNjAxZDk2YWZhNGEyNWRkODc0MTc1Y2QyZTM5YjI4ZGIwYC48L3N3b3JuPgorPHN3b3JuIHI9InI5Iy9wdWxsX3JlcXVlc3QvbnVtYmVyIiBrPSJudW1lcmljIj5UaGlzIGlzIHB1bGwgcmVxdWVzdCA3Ljwvc3dvcm4+CmRpZmYgLS1naXQgYS9VTlJFU09MVkVELm1kIGIvVU5SRVNPTFZFRC5tZApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi4zY2E3YmFiCi0tLSAvZGV2L251bGwKKysrIGIvVU5SRVNPTFZFRC5tZApAQCAtMCwwICsxLDMgQEAKKyMgbm90ZXMgdGhlIHJ1bm5lciBjb3VsZCBub3Qgc2VlCisKKzxzd29ybiByPSJyMTIiIGs9Im51bWVyaWMiPlRoZSBtYW5pZmVzdCBjYXJyaWVzIDEyIHJlY2VpcHRzLjwvc3dvcm4+CmRpZmYgLS1naXQgYS9wbGFpbi5tZCBiL3BsYWluLm1kCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAuLmZhZDU0Y2MKLS0tIC9kZXYvbnVsbAorKysgYi9wbGFpbi5tZApAQCAtMCwwICsxLDMgQEAKKyMgcGxhaW4KKworTm8gc3dvcm4gdGFnIGhlcmUuCmRpZmYgLS1naXQgYS9zdGFsZS5zd29ybi5qc29uIGIvc3RhbGUuc3dvcm4uanNvbgpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi42YTZiMzliCi0tLSAvZGV2L251bGwKKysrIGIvc3RhbGUuc3dvcm4uanNvbgpAQCAtMCwwICsxIEBACit7InNwZWMiOiAic3dvcm4vMC4xIiwgImNvbW1pdCI6IG51bGwsICJkb2N1bWVudCI6IHsibmFtZSI6ICJ4IiwgInNoYTI1NiI6ICIwIn0sICJ0ZXh0IjogIiIsICJzcGFucyI6IFtdfQo=",
+   "harness_note": "diff supplied by the caller; completeness asserted by the caller, not observed"
+  },
+  "r2": {
+   "id": "r2",
+   "sha256": "ef3330bd6c249caa87955884e01090211582f1c86d1828cf8e231ed5bd83ad01",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T00:00:00Z",
+   "complete": true,
+   "bytes": "Y2IwNTdhYTYwMWQ5NmFmYTRhMjVkZDg3NDE3NWNkMmUzOWIyOGRiMA==",
+   "harness_note": "base sha from pull_request event (pull_request.base.sha)"
+  },
+  "r3": {
+   "id": "r3",
+   "sha256": "aefdab1c8729c7a5668d8458c6c65d51783375b9de33d457a3be59b3a87e40d4",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T00:00:00Z",
+   "complete": true,
+   "bytes": "ZjgwOGMzYzY0MDU2YWQ5OTc5NmZjNTNjNzgyNGFlNWRhMDhjMzI2OA==",
+   "harness_note": "head sha from pull_request event (pull_request.head.sha)"
+  },
+  "r4": {
+   "id": "r4",
+   "sha256": "ffcfd72fad7954ae5a63628d70ad100d808cb5a3305a1bb20117fbd66e305764",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T00:00:00Z",
+   "complete": true,
+   "bytes": "cHVsbF9yZXF1ZXN0",
+   "harness_note": "GITHUB_EVENT_NAME as given"
+  },
+  "r5": {
+   "id": "r5",
+   "sha256": "a1e88c2e4878c19090fe0e062cfcc9ff70ee3f87d5cae784f6e8d24798d28bc8",
+   "kind_of_source": "harness_note",
+   "captured_at": "2026-09-05T00:00:00Z",
+   "complete": true,
+   "bytes": "ewogImFjdGlvbiI6ICJzeW5jaHJvbml6ZSIsCiAibnVtYmVyIjogNywKICJwdWxsX3JlcXVlc3QiOiB7CiAgIm51bWJlciI6IDcsCiAgInRpdGxlIjogIm5vdGVzIiwKICAiYm9keSI6ICJBZGRzIHRoZSBub3Rlcy5cclxuXHJcbjxzd29ybiByPVwicjJcIiBrPVwibnVtZXJpY1wiPlRoZSBydW4gcmVzb2x2ZWQgMCBmYWlsdXJlcy48L3N3b3JuPlxyXG4iLAogICJiYXNlIjogewogICAicmVmIjogIm1haW4iLAogICAic2hhIjogImNiMDU3YWE2MDFkOTZhZmE0YTI1ZGQ4NzQxNzVjZDJlMzliMjhkYjAiLAogICAicmVwbyI6IHsKICAgICJmdWxsX25hbWUiOiAibGFiL2FwcCIsCiAgICAiZm9yayI6IGZhbHNlCiAgIH0KICB9LAogICJoZWFkIjogewogICAicmVmIjogIm5vdGVzIiwKICAgInNoYSI6ICJmODA4YzNjNjQwNTZhZDk5Nzk2ZmM1M2M3ODI0YWU1ZGEwOGMzMjY4IiwKICAgInJlcG8iOiB7CiAgICAiZnVsbF9uYW1lIjogImxhYi9hcHAiLAogICAgImZvcmsiOiBmYWxzZQogICB9CiAgfQogfSwKICJyZXBvc2l0b3J5IjogewogICJmdWxsX25hbWUiOiAibGFiL2FwcCIKIH0KfQo=",
+   "harness_note": "GITHUB_EVENT_PATH bytes as given"
+  }
+ },
+ "rung": "L2",
+ "digest": "40081b49a62aa809e3145df680c77e25e59ab8a05ba34a37f3493b34d588ef6d"
+}

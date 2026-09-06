@@ -88,6 +88,72 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
+## [Unreleased] — the sidecar battery: 49 attacks, 0 refused, and a verdict that means less than its name
+
+**Built to `papers/sworn/SPEC_sidecar_battery_v01_2026_09_06.md`, frozen before the battery was
+written.** The suite-power study measured the sidecar layer at 6 killed of 13 with both injection
+boundaries undefended — a statement about the tests. This asked the question about the code: is
+there an attack? Six attackers took a surface each, an adversary hunted what they left alone, and
+every prediction was recorded before anything ran.
+
+- **49 attacks ran and `load_sidecar` refused none of them.** Self-minted manifests, transplanted
+  identities, forged commits, smuggled tags, receipt entries whose shape `Manifest.add()` would
+  reject — all accepted. It is genuinely strict, but strict about SHAPE, and none of these were the
+  wrong shape. It never crashed either: 0 attacks produced anything but a clean accept or refuse,
+  which is the promise its docstring makes.
+- **10 succeeded by the frozen criterion** — accepted, and the rendered document does not
+  re-canonise to the span table that was validated. `to_sidecar` refuses to emit a sidecar that
+  cannot round-trip; `load_sidecar` + `render` makes no such promise in the other direction, and
+  `text_smuggling` broke it 5 times of 7.
+- **42 of the 49 render to a document that verifies SWORN-HELD, and 14 of those hold nothing at
+  all.**
+- **THE FINDING, and it is not in the sidecar layer.** The ladder reads
+  `elif counts["FAILED"] == 0 and counts["MALFORMED"] == 0: SWORN-HELD` and never consults
+  `UNRESOLVED`. A document in which nothing was checked carries the same headline as one in which
+  everything held — the conflation this module's own doctrine refuses four lines from the top of the
+  same file ("a document that swore nothing is UNSWORN, never 'no failures'"), applied to
+  `sworn_total == 0` and not to `unresolved == sworn_total`.
+- **Author-reachable with one string.** A manifest rung the verifier does not know makes every span
+  UNRESOLVED with reason `rung_unknown`, before the receipt id is looked up. Same document, same
+  receipt, a sentence saying the loss is 0 against a receipt saying 4200000: rung `L2` gives
+  SWORN-FAILED, rung `L3` gives **SWORN-HELD**. Nothing forged, nothing malformed.
+- **It catches honest documents, which is how it was found.** Verifying a real committed RESULT with
+  `--repo .` and no `--commit` resolves nothing: held=0, unresolved=10, SWORN-HELD. With the commit
+  its sidecar names: held=10. Both print SWORN-HELD. That is not an exotic attack, it is the
+  ordinary way a reader runs the tool.
+- **Repaired: the headline warns**, distinguishing *nothing was checked* from *N of M did not hold*,
+  and the guard is watched to fail — remove the warning and 3 of its 6 tests fail, with two silence
+  controls so it does not become noise.
+- **NOT repaired, and left to the operator:** renaming the verdict. `SWORN-HELD` should require
+  `UNRESOLVED == 0`. That is a breaking change to a published vocabulary every consumer of
+  `document_verdict` depends on. The blast radius was measured rather than guessed: of 39 committed
+  sworn receipts, ONE is SWORN-HELD with unresolved spans, and it is a fixture named
+  `sworn_action_sample.UNRESOLVED`.
+- **A second action sample, beside the first.** The committed sample contained exactly that case, so
+  it stopped reproducing. The script's own refusal already named the remedy — "a sample is history;
+  write a new prefix at a new commit" — and had no way to do it, so `--prefix` was added.
+  `sworn_action_sample.*` stays untouched history; `sworn_action_sample_2026_09_06.*` is what the
+  action prints now. **The two summaries differ in exactly one line**, and a test pins that, because
+  the pair is the record of the change.
+- **A second finding: the rounding rule has no floor.** `DECISIONS["rounding"]` quantizes the
+  receipt to the fractional digits **the author printed**, which is right — demanding an exact match
+  would FAIL every honestly rounded figure. But at zero fractional digits it stops rounding and
+  starts erasing: a receipt of `0.4211` against the sentence "the A-share is 0." is **HELD**, with a
+  genuine harness-minted L2 receipt and nothing malformed. The verdict is deliberately unchanged;
+  the headline now counts spans whose non-zero receipt was compared against zero, and a receipt
+  genuinely equal to zero is not flagged, which is the control.
+- **The first attempt at that signal was itself a defect, and the corpus refused it.** It added a
+  field to the span's `detail` — which is inside the digested core — so it moved the core digest of
+  every affected span and would have put Python out of agreement with the JavaScript verifier. The
+  conformance generator refused the regeneration outright: *"a moved core is a finding about the
+  verifier, never a reason to rewrite the set"*. A warning that changes what the format digests is a
+  format change wearing a warning's clothes. Derived on the headline instead, from fields `detail`
+  already carried.
+- **A repair to yesterday's repair.** The `canon` warning shipped hours earlier sliced `side["text"]`
+  — a `str` — by BYTE offsets. It lines up only while a document stays ASCII and shifts silently
+  otherwise; on this leg's own RESULT it read a span forty bytes away and reported "no digit-bearing
+  token" for a span carrying two. Fixed, and pinned by a test whose document carries em-dashes.
+
 ## [Unreleased] — suite power: half the changes to the layers nothing can reach would ship green
 
 **Built to `papers/sworn/SPEC_suite_power_v01_2026_09_06.md`, frozen before any mutant ran.** The

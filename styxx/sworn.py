@@ -1355,6 +1355,26 @@ def _check_numeric(inner_text: str, res: _Resolved, parsed: dict) -> Tuple[str, 
         return "MALFORMED", "leaf_not_numeric", {"leaf": _safe_text(leaf)}
     detail = {"printed_token": tok, "printed": rhs, "receipt": str(leaf), "receipt_rounded": lhs,
               "fractional_digits": frac, "rounding": ROUNDING}
+    # DECISIONS["rounding"] is deliberate and it is right: an author writing 0.42 against a receipt
+    # of 0.4211 is honestly rounding, and demanding an exact match would FAIL every rounded figure
+    # in the corpus. But the rule quantizes to the AUTHOR'S printed precision and has no floor, so
+    # at zero fractional digits it stops rounding and starts erasing: a receipt of 0.4211 against
+    # the sentence "the A-share is 0." is HELD, with a genuine harness-minted receipt and nothing
+    # malformed anywhere.
+    #
+    # The line drawn here is not a threshold anyone has to argue about. It is the case where the
+    # printed figure carries NO information about the receipt at all: a non-zero receipt that
+    # rounds to zero. The verdict does not change — that would break the honest-rounding rule this
+    # format needs — but the span says so, so a reader of the receipt is not left to notice that
+    # `receipt` and `receipt_rounded` disagree by everything.
+    # NOTE: nothing is added to `detail` here, and the first version of this signal did. `detail`
+    # is INSIDE the digested core, so a field added to it moves the core digest of every affected
+    # span — the conformance generator refused the regeneration and said so: "a moved core is a
+    # finding about the verifier, never a reason to rewrite the set". It would also have put this
+    # side out of agreement with styxx/_data/sworn_verify.js, which knows nothing about it.
+    #
+    # `receipt` and `receipt_rounded` are already here and already say it. The signal belongs where
+    # a reader meets the verdict — the headline, which is CLI output and outside the digest.
     if lhs == rhs:
         return "HELD", None, detail
     return "FAILED", "value_mismatch", detail
@@ -1786,6 +1806,44 @@ def _headline(core: dict) -> str:
                "n/a" if ndiff is None else ndiff, rungs))
     if core["document_malformed"]:
         line += "  document-MALFORMED: %s" % core["document_malformed"]["reason"]
+    # SWORN-HELD is decided by `FAILED == 0 and MALFORMED == 0` and does not consult UNRESOLVED, so
+    # a document in which NOTHING was checked carries the same headline as one in which everything
+    # held. That conflation is the one this module's own doctrine refuses four lines from the top of
+    # the file — "a document that swore nothing is UNSWORN, never 'no failures'" — applied to
+    # sworn_total == 0 and not to unresolved == sworn_total.
+    #
+    # It is author-reachable without forging anything: a manifest rung this verifier does not know
+    # makes every span UNRESOLVED with reason `rung_unknown`, BEFORE any receipt id is looked up, so
+    # a sentence contradicting its own receipt goes from SWORN-FAILED to SWORN-HELD by changing one
+    # string. Naming the verdict differently is a breaking change to a published vocabulary and is
+    # the operator's call; saying so out loud on the line a reader actually reads is not.
+    # A HELD span whose comparison was against zero says nothing about its receipt. It is honest
+    # rounding taken past the point where anything survives, and it is invisible on a line that
+    # only counts verdicts.
+    # Derived from what the detail already carries — `receipt` and `receipt_rounded` — rather than
+    # from a field added to it, because detail is inside the digested core and this must not move it.
+    def _erased_span(s):
+        if s.get("verdict") != "HELD":
+            return False
+        d = s.get("detail") or {}
+        if "receipt" not in d or "receipt_rounded" not in d:
+            return False
+        try:
+            return not Decimal(d["receipt"]).is_zero() and Decimal(d["receipt_rounded"]).is_zero()
+        except (InvalidOperation, ValueError, TypeError):
+            return False
+
+    _erased = [s for s in core["spans"] if _erased_span(s)]
+    if _erased:
+        line += ("\n  WARNING: %d HELD span(s) compared against 0 because the sentence printed no "
+                 "fractional digits; they say nothing about the receipt's value" % len(_erased))
+    if core["document_verdict"] == "SWORN-HELD" and c["UNRESOLVED"]:
+        if c["HELD"] == 0:
+            line += ("\n  WARNING: nothing was checked — all %d sworn spans are UNRESOLVED, and "
+                     "SWORN-HELD does not mean they held" % c["UNRESOLVED"])
+        else:
+            line += ("\n  WARNING: %d of %d sworn spans are UNRESOLVED and did not hold; "
+                     "SWORN-HELD reports only that none FAILED" % (c["UNRESOLVED"], core["sworn_total"]))
     return line
 
 
@@ -1873,7 +1931,13 @@ def main(argv=None) -> int:
         for _sp in side["spans"]:
             if _sp.get("kind") != "numeric":
                 continue
-            _inner = side["text"][_sp["start"]:_sp["end"]]
+            # Span offsets are BYTE offsets into the UTF-8 encoding — load_sidecar bounds them
+            # against len(text.encode("utf-8")) and render splices into the encoded bytes. Slicing
+            # the str by them lines up only while the document stays ASCII, and silently shifts as
+            # soon as it does not: the first version of this warning read the wrong span on this
+            # very file, reporting "no digit-bearing token" for a span carrying two.
+            _enc = side["text"].encode("utf-8")
+            _inner = _enc[_sp["start"]:_sp["end"]].decode("utf-8", "replace")
             _why, _tok, _seen = _number_token(_inner)
             if _why:
                 print("  WARNING @%d: numeric span will be MALFORMED %s at verify — %s"
