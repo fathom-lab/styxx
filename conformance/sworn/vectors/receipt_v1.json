@@ -4,10 +4,10 @@
  "count": 5,
  "vectors": [
   {
-   "id": "54d5c12e774b220d0cf9f0418cf317fc1365371ad7354bee8e3cdd7d020f9de4",
+   "id": "31771af1c71c245260efdb0d24bae8776862c34819b127e05401096679fa0b3a",
    "family": "receipt_v1",
    "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
    ],
    "rules": [
     "R9"
@@ -17,18 +17,18 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "2ff7e776a69a7483c72f5cf7428fe81a87850652c2b3cf5dd6c76d2e85ca17f9",
+    "receipt": "e42b2184d47de9a161a15f31f4c60bcc2a6d9f48548fb2eb9cf3d74635b10362",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
    },
    "expect": {
     "outcome": "check",
     "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
     }
    }
   },
@@ -85,35 +85,6 @@
    }
   },
   {
-   "id": "78e242be88d40bb2c534e76c0c2d11596005598d088a33ea0e8b06983b770838",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "67ab48326b15c904bb4e662856a08f7dd5793cde480eea9183c89d6382c13abe",
-    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
-    "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "b17905ec3c1dd099de869fafd1bc77054597d2990d8242434a6f6d1e74dcf9fd",
    "family": "receipt_v1",
    "sources": [
@@ -143,7 +114,7 @@
    }
   },
   {
-   "id": "b3f17c056f2ab548e56ccf07fd3724ad150db5693a598334cb982ceede11affe",
+   "id": "e840c795ee5a202e53d41c146acdbd0a332e8a5310f6f5a28a071f4f6097c4c9",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -156,8 +127,8 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "950a09b90c81f50195967f3ead7ac78a6d54b14fc0bf4bf58665bc830ecc4ec8",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "receipt": "945c4f6f008ea9daef62a2232fce258bb910b221d4ed05462a64d52767f8a4d6",
+    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
@@ -166,8 +137,37 @@
     "outcome": "check",
     "check": {
      "status": "FAILED",
-     "digest_match": false,
+     "digest_match": true,
      "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "f32a31cb0afac19f849175c3ec80b152bf544354d7104b04be6bf2b8340ab437",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "e040ae629136ec4834d09b4da510be1795f036db77e09142d151bff635dc63a5",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
     }
    }
   }

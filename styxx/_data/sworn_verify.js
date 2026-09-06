@@ -1013,19 +1013,30 @@ function checkQuote(inner, res) {
     // design, so a full-range slice of a newline-terminated receipt is one byte short and a length
     // comparison calls it narrowed. Ask the slicer what "everything" is and compare to that —
     // exactly as styxx/sworn.py does, or the differential harness finds the disagreement.
+    // [B4] B1 (SPEC_trailing_blank_lines_do_not_narrow_v01_2026_09_06): "the whole receipt" is its
+    // CONTENT lines. Counting a trailing empty line as a line made `#L1` over a receipt ending
+    // "\n\n" differ from the full range by one empty line, which bought the exemption and let a
+    // 4-byte needle ride over a 9020-byte blob. Mirrors styxx/sworn.py, which strips trailing
+    // newlines before counting, or the differential harness finds the disagreement.
     let narrowed = false;
     if (res.slice !== null) {
       const whole = res.bytes;
-      let nLines = 0;
-      for (let i = 0; i < whole.length; i++) if (whole[i] === 0x0a) nLines++;
-      if (whole.length && whole[whole.length - 1] !== 0x0a) nLines++;
-      const full = lineSlice(whole, 1, nLines);
-      const isWhole = full !== null && full.length === res.slice.length &&
-                      full.every((b, i) => b === res.slice[i]);
+      let end = whole.length;
+      while (end > 0 && whole[end - 1] === 0x0a) end--;      // whole.rstrip(b"\n")
+      let nContent = 0;
+      for (let i = 0; i < end; i++) if (whole[i] === 0x0a) nContent++;
+      if (end > 0) nContent++;
+      const full = nContent ? lineSlice(whole, 1, nContent) : null;
+      // `full === null` means the receipt has NO content lines, which narrows nothing — so this is
+      // written as "full exists AND differs", not as `!isWhole`. `!isWhole` would make a
+      // content-free receipt narrowed here while sworn.py calls it not narrowed: a parity defect
+      // of exactly the kind this repair exists to remove.
+      const notWhole = full !== null && !(full.length === res.slice.length &&
+                                          full.every((b, i) => b === res.slice[i]));
       // ...or the receipt is BELOW the floor, where the floor's danger cannot exist and an anchor
       // keeps its exemption even though it narrows nothing — the lab's prior, documented decision
       // for tiny fixtures. Mirrors styxx/sworn.py exactly.
-      narrowed = !isWhole || whole.length < SHORT_NEEDLE_BYTES;
+      narrowed = notWhole || whole.length < SHORT_NEEDLE_BYTES;
     }
     if (!narrowed && needle.length < SHORT_NEEDLE_BYTES) {
       return ["MALFORMED", "short_needle", { needle_bytes: needle.length,
