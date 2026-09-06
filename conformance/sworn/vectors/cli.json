@@ -80,6 +80,33 @@
    }
   },
   {
+   "id": "50ad122fb282981cc8ef3274ab4b72f6e49f6c51169b477f5fa7ded37826727a",
+   "family": "cli",
+   "sources": [
+    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "651bbc63be0db4272b254a12a35d96ceacb98980c527700efa2356902822fef5",
+    "document": null,
+    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "703825f9bd39cd5759c912ac869a6082cfd71a16866483cba4f86bbe4d8640d1",
    "family": "cli",
    "sources": [
@@ -272,33 +299,6 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
-    }
-   }
-  },
-  {
-   "id": "e09258bdd05445b36c4fd1fdf0212658f1388e74fcc757bbe158b92fb310a878",
-   "family": "cli",
-   "sources": [
-    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "87bf93d2aef8bc1087f9a44e41bea6777c262eec72e0baf79abd66e0092ef6a5",
-    "document": null,
-    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
     }
    }
   }

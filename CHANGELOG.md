@@ -88,6 +88,35 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
+## [Unreleased] — the short-needle exemption is earned by narrowing, not by naming a range
+
+**Built to `papers/sworn/SPEC_short_needle_anchor_v01_2026_09_06.md`, frozen before the repair.**
+From the sidecar battery's adversary, in its list of what nobody had attacked.
+
+- **The exemption was keyed on whether a line slice was PRESENT, not on whether it NARROWED.**
+  v0.2 R3 refuses a quote needle under 16 bytes over a whole receipt and exempts a line slice on the
+  stated ground that "the author narrowed the haystack by naming it". `#L1-L3` over a three-line
+  receipt is the whole receipt with an anchor on it — nothing narrowed, floor gone, a two-byte
+  needle HELD. The adversary's example (`#L1-L400`) was wrong, refused as out of range; the claim
+  under it held with a range that exactly spans the file.
+- **The first repair was wrong, and the frozen spec that prescribed it was wrong the same way.** N1
+  said compare bytes, not line counts. `_line_slice` excludes the last selected line's terminating
+  LF by design, so a full-range slice of a 53-byte receipt is 52 bytes and a length test calls that
+  narrowed; the guard still failed on the newline-terminated receipt. An **ERRATA is appended** to
+  the frozen spec, never an edit. The repair that holds asks the slicer itself — a slice narrows iff
+  it differs from `_line_slice(receipt, 1, n_lines)` — and the JavaScript side asks `lineSlice` the
+  same question (N5).
+- **Watched to fail and re-derived from git**: 2 of 8 failed against the shipped verifier (both
+  whole-receipt slices, terminated and unterminated), 0 of 8 after; the 6 that pass throughout are
+  the controls — the bare floor, one line of three, two of three, a needle absent from the named
+  line, a pointer leaf, a needle at the floor. `papers/sworn/repair_receipt.py` (NEW, generalised
+  from the tree-channel one) runs the guard at the repair commit and its parent with BOTH verifiers
+  taken from git, so a two-sided repair is never measured with one side old and one side new.
+- The frozen 1689-vector bar holds; the standing differential guard passes with both sides changed
+  together.
+- **Not reproduced as described:** `commit: null` blinding the tree channel. With an explicit tree
+  handle it resolves; only the CLI path without `--commit` goes blind, which is the UNRESOLVED
+  finding already warned about in #71.
 ## [Unreleased] — invariant 2 on the tree channel: one refusal on every form a receipt can take
 
 **Built to `papers/sworn/SPEC_tree_channel_authorship_v01_2026_09_06.md`, frozen before the
