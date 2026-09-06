@@ -450,7 +450,15 @@ const COMMENT_OPEN = utf8("<!--");
 const COMMENT_CLOSE = utf8("-->");
 
 // [B4 row 1] Python's \w is Unicode-alphanumeric plus underscore; \d is category Nd.
-const TOKEN_RE = /[\p{L}\p{N}_.,+\-−%/±:]+/gu;
+// v0.2 N1 (SPEC_numeric_sign_is_not_dropped_v01_2026_09_06): every Unicode Pd dash plus U+00AD
+// SOFT HYPHEN binds to the number it precedes, so a sign written with any dash other than U+002D
+// or U+2212 can no longer split the token and vanish. Spelled out rather than written \p{Pd}
+// BECAUSE \p{Pd} here resolves against V8's Unicode version and against CPython's on the other
+// side: sworn.py's _DASH_BINDS is this same list, and a drift between the two is a parity defect.
+const DASH_BINDS =
+  "­֊־᐀᠆‐‑‒–—―⸗⸚" +
+  "⸺⸻⹀⹝〜〰゠︱︲﹘﹣－\u{10EAD}";
+const TOKEN_RE = new RegExp("[\\p{L}\\p{N}_.,+\\-−%/±:" + DASH_BINDS + "]+", "gu");
 const DIGIT_RE = /\p{Nd}/u;
 const GRAM_RE = /^[-+−]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\.[0-9]+)?|\.[0-9]+)%?$/;
 const HEXRUN_RE = /(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])/g;

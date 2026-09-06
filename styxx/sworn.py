@@ -1274,7 +1274,21 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
 # `23,247.` is 23247 and `1e-5` is a MALFORMED span, never the number 5. Trailing sentence
 # punctuation is the one thing stripped, because it is the one thing OATH's `_NUM` refused and
 # then could not see past (`precision of 0.55.` certified with zero tokens examined).
-_TOKEN = re.compile(r"[\w.,+\-−%/±:]+")
+# v0.2 N1 (SPEC_numeric_sign_is_not_dropped_v01_2026_09_06): every Unicode Pd dash, plus U+00AD
+# SOFT HYPHEN, BINDS to the number it precedes. Before this, only U+002D and U+2212 were in the
+# class, so any other dash split the token and vanished — a sentence asserting -0.42 written with
+# U+2010 was HELD against a receipt of 0.42. The dash now joins the digits, the token fails _GRAM,
+# and the span is MALFORMED `number_grammar`: the verifier declines rather than guessing which of
+# 26 dashes meant arithmetic negation.
+#
+# The set is written out rather than expressed as a Unicode property because sworn_verify.js must
+# use the SAME set: \p{Pd} there resolves against V8's Unicode version and here against CPython's,
+# and any drift between the two is a parity defect. tests/test_sworn_numeric_sign_is_not_dropped.py
+# derives the set from unicodedata and asserts it equals this one, so a Unicode bump is caught.
+_DASH_BINDS = ("­֊־᐀᠆‐‑‒–—―⸗⸚"
+               "⸺⸻⹀⹝〜〰゠︱︲﹘﹣－"
+               "\U00010ead")
+_TOKEN = re.compile(r"[\w.,+\-−%/±:" + _DASH_BINDS + "]+")
 _DIGIT = re.compile(r"\d")
 _GRAM = re.compile(r"[-+−]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\.[0-9]+)?|\.[0-9]+)%?")
 _HEXRUN = re.compile(r"(?<![A-Za-z0-9_])[0-9A-Fa-f]+(?![A-Za-z0-9_])")
