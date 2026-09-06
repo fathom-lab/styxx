@@ -32,6 +32,11 @@ NEEDLE = "the precision is 0.9900"
 OTHER = "the precision is 0.1100"
 
 
+# write_bytes, not write_text(newline=...): that keyword landed in Python 3.10 and this repo's CI
+# matrix includes 3.9, where it is a TypeError. Five local suite runs on 3.12 could not see it —
+# the local environment and CI are two things meant to agree, with nothing checking that they do,
+# which is the same shape as the defects this file exists for. Bytes are also the more honest
+# instrument for a test about what git stores.
 def _run(repo, *args, **kw):
     return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, check=False, **kw)
 
@@ -50,11 +55,11 @@ def repo_with_replace(tmp_path):
     _run(repo, "init", "-q", ".")
     _run(repo, "config", "user.email", "t@t.t")
     _run(repo, "config", "user.name", "t")
-    (repo / "f.txt").write_text(NEEDLE + "\n", encoding="utf-8", newline="\n")
+    (repo / "f.txt").write_bytes((NEEDLE + "\n").encode("utf-8"))
     _run(repo, "add", "f.txt")
     _run(repo, "commit", "-q", "-m", "A")
     a = _run(repo, "rev-parse", "HEAD").stdout.decode().strip()
-    (repo / "f.txt").write_text(OTHER + "\n", encoding="utf-8", newline="\n")
+    (repo / "f.txt").write_bytes((OTHER + "\n").encode("utf-8"))
     _run(repo, "add", "f.txt")
     _run(repo, "commit", "-q", "-m", "B")
     b = _run(repo, "rev-parse", "HEAD").stdout.decode().strip()
