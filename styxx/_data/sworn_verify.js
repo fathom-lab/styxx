@@ -79,8 +79,12 @@ function sha256Bytes(bytes) {
 /* ============================================================ bytes and text */
 
 const _ENC = new TextEncoder();
-const _DEC_STRICT = new TextDecoder("utf-8", { fatal: true });
-const _DEC_LOOSE = new TextDecoder("utf-8");
+// ignoreBOM:true is the WHATWG spelling of "do not treat a BOM specially — give it to me as a
+// character". Left at its default of false, TextDecoder STRIPS a leading U+FEFF, which made
+// jsonStrict's BOM refusal below unreachable and made this side accept a BOM-prefixed receipt
+// payload that styxx/sworn.py refuses. Python's bytes.decode never strips one.
+const _DEC_STRICT = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+const _DEC_LOOSE = new TextDecoder("utf-8", { ignoreBOM: true });   // matches decode(errors="replace")
 
 function utf8(s) { return _ENC.encode(s); }
 
@@ -912,10 +916,26 @@ function printedDecimal(tok) {
 }
 
 function safeText(x, limit) {
-  const s = String(x).slice(0, limit === undefined ? 80 : limit);
-  // Python: .encode("utf-8", errors="replace").decode("utf-8") — a lone surrogate becomes U+FFFD
-  return s.replace(/[\ud800-\udfff](?![\udc00-\udfff])/g, "�")
-          .replace(/(^|[^\ud800-\udbff])[\udc00-\udfff]/g, (m, p1) => p1 + "�");
+  // Python: str(x)[:limit].encode("utf-8", errors="replace").decode("utf-8").
+  //
+  // Three things have to match and none of them is the obvious spelling.
+  //   * Python slices by CODE POINT. String.prototype.slice counts UTF-16 units, so it truncates
+  //     at a different place and can cut a surrogate pair in half. Array.from iterates by code
+  //     point: a valid pair arrives as ONE element of length 2, a lone surrogate as one of
+  //     length 1.
+  //   * The replacement for an unencodable lone surrogate is "?" (U+003F) — what Python's
+  //     errors="replace" emits on ENCODE — not U+FFFD, which is what it emits on decode.
+  //   * Only a LONE surrogate is replaced. The previous fixup matched [\ud800-\udfff], which
+  //     includes low surrogates, so the low half of every valid astral character was replaced and
+  //     U+1F600 came out as [d83d, fffd].
+  const lim = limit === undefined ? 80 : limit;
+  const cps = Array.from(String(x)).slice(0, lim);
+  let out = "";
+  for (const c of cps) {
+    const u = c.charCodeAt(0);
+    out += (c.length === 1 && u >= 0xd800 && u <= 0xdfff) ? "?" : c;
+  }
+  return out;
 }
 
 function checkNumeric(innerText, res) {
@@ -1156,7 +1176,7 @@ function coreDigest(core) {
 
 const _api = { swornVerify, coreDigest, jcs, jcsString, sha256Bytes, jsonStrict, jsonStrictBytes,
                jsonPlain, jsonPlainBytes,
-               Manifest, Dec, JObj, scan, parseReceipt, utf8, decodeStrict, LABEL:
+               Manifest, Dec, JObj, scan, parseReceipt, utf8, decodeStrict, safeText, LABEL:
   "re-derives sworn span verdicts offline; a forger controlling the whole file passes both " +
   "browser layers; the package at the named commit is the check" };
 

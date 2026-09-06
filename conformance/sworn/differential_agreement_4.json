@@ -1,0 +1,132 @@
+{
+ "schema": "styxx.sworn.differential-agreement/v1",
+ "spec": "papers/sworn/SPEC_differential_agreement_v01_2026_09_05.md",
+ "seed": 20260905,
+ "cases_requested": 150000,
+ "implementations": {
+  "python": {
+   "module": "styxx/sworn.py",
+   "sha256": "bbfa8bc0761320f42d06d8cda15e6784015b63b2add250db62bbb9ef55e1311b"
+  },
+  "javascript": {
+   "module": "styxx/_data/sworn_verify.js",
+   "sha256": "372b93e1218ca2528ad8c15efada86073f0d01059f6c904f71363d07e1c9f93d"
+  },
+  "note": "content identity modulo newlines, the corpus doctrine"
+ },
+ "compared": 150000,
+ "agree": 150000,
+ "disagree": 0,
+ "void": false,
+ "gates": {
+  "G-N": {
+   "quantity": "cases compared",
+   "value": 150000,
+   "bar": ">= 100000",
+   "pass": true
+  },
+  "G-A": {
+   "quantity": "cases whose core digests are equal",
+   "value": 150000,
+   "share": 1.0,
+   "disagreements": 0
+  },
+  "G-C": {
+   "quantity": "verdict vocabulary reached",
+   "value": {
+    "HELD": 1169,
+    "FAILED": 3347,
+    "UNRESOLVED": 37102,
+    "MALFORMED": 342673,
+    "WITHHELD": 0
+   },
+   "document_malformed": 17337,
+   "pass": true
+  },
+  "G-R": {
+   "quantity": "distinct MALFORMED reasons exercised",
+   "value": 38,
+   "bar": ">= 12",
+   "pass": true
+  },
+  "G-E": {
+   "quantity": "cases where either side raised",
+   "python_only": 0,
+   "javascript_only": 0,
+   "both": 0,
+   "pairs": {}
+  }
+ },
+ "census": {
+  "document_verdicts": {
+   "SWORN-FAILED": 139795,
+   "UNSWORN": 6386,
+   "SWORN-HELD": 3819
+  },
+  "span_verdicts": {
+   "HELD": 1169,
+   "FAILED": 3347,
+   "UNRESOLVED": 37102,
+   "MALFORMED": 342673,
+   "WITHHELD": 0
+  },
+  "malformed_reasons": {
+   "receipt_form": 46665,
+   "kind_unknown": 36954,
+   "hash_over_partial": 29178,
+   "needle_count": 29064,
+   "absent_over_partial": 28227,
+   "nesting": 27538,
+   "hidden_commitment": 18423,
+   "number_count": 16096,
+   "stray_closer": 16030,
+   "kind_reserved": 12368,
+   "tag_syntax": 11333,
+   "rung_unknown": 9851,
+   "manifest_integrity": 9685,
+   "pointer_unresolvable": 9356,
+   "number_grammar": 9153,
+   "length_cap": 8412,
+   "manifest_absent": 8228,
+   "digest_form": 7915,
+   "receipt_author_minted": 7581,
+   "empty_span": 6761,
+   "receipt_not_json": 5574,
+   "no_repository": 5480,
+   "kind_of_source_unknown": 3767,
+   "needle_empty": 3191,
+   "anchor_out_of_range": 2601,
+   "manifest_id_missing": 2592,
+   "unclosed": 2509,
+   "leaf_not_scalar": 2387,
+   "needle_missing": 1941,
+   "short_needle": 1233,
+   "digest_mismatch": 1136,
+   "manifest_bytes_absent": 1125,
+   "leaf_not_string": 238,
+   "value_mismatch": 224,
+   "manifest_no_completeness": 141,
+   "leaf_not_numeric": 100,
+   "needle_present": 46,
+   "pointer_ambiguous": 19
+  },
+  "document_malformed": {
+   "unbalanced_fences": 15806,
+   "invalid_utf8": 1531
+  },
+  "kinds": {
+   "numeric": 89141,
+   "quote": 88917,
+   "absent": 59853,
+   "hash": 59536,
+   "None": 27363,
+   "": 14983,
+   "exec": 14933,
+   "Numeric": 14814,
+   "numeri c": 14751
+  }
+ },
+ "disagreements": [],
+ "disagreements_total": 0,
+ "reading": "agreement here is agreement on inputs nobody chose, which is strictly more than agreement on the conformance vectors and strictly less than correctness: both implementations may be wrong in the same way, and the same hands wrote both."
+}
