@@ -96,6 +96,41 @@ def _rng(seed: int, index: int) -> random.Random:
     return random.Random("%d:%d" % (seed, index))
 
 
+# --- APERTURE_ALPHABET -------------------------------------------------------------------------
+# The generator's reachable alphabet was measured at 98 code points, SEVEN of them non-ASCII, while
+# every character-level defect the 2026-09-06 audit found lay outside it: the dashes that dropped a
+# minus sign, U+202E which reverses a number for the reader, U+0085 which split the two verifiers on
+# a document verdict. "100000 agree, 0 disagree" was true of a 98-character alphabet and was read as
+# a statement about the implementations. This is the repair.
+#
+# WHY THESE AND NOT EVERY CHARACTER. A generator emitting a code point the two RUNTIMES classify
+# differently — CPython is on Unicode 15.0.0 here, V8's ICU on 16.0 — would make this harness red for
+# a mismatch no edit to either implementation can fix, turning a defect detector into a runtime
+# detector. Every code point below was checked against conformance/sworn/class_census.py: all 68 are
+# classified identically by both. See FINDING_unicode_version_skew_2026_09_06.md.
+_APERTURE_DASHES = [0x002D, 0x00AD, 0x058A, 0x05BE, 0x1400, 0x1806, 0x2010, 0x2011, 0x2012, 0x2013,
+                    0x2014, 0x2015, 0x2212, 0x2E17, 0x2E1A, 0x2E3A, 0x2E3B, 0x2E40, 0x2E5D, 0x301C,
+                    0x3030, 0x30A0, 0xFE31, 0xFE32, 0xFE58, 0xFE63, 0xFF0D]
+_APERTURE_FORMAT = [0x200B, 0x200C, 0x200D, 0x200E, 0x200F, 0x202A, 0x202B, 0x202C, 0x202D, 0x202E,
+                    0x2066, 0x2067, 0x2068, 0x2069, 0xFEFF]
+_APERTURE_SPACE = [0x0085, 0x00A0, 0x1680, 0x2000, 0x2007, 0x200A, 0x2028, 0x2029, 0x202F, 0x205F,
+                   0x3000, 0x000B, 0x000C]
+_APERTURE_MARKS = [0x0300, 0x0301, 0x0334, 0x0489, 0x20E3]
+_APERTURE_DIGITS = [0x0660, 0x06F0, 0x0966, 0x1040, 0xFF10, 0x1D7CE, 0x2070, 0x00B2]
+APERTURE_ALPHABET = [chr(c) for c in (_APERTURE_DASHES + _APERTURE_FORMAT + _APERTURE_SPACE
+                                      + _APERTURE_MARKS + _APERTURE_DIGITS)]
+
+
+def _sprinkle(s: str, r: random.Random, p: float) -> str:
+    """Splice APERTURE_ALPHABET characters into a string, with probability p."""
+    if not s or r.random() >= p:
+        return s
+    out = list(s)
+    for _ in range(r.randint(1, 3)):
+        out.insert(r.randrange(len(out) + 1), r.choice(APERTURE_ALPHABET))
+    return "".join(out)
+
+
 def _number_sentence(r: random.Random) -> str:
     n = r.choice(NUMBERS)
     body = " ".join(r.choice(WORDS) for _ in range(r.randint(0, 4)))
@@ -134,8 +169,10 @@ def _inner_for(kind: str, r: random.Random) -> str:
 
 def _span(r: random.Random) -> str:
     kind = r.choice(KINDS)
-    receipt = r.choice(RECEIPTS)
+    receipt = _sprinkle(r.choice(RECEIPTS), r, 0.12)      # APERTURE: reaches receipt_form, U+0085
     inner = _inner_for(kind if kind in ("numeric", "quote", "hash", "absent") else "numeric", r)
+    inner = _sprinkle(inner, r, 0.22)                     # APERTURE: reaches the dash and override
+                                                         # rules, and the needle/number tokenizers
     if r.random() < 0.02:
         inner = inner * r.randint(20, 60)              # over the code-point cap
     opener = '<sworn r="%s" k="%s">' % (receipt, kind)
