@@ -1,5 +1,23 @@
 [
  {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: sig does not verify against the log public key"
+  },
+  "family": "sth",
+  "id": "060e8c70ce98f3e57bac2fd4c033589da77989e04a333a59e9a3c0d924a69aa1",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "4ccf6160b2d159144b525f1e0a9b60824855b226c4db5c8c010b93f9fa3fffb0"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
   "entrypoint": "log.verify_consistency",
   "expect": {
    "ok": false,
@@ -309,22 +327,21 @@
   ]
  },
  {
-  "entrypoint": "log.verify_inclusion",
+  "entrypoint": "log.verify_sth",
   "expect": {
    "ok": false,
    "outcome": "verified",
-   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+   "reason": "sth: log_id 'sha256:efaa09f44aa8f5572dacded2b3fc48ea9299073e71e7d8b8824c6d9015dc5e55' is not this key's log_id"
   },
   "family": "sth",
-  "id": "351eeb99ad9d3064797fcf8303122970c1640d6f205820b768660cdb36ef024e",
+  "id": "38662539ad65e7aa818ad7021e5dad82fddeae69e7251241e3bdd4c77daf18f8",
   "inputs": {
-   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
-   "op": "verify_inclusion",
-   "proof": "85ab40e3a912107d3907e6e86c01dced618a3bf7f9ae385899d6be9a458ba221",
-   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+   "log_public": "38dd83d9d35779b21d30a92d4648bd67df92c64f1f6bacb91094094f7eae29f5",
+   "op": "verify_sth",
+   "sth": "0a155a0d26c98ac7bb41712794719fadde6c44f2735618ffbd0d874b83dae95e"
   },
   "sources": [
-   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {
@@ -915,24 +932,6 @@
   ]
  },
  {
-  "entrypoint": "log.verify_sth",
-  "expect": {
-   "ok": false,
-   "outcome": "verified",
-   "reason": "sth: log_id 'sha256:efaa09f44aa8f5572dacded2b3fc48ea9299073e71e7d8b8824c6d9015dc5e55' is not this key's log_id"
-  },
-  "family": "sth",
-  "id": "8c065ff81082842cb038077052dfa75b611961e6bc3a94e84760fecb411fb656",
-  "inputs": {
-   "log_public": "38dd83d9d35779b21d30a92d4648bd67df92c64f1f6bacb91094094f7eae29f5",
-   "op": "verify_sth",
-   "sth": "b9da8f74997a6fc8963261bbb309b6a16a791aac22eb3763d25aec14c48bd102"
-  },
-  "sources": [
-   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
-  ]
- },
- {
   "entrypoint": "log.verify_inclusion",
   "expect": {
    "ok": true,
@@ -949,24 +948,6 @@
   },
   "sources": [
    "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
-  ]
- },
- {
-  "entrypoint": "log.verify_sth",
-  "expect": {
-   "ok": false,
-   "outcome": "verified",
-   "reason": "sth: sig does not verify against the log public key"
-  },
-  "family": "sth",
-  "id": "8eed6577290c0fba150f20ca51ef6e68941f71618607f1caee08cd2750f605a0",
-  "inputs": {
-   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
-   "op": "verify_sth",
-   "sth": "ee070ddb0afb5be424d633bf2265903d34674e729eb86e3e2646cb1c63d58240"
-  },
-  "sources": [
-   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {
@@ -1342,19 +1323,19 @@
  {
   "entrypoint": "log.verify_sth",
   "expect": {
-   "ok": true,
+   "ok": false,
    "outcome": "verified",
-   "reason": "ok"
+   "reason": "sth: sig does not verify against the log public key"
   },
   "family": "sth",
-  "id": "ae35bd1294c8b4c3234707c376c7dcc24357504e4cc9ff93e8271141c8fb11db",
+  "id": "b7acd7f95dd913b5eada484e9cb42be569ad808e6a56fe59922f70f9dfa264de",
   "inputs": {
    "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
    "op": "verify_sth",
-   "sth": "b9da8f74997a6fc8963261bbb309b6a16a791aac22eb3763d25aec14c48bd102"
+   "sth": "2f6d6dfc9b9bd3cb81030d2df9ada3115378c1aaf0888465273cd038bb589c1e"
   },
   "sources": [
-   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies"
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {
@@ -1462,19 +1443,19 @@
  {
   "entrypoint": "log.verify_sth",
   "expect": {
-   "ok": false,
+   "ok": true,
    "outcome": "verified",
-   "reason": "sth: sig does not verify against the log public key"
+   "reason": "ok"
   },
   "family": "sth",
-  "id": "d019618753539cdf32002e0e10a9fc3b084ef1fbf9a352f5889663b939d68342",
+  "id": "c6cf724ba465db464b6ba5d5824d8aa96ab2d2ad024aa1889178d56c54565d0a",
   "inputs": {
    "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
    "op": "verify_sth",
-   "sth": "d19a3f9503671d3237b4fb19792404200e120d1607c6bae25197a598ab938ca2"
+   "sth": "0a155a0d26c98ac7bb41712794719fadde6c44f2735618ffbd0d874b83dae95e"
   },
   "sources": [
-   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies"
   ]
  },
  {
@@ -1592,24 +1573,6 @@
   ]
  },
  {
-  "entrypoint": "log.verify_sth",
-  "expect": {
-   "ok": false,
-   "outcome": "verified",
-   "reason": "sth: unexpected field 'note'"
-  },
-  "family": "sth",
-  "id": "d7da3e16e52f987eccce52ec3e8a399562383121f8abee38dbd9998c58488564",
-  "inputs": {
-   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
-   "op": "verify_sth",
-   "sth": "1db003973d41d5b4432347fa601387ec5b4b71abcf6af83b6e7e028d7e36726b"
-  },
-  "sources": [
-   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
-  ]
- },
- {
   "entrypoint": "log.verify_consistency",
   "expect": {
    "ok": true,
@@ -1672,6 +1635,24 @@
   },
   "sources": [
    "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: unexpected field 'note'"
+  },
+  "family": "sth",
+  "id": "df43d64830f77bd951bf97b4023de402434ccc23c7eea189a392b2c40b8413d9",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "159a3e7880ea24508813cc5a295ff3c9febfae4aa68ba83c1aa657ac5cf3453b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {

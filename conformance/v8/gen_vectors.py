@@ -19,8 +19,31 @@ implementation rather than a reason to rewrite the set:
 * **A vector that will not replay.** Every vector is replayed through `replay.py` before anything
   is written, so a set that ships is a set that reproduces on the machine that made it.
 
-Vectors that the run no longer produces are NOT a refusal -- a test may legitimately be rewritten --
-but every dropped id is printed, so the loss is visible in the terminal and in the diff.
+Vectors the run no longer produces are classified rather than counted, because "dropped" hides two
+different events. Every dropped vector is replayed against the tree that dropped it:
+
+* it still reproduces -> **input churn**. The sources stopped making that call; the address went
+  away with the call. This is an ordinary retirement and needs no permission.
+* it does not reproduce -> **a behaviour change**, wearing a drop's clothes. The tree answers
+  differently on inputs the set had pinned; the address changed only because the repair that moved
+  the behaviour also touched the fixture. This is a moved core and is refused like one.
+* it cannot be replayed at all -> **undiagnosed**, and it is refused rather than assumed benign.
+
+## Retiring a moved core, with a reason
+
+A behaviour change can be deliberate. When it is, the operator resolves it in the tool by naming
+the ids -- never a flag that retires whatever moved:
+
+    python conformance/v8/gen_vectors.py \
+        --retire <id> --reason "subject.environment became required (ENV-ABSENT)" \
+        --retire <id> --reason "body.runs became required on a noise plan (A-NORUNS)"
+
+`--retire` and `--reason` are positional pairs: an id with no reason is refused, a reason with no
+id is refused, and an id that did not move in this run is refused. Each retirement is written into
+`index.provenance.retired.with_reason` beside the old outcome, the new one, the sources that
+produced it and the operator's reason, and that ledger is carried forward by later runs -- a
+retirement is a record, not a switch. Ordinary retirements sit in `retired.input_churn` in the same
+block, so the two are never confused for one another when the set is diffed.
 
 Nothing here has a clock. The set is a function of the sources and of `styxx.v8`, so two runs on
 two machines produce the same bytes, and `--check` is a real comparison rather than a timestamp.
@@ -37,7 +60,7 @@ import sys
 import tempfile
 from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Tuple
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -267,8 +290,13 @@ def unvectored(vectors: Dict[str, dict]) -> dict:
 # --------------------------------------------------------------------------- writing
 
 
-def build(records: List[dict]) -> Tuple[dict, Dict[str, bytes], Dict[str, dict]]:
-    """Records -> (index, {relative path: bytes}, vectors by id). Replays before returning."""
+def build(records: List[dict], retired: Optional[dict] = None
+          ) -> Tuple[dict, Dict[str, bytes], Dict[str, dict]]:
+    """Records -> (index, {relative path: bytes}, vectors by id). Replays before returning.
+
+    `retired` is the `provenance.retired` ledger; it sits outside `set_sha256` with the rest of
+    the provenance, so recording a retirement never changes the identity of the set.
+    """
     vectors, all_blobs, skipped, unvectored_sources = fold(records)
     blobs = reachable_blobs(vectors, all_blobs)
 
@@ -341,6 +369,8 @@ def build(records: List[dict]) -> Tuple[dict, Dict[str, bytes], Dict[str, dict]]
         "tooling": {p: _sha_file(ROOT / p) for p in TOOLING},
         "sources": {p: _sha_file(ROOT / p) for p in SOURCES},
         "replay": {f: counts.get(f, {}) for f in FAMILIES},
+        "retired": retired if retired is not None
+        else {"note": LEDGER_NOTE, "with_reason": [], "input_churn": []},
     }
     files["index.json"] = _dump(index)
     return index, files, vectors
@@ -355,29 +385,221 @@ def committed(directory: Path) -> Dict[str, dict]:
     return out
 
 
-def compare_to_committed(old: Dict[str, dict], new: Dict[str, dict]) -> List[str]:
-    """The moved cores: ids in both whose outcome changed. Prints the additions and the drops."""
-    moved: List[str] = []
+def moved_cores(old: Dict[str, dict], new: Dict[str, dict]) -> List[dict]:
+    """Ids in both sets whose outcome changed: the same address, a different answer."""
+    rows: List[dict] = []
     for vid, vector in sorted(new.items()):
         was = old.get(vid)
         if was is None:
             continue
         if canonical_bytes(was.get("expect")) != canonical_bytes(vector["expect"]):
-            moved.append(
-                "  %s (%s)\n    was      %s\n    this run %s\n    sources  %s"
-                % (vid, vector["entrypoint"],
-                   json.dumps(was.get("expect"), sort_keys=True)[:300],
-                   json.dumps(vector["expect"], sort_keys=True)[:300],
-                   ", ".join(vector["sources"]))
+            rows.append({
+                "id": vid,
+                "kind": "moved-core",
+                "entrypoint": vector["entrypoint"],
+                "was": was.get("expect"),
+                "now": vector["expect"],
+                "sources": list(vector["sources"]),
+            })
+    return rows
+
+
+def classify_drops(
+    old: Dict[str, dict], new: Dict[str, dict], blobs: Dict[str, str]
+) -> List[dict]:
+    """Every id the run no longer produces, replayed against the tree that dropped it.
+
+    "Dropped" is one word for two events. A vector whose call a test simply stopped making still
+    reproduces -- the sources moved, `styxx.v8` did not -- and that is input churn. A vector that
+    no longer reproduces is a behaviour change that happens to have taken its address with it,
+    because the repair that moved the answer also touched the fixture the address is computed
+    from; printing that as a drop would lose exactly the finding a moved core is refused for.
+    """
+    rows: List[dict] = []
+    for vid in sorted(set(old) - set(new)):
+        vector = old[vid]
+        row = {
+            "id": vid,
+            "entrypoint": vector.get("entrypoint"),
+            "was": vector.get("expect"),
+            "sources": list(vector.get("sources") or []),
+        }
+        try:
+            got = R.replay(vector, blobs)
+        except R.ReplayError as exc:
+            row["kind"] = "undiagnosed"
+            row["now"] = None
+            row["detail"] = "the dropped vector cannot be replayed: %s" % exc
+        else:
+            if R.agrees(vector.get("expect"), got):
+                row["kind"] = "input-churn"
+                row["now"] = got
+                row["detail"] = "it still reproduces: the sources stopped making this call"
+            else:
+                row["kind"] = "behaviour-change"
+                row["now"] = got
+                row["detail"] = R.difference(vector.get("expect"), got)
+        rows.append(row)
+    return rows
+
+
+#: What each drop kind means, printed once per run above the ids so the terminal says which
+#: event happened rather than one word for all three.
+DROP_KINDS = {
+    "input-churn": "they still reproduce; the sources stopped making the call",
+    "behaviour-change": "they no longer reproduce; styxx.v8 answers differently and the address "
+                        "left with the fixture",
+    "undiagnosed": "they cannot be replayed at all, so neither reading is available",
+}
+
+
+def format_move(row: dict) -> str:
+    """One moved address, both outcomes and the tests that reach it."""
+    return (
+        "  %s (%s, %s)\n    was      %s\n    this run %s\n    sources  %s"
+        % (row["id"], row["entrypoint"], row["kind"],
+           json.dumps(row["was"], sort_keys=True)[:300],
+           json.dumps(row["now"], sort_keys=True)[:300],
+           ", ".join(row["sources"]) or "(none)")
+    )
+
+
+def compare_to_committed(old: Dict[str, dict], new: Dict[str, dict]) -> List[str]:
+    """The moved cores as printable lines. Kept as the narrow question -- did an address that
+    survived change its answer -- for callers that do not have the blob store to classify drops."""
+    return [format_move(row) for row in moved_cores(old, new)]
+
+
+# --------------------------------------------------------------------------- retirement
+
+
+def retirement_plan(retire: List[str], reason: List[str]) -> Dict[str, str]:
+    """`--retire`/`--reason` as `{id: reason}`, or a refusal.
+
+    The pairs are positional and both halves are required. There is deliberately no flag that
+    means "retire whatever moved": an operator who cannot name the address has not looked at it.
+    """
+    retire = list(retire or [])
+    reason = list(reason or [])
+    if len(retire) != len(reason):
+        raise SystemExit(
+            "REFUSED: %d --retire and %d --reason. They are positional pairs, and a retirement "
+            "with no reason is the override this path exists to avoid."
+            % (len(retire), len(reason))
+        )
+    plan: Dict[str, str] = {}
+    for vid, why in zip(retire, reason):
+        vid = vid.strip().lower()
+        if not vid:
+            raise SystemExit("REFUSED: --retire needs the id of a vector, not an empty string")
+        if not (why or "").strip():
+            raise SystemExit("REFUSED: --retire %s carries an empty reason; say what changed "
+                             "and why the change is deliberate" % vid)
+        if vid in plan:
+            raise SystemExit("REFUSED: --retire %s given twice, with two reasons; one address "
+                             "moved once in this run" % vid)
+        plan[vid] = why.strip()
+    return plan
+
+
+def apply_retirements(
+    plan: Dict[str, str], moved: List[dict], drops: List[dict]
+) -> Tuple[List[dict], List[str], List[str]]:
+    """`(rows to record, addresses that moved and were not named, reasons to refuse a name)`.
+
+    Every address whose answer changed must be named, and every named address must have changed.
+    A drop that still reproduces is an ordinary retirement and cannot be laundered through this
+    path: naming one is refused, so the reason recorded beside a retired core is always a reason
+    about `styxx.v8` and never about a test that moved.
+    """
+    changed = {row["id"]: row for row in moved}
+    for row in drops:
+        if row["kind"] in ("behaviour-change", "undiagnosed"):
+            changed[row["id"]] = row
+    churn = {row["id"] for row in drops if row["kind"] == "input-churn"}
+
+    refusals: List[str] = []
+    for vid in sorted(plan):
+        if vid in changed:
+            continue
+        if vid in churn:
+            refusals.append(
+                "  %s is an ordinary retirement: it still reproduces against this tree, so the "
+                "sources stopped making the call and nothing about styxx.v8 moved. It needs no "
+                "reason and cannot carry one." % vid
             )
-    added = sorted(set(new) - set(old))
-    dropped = sorted(set(old) - set(new))
-    if added:
-        print("  %d vectors added" % len(added))
-    for vid in dropped:
-        print("  DROPPED %s (%s) -- the run no longer produces it"
-              % (vid, old[vid].get("entrypoint")))
-    return moved
+        else:
+            refusals.append(
+                "  %s did not move in this run: no committed vector at that address changed its "
+                "answer or disappeared." % vid
+            )
+    unnamed = sorted(set(changed) - set(plan))
+
+    recorded = [
+        dict(changed[vid], reason=plan[vid], detail=changed[vid].get("detail"))
+        for vid in sorted(plan)
+        if vid in changed
+    ]
+    return recorded, unnamed, refusals
+
+
+LEDGER_NOTE = (
+    "Both halves are ledgers: every run carries the previous one forward, because a run that "
+    "recorded only its own diff would erase the record on the very next regeneration. "
+    "with_reason: an address whose ANSWER changed and whose old answer an operator retired on "
+    "purpose, naming the id and giving the reason; the row carries the old outcome, the new one, "
+    "the sources that produced it and the reason. input_churn: an address the sources stopped "
+    "producing whose old vector still reproduced against the tree that dropped it -- an ordinary "
+    "retirement, no permission asked and none given, so the row carries the address alone. An id "
+    "the sources produce again leaves input_churn; nothing leaves with_reason. The two are never "
+    "merged: one word for both would hide a behaviour change behind a rewritten test."
+)
+
+#: The fields of a with-reason row, so a carried-forward row and a new one have the same shape.
+LEDGER_FIELDS = ("id", "kind", "entrypoint", "was", "now", "sources", "reason", "detail")
+
+
+def _ledger_key(row: Mapping) -> str:
+    return hashlib.sha256(canonical_bytes(
+        {"id": row.get("id"), "was": row.get("was"), "now": row.get("now")}
+    )).hexdigest()
+
+
+def retirement_ledger(previous: Optional[dict], recorded: List[dict], drops: List[dict],
+                      current: Optional[Iterable[str]] = None) -> dict:
+    """`provenance.retired`: both ledgers, this run's rows appended to the committed set's.
+
+    `current` is the addresses this run produced. An id in it is not retired, whatever an earlier
+    run recorded, so a call a test brings back leaves `input_churn` rather than sitting in the
+    ledger contradicting the vectors beside it.
+    """
+    previous = previous or {}
+    live = set(current or ())
+
+    rows: List[dict] = []
+    seen: set = set()
+    for row in list(previous.get("with_reason") or []) + list(recorded):
+        clean = {field: row.get(field) for field in LEDGER_FIELDS}
+        key = _ledger_key(clean)
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append(clean)
+
+    churn: Dict[str, dict] = {}
+    for row in list(previous.get("input_churn") or []) + [
+        r for r in drops if r["kind"] == "input-churn"
+    ]:
+        vid = row.get("id")
+        if vid in live:
+            continue
+        churn[vid] = {"id": vid, "entrypoint": row.get("entrypoint")}
+
+    return {
+        "note": LEDGER_NOTE,
+        "with_reason": rows,
+        "input_churn": [churn[vid] for vid in sorted(churn)],
+    }
 
 
 def main(argv=None) -> int:
@@ -387,11 +609,17 @@ def main(argv=None) -> int:
     parser.add_argument("--replay", action="store_true",
                         help="replay the committed set instead of regenerating it")
     parser.add_argument("--dir", default=str(HERE))
+    parser.add_argument("--retire", action="append", default=[], metavar="ID",
+                        help="retire the committed answer at this address; pair it with --reason")
+    parser.add_argument("--reason", action="append", default=[], metavar="TEXT",
+                        help="why the change at the preceding --retire is deliberate")
     args = parser.parse_args(argv)
 
     directory = Path(args.dir).resolve()
     if args.replay:
         return R.main(["--dir", str(directory)])
+
+    plan = retirement_plan(args.retire, args.reason)
 
     with tempfile.TemporaryDirectory() as td:
         records = record(SOURCES, Path(td) / "records.jsonl")
@@ -400,13 +628,48 @@ def main(argv=None) -> int:
           % (index["vectors"], index["blobs"]["count"], index["set_sha256"]))
 
     old = committed(directory)
+    ledger: Optional[dict] = None
     if old:
-        moved = compare_to_committed(old, vectors)
-        if moved:
-            print("REFUSED: %d committed vector(s) now carry a different outcome:\n%s"
-                  % (len(moved), "\n".join(moved)), file=sys.stderr)
-            print("A moved core is a finding about styxx.v8. Nothing was written.", file=sys.stderr)
+        moved = moved_cores(old, vectors)
+        drops = classify_drops(old, vectors, R.load_blobs(directory))
+        added = sorted(set(vectors) - set(old))
+        if added:
+            print("  %d vectors added" % len(added))
+        by_kind = Counter(row["kind"] for row in drops)
+        for kind in ("input-churn", "behaviour-change", "undiagnosed"):
+            if by_kind.get(kind):
+                print("  %d dropped: %s" % (by_kind[kind], DROP_KINDS[kind]))
+        for row in drops:
+            print("  DROPPED %s (%s) -- %s: %s"
+                  % (row["id"], row["entrypoint"], row["kind"], row["detail"]))
+
+        recorded, unnamed, refusals = apply_retirements(plan, moved, drops)
+        if refusals:
+            print("REFUSED: --retire names %d address(es) that this run cannot retire:\n%s"
+                  % (len(refusals), "\n".join(refusals)), file=sys.stderr)
+            print("Nothing was written.", file=sys.stderr)
             return 1
+        if unnamed:
+            rows = {row["id"]: row for row in moved + drops}
+            print("REFUSED: %d committed vector(s) now carry a different outcome:\n%s"
+                  % (len(unnamed), "\n".join(format_move(rows[vid]) for vid in unnamed)),
+                  file=sys.stderr)
+            print("A moved core is a finding about styxx.v8. Nothing was written.\n"
+                  "If the change is deliberate, retire each address by name and say why:\n"
+                  "  --retire %s --reason \"...\"" % unnamed[0], file=sys.stderr)
+            return 1
+        for row in recorded:
+            print("  RETIRED %s (%s) -- %s" % (row["id"], row["kind"], row["reason"]))
+        previous = {}
+        try:
+            previous = (R.load_index(directory).get("provenance") or {}).get("retired") or {}
+        except R.ReplayError:
+            pass
+        ledger = retirement_ledger(previous, recorded, drops, current=vectors)
+        # Provenance sits outside `set_sha256`, so the ledger is written into the index that was
+        # already built and digested rather than costing a second replay of the whole set.
+        index["provenance"]["retired"] = ledger
+        files["index.json"] = _dump(index)
 
     if args.check:
         was = None

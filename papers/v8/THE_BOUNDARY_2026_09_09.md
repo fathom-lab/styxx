@@ -86,18 +86,62 @@ that was merely unaddressed — and it survived the writing of the document, the
 specification amendment that contradicted it, and a public summary of both. It was found only
 because the adversary was asked to disbelieve the conclusion, which nobody does by default.
 
-The roster, corrected, has **three** members, each re-confirmed by that pass:
+**SECOND CORRECTION, same day, same error.** A fifth pass was asked to attack the corrected roster
+on the grounds that an error present once is likely present twice. It was. **Member 3 — the
+repository and revision read off a directory name — is also reachable**, by exactly the test that
+reclassified the environment member: another logged cert already carries the same information and
+nothing compares them. Beside `hf_repo` and `revision` in the same subject sit the Appendix A.2
+hashes over the snapshot's actual bytes. The predicate *"across the entries of one log, one
+(hf_repo, revision) names one set of content hashes, and one set of content hashes names one
+(hf_repo, revision)"* is a predicate over bytes already on disk, is not implemented, and both halves
+were demonstrated: the same `weights_sha256` under two revisions appends, and the same revision
+under two weights hashes appends.
 
-1. The batch labels written alongside the recipe meant to corroborate them, both halves signed by
-   one party.
-2. The choice of which run becomes the baseline — still unreachable, but no longer *silent*: the
-   `baseline_gap` quantity now reports it, which is this document's own prescription ("class two is
-   a disclosure") implemented for a member while it was still filed under reachable-by-nothing.
-3. The repository and revision, read off a directory name by a method that describes itself as
-   all-observed.
+The adversary's own caveat is the honest part, and it is why this reclassification is forced rather
+than optional: that predicate does not *fully* close member 3, because renaming the directory once
+makes every cert tell the same lie consistently. But that is exactly as true of the environment
+member, and this lab counted that one as class one. By the standard the lab itself applied, member 3
+belongs in the backlog.
 
-The general form survives the correction. The count did not, and the count was stated with more
-confidence than the evidence carried.
+**The roster is now two members.** It has shrunk at every pass that attacked it: four, then three,
+then two. That trend is the finding, and it should be read as a warning about this document rather
+than a record of progress. Each member was placed in class two by an argument that felt conclusive
+when written, and two of the four did not survive an adversary told to disbelieve it. The correct
+inference is that **the burden of proof for "no check can reach this" is much higher than the burden
+this document originally applied**, and that the remaining two should be assumed reachable until
+someone has tried and failed to reach them, rather than the reverse.
+
+A separate correction to this document, of a different kind. It credited member 2 with a mitigation:
+*"still unreachable, but no longer silent — the `baseline_gap` quantity now reports it."* That
+sentence is false. The previous-comparable lookup never excludes the appending cert's own floor runs:
+verified directly on this lab's published verdict, where the lookup for the canonical fingerprint
+returns entry 5, which is that canonical's own run 4. A fresh append would therefore measure the
+canonical against one of its own floor runs and call the result a baseline gap. (The stored entries
+carry no `baseline_gap` at all, because the log predates the field, so nothing in the published
+bytes announces anything — the defect is in what the code would now compute, not in what that log
+says.) the honest and dishonest cases produce the same shape; and the announcement is
+pairwise, so a staged move publishes nothing cumulative. The member's classification stands. The
+claim that it is disclosed does not, and a quantity that announces an event that did not occur is a
+false accusation of the same species as the tamper report repaired earlier today.
+
+The roster, corrected **twice**, and to be read as provisional:
+
+1. **The batch labels written alongside the recipe meant to corroborate them**, both halves signed
+   by one party. Re-confirmed at every pass: five byte-identical bodies wearing five batch labels
+   produce the same bytes and the same census as five real runs that agreed exactly.
+2. **The choice of which run becomes the baseline.** Classification stands; the mitigation this
+   document credited it with does not, and is withdrawn above.
+
+The environment member and the repository-and-revision member were both moved to class one after
+being placed here, each by an adversary asked to disbelieve the claim.
+
+The general form survives both corrections: a check on bytes an issuer wrote can only ask whether
+that party contradicted itself. What did not survive is this document's confidence about *which*
+defects have that shape. Twice, a defect was called unreachable when another logged cert already
+carried the information that would have caught it and nothing compared them. That is not a subtle
+failure mode; it is the first thing to check, and it was missed twice by the same author in one
+day. A reader should treat the two members above as claims awaiting a serious attempt to refute
+them, not as established results.
 
 The practical difference between the classes is what a reader should do about them. Class one is a
 backlog. Class two is a disclosure: it belongs in the output beside the verdict, not in a limits

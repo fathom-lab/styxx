@@ -102,6 +102,40 @@
   "expect": {
    "exit_code": 3,
    "mismatched": [
+    "cert.type:'fingerprint' vs 'prereg'"
+   ],
+   "outcome": "outcome",
+   "result_sha256": "1217f2e26e38443f704de063b46709ac4a984df8fcfedd6b1582dd81826bfad7",
+   "verdict": "mismatch"
+  },
+  "family": "exit",
+  "id": "2815f5feddab445872196e3b1a04b05eaca25ccfc0ee070726f553911ed0e1a8",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "97a6152587b2eef8ffc17ac95f316f234f480254a043f6aac7080f1e061dfee7",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 3,
+   "mismatched": [
     "recipe.battery"
    ],
    "outcome": "outcome",
@@ -299,40 +333,6 @@
   },
   "sources": [
    "tests/test_v8_verify.py::test_an_unknown_resolver_kind_is_refused"
-  ]
- },
- {
-  "entrypoint": "verify.diff",
-  "expect": {
-   "exit_code": 3,
-   "mismatched": [
-    "cert.type:'fingerprint' vs 'prereg'"
-   ],
-   "outcome": "outcome",
-   "result_sha256": "0440882ee0321d0f34b5f163eafb88a72b5bea3f2286cc86925289e580ab7946",
-   "verdict": "mismatch"
-  },
-  "family": "exit",
-  "id": "bcc66e041c427c415d00ffb57228d611657126864cad292567d4b32ea3d3dbde",
-  "inputs": {
-   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
-   "b": "5a7a57c9edba817e95a70ce09b5c19cac1e98e3f5c3bb06d3f343e50e7eb76bd",
-   "resolver": {
-    "answers": {
-     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
-     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
-     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
-     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
-     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
-     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
-     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
-     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
-    },
-    "kind": "resolving"
-   }
-  },
-  "sources": [
-   "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
   ]
  },
  {

@@ -12,7 +12,7 @@ Every count lives in `index.json` and `mutation_coverage.json`; none is written 
 | `vectors/<family>.json` | one file per family, vectors sorted by id |
 | `blobs.json` | every value a vector names, keyed by sha256, base64 of its RFC 8785 canonical bytes |
 | `recorder.py` | the pytest plugin that turns every call into a `styxx.v8` entrypoint into a record while the sources run |
-| `gen_vectors.py` | runs the sources under the recorder, folds the records into vectors, replays every one, refuses a moved core, writes the set |
+| `gen_vectors.py` | runs the sources under the recorder, folds the records into vectors, replays every one, classifies every drop, refuses a moved core unless the operator retires it by name with a reason, writes the set |
 | `replay.py` | replays one vector through `styxx.v8`; the reference for what a second implementation does, entrypoint by entrypoint |
 | `mutation_catalogue.json` | localised edits to the implementation, each with the behaviour it breaks, plus semantics-preserving controls |
 | `mutation_coverage.py` | applies each edit to a scratch copy, monkeypatches it over the real module, replays the committed set, and reports what the set saw |
@@ -76,9 +76,59 @@ python conformance/v8/gen_vectors.py --check    # regenerate in memory; exit 1 i
 The generator loads the committed set before it writes. A vector already in the set whose outcome
 differs from what the run produced is a moved core: the generator prints its id, both outcomes and
 the tests that produced it, and exits without writing anything. A moved core is a finding about
-`styxx.v8`, never a reason to rewrite the set. Vectors are only ever added, or dropped with notice
-— every id the run no longer produces is printed — and the set digest changes only in a commit that
-says why.
+`styxx.v8`, never a reason to rewrite the set. The set digest changes only in a commit that says
+why.
+
+**Every drop is classified, because "dropped" was one word for two events.** An id the run no
+longer produces is replayed against the tree that dropped it:
+
+* it still reproduces → **input churn**. The sources stopped making that call and the address left
+  with it; nothing about `styxx.v8` moved. An ordinary retirement, no permission asked.
+* it does not reproduce → **a behaviour change wearing a drop's clothes**, and it is refused
+  exactly like a moved core. The address changed only because the repair that moved the answer
+  also touched the fixture the address is computed from. This is not hypothetical: on 2026-09-09
+  five of the six answers that moved left through this door, and a generator that printed one word
+  for both would have lost all five in a list of drops.
+* it cannot be replayed at all → **undiagnosed**, and it is refused rather than assumed benign.
+
+### Retiring a moved core, with a reason
+
+A behaviour change can be deliberate — a repair closes an attack, and a vector that pinned the
+acceptance the attack used is now a record of a defect. Deciding that is the operator's, so it is
+resolved in the tool rather than by hand or by an override:
+
+```
+python conformance/v8/gen_vectors.py \
+  --retire <id> --reason "ENV-ABSENT: subject.environment became required ..." \
+  --retire <id> --reason "A-NORUNS: body.runs became required on a noise plan ..."
+```
+
+The shape of the path is what keeps it from becoming an override:
+
+* **The ids are named.** There is no flag meaning "retire whatever moved". An operator who cannot
+  name the address has not looked at it.
+* **A reason is required, per id.** `--retire` and `--reason` are positional pairs; an id with no
+  reason, a reason with no id, or an id given twice is refused before the sources are even run.
+* **Only an address that actually moved can be retired.** Naming an input-churn drop is refused —
+  it needs no reason and cannot carry one — as is naming an address that did not move at all. So
+  the reason recorded beside a retired core is always a reason about `styxx.v8`, never about a
+  test that was rewritten.
+* **A moved core nobody named is still a refusal**, with the same message and the same exit code
+  as before this path existed.
+* **The retirement is recorded, not just permitted.** `index.provenance.retired.with_reason`
+  carries the id, the old outcome, the new one, the sources that produced it, the diagnosis and
+  the operator's reason. Ordinary retirements sit in `retired.input_churn` in the same block,
+  carrying the address alone: the two are never merged. Both halves are ledgers — every run
+  carries the previous one forward, or the record would be erased by the next regeneration — and
+  an address the sources start producing again leaves `input_churn`, while nothing leaves
+  `with_reason`. The whole block is provenance, outside `set_sha256`: recording a retirement does
+  not change the identity of the set.
+
+The limit, stated rather than papered over: the tool checks that a reason is **present**, never
+that it is **true**. It can prove which address moved, from what to what, and that a human named it
+before it was written; it cannot tell a repair from a regression, and a wrong reason recorded here
+is a wrong reason recorded durably. What it removes is the silent case — an answer that changed
+with nobody's name on it — and that is all it removes.
 
 The generator has no clock and reads no git. The set is a function of the sources and of the
 implementation, so two runs on two machines produce the same bytes and `--check` is a real
@@ -221,6 +271,79 @@ drops and 648 additions.
   receipt now describes a tree that no longer exists.
 * **The drop notice is still weaker than the refusal, and the split still has to be run by hand.**
   147 to 5 here, 84 to 5 this morning. Consequence 3 of the finding paper is unchanged and owed.
+
+## The regeneration that did write, later on 2026-09-09
+
+The decision the section above says is owed was taken: the six answers that moved were retired by
+name, each with the repair that moved it, through the new `--retire`/`--reason` path. The set was
+regenerated and `conformance/v8/` was rewritten by the generator. Nothing was hand-edited, no
+exception list was added, no schema was weakened, and the refusal is untouched — a run of
+`gen_vectors.py` with no flags still refuses on a moved core, and the same run refuses if even one
+of the six is left unnamed.
+
+**The split this run measured**, with every drop replayed against the tree that dropped it:
+
+* 648 addresses added.
+* 149 dropped and still reproducing — input churn. By entrypoint: `floor.pairwise` 105,
+  `cert.check` 36, `log.verify_sth` 5, `log.verify_inclusion` 1, `merkle.inclusion_proof` 1,
+  `merkle.root` 1.
+* 5 dropped and no longer reproducing, plus 1 moved core — **the six**, and no seventh cause.
+
+Two of those churn drops are new since the split recorded above, which counted 105/36/5/1 and no
+`log.verify_inclusion` or `merkle.inclusion_proof`. `styxx/v8/log.py` moved in commit `27a6529e`
+between the two runs; both new drops still reproduce, so no answer moved with them. The earlier run
+built two vectors more than this one for the same reason.
+
+**What was retired, and why.** The full rows, with both outcomes and the sources, are in
+`index.provenance.retired.with_reason`:
+
+| retired | kind | reason recorded |
+|---|---|---|
+| `4d7cf5c4…3834479f` | behaviour-change | ENV-ABSENT — `subject.environment` became required; the retired answer accepted a fingerprint with the key absent, which turned the environment guard off by omission |
+| `631c0d24…8f9eb75c` | behaviour-change | ENV-ABSENT — the same shape, recorded from `test_v8_verify.py` |
+| `7f980b9f…800aea43` | behaviour-change | A-NORUNS — `body.runs` became required on a noise plan; the retired answer accepted a plan with the key absent, which let an issuer hand-pick which of its own runs composed a floor |
+| `b0cd1d4e…e7e9c3d6` | **moved-core** | A-NORUNS — the same acceptance at an address that survived the repair, which is why this one blocked the generator and the other five did not |
+| `745af6cc…c8244eb` | behaviour-change | A-NORUNS — the prereg now fails schema twice, for the violation the test injects and for the absent key; the single-reason outcome is retired and the cert is refused still |
+| `bcc66e04…a3d3dbde` | behaviour-change | A-NORUNS reaching `verify.diff` — the B-side cert is invalid rather than merely not comparable, so the run reports exit 4 where it reported exit 3 |
+
+Five of the six retired an **acceptance**. That is the prediction in
+`papers/v8/conformance_pinned_a_defect_2026_09_09.md` holding: a vector that pins `ok: true`
+freezes whatever the implementation accepted on the day it was recorded, and every later rule can
+falsify it.
+
+Both consequences the blocked run demonstrated are now closed. The drop notice is no longer weaker
+than the refusal — the split is the generator's, not a hand-run script — and `mutation_coverage.py`
+replays a set that reproduces again.
+
+### The miss list did not change
+
+The coverage was re-measured against the regenerated set and the tree as it stands. **The same five
+mutants are missed, by name**: `merkle-leaf-prefix-dropped`, `keys-small-order-accepted`,
+`cert-small-order-key-accepted`, `cert-noncanonical-point-accepted`, `log-duplicate-id-accepted`.
+Nothing became catchable and nothing stopped being catchable; the per-region table is identical and
+the detection rate is unchanged to four decimal places. What moved is how many vectors notice a
+caught mutant — `floor-alpha-off-by-one` went from 296 witnesses to 773 — which is the direction
+that matters: **the 648 vectors added are redundant with respect to this catalogue.** They deepen
+the places the set already reached and open none of the places it does not. The key-validation gap
+in particular (a small-order or non-canonical issuer key) is exactly as open as it was.
+
+That is worth stating plainly because a set growing by half its size and a detection rate that does
+not move is the same finding the lab keeps meeting: an agreement number counts vectors, and vectors
+are not coverage.
+
+### A deadlock in the receipt guard, found and narrowed
+
+`mutation_coverage.py` refused to write while `mutation_coverage.json` was tracked by git, on the
+rule that a receipt is history. `tests/test_v8_conformance.py` asserts the opposite — that the
+receipt describes the modules in the tree today — so after any change to a mutable module the test
+demanded a fresh receipt and the tool refused to produce one. Nothing could satisfy both.
+
+The guard now refuses only what it was written for: a re-run over the same set and the same modules,
+where writing today's number over the one that was vouched for pins a measurement instead of
+testing it. When `set_sha256` or a mutable module has moved, the committed receipt already fails its
+own tests, so the run measures a different object — it says which digests moved before it writes,
+and prints how the miss list differs from the receipt it replaces. The replacement is never silent
+and the previous bytes are in git.
 
 ## What passing means, and does not
 

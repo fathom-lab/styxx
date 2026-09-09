@@ -1402,29 +1402,27 @@
   ]
  },
  {
-  "entrypoint": "merkle.inclusion_proof",
+  "entrypoint": "merkle.root",
   "expect": {
-   "outcome": "proof",
-   "path": [
-    "4bc8552b47357c670fc14d5adafcbe7981e884e7bb9a4ce974b32fa38a6ab4f8"
-   ]
+   "outcome": "root",
+   "root": "534fce6ab269f54a37bf6be545719e00444afbd061eae9599da882fac933584f"
   },
   "family": "merkle",
-  "id": "49ed23a73692c8b907cd2c71010435100f0916858d36b95ef1a94bb809f0be9e",
+  "id": "49f15d27c0f245da9dbc25b7b6ae0cc5fb1e5d9b08233b5ae12b73e8279d5bb9",
   "inputs": {
-   "index": 4,
    "leaves": [
     "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
     "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
-    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
     "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
-    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "33cf6b132f3992131eeae19e4a0292f590e81d2b5ca4e1c7d9e706d377dcade1"
    ],
-   "op": "inclusion_proof",
-   "tree_size": 5
+   "op": "root"
   },
   "sources": [
-   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {
@@ -2710,30 +2708,6 @@
   },
   "sources": [
    "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
-  ]
- },
- {
-  "entrypoint": "merkle.root",
-  "expect": {
-   "outcome": "root",
-   "root": "b60ca6374af32266e4a310887d27dd8262e0eda2a3e218a2064ed4b03503c62b"
-  },
-  "family": "merkle",
-  "id": "a421b6f6e67de4a6ad08f141d90ff38fd98cab8445c96547bb7d30367c7099a0",
-  "inputs": {
-   "leaves": [
-    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
-    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
-    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
-    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
-    "807f7cea708f0b18aa27f8f1a7eb0d93cc6b2c9c1d560cf3f98c532348df5b95"
-   ],
-   "op": "root"
-  },
-  "sources": [
-   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
-   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
-   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
   ]
  },
  {

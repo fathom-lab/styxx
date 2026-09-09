@@ -1,0 +1,146 @@
+{
+  "log": "papers/v8/first_verdict_2026_09_09/log",
+  "log_id": "sha256:88300489aaab498ea197b13fae57c7fb7ba9c23d49cd97be59f5deaa9bae7c4f",
+  "entries": 7,
+  "log_binding": {
+    "bound": 0,
+    "unbound": 7
+  },
+  "findings": [
+    {
+      "ok": true,
+      "what": "00000000.json id recomputes",
+      "detail": "sha256:39e7f293e034ca10191..."
+    },
+    {
+      "ok": true,
+      "what": "00000000.json signature verifies",
+      "detail": "battery by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000000.json bytes are canonical",
+      "detail": "15338 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000001.json id recomputes",
+      "detail": "sha256:5ba84be3ea35a1ad9fa..."
+    },
+    {
+      "ok": true,
+      "what": "00000001.json signature verifies",
+      "detail": "prereg by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000001.json bytes are canonical",
+      "detail": "9716 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000002.json id recomputes",
+      "detail": "sha256:8e13ac182b484e3ae2d..."
+    },
+    {
+      "ok": true,
+      "what": "00000002.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000002.json bytes are canonical",
+      "detail": "92274 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000003.json id recomputes",
+      "detail": "sha256:5fffce6bd4655ff91d5..."
+    },
+    {
+      "ok": true,
+      "what": "00000003.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000003.json bytes are canonical",
+      "detail": "92271 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000004.json id recomputes",
+      "detail": "sha256:243b385e9982c70a29f..."
+    },
+    {
+      "ok": true,
+      "what": "00000004.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000004.json bytes are canonical",
+      "detail": "92253 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000005.json id recomputes",
+      "detail": "sha256:d521ed3169d3cb30e10..."
+    },
+    {
+      "ok": true,
+      "what": "00000005.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000005.json bytes are canonical",
+      "detail": "92253 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000006.json id recomputes",
+      "detail": "sha256:73a09ffa3f1ee69a065..."
+    },
+    {
+      "ok": true,
+      "what": "00000006.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000006.json bytes are canonical",
+      "detail": "94537 bytes"
+    },
+    {
+      "ok": true,
+      "what": "a cert naming this log is seated here",
+      "detail": "positive control"
+    },
+    {
+      "ok": true,
+      "what": "a cert naming another log is refused here",
+      "detail": "log_hint: this cert names log sha256:f8300489aaab498ea197b13fae57c7fb7ba9c23d49cd97be59f5deaa9bae7c4f and this log is sha256:88300489aaab498ea197b13fae57c7fb7ba9c23d49cd97be59f5deaa9bae7c4f; a cert bound to a log is not seated in another one (L7, section 8.1)"
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json entries reproduce the signed root",
+      "detail": "tree_size=7 sha256:d61a6a784e5709aa1be..."
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json tree head signature verifies",
+      "detail": "log_id sha256:88300489aaab4..."
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json inclusion proof for leaf 6 verifies",
+      "detail": "path length 2"
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json the same proof is refused for the wrong leaf",
+      "detail": "negative control"
+    }
+  ]
+}

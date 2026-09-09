@@ -414,6 +414,24 @@ class TestTheGeneratorRefusesRatherThanRewrites:
         new = {v["id"]: v for v in VECTORS["decide"][1:4]}
         assert G.compare_to_committed(old, new) == []
 
+    def test_a_drop_that_still_reproduces_and_one_that_does_not_are_told_apart(self):
+        """The diagnostic the refusal now rests on: "dropped" is one word for two events."""
+        churn = copy.deepcopy(VECTORS["cert"][0])
+        moved = copy.deepcopy(VECTORS["cert"][1])
+        moved["expect"] = dict(moved["expect"], ok=not moved["expect"]["ok"])
+        old = {churn["id"]: churn, moved["id"]: moved}
+        rows = {r["id"]: r for r in G.classify_drops(old, {}, BLOBS)}
+        assert rows[churn["id"]]["kind"] == "input-churn"
+        assert rows[moved["id"]]["kind"] == "behaviour-change"
+        assert rows[moved["id"]]["now"] != rows[moved["id"]]["was"]
+        assert rows[churn["id"]]["detail"] and rows[moved["id"]]["detail"]
+
+    def test_a_drop_that_cannot_be_replayed_is_undiagnosed_rather_than_assumed_benign(self):
+        vector = copy.deepcopy(VECTORS["cert"][0])
+        rows = G.classify_drops({vector["id"]: vector}, {}, {})
+        assert rows[0]["kind"] == "undiagnosed"
+        assert "cannot be replayed" in rows[0]["detail"]
+
     def test_the_skipped_calls_are_folded_out_of_the_vectors_and_into_the_remainder(self):
         vectors, _blobs, skipped, sources = G.fold([
             {"source": "t.py::a", "entrypoint": "cert.check", "skip": "holds a NaN"},
@@ -422,6 +440,96 @@ class TestTheGeneratorRefusesRatherThanRewrites:
         assert vectors == {}
         assert [r["reason"] for r in skipped] == ["holds a NaN"]
         assert [r["source"] for r in sources] == ["t.py::h"]
+
+
+class TestRetiringAMovedCoreTakesAReason:
+    """The third option in `papers/v8/FINDING_moved_cores_2026_09_09.md`, built so it cannot
+    become an override: the ids are named, the reasons are required, and an ordinary retirement
+    cannot be laundered through the path."""
+
+    MOVED = {"id": "a" * 64, "kind": "moved-core", "entrypoint": "cert.check",
+             "was": {"ok": True}, "now": {"ok": False}, "sources": ["tests/t.py::x"]}
+    DRIFTED = {"id": "b" * 64, "kind": "behaviour-change", "entrypoint": "cert.check",
+               "was": {"ok": True}, "now": {"ok": False}, "sources": ["tests/t.py::y"],
+               "detail": "ok: expected true, replayed false"}
+    CHURNED = {"id": "c" * 64, "kind": "input-churn", "entrypoint": "cert.check",
+               "was": {"ok": True}, "now": {"ok": True}, "sources": ["tests/t.py::z"],
+               "detail": "it still reproduces"}
+
+    def test_an_id_with_no_reason_is_refused(self):
+        with pytest.raises(SystemExit) as excinfo:
+            G.retirement_plan([self.MOVED["id"]], [])
+        assert "positional pairs" in str(excinfo.value)
+        with pytest.raises(SystemExit) as excinfo:
+            G.retirement_plan([self.MOVED["id"]], ["   "])
+        assert "empty reason" in str(excinfo.value)
+
+    def test_one_address_cannot_be_retired_twice_with_two_reasons(self):
+        with pytest.raises(SystemExit) as excinfo:
+            G.retirement_plan([self.MOVED["id"]] * 2, ["one", "another"])
+        assert "given twice" in str(excinfo.value)
+
+    def test_a_moved_core_nobody_named_is_still_a_refusal(self):
+        """There is no flag that retires whatever moved; silence is the default refusal."""
+        _rec, unnamed, refusals = G.apply_retirements({}, [self.MOVED], [self.DRIFTED])
+        assert unnamed == sorted([self.MOVED["id"], self.DRIFTED["id"]])
+        assert refusals == []
+
+    def test_an_ordinary_retirement_cannot_be_laundered_through_the_path(self):
+        plan = G.retirement_plan([self.CHURNED["id"]], ["it looked untidy"])
+        _rec, _unnamed, refusals = G.apply_retirements(plan, [], [self.CHURNED])
+        assert len(refusals) == 1 and "still reproduces" in refusals[0]
+
+    def test_an_address_that_did_not_move_cannot_be_retired(self):
+        plan = G.retirement_plan(["d" * 64], ["pre-emptive"])
+        _rec, _unnamed, refusals = G.apply_retirements(plan, [self.MOVED], [])
+        assert len(refusals) == 1 and "did not move in this run" in refusals[0]
+
+    def test_a_named_address_is_recorded_with_its_reason_and_both_outcomes(self):
+        plan = G.retirement_plan(
+            [self.MOVED["id"], self.DRIFTED["id"]], ["ENV-ABSENT closed it", "A-NORUNS closed it"]
+        )
+        recorded, unnamed, refusals = G.apply_retirements(plan, [self.MOVED], [self.DRIFTED])
+        assert (unnamed, refusals) == ([], [])
+        by_id = {row["id"]: row for row in recorded}
+        assert by_id[self.MOVED["id"]]["reason"] == "ENV-ABSENT closed it"
+        assert by_id[self.MOVED["id"]]["kind"] == "moved-core"
+        assert by_id[self.DRIFTED["id"]]["kind"] == "behaviour-change"
+        for row in recorded:
+            assert row["was"] != row["now"]
+            assert row["sources"]
+
+    def test_the_ledger_carries_forward_and_does_not_record_one_move_twice(self):
+        plan = G.retirement_plan([self.MOVED["id"]], ["because"])
+        recorded, _unnamed, _refusals = G.apply_retirements(plan, [self.MOVED], [])
+        first = G.retirement_ledger({}, recorded, [self.CHURNED], current=set())
+        again = G.retirement_ledger(first, recorded, [self.CHURNED], current=set())
+        assert [r["id"] for r in first["with_reason"]] == [self.MOVED["id"]]
+        assert [r["id"] for r in again["with_reason"]] == [self.MOVED["id"]]
+        assert [r["id"] for r in again["input_churn"]] == [self.CHURNED["id"]]
+
+    def test_an_address_the_sources_produce_again_leaves_the_churn_ledger(self):
+        previous = G.retirement_ledger({}, [], [self.CHURNED], current=set())
+        back = G.retirement_ledger(previous, [], [], current={self.CHURNED["id"]})
+        assert back["input_churn"] == []
+
+    def test_the_two_kinds_of_retirement_are_different_rows_in_the_committed_set(self):
+        """A reader diffing the set sees which retirements were decided and which just happened."""
+        retired = INDEX["provenance"]["retired"]
+        assert retired["note"].strip()
+        assert retired["with_reason"], "the set records no retirement with a reason"
+        ids = {v["id"] for v in ALL}
+        for row in retired["with_reason"]:
+            assert row["reason"].strip()
+            assert row["was"] != row["now"]
+            assert row["kind"] in ("moved-core", "behaviour-change", "undiagnosed")
+            assert row["sources"]
+            assert (row["id"] in ids) == (row["kind"] == "moved-core")
+        for row in retired["input_churn"]:
+            assert set(row) == {"id", "entrypoint"}, "an ordinary retirement carries no reason"
+            assert row["id"] not in ids
+        assert not ({r["id"] for r in retired["with_reason"]}
+                    & {r["id"] for r in retired["input_churn"]})
 
 
 # --------------------------------------------------------------------------- the README

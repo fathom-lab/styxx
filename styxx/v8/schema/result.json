@@ -12,7 +12,7 @@
       "$comment": "Same rule as schema/fingerprint.json: the marker is absent on a measured body, so it is not required; its VALUE is pinned so a hostile `synthetic: \"no\"` is a schema refusal rather than something `cert.is_synthetic` has to fail closed on. A result body carries no items, so the mock oracle in `cert.check` cannot re-derive it here -- what anchors a verify result is the fingerprint its `ref` names.",
       "required": ["kind"],
       "properties": {
-        "kind": { "enum": ["confirmatory", "pilot", "robustness", "sensitivity", "verify", "response", "document"] },
+        "kind": { "enum": ["confirmatory", "pilot", "robustness", "sensitivity", "verify", "response", "document", "policy"] },
         "synthetic": { "const": true }
       },
       "allOf": [
@@ -48,6 +48,35 @@
               "challenge": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
               "disposition": { "enum": ["new_floor", "cause_identified", "concession"] },
               "detail": { "type": "string" }
+            }
+          }
+        },
+        {
+          "$comment": "kind `policy` is a log's own statement of who it admits, signed by the LOG key and appended like any other entry (L10c residue, C-12 option (a)). `keys/issuers.json` is unsigned and outside the Merkle tree, so eighteen bytes written into it turn the roster off; a statement inside the tree has an index, a signature and a leaf hash instead. `log_hint` is REQUIRED here and nowhere else: a policy statement that did not name its own log would admit keys to whichever log it was replayed into, which is L7 pointed at the admission rule.",
+          "if": { "properties": { "kind": { "const": "policy" } }, "required": ["kind"] },
+          "then": {
+            "required": ["issuer_policy", "log_hint"],
+            "properties": {
+              "issuer_policy": {
+                "type": "object",
+                "required": ["policy"],
+                "properties": {
+                  "policy": { "enum": ["roster", "open"] },
+                  "reason": { "type": "string" },
+                  "issuers": { "type": "array", "items": { "type": "object" } }
+                },
+                "allOf": [
+                  {
+                    "if": { "properties": { "policy": { "const": "roster" } }, "required": ["policy"] },
+                    "then": { "required": ["issuers"] }
+                  }
+                ]
+              },
+              "log_hint": {
+                "type": "object",
+                "required": ["log_id"],
+                "properties": { "log_id": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" } }
+              }
             }
           }
         },

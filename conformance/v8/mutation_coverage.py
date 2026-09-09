@@ -14,8 +14,17 @@ of the run, the committed set is replayed, and the question is whether any vecto
 **missed** means it would pass, and the miss list is the deliverable: a real difference could sit
 in any of those places today with every replay in this repository looking exactly as it does now.
 
-Nothing here writes into the tree. Every mutant is a file in a temporary directory, every patch is
-undone in a `finally`, and the run refuses to overwrite a receipt git already tracks.
+Nothing here writes into the tree. Every mutant is a file in a temporary directory and every patch
+is undone in a `finally`.
+
+The one file it does write is the receipt, and a receipt is history. A run refuses to overwrite a
+receipt git already tracks **that still describes this set and these modules**: re-running the same
+measurement over the same bytes and writing the new number on top of the old one is how a receipt
+gets pinned instead of tested, and the old number is the one that was vouched for. When the set or
+a mutable module has moved, the committed receipt does not describe this tree any more -- and
+`tests/test_v8_conformance.py` says so, in two tests -- so the measurement is of a different object
+and is written, after printing what moved and how the miss list differs. The previous bytes are in
+git; the replacement is never silent.
 
     python conformance/v8/mutation_coverage.py
     python conformance/v8/mutation_coverage.py --catalogue <in.json> --out <receipt.json>
@@ -237,6 +246,55 @@ def _tracked(path: Path) -> bool:
     return proc.returncode == 0
 
 
+def read_receipt(path: Path) -> Optional[dict]:
+    """The receipt already at `path`, or None when there is none to read."""
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def superseded(previous: dict, index: dict) -> List[str]:
+    """What has moved since `previous` was measured. Empty means it still describes this tree."""
+    why: List[str] = []
+    was = (previous.get("set") or {}).get("set_sha256")
+    now = index.get("set_sha256")
+    if was != now:
+        why.append("the set moved: set_sha256 %s -> %s" % (was, now))
+    for rel, sha in sorted((previous.get("implementation") or {}).items()):
+        if _sha(rel) != sha:
+            why.append("%s moved: %s -> %s" % (rel, sha[:12], _sha(rel)[:12]))
+    for rel in MUTABLE:
+        if rel not in (previous.get("implementation") or {}):
+            why.append("%s is measured now and was not then" % rel)
+    return why
+
+
+def miss_list_delta(previous: Optional[dict], receipt: dict) -> List[str]:
+    """How the miss list moved. A changed miss list is a finding, in either direction."""
+    if previous is None:
+        return ["no previous receipt: every miss below is new to the record"]
+    was = {row["name"] for row in previous.get("missed") or []}
+    now = {row["name"] for row in receipt.get("missed") or []}
+    lines: List[str] = []
+    for name in sorted(now - was):
+        lines.append("NEWLY MISSED %s -- the set could see this behaviour and no longer can"
+                     % name)
+    for name in sorted(was - now):
+        lines.append("NOW CAUGHT   %s -- a gap the previous receipt named is closed" % name)
+    if not lines:
+        lines.append(
+            "the miss list did not change: the same %d mutants are missed, by name. The set has "
+            "%d vectors where the previous receipt measured %d, so the vectors added since then "
+            "are redundant with respect to this catalogue -- they raise how many vectors notice a "
+            "caught mutant, not what the set can see."
+            % (len(now), receipt["set"]["vectors"], (previous.get("set") or {}).get("vectors"))
+        )
+    return lines
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="measure what the styxx.v8 vectors can see")
     parser.add_argument("--catalogue", default=str(CATALOGUE))
@@ -245,18 +303,25 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     out_path = Path(args.out).resolve()
-    if out_path.exists() and _tracked(out_path):
-        print(
-            "REFUSED: %s is tracked; a run is history -- write a new file rather than "
-            "regenerating a committed receipt in place" % out_path.name,
-            file=sys.stderr,
-        )
-        return 2
-
     directory = Path(args.dir).resolve()
     blobs = R.load_blobs(directory)
     vectors = R.load_vectors(directory)
     index = R.load_index(directory)
+
+    previous = read_receipt(out_path)
+    if previous is not None and _tracked(out_path):
+        why = superseded(previous, index)
+        if not why:
+            print(
+                "REFUSED: %s is tracked and still describes this set and these modules; a run is "
+                "history, and writing today's number over the one that was vouched for pins a "
+                "measurement instead of testing it. Change something or pass --out." % out_path.name,
+                file=sys.stderr,
+            )
+            return 2
+        print("the committed receipt is superseded and will be replaced:")
+        for line in why:
+            print("  %s" % line)
 
     # The unmutated set first. A detection rate measured over a set that does not already
     # reproduce would be a number about the baseline, not about the mutations.
@@ -385,6 +450,9 @@ def main(argv=None) -> int:
     )
     for row in missed:
         print("  MISSED %-30s %s" % (row["name"], (row.get("why") or "")[:90]))
+    print("\nthe miss list against %s:" % ("the committed receipt" if previous else "nothing"))
+    for line in miss_list_delta(previous, receipt):
+        print("  %s" % line)
     if void:
         print("VOID: a control was caught", file=sys.stderr)
         return 2

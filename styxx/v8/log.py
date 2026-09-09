@@ -390,6 +390,25 @@ spec rather than a new rule. ``derived_meta`` recomputes every derivable field f
 bytes; ``meta_disagreement`` names each field the file disagrees on; ``verify_entry`` refuses on
 any of them, and ``mirror`` collects them under a ``metadata`` key beside ``tamper``.
 
+**A-META residue: the field exempted by name is closed by fixing the FIELD (A-META-GAP).** That
+repair left one metadata key outside the comparison — ``baseline_gap``, exempted through
+``APPEND_TIME_META_KEYS`` — and the reason given was true: the derivation resolved the previous
+comparable fingerprint by scanning the whole log, so it returned a later answer on read than the
+file had recorded, and comparing it would have accused an honest log. A field the checker skips by
+name is as rewritable as the census was: eighteen edited bytes in an unsigned file outside the
+tree, ``meta_disagreement`` empty, ``verify_entry`` ``ok``, the root unmoved.
+
+The repair is to the field's definition, not to the checker in front of it. ``Log.baseline_gap``
+now bounds its search BELOW the index at which the log holds the cert, whenever it holds it, so it
+answers "the previous comparable fingerprint as of this entry's own index" — the number the
+appending index produced, and a number that does not move when a later comparable fingerprint
+lands. It is therefore in ``DERIVED_META_KEYS``, ``APPEND_TIME_META_KEYS`` is empty, and both
+``append`` and ``derived_meta`` obtain the value from one method (``_gap_meta``) so that agreement
+is a property of a single derivation rather than of two that must be kept in step. What this does
+NOT do: nothing about the field was ever signed, and a reader who never calls ``verify_entry`` or
+``mirror`` still reads the operator's copy unchecked — the residue the whole ``meta.json`` section
+above already states, and which only deleting the file closes.
+
 **A file that is OLD is not a file that is WRONG (A-META-ABSENT).** The repair above was written
 with one predicate for two states, and the day after it landed it accused the lab's own published
 log. `papers/v8/first_verdict_2026_09_09/log` was minted before ``floor_census`` existed, so its
@@ -485,14 +504,34 @@ statements, which is the property that was missing.
 **An open log says so on purpose.** The marker is a file the operator writes deliberately, it
 carries an optional ``reason``, and it is reported: ``mirror`` prints ``issuer_policy`` in its
 report, so a reader of a mirror learns the admission policy of the log it mirrored without
-inspecting the directory. What that does NOT do, stated rather than implied: the marker is an
-unsigned file outside the tree, exactly like the roster, so it is the operator's assertion about
-its own log and a mirror can only report what it copied. C-12 option (a) — the roster as a
-``result`` cert of kind ``document`` signed by the log key and appended like any other entry, so
-that a reader sees the index at which a key was admitted — is the version that would put this
-inside the tree, and it is the operator's decision, not this module's. Section 8.2 currently says
-there is no ``keys/issuers.json`` in the layout at all while the C-12 interim stands; this code
-has one and gates appends on it, which is a divergence the spec has to resolve either way.
+inspecting the directory.
+
+**The residue that repair left, and the half of it that is now closed.** The fail-open moved
+rather than vanished. It used to be reachable by deleting a file; it became reachable by writing
+one — ``{"policy": "open"}`` is eighteen bytes, the file is unsigned and outside the Merkle tree,
+and anyone who can write the directory can turn the roster off. No predicate over an unsigned file
+distinguishes the operator who wrote it from the attacker who did, so the close is a signature and
+nothing else.
+
+C-12 option (a) is implemented: the policy can be a LOGGED CERT — a ``result`` of kind ``policy``
+(``schema/result.json``), signed by the LOG's own key, bound to this log by ``body.log_hint``, and
+appended like any other entry, so "this log admits anybody" is a statement with an index, a leaf
+hash and a signature. ``Log.policy_cert`` finds the highest such entry, ``issuer_policy`` returns
+it in preference to the file, and ``keys/issuers.json`` becomes a cache with a checker in front of
+it exactly as ``meta.json`` did under A-META. A file that contradicts the statement gives policy
+``contradicted``, which **refuses every append** and is reported by ``mirror``: the eighteen-byte
+edit now stops the log rather than opening it. One append does not consult the policy — the log's
+own statement about itself, gated by ``_is_own_policy_statement`` — because a rule about issuers
+cannot be applied to the log's own key without putting that key in its own roster, and that key
+can already sign STHs.
+
+**[OPERATOR-GATED] and stated as a residue rather than a plan.** An UNWITNESSED open marker still
+admits every key. Refusing it would refuse every append to every open log already running, and
+retiring it moves section 8.2, which currently says there is no ``keys/issuers.json`` in the
+layout at all while the C-12 interim stands — this code has one, gates appends on it, and now also
+has an in-tree form, which is a divergence the spec has to resolve either way and which needs the
+operator's signature on the edit. What did not need it, and is here: the witnessed form, the mint
+(``log init --witness-policy``), the tree beating the file, and the contradiction refusing.
 
 **A cert may name the log it belongs to, and this log refuses one that names another (L7).**
 Seven entries of the published log were replayed verbatim into a log built on a DIFFERENT key.
@@ -601,22 +640,25 @@ OPEN_POLICY = "open"
 # are therefore re-derived on read rather than trusted (A-META, section 8.2). ``appended_at`` is
 # the one field outside this set: a timestamp is the signer's assertion (section 8.1) and no
 # predicate over the entries produces it.
-DERIVED_META_KEYS = ("index", "id", "type", "public", "floor")
+DERIVED_META_KEYS = ("index", "id", "type", "public", "floor", "baseline_gap")
 ASSERTED_META_KEYS = ("appended_at",)
 
-# Metadata fields that ARE computed from the log's own bytes and still cannot be compared on
-# read, because their value depends on the log AS IT STOOD AT APPEND rather than on the entries.
-# ``baseline_gap`` is the case: it resolves the previous comparable fingerprint by scanning the
-# whole log, so an entry that had no comparable predecessor when it was appended acquires one as
-# soon as a later comparable fingerprint lands, and re-deriving it at read gives a different and
-# strictly later answer than the file records.
+# EMPTY, AND KEPT AS A NAME SO THE REPAIR IS LEGIBLE.
 #
-# THIS IS A HOLE AND IT IS NAMED RATHER THAN CLOSED. These fields are exactly as rewritable as the
-# census was before A-META, and ``meta_disagreement`` passes over them. Closing it needs the
-# derivation to be index-relative -- "the previous comparable fingerprint at an index below this
-# one" -- which is a change to the field's own definition and belongs to whoever owns it, not to
-# the checker in front of it.
-APPEND_TIME_META_KEYS = ("baseline_gap",)
+# This held ``baseline_gap``: a field computed from the log's own bytes that could not be compared
+# on read, because it resolved the previous comparable fingerprint by scanning the WHOLE log. An
+# entry with no comparable predecessor at append acquired one as soon as a later comparable
+# fingerprint landed, so re-deriving at read gave a different and strictly later answer than the
+# file recorded, and ``meta_disagreement`` had to pass over it by name. A field exempted from the
+# check by name is exactly as rewritable as the census was before A-META.
+#
+# The exemption is gone because the FIELD was fixed rather than the checker: ``Log.baseline_gap``
+# is index-relative (the previous comparable fingerprint at an index BELOW this entry's, whenever
+# the log holds this cert), which is the answer as of the appending index and does not move when
+# the log grows. ``baseline_gap`` is therefore in ``DERIVED_META_KEYS`` and is re-derived and
+# compared like every other derived field. Nothing is exempt; if something must be again, it goes
+# here with its argument, and ``_meta_split`` reports it as unchecked.
+APPEND_TIME_META_KEYS: tuple[str, ...] = ()
 
 # DEAD FOR ANY CERT BUILT TO THE SPEC, AND STILL LOAD-BEARING FOR ONE TEST FILE.
 #
@@ -857,6 +899,12 @@ class Log:
         section 2.6's transitive walk over certs (not over other metadata files), the floor census
         by ``floor_census``, and the baseline gap by ``baseline_gap`` where one exists. This is
         what ``append`` writes; reading it back rather than the file is the repair.
+
+        ``baseline_gap`` is here rather than exempt because the field was made index-relative:
+        ``Log.baseline_gap`` bounds its search below the index the log holds this cert at, so the
+        number a reader derives now is the number the appending index produced. ``append`` writes
+        what ``_gap_meta`` returns and this reads it back through the same call, so agreement is a
+        property of one function and not of two.
         """
         cert = self.cert(index)
         out: dict[str, Any] = {
@@ -872,7 +920,22 @@ class Log:
             census = None
         if census is not None:
             out["floor"] = census
+        gap = self._gap_meta(cert)
+        if gap is not None:
+            out["baseline_gap"] = gap
         return out
+
+    def _gap_meta(self, cert: dict) -> Optional[dict]:
+        """``baseline_gap`` as the metadata carries it — the one derivation, used by both sides.
+
+        ``append`` called ``baseline_gap`` inside a ``try`` and wrote ``{"note": ...}`` when it
+        raised, so a reader re-deriving it had to reproduce that branch too or report a
+        disagreement over an error string. Both sides call this.
+        """
+        try:
+            return self.baseline_gap(cert)
+        except Exception as exc:  # metadata never refuses an append the rules accepted
+            return {"note": f"{type(exc).__name__}: {exc}"}
 
     def _meta_split(self, index: int) -> tuple[list[str], list[str]]:
         """``(contradicted, stale)`` for ``<index>.meta.json`` — the A-META-ABSENT predicate.
@@ -928,8 +991,8 @@ class Log:
             contradicted.append(
                 f"entry {index}: metadata carries {key!r}, which no derivation over the entries "
                 f"produces; the asserted field is {ASSERTED_META_KEYS[0]!r} (section 8.1: a "
-                f"timestamp is the signer's assertion) and the append-time ones are "
-                f"{list(APPEND_TIME_META_KEYS)}"
+                f"timestamp is the signer's assertion) and the set exempted from the derivation "
+                f"is {list(APPEND_TIME_META_KEYS)}"
             )
         return contradicted, stale
 
@@ -985,21 +1048,136 @@ class Log:
         """The index holding ``cert_id``, or None."""
         return self._id_map().get(cert_id)
 
+    def policy_cert(self) -> Optional[tuple[int, dict]]:
+        """The log's own signed statement of who it admits, and the index it sits at (L10c-b).
+
+        ``(index, cert)`` for the HIGHEST-indexed entry that is all of:
+
+        * ``type: "result"``, ``body.kind: "policy"`` (``schema/result.json``),
+        * signed by the key in ``keys/log.pub`` — the LOG's key, not an issuer's, because the
+          question "who may write into this log" belongs to the log's own identity,
+        * carrying ``body.log_hint.log_id`` equal to this log's ``log_id`` (section 8.1), so the
+          statement cannot be lifted into another log and admit keys there,
+        * carrying a ``body.issuer_policy`` this version can enforce (``roster`` or ``open``).
+
+        Highest index, because a log may state its policy again — a roster gains a key, an open
+        log closes — and the later statement is the one in force, exactly as the log index orders
+        everything else (section 7.2). Every earlier statement stays in the tree, so the history
+        of the admission rule is readable rather than overwritten, which is the whole difference
+        between this and a file.
+
+        ``None`` when no entry qualifies: the ordinary state of every log minted before this
+        existed, and of every log whose operator has not signed one. That case falls back to
+        ``keys/issuers.json`` and is exactly as strong as it was — see ``issuer_policy``.
+        """
+        public = self.log_public()
+        if public is None:
+            return None
+        try:
+            wire = keys.encode_public(public)
+            mine = "sha256:" + hashlib.sha256(public).hexdigest()
+        except Exception:
+            return None
+        for index in reversed(self.indices()):
+            try:
+                cert = self.cert(index)
+            except Exception:
+                continue
+            if cert.get("type") != "result":
+                continue
+            body = _body(cert)
+            if body.get("kind") != "policy":
+                continue
+            issuer = cert.get("issuer")
+            if not isinstance(issuer, dict) or issuer.get("key") != wire:
+                continue
+            hint = body.get("log_hint")
+            if not isinstance(hint, dict) or hint.get("log_id") != mine:
+                continue
+            if _policy_from_statement(body.get("issuer_policy")) is None:
+                continue
+            return index, cert
+        return None
+
     def issuer_policy(self) -> dict:
-        """Who this log admits, read off ``keys/issuers.json``. Never raises, never returns None.
+        """Who this log admits. Never raises, never returns None.
+
+        **The tree decides when the tree has spoken (L10c residue).** The first L10c repair made a
+        missing ``keys/issuers.json`` refuse every append, which closed a fail-open reachable by
+        ``rm`` and opened one reachable by ``echo``: ``{"policy": "open"}`` is eighteen bytes, the
+        file is unsigned and outside the Merkle tree, and anyone who can write the directory can
+        turn the roster off. No predicate over an unsigned file can tell the operator who wrote it
+        from the attacker who did.
+
+        So the policy can be a LOGGED CERT — ``policy_cert``, C-12 option (a): a ``result`` of kind
+        ``policy``, signed by the log's own key, bound to this log, appended like any other entry.
+        It has an index, a leaf hash, and a signature the file has never had, and every later
+        reader can see at which index a key became admissible. When such an entry exists it is the
+        policy, and ``keys/issuers.json`` becomes a cache with a checker in front of it, exactly as
+        ``meta.json`` became under A-META:
+
+        * ``{"policy": ..., "source": "cert", "cert_index": int, "cert_id": str, ...}`` — the
+          statement in the tree, agreed with by the file (or by a file that is simply absent,
+          which contradicts nothing).
+        * ``{"policy": "contradicted", "source": "cert", ...}`` — the file states something the
+          tree refutes. **This refuses every append**, and it is the eighteen-byte attack caught:
+          overwrite a witnessed roster with the open marker and the log stops accepting anything
+          rather than accepting everything. ``mirror`` reports it beside the metadata
+          contradictions it is a sibling of.
+
+        With no policy cert in the tree the file is all there is, and the answer is what it was,
+        with ``"source": "file"`` and ``"witnessed": False`` saying so out loud:
 
         ``{"policy": "roster", "issuers": [...]}`` — a JSON array is the roster (section 8.2's
-        ``keys/issuers.json``); an empty array admits nobody, which is a policy and not an
-        absence.
+        ``keys/issuers.json``); an empty array admits nobody, which is a policy and not an absence.
 
         ``{"policy": "open", "reason": <str|None>}`` — a JSON object naming policy ``open``: an
-        intentionally open log, admitting any key. This is the marker that replaces "the file is
-        missing" as the way to run an open log (L10c).
+        intentionally open log, admitting any key.
 
         ``{"policy": "absent"|"unreadable"|"unknown", "reason": ...}`` — every other state. Append
         refuses on all three: a security check whose unset configuration means "allow everything"
         is an off switch reachable by ``rm``.
+
+        **[OPERATOR-GATED] What is NOT done here, and why.** An UNWITNESSED open marker still
+        admits every key. Refusing it — making the logged statement mandatory — would refuse every
+        append to every open log already running, including any minted before this existed, and it
+        moves section 8.2's layout, which currently says there is no ``keys/issuers.json`` at all
+        while the C-12 interim stands. That is the operator's call and needs their signature on
+        the spec edit, not this module's. What did not need their signature, and is done: the
+        witnessed form exists, the CLI mints it (``log init --witness-policy``), the tree beats the
+        file, and a file that contradicts the tree refuses everything.
         """
+        witnessed = self.policy_cert()
+        file_policy = self._file_policy()
+        if witnessed is None:
+            out = dict(file_policy)
+            out["source"] = "file"
+            out["witnessed"] = False
+            return out
+        index, cert = witnessed
+        stated = _policy_from_statement(_body(cert).get("issuer_policy"))
+        assert stated is not None  # policy_cert only returns enforceable statements
+        out = dict(stated)
+        out["source"] = "cert"
+        out["witnessed"] = True
+        out["cert_index"] = index
+        out["cert_id"] = cert.get("id")
+        disagreement = _policy_disagreement(stated, file_policy)
+        if disagreement is not None:
+            return {
+                "policy": "contradicted",
+                "source": "cert",
+                "witnessed": True,
+                "cert_index": index,
+                "cert_id": cert.get("id"),
+                "stated": stated,
+                "file": file_policy,
+                "reason": disagreement,
+            }
+        return out
+
+    def _file_policy(self) -> dict:
+        """``keys/issuers.json`` alone, with no reference to the tree. The pre-L10c-b answer."""
         path = self.keys_dir / "issuers.json"
         if not path.exists():
             return {"policy": "absent", "reason": f"no {path}"}
@@ -1097,7 +1275,28 @@ class Log:
         # read `roster = self.issuers(); if roster is not None:`, so deleting keys/issuers.json
         # admitted every key. A missing configuration is not a permission.
         policy = self.issuer_policy()
-        if policy["policy"] == "roster":
+        if policy["policy"] == "contradicted":
+            # L10c residue: keys/issuers.json says one thing and the log's own signed statement
+            # says another. Refusing EVERYTHING is the only safe reading -- the file is the half
+            # anyone with write access can produce, so the disagreement is evidence about the
+            # directory and not a choice between two policies.
+            raise AppendRefused(
+                f"issuer: {policy['reason']}. The logged policy statement is entry "
+                f"{policy['cert_index']} ({policy['cert_id']}), signed by this log's own key and "
+                "inside the Merkle tree; keys/issuers.json is unsigned, outside the tree, and "
+                "writable by anyone who can write the directory. A log whose cache contradicts "
+                "its own signed policy appends nothing until they agree (L10c)"
+            )
+        if self._is_own_policy_statement(cert):
+            # BOOTSTRAP, and the one append that does not consult the policy. A log states who it
+            # admits by signing a `result` of kind `policy` with its OWN key and binding it to
+            # itself; that entry cannot be gated on the policy it establishes without requiring
+            # the log key to be in its own roster, which is a rule about issuers and this is not
+            # an issuer. Everything the exception rests on is checked in
+            # `_is_own_policy_statement`, and anyone able to sign under the log key can already
+            # sign STHs, so this concedes nothing that key did not already hold.
+            pass
+        elif policy["policy"] == "roster":
             key = cert.get("issuer", {}).get("key")
             if not _in_roster(policy["issuers"], key, index):
                 raise AppendRefused(
@@ -1160,10 +1359,7 @@ class Log:
                         f"baseline: a comparable fingerprint is at index {previous}; "
                         "a fingerprint that starts a new baseline needs a previous ref"
                     )
-            try:
-                gap = self.baseline_gap(cert)
-            except Exception as exc:  # metadata never refuses an append the rules accepted
-                gap = {"note": f"{type(exc).__name__}: {exc}"}
+            gap = self._gap_meta(cert)
 
         # 6. a canonical fingerprint honours the plan its floor names (section 5.1 step 2), and
         # its runs are more than one execution wearing R labels. The census is kept for the
@@ -1236,6 +1432,40 @@ class Log:
         _write_json(self.meta_path(index), meta)
         self._id_map_cache = None
         return index
+
+    def _is_own_policy_statement(self, cert: dict) -> bool:
+        """True when ``cert`` is THIS log stating its own admission policy (L10c residue).
+
+        The predicate the append-time bootstrap rests on, and it is deliberately the same one
+        ``policy_cert`` reads with: a ``result`` of kind ``policy``, signed by the key in
+        ``keys/log.pub``, bound to this log's ``log_id``, carrying an ``issuer_policy`` block this
+        version can enforce. Nothing here is an issuer's assertion — every clause is checked
+        against bytes this log holds, and ``append`` step 1 has already verified the signature.
+
+        Two failure modes it is written to avoid. A cert of this shape signed by SOMEONE ELSE's
+        key is not a policy statement and gets no exception (the roster or the open marker decides
+        it, like anything else). A statement naming a DIFFERENT log is refused a line later by
+        ``_check_log_binding`` in any case, but it is excluded here too, so that "this admits any
+        key" can never be minted once and replayed into every log that will take it — which is L7
+        aimed at the admission rule instead of at a measurement.
+        """
+        if cert.get("type") != "result":
+            return False
+        body = _body(cert)
+        if body.get("kind") != "policy":
+            return False
+        if _policy_from_statement(body.get("issuer_policy")) is None:
+            return False
+        public = self.log_public()
+        if public is None:
+            return False
+        issuer = cert.get("issuer")
+        if not isinstance(issuer, dict) or issuer.get("key") != keys.encode_public(public):
+            return False
+        hint = body.get("log_hint")
+        if not isinstance(hint, dict):
+            return False
+        return hint.get("log_id") == "sha256:" + hashlib.sha256(public).hexdigest()
 
     def _check_log_binding(self, cert: dict) -> None:
         """Refuse a cert whose ``body.log_hint`` names a log that is not this one (L7).
@@ -2470,6 +2700,60 @@ class Log:
 
 # ----------------------------------------------------------------- roster helpers
 
+def _policy_from_statement(block: Any) -> Optional[dict]:
+    """A ``body.issuer_policy`` block as ``issuer_policy`` reports it, or None if unenforceable.
+
+    ``{"policy": "roster", "issuers": [...]}`` or ``{"policy": "open", "reason": <str|None>}`` —
+    the same two shapes ``keys/issuers.json`` can hold, so that a reader comparing the file with
+    the statement compares like with like. Anything else returns None and the entry is not treated
+    as a policy statement at all: a statement this version cannot enforce must not silently become
+    a permission, which is L10c's whole sentence.
+    """
+    if not isinstance(block, dict):
+        return None
+    named = block.get("policy")
+    if named == "roster":
+        issuers = block.get("issuers")
+        if not isinstance(issuers, list):
+            return None
+        return {"policy": "roster", "issuers": issuers}
+    if named == OPEN_POLICY:
+        reason = block.get("reason")
+        return {"policy": OPEN_POLICY, "reason": reason if isinstance(reason, str) else None}
+    return None
+
+
+def _policy_disagreement(stated: dict, file_policy: dict) -> Optional[str]:
+    """Why ``keys/issuers.json`` contradicts the logged statement, or None.
+
+    An ABSENT file contradicts nothing — the statement is in the tree and the cache is simply not
+    there, the same reading A-META-ABSENT gives a metadata file that predates a derived field. An
+    unreadable or unknown file DOES contradict: it is not a silence, it is bytes that fail to say
+    what the tree says. And a roster whose entries differ in any way is the eighteen-byte attack
+    with more typing.
+    """
+    named = file_policy.get("policy")
+    if named == "absent":
+        return None
+    if named != stated["policy"]:
+        return (
+            f"keys/issuers.json states policy {named!r} and the logged policy statement states "
+            f"{stated['policy']!r}"
+        )
+    if stated["policy"] == "roster":
+        try:
+            mine = _clean_roster(stated["issuers"])
+            theirs = _clean_roster(file_policy.get("issuers") or [])
+        except ValueError as exc:
+            return f"keys/issuers.json is not a roster this version can compare: {exc}"
+        if mine != theirs:
+            return (
+                f"keys/issuers.json names {len(theirs)} roster entries and the logged policy "
+                f"statement names {len(mine)}, and they are not the same roster"
+            )
+    return None
+
+
 def _clean_policy(issuers) -> Any:
     """The bytes ``keys/issuers.json`` gets: a cleaned roster, or the open marker.
 
@@ -2981,9 +3265,15 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
     module's "Decisions".
 
     ``issuer_policy`` is the admission policy of the log that was copied (L10c): ``roster``,
-    ``open``, or one of the states that refuse every append. It is a disclosure, not an
-    accusation — an open log is a legitimate configuration and ``absent`` is a log that admits
-    nobody — so none of the four states is written into ``misbehaviour``.
+    ``open``, or one of the states that refuse every append, with ``source`` saying whether it
+    came from the log's own signed statement in the tree or from ``keys/issuers.json``. It is a
+    disclosure, not an accusation — an open log is a legitimate configuration and ``absent`` is a
+    log that admits nobody — so none of those states is written into ``misbehaviour``.
+
+    ``contradicted`` is the exception, and it is not a policy: it means the unsigned file disagrees
+    with the log's own signed statement, which is the eighteen-byte edit the L10c residue is
+    about. That goes under ``metadata`` beside the census contradictions it is a sibling of, and
+    it clears ``verified``.
 
     ``log_binding`` counts the entries that name a log in ``body.log_hint`` and the entries that
     name none (L7). An unbound entry is not a fault; it is the state in which "this cert is in
@@ -3055,6 +3345,17 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
         if not ok:
             tamper.append(reason)
     entries_intact = not tamper
+    # L10c residue: keys/issuers.json against the log's OWN signed policy statement. This is the
+    # sibling of the metadata contradictions above -- an unsigned file outside the tree asserting
+    # something the tree refutes -- so it lands under `metadata` and clears `verified`. It is read
+    # AFTER `entries_intact`, so a policy the file contradicts does not silently reclassify an
+    # STH mismatch. An open or roster policy on its own accuses nobody and stays a disclosure.
+    if isinstance(policy, dict) and policy.get("policy") == "contradicted":
+        metadata.append(
+            f"issuers: {policy['reason']}; the logged policy statement is entry "
+            f"{policy['cert_index']} ({policy['cert_id']}), signed by the log's own key and "
+            "inside the tree, and keys/issuers.json is neither (L10c)"
+        )
 
     # tree heads
     heads: list[tuple[str, dict]] = []

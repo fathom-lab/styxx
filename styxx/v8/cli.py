@@ -342,6 +342,89 @@ def _now() -> str:
     return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+# --------------------------------------------------------------------------- the log binding
+
+
+# ``--bind-log <dir>`` / ``--log-id sha256:<hex>`` on every command that mints a cert. Section
+# 8.1's ``body.log_hint``, which ``log.Log._check_log_binding`` refuses at append and
+# ``log.verify_entry`` refuses on read when it names another log (L7).
+_BIND_VALUES = ("bind_log", "log_id")
+# ``--no-bind-log`` is only meaningful where a command ALREADY names a log for another reason and
+# therefore binds by default -- ``verify --log``. Everywhere else the default is unbound and the
+# flag has nothing to switch off.
+_BIND_FLAGS = ("no_bind_log",)
+
+
+def _binding(opts: dict, *, default_log: Any = None) -> Optional[dict]:
+    """``{"log_id": ...}`` for ``body.log_hint``, or None when this mint was told no log (L7).
+
+    **WHEN THIS CLI WRITES THE FIELD, stated rather than implied.** Two rules, and neither is
+    "always":
+
+    1. **A command that already names a log binds to it by default.** ``verify --log <dir>``
+       resolves refs against that log and, when it signs a challenge, that is the log the
+       challenge is for; it names it unless ``--no-bind-log`` says otherwise. A default that
+       binds is right exactly here, because the log is not a guess — the command was handed it.
+    2. **Every other mint binds only when told to**, with ``--bind-log <dir>`` or ``--log-id``.
+       ``battery``, ``prereg`` and ``fingerprint`` name no log, and the reason the default is not
+       to invent one is in the field's own design: ``log_hint`` is OPTIONAL because a cert cannot
+       name a log that does not exist yet, and because requiring it would refuse every cert
+       already signed and every committed conformance vector. A mint that guessed a log id would
+       be fabricating the one fact the binding exists to state.
+
+    So an unflagged ``fingerprint`` still produces an UNBOUND cert, exactly as replayable as it
+    was before L7 — the limitation ``log.mirror``'s ``log_binding`` counter reports and
+    ``tests/test_v8_log_integrity.py::test_an_unbound_cert_still_replays_verbatim`` pins. Every
+    mint says which it produced in its payload (``log_hint``), and ``log append --require-binding``
+    is the switch for an operator who has decided their log takes bound certs only; making that
+    the log's own rule rather than the invocation's needs a policy statement inside the tree
+    (see ``log.Log.policy_cert``) and is marked ``[OPERATOR-GATED]`` there.
+
+    ``--bind-log`` is the form to prefer: it reads ``keys/log.pub`` and hashes it (section 8.1),
+    so the id cannot be mistyped into a cert no log will ever accept. ``--log-id`` is for minting
+    against a log this box does not hold, and giving both requires them to agree.
+    """
+    named = opts.get("log_id")
+    directory = opts.get("bind_log")
+    if not directory and named is None and not opts.get("no_bind_log"):
+        directory = default_log
+    from_dir: Optional[str] = None
+    if directory:
+        log_obj = _open_log(directory)
+        try:
+            from_dir = log_obj.log_id()
+        except logmod.AppendRefused as exc:
+            raise CliError(f"--bind-log: {exc.reason}") from None
+    if named is not None:
+        if not _is_cert_id(named):
+            raise CliError(
+                f"--log-id must be sha256:<64 hex> (section 8.1's log_id), got {named!r}"
+            )
+        if from_dir is not None and from_dir != named:
+            raise CliError(
+                f"--log-id {named} is not the log at --bind-log ({from_dir}); a cert bound to a "
+                "log names one log"
+            )
+        return {"log_id": named}
+    if from_dir is not None:
+        return {"log_id": from_dir}
+    return None
+
+
+def _bind(body: dict, binding: Optional[dict]) -> dict:
+    """``body`` with section 8.1's ``log_hint`` written in, or ``body`` unchanged.
+
+    In the BODY, which is inside the signed core ``D`` (section 2.1). An advisory field beside the
+    signature is what the replay in L7 walked through; this one cannot be added, removed or edited
+    without a new signature under a key the target log's roster admits.
+    """
+    if binding is None:
+        return body
+    out = dict(body)
+    out["log_hint"] = dict(binding)
+    return out
+
+
 def _sign_cert(
     cert_type: str,
     *,
@@ -719,7 +802,7 @@ def cmd_fingerprint(argv: Sequence[str]) -> tuple[int, dict]:
         values=(
             "subject", "recipe", "battery", "key", "out", "runs", "plan", "sensitivity",
             "covers", "not_covered", "created", "issuer_name",
-        ) + _RUNNER_VALUES,
+        ) + _RUNNER_VALUES + _BIND_VALUES,
         positional_max=0,
     )
     subject, recipe = _spec_subject_recipe(opts)
@@ -786,6 +869,9 @@ def cmd_fingerprint(argv: Sequence[str]) -> tuple[int, dict]:
 
     issuer_name = opts.get("issuer_name") or ISSUER_NAME
     created = opts.get("created")
+    # L7: the run certs and the canonical all name the log they are for, when this mint was told
+    # one. `_binding` states when that is and why it is not unconditional.
+    binding = _binding(opts)
     base_refs = [{"role": "battery", "id": battery_id}]
     if plan:
         # Section 5.5: the runs of one plan share a `noise_plan` ref, which is what lets a log
@@ -803,7 +889,7 @@ def cmd_fingerprint(argv: Sequence[str]) -> tuple[int, dict]:
             "fingerprint",
             subject=subject,
             recipe=settings[k]["recipe"],
-            body=body,
+            body=_bind(body, binding),
             refs=base_refs,
             seed=seed,
             issuer_name=issuer_name,
@@ -851,7 +937,7 @@ def cmd_fingerprint(argv: Sequence[str]) -> tuple[int, dict]:
         "fingerprint",
         subject=subject,
         recipe=settings[0]["recipe"],
-        body=canonical_body,
+        body=_bind(canonical_body, binding),
         refs=refs,
         seed=seed,
         issuer_name=issuer_name,
@@ -896,6 +982,9 @@ def cmd_fingerprint(argv: Sequence[str]) -> tuple[int, dict]:
         "not_covered": floor_block["not_covered"] if floor_block else None,
         "noise_plan": plan,
         "sensitivity": sensitivity,
+        # L7. `None` says these certs name no log and are therefore replayable into any log that
+        # will take them; it is a disclosure at the moment of minting, not an error.
+        "log_hint": dict(binding) if binding else None,
         "written": written,
         "cert": canonical,
     }
@@ -988,7 +1077,7 @@ def cmd_prereg(argv: Sequence[str]) -> tuple[int, dict]:
         values=(
             "runs", "subject", "recipe", "battery", "key", "out", "window",
             "created", "issuer_name",
-        ) + _RUNNER_VALUES,
+        ) + _RUNNER_VALUES + _BIND_VALUES,
         multi=("nuisance",),
         positional_max=0,
     )
@@ -1047,11 +1136,12 @@ def cmd_prereg(argv: Sequence[str]) -> tuple[int, dict]:
             raise CliError(f"--window takes exactly 'start,end', got {opts['window']!r}")
         body["window"] = {"start": window[0], "end": window[1]}
 
+    binding = _binding(opts)  # L7; `_binding` states when this mint writes body.log_hint
     cert = _sign_cert(
         "prereg",
         subject=subject,
         recipe=recipe,
-        body=body,
+        body=_bind(body, binding),
         refs=[{"role": "battery", "id": battery_id}],
         seed=seed,
         issuer_name=opts.get("issuer_name") or ISSUER_NAME,
@@ -1066,6 +1156,7 @@ def cmd_prereg(argv: Sequence[str]) -> tuple[int, dict]:
         "covers": covers,
         "not_covered": body["not_covered"],
         "nuisance": factors,
+        "log_hint": dict(binding) if binding else None,
         "written": None,
         "cert": cert,
     }
@@ -1080,11 +1171,11 @@ def cmd_prereg(argv: Sequence[str]) -> tuple[int, dict]:
 def cmd_verify(argv: Sequence[str]) -> tuple[int, dict]:
     opts, positional = _parse_options(
         argv,
-        flags=("challenge", "no_confirm") + _RUNNER_FLAGS,
+        flags=("challenge", "no_confirm") + _RUNNER_FLAGS + _BIND_FLAGS,
         values=(
             "ref", "log", "key", "own", "note", "environment", "result_out", "challenge_out",
             "battery", "issuer_name", "created",
-        ) + _RUNNER_VALUES,
+        ) + _RUNNER_VALUES + _BIND_VALUES,
         multi=("diff", "resolve"),
     )
     diff_paths = list(opts["diff"]) + list(positional)
@@ -1227,11 +1318,14 @@ def _challenge(
         # with 2.7's "a forbidden member is absent" moves every committed conformance vector, so
         # it is NOT landed here. The challenger's observed subject and recipe core go into the
         # BODY instead, which is where C3's repair belongs anyway (`verify.challenge_body`).
+        # L7, rule 1 of `_binding`: this command was HANDED a log (--log resolved the two certs
+        # against it), so the challenge names it unless --no-bind-log says not to.
+        binding = _binding(opts, default_log=opts.get("log"))
         cert = _sign_cert(
             "challenge",
             subject={},
             recipe={},
-            body=body,
+            body=_bind(body, binding),
             refs=[{"role": "target", "id": target}, {"role": "own", "id": own}],
             seed=_load_seed(opts["key"]),
             issuer_name=opts.get("issuer_name") or ISSUER_NAME,
@@ -1239,6 +1333,7 @@ def _challenge(
         )
         out["challenge_cert"] = cert
         out["challenge_cert_id"] = cert["id"]
+        out["challenge_log_hint"] = dict(binding) if binding else None
         if opts["challenge_out"]:
             out["challenge_written"] = _write_json(opts["challenge_out"], cert)
     elif opts["challenge_out"] or opts["own"]:
@@ -1288,7 +1383,7 @@ def cmd_battery(argv: Sequence[str]) -> tuple[int, dict]:
             values=(
                 "sweep", "pool", "n", "k", "perm_seed", "tau", "max_family_share", "out",
                 "key", "subject", "recipe", "selected_against", "created", "issuer_name",
-            ),
+            ) + _BIND_VALUES,
             positional_max=0,
         )
         sweep_path = _require(opts, "sweep")
@@ -1337,7 +1432,9 @@ def cmd_battery(argv: Sequence[str]) -> tuple[int, dict]:
     if sub in ("fixed", "pool"):
         opts, _ = _parse_options(
             argv[1:],
-            values=("source", "label", "out", "key", "subject", "recipe", "created", "issuer_name"),
+            values=(
+                "source", "label", "out", "key", "subject", "recipe", "created", "issuer_name",
+            ) + _BIND_VALUES,
             positional_max=0,
         )
         source = _require(opts, "source")
@@ -1388,11 +1485,12 @@ def _maybe_sign_battery(opts: dict, body: dict, payload: dict) -> None:
                 "(schema/battery.json requires the ref)"
             )
         refs.append({"role": "selected_against", "id": selected})
+    binding = _binding(opts)  # L7; `_binding` states when this mint writes body.log_hint
     cert = _sign_cert(
         "battery",
         subject=subject,
         recipe=recipe,
-        body=body,
+        body=_bind(body, binding),
         refs=refs,
         seed=_load_seed(opts["key"]),
         issuer_name=opts.get("issuer_name") or ISSUER_NAME,
@@ -1400,18 +1498,32 @@ def _maybe_sign_battery(opts: dict, body: dict, payload: dict) -> None:
     )
     payload["cert"] = cert
     payload["id"] = cert["id"]
+    payload["log_hint"] = dict(binding) if binding else None
 
 
 # --------------------------------------------------------------------------- log
 
 
-_LOG_VALUES = ("log", "key", "pub", "pin", "out", "to", "pinned_sth", "proof", "timestamp", "tree_size")
+_LOG_VALUES = (
+    "log", "key", "pub", "pin", "out", "to", "pinned_sth", "proof", "timestamp", "tree_size",
+    "created", "issuer_name",
+)
 _LOG_MULTI = ("issuer", "blob")
 # ``log init --open-issuers`` writes the marker that says this log admits any key. Without it, and
 # without ``--issuer``, the log gets an empty roster and admits nobody -- which is a policy. What
 # is no longer reachable is a log with no policy file at all, because that used to admit
 # everything (L10c, ``log.Log.issuer_policy``).
-_LOG_FLAGS = ("open_issuers",)
+#
+# ``log append --require-binding`` refuses a cert that names no log (L7). It is the INVOCATION's
+# rule, not the log's: nothing on disk records that this log wants bound certs, so an operator who
+# forgets the flag once appends an unbound cert and the log cannot tell afterwards. Making it the
+# log's own rule needs a policy statement inside the tree; see ``log.Log.policy_cert``.
+#
+# ``log init --witness-policy`` mints the log's own signed statement of who it admits and appends
+# it at index 0 (L10c residue, C-12 option (a)). It needs ``--key``, because the statement is
+# signed by the LOG's key; with ``--pub`` alone the operator holds that key elsewhere and this
+# process cannot write the statement for them.
+_LOG_FLAGS = ("open_issuers", "require_binding", "witness_policy")
 
 
 def _log_public(opts: dict) -> bytes:
@@ -1478,12 +1590,58 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             log_obj = logmod.Log.init(Path(directory), public, policy)
         except (ValueError, OSError) as exc:
             raise CliError(f"log init: {exc}") from None
+        witness: Optional[str] = None
+        if opts.get("witness_policy"):
+            # L10c residue. The policy goes INTO the tree: a `result` of kind `policy`, signed by
+            # the log's own key, bound to this log, appended at index 0. From here on
+            # `Log.issuer_policy` reads the statement rather than the file, and an edit to
+            # `keys/issuers.json` is a contradiction that refuses every append instead of a
+            # configuration change nobody can attribute.
+            #
+            # It is NOT the default, and that is a decision rather than an oversight: seating a
+            # statement at index 0 moves every entry of every log this CLI has ever built by one,
+            # and section 8.2 pins the layout. Making it mandatory is the [OPERATOR-GATED] half.
+            if not opts["key"]:
+                raise CliError(
+                    "log init --witness-policy needs --key <pem>: the policy statement is signed "
+                    "by the LOG's own key, and --pub alone means this process does not hold it. "
+                    "An operator who keeps the log key offline signs the statement there and "
+                    "appends it with `log append`"
+                )
+            stated = (
+                {"policy": logmod.OPEN_POLICY}
+                if opts.get("open_issuers")
+                else {"policy": "roster", "issuers": [dict(e) for e in issuers]}
+            )
+            seed = _load_seed(opts["key"])
+            cert = _sign_cert(
+                "result",
+                subject={},
+                recipe={},
+                body={
+                    "kind": "policy",
+                    "issuer_policy": stated,
+                    "log_hint": {"log_id": log_obj.log_id()},
+                },
+                refs=[],
+                seed=seed,
+                issuer_name=opts.get("issuer_name") or ISSUER_NAME,
+                created=opts.get("created"),
+            )
+            try:
+                log_obj.append(cert)
+            except logmod.AppendRefused as exc:
+                raise CliError(f"log init --witness-policy: {exc.reason}") from None
+            witness = cert["id"]
+        policy_now = log_obj.issuer_policy()
         return 0, {
             "command": "log init",
             "path": str(log_obj.path),
             "log_id": log_obj.log_id(),
             "public": keys.encode_public(public),
-            "issuer_policy": log_obj.issuer_policy()["policy"],
+            "issuer_policy": policy_now["policy"],
+            "policy_source": policy_now.get("source"),
+            "policy_cert": witness,
             "issuers": [entry["key"] for entry in issuers],
             "size": log_obj.size(),
         }
@@ -1493,6 +1651,15 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             raise CliError("log append needs exactly one cert file")
         log_obj = _open_log(_require(opts, "log"))
         cert = _load_object(positional[0], "log append")
+        hint = cert.get("body", {}).get("log_hint") if isinstance(cert.get("body"), dict) else None
+        bound = isinstance(hint, dict)
+        if opts.get("require_binding") and not bound:
+            raise CliError(
+                "log append --require-binding: this cert carries no body.log_hint, so it names "
+                "no log and can be replayed verbatim into any log that will take it (L7, section "
+                "8.1). Mint it with --bind-log <this log> and sign it again; the binding is "
+                "inside the signed body and cannot be added afterwards"
+            )
         blobs: dict[str, bytes] = {}
         for path in opts["blob"]:
             raw = _read_bytes(path, "--blob")
@@ -1508,6 +1675,8 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             "type": cert.get("type"),
             "size": log_obj.size(),
             "blobs": sorted(blobs),
+            # L7, reported at the one moment an operator can still do something about it.
+            "bound": bound,
         }
 
     if sub == "prove":

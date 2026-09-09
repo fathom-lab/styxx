@@ -712,3 +712,99 @@ test('challengeValidity never throws on hostile input', () => {
   assert.deepStrictEqual(V.challengeValidity({ subject: 'x' }, { subject: [] }), []);
   assert.deepStrictEqual(V.challengeValidity(BF16, {}).sort().length > 0, true);
 });
+
+// ---------------------------------------------------------------------------
+// spec section 8.1 -- the log a cert binds itself to (L7)
+//
+// The defect this exists for: seven entries of a published log were replayed
+// verbatim into a log built on a different key.  All seven appended, byte for
+// byte, and gave the same Merkle root under a different `log_id`, so "this cert
+// is in the log" was a statement about bytes and not about a log.  Until this
+// section existed, the second implementation read a bound cert as unbound, and
+// the two disagreed about whether a cert names its log.
+// ---------------------------------------------------------------------------
+
+const LOG_A = 'sha256:' + '3'.repeat(64);
+const LOG_B = 'sha256:' + '4'.repeat(64);
+
+function boundTo(logId, extra) {
+  const cert = JSON.parse(JSON.stringify(BF16));
+  cert.body = { log_hint: Object.assign({ log_id: logId }, extra || {}) };
+  return cert;
+}
+
+test('a cert naming this log is seated here, and one naming another log is not', () => {
+  assert.strictEqual(V.logBindingReason(boundTo(LOG_A), LOG_A), null);
+  const why = V.logBindingReason(boundTo(LOG_B), LOG_A);
+  console.log('[8.1] wrong log: ' + why);
+  assert.ok(typeof why === 'string' && why.includes(LOG_B) && why.includes(LOG_A));
+  // `locations` is advisory freight beside the binding and decides nothing.
+  assert.strictEqual(
+    V.logBindingReason(boundTo(LOG_A, { locations: ['https://example.invalid/log'] }), LOG_A),
+    null);
+  assert.strictEqual(V.isLogBound(boundTo(LOG_A)), true);
+});
+
+test('an unbound cert is seated by any log, which is what optional costs', () => {
+  // Not a pass mark: it is the pinned LIMIT.  Requiring the field would refuse every
+  // cert already signed, and a cert cannot name a log that does not exist yet, so an
+  // unbound cert is exactly as replayable as it was before the field.
+  assert.strictEqual(V.logBindingReason(BF16, LOG_A), null);
+  assert.strictEqual(V.logBindingReason(BF16, LOG_B), null);
+  assert.strictEqual(V.isLogBound(BF16), false);
+  const nulled = JSON.parse(JSON.stringify(BF16));
+  nulled.body = { log_hint: null };
+  assert.strictEqual(V.logBindingReason(nulled, LOG_A), null);
+  assert.strictEqual(V.isLogBound(nulled), false);
+});
+
+test('a malformed binding is refused rather than ignored', () => {
+  // A binding that cannot be compared with anything is not a weaker binding; it is a
+  // claim shaped like one, and reading it as "unbound" would let an attacker turn a
+  // bound cert loose by breaking the field rather than by removing it.
+  const shapes = [
+    'not-an-object', 42, true, [], ['sha256:' + '3'.repeat(64)],
+    { log_id: 'sha256:zz' },
+    { log_id: '3'.repeat(64) },
+    { log_id: 'sha256:' + '3'.repeat(63) },
+    { log_id: 'sha256:' + 'A'.repeat(64) },
+    { log_id: null },
+    { locations: ['mirror'] },
+    {}
+  ];
+  for (const shape of shapes) {
+    const cert = JSON.parse(JSON.stringify(BF16));
+    cert.body = { log_hint: shape };
+    const why = V.logBindingReason(cert, LOG_A);
+    assert.ok(typeof why === 'string' && why.startsWith('log_hint:'), JSON.stringify(shape));
+  }
+});
+
+test('log_id is the hash of the raw log public key', () => {
+  const pair = crypto.generateKeyPairSync('ed25519');
+  const raw = pair.publicKey.export({ format: 'der', type: 'spki' }).subarray(-32);
+  const expected = 'sha256:' + crypto.createHash('sha256').update(raw).digest('hex');
+  assert.strictEqual(V.logIdFromPublic(raw), expected);
+  assert.strictEqual(V.logIdFromPublic(V.encodePublic(raw)), expected);
+  // A published pair: keys/log.pub and the log_id its own signed tree head carries,
+  // both produced by the other implementation.
+  assert.strictEqual(
+    V.logIdFromPublic('ed25519:FG7r2x9S5_A7hNy4MlGnQQGP1_30lKNSH8v50S9f3OM'),
+    'sha256:88300489aaab498ea197b13fae57c7fb7ba9c23d49cd97be59f5deaa9bae7c4f');
+  assert.throws(() => V.logIdFromPublic('ed25519:' + 'A'.repeat(10)), /decoded/);
+  assert.throws(() => V.logIdFromPublic(Buffer.alloc(31)), TypeError);
+});
+
+test('the binding predicate refuses hostile certs and throws on a bad log id', () => {
+  // The cert is input from the wire: refused, never crashed on.  The log id is the
+  // caller's own pinned key: a malformed one is the caller's defect and is thrown.
+  for (const cert of [null, undefined, 42, 'x', [], {}, { body: null }, { body: 'x' },
+                      { body: [] }, { body: { log_hint: undefined } }]) {
+    assert.strictEqual(V.logBindingReason(cert, LOG_A), null, JSON.stringify(cert) || 'undefined');
+    assert.strictEqual(V.isLogBound(cert), false);
+  }
+  for (const bad of [null, undefined, '', 'sha256:zz', '3'.repeat(64), LOG_A.toUpperCase(), 7,
+                     Buffer.alloc(32)]) {
+    assert.throws(() => V.logBindingReason(boundTo(LOG_A), bad), TypeError);
+  }
+});

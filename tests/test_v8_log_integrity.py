@@ -18,19 +18,33 @@ back as the refusal.
   log (`papers/v8/first_verdict_2026_09_09/log`) under ``tamper`` with ``verified: False``.
   ABSENT is stale and reported; CONTRADICTED is tamper and refused. EXTERNAL-1 is the receipt for
   what an accuser that fires on honest artifacts costs: 0.23 precision, class disabled.
+* **A-META-GAP** — that repair then exempted one key from the comparison BY NAME. ``baseline_gap``
+  resolved the previous comparable fingerprint by scanning the whole log, so it answered later on
+  read than at append and could not be compared; ``meta_disagreement`` skipped it, and a key the
+  checker skips is exactly as rewritable as the census was. The field is index-relative now and
+  the exemption is empty.
 * **L10c** — ``Log.issuers()`` returned ``None`` when ``keys/issuers.json`` was absent and append
   step 2 read ``if roster is not None``. The control is two lines: with a roster present a rogue
   key is refused; delete the file and the same rogue key appends.
+* **L10c residue** — that repair moved the fail-open rather than closing it: ``rm`` was refused
+  and ``echo`` was not. ``{"policy": "open"}`` is eighteen bytes into an unsigned file outside the
+  tree. The policy can now be a signed entry, the tree beats the file, and a file that contradicts
+  the log's own statement refuses every append.
 * **L7** — the seven published entries replayed verbatim into a log built on a DIFFERENT key.
   All seven appended, byte-identical, same Merkle root, different ``log_id``, so "this cert is in
   the log" was not a checkable statement.
+* **L7 residue** — the enforcement was complete and NOTHING MINTED THE FIELD, so no cert this
+  system produced was bound and the replay worked on every one of them. ``--bind-log`` is the
+  mint.
 * **L6** — nothing compared the noise plan's log index against its runs'. Section 7.2 says the
   log index is the proof of order; a plan appended after the runs it governs preregisters
   nothing.
 
 Two limitations are pinned here as tests rather than hidden, because a repair that could not be
-made is a result: ``test_an_unbound_cert_still_replays_verbatim`` and
-``test_the_append_time_metadata_fields_are_not_re_derivable``.
+made is a result: ``test_an_unbound_cert_still_replays_verbatim`` (an UNBOUND cert is exactly as
+replayable as it was, and the mint does not change that for certs already signed) and
+``test_an_unwitnessed_open_marker_still_admits_every_key`` (a log whose tree states no policy
+falls back to the file, and requiring the statement is [OPERATOR-GATED] at §8.2).
 
 Nothing here skips.
 """
@@ -48,6 +62,7 @@ from styxx.v8 import keys as keysmod
 from styxx.v8.jcs import canonical_bytes
 from styxx.v8.log import (
     APPEND_TIME_META_KEYS,
+    DERIVED_META_KEYS,
     OPEN_POLICY,
     AppendRefused,
     Log,
@@ -383,28 +398,81 @@ def test_metadata_cannot_point_a_cert_id_at_another_leaf(tmp_path):
     assert verify_entry(log, 0)[0] is False
 
 
-def test_the_append_time_metadata_fields_are_not_re_derivable(tmp_path):
-    """A LIMITATION, pinned rather than hidden.
+def _first_gap_index(log: Log) -> int:
+    for index in range(log.size()):
+        if "baseline_gap" in log.meta(index):
+            return index
+    raise AssertionError("no entry of this ladder carries a baseline_gap; the attack has no target")
 
-    ``baseline_gap`` is computed from the log as it stood at append: it resolves the previous
-    comparable fingerprint by scanning the whole log, so an entry that had no comparable
-    predecessor when it was appended acquires one as soon as a later comparable fingerprint lands.
-    Re-deriving it on read therefore gives a different and strictly later answer than the file
-    records, and ``meta_disagreement`` passes over it. Those fields are exactly as rewritable as
-    the census was before this repair. Closing it needs the derivation to be index-relative, which
-    is a change to the field's own definition and not to the checker in front of it.
+
+def test_a_rewritten_baseline_gap_is_caught_like_any_other_derived_field(tmp_path):
+    """A-META-GAP. The field that was exempt from the check BY NAME, now derived and compared.
+
+    The exemption was real and its reason was true: ``baseline_gap`` resolved the previous
+    comparable fingerprint by scanning the WHOLE log, so an entry with no comparable predecessor
+    at append acquired one as soon as a later comparable fingerprint landed, and re-deriving on
+    read gave a strictly later answer than the file recorded. Comparing it then would have accused
+    honest logs. But a key ``meta_disagreement`` skips by name is exactly as rewritable as the
+    census was before A-META — an unsigned file outside the tree, no leaf moving, no root
+    changing, ``verify_entry`` returning ``ok``.
+
+    The repair is to the FIELD: ``Log.baseline_gap`` is index-relative, so the answer is the one
+    the appending index produced and does not move when the log grows. The exemption is therefore
+    empty and the field is checked like every other.
     """
     built = ladder(tmp_path / "log")
     log = built["log"]
-    assert APPEND_TIME_META_KEYS == ("baseline_gap",)
-    for index in range(log.size()):
-        stored = log.meta(index)
-        if "baseline_gap" not in stored:
-            continue
-        rewrite_meta(log, index, baseline_gap={"previous_index": 999})
-        assert log.meta_disagreement(index) == []  # the hole, stated
-        assert verify_entry(log, index)[0] is True
-        break
+    assert APPEND_TIME_META_KEYS == ()  # nothing is exempt from the derivation any more
+    assert "baseline_gap" in DERIVED_META_KEYS
+
+    index = _first_gap_index(log)
+    before = log.root()
+    honest = log.meta(index)["baseline_gap"]
+    assert log.derived_meta(index)["baseline_gap"] == honest  # the control
+
+    rewrite_meta(log, index, baseline_gap={**honest, "previous_index": 999, "announced": True})
+
+    assert log.root() == before  # no leaf moved; the file is outside the tree, as it always was
+    reasons = log.meta_disagreement(index)
+    assert len(reasons) == 1
+    assert "metadata says baseline_gap =" in reasons[0]
+    assert "'previous_index': 999" in reasons[0]
+    ok, why = verify_entry(log, index)
+    assert not ok
+    assert "baseline_gap" in why
+
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB, pinned_sth=log.sth(LOG_SEED, TS))
+    assert report["verified"] is False
+    assert any("baseline_gap" in line for line in report["metadata"])
+
+
+def test_the_baseline_gap_a_reader_derives_is_the_one_the_appending_index_produced(tmp_path):
+    """WHY the exemption existed, run as the case that used to break it.
+
+    Entry ``i`` is appended when no comparable fingerprint precedes it, so its gap names the
+    baseline as of index ``i``. A later comparable fingerprint then lands. Under the whole-log
+    scan, re-deriving entry ``i``'s gap picked up that later entry and answered with a baseline
+    that did not exist when ``i`` was appended — a moving number, which is why no checker could
+    compare it. Bounded below ``i``'s own index it does not move, and that is what makes the
+    field checkable rather than the checker lenient.
+    """
+    built = ladder(tmp_path / "log")
+    log = built["log"]
+    index = _first_gap_index(log)
+    at_append = log.meta(index)["baseline_gap"]
+    assert at_append["previous_index"] < index
+
+    # the log grows past that entry: another comparable fingerprint, appended later
+    later = _run_cert(built["battery"], 1, [{"role": "previous", "id": built["canonical"]["id"]}])
+    grew = log.append(later)
+    assert grew > index
+
+    assert log.derived_meta(index)["baseline_gap"] == at_append
+    assert log.derived_meta(index)["baseline_gap"]["previous_index"] < index
+    assert log.meta_disagreement(index) == []
+    for i in range(log.size()):
+        ok, why = verify_entry(log, i)
+        assert ok, why
 
 
 # ================================================================= L10c
@@ -440,7 +508,12 @@ def test_an_empty_roster_admits_nobody_and_that_is_a_policy(tmp_path):
     an operator can make and defend. "The file is not there" is not.
     """
     log = Log.init(tmp_path / "log", LOG_PUB, [])
-    assert log.issuer_policy() == {"policy": "roster", "issuers": []}
+    assert log.issuer_policy() == {
+        "policy": "roster",
+        "issuers": [],
+        "source": "file",       # nothing in the tree states a policy, so the file is all there is
+        "witnessed": False,
+    }
     with pytest.raises(AppendRefused) as exc:
         log.append(F.make_cert("battery", body=F.battery_body("pool-v1")))
     assert "not in the roster" in exc.value.reason
@@ -456,6 +529,8 @@ def test_an_intentionally_open_log_is_a_marker_and_admits_any_key(tmp_path):
     assert log.issuer_policy() == {
         "policy": OPEN_POLICY,
         "reason": "v1 open submission, section 8.3",
+        "source": "file",
+        "witnessed": False,     # the residue: eighteen unsigned bytes, and this says so
     }
     assert log.issuers() is None  # an open log has no roster, and that is not an admission rule
     assert log.append(
@@ -503,7 +578,9 @@ def test_the_cli_can_only_reach_an_open_log_by_asking_for_one(tmp_path):
         ["log", "init", "--log", str(tmp_path / "closed"), "--key", str(pem)]
     )
     assert code == 0 and payload["issuer_policy"] == "roster"
-    assert Log(tmp_path / "closed").issuer_policy() == {"policy": "roster", "issuers": []}
+    assert Log(tmp_path / "closed").issuer_policy() == {
+        "policy": "roster", "issuers": [], "source": "file", "witnessed": False,
+    }
 
     code, payload = climod.run(
         ["log", "init", "--log", str(tmp_path / "open"), "--key", str(pem), "--open-issuers"]
@@ -519,6 +596,245 @@ def test_the_cli_can_only_reach_an_open_log_by_asking_for_one(tmp_path):
     )
     assert code != 0
     assert "two different admission policies" in payload["error"]
+
+
+# ================================================================= L10c residue: the eighteen bytes
+
+
+def policy_statement(log: Log, stated: dict, *, log_id: str = None, label: str = "log-key") -> dict:
+    """The log's own admission policy as a signed entry — C-12 option (a), in one helper.
+
+    A ``result`` of kind ``policy``, signed by the LOG's key (``label``), bound to the log it
+    speaks for. ``label`` and ``log_id`` are parameters so the two forgeries — someone else's key,
+    another log's id — are one argument away from the honest cert.
+    """
+    return F.make_cert(
+        "result",
+        issuer_label=label,
+        subject={},
+        recipe={},
+        refs=[],
+        body={
+            "kind": "policy",
+            "issuer_policy": stated,
+            "log_hint": {"log_id": log_id if log_id is not None else log.log_id()},
+        },
+    )
+
+
+def test_a_log_can_state_its_admission_policy_inside_its_own_tree(tmp_path):
+    """The control for the residue repair: the policy as an entry, not as eighteen unsigned bytes.
+
+    ``keys/issuers.json`` is outside the Merkle tree and signed by nothing, so "this log admits
+    anybody" was a sentence anyone with write access could write. Signed by the log's own key,
+    bound to this log and appended, it has an index, a leaf hash and a signature — and
+    ``issuer_policy`` reads it in preference to the file.
+    """
+    log = fresh(tmp_path / "log")
+    statement = policy_statement(log, {"policy": "roster", "issuers": roster()})
+    at = log.append(statement)  # the log's own key is not in the roster; the bootstrap admits it
+    assert at == 0
+
+    policy = log.issuer_policy()
+    assert policy["policy"] == "roster"
+    assert policy["source"] == "cert" and policy["witnessed"] is True
+    assert policy["cert_index"] == 0 and policy["cert_id"] == statement["id"]
+
+    # THE TREE GOVERNS. Delete the file — L10c's original attack, which refuses every append on a
+    # log that states nothing. Here the policy is an entry, so deleting the cache changes nothing:
+    # an absent file contradicts no statement (the A-META-ABSENT reading), and the roster still
+    # decides.
+    (log.keys_dir / "issuers.json").unlink()
+    assert log._file_policy()["policy"] == "absent"
+    assert log.issuer_policy()["policy"] == "roster"
+    assert log.issuer_policy()["source"] == "cert"
+
+    assert log.append(F.make_cert("battery", body=F.battery_body("pool-v1"))) == 1
+    with pytest.raises(AppendRefused) as exc:
+        log.append(F.make_cert("battery", issuer_label="other", body=F.battery_body("fixed-v1", n=3)))
+    assert "not in the roster" in exc.value.reason
+    assert log.size() == 2
+    for index in range(log.size()):
+        ok, why = verify_entry(log, index)
+        assert ok, why
+
+
+def test_an_open_log_can_say_so_inside_the_tree_and_then_it_admits_anybody(tmp_path):
+    """The open case as a STATEMENT: "this log admits anybody" with an index and a signature.
+
+    The difference from the marker is not what it permits — both admit every key — but who can
+    say it. The file is eighteen bytes anyone with write access can produce; this is the log's own
+    key, bound to this log, at a leaf a reader can cite.
+    """
+    log = Log.init(
+        tmp_path / "log", LOG_PUB, {"policy": OPEN_POLICY, "reason": "v1 open submission"}
+    )
+    statement = policy_statement(
+        log, {"policy": OPEN_POLICY, "reason": "v1 open submission"}
+    )
+    assert log.append(statement) == 0
+    policy = log.issuer_policy()
+    assert policy["policy"] == OPEN_POLICY and policy["witnessed"] is True
+    assert policy["reason"] == "v1 open submission"
+    assert log.append(
+        F.make_cert("battery", issuer_label="other", body=F.battery_body("pool-v1"))
+    ) == 1
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB)
+    assert report["issuer_policy"]["source"] == "cert"
+    assert report["verified"] is True and report["misbehaviour"] == []
+
+
+def test_eighteen_bytes_written_into_issuers_json_now_refuse_every_append(tmp_path):
+    """THE RESIDUE, run as the attack and pinned as the refusal.
+
+    The first L10c repair moved the fail-open rather than closing it: deleting the file was
+    refused, and ``{"policy": "open"}`` — eighteen bytes into an unsigned file outside the tree —
+    admitted every key instead. No predicate over an unsigned file tells the operator who wrote it
+    from the attacker who did.
+
+    With the policy stated inside the tree, that edit is not a configuration change: it is a file
+    contradicting the log's own signature, so the log appends NOTHING until they agree. Refusing
+    everything is the only safe reading — the file is the half anyone with write access can
+    produce, so the disagreement is evidence about the directory rather than a choice between two
+    policies.
+    """
+    log = fresh(tmp_path / "log")
+    log.append(policy_statement(log, {"policy": "roster", "issuers": roster()}))
+    assert log.issuer_policy()["policy"] == "roster"
+    honest = F.make_cert("battery", body=F.battery_body("pool-v1"))
+    assert log.append(honest) == 1
+
+    (log.keys_dir / "issuers.json").write_bytes(b'{"policy": "open"}')
+    assert len(b'{"policy": "open"}') == 18
+
+    policy = log.issuer_policy()
+    assert policy["policy"] == "contradicted"
+    assert policy["cert_index"] == 0
+    assert "'open'" in policy["reason"] and "'roster'" in policy["reason"]
+
+    rogue = F.make_cert("battery", issuer_label="other", body=F.battery_body("fixed-v1", n=3))
+    with pytest.raises(AppendRefused) as exc:
+        log.append(rogue)
+    assert exc.value.reason.startswith("issuer:")
+    assert "contradicts" in exc.value.reason or "appends nothing" in exc.value.reason
+    assert log.size() == 2
+
+    # the roster's own issuer is refused too: this is not "fall back to the stricter policy",
+    # it is "this directory disagrees with itself and nothing goes in"
+    with pytest.raises(AppendRefused):
+        log.append(F.make_cert("battery", body=F.battery_body("fixed-v1", n=4)))
+
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB, pinned_sth=log.sth(LOG_SEED, TS))
+    assert report["verified"] is False
+    assert any("issuers:" in line for line in report["metadata"])
+    assert report["tamper"] == []  # no leaf moved; the entries are exactly as they were
+
+
+def test_a_policy_statement_signed_by_another_key_is_not_this_logs_policy(tmp_path):
+    """The forgery the bootstrap must not admit: the shape without the log's signature.
+
+    ``_is_own_policy_statement`` grants one append that does not consult the policy, so the clause
+    that matters is who signed it. An issuer minting the same body is an issuer making a claim
+    about a log it does not hold, and the roster decides it like anything else.
+    """
+    log = fresh(tmp_path / "log")
+    forged = policy_statement(log, {"policy": OPEN_POLICY}, label="other")
+    with pytest.raises(AppendRefused) as exc:
+        log.append(forged)
+    assert "not in the roster" in exc.value.reason
+
+    # even seated by an admitted issuer, it is not the log's policy: the key is wrong
+    seated = policy_statement(log, {"policy": OPEN_POLICY}, label="issuer")
+    assert log.append(seated) == 0
+    assert log.policy_cert() is None
+    assert log.issuer_policy()["source"] == "file"
+    with pytest.raises(AppendRefused):
+        log.append(F.make_cert("battery", issuer_label="other", body=F.battery_body("pool-v1")))
+
+
+def test_a_policy_statement_naming_another_log_governs_neither(tmp_path):
+    """L7 pointed at the admission rule: "admits anybody" may not be minted once and replayed.
+
+    A statement that did not name its own log would open every log it was appended to, which is
+    the replay attack aimed at the gate instead of at a measurement. It is refused at append by
+    ``_check_log_binding``, and a copy of it seated in a clone is not read as that clone's policy.
+    """
+    first = fresh(tmp_path / "first")
+    # `second` is OPEN, so the roster cannot be what refuses this: the binding is.
+    second = Log.init(tmp_path / "second", SECOND_LOG_PUB, {"policy": OPEN_POLICY})
+    lifted = policy_statement(first, {"policy": OPEN_POLICY}, log_id=first.log_id())
+    with pytest.raises(AppendRefused) as exc:
+        second.append(lifted)
+    assert exc.value.reason.startswith("log_hint:")
+
+    # and written straight into the clone's directory, it still is not the clone's policy
+    second.entry_path(0).parent.mkdir(parents=True, exist_ok=True)
+    second.entry_path(0).write_bytes(canonical_bytes(lifted))
+    second._id_map_cache = None
+    assert second.policy_cert() is None
+    assert second.issuer_policy()["source"] == "file"  # the clone's file, not the lifted statement
+    assert second.issuer_policy()["witnessed"] is False
+
+
+def test_an_unwitnessed_open_marker_still_admits_every_key(tmp_path):
+    """[OPERATOR-GATED], pinned as a test rather than described in a comment.
+
+    A log whose tree states no policy falls back to the file, and there the eighteen-byte marker
+    is exactly as strong as it was: it admits every key and nothing distinguishes the operator who
+    wrote it from anyone else who could write that directory. Refusing it — making the logged
+    statement mandatory — would refuse every append to every open log already running, and it
+    moves section 8.2's layout, which is the operator's signature to give and not this module's.
+
+    What IS closed without their signature: the witnessed form exists, the tree beats the file,
+    and a file contradicting the tree refuses everything
+    (``test_eighteen_bytes_written_into_issuers_json_now_refuse_every_append``). What is not:
+    this.
+    """
+    log = fresh(tmp_path / "log")
+    (log.keys_dir / "issuers.json").write_bytes(b'{"policy": "open"}')
+    policy = log.issuer_policy()
+    assert policy["policy"] == OPEN_POLICY
+    assert policy["source"] == "file" and policy["witnessed"] is False
+    assert log.append(
+        F.make_cert("battery", issuer_label="other", body=F.battery_body("pool-v1"))
+    ) == 0
+
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB)
+    assert report["issuer_policy"]["witnessed"] is False
+    assert report["verified"] is True  # a configuration is not an accusation (EXTERNAL-1)
+
+
+def test_the_cli_mints_the_policy_statement_only_when_it_holds_the_log_key(tmp_path):
+    """``log init --witness-policy``: the mint, and the half of it that needs the operator.
+
+    The statement is signed by the LOG's key. With ``--key`` this process holds it and writes the
+    statement at index 0; with ``--pub`` the operator keeps that key elsewhere, and inventing one
+    is not something this command can do for them.
+    """
+    pem = tmp_path / "log.pem"
+    assert climod.run(["key", "generate", "--out", str(pem)])[0] == 0
+
+    code, payload = climod.run([
+        "log", "init", "--log", str(tmp_path / "witnessed"), "--key", str(pem),
+        "--open-issuers", "--witness-policy",
+    ])
+    assert code == 0, payload
+    assert payload["issuer_policy"] == OPEN_POLICY
+    assert payload["policy_source"] == "cert"
+    assert payload["policy_cert"] and payload["size"] == 1
+
+    log = Log(tmp_path / "witnessed")
+    assert log.policy_cert()[0] == 0
+    assert verify_entry(log, 0)[0] is True
+
+    pub = tmp_path / "log.pub"
+    pub.write_bytes((tmp_path / "witnessed" / "keys" / "log.pub").read_bytes())
+    code, payload = climod.run([
+        "log", "init", "--log", str(tmp_path / "unwitnessed"), "--pub", str(pub),
+        "--open-issuers", "--witness-policy",
+    ])
+    assert code != 0
+    assert "--witness-policy needs --key" in payload["error"]
 
 
 # ================================================================= L7
@@ -627,6 +943,116 @@ def test_an_unbound_cert_still_replays_verbatim(tmp_path):
 
     report = mirror(second.path, tmp_path / "dst", SECOND_LOG_PUB)
     assert report["log_binding"] == {"bound": 0, "unbound": 1}
+
+
+def test_the_cli_mints_the_binding_and_the_replay_is_then_refused(tmp_path):
+    """L7's other half: enforcement was complete and NOTHING MINTED THE FIELD.
+
+    Every rule above was already in place — refused at append, refused on read, counted by
+    ``mirror`` — and no CLI path wrote ``body.log_hint``, so no cert produced by this system was
+    bound and the replay went on working on every one of them. A gate nothing ever passes through
+    is not a closed attack; it is an unreachable branch.
+
+    ``--bind-log`` is the mint, on the commands that sign a cert. The same replay that succeeds on
+    the unbound cert below is refused on the bound one, and the only difference between the two
+    invocations is the flag.
+    """
+    pem = tmp_path / "issuer.pem"
+    code, key_payload = climod.run(["key", "generate", "--out", str(pem)])
+    assert code == 0, key_payload
+    public = key_payload["public"]
+
+    log_pem = tmp_path / "log.pem"
+    assert climod.run(["key", "generate", "--out", str(log_pem)])[0] == 0
+    home = tmp_path / "home"
+    code, payload = climod.run(
+        ["log", "init", "--log", str(home), "--key", str(log_pem), "--issuer", f"lab={public}"]
+    )
+    assert code == 0, payload
+    home_id = payload["log_id"]
+
+    pool = tmp_path / "pool.json"
+    pool.write_bytes(json.dumps(F.battery_items(4)).encode("utf-8"))
+    spec = tmp_path / "spec.json"
+    spec.write_bytes(json.dumps({
+        "subject": copy.deepcopy(F.WEIGHTS_SUBJECT), "recipe": {},
+    }).encode("utf-8"))
+
+    def mint(out: Path, *extra: str) -> dict:
+        code, payload = climod.run([
+            "battery", "pool", "--source", str(pool), "--key", str(pem),
+            "--subject", str(spec), "--created", F.CREATED, "--out", str(out), *extra,
+        ])
+        assert code == 0, payload
+        return payload
+
+    unbound = mint(tmp_path / "unbound.json")
+    bound_payload = mint(tmp_path / "bound.json", "--bind-log", str(home))
+
+    assert unbound["log_hint"] is None
+    assert bound_payload["log_hint"] == {"log_id": home_id}
+    assert bound_payload["cert"]["body"]["log_hint"] == {"log_id": home_id}
+
+    # both belong in the log they were minted for
+    for path in (tmp_path / "unbound.json", tmp_path / "bound.json"):
+        code, appended = climod.run(["log", "append", str(path), "--log", str(home)])
+        assert code == 0, appended
+    assert climod.run(["log", "append", str(tmp_path / "bound.json"), "--log", str(home)])[0] != 0
+
+    # THE REPLAY, verbatim, into a log on a different key
+    other = tmp_path / "other"
+    code, payload = climod.run(
+        ["log", "init", "--log", str(other), "--key", str(log_pem), "--open-issuers"]
+    )
+    assert code == 0, payload
+    Log(other).keys_dir.joinpath("log.pub").write_bytes(
+        keysmod.encode_public(SECOND_LOG_PUB).encode("utf-8")
+    )
+    assert Log(other).log_id() != home_id
+
+    code, appended = climod.run(["log", "append", str(tmp_path / "unbound.json"), "--log", str(other)])
+    assert code == 0, appended            # the limitation, unchanged: an unbound cert replays
+    assert appended["bound"] is False
+
+    code, refused = climod.run(["log", "append", str(tmp_path / "bound.json"), "--log", str(other)])
+    assert code != 0
+    assert "log_hint:" in refused["error"] and home_id in refused["error"]
+    assert Log(other).size() == 1
+
+
+def test_log_append_can_require_a_binding_the_mint_did_not_write(tmp_path):
+    """The switch for an operator who has decided their log takes bound certs only.
+
+    It is the INVOCATION's rule and not the log's, and that limit is the point of the test: a log
+    that wants bound certs cannot say so on disk, so an operator who forgets the flag once appends
+    an unbound cert and nothing afterwards records that they meant otherwise. Making it the log's
+    own rule needs the policy statement of ``Log.policy_cert`` to carry it, and that is not landed.
+    """
+    pem = tmp_path / "log.pem"
+    assert climod.run(["key", "generate", "--out", str(pem)])[0] == 0
+    root = tmp_path / "log"
+    code, payload = climod.run(
+        ["log", "init", "--log", str(root), "--key", str(pem), "--open-issuers"]
+    )
+    assert code == 0, payload
+
+    plain = tmp_path / "plain.json"
+    plain.write_bytes(canonical_bytes(F.make_cert("battery", body=F.battery_body("pool-v1"))))
+    code, refused = climod.run(
+        ["log", "append", str(plain), "--log", str(root), "--require-binding"]
+    )
+    assert code != 0
+    assert "carries no body.log_hint" in refused["error"]
+    assert Log(root).size() == 0
+
+    bound_cert = bound("battery", payload["log_id"])
+    path = tmp_path / "bound.json"
+    path.write_bytes(canonical_bytes(bound_cert))
+    code, appended = climod.run(
+        ["log", "append", str(path), "--log", str(root), "--require-binding"]
+    )
+    assert code == 0, appended
+    assert appended["bound"] is True
 
 
 # ================================================================= L6
