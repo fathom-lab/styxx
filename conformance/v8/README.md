@@ -8,7 +8,7 @@ Every count lives in `index.json` and `mutation_coverage.json`; none is written 
 
 | file | what it is |
 |---|---|
-| `index.json` | one digest over everything (`set_sha256`), the family files by sha256, the blob store by sha256, the entrypoint table, the honest remainder, and provenance outside the digest |
+| `index.json` | one digest over everything (`set_sha256`), the family files by sha256, the blob store by sha256, the entrypoint table, the honest remainder, the retirement ledger — all inside the digest — and provenance about the tree outside it |
 | `vectors/<family>.json` | one file per family, vectors sorted by id |
 | `blobs.json` | every value a vector names, keyed by sha256, base64 of its RFC 8785 canonical bytes |
 | `recorder.py` | the pytest plugin that turns every call into a `styxx.v8` entrypoint into a record while the sources run |
@@ -55,7 +55,8 @@ canonical bytes rather than by Python equality. No entrypoint in the set disting
 ## How to consume it
 
 1. Read `index.json`; recompute `set_sha256 = sha256(canonical_bytes(index minus set_sha256 minus
-   provenance))` and compare.
+   provenance))` and compare. `retired` is inside that core; `provenance` is the only key outside
+   it.
 2. For each family file, compare its bytes' sha256 to `index.families[name].sha256`; the same for
    `blobs.json`.
 3. For each vector, resolve every blob it names, check each hashes to its key, and re-derive `id`
@@ -115,14 +116,58 @@ The shape of the path is what keeps it from becoming an override:
   test that was rewritten.
 * **A moved core nobody named is still a refusal**, with the same message and the same exit code
   as before this path existed.
-* **The retirement is recorded, not just permitted.** `index.provenance.retired.with_reason`
-  carries the id, the old outcome, the new one, the sources that produced it, the diagnosis and
-  the operator's reason. Ordinary retirements sit in `retired.input_churn` in the same block,
-  carrying the address alone: the two are never merged. Both halves are ledgers — every run
-  carries the previous one forward, or the record would be erased by the next regeneration — and
-  an address the sources start producing again leaves `input_churn`, while nothing leaves
-  `with_reason`. The whole block is provenance, outside `set_sha256`: recording a retirement does
-  not change the identity of the set.
+* **An undiagnosed drop cannot be retired at all.** A vector that cannot be replayed against the
+  tree that dropped it has no old answer and no new one, so there is nothing a reason could be
+  about. Naming one is refused, and the run is refused on it independently of `--retire`: the
+  repair is to make it replayable or to find the defect in the vector. Until this round it was
+  the *easiest* thing in the set to retire, because it was pooled with measured behaviour changes.
+* **The retirement is recorded, not just permitted.** `index.retired.with_reason` carries the id,
+  the old outcome, the new one, the sources that produced it, the diagnosis and the operator's
+  reason. Ordinary retirements sit in `retired.input_churn` in the same block, carrying the
+  address alone: the two are never merged. Both halves are ledgers — every run carries the
+  previous one forward, or the record would be erased by the next regeneration — and an address
+  the sources start producing again leaves `input_churn`, while nothing leaves `with_reason`.
+
+### Where the ledger lives, and what protects it
+
+The ledger sits **inside** `set_sha256`, at `index.retired`. It used to sit in `index.provenance`,
+which is written after the digest is computed, and the consequence was demonstrated rather than
+feared: deleting every `with_reason` row and every `input_churn` row left `set_sha256` unchanged,
+so a set with its whole history removed still verified. Recording a retirement now moves the
+identity of the set, and so does deleting one.
+
+The rest of `provenance` stays outside the digest for a different reason. Those entries are file
+hashes of the implementation, the tooling and the sources, plus the per-family replay counts: they
+describe the *tree that produced the set*, and a comment added to `floor.py` moves them without
+moving a vector. The ledger is not that kind of thing — it is content, and nothing else in the
+repository witnesses it.
+
+The cost, stated: `set_sha256` is a function of the sources, of `styxx.v8`, **and** of the ledger
+the committed set carries forward, so generating this set into an empty directory yields a
+different digest than regenerating it in place.
+
+And the limit, which is the same limit the rest of this repository keeps running into: a digest
+inside a file does not protect that file from someone editing the file. Delete a row, recompute
+`set_sha256` over the edited core, and the index is self-consistent again. Two things outside the
+index catch that, and they are the whole of the protection — `mutation_coverage.json` pins the
+`set_sha256` it measured and `tests/test_v8_conformance.py` fails when they disagree, and the
+previous bytes are in git. The in-file digest catches the careless edit; only the commit history
+catches the careful one.
+
+A second erasure was demonstrated and closed the same way. The generator used to read the ledger
+only when the directory already held vectors, so deleting `index.json` — or `vectors/` — made the
+next run write the default empty ledger with no refusal. It reads the ledger on its own now, before
+the sources are run, and a directory that still holds pieces of a set but has lost the index that
+carried its history is refused. An empty directory is still a new set, because a directory with
+nothing in it has no history to erase.
+
+**`input_churn` is a ledger, not a leak, and the argument is arithmetic.** It is keyed by vector id,
+so an address enters at most once however often it is dropped and re-added, and it is bounded by
+the number of distinct addresses the sources have ever produced — not by the number of runs and not
+by elapsed time. It is kept in full: pruning it would buy back a fraction of the set's bytes and
+cost the only question it answers, which is whether an address a reader remembers was ever here.
+Its honest limit is that a churn row carries the address and the entrypoint and nothing else, so it
+is a receipt for a deletion rather than a copy of what was deleted.
 
 The limit, stated rather than papered over: the tool checks that a reason is **present**, never
 that it is **true**. It can prove which address moved, from what to what, and that a human named it
@@ -295,7 +340,7 @@ between the two runs; both new drops still reproduce, so no answer moved with th
 built two vectors more than this one for the same reason.
 
 **What was retired, and why.** The full rows, with both outcomes and the sources, are in
-`index.provenance.retired.with_reason`:
+`index.retired.with_reason`:
 
 | retired | kind | reason recorded |
 |---|---|---|

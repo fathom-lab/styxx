@@ -1,0 +1,165 @@
+=== floor2.py ===
+log            : C:\Users\heyzo\clawd\wt\v8\papers\v8\first_verdict_2026_09_09\log
+canonical cert : entry 6  sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3
+runs           :
+  run 0  entry 6  batch_size=1   item_order=canonical
+  run 1  entry 2  batch_size=8   item_order=perm11
+  run 2  entry 3  batch_size=32  item_order=perm12
+  run 3  entry 4  batch_size=1   item_order=perm11
+  run 4  entry 5  batch_size=1   item_order=perm12
+
+channel exact
+  pair 0 (run 0, run 1)  mine=0.03125         stored=0.03125         AGREE
+  pair 1 (run 0, run 2)  mine=0.015625        stored=0.015625        AGREE
+  pair 2 (run 0, run 3)  mine=0.0             stored=0               AGREE
+  pair 3 (run 0, run 4)  mine=0.0             stored=0               AGREE
+  pair 4 (run 1, run 2)  mine=0.046875        stored=0.046875        AGREE
+  pair 5 (run 1, run 3)  mine=0.03125         stored=0.03125         AGREE
+  pair 6 (run 1, run 4)  mine=0.03125         stored=0.03125         AGREE
+  pair 7 (run 2, run 3)  mine=0.015625        stored=0.015625        AGREE
+  pair 8 (run 2, run 4)  mine=0.015625        stored=0.015625        AGREE
+  pair 9 (run 3, run 4)  mine=0.0             stored=0               AGREE
+  floor            mine=0.046875        stored=0.046875        AGREE
+  alpha_single     mine=0.09090909090909091  stored=0.09090909090909091  AGREE
+
+channel seqlp
+  pair 0 (run 0, run 1)  mine=0.036056444     stored=0.036056444     AGREE
+  pair 1 (run 0, run 2)  mine=0.017551866     stored=0.017551866     AGREE
+  pair 2 (run 0, run 3)  mine=0.0             stored=0               AGREE
+  pair 3 (run 0, run 4)  mine=0.0             stored=0               AGREE
+  pair 4 (run 1, run 2)  mine=0.036070694     stored=0.036070694     AGREE
+  pair 5 (run 1, run 3)  mine=0.036056444     stored=0.036056444     AGREE
+  pair 6 (run 1, run 4)  mine=0.036056444     stored=0.036056444     AGREE
+  pair 7 (run 2, run 3)  mine=0.017551866     stored=0.017551866     AGREE
+  pair 8 (run 2, run 4)  mine=0.017551866     stored=0.017551866     AGREE
+  pair 9 (run 3, run 4)  mine=0.0             stored=0               AGREE
+  floor            mine=0.036070694     stored=0.036070694     AGREE
+  alpha_single     mine=0.09090909090909091  stored=0.09090909090909091  AGREE
+
+channel topk
+  pair 0 (run 0, run 1)  mine=1.745297088     stored=1.745297088     AGREE
+  pair 1 (run 0, run 2)  mine=0.813925214     stored=0.813925214     AGREE
+  pair 2 (run 0, run 3)  mine=0.0             stored=0               AGREE
+  pair 3 (run 0, run 4)  mine=0.0             stored=0               AGREE
+  pair 4 (run 1, run 2)  mine=2.1402339       stored=2.1402339       AGREE
+  pair 5 (run 1, run 3)  mine=1.745297088     stored=1.745297088     AGREE
+  pair 6 (run 1, run 4)  mine=1.745297088     stored=1.745297088     AGREE
+  pair 7 (run 2, run 3)  mine=0.813925214     stored=0.813925214     AGREE
+  pair 8 (run 2, run 4)  mine=0.813925214     stored=0.813925214     AGREE
+  pair 9 (run 3, run 4)  mine=0.0             stored=0               AGREE
+  floor            mine=2.1402339       stored=2.1402339       AGREE
+  alpha_single     mine=0.09090909090909091  stored=0.09090909090909091  AGREE
+
+standardized_max (section 5.7)
+  run 0  mine=0.0            exceeds=False  stored=0              exceeds=False  AGREE
+  run 1  mine=0.999604942    exceeds=False  stored=0.999604942    exceeds=False  AGREE
+  run 2  mine=0.486596293    exceeds=False  stored=0.486596293    exceeds=False  AGREE
+  run 3  mine=0.0            exceeds=False  stored=0              exceeds=False  AGREE
+  run 4  mine=0.0            exceeds=False  stored=0              exceeds=False  AGREE
+
+  alpha_overall    mine=0.0  stored=0  AGREE
+
+readings the specification does not choose between
+  seqlp/roles_item_canary    floor=0.036070694
+                             distances=[0.036056444, 0.017551866, 0.0, 0.0, 0.036070694, 0.036056444, 0.036056444, 0.017551866, 0.017551866, 0.0]
+  topk/nested                floor=1.875141894
+                             distances=[1.541589419, 0.709569573, 0.0, 0.0, 1.875141894, 1.541589419, 1.541589419, 0.709569573, 0.709569573, 0.0]
+  topk/both_positions_only   floor=2.1402339
+                             distances=[1.745297088, 0.813925214, 0.0, 0.0, 2.1402339, 1.745297088, 1.745297088, 0.813925214, 0.813925214, 0.0]
+OVERALL: all 30 pairwise distances + 3 floors agree to the last digit
+wrote C:\Users\heyzo\clawd\wt\v8\papers\v8\floor_second_implementation_2026_09_09\floor2_result.json
+exit=0
+
+=== recomputable.py ===
+entry 2  run 1  items=64  exact.hash RECOMPUTES
+entry 3  run 2  items=64  exact.hash RECOMPUTES
+entry 4  run 3  items=64  exact.hash RECOMPUTES
+entry 5  run 4  items=64  exact.hash RECOMPUTES
+entry 6  run 0  items=64  exact.hash RECOMPUTES
+
+raw payload per item, as stored: ['item_id', 'n_generated', 'output_sha256', 'output_text', 'role', 'seq_logprob', 'token_ids', 'token_ids_sha256', 'topk']
+  exact needs token_ids           -> present (3 ids on item 0)
+  seqlp needs seq_logprob         -> present (-0.18463053567393217)
+  topk  needs per-position ids+lps-> present (3 positions, k=5)
+
+blobs/ directory contents: []  (body.items_blob not used; items are inline)
+
+VERDICT: the floor is recomputable from the stored bytes. 0 mismatches.
+exit=0
+
+=== ambiguity_probe.py ===
+== the bf16 canonical in fp_bf16/ against the log's entry 6 ==
+   same cert id : True
+   bf16 id      : sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3
+   fp16 id      : sha256:d92ebe2089f9de0cc3e634a9a89751b97e9033025c4280c2a1c9e1e1cedf0f18
+   fp16 body keys: ['channels', 'items', 'nuisance', 'redacted', 'run_index', 'tier']
+
+== the published diff, recomputed here ==
+   exact  mine=0.0625         published=0.0625         AGREE
+   seqlp  mine=0.058564664    published=0.058564664    AGREE
+   topk   mine=1.407087824    published=1.407087824    AGREE
+
+== AMBIGUITY-1: topk, flat mean over (item,position) vs nested mean ==
+   flat (item,pos)          floor=2.1402339      diff=1.407087824    ratio=0.657445817 -> same
+   mean of per-item means   floor=1.875141894    diff=1.29988493     ratio=0.693219502 -> same
+   verdict identical under both readings: True
+
+== AMBIGUITY-2: positions present on one side only ==
+   one-sided positions across the 10 floor pairs : 0
+   one-sided positions on the bf16/fp16 diff     : 0
+   -> the clause is unreached on these bytes; the ambiguity is untested here
+
+== AMBIGUITY-3: role filter ==
+   roles present in this battery: {'item': 64}
+   -> only 'item'; the filter is unreached on these bytes
+
+== is the diff even well-defined under section 3.2? ==
+   bf16 topk_forced_on : None
+   fp16 topk_forced_on : None
+   bf16 item has prefix_token_ids : False
+   fp16 item has prefix_token_ids : False
+   identity fields differing: []
+   precision bf16='bf16' fp16='fp16'
+
+== section 3.2 comparability, applied ==
+   'two certs' topk are comparable iff their topk_forced_on values are equal
+    and are not "self", or both are "self" and the two sides' greedy outputs
+    are token-identical.'
+
+   bf16 vs fp16 greedy outputs token-identical : False
+   -> under the 'self' branch this comparison is topk-INCONCLUSIVE and
+      section 6 says no topk number is printed. RESULT printed 1.407087824.
+
+   the same rule applied to the ten floor pairs:
+     pair 0 (run 0, run 1) token-identical=False topk d=1.745297088   <- inconclusive under the rule
+     pair 1 (run 0, run 2) token-identical=False topk d=0.813925214   <- inconclusive under the rule
+     pair 2 (run 0, run 3) token-identical=True  topk d=0.0
+     pair 3 (run 0, run 4) token-identical=True  topk d=0.0
+     pair 4 (run 1, run 2) token-identical=False topk d=2.1402339   <- inconclusive under the rule
+     pair 5 (run 1, run 3) token-identical=False topk d=1.745297088   <- inconclusive under the rule
+     pair 6 (run 1, run 4) token-identical=False topk d=1.745297088   <- inconclusive under the rule
+     pair 7 (run 2, run 3) token-identical=False topk d=0.813925214   <- inconclusive under the rule
+     pair 8 (run 2, run 4) token-identical=False topk d=0.813925214   <- inconclusive under the rule
+     pair 9 (run 3, run 4) token-identical=True  topk d=0.0
+   topk floor over only the comparable pairs = 0.0  (published: 2.1402339)
+exit=0
+
+=== test_floor2.py ===
+exact
+  1 of 4 items differs -> 0.25                         ok   got=0.25 want=0.25
+  identical -> 0.0                                     ok   got=0.0 want=0.0
+  anchor role excluded from exact                      ok   got=0.25 want=0.25
+seqlp
+  mean(|0.5|,|0.25|) -> 0.375                          ok   got=0.375 want=0.375
+topk / union-of-vocab alignment
+  absent token takes lp=-20                            ok   got=38.1 want=38.1
+  single item, single position                         ok   got=38.1 want=38.1
+topk / a position present on one side only
+  one-sided position costs 5*20 and is counted         ok   got=69.05 want=69.05
+  literal 'positions present on both sides' drops it   ok   got=38.1 want=38.1
+topk / flat vs nested differ when items have unequal position counts
+  flat  = (1+1+4)/3                                    ok   got=2.0 want=2.0
+  nested= (1 + 4)/2                                    ok   got=2.5 want=2.5
+
+all unit tests pass
+exit=0

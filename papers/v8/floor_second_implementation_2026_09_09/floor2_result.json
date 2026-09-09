@@ -1,0 +1,335 @@
+{
+  "canonical_cert_id": "sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3",
+  "canonical_entry_index": 6,
+  "computed": {
+    "exact": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        0.03125,
+        0.015625,
+        0.0,
+        0.0,
+        0.046875,
+        0.03125,
+        0.03125,
+        0.015625,
+        0.015625,
+        0.0
+      ],
+      "floor": 0.046875,
+      "pairs": 10,
+      "runs": 5
+    },
+    "seqlp": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        0.036056444,
+        0.017551866,
+        0.0,
+        0.0,
+        0.036070694,
+        0.036056444,
+        0.036056444,
+        0.017551866,
+        0.017551866,
+        0.0
+      ],
+      "floor": 0.036070694,
+      "pairs": 10,
+      "runs": 5
+    },
+    "seqlp/roles_item_canary": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        0.036056444,
+        0.017551866,
+        0.0,
+        0.0,
+        0.036070694,
+        0.036056444,
+        0.036056444,
+        0.017551866,
+        0.017551866,
+        0.0
+      ],
+      "floor": 0.036070694,
+      "pairs": 10,
+      "runs": 5
+    },
+    "topk": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        1.745297088,
+        0.813925214,
+        0.0,
+        0.0,
+        2.1402339,
+        1.745297088,
+        1.745297088,
+        0.813925214,
+        0.813925214,
+        0.0
+      ],
+      "floor": 2.1402339,
+      "pairs": 10,
+      "runs": 5
+    },
+    "topk/both_positions_only": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        1.745297088,
+        0.813925214,
+        0.0,
+        0.0,
+        2.1402339,
+        1.745297088,
+        1.745297088,
+        0.813925214,
+        0.813925214,
+        0.0
+      ],
+      "floor": 2.1402339,
+      "pairs": 10,
+      "runs": 5
+    },
+    "topk/nested": {
+      "alpha_single": 0.09090909090909091,
+      "distances": [
+        1.541589419,
+        0.709569573,
+        0.0,
+        0.0,
+        1.875141894,
+        1.541589419,
+        1.541589419,
+        0.709569573,
+        0.709569573,
+        0.0
+      ],
+      "floor": 1.875141894,
+      "pairs": 10,
+      "runs": 5
+    }
+  },
+  "log_dir": "C:\\Users\\heyzo\\clawd\\wt\\v8\\papers\\v8\\first_verdict_2026_09_09\\log",
+  "nuisance": {
+    "0": {
+      "batch_size": 1,
+      "driver": "596.08",
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "item_order": "canonical",
+      "item_order_sha256": "0e25a46ee7ff6075f85eebb1bd1ce697d1fda9e202bd3a40613a29b5b7470c3d"
+    },
+    "1": {
+      "batch_size": 8,
+      "driver": "596.08",
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "item_order": "perm11",
+      "item_order_sha256": "128a5c9927938eef4342d9fe9609cdaa74aeeeaf475fc59cffd96ae988f2cca7"
+    },
+    "2": {
+      "batch_size": 32,
+      "driver": "596.08",
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "item_order": "perm12",
+      "item_order_sha256": "6426c475b029fbe559692cf5b782c1903d85aba44ac7a5537bc4d83416c3472f"
+    },
+    "3": {
+      "batch_size": 1,
+      "driver": "596.08",
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "item_order": "perm11",
+      "item_order_sha256": "128a5c9927938eef4342d9fe9609cdaa74aeeeaf475fc59cffd96ae988f2cca7"
+    },
+    "4": {
+      "batch_size": 1,
+      "driver": "596.08",
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "item_order": "perm12",
+      "item_order_sha256": "6426c475b029fbe559692cf5b782c1903d85aba44ac7a5537bc4d83416c3472f"
+    }
+  },
+  "pair_order": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "run_index_to_entry_index": {
+    "0": 6,
+    "1": 2,
+    "2": 3,
+    "3": 4,
+    "4": 5
+  },
+  "standardized_max": [
+    {
+      "exceeds": false,
+      "run": 0,
+      "standardized_max": 0.0
+    },
+    {
+      "exceeds": false,
+      "run": 1,
+      "standardized_max": 0.999604942
+    },
+    {
+      "exceeds": false,
+      "run": 2,
+      "standardized_max": 0.486596293
+    },
+    {
+      "exceeds": false,
+      "run": 3,
+      "standardized_max": 0.0
+    },
+    {
+      "exceeds": false,
+      "run": 4,
+      "standardized_max": 0.0
+    }
+  ],
+  "stored": {
+    "alpha_overall": 0,
+    "alpha_overall_method": "section 5.7: over the R floor runs, each run's standardized maximum channel distance to the reference run is computed under 'standardization' and alpha_overall is the fraction of those runs that exceed the floor, over the channel set actually evaluated; no new runs are used",
+    "covers": [
+      "batch_size",
+      "item_order"
+    ],
+    "not_covered": [
+      "hardware.count",
+      "hardware.driver",
+      "hardware.gpu",
+      "runtime.backend",
+      "runtime.framework",
+      "runtime.version"
+    ],
+    "per_channel": {
+      "exact": {
+        "alpha_single": 0.09090909090909091,
+        "distances": [
+          0.03125,
+          0.015625,
+          0,
+          0,
+          0.046875,
+          0.03125,
+          0.03125,
+          0.015625,
+          0.015625,
+          0
+        ],
+        "floor": 0.046875,
+        "pairs": 10,
+        "runs": 5
+      },
+      "seqlp": {
+        "alpha_single": 0.09090909090909091,
+        "distances": [
+          0.036056444,
+          0.017551866,
+          0,
+          0,
+          0.036070694,
+          0.036056444,
+          0.036056444,
+          0.017551866,
+          0.017551866,
+          0
+        ],
+        "floor": 0.036070694,
+        "pairs": 10,
+        "runs": 5
+      },
+      "topk": {
+        "alpha_single": 0.09090909090909091,
+        "distances": [
+          1.745297088,
+          0.813925214,
+          0,
+          0,
+          2.1402339,
+          1.745297088,
+          1.745297088,
+          0.813925214,
+          0.813925214,
+          0
+        ],
+        "floor": 2.1402339,
+        "pairs": 10,
+        "runs": 5
+      }
+    },
+    "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+    "runs": [
+      "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+      "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+      "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+      "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9"
+    ],
+    "standardization": "max over the evaluated channels of d_c / floor_c, d_c the distance from the reference run; a channel whose floor_c is 0 contributes no ratio and is an exceedance whenever d_c > 0",
+    "standardized_max": [
+      {
+        "exceeds": false,
+        "run": 0,
+        "standardized_max": 0
+      },
+      {
+        "exceeds": false,
+        "run": 1,
+        "standardized_max": 0.999604942
+      },
+      {
+        "exceeds": false,
+        "run": 2,
+        "standardized_max": 0.486596293
+      },
+      {
+        "exceeds": false,
+        "run": 3,
+        "standardized_max": 0
+      },
+      {
+        "exceeds": false,
+        "run": 4,
+        "standardized_max": 0
+      }
+    ]
+  }
+}

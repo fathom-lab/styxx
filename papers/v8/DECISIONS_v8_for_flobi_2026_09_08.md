@@ -6,6 +6,11 @@ ids that raise it. Full texts: `REVIEW_v8_spec_2026_09_07.md`. The amended draft
 already implements every recommendation marked **R** below and marks each spot `[OPERATOR-GATED …]`, so a
 "yes to all recommendations" is one commit and no edits. Nothing is committed until you say so.
 
+Two questions were added after that count and are not in it: **Q9** (2026-09-08, the three decisions that
+expire) and **Q10** (2026-09-09, the four that the emptying of the class-two roster creates). Counting the
+draft's marked blocks rather than this sheet's items, **twenty-six blocks stand operator-gated** as of
+2026-09-09.
+
 Six of these are blockers: entry #0's type (Q3), floor scope (Q4a), the floor quantum (Q4b), the identity
 verdict (Q4c), the depth GPU (Q6c), and cross-hardware canaries (Q4a again). The rest can ship as written.
 
@@ -168,6 +173,154 @@ Signature schemes have a policy horizon, and current guidance points at the firs
 2030s for the family this design uses. The Merkle structure is unaffected and survives intact. The
 question these three answer is whether, on that day, the log still proves anything — and the answer
 is decided now or not at all.
+
+---
+
+## Q10 — the four questions the empty class-two roster creates · B-SCHEDULE, B-XLOG, B-FLOOR3, B-CENSUS · added 2026-09-09
+
+`THE_BOUNDARY_2026_09_09.md` split the surviving defects into what a check over logged bytes can reach
+and what nothing can. **The second class is now empty** — all four members were reclassified, the last
+two against this lab's own published log (`papers/v8/class_two_empty_2026_09_09/`, three scripts that
+read stored entry bytes and import no styxx). Every one of the four errors was the same: the argument
+examined one certificate instead of the log the certificate sits in. The repairs are written into the
+spec as A-61 to A-65. Four decisions inside them are yours, and each is marked in place.
+**With these, twenty-six blocks in the draft stand operator-gated.**
+
+- **(a) Plans already logged without a schedule.** *B-SCHEDULE, §5.1.* A noise plan now carries the
+  assignment of every run, so the reference run — the one whose values become the subject's
+  fingerprint — is fixed before the data exists. The published plan does not: two factors at three
+  values and five runs admit **57,600 schedules that satisfy it, and it names none of them**, so the
+  reference was chosen from nine cells after the plan was signed, by the party the fingerprint is
+  about. **R:** the requirement binds from the version that adopts it; a floor whose plan predates the
+  field appends and prints `schedule: absent (plan predates the field)`. The alternative — require it
+  everywhere — makes the lab's own only real floor unappendable to a fresh log and costs a
+  re-measurement for a repair that fixes nothing already logged. Second half, same decision: a
+  schedule may **not** leave a position free, because one `any` per factor hands the choice back.
+- **(b) The half of the snapshot check that has an honest failure mode.** *B-XLOG, §2.2.* One
+  (`hf_repo`, `revision`) naming two sets of content hashes is a contradiction in the log's own bytes.
+  One set of hashes under two revisions is not always: a commit touching only a README gives two
+  revisions identical A.2 hashes, and both certs are honest. **R:** refuse the first half, disclose the
+  second as `revision-alias`. Today the implementation refuses both, so the interim is a refusal whose
+  message names the innocent case. This is the EXTERNAL-1 lesson (an accusation predicate at 0.23
+  precision) applied before rather than after.
+- **(c) What a contradicted floor does.** *B-FLOOR3, §5.8.* A floor claiming that a factor level pair
+  separates nothing, against a logged floor that measured it separating something, is now detectable:
+  on the published log the forgery is refused on **9 of 9** comparable cells across three channels, the
+  honest floor agrees on all **12**, and a fresh subject returns **`unconstrained`** — which is not a
+  pass and must never be printed as one. **R:** refuse the zero-against-a-logged-positive class at
+  append; disclose anything weaker; leave the stricter determinism check (same-batch runs in the
+  published floor were byte-identical) as a disclosure for 8.0, because one subject on one box on one
+  day is not enough evidence to turn an honest driver update into a refusal.
+- **(d) What an empty census does to the exit code.** *B-CENSUS, §6.* Every verdict now prints how much
+  prior logged material constrained it, and a verdict nothing constrained prints **`first claim: no
+  prior logged cert constrains this subject on this recipe`** on the verdict line rather than in a
+  limits section. **R:** print-only for 8.0, exit codes unchanged, and the stricter form (`same
+  (unconstrained)` exits 2) at the first docket. The arithmetic is why: the published log has **7 cert
+  entries, 1 issuer key and no challenges**, so the reproduction count is 0 for every cert in it and
+  every verdict the tool can currently produce is a first claim — an exit code that is constant carries
+  no information. Second half: the census lives in the printed report and not yet in the signed result
+  body, because those bytes are pinned by the committed conformance vectors; moving it into the body is
+  a schema version and fresh vectors beside the old ones, never over them.
+
+**What none of the four buys, stated because it is the point of the document that forced them.** Every
+predicate above asks whether one party contradicted itself. The residue is no longer a list of fields
+it cannot reach; it is one act — **the first claim about anything** — and the only thing that
+constrains a first claim is a second party running the same battery and putting their own bytes in the
+log. The reproduction count is currently zero. That is a business fact before it is an engineering one.
+
+## Q11 — the question a second implementation found, and it costs us a published number · B-TOPKABSENT · added 2026-09-09
+
+**Background.** A second implementation of the floor arithmetic was written from the spec by an
+author forbidden to read `styxx/v8/distances.py`, `floor.py` or `fingerprint.py`. It reproduced all
+thirty published numbers exactly — ten pairwise distances on each of three channels, to the last
+digit. That is the good news and it is the first cross-implementation agreement this project has
+about a *measurement* rather than about cryptography.
+
+It then found that §3.2 does not say what an **absent** `topk_forced_on` means, and the field is
+absent on both sides of every certificate we have published.
+
+- Read absent as *a value, equal on both sides*: the comparison is permitted, everything published
+  stands.
+- Read absent as *the run scored its own output*: the comparison is topk-inconclusive, §6 says print
+  no topk number, and seven of ten floor pairs drop out, leaving **a topk floor of 0.0** against the
+  published 2.1402339.
+
+**What it costs.** Under the honest reading, the most quotable line in
+`RESULT_first_verdict_2026_09_09.md` — *changing the batch size perturbs this model's top-five
+distribution more than changing precision from bf16 to fp16 does* — is not printable. That RESULT is
+preserved byte-identical and now carries `ERRATUM_topk_comparability_2026_09_09.md`; it is not
+edited, because a receipt is history.
+
+**The options.**
+
+- **(a) Absent means no comparison.** Print `topk: inconclusive (no forcing regime stated)`. Treats
+  an unstated regime as unstated. Costs us the topk claim above until the field is written.
+- **(b) Absent means not-forced and comparable.** Preserves every published number. Reads silence as
+  a claim, and it is the reading that happens to favour whoever is publishing.
+- **(c) Refuse an absent field at append.** The question cannot arise again, and every certificate we
+  have is unappendable to a fresh 8.0 log.
+
+**Recommendation: (a).** It is the only one of the three that does not infer a fact from silence, and
+(b) fails the test this lab applies everywhere else — the reading that benefits the party writing the
+bytes is the one to distrust. The cost is real and is the reason this is your call and not ours: it
+retracts a public claim we made this morning.
+
+**This decision cannot be unmade** for certificates appended under it. Once a log has seated topk
+numbers under one reading, changing the reading changes what those entries mean.
+
+**Also in A-66 and not separately gated**, because neither changes a published verdict: Appendix B's
+topk averaging is fixed as flat over (item, position) pairs, which is what both implementations
+computed — the alternative gives 1.875141894 and leaves the verdict `same` either way — and §5.7's
+`alpha_overall` is printed with its margin, because ours is published as 0 and the nearest run clears
+its threshold by **0.0004**.
+
+---
+
+## Q12 — the attack that broke today's repair, and what a floor may declare · B-NEWLEVEL · added 2026-09-09
+
+**Background.** We closed `THE_BOUNDARY`'s class-two member 1 with a cross-certificate floor
+predicate (A-63) and published that as a result. A sixth adversarial pass broke it the same day,
+using only our own published bytes.
+
+The attack declares a batch level the log has never seen. Four of five runs in the forged floor are
+our published bytes verbatim; the fifth is spliced from genuine runs at the other precision. Every
+check passes — the floor predicate, determinism, snapshot agreement, and every structural property
+we cited as the signature of a real measurement. Our own published comparison is re-judged from
+`exceeds_floor` to `same` on all three channels.
+
+**The structural point, which is the reason this is a decision and not a bug fix.** A comparison
+against the log constrains a claim only at factor levels the log already holds. The issuer declares
+the levels. The space of levels is unbounded. So the record growing does not close in on a liar —
+the empty space in it grows too, and the issuer picks where to stand.
+
+**The options.**
+
+- **(a) Refuse nothing; disclose.** Print `levels_without_prior` beside the verdict so a reader sees
+  which part of a floor rests on no comparison. Costs nothing and refuses no honest first
+  measurement of a genuinely new setting.
+- **(b) A floor whose widest distance comes from a level with no prior may not be the reference for
+  a drift claim.** Refuses this exact attack. Also refuses an honest lab that adds a batch size.
+- **(c) A factor level must be preregistered in a plan logged before any run at that level.** Folds
+  into Q10's B-SCHEDULE and makes a level a commitment instead of a declaration.
+
+**Recommendation: (a) with (c).** The disclosure is free. (c) puts the choice of levels under the
+same before-the-data rule the schedule is already going under. (b) on its own buys a refusal an
+attacker routes around by declaring two new levels instead of one.
+
+**Cost of (c):** every floor we have already logged rests on a plan that fixed levels but not their
+assignment, so those are grandfathered as stale-not-contradicted, and a fresh 8.0 log holds new ones
+to the rule.
+
+**Also recorded and not separately gated:** `precision` is a field with no corroborating byte
+anywhere in the design. The published bf16 and fp16 subjects differ in that one string and nothing
+else, and excluding it from snapshot agreement is correct — a rule that hashed it would refuse an
+honest pair. It is the pivot of every forgery above and it appeared on no roster in the source
+document. There is no repair on offer here; it is on the record so the next roster is not written
+without it.
+
+**This decision cannot be unmade** for certificates appended under it.
+
+---
 
 ---
 

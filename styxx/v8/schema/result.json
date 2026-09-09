@@ -57,6 +57,10 @@
           "then": {
             "required": ["issuer_policy", "log_hint"],
             "properties": {
+              "require_binding": {
+                "type": "boolean",
+                "$comment": "H4: whether this log requires every cert it seats to name it in `body.log_hint`. `log append --require-binding` was the INVOCATION's rule -- the same unbound bytes were refused with the flag and accepted without it, and nothing a stranger read recorded which rule was in force. Here it is the log's own signed statement, at an index, inside the tree, superseded by a later statement and never by an edit. Typed as a boolean so a statement carrying `\"true\"` is a schema refusal rather than something `Log.binding_policy` has to decide; that method honours the literal `true` and nothing else."
+              },
               "issuer_policy": {
                 "type": "object",
                 "required": ["policy"],

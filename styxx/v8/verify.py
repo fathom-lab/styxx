@@ -417,6 +417,17 @@ def _baseline_gap(cert: Mapping, cert_body: Mapping, resolver: Any) -> Optional[
         out["previous_id"] = previous_id
         out["declared_previous"] = list(previous_ids)
         out["announced"] = True
+        # A cert that NAMES a previous baseline is declaring a replacement, whatever either side
+        # carries: that is the `announced` half of `Log.baseline_gap`'s `relation`, and the two
+        # sources must agree on the word or a reader gets a different classification depending on
+        # whether they ran with a log (G2).
+        out["previous_is_canonical"] = isinstance(found.get("body"), Mapping) and isinstance(
+            found["body"].get("noise_floor"), Mapping
+        )
+        out["own_is_canonical"] = isinstance(cert_body.get("noise_floor"), Mapping)
+        out["relation"] = "baseline-replaced"
+        out["replaced_a_baseline"] = True
+        out["silent_replacement"] = False
         out["source"] = "previous_ref"
         return out
     return None
@@ -619,10 +630,25 @@ def _report(header: str, body: Mapping) -> str:
         # beside the verdict rather than in a limits section, because a reader comparing against
         # the new baseline is otherwise never told the old one existed (BASELINE-CHOICE).  It
         # says how far the two are apart; it cannot say which of them measured the subject.
-        head = f"  baseline replaced: {gap.get('previous_id')}"
+        #
+        # G2: the headline says which of the two it is.  It used to read "baseline replaced" for
+        # every gap, including two plain runs of one preregistered plan, where no baseline exists
+        # and none moved -- the same defect class as a tamper report on an unedited log.
+        # `relation` is the log's classification (see `styxx.v8.log.Log.baseline_gap`); a gap from
+        # a cert's own `previous` ref is always a declared replacement.
+        replaced = bool(gap.get("replaced_a_baseline", True))
+        head = (
+            f"  baseline replaced: {gap.get('previous_id')}" if replaced
+            else f"  previous comparable fingerprint: {gap.get('previous_id')}"
+        )
         if gap.get("previous_index") is not None:
             head += f" (log index {gap['previous_index']})"
         lines.append(head)
+        if not replaced:
+            lines.append(
+                f"    no baseline moved [{gap.get('relation')}]: this is the distance to the "
+                "nearest comparable fingerprint, not a replacement"
+            )
         how = "named by this cert's previous ref" if gap.get("announced") else (
             "NOT named by this cert: another run under the same noise plan"
             if gap.get("same_noise_plan") else "NOT named by this cert"

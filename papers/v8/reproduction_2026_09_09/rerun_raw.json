@@ -1,0 +1,779 @@
+{
+ "kind": "rerun",
+ "started": "2026-09-09T23:20:17Z",
+ "inputs": {
+  "canonical_cert": "fingerprint-canonical-73a09ffa3f1e.json",
+  "canonical_cert_id": "sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3",
+  "battery_cert_id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+  "battery_size": 64,
+  "snapshot": "C:\\Users\\heyzo\\.cache\\huggingface\\hub\\models--google--gemma-2-2b-it\\snapshots\\299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+ },
+ "order_checks": {
+  "cert_run_order_is_a3": true,
+  "recomputed_item_order_sha256": "0e25a46ee7ff6075f85eebb1bd1ce697d1fda9e202bd3a40613a29b5b7470c3d",
+  "cert_item_order_sha256": "0e25a46ee7ff6075f85eebb1bd1ce697d1fda9e202bd3a40613a29b5b7470c3d",
+  "item_order_sha256_matches": true,
+  "cert_nuisance": {
+   "batch_size": 1,
+   "driver": "596.08",
+   "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+   "item_order": "canonical"
+  },
+  "recipe_batch_size": 1,
+  "recipe_max_new_tokens": 16,
+  "recipe_seed": 7,
+  "recipe_padding_side": "left",
+  "recipe_temperature": 0
+ },
+ "subject_check": {
+  "hash_seconds": 5.06,
+  "fields": {
+   "weights_sha256": {
+    "cert": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66",
+    "observed": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66",
+    "same": true
+   },
+   "config_sha256": {
+    "cert": "eacec6c5ca317a87ed2c46789d9705b9274db5027e7ba59da739bfae23addb55",
+    "observed": "eacec6c5ca317a87ed2c46789d9705b9274db5027e7ba59da739bfae23addb55",
+    "same": true
+   },
+   "generation_config_sha256": {
+    "cert": "a543a5d299bc2b20c52bd87ed174f561266510b57a392e12b5b5d758d798ce05",
+    "observed": "a543a5d299bc2b20c52bd87ed174f561266510b57a392e12b5b5d758d798ce05",
+    "same": true
+   },
+   "tokenizer_sha256": {
+    "cert": "a2acb1f8c74a00e5e6c0dea9a387ac61b41556a2317478422fb0c66f46ec7213",
+    "observed": "a2acb1f8c74a00e5e6c0dea9a387ac61b41556a2317478422fb0c66f46ec7213",
+    "same": true
+   }
+  },
+  "all_same": true
+ },
+ "load_seconds": 19.53,
+ "runner_subject": {
+  "kind": "weights",
+  "hf_repo": "google/gemma-2-2b-it",
+  "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8",
+  "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66",
+  "config_sha256": "eacec6c5ca317a87ed2c46789d9705b9274db5027e7ba59da739bfae23addb55",
+  "generation_config_sha256": "a543a5d299bc2b20c52bd87ed174f561266510b57a392e12b5b5d758d798ce05",
+  "tokenizer_sha256": "a2acb1f8c74a00e5e6c0dea9a387ac61b41556a2317478422fb0c66f46ec7213",
+  "precision": "bf16"
+ },
+ "runner_environment": {
+  "runtime": {
+   "framework": "transformers",
+   "version": "4.57.3",
+   "backend": "torch 2.5.1+cu121"
+  },
+  "hardware": {
+   "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+   "driver": "596.08",
+   "count": 1,
+   "device": "cuda"
+  }
+ },
+ "cert_environment": {
+  "hardware": {
+   "count": 1,
+   "driver": "596.08",
+   "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU"
+  },
+  "runtime": {
+   "backend": "torch 2.5.1+cu121",
+   "framework": "transformers",
+   "version": "4.57.3"
+  }
+ },
+ "driver_now": "596.08",
+ "python": "3.12.10",
+ "versions": {
+  "torch": "2.5.1+cu121",
+  "transformers": "4.57.3"
+ },
+ "one_call_pass": {
+  "seconds": 49.93,
+  "seconds_per_item": 0.78,
+  "output_sha256_reproduced": 64,
+  "fully_bitwise": 64,
+  "differing_item_ids": [],
+  "agrees_with_per_item_loop": true
+ },
+ "exact_channel": {
+  "cert": "d3372370c68804a099c6e0098038382da23e1a4d24383e129d0576ae312a18c9",
+  "rerun": "d3372370c68804a099c6e0098038382da23e1a4d24383e129d0576ae312a18c9",
+  "same": true
+ },
+ "result": {
+  "items": 64,
+  "output_sha256_reproduced": 64,
+  "output_sha256_differed": 0,
+  "differing_item_ids": [],
+  "token_ids_sha256_reproduced": 64,
+  "seq_logprob_bitwise": 64,
+  "topk_bitwise": 64
+ },
+ "timing": {
+  "model_load_seconds": 19.53,
+  "snapshot_hash_seconds": 5.06,
+  "generate_seconds_64_items": 51.67,
+  "generate_plus_load_seconds": 71.2,
+  "per_item_mean_seconds": 0.807,
+  "per_item_min_seconds": 0.252,
+  "per_item_max_seconds": 1.584,
+  "per_item_median_seconds": 0.59,
+  "first_item_seconds": 1.167,
+  "per_item_mean_excluding_first": 0.801
+ },
+ "gpu_memory": {
+  "weights_mib_after_load": 4987.5,
+  "peak_allocated_mib": 5035.1,
+  "peak_reserved_mib": 5246.0,
+  "logits_to_keep_passed": false
+ },
+ "per_item": [
+  {
+   "position": 0,
+   "item_id": "031423a172a2e686",
+   "seconds": 1.167,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 1,
+   "item_id": "09fff3f2855e805e",
+   "seconds": 1.584,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 2,
+   "item_id": "0b43bd5dac9159b0",
+   "seconds": 0.389,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 3,
+   "item_id": "0ec1d4aac9d4b1c1",
+   "seconds": 0.586,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 4,
+   "item_id": "0f57e51a1166b0a3",
+   "seconds": 1.559,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 5,
+   "item_id": "1474984f910a3d50",
+   "seconds": 0.549,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 6,
+   "item_id": "15aa43154e4e8a58",
+   "seconds": 0.59,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 7,
+   "item_id": "1820b7bc00d14180",
+   "seconds": 0.489,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 8,
+   "item_id": "187ef958bdbc290f",
+   "seconds": 1.474,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 9,
+   "item_id": "19e5887fbecc87f2",
+   "seconds": 0.47,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 10,
+   "item_id": "1c7b7f6b18ed7076",
+   "seconds": 0.393,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 11,
+   "item_id": "205501a795c91a18",
+   "seconds": 0.671,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 12,
+   "item_id": "260f113688c1d28e",
+   "seconds": 1.169,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 13,
+   "item_id": "26ec0be077260ce8",
+   "seconds": 0.771,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 14,
+   "item_id": "27e3f832647ac910",
+   "seconds": 0.433,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 15,
+   "item_id": "283fef992ecff8d3",
+   "seconds": 1.513,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 16,
+   "item_id": "2dbfdf7c4ed7519b",
+   "seconds": 1.388,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 17,
+   "item_id": "350ba35055d7d7d7",
+   "seconds": 1.28,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 18,
+   "item_id": "3ec4a246b26050e9",
+   "seconds": 1.317,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 19,
+   "item_id": "46be29730041af90",
+   "seconds": 0.463,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 20,
+   "item_id": "4cc3bf784a888574",
+   "seconds": 1.191,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 21,
+   "item_id": "4e500ba6e76ccb40",
+   "seconds": 0.461,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 22,
+   "item_id": "4f2fb99274a75069",
+   "seconds": 0.507,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 23,
+   "item_id": "4f72b278c326fe43",
+   "seconds": 1.124,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 24,
+   "item_id": "50c0a7e22e352fda",
+   "seconds": 1.205,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 25,
+   "item_id": "51b37322772567b3",
+   "seconds": 0.548,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 26,
+   "item_id": "5541521daa7be3a8",
+   "seconds": 1.464,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 27,
+   "item_id": "64f60bb5f403ef0d",
+   "seconds": 0.979,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 28,
+   "item_id": "65e06585631e9036",
+   "seconds": 0.526,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 29,
+   "item_id": "68bfc366491cf245",
+   "seconds": 1.087,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 30,
+   "item_id": "6bb1d390a81c9153",
+   "seconds": 1.131,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 31,
+   "item_id": "6c9bf4f0af3a7521",
+   "seconds": 1.364,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 32,
+   "item_id": "8208b3acb427cc38",
+   "seconds": 0.605,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 33,
+   "item_id": "85354edf605aadc5",
+   "seconds": 0.33,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 34,
+   "item_id": "8f63f67bda41ced9",
+   "seconds": 1.272,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 35,
+   "item_id": "97154ba031f43747",
+   "seconds": 0.361,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 36,
+   "item_id": "97328a6dfa5122ae",
+   "seconds": 1.372,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 37,
+   "item_id": "977b7f3492fbebf0",
+   "seconds": 0.323,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 38,
+   "item_id": "98f001a768eef63f",
+   "seconds": 1.291,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 39,
+   "item_id": "a13d1b0ebe3558d9",
+   "seconds": 0.501,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 40,
+   "item_id": "a1729e4f6a1650bd",
+   "seconds": 0.351,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 41,
+   "item_id": "a1f4a82542815cc4",
+   "seconds": 1.327,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 42,
+   "item_id": "adcdbc5352081297",
+   "seconds": 0.359,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 43,
+   "item_id": "af9c2f51a76ffd55",
+   "seconds": 0.275,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 44,
+   "item_id": "b1a031d8c6eca320",
+   "seconds": 1.263,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 45,
+   "item_id": "b4712a870051b4d6",
+   "seconds": 0.524,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 46,
+   "item_id": "bfd8ad0553caba6e",
+   "seconds": 0.467,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 47,
+   "item_id": "c2c7eb9413d0ba18",
+   "seconds": 0.28,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 48,
+   "item_id": "c6402f34a998589f",
+   "seconds": 0.531,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 49,
+   "item_id": "cd0ebf86db4ea8ee",
+   "seconds": 0.434,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 50,
+   "item_id": "cf24f2f1a59981cc",
+   "seconds": 0.971,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 51,
+   "item_id": "cf55169da711bfb9",
+   "seconds": 1.168,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 52,
+   "item_id": "d1862bf626a90977",
+   "seconds": 0.351,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 53,
+   "item_id": "d319b260a24e4129",
+   "seconds": 1.258,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 54,
+   "item_id": "d7efa933c8ad300d",
+   "seconds": 0.427,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 55,
+   "item_id": "db3c4d9c98016c3e",
+   "seconds": 1.226,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 56,
+   "item_id": "e56ece70332f0fe3",
+   "seconds": 0.563,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 57,
+   "item_id": "e66249f258111435",
+   "seconds": 1.173,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 58,
+   "item_id": "e8b649f6741af516",
+   "seconds": 0.473,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 59,
+   "item_id": "ea86bf79e2e8283d",
+   "seconds": 0.284,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 60,
+   "item_id": "f47d6ffec5932844",
+   "seconds": 0.864,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 61,
+   "item_id": "f563f4b070e4ec28",
+   "seconds": 0.252,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 62,
+   "item_id": "f7bb1a271135c510",
+   "seconds": 0.569,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  },
+  {
+   "position": 63,
+   "item_id": "fb0bb42d75b7e1ad",
+   "seconds": 0.369,
+   "output_sha256_reproduces": true,
+   "token_ids_sha256_reproduces": true,
+   "n_generated_reproduces": true,
+   "seq_logprob_bitwise": true,
+   "topk_bitwise": true
+  }
+ ],
+ "finished": "2026-09-09T23:22:30Z"
+}

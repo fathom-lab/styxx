@@ -169,9 +169,9 @@
   "styxx/v8/distances.py": "fcf747fb4e71d201fb019aefb5c8d2fb1d5288e00153438d2dd751c66763f914",
   "styxx/v8/floor.py": "c40a8b80a928938d58c5653775064f31e958f63e7e920a13f186721ba67f182a",
   "styxx/v8/keys.py": "ee3e8994c7a1bef5e731579530bf3c22deed27138d7eb0f313105afd90c222ac",
-  "styxx/v8/log.py": "130f1aeba7744abd314a81558d6608718b9dfb69260e60712669dde3f213e475",
+  "styxx/v8/log.py": "8838971578138588e1d83a166246b89ee6e2d118c160ded4a31fab341a758e92",
   "styxx/v8/merkle.py": "0266425b70d9c496a65b3d8d240354b3a8282bfcda41c88d283b494f856625ac",
-  "styxx/v8/verify.py": "5db73c15d2fe15c5658a86a334a2c96709a5982cedf9e6218302fe7037a4539d"
+  "styxx/v8/verify.py": "e6275306f775aa645b675d7e482beee6b263b7d2c442b71ddbaa30352fa553d3"
  },
  "missed": [
   {
@@ -953,7 +953,7 @@
     "vectors": 93
    }
   },
-  "set_sha256": "c780475b681d6a8d74a2f2021e4ad99208d073f61d2f5c18c60b8014922c2b70",
+  "set_sha256": "735fb6fe6d3a131cb0686463cd62748fe12428ef6b8d872acc015cc972c8e29e",
   "vectors": 1853
  },
  "void": false

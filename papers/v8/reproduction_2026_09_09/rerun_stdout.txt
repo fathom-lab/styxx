@@ -1,0 +1,78 @@
+.  0/64 031423a172a2e686   1.17s
+.  1/64 09fff3f2855e805e   1.58s
+.  2/64 0b43bd5dac9159b0   0.39s
+.  3/64 0ec1d4aac9d4b1c1   0.59s
+.  4/64 0f57e51a1166b0a3   1.56s
+.  5/64 1474984f910a3d50   0.55s
+.  6/64 15aa43154e4e8a58   0.59s
+.  7/64 1820b7bc00d14180   0.49s
+.  8/64 187ef958bdbc290f   1.47s
+.  9/64 19e5887fbecc87f2   0.47s
+. 10/64 1c7b7f6b18ed7076   0.39s
+. 11/64 205501a795c91a18   0.67s
+. 12/64 260f113688c1d28e   1.17s
+. 13/64 26ec0be077260ce8   0.77s
+. 14/64 27e3f832647ac910   0.43s
+. 15/64 283fef992ecff8d3   1.51s
+. 16/64 2dbfdf7c4ed7519b   1.39s
+. 17/64 350ba35055d7d7d7   1.28s
+. 18/64 3ec4a246b26050e9   1.32s
+. 19/64 46be29730041af90   0.46s
+. 20/64 4cc3bf784a888574   1.19s
+. 21/64 4e500ba6e76ccb40   0.46s
+. 22/64 4f2fb99274a75069   0.51s
+. 23/64 4f72b278c326fe43   1.12s
+. 24/64 50c0a7e22e352fda   1.21s
+. 25/64 51b37322772567b3   0.55s
+. 26/64 5541521daa7be3a8   1.46s
+. 27/64 64f60bb5f403ef0d   0.98s
+. 28/64 65e06585631e9036   0.53s
+. 29/64 68bfc366491cf245   1.09s
+. 30/64 6bb1d390a81c9153   1.13s
+. 31/64 6c9bf4f0af3a7521   1.36s
+. 32/64 8208b3acb427cc38   0.60s
+. 33/64 85354edf605aadc5   0.33s
+. 34/64 8f63f67bda41ced9   1.27s
+. 35/64 97154ba031f43747   0.36s
+. 36/64 97328a6dfa5122ae   1.37s
+. 37/64 977b7f3492fbebf0   0.32s
+. 38/64 98f001a768eef63f   1.29s
+. 39/64 a13d1b0ebe3558d9   0.50s
+. 40/64 a1729e4f6a1650bd   0.35s
+. 41/64 a1f4a82542815cc4   1.33s
+. 42/64 adcdbc5352081297   0.36s
+. 43/64 af9c2f51a76ffd55   0.27s
+. 44/64 b1a031d8c6eca320   1.26s
+. 45/64 b4712a870051b4d6   0.52s
+. 46/64 bfd8ad0553caba6e   0.47s
+. 47/64 c2c7eb9413d0ba18   0.28s
+. 48/64 c6402f34a998589f   0.53s
+. 49/64 cd0ebf86db4ea8ee   0.43s
+. 50/64 cf24f2f1a59981cc   0.97s
+. 51/64 cf55169da711bfb9   1.17s
+. 52/64 d1862bf626a90977   0.35s
+. 53/64 d319b260a24e4129   1.26s
+. 54/64 d7efa933c8ad300d   0.43s
+. 55/64 db3c4d9c98016c3e   1.23s
+. 56/64 e56ece70332f0fe3   0.56s
+. 57/64 e66249f258111435   1.17s
+. 58/64 e8b649f6741af516   0.47s
+. 59/64 ea86bf79e2e8283d   0.28s
+. 60/64 f47d6ffec5932844   0.86s
+. 61/64 f563f4b070e4ec28   0.25s
+. 62/64 f7bb1a271135c510   0.57s
+. 63/64 fb0bb42d75b7e1ad   0.37s
+
+output_sha256 reproduced : 64/64
+token_ids_sha256         : 64/64
+seq_logprob bitwise      : 64/64
+topk bitwise             : 64/64
+differing                : []
+exact channel hash same  : True
+  cert  d3372370c68804a099c6e0098038382da23e1a4d24383e129d0576ae312a18c9
+  rerun d3372370c68804a099c6e0098038382da23e1a4d24383e129d0576ae312a18c9
+generate 64 items        : 51.7s  (0.81s/item)  [64 separate runner calls]
+one runner call, 64 items: 49.93s  (0.78s/item)  reproduced 64/64  identical to per-item loop: True
+model load               : 19.5s
+snapshot hashing         : 5.06s
+gpu after load / peak    : 4987.5 MiB / 5035.1 MiB allocated, 5246.0 MiB reserved

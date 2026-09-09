@@ -808,3 +808,308 @@ test('the binding predicate refuses hostile certs and throws on a bad log id', (
     assert.throws(() => V.logBindingReason(boundTo(LOG_A), bad), TypeError);
   }
 });
+
+// ---------------------------------------------------------------------------
+// The cross-certificate floor predicate
+//
+// The fixture below mirrors the SHAPE of the published floor (five runs, three batch
+// sizes, three item orders, ten pairwise distances of which the three same-batch pairs
+// are zero) without copying its numbers.  The run against the real published bytes
+// lives in papers/v8/first_log_2026_09_09/cross_verify_floor.js, which writes its own
+// report; these tests are here to pin the predicate's behaviour, including the cases
+// no published log happens to contain.
+// ---------------------------------------------------------------------------
+
+const FLOOR_SUBJECT = {
+  kind: 'weights',
+  hf_repo: 'example/model-2b',
+  revision: '1'.repeat(40),
+  weights_sha256: '2'.repeat(64),
+  config_sha256: '3'.repeat(64),
+  tokenizer_sha256: '4'.repeat(64),
+  generation_config_sha256: '5'.repeat(64),
+  precision: 'bf16',
+  environment: { hardware: { gpu: 'a', driver: '1', count: 1 } }
+};
+const FLOOR_RECIPE = {
+  battery: 'sha256:' + '6'.repeat(64),
+  chat_template_sha256: '7'.repeat(64),
+  system_prompt_sha256: '8'.repeat(64),
+  decoding: { batch_size: 1, max_new_tokens: 16, temperature: 0, top_p: 1, seed: 7 }
+};
+// run_index                  0            1         2         3         4
+const FIX_BATCH = [1, 8, 32, 1, 1];
+const FIX_ORDER = ['canonical', 'perm11', 'perm12', 'perm11', 'perm12'];
+// pairs in lexicographic order over sorted run_index:
+// (0,1)(0,2)(0,3)(0,4)(1,2)(1,3)(1,4)(2,3)(2,4)(3,4)
+const FIX_DIST = [0.25, 0.125, 0, 0, 0.5, 0.25, 0.25, 0.125, 0.125, 0];
+
+const certId = (n) => 'sha256:' + String(n).repeat(64);
+
+function runCert(i, opts) {
+  const o = opts || {};
+  return {
+    id: o.id || certId(i),
+    type: 'fingerprint',
+    subject: JSON.parse(JSON.stringify(o.subject || FLOOR_SUBJECT)),
+    recipe: JSON.parse(JSON.stringify(o.recipe || FLOOR_RECIPE)),
+    body: {
+      run_index: o.run_index === undefined ? i : o.run_index,
+      tier: 'white-box',
+      nuisance: {
+        batch_size: o.batch_size === undefined ? FIX_BATCH[i] : o.batch_size,
+        item_order: o.item_order === undefined ? FIX_ORDER[i] : o.item_order
+      },
+      channels: { exact: [0, 0, 0] }
+    }
+  };
+}
+
+// The floor cert is itself one of its runs and names the other four by id, which is the
+// shape entry 6 of the published verdict log has.
+function makeFloor(opts) {
+  const o = opts || {};
+  const dist = o.distances || FIX_DIST;
+  const n = o.runs === undefined ? 5 : o.runs;
+  const floor = runCert(0, o);
+  floor.id = o.id || certId(9);
+  floor.body.noise_floor = {
+    covers: o.covers || ['batch_size', 'item_order'],
+    runs: [1, 2, 3, 4].slice(0, n - 1).map((i) => certId(i)),
+    per_channel: {
+      exact: {
+        distances: dist.slice(),
+        runs: o.declaredRuns === undefined ? n : o.declaredRuns,
+        pairs: o.declaredPairs === undefined ? (n * (n - 1)) / 2 : o.declaredPairs,
+        floor: Math.max.apply(null, dist.concat([0]))
+      }
+    }
+  };
+  return floor;
+}
+
+function makeSet(opts) {
+  const o = opts || {};
+  const floor = makeFloor(o);
+  const n = o.runs === undefined ? 5 : o.runs;
+  const rest = [];
+  for (let i = 1; i < n; i += 1) rest.push(runCert(i, o));
+  return { floor, runs: [floor].concat(rest), certs: [floor].concat(rest) };
+}
+
+// The roster's construction: every run gets run 0's body, every run keeps its own
+// labels, every distance becomes 0.  d(x, x) = 0, so nothing is recomputed.
+function forge(set) {
+  const floor = JSON.parse(JSON.stringify(set.floor));
+  const zero = set.runs.find((c) => c.body.run_index === 0);
+  const n = set.runs.length;
+  for (const ch of Object.keys(floor.body.noise_floor.per_channel)) {
+    const d = floor.body.noise_floor.per_channel[ch];
+    d.distances = new Array((n * (n - 1)) / 2).fill(0);
+    d.floor = 0;
+  }
+  const runs = set.runs.map((c) => {
+    const f = c.id === floor.id ? floor : JSON.parse(JSON.stringify(c));
+    f.body.channels = JSON.parse(JSON.stringify(zero.body.channels));
+    return f;
+  });
+  return { floor, runs };
+}
+
+test('a floor cert names its runs by id, and run_index does not decide which certs they are',
+     () => {
+  const set = makeSet();
+  // A second subject's runs, sharing run_index 0..4, sitting in the same corpus. An
+  // index-keyed scan would pick some of these; the ids say which certs are meant.
+  const intruders = [0, 1, 2, 3, 4].map((i) => {
+    const c = runCert(i, { batch_size: 99, item_order: 'other' });
+    c.id = 'sha256:' + 'a'.repeat(63) + i;
+    return c;
+  });
+  const r = V.resolveFloorRuns(set.floor, intruders.concat(set.certs));
+  assert.deepStrictEqual(r.missing, []);
+  assert.strictEqual(r.named, 4);
+  assert.strictEqual(r.runs.length, 5);
+  assert.deepStrictEqual(r.runs.map((c) => c.id).sort(),
+                         set.certs.map((c) => c.id).sort());
+  assert.ok(r.runs.every((c) => c.body.nuisance.batch_size !== 99));
+  // A floor whose named runs are absent is not evidence about anything.
+  const partial = V.resolveFloorRuns(set.floor, [set.floor]);
+  assert.strictEqual(partial.runs.length, 1);
+  assert.strictEqual(partial.missing.length, 4);
+  assert.throws(() => V.resolveFloorRuns({ body: {} }, []), TypeError);
+});
+
+test('the honest floor does not accuse itself', () => {
+  const set = makeSet();
+  const r = V.floorAgreement(set.floor, set.runs, set.floor, set.runs);
+  assert.strictEqual(r.verdict, V.FLOOR_AGREES);
+  assert.deepStrictEqual(r.contradictions, []);
+  assert.deepStrictEqual(r.defects, []);
+  // Five runs over two covered factors: batch levels {1,1}{1,8}{1,32}{8,32} and order
+  // levels {c,p11}{c,p12}{p11,p12}{p11,p11}{p12,p12} make 9 factor cells; the five
+  // distinct assignments make 10 assignment pairs.
+  assert.deepStrictEqual(r.compared, { factor: 9, assignment: 10, total: 19 });
+});
+
+test('the roster forgery is refused against a prior floor on the same subject', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  const r = V.floorAgreement(bad.floor, bad.runs, set.floor, set.runs);
+  assert.strictEqual(r.verdict, V.FLOOR_CONTRADICTS);
+  // Every cell whose prior held a positive distance: 3 of the 4 batch cells (all but
+  // {1,1}), all 5 order cells, and 7 of the 10 assignment pairs.
+  assert.strictEqual(r.contradictions.length, 15);
+  assert.strictEqual(r.compared.total, 19);
+  // Within the certificate the forgery still has the honest shape, which is the
+  // roster's whole point: five distinct labels, every declared factor varying.
+  const labels = bad.runs.map((c) => JSON.stringify(c.body.nuisance));
+  assert.strictEqual(new Set(labels).size, 5);
+  assert.strictEqual(new Set(bad.runs.map((c) => c.body.nuisance.batch_size)).size, 3);
+});
+
+test('with no prior floor the predicate declines rather than accusing', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  for (const prior of [null, undefined, 42, 'x', [], {}, { body: {} },
+                       { body: { noise_floor: 'x' } }]) {
+    const r = V.floorAgreement(bad.floor, bad.runs, prior, []);
+    assert.strictEqual(r.verdict, V.FLOOR_UNCONSTRAINED, JSON.stringify(prior) || 'undefined');
+    assert.strictEqual(r.compared.total, 0);
+  }
+});
+
+test('a prior on a different subject or recipe is not evidence about this one', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  const variants = [
+    ['cross-subject:precision', (c) => { c.subject.precision = 'fp16'; }],
+    ['subject.weights_sha256', (c) => { c.subject.weights_sha256 = 'b'.repeat(64); }],
+    ['recipe.battery', (c) => { c.recipe.battery = 'sha256:' + 'c'.repeat(64); }],
+    ['recipe.decoding', (c) => { c.recipe.decoding.max_new_tokens = 32; }],
+    ['recipe.decoding', (c) => { c.recipe.decoding.temperature = 1; }]
+  ];
+  for (const [name, mutate] of variants) {
+    const other = makeSet();
+    mutate(other.floor);
+    for (const c of other.runs) if (c !== other.floor) mutate(c);
+    const r = V.floorAgreement(bad.floor, bad.runs, other.floor, other.runs);
+    assert.strictEqual(r.verdict, V.FLOOR_UNCONSTRAINED, name);
+    assert.ok(r.comparability.includes(name), name + ' :: ' + r.comparability.join(','));
+  }
+});
+
+test('a prior that exercised no shared factor level is unconstrained, not agreement', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  // Same subject, same battery, but two runs at batch sizes and orders this candidate
+  // never used. Nothing in it speaks to any cell here.
+  const other = makeSet({ runs: 2, distances: [0.5] });
+  for (const c of other.runs) {
+    c.body.nuisance.batch_size = c.body.run_index === 0 ? 2 : 4;
+    c.body.nuisance.item_order = c.body.run_index === 0 ? 'q1' : 'q2';
+  }
+  const r = V.floorAgreement(bad.floor, bad.runs, other.floor, other.runs);
+  assert.strictEqual(r.verdict, V.FLOOR_UNCONSTRAINED);
+  assert.strictEqual(r.compared.total, 0);
+  assert.match(r.reasons[0], /no factor level pair/);
+});
+
+test('a candidate louder than the prior is not a contradiction', () => {
+  // Machines drift and a later floor may be noisier. A rule that demanded equality
+  // would refuse honest re-measurement; only a zero where the log holds a positive
+  // says a declared factor does nothing.
+  const set = makeSet();
+  const louder = makeSet({ distances: FIX_DIST.map((v) => v + 0.75) });
+  const r = V.floorAgreement(louder.floor, louder.runs, set.floor, set.runs);
+  assert.strictEqual(r.verdict, V.FLOOR_AGREES);
+  assert.strictEqual(r.compared.total, 19);
+  // and the same pair the other way round IS refused
+  const back = V.floorAgreement(set.floor, set.runs, louder.floor, louder.runs);
+  assert.strictEqual(back.verdict, V.FLOOR_CONTRADICTS);
+});
+
+test('contradictions carry their attribution: clean pairs and confounded ones', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  const r = V.floorAgreement(bad.floor, bad.runs, set.floor, set.runs);
+  const clean = r.contradictions.filter((c) => c.clean);
+  const dirty = r.contradictions.filter((c) => !c.clean);
+  // batch {1,8} and {1,32} each have a pair holding item_order fixed; batch {8,32}
+  // does not, and neither order cell that pairs a permutation with itself does.
+  assert.deepStrictEqual([clean.length, dirty.length], [12, 3]);
+  assert.ok(dirty.every((c) => c.tier === 'factor'));
+  assert.ok(dirty.every((c) => /attribution confounded/.test(c.why)));
+  assert.ok(r.contradictions.every((c) => c.channel === 'exact'));
+});
+
+test('a floor whose arithmetic does not match the runs it names is refused', () => {
+  // The Python demonstration skips a channel whose distance count is wrong. A skip is
+  // indistinguishable in the result from "never measured", so a forger who truncates
+  // the list would buy silence with it. Here each of these is a claim the cert's own
+  // named runs refute, and none of them needs a prior to refute it.
+  const set = makeSet();
+  const cases = [
+    ['truncated distances', makeSet({ distances: FIX_DIST.slice(0, 6) }), /6 distances for 5 runs/],
+    ['declared run count', makeSet({ declaredRuns: 4 }), /declares runs=4/],
+    ['declared pair count', makeSet({ declaredPairs: 6 }), /declares pairs=6/]
+  ];
+  for (const [name, broken, re] of cases) {
+    const r = V.floorAgreement(broken.floor, broken.runs, set.floor, set.runs);
+    assert.strictEqual(r.verdict, V.FLOOR_CONTRADICTS, name);
+    assert.ok(r.defects.some((d) => re.test(d)), name + ' :: ' + r.defects.join('; '));
+    // and with no prior at all it is still refused: the contradiction is with the run
+    // certs the floor itself names
+    assert.strictEqual(V.floorAgreement(broken.floor, broken.runs, null, []).verdict,
+                       V.FLOOR_CONTRADICTS, name + ' (no prior)');
+  }
+  // a non-finite or negative distance is the same kind of defect
+  for (const v of [null, 'x', NaN, -1]) {
+    const d = FIX_DIST.slice();
+    d[0] = v;
+    const broken = makeSet({ distances: d });
+    assert.strictEqual(V.floorAgreement(broken.floor, broken.runs, set.floor, set.runs).verdict,
+                       V.FLOOR_CONTRADICTS, String(v));
+  }
+  // two runs claiming one index is a defect too
+  const collide = makeSet();
+  collide.runs[2].body.run_index = 1;
+  assert.strictEqual(V.floorAgreement(collide.floor, collide.runs, set.floor, set.runs).verdict,
+                     V.FLOOR_CONTRADICTS);
+});
+
+test('a broken prior never accuses: it is not evidence, it is a defect of its own', () => {
+  const set = makeSet();
+  const bad = forge(set);
+  const brokenPrior = makeSet({ declaredRuns: 4 });
+  const r = V.floorAgreement(bad.floor, bad.runs, brokenPrior.floor, brokenPrior.runs);
+  assert.strictEqual(r.verdict, V.FLOOR_UNCONSTRAINED);
+  assert.match(r.reasons[0], /inconsistent with the runs it names/);
+});
+
+test('a candidate carrying no floor is a caller mistake and throws', () => {
+  const set = makeSet();
+  for (const c of [null, undefined, 42, 'x', [], {}, { body: {} },
+                   { body: { noise_floor: [] } }]) {
+    assert.throws(() => V.floorAgreement(c, [], set.floor, set.runs), TypeError);
+  }
+  assert.strictEqual(V.noiseFloorOf(set.floor) !== null, true);
+  assert.strictEqual(V.noiseFloorOf({ body: {} }), null);
+});
+
+test('the verdict vocabulary is exactly three values and none of them is a boolean', () => {
+  // `unconstrained` is not a pass. Anything that collapses the three to two -- a
+  // truthiness test, an `ok` flag -- reintroduces the failure this predicate exists to
+  // avoid: answering when there is no evidence.
+  assert.deepStrictEqual(
+    [V.FLOOR_AGREES, V.FLOOR_CONTRADICTS, V.FLOOR_UNCONSTRAINED].sort(),
+    ['agrees', 'contradicts', 'unconstrained']);
+  assert.deepStrictEqual(V.FLOOR_TIERS, ['factor', 'assignment']);
+  const set = makeSet();
+  const seen = new Set([
+    V.floorAgreement(set.floor, set.runs, set.floor, set.runs).verdict,
+    V.floorAgreement(forge(set).floor, forge(set).runs, set.floor, set.runs).verdict,
+    V.floorAgreement(set.floor, set.runs, null, []).verdict
+  ]);
+  assert.strictEqual(seen.size, 3);
+});

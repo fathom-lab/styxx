@@ -476,6 +476,95 @@ function tagged(tag, digest32) {
 }
 
 // ---------------------------------------------------------------------------
+// Spec section 8.1: the log a cert binds itself to (L7)
+//
+// A cert MAY carry `body.log_hint = {log_id, locations?}`.  `log_id` is section 8.1's
+// identity for a log: "sha256:" + hex(sha256(raw log public key)).  That is the cert-id
+// grammar spelled over bytes that are not a cert, which is why the path is exempted by
+// name from the rule that every embedded cert id appears in `refs` and resolves.
+//
+// The field sits inside `body`, so it is inside the signed digest: it cannot be added,
+// edited or removed without a fresh signature under a key the log admits.  An advisory
+// field outside the signature would be walked through by exactly the attack this exists
+// to stop -- entries replayed verbatim into a log built on a different key, appending
+// byte for byte and giving the same root under a different `log_id`, so that "this cert
+// is in the log" named no log.
+//
+// The predicate: a log may seat a cert iff the cert names no log, or names THAT log.
+//   - no `log_hint` (absent, or null): unbound.  Any log may seat it, and it is as
+//     replayable as it was before the field existed.  This is the state of every cert
+//     signed before the field, so refusing it would refuse the whole existing corpus.
+//   - `log_hint` present but not an object, or without a `log_id` in section 8.1's form:
+//     refused rather than ignored.  A binding that cannot be compared with anything is
+//     not a weaker binding, it is a claim shaped like one.
+//   - `log_hint.log_id` naming another log: refused.
+//
+// The same rule holds at the gate that appends an entry and for a reader checking a
+// clone where that gate never ran; there is one predicate, read twice.
+//
+// `logBindingReason` never throws on the CERT -- hostile input is refused, not crashed
+// on -- and always throws on a malformed `logId`, which is the caller's own pinned key
+// rather than anything off the wire.
+
+const LOG_ID_RE = /^sha256:[0-9a-f]{64}$/;
+
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function typeName(value) {
+  if (value === null) return 'null';
+  return Array.isArray(value) ? 'array' : typeof value;
+}
+
+function bodyOf(cert) {
+  const b = isPlainObject(cert) ? cert.body : null;
+  return isPlainObject(b) ? b : {};
+}
+
+// "sha256:" + hex(sha256(raw public key)), from the 32 raw bytes or from the
+// "ed25519:<base64url>" text a log stores in keys/log.pub.
+function logIdFromPublic(publicKey) {
+  const raw = typeof publicKey === 'string'
+    ? decodePublic(publicKey.trim())
+    : asBytes(publicKey, 'logIdFromPublic');
+  if (raw.length !== PUBLIC_LEN) {
+    throw new TypeError('logIdFromPublic: expected ' + PUBLIC_LEN + ' bytes');
+  }
+  return 'sha256:' + sha256Hex(raw);
+}
+
+// Does this cert name a log at all?  A count of bound and unbound entries is what a
+// reader of a corpus is owed: an unbound entry is not a fault, it is the state in which
+// "this cert is in the log" is a statement about bytes rather than about this log.
+function isLogBound(cert) {
+  return isPlainObject(bodyOf(cert).log_hint);
+}
+
+function logBindingReason(cert, logId) {
+  if (typeof logId !== 'string' || !LOG_ID_RE.test(logId)) {
+    throw new TypeError('logBindingReason: logId must be "sha256:<64 lowercase hex>"');
+  }
+  const hint = bodyOf(cert).log_hint;
+  if (hint === undefined || hint === null) return null;
+  if (!isPlainObject(hint)) {
+    return 'log_hint: body.log_hint is ' + typeName(hint) + ', not an object; the binding a ' +
+      'cert makes to its log is {log_id, locations?} or it is nothing (section 8.1)';
+  }
+  const named = hint.log_id;
+  if (typeof named !== 'string' || !LOG_ID_RE.test(named)) {
+    return 'log_hint: body.log_hint.log_id is ' + JSON.stringify(named === undefined ? null : named) +
+      ', which is not sha256:<64 hex>; a cert that names its log names it in the form ' +
+      'section 8.1 gives log_id, or the binding cannot be compared with anything';
+  }
+  if (named !== logId) {
+    return 'log_hint: this cert names log ' + named + ' and this log is ' + logId +
+      '; a cert bound to a log is not seated in another one (L7, section 8.1)';
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Spec section 9 rule 1: is this fingerprint a challenge to that one?
 //
 // Written from the spec text, not from the Python: "A challenge is valid iff the
@@ -572,9 +661,324 @@ function challengeValidity(target, own) {
   return out.sort();
 }
 
+// ---------------------------------------------------------------------------
+// The cross-certificate floor predicate
+//
+// A noise floor cert says "these declared factors move this subject's channels by at
+// most this much".  Read alone, a floor of 0.0 over five run certs that all carry the
+// same body is byte-identical to a floor of 0.0 over five runs that genuinely agreed:
+// the roster of unreachable defects (papers/v8/THE_BOUNDARY_2026_09_09.md, member 1)
+// is built on that observation and it is true -- of ONE certificate.
+//
+// It stops being true the moment the same subject has been measured before, because a
+// prior floor in the log already records which declared factor levels SEPARATE this
+// subject.  A candidate that reports a zero where the log holds a positive is not
+// merely a quieter measurement; it says a factor does nothing, against a logged
+// measurement that it does.
+//
+// The result is three-valued on purpose.  `unconstrained` is not a pass.  A checker
+// that answers when it holds no evidence is the failure this project already has a
+// receipt for -- the path-claim accusation class ran at 0.23 precision on external
+// pull requests and was disabled -- so "there is no comparable prior" has to be
+// sayable, and has to be distinguishable from "compared and agreed".
+//
+// Asymmetry is deliberate.  A candidate positive where the prior held zero is NOT a
+// contradiction: hardware drifts, and a rule that demanded equality would refuse
+// honest re-measurement.  A candidate zero where the prior held positive is the one
+// direction that cannot be explained by noise, because zero distance means the two
+// runs produced identical channel values.
+// ---------------------------------------------------------------------------
+
+const FLOOR_AGREES = 'agrees';
+const FLOOR_CONTRADICTS = 'contradicts';
+const FLOOR_UNCONSTRAINED = 'unconstrained';
+
+// Two tiers of evidence, compared independently and reported separately:
+//   'factor'      one covered factor, one unordered pair of its levels (batch 1 vs 8).
+//                 Generalizes across floors that used different run schedules, which
+//                 matters because the published noise plan fixes no schedule.
+//   'assignment'  the unordered pair of FULL covered-factor assignments.  Exact and
+//                 free of attribution, but only matches a prior that ran the same
+//                 assignments.
+const FLOOR_TIERS = ['factor', 'assignment'];
+
+function noiseFloorOf(cert) {
+  const f = bodyOf(cert).noise_floor;
+  return isPlainObject(f) ? f : null;
+}
+
+function nuisanceOf(cert) {
+  const n = bodyOf(cert).nuisance;
+  return isPlainObject(n) ? n : {};
+}
+
+// A stable text key for an arbitrary JSON value: its canonical bytes.  Unrepresentable
+// values get a key no representable value can collide with, so they compare unequal to
+// everything including each other's neighbours rather than throwing here.
+function valueKey(value) {
+  try {
+    return canonicalBytes(value === undefined ? null : value).toString('utf8');
+  } catch (e) {
+    return '\u0000unrepresentable';
+  }
+}
+
+function unorderedPairKey(a, b) {
+  const ka = valueKey(a);
+  const kb = valueKey(b);
+  return ka <= kb ? ka + '\u0001' + kb : kb + '\u0001' + ka;
+}
+
+// The runs a floor cert names, resolved BY CERT ID out of a supplied corpus.
+//
+// Resolving by id rather than by scanning a log for `body.run_index` is a deliberate
+// choice: run_index is scoped to one floor, so a log holding two subjects' runs has
+// several certs claiming index 0, and an index-keyed scan silently mixes them.  The
+// floor names its runs; that naming is what is followed.
+//
+// The published shape (entry 6 of papers/v8/first_verdict_2026_09_09/log) has the floor
+// cert carrying run_index 0 itself and naming the other four by id, so a floor that is
+// one of its own runs is added to the set.
+function resolveFloorRuns(floorCert, certs) {
+  const floor = noiseFloorOf(floorCert);
+  if (floor === null) {
+    throw new TypeError('resolveFloorRuns: cert carries no body.noise_floor');
+  }
+  if (!Array.isArray(floor.runs)) {
+    throw new TypeError('resolveFloorRuns: body.noise_floor.runs is not an array');
+  }
+  const index = new Map();
+  for (const c of Array.isArray(certs) ? certs : []) {
+    if (isPlainObject(c) && typeof c.id === 'string' && !index.has(c.id)) index.set(c.id, c);
+  }
+  const runs = [];
+  const missing = [];
+  for (const id of floor.runs) {
+    const c = typeof id === 'string' ? index.get(id) : undefined;
+    if (c === undefined) missing.push(id);
+    else runs.push(c);
+  }
+  const selfNamed = typeof floorCert.id === 'string' && floor.runs.includes(floorCert.id);
+  if (!selfNamed && Number.isInteger(bodyOf(floorCert).run_index)) runs.push(floorCert);
+  return { runs, missing, named: floor.runs.length };
+}
+
+// Turn a floor cert plus its run certs into comparable cells.
+//
+// The distances a floor stores are an ordered list over the pairs of its runs.  A
+// distance is only evidence about a factor once you know which factor levels it
+// separated, so the list is re-attributed to run pairs before anything is compared.
+// The convention taken here -- pairs in lexicographic order over runs sorted by
+// run_index -- is corroborated on the published floor: under it, and only under it,
+// the three zero distances land exactly on the three pairs whose batch_size is equal.
+function floorObservations(floorCert, runCerts) {
+  const defects = [];
+  const cells = new Map();
+  const floor = noiseFloorOf(floorCert);
+  if (floor === null) return { cells, defects: ['the cert carries no body.noise_floor'], runs: 0, pairs: 0, covers: [] };
+
+  const ordered = (Array.isArray(runCerts) ? runCerts.slice() : [])
+    .filter(isPlainObject)
+    .sort((a, b) => bodyOf(a).run_index - bodyOf(b).run_index);
+  const indices = ordered.map((c) => bodyOf(c).run_index);
+  for (const i of indices) {
+    if (!Number.isInteger(i)) defects.push('a run cert carries a non-integer body.run_index');
+  }
+  if (new Set(indices).size !== indices.length) {
+    defects.push('two run certs share a body.run_index: ' + JSON.stringify(indices));
+  }
+
+  const pairs = [];
+  for (let i = 0; i < ordered.length; i += 1) {
+    for (let j = i + 1; j < ordered.length; j += 1) pairs.push([i, j]);
+  }
+
+  const covers = (Array.isArray(floor.covers) ? floor.covers : []).filter((s) => typeof s === 'string');
+  const perChannel = isPlainObject(floor.per_channel) ? floor.per_channel : {};
+  if (Object.keys(perChannel).length === 0) defects.push('body.noise_floor.per_channel is empty or absent');
+
+  const touch = (channel, tier, label) => {
+    const key = channel + '\u0002' + tier + '\u0002' + label;
+    let cell = cells.get(key);
+    if (cell === undefined) {
+      cell = { channel, tier, label, values: new Set(), cleanValues: new Set() };
+      cells.set(key, cell);
+    }
+    return cell;
+  };
+
+  for (const channel of Object.keys(perChannel).sort()) {
+    const d = perChannel[channel];
+    if (!isPlainObject(d) || !Array.isArray(d.distances)) {
+      defects.push('channel ' + channel + ': body.noise_floor.per_channel.' + channel +
+        '.distances is not an array');
+      continue;
+    }
+    // The floor's own arithmetic, checked against the runs it names.  The Python
+    // demonstration skipped a channel whose distance count did not match; a skip is
+    // indistinguishable in the result from "this channel was never measured", and a
+    // forger who truncates the list would buy silence with it.  Here it is a defect.
+    if (d.distances.length !== pairs.length) {
+      defects.push('channel ' + channel + ': ' + d.distances.length + ' distances for ' +
+        ordered.length + ' runs, which make ' + pairs.length + ' pairs');
+      continue;
+    }
+    if (d.runs !== undefined && d.runs !== ordered.length) {
+      defects.push('channel ' + channel + ': declares runs=' + JSON.stringify(d.runs) +
+        ' and names ' + ordered.length + ' run certs');
+    }
+    if (d.pairs !== undefined && d.pairs !== pairs.length) {
+      defects.push('channel ' + channel + ': declares pairs=' + JSON.stringify(d.pairs) +
+        ' and its runs make ' + pairs.length);
+    }
+    for (let k = 0; k < pairs.length; k += 1) {
+      const v = d.distances[k];
+      if (typeof v !== 'number' || !Number.isFinite(v)) {
+        defects.push('channel ' + channel + ': distance ' + k + ' is ' + JSON.stringify(v) +
+          ', not a finite number');
+        continue;
+      }
+      if (v < 0) {
+        defects.push('channel ' + channel + ': distance ' + k + ' is negative (' + v + ')');
+      }
+      const na = nuisanceOf(ordered[pairs[k][0]]);
+      const nb = nuisanceOf(ordered[pairs[k][1]]);
+
+      for (const f of covers) {
+        const cell = touch(channel, 'factor', f + '\u0003' + unorderedPairKey(na[f], nb[f]));
+        cell.values.add(v);
+        // Clean for f iff every OTHER covered factor is held equal across the pair.
+        // A pair that moves two factors at once is still evidence that the two runs
+        // differ; it is not evidence about which factor did it.
+        const confounded = covers.some((g) => g !== f && valueKey(na[g]) !== valueKey(nb[g]));
+        if (!confounded) cell.cleanValues.add(v);
+      }
+
+      const project = (n) => {
+        const o = {};
+        for (const f of covers) o[f] = n[f] === undefined ? null : n[f];
+        return o;
+      };
+      const cell = touch(channel, 'assignment', unorderedPairKey(project(na), project(nb)));
+      cell.values.add(v);
+      cell.cleanValues.add(v);
+    }
+  }
+  return { cells, defects, runs: ordered.length, pairs: pairs.length, covers };
+}
+
+function describeCell(cell) {
+  if (cell.tier === 'factor') {
+    const [name, levels] = cell.label.split('\u0003');
+    return 'channel ' + cell.channel + ', factor ' + name + ' at levels ' +
+      levels.split('\u0001').join(' vs ');
+  }
+  return 'channel ' + cell.channel + ', assignment pair ' +
+    cell.label.split('\u0001').join(' vs ');
+}
+
+const sortedValues = (set) => Array.from(set).sort((a, b) => a - b);
+
+// floorAgreement(candidateCert, candidateRuns, priorCert, priorRuns)
+//
+//   -> { verdict, reasons, compared, contradictions, defects, comparability }
+//
+// `verdict` is one of 'agrees' | 'contradicts' | 'unconstrained'.
+//
+// Throwing policy follows this file's convention.  A candidate that carries no
+// body.noise_floor is a caller mistake and throws; a candidate that carries one whose
+// arithmetic does not match the runs it names is a claim refuted by logged bytes and
+// is a contradiction, prior or no prior.  Anything about the PRIOR that makes it
+// unusable -- absent, not a floor, not comparable under section 2.3, internally
+// inconsistent -- yields `unconstrained`, never an accusation: a broken prior is not
+// evidence, and this predicate never accuses on the strength of one.
+function floorAgreement(candidateCert, candidateRuns, priorCert, priorRuns) {
+  if (noiseFloorOf(candidateCert) === null) {
+    throw new TypeError('floorAgreement: the candidate carries no body.noise_floor');
+  }
+  const cand = floorObservations(candidateCert, candidateRuns);
+  const compared = { factor: 0, assignment: 0, total: 0 };
+  const out = (verdict, reasons) => ({
+    verdict,
+    reasons,
+    compared,
+    contradictions: [],
+    defects: cand.defects,
+    comparability: []
+  });
+
+  if (cand.defects.length > 0) {
+    return Object.assign(out(FLOOR_CONTRADICTS, cand.defects.map(
+      (d) => 'the candidate floor contradicts the run certs it names: ' + d)), {});
+  }
+  if (noiseFloorOf(priorCert) === null) {
+    return out(FLOOR_UNCONSTRAINED, ['no prior floor cert on this subject and battery']);
+  }
+  const differing = challengeValidity(priorCert, candidateCert);
+  if (differing.length > 0) {
+    return Object.assign(out(FLOOR_UNCONSTRAINED, [
+      'the prior floor is not comparable under section 2.3; it differs on ' +
+        differing.join(', ')
+    ]), { comparability: differing });
+  }
+  const prior = floorObservations(priorCert, priorRuns);
+  if (prior.defects.length > 0) {
+    return out(FLOOR_UNCONSTRAINED, [
+      'the prior floor is inconsistent with the runs it names, so it is not evidence: ' +
+        prior.defects[0]
+    ]);
+  }
+
+  const contradictions = [];
+  for (const [key, cell] of cand.cells) {
+    const before = prior.cells.get(key);
+    if (before === undefined) continue;
+    compared[cell.tier] += 1;
+    compared.total += 1;
+    const here = sortedValues(cell.values);
+    const there = sortedValues(before.values);
+    if (here.every((v) => v === 0) && there.some((v) => v > 0)) {
+      contradictions.push({
+        tier: cell.tier,
+        channel: cell.channel,
+        clean: cell.cleanValues.size > 0 && before.cleanValues.size > 0,
+        why: describeCell(cell) + ': the prior floor measured ' + JSON.stringify(there) +
+          ' and this one reports ' + JSON.stringify(here) +
+          (cell.cleanValues.size > 0 && before.cleanValues.size > 0
+            ? '' : ' (attribution confounded: the contributing pairs also moved another covered factor)')
+      });
+    }
+  }
+
+  if (compared.total === 0) {
+    return out(FLOOR_UNCONSTRAINED, [
+      'the prior floor exercised no factor level pair this one also exercised'
+    ]);
+  }
+  if (contradictions.length > 0) {
+    return Object.assign(out(FLOOR_CONTRADICTS, contradictions.map((c) => c.why)),
+      { contradictions });
+  }
+  return out(FLOOR_AGREES, [
+    compared.total + ' cells compared (' + compared.factor + ' factor-level pairs, ' +
+      compared.assignment + ' assignment pairs), none contradicted'
+  ]);
+}
+
 module.exports = {
+  FLOOR_AGREES,
+  FLOOR_CONTRADICTS,
+  FLOOR_UNCONSTRAINED,
+  FLOOR_TIERS,
+  noiseFloorOf,
+  resolveFloorRuns,
+  floorObservations,
+  floorAgreement,
   challengeValidity,
   isSynthetic,
+  logIdFromPublic,
+  isLogBound,
+  logBindingReason,
   canonicalBytes,
   sha256Hex,
   digest,

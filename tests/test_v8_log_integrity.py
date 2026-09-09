@@ -39,12 +39,32 @@ back as the refusal.
 * **L6** — nothing compared the noise plan's log index against its runs'. Section 7.2 says the
   log index is the proof of order; a plan appended after the runs it governs preregisters
   nothing.
+* **H2** — the binding was enforced in one direction and it was the wrong one. A cert carrying
+  ``body.log_hint`` naming the gold log passed ``log verify-cert --log <gold>`` with ``ok: true``
+  while ``Log.find()`` on that directory returned ``None``: ``--log`` was accepted and IGNORED,
+  and the verdict came from ``cert.check``, which has never heard of a log. The field certified
+  "I claim to belong here" and nothing checked "and you do". ``Log.membership`` is the reverse
+  predicate, about bytes rather than ids, and ``--log`` now runs it.
+* **H1** — strip the binding. An issuer who re-signs without ``log_hint`` gets a twin that appends
+  anywhere. NOT repaired and not repairable here: ``body`` is inside ``D``, so the strip needs the
+  issuer's key, and the issuer is exactly whom the field constrains. What it costs the attacker is
+  pinned instead (a different id, a different leaf, no ref resolving to it), and what stops the
+  twin is H4's rule stated by the RECEIVING log.
+* **H4** — ``log append --require-binding`` was the INVOCATION's rule: the same unbound bytes were
+  refused with the flag and accepted without it, and nothing a stranger read recorded which rule
+  had been in force. The rule now rides on the policy statement L10c's residue put in the tree —
+  signed, indexed, superseded only by a later statement — and it binds FORWARD, so entries seated
+  before the log said anything are not accused.
 
-Two limitations are pinned here as tests rather than hidden, because a repair that could not be
+Four limitations are pinned here as tests rather than hidden, because a repair that could not be
 made is a result: ``test_an_unbound_cert_still_replays_verbatim`` (an UNBOUND cert is exactly as
-replayable as it was, and the mint does not change that for certs already signed) and
+replayable as it was, and the mint does not change that for certs already signed),
 ``test_an_unwitnessed_open_marker_still_admits_every_key`` (a log whose tree states no policy
-falls back to the file, and requiring the statement is [OPERATOR-GATED] at §8.2).
+falls back to the file, and requiring the statement is [OPERATOR-GATED] at §8.2),
+``test_an_issuer_can_strip_the_binding_and_the_twin_appends_anywhere`` (H1, and the append at the
+end of it is the attack succeeding) and ``test_membership_names_the_log_it_answered_for``
+(membership is a statement about the directory the caller pointed at, and Appendix D's pinned key
+is what makes it worth anything).
 
 Nothing here skips.
 """
@@ -601,25 +621,31 @@ def test_the_cli_can_only_reach_an_open_log_by_asking_for_one(tmp_path):
 # ================================================================= L10c residue: the eighteen bytes
 
 
-def policy_statement(log: Log, stated: dict, *, log_id: str = None, label: str = "log-key") -> dict:
+def policy_statement(
+    log: Log,
+    stated: dict,
+    *,
+    log_id: str = None,
+    label: str = "log-key",
+    require_binding: bool = False,
+) -> dict:
     """The log's own admission policy as a signed entry — C-12 option (a), in one helper.
 
     A ``result`` of kind ``policy``, signed by the LOG's key (``label``), bound to the log it
     speaks for. ``label`` and ``log_id`` are parameters so the two forgeries — someone else's key,
     another log's id — are one argument away from the honest cert.
+
+    ``require_binding`` is H4 riding on the same statement: the rule about whether the certs this
+    log seats must name it, in the tree rather than in the invocation that appended them.
     """
-    return F.make_cert(
-        "result",
-        issuer_label=label,
-        subject={},
-        recipe={},
-        refs=[],
-        body={
-            "kind": "policy",
-            "issuer_policy": stated,
-            "log_hint": {"log_id": log_id if log_id is not None else log.log_id()},
-        },
-    )
+    body = {
+        "kind": "policy",
+        "issuer_policy": stated,
+        "log_hint": {"log_id": log_id if log_id is not None else log.log_id()},
+    }
+    if require_binding:
+        body["require_binding"] = True
+    return F.make_cert("result", issuer_label=label, subject={}, recipe={}, refs=[], body=body)
 
 
 def test_a_log_can_state_its_admission_policy_inside_its_own_tree(tmp_path):
@@ -1053,6 +1079,354 @@ def test_log_append_can_require_a_binding_the_mint_did_not_write(tmp_path):
     )
     assert code == 0, appended
     assert appended["bound"] is True
+
+
+# ================================================================= H2: the binding pointed one way
+
+
+def test_a_cert_that_names_a_log_is_not_thereby_in_it(tmp_path):
+    """H2, run as the attack and pinned as the reversed predicate.
+
+    ``body.log_hint`` says *I claim to belong to log X*, and every rule L7 added enforces the
+    contrapositive — X refuses certs naming anything else. Nothing checked the claim. So a cert
+    bound to the gold log and NEVER APPENDED to it passed ``log verify-cert --log <gold>`` with
+    ``ok: true`` while ``find()`` on that same directory returned ``None``: ``--log`` was accepted
+    and ignored, and the verdict came from ``cert.check``, which has never heard of a log.
+
+    The useful predicate is the reverse one and it belongs to the log: does this log HOLD these
+    bytes. It is a conjunction with the old one, so a well-formed cert that is not here is not
+    ``ok`` here.
+    """
+    log = fresh(tmp_path / "log")
+    absent = bound("battery", log.log_id())
+    path = tmp_path / "absent.json"
+    path.write_bytes(canonical_bytes(absent))
+
+    # the fact the old answer contradicted
+    assert log.find(absent["id"]) is None
+
+    code, payload = climod.run(["log", "verify-cert", str(path), "--log", str(log.path)])
+    assert code != 0
+    assert payload["ok"] is False
+    assert payload["membership"]["holds"] is False
+    assert payload["membership"]["in_log"] is False
+    assert payload["membership"]["bound"] is True
+    assert payload["membership"]["names_this_log"] is True  # the CLAIM is true; the fact is not
+    assert any("this log holds no entry" in reason for reason in payload["reasons"])
+
+    # WITHOUT --log the answer is what it always was, and the payload says which question it is
+    code, alone = climod.run(["log", "verify-cert", str(path)])
+    assert code == 0 and alone["ok"] is True
+    assert alone["membership"] is None
+    assert alone["log_hint"] == {"log_id": log.log_id()}
+
+    # the control: the same bytes, seated
+    log.append(absent)
+    code, payload = climod.run(["log", "verify-cert", str(path), "--log", str(log.path)])
+    assert code == 0, payload
+    assert payload["ok"] is True
+    assert payload["membership"]["holds"] is True and payload["membership"]["index"] == 0
+    assert payload["membership"]["reasons"] == []
+
+
+def test_membership_is_about_bytes_and_not_about_the_id(tmp_path):
+    """An id is a hash of ``D``; an entry is the whole signed cert. They are not the same question.
+
+    ``find`` maps an id to an index, so a cert whose ``sig`` was replaced resolves to the seated
+    entry and is not that entry. Membership compares ``canonical_bytes`` and then re-verifies the
+    seated entry on its own terms, so "your id is in this log" never stands in for "these bytes
+    are".
+    """
+    log = fresh(tmp_path / "log")
+    cert = bound("battery", log.log_id())
+    log.append(cert)
+
+    twin = copy.deepcopy(cert)
+    twin["sig"] = "ed25519:" + "A" * 86 + "=="
+    assert twin["id"] == cert["id"]
+
+    held = log.membership(twin)
+    assert held["in_log"] is True and held["index"] == 0
+    assert held["bytes_match"] is False
+    assert held["holds"] is False
+    assert any("different bytes" in reason for reason in held["reasons"])
+
+    # and the seated entry itself is untouched by the question
+    assert log.membership(cert)["holds"] is True
+
+
+def test_membership_names_the_log_it_answered_for(tmp_path):
+    """The limit, pinned: this is a statement about the directory the caller pointed at.
+
+    Pointed at another party's log it returns that party's answer. Appendix D's step is what makes
+    it worth anything — the log key comes from a channel the operator does not control — and
+    nothing in these bytes can tell a reader which log they should have been reading.
+    """
+    first = fresh(tmp_path / "first")
+    second = fresh(tmp_path / "second", public=SECOND_LOG_PUB)
+    cert = bound("battery", first.log_id())
+    first.append(cert)
+
+    here = first.membership(cert)
+    there = second.membership(cert)
+    assert here["holds"] is True and here["log_id"] == first.log_id()
+    assert there["holds"] is False and there["log_id"] == second.log_id()
+    assert there["names_this_log"] is False
+    assert any(first.log_id() in reason for reason in there["reasons"])
+
+
+# ================================================================= H1: stripping the binding
+
+
+def test_an_issuer_can_strip_the_binding_and_the_twin_appends_anywhere(tmp_path):
+    """H1, run and NOT repaired, because the party it constrains is the party who signs.
+
+    ``body`` is inside ``D``, so removing ``log_hint`` needs the issuer's key — and the issuer is
+    exactly whom the field constrains. A constraint a party lifts by signing again constrains only
+    a party that did not want to lift it. What the strip costs, and it is not nothing: the twin is
+    a DIFFERENT cert with a different id and a different leaf, so every ref that names the bound
+    cert resolves to the bound one. The strip produces a sibling, never a substitute.
+
+    The one thing that stops the twin is a rule the RECEIVING log states (H4), which is why that
+    is the repair that matters here.
+    """
+    home = fresh(tmp_path / "home")
+    body = dict(F.battery_body("pool-v1"))
+    body["log_hint"] = {"log_id": home.log_id()}
+    bound_cert = F.make_cert("battery", body=body)
+    home.append(bound_cert)
+
+    stripped = dict(body)
+    stripped.pop("log_hint")
+    twin = F.make_cert("battery", body=stripped)
+
+    assert twin["id"] != bound_cert["id"]           # a sibling, not a substitute
+    assert home.find(twin["id"]) is None
+    assert "log_hint" not in twin["body"]
+
+    elsewhere = fresh(tmp_path / "elsewhere", public=SECOND_LOG_PUB)
+    with pytest.raises(AppendRefused):
+        elsewhere.append(copy.deepcopy(bound_cert))
+    assert elsewhere.append(copy.deepcopy(twin)) == 0   # THE ATTACK, unrepaired
+
+    # what does stop it: the receiving log's own stated rule
+    strict = fresh(tmp_path / "strict", "log-key", "issuer")
+    strict.append(policy_statement(strict, {"policy": "roster", "issuers": roster("log-key", "issuer")},
+                                   require_binding=True))
+    with pytest.raises(AppendRefused) as exc:
+        strict.append(copy.deepcopy(twin))
+    assert exc.value.reason.startswith("log_hint:")
+    assert "requires that every cert it seats names it" in exc.value.reason
+
+
+# ================================================================= H4: whose rule is it
+
+
+def test_a_log_states_in_its_own_tree_that_it_requires_binding(tmp_path):
+    """H4. The rule was the INVOCATION's, so nothing a stranger read recorded it.
+
+    ``log append --require-binding`` refused unbound bytes and the same command without the flag
+    accepted them, and afterwards no predicate over the directory told a log that wanted binding
+    from a log that never did. The precedent is one directory over: L10c's admission rule became a
+    signed entry in the tree. ``require_binding`` rides on that same statement, so it has an index,
+    a leaf hash and a signature, it cannot be lifted into another log, and ``mirror`` prints it.
+    """
+    log = fresh(tmp_path / "log", "log-key", "issuer")
+    statement = policy_statement(
+        log, {"policy": "roster", "issuers": roster("log-key", "issuer")}, require_binding=True
+    )
+    assert log.append(statement) == 0
+    policy = log.binding_policy()
+    assert policy == {
+        "require_binding": True,
+        "source": "cert",
+        "cert_index": 0,
+        "cert_id": statement["id"],
+    }
+
+    with pytest.raises(AppendRefused) as exc:
+        log.append(F.make_cert("battery", body=F.battery_body("pool-v1")))
+    assert exc.value.reason.startswith("log_hint:")
+    assert statement["id"] in exc.value.reason
+    assert log.size() == 1
+
+    assert log.append(bound("battery", log.log_id())) == 1
+    for index in range(log.size()):
+        ok, why = verify_entry(log, index)
+        assert ok, why
+
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB)
+    assert report["verified"] is True and report["tamper"] == []
+    assert report["binding_policy"]["require_binding"] is True
+    assert report["binding_policy"]["cert_id"] == statement["id"]
+    assert report["log_binding"] == {"bound": 2, "unbound": 0}
+
+
+def test_the_requirement_binds_forward_and_does_not_accuse_the_entries_below_it(tmp_path):
+    """A rule turned on at index j is a statement about j onward, and only about j onward.
+
+    An entry seated before the log said anything is honestly unbound. Refusing it on read would be
+    A-META-ABSENT's defect in a different field — EXTERNAL-1 measured what an accuser that fires on
+    honest artifacts is worth (0.23 precision, class disabled), and this log's own published
+    entries are exactly the artifacts in question.
+    """
+    log = fresh(tmp_path / "log", "log-key", "issuer")
+    before = F.make_cert("battery", body=F.battery_body("pool-v1"))
+    assert log.append(before) == 0                                    # no rule yet
+    statement = policy_statement(
+        log, {"policy": "roster", "issuers": roster("log-key", "issuer")}, require_binding=True
+    )
+    assert log.append(statement) == 1
+
+    with pytest.raises(AppendRefused):
+        log.append(F.make_cert("battery", body=F.battery_body("fixed-v1", n=3)))
+
+    assert log.binding_policy(below=0)["require_binding"] is False    # nothing governs entry 0
+    assert log.binding_policy(below=1)["require_binding"] is False    # nor the statement itself
+    assert log.binding_policy(below=2)["require_binding"] is True
+    ok, why = verify_entry(log, 0)
+    assert ok, why
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB)
+    assert report["verified"] is True and report["tamper"] == []
+    assert report["log_binding"] == {"bound": 1, "unbound": 1}
+
+
+def test_an_unbound_entry_seated_above_the_requirement_is_caught_on_read(tmp_path):
+    """The same predicate where the gate never ran: a clone, or a directory someone wrote into.
+
+    Everything else about the entry is in order — the id recomputes, the signature verifies, the
+    metadata is the derivation. Only the rule the log signed is broken.
+    """
+    log = fresh(tmp_path / "log", "log-key", "issuer")
+    statement = policy_statement(
+        log, {"policy": "roster", "issuers": roster("log-key", "issuer")}, require_binding=True
+    )
+    log.append(statement)
+
+    smuggled = F.make_cert("battery", body=F.battery_body("pool-v1"))
+    log.entry_path(1).parent.mkdir(parents=True, exist_ok=True)
+    log.entry_path(1).write_bytes(canonical_bytes(smuggled))
+    log._id_map_cache = None
+    log.meta_path(1).write_bytes(
+        (
+            json.dumps(
+                dict(log.derived_meta(1), appended_at=TS), sort_keys=True, indent=2
+            )
+            + "\n"
+        ).encode("utf-8")
+    )
+    log._id_map_cache = None
+    assert log.meta_disagreement(1) == []      # nothing else about the entry is wrong
+    ok, why = verify_entry(log, 1)
+    assert not ok
+    assert "requires binding from entry 0" in why
+
+
+def test_the_flag_records_nothing_and_the_statement_records_itself(tmp_path):
+    """H4 end to end, as the two-line control the attack was.
+
+    Same bytes, same log, two invocations: refused with the flag, accepted without it. Then the
+    same bytes against a log that STATED the rule: refused with no flag at all, by every caller.
+    """
+    pem = tmp_path / "log.pem"
+    assert climod.run(["key", "generate", "--out", str(pem)])[0] == 0
+    plain = tmp_path / "plain.json"
+    plain.write_bytes(canonical_bytes(F.make_cert("battery", body=F.battery_body("pool-v1"))))
+
+    loose = tmp_path / "loose"
+    code, payload = climod.run(
+        ["log", "init", "--log", str(loose), "--key", str(pem), "--open-issuers"]
+    )
+    assert code == 0, payload
+    assert payload["require_binding"] is False
+    assert climod.run(
+        ["log", "append", str(plain), "--log", str(loose), "--require-binding"]
+    )[0] != 0
+    code, appended = climod.run(["log", "append", str(plain), "--log", str(loose)])
+    assert code == 0, appended                                  # THE ATTACK: the flag was optional
+    assert appended["bound"] is False and appended["binding_required"] is False
+    assert appended["binding_policy_cert"] is None
+
+    strict = tmp_path / "strict"
+    code, payload = climod.run([
+        "log", "init", "--log", str(strict), "--key", str(pem),
+        "--open-issuers", "--witness-policy", "--require-binding",
+    ])
+    assert code == 0, payload
+    assert payload["require_binding"] is True and payload["policy_cert"]
+    code, refused = climod.run(["log", "append", str(plain), "--log", str(strict)])
+    assert code != 0
+    assert "requires that every cert it seats names it" in refused["error"]
+    assert Log(strict).size() == 1
+
+    # and the requirement is a statement or it is nothing
+    code, refused = climod.run([
+        "log", "init", "--log", str(tmp_path / "nope"), "--key", str(pem), "--require-binding",
+    ])
+    assert code != 0
+    assert "--require-binding needs --witness-policy" in refused["error"]
+
+
+def test_the_requirement_is_lifted_by_a_later_statement_and_never_by_an_edit(tmp_path):
+    """The operator can turn their own rule off — and every reader sees when, and at which index.
+
+    That is the whole difference between a rule in the tree and a rule in a file or a flag. The
+    earlier statement stays a leaf, so the history of the requirement is readable rather than
+    overwritten; the log's own key is what it takes to change it; and the entries seated while it
+    was in force stay bound whatever is said later.
+    """
+    log = fresh(tmp_path / "log", "log-key", "issuer")
+    stated = {"policy": "roster", "issuers": roster("log-key", "issuer")}
+    on = policy_statement(log, stated, require_binding=True)
+    log.append(on)
+    log.append(bound("battery", log.log_id()))
+    with pytest.raises(AppendRefused):
+        log.append(F.make_cert("battery", body=F.battery_body("fixed-v1", n=3)))
+
+    off = policy_statement(log, stated, require_binding=False)
+    assert log.append(off) == 2
+    assert log.binding_policy() == {
+        "require_binding": False, "source": "cert", "cert_index": 2, "cert_id": off["id"],
+    }
+    assert log.append(F.make_cert("battery", body=F.battery_body("fixed-v1", n=3))) == 3
+
+    # the first statement is still a leaf, and the segment it governed is still bound
+    assert log.cert(0)["id"] == on["id"]
+    assert log.binding_policy(below=2)["require_binding"] is True
+    for index in range(log.size()):
+        ok, why = verify_entry(log, index)
+        assert ok, why
+    report = mirror(log.path, tmp_path / "dst", LOG_PUB)
+    assert report["verified"] is True
+    assert report["binding_policy"]["require_binding"] is False
+    assert report["log_binding"] == {"bound": 3, "unbound": 1}
+
+
+def test_a_corpus_above_the_requirement_replays_nowhere(tmp_path):
+    """The half of L7's cross-log replay the binding DOES close, stated as the segment it closes.
+
+    Every entry above a ``require_binding`` statement names this log, so the whole segment is
+    unreplayable as a segment — the counterpart of ``test_an_unbound_cert_still_replays_verbatim``,
+    which pins the half that is not closed and is kept passing.
+    """
+    home = fresh(tmp_path / "home", "log-key", "issuer")
+    home.append(policy_statement(
+        home, {"policy": "roster", "issuers": roster("log-key", "issuer")}, require_binding=True
+    ))
+    seated = [
+        bound("battery", home.log_id()),
+        bound("battery", home.log_id(), body=F.battery_body("fixed-v1", n=3)),
+    ]
+    for cert in seated:
+        home.append(cert)
+    assert home.size() == 3
+
+    fresh_log = fresh(tmp_path / "replay", "log-key", "issuer", public=SECOND_LOG_PUB)
+    for cert in seated:
+        with pytest.raises(AppendRefused) as exc:
+            fresh_log.append(copy.deepcopy(cert))
+        assert exc.value.reason.startswith("log_hint:")
+    assert fresh_log.size() == 0
 
 
 # ================================================================= L6

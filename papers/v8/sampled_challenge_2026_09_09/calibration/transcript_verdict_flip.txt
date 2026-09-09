@@ -1,0 +1,68 @@
+--- reproducing the published verdict from the certificates
+  exact  distance 0.062500000 (published 0.0625) ok   floor 0.046875000 (published 0.046875) ok   -> exceeds_floor
+  seqlp  distance 0.058564664 (published 0.058564664) ok   floor 0.036070694 (published 0.036070694) ok   -> exceeds_floor
+  topk   distance 1.407087824 (published 1.407087824) ok   floor 2.140233900 (published 2.1402339) ok   -> same
+
+--- the item
+  item_id            a1f4a82542815cc4
+  output_text        '```xml\n<item>one</item>\n``` \n'
+  n_generated        14   recorded distributions 8   emitted tokens with none 6
+  recorded prefix sum -0.134172570   <- P8b's ceiling
+  honest seq_logprob  -1.223275343   (1.089103 below it)
+  fp16 seq_logprob    -3.511959788   (3.377787 below it)
+  the write: understate this item's score by 2.288684445 nats, to the fp16 value
+
+--- scenario A: the reference run alone
+    (cheapest, but it breaks the log's own record that the three batch-1 runs agree exactly)
+  exact  distance 0.062500000  floor 0.046875000  ratio 1.333  exceeds_floor -> exceeds_floor
+  seqlp  distance 0.022803969  floor 0.071090944  ratio 0.321  exceeds_floor -> same  <== FLIPPED
+  topk   distance 1.407087824  floor 2.140233900  ratio 0.657  same -> same
+  overall exceeds_floor -> exceeds_floor
+  internal battery on the forged cert : all predicates hold -- MISSED
+  items a digest challenge would flag  : 0 of 64 -> P(catch) = 0.000 even at k=64
+  items a full-record challenge flags  : 1 of 64 -> P(catch) = 0.016 at k=1, 0.125 at k=8
+
+--- scenario B: all three batch-1 runs
+    (keeps run0 = run3 = run4 byte-identical, which entry 6 of the log already asserts)
+  exact  distance 0.062500000  floor 0.046875000  ratio 1.333  exceeds_floor -> exceeds_floor
+  seqlp  distance 0.022803969  floor 0.071090944  ratio 0.321  exceeds_floor -> same  <== FLIPPED
+  topk   distance 1.407087824  floor 2.140233900  ratio 0.657  same -> same
+  overall exceeds_floor -> exceeds_floor
+  internal battery on the forged cert : all predicates hold -- MISSED
+  items a digest challenge would flag  : 0 of 64 -> P(catch) = 0.000 even at k=64
+  items a full-record challenge flags  : 1 of 64 -> P(catch) = 0.016 at k=1, 0.125 at k=8
+
+--- scenario C: the overall verdict, which the exact channel is still holding up
+    Scenarios A and B flip seqlp and stop, because exact stays at 4 disagreeing items
+    against a floor of 3.  Removing one disagreement means writing a token id, and a
+    token id is exactly what a challenger reproduces.  This measures that price.
+    items where bf16 and fp16 disagree on tokens: 4 of 64
+  exact  distance 0.046875000  floor 0.046875000  exceeds_floor -> same  <== FLIPPED
+  seqlp  distance 0.022676666  floor 0.070963640  exceeds_floor -> same  <== FLIPPED
+  topk   distance 1.319929884  floor 2.140233900  same -> same
+  overall exceeds_floor -> same
+  internal battery : all predicates hold -- MISSED
+  items a digest challenge would flag: 1 of 64
+      k=1   P(catch) = 0.0156
+      k=2   P(catch) = 0.0312
+      k=4   P(catch) = 0.0625
+      k=8   P(catch) = 0.1250
+      k=16  P(catch) = 0.2500
+      k=32  P(catch) = 0.5000
+      k=64  P(catch) = 1.0000
+  THE PRICE: the seqlp half of this forgery is free at every k; the exact half is
+  exposed on 1 item(s), which is what the challenge is for.
+
+--- for scale: the same move on all 27 eligible partial items
+  seqlp distance 0.008512437 against the untouched published floor 0.036070694  ratio 0.236
+  (the floor is set by the run1/run2 pair, which this move does not touch)
+
+READING
+  The seqlp channel of the published verdict is decided by a quantity that one party writes and
+  that, on 27 of 64 items, no predicate over the certificate constrains from below and no output
+  digest covers.  A k-item challenge is the right instrument for the classes that move tokens.
+  It is the wrong instrument for this one, at every k, including k = 64.
+
+  What reaches it is a challenger who publishes their own seq_logprob -- and the published log
+  says that comparison is only meaningful at a fixed batch size, where three honest pairs agreed
+  on all 64 items and all seven cross-batch pairs disagreed on all 64.

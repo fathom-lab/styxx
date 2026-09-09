@@ -1,0 +1,121 @@
+THE CONSTRAINT CENSUS
+  log            : papers/v8/first_verdict_2026_09_09/log
+  entries        : 7
+  issuer keys    : ['ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA']
+
+idx  type         prior  own constr indep  verdict
+--------------------------------------------------
+  0  battery          0    0      0     0  unconstrained
+  1  prereg           1    1      0     0  unconstrained
+  2  fingerprint      2    2      0     0  unconstrained
+  3  fingerprint      3    2      1     0  constrained
+  4  fingerprint      4    2      2     0  constrained
+  5  fingerprint      5    2      3     0  constrained
+  6  fingerprint      6    6      0     0  unconstrained
+
+
+PER PREDICATE, PER ENTRY
+  matched = prior entries in the predicate's scope
+  own     = of those, material this cert itself names (its inputs; cannot corroborate it)
+  avail   = matched - own
+  usable  = available entries carrying the fields the predicate reads
+  indep   = usable entries signed by a DIFFERENT issuer key
+
+  entry 0 (battery)   constraint: 0 of 0 prior entries could contradict this claim (0 are its own material); first claim, every consistency check on it is vacuous
+    floor_agreement      matched=0  own=0  avail=0  usable=0  indep=0  not-applicable
+        - this cert carries neither a noise_floor nor channel values
+    snapshot_agreement   matched=0  own=0  avail=0  usable=0  indep=0  unconstrained
+    schedule             matched=0  own=0  avail=0  usable=0  indep=0  not-applicable
+        - this cert names no noise plan
+    determinism          matched=0  own=0  avail=0  usable=0  indep=0  not-applicable
+        - this cert records no batch level
+    issuer_history       matched=0  own=0  avail=0  usable=0  indep=0  unconstrained
+        - this predicate constrains a party only against itself
+
+  entry 1 (prereg)   constraint: 0 of 1 prior entries could contradict this claim (1 are its own material); first claim, every consistency check on it is vacuous
+    floor_agreement      matched=1  own=1  avail=0  usable=0  indep=0  not-applicable
+        - this cert carries neither a noise_floor nor channel values
+    snapshot_agreement   matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+    schedule             matched=0  own=0  avail=0  usable=0  indep=0  not-applicable
+        - this cert names no noise plan
+    determinism          matched=0  own=0  avail=0  usable=0  indep=0  not-applicable
+        - this cert carries no channel values to reproduce
+    issuer_history       matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - this predicate constrains a party only against itself
+
+  entry 2 (fingerprint)   constraint: 0 of 2 prior entries could contradict this claim (2 are its own material); first claim, every consistency check on it is vacuous
+    floor_agreement      matched=2  own=2  avail=0  usable=0  indep=0  unconstrained
+    snapshot_agreement   matched=2  own=2  avail=0  usable=0  indep=0  unconstrained
+    schedule             matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged
+    determinism          matched=0  own=0  avail=0  usable=0  indep=0  unconstrained
+    issuer_history       matched=2  own=2  avail=0  usable=0  indep=0  unconstrained
+        - this predicate constrains a party only against itself
+
+  entry 3 (fingerprint)   constraint: 1 of 3 prior entries could contradict this claim (0 signed by another key, 2 are its own material)
+    floor_agreement      matched=3  own=2  avail=1  usable=1  indep=0  constrained
+    snapshot_agreement   matched=3  own=2  avail=1  usable=1  indep=0  constrained
+    schedule             matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged
+    determinism          matched=0  own=0  avail=0  usable=0  indep=0  unconstrained
+    issuer_history       matched=3  own=2  avail=1  usable=1  indep=0  constrained
+        - this predicate constrains a party only against itself
+
+  entry 4 (fingerprint)   constraint: 2 of 4 prior entries could contradict this claim (0 signed by another key, 2 are its own material)
+    floor_agreement      matched=4  own=2  avail=2  usable=2  indep=0  constrained
+    snapshot_agreement   matched=4  own=2  avail=2  usable=2  indep=0  constrained
+    schedule             matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged
+    determinism          matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+    issuer_history       matched=4  own=2  avail=2  usable=2  indep=0  constrained
+        - this predicate constrains a party only against itself
+
+  entry 5 (fingerprint)   constraint: 3 of 5 prior entries could contradict this claim (0 signed by another key, 2 are its own material)
+    floor_agreement      matched=5  own=2  avail=3  usable=3  indep=0  constrained
+    snapshot_agreement   matched=5  own=2  avail=3  usable=3  indep=0  constrained
+    schedule             matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged
+    determinism          matched=2  own=1  avail=1  usable=1  indep=0  constrained
+    issuer_history       matched=5  own=2  avail=3  usable=3  indep=0  constrained
+        - this predicate constrains a party only against itself
+
+  entry 6 (fingerprint)   constraint: 0 of 6 prior entries could contradict this claim (6 are its own material); first claim, every consistency check on it is vacuous
+    floor_agreement      matched=6  own=6  avail=0  usable=0  indep=0  unconstrained
+    snapshot_agreement   matched=6  own=6  avail=0  usable=0  indep=0  unconstrained
+    schedule             matched=1  own=1  avail=0  usable=0  indep=0  unconstrained
+        - the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged
+    determinism          matched=3  own=3  avail=0  usable=0  indep=0  unconstrained
+    issuer_history       matched=6  own=6  avail=0  usable=0  indep=0  unconstrained
+        - this predicate constrains a party only against itself
+
+
+THE HEADLINE ENTRY
+
+  Entry 6 is the canonical fingerprint and the noise floor -- the verdict the
+  artifact `first_verdict_2026_09_09` exists to publish. 6 entries
+  precede it in this log, and 6 of those are its own material:
+
+    battery      entries [0]
+    fingerprint  entries [2, 3, 4, 5]
+    prereg       entries [1]
+
+  Prior entries left for any predicate to compare it against: 0
+  Of those, signed by a party other than the issuer          : 0
+
+  This lab's own published verdict is a first claim. Every cross-cert predicate this system has
+  or should have returns vacuous on it -- not "agrees", not "disagrees": nothing to compare.
+
+THE SHAPE OF THE LOG
+
+  constraining entries, in index order: [0, 0, 0, 1, 2, 3, 0]
+
+  The count rises across entries 3, 4 and 5 -- the floor runs, which do not name one another, so
+  each is constrained by the runs logged below it -- and falls back to 0 at entry 6,
+  because the floor consumes all of them. Consistency accrues, and then the certificate that
+  aggregates it starts over.
+
+  Independent constraint is 0 at every index: this log has one issuer key. A party is compared
+  only against itself anywhere in it.
+
+wrote papers/v8/constraint_census_2026_09_09/census.json
+wrote papers/v8/constraint_census_2026_09_09/output.txt

@@ -1,0 +1,1243 @@
+{
+  "entries": 7,
+  "independent_entries_anywhere": 0,
+  "max_constraining_entries": 3,
+  "per_entry": [
+    {
+      "cert": {
+        "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "index": 0,
+        "type": "battery"
+      },
+      "constraining_entries": 0,
+      "disclosure": "constraint: 0 of 0 prior entries could contradict this claim (0 are its own material); first claim, every consistency check on it is vacuous",
+      "first_claim": true,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1"
+      ],
+      "own_material_present": 0,
+      "predicates": {
+        "determinism": {
+          "applicable": false,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [
+            "this cert records no batch level"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "batch_size": null,
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "floor_agreement": {
+          "applicable": false,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 0,
+          "blocked_by": [
+            "this cert carries neither a noise_floor nor channel values"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 0,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "schedule": {
+          "applicable": false,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "this cert names no noise plan"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 0,
+          "scope": {
+            "plan": null
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        }
+      },
+      "prior_entries": 0,
+      "verdict": "unconstrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+        "index": 1,
+        "type": "prereg"
+      },
+      "constraining_entries": 0,
+      "disclosure": "constraint: 0 of 1 prior entries could contradict this claim (1 are its own material); first claim, every consistency check on it is vacuous",
+      "first_claim": true,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+      ],
+      "own_material_present": 1,
+      "predicates": {
+        "determinism": {
+          "applicable": false,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [
+            "this cert carries no channel values to reproduce"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "batch_size": "1",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "floor_agreement": {
+          "applicable": false,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 0,
+          "blocked_by": [
+            "this cert carries neither a noise_floor nor channel values"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 0,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "schedule": {
+          "applicable": false,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "this cert names no noise plan"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 0,
+          "scope": {
+            "plan": null
+          },
+          "usable": 0,
+          "verdict": "not-applicable"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        }
+      },
+      "prior_entries": 1,
+      "verdict": "unconstrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+        "index": 2,
+        "type": "fingerprint"
+      },
+      "constraining_entries": 0,
+      "disclosure": "constraint: 0 of 2 prior entries could contradict this claim (2 are its own material); first claim, every consistency check on it is vacuous",
+      "first_claim": true,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+        "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128"
+      ],
+      "own_material_present": 2,
+      "predicates": {
+        "determinism": {
+          "applicable": true,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "batch_size": "8",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "floor_agreement": {
+          "applicable": true,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 2,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 0,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 2,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "schedule": {
+          "applicable": true,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 1,
+          "scope": {
+            "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 2,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        }
+      },
+      "prior_entries": 2,
+      "verdict": "unconstrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+        "index": 3,
+        "type": "fingerprint"
+      },
+      "constraining_entries": 1,
+      "disclosure": "constraint: 1 of 3 prior entries could contradict this claim (0 signed by another key, 2 are its own material)",
+      "first_claim": false,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+        "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8"
+      ],
+      "own_material_present": 2,
+      "predicates": {
+        "determinism": {
+          "applicable": true,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 0,
+          "own": 0,
+          "own_entries": [],
+          "scope": {
+            "batch_size": "32",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "floor_agreement": {
+          "applicable": true,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 1,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 3,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 1,
+          "verdict": "constrained"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 1,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 3,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 1,
+          "verdict": "constrained"
+        },
+        "schedule": {
+          "applicable": true,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 1,
+          "scope": {
+            "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 1,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 3,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 1,
+          "verdict": "constrained"
+        }
+      },
+      "prior_entries": 3,
+      "verdict": "constrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+        "index": 4,
+        "type": "fingerprint"
+      },
+      "constraining_entries": 2,
+      "disclosure": "constraint: 2 of 4 prior entries could contradict this claim (0 signed by another key, 2 are its own material)",
+      "first_claim": false,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+      ],
+      "own_material_present": 2,
+      "predicates": {
+        "determinism": {
+          "applicable": true,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "batch_size": "1",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "floor_agreement": {
+          "applicable": true,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 2,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 4,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 2,
+          "verdict": "constrained"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 2,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 4,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 2,
+          "verdict": "constrained"
+        },
+        "schedule": {
+          "applicable": true,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 1,
+          "scope": {
+            "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 2,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 4,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 2,
+          "verdict": "constrained"
+        }
+      },
+      "prior_entries": 4,
+      "verdict": "constrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9",
+        "index": 5,
+        "type": "fingerprint"
+      },
+      "constraining_entries": 3,
+      "disclosure": "constraint: 3 of 5 prior entries could contradict this claim (0 signed by another key, 2 are its own material)",
+      "first_claim": false,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+        "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9"
+      ],
+      "own_material_present": 2,
+      "predicates": {
+        "determinism": {
+          "applicable": true,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 1,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 2,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "batch_size": "1",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 1,
+          "verdict": "constrained"
+        },
+        "floor_agreement": {
+          "applicable": true,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 3,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 5,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 3,
+          "verdict": "constrained"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 3,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 5,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 3,
+          "verdict": "constrained"
+        },
+        "schedule": {
+          "applicable": true,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 1,
+          "scope": {
+            "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 3,
+          "blocked_by": [],
+          "entries": [
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            }
+          ],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 5,
+          "own": 2,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 3,
+          "verdict": "constrained"
+        }
+      },
+      "prior_entries": 5,
+      "verdict": "constrained"
+    },
+    {
+      "cert": {
+        "id": "sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3",
+        "index": 6,
+        "type": "fingerprint"
+      },
+      "constraining_entries": 0,
+      "disclosure": "constraint: 0 of 6 prior entries could contradict this claim (6 are its own material); first claim, every consistency check on it is vacuous",
+      "first_claim": true,
+      "independent_entries": 0,
+      "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA",
+      "own_material": [
+        "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+        "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+        "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+        "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+        "sha256:73a09ffa3f1ee69a065f5d3aa28965348558d7d128b1b302fd6909324766a5c3",
+        "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+        "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9"
+      ],
+      "own_material_present": 6,
+      "predicates": {
+        "determinism": {
+          "applicable": true,
+          "asks": "a run at a batch level this subject has already been logged at must reproduce the recorded channel values exactly",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 3,
+          "own": 3,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9",
+              "index": 5,
+              "type": "fingerprint"
+            }
+          ],
+          "scope": {
+            "batch_size": "1",
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "floor_agreement": {
+          "applicable": true,
+          "asks": "across entries sharing a weights_sha256 and a battery, the floor's distances and the per-run channel values must be consistent (THE_BOUNDARY member 1)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 6,
+          "own": 6,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            },
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9",
+              "index": 5,
+              "type": "fingerprint"
+            }
+          ],
+          "scope": {
+            "battery": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+            "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "issuer_history": {
+          "applicable": true,
+          "asks": "how many entries this issuer key has signed before; constrains a party only against itself",
+          "available": 0,
+          "blocked_by": [
+            "this predicate constrains a party only against itself"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 6,
+          "own": 6,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            },
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9",
+              "index": 5,
+              "type": "fingerprint"
+            }
+          ],
+          "scope": {
+            "issuer": "ed25519:Lm5ELynReA3UwDWWIfW90W6JrD18Y3VWtwCijoZuUzA"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "schedule": {
+          "applicable": true,
+          "asks": "the runs' factor assignments are the logged noise plan's schedule, in order, so the reference run is fixed before the data exists (THE_BOUNDARY member 2)",
+          "available": 0,
+          "blocked_by": [
+            "the plan on file fixes the factors, their levels and the run count, and names no schedule: it does not fix which assignment each run takes, so the reference run is chosen after the plan is logged"
+          ],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 1,
+          "own": 1,
+          "own_entries": [
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            }
+          ],
+          "plans_carrying_a_schedule": 0,
+          "plans_on_file": 1,
+          "scope": {
+            "plan": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        },
+        "snapshot_agreement": {
+          "applicable": true,
+          "asks": "across the entries of one log, one (hf_repo, revision) names one set of Appendix A.2 content hashes, and one set of content hashes names one (hf_repo, revision) (THE_BOUNDARY member 3)",
+          "available": 0,
+          "blocked_by": [],
+          "entries": [],
+          "in_scope_not_usable": 0,
+          "independent": 0,
+          "matched": 6,
+          "own": 6,
+          "own_entries": [
+            {
+              "id": "sha256:39e7f293e034ca10191cd959f46049762c46a8a093664b575d5b3158c93d23c1",
+              "index": 0,
+              "type": "battery"
+            },
+            {
+              "id": "sha256:5ba84be3ea35a1ad9fa52f7d7930638ed6ef60949de3407915e8ec24c1634728",
+              "index": 1,
+              "type": "prereg"
+            },
+            {
+              "id": "sha256:8e13ac182b484e3ae2dec3e4b33d977e9ac7b5daef892d60cc25087e6b6cf128",
+              "index": 2,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:5fffce6bd4655ff91d54b052bf004078e04c9c47fe3d8a1ef730d2247b0e43f8",
+              "index": 3,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:243b385e9982c70a29fa369464d1bb44c2476ee7f6cb00b25848cca3a741d54c",
+              "index": 4,
+              "type": "fingerprint"
+            },
+            {
+              "id": "sha256:d521ed3169d3cb30e10fecd4b84ee334bef9949bfe50cab1f217313c6967fbb9",
+              "index": 5,
+              "type": "fingerprint"
+            }
+          ],
+          "scope": {
+            "hf_repo": "google/gemma-2-2b-it",
+            "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+          },
+          "usable": 0,
+          "verdict": "unconstrained"
+        }
+      },
+      "prior_entries": 6,
+      "verdict": "unconstrained"
+    }
+  ],
+  "root": "C:\\Users\\heyzo\\clawd\\wt\\v8\\papers\\v8\\first_verdict_2026_09_09\\log",
+  "unconstrained_entries": 4
+}

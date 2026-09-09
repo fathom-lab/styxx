@@ -1,0 +1,60 @@
+{
+  "log": "papers/v8/first_verdict_2026_09_09/log",
+  "floor_entry": "00000006",
+  "runs": 5,
+  "pairs": 10,
+  "covers": [
+    "batch_size",
+    "item_order"
+  ],
+  "channels": [
+    "exact",
+    "seqlp",
+    "topk"
+  ],
+  "cells_compared": {
+    "factor": 27,
+    "assignment": 30,
+    "total": 57
+  },
+  "contradictions": 45,
+  "contradictions_clean": 36,
+  "contradictions_confounded": 9,
+  "findings": [
+    {
+      "ok": true,
+      "what": "entry 00000006 names 4 run certs and the log holds them all",
+      "detail": "5 runs including the floor cert itself"
+    },
+    {
+      "ok": true,
+      "what": "entry 00000006 floor is consistent with its own runs",
+      "detail": "5 runs, 10 pairs, covers [batch_size, item_order]"
+    },
+    {
+      "ok": true,
+      "what": "the distance list re-attributes to run pairs under the sorted-run_index convention",
+      "detail": "3 same-batch pairs all exactly 0, 7 different-batch pairs all strictly positive, across 3 channels"
+    },
+    {
+      "ok": true,
+      "what": "A: the honest published floor does not accuse itself",
+      "detail": "agrees -- 57 cells compared (27 factor-level pairs, 30 assignment pairs), none contradicted"
+    },
+    {
+      "ok": true,
+      "what": "B: the forgery is refused against the prior logged floor",
+      "detail": "contradicts -- 45 of 57 cells contradict (27 factor-level pairs, 30 assignment pairs compared)"
+    },
+    {
+      "ok": true,
+      "what": "C: with no prior measurement the predicate declines rather than accusing",
+      "detail": "unconstrained -- no prior floor cert on this subject and battery"
+    },
+    {
+      "ok": true,
+      "what": "D: a floor on a different subject is not allowed to accuse this one",
+      "detail": "unconstrained -- the prior floor is not comparable under section 2.3; it differs on cross-subject:precision"
+    }
+  ]
+}

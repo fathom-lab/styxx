@@ -121,11 +121,11 @@
    "styxx/v8/floor.py": "c40a8b80a928938d58c5653775064f31e958f63e7e920a13f186721ba67f182a",
    "styxx/v8/jcs.py": "85f25506275c2fc37abae8b79ba25aa009f2975ae0a4062be655cc3379985e73",
    "styxx/v8/keys.py": "ee3e8994c7a1bef5e731579530bf3c22deed27138d7eb0f313105afd90c222ac",
-   "styxx/v8/log.py": "130f1aeba7744abd314a81558d6608718b9dfb69260e60712669dde3f213e475",
+   "styxx/v8/log.py": "aeb934f8aaf55e1014128231d42c2c9317f6079eac40d4d251c60f70cc890349",
    "styxx/v8/merkle.py": "0266425b70d9c496a65b3d8d240354b3a8282bfcda41c88d283b494f856625ac",
    "styxx/v8/verify.py": "5db73c15d2fe15c5658a86a334a2c96709a5982cedf9e6218302fe7037a4539d"
   },
-  "note": "outside set_sha256: the set is a function of these bytes, not of this block",
+  "note": "outside set_sha256: this block describes the TREE that produced the set, not the set. A comment added to floor.py moves these hashes without moving a vector, and a set identity that moved on that would make --check a test of the working tree. The retirement ledger used to sit here and does not any more: it is index.retired now, inside the digest, because a history the digest does not cover was deleted without moving the digest.",
   "replay": {
    "cert": {
     "failed": 0,
@@ -163,779 +163,6 @@
     "vectors": 93
    }
   },
-  "retired": {
-   "input_churn": [
-    {
-     "entrypoint": "cert.check",
-     "id": "0252a654df7bdacae625a5291da8f462a954ff80165ef1bdfe02124f6a29dde6"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "02b3dd66483b00a29c9a397a10f3251266e85c62e89a8a8dd5e50a29a1163edd"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "04e723159db272e9c2f09910c28b4cd036e719bc39feccd7b4f32f99538d562c"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "05a874be08810fad88e54c0bf2e6c0faf3ab1bf69df0ad6fa7501b128f8a1faf"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "068d138b5cb176d9075fa1eaa855683c35a4db826b0581dad7477228b7054107"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "08cf25f7c99aa8bbfd5b43e0e0385593541c6c66bd151250fce753776c767f68"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "0a41f5931ed1ec063682a389f58c2aa46897ada424495afd70adddc82a78652c"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "0fc2dc9b80a3308d95b995a7e93af3311a298440f4aa779b84839699bea3e0be"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "109743185f7b4d88dda058cd1a7ea1eec957a0298b6883cb100f15d5d6e9882c"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "13ced7bd09595747f837a64cf969f2701225571923eda2abf3b0827d29da679f"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "175a1bbc4ec9a5d9689b86d08e5d560f3603e1785916ec33503eff25ca0004ae"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "176e97c46aac5890bfc1f49665ef42bac7ebb5c4ffd11aaa1069e5f45d9ab8ca"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "1976c0ec73ec4bb7c39106ad6b0f0d7f3d4aa1509bb778e0339e69e631f0ff59"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "1b24924ce486267d9e5630355f6a7f05bb4dbc37dbc6a84520fdc07ca106e165"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "1c1f06abf31cd0a1599c424b8f5e655aa6b04f40c9c58bf3153c58d9d9a74147"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "1d454aa75c574f424d000f55caaa715f1066f6ed52982537b578a74b28f5ef96"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "1ef02b9e2d11b9ccb7bb8a6b7d4b4b7dd9da1b749c702a0163549bea0b7addb3"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "1f065e657d6856921cd2d9c2f99c020370fe0a2b8f44036daa9ee617a54339db"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "1f5812f98b1834a0b7b384dbf70c9a2dc3bba7aa166ceed6e30a8bacae93ef85"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "244c14227f8d25179f4b7f259fbad76f84c7eaac679c8de053c100614e12730d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "2514c41e9a5c8caad04846f4aefc4478e510de796ccdc382ab95a93c830cfdf8"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "261c1d911f083d7ad2bd5b1b769e16b0ca9ac257f4090a72983171f6c94b481c"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "26664aa44db9b237e0a8913a597bb0923206fb1784b77d4f19b72540096f41cc"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "2734cb7c2bbd2cba3480f10910cf630604be4f5c65a20cbbfc4dcfc92fe48032"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "278f2f5bfa1f36106acd4879ae1c181dc780cf9f6c1c88ed912e8607c3bc63ba"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "294a2c3445963b779aaa45beec306762b4b40cb73e76d625d3aed269a1e13cbe"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "2e0dd52558e4b3494e109b0b62efd1e5541666fb7493fc398908d32974408468"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "31e96e25edb10bd9c738413b141d6cb323a998ff3b1abaca691b1a6286f6cd58"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "350ffa07090cef9477d8e483cec424b213aa3a6898b572b95efc72ba2c80dc66"
-    },
-    {
-     "entrypoint": "log.verify_inclusion",
-     "id": "351eeb99ad9d3064797fcf8303122970c1640d6f205820b768660cdb36ef024e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "37c9e40b171e71adada958cee1db35075a5117674d77e5ce0ca64ebe32df318d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "397802295120dcc6ce64e91e70bb6c55a133dd74dff932110653bdf72c7fb176"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "3a253c7ef7bd259e693fff2d7b9642bc5c978530ed324f7cf8cd7dd9644025f4"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "3c436ad6edd49006421465120c88bd6eb693d752cde74ce1d4cdc29cc2f41c0c"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "3cb53d3aaed9a06b2938f27cfc81d772e421edff10d8bf1052a5df58ddebc449"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "3dee37a2c5b2e71326a41805d6c51e836ee9317510e304fb4673853fc7823f11"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "3e42648e339b3e4c9c2bc8ad8d02132cfbcee9f4470fc86a3c9d12889f116126"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "4015ce036981b4b1907f7f607b5fff6a85a9a75d092693d9c322bdc4a685bea4"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "42892c5673005a4fcf1bd7b1fcf33fc2f4ae2ca849ebb9e3c7c8c4b0e9dacdee"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "42eb3dc87c29af03b0b8327b170ce8dc96bb5ed24f10a3552e3c544526872c6d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "44b532cb4fb70913067588ed746abe8294905e7a5be21c72cdfe26e7e480911f"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "46d33169ff8bea75ffe5a17ca9d64bd0884dff8dfd60c1cc4bbd1cdafb6aa63b"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "46fda7766d70645be21e836ebb9456f8a2e11fa978d486903bbdbf1ee9950bb0"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "471a97f6413dd7acedf92aec74977601c78f9cfa94f7a785ff89202f71a013c3"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "488928ddafc2cc4567fa84c8644302c47e168be2ccdb85890e86d9059b7f7fe0"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "48b45dc9e2737e81da7db3cfbf87ff9b857472aa4664ad3a76d907215830054c"
-    },
-    {
-     "entrypoint": "merkle.inclusion_proof",
-     "id": "49ed23a73692c8b907cd2c71010435100f0916858d36b95ef1a94bb809f0be9e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "4adf03141a42c26012364e6352432d5f613e0b848029bf0f6129129963510a68"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "4b3746ed5edb6c70b4f5fcb6fb5ed558d35ec08497f2779560b8473ced525dc3"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "4be74803c34659044d1fc576d9559db67e93442a3658920cd518cb8919d86023"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "4c50260516dbff254cc2c485de4eb7da83c925ced596e0ad18110f9fc90a9d55"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "51e61d92523cb928578c2969882a38fb5f4ddb54d94fb45ccbda4e75e3d5179e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "5350ab2470d8acedc0ad90d9390e214a2ece1840da4ae648af8eb7bd6fe55383"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "555fb80b4989aa18916ebe44b6435fd8383a2e2dc3929d02d5d7b34055ea2606"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "57cad31538b68fc7e362830c632d3ec3e26d3f016ca683f6ab96b6269ebe98e1"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "58690fc433e2ced267e29f12d78598d7e5f67d238a8803098434ad65a1815417"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "5956c6241b9d8045d2133c95a2aa1e73c1fe14eb7427101f640c0425233f0fec"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "5f4098d32c93644cccb3d80f85302c1aa2f1e258c330fd6184c0726cd05271f1"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "5fcdf0d702db27fb184d3d0150b112581ea734bd44fc39c96f70ba7ff20b1eb0"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "63c34a1ef6fd78c7edea94e615e2d589d006b305da17664bc91d7737945bc013"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "64b5188d9474064798855ece7684503d2520a93480000f58a1fcdb116a7b6654"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "65268ae9a9e2181b34d87041f12808b913de55dc6a96d7fe6dc2d5ff022be270"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "6664465646d674c493ede52447c8c9b70e0696e17f5c1c3a55bdbe32cdc13533"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "694fc54786c6e842b55eafaf035a87529b5035fe60f05412102bab80c7649890"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6a2613b3e62f43a1ef94e8c4c0c422426d26b010b5fa8657126056d8fd506f0b"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6a3b0d8e4afbbf891d4cbf7b0d42a8db66e87df93d269887896b23eee666eb0b"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6a9175b4f375785abfc3161268eda9c6161845be72c680928248b9dfa395e75e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6e3872c965bf276aae93163a9e8abdfae70aad1523832fc347fc38905f93684d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6f2cc149733b55b968ad38e931609d9d172cebaf6b45b1413f5645600f8560b7"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "6f3898144586f812bd239d362b74b9c5074241504b6f4cc1289664179b9083c6"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "70f07686b8d40f679bbd17cc962998be467a3226953d55af498a015836ca0b70"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "73951bb2dc0f345f6b835e86dfedcfecd03d5d48062c02b97a1621b10d105c50"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "73d0cd82475e6de8a590b767ae1b69fd5e72b79f8396fa17f1af7d7d649c6656"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "788768c3483ed1c5b7715f1c515b72f090245906a6679e35df03ac3bd874c6d3"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "7a6b353eccaf82f57ff19107bf7f7de59a0a80ad8d250b4aa526b79f114bf6a6"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "7b7bebc0a38edbccdd80940d65ef132feed2619ac4a4d1383c2b37640cb77609"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "7e7bbba3ca412d2c1fc957b483ad42d0ff27fbf25a5cc02b9c25f5fb39f8a5ab"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "7f5bf1a499cfd58c0fc2a31cceb3dc8f43ac2d290d798e46024a1719ff6705d8"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "80152d2565430339fadf868537931cea503ac8a6b68c403a77fcf972d6c990ff"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "816e1c4d7add21e353560b7e75c9e79eb44480e96d067ddbdda22d13eba65f52"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "827d795558c904e3c897d9a9302cedcab4d756f919aa666f09d021778d081e35"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "86f956ad473c24d78586a372667159fc5c2fee3fd6a866167a9c8aeef95e8eae"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "8aa5efa48bb3bca685b65d549dee0b12beab7aec2198db39b7444690f0451d95"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "8ad05faddd74fae2abc016335aa5d41b08921f6e140c202b57c082fbdfcdf567"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "8bea940966a4a35fee72eaf211883bf270266bc518465daa4ecd61bb07d5a9db"
-    },
-    {
-     "entrypoint": "log.verify_sth",
-     "id": "8c065ff81082842cb038077052dfa75b611961e6bc3a94e84760fecb411fb656"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "8c5db8b8a7af3777b5b9cd842260e90bd7df43b39f0b3a76c3c93b6b9c9f7a37"
-    },
-    {
-     "entrypoint": "log.verify_sth",
-     "id": "8eed6577290c0fba150f20ca51ef6e68941f71618607f1caee08cd2750f605a0"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "8f6d4503ca65e1f9f5fe9d5d5e48b31e5f7f951f4cfaaa6e4b760edbf113f32b"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "908999c37b2d1a93bee6d6c5d9f6929db3919c42106e710fd78fcfb77bebaebe"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "908cecf381b8651ebdb2636d9a3bcdb4b239766187ed9373c9775110376cfe45"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "92c79db0bf6a29d0667978c37af4cfd4be57cd1f821201297a063c59907b238e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "97be17dac3058e650dc4b510202a6048d45e93ccefa4c865215ec27cf8b5a493"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "98aa01737a14311c52136886b31718fb8c1e0b940b5d43f7af0e26f9c1e58994"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "98d8d29117c118994c888cf7da53397aad8526be3941e9364dd72abf324e4b22"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "99cf123581d046f3515cd1bf2f58d1cc344681bd089495dce0e9ad25badf4f3f"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "9a735ea42125f5f475de6c438107dcb6141cd3db9720655660a32c41f5e1695f"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "9b2500617626247913f65cbd2fee363ef7ce045d278b1f6d663c02df57169a1d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "9ffd78fc9602599ce01b7dc575070670a6892fad2434b6a50c4cda0b9f545ced"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "a2627e1d0240652ba6c8efa394ce5659ae51bd138888d21848ee942e205b9153"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "a3141652b629887a46ee380353c5d0639334b127e7e6a0ccf3ecbbd2a79d4d0a"
-    },
-    {
-     "entrypoint": "merkle.root",
-     "id": "a421b6f6e67de4a6ad08f141d90ff38fd98cab8445c96547bb7d30367c7099a0"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "a66d91dbc39c082bb1eae2b1d89895c9e496ffbf8907b7091bd38d5fa77e430c"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "a6a17648de05bec4d642e22e84ab59f01db059134bf34d244b6a3720b7f2a3e7"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "a79f16c7dbc8d649585661a1928b6a9ecf09f713ae09bda8899c8cff2574856d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "a8b5ad19b342c77a24e856d566be64325ef3bedc973eb2e09d84ffe5448c825d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "a99ccaeadd0d13581fa0d2f1a337e47c40abf553cd1792a2894ac22e7f0a6ad5"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "abc9b724ac7081f45e594852e16c657c15b0c98fdc47977343f937bdcd4d2cec"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "ada29a120855fbadf07046f3cff0a9d41b6df969991c093625b26fdb268b3a8f"
-    },
-    {
-     "entrypoint": "log.verify_sth",
-     "id": "ae35bd1294c8b4c3234707c376c7dcc24357504e4cc9ff93e8271141c8fb11db"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "ae8962ce683e9b03f229ef3ab56182cba197a6f335f4d4f01b865b618cd50b74"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "afe825bd850b64f85e0b6b8e0e221df5e4cf26520a455ab7145025f5add43413"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "b38a2830dbd59d5057dfa98d0f978557b347677b2d84bb8e26d9b822078ba354"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "b73dd0b6dcc318ac72c32d34afacd72f1c579e96da53c810eb1f19a35fc4866c"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "b7d20419d47d645fae3837e7a10fa7b208b589b507d7627b1a59c16679297123"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "ba4421e7e6a08264665d5bc621f2c257ce9ba472ad04fba6a3fe3c6aaa0fdd68"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "bccb41402cb4846be63fd4b02cdb86a276a17dce235d75e5e1bf83b6f3dc5889"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "c1722e297fa18b0eef2abc30e0c9ddff9dcbe65eaccc5cbb6badb7251bca0d38"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "c2ed52312b54f29994397a74809bc7408624517aa29dedbd560a94e4a4bdcf8f"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "c59a8673259b91d6fe980ff19a673da22df1e67376ed03a3d8ccce70fde00aac"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "c6cb1b1f24307b99dafdc07045b028b27633d618cffe2a721909518796b860a5"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "c78d0585b17c9d98f9e5112478d1e73ca6bc73575499657a959df828ffef8f16"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "c88d02f631e9502fc13840dc51c98af22492ca7c0c047a43c49e5d59757797b1"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "cf2a43c9aec284846f3f09c818c8fa2141964a8840891b97906310819a11478c"
-    },
-    {
-     "entrypoint": "log.verify_sth",
-     "id": "d019618753539cdf32002e0e10a9fc3b084ef1fbf9a352f5889663b939d68342"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "d15b048126af190e595e87143f82a417b556069840207c4c4f8cd43aea36cb95"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "d60e51f121a4c875255c425213f11c75425973b7c1647650ff4bfd393d092aa8"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "d6d39420f8e7367a3b21afaafda03fc3a967192a702ee66f30656736f632b80e"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "d7423d0739eef99dacab6415f42ea142ef7e7dffe5d2360face9323f9dbaccb0"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "d7d0b64464a0e5e38b6c5d7a6ca19f4741ec64adf392bfe1abef16c3333dfec9"
-    },
-    {
-     "entrypoint": "log.verify_sth",
-     "id": "d7da3e16e52f987eccce52ec3e8a399562383121f8abee38dbd9998c58488564"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "d9b3e3b071c1d2eb517bf527d92aa016c544f9e585f8169086d1d2d62bf22c0b"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "db131c204730db48812ab81e7328618cbfee16e2a3c002254c9b87c6a88415bb"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "db9c4d54b15800044f0e957eb8166375b5da2a59012cd1294e108bf68a71bc10"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "dc0eb472107c009c131713dc4a1df8e40327a92df9dea1bcc9cc22bd32f08b78"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "dfa713e5bb4591ef9994ff242c86cbf7aae5d776fa029c40ed9e3d5f90af2895"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "e110d0b1a28340538795b9b474abd94dc1a41f2d4bdf35c409a8af417b51061e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "e7bc830fbe9bb37c11c110155bd6c07284f35eb9f25fec971de76adf1a309dd4"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "e848662885e6d6f729897122b0879d5f3374eed08129d0479f90da6fd322336c"
-    },
-    {
-     "entrypoint": "cert.check",
-     "id": "e9bb5ebc1d418848d19ca9d11ea206dc2bb25d32e162f9ac7ad5ecd02118af5d"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "ecdbe30e6604aeafc7e2f1e95553dcf764c7e79e280e74560e53abd5f8613782"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "ed60ead5156d6422d276a9f17e7ebd44d92c945c8d1ad3334ab349a227b5ffdb"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f2e703c9a70e10fee2e097ec99618ac29becf6d1147f3e2598e727082d348298"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f57239a051da56e85d9de1f8662ac350aed88e40fa6466bb0f7f6cac1da2ead0"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f6632d205a9d372a0c3ad2130881be56403699e1b03edce871a20ac18973c26e"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f675e3dafa56531e9146065581c3d04909449b5bbdbad55626ceef122533113a"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f8ed1e4da47cf90ad938264507c29008b03aaf478ae2655caa20e2a8885cf2aa"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "f99c94fd99db091aaacc1cc405949c50a42b14604fcddd4d0ef0e217381b2434"
-    },
-    {
-     "entrypoint": "floor.pairwise",
-     "id": "fdefb608d99f54b2006a0dfdb97da2f63e1286a837ca306e459319b7ec82f6e8"
-    }
-   ],
-   "note": "Both halves are ledgers: every run carries the previous one forward, because a run that recorded only its own diff would erase the record on the very next regeneration. with_reason: an address whose ANSWER changed and whose old answer an operator retired on purpose, naming the id and giving the reason; the row carries the old outcome, the new one, the sources that produced it and the reason. input_churn: an address the sources stopped producing whose old vector still reproduced against the tree that dropped it -- an ordinary retirement, no permission asked and none given, so the row carries the address alone. An id the sources produce again leaves input_churn; nothing leaves with_reason. The two are never merged: one word for both would hide a behaviour change behind a rewritten test.",
-   "with_reason": [
-    {
-     "detail": "ok: expected true, replayed false",
-     "entrypoint": "cert.check",
-     "id": "4d7cf5c48b6bc33743a38226e6081009a07ca759799da34fb455288a3834479f",
-     "kind": "behaviour-change",
-     "now": {
-      "id": "sha256:c7d065d043181f2d0fbffd247aa6598ed6f3df1c450c5a4619895fed0e01d581",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema"
-      ],
-      "type": "fingerprint"
-     },
-     "reason": "ENV-ABSENT: subject.environment became required on a fingerprint. The retired answer accepted a cert with the key absent, which turned the environment guard off by omission; the acceptance is retired together with the defect it pinned.",
-     "sources": [
-      "tests/test_v8_cert.py::test_alias_subject_without_logprobs_round_trips"
-     ],
-     "was": {
-      "id": "sha256:c7d065d043181f2d0fbffd247aa6598ed6f3df1c450c5a4619895fed0e01d581",
-      "ok": true,
-      "outcome": "check",
-      "reason_kinds": [],
-      "type": "fingerprint"
-     }
-    },
-    {
-     "detail": "ok: expected true, replayed false",
-     "entrypoint": "cert.check",
-     "id": "631c0d24b1a9861a17a2048e3ef58ed168aefe0ea6ba7a2b841c3b648f9eb75c",
-     "kind": "behaviour-change",
-     "now": {
-      "id": "sha256:4faca607f5443160da1c5fb39b385263bb3e2915b7fa5d5b76bf60769a0b2b91",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema"
-      ],
-      "type": "fingerprint"
-     },
-     "reason": "ENV-ABSENT: subject.environment became required on a fingerprint. The retired answer accepted a cert with the key absent, which turned the environment guard off by omission; the acceptance is retired together with the defect it pinned.",
-     "sources": [
-      "tests/test_v8_verify.py::test_an_alias_verdict_carries_the_section_2_2_sentence"
-     ],
-     "was": {
-      "id": "sha256:4faca607f5443160da1c5fb39b385263bb3e2915b7fa5d5b76bf60769a0b2b91",
-      "ok": true,
-      "outcome": "check",
-      "reason_kinds": [],
-      "type": "fingerprint"
-     }
-    },
-    {
-     "detail": "reason_kinds: expected [\"schema\"], replayed [\"schema\", \"schema\"]",
-     "entrypoint": "cert.check",
-     "id": "745af6ccfcddbb54f3ac5b0b206ad886f735d24dda2057af5e04ed2c9c8244eb",
-     "kind": "behaviour-change",
-     "now": {
-      "id": "sha256:d0f88832837b19c0b71a2ddbea3ca61676377b79ad6b3f6c5b108d0a09325fa2",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema",
-       "schema"
-      ],
-      "type": "prereg"
-     },
-     "reason": "A-NORUNS: body.runs became required on a noise plan, so this prereg now fails schema twice -- for the one violation the test injects and for the absent key. The single-reason outcome is retired; the cert was already refused and is refused still.",
-     "sources": [
-      "tests/test_v8_cert.py::test_one_schema_violation_per_type[prereg]"
-     ],
-     "was": {
-      "id": "sha256:d0f88832837b19c0b71a2ddbea3ca61676377b79ad6b3f6c5b108d0a09325fa2",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema"
-      ],
-      "type": "prereg"
-     }
-    },
-    {
-     "detail": "ok: expected true, replayed false",
-     "entrypoint": "cert.check",
-     "id": "7f980b9f1b86e83518779820960f945eb58d64a5cc9f10b4d5d8e242800aea43",
-     "kind": "behaviour-change",
-     "now": {
-      "id": "sha256:20f6762ae8393b88da1d076e419c5d7bfbad92fc94e711e83c0aecb60efb0484",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema"
-      ],
-      "type": "prereg"
-     },
-     "reason": "A-NORUNS: body.runs became required on a noise plan. The retired answer accepted a plan with the key absent, which let an issuer hand-pick which of its own runs composed a floor; the acceptance is retired together with the defect it pinned.",
-     "sources": [
-      "tests/test_v8_cert.py::test_materials_are_not_checked_when_the_recipe_is_absent",
-      "tests/test_v8_cert.py::test_prereg_round_trips_every_kind[noise-plan]",
-      "tests/test_v8_cert.py::test_round_trip_sign_then_check[prereg]",
-      "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type",
-      "tests/test_v8_log.py::test_refuses_a_key_retired_at_this_index",
-      "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
-      "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
-      "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
-      "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
-      "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
-      "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root",
-      "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
-     ],
-     "was": {
-      "id": "sha256:20f6762ae8393b88da1d076e419c5d7bfbad92fc94e711e83c0aecb60efb0484",
-      "ok": true,
-      "outcome": "check",
-      "reason_kinds": [],
-      "type": "prereg"
-     }
-    },
-    {
-     "detail": null,
-     "entrypoint": "cert.check",
-     "id": "b0cd1d4eb73ba0de04ecfc7e7a46afc9802e861addc385040dbed890e7e9c3d6",
-     "kind": "moved-core",
-     "now": {
-      "id": "sha256:fcc09fc06f6066ef7892e9e2da95684627949d1fd17f3e61a71f2630474a3bed",
-      "ok": false,
-      "outcome": "check",
-      "reason_kinds": [
-       "schema"
-      ],
-      "type": "prereg"
-     },
-     "reason": "A-NORUNS: body.runs became required on a noise plan. The retired answer accepted a plan with the key absent, which let an issuer hand-pick which of its own runs composed a floor; the acceptance is retired together with the defect it pinned.",
-     "sources": [
-      "tests/test_v8_log.py::test_a_noise_plan_that_names_no_r_does_not_check_out"
-     ],
-     "was": {
-      "id": "sha256:fcc09fc06f6066ef7892e9e2da95684627949d1fd17f3e61a71f2630474a3bed",
-      "ok": true,
-      "outcome": "check",
-      "reason_kinds": [],
-      "type": "prereg"
-     }
-    },
-    {
-     "detail": "exit_code: expected 3, replayed 4",
-     "entrypoint": "verify.diff",
-     "id": "bcc66e041c427c415d00ffb57228d611657126864cad292567d4b32ea3d3dbde",
-     "kind": "behaviour-change",
-     "now": {
-      "exit_code": 4,
-      "mismatched": [],
-      "outcome": "outcome",
-      "result_sha256": "96164b45ba895f66542e70a45f8447084ddeb46b8e6db1e40253f0f29ed011fb",
-      "verdict": "invalid"
-     },
-     "reason": "A-NORUNS reaches verify.diff: the b-side cert is now invalid rather than merely not comparable, so the run reports exit 4 (invalid) where it reported exit 3 (mismatch). The retired exit code described a cert that no longer checks out.",
-     "sources": [
-      "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
-     ],
-     "was": {
-      "exit_code": 3,
-      "mismatched": [
-       "cert.type:'fingerprint' vs 'prereg'"
-      ],
-      "outcome": "outcome",
-      "result_sha256": "0440882ee0321d0f34b5f163eafb88a72b5bea3f2286cc86925289e580ab7946",
-      "verdict": "mismatch"
-     }
-    }
-   ]
-  },
   "sources": {
    "tests/test_v8_cert.py": "f1e8ea0df4fefba472d546e452d6651240b7a454e0985e7077f246107835cef8",
    "tests/test_v8_distances.py": "6912a6ceb32f743fdb666fd5d8f7eca30c33fd02176348fc4264b52a7efe2a4a",
@@ -950,8 +177,786 @@
   }
  },
  "reading": "agreement on these vectors makes an implementation agree with styxx.v8 on the inputs five test files chose. It does not make it correct, and it does not mean the contract is covered: mutation_coverage.json measures what a disagreement would have to be for this set to see it, and its miss list is part of the answer.",
+ "retired": {
+  "counts": {
+   "input_churn": 149,
+   "with_reason": 6
+  },
+  "growth": "input_churn is keyed by id, so an address enters at most once and the half is bounded by the distinct addresses the sources have ever produced, not by the number of runs. It is kept in full: a retirement nobody had to ask permission for is still a retirement.",
+  "input_churn": [
+   {
+    "entrypoint": "cert.check",
+    "id": "0252a654df7bdacae625a5291da8f462a954ff80165ef1bdfe02124f6a29dde6"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "02b3dd66483b00a29c9a397a10f3251266e85c62e89a8a8dd5e50a29a1163edd"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "04e723159db272e9c2f09910c28b4cd036e719bc39feccd7b4f32f99538d562c"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "05a874be08810fad88e54c0bf2e6c0faf3ab1bf69df0ad6fa7501b128f8a1faf"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "068d138b5cb176d9075fa1eaa855683c35a4db826b0581dad7477228b7054107"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "08cf25f7c99aa8bbfd5b43e0e0385593541c6c66bd151250fce753776c767f68"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "0a41f5931ed1ec063682a389f58c2aa46897ada424495afd70adddc82a78652c"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "0fc2dc9b80a3308d95b995a7e93af3311a298440f4aa779b84839699bea3e0be"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "109743185f7b4d88dda058cd1a7ea1eec957a0298b6883cb100f15d5d6e9882c"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "13ced7bd09595747f837a64cf969f2701225571923eda2abf3b0827d29da679f"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "175a1bbc4ec9a5d9689b86d08e5d560f3603e1785916ec33503eff25ca0004ae"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "176e97c46aac5890bfc1f49665ef42bac7ebb5c4ffd11aaa1069e5f45d9ab8ca"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "1976c0ec73ec4bb7c39106ad6b0f0d7f3d4aa1509bb778e0339e69e631f0ff59"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "1b24924ce486267d9e5630355f6a7f05bb4dbc37dbc6a84520fdc07ca106e165"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "1c1f06abf31cd0a1599c424b8f5e655aa6b04f40c9c58bf3153c58d9d9a74147"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "1d454aa75c574f424d000f55caaa715f1066f6ed52982537b578a74b28f5ef96"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "1ef02b9e2d11b9ccb7bb8a6b7d4b4b7dd9da1b749c702a0163549bea0b7addb3"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "1f065e657d6856921cd2d9c2f99c020370fe0a2b8f44036daa9ee617a54339db"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "1f5812f98b1834a0b7b384dbf70c9a2dc3bba7aa166ceed6e30a8bacae93ef85"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "244c14227f8d25179f4b7f259fbad76f84c7eaac679c8de053c100614e12730d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "2514c41e9a5c8caad04846f4aefc4478e510de796ccdc382ab95a93c830cfdf8"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "261c1d911f083d7ad2bd5b1b769e16b0ca9ac257f4090a72983171f6c94b481c"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "26664aa44db9b237e0a8913a597bb0923206fb1784b77d4f19b72540096f41cc"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "2734cb7c2bbd2cba3480f10910cf630604be4f5c65a20cbbfc4dcfc92fe48032"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "278f2f5bfa1f36106acd4879ae1c181dc780cf9f6c1c88ed912e8607c3bc63ba"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "294a2c3445963b779aaa45beec306762b4b40cb73e76d625d3aed269a1e13cbe"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "2e0dd52558e4b3494e109b0b62efd1e5541666fb7493fc398908d32974408468"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "31e96e25edb10bd9c738413b141d6cb323a998ff3b1abaca691b1a6286f6cd58"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "350ffa07090cef9477d8e483cec424b213aa3a6898b572b95efc72ba2c80dc66"
+   },
+   {
+    "entrypoint": "log.verify_inclusion",
+    "id": "351eeb99ad9d3064797fcf8303122970c1640d6f205820b768660cdb36ef024e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "37c9e40b171e71adada958cee1db35075a5117674d77e5ce0ca64ebe32df318d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "397802295120dcc6ce64e91e70bb6c55a133dd74dff932110653bdf72c7fb176"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "3a253c7ef7bd259e693fff2d7b9642bc5c978530ed324f7cf8cd7dd9644025f4"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "3c436ad6edd49006421465120c88bd6eb693d752cde74ce1d4cdc29cc2f41c0c"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "3cb53d3aaed9a06b2938f27cfc81d772e421edff10d8bf1052a5df58ddebc449"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "3dee37a2c5b2e71326a41805d6c51e836ee9317510e304fb4673853fc7823f11"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "3e42648e339b3e4c9c2bc8ad8d02132cfbcee9f4470fc86a3c9d12889f116126"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "4015ce036981b4b1907f7f607b5fff6a85a9a75d092693d9c322bdc4a685bea4"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "42892c5673005a4fcf1bd7b1fcf33fc2f4ae2ca849ebb9e3c7c8c4b0e9dacdee"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "42eb3dc87c29af03b0b8327b170ce8dc96bb5ed24f10a3552e3c544526872c6d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "44b532cb4fb70913067588ed746abe8294905e7a5be21c72cdfe26e7e480911f"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "46d33169ff8bea75ffe5a17ca9d64bd0884dff8dfd60c1cc4bbd1cdafb6aa63b"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "46fda7766d70645be21e836ebb9456f8a2e11fa978d486903bbdbf1ee9950bb0"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "471a97f6413dd7acedf92aec74977601c78f9cfa94f7a785ff89202f71a013c3"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "488928ddafc2cc4567fa84c8644302c47e168be2ccdb85890e86d9059b7f7fe0"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "48b45dc9e2737e81da7db3cfbf87ff9b857472aa4664ad3a76d907215830054c"
+   },
+   {
+    "entrypoint": "merkle.inclusion_proof",
+    "id": "49ed23a73692c8b907cd2c71010435100f0916858d36b95ef1a94bb809f0be9e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "4adf03141a42c26012364e6352432d5f613e0b848029bf0f6129129963510a68"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "4b3746ed5edb6c70b4f5fcb6fb5ed558d35ec08497f2779560b8473ced525dc3"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "4be74803c34659044d1fc576d9559db67e93442a3658920cd518cb8919d86023"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "4c50260516dbff254cc2c485de4eb7da83c925ced596e0ad18110f9fc90a9d55"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "51e61d92523cb928578c2969882a38fb5f4ddb54d94fb45ccbda4e75e3d5179e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "5350ab2470d8acedc0ad90d9390e214a2ece1840da4ae648af8eb7bd6fe55383"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "555fb80b4989aa18916ebe44b6435fd8383a2e2dc3929d02d5d7b34055ea2606"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "57cad31538b68fc7e362830c632d3ec3e26d3f016ca683f6ab96b6269ebe98e1"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "58690fc433e2ced267e29f12d78598d7e5f67d238a8803098434ad65a1815417"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "5956c6241b9d8045d2133c95a2aa1e73c1fe14eb7427101f640c0425233f0fec"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "5f4098d32c93644cccb3d80f85302c1aa2f1e258c330fd6184c0726cd05271f1"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "5fcdf0d702db27fb184d3d0150b112581ea734bd44fc39c96f70ba7ff20b1eb0"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "63c34a1ef6fd78c7edea94e615e2d589d006b305da17664bc91d7737945bc013"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "64b5188d9474064798855ece7684503d2520a93480000f58a1fcdb116a7b6654"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "65268ae9a9e2181b34d87041f12808b913de55dc6a96d7fe6dc2d5ff022be270"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "6664465646d674c493ede52447c8c9b70e0696e17f5c1c3a55bdbe32cdc13533"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "694fc54786c6e842b55eafaf035a87529b5035fe60f05412102bab80c7649890"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6a2613b3e62f43a1ef94e8c4c0c422426d26b010b5fa8657126056d8fd506f0b"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6a3b0d8e4afbbf891d4cbf7b0d42a8db66e87df93d269887896b23eee666eb0b"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6a9175b4f375785abfc3161268eda9c6161845be72c680928248b9dfa395e75e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6e3872c965bf276aae93163a9e8abdfae70aad1523832fc347fc38905f93684d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6f2cc149733b55b968ad38e931609d9d172cebaf6b45b1413f5645600f8560b7"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "6f3898144586f812bd239d362b74b9c5074241504b6f4cc1289664179b9083c6"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "70f07686b8d40f679bbd17cc962998be467a3226953d55af498a015836ca0b70"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "73951bb2dc0f345f6b835e86dfedcfecd03d5d48062c02b97a1621b10d105c50"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "73d0cd82475e6de8a590b767ae1b69fd5e72b79f8396fa17f1af7d7d649c6656"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "788768c3483ed1c5b7715f1c515b72f090245906a6679e35df03ac3bd874c6d3"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "7a6b353eccaf82f57ff19107bf7f7de59a0a80ad8d250b4aa526b79f114bf6a6"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "7b7bebc0a38edbccdd80940d65ef132feed2619ac4a4d1383c2b37640cb77609"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "7e7bbba3ca412d2c1fc957b483ad42d0ff27fbf25a5cc02b9c25f5fb39f8a5ab"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "7f5bf1a499cfd58c0fc2a31cceb3dc8f43ac2d290d798e46024a1719ff6705d8"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "80152d2565430339fadf868537931cea503ac8a6b68c403a77fcf972d6c990ff"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "816e1c4d7add21e353560b7e75c9e79eb44480e96d067ddbdda22d13eba65f52"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "827d795558c904e3c897d9a9302cedcab4d756f919aa666f09d021778d081e35"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "86f956ad473c24d78586a372667159fc5c2fee3fd6a866167a9c8aeef95e8eae"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "8aa5efa48bb3bca685b65d549dee0b12beab7aec2198db39b7444690f0451d95"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "8ad05faddd74fae2abc016335aa5d41b08921f6e140c202b57c082fbdfcdf567"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "8bea940966a4a35fee72eaf211883bf270266bc518465daa4ecd61bb07d5a9db"
+   },
+   {
+    "entrypoint": "log.verify_sth",
+    "id": "8c065ff81082842cb038077052dfa75b611961e6bc3a94e84760fecb411fb656"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "8c5db8b8a7af3777b5b9cd842260e90bd7df43b39f0b3a76c3c93b6b9c9f7a37"
+   },
+   {
+    "entrypoint": "log.verify_sth",
+    "id": "8eed6577290c0fba150f20ca51ef6e68941f71618607f1caee08cd2750f605a0"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "8f6d4503ca65e1f9f5fe9d5d5e48b31e5f7f951f4cfaaa6e4b760edbf113f32b"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "908999c37b2d1a93bee6d6c5d9f6929db3919c42106e710fd78fcfb77bebaebe"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "908cecf381b8651ebdb2636d9a3bcdb4b239766187ed9373c9775110376cfe45"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "92c79db0bf6a29d0667978c37af4cfd4be57cd1f821201297a063c59907b238e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "97be17dac3058e650dc4b510202a6048d45e93ccefa4c865215ec27cf8b5a493"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "98aa01737a14311c52136886b31718fb8c1e0b940b5d43f7af0e26f9c1e58994"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "98d8d29117c118994c888cf7da53397aad8526be3941e9364dd72abf324e4b22"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "99cf123581d046f3515cd1bf2f58d1cc344681bd089495dce0e9ad25badf4f3f"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "9a735ea42125f5f475de6c438107dcb6141cd3db9720655660a32c41f5e1695f"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "9b2500617626247913f65cbd2fee363ef7ce045d278b1f6d663c02df57169a1d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "9ffd78fc9602599ce01b7dc575070670a6892fad2434b6a50c4cda0b9f545ced"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "a2627e1d0240652ba6c8efa394ce5659ae51bd138888d21848ee942e205b9153"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "a3141652b629887a46ee380353c5d0639334b127e7e6a0ccf3ecbbd2a79d4d0a"
+   },
+   {
+    "entrypoint": "merkle.root",
+    "id": "a421b6f6e67de4a6ad08f141d90ff38fd98cab8445c96547bb7d30367c7099a0"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "a66d91dbc39c082bb1eae2b1d89895c9e496ffbf8907b7091bd38d5fa77e430c"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "a6a17648de05bec4d642e22e84ab59f01db059134bf34d244b6a3720b7f2a3e7"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "a79f16c7dbc8d649585661a1928b6a9ecf09f713ae09bda8899c8cff2574856d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "a8b5ad19b342c77a24e856d566be64325ef3bedc973eb2e09d84ffe5448c825d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "a99ccaeadd0d13581fa0d2f1a337e47c40abf553cd1792a2894ac22e7f0a6ad5"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "abc9b724ac7081f45e594852e16c657c15b0c98fdc47977343f937bdcd4d2cec"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "ada29a120855fbadf07046f3cff0a9d41b6df969991c093625b26fdb268b3a8f"
+   },
+   {
+    "entrypoint": "log.verify_sth",
+    "id": "ae35bd1294c8b4c3234707c376c7dcc24357504e4cc9ff93e8271141c8fb11db"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "ae8962ce683e9b03f229ef3ab56182cba197a6f335f4d4f01b865b618cd50b74"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "afe825bd850b64f85e0b6b8e0e221df5e4cf26520a455ab7145025f5add43413"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "b38a2830dbd59d5057dfa98d0f978557b347677b2d84bb8e26d9b822078ba354"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "b73dd0b6dcc318ac72c32d34afacd72f1c579e96da53c810eb1f19a35fc4866c"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "b7d20419d47d645fae3837e7a10fa7b208b589b507d7627b1a59c16679297123"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "ba4421e7e6a08264665d5bc621f2c257ce9ba472ad04fba6a3fe3c6aaa0fdd68"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "bccb41402cb4846be63fd4b02cdb86a276a17dce235d75e5e1bf83b6f3dc5889"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "c1722e297fa18b0eef2abc30e0c9ddff9dcbe65eaccc5cbb6badb7251bca0d38"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "c2ed52312b54f29994397a74809bc7408624517aa29dedbd560a94e4a4bdcf8f"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "c59a8673259b91d6fe980ff19a673da22df1e67376ed03a3d8ccce70fde00aac"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "c6cb1b1f24307b99dafdc07045b028b27633d618cffe2a721909518796b860a5"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "c78d0585b17c9d98f9e5112478d1e73ca6bc73575499657a959df828ffef8f16"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "c88d02f631e9502fc13840dc51c98af22492ca7c0c047a43c49e5d59757797b1"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "cf2a43c9aec284846f3f09c818c8fa2141964a8840891b97906310819a11478c"
+   },
+   {
+    "entrypoint": "log.verify_sth",
+    "id": "d019618753539cdf32002e0e10a9fc3b084ef1fbf9a352f5889663b939d68342"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "d15b048126af190e595e87143f82a417b556069840207c4c4f8cd43aea36cb95"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "d60e51f121a4c875255c425213f11c75425973b7c1647650ff4bfd393d092aa8"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "d6d39420f8e7367a3b21afaafda03fc3a967192a702ee66f30656736f632b80e"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "d7423d0739eef99dacab6415f42ea142ef7e7dffe5d2360face9323f9dbaccb0"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "d7d0b64464a0e5e38b6c5d7a6ca19f4741ec64adf392bfe1abef16c3333dfec9"
+   },
+   {
+    "entrypoint": "log.verify_sth",
+    "id": "d7da3e16e52f987eccce52ec3e8a399562383121f8abee38dbd9998c58488564"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "d9b3e3b071c1d2eb517bf527d92aa016c544f9e585f8169086d1d2d62bf22c0b"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "db131c204730db48812ab81e7328618cbfee16e2a3c002254c9b87c6a88415bb"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "db9c4d54b15800044f0e957eb8166375b5da2a59012cd1294e108bf68a71bc10"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "dc0eb472107c009c131713dc4a1df8e40327a92df9dea1bcc9cc22bd32f08b78"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "dfa713e5bb4591ef9994ff242c86cbf7aae5d776fa029c40ed9e3d5f90af2895"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "e110d0b1a28340538795b9b474abd94dc1a41f2d4bdf35c409a8af417b51061e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "e7bc830fbe9bb37c11c110155bd6c07284f35eb9f25fec971de76adf1a309dd4"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "e848662885e6d6f729897122b0879d5f3374eed08129d0479f90da6fd322336c"
+   },
+   {
+    "entrypoint": "cert.check",
+    "id": "e9bb5ebc1d418848d19ca9d11ea206dc2bb25d32e162f9ac7ad5ecd02118af5d"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "ecdbe30e6604aeafc7e2f1e95553dcf764c7e79e280e74560e53abd5f8613782"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "ed60ead5156d6422d276a9f17e7ebd44d92c945c8d1ad3334ab349a227b5ffdb"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f2e703c9a70e10fee2e097ec99618ac29becf6d1147f3e2598e727082d348298"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f57239a051da56e85d9de1f8662ac350aed88e40fa6466bb0f7f6cac1da2ead0"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f6632d205a9d372a0c3ad2130881be56403699e1b03edce871a20ac18973c26e"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f675e3dafa56531e9146065581c3d04909449b5bbdbad55626ceef122533113a"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f8ed1e4da47cf90ad938264507c29008b03aaf478ae2655caa20e2a8885cf2aa"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "f99c94fd99db091aaacc1cc405949c50a42b14604fcddd4d0ef0e217381b2434"
+   },
+   {
+    "entrypoint": "floor.pairwise",
+    "id": "fdefb608d99f54b2006a0dfdb97da2f63e1286a837ca306e459319b7ec82f6e8"
+   }
+  ],
+  "note": "Both halves are ledgers: every run carries the previous one forward, because a run that recorded only its own diff would erase the record on the very next regeneration. with_reason: an address whose ANSWER changed and whose old answer an operator retired on purpose, naming the id and giving the reason; the row carries the old outcome, the new one, the sources that produced it and the reason. input_churn: an address the sources stopped producing whose old vector still reproduced against the tree that dropped it -- an ordinary retirement, no permission asked and none given, so the row carries the address alone. An id the sources produce again leaves input_churn; nothing leaves with_reason. The two are never merged: one word for both would hide a behaviour change behind a rewritten test. A drop that cannot be replayed at all reaches NEITHER half: it is refused, not retired, because a reason written beside a move nobody measured is the quietest retirement there is. This block sits inside set_sha256, so deleting a row from it moves the identity of the set.",
+  "with_reason": [
+   {
+    "detail": "ok: expected true, replayed false",
+    "entrypoint": "cert.check",
+    "id": "4d7cf5c48b6bc33743a38226e6081009a07ca759799da34fb455288a3834479f",
+    "kind": "behaviour-change",
+    "now": {
+     "id": "sha256:c7d065d043181f2d0fbffd247aa6598ed6f3df1c450c5a4619895fed0e01d581",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema"
+     ],
+     "type": "fingerprint"
+    },
+    "reason": "ENV-ABSENT: subject.environment became required on a fingerprint. The retired answer accepted a cert with the key absent, which turned the environment guard off by omission; the acceptance is retired together with the defect it pinned.",
+    "sources": [
+     "tests/test_v8_cert.py::test_alias_subject_without_logprobs_round_trips"
+    ],
+    "was": {
+     "id": "sha256:c7d065d043181f2d0fbffd247aa6598ed6f3df1c450c5a4619895fed0e01d581",
+     "ok": true,
+     "outcome": "check",
+     "reason_kinds": [],
+     "type": "fingerprint"
+    }
+   },
+   {
+    "detail": "ok: expected true, replayed false",
+    "entrypoint": "cert.check",
+    "id": "631c0d24b1a9861a17a2048e3ef58ed168aefe0ea6ba7a2b841c3b648f9eb75c",
+    "kind": "behaviour-change",
+    "now": {
+     "id": "sha256:4faca607f5443160da1c5fb39b385263bb3e2915b7fa5d5b76bf60769a0b2b91",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema"
+     ],
+     "type": "fingerprint"
+    },
+    "reason": "ENV-ABSENT: subject.environment became required on a fingerprint. The retired answer accepted a cert with the key absent, which turned the environment guard off by omission; the acceptance is retired together with the defect it pinned.",
+    "sources": [
+     "tests/test_v8_verify.py::test_an_alias_verdict_carries_the_section_2_2_sentence"
+    ],
+    "was": {
+     "id": "sha256:4faca607f5443160da1c5fb39b385263bb3e2915b7fa5d5b76bf60769a0b2b91",
+     "ok": true,
+     "outcome": "check",
+     "reason_kinds": [],
+     "type": "fingerprint"
+    }
+   },
+   {
+    "detail": "reason_kinds: expected [\"schema\"], replayed [\"schema\", \"schema\"]",
+    "entrypoint": "cert.check",
+    "id": "745af6ccfcddbb54f3ac5b0b206ad886f735d24dda2057af5e04ed2c9c8244eb",
+    "kind": "behaviour-change",
+    "now": {
+     "id": "sha256:d0f88832837b19c0b71a2ddbea3ca61676377b79ad6b3f6c5b108d0a09325fa2",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema",
+      "schema"
+     ],
+     "type": "prereg"
+    },
+    "reason": "A-NORUNS: body.runs became required on a noise plan, so this prereg now fails schema twice -- for the one violation the test injects and for the absent key. The single-reason outcome is retired; the cert was already refused and is refused still.",
+    "sources": [
+     "tests/test_v8_cert.py::test_one_schema_violation_per_type[prereg]"
+    ],
+    "was": {
+     "id": "sha256:d0f88832837b19c0b71a2ddbea3ca61676377b79ad6b3f6c5b108d0a09325fa2",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema"
+     ],
+     "type": "prereg"
+    }
+   },
+   {
+    "detail": "ok: expected true, replayed false",
+    "entrypoint": "cert.check",
+    "id": "7f980b9f1b86e83518779820960f945eb58d64a5cc9f10b4d5d8e242800aea43",
+    "kind": "behaviour-change",
+    "now": {
+     "id": "sha256:20f6762ae8393b88da1d076e419c5d7bfbad92fc94e711e83c0aecb60efb0484",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema"
+     ],
+     "type": "prereg"
+    },
+    "reason": "A-NORUNS: body.runs became required on a noise plan. The retired answer accepted a plan with the key absent, which let an issuer hand-pick which of its own runs composed a floor; the acceptance is retired together with the defect it pinned.",
+    "sources": [
+     "tests/test_v8_cert.py::test_materials_are_not_checked_when_the_recipe_is_absent",
+     "tests/test_v8_cert.py::test_prereg_round_trips_every_kind[noise-plan]",
+     "tests/test_v8_cert.py::test_round_trip_sign_then_check[prereg]",
+     "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type",
+     "tests/test_v8_log.py::test_refuses_a_key_retired_at_this_index",
+     "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+     "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+     "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+     "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+     "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+     "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root",
+     "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
+    ],
+    "was": {
+     "id": "sha256:20f6762ae8393b88da1d076e419c5d7bfbad92fc94e711e83c0aecb60efb0484",
+     "ok": true,
+     "outcome": "check",
+     "reason_kinds": [],
+     "type": "prereg"
+    }
+   },
+   {
+    "detail": null,
+    "entrypoint": "cert.check",
+    "id": "b0cd1d4eb73ba0de04ecfc7e7a46afc9802e861addc385040dbed890e7e9c3d6",
+    "kind": "moved-core",
+    "now": {
+     "id": "sha256:fcc09fc06f6066ef7892e9e2da95684627949d1fd17f3e61a71f2630474a3bed",
+     "ok": false,
+     "outcome": "check",
+     "reason_kinds": [
+      "schema"
+     ],
+     "type": "prereg"
+    },
+    "reason": "A-NORUNS: body.runs became required on a noise plan. The retired answer accepted a plan with the key absent, which let an issuer hand-pick which of its own runs composed a floor; the acceptance is retired together with the defect it pinned.",
+    "sources": [
+     "tests/test_v8_log.py::test_a_noise_plan_that_names_no_r_does_not_check_out"
+    ],
+    "was": {
+     "id": "sha256:fcc09fc06f6066ef7892e9e2da95684627949d1fd17f3e61a71f2630474a3bed",
+     "ok": true,
+     "outcome": "check",
+     "reason_kinds": [],
+     "type": "prereg"
+    }
+   },
+   {
+    "detail": "exit_code: expected 3, replayed 4",
+    "entrypoint": "verify.diff",
+    "id": "bcc66e041c427c415d00ffb57228d611657126864cad292567d4b32ea3d3dbde",
+    "kind": "behaviour-change",
+    "now": {
+     "exit_code": 4,
+     "mismatched": [],
+     "outcome": "outcome",
+     "result_sha256": "96164b45ba895f66542e70a45f8447084ddeb46b8e6db1e40253f0f29ed011fb",
+     "verdict": "invalid"
+    },
+    "reason": "A-NORUNS reaches verify.diff: the b-side cert is now invalid rather than merely not comparable, so the run reports exit 4 (invalid) where it reported exit 3 (mismatch). The retired exit code described a cert that no longer checks out.",
+    "sources": [
+     "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
+    ],
+    "was": {
+     "exit_code": 3,
+     "mismatched": [
+      "cert.type:'fingerprint' vs 'prereg'"
+     ],
+     "outcome": "outcome",
+     "result_sha256": "0440882ee0321d0f34b5f163eafb88a72b5bea3f2286cc86925289e580ab7946",
+     "verdict": "mismatch"
+    }
+   }
+  ]
+ },
  "schema": "styxx.v8.conformance/v1",
- "set_sha256": "c780475b681d6a8d74a2f2021e4ad99208d073f61d2f5c18c60b8014922c2b70",
+ "set_sha256": "735fb6fe6d3a131cb0686463cd62748fe12428ef6b8d872acc015cc972c8e29e",
  "sources": [
   "tests/test_v8_cert.py",
   "tests/test_v8_log.py",

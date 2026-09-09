@@ -27,6 +27,7 @@ Verbs::
                 fixed  --source <items.json> [--label <str>]
                 pool   --source <items.json>
     log         init | append <cert> | prove <index> | sth | mirror --to <dir>
+                watch --to <dir> --store <file>
                 verify-cert <cert> | verify-inclusion <proof> <sth>
                 verify-consistency <sth1> <sth2> | verify-sth <sth>
 
@@ -71,6 +72,7 @@ from . import log as logmod
 from . import runner as runnermod
 from . import sweep as sweepmod
 from . import verify as verifymod
+from . import witness as witnessmod
 from .consts import EXIT, ID_RE, SCHEMA_VERSION
 from .jcs import canonical_bytes
 from .runner import MockRunner
@@ -140,11 +142,13 @@ USAGE = (
     "battery pool  --source <items.json> [--out <file>]",
     "",
     "log init --log <dir> (--key <pem> | --pub <file>) [--issuer [name=]<key|file>]...",
-    "log append <cert.json> --log <dir> [--blob <file>]...",
+    "         [--open-issuers] [--witness-policy [--require-binding]]",
+    "log append <cert.json> --log <dir> [--blob <file>]... [--require-binding]",
     "log prove <index> --log <dir> [--tree-size N] [--out <file>]",
     "log sth --log <dir> --key <pem> [--timestamp <RFC3339 Z>]",
     "log mirror --log <dir> --to <dir> [--pin <log.pub>] [--pinned-sth <file>]",
-    "log verify-cert <cert.json>",
+    "log watch  --log <dir> --to <dir> --store <file> [--pin <log.pub>] [--pinned-sth <file>]",
+    "log verify-cert <cert.json> [--log <dir>]   (--log asks whether that log HOLDS it)",
     "log verify-inclusion <proof.json> <sth.json> [--pin <log.pub>] [--log <dir>]",
     "log verify-consistency <sth1.json> <sth2.json> [--proof <file>] [--pin ...] [--log <dir>]",
     "log verify-sth <sth.json> [--pin <log.pub>] [--log <dir>]",
@@ -1506,7 +1510,7 @@ def _maybe_sign_battery(opts: dict, body: dict, payload: dict) -> None:
 
 _LOG_VALUES = (
     "log", "key", "pub", "pin", "out", "to", "pinned_sth", "proof", "timestamp", "tree_size",
-    "created", "issuer_name",
+    "created", "issuer_name", "store", "observed_at",
 )
 _LOG_MULTI = ("issuer", "blob")
 # ``log init --open-issuers`` writes the marker that says this log admits any key. Without it, and
@@ -1516,8 +1520,16 @@ _LOG_MULTI = ("issuer", "blob")
 #
 # ``log append --require-binding`` refuses a cert that names no log (L7). It is the INVOCATION's
 # rule, not the log's: nothing on disk records that this log wants bound certs, so an operator who
-# forgets the flag once appends an unbound cert and the log cannot tell afterwards. Making it the
-# log's own rule needs a policy statement inside the tree; see ``log.Log.policy_cert``.
+# forgets the flag once appends an unbound cert and the log cannot tell afterwards. It is kept as
+# what a log has BEFORE it has stated anything.
+#
+# ``log init --witness-policy --require-binding`` is the same rule where a reader can see it (H4):
+# the statement in the tree carries ``require_binding: true``, ``log.Log.binding_policy`` reads it,
+# and ``log.Log.append`` then refuses every unbound cert whoever runs the command. On the same
+# flag, so the two spellings sit side by side and the difference is which object holds the rule.
+#
+# ``log verify-cert --log <dir>`` answers the REVERSE of the binding (H2): the flag used to be
+# accepted and ignored, so a cert bound to the gold log and absent from it verified ``ok: true``.
 #
 # ``log init --witness-policy`` mints the log's own signed statement of who it admits and appends
 # it at index 0 (L10c residue, C-12 option (a)). It needs ``--key``, because the statement is
@@ -1614,15 +1626,23 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
                 else {"policy": "roster", "issuers": [dict(e) for e in issuers]}
             )
             seed = _load_seed(opts["key"])
+            statement_body = {
+                "kind": "policy",
+                "issuer_policy": stated,
+                "log_hint": {"log_id": log_obj.log_id()},
+            }
+            if opts.get("require_binding"):
+                # H4. The same flag, moved from the invocation that appends to the statement the
+                # log signs about itself: from here on EVERY append is refused unless the cert
+                # names this log, whoever runs it, and a reader of a mirror sees the rule and the
+                # index it started at. The statement carries `log_hint` itself, so it satisfies
+                # the rule it establishes.
+                statement_body["require_binding"] = True
             cert = _sign_cert(
                 "result",
                 subject={},
                 recipe={},
-                body={
-                    "kind": "policy",
-                    "issuer_policy": stated,
-                    "log_hint": {"log_id": log_obj.log_id()},
-                },
+                body=statement_body,
                 refs=[],
                 seed=seed,
                 issuer_name=opts.get("issuer_name") or ISSUER_NAME,
@@ -1633,7 +1653,19 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             except logmod.AppendRefused as exc:
                 raise CliError(f"log init --witness-policy: {exc.reason}") from None
             witness = cert["id"]
+        elif opts.get("require_binding"):
+            # H4: the requirement is a STATEMENT or it is nothing. There is no file to write it
+            # into -- that was the eighteen-byte lesson -- and accepting the flag here without
+            # `--witness-policy` would create a log the operator believes requires binding and
+            # that says nothing to anyone who reads it.
+            raise CliError(
+                "log init --require-binding needs --witness-policy: the rule is a signed entry in "
+                "the log's own tree (a result of kind policy carrying require_binding), because a "
+                "requirement nobody can read from the directory is the invocation's rule and not "
+                "the log's (H4). Without it, use `log append --require-binding` per invocation"
+            )
         policy_now = log_obj.issuer_policy()
+        binding_now = log_obj.binding_policy()
         return 0, {
             "command": "log init",
             "path": str(log_obj.path),
@@ -1642,6 +1674,7 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             "issuer_policy": policy_now["policy"],
             "policy_source": policy_now.get("source"),
             "policy_cert": witness,
+            "require_binding": binding_now["require_binding"],
             "issuers": [entry["key"] for entry in issuers],
             "size": log_obj.size(),
         }
@@ -1653,12 +1686,19 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
         cert = _load_object(positional[0], "log append")
         hint = cert.get("body", {}).get("log_hint") if isinstance(cert.get("body"), dict) else None
         bound = isinstance(hint, dict)
+        # H4: the log's OWN rule, read off its signed policy statement, is enforced inside
+        # `Log.append` for every caller. This flag is what an operator has before they have signed
+        # one -- it is reported below beside `binding_required` so the two are never confused.
+        binding_policy = log_obj.binding_policy()
         if opts.get("require_binding") and not bound:
             raise CliError(
                 "log append --require-binding: this cert carries no body.log_hint, so it names "
                 "no log and can be replayed verbatim into any log that will take it (L7, section "
                 "8.1). Mint it with --bind-log <this log> and sign it again; the binding is "
-                "inside the signed body and cannot be added afterwards"
+                "inside the signed body and cannot be added afterwards. NOTE this flag is the "
+                "INVOCATION's rule: it refuses this append and records nothing, so the next "
+                "invocation without it accepts the same bytes. `log init --witness-policy "
+                "--require-binding` states the rule in the log itself (H4)"
             )
         blobs: dict[str, bytes] = {}
         for path in opts["blob"]:
@@ -1677,6 +1717,10 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
             "blobs": sorted(blobs),
             # L7, reported at the one moment an operator can still do something about it.
             "bound": bound,
+            # H4: whether the LOG required it, and where it said so. `bound is False` beside
+            # `binding_required is False` is the state in which nothing recorded a rule.
+            "binding_required": binding_policy["require_binding"],
+            "binding_policy_cert": binding_policy["cert_id"],
         }
 
     if sub == "prove":
@@ -1721,18 +1765,67 @@ def cmd_log(argv: Sequence[str]) -> tuple[int, dict]:
         code = 0 if report.get("verified") else EXIT["invalid"]
         return code, {"command": "log mirror", "from": str(src), "to": str(dst), "report": report}
 
+    if sub == "watch":
+        # `mirror` with a memory (``styxx.v8.witness``). It mirrors, then compares the copy
+        # against every head ``--store`` has seen on an earlier run, which is the only way an
+        # append-only claim is checkable by a reader who holds no head from outside. A first run
+        # holds nothing and says so: ``basis: "first-observation"``, and its exit code is the
+        # mirror's. The store must live where the LOG OPERATOR cannot write it; nothing here can
+        # check that.
+        src = _require(opts, "log")
+        _open_log(src)
+        dst = _require(opts, "to")
+        store = _require(opts, "store")
+        pinned_sth = _load_object(opts["pinned_sth"], "--pinned-sth") if opts["pinned_sth"] else None
+        report = witnessmod.watch(
+            Path(src),
+            Path(dst),
+            _log_public(opts),
+            Path(store),
+            pinned_sth=pinned_sth,
+            observed_at=opts["observed_at"] or None,
+        )
+        code = 0 if report.get("verified") else EXIT["invalid"]
+        return code, {
+            "command": "log watch",
+            "from": str(src),
+            "to": str(dst),
+            "store": str(store),
+            "report": report,
+        }
+
     if sub == "verify-cert":
+        # H2. `--log <dir>` used to be accepted and IGNORED here: this ran `cert.check`, which has
+        # never heard of a log, and answered `ok: true` for a cert carrying `body.log_hint` naming
+        # the gold log while `Log.find()` on that same directory returned None. The field
+        # certified "I claim to belong here" and nothing checked "and you do".
+        #
+        # With `--log` the answer is the REVERSE predicate -- does this log hold these bytes --
+        # and `ok` is the conjunction of the two. Without it the answer is what it always was, a
+        # statement about one cert's own bytes, and the payload says so: `membership` is null and
+        # `log_hint` reports the unchecked claim so a reader can see there was one.
         if len(positional) != 1:
             raise CliError("log verify-cert needs exactly one cert file")
         cert = _load_object(positional[0], "log verify-cert")
         outcome = certmod.check(cert)
-        return (0 if outcome.ok else EXIT["invalid"]), {
+        reasons = list(outcome.reasons)
+        body = cert.get("body") if isinstance(cert.get("body"), dict) else {}
+        hint = body.get("log_hint")
+        payload = {
             "command": "log verify-cert",
             "ok": outcome.ok,
             "id": outcome.id,
             "type": outcome.type,
-            "reasons": list(outcome.reasons),
+            "log_hint": dict(hint) if isinstance(hint, dict) else hint,
+            "membership": None,
+            "reasons": reasons,
         }
+        if opts.get("log"):
+            held = _open_log(opts["log"]).membership(cert)
+            payload["membership"] = held
+            reasons.extend(held["reasons"])
+            payload["ok"] = bool(outcome.ok and held["holds"])
+        return (0 if payload["ok"] else EXIT["invalid"]), payload
 
     if sub == "verify-sth":
         if len(positional) != 1:

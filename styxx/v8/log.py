@@ -488,6 +488,59 @@ rather than closed: a client that reads ``meta.json`` and never calls ``verify_e
 ``mirror`` still gets the operator's bytes with no check, and no predicate here can reach that
 client. Deleting the file is the repair that actually closes it, and it is a layout change.
 
+**One (hf_repo, revision) names one snapshot, and one snapshot names one (hf_repo, revision)
+(M3).** ``papers/v8/THE_BOUNDARY_2026_09_09.md`` published a roster of defects it called unreachable
+by any check over bytes an issuer wrote, and member 3 was "the repository and revision, read off a
+directory name". A fifth adversarial pass refuted it by the test that had already reclassified the
+environment member one pass earlier: **another logged cert already carries the information that
+would catch it, and nothing compares them.** Beside ``hf_repo`` and ``revision`` in the same subject
+sit the four Appendix A.2 hashes over the snapshot's actual bytes, and both halves were demonstrated
+appending — the same ``weights_sha256`` under two revisions, and the same revision under two
+``weights_sha256``. ``snapshot_disagreement`` is the predicate and ``precision`` takes no part,
+because it is a load-time cast that changes no content hash (this lab's own bf16 and fp16 subjects
+are one snapshot).
+
+The two halves are treated differently and the asymmetry is the decision, not an oversight.
+*One name, two snapshots* is a CONTRADICTION — one revision of one repository is one set of files,
+so two certs hashing it two ways cannot both be right — and ``_check_subject_names_one_snapshot``
+refuses it. *One snapshot, two names* has an HONEST failure mode: a commit touching only files
+outside the A.2 list gives two truthful revisions one identical quadruple, and refusing that fires
+on an honest artifact, which is the defect EXTERNAL-1 measured at 0.23 precision. That half is
+disclosed into the entry's metadata by ``snapshot_aliases`` and refuses nothing; whether it becomes
+a refusal is the operator gate the spec draft calls B-XLOG (A-62). What the disclosure does not buy
+is stated where it is paid: the demonstrated attack — one ``weights_sha256`` under a second
+revision — still appends, with the entry naming the cert it shares its bytes with.
+
+What M3 does NOT close is most of the member, and is written in the method's own docstring: rename
+the directory once, mint every cert from that runner, and every entry tells the same lie
+consistently. This reaches an issuer that contradicts itself across a log and reaches nothing else.
+
+**The baseline gap announced things that did not happen (G1, G2, G3).** ``THE_BOUNDARY`` credited
+member 2 — the choice of which run becomes the baseline — with ``baseline_gap`` as a mitigation and
+withdrew the credit the same day. Three defects, two repaired here:
+
+* **G1** — the previous-comparable lookup never excluded the appending cert's own
+  ``noise_floor.runs``. On the lab's published verdict it returns entry 5, which is that canonical's
+  own run 4, so an append computing the field today would measure a canonical against a run of its
+  own floor and call it a baseline gap. The ids in the cert's own floor block are excluded now, and
+  when nothing else is comparable the answer is ``None``. The exclusion is in the disclosure and NOT
+  in ``previous_comparable``, because section 5.5's rule must keep seeing those runs — otherwise a
+  canonical dodges the rule by naming the fingerprint it replaces as one of its own runs.
+* **G2** — the honest case (two runs of one preregistered plan) and the dishonest one (a second
+  canonical quietly replacing the first under that plan) produced the same three values. They differ
+  in a fact the log holds: whether either cert carries a ``noise_floor`` block, i.e. whether either
+  is a baseline at all. ``relation`` / ``replaced_a_baseline`` are that fact, and ``verify`` prints
+  "no baseline moved" where none did.
+* **G3** — the announcement is pairwise, so a staged move publishes nothing cumulative. DECIDED: a
+  cumulative distance does not belong in this field, because none of the three channels composes
+  along a chain and a sum of pairwise gaps is not the endpoint distance. The endpoint quantity is
+  ``floor.baseline_gap`` over the two endpoint bodies, which any reader can already call on two
+  logged certs. The argument is in ``Log.baseline_gap``'s docstring so it can be attacked.
+
+The reason this is a correctness bug and not a cosmetic one is the same receipt EXTERNAL-1 gives
+below: a quantity that announces an event that did not occur is an accuser firing on honest
+artifacts, and this lab has already disabled one class for that at 0.23 precision.
+
 **A missing issuer roster fails CLOSED (L10c).** ``issuers()`` returned ``None`` when
 ``keys/issuers.json`` was absent and append step 2 read ``if roster is not None``, so the control
 the attacker ran is two lines: with a roster present a rogue key is refused; delete the file and
@@ -577,6 +630,104 @@ and that cuts both ways.
   therefore "a cert MAY be bound, and a bound cert is refused by the wrong log", not "certs are
   bound".
 
+**The binding pointed one way, and it was the wrong way (H2).** ``body.log_hint`` says *I claim
+to belong to log X*. The three rules above enforce the contrapositive — a cert naming X is refused
+by every log that is not X — and for as long as that was all, the field certified a claim and
+nothing checked the claim. Run against the lab's own published log: take a cert that is NOT in it,
+sign ``log_hint`` naming it, and ``log verify-cert --log <that log>`` answered ``ok: true`` while
+``Log.find()`` on the same directory returned ``None``. ``verify-cert`` never read ``--log`` at
+all; it ran ``cert.check`` and reported the verdict of a function that has never heard of a log.
+
+The useful predicate is the reverse one, and it is the LOG's to answer rather than the cert's:
+*does this log hold these bytes?* ``Log.membership`` is that predicate and it is deliberately
+about bytes, not about ids — ``find`` maps an id to an index, and two certs with one id and two
+signatures are two byte strings, so membership compares ``canonical_bytes(cert)`` against the
+seated entry and then runs ``verify_entry`` at that index. ``log verify-cert --log <dir>`` returns
+it, and its ``ok`` is then the conjunction: well formed AND seated here AND the seated entry
+verifies. Without ``--log`` the answer is what it always was — a statement about one cert's own
+bytes — and the payload now carries ``log_hint`` and a null ``membership`` so a reader can see
+that the cert named a log and that nothing checked it.
+
+The direction matters because the two predicates fail differently. A cert bound to X and absent
+from X is the interesting case (a claim of provenance with no leaf behind it), and only the
+reverse predicate sees it. A cert bound to X and present in X is what the append gate already
+guaranteed. **What membership is not**: it is a statement about the log the caller pointed at, so
+a caller pointed at the attacker's log gets the attacker's answer. Appendix D's step is unchanged
+and is the thing that makes it worth anything — the log key comes from a channel the operator does
+not control, and ``--pin`` is where that key enters.
+
+**Stripping the binding, and what the field is therefore worth (H1).** An issuer who re-signs the
+same measurement with ``log_hint`` deleted gets a cert that appends into any log that will take
+it. No predicate here can prevent that and none is written: ``body`` is inside ``D``, so removing
+the field requires the issuer's key, and the issuer is precisely the party the field constrains.
+A constraint a party can lift by signing again constrains only a party that does not want to lift
+it.
+
+So the honest statement of the field's worth, in three parts:
+
+* **What it buys, unconditionally.** A cert that IS bound cannot be seated anywhere else, at
+  append or on read, including in a clone where no gate ran. That is the L7 replay closed for
+  bound bytes.
+* **What the strip costs the attacker, which is not nothing.** The stripped cert is a DIFFERENT
+  cert: ``id`` is over the digest of ``D``, ``body`` is inside ``D``, so the twin has a different
+  id and a different leaf hash. Every ref that names the bound cert by id resolves to the bound
+  one and not to the twin, and a reader holding the bound id can ask ``membership``. The strip
+  produces a sibling, never a substitute.
+* **What it does not buy, stated plainly.** The twin is a well-formed unbound cert, and an unbound
+  cert is exactly as replayable as it was before any of this. The issuer can always mint one.
+
+The consequence is the reason H4 below is the repair that matters: the binding constrains the
+ISSUER and only the receiving LOG's rule constrains an issuer who does not consent. The two are
+not alternatives — a rule the log states is enforced against every cert the log seats, whoever
+signed it.
+
+**If a log requires binding, the log says so, in the log (H4).** ``log append --require-binding``
+was the INVOCATION's rule: the same unbound bytes were refused with the flag and accepted without
+it, and nothing a stranger reads records which rule was in force. An operator who forgets the flag
+once seats an unbound cert, and afterwards no predicate over the directory can tell that from a
+log that never wanted binding at all. That is a policy living in a shell history.
+
+The precedent is one directory over: L10c's admission rule stopped being ``keys/issuers.json`` and
+became a LOGGED CERT — a ``result`` of kind ``policy``, signed by the log's own key, bound to this
+log, with an index and a leaf hash. ``body.require_binding: true`` on that same statement is the
+binding rule in the same place, and everything the admission rule earned it earns for free: it is
+signed, it is inside the Merkle tree, it cannot be lifted into another log (its own ``log_hint``
+stops that), and a later statement supersedes an earlier one by index while the earlier one stays
+readable. ``Log.binding_policy`` reads it, ``append`` refuses an unbound cert while it is in force,
+``verify_entry`` refuses a seated unbound entry, and ``mirror`` reports it beside ``issuer_policy``.
+
+Two things this is careful about:
+
+* **It binds forward, never backward.** The governing statement for entry *i* is the highest
+  qualifying policy cert at an index BELOW *i*. Entries seated before the log said anything are
+  honestly unbound and are not accused — the A-META-ABSENT rule applied to a different field, for
+  the same reason: EXTERNAL-1 measured what an accuser that fires on honest artifacts is worth
+  (0.23 precision, class disabled). A log that turns the rule on at index *j* is making a
+  statement about *j* onward, and that is the statement a reader gets.
+* **The statement itself is exempt, and it cannot be otherwise.** A policy cert carries
+  ``log_hint`` by schema (``schema/result.json`` requires it for kind ``policy``), so it satisfies
+  its own rule and no exception is needed. That is why the requirement was put on the policy cert
+  rather than into ``keys/issuers.json``, quite apart from the signature: a rule stated in an
+  unsigned file is the eighteen-byte attack again, with ``require_binding`` as the key to delete.
+
+**What this closes of L7's cross-log replay, and what it does not.** Stated as a partition,
+because the flag made it easy to believe more had been closed than had:
+
+* **Closed** — a bound cert in another log, at the gate and on read.
+* **Closed** — a log's own corpus above the index at which it required binding: every entry there
+  carries a binding to this log, so the whole segment is unreplayable as a segment.
+* **NOT closed, and not closable here** — the seven entries of
+  `papers/v8/first_verdict_2026_09_09/log`. They were signed before the field existed, they carry
+  no ``log_hint``, and binding them now means re-signing them, which mints seven different certs
+  with seven different ids. They replay verbatim into a fresh log under a different key today,
+  and the test that says so is kept passing rather than repaired.
+* **NOT closed** — an unbound cert minted by an issuer who chooses not to bind, into a log that
+  does not require binding. Both halves are the other party's choice.
+* **NOT closed by anything in this module** — a stranger standing up a log, appending unbound
+  bytes and signing their own STHs. Identical leaves, identical root, a different key. What
+  separates the two logs is the key the reader pinned out of band (Appendix D) and nothing else;
+  no predicate over one log's bytes can tell a reader which log they should have been reading.
+
 **The plan is at a lower index than the runs it governs (L6).** Section 7.2 says it in five
 words — *the log index is the proof of order* — and nothing compared the plan's index against its
 runs'. The route is not exotic: section 5.1 step 5 (ii) has each run reference the plan under role
@@ -640,7 +791,9 @@ OPEN_POLICY = "open"
 # are therefore re-derived on read rather than trusted (A-META, section 8.2). ``appended_at`` is
 # the one field outside this set: a timestamp is the signer's assertion (section 8.1) and no
 # predicate over the entries produces it.
-DERIVED_META_KEYS = ("index", "id", "type", "public", "floor", "baseline_gap")
+DERIVED_META_KEYS = (
+    "index", "id", "type", "public", "floor", "baseline_gap", "snapshot_aliases",
+)
 ASSERTED_META_KEYS = ("appended_at",)
 
 # EMPTY, AND KEPT AS A NAME SO THE REPAIR IS LEGIBLE.
@@ -923,6 +1076,12 @@ class Log:
         gap = self._gap_meta(cert)
         if gap is not None:
             out["baseline_gap"] = gap
+        try:
+            aliases = self.snapshot_aliases(cert)
+        except Exception:
+            aliases = None
+        if aliases is not None:
+            out["snapshot_aliases"] = aliases
         return out
 
     def _gap_meta(self, cert: dict) -> Optional[dict]:
@@ -1048,7 +1207,7 @@ class Log:
         """The index holding ``cert_id``, or None."""
         return self._id_map().get(cert_id)
 
-    def policy_cert(self) -> Optional[tuple[int, dict]]:
+    def policy_cert(self, *, below: Optional[int] = None) -> Optional[tuple[int, dict]]:
         """The log's own signed statement of who it admits, and the index it sits at (L10c-b).
 
         ``(index, cert)`` for the HIGHEST-indexed entry that is all of:
@@ -1069,6 +1228,12 @@ class Log:
         ``None`` when no entry qualifies: the ordinary state of every log minted before this
         existed, and of every log whose operator has not signed one. That case falls back to
         ``keys/issuers.json`` and is exactly as strong as it was — see ``issuer_policy``.
+
+        ``below`` bounds the search to statements at an index strictly less than it, which is the
+        form ``verify_entry`` needs (H4): the statement governing entry *i* is the one the log had
+        already made when *i* was seated, so a rule turned on at index *j* says nothing about the
+        entries below *j* and does not accuse them. ``append`` needs no bound — every entry is
+        below the index it is about to write — and passes none.
         """
         public = self.log_public()
         if public is None:
@@ -1079,6 +1244,8 @@ class Log:
         except Exception:
             return None
         for index in reversed(self.indices()):
+            if below is not None and index >= below:
+                continue
             try:
                 cert = self.cert(index)
             except Exception:
@@ -1098,6 +1265,143 @@ class Log:
                 continue
             return index, cert
         return None
+
+    def binding_policy(self, *, below: Optional[int] = None) -> dict:
+        """Whether this log requires every cert it seats to name it (H4). Never raises.
+
+        ``{"require_binding": bool, "source": "cert"|"none", "cert_index": int|None,
+        "cert_id": str|None}``.
+
+        THE POINT IS WHERE THE ANSWER LIVES. ``log append --require-binding`` refused an unbound
+        cert and accepted the same bytes without the flag, and nothing on disk recorded which rule
+        had been in force — so an operator who forgot the flag once was indistinguishable, to every
+        later reader, from a log that never wanted binding. This reads the rule off the log's own
+        signed statement (``policy_cert``, C-12 option (a)): ``body.require_binding: true`` on a
+        ``result`` of kind ``policy``, signed by the LOG's key, bound to this log, with an index
+        and a leaf hash. A reader of a mirror learns the rule from the bytes; ``mirror`` prints it.
+
+        ``require_binding`` is honoured only as the literal ``True``. ``schema/result.json`` types
+        it as a boolean, so a statement carrying anything else cannot be appended at all; the
+        strict test is what a cert seated by some other implementation meets, and the failure
+        direction is "not required", which is the direction that does not silently invent a rule
+        the log never stated.
+
+        The unstated case is ``{"require_binding": False, "source": "none"}``: no statement, so no
+        rule, and ``log append --require-binding`` remains available as the invocation's rule for
+        an operator who has not signed one. That flag is not a substitute — it is what a log has
+        before it says anything — and the difference is exactly H4.
+        """
+        found = self.policy_cert(below=below)
+        if found is None:
+            return {
+                "require_binding": False,
+                "source": "none",
+                "cert_index": None,
+                "cert_id": None,
+            }
+        index, cert = found
+        return {
+            "require_binding": _body(cert).get("require_binding") is True,
+            "source": "cert",
+            "cert_index": index,
+            "cert_id": cert.get("id"),
+        }
+
+    def membership(self, cert: dict) -> dict:
+        """Does THIS LOG hold THESE BYTES — the predicate ``body.log_hint`` does not answer (H2).
+
+        ``body.log_hint`` is a cert saying *I belong to log X*, and ``_check_log_binding`` enforces
+        its contrapositive: a cert naming X is refused by every log that is not X. Nothing checked
+        the claim itself, so a cert bound to the gold log and absent from it passed
+        ``log verify-cert --log <gold>`` with ``ok: true`` while ``find()`` on the same directory
+        returned ``None``. This is the reverse predicate, and it is the log's answer rather than
+        the cert's.
+
+        It is about BYTES, not ids. ``find`` maps an id to an index, and an id is a hash of ``D``
+        while an entry is ``canonical_bytes(cert)`` — signature included — so two certs can share
+        an id and be two different entries. ``bytes_match`` compares the caller's canonical bytes
+        against the seated ones, and ``verify_entry`` then re-checks the seated entry on its own
+        terms (id recomputes, signature verifies, metadata agrees, leaf is in the tree, the
+        binding names this log, the inclusion proof verifies under a head this log signed).
+
+        Returned keys:
+
+        * ``holds`` — the verdict: this log holds these exact bytes and that entry verifies.
+        * ``in_log`` / ``index`` — whether the cert's id resolves here, and where.
+        * ``bytes_match`` — the seated entry is byte-identical to the cert handed in.
+        * ``entry_ok`` / ``entry_reason`` — ``verify_entry`` at that index.
+        * ``bound`` / ``names_this_log`` / ``named_log_id`` — what the cert claims, reported
+          beside what the log answers, because the gap between the two IS the attack.
+        * ``binding_policy`` — this log's current rule (H4), so a caller can tell "not here" from
+          "not here, and this log would not have taken it".
+        * ``reasons`` — every way it failed, in the order found; empty when ``holds``.
+
+        **What this is a statement about**: the directory the caller pointed at. Pointed at the
+        attacker's log it returns the attacker's answer, which is why Appendix D's step is the
+        pinned key from a channel the operator does not control and why ``--pin`` exists. No
+        predicate over one log's bytes tells a reader which log they should have been reading.
+        """
+        reasons: list[str] = []
+        try:
+            mine: Optional[str] = self.log_id()
+        except Exception as exc:
+            mine = None
+            reasons.append(f"log: this directory states no log_id ({exc})")
+
+        body = _body(cert) if isinstance(cert, dict) else {}
+        hint = body.get("log_hint")
+        bound = isinstance(hint, dict)
+        named_log_id = hint.get("log_id") if bound else None
+        names_this_log: Optional[bool] = None
+        if bound and mine is not None:
+            names_this_log = named_log_id == mine
+            if not names_this_log:
+                reasons.append(
+                    f"binding: this cert names log {named_log_id!r} and this log is {mine}"
+                )
+
+        cert_id = cert.get("id") if isinstance(cert, dict) else None
+        index = self.find(cert_id) if isinstance(cert_id, str) else None
+        bytes_match: Optional[bool] = None
+        entry_ok: Optional[bool] = None
+        entry_reason: Optional[str] = None
+        if index is None:
+            reasons.append(
+                f"membership: this log holds no entry with id {cert_id!r}. A cert that names a "
+                "log in body.log_hint is claiming to belong to it; the claim is not the fact, and "
+                "this is the fact (H2)"
+            )
+        else:
+            try:
+                bytes_match = self.entry_bytes(index) == canonical_bytes(cert)
+            except Exception as exc:
+                bytes_match = False
+                reasons.append(f"membership: entry {index} is not comparable: {exc}")
+            else:
+                if not bytes_match:
+                    reasons.append(
+                        f"membership: entry {index} carries id {cert_id} and different bytes; an "
+                        "id is a hash of D and an entry is the whole signed cert, so this is "
+                        "another cert with the same id"
+                    )
+            entry_ok, entry_reason = verify_entry(self, index)
+            if not entry_ok:
+                reasons.append(f"entry: {entry_reason}")
+
+        return {
+            "log_id": mine,
+            "holds": bool(index is not None and bytes_match and entry_ok),
+            "in_log": index is not None,
+            "index": index,
+            "bytes_match": bytes_match,
+            "entry_ok": entry_ok,
+            "entry_reason": entry_reason,
+            "bound": bound,
+            "named_log_id": named_log_id,
+            "names_this_log": names_this_log,
+            "binding_policy": self.binding_policy(),
+            "reasons": reasons,
+        }
 
     def issuer_policy(self) -> dict:
         """Who this log admits. Never raises, never returns None.
@@ -1344,6 +1648,16 @@ class Log:
         if isinstance(cert_id, str) and self.find(cert_id) is not None:
             raise AppendRefused(f"duplicate: {cert_id} is already at index {self.find(cert_id)}")
 
+        # 4b. one (hf_repo, revision) names one set of Appendix A.2 content hashes across this
+        # log, and one set of content hashes names one (hf_repo, revision). See
+        # `snapshot_disagreement` — including what it does NOT close, which is most of member 3.
+        # The first half REFUSES (two certs hashing one revision two ways cannot both be right);
+        # the second DISCLOSES into the entry's metadata, because a commit touching only files
+        # outside the A.2 list gives two honest revisions one identical quadruple. See
+        # `snapshot_aliases` for that argument and the operator gate it is waiting on.
+        self._check_subject_names_one_snapshot(cert)
+        aliases = self.snapshot_aliases(cert)
+
         # 5. the baseline rule (section 5.5), and the disclosure the rule does not make.
         # The rule decides whether a second canonical fingerprint may append; it never says how
         # far the new baseline is from the one it replaces, and choosing a favourable baseline is
@@ -1429,6 +1743,8 @@ class Log:
             meta["floor"] = census
         if gap is not None:
             meta["baseline_gap"] = gap
+        if aliases is not None:
+            meta["snapshot_aliases"] = aliases
         _write_json(self.meta_path(index), meta)
         self._id_map_cache = None
         return index
@@ -1486,9 +1802,29 @@ class Log:
         elsewhere, which is provenance to a reader and a custody problem to an archivist) and
         names the spec edit it owes (``cert.NON_REF_HASH_PATHS`` gains a third member, where A.1
         says there is no third).
+
+        **A log that has said it requires binding refuses an unbound cert here (H4).** That used
+        to be ``log append --require-binding``, the invocation's rule: the same bytes were refused
+        with the flag and accepted without it, and nothing on disk recorded which rule was in
+        force. The rule is now read off ``binding_policy`` — the log's own signed statement inside
+        its own tree — so it applies to every append, whoever runs it and however they spell the
+        command line. A policy statement carries ``log_hint`` by schema, so it satisfies its own
+        rule with no exception; and the rule reaches only appends made after it was stated,
+        because the entries below it were seated honestly under no rule at all.
         """
         hint = _body(cert).get("log_hint")
         if hint is None:
+            policy = self.binding_policy()
+            if policy["require_binding"]:
+                raise AppendRefused(
+                    "log_hint: this cert names no log, and this log requires that every cert it "
+                    f"seats names it — entry {policy['cert_index']} ({policy['cert_id']}) is this "
+                    "log's own signed policy statement and it says require_binding. An unbound "
+                    "cert appends verbatim into any log that will take it (L7), and a rule about "
+                    "that belongs in the log where a reader can see it rather than in the "
+                    "invocation that appended (H4). Mint it again with --bind-log: the binding is "
+                    "inside the signed body and cannot be added afterwards"
+                )
             return
         if not isinstance(hint, dict):
             raise AppendRefused(
@@ -2381,16 +2717,63 @@ class Log:
         under the new baseline gets honest arithmetic over dishonest bytes. BASELINE-CHOICE stays
         in the label class where the relabel itself is concerned; only the announcement leaves it.
 
+        **G1: a cert's own floor runs are not baselines it replaced.** The lookup used to be
+        ``previous_comparable``, which is every comparable fingerprint below this one -- including
+        the R runs this cert's own ``noise_floor`` block names. On this lab's published canonical
+        that returns entry 5, which is that canonical's OWN run 4, so a fresh append measured a
+        canonical against a run of its own floor and called the result a baseline gap. Nothing had
+        been replaced. A quantity that announces an event that did not occur is a false accusation
+        of the same species as the tamper report that accused the published log of being edited
+        (A-META-ABSENT), and the lab holds a receipt for an accuser at 0.23 precision whose whole
+        class was disabled. So the ids in ``body.noise_floor.runs`` are excluded from the search,
+        and when nothing else is comparable the answer is None and the entry announces nothing.
+
+        The exclusion is HERE and not in ``previous_comparable``, because section 5.5's *rule* --
+        which refuses a second canonical carrying no ``previous`` ref -- must keep seeing those
+        runs. Excluding them there would let a canonical dodge the rule by naming the fingerprint
+        it replaces as one of its own floor runs.
+
+        **G2: the announcement discriminates, or it announces nothing.** The honest case (another
+        run of one preregistered plan, appended after its sibling) and the dishonest one (a second
+        canonical quietly replacing the first under the same plan) both appear with
+        ``announced: false, same_noise_plan: true`` and a distance, so the three values a reader
+        got were the same shape in both. They differ in a fact this log holds: **whether either
+        cert is a canonical at all**, which is whether it carries a ``noise_floor`` block (section
+        5.1). Two plain runs of a plan are not baselines and neither replaced anything; a canonical
+        appended over a canonical is a baseline that moved. So the gap now carries::
+
+            "previous_is_canonical": bool     # the previous cert carries a noise_floor block
+            "own_is_canonical": bool
+            "relation": str                   # see below
+            "replaced_a_baseline": bool       # relation == "baseline-replaced"
+            "silent_replacement": bool        # replaced_a_baseline and not announced
+
+        ``relation`` is one of ``baseline-replaced`` (this cert declares a ``previous`` ref that
+        names the cert found, or both certs are canonicals -- a baseline moved),
+        ``first-canonical`` (this cert is the first canonical of its subject; the entry below it is
+        a run and nothing was replaced), ``run-over-canonical``, ``runs-of-one-plan`` (two runs
+        under one logged noise plan -- section 5.1's normal shape, and no baseline), or
+        ``run-over-run``. Only ``baseline-replaced`` is an announcement; the rest are context, and
+        ``verify`` prints them as context. The distance is reported either way, because it is a
+        real number over two real bodies and suppressing it would hide the case where a "run" of a
+        plan is nowhere near its siblings.
+
+        When ``own_is_canonical``, the search PREFERS the nearest comparable canonical over a
+        nearer plain run: the baseline a canonical replaces is the canonical before it, and a run
+        logged in between is not the thing that moved.
+
         Returns None for anything that is not a fingerprint, and for the first fingerprint of a
         subject -- there is no baseline to be apart from. Otherwise ``floor.baseline_gap`` over
         the two run bodies, plus who the previous baseline is and whether this cert named it::
 
             {
-              "previous_index": int,        # the highest comparable fingerprint in this log
+              "previous_index": int,        # the comparable fingerprint this one sits against
               "previous_id": str,
               "declared_previous": [str],   # `previous` refs this cert carries, in ref order
               "announced": bool,            # a `previous` ref names previous_id
               "same_noise_plan": bool,      # appended under 5.5's runs-of-one-plan branch instead
+              "previous_is_canonical": bool, "own_is_canonical": bool,
+              "relation": str, "replaced_a_baseline": bool, "silent_replacement": bool,
               ... floor.baseline_gap(...)
             }
 
@@ -2398,31 +2781,58 @@ class Log:
         ref at all: legitimate, and the case a reader could not otherwise see. Every number is
         re-derivable by a reader from the log's own bytes -- this is a public method for that
         reason, as ``floor_census`` is.
+
+        **G3, and the decision is that a cumulative distance does NOT belong here.** The
+        announcement is pairwise, so a baseline walked from A to B to C in three appends publishes
+        three small gaps and never publishes A-to-C. The obvious repair -- sum the pairwise
+        distances along the chain -- is refused, and the reason is that the sum is not a distance.
+        ``exact`` is the fraction of items whose outputs differ and ``seqlp``/``topk`` are means of
+        per-item magnitudes: none of them composes along a chain, and a sum of them can exceed or
+        fall short of the real A-to-C distance by any amount (three moves of one item back and
+        forth sum to 3/n while the endpoints are identical). Publishing that number in the very
+        field that exists to stop a false announcement would repeat the defect it repairs.
+        What a reader actually needs is ``floor.baseline_gap(A_body, C_body)`` -- computed over the
+        two endpoint bodies directly, not accumulated -- which is a quantity the reader can already
+        obtain from the log without this field, by walking ``previous`` refs and calling the same
+        public function on the ends. Adding it here would make ``append`` walk the chain on every
+        append and write a number that moves whenever an intermediate entry is re-read, and the
+        A-META-GAP repair above is the standard: a derived metadata field must be a function of
+        bytes at a fixed index. The staged move stays visible in the chain of ``relation:
+        baseline-replaced`` entries; making it one number is a reader's report and is written down
+        in ``papers/v8`` as owed work, not smuggled into an entry's metadata.
         """
         if cert.get("type") != "fingerprint":
             return None
-        # `previous_comparable` scans the whole log, which is right at APPEND -- the cert is not
-        # in it yet, so the highest comparable index is the baseline being replaced. Called on a
-        # cert the log already holds, that scan can return a fingerprint appended AFTER it, and
-        # the gap would then be measured against a baseline that did not yet exist. A reader
-        # re-deriving the number must get the same one the append wrote, so the search is bounded
-        # below the cert's own index whenever the log has one for it.
+        # The search is bounded below the cert's own index whenever the log holds it: called on a
+        # logged cert an unbounded scan can return a fingerprint appended AFTER it, and the gap
+        # would then be measured against a baseline that did not yet exist. A reader re-deriving
+        # the number must get the one the append wrote (A-META-GAP).
         own_id = cert.get("id")
         at = self.find(own_id) if isinstance(own_id, str) else None
-        if at is None:
-            previous = self.previous_comparable(cert)
-        else:
-            previous = None
-            for index in reversed([i for i in self.indices() if i < at]):
-                try:
-                    other = self.cert(index)
-                except Exception:
-                    continue
-                if other.get("type") != "fingerprint" or other.get("id") == own_id:
-                    continue
-                if certmod.comparable(other, cert) == []:
-                    previous = index
-                    break
+        own_canonical = _is_canonical(cert)
+        skip = _own_floor_runs(cert)          # G1
+        previous: Optional[int] = None
+        nearest: Optional[int] = None
+        for index in reversed(self.indices()):
+            if at is not None and index >= at:
+                continue
+            try:
+                other = self.cert(index)
+            except Exception:
+                continue
+            if other.get("type") != "fingerprint" or other.get("id") == own_id:
+                continue
+            if other.get("id") in skip:
+                continue
+            if certmod.comparable(other, cert) != []:
+                continue
+            if nearest is None:
+                nearest = index
+            if own_canonical and _is_canonical(other):
+                previous = index
+                break
+        if previous is None:
+            previous = nearest
         if previous is None:
             return None
         try:
@@ -2432,12 +2842,30 @@ class Log:
         prev_body = _body(prev)
         own_body = _body(cert)
         declared = [rid for role, rid in certmod.refs(cert) if role == "previous"]
+        announced = prev.get("id") in declared
+        prev_canonical = _is_canonical(prev)
+        same_plan = _same_noise_plan(cert, prev)
+        if announced or (own_canonical and prev_canonical):
+            relation = "baseline-replaced"
+        elif own_canonical:
+            relation = "first-canonical"
+        elif prev_canonical:
+            relation = "run-over-canonical"
+        elif same_plan:
+            relation = "runs-of-one-plan"
+        else:
+            relation = "run-over-run"
         out: dict[str, Any] = {
             "previous_index": previous,
             "previous_id": prev.get("id"),
             "declared_previous": declared,
-            "announced": prev.get("id") in declared,
-            "same_noise_plan": _same_noise_plan(cert, prev),
+            "announced": announced,
+            "same_noise_plan": same_plan,
+            "previous_is_canonical": prev_canonical,
+            "own_is_canonical": own_canonical,
+            "relation": relation,
+            "replaced_a_baseline": relation == "baseline-replaced",
+            "silent_replacement": relation == "baseline-replaced" and not announced,
         }
         try:
             out.update(floormod.baseline_gap(prev_body, own_body))
@@ -2447,6 +2875,161 @@ class Log:
             # 5.5 rule never asked for.
             out["note"] = f"{type(exc).__name__}: {exc}"
         return out
+
+    def snapshot_disagreement(self, cert: dict) -> list[dict]:
+        """Entries of this log whose weights subject contradicts ``cert``'s about one snapshot.
+
+        M3, the member-3 predicate. ``papers/v8/THE_BOUNDARY_2026_09_09.md`` listed "the repository
+        and revision, read off a directory name" as a defect no check over logged bytes could
+        reach: nothing in the log witnessed which directory the runner opened, and a fabricated
+        ``hf_repo``/``revision`` is byte-indistinguishable from an honest one. A fifth adversarial
+        pass refuted that the same way the environment member was refuted — **another logged cert
+        already carries the information that would catch it, and nothing compared them.** Beside
+        ``hf_repo`` and ``revision`` in the same subject sit the four Appendix A.2 hashes over the
+        snapshot's actual bytes (``_SNAPSHOT_HASHES``). Both halves were demonstrated appending:
+        the same ``weights_sha256`` under two revisions, and the same revision under two
+        ``weights_sha256``.
+
+        The predicate, over bytes already on disk::
+
+            across the entries of one log, one (hf_repo, revision) names one set of content
+            hashes, and one set of content hashes names one (hf_repo, revision)
+
+        Both directions, because they catch different lies, and they are ACTED ON differently.
+        *One name, two snapshots* is a revision reused for a different set of files: the pin points
+        at two things, the two certs cannot both be right, and ``_check_subject_names_one_snapshot``
+        refuses the append. *One snapshot, two names* is one set of files wearing two revisions,
+        which is a lie when the directory was renamed and the TRUTH when a commit touched only
+        files outside the A.2 list; ``snapshot_aliases`` discloses that half into the entry's
+        metadata instead, and the argument for the asymmetry is there. This method reports both,
+        because it is the predicate and not the policy.
+
+        ``precision`` takes no part: it is a load-time cast and not a property of the snapshot, and
+        the lab's own published bf16 and fp16 subjects carry identical A.2 hashes under one
+        (hf_repo, revision). ``model_family`` takes no part either; it is not in S_identity.
+
+        **WHAT THIS DOES NOT CLOSE, and it is most of the member.** This catches an issuer
+        *contradicting itself across a log*. It cannot catch a uniform misnaming: rename the
+        directory once, mint every cert from that runner, and every entry tells the same lie
+        consistently — one (hf_repo, revision), one set of hashes, no disagreement, and this
+        method returns ``[]``. The hashes are over the bytes the runner read; nothing here says
+        those bytes came from the repository the subject names, because nothing in this log
+        fetched them. Closing that needs a second party who fetches the named revision and puts
+        its hashes in the log — the reproduction leg, not a predicate. Member 3 moves from "no
+        check can reach this" to "this check reaches the inconsistent case", which is exactly what
+        the environment member got and exactly the standard the lab applied to it.
+
+        It is also **bounded by the entry index** when the log already holds ``cert``, for
+        ``Log.baseline_gap``'s reason: a predicate a reader re-derives must give the answer the
+        appending index produced, not one that moves when a later entry lands.
+
+        Returns one dict per contradicting entry, in index order::
+
+            {"index": int, "id": str, "half": "one-name-two-snapshots" | "one-snapshot-two-names",
+             "fields": [str], "mine": [...], "theirs": [...]}
+        """
+        subject = cert.get("subject")
+        name, hashes = _snapshot_name(subject), _snapshot_hashes(subject)
+        if name is None or hashes is None:
+            return []
+        own_id = cert.get("id")
+        at = self.find(own_id) if isinstance(own_id, str) else None
+        out: list[dict] = []
+        for index in self.indices():
+            if at is not None and index >= at:
+                break
+            try:
+                other = self.cert(index)
+            except Exception:
+                continue
+            if other.get("id") == own_id:
+                continue
+            other_subject = other.get("subject")
+            other_name = _snapshot_name(other_subject)
+            other_hashes = _snapshot_hashes(other_subject)
+            if other_name is None or other_hashes is None:
+                continue
+            if other_name == name and other_hashes != hashes:
+                fields = [
+                    f for f, mine, theirs in zip(_SNAPSHOT_HASHES, hashes, other_hashes)
+                    if mine != theirs
+                ]
+                out.append({
+                    "index": index,
+                    "id": other.get("id"),
+                    "half": "one-name-two-snapshots",
+                    "fields": fields,
+                    "mine": [hashes[_SNAPSHOT_HASHES.index(f)] for f in fields],
+                    "theirs": [other_hashes[_SNAPSHOT_HASHES.index(f)] for f in fields],
+                })
+            elif other_hashes == hashes and other_name != name:
+                fields = [
+                    f for f, mine, theirs in zip(("hf_repo", "revision"), name, other_name)
+                    if mine != theirs
+                ]
+                out.append({
+                    "index": index,
+                    "id": other.get("id"),
+                    "half": "one-snapshot-two-names",
+                    "fields": fields,
+                    "mine": [dict(zip(("hf_repo", "revision"), name))[f] for f in fields],
+                    "theirs": [dict(zip(("hf_repo", "revision"), other_name))[f] for f in fields],
+                })
+        return out
+
+    def snapshot_aliases(self, cert: dict) -> Optional[list[dict]]:
+        """The logged entries carrying ``cert``'s exact A.2 hashes under another name, or None.
+
+        M3's second half, and it is a DISCLOSURE rather than a refusal. The asymmetry is the whole
+        of the decision, so it is stated rather than assumed:
+
+        * *one name, two snapshots* is a CONTRADICTION. One revision of one repository is one set
+          of files; two certs hashing it two ways cannot both be right, and appending the second
+          makes the log state two incompatible facts about one directory. Refused.
+        * *one snapshot, two names* has an HONEST FAILURE MODE. A repository commit that touches
+          only files outside the A.2 list -- a README, a licence, a ``.gitattributes`` -- produces
+          a new ``revision`` over an identical quadruple, and both certs are telling the truth.
+          Refusing that fires on an honest artifact, which is the defect EXTERNAL-1 measured at
+          0.23 precision before the class was disabled, and it would refuse the ordinary case of
+          pinning two revisions of one repository in one log.
+
+        So this half is reported into the entry's metadata and refuses nothing: it names the
+        entries a reader should look at, and a reader deciding whether a revision was fabricated
+        has the two ids to compare. Whether it becomes a refusal is the operator gate the spec
+        draft calls B-XLOG (``papers/v8/SPEC_v8_v0.2_draft.md``, A-62), and what is implemented
+        today is a disclosure. It buys less than the refusal does -- the demonstrated attack, one
+        ``weights_sha256`` under a second revision, still appends -- and that is written down here
+        rather than in a limits section.
+
+        Index-bounded and derived like every other metadata field (A-META, A-META-GAP): ``None``
+        rather than ``[]`` when there is nothing to disclose, so the key is absent from the entry
+        instead of carrying an empty list.
+        """
+        found = [f for f in self.snapshot_disagreement(cert) if f["half"] == "one-snapshot-two-names"]
+        return found or None
+
+    def _check_subject_names_one_snapshot(self, cert: dict) -> None:
+        """Refuse a cert whose weights subject CONTRADICTS a logged one about a snapshot (M3).
+
+        The predicate and its limits are ``snapshot_disagreement``'s; this is the refusal in front
+        of one of its two halves. It refuses rather than reports because the two certs cannot both
+        be right and the log cannot tell which is wrong: appending the second makes the log state
+        two incompatible facts about one directory, and a reader who resolves a ref to either one
+        gets an answer the other contradicts. Everything the refusal names is in the log's own
+        bytes. The other half is ``snapshot_aliases`` and it discloses; the argument for the
+        asymmetry is there.
+        """
+        for first in self.snapshot_disagreement(cert):
+            if first["half"] != "one-name-two-snapshots":
+                continue
+            raise AppendRefused(
+                f"subject: entry {first['index']} ({first['id']}) names the same "
+                f"(hf_repo, revision) as this cert and different content hashes {first['fields']} "
+                f"({first['theirs']} against {first['mine']}); one revision of one repository is "
+                "one set of files, so two certs hashing it two ways cannot both be right, and the "
+                "Appendix A.2 hashes are the half of S_identity that was taken over bytes rather "
+                "than read off a directory name (M3, section 2.2)"
+            )
 
     def _check_challenge_subject(self, cert: dict) -> None:
         """Section 9 rule 1, run over the two certs this log already holds, plus C3's binding.
@@ -2856,6 +3439,66 @@ def _nuisance_of(cert: dict) -> dict:
 _RECIPE_FACTORS = ("batch_size", "padding_side")
 
 
+# The Appendix A.2 content hashes: the four digests taken over the snapshot's actual bytes. They
+# are the half of a weights S_identity that is a function of files on disk; ``hf_repo`` and
+# ``revision`` are the half read off a directory name. ``precision`` is in neither set — it is a
+# load-time cast, not a property of the snapshot, and the lab's own published bf16 and fp16
+# subjects carry identical A.2 hashes under one (hf_repo, revision). A predicate that put
+# ``precision`` on the hash side would refuse that honest pair.
+_SNAPSHOT_HASHES = (
+    "weights_sha256", "config_sha256", "tokenizer_sha256", "generation_config_sha256",
+)
+
+
+def _is_canonical(cert: dict) -> bool:
+    """True when this fingerprint carries a ``noise_floor`` block — i.e. it is a BASELINE.
+
+    Section 5.1: the canonical fingerprint of a subject is the one that carries the floor its
+    runs produced. A fingerprint without one is a run, and a run is not a baseline — which is the
+    fact ``Log.baseline_gap`` uses to tell the honest case (two runs of one plan) from the
+    dishonest one (a second canonical quietly replacing the first).
+    """
+    return isinstance(_body(cert).get("noise_floor"), dict)
+
+
+def _own_floor_runs(cert: dict) -> set:
+    """The ids in ``body.noise_floor.runs`` — the runs this cert's OWN floor rests on.
+
+    Ids only, and no resolution: this is read by ``baseline_gap``, which refuses nothing, so an
+    unresolvable id here must not raise. ``_floor_run_certs`` is the resolving version and it
+    refuses, which is right where the floor's arithmetic is being checked and wrong here.
+    """
+    block = _body(cert).get("noise_floor")
+    runs = block.get("runs") if isinstance(block, dict) else None
+    return {r for r in runs if isinstance(r, str)} if isinstance(runs, list) else set()
+
+
+def _snapshot_name(subject: Any) -> Optional[tuple[str, str]]:
+    """``(hf_repo, revision)`` when both are non-empty strings on a weights subject, else None."""
+    if not isinstance(subject, dict) or subject.get("kind") != "weights":
+        return None
+    repo, revision = subject.get("hf_repo"), subject.get("revision")
+    if not isinstance(repo, str) or not repo or not isinstance(revision, str) or not revision:
+        return None
+    return (repo, revision)
+
+
+def _snapshot_hashes(subject: Any) -> Optional[tuple[str, ...]]:
+    """The four A.2 hashes of a weights subject, in ``_SNAPSHOT_HASHES`` order, or None.
+
+    None when the subject is not a weights subject or does not carry all four as strings.
+    ``schema/subject.json`` requires all four on the weights branch, so a subject reaching an
+    append carries them; a cert that somehow does not is out of this predicate's reach and the
+    refusal message below says which side was silent rather than pretending to have compared.
+    """
+    if not isinstance(subject, dict) or subject.get("kind") != "weights":
+        return None
+    values = tuple(subject.get(name) for name in _SNAPSHOT_HASHES)
+    if any(not isinstance(v, str) or not v for v in values):
+        return None
+    return values  # type: ignore[return-value]
+
+
 def _decoding_of(cert: dict) -> dict:
     """A cert's ``recipe.decoding``, or ``{}`` — the execution the cert says it ran under."""
     recipe = cert.get("recipe")
@@ -3191,6 +3834,25 @@ def verify_entry(log: "Log", index: int) -> tuple[bool, str]:
                 return False, (
                     f"entry {index}: body.log_hint names log {named!r} and this log is {mine}"
                 )
+        elif hint is not None:
+            # A binding that is not an object is refused at the gate; a clone is where a hand-made
+            # entry gets in. "Not an object" is not "no binding" -- reading it as absent would let
+            # the shape decide whether the rule below applies.
+            return False, (
+                f"entry {index}: body.log_hint is {type(hint).__name__}, not an object"
+            )
+        else:
+            # H4: the log's own signed statement, as of an index BELOW this entry's. Forward only.
+            # An entry seated before the log required anything is honestly unbound and is not
+            # accused of anything -- the A-META-ABSENT rule for a different field, on EXTERNAL-1's
+            # evidence about what an accuser that fires on honest artifacts is worth.
+            policy = log.binding_policy(below=index)
+            if policy["require_binding"]:
+                return False, (
+                    f"entry {index}: body.log_hint is absent and this log requires binding from "
+                    f"entry {policy['cert_index']} ({policy['cert_id']}) onward; an unbound entry "
+                    "above a require_binding statement is a cert this log said it would not seat"
+                )
         leaf = merkle.leaf_hash(raw)
         try:
             held = log.leaf_hashes()[index]
@@ -3279,6 +3941,14 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
     name none (L7). An unbound entry is not a fault; it is the state in which "this cert is in
     the log" is a statement about bytes rather than about this log, and a reader is owed the
     count.
+
+    ``binding_policy`` is whether the log that was copied REQUIRES that binding, and from which
+    entry (H4). It is the sibling of ``issuer_policy`` and it is here for the same reason: the
+    rule used to be a command-line flag, so a reader of a mirror could see that some entries were
+    unbound and could not see whether the log had ever meant otherwise. Like ``issuer_policy`` it
+    is a disclosure and not an accusation — a log that requires nothing is a legitimate log — and
+    an entry that violates a rule the log DID state is refused by ``verify_entry`` and lands in
+    ``tamper`` on its own terms.
     """
     report: dict[str, Any] = {
         "entries": 0,
@@ -3290,6 +3960,7 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
         "metadata": [],
         "stale_metadata": [],
         "issuer_policy": None,
+        "binding_policy": None,
         "log_binding": {"bound": 0, "unbound": 0},
     }
     tamper: list[str] = report["tamper"]
@@ -3322,6 +3993,17 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
     except Exception as exc:
         policy = {"policy": "unreadable", "reason": f"{type(exc).__name__}: {exc}"}
     report["issuer_policy"] = policy
+    # H4: the log's own rule about whether the certs it seats must name it. A disclosure beside
+    # `issuer_policy`, for the same reason -- a rule that lived in an invocation was invisible to
+    # every later reader of the directory.
+    try:
+        report["binding_policy"] = log.binding_policy()
+    except Exception as exc:
+        report["binding_policy"] = {
+            "require_binding": False,
+            "source": "unreadable",
+            "reason": f"{type(exc).__name__}: {exc}",
+        }
     for index in present:
         if index >= size:
             tamper.append(f"entries: index {index} sits beyond a gap at {size}")

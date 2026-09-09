@@ -140,6 +140,15 @@ class TestTheIndex:
         core = {k: v for k, v in INDEX.items() if k not in ("set_sha256", "provenance")}
         assert hashlib.sha256(canonical_bytes(core)).hexdigest() == INDEX["set_sha256"]
 
+    def test_provenance_is_the_only_key_the_digest_does_not_cover(self):
+        """What is outside the digest is a decision, so it is enumerated rather than trusted."""
+        core = {k: v for k, v in INDEX.items() if k not in ("set_sha256", "provenance")}
+        assert set(INDEX) - set(core) == {"set_sha256", "provenance"}
+        assert "retired" in core, "the retirement ledger is outside the digest again"
+        assert set(INDEX["provenance"]) == {
+            "note", "implementation", "tooling", "sources", "replay"
+        }, "provenance describes the tree; anything else outside the digest needs an argument"
+
     @pytest.mark.parametrize("family", FAMILIES)
     def test_each_family_file_hashes_to_what_the_index_says(self, family):
         row = INDEX["families"][family]
@@ -469,28 +478,65 @@ class TestRetiringAMovedCoreTakesAReason:
             G.retirement_plan([self.MOVED["id"]] * 2, ["one", "another"])
         assert "given twice" in str(excinfo.value)
 
+    UNDIAGNOSED = {"id": "e" * 64, "kind": "undiagnosed", "entrypoint": "cert.check",
+                   "was": {"ok": True}, "now": None, "sources": ["tests/t.py::w"],
+                   "detail": "the dropped vector cannot be replayed: no blob"}
+
     def test_a_moved_core_nobody_named_is_still_a_refusal(self):
         """There is no flag that retires whatever moved; silence is the default refusal."""
-        _rec, unnamed, refusals = G.apply_retirements({}, [self.MOVED], [self.DRIFTED])
+        _rec, unnamed, refusals, undiag = G.apply_retirements({}, [self.MOVED], [self.DRIFTED])
         assert unnamed == sorted([self.MOVED["id"], self.DRIFTED["id"]])
-        assert refusals == []
+        assert (refusals, undiag) == ([], [])
 
     def test_an_ordinary_retirement_cannot_be_laundered_through_the_path(self):
         plan = G.retirement_plan([self.CHURNED["id"]], ["it looked untidy"])
-        _rec, _unnamed, refusals = G.apply_retirements(plan, [], [self.CHURNED])
+        _rec, _unnamed, refusals, _undiag = G.apply_retirements(plan, [], [self.CHURNED])
         assert len(refusals) == 1 and "still reproduces" in refusals[0]
 
     def test_an_address_that_did_not_move_cannot_be_retired(self):
         plan = G.retirement_plan(["d" * 64], ["pre-emptive"])
-        _rec, _unnamed, refusals = G.apply_retirements(plan, [self.MOVED], [])
+        _rec, _unnamed, refusals, _undiag = G.apply_retirements(plan, [self.MOVED], [])
         assert len(refusals) == 1 and "did not move in this run" in refusals[0]
+
+    # ---- R5: the drop nobody could diagnose was the easiest one to retire ---------------------
+
+    def test_an_undiagnosed_drop_cannot_be_given_a_reason(self):
+        """The attack: `classify_drops` marks a vector that cannot be replayed AT ALL as
+        `undiagnosed`, and `apply_retirements` used to put it in `changed` beside a measured
+        behaviour change -- so `--retire <id> --reason "..."` wrote it into the ledger with a
+        reason about a move nobody had measured. The drop that must not be quietly retired was
+        the one the path accepted most readily."""
+        plan = G.retirement_plan([self.UNDIAGNOSED["id"]], ["assume it was fine"])
+        recorded, unnamed, refusals, undiag = G.apply_retirements(plan, [], [self.UNDIAGNOSED])
+        assert recorded == [], "an undiagnosed drop was written into the ledger with a reason"
+        assert self.UNDIAGNOSED["id"] not in unnamed
+        assert undiag == [self.UNDIAGNOSED["id"]]
+        assert len(refusals) == 1
+        assert "cannot be replayed at all" in refusals[0]
+        assert "nothing for a reason to be about" in refusals[0]
+
+    def test_an_undiagnosed_drop_still_refuses_the_run_when_nobody_names_it(self):
+        """Refusing the retirement must not turn into ignoring the drop: it comes back on its own
+        channel so `main` refuses whether or not `--retire` mentions it."""
+        recorded, unnamed, refusals, undiag = G.apply_retirements({}, [], [self.UNDIAGNOSED])
+        assert (recorded, unnamed, refusals) == ([], [], [])
+        assert undiag == [self.UNDIAGNOSED["id"]]
+
+    def test_the_ledger_refuses_an_undiagnosed_row_it_is_handed(self):
+        """Second line: a hand-edited ledger carrying an undiagnosed row cannot be carried
+        forward by the next regeneration either."""
+        forged = dict(self.UNDIAGNOSED, reason="somebody wrote this by hand")
+        with pytest.raises(SystemExit) as excinfo:
+            G.retirement_ledger({"with_reason": [forged]}, [], [], current=set())
+        assert "undiagnosed" in str(excinfo.value)
 
     def test_a_named_address_is_recorded_with_its_reason_and_both_outcomes(self):
         plan = G.retirement_plan(
             [self.MOVED["id"], self.DRIFTED["id"]], ["ENV-ABSENT closed it", "A-NORUNS closed it"]
         )
-        recorded, unnamed, refusals = G.apply_retirements(plan, [self.MOVED], [self.DRIFTED])
-        assert (unnamed, refusals) == ([], [])
+        recorded, unnamed, refusals, undiag = G.apply_retirements(plan, [self.MOVED],
+                                                                  [self.DRIFTED])
+        assert (unnamed, refusals, undiag) == ([], [], [])
         by_id = {row["id"]: row for row in recorded}
         assert by_id[self.MOVED["id"]]["reason"] == "ENV-ABSENT closed it"
         assert by_id[self.MOVED["id"]]["kind"] == "moved-core"
@@ -501,7 +547,7 @@ class TestRetiringAMovedCoreTakesAReason:
 
     def test_the_ledger_carries_forward_and_does_not_record_one_move_twice(self):
         plan = G.retirement_plan([self.MOVED["id"]], ["because"])
-        recorded, _unnamed, _refusals = G.apply_retirements(plan, [self.MOVED], [])
+        recorded, _unnamed, _refusals, _undiag = G.apply_retirements(plan, [self.MOVED], [])
         first = G.retirement_ledger({}, recorded, [self.CHURNED], current=set())
         again = G.retirement_ledger(first, recorded, [self.CHURNED], current=set())
         assert [r["id"] for r in first["with_reason"]] == [self.MOVED["id"]]
@@ -515,14 +561,14 @@ class TestRetiringAMovedCoreTakesAReason:
 
     def test_the_two_kinds_of_retirement_are_different_rows_in_the_committed_set(self):
         """A reader diffing the set sees which retirements were decided and which just happened."""
-        retired = INDEX["provenance"]["retired"]
+        retired = INDEX["retired"]
         assert retired["note"].strip()
         assert retired["with_reason"], "the set records no retirement with a reason"
         ids = {v["id"] for v in ALL}
         for row in retired["with_reason"]:
             assert row["reason"].strip()
             assert row["was"] != row["now"]
-            assert row["kind"] in ("moved-core", "behaviour-change", "undiagnosed")
+            assert row["kind"] in G.RETIRABLE_KINDS
             assert row["sources"]
             assert (row["id"] in ids) == (row["kind"] == "moved-core")
         for row in retired["input_churn"]:
@@ -530,6 +576,112 @@ class TestRetiringAMovedCoreTakesAReason:
             assert row["id"] not in ids
         assert not ({r["id"] for r in retired["with_reason"]}
                     & {r["id"] for r in retired["input_churn"]})
+
+    def test_the_committed_ledger_counts_what_it_carries(self):
+        retired = INDEX["retired"]
+        assert retired["counts"]["with_reason"] == len(retired["with_reason"])
+        assert retired["counts"]["input_churn"] == len(retired["input_churn"])
+
+    # ---- R1/R2: the ledger was outside the digest that was supposed to protect it -------------
+
+    def test_deleting_the_whole_ledger_moves_set_sha256(self):
+        """The attack, run against the committed index. `provenance.retired` was written AFTER
+        `set_sha256` was computed, so deleting all six `with_reason` rows and all 149
+        `input_churn` rows left the digest unchanged and the set still verified with its whole
+        history removed. The ledger is `index.retired` now, inside the digested core."""
+        core = {k: v for k, v in INDEX.items() if k not in ("set_sha256", "provenance")}
+        assert hashlib.sha256(canonical_bytes(core)).hexdigest() == INDEX["set_sha256"]
+        assert core["retired"]["with_reason"] and core["retired"]["input_churn"], (
+            "there is no committed history here to try to delete"
+        )
+        wiped = copy.deepcopy(core)
+        wiped["retired"] = G.empty_ledger()
+        assert hashlib.sha256(canonical_bytes(wiped)).hexdigest() != INDEX["set_sha256"], (
+            "the whole retirement ledger can be deleted without moving set_sha256"
+        )
+
+    def test_deleting_one_row_from_either_half_moves_set_sha256(self):
+        core = {k: v for k, v in INDEX.items() if k not in ("set_sha256", "provenance")}
+        for half in ("with_reason", "input_churn"):
+            edited = copy.deepcopy(core)
+            rows = edited["retired"][half]
+            assert rows, "the committed ledger has no %s row to attack" % half
+            edited["retired"][half] = rows[1:]
+            edited["retired"]["counts"][half] = len(rows) - 1
+            assert hashlib.sha256(canonical_bytes(edited)).hexdigest() != INDEX["set_sha256"], (
+                "a %s row can be deleted without moving set_sha256" % half
+            )
+
+    def test_what_the_digest_does_not_protect_is_said_and_is_pinned_elsewhere(self):
+        """The honest half. A digest inside a file cannot protect that file from an editor:
+        delete a row, recompute `set_sha256` over the edited core, and the index is
+        self-consistent again. What catches that is outside the index -- the receipt pins the
+        set_sha256 it measured -- and the generator says so rather than implying otherwise."""
+        assert COVERAGE["set"]["set_sha256"] == INDEX["set_sha256"]
+        doc = G.__doc__
+        assert "in-file digest catches the careless edit" in doc
+        assert "make the ledger unforgeable" in doc
+        assert "mutation_coverage.json" in doc and "git" in doc
+
+    # ---- R6: the ledger was erasable by deleting index.json -----------------------------------
+
+    def test_a_set_that_lost_its_index_is_refused_rather_than_regenerated_empty(self, tmp_path):
+        """The attack: `main` computed the ledger only when the directory already held vectors and
+        read it out of the index only then, so a directory with no committed index got the default
+        empty ledger and the history was gone with no refusal."""
+        (tmp_path / "vectors").mkdir()
+        (tmp_path / "vectors" / "decide.json").write_text("[]", encoding="utf-8")
+        (tmp_path / "blobs.json").write_text("{}", encoding="utf-8")
+        ledger, cannot = G.read_ledger(tmp_path)
+        assert ledger == {}
+        assert len(cannot) == 1
+        assert "no index.json" in cannot[0] and "empty one" in cannot[0]
+
+    def test_an_index_with_vectors_and_no_ledger_is_refused(self, tmp_path):
+        (tmp_path / "vectors").mkdir()
+        (tmp_path / "vectors" / "decide.json").write_text("[]", encoding="utf-8")
+        (tmp_path / "index.json").write_text(json.dumps({"schema": "x"}), encoding="utf-8")
+        _ledger, cannot = G.read_ledger(tmp_path)
+        assert len(cannot) == 1 and "no ledger" in cannot[0]
+
+    def test_an_empty_directory_is_a_new_set_and_not_an_erasure(self, tmp_path):
+        """The one case that must not refuse: a directory with nothing in it has no history to
+        erase, and whoever deleted the whole set deleted the vectors with it."""
+        assert G.read_ledger(tmp_path) == ({}, [])
+
+    def test_the_ledger_is_read_from_the_index_that_carries_it(self, tmp_path):
+        (tmp_path / "index.json").write_bytes(
+            json.dumps({"retired": {"with_reason": [{"id": "x"}], "input_churn": []}}).encode()
+        )
+        ledger, cannot = G.read_ledger(tmp_path)
+        assert cannot == [] and ledger["with_reason"] == [{"id": "x"}]
+
+    def test_a_set_written_before_the_ledger_moved_is_still_read(self, tmp_path):
+        """The committed set carried the ledger under `provenance.retired` until this repair, and
+        a run against one of those must carry the history forward, not start a new one."""
+        (tmp_path / "index.json").write_bytes(json.dumps(
+            {"provenance": {"retired": {"with_reason": [{"id": "y"}], "input_churn": []}}}
+        ).encode())
+        ledger, cannot = G.read_ledger(tmp_path)
+        assert cannot == [] and ledger["with_reason"] == [{"id": "y"}]
+
+    # ---- the fourth question: is input_churn a ledger or a leak? ------------------------------
+
+    def test_the_churn_half_is_keyed_by_address_so_it_cannot_grow_per_run(self):
+        """The answer recorded in `gen_vectors.CHURN_IS_BOUNDED`: a ledger, kept in full, bounded
+        by the distinct addresses the sources have ever produced rather than by the number of
+        runs. Dropping the same address on a hundred runs adds one row."""
+        drop = dict(self.CHURNED)
+        ledger = {}
+        for _ in range(100):
+            ledger = G.retirement_ledger(ledger, [], [drop], current=set())
+        assert ledger["input_churn"] == [{"id": drop["id"], "entrypoint": drop["entrypoint"]}]
+        assert ledger["counts"]["input_churn"] == 1
+        assert G.CHURN_IS_BOUNDED in ledger["growth"]
+
+    def test_the_committed_churn_half_holds_each_address_once(self):
+        ids = [row["id"] for row in INDEX["retired"]["input_churn"]]
+        assert len(ids) == len(set(ids))
 
 
 # --------------------------------------------------------------------------- the README

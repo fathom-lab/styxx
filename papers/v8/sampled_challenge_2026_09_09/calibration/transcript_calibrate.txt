@@ -1,0 +1,166 @@
+target: fingerprint-canonical-73a09ffa3f1e.json
+  64 items; internal battery on the HONEST certificate: all predicates hold
+  37 items fully tied by P8, 27 partial, 193 emitted tokens with no recorded distribution
+
+--- closed form vs 20000 draws (b = marked items, k = challenge size)
+  b=1   k=8   exact 0.125000   monte-carlo 0.122000
+  b=3   k=16  exact 0.584869   monte-carlo 0.580950
+  b=8   k=4   exact 0.421933   monte-carlo 0.412250
+
+--- FALSE ALARM, from the five published bf16 floor runs (10 honest pairs)
+  same batch size (3 pairs): digest disagreements [0, 0, 0], full-record [0, 0, 0]
+  different batch size (7 pairs): digest disagreements [2, 1, 3, 2, 2, 1, 1], full-record [64, 64, 64, 64, 64, 64, 64]
+  => at the SAME batch size the false-alarm rate is 0 at every k on both comparisons,
+     over 192 item comparisons.
+     OFF-batch a digest challenge false-alarms with probability 0.5849 at k=16, and the full-record challenge with probability 1.000 at k=1.
+
+--- DETECTION.  internal = fraction of forgeries the free battery catches;
+    k columns = P(a k-item output-digest challenge catches it); resid = fraction that
+    neither reaches at any k.  noop = vacuous draws, excluded from the rates.
+class                       f    n  noop  internal   resid  k=1     k=2     k=4     k=8     k=16    k=32    k=64    
+--------------------------------------------------------------------------------------------------------------------
+fabricate_careful           1  200     0     0.000   0.000  0.016   0.031   0.062   0.125   0.250   0.500   1.000   
+fabricate_careful           2  200     0     0.000   0.000  0.031   0.062   0.122   0.236   0.440   0.754   1.000   
+fabricate_careful           3  200     0     0.000   0.000  0.047   0.092   0.179   0.335   0.585   0.881   1.000   
+fabricate_careful           4  200     0     0.000   0.000  0.062   0.122   0.233   0.422   0.694   0.943   1.000   
+fabricate_careful           8  200     0     0.000   0.000  0.125   0.236   0.422   0.679   0.915   0.998   1.000   
+fabricate_careful          16  200     0     0.000   0.000  0.250   0.440   0.694   0.915   0.995   1.000   1.000   
+fabricate_careful          32  200     0     0.000   0.000  0.500   0.754   0.943   0.998   1.000   1.000   1.000   
+fabricate_careful          64  200     0     0.000   0.000  1.000   1.000   1.000   1.000   1.000   1.000   1.000   
+fabricate_careless          1  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+fabricate_careless          2  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+fabricate_careless          4  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+fabricate_careless          8  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+copy_output                 1  200     0     0.000   0.005  0.016   0.031   0.062   0.124   0.249   0.497   0.995   
+copy_output                 2  200     0     0.000   0.000  0.031   0.061   0.121   0.234   0.437   0.749   1.000   
+copy_output                 4  200     0     0.000   0.000  0.062   0.121   0.231   0.420   0.692   0.942   1.000   
+copy_output                 8  200     0     0.000   0.000  0.124   0.235   0.420   0.676   0.913   0.997   1.000   
+swap_pairs                  1  200     0     0.000   0.015  0.031   0.061   0.120   0.233   0.434   0.743   0.985   
+swap_pairs                  2  200     0     0.000   0.000  0.062   0.121   0.231   0.420   0.691   0.942   1.000   
+swap_pairs                  4  200     0     0.000   0.000  0.125   0.235   0.421   0.677   0.914   0.997   1.000   
+swap_pairs                  8  200     0     0.000   0.000  0.249   0.438   0.691   0.913   0.995   1.000   1.000   
+text_only_rewrite           1  200     0     0.000   0.000  0.016   0.031   0.062   0.125   0.250   0.500   1.000   
+text_only_rewrite           2  200     0     0.000   0.000  0.031   0.062   0.122   0.236   0.440   0.754   1.000   
+text_only_rewrite           4  200     0     0.000   0.000  0.062   0.122   0.233   0.422   0.694   0.943   1.000   
+text_only_rewrite           8  200     0     0.000   0.000  0.125   0.236   0.422   0.679   0.915   0.998   1.000   
+text_only_rewrite          16  200     0     0.000   0.000  0.250   0.440   0.694   0.915   0.995   1.000   1.000   
+text_swap                   1  200     0     0.000   0.000  0.031   0.062   0.122   0.236   0.440   0.754   1.000   
+text_swap                   2  200     0     0.000   0.000  0.062   0.121   0.231   0.419   0.690   0.941   1.000   
+text_swap                   4  200     0     0.000   0.000  0.125   0.236   0.421   0.678   0.914   0.998   1.000   
+text_swap                   8  200     0     0.000   0.000  0.249   0.438   0.691   0.913   0.995   1.000   1.000   
+seqlp_tied                  1  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_tied                  2  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_tied                  4  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_tied                  8  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under         1  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under         2  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under         4  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under         8  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under        16  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_under        27  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix     1  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix     2  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix     4  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix     8  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix    16  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_to_prefix    27  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_over          1  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_over          2  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_over          4  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+seqlp_partial_over          8  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_naive          1  200     0     0.755   0.245  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_naive          2  200     0     0.950   0.050  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_naive          4  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_naive          8  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated    1  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated    2  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated    4  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated    8  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated   16  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_reshape_coordinated   64  200     0     0.000   1.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_partial_free           1  200     0     0.470   0.530  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_partial_free           2  200     0     0.730   0.270  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_partial_free           4  200     0     0.940   0.060  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_partial_free           8  200     0     0.995   0.005  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+topk_partial_free          27  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+truncate_careful            1  200     0     0.000   0.000  0.016   0.031   0.062   0.125   0.250   0.500   1.000   
+truncate_careful            2  200     0     0.000   0.000  0.031   0.062   0.122   0.236   0.440   0.754   1.000   
+truncate_careful            4  200     0     0.000   0.000  0.062   0.122   0.233   0.422   0.694   0.943   1.000   
+truncate_careful            8  200     0     0.000   0.000  0.125   0.236   0.422   0.679   0.915   0.998   1.000   
+truncate_careless           1  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+truncate_careless           2  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+truncate_careless           4  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+truncate_careless           8  200     0     1.000   0.000  0.000   0.000   0.000   0.000   0.000   0.000   0.000   
+
+=== THE MISS LIST ===
+Every cell below contains forgeries that neither the free internal battery nor an
+output-digest challenge of ANY size catches -- k=64 is re-running the whole battery.
+
+class                       f   resid  internal  full k=1  full k=64  what is being claimed
+copy_output                 1   0.005     0.000     0.016      1.000  f items carrying a verbatim copy of another item's genuine result
+swap_pairs                  1   0.015     0.000     0.031      1.000  f disjoint transpositions, both bodies genuine
+seqlp_partial_under         1   1.000     0.000     0.016      1.000  score understated in the unrecorded-tail region
+seqlp_partial_under         2   1.000     0.000     0.031      1.000  score understated in the unrecorded-tail region
+seqlp_partial_under         4   1.000     0.000     0.062      1.000  score understated in the unrecorded-tail region
+seqlp_partial_under         8   1.000     0.000     0.125      1.000  score understated in the unrecorded-tail region
+seqlp_partial_under        16   1.000     0.000     0.250      1.000  score understated in the unrecorded-tail region
+seqlp_partial_under        27   1.000     0.000     0.422      1.000  score understated in the unrecorded-tail region
+seqlp_partial_to_prefix     1   1.000     0.000     0.016      1.000  score set to the largest value P8b permits
+seqlp_partial_to_prefix     2   1.000     0.000     0.031      1.000  score set to the largest value P8b permits
+seqlp_partial_to_prefix     4   1.000     0.000     0.062      1.000  score set to the largest value P8b permits
+seqlp_partial_to_prefix     8   1.000     0.000     0.125      1.000  score set to the largest value P8b permits
+seqlp_partial_to_prefix    16   1.000     0.000     0.250      1.000  score set to the largest value P8b permits
+seqlp_partial_to_prefix    27   1.000     0.000     0.422      1.000  score set to the largest value P8b permits
+topk_reshape_naive          1   0.245     0.755     0.016      1.000  recorded distributions rewritten, score left behind
+topk_reshape_naive          2   0.050     0.950     0.031      1.000  recorded distributions rewritten, score left behind
+topk_reshape_coordinated    1   1.000     0.000     0.016      1.000  recorded distributions rewritten and the score moved to match
+topk_reshape_coordinated    2   1.000     0.000     0.031      1.000  recorded distributions rewritten and the score moved to match
+topk_reshape_coordinated    4   1.000     0.000     0.062      1.000  recorded distributions rewritten and the score moved to match
+topk_reshape_coordinated    8   1.000     0.000     0.125      1.000  recorded distributions rewritten and the score moved to match
+topk_reshape_coordinated   16   1.000     0.000     0.250      1.000  recorded distributions rewritten and the score moved to match
+topk_reshape_coordinated   64   1.000     0.000     1.000      1.000  recorded distributions rewritten and the score moved to match
+topk_partial_free           1   0.530     0.470     0.016      1.000  recorded distributions rewritten on partial items only
+topk_partial_free           2   0.270     0.730     0.031      1.000  recorded distributions rewritten on partial items only
+topk_partial_free           4   0.060     0.940     0.062      1.000  recorded distributions rewritten on partial items only
+topk_partial_free           8   0.005     0.995     0.125      1.000  recorded distributions rewritten on partial items only
+
+  18 of 26 cells miss on EVERY forgery generated:
+    seqlp_partial_under f=1
+    seqlp_partial_under f=2
+    seqlp_partial_under f=4
+    seqlp_partial_under f=8
+    seqlp_partial_under f=16
+    seqlp_partial_under f=27
+    seqlp_partial_to_prefix f=1
+    seqlp_partial_to_prefix f=2
+    seqlp_partial_to_prefix f=4
+    seqlp_partial_to_prefix f=8
+    seqlp_partial_to_prefix f=16
+    seqlp_partial_to_prefix f=27
+    topk_reshape_coordinated f=1
+    topk_reshape_coordinated f=2
+    topk_reshape_coordinated f=4
+    topk_reshape_coordinated f=8
+    topk_reshape_coordinated f=16
+    topk_reshape_coordinated f=64
+
+--- WHERE THE CHALLENGE BUDGET SHOULD NOT GO.  Caught by the free internal battery on
+    every forgery at every f in the sweep, so a re-run buys nothing against them.
+  fabricate_careless
+  seqlp_partial_over
+  seqlp_tied
+  truncate_careless
+
+--- WHERE IT SHOULD GO.  Invisible to the internal battery on every forgery, and
+    reached only by a second party's bytes.
+  copy_output                digest challenge at k=64 catches 1.000
+  fabricate_careful          digest challenge at k=64 catches 1.000
+  seqlp_partial_to_prefix    digest challenge at k=64 catches 0.000
+  seqlp_partial_under        digest challenge at k=64 catches 0.000
+  swap_pairs                 digest challenge at k=64 catches 1.000
+  text_only_rewrite          digest challenge at k=64 catches 1.000
+  text_swap                  digest challenge at k=64 catches 1.000
+  topk_reshape_coordinated   digest challenge at k=64 catches 0.000
+  truncate_careful           digest challenge at k=64 catches 1.000
+
+wrote C:\Users\heyzo\clawd\wt\v8\papers\v8\sampled_challenge_2026_09_09\calibration\results.json

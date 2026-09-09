@@ -176,22 +176,49 @@ def test_refuses_a_floor_resting_on_another_subjects_run(tmp_path):
 @pytest.mark.parametrize(
     "field,value",
     [
-        ("hf_repo", "acme/other-model"),
-        ("revision", "0" * 40),
         ("weights_sha256", "b" * 64),
         ("config_sha256", "c" * 64),
         ("tokenizer_sha256", "d" * 64),
         ("generation_config_sha256", "e" * 64),
+    ],
+)
+def test_a_run_contradicting_the_snapshot_is_refused_an_append_earlier(tmp_path, field, value):
+    """Four of the seven no longer reach the floor guard at all (M3).
+
+    This was one parametrisation of seven ending at ``log.append(canonical)`` with A-SWAP's "a run
+    of a different subject". A run that names the logged (hf_repo, revision) with a different
+    Appendix A.2 hash now never gets that far: ``Log.append``'s M3 predicate
+    (``snapshot_disagreement``) refuses the RUN itself, because one revision of one repository is
+    one set of files and two certs hashing it two ways cannot both be right. The refusal moves an
+    append earlier; the floor guard behind it is untouched, and the three remaining fields below
+    still reach it.
+    """
+    with pytest.raises(AppendRefused) as exc:
+        ladder(tmp_path, run_overrides={2: {"subject": F.weights_subject(**{field: value})}})
+    reason = exc.value.reason
+    assert reason.startswith("subject:")
+    assert field in reason
+    assert "(M3, section 2.2)" in reason
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("hf_repo", "acme/other-model"),
+        ("revision", "0" * 40),
         ("precision", "fp16"),
     ],
 )
-def test_every_s_identity_field_binds_a_floor_to_its_subject(tmp_path, field, value):
-    """Section 2.2 whole, not a chosen half.
+def test_the_three_fields_m3_does_not_refuse_still_bind_the_floor(tmp_path, field, value):
+    """Section 2.2 whole, not a chosen half — and these three are the floor guard's alone.
 
-    ``precision`` and ``revision`` are the two ``cert.comparable`` softens to
-    ``cross-subject:`` — right for a *comparison*, wrong for a *run of one floor*, since section
-    5.3's floor was measured on one subject and says nothing about another. So this compares
-    identity fields directly and every one of the seven is a refusal.
+    ``precision`` is a load-time cast and moves no content hash, so M3 cannot see it. ``hf_repo``
+    and ``revision`` moved alone leave the four A.2 hashes intact, which M3 *discloses* rather than
+    refuses (an honest commit outside the A.2 list gives two revisions one quadruple —
+    ``Log.snapshot_aliases``). All three therefore reach ``log.append(canonical)``, where a floor
+    resting on another subject's run is refused: ``cert.comparable`` softens ``precision`` and
+    ``revision`` to ``cross-subject:``, right for a *comparison* and wrong for a *run of one
+    floor*, so the floor guard compares identity fields directly.
     """
     log, _, _, _, canonical = ladder(
         tmp_path, run_overrides={2: {"subject": F.weights_subject(**{field: value})}}
