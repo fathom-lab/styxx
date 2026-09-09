@@ -390,6 +390,64 @@ spec rather than a new rule. ``derived_meta`` recomputes every derivable field f
 bytes; ``meta_disagreement`` names each field the file disagrees on; ``verify_entry`` refuses on
 any of them, and ``mirror`` collects them under a ``metadata`` key beside ``tamper``.
 
+**A file that is OLD is not a file that is WRONG (A-META-ABSENT).** The repair above was written
+with one predicate for two states, and the day after it landed it accused the lab's own published
+log. `papers/v8/first_verdict_2026_09_09/log` was minted before ``floor_census`` existed, so its
+seven ``<index>.meta.json`` files carry no ``floor`` key at all; ``mirror`` re-derived the census
+at entry 6, found the file silent, and printed it under ``tamper`` with ``verified: False``. That
+log is untouched, published and pushed. Nothing had edited it, and the checker said it had.
+
+THE SPLIT, which is the predicate now:
+
+* **ABSENT** — the stored file holds no value for a derived key. The file predates the field. The
+  derivation is authoritative, the file is a stale cache, and *nothing the entries say is
+  contradicted*. Reported under ``stale_metadata`` / the mirror's ``stale_metadata`` key, and it
+  does not refuse and does not clear ``verified``.
+* **CONTRADICTED** — the file states a value and the entries derive a different one, or states a
+  value where the entries derive none, or carries a key no derivation over the entries produces
+  at all. Something asserts a fact the bytes refute. This is A-META's attack, and it stays a
+  refusal in ``verify_entry`` and a ``verified: False`` in ``mirror``.
+
+The asymmetry is not a courtesy, it is the information content: an absent key removes an
+assertion and adds none, so an attacker gains nothing by deleting one — the derivation is what
+every reader uses, and deleting ``public: false`` does not make a redacted cert public. Deleting
+``id`` or ``index`` is refused a line earlier in ``verify_entry`` on its own terms (section 8.2
+names both in the layout), so the split does not open them either. What is deliberately NOT
+widened is the third contradiction above: a key the file carries that this version derives
+nothing for stays a refusal, on A-OPTIONAL's argument — it is a presence, not an absence, and a
+free assertion inside a file readers quote. A future version that *removes* a derived key would
+turn honest old files into that state; when that happens the retired key belongs in a named set,
+not in a softened predicate.
+
+**Why this is a correctness bug and not a papercut, in this lab's own receipt.** EXTERNAL-1
+measured a path-claim accusation at 0.23 precision on external agents' pull requests and DISABLED
+the class: an accuser that fires on honest artifacts is not a strict checker, it is a broken one,
+and its output stops being read at all. A tamper report that cannot tell "old" from "wrong" is
+that same defect with a worse blast radius — the accusation here is machine-readable (``mirror``
+exits non-zero, ``verified`` is the sentence readers quote), it is aimed at an *artifact* rather
+than at a diff, and the artifact is usually someone else's. The strength of the CONTRADICTED half
+is exactly what makes the ABSENT half expensive: a checker that refuses everything is as useless
+as one that refuses nothing, and only the half that fires on real edits is worth keeping loud.
+
+**Where a stale file gets repaired: nowhere automatically, and that is the decision.** Re-deriving
+one costs nobody's key — ``<index>.meta.json`` is outside the Merkle tree and nothing signs it, so
+rewriting it moves no leaf, breaks no proof and changes no root, and ``derived_meta(index)`` plus
+``appended_at`` *is* the repaired file. Two places could do it and neither should:
+
+* **Not the source log.** It is published and pushed. This lab already has the receipt for
+  regenerating a committed artifact in place, and a metadata file quoted by a reader is one. If
+  the operator of a log chooses to refresh their own cache, that is their deliberate act at their
+  own path, and ``derived_meta`` is the whole implementation of it.
+* **Not the mirror's copy.** ``mirror`` is evidence *about* the source. A mirror that silently
+  rewrote ``dst`` would produce a copy that no longer agrees with the bytes it copied, and the
+  next mirror of that mirror would report agreement — which erases the very fact ``mirror`` exists
+  to publish. Worse, the same code path applied one branch over would launder a CONTRADICTED file
+  into a clean one.
+
+So the file stays stale, the reader is told it is stale under its own key, and every consumer of
+the value uses the derivation. That is what "a cache with a checker in front of it" means when the
+cache is old rather than hostile.
+
 Three consequences that are the point of doing it this way rather than by hashing the file:
 
 * ``public`` (section 2.6) used to be derived by reading OTHER entries' stored ``public`` flags,
@@ -816,53 +874,93 @@ class Log:
             out["floor"] = census
         return out
 
-    def meta_disagreement(self, index: int) -> list[str]:
-        """Every way ``<index>.meta.json`` differs from what the entries derive. ``[]`` is agreement.
+    def _meta_split(self, index: int) -> tuple[list[str], list[str]]:
+        """``(contradicted, stale)`` for ``<index>.meta.json`` — the A-META-ABSENT predicate.
 
-        Reported, not raised, because a mirror wants the whole list and a verifier wants the first
-        one. A key the file carries that no derivation produces is reported too — ``appended_at``
-        by name as the one asserted field, and anything else as a free assertion inside a file
-        readers quote (the A-OPTIONAL argument, applied to metadata).
+        One pass over the file, two lists, because the two states are different facts and were
+        conflated exactly once (see "A file that is OLD is not a file that is WRONG"):
+
+        * **CONTRADICTED** — the file states a value the entries refute: a derived key whose
+          stored value differs, a derived key the file carries where the derivation produces
+          none, or a key no derivation over the entries produces at all. An assertion against
+          the bytes. Refusal.
+        * **STALE** — the file holds no value for a key the entries derive. The file predates the
+          field; the derivation is authoritative and nothing the entries say is contradicted.
+          Reported, never a refusal.
+
+        A metadata file that cannot be read or cannot be derived is CONTRADICTED, not stale: an
+        unreadable file is not an old one, and a derivation that raised did not conclude "absent".
         """
         try:
             derived = self.derived_meta(index)
         except Exception as exc:
-            return [f"entry {index}: metadata not derivable: {type(exc).__name__}: {exc}"]
+            return [f"entry {index}: metadata not derivable: {type(exc).__name__}: {exc}"], []
         try:
             stored = self.meta(index)
         except Exception as exc:
-            return [f"entry {index}: metadata unreadable: {exc}"]
-        out: list[str] = []
+            return [f"entry {index}: metadata unreadable: {exc}"], []
+        contradicted: list[str] = []
+        stale: list[str] = []
         for key in DERIVED_META_KEYS:
             here, there = key in derived, key in stored
             if not here and not there:
                 continue
             if here and not there:
-                return_value = derived[key]
-                out.append(
+                stale.append(
                     f"entry {index}: metadata carries no {key!r}, which the entries derive as "
-                    f"{return_value!r}"
+                    f"{derived[key]!r}; the file predates the field, so it is stale and not "
+                    "tamper — the derivation is authoritative and nothing in the entries is "
+                    "contradicted (section 8.2, A-META-ABSENT)"
                 )
             elif there and not here:
-                out.append(
+                contradicted.append(
                     f"entry {index}: metadata carries {key!r} = {stored[key]!r} and the entries "
                     "derive none"
                 )
             elif not _exactly(derived[key], stored[key]):
-                out.append(
+                contradicted.append(
                     f"entry {index}: metadata says {key} = {stored[key]!r} while the entries "
                     f"derive {derived[key]!r}; this file is outside the tree and nothing signs "
                     "it, so it is re-derived on read and never trusted (section 8.2, A-META)"
                 )
         unchecked = set(DERIVED_META_KEYS) | set(ASSERTED_META_KEYS) | set(APPEND_TIME_META_KEYS)
         for key in sorted(set(stored) - unchecked):
-            out.append(
+            contradicted.append(
                 f"entry {index}: metadata carries {key!r}, which no derivation over the entries "
                 f"produces; the asserted field is {ASSERTED_META_KEYS[0]!r} (section 8.1: a "
                 f"timestamp is the signer's assertion) and the append-time ones are "
                 f"{list(APPEND_TIME_META_KEYS)}"
             )
-        return out
+        return contradicted, stale
+
+    def meta_disagreement(self, index: int) -> list[str]:
+        """Every way ``<index>.meta.json`` CONTRADICTS what the entries derive. ``[]`` is no conflict.
+
+        Reported, not raised, because a mirror wants the whole list and a verifier wants the first
+        one. A key the file carries that no derivation produces is reported too — ``appended_at``
+        by name as the one asserted field, and anything else as a free assertion inside a file
+        readers quote (the A-OPTIONAL argument, applied to metadata).
+
+        A key the file simply does NOT carry is not here: that is ``stale_metadata``, and the
+        argument for the split is in this module's "Decisions". Every caller that refuses reads
+        this list and only this list.
+        """
+        return self._meta_split(index)[0]
+
+    def stale_metadata(self, index: int) -> list[str]:
+        """Every key the entries derive that ``<index>.meta.json`` carries no value for.
+
+        A file written before a derived field existed. It is a disclosure and never a refusal:
+        the derivation is authoritative, the file is a cache, and nothing in the entries is
+        contradicted by a silence. The lab's own published log
+        (`papers/v8/first_verdict_2026_09_09/log`) is in exactly this state for ``floor``, and
+        reporting it as tamper is the defect this pair of methods exists to separate.
+
+        Nothing repairs it automatically — not here, not in ``mirror``. ``derived_meta(index)``
+        is the repaired file for an operator who chooses to refresh their own cache; the reasons
+        it is not done for them are in "Decisions".
+        """
+        return self._meta_split(index)[1]
 
     def _id_map(self) -> dict[str, int]:
         # The ENTRY's id, never the metadata's. It used to prefer ``meta(index)["id"]`` and fall
@@ -2788,6 +2886,11 @@ def verify_entry(log: "Log", index: int) -> tuple[bool, str]:
         # an unsigned file outside the tree -- `public`, `type`, and the floor census -- was the
         # operator's to rewrite with no leaf moving and no root changing. The census is re-derived
         # by ``floor_census`` from certs this log holds; every derivable field is compared.
+        #
+        # A-META-ABSENT: CONTRADICTED only. A key the file does not carry is a file older than the
+        # field, it contradicts nothing in the entries, and refusing it accused this lab's own
+        # published log of tampering with itself. ``log.stale_metadata(index)`` is that list, and
+        # no caller refuses on it.
         disagreements = log.meta_disagreement(index)
         if disagreements:
             return False, disagreements[0]
@@ -2861,13 +2964,21 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
     append-only claim is checkable at all (section 8.0).
 
     Returns ``{"entries", "sths", "verified", "misbehaviour", "unpublished", "tamper",
-    "metadata", "issuer_policy", "log_binding"}``.
+    "metadata", "stale_metadata", "issuer_policy", "log_binding"}``.
 
-    ``metadata`` is A-META's report: every field of an ``<index>.meta.json`` that disagrees with
-    what the entries derive, named per entry. Section 8.2 asks for exactly this — "``mirror``
-    reports a disagreement rather than trusting the file" — and a disagreement also fails
-    ``verify_entry``, so it lands in ``tamper`` too and ``verified`` is False. The list is here
-    because the first refusal is not the whole story when a census was rewritten field by field.
+    ``metadata`` is A-META's report: every field of an ``<index>.meta.json`` that CONTRADICTS what
+    the entries derive, named per entry. Section 8.2 asks for exactly this — "``mirror`` reports a
+    disagreement rather than trusting the file" — and a contradiction also fails ``verify_entry``,
+    so it lands in ``tamper`` too and ``verified`` is False. The list is here because the first
+    refusal is not the whole story when a census was rewritten field by field.
+
+    ``stale_metadata`` is the other half of that split (A-META-ABSENT): every key the entries
+    derive that the file carries no value for. A log minted before a derived field existed is in
+    this state permanently and honestly, so it is a disclosure and NOT an accusation — it does not
+    enter ``tamper`` and does not clear ``verified``. Nothing here rewrites the copied file: a
+    mirror is evidence about its source, and a mirror that silently refreshed the cache would
+    report agreement to the next reader over bytes that never agreed. The argument is in this
+    module's "Decisions".
 
     ``issuer_policy`` is the admission policy of the log that was copied (L10c): ``roster``,
     ``open``, or one of the states that refuse every append. It is a disclosure, not an
@@ -2887,12 +2998,14 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
         "unpublished": [],
         "tamper": [],
         "metadata": [],
+        "stale_metadata": [],
         "issuer_policy": None,
         "log_binding": {"bound": 0, "unbound": 0},
     }
     tamper: list[str] = report["tamper"]
     misbehaviour: list[str] = report["misbehaviour"]
     metadata: list[str] = report["metadata"]
+    stale: list[str] = report["stale_metadata"]
     try:
         _copy_tree(Path(src), Path(dst))
     except Exception as exc:
@@ -2924,11 +3037,15 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
             tamper.append(f"entries: index {index} sits beyond a gap at {size}")
     for index in range(size):
         # A-META: the census and every other derivable metadata field, re-derived rather than
-        # read. `verify_entry` refuses on the first disagreement; this names all of them.
+        # read. `verify_entry` refuses on the first contradiction; this names all of them.
+        # A-META-ABSENT: a key the file does not carry is stale, not tamper, and is reported
+        # under its own name where it accuses nobody.
         try:
-            metadata.extend(log.meta_disagreement(index))
+            contradicted, absent = log._meta_split(index)
         except Exception as exc:
-            metadata.append(f"entry {index}: metadata: {type(exc).__name__}: {exc}")
+            contradicted, absent = [f"entry {index}: metadata: {type(exc).__name__}: {exc}"], []
+        metadata.extend(contradicted)
+        stale.extend(absent)
         try:
             bound = isinstance(_body(log.cert(index)).get("log_hint"), dict)
         except Exception:
@@ -3017,8 +3134,10 @@ def mirror(src, dst, pinned_public: bytes, pinned_sth: Optional[dict] = None) ->
     covered = max([head["tree_size"] for _, head in heads], default=0)
     report["unpublished"] = [index for index in range(covered, size)]
 
-    # A metadata disagreement is already a `verify_entry` refusal and therefore already in
+    # A metadata CONTRADICTION is already a `verify_entry` refusal and therefore already in
     # `tamper`; naming it here as well is deliberate, because `verified` is the sentence readers
-    # quote and the attack it answers left it True (A-META).
+    # quote and the attack it answers left it True (A-META). `stale_metadata` is deliberately NOT
+    # in this conjunction: an absent key contradicts nothing, and clearing `verified` over one
+    # called the lab's own untouched published log tampered with (A-META-ABSENT).
     report["verified"] = not tamper and not misbehaviour and not metadata
     return report

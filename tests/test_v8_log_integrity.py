@@ -12,6 +12,12 @@ back as the refusal.
   ``verify_entry`` returned ``ok``, the root was unchanged because no leaf moved, and ``mirror``
   reported ``verified: True, tamper: []``. ``Log.floor_census`` re-derives the whole block
   exactly and nothing called it.
+* **A-META-ABSENT** — that repair then ran ONE predicate over TWO facts: a key the file does not
+  carry was treated exactly like a key it carries wrongly. Metadata written before a derived
+  field existed carries nothing for it, so ``mirror`` printed the lab's own untouched published
+  log (`papers/v8/first_verdict_2026_09_09/log`) under ``tamper`` with ``verified: False``.
+  ABSENT is stale and reported; CONTRADICTED is tamper and refused. EXTERNAL-1 is the receipt for
+  what an accuser that fires on honest artifacts costs: 0.23 precision, class disabled.
 * **L10c** — ``Log.issuers()`` returned ``None`` when ``keys/issuers.json`` was absent and append
   step 2 read ``if roster is not None``. The control is two lines: with a roster present a rogue
   key is refused; delete the file and the same rogue key appends.
@@ -32,11 +38,13 @@ from __future__ import annotations
 
 import copy
 import json
+from pathlib import Path
 
 import pytest
 
 from styxx.v8 import cli as climod
 from styxx.v8 import floor as floormod
+from styxx.v8 import keys as keysmod
 from styxx.v8.jcs import canonical_bytes
 from styxx.v8.log import (
     APPEND_TIME_META_KEYS,
@@ -231,6 +239,98 @@ def test_a_census_beside_an_entry_that_has_no_floor_is_a_disagreement(tmp_path):
     assert len(reasons) == 1
     assert "carries 'floor'" in reasons[0] and "derive none" in reasons[0]
     assert verify_entry(log, run_index)[0] is False
+    assert log.stale_metadata(run_index) == []  # it states a value; it is not silent
+
+
+# ================================================================= A-META-ABSENT
+
+
+def test_absent_is_stale_and_contradicted_is_tamper(tmp_path):
+    """BOTH halves of the split, on ONE entry, one edit apart (A-META-ABSENT).
+
+    The A-META repair ran one predicate over two different facts: a key the file does not carry
+    was reported exactly like a key it carries wrongly. A metadata file written before a derived
+    field existed carries nothing for that field, so the day after the repair landed it accused
+    the lab's own untouched published log of tampering.
+
+    The distinction, pinned here in the only way that is convincing — the same file, the same
+    entry, the same key, once deleted and once falsified:
+
+    * ABSENT: the derivation is authoritative, the file is a stale cache, and nothing the entries
+      say is contradicted. Not tamper, does not refuse, does not clear ``verified``.
+    * CONTRADICTED: the file asserts a census the bytes refute. That is the attack, and it stays
+      a refusal.
+    """
+    built = ladder(tmp_path / "log")
+    log, index = built["log"], built["index"]
+    honest = log.derived_meta(index)["floor"]
+
+    # --- ABSENT: the file predates ``floor_census``, which is the published log's real state.
+    stored = json.loads(log.meta_path(index).read_bytes().decode("utf-8"))
+    del stored["floor"]
+    log.meta_path(index).write_bytes(
+        (json.dumps(stored, sort_keys=True, indent=2) + "\n").encode("utf-8")
+    )
+
+    assert log.meta_disagreement(index) == []
+    stale = log.stale_metadata(index)
+    assert len(stale) == 1
+    assert "carries no 'floor'" in stale[0] and "stale and not tamper" in stale[0]
+    ok, why = verify_entry(log, index)
+    assert ok, why
+
+    report = mirror(log.path, tmp_path / "dst-absent", LOG_PUB, pinned_sth=log.sth(LOG_SEED, TS))
+    assert report["verified"] is True
+    assert report["tamper"] == [] and report["metadata"] == []
+    assert any("carries no 'floor'" in line for line in report["stale_metadata"])
+
+    # --- CONTRADICTED: the same key, now stating the adversary's census. One edit apart.
+    rewrite_meta(log, index, floor={
+        **honest,
+        "executions": 5,
+        "pairs_same_execution": 0,
+        "all_channels_zero": not honest["all_channels_zero"],
+    })
+
+    assert log.stale_metadata(index) == []
+    reasons = log.meta_disagreement(index)
+    assert len(reasons) == 1 and "metadata says floor =" in reasons[0]
+    assert verify_entry(log, index)[0] is False
+
+    report = mirror(log.path, tmp_path / "dst-wrong", LOG_PUB, pinned_sth=log.sth(LOG_SEED, TS))
+    assert report["verified"] is False
+    assert report["stale_metadata"] == []
+    assert any("executions" in line for line in report["metadata"])
+    assert any(f"entry {index}" in line for line in report["tamper"])
+
+
+def test_the_published_log_mirrors_verified_with_its_census_reported_stale(tmp_path):
+    """THE REGRESSION, on the artifact that was accused: no fixture, the real published bytes.
+
+    `papers/v8/first_verdict_2026_09_09/log` is untouched, published and pushed to a public
+    branch. It was minted before ``floor_census`` existed, so none of its seven metadata files
+    carries a ``floor`` key, and the A-META repair printed entry 6 under ``tamper`` with
+    ``verified: False``.
+
+    This lab has a receipt for what that costs: EXTERNAL-1 measured a path-claim accusation at
+    0.23 precision on external agents' pull requests and disabled the class. An accuser that
+    fires on honest artifacts is not strict, it is broken — and here the accusation is
+    machine-readable and lands on someone else's artifact.
+    """
+    root = Path(__file__).resolve().parents[1] / "papers/v8/first_verdict_2026_09_09/log"
+    assert root.is_dir(), f"the published log is committed at {root} and must not move"
+
+    published = Log(root)
+    pinned = keysmod.load_public(root / "keys/log.pub")
+    report = mirror(root, tmp_path / "published-mirror", pinned)
+
+    assert report["verified"] is True, report["tamper"] + report["metadata"]
+    assert report["tamper"] == []
+    assert report["metadata"] == []
+    assert any("entry 6" in line and "'floor'" in line for line in report["stale_metadata"])
+    for index in range(published.size()):
+        ok, why = verify_entry(published, index)
+        assert ok, why
 
 
 def test_public_is_derived_from_the_certs_and_not_from_the_neighbouring_metadata(tmp_path):

@@ -68,11 +68,36 @@ statement of the boundary this session produced:
 
 The two artifacts are identical. No predicate over them can differ. What follows is the general
 form: *a check on bytes an issuer wrote can only ask whether that party contradicted itself, and a
-party that does not contradict itself is not caught by asking.* Its members are the batch labels
-written alongside the recipe that is supposed to corroborate them, the choice of which run becomes
-the baseline, the repository and revision that are read off a directory name by a method that
-describes itself as all-observed, and the environment the whole coverage vocabulary resolves
-against, which is copied out of a specification file by a command that builds no runner at all.
+party that does not contradict itself is not caught by asking.*
+
+**CORRECTION, same day, and it is a correction to this document's central claim.** The roster
+published here first had four members. One of them was wrong. It read: *"the environment the whole
+coverage vocabulary resolves against, which is copied out of a specification file by a command that
+builds no runner at all."* That defect was **reachable**, and a fourth adversarial pass — asked
+specifically to hunt for a member misclassified in this direction — found it by noticing that the
+specification's own amendment A-52 describes the same defect as "a predicate over bytes already on
+disk." One document's class two was the other's class one. It has since been closed in both halves:
+the plan now observes its environment through a runner at mint, and the log compares every
+undeclared environment leaf of the plan against every floor cert's subject, which is a genuine
+predicate over logged bytes and was confirmed refusing.
+
+This is the most damaging error this analysis could have contained — declaring something impossible
+that was merely unaddressed — and it survived the writing of the document, the writing of the
+specification amendment that contradicted it, and a public summary of both. It was found only
+because the adversary was asked to disbelieve the conclusion, which nobody does by default.
+
+The roster, corrected, has **three** members, each re-confirmed by that pass:
+
+1. The batch labels written alongside the recipe meant to corroborate them, both halves signed by
+   one party.
+2. The choice of which run becomes the baseline — still unreachable, but no longer *silent*: the
+   `baseline_gap` quantity now reports it, which is this document's own prescription ("class two is
+   a disclosure") implemented for a member while it was still filed under reachable-by-nothing.
+3. The repository and revision, read off a directory name by a method that describes itself as
+   all-observed.
+
+The general form survives the correction. The count did not, and the count was stated with more
+confidence than the evidence carried.
 
 The practical difference between the classes is what a reader should do about them. Class one is a
 backlog. Class two is a disclosure: it belongs in the output beside the verdict, not in a limits

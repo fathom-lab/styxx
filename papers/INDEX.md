@@ -18,7 +18,7 @@ its own later work, the falsified version is what appears below.
 
 ---
 
-## 1. THE 49 ARCS (47 at the 2026-09-01 audit; `sworn` opened later that day; `charon` on 2026-09-02)
+## 1. THE 50 ARCS (47 at the 2026-09-01 audit; `sworn` opened later that day; `charon` on 2026-09-02; `v8` on 2026-09-07)
 
 | arc | terminal RESULT, one sentence | status | core-idea tags | ships in | DOI / OSF |
 |---|---|---|---|---|---|
@@ -70,6 +70,7 @@ its own later work, the falsified version is what appears below.
 | sycophancy-target-gate | A grammatical self-versus-other attachment gate fixed self-apology false positives and shipped; every lexical route to the restrained-technical false positive is closed-negative because opinion-versus-fact is irreducibly semantic. | LIVE | mention-vs-use, handed-target, sycophancy-pressure, calibration, policy-gating | `styxx/guardrail/self_directed_gate.py` | cites 10.5281/zenodo.19777921 |
 | three-axis-sendtime-gate | A locked seven-hypothesis send-time protocol, pre-data: nothing scored, stopping rule never fired. | UNCLEAR (pre-data) | preregistration, introspection, self-verification, oscillation-dynamics | `styxx/three_axis/` (env-gated; 3 of 6 modules unimported) | NONE |
 | tier3-confident-confabulation | Confident confabulation is inconsistent, not stable — the published "AUC 0.55, the model tells the same lie every time" headline was a clustering-threshold artifact of this lab's own probe. | RETRACTED (original) / LIVE (corrected) | mention-vs-use, receipt-integrity, self-verification, calibration | `styxx.semantic_entropy` | NONE |
+| v8 | Model behaviour is fingerprinted on a named battery and every claim is a signed cert in an append-only log a stranger re-derives from bytes; five rounds of the lab attacking its own repairs established that a check on bytes an issuer wrote can only ask whether that party contradicted itself, so the challenge — a second party's bytes — is the only part of the design that is not bookkeeping; one impossibility claim in that argument was itself found misclassified and withdrawn the same day. | LIVE (unmeasured) | receipt-integrity, preregistration, agent-provenance, handed-target | `styxx/v8/` | NONE |
 | white-box-vs-text-map | White-box probes beat text monitors only where the signal is representational and the interface clean; the edge is interface-fragile and absent on closed models. | UNCLEAR | policy-gating, benchmark-construct, other (weakest-receipt arc in the corpus) | UNCLEAR | NONE |
 
 ---
