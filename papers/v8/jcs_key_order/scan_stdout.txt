@@ -1,0 +1,49 @@
+styxx JCS key-order blast-radius scan
+  commit                              : 4dba3a72601a6f2d0d1cf62a89a6a172b1797b46
+  files enumerated (git-tracked json) : 2111
+  files parsed                        : 2111
+  files unparseable / unreadable      : 0 / 0
+  files parsed via JSONL fallback     : 11
+    of which papers/**               : 1676
+    of which conformance/sworn/**    : 39
+    of which *.certificate.json      : 213
+    of which *.sworn.json            : 38
+    of which *.sworn-receipt.json    : 46
+    of which *.jsonl                 : 161
+  sworn blobs decoded and scanned     : 2227 of 3981
+    blob remainder: 1745 document text, 8 malformed by design, 1 undecodable
+  charon.log.jsonl present            : True
+  objects walked                      : 531162
+  keys walked                         : 3791239
+  objects with any non-ASCII key      : 23
+  objects with any non-BMP key        : 0
+  objects where the two orders DIFFER : 0
+  keys with any char >= U+E000        : 0
+  max code point over all keys        : 0x9ed1
+  --- repair equivalence (shipped sort vs proposed UTF-16 sort) ---
+  documents canonicalized both ways   : 65674
+  byte-identical                      : 65659
+  bytes DIFFER                        : 0
+  outside the jcs domain both ways    : 15
+  distinct non-ASCII keys seen        : 64
+        10  'año_vehiculo'  code points ['0x61', '0xf1', '0x6f', '0x5f', '0x76', '0x65', '0x68', '0x69', '0x63', '0x75', '0x6c', '0x6f']
+         8  'ρ'  code points ['0x3c1']
+         8  'dose σ'  code points ['0x64', '0x6f', '0x73', '0x65', '0x20', '0x3c3']
+         7  'λ'  code points ['0x3bb']
+         5  'λ (behavior weight)'  code points ['0x3bb', '0x20', '0x28', '0x62', '0x65', '0x68', '0x61', '0x76', '0x69', '0x6f', '0x72', '0x20', '0x77', '0x65', '0x69', '0x67', '0x68', '0x74', '0x29']
+         3  'α'  code points ['0x3b1']
+         3  '✅ holds (pre-registered, confirmed)'  code points ['0x2705', '0x20', '0x68', '0x6f', '0x6c', '0x64', '0x73', '0x20', '0x28', '0x70', '0x72', '0x65', '0x2d', '0x72', '0x65', '0x67', '0x69', '0x73', '0x74', '0x65', '0x72', '0x65', '0x64', '0x2c', '0x20', '0x63', '0x6f', '0x6e', '0x66', '0x69', '0x72', '0x6d', '0x65', '0x64', '0x29']
+         1  '视觉'  code points ['0x89c6', '0x89c9']
+         1  '明亮度'  code points ['0x660e', '0x4eae', '0x5ea6']
+         1  '黑暗度'  code points ['0x9ed1', '0x6697', '0x5ea6']
+         1  '颜色'  code points ['0x989c', '0x8272']
+         1  '图案'  code points ['0x56fe', '0x6848']
+         1  '大'  code points ['0x5927']
+         1  '小'  code points ['0x5c0f']
+         1  '快'  code points ['0x5feb']
+         1  '慢'  code points ['0x6162']
+         1  '复杂度'  code points ['0x590d', '0x6742', '0x5ea6']
+         1  '脸'  code points ['0x8138']
+         1  '身体'  code points ['0x8eab', '0x4f53']
+         1  '触摸'  code points ['0x89e6', '0x6478']
+  written                             : C:\Users\heyzo\clawd\wt\v8\papers\v8\jcs_key_order\scan_key_order.json

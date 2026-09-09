@@ -1,0 +1,23 @@
+{
+ "kind": "weights",
+ "model_family": "gemma-2",
+ "hf_repo": "google/gemma-2-2b-it",
+ "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8",
+ "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66",
+ "config_sha256": "eacec6c5ca317a87ed2c46789d9705b9274db5027e7ba59da739bfae23addb55",
+ "generation_config_sha256": "a543a5d299bc2b20c52bd87ed174f561266510b57a392e12b5b5d758d798ce05",
+ "tokenizer_sha256": "a2acb1f8c74a00e5e6c0dea9a387ac61b41556a2317478422fb0c66f46ec7213",
+ "precision": "fp16",
+ "environment": {
+  "runtime": {
+   "framework": "transformers",
+   "version": "4.57.3",
+   "backend": "torch 2.5.1+cu121"
+  },
+  "hardware": {
+   "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+   "driver": "596.08",
+   "count": 1
+  }
+ }
+}

@@ -1,0 +1,131 @@
+{
+  "log": "C:/Users/heyzo/AppData/Local/Temp/claude/C--Users-heyzo--clawdbot/4b6f608a-df7a-4e37-ac01-450acd7d7b4b/scratchpad/reattack/rexec2log",
+  "entries": 7,
+  "findings": [
+    {
+      "ok": true,
+      "what": "00000000.json id recomputes",
+      "detail": "sha256:39e7f293e034ca10191..."
+    },
+    {
+      "ok": true,
+      "what": "00000000.json signature verifies",
+      "detail": "battery by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000000.json bytes are canonical",
+      "detail": "15338 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000001.json id recomputes",
+      "detail": "sha256:5ba84be3ea35a1ad9fa..."
+    },
+    {
+      "ok": true,
+      "what": "00000001.json signature verifies",
+      "detail": "prereg by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000001.json bytes are canonical",
+      "detail": "9716 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000002.json id recomputes",
+      "detail": "sha256:c8c53e1277f34965d99..."
+    },
+    {
+      "ok": true,
+      "what": "00000002.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000002.json bytes are canonical",
+      "detail": "92256 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000003.json id recomputes",
+      "detail": "sha256:2aa753841833b09fbb8..."
+    },
+    {
+      "ok": true,
+      "what": "00000003.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000003.json bytes are canonical",
+      "detail": "92253 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000004.json id recomputes",
+      "detail": "sha256:7d19b254ebde88e85c1..."
+    },
+    {
+      "ok": true,
+      "what": "00000004.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000004.json bytes are canonical",
+      "detail": "92254 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000005.json id recomputes",
+      "detail": "sha256:b57328af2b7ba43bc3f..."
+    },
+    {
+      "ok": true,
+      "what": "00000005.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000005.json bytes are canonical",
+      "detail": "92253 bytes"
+    },
+    {
+      "ok": true,
+      "what": "00000006.json id recomputes",
+      "detail": "sha256:a38ab96fdc9b70e8dcf..."
+    },
+    {
+      "ok": true,
+      "what": "00000006.json signature verifies",
+      "detail": "fingerprint by styxx v8"
+    },
+    {
+      "ok": true,
+      "what": "00000006.json bytes are canonical",
+      "detail": "94308 bytes"
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json entries reproduce the signed root",
+      "detail": "tree_size=7 sha256:2ef2421d856778c47d4..."
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json tree head signature verifies",
+      "detail": "log_id sha256:88300489aaab4..."
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json inclusion proof for leaf 6 verifies",
+      "detail": "path length 2"
+    },
+    {
+      "ok": true,
+      "what": "000000000007.json the same proof is refused for the wrong leaf",
+      "detail": "negative control"
+    }
+  ]
+}

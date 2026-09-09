@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:envelope",
+  "title": "styxx/8.0 cert envelope (spec section 2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["styxx", "type", "id", "created", "issuer", "subject", "recipe", "body", "refs", "sig"],
+  "properties": {
+    "styxx": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "type": {
+      "enum": ["fingerprint", "battery", "prereg", "result", "promotion", "action", "challenge", "sublog"]
+    },
+    "id": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+    "created": { "$ref": "urn:styxx:v8:schema:common#/$defs/rfc3339_z" },
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "key"],
+      "properties": {
+        "name": { "type": "string" },
+        "key": { "$ref": "urn:styxx:v8:schema:common#/$defs/public_key" }
+      }
+    },
+    "subject": {
+      "anyOf": [
+        { "$ref": "#/$defs/empty_object" },
+        { "$ref": "urn:styxx:v8:schema:subject" }
+      ]
+    },
+    "recipe": {
+      "anyOf": [
+        { "$ref": "#/$defs/empty_object" },
+        { "$ref": "urn:styxx:v8:schema:recipe" }
+      ]
+    },
+    "body": { "type": "object" },
+    "refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "id"],
+        "properties": {
+          "role": {
+            "enum": [
+              "battery", "run", "selected_against", "pool", "prereg", "result", "robustness",
+              "target", "own", "parent", "fingerprint", "sealed", "previous", "sensitivity", "noise_plan"
+            ]
+          },
+          "id": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" }
+        }
+      }
+    },
+    "sig": { "$ref": "urn:styxx:v8:schema:common#/$defs/signature" }
+  },
+  "$defs": {
+    "empty_object": {
+      "type": "object",
+      "maxProperties": 0
+    }
+  }
+}

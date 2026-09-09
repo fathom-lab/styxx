@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:result",
+  "title": "styxx/8.0 result cert (spec section 6.1)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "result" },
+    "subject": { "type": "object" },
+    "recipe": { "type": "object" },
+    "body": {
+      "type": "object",
+      "$comment": "Same rule as schema/fingerprint.json: the marker is absent on a measured body, so it is not required; its VALUE is pinned so a hostile `synthetic: \"no\"` is a schema refusal rather than something `cert.is_synthetic` has to fail closed on. A result body carries no items, so the mock oracle in `cert.check` cannot re-derive it here -- what anchors a verify result is the fingerprint its `ref` names.",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["confirmatory", "pilot", "robustness", "sensitivity", "verify", "response", "document"] },
+        "synthetic": { "const": true }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["confirmatory", "pilot", "robustness", "sensitivity"] } }, "required": ["kind"] },
+          "then": {
+            "required": ["deviations"],
+            "properties": { "deviations": { "type": "array" } }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "verify" } }, "required": ["kind"] },
+          "then": {
+            "required": ["overall", "per_channel", "floor_owner", "coverage", "skipped_channels", "rounding"],
+            "properties": {
+              "ref": { "type": ["string", "null"] },
+              "new_run": { "type": ["object", "string", "null"] },
+              "confirmation_run": { "type": ["object", "string", "null"] },
+              "per_channel": { "type": "object" },
+              "overall": { "type": "string" },
+              "floor_owner": { "type": ["string", "null"] },
+              "coverage": { "type": ["string", "object", "null"] },
+              "skipped_channels": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+              "rounding": { "type": ["integer", "object"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "response" } }, "required": ["kind"] },
+          "then": {
+            "required": ["challenge", "disposition", "detail"],
+            "properties": {
+              "challenge": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+              "disposition": { "enum": ["new_floor", "cause_identified", "concession"] },
+              "detail": { "type": "string" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "document" } }, "required": ["kind"] },
+          "then": {
+            "required": ["path", "commit", "git_blob_sha256", "eol"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "commit": { "type": "string", "minLength": 1 },
+              "git_blob_sha256": {
+                "anyOf": [
+                  { "$ref": "urn:styxx:v8:schema:common#/$defs/hex40" },
+                  { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" }
+                ]
+              },
+              "eol": { "const": "lf" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

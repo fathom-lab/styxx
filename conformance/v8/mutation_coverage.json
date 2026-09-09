@@ -1,0 +1,960 @@
+{
+ "by_module": {
+  "styxx/v8/cert.py": {
+   "caught": 3,
+   "missed": 2,
+   "viable": 5
+  },
+  "styxx/v8/distances.py": {
+   "caught": 4,
+   "missed": 0,
+   "viable": 4
+  },
+  "styxx/v8/floor.py": {
+   "caught": 4,
+   "missed": 0,
+   "viable": 4
+  },
+  "styxx/v8/keys.py": {
+   "caught": 1,
+   "missed": 1,
+   "viable": 2
+  },
+  "styxx/v8/log.py": {
+   "caught": 2,
+   "missed": 1,
+   "viable": 3
+  },
+  "styxx/v8/merkle.py": {
+   "caught": 3,
+   "missed": 1,
+   "viable": 4
+  }
+ },
+ "by_region": {
+  "cert-refs": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "cert-signature": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "cert-version": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "distance-resid": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "distance-seqlp": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "distance-topk": {
+   "caught": 2,
+   "missed": 0,
+   "viable": 2
+  },
+  "floor-pairwise": {
+   "caught": 2,
+   "missed": 0,
+   "viable": 2
+  },
+  "floor-rounding": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "floor-verdicts": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "key-domain-separation": {
+   "caught": 1,
+   "missed": 0,
+   "viable": 1
+  },
+  "key-validation": {
+   "caught": 0,
+   "missed": 3,
+   "viable": 3
+  },
+  "log-append": {
+   "caught": 0,
+   "missed": 1,
+   "viable": 1
+  },
+  "merkle-domain-separation": {
+   "caught": 1,
+   "missed": 1,
+   "viable": 2
+  },
+  "merkle-tree-shape": {
+   "caught": 2,
+   "missed": 0,
+   "viable": 2
+  },
+  "sth-verification": {
+   "caught": 2,
+   "missed": 0,
+   "viable": 2
+  }
+ },
+ "catalogue": {
+  "file": "mutation_catalogue.json",
+  "sha256": "2535bc4583995cc5c1360960a5520ea32374288d8fc052cfaa0ce3c96a171d18"
+ },
+ "contract": "styxx/v8/INTERFACES_layer2.md section 10",
+ "counts": {
+  "anchor_ambiguous": 0,
+  "anchor_missing": 0,
+  "caught": 17,
+  "controls": 4,
+  "controls_caught": 0,
+  "controls_viable": 4,
+  "missed": 5,
+  "no_op": 0,
+  "non_viable": 0,
+  "not_mutable": 0,
+  "proposed": 26,
+  "viable": 22
+ },
+ "gates": {
+  "G-C": {
+   "bar": ">= 3",
+   "pass": true,
+   "quantity": "viable semantics-preserving controls",
+   "value": 4
+  },
+  "G-D": {
+   "bar": "none -- reported, never passed or failed",
+   "pass": null,
+   "quantity": "detection rate, caught / viable",
+   "value": {
+    "caught": 17,
+    "rate": 0.7727,
+    "viable": 22
+   }
+  },
+  "G-K": {
+   "bar": "== 0",
+   "note": "a caught control VOIDS the run: the set would be detecting editing rather than a change of behaviour",
+   "pass": true,
+   "quantity": "controls caught",
+   "value": 0
+  },
+  "G-M": {
+   "bar": ">= 12",
+   "pass": true,
+   "quantity": "viable mutants measured",
+   "value": 22
+  },
+  "G-R": {
+   "bar": ">= 5",
+   "pass": true,
+   "quantity": "regions with at least one viable mutant",
+   "value": 15
+  }
+ },
+ "implementation": {
+  "styxx/v8/cert.py": "87aff7c2861010961051eedb98a597f82986c026a5e6de41fb37a84d3e2330c1",
+  "styxx/v8/distances.py": "fcf747fb4e71d201fb019aefb5c8d2fb1d5288e00153438d2dd751c66763f914",
+  "styxx/v8/floor.py": "84ede821c66e32b19263bdeedb3df24c905f612bb4376eb86a1b13c202d958d9",
+  "styxx/v8/keys.py": "ee3e8994c7a1bef5e731579530bf3c22deed27138d7eb0f313105afd90c222ac",
+  "styxx/v8/log.py": "93f80969d002bd2c379914f122cc3f46930196cbc894abf0b107305925c42d51",
+  "styxx/v8/merkle.py": "0266425b70d9c496a65b3d8d240354b3a8282bfcda41c88d283b494f856625ac",
+  "styxx/v8/verify.py": "8c3feb37a48c281c37c38782013681d33b26b836596fefd79de63da94a911b93"
+ },
+ "missed": [
+  {
+   "module": "styxx/v8/merkle.py",
+   "name": "merkle-leaf-prefix-dropped",
+   "new": "_LEAF_PREFIX = b\"\"",
+   "old": "_LEAF_PREFIX = b\"\\x00\"",
+   "region": "merkle-domain-separation",
+   "why": "RFC 6962 hashes a leaf as SHA-256(0x00 || entry). Without the prefix a leaf and a bare entry hash alike, which is the second-preimage hole the prefix exists to close. Expected to be MISSED: section 10 makes leaf hashes an INPUT to the merkle family, so no vector ever calls merkle.leaf_hash and a port could get the leaf prefix wrong and pass the whole set."
+  },
+  {
+   "module": "styxx/v8/keys.py",
+   "name": "keys-small-order-accepted",
+   "new": "    if False:\n        raise ValueError(\"public key is a small-order point\")",
+   "old": "    if _is_small_order(point):\n        raise ValueError(\"public key is a small-order point\")",
+   "region": "key-validation",
+   "why": "A small-order issuer key makes a signature verify under keys the signer does not hold. MISSED, and the reason is the finding: the rule is implemented TWICE. keys.decode_public calls validate_public, and cert.public_key_reason then runs its own copy of _decode_point/_is_small_order over the same bytes. Break either copy and the other still rejects the key, with the same reason prefix, so no vector's outcome moves. Its cert-side twin below is missed for the mirror-image reason."
+  },
+  {
+   "module": "styxx/v8/cert.py",
+   "name": "cert-small-order-key-accepted",
+   "new": "    if False:\n        return \"small-order point\"",
+   "old": "    if _is_small_order(point):\n        return \"small-order point\"",
+   "region": "key-validation",
+   "why": "The same rule, mutated in cert.py's own copy. MISSED for the mirror-image reason: keys.decode_public has already raised on the key by the time this line would run, and the raise lands in the same 'issuer.key: ' reason prefix, so the recorded reason KIND does not move. Neither copy can be broken alone in a way this set sees, and the expect shape -- reason kinds, not reason texts -- could not tell the two rejections apart even if it did."
+  },
+  {
+   "module": "styxx/v8/cert.py",
+   "name": "cert-noncanonical-point-accepted",
+   "new": "    if False:\n        return \"non-canonical point encoding (y >= p)\"",
+   "old": "    if y >= _P:\n        return \"non-canonical point encoding (y >= p)\"",
+   "region": "key-validation",
+   "why": "Two encodings of one point, both accepted, give one issuer two issuer.key strings and one cert two valid forms. MISSED, and the layering is again the reason: keys.decode_public's canonical-base64url check and _decode_point reject the same bytes first, under the same reason prefix."
+  },
+  {
+   "module": "styxx/v8/log.py",
+   "name": "log-duplicate-id-accepted",
+   "new": "            pass",
+   "old": "            raise AppendRefused(f\"duplicate: {cert_id} is already at index {self.find(cert_id)}\")",
+   "region": "log-append",
+   "why": "Append refuses a cert already in the log. Expected to be MISSED: section 10 records no append entrypoint, so nothing in the set ever calls it. Carried because the miss is the finding."
+  }
+ ],
+ "mutations": [
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": null,
+   "module": "styxx/v8/merkle.py",
+   "name": "merkle-leaf-prefix-dropped",
+   "new": "_LEAF_PREFIX = b\"\"",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "_LEAF_PREFIX = b\"\\x00\"",
+   "region": "merkle-domain-separation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "RFC 6962 hashes a leaf as SHA-256(0x00 || entry). Without the prefix a leaf and a bare entry hash alike, which is the second-preimage hole the prefix exists to close. Expected to be MISSED: section 10 makes leaf hashes an INPUT to the merkle family, so no vector ever calls merkle.leaf_hash and a port could get the leaf prefix wrong and pass the whole set."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "merkle",
+    "id": "0036f63d4eacd511ac021013462afa6f9755d8a46c10ac8f667a95fee0cc23e7",
+    "why": "root: expected \"a9e5ed5883bb6dfda7bd7e4f38808b957278ef66506405bf36e201d5aa7706ba\", replayed \"3033f47940c08b8fcebb6f6eb4c7ce10053ddf24f0a503d50e71d3937837d243\""
+   },
+   "module": "styxx/v8/merkle.py",
+   "name": "merkle-node-prefix-is-leaf-prefix",
+   "new": "_NODE_PREFIX = b\"\\x00\"",
+   "noticed": 119,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 95,
+    "sth": 24
+   },
+   "old": "_NODE_PREFIX = b\"\\x01\"",
+   "region": "merkle-domain-separation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "An interior node hashed with the leaf prefix makes a node and a leaf indistinguishable to a verifier reading hashes alone."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "merkle",
+    "id": "83578252fdeb0c2e7c40a6c4cefb37e7739345f34da55b88a8141deca1187c91",
+    "why": "root: expected \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", replayed \"0000000000000000000000000000000000000000000000000000000000000000\""
+   },
+   "module": "styxx/v8/merkle.py",
+   "name": "merkle-empty-root-is-zeros",
+   "new": "EMPTY_ROOT: bytes = bytes(32)",
+   "noticed": 1,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 1,
+    "sth": 0
+   },
+   "old": "EMPTY_ROOT: bytes = hashlib.sha256(b\"\").digest()",
+   "region": "merkle-tree-shape",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "RFC 6962 fixes MTH([]) = SHA-256(\"\"). Thirty-two zero bytes is the other plausible choice and a port could pick it."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "merkle",
+    "id": "0036f63d4eacd511ac021013462afa6f9755d8a46c10ac8f667a95fee0cc23e7",
+    "why": "root: expected \"a9e5ed5883bb6dfda7bd7e4f38808b957278ef66506405bf36e201d5aa7706ba\", replayed \"ee8d96d1fcbcdde1b0de1a05c883e7e51176f6472b6c633bca6e611e7d831d2b\""
+   },
+   "module": "styxx/v8/merkle.py",
+   "name": "merkle-children-swapped",
+   "new": "return node_hash(_mth(leaves, lo + k, hi), _mth(leaves, lo, lo + k))",
+   "noticed": 71,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 71,
+    "sth": 0
+   },
+   "old": "return node_hash(_mth(leaves, lo, lo + k), _mth(leaves, lo + k, hi))",
+   "region": "merkle-tree-shape",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "The left subtree is the first k leaves. Swapping the children keeps every leaf in the tree and changes every root above two leaves."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": null,
+   "module": "styxx/v8/keys.py",
+   "name": "keys-small-order-accepted",
+   "new": "    if False:\n        raise ValueError(\"public key is a small-order point\")",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    if _is_small_order(point):\n        raise ValueError(\"public key is a small-order point\")",
+   "region": "key-validation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "A small-order issuer key makes a signature verify under keys the signer does not hold. MISSED, and the reason is the finding: the rule is implemented TWICE. keys.decode_public calls validate_public, and cert.public_key_reason then runs its own copy of _decode_point/_is_small_order over the same bytes. Break either copy and the other still rejects the key, with the same reason prefix, so no vector's outcome moves. Its cert-side twin below is missed for the mirror-image reason."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": null,
+   "module": "styxx/v8/cert.py",
+   "name": "cert-small-order-key-accepted",
+   "new": "    if False:\n        return \"small-order point\"",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    if _is_small_order(point):\n        return \"small-order point\"",
+   "region": "key-validation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "The same rule, mutated in cert.py's own copy. MISSED for the mirror-image reason: keys.decode_public has already raised on the key by the time this line would run, and the raise lands in the same 'issuer.key: ' reason prefix, so the recorded reason KIND does not move. Neither copy can be broken alone in a way this set sees, and the expect shape -- reason kinds, not reason texts -- could not tell the two rejections apart even if it did."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": null,
+   "module": "styxx/v8/cert.py",
+   "name": "cert-noncanonical-point-accepted",
+   "new": "    if False:\n        return \"non-canonical point encoding (y >= p)\"",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    if y >= _P:\n        return \"non-canonical point encoding (y >= p)\"",
+   "region": "key-validation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "Two encodings of one point, both accepted, give one issuer two issuer.key strings and one cert two valid forms. MISSED, and the layering is again the reason: keys.decode_public's canonical-base64url check and _decode_point reject the same bytes first, under the same reason prefix."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "cert",
+    "id": "00216611f04caa371fb6a1b901951723337089c4a74a29d9fc799e98851ac6ee",
+    "why": "reason_kinds: expected [\"schema\"], replayed [\"schema\", \"sig-bad\"]"
+   },
+   "module": "styxx/v8/keys.py",
+   "name": "keys-tag-separator-dropped",
+   "new": "    return tag_bytes + digest",
+   "noticed": 303,
+   "noticed_by_family": {
+    "cert": 207,
+    "decide": 0,
+    "distance": 0,
+    "exit": 12,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 84
+   },
+   "old": "    return tag_bytes + b\"\\x00\" + digest",
+   "region": "key-domain-separation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "The NUL between the tag and the digest is what makes the tag unambiguous. Without it, a tag that is a prefix of another tag can be made to collide."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "sth",
+    "id": "06da52aff8d293dcbf8d3d59934a1c3ff6c845b4563887f5e27702bcec044ba0",
+    "why": "reason: expected \"consistency: the second tree does not extend the first\", replayed \"first sth: sig does not verify against the log public key\""
+   },
+   "module": "styxx/v8/log.py",
+   "name": "log-sth-tag-dropped",
+   "new": "        if not keys.verify(public, digest, signature):",
+   "noticed": 84,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 84
+   },
+   "old": "        if not keys.verify(public, keys.tagged(STH_TAG, digest), signature):",
+   "region": "sth-verification",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "An STH signature is over the tagged digest. Verifying the bare digest lets a signature made for another object type be presented as an STH."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "sth",
+    "id": "444d6d3a116e2329bd3a65e12d7adb14dbb581fb660968a16044257682390bef",
+    "why": "reason: expected \"inclusion: proof tree_size 3 is not the STH's 4\", replayed \"inclusion: proof root_hash is not the STH's root_hash\""
+   },
+   "module": "styxx/v8/log.py",
+   "name": "log-inclusion-tree-size-unchecked",
+   "new": "        if False:",
+   "noticed": 1,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 1
+   },
+   "old": "        if proof[\"tree_size\"] != sth[\"tree_size\"]:",
+   "region": "sth-verification",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "An inclusion proof is only meaningful against the tree size it was cut at; accepting a proof for another size accepts a proof against a root nobody signed."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": null,
+   "module": "styxx/v8/log.py",
+   "name": "log-duplicate-id-accepted",
+   "new": "            pass",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "            raise AppendRefused(f\"duplicate: {cert_id} is already at index {self.find(cert_id)}\")",
+   "region": "log-append",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "Append refuses a cert already in the log. Expected to be MISSED: section 10 records no append entrypoint, so nothing in the set ever calls it. Carried because the miss is the finding."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "cert",
+    "id": "2bd481cc5b8fc0f9aa75a22a102d689bcf57362fdc47339c34fcba232a837581",
+    "why": "ok: expected false, replayed true"
+   },
+   "module": "styxx/v8/cert.py",
+   "name": "cert-embedded-ids-unchecked",
+   "new": "        if False:\n            reasons.append(f\"refs: embedded id {value} at {path} is not in refs\")",
+   "noticed": 4,
+   "noticed_by_family": {
+    "cert": 4,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "        if value not in ref_ids:\n            reasons.append(f\"refs: embedded id {value} at {path} is not in refs\")",
+   "region": "cert-refs",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Section 2.1: every sha256 id embedded in subject/recipe/body must appear in refs, so a reader can resolve everything the cert leans on. Dropping the check accepts a cert that names a dependency it never declares."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "cert",
+    "id": "1be58a8bb1545cb8d1e96901b6083f0c0d7f4540e3ebf19263229dff8a2d972a",
+    "why": "reason_kinds: expected [\"id-mismatch\", \"sig-bad\"], replayed [\"id-mismatch\"]"
+   },
+   "module": "styxx/v8/cert.py",
+   "name": "cert-signature-not-verified",
+   "new": "        elif False:",
+   "noticed": 6,
+   "noticed_by_family": {
+    "cert": 6,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "        elif not keys.verify(public, keys.tagged(CERT_TAG, digest), signature):",
+   "region": "cert-signature",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "A cert whose signature is merely well-formed rather than valid. The loudest possible failure, carried to show the set can see the loud ones."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "cert",
+    "id": "27d3bdbc3d1756743369d3e847f0110ef2520448cb60675914d3e6c337cf11e0",
+    "why": "ok: expected true, replayed false"
+   },
+   "module": "styxx/v8/cert.py",
+   "name": "cert-version-rule-inverted",
+   "new": "    return theirs is not None and mine is not None and theirs >= mine",
+   "noticed": 4,
+   "noticed_by_family": {
+    "cert": 4,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    return theirs is not None and mine is not None and theirs <= mine",
+   "region": "cert-version",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Section 2.5 accepts a cert whose schema version is at or below the verifier's. Inverting it accepts exactly the certs a verifier cannot read and rejects the ones it can."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "distance",
+    "id": "0b156867f68947f0eb707bf45db36bb5160c067bb6aff25137b057b2036d52f9",
+    "why": "value: expected 34.3, replayed 29.3"
+   },
+   "module": "styxx/v8/distances.py",
+   "name": "distance-absent-fill-minus-ten",
+   "new": "ABSENT_LP = -10.0",
+   "noticed": 23,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 19,
+    "exit": 3,
+    "floor": 1,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "ABSENT_LP = -20.0",
+   "region": "distance-topk",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Appendix B fills a token absent from one side's top-k with -20. Any other constant produces a different topk distance and therefore a different floor."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "distance",
+    "id": "0b156867f68947f0eb707bf45db36bb5160c067bb6aff25137b057b2036d52f9",
+    "why": "value: expected 34.3, replayed 9.3"
+   },
+   "module": "styxx/v8/distances.py",
+   "name": "distance-one-sided-position-free",
+   "new": "ONE_SIDED_POSITION = 0.0",
+   "noticed": 17,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 14,
+    "exit": 3,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "ONE_SIDED_POSITION = float(TOPK_K) * 20.0",
+   "region": "distance-topk",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "A position present on one side only contributes 5 * 20 and is counted. Contributing zero makes a run that stopped early look identical to one that did not."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "distance",
+    "id": "000d967da555f3130ced2b68c9ff2e9f6892abb04e2f8eb2846df9b2037c1ea0",
+    "why": "value: expected 1, replayed 4.0"
+   },
+   "module": "styxx/v8/distances.py",
+   "name": "distance-seqlp-sum-not-mean",
+   "new": "    return math.fsum(terms)",
+   "noticed": 43,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 31,
+    "exit": 3,
+    "floor": 9,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    return _mean(terms, \"seqlp\")",
+   "region": "distance-seqlp",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "seqlp is the mean of the absolute deltas, not their sum. A sum makes the distance grow with battery size and makes floors from batteries of different sizes incomparable."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "distance",
+    "id": "28f744b114346c1b64a29dfc6b631f81a50c1b29406cf3ec52574e6dfa4a95ce",
+    "why": "value: expected 0.6931471805599453, replayed 1.3862943611198906"
+   },
+   "module": "styxx/v8/distances.py",
+   "name": "distance-jsd-unhalved",
+   "new": "    return max(0.0, kl_p + kl_q)",
+   "noticed": 7,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 7,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    return max(0.0, 0.5 * kl_p + 0.5 * kl_q)",
+   "region": "distance-resid",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Jensen-Shannon divergence is the mean of the two KLs, not their sum. Doubling every resid distance doubles the floor with it, so the verdicts move only where a distance sits near a floor that did not move."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "decide",
+    "id": "1174cc78b1a9197bedde101d62b5f1a67d7dce097f9fb1eb49745e93aa12b511",
+    "why": "verdict: expected \"same\", replayed \"exceeds_floor\""
+   },
+   "module": "styxx/v8/floor.py",
+   "name": "floor-compare-before-rounding",
+   "new": "    d = None if distance is None else _finite(\"distance\", distance)",
+   "noticed": 1,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 1,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    d = None if distance is None else _rounded(_finite(\"distance\", distance))",
+   "region": "floor-rounding",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Section 5.2 compares both sides after rounding to nine places. Comparing an unrounded distance to a rounded floor turns a difference in the tenth decimal into a verdict. Expected to be caught only if some vector sits inside that window."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "decide",
+    "id": "1ad200c057129a1a3b6979a41ecea6664c4e0c5ac7f8767d47174a0a47bd2d3f",
+    "why": "verdict: expected \"exceeds_floor\", replayed \"drift\""
+   },
+   "module": "styxx/v8/floor.py",
+   "name": "floor-exceeds-is-drift",
+   "new": "        return \"drift\"",
+   "noticed": 20,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 17,
+    "distance": 0,
+    "exit": 3,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "        return \"exceeds_floor\"",
+   "region": "floor-verdicts",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "GATED S5-02 recommendation A: an exceedance with no confirmation run is exceeds_floor, and drift is reserved for a comparison that ran the confirmation step. Collapsing them is the reversal the gate anticipates, and a verifier that made it would report drift where the spec says it cannot."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "floor",
+    "id": "074efb9dfd30fb340e7d4b2b587ccb53c390a5c8a0b1c1c20efd8396a2b0111f",
+    "why": "block: expected {\"alpha_single\": 0.25, \"distances\": [0.25, 0.5, 0.25], \"floor\": 0.5, \"pairs\": 3, \"runs\": 3}, replayed {\"alpha_single\": 0.25, \"distances\": [0.25, 0.5, 0.25], \"floor\": 0.333333333, \"pairs\": 3, \"runs\": 3}"
+   },
+   "module": "styxx/v8/floor.py",
+   "name": "floor-is-mean-not-max",
+   "new": "        \"floor\": _rounded(sum(distances) / len(distances)),",
+   "noticed": 17,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 17,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "        \"floor\": _rounded(max(distances)),",
+   "region": "floor-pairwise",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "Section 5 defines the floor as the maximum pairwise distance between same-subject runs. A mean floor sits below half the observed nuisance and calls ordinary nuisance drift."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": false,
+   "example": {
+    "family": "floor",
+    "id": "02b3dd66483b00a29c9a397a10f3251266e85c62e89a8a8dd5e50a29a1163edd",
+    "why": "block: expected {\"alpha_single\": 0.09090909090909091, \"distances\": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], \"floor\": 0, \"pairs\": 10, \"runs\": 5}, replayed {\"alpha_single\": 0.1, \"distances\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"floor\":"
+   },
+   "module": "styxx/v8/floor.py",
+   "name": "floor-alpha-off-by-one",
+   "new": "        \"alpha_single\": 1.0 / pairs,",
+   "noticed": 296,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 296,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "        \"alpha_single\": 1.0 / (pairs + 1),",
+   "region": "floor-pairwise",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "caught",
+   "why": "The single-comparison level is 1/(m+1) over m pairs: the new comparison is the (m+1)th. Dividing by m alone overstates the confidence of every single verdict the floor supports."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": true,
+   "example": null,
+   "module": "styxx/v8/merkle.py",
+   "name": "control-leaf-hash-local-rename",
+   "new": "    payload = _as_bytes(entry)\n    if payload is None:\n        raise ValueError(f\"leaf_hash: entry must be bytes, got {type(entry).__name__}\")\n    return hashlib.sha256(_LEAF_PREFIX + payload).digest()",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    data = _as_bytes(entry)\n    if data is None:\n        raise ValueError(f\"leaf_hash: entry must be bytes, got {type(entry).__name__}\")\n    return hashlib.sha256(_LEAF_PREFIX + data).digest()",
+   "region": "merkle-domain-separation",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "A local variable renamed. Every byte the function returns is unchanged."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": true,
+   "example": null,
+   "module": "styxx/v8/distances.py",
+   "name": "control-seqlp-named-return",
+   "new": "    mean = _mean(terms, \"seqlp\")\n    return mean",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    return _mean(terms, \"seqlp\")",
+   "region": "distance-seqlp",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "The same value returned through a name. No arithmetic changes."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": true,
+   "example": null,
+   "module": "styxx/v8/floor.py",
+   "name": "control-floor-same-negated",
+   "new": "    if not (d > f):\n        return \"same\"",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    if d <= f:\n        return \"same\"",
+   "region": "floor-verdicts",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "The same condition written the other way. Both d and f are finite floats by the time this runs, so the two agree everywhere."
+  },
+  {
+   "anchor_occurrences": 1,
+   "control": true,
+   "example": null,
+   "module": "styxx/v8/cert.py",
+   "name": "control-cert-comment",
+   "new": "    # 8. numbers (section 2.1: no NaN, no infinity, nothing past 2**53)",
+   "noticed": 0,
+   "noticed_by_family": {
+    "cert": 0,
+    "decide": 0,
+    "distance": 0,
+    "exit": 0,
+    "floor": 0,
+    "merkle": 0,
+    "sth": 0
+   },
+   "old": "    # 8. numbers",
+   "region": "cert-refs",
+   "unreplayable": 0,
+   "vectors": 1359,
+   "verdict": "missed",
+   "why": "A comment lengthened. Nothing executable is touched."
+  }
+ ],
+ "not_mutable": {
+  "styxx/v8/jcs.py": "its consumers rename what they import, so a rebinding patch does not reach them; a mutation here would measure the patcher"
+ },
+ "reading": "caught means a second implementation that got this behaviour wrong would fail the committed set. missed means it would pass, and a real difference could sit there today with the replay looking exactly as it does now. The rate is a property of the SET and of this catalogue together; a catalogue that avoids the thin places would report a higher one and mean less.",
+ "schema": "styxx.v8.mutation-coverage/v1",
+ "set": {
+  "dir": "conformance/v8",
+  "families": {
+   "cert": {
+    "failed": 0,
+    "passed": 219,
+    "vectors": 219
+   },
+   "decide": {
+    "failed": 0,
+    "passed": 61,
+    "vectors": 61
+   },
+   "distance": {
+    "failed": 0,
+    "passed": 402,
+    "vectors": 402
+   },
+   "exit": {
+    "failed": 0,
+    "passed": 14,
+    "vectors": 14
+   },
+   "floor": {
+    "failed": 0,
+    "passed": 412,
+    "vectors": 412
+   },
+   "merkle": {
+    "failed": 0,
+    "passed": 157,
+    "vectors": 157
+   },
+   "sth": {
+    "failed": 0,
+    "passed": 94,
+    "vectors": 94
+   }
+  },
+  "set_sha256": "6df4c39aa44db83ed8b341e017470e7a702d3ddf968f539e82739981a1a0c858",
+  "vectors": 1359
+ },
+ "void": false
+}

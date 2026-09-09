@@ -1,0 +1,61 @@
+[data] 900 items, 0 excluded, subjects=['college_computer_science', 'high_school_mathematics', 'moral_scenarios', 'philosophy', 'professional_law']
+[env] torch 2.5.1+cu121 gpu NVIDIA GeForce RTX 4070 Laptop GPU
+[model] meta-llama/Llama-3.2-1B-Instruct
+  [meta-llama/Llama-3.2-1B-Instruct] rev 9213176726f5 letters [362, 426, 356, 423]
+`torch_dtype` is deprecated! Use `dtype` instead!
+    [load] bfloat16 in 2.6s
+    [run] ref_bs1      bs=1   acc=0.3900   28.2s
+    [run] repeat_bs1   bs=1   acc=0.3900   29.6s
+    [run] bs8          bs=8   acc=0.3900   15.8s
+    [run] bs32         bs=32  acc=0.3956  107.8s
+    [run] bs8_perm11   bs=8   acc=0.3956   23.2s
+    [run] bs32_perm12  bs=32  acc=0.3956  177.4s
+    [load] float16 in 2.1s
+    [run] fp16_bs1     bs=1   acc=0.3967   29.7s
+[model] google/gemma-2-2b-it
+  [google/gemma-2-2b-it] rev 299a8560bedf letters [586, 599, 585, 608]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:00<00:00, 25.76it/s]
+    [load] bfloat16 in 5.3s
+    [run] ref_bs1      bs=1   acc=0.4200   63.7s
+    [run] repeat_bs1   bs=1   acc=0.4200   76.0s
+    [run] bs8          bs=8   acc=0.4178   30.9s
+    [run] bs32         bs=32  acc=0.4244  588.0s
+    [run] bs8_perm11   bs=8   acc=0.4189   42.9s
+    [run] bs32_perm12  bs=32  acc=0.4222 1168.3s
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:02<00:02,  2.51s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:02<00:00,  1.12s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:02<00:00,  1.33s/it]
+    [load] float16 in 4.0s
+    [run] fp16_bs1     bs=1   acc=0.4233   58.5s
+
+================ RESULT ================
+
+meta-llama/Llama-3.2-1B-Instruct   (kill gates: {'determinism_control_passed': True, 'sanity_floor_passed': True, 'completeness_passed': True})
+  variant             acc  flips  identical margins
+  ref_bs1          0.3900      0                900
+  repeat_bs1       0.3900      0                900
+  bs8              0.3900     46                235
+  bs32             0.3956     42                235
+  bs8_perm11       0.3956     37                247
+  bs32_perm12      0.3956     37                236
+  fp16_bs1         0.3967     38                 39
+  accuracy spread across nuisance variants: 0.556 pp   (prereg H4 threshold 0.5 pp)
+  union of nuisance flips: 72 of 900
+  mean reference margin  flipped: 0.08159722056653765
+                       unflipped: 1.05842391277128
+  precision arm (fp16, declared not nuisance): {'accuracy': 0.39666666666666667, 'flips_vs_ref': 38, 'delta_pp': 0.6666666666666654}
+
+google/gemma-2-2b-it   (kill gates: {'determinism_control_passed': True, 'sanity_floor_passed': True, 'completeness_passed': True})
+  variant             acc  flips  identical margins
+  ref_bs1          0.4200      0                900
+  repeat_bs1       0.4200      0                900
+  bs8              0.4178      8                154
+  bs32             0.4244      8                177
+  bs8_perm11       0.4189      9                155
+  bs32_perm12      0.4222      9                144
+  fp16_bs1         0.4233     14                 13
+  accuracy spread across nuisance variants: 0.667 pp   (prereg H4 threshold 0.5 pp)
+  union of nuisance flips: 20 of 900
+  mean reference margin  flipped: 0.11562500596046447
+                       unflipped: 1.9862926120361821
+  precision arm (fp16, declared not nuisance): {'accuracy': 0.42333333333333334, 'flips_vs_ref': 14, 'delta_pp': 0.3333333333333355}
+
+receipt -> C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\mmlu\receipt.json

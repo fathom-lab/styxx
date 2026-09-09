@@ -1,0 +1,170 @@
+{
+ "schema": "styxx.v8.jcs-key-order-scan/v1",
+ "label": "a scan, not a result; no claim beyond the counts below",
+ "repo": "C:\\Users\\heyzo\\clawd\\wt\\v8",
+ "commit": "4dba3a72601a6f2d0d1cf62a89a6a172b1797b46",
+ "rule": "an object is AFFECTED iff sorted(keys) (Unicode code point, what styxx.attestation._jcs does) != sorted(keys, key=utf-16-be) (UTF-16 code unit, what RFC 8785 section 3.2.3 requires)",
+ "denominator": {
+  "files_enumerated": 2111,
+  "files_parsed": 2111,
+  "files_unparseable": 0,
+  "files_unreadable": 0,
+  "files_parsed_via_jsonl_fallback": 11,
+  "files_by_group": {
+   "papers/**": 1676,
+   "conformance/sworn/**": 39,
+   "*.certificate.json": 213,
+   "*.sworn.json": 38,
+   "*.sworn-receipt.json": 46,
+   "*.jsonl": 161
+  },
+  "charon_log_present": true,
+  "blobs_total": 3981,
+  "blobs_scanned_as_json": 2227,
+  "blobs_document_text_not_json": 1745,
+  "blobs_json_shaped_but_malformed_by_design": 8,
+  "blobs_undecodable": 1
+ },
+ "counts": {
+  "objects_walked": 531162,
+  "keys_walked": 3791239,
+  "objects_with_any_non_ascii_key": 23,
+  "objects_with_any_non_bmp_key": 0,
+  "objects_where_the_two_orders_differ": 0,
+  "keys_containing_any_char_ge_U+E000": 0,
+  "max_code_point_over_all_keys": "0x9ed1"
+ },
+ "repair_equivalence": {
+  "rule": "canonicalize each parsed document with styxx.attestation._jcs and with the same function differing ONLY in sort key (sorted(..., key=lambda kv: kv[0].encode('utf-16-be'))), compare bytes",
+  "documents_compared": 65674,
+  "byte_identical": 65659,
+  "bytes_differ": 0,
+  "outside_the_jcs_domain_both_ways": 15,
+  "differing_sources": [],
+  "domain_error_examples": [
+   {
+    "source": "benchmarks/data/_suite_causal_ablate_result.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "benchmarks/data/_suite_causal_length_result.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_cliff_result.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_Llama_3_2_3B_Instruct.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_Llama_3_2_3B_Instruct_gm32.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_Qwen2_5_3B_Instruct.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_Qwen2_5_3B_Instruct_gm32.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_gemma_2_2b_it.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/crossfamily_gate_gemma_2_2b_it_gm32.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   },
+   {
+    "source": "papers/grounded-honesty-axis/xvendor_gpt4omini_nli_gate.json",
+    "error": "ValueError: portable digest is defined for finite numbers only"
+   }
+  ]
+ },
+ "distinct_non_ascii_keys": {
+  "año_vehiculo": 10,
+  "ρ": 8,
+  "dose σ": 8,
+  "λ": 7,
+  "λ (behavior weight)": 5,
+  "α": 3,
+  "✅ holds (pre-registered, confirmed)": 3,
+  "视觉": 1,
+  "明亮度": 1,
+  "黑暗度": 1,
+  "颜色": 1,
+  "图案": 1,
+  "大": 1,
+  "小": 1,
+  "快": 1,
+  "慢": 1,
+  "复杂度": 1,
+  "脸": 1,
+  "身体": 1,
+  "触摸": 1,
+  "热": 1,
+  "冷": 1,
+  "轻": 1,
+  "重": 1,
+  "疼痛": 1,
+  "响亮": 1,
+  "声音": 1,
+  "音乐": 1,
+  "味觉": 1,
+  "嗅觉": 1,
+  "头": 1,
+  "上肢": 1,
+  "下肢": 1,
+  "实践": 1,
+  "地标": 1,
+  "路径": 1,
+  "场景": 1,
+  "近距离": 1,
+  "朝向": 1,
+  "远离": 1,
+  "数字": 1,
+  "持续时间": 1,
+  "长": 1,
+  "短": 1,
+  "造成": 1,
+  "后果性": 1,
+  "人类": 1,
+  "沟通": 1,
+  "自我": 1,
+  "认知": 1,
+  "益处": 1,
+  "快乐": 1,
+  "悲伤": 1,
+  "生气": 1,
+  "厌恶": 1,
+  "害怕": 1,
+  "惊讶": 1,
+  "驱动力": 1,
+  "需要": 1,
+  "注意力": 1,
+  "唤醒": 1,
+  "doseσ": 1,
+  "A: pure index leaf (per_item[k].i) — the defect in its purest form": 1,
+  "C: subscript-coincident BUT the column names the container (seed -> seeds[0]) — a correct binding, NOT evidence of the defect": 1
+ },
+ "non_bmp_sites": [],
+ "divergent_sites": [],
+ "unparseable_files": [],
+ "unreadable_files": [],
+ "files_parsed_via_jsonl_fallback": [
+  "data/bfcl_v3/BFCL_v3_irrelevance.json",
+  "data/bfcl_v3/BFCL_v3_live_irrelevance.json",
+  "data/bfcl_v3/BFCL_v3_live_multiple.json",
+  "data/bfcl_v3/BFCL_v3_live_simple.json",
+  "data/bfcl_v3/BFCL_v3_multi_turn_miss_func.json",
+  "data/bfcl_v3/BFCL_v3_multi_turn_miss_param.json",
+  "data/bfcl_v3/BFCL_v3_multiple.json",
+  "data/bfcl_v3/BFCL_v3_simple.json",
+  "data/bfcl_v3/possible_answer/BFCL_v3_live_simple.json",
+  "data/bfcl_v3/possible_answer/BFCL_v3_multiple.json",
+  "data/bfcl_v3/possible_answer/BFCL_v3_simple.json"
+ ]
+}

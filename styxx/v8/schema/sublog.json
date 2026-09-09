@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:sublog",
+  "title": "styxx/8.0 sublog cert (spec section 10, volume rule)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "sublog" },
+    "subject": { "type": "object" },
+    "recipe": { "type": "object" },
+    "body": {
+      "type": "object",
+      "required": [
+        "sublog_id", "tree_size", "root_hash", "prev_tree_size", "prev_root_hash",
+        "consistency_proof", "count_since_prev", "entries_sha256"
+      ],
+      "properties": {
+        "sublog_id": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "tree_size": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "root_hash": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "prev_tree_size": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "prev_root_hash": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" }
+          ]
+        },
+        "consistency_proof": {
+          "type": "array",
+          "items": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" }
+        },
+        "count_since_prev": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "entries_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" }
+      }
+    }
+  }
+}

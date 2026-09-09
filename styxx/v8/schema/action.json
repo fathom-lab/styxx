@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:action",
+  "title": "styxx/8.0 action cert (spec section 10)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "action" },
+    "subject": { "type": "object" },
+    "recipe": { "type": "object" },
+    "body": {
+      "type": "object",
+      "required": ["seq", "context_sha256", "readings", "action_sha256", "action_kind", "ts"],
+      "properties": {
+        "seq": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "context_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "readings": {
+          "type": "object",
+          "required": ["certified", "lab"],
+          "properties": {
+            "certified": { "type": "object" },
+            "lab": { "type": "object" }
+          }
+        },
+        "action_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "action_kind": { "enum": ["tool_call", "message", "commit"] },
+        "ts": { "$ref": "urn:styxx:v8:schema:common#/$defs/rfc3339_z" }
+      }
+    }
+  }
+}

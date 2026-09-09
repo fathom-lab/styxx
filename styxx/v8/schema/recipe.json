@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:recipe",
+  "title": "styxx/8.0 recipe (spec section 2.3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "battery", "decoding", "materials", "chat_template_sha256", "system_prompt_sha256",
+    "env_lock_sha256", "harness"
+  ],
+  "properties": {
+    "battery": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+    "decoding": {
+      "type": "object",
+      "required": ["temperature", "top_p", "max_new_tokens", "stop", "seed", "batch_size", "padding_side"],
+      "properties": {
+        "temperature": { "type": "number", "minimum": 0 },
+        "top_p": { "type": "number", "minimum": 0, "maximum": 1 },
+        "max_new_tokens": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+        "stop": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+        "seed": { "type": "integer" },
+        "batch_size": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+        "padding_side": { "enum": ["left", "right"] }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "required": ["chat_template", "chat_template_source", "system_prompt", "env_lock"],
+      "properties": {
+        "chat_template": { "type": "string" },
+        "chat_template_source": { "type": "string" },
+        "system_prompt": { "type": "string" },
+        "env_lock": { "type": "string" }
+      }
+    },
+    "chat_template_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+    "system_prompt_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+    "env_lock_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+    "harness": {
+      "type": "object",
+      "required": ["name", "version", "commit"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "commit": { "type": "string" }
+      }
+    },
+    "sae": {
+      "type": "object",
+      "required": ["loader", "repo", "revision", "layers", "attribution"],
+      "properties": {
+        "loader": { "type": "string" },
+        "repo": { "type": "string" },
+        "revision": { "type": "string" },
+        "layers": {
+          "anyOf": [
+            { "const": "all" },
+            { "type": "array", "minItems": 2, "items": { "type": "integer", "minimum": 0 } }
+          ]
+        },
+        "attribution": {
+          "type": "object",
+          "required": ["tool", "commit", "params"],
+          "properties": {
+            "tool": { "type": "string" },
+            "commit": { "type": "string" },
+            "params": { "type": "object" }
+          }
+        }
+      }
+    }
+  }
+}

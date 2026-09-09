@@ -1,0 +1,45 @@
+styxx JCS key-order differential — RFC 8785 section 3.2.3
+python           : 3.12.10
+rfc8785          : 0.1.4
+repo             : C:\Users\heyzo\clawd\wt\v8
+
+    BMP private-use  code points [57344]  utf-16 units ['0xe000']
+    non-BMP emoji    code points [128512]  utf-16 units ['0xd83d', '0xde00']
+
+--- DIVERGENT object {U+E000: 1, U+1F600: 2}
+    keys (python repr)        : ['\ue000', '😀']
+    styxx.attestation.jcs     : '{"\ue000":1,"😀":2}'
+    sha256                    : 871954531859c7572c6279f90eb83a594ddc3a289e8bdc28d2a84ffb8c1a1703
+    rfc8785.dumps             : '{"😀":2,"\ue000":1}'
+    sha256                    : 28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a
+    bytes equal               : False
+
+--- CONTROL object (all keys BMP)
+    keys (python repr)        : ['\ue000', 'é', 'a', '\uffff']
+    styxx.attestation.jcs     : '{"a":3,"é":2,"\ue000":1,"\uffff":4}'
+    sha256                    : a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6
+    rfc8785.dumps             : '{"a":3,"é":2,"\ue000":1,"\uffff":4}'
+    sha256                    : a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6
+    bytes equal               : True
+
+--- JavaScript backends (node)
+    sworn_verify   divergent  : '{"😀":2,"\ue000":1}'
+    sworn_verify   sha256     : 28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a
+    sworn_verify   control sha: a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6
+    styxx_verify   divergent  : '{"😀":2,"\ue000":1}'
+    styxx_verify   sha256     : 28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a
+    styxx_verify   control sha: a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6
+
+--- AGREEMENT on the divergent object (sha256 of the canonical bytes)
+    871954531859c7572c6279f90eb83a594ddc3a289e8bdc28d2a84ffb8c1a1703  code-point-order  styxx.attestation.jcs (python)
+    28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a  RFC-8785-order  rfc8785 0.1.4 (python)
+    28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a  RFC-8785-order  styxx/_data/sworn_verify.js
+    28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a  RFC-8785-order  web/styxx_verify.js
+
+--- AGREEMENT on the all-BMP control object
+    a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6  agrees  styxx.attestation.jcs (python)
+    a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6  agrees  rfc8785 0.1.4 (python)
+    a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6  agrees  styxx/_data/sworn_verify.js
+    a2c2c69d71d8da4f6b24ed045b7d52581f110988a3fd2e9c33e9d4225d5bcfc6  agrees  web/styxx_verify.js
+
+OK: divergence reproduced on the non-BMP object; all four backends agree on the control.

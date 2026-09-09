@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:subject",
+  "title": "styxx/8.0 subject (spec section 2.2)",
+  "type": "object",
+  "required": ["kind", "model_family"],
+  "properties": {
+    "kind": { "enum": ["weights", "alias"] },
+    "model_family": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "weights" } }, "required": ["kind"] },
+      "then": { "$ref": "#/$defs/weights" }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "alias" } }, "required": ["kind"] },
+      "then": { "$ref": "#/$defs/alias" }
+    }
+  ],
+  "$defs": {
+    "environment": {
+      "type": "object",
+      "required": ["runtime", "hardware"],
+      "properties": {
+        "runtime": {
+          "type": "object",
+          "required": ["framework", "version", "backend"],
+          "properties": {
+            "framework": { "type": "string" },
+            "version": { "type": "string" },
+            "backend": { "type": "string" }
+          }
+        },
+        "hardware": {
+          "type": "object",
+          "required": ["gpu", "driver", "count"],
+          "properties": {
+            "gpu": { "type": "string" },
+            "driver": { "type": "string" },
+            "count": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "model_family", "hf_repo", "revision", "weights_sha256", "config_sha256",
+        "tokenizer_sha256", "generation_config_sha256", "precision", "environment"
+      ],
+      "properties": {
+        "kind": { "const": "weights" },
+        "model_family": { "type": "string", "minLength": 1 },
+        "hf_repo": { "type": "string", "minLength": 1 },
+        "revision": { "type": "string", "minLength": 1 },
+        "weights_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "config_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "tokenizer_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "generation_config_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "precision": { "type": "string", "minLength": 1 },
+        "environment": { "$ref": "#/$defs/environment" }
+      }
+    },
+    "alias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_family", "provider", "alias", "region"],
+      "properties": {
+        "kind": { "const": "alias" },
+        "model_family": { "type": "string", "minLength": 1 },
+        "provider": { "type": "string", "minLength": 1 },
+        "alias": { "type": "string", "minLength": 1 },
+        "region": { "type": "string", "minLength": 1 },
+        "observed_model_id": { "type": "string" },
+        "observed_at": { "$ref": "urn:styxx:v8:schema:common#/$defs/rfc3339_z" },
+        "environment": { "$ref": "#/$defs/environment" }
+      }
+    }
+  }
+}

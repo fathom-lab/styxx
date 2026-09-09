@@ -1,0 +1,1931 @@
+[
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "06da52aff8d293dcbf8d3d59934a1c3ff6c845b4563887f5e27702bcec044ba0",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "4c394da22b1cabecc875c593529eca1c2e235625da020c47776d61643cef4e19",
+   "sth_m": "f84434c72d0204f5e0a30bf755800d06daadf99a14a01a1504896a9d4c519a7b",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "0a6fe9c8ce3d0655d6ea1f249f16c14435bf71832199cf924869ca116dd752a0",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "c1aee367b9c29193964225af69c4c74b6fff2a281148bc724be20c315fc534d9",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: proof first is not the first STH's tree_size"
+  },
+  "family": "sth",
+  "id": "0b85f0418568abb9c40da83f0d1022890d187daa99e42fbd6bc0df9b700780d0",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "e5ba13be6e214818ffc3e36593c7b23bd1d332dadf95cf14c1ace3981e33f07e",
+   "sth_m": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2",
+   "sth_n": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "0d03b360509cbe3486a879f0038b9b3454b514af4a6d53274a31dda80d74eb7a",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "cc93da37cad3ba561b8bafd87ac793afdc7c048589ebbba3e896a37b4bc4793d",
+   "sth_m": "d834402a5d8725af8ae9091474207813ca90912378bce3aa95715aa822ae5cb9",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: proof second is not the second STH's tree_size"
+  },
+  "family": "sth",
+  "id": "0e4912a7343ccbe20b91a1672cee2075845428015807bfd19e98fdb1374bee33",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "3027177259de98f94c8601bdfce0341f0e1f778d064599d1e3b6b2c95ccdb4dd",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "11ad834936e50a0f4fcb92a97ce621291d25e8cc0a42284926b45226f837475f",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "b9ed47a9060b737df34df7c02908358bb600b942aa752f0a9898563f5a368962",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "129d1c1bfe191f5ac4f46285a0d3dc0b405d6fd6fd11a7f4e2d498adcf6c14ca",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "25132b4fc3c434347fc35050ecd128b53de16916a99a788661ea10bccdadc757",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "13471a959804ef2b2dec0a08553dd34c4ebc7161efbfa53b68a41f8341b8ac45",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "c963b308f2043b11d9bae1b66e70c383cbca2ec64f783ea041b8c7266a3a2220",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "1dba93c6d9ff9c2db359d5d0be159c6f2bd956c7e60cdd26847b36f85c6e16a8",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "204d434170501b72e161fdc1c91d7d080c0f9b472010f23fe78c3a9318ca3ac3",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "3a2ca90af433a50c75abfbecd0cc88fa070b0b974f676207c487cc4a9788746c",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: missing leaf_hash"
+  },
+  "family": "sth",
+  "id": "225ea7cc02fe4dc8c2a0491e6b130fefc56098f952d2dc586fc364c1b171f803",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "99dc9d5d07794e9484d1fbda7de728ee50d601ea265a4552af511abbb4892294",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: missing leaf_index"
+  },
+  "family": "sth",
+  "id": "2535de557dce953e9dae2932f7e23925644f7b5d87e5fcb14a6a8f0ee7832217",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "2cb92bba3cceda3457beb59aaeeee0c8f0cadb96be0e2f60bb8a12b2775d0247",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "126728038755e2be9c276800c141a2b9b98078a49572856821c5d0c8c02ec44e",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "f84434c72d0204f5e0a30bf755800d06daadf99a14a01a1504896a9d4c519a7b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "30cb2155543dc6bba012d30353cb4c9aa3ecfb87dfdaece7680b69abae130323",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "dea2ab773c4ecea8555109d1bd00bd8a41b3e9502e8d0cb71bc30c10950aaac3",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "312d27de0da7496d6576104ba91e4111cedf845bd1a297cf1802f9cb40c1e708",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "4dc18ccd47252c11b1cafd2dfa6a114e9dc770c6001f4be9cec22fa12d04dd53",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "351eeb99ad9d3064797fcf8303122970c1640d6f205820b768660cdb36ef024e",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "85ab40e3a912107d3907e6e86c01dced618a3bf7f9ae385899d6be9a458ba221",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "4048a1eacefdfa46a81cce00876128ab3a0edefa77f72c7c0e8d669454db5211",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "8882e934203fac3f24bfde8bf5f58caad8d6f5fbb6746d26d8435f9fa46ebc39",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof tree_size 3 is not the STH's 4"
+  },
+  "family": "sth",
+  "id": "444d6d3a116e2329bd3a65e12d7adb14dbb581fb660968a16044257682390bef",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "c1aee367b9c29193964225af69c4c74b6fff2a281148bc724be20c315fc534d9",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: not a JSON object"
+  },
+  "family": "sth",
+  "id": "46b43edcccffb0928460f3ff000b4b4dbfdd70384c087d9b8496f6273a8d8def",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "b6afc070859d17ac08e70d0c6f1334bc36b4faa177736365870d9600b85f9f3f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "47d89efd6d635ebf5e17bd92e34b59e93f5c5687357d63ef4e243b921b91dc2c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "fda3c87cfede668c19737ea521a5c197c5327fa7b4caa2acb6011f0a367961ad",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "4b130ad297afd304320f7032e3dbc1cb28e1b294027cdc98a9c0b0be8546bf52",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "bcba0bcc7122ad7750bcc3d668c741cadf8cf8af30875774732b218acd6116b3",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "51c17f19c3090da071f4bf67d8a5f8309222b0a6283e49444938519874c92e69",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "9b2e3795437430d5f52cfff2223f82a3661812a93370b9f6c621b9b520ab5bf8",
+   "sth_m": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "5209653fabd718e2a4dcc893e0d1a5bc18c3e85db907c7c75379d09cce3a6337",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "d1446ffb6d255fee4a8a7384ebe70495e652dc606352779693b72d45c8994041",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "53bcb6d253be7787a22b037a739939696d12a522a48a185b5f887f1c9ec1e1c5",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "a5ed691684127c8f920ce77a205a5b295ee5f444a8946457f2a722c8ae357784",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "53c9d4471c4374df4554e2fc56b165c2989f7aa57f454ad827b19165d5c2e01f",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "b9499903692ddd0d04aca23b51883bb3766f9111182ffdd123874129e0e164d2",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "5801e42ebcfd3c4613365fcf6bede6847d2f019e59c8bdb7e536ed6c61971138",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "461158130e6a69038dd390dfcb24766f38ef4372b543c0cca2561d931c433ed6",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "628f85d267e7db391baf5b70bd44f19b3e6de77839e4eed8aa71f600ee967b0b",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "7b5a499cc3549f47e47c8697522a0f2de91eaa5282ba4e823018c7b5bbf73ff6",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "648ef6f142af56bd2d6638895bb44ef714af6e40aa8403985bb27bdec412d4d6",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "67cd7c3ba19100405e503a69adff12a8d383d0de00632c847e0455f34f7dc33c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "6c669895de08fce5e38bd311e9e0658bc1a3e7c469942e758e9cf789be565a16",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "b55d02fbbd2c1cf2684162ed4f6630be0f744aca5161a43bf1ad9dd99a60eac5",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "6fb6125640ac563bb882b8db93de2dbdfa80c1bdb2a63906a929f45244d6d0ce",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "c3a40a4ec6db89ef7f9f6b14f6f0bda10842d4ed428bb64c15864766b2429837",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "6feb44cef1ba1dae161fce7b2f64e17d67f5333bff91b3d8cec842367ffc287c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "3027177259de98f94c8601bdfce0341f0e1f778d064599d1e3b6b2c95ccdb4dd",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "7165d1114f20206ced264418bc38ca45c345fd3e746040bc965d31d8b3cdc690",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "3adc10786d9c598ba01ddb35231bbb1cdfc0f8d3f911b95f075c34b73bdf1494",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "722da32b4a5a533590875661005000a4f2d4f577e0d09de9becb4796c8ee19a3",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "b27f2987e0c8a273d689869cd04896a3bb4e9cf3cf733759e030567470a0995f",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "72defb2972f294793a92c49d8e86f1a3094cb0e805af1661be9ed9b0eb8f323d",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "0f9a4af51cb14dec21de8b4ed4b9798eeb1def73d3c366af9bd69d3bde6d553e",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof is not a JSON object"
+  },
+  "family": "sth",
+  "id": "7418b329ee12f5f620d3c32d1a3c9eb239e4d6b16b0758328dc5650af63c8499",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "789761b89a32d4f77c043df7a2a50f1c9d87cb240b443fae0ec37183c30d3750",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "3fbcf031297cfb2ca0a79401e3554dc0062b838808a5839396a04d56906a3ccb",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "7b2b6042df1cc709c09365e15ef4930cbea3c9ae86ccc01f24f9a8f2c6f1a1e0",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "4da590f69245b53ee760e4e61f13416c0349061ab46dab841379953bf38c2946",
+   "sth": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "7c038f436d131566bad45ea3e8e54b0049e6ac24ff84e19c78f4e0e3e3a6f9f1",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "f84434c72d0204f5e0a30bf755800d06daadf99a14a01a1504896a9d4c519a7b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "7dbeebe35aeac0f20402781de4494adf8b9742076fc9b233fb2dbb314a4f889c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "eae9f892ca498ced83643806c92fe3f6423d898d2545db83c1cc9e8fb7a3bd6c",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "812f1fdf54f5b30a6fa085927147a974e653e9a63c729c0d556721577714d875",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "87aa4d1999b86a98d9ac9aac6adce21e183dd85d9f5c6260a4a229eab9c72f46",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: missing log_id"
+  },
+  "family": "sth",
+  "id": "81446a1479b4ff6df1fa292aa7fb4131e4024a320727e0a38c16740cf368b115",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "822185d4f96864cc96926f571f3b31d914104bb9942371f11ea26900ca670c90",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "d834402a5d8725af8ae9091474207813ca90912378bce3aa95715aa822ae5cb9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "859e595a8172097e0a7b6191d9ad949c70ae9397cadf58331164f26829868404",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "76c335987f249a266ebd9a4fb2202027b003efdf79decff15ef7b465efce1a7a",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: log_id 'sha256:efaa09f44aa8f5572dacded2b3fc48ea9299073e71e7d8b8824c6d9015dc5e55' is not this key's log_id"
+  },
+  "family": "sth",
+  "id": "8c065ff81082842cb038077052dfa75b611961e6bc3a94e84760fecb411fb656",
+  "inputs": {
+   "log_public": "38dd83d9d35779b21d30a92d4648bd67df92c64f1f6bacb91094094f7eae29f5",
+   "op": "verify_sth",
+   "sth": "b9da8f74997a6fc8963261bbb309b6a16a791aac22eb3763d25aec14c48bd102"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "8d451204d8633be9aee1a77eed881e3ee5be964c9b264bae942dcfad2914ce0f",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "8612a0795d625c870ad14bb7fb551a00b4deed0f72182ae8a02a8d9f3e6cfbd3",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: sig does not verify against the log public key"
+  },
+  "family": "sth",
+  "id": "8eed6577290c0fba150f20ca51ef6e68941f71618607f1caee08cd2750f605a0",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "ee070ddb0afb5be424d633bf2265903d34674e729eb86e3e2646cb1c63d58240"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "9129ef58723e22958aed70e29a64eef37986d85b370486a8501b7f403d11e5f1",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "e7c87e627a26d2ca125f15bb4c6d57ebf727d7e2d3a1b267695e39046d9bdcba",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "92391c04683e6cfa8fb7c744a39b3e6883926f199a1b0551b37a41bde3c46aad",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "58d020a0b2cdcd822a6e91901f1f66a5aa67244c3c67c9ce7431d8ccc5b898d6",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "974a6da1717fb5604f89de6c6322775df5bd09bca84b5227fd3615e5bff1fec7",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "4336bf9c79bc9e3bc50a2c86f7af07f03bdd0ef975a4eca357b0346cf83406a4",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "d834402a5d8725af8ae9091474207813ca90912378bce3aa95715aa822ae5cb9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "9773a61dd7005a5b593df3bf5d54b4d791563e1e4c8c260d45409d18891ce29d",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "e2016c0e79359009acebcb496ae75367939acf15162cc90db8ac254f84884b46",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "991bc26cbbe17720d079a68376b1f3d55fd732eb57b9cf5fa7f9b5dce7968a32",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "aa34d6f464a66423eaf073855aab1afcdb411d1ec01973707a372724b9439454",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "9980911e22ec4cc525d94d3ab8ad51242a5a2aa84fae615b1dc3ec94f6d3424b",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: the proof does not reach the signed root"
+  },
+  "family": "sth",
+  "id": "9a28823724d817d2f1c49bfedbb0084324ab2086c04fb94f95cc5f6342a162be",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "2151ba44076aee8ca6236006f17a8604edfb894dc712cee4e6fcbd23806857d0",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "9b457272ac1eb6eb62dc00505045cc01c6d622c3c6367c873e4e0d410510a153",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "37bc5ccd5f3c85e45b7462afa7a239021fbd76957136475a829c92ffb04153c2",
+   "sth_m": "f84434c72d0204f5e0a30bf755800d06daadf99a14a01a1504896a9d4c519a7b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "9ef365c5fe7bf704322c44c36360ab60925ed4c945db78dab4f009a57d5f79fe",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "1231d3b26fef766fc8dd96b78c5e668ddca96aece27620c8afcebc937298fa02",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "a15c51922af955783f151df57bb535c8d29d8a5ac00ecafb6a83ba3fd85bac94",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "b0dd362866dc9c8111690bc8ecc83a38e1dcc6a3eaa1d33c105db08a2ecc810d",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "a27f6cc5ed8e0ba0ae1ad885dc6912ba55257e76a4c1e9d2e5250f5ab521fe4c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "a65fcdaf3b4e783e971e9b70e8272156be99b18050238489b6a25a158b619c6e",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "a6b297da20cbfb9c658952a0dd305a915e8ffb61b7f0afa8850673d4fab42bb9",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "a66c577b58788c3614e2862d2f735ca3664ec6a73dff54acbdffb93e1f8e75f7",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "d9754a72a4a0cb3f4ec3dd4b3f79ad3f42cc83365bfb2f0ce26552bc45362cbe",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "f84434c72d0204f5e0a30bf755800d06daadf99a14a01a1504896a9d4c519a7b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "a82bfc3b36be13e979340d644b56fffc06ee5e245d2f057e1472e69d5fa7db3c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "b06b5b944eec538dec7858ec2ab5b2324c9ad1542ce4ba5fb4fa1b31e6f10c24",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "a8f5710ee8a3ca0de78fac313943691820d399e1f5b3410df3ebffe4990ad20b",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "9890d350b04520179fe797c770840f719529ba77650fbbb45f3ca76e6500a7fa",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "abfc2ef6f2f1cad891d5bd8630853e8c194abb7c70665373b795d3f34b88f645",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "077e3da74299764bfaf698ec349a63e4cd9de959c3256b27bb7fa5993f3812b2",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "ad07c00728a17e126374a3bba2aae18a4cfbd218f2763e712a9bf7fae9699af6",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "5883d4aff394b3d2088fa611ed0b39254777e2ed83a5bedb251888426431e66e",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: log_id 1 is not this key's log_id"
+  },
+  "family": "sth",
+  "id": "ada2796edce1a1f37190f1286344b7181472f1d2449d924ecfb4a87a4462e64c",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "053576d0d1796ebfd6031a2ab172f0ce0608c81854cd47528f303eb59f3b0ccb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "ae35bd1294c8b4c3234707c376c7dcc24357504e4cc9ff93e8271141c8fb11db",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "b9da8f74997a6fc8963261bbb309b6a16a791aac22eb3763d25aec14c48bd102"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "b7b2919a04ec49f8444c75902596545eb249937579f9ca0300f7febbbd5de3e8",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "f3723b09a5960e4809b06edf164e83287b621c4086e64371613056f584993922",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "d834402a5d8725af8ae9091474207813ca90912378bce3aa95715aa822ae5cb9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "b8765d23aec1b29224f2dd25df198dcf1723e02a327c143f8d97673a9f774bbd",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "cddc0af439841912271c50e59ee02bb600eb1d282411bcb3e0b558351c38c1fa",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "ba40c5494275578f387f2f60dbd568822244f084c15c4ee1b814ae4782b946c2",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "d0729c533b4bd175755b604f09ddab45b19bac371601822b1fb5b497fe4da6eb",
+   "sth": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "bfaf15c47eaad92ca8a137427d00b5159ebe4f3d0d16d9ad856caaf171e94764",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "ae198e8211ebc6fb48869878091ee8b3d3fd467c4ecc703ea826ac519dcc05fa",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "bff1d5e60fdc8aa68834c293d1a70a378e01d5effd43c4e24833f608a79cb977",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "43d27839d8e20648701200d62a6cc16c06323fb7e4b5cad85bb3b78f8dbdde57",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: sig does not verify against the log public key"
+  },
+  "family": "sth",
+  "id": "d019618753539cdf32002e0e10a9fc3b084ef1fbf9a352f5889663b939d68342",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "d19a3f9503671d3237b4fb19792404200e120d1607c6bae25197a598ab938ca2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "d0bb61540faf2283db187f70ba6612beecd20fdd87e52dd57a960f8831ce44ca",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "c58b8b7e9fa470d2af3fb9b04b0658d134ee49c1f8fe9adb3009b317440246da",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "d0bc92f376250edf6d91a5d2cd098811ceb37158fc84a4541f48cd22fba007e8",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "2b96a2a101ba25be4b5b3caf90bdd4f2e50a4e1a7cc356efa670d7a85ac0d1b9",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "d834402a5d8725af8ae9091474207813ca90912378bce3aa95715aa822ae5cb9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "d3618d0cfdc989b4d83a60fa8872ff5bedcc9a3d429690af3f111ecc6b13f7a6",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "23ab1ec2f1346149472d9ea1c6a94a5c09cf7356799644a45387a2c918fe15a5",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "d37b3f6d102d4721977d1068c1b04a8d18e7256ffe36260778310cb46ef19476",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "c77d1ecd8cbb8c1e510db0213b54937015f4e0ad9eb498387a44c512cd1e9084",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "d541be58d40fbbacb9d9f1e7cc4a2ff6083040afcfb3bad9c6b84f217eada7cd",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "e0efa594228db7353ef8106c7a1a1b165644f1baa74718f01a6d2bba59aaaafc",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: unexpected field 'note'"
+  },
+  "family": "sth",
+  "id": "d7da3e16e52f987eccce52ec3e8a399562383121f8abee38dbd9998c58488564",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "1db003973d41d5b4432347fa601387ec5b4b71abcf6af83b6e7e028d7e36726b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "d8d33824bced786bb550537f8a3d08b5b5fa238ffb060074c80a5fe37204acda",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "4a469d66b0bb5a31820cb8fbcafb12396cf1b3171b44e3c0cd0d29edb6b97bd9",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "dd445baff8826ff6fc752df6c9db6a1fb33aec5084d58d21ed41d73724518db2",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "245b14094e99df917206e24924780571104074417e3ea8ba0e1a76499e05d6c0",
+   "sth": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "dee62e59396cb21b846aeffd70bc6b4e1ad7aa478795066730994b7727bd0133",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "c351b5669c0125a0007d8c7194c0d6f2b6ac0196c925f5314a62ee67ca646887",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "e34b8ac8982c4f2ac21f7586518f5316e6d36dd4eb6186aadaf77e8f8bde0ad2",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "afe1aa7c0436b35cd440268c938ea98406b04e5ea7383d2e4e0c852f2e4ab2a4",
+   "sth_m": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "e66d34024e347a70ee3f1c8e3f66374611af9b19911216fb9d417a419dd1f2f5",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "3e372697db0736d858ba23c8c3eb6d1234177ac0a4e5d68fa996144a9fe8aabd",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "e68722b366723a536c26d6b822439f7e514e1cfbba7a02e3073c8d7eefde965e",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "4bdf40f736bd6c886bec5a0936ac9269e2c4a382148f99e071c36b403b7ac007",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "consistency: the second tree does not extend the first"
+  },
+  "family": "sth",
+  "id": "e96fed1b3f866c126aafe5d1b2e00435f1279de7b708e4c32d0736ef7b0f6d31",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "8c5a33e7849d45481645181e9f340c2d032655bc83194bfc09711bcd6715da41",
+   "sth_m": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b",
+   "sth_n": "0e87809aec4e8c7390ffc9106857cf63abb3682ff0d9014a68f831ee6d5ed3c5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "eb3dc20bd5698c18623fd01929c1bbaae3f187191f7064cabe62d12bb27f1cfc",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_consistency",
+   "proof": "e5ba13be6e214818ffc3e36593c7b23bd1d332dadf95cf14c1ace3981e33f07e",
+   "sth_m": "e0283b222040a93eb2bbff898b8e2cfa700b1c2ffee8648e159f4f3168e41c9c",
+   "sth_n": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "ec858c5edf6fc1ba38b19fde09c7eb60c1318a3f7c98611261f729f12d6d42b3",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "2cee11fbc2b5b3238e700b29eb979474baf5fee389c02d8c982241b3400f567d",
+   "sth": "844201ef739d9272f52a1a8e7334a635ec3d58fd3fb73aea965c241c8932b09c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: not a JSON object"
+  },
+  "family": "sth",
+  "id": "ecd1b815ce32766cf589e6ab9627a87286a4df3fb5fe7e2f7e2d08bccf42c106",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "ee88facd497b7034e2942f51f53b7a78508991d0fa29619c17da7bf55981725b",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "bb4e73a2b6a2913b3c81c9e1cd116e97748d341a21f6862e98598b6ffc1b0922",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: not a JSON object"
+  },
+  "family": "sth",
+  "id": "f32ae1fad3b0b7b7616e5d1137a97a17af9d845e9fea3b38fb9fd58912a99d87",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: the proof does not reach the signed root"
+  },
+  "family": "sth",
+  "id": "f78e714393f4d106d9e87070f7975531beccb94dae5c9b7d72e6e92f4ba8e140",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "2c6a5fa518cb0670eeb88990d99d9c54e62df67cae05bfe15681b658437447e0",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "inclusion: proof root_hash is not the STH's root_hash"
+  },
+  "family": "sth",
+  "id": "fa36f885561da03488915dcf22de35e6059754349f446e44f67f9894e88c6ec1",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "edab3e27ba8de4cabd9290831356ed0fc3cd9cea0c1d0e25a2e7f62bdb3c8dcd",
+   "sth": "77626694d4fb32ef63c91b80dee2ed24e93df52e63bea2a2ec8aca2649434db2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified",
+   "reason": "ok"
+  },
+  "family": "sth",
+  "id": "fc2ed756c3aa111972ed765e3414901680808041d83f626d858c9a7f2e12f62d",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_inclusion",
+   "proof": "ab8d583a9948fcc1ce74253fb843bf559cde38d44764c0e130d0b73f7a96d879",
+   "sth": "e456976afbcef918630c816541817492114955cc3badaeb2f4db92d2dad3596b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "log.verify_sth",
+  "expect": {
+   "ok": false,
+   "outcome": "verified",
+   "reason": "sth: sig does not verify against the log public key"
+  },
+  "family": "sth",
+  "id": "ffe91b1fd3943964ab84233b4790611412b0cd8205813f7a3086232fb4dbbac4",
+  "inputs": {
+   "log_public": "97af4b6d77b6dd1fdf20d56e686f44f541951cdac64706997f80cd601512a6dc",
+   "op": "verify_sth",
+   "sth": "6a7d3841694cab6adbee7f33d2a4a23b6bf8521e9aa2bfd49ed4630d1fa515ba"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key"
+  ]
+ }
+]

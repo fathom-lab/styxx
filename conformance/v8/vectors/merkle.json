@@ -1,0 +1,4112 @@
+[
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "a9e5ed5883bb6dfda7bd7e4f38808b957278ef66506405bf36e201d5aa7706ba"
+  },
+  "family": "merkle",
+  "id": "0036f63d4eacd511ac021013462afa6f9755d8a46c10ac8f667a95fee0cc23e7",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "04e1f0417b5922014e6047bb93a62478a073056bd0d1e8f3890577f99bf1e023",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "second": 4,
+   "second_root": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+   ]
+  },
+  "family": "merkle",
+  "id": "07d1346c3c5eeccf9bdeb8587894ab8a4bbd9e074651954b81e8691f2ce9bf24",
+  "inputs": {
+   "index": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "0946cd42b42550fe3f6da838b01d2bcef66ca89ea49180b90bfb0231599aac4c",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "0988c6218c36000fdfc63b7be6374ba58e61117487c4102565bd2cdd13a55717",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "0af7545051cedb10a5cd370075264e1cc7f44e8f755741f1d4b53856a7df4f26",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "0ce7f3574e4d9a884405b0a95e7f2ef2bdc74575dde18f3592739c7f145c239d",
+  "inputs": {
+   "expected_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc",
+   "index": 1,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "1030c215ae761dbf81bbaf15a6c695c3828f83dd1a45983fe53d98839003e805",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "11dc54b0f6be2bec544fd9d5be1bac36e4b24520f17f3dcf5407e46664c5fe06",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "145542c8fcb6a4371df2f9728603c066df843559fa4ab83c53a76e98a52cff60",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "15f1da32b60e2d67be6c2956eae6a0e82de065ee7c90748b3a82aab7a0ec66e9",
+  "inputs": {
+   "index": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "1630283f5bead29f0877cdbd0353ec1e38ba3f5830c15a249fb28811871f5f90",
+  "inputs": {
+   "index": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "18bf00458f43b3b96dabd851ba4d2b9a3b06a11650afa79d3ed9056ed8eae839",
+  "inputs": {
+   "first": 4,
+   "first_root": "3333333333333333333333333333333333333333333333333333333333333333",
+   "op": "verify_consistency",
+   "proof": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "19187522fb9a85505fc6b77e497133fdad809d80d203832963bc346470781f14",
+  "inputs": {
+   "expected_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "index": 0,
+   "leaf_hash": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_inclusion",
+   "proof": [],
+   "tree_size": 1
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "19302f9d1ea2bb8952a6221f2da5b8b931f2820ef573926751db7d4ebacea640",
+  "inputs": {
+   "index": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "1a3b3d65da9a7db45d581f92e042d08ce50e909c9def948d4dfa01c8afa05e86",
+  "inputs": {
+   "expected_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "index": 0,
+   "leaf_hash": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_inclusion",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ],
+   "tree_size": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "1d3ad1aca31379f1758abb267114b85006556fbded1b2d273d742ecb4d0a4fc9",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "1d447f8869a2a6f928a32e8b733dab5d625186a496164b45f756ae8bf8b97a24",
+  "inputs": {
+   "first": 3,
+   "first_root": "2222222222222222222222222222222222222222222222222222222222222222",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "1df5ddc02957a40eaba80df68db21d00aa4c4ef8761f240d2e5519b1bc04009a",
+  "inputs": {
+   "index": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057"
+   ]
+  },
+  "family": "merkle",
+  "id": "1efdab88e8c879097e8a492fe834f575246fb276b155cd3104318a3fbecddb85",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "1f162afdaff0473087f730d952a772bec47981cc362407b07bb39598e3d697f0",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "family": "merkle",
+  "id": "1f69ad900aa80e9447c1984835a0cf94855469eb5d69602731d2050e6cb02ea4",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "2108f0a524d78c72d213107166a6c0e8348156cacb9bdf429bd0cd18881f0f7e",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "214a55e5bcd2d25a845ee914d00e6a362fc0008ec6002a32ebe5c1a94b56febe",
+  "inputs": {
+   "expected_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "index": 0,
+   "leaf_hash": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_inclusion",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "260fb4405db3b1545eb2316784d92680a673d29264c060f9b43b460f740618d2",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "80a7bc5454613502311ff27c468f9aa2910136ceb0d784c1d9dc397f34a3da81"
+  },
+  "family": "merkle",
+  "id": "2897f46c0c27fb5350da8a4c7dfa311c53107b3c5b1fd64fd0fd55b6f7f5ae3a",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "28ad7081719cc8049bd6445da4d01d5e040a5a03db7ec3cb6abd3b6c426a06fe",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "2933be46f332aa5d471923396685eea19bc7b97c051531c0ec80f31182b2e910",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "293b60c7cbdffe7c27db202d5d072eaeb3fec33c8a69e65906b31ddd7358de32",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "2c6b5112c62f84b89de37bd0a04debacc5f2e386a1bc171452ea38f103b25d02",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "2e2c6a1f6e1c5eee96f78415093cb5344ecd4526f0b31b424af199eb255d18b7",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "2e43c412cd268949f0f0900785fc339e40559fd374405ce1f4b56ff014187b1c",
+  "inputs": {
+   "first": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "2ff67c9d3654f424bd1490fb55864ad32bd4d8fa2973410eabeff12694a740f8",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "31714c6996a711797f396e9e0a23d6242097a3b2a4d564defd36f577fbaccb4b",
+  "inputs": {
+   "expected_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc",
+   "index": 2,
+   "leaf_hash": "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+   "op": "verify_inclusion",
+   "proof": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "3229349b9fc9302747edafb47b7d57eb4a78f572bcd4bbe28cc3c8dad5291fdd",
+  "inputs": {
+   "expected_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc",
+   "index": 0,
+   "leaf_hash": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_inclusion",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "34dfa32f31fccd65c8269c4b35bedf62312c1b5a752dcd3906feb8aea995609a",
+  "inputs": {
+   "index": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "35008f251e657042f5f4c2cd27d473592529bc712cf13c562d877cedfeb8202e",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "353e66244201f30d56d77ffa65e3f852cd0cedff63972dccc9d42a1a49c4df3f",
+  "inputs": {
+   "index": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "80a7bc5454613502311ff27c468f9aa2910136ceb0d784c1d9dc397f34a3da81"
+   ]
+  },
+  "family": "merkle",
+  "id": "3621a0fea22b0b50dc88411ae72e6949f60e21fbfe24a8cc3209b5ef54707010",
+  "inputs": {
+   "index": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "369f035695c94b99f86fb960eb44dbc8ddfd431a487ce090ccfe4f3194a3e947",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "second": 3,
+   "second_root": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ]
+  },
+  "family": "merkle",
+  "id": "37b8d8043ecbbb0dbf8e292b419a1e35c3dfebd0871516b713973c74f105d223",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "37bb0a71ef36ad17f4a9137bf8e31c2b483c787941ecb9da693e405a167c792d",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "390dec7f45ab11c4ec15c100888a692ecea73a3f7ebdb2e88533f892c424c1b7",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "39c37ec5bdb85679ef4dbdf9877a640e081688a35fd55b83231f264de1c504dd",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "3a616505af321f9232935b69868a4e9d527964ac3b427c71342655067cabf4d5",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "3b1e7b0afa3e46b3bec795e4bdc40f35d4c00b4843453aa0b79575d575706808",
+  "inputs": {
+   "expected_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d",
+   "index": 0,
+   "leaf_hash": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_inclusion",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "41ca9d2f14145818b9cb7c11c28f634e7f87224785a36833013039741b95f20d",
+  "inputs": {
+   "index": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "432eb6f49b54649ee3193cad90fcd6ab8c07f34bec281e9a3000b853b8045d90",
+  "inputs": {
+   "first": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "4357c148a54d56f52a50ac55b8ef1c419ad8e9a1ebe72a35a1e5544f7500b922",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ],
+   "second": 2,
+   "second_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+  },
+  "family": "merkle",
+  "id": "44e94df740f7bcc8f25448ae58321e24312582f5eaa0202f0f168cefe47720b0",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "468dcb807ef7b538fdc8ce261b02760eb562d2708e3c39c5f209bbc089beaad0",
+  "inputs": {
+   "first": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "477fab689032b67f298f404c68d0fcbd9346bc7394f15358789640c6e2ed046c",
+  "inputs": {
+   "expected_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "index": 1,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "4984f58b45dd3e9d46fcbb8df2bd84a32deb872c18d85f6ebcd181f1100a6e86",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4bc8552b47357c670fc14d5adafcbe7981e884e7bb9a4ce974b32fa38a6ab4f8"
+   ]
+  },
+  "family": "merkle",
+  "id": "49ed23a73692c8b907cd2c71010435100f0916858d36b95ef1a94bb809f0be9e",
+  "inputs": {
+   "index": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "4b129a0a18f37a6fa2ed3c6ebe3b95c38e4ff458287841a498a618d70fecdd07",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "b0049cbf1c29d02f5aca9a0b62bec49812897025ac4b493baf1efbfdc44590c1"
+   ]
+  },
+  "family": "merkle",
+  "id": "4c929c306a5cb44b3fd3df414187e9a7c4f7d6551e8ff2818abb2a58f15105fc",
+  "inputs": {
+   "index": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414"
+   ]
+  },
+  "family": "merkle",
+  "id": "536edfe10c65cac68b43dd8203dd74a5e05a599da15030c5ce1bd66600d5d81a",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "5437c615c159b31ab2228bacd5a4e90a616c64a1d66b9764fb73b75d459708a7",
+  "inputs": {
+   "index": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "5505e5c979323a854259bbe7de9a924eaca7bd85b435ca0433b484edf45563b6",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "be9652963ef912f097dff77538fb6c90f779c6464fd26914b8df8a1e8954630d"
+  },
+  "family": "merkle",
+  "id": "559657ca8d941eb486e984e5715d2606cf5badb2041f9ce90f0cd9e66ef34857",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "55f2651d1c2d0d0f9a3c813a4af61826d686cce276a97e153187c75bf883a4ee",
+  "inputs": {
+   "first": 4,
+   "first_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc",
+   "op": "verify_consistency",
+   "proof": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "58011dc8534a9f003bbb17e5781bcce47a866dd70be6726d3183d99460d441f5",
+  "inputs": {
+   "index": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "58f181db55a209925e98759c7dd2b5ea117afb01ef60bf894cc62539f5efa390",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "5ad1fe0ecabf814e2c145efcf7b09c5293b24c5f16e780ab6f0ec9196f4cd8e9",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "5d257fd2d84f1546710653eee72714c4f3d0c162ea9a6c8b03b5c3be5c41baf1",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "5ddf8fa9d5e86da59475b0c15f4b968d37949f4d34ac8f5f100fe618cc8f2693",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "5eb72b31454ae419ecc29d89b7f8cc962cf402390189908f6119524512081437",
+  "inputs": {
+   "first": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "60ee751607c32be4cb7a7c5f351213757edf2176f1047385dfb0512e175ef6c5",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "family": "merkle",
+  "id": "6590b24bce918e2f82f4f263a316b3e615eaa1c9bbcca3ef696d9422e98cc66a",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "6680abc786a8eeb14b662633948b7f78755f744a6e740c71999f5d0716c3a8b8",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "68ac2e72b70dc00946498f7b2b86df9d1ff8b3d809615f8b637e8da83dbc5c10",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "second": 4,
+   "second_root": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "6c47e3283e14497ad6900d1c8714036895a0be7a63b3318332a15b672fbed869",
+  "inputs": {
+   "expected_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "index": 2,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "6ee20d50389101d9b46dba4452c4a2eb8f9236a8967d2847a98397ab9bc7c94c",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "720b546cc4973e52eb0f47adedafa8c81a53596fe4933b64646552db89c92e2c",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ]
+  },
+  "family": "merkle",
+  "id": "72272a5d4cac9ebadb169c8b862fb86bff224af9aa1e3c266da21994cbf576c5",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d"
+   ]
+  },
+  "family": "merkle",
+  "id": "7401aa6b791f26e7362fd1a3cca34f211e540bf53fb7ca8b71d848afe274fea0",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "7463c8e2c30f3eb361ca986136a17963790895d9c5837856cd0896541d84d780",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "75e7140c182374f2ce846c2068d44a25ab0967602ec6c06787e2a817bcc012de",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "79e3556fbd187b28fcf1ac5273fe9aa598027ce2759e9ec2b9a3b347aa79a2d6",
+  "inputs": {
+   "expected_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "index": 1,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "fa200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "f93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "7bfbba20bb16669655deb2510f41bc5c5d75806b46883a86fe193a394053f4b6",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "7cbf930326182d90f852b5d405dd8303929c605ee3de26a1c2743d1e9d1fd23b",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "0000000000000000000000000000000000000000000000000000000000000000",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "7e40d1e63ff3c1d3a05588874394134af8f4afc74042994d89398fb0363adcfd",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32"
+   ]
+  },
+  "family": "merkle",
+  "id": "7e924c80cbe1800865a80718999552cd954bf783119521c5482371cf04b65deb",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32"
+   ]
+  },
+  "family": "merkle",
+  "id": "7ff37b8da57a5957f9d148abfdfa27de3a71f103ab8f2ed348d0cfba00d80f64",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "813d4fbbc294f493cc72912d817a5025635de3335a9879dc7d6be5325b2abdd1",
+  "inputs": {
+   "expected_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "index": 2,
+   "leaf_hash": "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+   "op": "verify_inclusion",
+   "proof": [
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": []
+  },
+  "family": "merkle",
+  "id": "81be7482754d911e2add6795d164d5d07bd48dd5c8ac12865410186d8945dbcb",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 1
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "family": "merkle",
+  "id": "83578252fdeb0c2e7c40a6c4cefb37e7739345f34da55b88a8141deca1187c91",
+  "inputs": {
+   "leaves": [],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_init_creates_the_layout_and_the_four_commands"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "8364cda89e22e2df5dd17f672006925c5ee68b35c1688e4231643be033d4bc36",
+  "inputs": {
+   "first": 3,
+   "first_root": "2222222222222222222222222222222222222222222222222222222222222222",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+   ]
+  },
+  "family": "merkle",
+  "id": "837711cba7e3db0ba53439556ddb449a281b9fc47558e961087780e20b34dc4d",
+  "inputs": {
+   "index": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "84d9ed9df985b4c722b720e91b85544db7cf1e30ce082419df82cb61fdd8d148",
+  "inputs": {
+   "expected_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "index": 1,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf"
+   ],
+   "tree_size": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "880b228f0db6a6350d29fab705017b91ccb4c2de7a673bc790d038810f8f4b14",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "8ad6951e954ccd4ebe7cd1984f5fd2edec28416f91e493c40e52d7783a80f0df",
+  "inputs": {
+   "first": 4,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "8cb3dcf344d0dabf62140ce11ac19442103d616a31203e8fc512882d54852724",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "8cd57769b02feec2d56405683f25158e78b143611e92ac59e2b5f7797ce1b038",
+  "inputs": {
+   "index": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "8d4ab305b3d817185b8fd0585ce5f72700f3ed47ac4a3046be6eff08f65788eb",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "eb2f934b0783cad66c5547379dd69212f23c16a4b2570622ee1788d3bc741f68"
+  },
+  "family": "merkle",
+  "id": "930d03a6c34efef418e9835e99f7f47adea74e046dbb7bde315e246d681b3cba",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "93ff5adf48026f6bbc4b31a8188a749f438d6a9853e23ef8e3302cc54c2ddd98",
+  "inputs": {
+   "expected_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc",
+   "index": 3,
+   "leaf_hash": "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+   "op": "verify_inclusion",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "97df5390b71061f1519a6d151e2bb6a53a0c9b1fe20f575da1322648c5f9b792",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "9c634c289e60a27227dd51b0fcbef3e9c3fd5ba041cb78f2d2eef7cbe2dd4f25",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "second": 3,
+   "second_root": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "9f733157b27ba525b0fd92a05da42f4bf3d77d81f425796c29014b9c2a07a9f5",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "a01cc81b2a5fe33e5906dcfc8db339774d714cb9e0b6389d54dccaa2b1ee85a5",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414"
+  },
+  "family": "merkle",
+  "id": "a1b05b0cf1d1e8be1f9294e53c15ff65ad482fca294ae026b66e7b6b4cdce398",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057"
+   ]
+  },
+  "family": "merkle",
+  "id": "a1feed1b25282b79faacc81d9b2e794365585261ce6fb04a33fb9eed3925d7b1",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "a37fc3191037bd6152556fa1eda880c39c4a528ced55331b7b98843de659ad18",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "b60ca6374af32266e4a310887d27dd8262e0eda2a3e218a2064ed4b03503c62b"
+  },
+  "family": "merkle",
+  "id": "a421b6f6e67de4a6ad08f141d90ff38fd98cab8445c96547bb7d30367c7099a0",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "807f7cea708f0b18aa27f8f1a7eb0d93cc6b2c9c1d560cf3f98c532348df5b95"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ]
+  },
+  "family": "merkle",
+  "id": "a6793de3b9429563328aee4c67aeb37002d03b8fd2e634eb0f866fb73fccee09",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "a67a186e8b9f02a4f02046bec809de4415381dd6398faf687f0d79d47150320c",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "a78300a34369a258ea4ba79aeb39587afcd21760bfa33cd0ac479d9691ca25c0",
+  "inputs": {
+   "expected_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d",
+   "index": 2,
+   "leaf_hash": "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+   "op": "verify_inclusion",
+   "proof": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "a7f256e7c7af0298ef9522216a643173550df7ab58b0f5988ce173302b4f28e2",
+  "inputs": {
+   "expected_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d",
+   "index": 3,
+   "leaf_hash": "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+   "op": "verify_inclusion",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "family": "merkle",
+  "id": "a87a4f21e151b87bd4bbf3b26d3f32dfc2ef703020e176d33455ae36e81b1f31",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "a924f0373d50acb853e612949a7bf41189b4c44e0feda0c15ba0472169ffa729",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "acffe4fe5be1fc533caa257d42abfb11e55656a6ef885ab9931516dd086cdf4d",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "aebe14a29a04c0a294af58b80420de183946c00204185fb020c4a307f7ed2372",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf"
+  },
+  "family": "merkle",
+  "id": "aebe79ca0b67ef79c061805a68cf0f6177b21cf98a57a4654414b081e8ea9276",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "aeca1651e2cbd97a8231b5f61a1a9184ce8dd1e5a3476acb97deeb1e10f4ec91",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "b2c3d159ccd70fe1bf380d93d1007acd502414dc92c51e5cbf5f440386a8b6c6",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "b31c00b9c493db9a226eba19034c50d4795d9b541dff3d3f727fe6f427ce0053",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "bb0835f3f308a1f12b602079b63fdd64fef4aa44bc0351d6f800ca08f2810eb7",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "bca3142ea4cb3de6c201df56093c7de8b105a0b5dacdfc905e7c1e4855ee745a",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "bf01eacee276378d05305d309ee5d07ee4654a4533c9be41a6746196bc61557b",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "c0e367ef63f261ba92ddb1930ce547976b47d21a88189d5aaa6b9c8b0fc6147c",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf"
+   ]
+  },
+  "family": "merkle",
+  "id": "c0fbae340c1b3488f09ea40ba3edd761a1f948f19a16956826eb9b1016d543d3",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "c262230eaf85d9af74cd1dc2fe78de45489eca9dabda3a53c76cc1cb1dcd0220",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "c315fa9b11400f386c6bda9d99fb96a34b85de372f04059c57e6f6cda1d9bbde",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "4bc8552b47357c670fc14d5adafcbe7981e884e7bb9a4ce974b32fa38a6ab4f8"
+  },
+  "family": "merkle",
+  "id": "c3b4da5ee6fadef8d009cb547d8ccd2b959f4058d66f659d5deff77570624b6e",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "c6337dba4e36bd87f4557c8e6371d9e726ee24138126de7cf521af6015981f74",
+  "inputs": {
+   "index": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "12f6a1bc076c15de877de5f4442a4a12bf0b757ad0d864e7c52eb89953c72d5b"
+  },
+  "family": "merkle",
+  "id": "c7527af56baddf42eaa1cb2bfaf3bfc6b225a25740697f61e49bf67239a11be4",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "d033b946fa3ee791d59b548c95ca2e20d542c0f55b80021fd55c8ece31441ad4",
+  "inputs": {
+   "expected_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d",
+   "index": 4,
+   "leaf_hash": "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+   "op": "verify_inclusion",
+   "proof": [
+    "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+   ],
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "d1ff4c2fed37fcf9d43fd353032f09257d28c8c7c80106e5c75cd44b2c5852a5",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "d66e65fa28e9483a91a7c7ae4fa0c7cb1dd8460c112a7ec5da0b99262044d2e3"
+  },
+  "family": "merkle",
+  "id": "d42b1f12951ad9d57b6de74dec811539a8b007276ab1af6c67897fdffebcf202",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "d7c10e6c101eb2076a9958e2ab44f246f6ae7282cda8b9156cb5fbf6bef72a7d",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "d80bbdbe2c573d228423e23486f8166cc0c3edc0a0130c3651224b3597b335da",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "db5382eba605005986fe5cd348e614184b6f674a86a7c5eab3401cca16d65fd4",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "dcf8ad384a35dd3f610d4c56c14a323efcaa92d57151b8647f942f1aab0492c8",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "dd261763a3fa2cd1681f1e6b4f8e4cfd296cd8af9d15a68986b670fc53b7bc49",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "second": 3,
+   "second_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_inclusion",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "e03aac99fe4969bc46ce88c037b5e5f8801f5e1dcb5bc4a70357e440b985ba53",
+  "inputs": {
+   "expected_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d",
+   "index": 1,
+   "leaf_hash": "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+   "op": "verify_inclusion",
+   "proof": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "tree_size": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d"
+   ]
+  },
+  "family": "merkle",
+  "id": "e0e665973fe26becf2008f79b1428ea77684cebfad8e05bda15cfa65f174b181",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "e2aeff50c8dae72c3ad2e27aaa5c751a8e8a710a1f9df046c7b1e558e1a3d103",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "79c187f033c6dda29fe1822efa7988f12dbc99a0ca63f68946e5ce5392ee712d"
+  },
+  "family": "merkle",
+  "id": "e33f4f8c8146621e366141adb2e36792bbc6e98f800ae1c3f42230536666f725",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "e3f8cd2a245edb367d7ac3b93a122e1933d274e9213a67af4893968d2397d259",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "21e86379f0ddf10dca04435b8c55da29bddb84a41571988b12378a718fb9462d"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "e9f5b2a0c678c77b277a7cc305a16d064ea386113af109c1a7cbf9c61d6ecba8",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e"
+   ]
+  },
+  "family": "merkle",
+  "id": "eb63558df0ee0e5d1c76aef7b4d6c1bbbf244ae20fbbaf900484427e3778724d",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "ecffdc8e0d40e5298ab70fa53e20f3cc0cac746b1bd43a4284cda81aed8734d3",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "second": 4,
+   "second_root": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view"
+  ]
+ },
+ {
+  "entrypoint": "merkle.inclusion_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "edd834d368211bbbd3a63d931e8c98c3ecc3b27ebea972aee301d0dcfa73948e",
+  "inputs": {
+   "index": 0,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "inclusion_proof",
+   "tree_size": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "eef9abdb3ad2f75f49323f2481f48fac3f8825aeafc3c6ed16aadc1938e778b1",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "ef92d1f36e4a898ce6683854521074ac1afc7cdbac0ee601a28cd6d77a7c2bc5",
+  "inputs": {
+   "first": 3,
+   "first_root": "1a9f445dcbe373a332b624c96f97dc6f6e2209f717f308995a3e14b793bac3eb",
+   "op": "verify_consistency",
+   "proof": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "second": 5,
+   "second_root": "8bdbe09818556c61da93aad7904956d65c5f490af37687432c88c98ed50a6a5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd"
+   ]
+  },
+  "family": "merkle",
+  "id": "f2b59573448538dc4d10d01d1006a4e1aa1c2cd95628cbd5d46c8f6a5d0938fa",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 3
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+   ]
+  },
+  "family": "merkle",
+  "id": "f35cd574c0b83dc94654b13aeb471ce1acf8c60e7607a9bc6728d8c9572c6083",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 4
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "f4349489ece33fdaeaad6249c90343ea1bd265892c36a635877a548b6079fd25",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "a93173173abf0686cc944345a99c444f59991db6d5084c3935405cbe7479a057",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "f4e2a93c70ac3823e73273aec803a82a790db09d9bfe860aa204391f9b8014a8",
+  "inputs": {
+   "first": 2,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092"
+   ]
+  },
+  "family": "merkle",
+  "id": "f532e9b3a93fb796ea66b1bd45e29006e2817051d9d87302d000c996723fd5f1",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71",
+    "953d83aad0719b38a5d225887614b455d9f43ae062c8e2fc46bd9273935eb6c1"
+   ],
+   "op": "consistency_proof",
+   "second": 2
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "f5624df0647fbf4de8bab7e80deb2ef16ca143ebd9ad47bf9ff3e7f656eb0305",
+  "inputs": {
+   "first": 1,
+   "first_root": "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+   "op": "verify_consistency",
+   "proof": [
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e"
+   ],
+   "second": 2,
+   "second_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "21adfca668fce5927a70891453cb37dd67638a4eadfdc0f49298dac6af12e414",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "f9d9b9a500a21967da42800c821a2ae88b1b254e66e13ccabbd74763e5c25ed3",
+  "inputs": {
+   "first": 3,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.root",
+  "expect": {
+   "outcome": "root",
+   "root": "b0049cbf1c29d02f5aca9a0b62bec49812897025ac4b493baf1efbfdc44590c1"
+  },
+  "family": "merkle",
+  "id": "fa23214b8dccb3e4e9c41b4c83fb4cbb64cddd3845445796bb198bc53c7e38ad",
+  "inputs": {
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "43f51b8119d3db86a0d7e7416fa9042dac4d93b9d94fa84ad08c732ba11df91e",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34"
+   ],
+   "op": "root"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": false,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "fcc0b6e5103676f501ea81792c6cb677ea1e6d15da697d27aa4d1fb0cb210711",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ },
+ {
+  "entrypoint": "merkle.verify_consistency",
+  "expect": {
+   "ok": true,
+   "outcome": "verified"
+  },
+  "family": "merkle",
+  "id": "fdab6a3858f171fdfc4f3c3f8e8dffa53a34d5efe85ffb520f192cf34953bc3c",
+  "inputs": {
+   "first": 2,
+   "first_root": "00daec734dd19eb1a3d158a93dcca312d7f780876d529a6fd3cd3742502cae78",
+   "op": "verify_consistency",
+   "proof": [
+    "505c4f6dabc4fe68902b3bcc8dc468f2716a19e82dfb15d14bd90b42454f331b"
+   ],
+   "second": 4,
+   "second_root": "acd2bf533ce92908ca3637b13a6c3b513465564b7265680c7194f376a50db0cc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour"
+  ]
+ },
+ {
+  "entrypoint": "merkle.consistency_proof",
+  "expect": {
+   "outcome": "proof",
+   "path": [
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "cedf63959cf0a661c085f1ceb7ea83e01fd815d777636e98d16f0e80be6ebd32",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ]
+  },
+  "family": "merkle",
+  "id": "fe4c82e69f02e1b000e0f6ec667f1e859ab3e7b98c239e104c3caa9f49d2b1e4",
+  "inputs": {
+   "first": 1,
+   "leaves": [
+    "4a200eac65f4a441e694bef31308798ba463debfd1fb95c11d555e6c549522cf",
+    "2e6f2042b217c8d3a382dde872ad2cd032ac4ff645bc8533aec79e9e8e1eb092",
+    "efcc001fb0343a4a2216789e747c50e0e41d097d6ac0442c78881636383cad34",
+    "e93e80fcdaf964e85bdf44974a5411110a2b6caef2fa7c90310369f98d1bdefd",
+    "3267d8735485e7f8a8ba09ffdad5eec2c22cfce82fe11b5a26dc95eb82950d71"
+   ],
+   "op": "consistency_proof",
+   "second": 5
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper"
+  ]
+ }
+]

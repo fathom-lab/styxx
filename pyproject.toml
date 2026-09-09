@@ -203,6 +203,7 @@ packages = [
     "styxx.fonts",
     "styxx._data",
     "styxx.harness",
+    "styxx.v8",
 ]
 
 [tool.setuptools.package-data]
@@ -213,6 +214,7 @@ packages = [
 "styxx.compliance.templates" = ["*.md"]
 "styxx.fonts" = ["*.ttf"]
 "styxx._data" = ["*.json", "*.md", "*.jsonl", "*.js"]
+"styxx.v8" = ["*.json", "*.md", "*.js"]
 
 [tool.ruff]
 # styxx supports Python >= 3.9. Pin the target so ruff never suggests (or its

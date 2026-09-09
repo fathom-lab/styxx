@@ -1,0 +1,436 @@
+[
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 3,
+   "mismatched": [
+    "schema_version:8.1"
+   ],
+   "outcome": "outcome",
+   "result_sha256": "416c8bf8ba6e781253ceea878e2487b5ba82d398ccf7ca90161c1b770530e99e",
+   "verdict": "mismatch (schema version)"
+  },
+  "family": "exit",
+  "id": "03056941cbd98626328f9d866714299d08c8b1955e9ab38e77bb70aaa9610523",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "9104a1b6a557fe7e1ec53330dd6c72cc8b991cb685db20c3069dd51550a09c18",
+   "resolver": {
+    "answers": {},
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_schema_version_this_verifier_does_not_implement_exits_three"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "7bafca6b937099fbae869d1e4921286d20b3b62f5d0b7666b848b7de98689c8a",
+   "verdict": "inconclusive"
+  },
+  "family": "exit",
+  "id": "1c507c9c94af84649c5e617893ece8f4cf9081d7a1cebc1e84f28bab133c3ecd",
+  "inputs": {
+   "a": "7a3b3daf918b8c36c243ddda76e4ad2491ef7cbf363a11d2a86a918f4493a366",
+   "b": "6f7078dae45ee6e57842ce6ee19ab82b8b34fcb32780fa39d04b1da7c283c7a3",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_channel_that_cannot_be_compared_is_inconclusive_not_an_exception"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 0,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "4541161220cfbeee2a55e4d19c3decb06b8f953a0e561768bcc9741b5e45f1b2",
+   "verdict": "same"
+  },
+  "family": "exit",
+  "id": "23355dfe8318908b661577b5cbf02a4c715358532f2625eeda212c705bf9973b",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_of_a_cert_with_itself_exits_zero",
+   "tests/test_v8_verify.py::test_make_result_cert_accepts_role_id_tuples",
+   "tests/test_v8_verify.py::test_make_result_cert_checks_as_a_signed_result_cert",
+   "tests/test_v8_verify.py::test_make_result_cert_is_byte_stable_for_the_same_outcome",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_bad_issuer",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_body_whose_ids_are_not_in_refs",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_seed_that_is_not_the_issuer_key",
+   "tests/test_v8_verify.py::test_the_report_never_uses_a_claim_word",
+   "tests/test_v8_verify.py::test_the_result_body_carries_every_field_section_6_1_names",
+   "tests/test_v8_verify.py::test_verify_outcome_fields_have_the_contract_types"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 3,
+   "mismatched": [
+    "recipe.battery"
+   ],
+   "outcome": "outcome",
+   "result_sha256": "7f665a657f3ce3726ed24156878b3297059bc1e2578d5e915f92b290ab756cfe",
+   "verdict": "mismatch"
+  },
+  "family": "exit",
+  "id": "3a559426328c452602a1e49d6f0aaf83ed2d6525ed2941b36972fd718d4c2c67",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "c9375f84089edf0bbfde5b36688ada87d2381073b76371096ebd687eeedc56ea",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:a98245bcd40a42d25bdd7ac42e3fb2b59bb576caa9230322ef1246b9e288e297": "21ad253690388ab4d99b704c55e381bd454435909a1e811bab794794f4903de8",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_mismatch_via_a_different_battery_exits_three_with_no_distances"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 0,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "4541161220cfbeee2a55e4d19c3decb06b8f953a0e561768bcc9741b5e45f1b2",
+   "verdict": "same"
+  },
+  "family": "exit",
+  "id": "3a97a8b50bfbc805b9451903ef8b4bd9f1f34a340cde22f6a57d080327bd178b",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "resolver": {
+    "kind": "none"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_no_resolver_means_no_ref_resolution_in_diff"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "eba13d9495e8f857f7f93ac3744b88651b7aa7b84c0f9631eecd7d7360298306",
+   "verdict": "exceeds_floor"
+  },
+  "family": "exit",
+  "id": "3ca19887e664fc1ad6f093685876d38615e4741589c9845304be6d9098d750bf",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "eb9f26fb586d2f94cfc96a3bad0e128cc872ceadca38d9b336b1963ab664fa61",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "bd47c05dfc02679de62f057d4fd24fa5b185dd77d0656d783d18da1e692b7961",
+   "verdict": "inconclusive"
+  },
+  "family": "exit",
+  "id": "458d53fa9443d42934f35e661dc45acb1e9e8441ebfe1fa9ea508d1421d60e51",
+  "inputs": {
+   "a": "9e712a484cc69cb1e9563ddf302ac0b307c90f9f062c096b3b7e4e9074d1fdbf",
+   "b": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_without_a_usable_floor_on_the_left_cert_exits_two"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "5773bf6a7aabd281574458f8d1a2b9af7c61fdf2a4d4d836079c1b5bc4364cdb",
+   "verdict": "exceeds_floor"
+  },
+  "family": "exit",
+  "id": "71420b228650e921ac75cc84fa8541944f219ff961fd27c345514ee5c939b14f",
+  "inputs": {
+   "a": "ea4fda0733ae194b2f1001cf554850347c5980fa2a5496cea85130125ad89997",
+   "b": "2844a7ea2873bb990fffcfadcb38c229333eab3ef8c32b0aff7421579c7d1c79",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "a5db35c939adc3b1f1bd9204d88f36dbfb47e81d70c32990af0add6b19107893",
+   "verdict": "inconclusive (cross-subject)"
+  },
+  "family": "exit",
+  "id": "9bbba42b33c9d2448e62310b537024335bae6195e560dbd5f4a8a896e61f0857",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "7eca9e2141c606f88a43a8421f7d953d1f84b6fd982ce2a5a209ebf4665c56c0",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_revision_crossing_diff_is_also_cross_subject"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "error": "TypeError",
+   "outcome": "refused"
+  },
+  "family": "exit",
+  "id": "a584e13dce1c633a384097f0952fb4a4d2432556e4f7dc80740b14697ea87533",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "resolver": {
+    "kind": "unsupported"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_unknown_resolver_kind_is_refused"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 3,
+   "mismatched": [
+    "cert.type:'fingerprint' vs 'prereg'"
+   ],
+   "outcome": "outcome",
+   "result_sha256": "0440882ee0321d0f34b5f163eafb88a72b5bea3f2286cc86925289e580ab7946",
+   "verdict": "mismatch"
+  },
+  "family": "exit",
+  "id": "bcc66e041c427c415d00ffb57228d611657126864cad292567d4b32ea3d3dbde",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "5a7a57c9edba817e95a70ce09b5c19cac1e98e3f5c3bb06d3f343e50e7eb76bd",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "423974173fdb77bf7df8a2cd1e1f288da78ac4246acde48df5f437f90e41b206",
+   "verdict": "exceeds_floor"
+  },
+  "family": "exit",
+  "id": "c7a531b466c1fa0dba050ba5fc473f651b71eecd79c0ed0c41a9d3130e9573fe",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "2844a7ea2873bb990fffcfadcb38c229333eab3ef8c32b0aff7421579c7d1c79",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_never_says_drift"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 2,
+   "mismatched": [],
+   "outcome": "outcome",
+   "result_sha256": "e8d592df629a704c26a4272ff95ab5650b0fe6836bf4965b4af31028ca79f965",
+   "verdict": "inconclusive (cross-subject)"
+  },
+  "family": "exit",
+  "id": "deb72095b47e3924be808a866b289e05045cb8b24929ccbee39d9232a8b5d7e7",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "f92680e14429e6d90fa9e3da52c9b8df1a298b166d74dd4858aeecd24165f250",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_is_labelled_and_can_never_say_same"
+  ]
+ },
+ {
+  "entrypoint": "verify.diff",
+  "expect": {
+   "exit_code": 3,
+   "mismatched": [
+    "subject.weights_sha256"
+   ],
+   "outcome": "outcome",
+   "result_sha256": "b2e3a5c940b9a1901c1c88ea04725e1ee4a960439ca84799bd64f088665e4de4",
+   "verdict": "mismatch"
+  },
+  "family": "exit",
+  "id": "fedca4c03dbb1bf653b9ab74814b15a4d3acbffeb46674222190d8796c1e9de1",
+  "inputs": {
+   "a": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111",
+   "b": "343a8ea46d279d4ac15e778015e44c675b599184b4a3ae5b73819abfaebc0a60",
+   "resolver": {
+    "answers": {
+     "sha256:0a5e32262751e1efb06c60c7b78f73c29813f23b55f674b020e2baec007ef491": "7b3f6be0fd0f4b5ee10ea9791aeb15b1c39ac50a6d944faf36641cdf6850a882",
+     "sha256:0f537fd05af7474067f51325ce49d50d70411e8232e3d742e27ef4bcf980c1d9": "43c14ea485d04b4d07f09dea86de9f6e3a18775e1e78daab5c049ca78133883a",
+     "sha256:1ca33500a70cf417c66262f5f423fed5089db2332f71cbfe90bc98a3fac84175": "2d3a128c676889aee5fd8a9a25047f74753624891ae1a513206a5f580190484f",
+     "sha256:25b93e9d32f0ed03ddc0dc0ad12b5f1a1625a1ef515f81e4caad705e9adb1845": "e17ad1e978b8c498279c100812d5aa57d05dc90f18d13d2dd625e3dfa63e3673",
+     "sha256:73fa21ff05cf8a47433a98f8a0285d81bd0581be42888d08264819f77bd4ff6e": "34960173c2934e5c72492efb78f8f28009b37627e4f28207f55faa43b910f8e3",
+     "sha256:c9a2a4d8d00ce34abe00fc61b7171dc2b4969cf18e25991b0a5789c9ebeacbdc": "0ef1192cf65b4dead1adc4f38d2f64253db6b36549929b1779c8059579ace0eb",
+     "sha256:cfe92c582187e83e671426198e3de608991685ce325829886286f4e3dc6b2285": "da921379add9254874f85e9100642e5a7735d995494c694257c3fc8477acc114",
+     "sha256:ec1f5dbcfd2938479be09dde5b9ced9e068b18bba5c18185b288642236f73168": "f7866ea503654eacbe5e6d7843ed3efdcb972c81def5fba8199424e67dd0cd8a"
+    },
+    "kind": "resolving"
+   }
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_diff_that_differs_on_an_identity_field_is_exit_three_not_identity"
+  ]
+ }
+]

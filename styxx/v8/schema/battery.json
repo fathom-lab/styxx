@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:battery",
+  "title": "styxx/8.0 battery cert (spec section 4.5)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "battery" },
+    "subject": { "type": "object", "required": ["kind"] },
+    "recipe": {
+      "$comment": "Section 4.5: a pool-v1 or fixed-v1 battery has no recipe.battery and its recipe may be {}. It is the root of the dependency ladder: requiring recipe.battery on every battery would make each one name an earlier battery (section 2.1 forces an embedded id into refs, section 8.3 makes every ref resolve) and no battery constructible at all. The requirement lives in the canary-v1 branch below, where there is a pool to point at.",
+      "type": "object"
+    },
+    "body": {
+      "type": "object",
+      "required": ["kind", "items", "families", "redacted"],
+      "properties": {
+        "kind": { "enum": ["pool-v1", "fixed-v1", "canary-v1"] },
+        "pool_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "pool_size": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "source": { "type": "string" },
+        "params": { "type": "object" },
+        "families": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/family" }
+        },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/item" }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["item_id", "flip2"],
+            "properties": {
+              "item_id": { "type": "string", "minLength": 1 },
+              "flip2": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
+        "redacted": { "type": "boolean" }
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "body": { "properties": { "kind": { "const": "canary-v1" } }, "required": ["kind"] }
+    },
+    "required": ["body"]
+  },
+  "then": {
+    "properties": {
+      "recipe": {
+        "$comment": "Section 4.5: canary-v1 is not a root. It was selected against a fingerprint that ran on a pool, so it names that pool here and carries the selected_against ref below.",
+        "type": "object",
+        "required": ["battery"]
+      },
+      "body": {
+        "required": ["params", "excluded"],
+        "properties": {
+          "items": {
+            "items": {
+              "required": ["score", "margin", "flip1", "flip2", "flip3"],
+              "properties": { "role": { "enum": ["canary", "anchor"] } }
+            }
+          }
+        }
+      },
+      "refs": {
+        "contains": {
+          "properties": { "role": { "const": "selected_against" } },
+          "required": ["role"]
+        }
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "body": {
+        "not": {
+          "anyOf": [
+            { "required": ["params"] },
+            { "required": ["excluded"] }
+          ]
+        },
+        "properties": {
+          "items": {
+            "items": {
+              "not": {
+                "anyOf": [
+                  { "required": ["score"] },
+                  { "required": ["margin"] },
+                  { "required": ["margin_by_position"] },
+                  { "required": ["flip1"] },
+                  { "required": ["flip2"] },
+                  { "required": ["flip3"] },
+                  { "required": ["flip4"] }
+                ]
+              },
+              "properties": { "role": { "const": "item" } }
+            }
+          }
+        }
+      },
+      "refs": {
+        "not": {
+          "contains": {
+            "properties": { "role": { "const": "selected_against" } },
+            "required": ["role"]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "family": {
+      "enum": ["recall", "short-reasoning", "instruction-following", "format", "refusal-boundary"]
+    },
+    "item": {
+      "type": "object",
+      "required": ["item_id", "prompt_sha256", "prompt_text", "family", "role"],
+      "properties": {
+        "item_id": { "type": "string", "minLength": 1 },
+        "prompt_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "prompt_text": { "type": "string" },
+        "family": { "$ref": "#/$defs/family" },
+        "role": { "enum": ["item", "canary", "anchor"] },
+        "score": { "type": "number" },
+        "margin": { "type": "number" },
+        "margin_by_position": { "$ref": "urn:styxx:v8:schema:common#/$defs/number_array" },
+        "flip1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "flip2": { "type": "number", "minimum": 0, "maximum": 1 },
+        "flip3": { "type": "number", "minimum": 0, "maximum": 1 },
+        "flip4": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

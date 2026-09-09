@@ -1,0 +1,4365 @@
+[
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:31e746020ce389d87580e4cd1e18c8f75d65c3368889f361f438fd15bad70a59",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "promotion"
+  },
+  "family": "cert",
+  "id": "00216611f04caa371fb6a1b901951723337089c4a74a29d9fc799e98851ac6ee",
+  "inputs": {
+   "cert": "d7f51a09e061474d18723c651caa9c900e2fa8c2a02552f9183ad8a5f4d554cb"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[promotion]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0ba0ce37b5833a06c2ea6e13b5297533a287cf97ca7b751e341f30209b806f0e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "0166328dabb5ea1fb762b74505550178b035b43a1efbe7edb75b12048f5549ac",
+  "inputs": {
+   "cert": "f91e78ff37dc64ace850e5d3f12604213a340d41caa54eff0c8c2190b18ea6f1"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d39cae0cfb5d04ab202d78103cb569150a82620c0b4b4f7e3e6394b8867f7cef",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "017cd67e43b62d52726fc91b343ae60665891e71d5df2bf297436db8b381e869",
+  "inputs": {
+   "cert": "31976013a63a0be5c384fb9c03929ce8d6851c651290cbe72271daadf253fb34"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d1071fc634601c6959689d084ff229e2e850e98e25debcf6aa4ed8229da78316",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "019fc9750ed30389c7b46df3619f3a9d65ab4e2ad55bf021a76f3cd2eae00e53",
+  "inputs": {
+   "cert": "60ca5c23a736dfde6e8e509d54570e2fee8b37f869ef160338290bfe7c3d074b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1fa7fc8e347eefa6853eac30471a5c077bf069509906fd1428c970def6758c13",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "02110418b933cb0caa2b0c6b56c2d6d4a3ed8e5d7ac9d0f218783c977acab55b",
+  "inputs": {
+   "cert": "84ec39bd3b2e95693962c6b97ef1565b73c227ebaa976127c70900513408c49d"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_items_blob_is_a_blob_address_and_not_a_ref"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:dfa1ce0805fae302842ec0dc7ab98c342cc8e06cf8d415cd46bd88154d7ba45b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0252a654df7bdacae625a5291da8f462a954ff80165ef1bdfe02124f6a29dde6",
+  "inputs": {
+   "cert": "e877d3a737edc76981e96f6cbf605b538785dcca26e77598fa61c63dfc61c3f5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c5a7c16e4791d3309c2432dabb023b9c6f98cbfe4b7f8151c278e9b1f72e639e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "028808c8b1f0d2904de838a4dc9d0504c48eefe2b990dc01c12b21bade364bdc",
+  "inputs": {
+   "cert": "7a3b3daf918b8c36c243ddda76e4ad2491ef7cbf363a11d2a86a918f4493a366"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_channel_that_cannot_be_compared_is_inconclusive_not_an_exception"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:2e83ea49122295d72612f3b7fe4f6ba2566fa013c17b5a57f04c9a19e8750171",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "0376e9d756c66b8405b6f066425f6dee1dd1c6308a76177e5dbf870cdc8f2e1e",
+  "inputs": {
+   "cert": "ac9b058d0375d96bb25afcc67e507b7059fde19ed45b66f7551122ce1e379216"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:15cf99c835b3fdb0ab03579d09498f99ceede047191bac44ead116f2fb3105b3",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "038a07230ab0cec4eef6fe2056c8af457c00f1848d6f4f9772952f793b999364",
+  "inputs": {
+   "cert": "fa45e9f3221884371a34387c174cff8b976c2994d0fab82106ec3de6b7427796"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b4b48f5aecc08822d09a4d990f510aeea7c43013ea9b915d2a2b47517811696d",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "03b7164283c0baf96d4ca50f986f33ce4761463732b2b2f5c4e2ab4c96d0e7f9",
+  "inputs": {
+   "cert": "81f480e122fa1f6425af4439fce1a8b4f8065e1a76264c71fba542fa6b9fff4c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d3d46ebf44fd5859ad1b0c7ecb0dfb2757eb6e6387cc1e46b2dcd2cedeb477c0",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "04e7cef618a9a24582702464ab6b308882f653bb3834ecad515bee4bb4a16115",
+  "inputs": {
+   "cert": "324caa44620b5d427a689f437839c926a78f1605cecaa1ec80d49fa99cfa1066"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3acfb416d6924a9587cf7456527a36f15327a47d05a010acb29f54ebd6b79f93",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "05a874be08810fad88e54c0bf2e6c0faf3ab1bf69df0ad6fa7501b128f8a1faf",
+  "inputs": {
+   "cert": "cb14c9cfffa6feded3156c5de83ce532b154935ac3f25a76a89c480cd84f5ae3"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:189e5e0f5c8b4b5c8266e49c53b9a3f1aa28df8d58ae51b2d1dd77b504444475",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema",
+    "sig-missing"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "05b75863a47af23223c341413fd3d1800cc42fe82a3e596eb0d4d2c04718f6b6",
+  "inputs": {
+   "cert": "e1f8c2f3fc22d062b6482e9b7c9aa296b30b726374496eec1aecd90fb38a740b"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[signature-missing]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f1b234af0e21ffafc38b21d11e1b01a69d78c9c49d8238ac3e35e9c38b8e0fc3",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "085b453ec5532439032c7d8f028aff6460926fc2a59d12e7e9e449a8b8c56e4b",
+  "inputs": {
+   "cert": "4e7ce90d38b24c6e6acb4c39cffe19891177893bd1e203d2faecbbfe39886d2c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:20426ec1ddf894014f64fc28f04294ac02ee0cfbb90ace60c7c45434a06671bb",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "refs-role"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0869770ecc763336049ba37cbe8867b98401c8cfde9820dea3b816a83815109c",
+  "inputs": {
+   "cert": "e63c88eb4106898d3644641ac4efe1a215c9d07c538f33d2e67fbb474cee2fac"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[ref-role-invalid-for-the-type]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:8cad4d20b54d4e5ae52d86be155fa537112acc3949b829806ead97d1b8355f46",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "08979e7074958e27070d90d2be079971b01c16b2a744e8be9bade6bd5cef47cc",
+  "inputs": {
+   "cert": "fda7bf0fe31ae7a9634f903a80508ab7eb3386cee2abf17d2b9659524851a236"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:90e9337ca041011576fa3517f9b34dfda6ebd81ba3e514e3973a714c8aa57c37",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0949559c72672af6e859bd7cc0c50039a2e8d329b5ae783db412ad35b181ad7c",
+  "inputs": {
+   "cert": "884f5010142525bb2a44a6bd338a89270b22560f4fa943801e43c67c9dccc14c"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[public-is-not-an-envelope-field]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1e03a730e727b7b1c672939fd8ac5b904d329047f21ba3e91a3411b6d74099c5",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0b3217b12413967cd4486abd2fb6f90bce9e30674fa709b6a46f4c54756b8823",
+  "inputs": {
+   "cert": "4660307c1dbcdc5e58ffb6d66d3ac3f9c6ce8befb91acb03fe53ef19c71f6428"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:eb72ddf03f20a1d5f99e9e16a2ed082cb1682bbbbe16c29f7b6402cbdba3d2f0",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0c32aaf5c70a0fe91dc62d3e9f25b8973a89cd3d64872a909c3391850b9b79df",
+  "inputs": {
+   "cert": "0ff6f80574783ac803b3cfbde696109692c25e1fdd8cd9e8ccad5a01f6e31683"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[noise_plan]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b3539481ccb51179ae9179486f1fdac66faf8cb7f5e5c30c962a756211fde96f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0e646e4c7ddc59f8355de575fa628e17cabcea68167c8bbf3e67ad5c8776e718",
+  "inputs": {
+   "cert": "6f7078dae45ee6e57842ce6ee19ab82b8b34fcb32780fa39d04b1da7c283c7a3"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_channel_that_cannot_be_compared_is_inconclusive_not_an_exception"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:327ee17944d39b0a0686cc5ae387ce7a7eeb75df80c10e559cf9d71f300643a1",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "0eaa0c70cb270b0291482280f904d30f863d637aa4e7bcf5830173be0fab415b",
+  "inputs": {
+   "cert": "2844a7ea2873bb990fffcfadcb38c229333eab3ef8c32b0aff7421579c7d1c79"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_never_says_drift",
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:43257cb73038de9038bb7206ef5890db6617888096540d96e25e935ddf18f02f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "112be53beb4bf29e41ec82e29f10b919c1e28bca421650fd5cc8327b0faad0e3",
+  "inputs": {
+   "cert": "568aa9ead064934f767c668426ed3867204ba2af89fe8bc01eb7587d0ca4d433"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[pool]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c2fb18628f1442dc5a06e776a5a56309adbfeef01b5d20100a74d23a154ce309",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "122975ea32474db39e7e370c18d69daca865661746779b428d1d04093170fe0c",
+  "inputs": {
+   "cert": "3f19d4528eb393c6d7a6aaa8a8119aaf77dc21d2de05048bedd5efa1bdd42506"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:75c07f519e0bcda9fd871601e083a8506718423f05dddd24be9e0c193f9c3fe6",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "12bd23f5e5d8277ca7238051d929208750b0c9f9190229335941a55423c78ad0",
+  "inputs": {
+   "cert": "e1b5be0722efa11e86710f6237c57bb2da01f79fded28fd15d1f325fa9191509"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3840ee1966df62b3d444fe0d77a2cdb3ac29d533c37f1e60dc3d6e9defb83bdf",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "139ea5b44aea18d97dc4f7cbb28dfe62b8e24fffd0d54551b67321d9850b542b",
+  "inputs": {
+   "cert": "3b12624c763bdc70cad77a214c758154223b3ba0608c460aa0b8c12c8527ee1a"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_battery_round_trips_every_kind[canary-v1]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:facbf2bdd1738ec2682152b764273cc4e65e1b5f6913848c050d0cc15dc89bfb",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "15e368f3377a396c5f0b37b7cb8d5bf4b69c71146154740397a4a22682e5395d",
+  "inputs": {
+   "cert": "3921659864baf4f4e8628bf6d7d15f642331e3f3da1a2c215af7819c6e33c11b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ab3b6813352d4953db1f680362361ca822f192fb247eb4f20cb4ce56aacfac38",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "16d299dc83989b230befcbfe582b8ff7ba4bd5d0521084192959b81012327b56",
+  "inputs": {
+   "cert": "7518a7a88e1f81a9fa38a6cda27752f4286d83ffa70e1fab1e22a43b2ee9397b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:890dae4d870cb312eda01d104bd175615f1c4a37bacd5d4fc3d9909e75bd2c7e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "18c1b7405230b7f16720eeb39f6c60626efc22ccdc2ab9385070d556430fd7e0",
+  "inputs": {
+   "cert": "e0d72c9a1f5dbd69c40ba3158c1e54d93da870c288b56588326c41fbb7bde1c3"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_ran_another_battery"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4d16188c3f807aa950b9d8c4d8c850ca0f0b2ed143c4eef024f7f3de2096b968",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "19594618a53bcde4d9a3e3eb7081fae13e384bdf0a8b263aef2c41c84840c74b",
+  "inputs": {
+   "cert": "e9e4a48ad9ad370a37be355cb7397be05f1181979945ed62beeb111b94f74ee5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:80377aa6b36994fb39380bb00c661c348271d2c544f2043c4889a351d1978deb",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "sublog"
+  },
+  "family": "cert",
+  "id": "1a3b1871c8a9303b4f8ffca05d16675697507e9b623091a42d32bae29af7d4ab",
+  "inputs": {
+   "cert": "179f94645c91cc1454d5da9f4d53b5a0e525f1a52f0fe3717ef2af880ec8a177"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[sublog]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c7c8e949b0e950f3bcacd4b2093761b804239ca5d90e480a2922483490acc21d",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "1ac72b67790a1e8f2d1c82ebb71b63c761f8b3efb3656fb16e59295761df7e04",
+  "inputs": {
+   "cert": "a958c56da740e36e9b61db724bda63ac6e05b6b866ed4a3397627e706193ac83"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[prereg]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f4e8e4b329a6228a0d5b2dbe36e35bfe8ba0ac77839c10f43c469760a7e4c7bc",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "id-mismatch",
+    "sig-bad"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "1be58a8bb1545cb8d1e96901b6083f0c0d7f4540e3ebf19263229dff8a2d972a",
+  "inputs": {
+   "cert": "749f0e575f8e923b9071c86eb0c7bc1e68222f6ecee467e8a482a3def65e1c0b"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_tampered_cert_exits_four",
+   "tests/test_v8_verify.py::test_an_outcome_that_compared_nothing_cannot_become_a_challenge[invalid]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[invalid-invalid-4]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ef6210b5fedbd12e78734ccfb8f396c40f86964a8e6b3f4ae2b411f384f52904",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "1c1f06abf31cd0a1599c424b8f5e655aa6b04f40c9c58bf3153c58d9d9a74147",
+  "inputs": {
+   "cert": "72c592af4580078402673a8e427a916a376b825b50b0394faf3ffaec3dbf3fab"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0aa6e02fc09332540d19b8b14e23af40ad4819d2aecd4660ec03c84250488e21",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "1d454aa75c574f424d000f55caaa715f1066f6ed52982537b578a74b28f5ef96",
+  "inputs": {
+   "cert": "f41cb7070427649b9c9a8fbf3a3da900fa441c173f7471dc977ec0ebb20c5029"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:330272e32fe892f76a05fc8c93729873cc15afbdcecb1d3f60f8e3f22330bd96",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "1e99558b15383ba2eb5efb85c18ec1d9c960e37835f87009831d66688ab3ac9e",
+  "inputs": {
+   "cert": "df4eb9dc527bc9cbd2457ed38cfb1a58bb01bd36364b7b5b9c9250aa8e02fa22"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation",
+   "tests/test_v8_log.py::test_a_floor_can_never_reach_the_check_without_its_plan",
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked",
+   "tests/test_v8_log.py::test_a_root_battery_fills_an_empty_log_with_no_ref_to_resolve",
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9afd6a1962885352d2f4b3ab76bbe44df3259a567fc1c4e640085580917f96e0",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "1f566d3773ac88e1660d2dd35afc31d05768ed7c5ad52b77089c50c137493d3d",
+  "inputs": {
+   "cert": "97a6152587b2eef8ffc17ac95f316f234f480254a043f6aac7080f1e061dfee7"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:189e5e0f5c8b4b5c8266e49c53b9a3f1aa28df8d58ae51b2d1dd77b504444475",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "24e41a00714a2815a0c60b30d1de8c1c64473cc99ee3f148ea53478256a26891",
+  "inputs": {
+   "cert": "e7c9f348c09c6ab60a31791398335fc32a03b0715f492faba72d471d9285609e"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[battery]",
+   "tests/test_v8_cert.py::test_ok_is_true_exactly_when_reasons_is_empty",
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[fingerprint]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type",
+   "tests/test_v8_log.py::test_refuses_a_ref_that_does_not_resolve"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5077f03a60e787a901b2523c6b099d4ba486a4f04eff84de7b8184449ca44b71",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "25425dbe4f550c36e7ee7780d7842b7360c51af7437e9818acf7b47e2d6266c9",
+  "inputs": {
+   "cert": "2a7b804ff10651a3f21a04490b653b813d050954175ca49d5ae37fcf8457009b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0eb779cbefd7f85dcfeae10d0883b55364f3aa23c0226306a4f6bedb8e91e4d5",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2734cb7c2bbd2cba3480f10910cf630604be4f5c65a20cbbfc4dcfc92fe48032",
+  "inputs": {
+   "cert": "95534b980ef068b0eed38c7bcfdfcee464d66eab3c83f95b47d90422f0752c9e"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c3d57d03692ccb4153b4470f9f3d6671e9da9d4da300c0a8c3b6f6ecfd684c77",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "278f2f5bfa1f36106acd4879ae1c181dc780cf9f6c1c88ed912e8607c3bc63ba",
+  "inputs": {
+   "cert": "5a0152e41260937024d19914ab1dd83a82271a56b20de9db5b6bb4db99b54a1d"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:aed9bb841f87fcce596047b6181a123b58be2a9183dab8adc4a90df646b56fa8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "27d3bdbc3d1756743369d3e847f0110ef2520448cb60675914d3e6c337cf11e0",
+  "inputs": {
+   "cert": "b124f88c2f41585b5f5dac43c708103595f78a1399cceb0b477435bf48e309e3"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_lower_schema_version_is_accepted"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0129787c2dfabcb284029932f7af13c27bcc575a10cbe62b97ae2b8ba7595834",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "288740cf359d5b91277daf230cfcb20882d691adf06c1a2cde339102150f095f",
+  "inputs": {
+   "cert": "7cdf9eecd5cb4e7a6e976750f8c5c648e7b0fc27bea136301b1fc384fb10c8cd"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:caa4d665dc33b5f0e14ecbf0bbbe39fcea40784aa774c7811a194f38df35059b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2889ec6f7296ab1d81c1d1eeda0c3f876dea3a73a3f0ff6ee462f5246f20e02b",
+  "inputs": {
+   "cert": "b3aacd90229567e9d31f98738d038ad177df2c12a9de21d0b9c64db8b185f54f"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[previous]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:30b099b3e1ab97523534000886f8c52fdea2ab9b3404d79674b9374e4f6d6f12",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "28d30bce7ee97f120a115f9bf04e3492f301075fe931dabb2fe69030faf33d89",
+  "inputs": {
+   "cert": "a0b5551c340a02c1c18deaf400dd64b77abfe820b937ca97484b3000142d932b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:7be42bc8d335d0f0e17a287247350e1c8b221ae9dedd972cdb4e0f6b066d3bc1",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "refs-missing"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2bd481cc5b8fc0f9aa75a22a102d689bcf57362fdc47339c34fcba232a837581",
+  "inputs": {
+   "cert": "a8a8f4459547a9214251a9650070ece2ae368a221c0c3d3beb31e2e3fe1e17b4"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[embedded-id-absent-from-refs]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d740834539085bf8e7011890b0bb662b910859811477372143181b415d0ad0b9",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "materials"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2c451225f52f16cfc65c4819ed2e3e8993d4c858382e728e6c80e0782733cae7",
+  "inputs": {
+   "cert": "4d397ef7c880ef0768cb75fa1f2231f9d25d5c49bc8210f0ed5de656e9f1b634"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[system_prompt-hash-mismatch]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1f9fdd162330fc4b62fddd2bc902ed611548141f933ca728fab6917613a70d24",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "2cd0410ba404fc5d32acb89d97bec0a072d9828a108f14fbec72fb0af7a839dd",
+  "inputs": {
+   "cert": "745bb53275ed8b6cc73f051208471d3fbdab6eaefb307e9837f82088169c1309"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5797f385feb372e005b3af7093a9fdd03fd6559d0497de5221ca95025ebfbaf9",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2d62e707b90f7b90a330322abba786f95e5a3d3d60e3159ffdb83d16213a684e",
+  "inputs": {
+   "cert": "41a32178151b33968da7ad20ef1e6f4d0051f234456a6c55fe43050ac9ffbea8"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[fingerprint]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4eb51eb350b24eeb4fe80c97c529f2bdcc95f49f19e1a1771deef92226011bbd",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "2d6dbc28ece6093db1e387f757b9cec6519099d741014f1544f23764793600ed",
+  "inputs": {
+   "cert": "02744c2c6f8a73b6e58eab09ab79e02162514c9bf4cf750a3b65686762c70108"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_challenge_against_its_own_subject_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:42859c7f28da0ffe17353de9f399658c7622ecfada457431e4b7c2fd32ab9e47",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2ee381a8624ab3b1267c0fe0bacbea29ff324fd27be04ca034d78f2ee501b00f",
+  "inputs": {
+   "cert": "b47e0c7c4f8e669a718f1e759ee9a2b2ab75e467e5313ac9149a939056366665"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:cccc4bb8d81491ad0cf7966d9745a117663343e289977262a60f750ff1eeb4f8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "2f930413cb8a41a6073bf1c4b72ad6b164217dced83a6350e336c4da34a0bd6a",
+  "inputs": {
+   "cert": "85593582b4158b9dfc3b9b0ccaa762388c4b1c0c0b12784cfc592a591dd24c88"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[robustness]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:439fc4378542caa3df1baac1a09bf634f288d8eedc62e3c6061ed2caed5dddfb",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "2fc70b9fd9730eec0ab1dd28c3747cdb8bcd11759fa841f8017a4561de3f6dc2",
+  "inputs": {
+   "cert": "1b9ec5648775c2ad25c3abb416853cdbc081905dfe5c5f6c09a8a61af5d89b49"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4303648be7ff118b1555b3ed13026450a70a9dcc70969ac23e80393b846751b8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "30ed62c9a2b7b859d84de2ecdd1d4b33fcb791405fde07642fd9a1b034f5a9b5",
+  "inputs": {
+   "cert": "54caa069310037c4d2da95089a8f93993b9d966d78c4cd12d308513288cd94ed"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6042eb02bc2da49b0da2fde773d2a16c7c0a5d070ba29b3877bd35c796fa917e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "31d71af502f65a4a9c37652dfaa261fb3a15bb6d597b4ff2022c0d69327bdbc6",
+  "inputs": {
+   "cert": "af3eb7e7f7eae8796127201f04ecb9cbfe44eff33120e0d770df658358e92ee7"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0625f159702b80f5f7046f1c14b3485fcea717907762ab8a61d77cd81d3109ad",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "32720b4544571c8e5a07f165b83fb1bb7cfa9eee4ff5f034176fc0fec88ad5e8",
+  "inputs": {
+   "cert": "a126c42ab12314e2a7b9260a66d3a74471aa6a0846da0f2522cf6ea1b97688bb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1c8ae0b31cf40e8874cb39b7f8a79e0c6b9dd146ec6df58586c0c530718d7079",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "354a752c2b3da513089356dd60202161c0bab98cb0904c0653ce77f7472068cd",
+  "inputs": {
+   "cert": "c14b19fa835826d3087813bdc19b8ff6255caa5b0f694e7665ea4df2300d9e02"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3a245fb0b04686dd360b1af5a4d22ea710273e137e6c458c3ef223f5734563e2",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "36ffd064b1f067224c498ee26dec0e29845eec689de8e3054c74e25e18dc80cb",
+  "inputs": {
+   "cert": "d1ee8345270135185d5fb203fb713b1777a283abb0791cf9610697160b333b84"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_canary_battery_whose_selected_against_is_not_a_fingerprint_is_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:8795999941471a09dc7cc03d88b7ef534debebd823ec5a08a93933a9532f72c1",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "378798fa1f27d596f2969ae71688d45025c7efda705adb3a409fcf85d641c866",
+  "inputs": {
+   "cert": "a6c3f0f542904077a56ae6fe45317dfdf8feff0c2a1780c7daf32303972c96f9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:95f19015b0b361d3a280ba5db61dd110f102f78c543f09d0f917450ed72db07c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3821613c6f994f2c5e50c4b1f557ef01b0edd8b1c37252d83b1af8198ebcc7bf",
+  "inputs": {
+   "cert": "ea4fda0733ae194b2f1001cf554850347c5980fa2a5496cea85130125ad89997"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:27f7525cbb01a58300df6a93d9cbc785c605a19c4a8651cb2fd12ed3aa4285b2",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "388db9c5235a535315f2d4a415f60a398d96dbed2bdd5ff18a2f7b3a0979b73e",
+  "inputs": {
+   "cert": "41360b399c21cd032c370f3aa6110ec0b9806cea12adc485a26999a646c3cffb"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[sensitivity]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:50c30eab0fa9b9d202ba457e23660552bc5553231f858c7f2578faae5ef18d24",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "38a83cb8b3a06383fe6794355a39c5c0e79f40f50c109471a64cae3ac95f81cc",
+  "inputs": {
+   "cert": "3df316b8566b104d48697017a6f10c60bf1945d3d8464e1e013bc2fd9b84f17a"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended",
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused",
+   "tests/test_v8_log.py::test_a_plan_that_fixes_no_r_is_not_checked_for_completeness",
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces",
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply",
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value",
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one",
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:80043122c47140bdf48468a4ea9ca2f5dae60b45a8f393e451b98112ea2466c9",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "key-bad",
+    "sig-unverifiable"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "38b600dd46d9e162374891eaa2deacc9da0b0dab49990bdb3dd9dcd8c5f70b5c",
+  "inputs": {
+   "cert": "9e2c1caec12524daa08976811d6c8c8675cb804295ffb569b7953e9970bb2b0b"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[issuer-key-not-on-the-curve]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9696c55e84f45b9569abf6a28dca0d86aec659c1ad57efc05b54706d56a4729a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "38dd6082d5dcccc3ac91c7107c0dfc7fd012bb5d26d057cb2ff87de1b35cd443",
+  "inputs": {
+   "cert": "1b524bc66860d68cffd79d87721a3fdb07b2feb501a52b6e2e95afe9958854a9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:190d0b0bff7e09be7dfcaf0f2b153725b11237b3f15a0e1568c1e90b5cd8dd83",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3ae4dd507ded2dc6570f3cad0c18d44184008fd1c6e22edf237f1b04bef6beaa",
+  "inputs": {
+   "cert": "e7b1cdfad9304ff6f3c5e0876557b02e6dbaced002608c2284381da495e50377"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a6ac26345c74b8367a7194e95a5cb94f8c5f4e221f4f5cf5b86ed7096f279933",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3b165fab50b1224cd19f111226de8a974c5e85916274210837812fc4ac8f19f8",
+  "inputs": {
+   "cert": "1e567e911181849b24b6bb21c56f86bc06586245cb297418dca424c7b5ca7c39"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:22d45a2988a9ebac0cd0a9b98a0ea191d3187b6900ce5958168ca6c66a6f073b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "3be151649955c5075b0e8d54d6a54781a3f235ddab73c75d4aaa7a4d3496544e",
+  "inputs": {
+   "cert": "2500e0e79b4efdf85823c0fe5b65fd95623286eb140f890631cc1cb36ba66682"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_make_result_cert_accepts_role_id_tuples",
+   "tests/test_v8_verify.py::test_make_result_cert_checks_as_a_signed_result_cert"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:aa56ed0a6d44de92d9760f326424e5bead98aa517f970278b9155e476e992138",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3cb53d3aaed9a06b2938f27cfc81d772e421edff10d8bf1052a5df58ddebc449",
+  "inputs": {
+   "cert": "3899b7e170c91ff3d61edc35dbe6bf8dcb6d6d6724b3fc91640d5596d23b3c9c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:2bca4ce4c8e748eadcd99bca69b81b885829ece505e901eda470bcf449b10724",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3e42648e339b3e4c9c2bc8ad8d02132cfbcee9f4470fc86a3c9d12889f116126",
+  "inputs": {
+   "cert": "dc8aef64cf28db9a5b511633e286de1eac8c20d1b3778956fc1627f09793df46"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:aaaead4be22543f3b3910a51c32903b5cf3f38d0226f6987c4a9f017a42fbf38",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "3ecc211fe81d4d5ec81fda6ca67f589f7c348db66902af38af02498922052d78",
+  "inputs": {
+   "cert": "4e3b22efb06504787e4860eceae9befad044b9f28bd9a5fbefd7020d4d9f8836"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_genesis_exemption_covers_nothing_a_root_battery_needs"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:10274ca0eaa054188e52a62eca88089ce1b2cad2b35376d7495ed558f62fc4cc",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3f8c173d1e5ddd8ba11fecf13fa40e1bfa4834a65f910971e3ebf9ae62f029e0",
+  "inputs": {
+   "cert": "931022a822e7964caee2317a048d9442d92489daa427ea3de0f2d5caa4e24d57"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d8d1dc0fdb547a1961ff3c59540f61e926afe59b2b911c2fffa958e33041dcb4",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "3f95487acbb13d134e54fd16d88f701fea877bf63c8d5186d3e0ed8cd40a87ce",
+  "inputs": {
+   "cert": "11caca6508df6c436af53d526169380a6f5c5dfd08621def00099443a950b81e"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_canary_battery_needs_its_selected_against_in_the_log",
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_entry_bytes_are_canonical_with_no_newline_and_no_cr",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_meta_records_index_id_type_and_public",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_refuses_a_duplicate_id",
+   "tests/test_v8_log.py::test_refuses_a_ref_whose_type_does_not_match_the_role",
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref",
+   "tests/test_v8_log.py::test_refuses_to_append_over_a_gap",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+   "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1d7606fa0501c8d1505d50033098704ac5a69efc0710aa711282029e60d5c265",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "42eb3dc87c29af03b0b8327b170ce8dc96bb5ed24f10a3552e3c544526872c6d",
+  "inputs": {
+   "cert": "b159efc376b4af6e14f21e4a5a2981488ead602a3fbfae68df2b597f760d8a9b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f4e8e4b329a6228a0d5b2dbe36e35bfe8ba0ac77839c10f43c469760a7e4c7bc",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "id-mismatch",
+    "schema",
+    "sig-bad",
+    "version"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "43545724cd217510d36f4a553fba6f339f3ef893959d4142c2bbd487be973922",
+  "inputs": {
+   "cert": "cc8df78b4068694e5e1e40012c9b943abc512dcdbe7eca68d2c77879b47abfc7"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_malformed_version_string_is_invalid_not_a_version_mismatch"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f4e8e4b329a6228a0d5b2dbe36e35bfe8ba0ac77839c10f43c469760a7e4c7bc",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "43f27b35a926759573c93312254659a37db7822395d0562ad3d659c1a54e45ae",
+  "inputs": {
+   "cert": "9a09d165434361e38c7bb8f3a8a1b4550bf51fe650e8f64205cd3e5fe3708111"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_callable_resolver_and_a_log_shaped_resolver_both_work",
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_a_challenge_from_beyond_coverage_says_so",
+   "tests/test_v8_verify.py::test_a_channel_present_on_one_side_only_is_skipped_and_never_moves_the_exit_code",
+   "tests/test_v8_verify.py::test_a_confirmation_run_that_fails_exits_five",
+   "tests/test_v8_verify.py::test_a_diff_that_differs_on_an_identity_field_is_exit_three_not_identity",
+   "tests/test_v8_verify.py::test_a_ref_that_does_not_resolve_exits_four",
+   "tests/test_v8_verify.py::test_a_ref_that_resolves_to_the_wrong_type_exits_four",
+   "tests/test_v8_verify.py::test_a_revision_crossing_diff_is_also_cross_subject",
+   "tests/test_v8_verify.py::test_a_runner_that_cannot_run_exits_five",
+   "tests/test_v8_verify.py::test_a_runner_whose_environment_fails_exits_five",
+   "tests/test_v8_verify.py::test_an_outcome_that_compared_nothing_cannot_become_a_challenge[mismatch]",
+   "tests/test_v8_verify.py::test_an_outcome_that_compared_nothing_cannot_become_a_challenge[unavailable]",
+   "tests/test_v8_verify.py::test_an_unknown_resolver_kind_is_refused",
+   "tests/test_v8_verify.py::test_an_unresolvable_battery_exits_four",
+   "tests/test_v8_verify.py::test_beyond_floor_coverage_exits_two",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_cross_subject_diff_is_labelled_and_can_never_say_same",
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict",
+   "tests/test_v8_verify.py::test_diff_never_says_drift",
+   "tests/test_v8_verify.py::test_diff_of_a_cert_with_itself_exits_zero",
+   "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch",
+   "tests/test_v8_verify.py::test_diff_without_a_usable_floor_on_the_left_cert_exits_two",
+   "tests/test_v8_verify.py::test_every_channel_name_in_a_result_body_is_a_known_channel",
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order",
+   "tests/test_v8_verify.py::test_make_result_cert_accepts_role_id_tuples",
+   "tests/test_v8_verify.py::test_make_result_cert_checks_as_a_signed_result_cert",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_make_result_cert_is_byte_stable_for_the_same_outcome",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_bad_issuer",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_body_whose_ids_are_not_in_refs",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_seed_that_is_not_the_issuer_key",
+   "tests/test_v8_verify.py::test_mismatch_via_a_different_battery_exits_three_with_no_distances",
+   "tests/test_v8_verify.py::test_no_resolver_means_no_ref_resolution_in_diff",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_ref_refuses_a_subject_that_crosses_precision",
+   "tests/test_v8_verify.py::test_ref_same_exits_zero",
+   "tests/test_v8_verify.py::test_ref_without_confirm_never_reaches_drift",
+   "tests/test_v8_verify.py::test_skew_below_the_floor_is_still_same",
+   "tests/test_v8_verify.py::test_skew_via_harness_version_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[beyond-coverage-beyond-floor-coverage-2]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[mismatch-mismatch-3]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[same-same-0]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[skew-skew-2]",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[unavailable-unavailable-5]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict",
+   "tests/test_v8_verify.py::test_the_report_carries_the_coverage_line_with_every_verdict",
+   "tests/test_v8_verify.py::test_the_report_never_uses_a_claim_word",
+   "tests/test_v8_verify.py::test_the_result_body_carries_every_field_section_6_1_names",
+   "tests/test_v8_verify.py::test_the_rounding_is_recorded_in_the_result",
+   "tests/test_v8_verify.py::test_verify_outcome_fields_have_the_contract_types"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:8ecb68fc9ac542280e13f448b28aa266e546a3767bc1bd6d14d78b5e119eb204",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "46fda7766d70645be21e836ebb9456f8a2e11fa978d486903bbdbf1ee9950bb0",
+  "inputs": {
+   "cert": "0576a2644b84ef759dc498df1d9d21f7bba0ce96e9d30e87bc4cc2ffbfc5e3ab"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:15b25917893f79de378818fc12e96d6b94c062bebac54aea85f9c00d1e23b93f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "488928ddafc2cc4567fa84c8644302c47e168be2ccdb85890e86d9059b7f7fe0",
+  "inputs": {
+   "cert": "2f5071a7f3812fc5cb9469387a92aa2792991a3f65a13b7150a221ce193c1656"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3b55c588eee8515a83ca135cd82eb8924e08ebb55e6f2994ce606d83a0a09eb9",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "48b45dc9e2737e81da7db3cfbf87ff9b857472aa4664ad3a76d907215830054c",
+  "inputs": {
+   "cert": "b7ed44dbb5b7828d030de665849b88c07fd13e12ae1efa18545cc1fe4415c48f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9e0b75919aeeece99a89a640cbf43df105e817c5085e2ce14f31eaef8632160b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "49dee49f37f570b7b4a3761d95d653d5c602e54fe60656016433387ed5a31719",
+  "inputs": {
+   "cert": "cba1a05bdd159c64bb36cab558e49695d7652d15fedae870da9e535454d787c9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4f47d399d11700f89aa38e54707386e31309389490f43532bd94565bde509da8",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "refs-missing"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "4ad08c41c83691a2307b2f25e32c6ef0591b9fe7a16a660b0ad6794747f8d63c",
+  "inputs": {
+   "cert": "a9b4e630827f41c828189567079173280f30989ce943a6143ecfeafa836bc342"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_can_never_reach_the_check_without_its_plan"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:35cdf99d1aa82cc024e85f31bb63472043e1a49763730a9d71904853b4795af3",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "4be74803c34659044d1fc576d9559db67e93442a3658920cd518cb8919d86023",
+  "inputs": {
+   "cert": "a31a417e6d8a3c1bc4d301350c45e0016bc3f6a148446d1e08ef61449bbae9bc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1277b3e6c874054798acab026671b5783abd39cb21fd9bc35ab4907e5fa9abf3",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "4c5ad1af41f3d1bd070b10c9db6c001dd9e74231b08f31e9d733da924125ca2a",
+  "inputs": {
+   "cert": "b7e624700b1034757d8b22bed3dc542881742390fa58f89f81c0192c08b94546"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[verify]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c7d065d043181f2d0fbffd247aa6598ed6f3df1c450c5a4619895fed0e01d581",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "4d7cf5c48b6bc33743a38226e6081009a07ca759799da34fb455288a3834479f",
+  "inputs": {
+   "cert": "6c27f1d2623eb82f6dd73642ff9e2caf39b2de4fa649e4e255670689fa8299ab"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_alias_subject_without_logprobs_round_trips"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e07c501136f5334a6c882591c398cf7dc6eff149836bff3cf501bebcdd7138fd",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "50aecf146b268c987dcac8c95193a25838b1d71e781867b360dff646e5fc6f29",
+  "inputs": {
+   "cert": "bdbe0732ed840a4342e684919c5ed095824ed43e2a720de88ef1c7c17767061f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:32e09fde988b8ce5bc50be10960b5db82c262372d582eca49fb1eb903cc0355b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "521991352051a46083c073975970c6838269885ab4f6708b2def3e9646a44c74",
+  "inputs": {
+   "cert": "1f3e071abdacf8aa21ffb486f3deac08ac8c8c612080da442e6398d797c451c8"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e1d995df6968efc0c20e9b22f8bc9be5a39e124f2e5c8666bf40db8bad777069",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "54b525eb6d632c1c3d01c125e4844d3a4913f090bf5fc476d604ee237bd1dd72",
+  "inputs": {
+   "cert": "be78a511399c1b03b24cee5fa33ddb0259c3d74424fdb500f46269fb740844f7"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_redacted_battery_under_a_public_cert"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:607d99643b94fc23e983dbd584cb098c24c2d81ad7c1361372f14a1018fbdb33",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "56cd377cf5571a46751a5a68fbb7db4f584d218e95c1874585e85e2a773b2c90",
+  "inputs": {
+   "cert": "43cf78a92a19e7c6fe11618547b124f4e47e90c967f1310a9560a9da7047be16"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:93fcc3584addd3a7da20f0a120cd4d00c0d007f5140ca3ab7684934d20aacae9",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "58f83bf0a3e6f2ade06afec9b9e58de6659665c059a0b4fb9c913aca5655e15d",
+  "inputs": {
+   "cert": "f92680e14429e6d90fa9e3da52c9b8df1a298b166d74dd4858aeecd24165f250"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_is_labelled_and_can_never_say_same"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b70f9462dbe2854fbce4878e0f49ddf0420a13b2f5514dcc15545f0a11ae063c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "5902af9d42e07898a99e0866e18de03e3288771a7625fb69d2bf1fd86e87e769",
+  "inputs": {
+   "cert": "c239041f6e3605f39c6924091d27007113ba55a07184b96d8f689e59e225e7fc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ffea19177bf431af5e1b0541d0667a331c9aaa937060dc676d3ccd419d0f8f56",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "5b394794fd92f5d13661da69ea64dbc7462050ea08395d8ba05670f66a9e20bb",
+  "inputs": {
+   "cert": "f3b446e58ece516aea4dfb918deda624944aba89de4b856f0d48e14477e49188"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_ref_whose_type_does_not_match_the_role"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:20060f4973ab9de7a70b7737db1b81384c967e76261eb4bdc6365d7534b1dcd7",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "5cb25f76e656e8540423333234c6734f50377b04440fbd1c0906fd64067d6925",
+  "inputs": {
+   "cert": "7eca9e2141c606f88a43a8421f7d953d1f84b6fd982ce2a5a209ebf4665c56c0"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_revision_crossing_diff_is_also_cross_subject"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:192731089a2d452640d3dc29fe583df7b3fdefd1b2417d0f235c54d816d95633",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "5d6c8210a148dbfd79dd18764624a2b013fe8c6deb7d2e41e73dc8970b6b273e",
+  "inputs": {
+   "cert": "25abf4eabcc0cb2ec208fd306e69534172f6366cfb56acb0acdefbc1d72a8313"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[battery]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:7241fedd1b663306b7637eba6ba84a5cf8d7d1ca21068492a44967dcc202311a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "5e08ccef11917cee87890d74627a98dd01720e738e80fa533c9dea38936e4689",
+  "inputs": {
+   "cert": "6610be6e7fb8d299d4b00826b63216f5f3407d688510f24100c41668d9048480"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c49ce9158447d974a9151a37aa6a0eed3b4cf7b78ad31ecd77066f4c36fd9fc7",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "5e7a8c8e5b32f55562da634967be9e2013867bb05ca2f64396cadaf48a3ea221",
+  "inputs": {
+   "cert": "7711e38889968ae7ae4d25142a85078ea012264e8893b840cff8b107efcf0000"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4faca607f5443160da1c5fb39b385263bb3e2915b7fa5d5b76bf60769a0b2b91",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "631c0d24b1a9861a17a2048e3ef58ed168aefe0ea6ba7a2b841c3b648f9eb75c",
+  "inputs": {
+   "cert": "1aad22cc598d06548faa9d940e0cde992ec98fc8b86f804da972e337eb3ddbb6"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_alias_verdict_carries_the_section_2_2_sentence"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9ed71d3465dec6c0c75bd44aded554d47ee0a2dc2e8650193ba0695e4b73162e",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "63c69306e462d385eda70b45c43a4ec7202faedcfb19a951c87ed6d8620d492d",
+  "inputs": {
+   "cert": "85efb857749facc27dc89c51f7f5c2aff7adea0eb67dd43feb789c6fe0c64ffc"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_challenge_requires_both_a_target_and_an_own_ref"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:640f7e1ffa4c7fdf2636d51b8b77eafff3b498590d60c4b6b460fcf476117b52",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema",
+    "schema",
+    "schema",
+    "schema",
+    "schema",
+    "schema"
+   ],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "651fd9e785edd2fdb9c006560b301b467281188815b6e9fea5961d4ec7711db3",
+  "inputs": {
+   "cert": "faeb8607cec2739beafce9fd2f32be4f2b0c9b15bfc585d7cbaec0c5e9ef5249"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[result]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0dd7976d7e0b606cf5389fdfd14258cb08c4bf13e0e497910d07078805677edc",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "6664465646d674c493ede52447c8c9b70e0696e17f5c1c3a55bdbe32cdc13533",
+  "inputs": {
+   "cert": "e81c0e5255f1a7b3e63932c80f68fd95903f03a1b9c1f835a9d9806559108e6d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "id-mismatch"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "66ce2d341b9dc324efec20b4d98be8f93c55197f18798a72346a3d9a7b7e31ad",
+  "inputs": {
+   "cert": "4dde819aae6da4a5fc786ece52f03004b54533aab023d51ea19343455dde0635"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[id-replaced]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c1f4859b227fdfeb98db4a1e0bf2281570f8b3f8f63f32150b2c4fa861c642d2",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "6ad3e056486541190b9bac71ad269a66ec810e60aa328147b4cd32c04935aa81",
+  "inputs": {
+   "cert": "62113d44b4b99555ceb892fb4e18286d5409dfaf6cebd345a7d6c260cbc2876b"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[run]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e34e0824e186d042425409b5bc1a9fd0528d0f1b5378297fe0d108c92e260b1a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "6b462d94acffd9e1445c6517fd07fe2450511e2bd012431f6241a6735e628f02",
+  "inputs": {
+   "cert": "650810ff925c326a155a17801d84f446810c7b2fa8e78537ab93c8d971a72624"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9796648fdf6b5011bc16819880fb1703a7080a15f4789e618ee23306e84787ee",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "version"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "6b6a2a4161d10bb1341f3e793a8fce08139a651fc9e21442cf2f36d408e705f6",
+  "inputs": {
+   "cert": "af322a7756fb4a7668550ac8d7f061665e0ccbdfc8800aaad44ccbd0ceb052a6"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[future-schema-minor]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:eee617cf44984be0796493edac7bab003de95fbe5db3f04c71bab32f4383d916",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "id-mismatch",
+    "sig-bad"
+   ],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "6b8db175ec697ca74879e5c02899dac23b702e1d832c21dd0c314c53efe1ce8b",
+  "inputs": {
+   "cert": "c51f5e6556ab9fe1a7bf0967f4e3373e787b97210e76fafe7bd4e88dac44c911"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_cert_that_does_not_check_out"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4b5e2f3827a73a975ee760c141fa8041aed1bc5152ba6b4b6711bcf008dae087",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "6be714c44a6a3023ee5e1e7ff035158c6ff0df81c356d8bb4f24a52000170f5f",
+  "inputs": {
+   "cert": "b75b175cf215df60ed82bf42fdac33551a7918c290b89d7ddb696f9196fe7a6c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d61d4740637ee496115894cb9fe1ea99bc5960497c90eb27ea0f355e964fc6ed",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "70d39a326a3823c5b6760d235469faff945ee5536ac0eff60e4d83f01160a127",
+  "inputs": {
+   "cert": "621dcea339b98e5ba4189c7f075d6c5ee1b3b2a31c83504560e7e595a08687f3"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:477a14555d7d53f05e41fc4ebd21c5655c85de3b782a1a44f9fddb00197e9194",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "719c66e6be6f7b39417df0c56ca83ef74c8afdde01556b47724ed6c2746f4860",
+  "inputs": {
+   "cert": "573eb4c84191eaab7d6fe2ef18ed8a92cad60fecbeff96f0adaacbeea71eadaa"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c59d193b38bdeeaecd9cd91883363d1bc88a0cbc52e47535e72bd694cbe61805",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "734fb9582b21f86494b9082e1e9e29b9d8a8b32b28d452ad78d182985e7652b0",
+  "inputs": {
+   "cert": "a8096a775f76d817b035dff9367839ea3ad7c08baffda47e04072195bf035f86"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_prereg_round_trips_every_kind[study]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e3a221fc171f0950dae1a6658344905fb7b2f32e9c76298d09212cda8c692dbb",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "73951bb2dc0f345f6b835e86dfedcfecd03d5d48062c02b97a1621b10d105c50",
+  "inputs": {
+   "cert": "45e1159f3c29ae96b6be0a831241360d49dddfdd23f0f381dda208a9725294fa"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d0f88832837b19c0b71a2ddbea3ca61676377b79ad6b3f6c5b108d0a09325fa2",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "745af6ccfcddbb54f3ac5b0b206ad886f735d24dda2057af5e04ed2c9c8244eb",
+  "inputs": {
+   "cert": "86a07c4603ba9ef456938e2b428555ac1b07795a864ac42baea7acbfb9aa5108"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[prereg]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3f076552c572d99a2c67510684fc4b689df213cac6f8aced887df3de6fec6c05",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "77aec76091310d433c3fa45f645b1a1e16d44d11b20edbe3b2bdc0d1e70dea76",
+  "inputs": {
+   "cert": "1754dbc8bf73a2337b1833231810b6acf3d08bb2599f0651d6c80102540775ab"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1e13d912a4f817ab686ca983831f08499c6b8d4447d825b8317fb6f79445723e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "promotion"
+  },
+  "family": "cert",
+  "id": "7995cbb5f0e4c99d359998ec5ed87dfa2dbe173da0b6710bb1dd4ae1afd9711b",
+  "inputs": {
+   "cert": "be9953cea90626b0791b381be5d350fb84e7769aa497ed827e44fb7520b02c66"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[promotion]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a8da5b35f2e8b6e42ef84ca95e5d5c79ecf725fd6d1eeb1994d66e3b0f501719",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "79ea021eb291e3c8596a6556ff0dabfd73d6c7da049128c992d4ae5d2f99624e",
+  "inputs": {
+   "cert": "dc2e62b570df5e1def2ffe1a9ea8ac101123fe041f51be20c2ca8c36264fc4de"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[document]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5f53a0d253ab1a478582d033cb7b86c06703a903fb44db85187168efd2598ec6",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "materials"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7a4bb0086d0e113db43f389acc10ec027c517901ef09b5dd2f6062e2e9ee37cb",
+  "inputs": {
+   "cert": "133b11b5923e6b9ccb392720ad3a0eb4c358ec00f675ead2b845be3161e2b21d"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_material_hash_is_checked_even_when_the_text_is_empty"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f5038b39b36e3cb1955738fe62dee247da5218f6de40197a3a9e85a63ec1f57e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7a6b353eccaf82f57ff19107bf7f7de59a0a80ad8d250b4aa526b79f114bf6a6",
+  "inputs": {
+   "cert": "25c46f9621faab113d0192050f54a4a423787302a3a5227687a098c40bfcdcaa"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:bbf6c956367b79238c41868f39e5ee3dea82caa1cb1b24f4fc10bffa34f35dfc",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7afa37ec55fecedae6f477941c2ee2bc1b11d57ced2b80a962b22015d602c275",
+  "inputs": {
+   "cert": "5b543d6bf674bf648153e8eb09a4c4bc6f0e54a11e116fbd8f89b59a7cb96352"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:dcb7fa4af71881057af41b11095de588644aa05ca60de89e013d2d95aefb3a27",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "7b803597f0b0d9b44378f221a1163d817741a9ffdf88a159e9777baa05a3b29e",
+  "inputs": {
+   "cert": "dd5e3d212a9465da218d86ffd8fb546c3da9684c7d4a53a84e4352f52ab23de1"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[challenge]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5e7642e3196922b029bdff8022d8dfebe78e592565ff546bd095e6bfcb5c5825",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "key-bad",
+    "sig-unverifiable"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7c1ba39fdfebd48bcb68be3f38566b4742ea7a1a3cb7beae8670bec93b1927e8",
+  "inputs": {
+   "cert": "5b1a86aa1cd8c241abdec681a8016cae0100cf603861bc702c6df86c17f5fe64"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_small_order_key_cannot_be_rescued_by_a_matching_signature",
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[small-order-issuer-key]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e5a40068e8200add488a3888e30019b592bd1fe593140e837457f5bf13bed386",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "key-bad",
+    "schema",
+    "sig-unverifiable"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7cf9c9d0bb5f31740f3510d8569f4a5812fe5d771674cff87511f3abc64a119b",
+  "inputs": {
+   "cert": "0271dafa63973a6833770acc4a61f45b7609e9cbe81a41bb822d33d386605e3d"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[issuer-key-with-base64-padding]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:857fa27424bfbaefe3e636d473f13c6ab23b5b7795cab2306a4f5db412e910c8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7e7bbba3ca412d2c1fc957b483ad42d0ff27fbf25a5cc02b9c25f5fb39f8a5ab",
+  "inputs": {
+   "cert": "5ee66486125e88c30c5377d7f0d8b9f5162cfb65460bdcecc75aee89ad57b265"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:58509377908b24a75e9076b7e17cb7cfe270f5d5283f50ee6add9882bdb3bc58",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "version"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "7f764ae368656342e2bdfb520e18cedac67cb61316dda0c23745357afebc5b99",
+  "inputs": {
+   "cert": "ccd9eafb99d0f8c11e9e11927ddad917d29757a3be8b483dc7b4d746bcf01436"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[future-schema-major]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:20f6762ae8393b88da1d076e419c5d7bfbad92fc94e711e83c0aecb60efb0484",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "7f980b9f1b86e83518779820960f945eb58d64a5cc9f10b4d5d8e242800aea43",
+  "inputs": {
+   "cert": "5a7a57c9edba817e95a70ce09b5c19cac1e98e3f5c3bb06d3f343e50e7eb76bd"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_materials_are_not_checked_when_the_recipe_is_absent",
+   "tests/test_v8_cert.py::test_prereg_round_trips_every_kind[noise-plan]",
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[prereg]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type",
+   "tests/test_v8_log.py::test_refuses_a_key_retired_at_this_index",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+   "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root",
+   "tests/test_v8_verify.py::test_diff_of_a_non_fingerprint_is_a_mismatch"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a643c2225cfe072f7bb572dbecca3a8a46b9b9523be91159af8934e3e42be6e0",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "81f54222c3c36d5cd98499b6ec5ebc75475e1a5efdb33f8c7cbd0de933eb4a9e",
+  "inputs": {
+   "cert": "04eb81e8f5ebc802ad0f4aa986ab9a835928c23ebba8974ddf786bff32f7de23"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_entry_bytes_are_canonical_with_no_newline_and_no_cr",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_meta_records_index_id_type_and_public",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_refuses_a_duplicate_id",
+   "tests/test_v8_log.py::test_refuses_a_ref_whose_type_does_not_match_the_role",
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref",
+   "tests/test_v8_log.py::test_refuses_to_append_over_a_gap",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+   "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a31de01dab73a9c8138d3ea39fdf2fb71da80ecb9b79ef240b1c73d08e69a247",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "82626f1a7996f8869513932aa0a8eeb32e23364bbfbe0ab8dc7d7f1ae21881c7",
+  "inputs": {
+   "cert": "08ec9c525dbf50f2ad7a0498a3900d90348064f01ed309a6424d8846cf0f5c5d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3afe0a22d933d61d815aeb0b7e1519fa9897e1702180a891206c0b19375deea5",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "827d795558c904e3c897d9a9302cedcab4d756f919aa666f09d021778d081e35",
+  "inputs": {
+   "cert": "02945f0e9417f50b4fa1d31014885638c2d7e425561e90a2aa84aeaa256c31d2"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3bda6f49502f57da9c375386552b1bfa28d4ed306b271668ebb5de7795f5a29c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "82e0316ee8a18f3beebd27e0bdfcc2455f8c1a50b43d3561d77fc267cd701e2e",
+  "inputs": {
+   "cert": "7f6a6541842d070ca4170ab04bbcac6e8790f8bf3a3f0ee685865a5e9c412cf0"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_is_another_subject"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3ec10c26bc9114de2684a711d42a82c017ef8e2ce4b2f914bcf966bb18ffc2ca",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "82f02d81fe680c942f25be2eef86218e754d6cd97c580ae1fa82c5360366922a",
+  "inputs": {
+   "cert": "7c6e05a7bb8c26f015448c612e4450ddcc054eef09e8dea901b58b40f02473f3"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_padding_side_no_batch_is_large_enough_to_apply"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fd89f68dd3fcb4d3a2cf51689b8283258266651c9db80e269db8ed495f166b1a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "85f9391583b6a834f321d4c60f6cbc14395151f9455399f30e9e76fb25350f0b",
+  "inputs": {
+   "cert": "7d5a91e0dd9eb04a7617554763a5f5c8851b13690f1137535f5c8ee9ce44d71f"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_role_allowed_on_a_fingerprint_is_accepted[sensitivity]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:2a3b0495b74308f2f5641244dee3ef405518e752af4dab4453abf0cbcd1a92e5",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "86f956ad473c24d78586a372667159fc5c2fee3fd6a866167a9c8aeef95e8eae",
+  "inputs": {
+   "cert": "edc6028b0130d63eeeb3abf1d87c79abcb26bd7c6cc07e1b4d9d31f12f80ae0d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fe37ec95a6de1c8b7ecd3769385a29fa14ed4b6624e22988c873894d11ab6202",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "87c7cb3e5bdee2fbda6f55af63b0aa0539c4b35877f9459b68871f88cae587c3",
+  "inputs": {
+   "cert": "477bc7484f4788509c4709ad7c64108368318358a065cfbaf2d8b7f3c309fdc5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_redacted_battery_under_a_public_cert"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:875813cb8d9fa38e3e234148072b6ebe44d8ceda5e05da6d6efb90f4190282ac",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "88e5e1223017590ce7cd2f144a8887a51e2b579cb02bda1562a9f2e9cb36776e",
+  "inputs": {
+   "cert": "f99800530e364f71d248fa997b4ee2eb7386cf01f818054815372d1ab43f4c40"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_battery_round_trips_every_kind[fixed-v1]",
+   "tests/test_v8_log.py::test_a_challenge_against_its_own_subject_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_is_another_subject",
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_ran_another_battery"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fc7754c9073ef9ef85900f81fda9153cbab7ebbcb720578afe2fe61716a9144f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8a42388dc684235b476f0c2f13411e85c6f409cb7be86331730a3c70d6c9abd3",
+  "inputs": {
+   "cert": "c45000718976ac31248683f3e79dc727a790fefc1eb51b9dcd7b793d146c071b"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_can_never_reach_the_check_without_its_plan"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:44f36a6f79563b9a594c4fc4d03b7dbf1ae9afc2885e1fbdef037a811378c190",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8aa5efa48bb3bca685b65d549dee0b12beab7aec2198db39b7444690f0451d95",
+  "inputs": {
+   "cert": "444ac7d0c01f925e9615f3a4e7f4a4b1d44582d04e991dce0dfcfcff6c638d6e"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6722abf542f7b506222da720f9d795ed4013a0625325d970777d34f61829c581",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8ab014e29ad1bdfe576ecff8484050c8118d5a3b24f9dc5f59e911fc87ef9541",
+  "inputs": {
+   "cert": "2d2db15afe1cdbfe7cb8ba956e074bb36fb9c269533270fa82ac9f9cf385dca9"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e1f428872b6509801e017e82ff44aaee9cb93394fddf34fb9b846e4741e153c8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8ad05faddd74fae2abc016335aa5d41b08921f6e140c202b57c082fbdfcdf567",
+  "inputs": {
+   "cert": "259600e0c892074f8477b21bacf6c5768bb92b453c9429bb029418dd5171400f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4f50b00b8eb4f573ac2e4c846a57ff52e70015897d02fe4d990e36f6c9cad34b",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "8cd7f8cf7779a8a565f8a366f4df3f1edf3c3a2d21a953d5880235ff0f71d220",
+  "inputs": {
+   "cert": "2734efbbda6a14a363d2792f38842eb6e0a0b84a52c2f640c70b53b560f13432"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_canary_selection_fields_are_forbidden_outside_canary_v1"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:715f8e33974a02ab025e1094aec6daa6a58be188a950c193c0d01df0ca26dd95",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8d17ad9772ab81f323391db7004977ad3e09b15390c9a4d12b0b303f4328f701",
+  "inputs": {
+   "cert": "6e242a2ac9fb44caf2fec956fec26d82ce101945a62b559b250d078c8a70dbc7"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ac3d5a18025e15b274b406faef8e465f4e3704dc37b45a523e2695e55c2c4868",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "8f9f18794d365f50cb32fc1d02b044f856b950790be4b7872fed0a11f484b126",
+  "inputs": {
+   "cert": "6dbc2501ccce0b9282a375b635289c221c7a8c1068b448aa23afc0e0ee95bfda"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_seal_commitment_is_a_commitment_and_not_a_ref",
+   "tests/test_v8_cert.py::test_a_sealed_prereg_and_its_reveal"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e149f7da2bd8d387462ba575903fbaa31030dc64f078a879e01b91655f0974c9",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8fe7c96d79bd7b91bbafadd7f326a9dcd1a620dd0849491584a2e4a8eb25a540",
+  "inputs": {
+   "cert": "c018afeafa6d3de7edf6dbb7fd64607a229ba024b8dbbdcf7c8d528bf5dcbfb5"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:18b56f35ae81bd1740d4137e3f1311b4a015ec9b7e9ff58fc79a11675c854d69",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "8ff52b3ebb78546e4661a6322d84c9f3d15a3fff3ae9225c149450c204521cb9",
+  "inputs": {
+   "cert": "3ef3e031cbca5337706a5d58a94d710b3360ec6a1f6bcad4130b8f715231212f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:189e5e0f5c8b4b5c8266e49c53b9a3f1aa28df8d58ae51b2d1dd77b504444475",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema",
+    "sig-undecodable"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "906b4042a4a2aa230d71c626de34107eb80b701c41ba685043dc52c5ba4d3dbf",
+  "inputs": {
+   "cert": "ff2b86f48b44362d22cc194cb3dffa94d0c4f39dc527fc20d1a201bd9324ac14"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[signature-undecodable]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f984f674928e291bb9ba35f61e396eaba6a537078df4e1c07680ca6e4c27b6f0",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "908cecf381b8651ebdb2636d9a3bcdb4b239766187ed9373c9775110376cfe45",
+  "inputs": {
+   "cert": "026f1d7cee7f32376f33b21ebbbc9d332b4374240b8cf1c2e0a11515faf554fa"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d5a4d4e31f45d4115a0f337e7c1536b1bd0a76ad9a0bce6d15cc5e18618e8184",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "refs-missing"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "91a08f47488378beb9788d8d122b16db13b04b83600d6a207eec01a673fb6335",
+  "inputs": {
+   "cert": "f9c5686270a10a9215c13d534458edc2b4518803c031d0087c7d31d9519feca4"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_every_embedded_id_outside_the_content_hash_paths_needs_a_ref"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:eee617cf44984be0796493edac7bab003de95fbe5db3f04c71bab32f4383d916",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "9248332b999ad680ba8a728a774692fda56942b3d0366bc08d18b721c37b7e67",
+  "inputs": {
+   "cert": "0acf5b7fa750e0cfb2d4254b37a3db71fa993db9215803f7a7787661c59bd269"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_battery_round_trips_every_kind[pool-v1]",
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[battery]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type",
+   "tests/test_v8_log.py::test_a_canary_battery_needs_its_selected_against_in_the_log",
+   "tests/test_v8_log.py::test_a_canary_battery_whose_selected_against_is_not_a_fingerprint_is_refused",
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_a_root_battery_fills_an_empty_log_with_no_ref_to_resolve",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_entry_bytes_are_canonical_with_no_newline_and_no_cr",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_meta_records_index_id_type_and_public",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_refuses_a_duplicate_id",
+   "tests/test_v8_log.py::test_refuses_a_key_retired_at_this_index",
+   "tests/test_v8_log.py::test_refuses_a_redacted_battery_under_a_public_cert",
+   "tests/test_v8_log.py::test_refuses_a_ref_that_does_not_resolve",
+   "tests/test_v8_log.py::test_refuses_a_ref_whose_type_does_not_match_the_role",
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref",
+   "tests/test_v8_log.py::test_refuses_to_append_over_a_gap",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+   "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:08284b9766036139f7dcd6bc3419d2b5acf58b071881e6559d88481520e4fe51",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "92bf5e092b44fcce6adab553a81142d783e8b1767dddc499492e79f0ad6eac18",
+  "inputs": {
+   "cert": "934b7facb9a175d3a36e561b5f256323997a0cade3a91d530305211871024a7e"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5d51c5758a9c835005ea6db4fe3123e69c2ad0443eb27d2adf6d064ee3e0bf55",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "954693b985e0938af3f46b2a3aef1843debf877a2aff72555b73e0a069079ef2",
+  "inputs": {
+   "cert": "5ba8ffa858279fb79301aba2ff3fa2f88d772bcfe6b7db2469293cff98fb968c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:7f2da5fd6b447e79115f36ef5015bcd25b1a202b6ec63c7213fe52f6e0cc1960",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "969777b6985bf4711fd4b70c664a5f5b7ebfe0dc721234941fb802cd4fdd3f42",
+  "inputs": {
+   "cert": "70415e3b6c08c7fe02a63e29498c6e0eada1bc98ff5529f291905dc330754046"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e6b1e31f2c533825980f43aa605dd8e686c39a53c98baa07339fb2d07be79b37",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "982e533649935d06ee284135bd2377e8e87eacd908584f1a69f642b230ca6279",
+  "inputs": {
+   "cert": "71b75d15deba0a899ddf4352250b977961f1a90615d520a235ae8d083f7b28b3"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:2732aaf77039c558eff948d395e3613da976f9b2be8376898864cc00b925fc8b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "98493a808c81bb43219a98667e573f78a3bd9288d8c7f524458dc03791fa58d6",
+  "inputs": {
+   "cert": "58e732c8ede89d8339e7d0fc247462373e9814334b34cc44de1dd5d37c656ff1"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_can_never_reach_the_check_without_its_plan",
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_do_not_record_a_declared_factor_at_all",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a8682b1e9b0471ca96a1fccfda71cdeaa816391fe7910c115200d619b9f1676a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "99cf123581d046f3515cd1bf2f58d1cc344681bd089495dce0e9ad25badf4f3f",
+  "inputs": {
+   "cert": "d490694bfee9ab2bad07bd5580f9f6700a1432df078572a84eb69aaef369d1c0"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_fixes_no_r_is_not_checked_for_completeness"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:07d16e63591205d6e928534585253335f1a5d0907495c359e825ab26acd80d9e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "9ea8a3316c3cf318de633c41ad013fb6ebe7ba094f6de91ff7be69a208b47589",
+  "inputs": {
+   "cert": "549387a0f2427728d9b8864872a9a5329116b21f737322bff39c65a7aafa21d8"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ce9028a01286e8b09606c04b964e11c11d2ae487dc9fb55323e0f56086393e92",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a085e7cf48ae1c114898977d8fd17b1df9d409c9409d8170b9d5e992c06e6815",
+  "inputs": {
+   "cert": "9e712a484cc69cb1e9563ddf302ac0b307c90f9f062c096b3b7e4e9074d1fdbf"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_without_a_usable_floor_on_the_left_cert_exits_two",
+   "tests/test_v8_verify.py::test_no_floor_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[no-floor-inconclusive-2]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6264b6cfc911109956c361b6f5fbbae77dc6e0fa36b46792be627ad16301da4f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a271aa2b642df412985ad15af24cb34f789336b9564ad3613709bf11f5344c1e",
+  "inputs": {
+   "cert": "9e4d9b4a0ef38842e4f2e1fca92cee3a076b67739046fa2672837a1d70aaad31"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:612ad0703069b12cd95353221446a9d6acf43e73f5a9814af421027c2014ce89",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a3141652b629887a46ee380353c5d0639334b127e7e6a0ccf3ecbbd2a79d4d0a",
+  "inputs": {
+   "cert": "23bc7952368462265ba4169c201bc7ac6ae5cbeea444fd12cbb89ff590ffcd85"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:573c6cd612ebd7ff1fd7e8e078154f7c39398eab89b0be4dff1d3a1aa6879c7c",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a341d32e81e3157dea3e9ff5156d384c5071795e5cf725c9979d6ef295a7aa49",
+  "inputs": {
+   "cert": "dfa4ec9e8e6694fbaebc5caa4bea1bd79072b35b718e04cf9348e57dc2430c4d"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[created-is-not-RFC-3339-Z]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f796acfaebca348043f1d58ff8666ff4d63022d45b5b8db1c0ec302d28258c4a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "a66d094471fc675d28b864d575fb4014c666736f825048e2de2faf8ff16e870b",
+  "inputs": {
+   "cert": "9eccfaddebf926145b890b6f8e3c220a119663eda2e122c752dd80d391b9ab33"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_is_another_subject"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f69aa3c62c4e7875d02e4b0d087eeeafee30876deccc61e6e17deab3b8e8ee43",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a66d91dbc39c082bb1eae2b1d89895c9e496ffbf8907b7091bd38d5fa77e430c",
+  "inputs": {
+   "cert": "06909c3d958253491057755dcc08dfd0e3a9a93a8c6d490c891d5940adf530c0"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:16357b73a46d8799ac2b1c7d1a6aec0d43c9f3bf2b48eb69a8f325972c6148e7",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "a69a9d190f8e8c0a6d14422892f4402e2bf9d30e834419c0f7713cf0b016a814",
+  "inputs": {
+   "cert": "a8081a552ca64f9be7bc4f22c34d9398e1ddd8b01307567d0e33e1e7ce367073"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_factor_that_turns_nothing_at_every_run_even_when_the_runs_differ"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d7780fa6d08f898baa6a64f31599f3c78efe81324027f9425a398710b235e561",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "sig-bad"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "aa801fd737fcee7356bbfd5259bbef1767223c84a78c5044c271c27b06e9100b",
+  "inputs": {
+   "cert": "bf2fe01b3238d1f7a34cec74776ae24908e6aac585d144deaa0678df179e29e5"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[wrong-key]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9b4a74f071d78ed1177ebf73594c6c00739e35939cb9b73763cafea097dcdd1b",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ab7c9922f5ea412d4afec21315da9e0c814244a1d49d40b47fee2132374a4efc",
+  "inputs": {
+   "cert": "821936c6e79fb7788ae5fdff5c7a0d3e98debe2d04e268505eb91105b84c01aa"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_anchor_flips_are_counted_beside_the_verdicts_and_do_not_move_the_distance"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:120180c0f1700b93e4f72d4bfb951898e0d9ce20387b6bee26bbdecbcc8adf61",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "ab93e55ca7fd881d54d174cd65822987bdc8332d8a010e83162978471a373495",
+  "inputs": {
+   "cert": "c725a25f490037569522c09e7be5a729329c210e0fac802d9a685b7a2f15a773"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9ebd5112cf59d131292d4981fec7da457dc4e01559310bb5b64013a81855126e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "abc9b724ac7081f45e594852e16c657c15b0c98fdc47977343f937bdcd4d2cec",
+  "inputs": {
+   "cert": "6c1514ceecca57c548c8712e905d58de58a113ac423e48afef0dc8dadc694991"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_fixes_no_r_is_not_checked_for_completeness"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1908067d94db8e917a9d1cd71434487c53f4ecba03b9b7800dff77bac389a676",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ada29a120855fbadf07046f3cff0a9d41b6df969991c093625b26fdb268b3a8f",
+  "inputs": {
+   "cert": "636d7ce8af2e8ddea81a34b6db45d9718cbad86ca1440a518440eca6aa2ed800"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_fixes_no_r_is_not_checked_for_completeness"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:db4f57eb11f82b9b96b632ca79480e03ea1d088577a13164afbb692b60b089db",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "af490b80082afd4f8ab8d1891c10afe7575c650659c30f703b5aa489dc9cb958",
+  "inputs": {
+   "cert": "c6da793d3bfa677d8bc28a94070a5563b8fecb13e3fd5a018b8a887b48c3cb27"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_batch_size_the_item_count_does_not_coerce_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:643397a1d52b1d1a4ed601878e6547b34766e6a5303599c77b2a257d5c27fb54",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "afc797bfbb61f73a7205ab2bf9bf50387c0a1f216c6e8d4aac5347170222da4a",
+  "inputs": {
+   "cert": "1f8b90847c55d038415cfa59111915f1be04d8fa1b6b5016ded19457d802700c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_challenge_against_its_own_subject_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fd40626b1a79b14d6f18bfebb6bb07e488054acbb5a4f4098d371b252fb406d5",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "afe825bd850b64f85e0b6b8e0e221df5e4cf26520a455ab7145025f5add43413",
+  "inputs": {
+   "cert": "9b82c4d3ab9ecf2b08b26278a677075a7496789cf55ec040f146fab93032a3b4"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5d43f37670b93210e34fbffb57e8beb6b0f216ac7b497bed3b88a822f03b19b4",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "aff22e95eacfd9eb996c0b81058ecb54e15af98b78a255e64e0d0093fff79729",
+  "inputs": {
+   "cert": "acb50e66e99113c5a95a7651cbf2d73a393821aa70373e316647551335cd09c4"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fcc09fc06f6066ef7892e9e2da95684627949d1fd17f3e61a71f2630474a3bed",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "b0cd1d4eb73ba0de04ecfc7e7a46afc9802e861addc385040dbed890e7e9c3d6",
+  "inputs": {
+   "cert": "ca1df5a1b925829da2efc995644cb69c766814063c6c0f9be76ec44484de1e80"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_fixes_no_r_is_not_checked_for_completeness"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:c2856d67bc2be661bb11e5b0e8dec5d36c58d5029db8f6ff4436174f46d7a653",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b23d8ea91ed15f7fb449fa521db0bc43da1c26d465d44571b6aef5071eefe5c4",
+  "inputs": {
+   "cert": "7e13f87000ed9913e254475dcd53113f97cfb41163d6a610c286f5692591595c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_no_process_here_can_apply_is_reported_and_not_refused"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1101a8692b2ae2a1aab39eb0acd208784766d9068ad95cb0d6af5dbc1855f472",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "challenge"
+  },
+  "family": "cert",
+  "id": "b3c888c1b1994d68e86b4cf9e860b99d1c24ce51d7e1bfa7f1c0d8d6d5eb628a",
+  "inputs": {
+   "cert": "8f5de8ce5f4c64ca9239c17a0d909e5bdaec01984c32dfa86ca6dc325576d02c"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[challenge]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6ad15fc4e253d69c8ffd0b0d662cd3150d10b9b41ec5e5b3f1613f6b248ce43c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b44d248d54cbd02387e0868325155c69f61e8dd177204e3cdd064b85ca7dcd78",
+  "inputs": {
+   "cert": "c6f3d26a5f2bc624b3af4c0f11e0d4f90ae29a72e3715104840e9d9282f41a21"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_fingerprint_with_floor_and_sensitivity_round_trips"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:2c2003413db6692466add4836d28943e44347c2d89a4cda7da9bae5916361d9d",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b49cd100189744b5a755b13f7c42819b8c84bd241910ba46e7e19c7e11b8cef5",
+  "inputs": {
+   "cert": "3c52186bc12cad8e4a3af090c37d00a9e2ce53b14ddb44dbdfc2531dbbe08231"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_challenge_against_its_own_subject_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_is_another_subject",
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_ran_another_battery"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:8894fa13ea28ffb4e66979cbfc3431b3c50bda4e200f9402a3af7c051587d95d",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b5fa40db2f42fbc99192efe00326230ae32b68ad366503af727be82f0d9503c8",
+  "inputs": {
+   "cert": "4c84b0332402283bfd3286f478e2b857a3e067ab93c2278a05f519c596208b81"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:28526992ce0f3d40daf973fbe1ea2fb9f03fe9d443bb9ac7869816146be27f93",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "b6c64c7bb589d2a4f0d2fdceb03b53faf1f963e679549956c16565bfe0b8ae6e",
+  "inputs": {
+   "cert": "02fa01b04de24e2682c92f09390928514c1dc61c37cafa9028e1208cd6e267d4"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_log_without_a_roster_file_admits_any_issuer",
+   "tests/test_v8_log.py::test_refuses_an_issuer_key_outside_the_roster"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:56c3455b82be89c7cc09f6f70c1ff534f319393fc08292fde24d05a31c1210aa",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b872ac8f742d86e2a2bc5b641c1ac128418901ebf8e8c960d2d08423949a2628",
+  "inputs": {
+   "cert": "bf0e897b4ab750c7fab4bc4c152aceae79a85dda453050edef19d2c44726b40c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_ran_another_battery"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:81f142fd4283aeff696e7bc8a0a567c202f7400cb5955737b91356416b8d34cd",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "b88cb4f6bc61260eb96ba9b63e95feb75cbd4e658182b9ff9af2faa667d39996",
+  "inputs": {
+   "cert": "a7c4584f410eb8c8eeb37f5052181d833f43c08f3b76c7b0855a72ffd0af6c9d"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_canary_battery_needs_its_selected_against_in_the_log"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a3832d7ee112c1e92773dbd05f4b8a4fcda7b7be03e40bc396fa12d7c8c26bba",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "sig-bad"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "b9d8072d63606861e4966413f5abec33ec3ba760ed60250471398d7ccdf58a55",
+  "inputs": {
+   "cert": "55fd6d403f1f68e6478b3c3d7656e66cc5e0014c7a77e3992239935a849fa7bf"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_cert_signed_by_the_wrong_key_exits_four"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4c13206851f002e950ad11717bce800254200a0d0b16be0ba1fbf59247f83b28",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ba4421e7e6a08264665d5bc621f2c257ce9ba472ad04fba6a3fe3c6aaa0fdd68",
+  "inputs": {
+   "cert": "5176919b39b80aac574772faae14a76a4930fc38c797d323b75b17e2083150ad"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ba7cf6393390b20bbc3cd82b467bd7262fb2f49ea8228217774b96fe2aceb2c1",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "key-missing",
+    "schema",
+    "sig-unverifiable"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "bb73effc8524730c029895eb6a4cc2e64e3bc560b9d9e0c3186e9466bbcfdafc",
+  "inputs": {
+   "cert": "eace116339e83cdd572a548103a736351cbc4f0848c5d0828dba126afa1b85d6"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[issuer-key-missing]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f05e360058aad586e3666e1a976ce7a5354841950ad6379c73062ca7fb151d0c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "be7e722219d5e3d31fe87107c53d223dbfdb4dcf0f02d060c5919b42d2b202a3",
+  "inputs": {
+   "cert": "06b3ad13323d9473d5c938c87b42d3d4179ea3a9ed0f2ef4f7ab7b7b0bc37589"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:478a337f3398286df7346de8a2128ee19e54e65101cef093f2d50930437d64cc",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "becc5474bcf41ceb7ac6dc492d8014b527b99f464e95b32fbfcbd6a14f9dfd99",
+  "inputs": {
+   "cert": "a055775e87e8d1b44ae209afa094737a0c3dc1d5ae07ea8be40f885541c63bad"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[ref-role-outside-the-enum]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d4c042678a4e378956bf553da7b2dd8ef2f2dbd7b415b48abc633e7661deee76",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "c113c2b99b7b10c5a0ed771d7d9bc38d9aac9514df7cf043c0ce5dede345fd3e",
+  "inputs": {
+   "cert": "873c45e4b29e428b17124809c9ce077593910577bbca7ba02b61b5b24b75d0a1"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_canary_battery_needs_a_selected_against_ref"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9d66eae6f11dd535bb06dd0e55045dcda0fcdd8b7d749748edf405bbefd52e3a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "c1722e297fa18b0eef2abc30e0c9ddff9dcbe65eaccc5cbb6badb7251bca0d38",
+  "inputs": {
+   "cert": "11fc1964658b9c5a3e34e8122c7ca027559797e5af5fa3b804c70750ac866f9f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:42b860d8953bcdfbc1d4e6edfc36532b1d5881dd4d238eb7a41828a29b1f9646",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "c33edc3b23b520621188c3aeb99006aee3b9fc09e78715f382003741eca0e6ed",
+  "inputs": {
+   "cert": "f0c4948201084097fdae6ffb9d5521577408118162004c57ec880925262efbbb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_canary_battery_needs_its_selected_against_in_the_log",
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_blobs_are_content_addressed_and_a_wrong_hash_is_refused",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_entry_bytes_are_canonical_with_no_newline_and_no_cr",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_meta_records_index_id_type_and_public",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_refuses_a_duplicate_id",
+   "tests/test_v8_log.py::test_refuses_a_ref_whose_type_does_not_match_the_role",
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref",
+   "tests/test_v8_log.py::test_refuses_to_append_over_a_gap",
+   "tests/test_v8_log.py::test_runs_under_one_noise_plan_are_not_new_baselines",
+   "tests/test_v8_log.py::test_sth_is_idempotent_but_refuses_a_reused_tree_size",
+   "tests/test_v8_log.py::test_sth_refuses_a_malformed_timestamp",
+   "tests/test_v8_log.py::test_sth_refuses_a_seed_that_is_not_the_log_key",
+   "tests/test_v8_log.py::test_sth_signs_the_current_head_and_verifies",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log",
+   "tests/test_v8_log.py::test_verify_sth_rejects_the_wrong_key_and_a_forged_root"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:91d2fc487d758a8b938706ce1669b6b50c12672d78e94d9824ddae5eaff11a62",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "c4773681dd9d6d69a4689cf4288093676786a3a8c4b522cc6398b25d45889ab7",
+  "inputs": {
+   "cert": "ad54ab9644b4e9a5348e130e33c53f47ea8007cc2dd5d50689bbf6ba094a8a6f"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b5ba11fc64c419599a93393d7dcb38026b80a5ed2f68f4b2640e50ac0e81b2b7",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "c6c6eb050235ca4e161219bd05176a2bd9ee33aeb14cc8427ba7c89a2750f37a",
+  "inputs": {
+   "cert": "f95c74e393e175bf17a205710ade4d37df5ed02cabedd6046835597ca3f77237"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_an_item_order_permuted_at_batch_size_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:936fe7c5729e54a7e31b7e68ad5a93202be44c7724352d86eb8bd9ec3683c107",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "c78d0585b17c9d98f9e5112478d1e73ca6bc73575499657a959df828ffef8f16",
+  "inputs": {
+   "cert": "52b2e4e39dd659735267ad3f3bbab03ad6ddf2d8e1092beae324dfd20da2be1c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:32d1f67891ecd9156151bc31a5a18cd927c7e5586a6d3c7e45a509e146969bcf",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "action"
+  },
+  "family": "cert",
+  "id": "c8315e5a917e13a05d84cad4641d53164a04a590a9e8d9355845d572c48a2376",
+  "inputs": {
+   "cert": "b3ac67c3d7f3bd9e848858ac598942171b5518708a85abf694e52e3ed7371f18"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[action]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4ff2deeb3a10669ec3362a48135e4cbcca3e5af08c7316ea024593b59b3673bb",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "c868bae2a6cfb914bead8e07a93d78c32cb1d9055653c01886039b348322be52",
+  "inputs": {
+   "cert": "588d1a49f2ab2606f19c7e08dedbcd7e583bcfed5f8a775de40542d32741369e"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3b4a501d82f9723ad9b778a51a5e6e6714b4e3058c893ff3415ec73955b03f01",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ca5f930fc78b618204bb3220ece8eca865b267aa166e271e595bb3a6c9388d3f",
+  "inputs": {
+   "cert": "4beefa5f7ee4d0f88236dd4b945825c076bc2b7b3ed018dc91dab7208d59b8eb"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_redacted_battery_under_a_public_cert"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:94ea359e2a64dc5f9794bee5aef2d0050a1fc249dced3aec4a49f06a74c90703",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "caf8197e1942656e5f81d220d6d83b994b566585d4d2771bff57680637b4ec04",
+  "inputs": {
+   "cert": "cb835daf91bc841ed259e25dab81882341d9de5f08ba2534577950d314a0b6bf"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:62f440d88a1c0f39be811ce7dcb90c4f0f5e05f0fbf699109881fb8b1b33cf5a",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "cbc5ebe31f1c53eecd496394e0f8951ac71ec68200193bc16c621f7bac27f183",
+  "inputs": {
+   "cert": "eb9bd812174f603ba0379757ceb5949c7b8245b3f39c36cd15b25b50cba3bd0c"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[response]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:e805b3aa3a2b0a171f1963312c5657b1449a2930c3dc959ca177edadc8cea9eb",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "cc70ec9e2b8b601e4ce056422a313a5f8e2d31b2424ff7921ec7cae00b9bfd60",
+  "inputs": {
+   "cert": "0c841280b601b80310a0470db3e82c1c509af83bc2993af8688412395827d8b7"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_canary_selection_fields_are_forbidden_outside_canary_v1"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:189e5e0f5c8b4b5c8266e49c53b9a3f1aa28df8d58ae51b2d1dd77b504444475",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "id-mismatch",
+    "sig-bad"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ccdb15b6da0d94c69bbcc5a127be86b4e3c8a213d46fcb9620814918bc450030",
+  "inputs": {
+   "cert": "bf38fce926a17ec26c4078fe90867aa266af7fd87cf1ae18bd4561cf0802ee4a"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_ok_is_true_exactly_when_reasons_is_empty",
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[tampered-byte]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b97a7d657904663c8089fa72f6618f8e96377f2627e2e3dfb0479e4022974d7c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d1e3fe462f99a7fd75586c5ed473d116266dae62a361a970967c3961fa01a8e8",
+  "inputs": {
+   "cert": "5f37d76f4f1288b8da12ee24682cf90fc1964c329f5281416920e365fa68a1b7"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_same_without_a_sensitivity_receipt_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[no-sensitivity-same"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:472bd4c0185a23546ab2a397e51af52df7e9f0f5faf24e132ea6eabfd7495b8f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d3e961478e0430dd22360d8f5205d4820e7ae92867e1aaaa4a40d47fc0180613",
+  "inputs": {
+   "cert": "8e8dedf089ea4a542b459917a3a25104c1ced3270be471b67444a0ee7f22993e"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_redacted_fingerprint_round_trips_without_output_text"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f12ed3938488565767ae7c060ed0a62b2156fe2a6879bdb32cf1810df80b6448",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "battery"
+  },
+  "family": "cert",
+  "id": "d4b5a5ca3ed5d2071df3fa2eafec08d7129a5587272bb24ca140b73620ef47ad",
+  "inputs": {
+   "cert": "2b48b5ed92b454b3ede9d1f123fda80fc2ffe1fdc0b83551d9de55156dbdf7ff"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_challenge_whose_own_fingerprint_ran_another_battery"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6718471c0571c16e37ef36687eea55b7f1e41bd2d6c16a70197eb677e848d8c4",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d51c872f48ff82a7f7b508cd14e7a7b2712705ff39d211744975fa3c496f2a2d",
+  "inputs": {
+   "cert": "62e4ebf93ca43cd1ba720c721bd9995c7682bd916f55b39de4a46a0f5cf046a1"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:4a489e38e2fbacc87edda476be7c6ff7bd56159cfcabecd66918d49a126811ce",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d5c343b93e3f9cc49fd3cbf6676f9d39f4289ff6eee354df0f02c18d385b6abb",
+  "inputs": {
+   "cert": "c1d7b43307c2720b8b54b44d8ac3359680ec27bd7a019551d16bd90fcb8a2dce"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_crlf_injected_entry_reads_as_tamper",
+   "tests/test_v8_log.py::test_an_inclusion_proof_does_not_verify_against_another_head",
+   "tests/test_v8_log.py::test_consistency_across_three_heads",
+   "tests/test_v8_log.py::test_inclusion_proofs_verify_at_every_historical_size",
+   "tests/test_v8_log.py::test_mirror_of_a_clean_log_verifies",
+   "tests/test_v8_log.py::test_mirror_reports_a_deleted_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_a_head_signed_by_another_key",
+   "tests/test_v8_log.py::test_mirror_reports_a_pinned_head_from_another_view",
+   "tests/test_v8_log.py::test_mirror_reports_a_reordered_pair_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_an_edited_entry_as_tamper",
+   "tests/test_v8_log.py::test_mirror_reports_entries_no_head_covers",
+   "tests/test_v8_log.py::test_mirror_reports_two_heads_of_one_size_as_misbehaviour",
+   "tests/test_v8_log.py::test_refuses_a_second_baseline_without_a_previous_ref",
+   "tests/test_v8_log.py::test_verify_entry_accepts_every_entry_of_a_clean_log"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:b275174258c4ae8fb4d8b548dd49298d048d6fb571fd6874b86693320075170b",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "action"
+  },
+  "family": "cert",
+  "id": "d5edd96bc6078f4329f96c0384fd3de90aa847991cf8d585f4c4c79c3f19c012",
+  "inputs": {
+   "cert": "848f6989cfd6a8b6e9b5b621c3bacfe79077791284c3af8a5396d22d2c5eb807"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[action]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:f36b1199199a31f0ae1a347e66f1ee97863c2164f93265de21a6ce7fc7461c8c",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d645db48797ae754f53d85048faeaf50543dfdb41d2e6f5ef0182ce6145e91da",
+  "inputs": {
+   "cert": "45828cc024ca9c59adad640b2c2f6a8bce72a14910313844f1d1caeb7c8ad102"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_zero_floor_over_two_computations_appends_and_is_labelled",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[2]",
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[3]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs",
+   "tests/test_v8_log.py::test_refuses_a_floor_that_drops_a_channel_its_runs_carry",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[alpha_single]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[distances]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[floor]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[pairs]",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_signed_numbers_are_not_its_runs_numbers[runs]",
+   "tests/test_v8_log.py::test_the_whole_preregistered_set_is_what_appends"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:6b0545c80ae0cdeb0deeae0f7b3ce701731b4e2339f79f197bc12cdecdafc85e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d6475460c272585a3d0d2d509ca660c05577960b14a9ff0e6162672e4f61f182",
+  "inputs": {
+   "cert": "eb9f26fb586d2f94cfc96a3bad0e128cc872ceadca38d9b336b1963ab664fa61"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:0c34ee60c5459045954e894c480abc945364e49fc9b04b3b584a22111579365f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d7423d0739eef99dacab6415f42ea142ef7e7dffe5d2360face9323f9dbaccb0",
+  "inputs": {
+   "cert": "1954232fa186eb4474685cd26c9a4b83eb21995af60a2aab4dc9a60562b2e04c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_floor_run_whose_nuisance_label_contradicts_its_own_recipe"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:55f8fbf98e52897e3c180c4bca822db8296caf7bf85517f93d38e46946b1b745",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "d779359314c9bdfc6b8d52c27e85a5ea6d06cf6428193ac933732ad0de272ccd",
+  "inputs": {
+   "cert": "4585b91f93559f4019859f4f7124b218fbd3a3a56a60011e51071949595e7dec"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_floor_that_varied_every_declared_factor_is_appended",
+   "tests/test_v8_log.py::test_refuses_a_floor_only_some_of_whose_runs_record_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_never_varied_a_declared_factor",
+   "tests/test_v8_log.py::test_refuses_a_floor_whose_runs_used_a_value_the_plan_did_not_declare",
+   "tests/test_v8_log.py::test_the_run_certs_of_a_floor_are_not_themselves_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:410630bcdf43bb8702fd192371bd52a78bed43a71996a27c00620374c92356a9",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "daf51648ebbf91cad2cf5a05887bd87f2667f2e6dd6cc3e670d09624fe65b9e8",
+  "inputs": {
+   "cert": "42482f67a2bbdcb6e246c794e0b33a69324b02ab2c207f3131dc3fbe596718a6"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_factor_with_one_declared_value_commits_to_no_variation"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:d8e25421ddc72398f287173891345fc7015afcb986c0fcdd82c5047a22a7a518",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "db131c204730db48812ab81e7328618cbfee16e2a3c002254c9b87c6a88415bb",
+  "inputs": {
+   "cert": "cfd0f0406cf1c6b2ed5fc04bed22dba881109e8fe0554fdce5dad11d351a9fe8"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_a_plan_that_declares_no_factors_is_not_checked"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:aa1818aca4d167f6c8dd60b9d9f3c70f03e3a8ec4bfedd708ab238d3806a150f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "dd8e3345e4f494c3d670bb89cc6d52faf283de92629ba69d1509e5683d79a3d3",
+  "inputs": {
+   "cert": "c0ce9070ba890c64574d6815dc0cfbb906367041cbc2a26cb96cfc0a4afbc362"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ad9b2a66e7b78ece1b86d52cb0a8ed6df46232767dfcdd1882abd15b5e6efab8",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "dfa713e5bb4591ef9994ff242c86cbf7aae5d776fa029c40ed9e3d5f90af2895",
+  "inputs": {
+   "cert": "12278b2864ce298cab5c5207a035ca3bf600b79b5fa913f493ef16c52bccebfc"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_plan_whose_only_factor_declares_a_single_value"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:700c9d010306a729befa064cdff7d4d3cd40f7a3b239e008510f2537c6c1324e",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "e110d0b1a28340538795b9b474abd94dc1a41f2d4bdf35c409a8af417b51061e",
+  "inputs": {
+   "cert": "98cf562aa960fa4c83b2c01da1a44bb85eafe67f437dcf80c2a5c36e607fade0"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_no_proper_subset_of_the_plan_s_runs_composes_a_floor[1]",
+   "tests/test_v8_log.py::test_refuses_a_floor_over_a_chosen_subset_of_the_preregistered_runs"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:8782aeb35980a132cb978d951300da40ce58d99e1b850cc58f3afab9ec644c58",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "materials",
+    "refs-missing",
+    "schema",
+    "version"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "e1f443fbede202d49110865d111db87e7011533bcab76d91529296a157e145bb",
+  "inputs": {
+   "cert": "208097720fd769563bcb44d0cee3b690ac0221f5f4ac9b3b5bc6e409b9c41a43"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_check_collects_every_failure_rather_than_stopping_at_the_first_one"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:3a2f5fc61dfd9ee4314c43860bc515bfb9433d6ed3f5c979a2a1bd624ec54551",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "e41ba1e5bf3116690b32f66247ecd993b9c1039c9cfe1a76dfafb1d0a6e3f1cf",
+  "inputs": {
+   "cert": "5ffaa4f77cd06f9f7a6ce323d05a224867a9258772e9437e28acc75a36b04245"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[confirmatory]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:fbf57f4640260501bfdf87b52e01b30af0cecf754d760628f9c33cc49a02f844",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "e9bb5ebc1d418848d19ca9d11ea206dc2bb25d32e162f9ac7ad5ecd02118af5d",
+  "inputs": {
+   "cert": "013c85d3c91ff27be883d8a1e0d75bd877711188e0419f17ca4b0cc8a0a091f1"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:5aa7bdce709a6cb86c99c22f0348ea2d0981c44f1e8cdbb507410b9f43c67218",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "prereg"
+  },
+  "family": "cert",
+  "id": "eb660641ff3daad433640c74653c5dedb0d495602c894606b5900799ff45859c",
+  "inputs": {
+   "cert": "dae577b811d7263e6253d27a9cdde7592097e5b61cd77e7ac197ce0d06b50e21"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_a_sealed_prereg_and_its_reveal"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:210b0ac2071a8ed1ad19efe4e949c3ce6bdafb11cb6a9457c3badacd412a1257",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ed1963de6578081379d2d6d18979e59070bacde9f6d561fe4236be03f3551fe0",
+  "inputs": {
+   "cert": "bead865ad7c262366671075c235dffd26f461e8ae9c114d4243640f742fad74c"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_the_same_item_order_factor_is_accepted_where_a_batch_can_see_it"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:9154d090a3cd0024ea190f5bb0505aa42e3bbcec1e56b0cb4acaaaf9ab2aeecd",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ed87dc40374a4608e4f20c0f54876c374d19f131b77f5602405c66b50e8131d4",
+  "inputs": {
+   "cert": "343a8ea46d279d4ac15e778015e44c675b599184b4a3ae5b73819abfaebc0a60"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_diff_that_differs_on_an_identity_field_is_exit_three_not_identity"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:cff53c5f468802fc8a36cbd01a8badc26f54da49ade35af58bf09fd821072f26",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "materials"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "f55966256363f25b905c51363f2e925970202918ff9c8e29a7f1c0cdb6270333",
+  "inputs": {
+   "cert": "5caef068b47db20ee6090cf9a8f134ecebbcfb67c8a7e1b3e5b45b391e10373f"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[chat_template-hash-mismatch]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:a9cbed0a24ef03745783d71376d8a2eb8b2c9b6e6dd1e8e6540b7a3ec0cfdf9f",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "result"
+  },
+  "family": "cert",
+  "id": "fb5b2eda654a00aa21f19c7a360e20cbe75c620cc5a486dbbf52db4dd83cdcfc",
+  "inputs": {
+   "cert": "04b5e9149cbae76803ff30ef54a4e3b481f82068ffddf4185b63aa9655142e73"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_result_round_trips_every_kind[pilot]",
+   "tests/test_v8_cert.py::test_round_trip_sign_then_check[result]",
+   "tests/test_v8_cert.py::test_the_fixture_module_builds_a_valid_cert_for_every_type"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ea12c9967ac692b342e200ad9bc552d258c796e9728f64b3eba95c0bcd9dfa89",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "schema"
+   ],
+   "type": "sublog"
+  },
+  "family": "cert",
+  "id": "fc57f568a209114c48c2dcf970828b1302ccb4050fbd3b7347cb2c81ea4d55ff",
+  "inputs": {
+   "cert": "5aa38df0a563260d2b35273b66f2f64fc98cb5372785cb2e88c48777b2aa04b3"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_schema_violation_per_type[sublog]"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:1a748f9668b5ccaf5298b1e6ef02076ac1705e9ac5cd8b0fe1d34c3f91d1224d",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "fcfca9d7e8d5a7d2d73f23f59d0e6f49ec8999afc09f446c41d365fa1199d8ad",
+  "inputs": {
+   "cert": "979d2570eed5f24227be6072d40355b49c4ace85958cbd8258ced207d344247a"
+  },
+  "sources": [
+   "tests/test_v8_log.py::test_refuses_a_batch_size_the_item_count_coerces"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:de0c1d5a64975b88c0d1e215519521756d0bad3d19f0fa7ae8ca0b891b05d8b6",
+   "ok": true,
+   "outcome": "check",
+   "reason_kinds": [],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "fe133fff6cf4b65acef3191d40ea488c7e9142a48f3ac4bc1e2e16d6fbfaeb0e",
+  "inputs": {
+   "cert": "c9375f84089edf0bbfde5b36688ada87d2381073b76371096ebd687eeedc56ea"
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_mismatch_via_a_different_battery_exits_three_with_no_distances"
+  ]
+ },
+ {
+  "entrypoint": "cert.check",
+  "expect": {
+   "id": "sha256:ce936009b9441c058b7745bff68913ce5e84607d334ab15f1b813390eef9e0dd",
+   "ok": false,
+   "outcome": "check",
+   "reason_kinds": [
+    "materials"
+   ],
+   "type": "fingerprint"
+  },
+  "family": "cert",
+  "id": "ff147a2f88087ff8fd2ad6a3c002ee0cf10d4e48c78ba1950fafb372b91c431a",
+  "inputs": {
+   "cert": "dc39e39699c159794b03e106d0acbc37ee380a17a85b260b927fc4e637385127"
+  },
+  "sources": [
+   "tests/test_v8_cert.py::test_one_negative_per_check_reason[env_lock-hash-mismatch]"
+  ]
+ }
+]

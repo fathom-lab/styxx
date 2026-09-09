@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:challenge",
+  "title": "styxx/8.0 challenge cert (spec section 9)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "challenge" },
+    "subject": { "type": "object" },
+    "recipe": { "type": "object" },
+    "refs": {
+      "allOf": [
+        { "contains": { "properties": { "role": { "const": "target" } }, "required": ["role"] } },
+        { "contains": { "properties": { "role": { "const": "own" } }, "required": ["role"] } }
+      ]
+    },
+    "body": {
+      "type": "object",
+      "required": ["per_channel", "coverage", "environment", "subject", "recipe_core"],
+      "properties": {
+        "subject": { "type": "object", "required": ["kind"] },
+        "recipe_core": {
+          "type": "object",
+          "required": ["battery", "decoding", "chat_template_sha256", "system_prompt_sha256"]
+        },
+        "synthetic": { "const": true },
+        "per_channel": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "distance": { "type": ["number", "null"] },
+              "target_floor": { "type": ["number", "null"] }
+            }
+          }
+        },
+        "coverage": { "enum": ["within", "beyond-floor-coverage"] },
+        "environment": { "type": "object" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:fingerprint",
+  "title": "styxx/8.0 fingerprint cert (spec section 3.1)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "fingerprint" },
+    "subject": {
+      "type": "object",
+      "required": ["kind", "environment"],
+      "$comment": "ENV-ABSENT. `environment` is required here because a fingerprint IS the record of a run, a run happened somewhere, and section 2.2 has that somewhere recorded because it was OBSERVED. Without it the mint-side guard was reachable only when the issuer chose to be checked: `styxx fingerprint` routed `subject.environment` through `runner.observed_environment` behind `if \"environment\" in subject:`, and `schema/subject.json` requires the block on the `weights` branch but not on the `alias` one -- so an alias spec with the key deleted minted a fingerprint that named no environment at all, observed nothing, and carried a floor whose `not_covered` was empty. Section 5.4 reads an empty `not_covered` as covering every environment there is (`verify._coverage_diff`), which is A-COVER arrived at by omission. The mint no longer has the `if`; this is the same rule stated over the bytes, for a cert the mint never saw. It does NOT make the environment identity -- section 2.2 keeps it out of `S_identity` and section 5.4 is where a difference lands.",
+      "properties": { "environment": { "type": "object", "minProperties": 1 } }
+    },
+    "recipe": { "type": "object", "required": ["battery"] },
+    "body": {
+      "type": "object",
+      "$comment": "`synthetic` is NOT in `required`, and that is deliberate: a measured body does not carry the key at all (styxx/v8/cert.py, \"Decisions\"), so requiring it would require every honest cert to declare itself a fabrication. Pinning the VALUE is what a schema can do here, and it is done -- `synthetic: \"no\"` and `synthetic: null` are refused here rather than left to fail closed in `cert.is_synthetic`. What stops the key being DELETED off a mock's body (C-MOCK-2) is not in this file and cannot be: `cert.check` re-derives MockRunner's item digests from the cert's own subject, recipe core and item ids and refuses a body that reproduces them unmarked.",
+      "required": ["run_index", "nuisance", "items", "channels", "redacted", "tier"],
+      "properties": {
+        "run_index": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "nuisance": {
+          "type": "object",
+          "required": ["batch_size", "item_order_sha256"],
+          "properties": {
+            "batch_size": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+            "item_order_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" }
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/item" }
+        },
+        "items_blob": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+        "channels": {
+          "type": "object",
+          "required": ["exact"],
+          "properties": {
+            "exact": {
+              "type": "object",
+              "required": ["hash"],
+              "properties": { "hash": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" } }
+            },
+            "seqlp": { "$ref": "#/$defs/flag_channel" },
+            "topk": { "$ref": "#/$defs/flag_channel" },
+            "resid": {
+              "type": "object",
+              "properties": {
+                "present": { "type": "boolean" },
+                "n_layers": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+                "profile": { "type": "array", "items": { "$ref": "urn:styxx:v8:schema:common#/$defs/number_array" } },
+                "mean": { "$ref": "urn:styxx:v8:schema:common#/$defs/number_array" }
+              }
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "present": { "type": "boolean" },
+                "n_layers": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+                "converge_layer": { "$ref": "urn:styxx:v8:schema:common#/$defs/number_array" },
+                "mean": { "type": "number" }
+              }
+            }
+          }
+        },
+        "noise_floor": {
+          "type": "object",
+          "required": ["plan", "runs", "covers", "not_covered", "per_channel"],
+          "properties": {
+            "plan": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+            "runs": { "type": "array", "items": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" } },
+            "covers": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+            "not_covered": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+            "per_channel": { "type": "object" }
+          }
+        },
+        "sensitivity": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+        "redacted": { "type": "boolean" },
+        "redacted_battery": { "type": "boolean" },
+        "tier": { "enum": ["white-box", "black-box"] },
+        "synthetic": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "flag_channel": {
+      "type": "object",
+      "required": ["present"],
+      "properties": { "present": { "type": "boolean" } }
+    },
+    "item": {
+      "type": "object",
+      "required": ["item_id", "token_ids_sha256", "output_sha256", "n_generated"],
+      "properties": {
+        "item_id": { "type": "string", "minLength": 1 },
+        "token_ids_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "output_sha256": { "$ref": "urn:styxx:v8:schema:common#/$defs/hex64" },
+        "output_text": { "type": "string" },
+        "n_generated": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+        "token_ids": { "$ref": "urn:styxx:v8:schema:common#/$defs/int_array" },
+        "prefix_token_ids": { "$ref": "urn:styxx:v8:schema:common#/$defs/int_array" },
+        "seq_logprob": { "type": ["number", "null"] },
+        "topk": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "required": ["pos", "ids", "lps"],
+            "properties": {
+              "pos": { "$ref": "urn:styxx:v8:schema:common#/$defs/nonneg_int" },
+              "ids": { "$ref": "urn:styxx:v8:schema:common#/$defs/int_array" },
+              "lps": { "$ref": "urn:styxx:v8:schema:common#/$defs/number_array" }
+            }
+          }
+        },
+        "margin_by_position": { "type": ["array", "null"], "items": { "type": "number" } },
+        "stay": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,1251 @@
+[
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "07a27b431aa2b57099057f311f717872c5b1a6e808eaa21f33ee96aac0c868ef",
+  "inputs": {
+   "confirmation": 0.100000001,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_drift_needs_both_runs_over_the_floor"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "beyond-floor-coverage"
+  },
+  "family": "decide",
+  "id": "0ee3566c44ed59a7a09107bbd96da1b5d32b1289bdd9ba0b74c555759811a022",
+  "inputs": {
+   "confirmation": null,
+   "covered": false,
+   "distance": 0,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_outside_coverage"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "1174cc78b1a9197bedde101d62b5f1a67d7dce097f9fb1eb49745e93aa12b511",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.10000000040000001,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestRounding::test_comparisons_use_rounded"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "11a315b3318382666ecfbe3b97be7c9335c9c2f6fb6920a4f0170f400c0bbf7e",
+  "inputs": {
+   "confirmation": 0.125,
+   "covered": true,
+   "distance": 0.125,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same (transient)"
+  },
+  "family": "decide",
+  "id": "170ccf107202c90de7f2df5a324e16e3e9c7d7c69131884caa8743fd9b58e4c3",
+  "inputs": {
+   "confirmation": 0,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_transient"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "1ad200c057129a1a3b6979a41ecea6664c4e0c5ac7f8767d47174a0a47bd2d3f",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 147.163434006,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "1c8304f03f3a719c73afc0f78c1d2f615af084ffbf198f1d30a8d0b750796776",
+  "inputs": {
+   "confirmation": 0.25,
+   "covered": true,
+   "distance": 0.25,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_batch1_floor_zero_then_a_single_flip_exceeds"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "20c4f0a9976f31e86fd6edb057205c979c3d175259a09dcb5b7cbedd5433c198",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.125,
+   "floor": 0,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_skew_via_harness_version_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[skew-skew-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "2a7251ebb10b9173c353e783cea0cabf94643e61c536a589891baf5e3e1df4cc",
+  "inputs": {
+   "confirmation": 0.1000000006,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestRounding::test_comparisons_use_rounded"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "2dc0703eadd54548037269a30903cde6661a77ac277beef1239bc8dd8e7fc826",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 23.047210753,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_a_confirmation_run_that_fails_exits_five",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_ref_without_confirm_never_reaches_drift",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same (transient)"
+  },
+  "family": "decide",
+  "id": "31269b8211f166946c4398f51311544c21e832fe86f022f05fc1f2b555e65890",
+  "inputs": {
+   "confirmation": 0.10000000040000001,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestRounding::test_comparisons_use_rounded"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "31b898af09d060e7b9fbf2ed497286de54592741d7b2e7123c56eb50acaa33c4",
+  "inputs": {
+   "confirmation": 141.955363722,
+   "covered": true,
+   "distance": 141.955363722,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "33c5059810b07abedbe5ea2763d30a6f71ce50a1d60acd1285f1048bae390e8c",
+  "inputs": {
+   "confirmation": 0.178793467,
+   "covered": true,
+   "distance": 0.178793467,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "382dda61ad1a05ea089147459b6e6f832df5d47383c7d95378bffbb28729ed3c",
+  "inputs": {
+   "confirmation": 0,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_skew_when_instrument_differs_and_d_exceeds"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "inconclusive"
+  },
+  "family": "decide",
+  "id": "38d8f881d7184726e52140be8cbefe814e205ee89ad3714d7bbd65e1fae61907",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": null,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_distance_none_is_inconclusive"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "3dc03ae14a656087e1d5c49818432e87b653a4891178da0cc5cbff86e18f1b24",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 1.129652057,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "3e211a56bf6a8aded5fd91416e93005efabd6ec343fd05f72406979847dadc31",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.05,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_same_at_or_below_floor"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same (transient)"
+  },
+  "family": "decide",
+  "id": "4288985e75423007ec10ee665be2e3f0cc44ea3982417002a6d9825908fba7de",
+  "inputs": {
+   "confirmation": 0,
+   "covered": true,
+   "distance": 0.25,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_batch1_floor_zero_then_a_single_flip_exceeds"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "4465497aaa6da7a2e4375ab736b70c93ecc36850545d36054a56a4f41afe17fc",
+  "inputs": {
+   "confirmation": 0.2,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_skew_when_instrument_differs_and_d_exceeds"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "44f8538cf736c2bfad6f1a317bceb3a4014cdcabf90202621b77fcb44dae1569",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.178793467,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "484508cb7132f7d8e9b70af70c07a5f84d5672a92b56983618fbc8a5aea10d7d",
+  "inputs": {
+   "confirmation": 0.9,
+   "covered": true,
+   "distance": 0.1,
+   "floor": 0.1,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_same_at_or_below_floor"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "4a07da49c78e018e917b45cf34312d9371b0a87fe26bb34f3cfeef3e4911f014",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 44.788908555,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_never_says_drift",
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "beyond-floor-coverage"
+  },
+  "family": "decide",
+  "id": "4a99f1bcc3fa6d13b73ac07b67664210d15e13f2649d148630616345c009f664",
+  "inputs": {
+   "confirmation": null,
+   "covered": false,
+   "distance": 0.125,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_from_beyond_coverage_says_so",
+   "tests/test_v8_verify.py::test_beyond_floor_coverage_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[beyond-coverage-beyond-floor-coverage-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "4e235b9b881c9c940715bd0a19e3849335bed8a8e462b7e0d83b6f467b665daa",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.1,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_same_at_or_below_floor"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "4f0ab23fd5ae854bc966f25809c5bb99f207c66e6903e1a8419cc5493c6a6bc6",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0,
+   "floor": 0,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_skew_below_the_floor_is_still_same"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "4ff23fbb4caa0c950ae4166466d27d123545a1ed889c1a7fc2b8cb326f85ad5d",
+  "inputs": {
+   "confirmation": 0.2,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_drift_needs_both_runs_over_the_floor"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "511e2ac063b857c335ac993af1e2be29cb5cb71ce707d652a1afa0f7b9821f56",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 1,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_exceeds_floor_without_confirmation_gated_s5_02",
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order",
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "5e534eaa9e446c85df5987d2e96b008ee07d64f32f3a5fd840c14605c89be362",
+  "inputs": {
+   "confirmation": 12.797167489,
+   "covered": true,
+   "distance": 12.797167489,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "beyond-floor-coverage"
+  },
+  "family": "decide",
+  "id": "6607a109169ef9228f935b6dbc14d72c14bf834496225f4303e940d7179e7377",
+  "inputs": {
+   "confirmation": null,
+   "covered": false,
+   "distance": 0.169245542,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_from_beyond_coverage_says_so",
+   "tests/test_v8_verify.py::test_beyond_floor_coverage_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[beyond-coverage-beyond-floor-coverage-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "682f8c57ce92614734208a7482f831c450a775e93a14acad3133dfe39523f6a0",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.169245542,
+   "floor": 0,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_skew_via_harness_version_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[skew-skew-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "6bc8bf7aebb5b7b0dae9be84847968a8f9d15fa0a686dd24ee1f1f7b3ede4a64",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.318601811,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_diff_never_says_drift",
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "71414b980828e4342d794cf005b7b6d690192c6dea923c677ee2f8b9b140fe4f",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_exceeds_floor_without_confirmation_gated_s5_02"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "76565cd1e6c6ad2a1c722e8f07d28b77422b4462a3fb4b1b99b064db34a4ba4e",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.25,
+   "floor": 1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_a_noisy_floor_absorbs_a_distance_inside_it"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "82826c0e0ee9090fb07be6e1ec602a0d6af49c0a94b8cdc24a1efc35d7cdec68",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 141.955363722,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "inconclusive"
+  },
+  "family": "decide",
+  "id": "84d56608897a5d4892a038033f40fc97bad4a429fd91c75b9262978b55e43708",
+  "inputs": {
+   "confirmation": 0.9,
+   "covered": false,
+   "distance": 0.9,
+   "floor": null,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_no_floor_is_inconclusive"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "inconclusive"
+  },
+  "family": "decide",
+  "id": "8931317b7fc23ad19b2ede484efb11c8bb747b668d9d1c2f5e26a967b7bb1e06",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0,
+   "floor": null,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_no_floor_is_inconclusive",
+   "tests/test_v8_verify.py::test_diff_without_a_usable_floor_on_the_left_cert_exits_two",
+   "tests/test_v8_verify.py::test_no_floor_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[no-floor-inconclusive-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "8962c058d27b7fdb63469063365f36ffbd9e7c1a7ba76b49e8eaf294cd51b5ed",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 23.047210753,
+   "floor": 0,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_skew_via_harness_version_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[skew-skew-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "8a355d0e210b8b4a006a55d1f7882d6c733ec1343605f6dd8c2b913340c1b8b8",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_same_at_or_below_floor",
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_a_noisy_floor_absorbs_a_distance_inside_it",
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_batch1_floor_zero_then_a_single_flip_exceeds",
+   "tests/test_v8_verify.py::test_a_callable_resolver_and_a_log_shaped_resolver_both_work",
+   "tests/test_v8_verify.py::test_a_channel_present_on_one_side_only_is_skipped_and_never_moves_the_exit_code",
+   "tests/test_v8_verify.py::test_a_channel_that_cannot_be_compared_is_inconclusive_not_an_exception",
+   "tests/test_v8_verify.py::test_a_revision_crossing_diff_is_also_cross_subject",
+   "tests/test_v8_verify.py::test_an_alias_verdict_carries_the_section_2_2_sentence",
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels",
+   "tests/test_v8_verify.py::test_anchor_flips_are_counted_beside_the_verdicts_and_do_not_move_the_distance",
+   "tests/test_v8_verify.py::test_cross_subject_diff_is_labelled_and_can_never_say_same",
+   "tests/test_v8_verify.py::test_diff_of_a_cert_with_itself_exits_zero",
+   "tests/test_v8_verify.py::test_every_channel_name_in_a_result_body_is_a_known_channel",
+   "tests/test_v8_verify.py::test_make_result_cert_accepts_role_id_tuples",
+   "tests/test_v8_verify.py::test_make_result_cert_checks_as_a_signed_result_cert",
+   "tests/test_v8_verify.py::test_make_result_cert_is_byte_stable_for_the_same_outcome",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_bad_issuer",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_body_whose_ids_are_not_in_refs",
+   "tests/test_v8_verify.py::test_make_result_cert_refuses_a_seed_that_is_not_the_issuer_key",
+   "tests/test_v8_verify.py::test_no_resolver_means_no_ref_resolution_in_diff",
+   "tests/test_v8_verify.py::test_ref_same_exits_zero",
+   "tests/test_v8_verify.py::test_same_without_a_sensitivity_receipt_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[no-sensitivity-same",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[same-same-0]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict",
+   "tests/test_v8_verify.py::test_the_report_carries_the_coverage_line_with_every_verdict",
+   "tests/test_v8_verify.py::test_the_report_never_uses_a_claim_word",
+   "tests/test_v8_verify.py::test_the_result_body_carries_every_field_section_6_1_names",
+   "tests/test_v8_verify.py::test_the_rounding_is_recorded_in_the_result",
+   "tests/test_v8_verify.py::test_verify_outcome_fields_have_the_contract_types"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "8c6dd95424537f3c698be75f31459ac42892d85952a9c28f6ce0ea99a5d8a592",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.125,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_a_confirmation_run_that_fails_exits_five",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_ref_without_confirm_never_reaches_drift",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "8e9fb39326583df51577f31aebc8333f0fd974706db0c43a2ff72d58c93e049f",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 12.797167489,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "9162c09279068c22016c7c5267dd2a16acdf0af9e7a9546b6de25419a0e2c5ff",
+  "inputs": {
+   "confirmation": 23.047210753,
+   "covered": true,
+   "distance": 23.047210753,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "955f1d55128d88a043eb10b935581edb116f84cc8bce8565701589bb3868d062",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 7.026753516,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "error": "TypeError",
+   "outcome": "refused"
+  },
+  "family": "decide",
+  "id": "9594623268a886f5dbc8d84ac7d016a8c50542e70bd21b35c8b95a748bf34045",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": "0.2",
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_refusals"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "9837d2217c063628f6c0434e9c88ed34ac0dce9696e53db65c5d95050e0a10b8",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.040434759,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_cross_subject_diff_that_exceeds_the_floor_keeps_its_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same (transient)"
+  },
+  "family": "decide",
+  "id": "9fa922a42e70bdffb66c92cb21db3712b7ec41027010aba68dbfa4db01182e79",
+  "inputs": {
+   "confirmation": 0.1,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_transient"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "a8a517c820eda3d9d609ca04f8a3417332db8a1f4738c8a957f4610837748a3d",
+  "inputs": {
+   "confirmation": 1,
+   "covered": true,
+   "distance": 1,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order",
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "ae23c5c4f15e84a30f5f8c8ed0c3476bd77bc49002302bab47f2078ef0c314a0",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 1.067163902,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "b552d89367794f4c20adff74e828c602df4a83fe8c2089f6290c0a444b46a1ad",
+  "inputs": {
+   "confirmation": 1.129652057,
+   "covered": true,
+   "distance": 1.129652057,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_ref_identity_exits_one_and_names_the_field",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[identity-identity"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "b733af87e3f1bdc3bafd3d646ecd882180a9f1bdaef27dcb915c9efd801717a7",
+  "inputs": {
+   "confirmation": 1.067163902,
+   "covered": true,
+   "distance": 1.067163902,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "be824e794eca6239fe9d29a4e337ff86587e9b6325b0e1ca2d818246a1e859bf",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.25,
+   "floor": 0.5,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_the_ratio_is_the_quotient_when_the_floor_is_above_zero"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "c966556774fee4d78db602fcc341fd5a13c48e78e4f876b911acedc7da52e95e",
+  "inputs": {
+   "confirmation": 0,
+   "covered": true,
+   "distance": 0,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_an_anchor_flip_still_moves_the_log_prob_channels"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "c9d94b865e90c8a87be3cccc2b4dbd82ebc877734178306ed524e1ed18e2e886",
+  "inputs": {
+   "confirmation": 0.169245542,
+   "covered": true,
+   "distance": 0.169245542,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "drift"
+  },
+  "family": "decide",
+  "id": "d77273e6980d21b00380ffe6acd01b5b5cede9656b323a724750534d53aca2df",
+  "inputs": {
+   "confirmation": 147.163434006,
+   "covered": true,
+   "distance": 147.163434006,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_identity_names_every_differing_field_in_spec_order"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "beyond-floor-coverage"
+  },
+  "family": "decide",
+  "id": "dc939637a0445554e7e88fd26da5a576bfb2f24e3f618086fd92011f652ea884",
+  "inputs": {
+   "confirmation": null,
+   "covered": false,
+   "distance": 23.047210753,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_from_beyond_coverage_says_so",
+   "tests/test_v8_verify.py::test_beyond_floor_coverage_exits_two",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[beyond-coverage-beyond-floor-coverage-2]"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "skew"
+  },
+  "family": "decide",
+  "id": "dfc194b61852e4e8d4f584041f2742b4e5ff220ad02512869ac95072378065c2",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.2,
+   "floor": 0.1,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_skew_when_instrument_differs_and_d_exceeds"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "e0cf1729ddee28d2f952a5b9124578e2a0c8a77d5465622ee5680ede76ec2be4",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.1000000006,
+   "floor": 0.1,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestRounding::test_comparisons_use_rounded"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "beyond-floor-coverage"
+  },
+  "family": "decide",
+  "id": "eb8f4714aa1e464824f26d7d5d51886e3b3929757008880495aba3cd6589ffed",
+  "inputs": {
+   "confirmation": 0.5,
+   "covered": false,
+   "distance": 0.5,
+   "floor": 0.1,
+   "skew": true
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestDecideTable::test_outside_coverage"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "ee282464b4031a74cfe927b2d8fe2b35992a22e679cddea3f51b1abc2d75839d",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.169245542,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_challenge_cert_built_from_the_body_checks",
+   "tests/test_v8_verify.py::test_a_confirmation_run_that_fails_exits_five",
+   "tests/test_v8_verify.py::test_challenge_body_is_the_section_9_shape",
+   "tests/test_v8_verify.py::test_make_result_cert_from_a_ref_run_checks",
+   "tests/test_v8_verify.py::test_ref_drift_exits_one_with_a_confirmation_run",
+   "tests/test_v8_verify.py::test_ref_without_confirm_never_reaches_drift",
+   "tests/test_v8_verify.py::test_the_exit_code_table_end_to_end[drift-drift-1]",
+   "tests/test_v8_verify.py::test_the_outcome_exit_code_matches_the_verdict_for_every_channel_verdict"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "exceeds_floor"
+  },
+  "family": "decide",
+  "id": "f4855dadfe813dd573cdadcf99d826ae51396b54b345826f547cbf889a602585",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.25,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestFloorThenDecide::test_batch1_floor_zero_then_a_single_flip_exceeds",
+   "tests/test_v8_verify.py::test_diff_never_says_drift"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "inconclusive"
+  },
+  "family": "decide",
+  "id": "fac0b81361f1a7463fe860f884c7cb1cf7ae5e093648ecb59aea2b7b523d3406",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": null,
+   "floor": 0,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_verify.py::test_a_channel_that_cannot_be_compared_is_inconclusive_not_an_exception"
+  ]
+ },
+ {
+  "entrypoint": "floor.decide",
+  "expect": {
+   "outcome": "verdict",
+   "verdict": "same"
+  },
+  "family": "decide",
+  "id": "fdff11b952f0c300851cdd44cf776a992b22f821b73c06f9c5231e8140c6829b",
+  "inputs": {
+   "confirmation": null,
+   "covered": true,
+   "distance": 0.100000001,
+   "floor": 0.10000000140000001,
+   "skew": false
+  },
+  "sources": [
+   "tests/test_v8_floor.py::TestRounding::test_comparisons_use_rounded"
+  ]
+ }
+]

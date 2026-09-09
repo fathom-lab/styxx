@@ -1,0 +1,25 @@
+[items] 64 prompts reused from the first run
+OK exit=0 (want 0)    0.8s  key generate --out
+OK exit=0 (want 0)    0.8s  key generate --out
+OK exit=0 (want 0)    0.8s  key show --key
+OK exit=0 (want 0)    0.8s  log init --log
+OK exit=0 (want 0)    0.9s  battery pool --source  <- root battery
+OK exit=0 (want 0)    0.9s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\pool.json  <- index 0
+OK exit=0 (want 0)    0.9s  prereg noise-plan --runs  <- THE PLAN: fixed before the runs, which is what stops a chosen nuisance set
+OK exit=0 (want 0)    0.9s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\plan.json  <- the plan is in the log before any run
+OK exit=0 (want 0)  193.0s  fingerprint --subject C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\subject_bf16.json  <- five real runs, this time under the plan
+OK exit=0 (want 0)    1.0s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-run1-c66cf4565c83.json  <- floor run run1
+OK exit=0 (want 0)    1.0s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-run2-8611aba4bcd3.json  <- floor run run2
+OK exit=0 (want 0)    1.1s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-run3-561b48195644.json  <- floor run run3
+OK exit=0 (want 0)    1.0s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-run4-97277d4c147e.json  <- floor run run4
+OK exit=0 (want 0)    1.1s  log append C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-canonical-e37430d240d7.json  <- the canonical fingerprint, carrying the floor
+
+[FLOOR] present=True
+[FLOOR] {"exact": {"alpha_single": 0.09090909090909091, "distances": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "floor": 0, "pairs": 10, "runs": 5}, "seqlp": {"alpha_single": 0.09090909090909091, "distances": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "floor": 0, "pairs": 10, "runs": 5}, "topk": {"alpha_single": 0.09090909090909091, "distances": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "floor": 0, "pairs": 10, "runs": 5}}
+OK exit=0 (want 0)   51.6s  fingerprint --subject C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\subject_fp16.json  <- the same weights at a different precision: a declared change, not a nuisance
+OK exit=2 (want 2)    1.1s  verify --diff C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\firstlog\out3\fp_bf16\fingerprint-canonical-e37430d240d7.json  <- THE FIRST REAL VERDICT: bf16 against fp16, judged against a measured floor
+
+[VERDICT] {"command": "verify", "exit_code": 2, "mismatched": [], "mode": "diff", "report": "styxx verify --diff\n  ref: sha256:e37430d240d79f53db556b0402944ef83ca22869e30c365adfe77e72d723ab59\n  floor_owner: A\n  cross-subject: precision\n  coverage: within  covers=order  not_covered=hardware.gpu\n  exact  distance=0.062500000  floor=0.000000000  ratio=-  exceeds_floor\n  seqlp  distance=0.058564664  floor=0.000000000  ratio=-  exceeds_floor\n  topk   distance=1.407087824  floor=0.000000000  ratio=-  exceeds_floor\n  anchor_flips: 0\n  sensitivity: none on record\n  overall: exceeds_floor  (exit 2)", "result": {"anchor_flips": 0, "confirmation_run": null, "coverage": "within", "coverage_diff": [], "covers": ["order"], "cross_subject": ["precision"], "floor_b": {}, "floor_owner": "A", "floor_owner_id": "sha256:e37430d240d79f53db556b0402944ef83ca22869e30c365adfe77e72d723ab59", "identity_diff": [], "kind": "verify", "mode": "diff", "new_run": "sha256:7c472181c872c56b2e00b0340bf23d3739b21dd3cde46b82e223133f3a1c3d79", "not_covered": ["hardware.gpu"], "overall": "exceeds_floor", "per_channel": {"exact": {"distance": 0.0625, "floor": 0.0, "ratio": null, "verdict": "exceeds_floor"}, "seqlp": {"dist
+OK exit=0 (want 0)    0.9s  log sth --log
+
+17 of 17 commands as expected (279.6s)

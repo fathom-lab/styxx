@@ -1,0 +1,31 @@
+[env] torch 2.5.1+cu121 cuda=True
+[env] gpu NVIDIA GeForce RTX 4070 Laptop GPU
+[env] snapshot 299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:00<00:00, 19.56it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:00<00:00, 19.56it/s]
+[load] bfloat16 in 7.4s
+[run] ref_bs1_natural        bs=1    164.3s
+[run] repeat_bs1_natural     bs=1    173.1s
+[run] bs8_natural            bs=8     26.3s
+[run] bs32_natural           bs=32     8.2s
+[run] bs8_perm_seed11        bs=8     35.9s
+[run] bs32_perm_seed12       bs=32    10.2s
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:02<00:02,  2.53s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:02<00:00,  1.31s/it]
+[load] float16 in 3.9s
+[run] fp16_bs1_natural       bs=1    166.8s
+
+variant                  n  flips  identical_lp   mean|dLP|    max|dLP|
+ref_bs1_natural         256      0           256     0.00000     0.0000
+repeat_bs1_natural      256      0           256     0.00000     0.0000
+bs8_natural             256      9             0     0.05047     4.0518
+bs32_natural            256      8             0     0.03276     0.7445
+bs8_perm_seed11         256      9             0     0.04611     3.8880
+bs32_perm_seed12        256     13             0     0.04261     1.3641
+fp16_bs1_natural        256     17             0     0.07439     4.2866
+
+union of nuisance flips : 20 of 256
+precision (fp16) flips  : 17
+  of which already nuisance-flipped: 10
+  precision-only                   : 7 -> ['arith-052', 'bound-011', 'bound-015', 'bound-033', 'instr-029', 'instr-033', 'instr-039']
+
+receipt -> C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\probe2\receipt.json

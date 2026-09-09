@@ -1,0 +1,292 @@
+{
+ "address": "id = sha256(canonical_bytes({\"family\": family, \"inputs\": inputs}))",
+ "blobs": {
+  "count": 590,
+  "encoding": "base64 of the value's RFC 8785 canonical bytes, keyed by sha256",
+  "file": "blobs.json",
+  "sha256": "3a8d1f3ecc71fbc973fbf2f34cb2688a507cb115f70f17b2e0051c6983341da3"
+ },
+ "contract": "styxx/v8/INTERFACES_layer2.md section 10",
+ "entrypoints": {
+  "cert.check": {
+   "family": "cert",
+   "vectors": 219
+  },
+  "distances.exact": {
+   "family": "distance",
+   "vectors": 146
+  },
+  "distances.lens": {
+   "family": "distance",
+   "vectors": 7
+  },
+  "distances.resid": {
+   "family": "distance",
+   "vectors": 17
+  },
+  "distances.seqlp": {
+   "family": "distance",
+   "vectors": 118
+  },
+  "distances.topk": {
+   "family": "distance",
+   "vectors": 114
+  },
+  "floor.decide": {
+   "family": "decide",
+   "vectors": 61
+  },
+  "floor.pairwise": {
+   "family": "floor",
+   "vectors": 412
+  },
+  "log.verify_consistency": {
+   "family": "sth",
+   "vectors": 43
+  },
+  "log.verify_inclusion": {
+   "family": "sth",
+   "vectors": 33
+  },
+  "log.verify_sth": {
+   "family": "sth",
+   "vectors": 18
+  },
+  "merkle.consistency_proof": {
+   "family": "merkle",
+   "vectors": 51
+  },
+  "merkle.inclusion_proof": {
+   "family": "merkle",
+   "vectors": 31
+  },
+  "merkle.root": {
+   "family": "merkle",
+   "vectors": 17
+  },
+  "merkle.verify_consistency": {
+   "family": "merkle",
+   "vectors": 41
+  },
+  "merkle.verify_inclusion": {
+   "family": "merkle",
+   "vectors": 17
+  },
+  "verify.diff": {
+   "family": "exit",
+   "vectors": 14
+  }
+ },
+ "families": {
+  "cert": {
+   "count": 219,
+   "file": "vectors/cert.json",
+   "sha256": "1843af00d15257fdae7b5adfe994e5967fb588bc768a66eed9f25e9d7342ad3a"
+  },
+  "decide": {
+   "count": 61,
+   "file": "vectors/decide.json",
+   "sha256": "d878ce629da63f5929a2ab90c9cb0301a76356bc2bea9ca20642cc873c108455"
+  },
+  "distance": {
+   "count": 402,
+   "file": "vectors/distance.json",
+   "sha256": "10443d33a6f2863f0e89224bfb80d48a9d4a4c435f053115f8ae3667aa5fa967"
+  },
+  "exit": {
+   "count": 14,
+   "file": "vectors/exit.json",
+   "sha256": "d17d6aad4e7892559b19ce891e2734478146e5b3e19487c7c9c9bf3b537459cd"
+  },
+  "floor": {
+   "count": 412,
+   "file": "vectors/floor.json",
+   "sha256": "cfe64810e3743b897ea7e2641712741cbbedf342e6c5bf038423e146d08f9e96"
+  },
+  "merkle": {
+   "count": 157,
+   "file": "vectors/merkle.json",
+   "sha256": "f172bad528499d301df31b67ddc118124cc5f671289489417abcecfa0315c04d"
+  },
+  "sth": {
+   "count": 94,
+   "file": "vectors/sth.json",
+   "sha256": "021e09f9c5a2963a6b0ec8d561425dfb16a1ca44b8a166cd6660ef40c35b30ed"
+  }
+ },
+ "provenance": {
+  "implementation": {
+   "styxx/v8/cert.py": "87aff7c2861010961051eedb98a597f82986c026a5e6de41fb37a84d3e2330c1",
+   "styxx/v8/distances.py": "fcf747fb4e71d201fb019aefb5c8d2fb1d5288e00153438d2dd751c66763f914",
+   "styxx/v8/floor.py": "84ede821c66e32b19263bdeedb3df24c905f612bb4376eb86a1b13c202d958d9",
+   "styxx/v8/jcs.py": "85f25506275c2fc37abae8b79ba25aa009f2975ae0a4062be655cc3379985e73",
+   "styxx/v8/keys.py": "ee3e8994c7a1bef5e731579530bf3c22deed27138d7eb0f313105afd90c222ac",
+   "styxx/v8/log.py": "93f80969d002bd2c379914f122cc3f46930196cbc894abf0b107305925c42d51",
+   "styxx/v8/merkle.py": "0266425b70d9c496a65b3d8d240354b3a8282bfcda41c88d283b494f856625ac",
+   "styxx/v8/verify.py": "8c3feb37a48c281c37c38782013681d33b26b836596fefd79de63da94a911b93"
+  },
+  "note": "outside set_sha256: the set is a function of these bytes, not of this block",
+  "replay": {
+   "cert": {
+    "failed": 0,
+    "passed": 219,
+    "vectors": 219
+   },
+   "decide": {
+    "failed": 0,
+    "passed": 61,
+    "vectors": 61
+   },
+   "distance": {
+    "failed": 0,
+    "passed": 402,
+    "vectors": 402
+   },
+   "exit": {
+    "failed": 0,
+    "passed": 14,
+    "vectors": 14
+   },
+   "floor": {
+    "failed": 0,
+    "passed": 412,
+    "vectors": 412
+   },
+   "merkle": {
+    "failed": 0,
+    "passed": 157,
+    "vectors": 157
+   },
+   "sth": {
+    "failed": 0,
+    "passed": 94,
+    "vectors": 94
+   }
+  },
+  "sources": {
+   "tests/test_v8_cert.py": "dc039507bd764910d52d1d4107539f84c3baeb95dbe4ef30ecb3f046f9cb6f3b",
+   "tests/test_v8_distances.py": "6912a6ceb32f743fdb666fd5d8f7eca30c33fd02176348fc4264b52a7efe2a4a",
+   "tests/test_v8_floor.py": "4cd8c7badf5773993ec8b5f1eafdc523468b0f402fe2d3ba8f9cd014e383eb33",
+   "tests/test_v8_log.py": "6e745311b00ac366383e8680414c8163c2d8a0e4e093ce57ab24dd2411a78154",
+   "tests/test_v8_verify.py": "c96352c4242d9e710b77c904db4c9c9eef63136de693938a49fc08157f047368"
+  },
+  "tooling": {
+   "conformance/v8/__init__.py": "704d1b50c360aac23dc77da33766a9762cbef26fded0f93302bb31819d18498d",
+   "conformance/v8/recorder.py": "494a74aec4bfa76c31ba017be23a647be8aa8cd64cf15f2e74e8b6f2cb0b2e2a",
+   "conformance/v8/replay.py": "a7ad3b431a7d958b511baa7b5eb645bbca33f408f333ed5f1e0189d823c4abcd"
+  }
+ },
+ "reading": "agreement on these vectors makes an implementation agree with styxx.v8 on the inputs five test files chose. It does not make it correct, and it does not mean the contract is covered: mutation_coverage.json measures what a disagreement would have to be for this set to see it, and its miss list is part of the answer.",
+ "schema": "styxx.v8.conformance/v1",
+ "set_sha256": "6df4c39aa44db83ed8b341e017470e7a702d3ddf968f539e82739981a1a0c858",
+ "sources": [
+  "tests/test_v8_cert.py",
+  "tests/test_v8_log.py",
+  "tests/test_v8_distances.py",
+  "tests/test_v8_floor.py",
+  "tests/test_v8_verify.py"
+ ],
+ "unvectored": {
+  "channel_verdicts": [],
+  "channels_with_a_floor": [],
+  "entrypoints": [],
+  "exit_codes": [
+   1,
+   4,
+   5
+  ],
+  "notes": {
+   "exit_code:1": "drift. A --diff runs no confirmation, so section 5.2 cannot reach drift from this entrypoint; verify.diff asserts it (GATED S5-02, recommendation A).",
+   "exit_code:4": "invalid. REACHABLE from verify.diff and reached by no recorded call: every exit-4 test in the sources drives verify.ref instead. A real gap.",
+   "exit_code:5": "unavailable. Produced when a runner refuses, and verify.ref is not a recorded entrypoint of this set.",
+   "reason_kind:id-uncomputable": "same cause: the cert whose id cannot be computed is the cert whose bytes the record cannot carry. See unvectored.skipped.",
+   "reason_kind:not-an-object": "cert.check on something that is not a JSON object. The sources reach it with a str; the record carries certs, not strings. See unvectored.skipped.",
+   "reason_kind:number": "cert.check's NaN/infinity/past-2**53 reasons. The sources reach them; the record cannot carry the cert, because no canonical bytes exist for it. See unvectored.skipped."
+  },
+  "reason_kinds": [
+   "id-uncomputable",
+   "not-an-object",
+   "number"
+  ],
+  "skipped": [
+   {
+    "entrypoint": "cert.check",
+    "reason": "cert holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_cert.py::test_one_negative_per_check_reason[NaN]"
+   },
+   {
+    "entrypoint": "cert.check",
+    "reason": "cert holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_cert.py::test_one_negative_per_check_reason[infinity]"
+   },
+   {
+    "entrypoint": "cert.check",
+    "reason": "cert holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_cert.py::test_one_negative_per_check_reason[integer-beyond-2**53]"
+   },
+   {
+    "entrypoint": "cert.check",
+    "reason": "check was called on a str, not a dict",
+    "source": "tests/test_v8_cert.py::test_one_negative_per_check_reason[not-a-JSON-object]"
+   },
+   {
+    "entrypoint": "distances.resid",
+    "reason": "a holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_distances.py::test_non_finite_raises"
+   },
+   {
+    "entrypoint": "distances.seqlp",
+    "reason": "a holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_distances.py::test_non_finite_raises"
+   },
+   {
+    "entrypoint": "floor.decide",
+    "reason": "distance holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_floor.py::TestDecideTable::test_refusals"
+   },
+   {
+    "entrypoint": "floor.decide",
+    "reason": "floor holds a value no canonical serialisation can carry (NaN, an infinity, a lone surrogate, or an integer past 2**53)",
+    "source": "tests/test_v8_floor.py::TestDecideTable::test_refusals"
+   },
+   {
+    "entrypoint": "verify.diff",
+    "reason": "diff was called on something other than two cert dicts",
+    "source": "tests/test_v8_verify.py::test_diff_and_ref_refuse_a_non_dict"
+   }
+  ],
+  "sources": [
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_exact_nonneg_symmetric"
+   },
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_lens_nonneg_symmetric_bounded"
+   },
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_order_independence"
+   },
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_resid_nonneg_symmetric_bounded"
+   },
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_seqlp_nonneg_symmetric"
+   },
+   {
+    "entrypoint": "*",
+    "reason": "a property test: its examples are a function of the hypothesis version and database, not of styxx.v8",
+    "source": "tests/test_v8_distances.py::test_hyp_topk_nonneg_symmetric"
+   }
+  ]
+ },
+ "vectors": 1359
+}

@@ -1,0 +1,112 @@
+{
+  "body": {
+    "covers": [
+      "batch_size",
+      "item_order"
+    ],
+    "environment": {
+      "hardware": {
+        "count": 1,
+        "driver": "596.08",
+        "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU"
+      },
+      "runtime": {
+        "backend": "torch 2.5.1+cu121",
+        "framework": "transformers",
+        "version": "4.57.3"
+      }
+    },
+    "kind": "noise-plan",
+    "not_covered": [
+      "hardware.count",
+      "hardware.driver",
+      "hardware.gpu",
+      "runtime.backend",
+      "runtime.framework",
+      "runtime.version"
+    ],
+    "nuisance": [
+      {
+        "factor": "batch_size",
+        "values": [
+          "1",
+          "8",
+          "32"
+        ]
+      },
+      {
+        "factor": "item_order",
+        "values": [
+          "canonical",
+          "perm11",
+          "perm12"
+        ]
+      }
+    ],
+    "runs": 5
+  },
+  "created": "2026-09-09T11:21:23Z",
+  "id": "sha256:df3396e2f8a2a6512cd0615efbfd1b58aed001ec4cb34020fa1c7fc226b84c3b",
+  "issuer": {
+    "key": "ed25519:IMRP6mO-df_iWpMmdWsfqyvKOgJcxqjaHMEuc1TK53M",
+    "name": "styxx v8"
+  },
+  "recipe": {
+    "battery": "sha256:74da38e617bcde34b137886db842ad207d623b1b8e5f2ef6f2c043d87ba74f18",
+    "chat_template_sha256": "ecd6ae513fe103f0eb62e8ab5bfa8d0fe45c1074fa398b089c93a7e70c15cfd6",
+    "decoding": {
+      "batch_size": 1,
+      "max_new_tokens": 16,
+      "padding_side": "left",
+      "seed": 7,
+      "stop": [],
+      "temperature": 0,
+      "top_p": 1.0
+    },
+    "env_lock_sha256": "77686f92da874ae93c0f485af8a27e31f0013ca66622817f411f921f5fb6ed86",
+    "harness": {
+      "commit": "worktree-uncommitted",
+      "name": "styxx",
+      "version": "8.0.0"
+    },
+    "materials": {
+      "chat_template": "{{ bos_token }}{% if messages[0]['role'] == 'system' %}{{ raise_exception('System role not supported') }}{% endif %}{% for message in messages %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if (message['role'] == 'assistant') %}{% set role = 'model' %}{% else %}{% set role = message['role'] %}{% endif %}{{ '<start_of_turn>' + role + '\n' + message['content'] | trim + '<end_of_turn>\n' }}{% endfor %}{% if add_generation_prompt %}{{'<start_of_turn>model\n'}}{% endif %}",
+      "chat_template_source": "tokenizer_config.json@299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8",
+      "env_lock": "accelerate==1.13.0\naioboto3==15.5.0\naiobotocore==2.25.1\naiofiles==25.1.0\naiohappyeyeballs==2.6.1\naiohttp==3.13.3\naioitertools==0.13.0\naiosignal==1.4.0\nannotated-doc==0.0.4\nannotated-types==0.7.0\nanthropic==0.86.0\nanyio==4.12.1\nast_serialize==0.5.0\nastor==0.8.1\nasttokens==3.0.1\nattrs==26.1.0\nav==17.0.0\nbcrypt==5.0.0\nbeartype==0.14.1\nbeautifulsoup4==4.14.3\nbetter-abc==0.0.3\nbidict==0.23.1\nbitsandbytes==0.49.2\nboto3==1.40.61\nbotocore==1.40.61\nbrowser-cookie3==0.20.1\nbuild==1.5.0\ncertifi==2026.2.25\ncffi==2.0.0\nchardet==5.2.0\ncharset-normalizer==3.4.6\nchromadb==1.5.5\n-e git+https://github.com/decoderesearch/circuit-tracer.git@6d64f60b09db96ce1622ba3a309181c0f1d1c5ec#egg=circuit_tracer\nclick==8.4.2\ncloudpickle==3.1.2\ncolorama==0.4.6\ncomm==0.2.3\ncontourpy==1.3.3\ncoverage==7.14.1\ncryptography==46.0.6\nctranslate2==4.7.1\ncycler==0.12.1\nDataProperty==1.1.0\ndatasets==4.8.4\ndebugpy==1.8.20\ndecorator==5.2.1\ndefusedxml==0.7.1\ndill==0.4.1\ndiptest==0.11.0\ndistro==1.9.0\ndocstring_parser==0.17.0\ndocutils==0.22.4\ndominate==2.9.1\ndurationpy==0.10\nedge-tts==7.2.8\neinops==0.8.2\net_xmlfile==2.0.0\nexecuting==2.2.1\nfancy-einsum==0.0.3\nfastapi==0.135.2\nfaster-whisper==1.2.1\nfilelock==3.25.2\nflatbuffers==25.12.19\nfonttools==4.62.1\nfpdf2==2.8.7\nfracridge==3.0\nfrozenlist==1.8.0\nfsspec==2025.9.0\ngensim==4.4.0\ngguf==0.19.0\ngitdb==4.0.12\nGitPython==3.1.46\nGLMsingle @ git+https://github.com/cvnlab/GLMsingle.git@1ab54a65edd3ea41a6133d4b4ecb78a9c7296684\ngoogle-ai-generativelanguage==0.6.15\ngoogle-api-core==2.30.0\ngoogle-api-python-client==2.193.0\ngoogle-auth==2.49.1\ngoogle-auth-httplib2==0.3.0\ngoogle-generativeai==0.8.6\ngoogleapis-common-protos==1.73.1\ngreenlet==3.4.0\ngrpcio==1.78.0\ngrpcio-status==1.71.2\nh11==0.16.0\nh5py==3.16.0\nhf-xet==1.6.0\nhtml2text==2025.4.15\nhttpcore==1.0.9\nhttplib2==0.31.2\nhttptools==0.7.1\nhttpx==0.28.1\nhttpx-sse==0.4.3\nhuggingface_hub==0.36.2\nhypothesis==6.165.5\nid==1.6.1\nidna==3.11\nijson==3.5.0\nimportlib_metadata==8.7.1\nimportlib_resources==6.5.2\niniconfig==2.3.0\ninspect_ai==0.3.224\nipykernel==6.31.0\nipython==9.11.0\nipython_pygments_lexers==1.1.1\nipywidgets==8.1.8\njaraco.classes==3.4.0\njaraco.context==6.1.2\njaraco.functools==4.4.0\njaxtyping==0.3.9\njedi==0.19.2\nJinja2==3.1.6\njiter==0.13.0\njmespath==1.1.0\njoblib==1.5.3\njsonlines==4.0.0\njsonpatch==1.33\njsonpath-ng==1.8.0\njsonpointer==3.1.1\njsonref==1.1.0\njsonschema==4.26.0\njsonschema-specifications==2025.9.1\njupyter_client==8.8.0\njupyter_core==5.9.1\njupyterlab_widgets==3.0.16\nkeyring==25.7.0\nkiwisolver==1.5.0\nkubernetes==35.0.0\nlibrt==0.11.0\nlinkify-it-py==2.1.0\nllvmlite==0.46.0\nlz4==4.4.5\nmarkdown-it-py==4.0.0\nMarkupSafe==3.0.2\nmatplotlib==3.10.8\nmatplotlib-inline==0.2.1\nmbstrdecoder==1.1.4\nmcp==1.27.0\nmdit-py-plugins==0.6.1\nmdurl==0.1.2\nmmh3==5.2.1\nmore-itertools==11.0.2\nmpmath==1.3.0\nmultidict==6.7.1\nmultiprocess==0.70.19\nmypy==2.1.0\nmypy_extensions==1.1.0\nnest-asyncio==1.6.0\nnest-asyncio2==1.7.2\nnetworkx==3.6.1\nnh3==0.3.4\nnibabel==5.4.2\nnilearn==0.13.1\nnnsight==0.6.1\nnumba==0.64.0\nnumpy==2.4.4\noauthlib==3.3.1\nonnxruntime==1.24.4\nopenai==2.30.0\nopencv-python-headless==4.13.0.92\nopenpyxl==3.1.5\nopentelemetry-api==1.40.0\nopentelemetry-exporter-otlp-proto-common==1.40.0\nopentelemetry-exporter-otlp-proto-grpc==1.40.0\nopentelemetry-proto==1.40.0\nopentelemetry-sdk==1.40.0\nopentelemetry-semantic-conventions==0.61b0\norjson==3.11.7\noverrides==7.7.0\npackaging==26.0\npandas==3.0.1\nparso==0.8.6\npathlib_abc==0.5.2\npathspec==1.1.1\npathvalidate==3.3.1\npeft==0.18.1\npillow==12.1.1\nplatformdirs==4.9.4\nplaywright==1.58.0\npluggy==1.6.0\nprettytable==3.17.0\nprompt_toolkit==3.0.52\npropcache==0.4.1\nproto-plus==1.27.2\nprotobuf==5.29.6\npsutil==7.2.2\npure_eval==0.2.3\npyarrow==23.0.1\npyasn1==0.6.3\npyasn1_modules==0.4.2\npybase64==1.4.3\npycparser==3.0\npycryptodome==3.23.0\npycryptodomex==3.23.0\npydantic==2.13.4\npydantic-settings==2.13.1\npydantic_core==2.46.4\npyee==13.0.1\npyfiglet==1.0.4\nPygments==2.19.2\nPyJWT==2.12.1\nPyMuPDF==1.27.2.2\npynndescent==0.6.0\npyparsing==3.3.2\npypdf==6.9.2\nPyPika==0.51.1\npypistats==1.13.0\npyproject_hooks==1.2.0\npytablewriter==1.2.1\npytest==9.0.3\npython-dateutil==2.9.0.post0\npython-dotenv==1.2.2\npython-engineio==4.13.1\npython-multipart==0.0.26\npython-slugify==8.0.4\npython-socketio==5.16.1\npytz==2026.1.post1\npywin32==311\npywin32-ctypes==0.2.3\nPyYAML==6.0.3\npyzmq==27.1.0\nreadme_renderer==44.0\nreferencing==0.37.0\nregex==2026.2.28\nreportlab==4.4.10\nrequests==2.32.5\nrequests-oauthlib==2.0.0\nrequests-toolbelt==1.0.0\nrfc3986==2.0.0\nrfc8785 @ file:///C:/Users/heyzo/AppData/Local/Temp/claude/C--Users-heyzo--clawdbot/4b6f608a-df7a-4e37-ac01-450acd7d7b4b/scratchpad/wheels/rfc8785-0.1.4-py3-none-any.whl#sha256=520d690b448ecf0703691c76e1a34a24ddcd4fc5bc41d589cb7c58ec651bcd48\nrich==14.3.3\nrpds-py==0.30.0\nruff==0.15.14\ns3fs==2025.9.0\ns3transfer==0.14.0\nsafetensors==0.7.0\nscikit-learn==1.8.0\nscipy==1.17.1\nseaborn==0.13.2\nsemver==3.0.4\nsentence-transformers==5.3.0\nsentencepiece==0.2.1\nsentry-sdk==2.55.0\nsetuptools==70.2.0\nsetuptools-scm==10.0.5\nshadowcopy==0.0.4\nshellingham==1.5.4\nshortuuid==1.0.13\nsimple-websocket==1.1.0\nsix==1.17.0\nsmart_open==7.6.1\nsmmap==5.0.3\nsniffio==1.3.1\nsortedcontainers==2.4.0\nsoupsieve==2.8.3\nsse-starlette==3.3.4\nstack-data==0.6.3\nstarlette==1.0.0\n-e git+https://github.com/fathom-lab/styxx.git@1e6b8fe92d8380cbccb2a6674e254ab793db314c#egg=styxx\n-e git+https://github.com/heyzoos123-blip/darkflobi-industries.git@884d8284df13977afb00b611045d66b3c38617f6#egg=styxx_behavioral&subdirectory=styxx-behavioral\n# Editable install with no version control (styxx-mcp==0.4.0)\n-e c:\\users\\heyzo\\clawd\\styxx\\mcp\nsvgwrite==1.4.3\nsympy==1.13.1\ntabledata==1.3.4\ntabulate==0.10.0\ntcolorpy==0.1.7\ntenacity==9.1.4\ntermcolor==3.3.0\ntext-unidecode==1.3\ntextual==8.2.7\nthreadpoolctl==3.6.0\ntiktoken==0.13.0\ntokenizers==0.22.2\ntoml==0.10.2\ntorch==2.5.1+cu121\ntornado==6.5.5\ntqdm==4.67.3\ntraitlets==5.14.3\ntransformer-lens==2.17.0\ntransformers==4.57.3\ntransformers-stream-generator==0.0.5\ntwine==6.2.0\ntypeguard==4.5.1\ntypepy==1.3.4\ntyper==0.24.1\ntyping-inspection==0.4.2\ntyping_extensions==4.15.0\ntzdata==2025.3\nuc-micro-py==2.0.0\numap-learn==0.5.11\nuniversal_pathlib==0.3.10\nuritemplate==4.2.0\nurllib3==2.6.3\nuvicorn==0.42.0\nvcs-versioning==1.1.1\nwadler_lindig==0.1.7\nwandb==0.25.1\nwatchdog==6.0.0\nwatchfiles==1.1.1\nwcwidth==0.6.0\nwebsocket-client==1.9.0\nwebsockets==16.0\nwheel==0.47.0\nwidgetsnbextension==4.0.15\nWMI==1.5.1\nwrapt==1.17.3\nwsproto==1.3.2\nxxhash==3.6.0\nyarl==1.23.0\nzipfile-zstd==0.0.4\nzipp==3.23.0\nzstandard==0.25.0\n",
+      "system_prompt": ""
+    },
+    "system_prompt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "refs": [
+    {
+      "id": "sha256:74da38e617bcde34b137886db842ad207d623b1b8e5f2ef6f2c043d87ba74f18",
+      "role": "battery"
+    }
+  ],
+  "sig": "ed25519:Mmr_qS0lIWsC8ctigS5dqmDXvuYilYpO4FVUrJiuSjmONG80gJ6p66p1sWAgfFUNcUDAUCNf3YAJLdVR5IzCAA",
+  "styxx": "8.0",
+  "subject": {
+    "config_sha256": "eacec6c5ca317a87ed2c46789d9705b9274db5027e7ba59da739bfae23addb55",
+    "environment": {
+      "hardware": {
+        "count": 1,
+        "driver": "596.08",
+        "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU"
+      },
+      "runtime": {
+        "backend": "torch 2.5.1+cu121",
+        "framework": "transformers",
+        "version": "4.57.3"
+      }
+    },
+    "generation_config_sha256": "a543a5d299bc2b20c52bd87ed174f561266510b57a392e12b5b5d758d798ce05",
+    "hf_repo": "google/gemma-2-2b-it",
+    "kind": "weights",
+    "model_family": "gemma-2",
+    "precision": "bf16",
+    "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8",
+    "tokenizer_sha256": "a2acb1f8c74a00e5e6c0dea9a387ac61b41556a2317478422fb0c66f46ec7213",
+    "weights_sha256": "ab61d3d62a218160c7cc9a1415a60604d0d5a63d242517e8850408871c6afd66"
+  },
+  "type": "prereg"
+}

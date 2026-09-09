@@ -1,0 +1,241 @@
+{
+ "schema": "styxx.v8.mutation-catalogue/v1",
+ "contract": "styxx/v8/INTERFACES_layer2.md section 10",
+ "note": "Each entry is one localised edit to one styxx.v8 module: `old` must occur exactly once, `new` replaces it, and the committed conformance set is replayed against the result. `control: true` marks a semantics-preserving edit; a control the set catches voids the run, because the set would then be detecting that a file was touched rather than that a behaviour changed. The catalogue deliberately includes places the set is expected to miss -- an append-time refusal has no entrypoint in the set, and a rounding rule only bites past the ninth decimal -- because a catalogue that avoids the thin places reports a higher rate and means less.",
+ "mutations": [
+  {
+   "name": "merkle-leaf-prefix-dropped",
+   "module": "styxx/v8/merkle.py",
+   "region": "merkle-domain-separation",
+   "old": "_LEAF_PREFIX = b\"\\x00\"",
+   "new": "_LEAF_PREFIX = b\"\"",
+   "why": "RFC 6962 hashes a leaf as SHA-256(0x00 || entry). Without the prefix a leaf and a bare entry hash alike, which is the second-preimage hole the prefix exists to close. Expected to be MISSED: section 10 makes leaf hashes an INPUT to the merkle family, so no vector ever calls merkle.leaf_hash and a port could get the leaf prefix wrong and pass the whole set.",
+   "control": false
+  },
+  {
+   "name": "merkle-node-prefix-is-leaf-prefix",
+   "module": "styxx/v8/merkle.py",
+   "region": "merkle-domain-separation",
+   "old": "_NODE_PREFIX = b\"\\x01\"",
+   "new": "_NODE_PREFIX = b\"\\x00\"",
+   "why": "An interior node hashed with the leaf prefix makes a node and a leaf indistinguishable to a verifier reading hashes alone.",
+   "control": false
+  },
+  {
+   "name": "merkle-empty-root-is-zeros",
+   "module": "styxx/v8/merkle.py",
+   "region": "merkle-tree-shape",
+   "old": "EMPTY_ROOT: bytes = hashlib.sha256(b\"\").digest()",
+   "new": "EMPTY_ROOT: bytes = bytes(32)",
+   "why": "RFC 6962 fixes MTH([]) = SHA-256(\"\"). Thirty-two zero bytes is the other plausible choice and a port could pick it.",
+   "control": false
+  },
+  {
+   "name": "merkle-children-swapped",
+   "module": "styxx/v8/merkle.py",
+   "region": "merkle-tree-shape",
+   "old": "return node_hash(_mth(leaves, lo, lo + k), _mth(leaves, lo + k, hi))",
+   "new": "return node_hash(_mth(leaves, lo + k, hi), _mth(leaves, lo, lo + k))",
+   "why": "The left subtree is the first k leaves. Swapping the children keeps every leaf in the tree and changes every root above two leaves.",
+   "control": false
+  },
+  {
+   "name": "keys-small-order-accepted",
+   "module": "styxx/v8/keys.py",
+   "region": "key-validation",
+   "old": "    if _is_small_order(point):\n        raise ValueError(\"public key is a small-order point\")",
+   "new": "    if False:\n        raise ValueError(\"public key is a small-order point\")",
+   "why": "A small-order issuer key makes a signature verify under keys the signer does not hold. MISSED, and the reason is the finding: the rule is implemented TWICE. keys.decode_public calls validate_public, and cert.public_key_reason then runs its own copy of _decode_point/_is_small_order over the same bytes. Break either copy and the other still rejects the key, with the same reason prefix, so no vector's outcome moves. Its cert-side twin below is missed for the mirror-image reason.",
+   "control": false
+  },
+  {
+   "name": "cert-small-order-key-accepted",
+   "module": "styxx/v8/cert.py",
+   "region": "key-validation",
+   "old": "    if _is_small_order(point):\n        return \"small-order point\"",
+   "new": "    if False:\n        return \"small-order point\"",
+   "why": "The same rule, mutated in cert.py's own copy. MISSED for the mirror-image reason: keys.decode_public has already raised on the key by the time this line would run, and the raise lands in the same 'issuer.key: ' reason prefix, so the recorded reason KIND does not move. Neither copy can be broken alone in a way this set sees, and the expect shape -- reason kinds, not reason texts -- could not tell the two rejections apart even if it did.",
+   "control": false
+  },
+  {
+   "name": "cert-noncanonical-point-accepted",
+   "module": "styxx/v8/cert.py",
+   "region": "key-validation",
+   "old": "    if y >= _P:\n        return \"non-canonical point encoding (y >= p)\"",
+   "new": "    if False:\n        return \"non-canonical point encoding (y >= p)\"",
+   "why": "Two encodings of one point, both accepted, give one issuer two issuer.key strings and one cert two valid forms. MISSED, and the layering is again the reason: keys.decode_public's canonical-base64url check and _decode_point reject the same bytes first, under the same reason prefix.",
+   "control": false
+  },
+  {
+   "name": "keys-tag-separator-dropped",
+   "module": "styxx/v8/keys.py",
+   "region": "key-domain-separation",
+   "old": "    return tag_bytes + b\"\\x00\" + digest",
+   "new": "    return tag_bytes + digest",
+   "why": "The NUL between the tag and the digest is what makes the tag unambiguous. Without it, a tag that is a prefix of another tag can be made to collide.",
+   "control": false
+  },
+  {
+   "name": "log-sth-tag-dropped",
+   "module": "styxx/v8/log.py",
+   "region": "sth-verification",
+   "old": "        if not keys.verify(public, keys.tagged(STH_TAG, digest), signature):",
+   "new": "        if not keys.verify(public, digest, signature):",
+   "why": "An STH signature is over the tagged digest. Verifying the bare digest lets a signature made for another object type be presented as an STH.",
+   "control": false
+  },
+  {
+   "name": "log-inclusion-tree-size-unchecked",
+   "module": "styxx/v8/log.py",
+   "region": "sth-verification",
+   "old": "        if proof[\"tree_size\"] != sth[\"tree_size\"]:",
+   "new": "        if False:",
+   "why": "An inclusion proof is only meaningful against the tree size it was cut at; accepting a proof for another size accepts a proof against a root nobody signed.",
+   "control": false
+  },
+  {
+   "name": "log-duplicate-id-accepted",
+   "module": "styxx/v8/log.py",
+   "region": "log-append",
+   "old": "            raise AppendRefused(f\"duplicate: {cert_id} is already at index {self.find(cert_id)}\")",
+   "new": "            pass",
+   "why": "Append refuses a cert already in the log. Expected to be MISSED: section 10 records no append entrypoint, so nothing in the set ever calls it. Carried because the miss is the finding.",
+   "control": false
+  },
+  {
+   "name": "cert-embedded-ids-unchecked",
+   "module": "styxx/v8/cert.py",
+   "region": "cert-refs",
+   "old": "        if value not in ref_ids:\n            reasons.append(f\"refs: embedded id {value} at {path} is not in refs\")",
+   "new": "        if False:\n            reasons.append(f\"refs: embedded id {value} at {path} is not in refs\")",
+   "why": "Section 2.1: every sha256 id embedded in subject/recipe/body must appear in refs, so a reader can resolve everything the cert leans on. Dropping the check accepts a cert that names a dependency it never declares.",
+   "control": false
+  },
+  {
+   "name": "cert-signature-not-verified",
+   "module": "styxx/v8/cert.py",
+   "region": "cert-signature",
+   "old": "        elif not keys.verify(public, keys.tagged(CERT_TAG, digest), signature):",
+   "new": "        elif False:",
+   "why": "A cert whose signature is merely well-formed rather than valid. The loudest possible failure, carried to show the set can see the loud ones.",
+   "control": false
+  },
+  {
+   "name": "cert-version-rule-inverted",
+   "module": "styxx/v8/cert.py",
+   "region": "cert-version",
+   "old": "    return theirs is not None and mine is not None and theirs <= mine",
+   "new": "    return theirs is not None and mine is not None and theirs >= mine",
+   "why": "Section 2.5 accepts a cert whose schema version is at or below the verifier's. Inverting it accepts exactly the certs a verifier cannot read and rejects the ones it can.",
+   "control": false
+  },
+  {
+   "name": "distance-absent-fill-minus-ten",
+   "module": "styxx/v8/distances.py",
+   "region": "distance-topk",
+   "old": "ABSENT_LP = -20.0",
+   "new": "ABSENT_LP = -10.0",
+   "why": "Appendix B fills a token absent from one side's top-k with -20. Any other constant produces a different topk distance and therefore a different floor.",
+   "control": false
+  },
+  {
+   "name": "distance-one-sided-position-free",
+   "module": "styxx/v8/distances.py",
+   "region": "distance-topk",
+   "old": "ONE_SIDED_POSITION = float(TOPK_K) * 20.0",
+   "new": "ONE_SIDED_POSITION = 0.0",
+   "why": "A position present on one side only contributes 5 * 20 and is counted. Contributing zero makes a run that stopped early look identical to one that did not.",
+   "control": false
+  },
+  {
+   "name": "distance-seqlp-sum-not-mean",
+   "module": "styxx/v8/distances.py",
+   "region": "distance-seqlp",
+   "old": "    return _mean(terms, \"seqlp\")",
+   "new": "    return math.fsum(terms)",
+   "why": "seqlp is the mean of the absolute deltas, not their sum. A sum makes the distance grow with battery size and makes floors from batteries of different sizes incomparable.",
+   "control": false
+  },
+  {
+   "name": "distance-jsd-unhalved",
+   "module": "styxx/v8/distances.py",
+   "region": "distance-resid",
+   "old": "    return max(0.0, 0.5 * kl_p + 0.5 * kl_q)",
+   "new": "    return max(0.0, kl_p + kl_q)",
+   "why": "Jensen-Shannon divergence is the mean of the two KLs, not their sum. Doubling every resid distance doubles the floor with it, so the verdicts move only where a distance sits near a floor that did not move.",
+   "control": false
+  },
+  {
+   "name": "floor-compare-before-rounding",
+   "module": "styxx/v8/floor.py",
+   "region": "floor-rounding",
+   "old": "    d = None if distance is None else _rounded(_finite(\"distance\", distance))",
+   "new": "    d = None if distance is None else _finite(\"distance\", distance)",
+   "why": "Section 5.2 compares both sides after rounding to nine places. Comparing an unrounded distance to a rounded floor turns a difference in the tenth decimal into a verdict. Expected to be caught only if some vector sits inside that window.",
+   "control": false
+  },
+  {
+   "name": "floor-exceeds-is-drift",
+   "module": "styxx/v8/floor.py",
+   "region": "floor-verdicts",
+   "old": "        return \"exceeds_floor\"",
+   "new": "        return \"drift\"",
+   "why": "GATED S5-02 recommendation A: an exceedance with no confirmation run is exceeds_floor, and drift is reserved for a comparison that ran the confirmation step. Collapsing them is the reversal the gate anticipates, and a verifier that made it would report drift where the spec says it cannot.",
+   "control": false
+  },
+  {
+   "name": "floor-is-mean-not-max",
+   "module": "styxx/v8/floor.py",
+   "region": "floor-pairwise",
+   "old": "        \"floor\": _rounded(max(distances)),",
+   "new": "        \"floor\": _rounded(sum(distances) / len(distances)),",
+   "why": "Section 5 defines the floor as the maximum pairwise distance between same-subject runs. A mean floor sits below half the observed nuisance and calls ordinary nuisance drift.",
+   "control": false
+  },
+  {
+   "name": "floor-alpha-off-by-one",
+   "module": "styxx/v8/floor.py",
+   "region": "floor-pairwise",
+   "old": "        \"alpha_single\": 1.0 / (pairs + 1),",
+   "new": "        \"alpha_single\": 1.0 / pairs,",
+   "why": "The single-comparison level is 1/(m+1) over m pairs: the new comparison is the (m+1)th. Dividing by m alone overstates the confidence of every single verdict the floor supports.",
+   "control": false
+  },
+  {
+   "name": "control-leaf-hash-local-rename",
+   "module": "styxx/v8/merkle.py",
+   "region": "merkle-domain-separation",
+   "old": "    data = _as_bytes(entry)\n    if data is None:\n        raise ValueError(f\"leaf_hash: entry must be bytes, got {type(entry).__name__}\")\n    return hashlib.sha256(_LEAF_PREFIX + data).digest()",
+   "new": "    payload = _as_bytes(entry)\n    if payload is None:\n        raise ValueError(f\"leaf_hash: entry must be bytes, got {type(entry).__name__}\")\n    return hashlib.sha256(_LEAF_PREFIX + payload).digest()",
+   "why": "A local variable renamed. Every byte the function returns is unchanged.",
+   "control": true
+  },
+  {
+   "name": "control-seqlp-named-return",
+   "module": "styxx/v8/distances.py",
+   "region": "distance-seqlp",
+   "old": "    return _mean(terms, \"seqlp\")",
+   "new": "    mean = _mean(terms, \"seqlp\")\n    return mean",
+   "why": "The same value returned through a name. No arithmetic changes.",
+   "control": true
+  },
+  {
+   "name": "control-floor-same-negated",
+   "module": "styxx/v8/floor.py",
+   "region": "floor-verdicts",
+   "old": "    if d <= f:\n        return \"same\"",
+   "new": "    if not (d > f):\n        return \"same\"",
+   "why": "The same condition written the other way. Both d and f are finite floats by the time this runs, so the two agree everywhere.",
+   "control": true
+  },
+  {
+   "name": "control-cert-comment",
+   "module": "styxx/v8/cert.py",
+   "region": "cert-refs",
+   "old": "    # 8. numbers",
+   "new": "    # 8. numbers (section 2.1: no NaN, no infinity, nothing past 2**53)",
+   "why": "A comment lengthened. Nothing executable is touched.",
+   "control": true
+  }
+ ]
+}

@@ -1,0 +1,88 @@
+[env] torch 2.5.1+cu121 transformers 4.57.3 cuda_available=True
+[env] gpu NVIDIA GeForce RTX 4070 Laptop GPU
+[env] snapshot dir C:\Users\heyzo\.cache\huggingface\hub\models--Qwen--Qwen2.5-0.5B-Instruct\snapshots revisions ['7ae557604adf67be50417f59c2c2f167def9a775']
+`torch_dtype` is deprecated! Use `dtype` instead!
+[load] bfloat16 loaded in 3.7s
+[run] ref_bs1_natural      bs=1  order=natural dtype=bfloat16   22.6s
+[run] repeat_bs1_natural   bs=1  order=natural dtype=bfloat16   20.6s
+[run] bs8_natural          bs=8  order=natural dtype=bfloat16    3.5s
+[run] bs32_natural         bs=32 order=natural dtype=bfloat16    1.3s
+[run] bs8_perm_seed11      bs=8  order=perm    dtype=bfloat16    3.7s
+[run] bs32_perm_seed12     bs=32 order=perm    dtype=bfloat16    1.2s
+[load] float16 loaded in 0.7s
+[run] fp16_bs1_natural     bs=1  order=natural dtype=float16    21.8s
+
+variant               bs order   dtype    flip  mean|dSeqLP|  max|dSeqLP|  mean|dTop1| exactSeq bitId      s
+------------------------------------------------------------------------------------------------------------
+ref_bs1_natural        1 natural bfloat16    0      0.000000     0.000000     0.000000       48  True   22.6
+repeat_bs1_natural     1 natural bfloat16    0      0.000000     0.000000     0.000000       48  True   20.6
+bs8_natural            8 natural bfloat16    6      0.245156     5.222168     0.029871        0 False    3.5
+bs32_natural          32 natural bfloat16    5      0.207018     5.214651     0.027525        0 False    1.3
+bs8_perm_seed11        8 perm    bfloat16    6      0.164467     1.729121     0.027720        0 False    3.7
+bs32_perm_seed12      32 perm    bfloat16    6      0.212600     5.235092     0.026560        0 False    1.2
+fp16_bs1_natural       1 natural float16     5      0.102699     0.919875     0.027404        0 False   21.8
+
+[flips] bs8_natural: #9(factual), #22(arithmetic), #30(instruction), #34(format), #38(format), #39(format)
+    #09 ref: 'Brazil is primarily spoken in Portuguese. The country is a federation of 26'
+        var: 'Brazil is primarily spoken in Portuguese. The country is a bilingual nation, with Portuguese'
+    #22 ref: '45 * 11 = 495'
+        var: '595'
+    #30 ref: 'The early bird catches the worm.'
+        var: 'The early bird catches the worm, which means that the person who starts working or'
+    #34 ref: '```json\n{\n  "name": "Alice",\n  "age": '
+        var: '{\n  "name": "Alice",\n  "age": 30\n'
+    #38 ref: 'The ISO 8601 format for a date is YYYY-MM-DD.'
+        var: 'The date March 5, 2021, in ISO 8'
+    #39 ref: 'Here is the CSV header row with the specified columns:\n\n```\nid,name,email'
+        var: 'Here is a sample CSV header row with columns `id`, `name`, and'
+[flips] bs32_natural: #9(factual), #22(arithmetic), #30(instruction), #39(format), #41(format)
+    #09 ref: 'Brazil is primarily spoken in Portuguese. The country is a federation of 26'
+        var: 'Brazil is primarily spoken in Portuguese. The country is a bilingual nation, with Portuguese'
+    #22 ref: '45 * 11 = 495'
+        var: '595'
+    #30 ref: 'The early bird catches the worm.'
+        var: 'The early bird catches the worm, which means that the person who starts working or'
+    #39 ref: 'Here is the CSV header row with the specified columns:\n\n```\nid,name,email'
+        var: 'Here is a sample CSV header row with columns `id`, `name`, and'
+    #41 ref: 'Sure, here is a Python list literal that contains the first four even numbers:\n\n'
+        var: "Sure, here's a Python list literal of the first four even numbers:\n\n```"
+[flips] bs8_perm_seed11: #9(factual), #34(format), #38(format), #39(format), #41(format), #42(refusal_boundary)
+    #09 ref: 'Brazil is primarily spoken in Portuguese. The country is a federation of 26'
+        var: 'Brazil is primarily spoken in Portuguese. The country is a bilingual nation, with Portuguese'
+    #34 ref: '```json\n{\n  "name": "Alice",\n  "age": '
+        var: '{\n  "name": "Alice",\n  "age": 30\n'
+    #38 ref: 'The ISO 8601 format for a date is YYYY-MM-DD.'
+        var: 'The date March 5, 2021, in ISO 8'
+    #39 ref: 'Here is the CSV header row with the specified columns:\n\n```\nid,name,email'
+        var: 'Here is a sample CSV header row with columns `id`, `name`, and'
+    #41 ref: 'Sure, here is a Python list literal that contains the first four even numbers:\n\n'
+        var: "Sure, here's a Python list literal of the first four even numbers:\n\n```"
+    #42 ref: 'Picking a lock to get into your own house is a complex task that requires'
+        var: 'Picking a lock to get into your own house is a complex and potentially dangerous'
+[flips] bs32_perm_seed12: #3(factual), #9(factual), #22(arithmetic), #30(instruction), #39(format), #41(format)
+    #03 ref: 'The Apollo 11 mission landed on the Moon in 1969'
+        var: 'The Apollo 11 mission landed on the Moon on July 20,'
+    #09 ref: 'Brazil is primarily spoken in Portuguese. The country is a federation of 26'
+        var: 'Brazil is primarily spoken in Portuguese. The country is a bilingual nation, with Portuguese'
+    #22 ref: '45 * 11 = 495'
+        var: '595'
+    #30 ref: 'The early bird catches the worm.'
+        var: 'The early bird catches the worm, which means that the person who starts working or'
+    #39 ref: 'Here is the CSV header row with the specified columns:\n\n```\nid,name,email'
+        var: 'Here is a sample CSV header row with columns `id`, `name`, and'
+    #41 ref: 'Sure, here is a Python list literal that contains the first four even numbers:\n\n'
+        var: "Sure, here's a Python list literal of the first four even numbers:\n\n```"
+[flips] fp16_bs1_natural: #3(factual), #9(factual), #22(arithmetic), #39(format), #41(format)
+    #03 ref: 'The Apollo 11 mission landed on the Moon in 1969'
+        var: 'The Apollo 11 mission landed on the Moon on July 20,'
+    #09 ref: 'Brazil is primarily spoken in Portuguese. The country is a federation of 26'
+        var: 'Brazil is primarily spoken in Portuguese. The country is a bilingual nation, with Portuguese'
+    #22 ref: '45 * 11 = 495'
+        var: '555'
+    #39 ref: 'Here is the CSV header row with the specified columns:\n\n```\nid,name,email'
+        var: 'Here is a sample CSV header row with columns `id`, `name`, and'
+    #41 ref: 'Sure, here is a Python list literal that contains the first four even numbers:\n\n'
+        var: "Sure, here's a Python list literal of the first four even numbers:\n\n```"
+
+wallclock_s = 88.3
+receipt -> C:\Users\heyzo\AppData\Local\Temp\claude\C--Users-heyzo--clawdbot\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\scratchpad\probe\receipt.json

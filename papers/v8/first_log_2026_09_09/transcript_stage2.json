@@ -1,0 +1,319 @@
+{
+  "transcript": [
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-run0-d6816e4f6e80.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "note": "floor run run0",
+      "seconds": 1.0,
+      "stdout": {
+        "blobs": [],
+        "command": "log append",
+        "id": "sha256:d6816e4f6e807de9a38b9261b101269b4792fc80a04cbc4ac23c35921cfb96bc",
+        "index": 1,
+        "size": 2,
+        "type": "fingerprint"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-run1-6d7b26b30e80.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "floor run run1",
+      "seconds": 0.9,
+      "stdout": {
+        "error": "log append refused: baseline: a comparable fingerprint is at index 1; a fingerprint that starts a new baseline needs a previous ref",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-run2-e49d55bac53e.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "floor run run2",
+      "seconds": 1.0,
+      "stdout": {
+        "error": "log append refused: baseline: a comparable fingerprint is at index 1; a fingerprint that starts a new baseline needs a previous ref",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-run3-c582835c4417.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "floor run run3",
+      "seconds": 1.0,
+      "stdout": {
+        "error": "log append refused: baseline: a comparable fingerprint is at index 1; a fingerprint that starts a new baseline needs a previous ref",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-run4-d6f0f2dafd49.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "floor run run4",
+      "seconds": 0.9,
+      "stdout": {
+        "error": "log append refused: baseline: a comparable fingerprint is at index 1; a fingerprint that starts a new baseline needs a previous ref",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "append",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-canonical-d6816e4f6e80.json",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "the canonical fingerprint, which references the runs above",
+      "seconds": 1.0,
+      "stdout": {
+        "error": "log append refused: duplicate: sha256:d6816e4f6e807de9a38b9261b101269b4792fc80a04cbc4ac23c35921cfb96bc is already at index 1",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "sth",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log",
+        "--key",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log.pem",
+        "--timestamp",
+        "2026-09-09T04:00:00Z"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "note": "sign the tree head",
+      "seconds": 0.8,
+      "stdout": {
+        "command": "log sth",
+        "size": 2,
+        "sth": {
+          "log_id": "sha256:ac3c9296e70dff31519fe9ce919b0edc5836b57948d7aa5be9c720311d4d7669",
+          "root_hash": "sha256:c5cacf40d7c8ca68577a1f167f6c8414799a6b7ed4ed476e7c0d3db7f5f974b2",
+          "sig": "ed25519:_hCA2C8wu8PQvxMJv2ITnN_vX58-5dGF8AbSRDEj7EJ1PQj9FhxnPDHXHUHNROZnw6HfxIdPVpTi6SICxYUpAw",
+          "timestamp": "2026-09-09T04:00:00Z",
+          "tree_size": 2
+        }
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "mirror",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log",
+        "--to",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "note": "a mirror verifies every entry and every head from the bytes",
+      "seconds": 0.9,
+      "stdout": {
+        "command": "log mirror",
+        "from": "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log",
+        "report": {
+          "entries": 2,
+          "misbehaviour": [],
+          "sths": 1,
+          "tamper": [],
+          "unpublished": [],
+          "verified": true
+        },
+        "to": "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "verify-cert",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\fingerprints\\fingerprint-canonical-d6816e4f6e80.json"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "note": "D1: recompute the id, check the signature",
+      "seconds": 0.9,
+      "stdout": {
+        "command": "log verify-cert",
+        "id": "sha256:d6816e4f6e807de9a38b9261b101269b4792fc80a04cbc4ac23c35921cfb96bc",
+        "ok": true,
+        "reasons": [],
+        "type": "fingerprint"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "prove",
+        "4",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror",
+        "--out",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\proof.json"
+      ],
+      "exit": 4,
+      "expected_exit": 0,
+      "note": "D2: an inclusion proof for the canonical fingerprint",
+      "seconds": 0.8,
+      "stdout": {
+        "error": "log prove: index: 4 outside 0..1",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "verify-sth",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror\\sth\\000000000002.json",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "note": "D2: the tree head verifies under the pinned key",
+      "seconds": 0.8,
+      "stdout": {
+        "command": "log verify-sth",
+        "ok": true,
+        "reason": "ok",
+        "tree_size": 2
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "verify-inclusion",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\proof.json",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror\\sth\\000000000002.json",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror"
+      ],
+      "exit": 5,
+      "expected_exit": 0,
+      "note": "D2: the cert is in the tree that head commits to",
+      "seconds": 0.7,
+      "stdout": {
+        "error": "log verify-inclusion <proof>: no such file: C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\proof.json",
+        "verb": "log"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "mirror",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\tampered_mirror",
+        "--to",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\tamper_out",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub"
+      ],
+      "exit": 4,
+      "expected_exit": 1,
+      "note": "CONTROL: a mirror of a tampered log must report it",
+      "seconds": 0.9,
+      "stdout": {
+        "command": "log mirror",
+        "from": "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\tampered_mirror",
+        "report": {
+          "entries": 2,
+          "misbehaviour": [],
+          "sths": 1,
+          "tamper": [
+            "entry 0: id does not recompute",
+            "entry 1: inclusion: proof root_hash is not the STH's root_hash",
+            "sth 000000000002.json: the entries do not reproduce the signed root at tree_size 2"
+          ],
+          "unpublished": [],
+          "verified": false
+        },
+        "to": "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\tamper_out"
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "verify-sth",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\forged_sth.json",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror"
+      ],
+      "exit": 4,
+      "expected_exit": 1,
+      "note": "CONTROL: a head with a forged root must not verify",
+      "seconds": 0.8,
+      "stdout": {
+        "command": "log verify-sth",
+        "ok": false,
+        "reason": "sth: sig does not verify against the log public key",
+        "tree_size": 2
+      }
+    },
+    {
+      "argv": [
+        "log",
+        "verify-inclusion",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\proof.json",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\forged_sth.json",
+        "--pin",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\log\\keys\\log.pub",
+        "--log",
+        "C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\mirror"
+      ],
+      "exit": 5,
+      "expected_exit": 1,
+      "note": "CONTROL: inclusion against a forged head must not verify",
+      "seconds": 0.8,
+      "stdout": {
+        "error": "log verify-inclusion <proof>: no such file: C:\\Users\\heyzo\\AppData\\Local\\Temp\\claude\\C--Users-heyzo--clawdbot\\4b6f608a-df7a-4e37-ac01-450acd7d7b4b\\scratchpad\\firstlog\\out\\proof.json",
+        "verb": "log"
+      }
+    }
+  ],
+  "wallclock_s": 13.2
+}

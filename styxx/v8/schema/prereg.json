@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:styxx:v8:schema:prereg",
+  "title": "styxx/8.0 prereg cert (spec section 7.2; kind noise-plan is section 5.1)",
+  "type": "object",
+  "properties": {
+    "type": { "const": "prereg" },
+    "subject": { "type": "object" },
+    "recipe": { "type": "object" },
+    "body": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["study", "noise-plan"] },
+        "sealed": { "type": "boolean" },
+        "commitment": { "$ref": "urn:styxx:v8:schema:common#/$defs/cert_id" },
+        "salt": { "type": "string", "pattern": "^[A-Za-z0-9_-]{43}$" },
+        "grader": {
+          "type": "object",
+          "required": ["kind", "id"],
+          "properties": {
+            "kind": { "enum": ["gold-labels", "human-panel", "model"] },
+            "id": { "type": "string" }
+          }
+        },
+        "runs": { "$ref": "urn:styxx:v8:schema:common#/$defs/pos_int" },
+        "nuisance": { "$ref": "#/$defs/nuisance_factors" },
+        "environment": { "type": "object" },
+        "covers": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+        "not_covered": { "$ref": "urn:styxx:v8:schema:common#/$defs/string_array" },
+        "window": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": "string", "minLength": 1 },
+            "end": { "type": "string", "minLength": 1 }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "sealed": { "const": true } },
+            "required": ["sealed"]
+          },
+          "then": {
+            "required": ["commitment"]
+          }
+        },
+        {
+          "$comment": "Section 5.1: a noise plan names R (the run count), the enumerated nuisance factors with their values, and the environment, and R is at least 5 (10 pairwise distances). R is REQUIRED here, not merely shaped: enforcing the minimum only when the key happens to be present made the whole of it optional, and a plan minted by hand with `runs` omitted fixed no R at all, which reopened the hand-picked-subset attack in full (papers/v8/challenge_and_attack_2026_09_09, F7; A-NORUNS in the third pass -- ten subsets of the lab's own five published runs appended with an empty floor_disagreement and topk floors from 0.81 to 2.14, flipping the published verdict word). The earlier note here said presence belonged at the mint (styxx/v8/cli.py) because a schema change must not turn a logged entry invalid; that trade is withdrawn. The mint is the one path an issuer holding the key does not use, so a check that lives only there checks nobody, and a prereg of kind noise-plan that fixes no R is not a plan a later floor may rest on -- it is a document shaped like one. The other two fields of step 1 (nuisance, environment) stay at the mint, because unlike R nothing downstream recomputes against them. styxx/v8/log.py _check_floor_names_the_plans_runs refuses the same thing from the other side, for a plan this schema never saw.",
+          "if": {
+            "properties": { "kind": { "const": "noise-plan" } },
+            "required": ["kind"]
+          },
+          "then": {
+            "required": ["runs"],
+            "properties": {
+              "runs": { "minimum": 5 }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "nuisance_factors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["factor", "values"],
+        "properties": {
+          "factor": { "type": "string", "minLength": 1 },
+          "values": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}
