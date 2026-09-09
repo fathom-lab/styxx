@@ -1,0 +1,876 @@
+# STYXX v8 — SPEC
+### battery hashes for model behavior
+**fathom lab · status: DRAFT v0.2 · 2026-09-08 · amended from v0.1 (2026-09-07) after the adversarial review recorded in `REVIEW_v8_spec_2026_09_07.md` · becomes binding at the commit that adds this file with its `.sworn.json` sidecar and receipt; the frozen text is the git blob at that commit (LF); later changes are dated ERRATA sections appended below, never edits (the convention of `papers/charon/SPEC_charon_v01_2026_09_02.md`)**
+
+This draft is not sworn and makes no numeric claim of its own. Every number in it is either a parameter, or a quotation from a named receipt with its path beside it. Blocks marked `[OPERATOR-GATED …]` are decisions the review could not make; the v0.1 text stands at those spots until the operator decides, and the ledger's "Operator decisions" section (31 items) is the authoritative list.
+
+---
+## Amendment ledger (v0.1 → v0.2)
+
+Each line: amendment id (finding ids it answers): the change. Finding ids refer to `REVIEW_v8_spec_2026_09_07.md`.
+
+- A-01 (S14-01, S8-05, S8-06, S0-02): binding condition rewritten (header); entry #0 is a `result` cert of kind `document` carrying the git blob hash, never a checkout hash. The type-set question stays gated (§2).
+- A-02 (S0-05): "checksum" → "battery hash" throughout, with the sentence that says what equal hashes mean; the "pitch" and "science and marketing" sentences deleted; "protocol" → "procedure".
+- A-03 (S0-04, S4-20, S7-08, S14-07): §0.1 glossary added; every referent without a repository path removed: monochord, "keystone v2", "gold fix", "monday/tuesday", "the 90-day plan".
+- A-04 (S2-09, S0-03): §2 retitled "Cert envelope (styxx/8.0, new)"; §2.4 states the relation to OATH certificates, capsules, the attestation artifact and sworn; a `claim` string is a sworn fragment.
+- A-05 (S2-06, S10-01): `eval` deleted; `sublog` added; still eight types. The change to the type set is marked gated at §2.
+- A-06 (S2-03, S2-12, S2-25, this session's key finding): id and signature constructions fixed with domain-separated preimages; encodings pinned; decode-time public-key validation added.
+- A-07 (S2-01 first half, S2-02, S2-11, S2-21, S7-06): subject split into identity fields and environment fields; `model_family` required; comparability, skew and floor keys defined on `(S_identity, recipe_core)`; the transfer policy for floors across hardware stays gated.
+- A-08 (S2-04, S2-17, S2-18): recipe materials stored in the clear (template, system prompt, lockfile); preimages of every hash pinned; A.2 file list fixed; `sae` block opened.
+- A-09 (S2-15, S2-16): `refs` are roled objects; every cert id anywhere in a cert must appear in `refs`; append refuses unresolved refs.
+- A-10 (S2-24): §2.5 versioning rule.
+- A-11 (S4-21, S4-27): `public` flag computed at append; redaction limited to outputs.
+- A-12 (S3-01, S2-22, S3-04, S3-07, S2-10): `exact` defined over token ids with a byte-exact preimage; topk positions bounded and teacher-forced for weights subjects; resid profile required with `n_layers`; `run_index` and `nuisance` on every run cert.
+- A-13 (S4-01, S4-03, S4-04, S4-05, S4-07, S4-08, S4-09, S4-10, S4-11, S4-12, S4-13, S4-14, S4-15, S4-16, S4-18, S4-22, S4-23, S4-24): §4 rebuilt: pool cert, δ2 as an explicit list with a batch-1 reference, `stay` replaces sampled flip3, the margin term fixed, one anchor definition, pool schema and family enum, fixed-v1 roles and source, the sensitivity claim demoted to a preregistered hypothesis, the glimmer sentences struck, the fine-tune limit restated honestly.
+- A-14 (probe, this session): `batch_size` and `padding_side` are recipe fields; the reference configuration is batch 1; the δ2 finding on this box is cited as the reason (`papers/v8/probe_batch_invariance_2026_09_08/`).
+- A-15 (S4-02, S5-01, S5-03, S5-05, S5-06, S5-08, S5-11, S6-04, S6-05): `identity` is a subject-field verdict, anchors are a separate report; the nuisance plan is logged before the runs; floor = max with its nominal size printed; a sensitivity receipt precedes any `same`; the baseline rule; rounding and summation order fixed; absent channels never change the exit code.
+- A-16 (S13-02, S6-01, S6-03, S9-05, S14-06): `--diff` uses the left cert's floor and says so; exit codes 4 and 5 added; result bodies defined per kind; `verify --ref --challenge` replaces `log challenge`.
+- A-17 (S7-01, S7-02, S7-03, S7-04, S7-05, S7-07, S0-03): tier requires a trust set and STH inclusion; the depth row cites the committed negative and the example claim is the receipted sentence; sealed prereg construction fixed and sealed over the whole body; the grader is frozen in the prereg.
+- A-18 (S8-01, S8-02, S8-03, S8-07, S8-08, S8-10, S8-11, S8-12, S8-13, S8-14, S8-15, S8-16, S8-18, S8-19, S1-02, S14-04, S8-04): log entry bytes, STH signing, `log_id`, storage layout, signing locus and MMD, mirror rules, the threat model rewritten to what the lab has measured, four verify commands, duplicate handling, open-submission mechanics, `styxx key`.
+- A-19 (S9-01, S9-02, S9-03, S9-04): challenge validity requires subject identity; disputed status computed over a trust file; "resolved" defined; JSD pinned.
+- A-20 (S10-03, S10-04): action certs additive to the middleware hook; readings limited by subject kind; first action has no parent.
+- A-21 (S11-02, S11-03, S11-04, S11-05, S6-02): the removal table corrected; `migrate` row deleted; `ci-baseline`/`ci-test` kept.
+- A-22 (S12-01, S13-03, S13-04): docket summary from a versioned template table; a budget table; the ceiling stated.
+- A-23 (S14-02, S14-05, S2-23, S14-06): ship gate rewritten; conformance vectors and a second implementation scheduled; definition of done per block.
+- A-24 (S2-05, S2-13, S2-26, S3-05): the alias limitation sentence; log location and key are inputs of Appendix D; timestamps are assertions; cross-hardware nuisance is a receipt to obtain, not an assumption.
+
+- A-52 (fixes PLAN-ENV, A-COVER and ENV-ABSENT, 2026-09-09): the coverage vocabulary stops being a field the issuer writes. Three connected repairs, all of them predicates over bytes already on disk. **PLAN-ENV**: `styxx prereg noise-plan` built no runner and copied `environment` out of the `--subject` spec, so the block the whole of §5.4 resolves against was typed on the one cert that is signed *before* the runs and named by id from inside every floor. §5.1 step 1 now says the plan **observes** the environment it names, through the same runner flags `fingerprint` takes, and — because a plan is written before its runs and can only observe its own box — that what it names is an **intended** environment which the runs must then match: both the mint and `Log` refuse a floor whose runs differ from the plan on any environment leaf the plan did not declare as a nuisance factor. Writing a plan on one box for runs on another is refused today and is opened as **S5-10**, because a docket or a multi-party replication may want it and the price is that the plan's environment becomes an assertion again. **A-COVER**: `noise_floor.covers` and `noise_floor.not_covered` were never compared against that plan, while the anchor re-derived `per_channel` and §5.7's overall size from the run certs and compared them exactly — so a canonical signed with `covers` naming the gpu, the driver and everything else and `not_covered: []` appended at exit 0 beside an honest floor. Since `verify` computes `coverage_diff` over `not_covered` alone, an empty list is the claim to cover every environment there is, and since `covers` decides whether an outside reproduction is a dispute or a coverage report (§5.4, §9), an issuer choosing it after the runs chose who was allowed to contradict it. §5.4 now **defines** both lists as functions of the plan's `nuisance` and `environment`; the mint derives them, `--not-covered` is removed from `prereg noise-plan`, and append refuses a disagreement. A plan that fixes no environment is refused there rather than skipped, for the reason A-NORUNS is refused: the quiet branch was the whole attack. **ENV-ABSENT**: A-51's mint rule sat behind `if "environment" in subject:` and `schema/fingerprint.json` required only `kind` on `subject`; `schema/subject.json` requires the environment block on the `weights` branch and not on `alias`, so an alias spec with the key deleted minted a fingerprint that observed nothing, named nothing, and carried a floor whose `not_covered` was empty. The mint has no omission branch and a fingerprint's subject must carry an environment. **What none of this reaches**, stated because it is the point of `THE_BOUNDARY_2026_09_09.md`: every one of these compares one of the issuer's certs against another of the issuer's certs, so a party that mints its plan and its runs on one box and writes one environment into both is not caught and cannot be.
+- A-51 (fixes S-DEVICE, 2026-09-09): §2.2 states that the environment is **observed, never asserted**, and says what the `hardware` block describes — the device the run computes on, with `device` beside `gpu`/`driver`/`count`. The obligation moves onto the runner, beside the `subject(requested)` obligation that closed C2 earlier the same day: `Runner.environment()` is required, `verify --ref` records what it returns, `styxx fingerprint` treats the `--subject` spec's `environment` block the same way at mint, and `--environment <file>` may only annotate the two fields a runner cannot observe (`harness`, `env_lock_sha256`), with a contradiction exiting 5. The demonstration this repairs ran one CPU forward pass through the shipped CLI and signed a result **and** a challenge naming an RTX 4070, `mismatched: []`, `identity_diff: []`: the runner reported the box's card rather than its own device, `device` appeared in no signed field, and the file overwrote the block in both bodies. Nothing became identity — §2.2 forbids it and §5.4 is where an environment difference belongs — so §5.4 gains the sentence that a GPU-minted floor verified on the CPU of the same box is now `beyond-floor-coverage`, which is that section working rather than a new gate. What a difference outside `not_covered` should mean is opened as **S2-02** with the implemented option named; what is not an option, and is written down as not one, is writing an environment nobody observed.
+- A-50 (fixes first-log F1 and F2, 2026-09-09): the noise plan gains a mint and the canonical fingerprint gains its floor. §11 adds `styxx prereg noise-plan`, the only command that produces a cert of kind `noise-plan`, with the reason stated in place: §5.1 step 1 required the plan and §5.5's baseline rule refused every later canonical fingerprint that named neither a plan nor a predecessor, so with no mint the two rules were jointly unsatisfiable and the ladder stopped at the floor. §5.1 step 4 now says what a canonical fingerprint is made of — `noise_floor` plus the `noise_plan` and R−1 `run` refs no run cert carries — that a floor of R runs is R certs and not R+1, and therefore that the canonical cert's `D`, id and leaf hash differ from every run cert's; a cert offered as canonical and byte-identical to run 0 measured no floor, and a verifier that meets one reports the floor absent under §5.2 row 1 rather than reading a floor that was never computed.
+- A-49 (fixes first-log F3): §6's exit-code table is extended to cover every v8 command instead of `verify` alone, with a "which commands" column, and §8 states that it defines no codes of its own and points there. The alternative — a second table for the log commands — was declined and the reason is written down: it would let one condition, a cert whose id does not recompute, carry two numbers depending on which verb noticed it. 4 and 5 are separated by one sentence that a mirror can act on: 4 means the bytes were read and are wrong, 5 means the bytes could not be read. This is what the first run's negative controls (a tampered mirror and a forged tree head, both exiting 4) were written against the wrong expectation of.
+- A-48 (fixes first-log finding 4): A.3 states that `item_id` is **supplied by the author and never derived by the tool** — `battery fixed` and `battery pool` refuse a source file whose items lack one rather than computing it — with the reason, which is that a derived id agrees with its prompt by construction and turns append's check into a tautology; supplying it makes the author's intent a second independent statement, so the check can fail and catch an edited prompt or a copied item. The construction formula is unchanged and remains the rule the author must have followed.
+- A-47 (opens F3-subject on first-log finding 3): a pool-v1 or fixed-v1 battery is model-agnostic, §2.7's table already says `subject` is forbidden on it, and §4.5 said in the same breath that its `recipe` "may be `{}`" while §2.7 says a forbidden member is absent and never an empty object. The envelope and the CLI resolved the disagreement in the worst direction — the root of the ladder was stamped with whichever model was loaded that morning, so the same prompts assembled on two boxes give two battery ids. Absent, empty, or kept-as-provenance is a real trade-off in bytes and in code, so it is **operator-gated at §4.5 as F3-subject** with three options, a recommendation of (a) absent, the note that (a) and (b) differ in every battery cert id, and an interim that stands until the operator decides.
+- A-46 (fixes first-log finding 2): §4.5's pool file schema is `{item_id, prompt_text, family}`. It said `prompt`, while the battery cert body in the same section, A.1's `prompt_sha256` preimage and the implementation all read `prompt_text`; three against one, and the sentence was the defect. A.3's copy of the schema is corrected with it.
+- A-45 (fixes first-log finding 1): A.1 is rewritten around the distinction its own grammar carries. `sha256:<64 hex>` is the identifier of a **cert**, and §2.1's refs rule is a rule about that form and only that form, with exactly two named exemptions that are hashes of bytes in the prefixed shape (`body.items_blob`, `body.commitment`); bare 64 hex is a hash of **bytes**, resolves to nothing, and is what `cert.material_hash` produces. v0.2's "hashes as `sha256:<64 hex>`, two exceptions" described the two short fields (`git_blob_sha1`, `item_id`) as exceptions to the length and so read as though every digest took the prefix — a reader who followed it wrote the prefix on `chat_template_sha256` and had every cert refused with *embedded id … is not in refs*, the log demanding that a chat template resolve to a logged cert. The eleven-field preimage table gains a `form` column, every row of it is marked bare, and `token_ids_sha256` and `output_sha256` are stated beside it for the same reason. §2.1 gains the embedded-id rule as a bullet of its own, because A.1 and §3.1 both cited it and only the ledger's A-09 line carried it.
+- A-44 (ledger reconciliation, 2026-09-08): the ledger was walked against the body, entry by entry. Every A-entry through A-26 describes a change present in the text. **A-27's closing sentence is superseded**: it listed C-03 to C-05, C-07 to C-15 and C-17 to C-19 as open, and by the time it was written nine of those were already repaired in the body with no ledger entry; A-28 through A-36 are those entries, written now, and A-37 through A-43 are the rest. A-27 itself is left unedited because an amendment ledger is history. Two loose ends found in the same walk and closed: `styxx fingerprint` gained the `--force-on` flag that §3.2 already told issuers to use, and §3.1's `item_order_sha256` now points at A.1, which defines it, instead of at A.3, which does not. The register of what is open is this ledger and the gated blocks, not A-27's last sentence.
+- A-43 (fixes C-19): App. C now lists in one place every parameter whose change makes canary-v2 — weights, τ, the δ lists, the `stay` temperature, the eligibility rule, the tie-break, the anchor rule, `max_family_share` — and states that N and K are **not** on it, because §4.4 varies N by docket size by design and the battery cert id already keys comparability; §15.4's "adjust once, then freeze as canary-v2" yields and is rewritten as a decision about defaults.
+- A-42 (fixes C-18): §12 prints a `suppressed: n` count on every category, including zero, so an issuer that redacts a battery no longer empties its own change-tracking section into something a reader cannot distinguish from a section with nothing in it.
+- A-41 (fixes C-17): A.3 defines `item_id = 16 hex of sha256(UTF-8(prompt_text))`, checked at append and rejected on collision, so two labs building fixed-v1 from the same prompts produce the same battery hash; A.1 replaces the three-preimage sentence with the complete table of all eleven `*_sha256` fields, each with its preimage and with whether append can check it, which is the list §2.3 already claimed A.1 carried.
+- A-40 (fixes C-16, second leg): §8.4's misbehaviour predicate is split — `equivocation` (two verifying heads at one size with different roots, or a consistency proof produced and failed) is published as misbehaviour; `unavailable` (no response, no proof produced) is a fetch status, never an accusation, on the EXTERNAL-1 receipt that an accusation predicate firing on unavailability ran at 0.23 precision. `mirror.retry_budget` is stated as a parameter set from the first mirror's own measured latencies, not as a number this document invents.
+- A-39 (fixes C-12): the trust default is **operator-gated** at §7.1, with the three options and a recommendation, because an unsigned roster inside the audited party's own repository is a design decision with a real cost either way. The interim, stated in place and governing until the operator decides: no default trust set, every instrument `lab`, Disputed and coverage-contested printed as `uncomputable (no trust set)`; §8.2 records that the layout carries no `keys/issuers.json` and says why the S2-14 gate's pointer here now resolves to this one.
+- A-38 (fixes C-11): `task_family` is defined once, in §7.1, as the §4.5 item `family` enum and nothing else, so the tier quadruple has four resolvable members; §7.2 restores the task-family half of the scope limit that v0.2 dropped; and §10's action body loses its `certified` key — action readings are lab tier in 8.0, because a `task_family` an agent writes into its own cert is a hand-set string and §7.1 forbids tier to follow one.
+- A-37 (fixes C-07): a reproduction from outside the floor's coverage is a **coverage report**, not nothing — ≥ 2 unresolved ones above the target's floor from distinct trusted keys put the cert in `coverage-contested`, which the issuer answers with a `new_floor` or a logged `refusal`; §8.6, §9 and §12 are rewritten to match, and §14's ship gate (b) says plainly that it tests the availability of the stranger's path rather than a verdict, with the question of whether 8.0 should demand more left operator-gated there.
+- A-36 (fixes C-15): append refuses a cert whose `items_blob` is not already in `blobs/` with matching content; the digest is copied into the entry sidecar, `mirror` re-checks it and reports `incomplete`, and a `verify` needing an absent blob exits 5 — so a cert whose per-item evidence was never published no longer passes App. D steps 1–2.
+- A-35 (fixes C-14): `topk_forced_on` (with a `forced_on` refs role) records which prefixes the topk channel was computed against, and comparability is stated for the certs rather than for the command, so a `--diff` between two independently forced fingerprints reports topk as `inconclusive` instead of silently reverting to the quantity S3-04 named defective; §13's quant delta and predecessor diff are produced with `--force-on`.
+- A-34 (fixes C-13): §5.7 states that `alpha_single` is per channel while the exit code is taken over up to five dependent channels, declines to assert an overall size, and defines `noise_floor.alpha_overall` as a parameter measured by permutation over the R floor runs already in hand; what `verify` does while it is null is operator-gated there.
+- A-33 (fixes C-10): §2.7 gives the presence of `subject` and `recipe` per (type, kind) as a table with every cell required or forbidden, plus the rule that a forbidden member is absent and never `{}` — so the same evidence has one content address in two implementations, which §14's release condition would otherwise have discovered as a disagreement.
+- A-32 (fixes C-09): §5.2 row 4 restores the conservative reading the v0.1 review's refutation of S3-03 relied on — a channel in the reference and absent in the new run is `inconclusive`, keyed on the reference cert's channel set — so a verifier can no longer reach `same` by not computing the channels that would have fired; `verify --ref` refuses to start without the capability to reproduce that set.
+- A-31 (fixes C-08): the baseline rule is scoped to canonical fingerprints, exempting the R−1 runs the floor procedure itself creates, and its predicate is restated as a property of bytes with the gap surfaced as a client-computed `baseline-gap` status rather than as an append refusal only the operator's CI could issue.
+- A-30 (fixes C-05): §5.2's rows are ordered clauses with `skew` above `drift`, so a confirmed exceedance under a patched harness reads as an instrument fact and not as a model change; `harness.commit` is restored to the skew-gating set and `runtime.version` is placed as the coverage-side copy of what `env_lock_sha256` already gates.
+- A-29 (fixes C-04): `decoding` is split into `decoding_core` (comparability-gating) and `execution` (nuisance), so a floor plan may vary the batch size §5.1 offers it; §2.3 states the §4.3 selection exemption in words instead of leaving it to be inferred, and every cross-configuration selection number is labelled as one in the battery cert.
+- A-28 (fixes C-03): the sensitivity receipt and the canonical fingerprint no longer reference each other — §2.1 states that refs resolve backwards and only backwards, the sensitivity result recomputes the floor from the run certs it names, the fingerprint's reference to it yields, and §5.1 step 5 fixes the append order that makes a `same` verdict reachable at all.
+- A-27 (completeness critic C-01, C-02, C-06, C-16, 2026-09-08): four self-inflicted defects in this draft, repaired. `public` was announced as log metadata by A-25 but left inside the signed envelope, so an issuer had to set a field it may not set and every cert would have failed its signature — the field is deleted from §2 and §2.6/§8.2 now specify the sidecar. `git_blob_sha256` named a value this repository cannot produce (git here is SHA-1), so entry #0 was unconstructible — §6.1 and A.1 now carry `git_blob_sha1` as a locator and `content_sha256` as the content address. `prove <index>` left a cert holder, who has an id and never an index, with no way to execute App. D step 2 — §8.2 adds a rebuildable `index/by_id.ndjson`. Tree heads filenamed by size alone could not store the two-heads-at-one-size artifact §8.4 calls proof of misbehaviour — the root hash is now in the filename. The remaining critic findings (C-03 to C-05, C-07 to C-15, C-17 to C-19) are open and listed in `REVIEW_completeness_critic_2026_09_08.md`.
+- A-26 (probe v2, 2026-09-08): §0.1, §4.1 and §5.6 corrected. Probe v1's containment observation — that §4.4's nuisance exclusion strips every precision-sensitive item — **did not replicate** on a second model and is withdrawn (`papers/v8/probe_batch_invariance_v2_2026_09_08/RESULT_batch_invariance_v2_2026_09_08.md`: 7 of 17 precision flips survive the exclusion on gemma-2-2b-it, against 0 of 5 surviving on Qwen2.5-0.5B-Instruct). What replicated — bit-identical batch-1 reruns, every log-probability moved by batching, a small non-zero flip rate — is stated with both rates. The sensitivity receipt of §5.3 is the consequence and is not optional.
+- A-25 (build finding, 2026-09-08): `public` cannot live inside the signed envelope and also be "computed at append, never set by the issuer" — the signature would break. `public` is log metadata beside the entry (`<index>.meta.json`, §8.2), not an envelope field; §2 and §2.6 read accordingly.
+
+Operator-gated in this draft (marked in place): S0-01/S8-17 (the name "charon"), S0-02 (type set), S1-01 (id vs evidence), S2-01 (floor transfer), S2-14 (issuer trust), S3-08 (readings cert), S4-06 (floor hardware span), S4-17 (the name "canary"), S5-02 (`--diff` vocabulary), S5-07/S7-09 (`unmeasured` vs `inconclusive`), S5-09 (floor coverage), S5-10 (§5.1, whether a plan may name an environment its own box does not have), S11-01 (CLI verbs), S13-01 (docket model ceiling), S14-03 (relation to the plan of record). The ledger lists the rest.
+
+Three further blocks are gated by findings of the completeness critic rather than of the v0.1 review, and are marked in place the same way: C-07 (§14, what ship gate (b) must demonstrate), C-12 (§7.1, the trust default behind certified tier and dispute status), C-13 (§5.7, what `verify` does on a floor with no measured overall size).
+
+One more is gated by a finding of the first end-to-end run against real weights (`papers/v8/first_log_2026_09_09/RESULT_first_real_log_2026_09_09.md`), and is marked in place the same way: **F3-subject** (§4.5, whether a model-agnostic battery cert names a model, and in what shape). It carries an interim, like C-12's, because certs are being built against this draft today.
+
+---
+## 0. What v8 is
+Three layers, one rule.
+| layer | what it does | depends on the depth instrument? |
+|---|---|---|
+| **fingerprint** | a reproducible battery hash for a model's behavior on a named battery; `verify` reports whether a new run exceeds a measured noise floor | no |
+| **instruments with evidence** | every instrument carries its own prereg → result → promotion certs; certified tier is computed from the log and a trust set | promotion of *depth* would; the layer itself does not |
+| **the log** | append-only transparency log for certs, with inclusion and consistency proofs and a challenge mechanism | no |
+
+The rule: **every claim is a cert, and every cert is reproducible by a stranger from its own recipe plus the public log.** Anything that can't be reproduced from the cert is not a claim; it's a note. Equal battery hashes mean equal greedy token ids on that battery under that recipe. They say nothing about the weights.
+
+`[OPERATOR-GATED S0-01 / S8-17: the v0.1 text calls this log "charon". styxx.charon v0.1 (styxx/charon.py, papers/charon/, log head 1647a26…, sworn RESULT, attack battery) is a different object: a hash-chained log of verdicts re-derived from bytes. Options: (a) rename the v8 log (e.g. "the ledger", "styxx tlog") and keep charon v0.1 as the re-derivation instrument whose lines are later logged as result certs; (b) declare charon v0.1 superseded, freeze papers/charon/ as history that is never rebuilt, and carry its head as a document entry. Recommendation: (a). This draft writes "the log" wherever v0.1 wrote "charon".]`
+
+### 0.1 Glossary (every term with a path; a term without one is not in this spec)
+- **depth** — mean SAE-attributed layer, the instrument of `papers/depth-truth/` (`PREREG_v2.md`, `INSTRUMENT_FREEZE.json`); its result: `FINDING_depth_does_not_predict_truth_2026_07_03.md`, verdict `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL`.
+- **keystone** — the name `papers/depth-truth/` uses for its own prereg (`autofire_pilot.py`, `TERMINATION_v1.md`). There is no "keystone v2" document. Nothing in this spec schedules one.
+- **glimmer** — `experiments/glimmer_dayzero_2026_08_10/`: a single-quantization, temperature-1.0 day-zero read with unfilled results (`REPORT.md`). Never an instrument. Superseded by the docket (§13).
+- **styxx-bench** — `bench/` (84 committed task lines at the blob named in the fixed-v1 battery cert). No "gold fix" exists in the tree; §4 says what fixed-v1 is built from.
+- **logprob vitals gate** — shipped under the verdict `unmeasured` (CHANGELOG "not-stacc fix"; `tests/test_unmeasured_not_adversarial.py`).
+- **sworn** — `styxx/sworn.py` v0.2 and `conformance/sworn/`: the claim-carrying document format every RESULT/PLAN in `papers/` uses.
+- **OATH certificate** — `styxx/certify.py`, `*.certificate.json`, `OATH_CONTRACT.md`: the numeric-claim certificate over a document and its receipts.
+- **plan of record** — `papers/PLAN_the_next_level_2026_09_02.md` (sworn). See §14.0.
+- **the probes** — `papers/v8/probe_batch_invariance_2026_09_08/` (Qwen2.5-0.5B-Instruct, 48 prompts; receipt sha256 `1ef0d4a67c7f3e07b03de3bdd0fbdd8b21e71edad79825888b9d09282b3afa04`) and `papers/v8/probe_batch_invariance_v2_2026_09_08/` (gemma-2-2b-it, 256 prompts; receipt sha256 `30f2011ed9e3118f9cda1278a01ac31402ed7afa5eb2fc40590d1c48cee35c5b`, with `RESULT_batch_invariance_v2_2026_09_08.md` recording what replicated and what was withdrawn). Two models, one GPU.
+
+### Non-goals for v8.0
+- No hosted service until a design partner asks for one. The log v0 is a git repository published as static files.
+- No conformity assertions. The compliance view organizes evidence; counsel decides.
+- No instrument reading in a certified section without a promotion cert that covers it.
+- No token in the critical path. Chain anchoring, if used, is a timestamp paid as a fee.
+- No claim about models in general. Every verdict is about one subject, one battery, one recipe, one floor.
+
+---
+## 1. Design principles
+1. **Content-addressed.** A cert's id is the sha256 of its canonical bytes. Same bytes, same id, anywhere.
+   `[OPERATOR-GATED S1-01: v0.1 said "same evidence, same id"; created and issuer are inside the digested bytes, so two issuers of the same evidence produce two ids. Options: (a) keep the sentence above and drop the evidence claim; (b) additionally define evidence_id = sha256(JCS({styxx, type, subject, recipe, body})) as an informative field that verify prints and that refs may not use. Recommendation: (b).]`
+2. **Recipe-complete.** A cert contains everything needed to re-run it: model identity, battery, decoding, the template and system prompt bytes, the environment lock. If it doesn't, `verify` refuses to compare and says so.
+3. **Noise floor before drift.** No drift claim without a measured null and a measured sensitivity for the same (subject, battery, recipe). "The model changed" is only sayable when the distance exceeds what re-running the *same* model under the logged nuisance plan produces, and only within the coverage that plan states.
+4. **Instruments carry their own evidence.** Tier is a property of an (instrument, code hash, model family, task family) quadruple, granted only by a promotion cert that a trusted key signed and an STH includes.
+5. **Append-only, publicly auditable, disputable.** The log stores; it does not endorse. Inclusion ≠ validity. Challenges are first-class. Append-only is checkable only between two tree heads a reader obtained through channels the operator does not control; with one key and no external pin, the log establishes internal consistency and nothing more.
+6. **Scope-limited claims.** A promotion cert's claim string is the only text an instrument is allowed to say about itself in compliance output, and every numeral in it resolves to a leaf of a logged result cert.
+
+---
+## 2. Cert envelope (styxx/8.0, new)
+This envelope is new. It does not replace the OATH numeric-claim certificate (`styxx/certify.py`, `*.certificate.json`), the sworn sidecar and receipt (`styxx/sworn.py`), the attestation artifact (`styxx/attestation.py`), or the capsule (`styxx/capsule.py`); none of those is re-issued, re-interpreted, or read by v8 code. It shares `styxx.attestation.jcs`'s canonicalization rule and nothing else. One schema, eight types.
+
+```json
+{
+  "styxx": "8.0",
+  "type": "fingerprint | battery | prereg | result | promotion | action | challenge | sublog",
+  "id": "sha256:<64 lowercase hex>",
+  "created": "2026-09-08T18:00:00Z",
+  "issuer": { "name": "fathom lab", "key": "ed25519:<base64url pubkey, no padding>" },
+  "subject": { "...": "model identity, §2.2" },
+  "recipe":  { "...": "everything needed to reproduce, §2.3" },
+  "body":    { "...": "type-specific payload, §3–§10" },
+  "refs":    [ { "role": "battery | run | selected_against | pool | prereg | result | robustness | target | own | parent | fingerprint | sealed | previous | sensitivity | noise_plan | forced_on", "id": "sha256:<hex>" } ],
+  "sig":     "ed25519:<base64url signature, no padding>"
+}
+```
+
+`[OPERATOR-GATED S0-02: the type set changed from v0.1 (eval removed, sublog added, result gains the kinds document, sensitivity, noise-plan and verify bodies). Type and verdict vocabulary changes are operator-gated by doctrine. Option 1 (this draft): the set above. Option 2: keep eval undefined and forbid it at append. Recommendation: option 1.]`
+
+`issuer.name` is a display hint and is never matched; issuer identity **is** the key. `created` is the issuer's assertion; clients order every history by log index and STH timestamp and display body times as `asserted <created>, logged <sth.timestamp>`. `public` is **not** an envelope field: it is log metadata, computed at append and stored beside the entry (§2.6, §8.2). A signed cert cannot carry a field the issuer may not set.
+
+`[OPERATOR-GATED S2-14: an issuer is a bare key with no trust root, no rotation and no revocation, so "independent issuers" in §9 is trivially forged. This draft adopts the minimum: identity is the key, and the log carries an issuer roster (§8.2, `keys/issuers.json`) that clients may consult; a key absent from it is reported as `unknown issuer`, never rejected. The open part is revocation: (a) forbid it in 8.0 — a compromised key's certs stay and the roster marks it retired from an index; or (b) define a `result` cert of kind `key` signed by the old key, effective from the STH that includes it, after which validators treat later certs from that key as invalid. Recommendation: (a) for 8.0, because (b) needs a revocation-checking rule in every client and there is one issuer today.]`
+
+### 2.1 Canonicalization, id, signature
+- Canonical bytes: **RFC 8785 (JSON Canonicalization Scheme)**. The reference implementation uses the `rfc8785` library with `styxx.attestation.jcs` as the checked fallback; the two are held to agree by a differential test with a mutation catalogue (`tests/test_v8_jcs.py`). Object keys sort by UTF-16 code units (RFC 8785 §3.2.3). Certs may not contain NaN, Infinity, integers outside ±2^53, non-string keys, or two keys that serialize equally.
+- `D` = raw 32 bytes of `sha256(JCS(cert with "id" and "sig" removed))`. `id` = `"sha256:" + lowercase hex(D)`.
+- `sig` = Ed25519 (RFC 8032, pure, no prehash) over the message `"styxx.v8/cert/1" || 0x00 || D`. The tag makes a cert signature unusable as a tree-head signature or a seal and vice versa (§7.2, §8.1).
+- Verify = recompute `D`, check the signature against `issuer.key`. Any cert failing recompute-or-signature is rejected at append and at `verify` (exit 4).
+- Decoding a public key rejects: a wrong prefix, padding, a decoded length other than 32, a non-canonical final base64url character, an encoding RFC 8032 §5.1.3 says does not decode, and any small-order point (the identity, the order-2 point and the six order-4 and order-8 points). Reason: under a small-order key one 64-byte string verifies as a signature over every message, and the all-zero key accepts the all-zero signature on one message in four (`tests/test_v8_keys.py`, hostile section).
+- **The refs rule, stated here because A.1 and §3.1 both cite it (A-09).** A validator walks `subject`, `recipe` and `body` recursively and matches every string against the cert-id grammar `^sha256:[0-9a-f]{64}$`; every match MUST appear in `refs`. The grammar is what carries the distinction: a string in that form is the identifier of a cert, a bare 64-hex string is a hash of bytes, the rule reaches the former and never the latter, and A.1 governs which fields take which form. Two paths hold a hash of bytes in the prefixed form and are exempted by name — `body.items_blob` (§3.1) and `body.commitment` (§7.2) — and there is no third.
+- A validator MUST resolve every entry in `refs` to a logged cert of the type its role names before accepting the cert.
+- **This rule is an ordering constraint and it governs.** A cert can only name certs that are already in the log, so `refs` imposes a partial order on append and no two certs may reference each other. Where a section wants a link in both directions, the direction that carries evidence backwards keeps its `refs` entry and the other direction is resolved by query over the log (§5.3 is the worked case: the fingerprint does not reference the sensitivity receipt). A rule that would close a reference cycle is a defect in that rule, not an exception to this one.
+
+### 2.2 Subject — model identity
+The subject has two parts. **Identity fields** key comparability, floors and challenges (§2.3, §5, §9). **Environment fields** are recorded, printed, and used for coverage (§5.4), never for identity.
+
+Local weights (white-box eligible):
+```json
+"subject": {
+  "kind": "weights",
+  "model_family": "gemma-2",
+  "hf_repo": "google/gemma-2-2b", "revision": "<commit sha>",
+  "weights_sha256": "<A.2>", "config_sha256": "<A.2>", "tokenizer_sha256": "<A.2>", "generation_config_sha256": "<A.2>",
+  "precision": "bf16 | fp16 | int8-bnb | nf4-bnb | q8_0 | q4_k_m | ...",
+  "environment": {
+    "runtime": { "framework": "transformers", "version": "4.57.3", "backend": "torch 2.5.1+cu121" },
+    "hardware": { "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU", "driver": "...", "count": 1 }
+  }
+}
+```
+`S_identity` for a weights subject = (`hf_repo`, `revision`, `weights_sha256`, `config_sha256`, `tokenizer_sha256`, `generation_config_sha256`, `precision`).
+
+API alias (black-box only):
+```json
+"subject": {
+  "kind": "alias",
+  "model_family": "<provider's family name or 'unknown'>",
+  "provider": "...", "alias": "...", "region": "...",
+  "observed_model_id": "<if returned in responses>", "observed_at": "2026-09-08T18:00:00Z"
+}
+```
+`S_identity` for an alias subject = (`provider`, `alias`, `region`). `observed_model_id` and `observed_at` are recorded in every cert and excluded from the key; an alias floor carries a mandatory `window` (§5.1).
+
+Alias subjects carry `body.tier = "black-box"` in every downstream cert. There is no way to make an alias fingerprint as strong as a weights fingerprint, and one sentence is printed with every alias verdict: *for an alias subject, `same` is evidence only against a provider that does not condition on the request; a provider that recognises published prompts and serves them from a pinned model or a cache defeats every black-box channel, and the log cannot tell.*
+
+**The environment is OBSERVED, never asserted.** The `hardware` block names the device the run **computes on**, not the devices the box holds: a run on the CPU records `gpu: "cpu"`, `driver: "none"`, `count: 0`, `device: "cpu"` while a card sits idle beside it. `hardware.device` is a required-in-practice fourth field for exactly that reason — `gpu` alone cannot separate `cuda:0` from `cuda:1`, and it was the absence of `device` from every signed field that made the difference invisible. The obligation sits on the runner (`styxx/v8/runner.py`, `Runner.environment()`), which is the only thing in the process that knows what `model.to(...)` was given, and `verify --ref` takes its record from there and from nowhere else. `--environment <file>` may **annotate** what the runner reported — a `harness` block, an `env_lock_sha256`, the two fields a runner cannot observe and §2.3's skew comparison reads — and a field of it that contradicts an observed one is exit 5: no result cert, no challenge, no verdict.
+
+**A subject with no `environment` key does not escape the rule, and until this was written it did.** The mint's guard sat behind "if the spec carries an `environment` block", and `schema/fingerprint.json` required only `kind` on `subject`; the `weights` branch of the subject schema requires the block, the `alias` branch does not. So an alias spec with the key deleted minted a fingerprint that observed no environment, named none, and — since §5.4 derives `not_covered` from what is there — carried a floor whose `not_covered` was empty, which that section reads as covering every environment there is. A guard an omission turns off is not a guard. There is no omission branch: with no block in the spec the runner's report stands alone, and **a fingerprint's `subject` carries an `environment`**, both kinds, because a fingerprint is the record of a run and a run happened somewhere. For an alias that somewhere is the client's runtime and the box it dialled out from, which computes no forward pass and holds no card of its own; it is not the provider's hardware and this section does not pretend otherwise.
+
+The rule is the same at **mint**. `styxx fingerprint --subject <spec.json>` takes the spec's `environment` block as an annotation over what the runner observes, not as the claim: before that, the spec file was the whole of it, so a subject block naming a card minted a canonical fingerprint naming that card whatever the run touched, and every floor built on it inherited the sentence. A verifier that re-runs such a cert can only ever compare its own observation against an issuer's assertion; the two sides of the comparison have to be the same kind of statement.
+
+This is not a new identity check and cannot become one: `device` is not in `S_identity` and this section keeps the environment out of identity entirely. An environment difference lands in §5.4, as coverage. What the rule removes is the ability to *write* the field: before it, `verify --ref --runner hf --device cpu --environment <a file naming an RTX 4070> --challenge` ran one CPU forward pass and signed a result and a challenge naming that card, with `mismatched: []` and `identity_diff: []` (the S-DEVICE demonstration, `papers/v8/challenge_and_attack_2026_09_09` and the third adversarial pass). A **synthetic** subject is the one exemption — a runner computing from a hash observes no hardware, and every cert it produces already carries `synthetic` in the signed bytes and is refused as a baseline for, a diff against or a challenge to a measured cert (§6) — so the environment it names cannot reach a stranger as a claim about a machine.
+
+`[OPERATOR-GATED S2-02: what a difference between the observed environment and the cert's recorded one MEANS. It is not identity (this section) and §5.4 already acts on the subset the floor's `not_covered` names. Options: (a) record it as `environment_diff` beside the coverage line and let `not_covered` alone gate — a floor whose plan named no environment field reaches a verdict against a run from another device, and the reader sees the difference in the signed body; (b) any observed difference in `runtime`/`hardware` forces `beyond-floor-coverage`, so a floor that named no environment field can never be verified from anywhere but the box it was measured on; (c) refuse (exit 5) rather than verify. Implemented today: (a). Recommendation: (a) for v8.0 with (b) as the docket rule, because (b) collapses to (c) for every floor whose plan was written before this section existed, and (c) turns a coverage question into an availability one. What is NOT gated, and is not an option: writing an environment nobody observed.]`
+
+`[OPERATOR-GATED S2-01: how a floor measured on one environment applies to a stranger's verify on another. Options: (a) floors are keyed on (S_identity, recipe_core) and carry a coverage list (§5.4); a run from an environment outside the coverage gets the verdict beyond-floor-coverage, never drift; (b) floors are keyed on the environment too, so a stranger must always measure their own floor before any verdict but inconclusive. Recommendation: (a), because (b) makes Appendix D step 4 impossible for everyone but the issuer.]`
+
+### 2.3 Recipe
+```json
+"recipe": {
+  "battery": "sha256:<battery cert id>",
+  "decoding_core": { "temperature": 0, "top_p": 1.0, "max_new_tokens": 64, "stop": ["\n"], "seed": 7 },
+  "execution":     { "batch_size": 1, "padding_side": "left", "device": "cuda:0" },
+  "materials": {
+    "chat_template": "<the Jinja template string as loaded, verbatim>",
+    "chat_template_source": "tokenizer_config.json@<revision> | inline",
+    "system_prompt": "<verbatim; empty string when none>",
+    "env_lock": "<pip freeze / lockfile text, verbatim>"
+  },
+  "chat_template_sha256": "<derived, A.1>", "system_prompt_sha256": "<derived, A.1>", "env_lock_sha256": "<derived, A.1>",
+  "harness": { "name": "styxx", "version": "8.0.0", "commit": "<sha>" },
+  "sae": { "loader": "...", "repo": "google/gemma-scope-2b-pt-res", "revision": "...", "layers": "all | [..]", "attribution": { "tool": "...", "commit": "...", "params": {} } }
+}
+```
+The three `*_sha256` fields are derived from `materials` and checked at append; a cert whose hashes do not match its materials is rejected. Every other `*_sha256` field whose material is carried beside it in the same cert is checked the same way (A.1 lists them). `sae` is present only when a white-box channel or SAE-based instrument is used; it is an open object with the required keys shown, and a single-layer default is forbidden. `execution.batch_size` and `execution.padding_side` are required: the probe (§0.1) shows that on one box a batch-size change alone moved 5–6 of 48 greedy outputs while the batch-1 rerun moved none (`receipt.json`, `variants`).
+
+**Why `decoding` is split.** v0.2 put `batch_size` and `padding_side` in `decoding` (A-14) and, in the same draft, named batch size among the nuisance factors a floor plan may vary (§5.1). With `decoding` whole inside `recipe_core`, every run at a second batch size was a comparability mismatch, so no floor plan could exercise the factor §5.1 offers and the δ2 sweep of §4.2 produced numbers §2.3 forbade. The rule that yields is "the whole `decoding` object keys comparability"; the rule that governs is "a factor a floor plan may vary is nuisance, not identity". `batch_size` keeps everything A-14 gave it — it is required, recorded, and part of what makes a cert recipe-complete — and it is now nuisance-side, where a batch change is caught by coverage (§5.4) rather than by exit 3.
+
+**Keys.** `recipe_core` = (`battery`, `decoding_core`, `chat_template_sha256`, `system_prompt_sha256`).
+- Comparability-gating (exit 3, no distances printed): any difference in `recipe_core`, or in `S_identity`, except that a `--diff` may cross `precision` or `revision` and is then labelled `cross-subject` (§6).
+- Skew-gating (distances printed, verdict `skew`, exit 2): a difference in `harness.version`, `harness.commit` or `env_lock_sha256` when the distance exceeds the floor. A verifier change never reads as model drift; this is the SKEW/DRIFT distinction charon v0.1 already made. `harness.commit` is in this set because a styxx build at one version string and two commits is otherwise invisible to every rule in this document. The runtime is skew-gated through `env_lock_sha256`, which is the digest of the lockfile that pins it; `subject.environment.runtime` is the printed, coverage-side copy of the same fact (§5.4) and gates nothing on its own.
+- Nuisance (§5.1, §5.4): `execution`. Recorded in every cert, listed in `noise_floor.covers` when a plan varied it and in `not_covered` when it did not, never comparability-gating.
+- Coverage (§5.4): environment fields.
+
+**The one exemption, written down.** §4.3's selection arithmetic (`flip1`, `flip2`, `flip4`, `s(i)`) compares runs that differ in `execution` and, for δ1, in `precision`. Those comparisons happen inside `styxx battery select`, not inside `verify`, so the exit-3 rule above — which is a rule about comparing two certs — never literally reached them; what was missing was the statement, not an exception. It is stated here so the exemption is visible rather than inferred: selection numbers are produced across mismatched configurations on purpose, that is what makes them sensitivity scores, they are confined to §4, they never enter a `verify` verdict, and every one of them is labelled `cross-configuration` in the battery cert.
+
+### 2.4 Relation to sworn, OATH and the capsule
+A `result` or `promotion` body's `claim` is a sworn fragment: every numeral in it is a `<sworn r="sha256:<result cert id>#/body/<json pointer>" k="numeric">` span resolved by `styxx.sworn` against the referenced cert; `styxx instrument promote` refuses a claim with an unbound numeral. Documents about certs (this spec, RESULTs, dockets) remain sworn documents. OATH certificates and capsules are unchanged and are not consumed by v8.
+
+### 2.5 Versioning
+`styxx` is the schema version. Verifiers accept `major.minor` ≤ their own and refuse higher with exit 3. A promotion cert's tier is computed under the rules of the schema version it names; 8.1 rules apply only to promotions issued as 8.1.
+
+### 2.6 `public` — log metadata, not a cert field
+`public` lives in the entry's sidecar (`<index>.meta.json`, §8.2), never inside the signed bytes. The log computes it at append: `false` if the cert or any cert in its transitive `refs` is redacted (§3.1, §4.5), else `true`. It is a pure function of the entry and the entries it references, so a mirror recomputes it and a disagreement between a mirror's value and the operator's is reported by `mirror` (§8.4). `verify` copies it into the result. Certs with `public: false` appear in the compliance view only under a "non-public evidence" heading and never in change tracking.
+
+### 2.7 Field presence per type
+"One schema, eight types" left the presence of `subject` and `recipe` to the implementer. Under JCS an absent key and a key holding `{}` are different bytes, so they are a different `D`, a different `id` and a different leaf hash: two implementations of the same evidence would content-address it twice, and §14's release condition is that a second implementation agrees on the conformance vectors. The v0.1 review judged this editorial (S2-07). It is not editorial here, because v0.2 made field presence load-bearing — §2.6 walks transitive refs, §2.3 keys on `recipe_core`, §9 reads `S_identity` from the two certs — and because the ship gate is what would discover it.
+
+`styxx`, `type`, `id`, `created`, `issuer`, `body`, `refs` and `sig` are required on every cert. `refs` is always present and is `[]` when the cert names no other cert; it is never absent and never null. For `subject` and `recipe`:
+
+| type (kind) | `subject` | `recipe` | note |
+|---|---|---|---|
+| fingerprint | required | required | refs carry `battery`; the canonical run also carries `run` and `noise_plan`, and `previous` under §5.5 |
+| battery (pool-v1, fixed-v1) | forbidden | forbidden | a battery is a set of items, not a run |
+| battery (canary-v1) | forbidden | forbidden | the subject it was selected against is the `selected_against` ref, and the recipe of the sweep is that reference fingerprint's |
+| prereg (noise-plan) | required | required | it names the recipe the R runs execute |
+| prereg (instrument, sealed or revealed) | forbidden | forbidden | the models it applies to are named in the body's datasets/models section |
+| result (verify) | required | required | the subject and recipe actually run |
+| result (sensitivity) | required | required | refs carry `noise_plan` and the R `run` certs |
+| result (confirmatory, pilot, robustness) | required | required | an instrument run is a run |
+| result (response) | forbidden | forbidden | the target's subject is reached through the challenge |
+| result (document) | forbidden | forbidden | a document has no model subject and no decoding |
+| promotion | forbidden | forbidden | `body.scope` carries the model family; the evidence is in the refs |
+| action | forbidden | forbidden | the subject is the one named by the `fingerprint` ref |
+| challenge | forbidden | forbidden | §9 computes identity from the target cert and the challenger's `own` fingerprint |
+| sublog | forbidden | forbidden | a sub-log head is about a tree, not a model |
+
+A forbidden member is **absent**, never an empty object. An optional member that is absent is **absent**, never null. There are no optional members in the table above; every cell is required or forbidden, so the canonical bytes of a well-formed cert of a given (type, kind) have exactly one shape. Append rejects a violation with exit 4. `conformance/v8/` carries at least one vector per row before the second implementation starts (§14).
+
+---
+## 3. Fingerprint cert
+### 3.1 Body
+```json
+"body": {
+  "run_index": 0,
+  "nuisance": { "batch_size": 1, "item_order_sha256": "<A.1>", "gpu": "...", "driver": "..." },
+  "items": [
+    {
+      "item_id": "b7f2…",
+      "token_ids_sha256": "<sha256(JCS(ids)), A.3>",
+      "output_sha256": "<sha256(UTF-8 of output_text)>",
+      "output_text": "…  (omitted when redacted=true)",
+      "n_generated": 12,
+      "seq_logprob": -3.412,
+      "prefix_token_ids": [ "… the reference greedy prefix used for topk (weights subjects)" ],
+      "topk": [ { "pos": 0, "ids": [..5..], "lps": [..5..] }, "… positions 0..min(7, n_generated-1)" ]
+    }
+  ],
+  "channels": {
+    "exact":  { "hash": "<A.3: sha256 over the raw 32-byte token_ids digests in item_id order>" },
+    "seqlp":  { "present": true },
+    "topk":   { "present": true },
+    "resid":  { "n_layers": 26, "profile": [[..L..] per item], "mean": [..L..] },
+    "lens":   { "n_layers": 26, "converge_layer": [..per item..], "mean": 14.2 }
+  },
+  "noise_floor": { "plan": "sha256:<noise-plan prereg id>", "runs": ["sha256:…"], "covers": ["batch", "order"], "not_covered": ["hardware", "driver"],
+                   "per_channel": { "exact": {"floor": 0.0, "distances": [..], "runs": 5, "pairs": 10, "alpha_single": 0.0909} },
+                   "alpha_overall": null, "alpha_overall_method": null, "standardization": "distance / floor_c" },
+  "topk_forced_on": "self | sha256:<fingerprint cert id>",
+  "redacted": false,
+  "tier": "white-box | black-box"
+}
+```
+`run_index` is 0..R−1; the canonical fingerprint is `run_index` 0 and carries `noise_floor`; every other run is its own logged cert referenced under role `run`. `seed` is fixed across runs (temperature 0 makes it moot); the nuisance settings, not the seed, vary. The fingerprint does **not** carry the id of its sensitivity receipt: that link would close a reference cycle (§2.1, §5.3), so it runs the other way and clients resolve it by query.
+
+`topk_forced_on` records which prefixes the `topk` channel was computed against: `"self"` (each item's own greedy prefix, the only option for alias subjects) or the id of the fingerprint cert whose `prefix_token_ids` were used, which is also carried as a `refs` entry with role `forced_on`. Without this field a `--diff` cannot tell whether the two sides' topk positions are conditioned on the same context, and §13's quant delta and predecessor diff are exactly the case where they are not (§3.2, §6).
+
+**Blobs.** Large per-item payloads (`output_text`, `topk`, `profile`) may live in a content-addressed blob: `body.items_blob = "sha256:<hex>"`, stored as `blobs/<hex>.json` in the log, bytes = JCS of the items array. `items_blob` is a digest of bytes, not a cert id, so A-09's rule ("every cert id in a cert appears in `refs`") does not reach it and `refs` has no blob role. In its place: **append refuses a cert whose `items_blob` is not already present in `blobs/` with content whose sha256 equals the field** (exit 4). The digest is copied into the entry's `.meta.json` (§8.2), `log mirror` re-checks it and reports a missing or mismatched blob as `incomplete` for that entry (§8.4), and a `verify` that needs an absent blob exits 5 (`unavailable`), never 0. Without those four rules the leaf hash covers the cert while the bytes carrying every per-item number sit outside it, and a cert whose evidence was never published passes App. D steps 1–2.
+
+### 3.2 Channels
+Black-box (any subject):
+- **exact** — greedy output token ids per item. The battery-level hash (A.3) is the battery hash.
+- **seqlp** — sum log-probability of the greedy sequence per item (where the API returns logprobs; else the channel is absent, never zero-filled).
+- **topk** — top-5 log-probs at generated positions 0..min(7, n_generated−1). For weights subjects, topk is computed teacher-forced on a named reference cert's greedy prefix (`prefix_token_ids`) so positions compare the same context; the cert that supplied the prefixes is recorded in `topk_forced_on` and referenced under role `forced_on`. A fingerprint that was forced on its own prefixes records `topk_forced_on: "self"`; that is the only option for alias subjects, where topk is conditioned on each side's own prefix and is therefore a weaker channel, and the result cert says so.
+  Teacher forcing is defined by naming a reference, which `verify --ref` supplies and `verify --diff` does not. So the rule is stated for the certs, not for the command: **two certs' topk are comparable iff their `topk_forced_on` values are equal and are not `"self"`, or both are `"self"` and the two sides' greedy outputs are token-identical.** Otherwise the channel is `inconclusive` in that comparison and no topk number is printed (§6). To make a cross-subject comparison well-defined, issue the second fingerprint with `--force-on <the reference cert>` (§11); that is how §13's quant delta and predecessor diff are produced.
+White-box (weights subject, one extra forward pass with hooks, no SAE required):
+- **resid** — per-layer residual-update norm profile at the final prompt token, clamped at 0 and L1-normalized; `profile` is required whenever the channel is present.
+- **lens** — logit-lens convergence layer: first layer at which the final-position top-1 under the unembedding equals the model's actual top-1.
+`lens` and `resid` are channels. They are never instrument readings and never appear under a tier.
+Deferred to instrument tier (§7), not a v8.0 channel: SAE attribution depth. Its only committed evidence is negative (§0.1).
+
+### 3.3 Distances
+Defined in Appendix B. Every channel has exactly one distance function; `verify` never picks.
+
+---
+## 4. Battery certs and canary selection (canary-v1)
+`[OPERATOR-GATED S4-17: "canary" collides with papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md, where a canary is a planted known-false span. Options: rename the v8 object (sentinel-v1, edge-v1, probe-v1) throughout, or keep it here and rename the sworn planted spans, which re-issues a sworn spec. Recommendation: rename the v8 object; this draft keeps "canary" until the operator picks the name.]`
+
+A fingerprint is only as sensitive as its battery. Three battery kinds:
+- **pool-v1** — the full candidate set a canary selection draws from: `items` = every candidate in the clear, no `selected_against`. The reference fingerprint of a canary selection runs on the pool cert.
+- **fixed-v1** — public, model-agnostic, target 512 items: the 84 committed styxx-bench items at the blob named in the cert plus items drawn by a committed script (seed and exclusion list in the cert) from named public datasets already cached on the build box (PopQA and the others the script names), each item carrying its provenance. Every item has `role: item`; there are no anchors. Used for cross-model comparison and predecessor diffs. Rotated yearly; for 12 months after a rotation, dockets run both fixed-v(n) and fixed-v(n−1) and the predecessor diff is on the older battery.
+- **canary-v1** — model-specific, selected against a weights subject only (it needs log-probs and re-quantizable weights). Alias subjects use fixed-v1 with their own floor; a canary battery selected on the open-weight twin of an alias may be used and is labelled `selected_against_kind: weights`.
+
+### 4.1 Hypothesis H-canary (unmeasured)
+Items whose greedy output sits near a decision boundary are hypothesised to move under quantization, fine-tuning, or a silent swap more often than random items. This has no receipt. Before any canary fingerprint carries a public drift claim, a `prereg` cert for "canary-v1 sensitivity" must be in the log with the predicted holes committed before the first δ-sweep: the pool is split into a selection half and a held-out half; the held-out half is where sensitivity is measured; the result is a `result` cert of kind `sensitivity` (§5.3).
+
+The two probes (§0.1) are why this stays a hypothesis and why §5.3 is mandatory. On Qwen2.5-0.5B-Instruct, all 5 precision-sensitive items were also nuisance-sensitive, so §4.4 step 1 excluded every one of them. On gemma-2-2b-it, 7 of 17 survived the same exclusion. The exclusion removes a majority of precision sensitivity in both runs and removes all of it in neither reliably, so how much a given battery retains is measured on the subject, never assumed.
+
+### 4.2 Perturbation family Δ (run on the reference subject, reference precision, reference runtime)
+The reference configuration is (batch 1, A.3 order, device 0, reference precision, reference runtime).
+| id | perturbation | purpose |
+|---|---|---|
+| δ1 | precision, in the reference runtime: bf16 → fp16 → int8-bnb → nf4-bnb (transformers + bitsandbytes, exact quant config recorded); GGUF quantizations are a second runtime and are recorded as such, never mixed into δ1 | sensitivity to representational change |
+| δ2 | nuisance, an explicit list: (batch 8, A.3 order, d0), (batch 32, A.3 order, d0), (batch 8, permuted with `params.perm_seed`, d0), (batch 8, A.3 order, d1 if a second device exists) | **noise**, not signal |
+| δ3 | boundary proximity, deterministic (§4.3) | proximity to decision boundary |
+| δ4 | (optional) semantically-null template jitter: trailing whitespace, newline variant | template brittleness |
+
+### 4.3 Scores
+For item *i*, from the reference greedy pass over all emitted positions t:
+- `margin(i)` = min over t of (lp_top1,t − lp_top2,t), in nats; the per-position vector is stored in the battery cert.
+- `flip1(i)`, `flip2(i)`, `flip4(i)` = fraction of δ1 / δ2 / δ4 variants whose greedy token ids ≠ reference.
+- `stay(i)` = Σ_t log softmax(z_t / 0.2)[greedy_t] from the reference pass; `flip3(i) = 1 − exp(stay(i))`. No sampling.
+```
+s(i) = 0.6 · (flip1(i) + flip3(i)) / 2  +  0.4 · exp(−margin(i) / τ),   τ = 1.0 nat
+```
+The margin term ranges over (0, 0.4]; the v0.1 form `1 − σ(margin/τ)` never exceeded 0.2 and misdescribed the recorded weights.
+
+`flip1`, `flip2`, `flip4` and `s(i)` are produced across configurations the comparability rule would not let `verify` compare: δ1 crosses `precision` (an `S_identity` field) and δ2 crosses `execution`. That is deliberate and is the exemption written down in §2.3. Every one of these numbers is stored in the battery cert under `cross_configuration: true` and is printed with that label. They are selection scores about items; they are never a distance between subjects, never a floor, and never an input to a verdict.
+
+### 4.4 Selection
+1. **Exclude** every item with `flip2(i) > 0`. They are listed in `body.excluded` with their flip2; they are not a floor pool. The floor is measured on the selected battery itself, with fresh runs (§5.1).
+2. Rank the remainder by `s(i)`; ties broken by margin ascending, then `item_id` ascending.
+3. Stratify by `family` (the enum of §4.5): no family > 25% of the battery; if a family runs short, remaining slots are filled by the next-highest s(i) regardless of family and the shortfall is recorded.
+4. Take the top **N** (defaults: 64 quick, 256 standard, 1024 docket).
+5. Add anchors: `zero(i)` = flip1 = flip2 = flip3 = 0 and (δ4 not run or flip4 = 0); anchors = the K items with the largest margin among zero(i), K = 64, `k_anchors_actual ≤ K` recorded. An anchor flip is reported as `anchor_flips: n` beside the channel verdicts. It is not an identity claim (§5.2).
+
+### 4.5 Battery cert body
+```json
+"body": {
+  "kind": "pool-v1 | fixed-v1 | canary-v1",
+  "pool_sha256": "…", "pool_size": 2000,
+  "params": { "tau": 1.0, "w_flip": 0.6, "w_margin": 0.4, "n": 256, "k_anchors": 64, "k_anchors_actual": 61, "max_family_share": 0.25, "perm_seed": 11, "delta4_run": false, "tie_break": "margin asc, item_id asc" },
+  "families": ["recall", "short-reasoning", "instruction-following", "format", "refusal-boundary"],
+  "items": [ { "item_id": "…", "prompt_sha256": "…", "prompt_text": "…", "family": "recall", "role": "item | canary | anchor",
+               "score": 0.71, "margin": 0.42, "margin_by_position": [..], "flip1": 0.67, "flip2": 0.0, "flip3": 0.33 } ],
+  "excluded": [ { "item_id": "…", "flip2": 0.25 } ],
+  "cross_configuration": true,
+  "redacted": false
+}
+```
+Selection fields and `selected_against` (a `refs` role) are required iff `kind = canary-v1` and forbidden otherwise; the schema enforces it.
+
+**A pool-v1 or fixed-v1 battery has no `recipe.battery`, and its `recipe` may be `{}`.** This is the root of the dependency ladder and it must be constructible in an empty log. The general recipe rule of §2.3 requires a `battery` id, and §2.1 then forces that id into `refs`, where §8.3 requires it to resolve — so applying the general rule to a battery cert makes every battery name an earlier battery and the first one impossible. The exception is stated here rather than discovered: a battery cert of kind `pool-v1` or `fixed-v1` carries no recipe battery, and a log whose first entry is one is well-formed. A `canary-v1` battery is not a root: it is selected against a fingerprint that ran on a pool, so it carries `selected_against` and inherits that fingerprint's battery through it. The ladder is therefore pool battery → a reference fingerprint on the pool → the canary battery → fingerprints on the canary, and no other order appends.
+
+**The same question about `subject` is open, and it is a decision rather than a typo.** A pool-v1 or fixed-v1 battery is model-agnostic by construction — it is a set of prompts, nothing in it was produced by running a model, and §2.7's table already answers `forbidden` for both `subject` and `recipe` on those two kinds. Two sentences in this draft disagree with that table and with each other: the paragraph above says a root battery's `recipe` "may be `{}`", while §2.7 says a forbidden member is **absent, never an empty object**, which is the rule that gives one (type, kind) exactly one content address in two implementations. The first real run resolved the disagreement by accident and in the worst direction: the envelope required both members present, the CLI required a `--subject` spec to sign a battery at all, and the root of the ladder was therefore stamped with whichever model was loaded on the box that morning (`papers/v8/first_log_2026_09_09/`, finding 3). Two labs assembling the same 512 prompts on two boxes then produce two battery cert ids and two incomparable ladders, which is the one outcome fixed-v1 exists to prevent.
+
+`[OPERATOR-GATED F3-subject: whether a model-agnostic battery cert names a model, and in what shape. Options: (a) **absent** — `subject` and `recipe` are omitted entirely from a pool-v1 or fixed-v1 battery cert, which is what §2.7's table already says; an absent subject means *this cert is about a set of items and not about any model, and nothing in it was produced by executing one*. The envelope's required-key list and `styxx battery fixed|pool` both change, and the conformance vectors for those two rows are regenerated. (b) **present and empty** — `"subject": {}` and `"recipe": {}` are permitted for those two kinds and mean the same sentence as (a); §2.7's "absent, never `{}`" rule is then rewritten to say `{}` **for these two rows specifically**, so that there is still exactly one shape per (type, kind) and one content address per battery. This is the smaller code change and the larger rule change. (c) **keep the subject required** and state in §4.5 that a root battery records the subject that happened to be loaded when it was built, as environment provenance and never as a claim about the items. Recommendation: **(a)**, because §2.7's table already says it, because a member that means "no model" reads better as an absence than as an empty object, and because (c) is not defensible: it makes the battery hash of an identical prompt set depend on a fact about the builder's GPU. Note that (a) and (b) differ in bytes and therefore in every battery cert id — whichever is chosen, the certs of `papers/v8/first_log_2026_09_09/` were built under (c) and are re-issued, not amended. Interim until the operator decides: the shape the first log used stands, and every root battery cert carries the line *subject recorded as build provenance; this battery is model-agnostic and the subject is not part of what it asserts* wherever the cert is displayed.]`
+
+This defect was found by building the cert, not by reading the draft: the first implementation of §2 and §8 could not construct a battery at all (`schema/battery.json` required `recipe.battery`), and the ladder of §13 had nothing to stand on. `cross_configuration` is required iff `kind = canary-v1` and is then always `true` (§2.3, §4.3). `item_id` is not free-form: A.3 fixes its construction as 16 hex of `sha256(UTF-8(prompt_text))`, which is what makes it safe as the ordering key of the battery hash. The author supplies it in the source file and append checks it against the `prompt_text` beside it; the tool does not derive it, and A.3 says why a check beats a derivation here. `family` is the `task_family` vocabulary of §7.1 and the only one; the enum listed above is that vocabulary, and a promotion's `scope.task_family` is a value of it. The pool file schema is `{item_id, prompt_text, family}` with `family` from the enum above; the mapping from styxx-bench `category` values is in the fixed-v1 build script. **The field is `prompt_text` and not `prompt`.** v0.2 wrote `prompt` here while the battery cert body two paragraphs above, A.3's `prompt_sha256` preimage and the implementation all read `prompt_text`; the three agree and this sentence was the defect, found by feeding the CLI a pool file written from it (`papers/v8/first_log_2026_09_09/`, finding 2). One name for one field, everywhere: `prompt_text`.
+
+**Prompts are stored in the clear, with no exception.** Redaction applies to fingerprint outputs only. v0.2 said this and then, in the next clause, gave a behaviour for "a battery with redacted prompts" — a state the sentence before it forbids. The sentence governs and the clause yields, because §15.2 records the operator's decision as clear text for outputs and prompts, and because a battery whose prompts are withheld cannot be re-run by anyone, which principle 2 forbids. Append refuses a battery cert with `redacted: true` (exit 4), and there is no `redacted_battery` flag on any cert.
+
+### 4.6 Known limits
+- Canaries are specific to the subject they were selected against; a canary battery from model A is just a random battery for model B. Cross-model claims use fixed-v1 only.
+- canary-v1 detects changes that were not optimised against the published battery. A party that trains or distils against the battery defeats it; publication makes this possible and the spec accepts it. Re-selection is a response to a known fine-tune, not a defence against a hidden one.
+- For alias subjects, see the sentence in §2.2. A `same` verdict on an alias is evidence only against a provider that does not condition on the request.
+
+---
+## 5. Noise-floor procedure
+Purpose: make "the model changed" a falsifiable statement with a stated error rate and a stated coverage.
+
+### 5.1 Procedure
+For subject S and battery B under recipe R:
+1. **Log the plan first.** A `prereg` cert of kind `noise-plan` names R (the run count), the enumerated nuisance factors and their values, and the environment. Every floor run references it under role `noise_plan`; a floor whose runs are not all under a logged plan is not a floor.
+
+   **The plan OBSERVES the environment it names, and the runs must match it.** §2.2's mint rule was applied to `styxx fingerprint` and not to the command that mints the plan: `prereg noise-plan` built no runner at all and copied `environment` out of the `--subject` spec file, so the block this step requires — and the block §5.4 derives the whole coverage vocabulary from, on the one cert signed *before* the runs and named by id from inside every floor built on it — was a value the issuer typed. A plan cannot observe its runs, because it is written before them. What it can observe is the box it is minted on, and that is what it now records: the command takes the same `--runner`/`--device`/`--snapshot` flags `fingerprint` takes, `Runner.environment()` is the source, and the spec's block may only annotate it (a contradiction is exit 5, as at the fingerprint).
+
+   The consequence, stated because it is a real obligation and not a formality: what the plan names is an **intended** environment, and an intention binds nothing until the runs are compared against it. So `fingerprint --plan` refuses runs whose observed environment differs from the plan's on any leaf the plan did not declare as a nuisance factor, and append refuses the same floor from the other side — the plan cert and the run certs are both in the log, so the comparison is a predicate a stranger re-runs on the bytes. The comparison is one-directional: a run may carry leaves the plan never mentioned (`harness`, `env_lock_sha256` — §2.3's skew fields, which a runner cannot observe), and a run *silent* about a leaf the plan fixed is refused rather than passed, because a check whose quietest state is "the field was missing" is not a check.
+
+   What this does not reach is the same sentence §5.4 and §2.2 carry: the plan's environment and the runs' are both bytes one party wrote, on one box, and a party that writes the same environment into both is not caught by any comparison between them.
+
+   `[OPERATOR-GATED S5-10: whether a noise plan may name an environment the box minting it does not have. Today: no — the plan observes, so a plan for runs on another machine cannot be minted, and a docket or a multi-party replication that wants a coordinator to preregister the battery for environments it does not hold cannot use this verb. Options: (a) keep the refusal, and let each party mint its own plan for its own environment, so a multi-party floor is several plans and the comparison between them happens in §9; (b) allow an unobserved plan behind an explicit flag that stamps `environment_observed: false` into the signed body, with `verify` printing it beside every verdict that rests on such a floor; (c) allow it silently, which is the state this repair removed. Recommendation: (a) for v8.0, because (b) reintroduces the field this amendment took away and is only worth its cost once a second party actually exists to coordinate with — which is the reproduction count of `THE_BOUNDARY_2026_09_09.md`, and it is currently zero.]`
+
+   **The plan needs a verb, and until it had one no floor could exist.** v0.2 stated this requirement and named no command that mints the cert: the verb set of §11 was `battery`, `fingerprint`, `key`, `log`, `verify`, and `instrument prereg` takes an instrument prereg file, not a noise plan. §5.5's baseline rule then refused every canonical fingerprint after the first, because a fingerprint starting a new baseline must reference either a previous canonical cert or a plan, and neither could be produced — *log append refused: baseline: a comparable fingerprint is at index 1; a fingerprint that starts a new baseline needs a previous ref* (`papers/v8/first_log_2026_09_09/`, F1). Both rules are right and neither yields: the plan requirement is what stops an issuer choosing its nuisance set after seeing the runs, and the baseline rule is what stops an issuer silently moving its own baseline. What was missing was the mint. `styxx prereg noise-plan` (§11) is that command, it is the only thing that produces a cert of this kind, and a floor procedure that cannot reach it stops at step 1.
+2. Run the recipe **R** times, fresh runs disjoint from every δ-sweep run, varying only the planned nuisance factors: item order and, where the plan says so, `execution.batch_size`, physical GPU and driver; for alias subjects, time-of-day and region within the shortest window that yields R runs, with `window: {start, end}` recorded. Varying `execution` does not break comparability (§2.3), which is why the plan may name it. R = 5 minimum (10 pairwise distances). R = 8 for dockets (28 pairs). The reference run is batch 1 in A.3 order.
+3. For each channel *c*, compute all pairwise distances between runs → the empirical null `D_c`. `floor_c = max(D_c)`. The result records `runs`, `pairs`, and `alpha_single = 1/(pairs+1)`, the nominal probability under exchangeability that a fresh same-model run exceeds the max; the percentile branch of v0.1 is deleted. `alpha_single` is a **per-channel** figure and the exit code is not per channel (§5.2, §5.7).
+4. Every run is logged as its own fingerprint cert with `run_index` and `nuisance`. The canonical fingerprint (`run_index` 0) carries `noise_floor`.
+
+   **The canonical cert differs in its bytes from the run it was computed on, and a `--runs R` that produced identical bytes produced no floor.** A floor of R runs yields R certs and not R+1: the R−1 non-canonical run certs of step 5 (ii), and the canonical fingerprint of step 5 (iii), which is run 0 carrying the floor computed over all R. The canonical cert is therefore never a bare run cert. It carries `noise_floor` — the plan id, the R run ids, `covers` and `not_covered`, and the per-channel floor with its `runs`, `pairs` and `alpha_single` — and it carries `noise_plan` and R−1 `run` entries in `refs` that no run cert carries, so its `D`, its id and its leaf hash all differ from every run cert's. The first real run wrote five run certs **and** a sixth cert that was byte-identical to run 0 — same id, no `noise_floor` key, a single `battery` ref — so `--runs 5` yielded five independent fingerprints and no floor at all (`papers/v8/first_log_2026_09_09/`, F2). That is F1's consequence, since with no mintable plan there was nothing for a floor to reference, and the two are repaired together: the plan is minted, the runs reference it, and the canonical cert computes the floor over them by step 3 and carries it. **A cert offered as canonical whose id equals a run cert's id is not a canonical fingerprint**, and a verifier that meets one reports the floor as absent (§5.2 row 1) rather than reading a floor that was never computed.
+5. **Append order.** The certs of one floor go into the log in exactly this order, because `refs` resolve backwards and only backwards (§2.1): (i) the noise-plan prereg; (ii) the R−1 non-canonical run certs, each referencing the plan under role `noise_plan`; (iii) the canonical fingerprint (`run_index` 0), referencing the plan and the R−1 runs and carrying `noise_floor`; (iv) the sensitivity result of §5.3, referencing the plan and all R run certs. Nothing in the list references anything later than itself. An implementation that appends (iv) before (iii), or that makes (iii) reference (iv), produces a cycle and cannot append at all.
+
+### 5.2 Drift decision (per channel)
+**The rows are ordered clauses, not a list of conditions.** The first row whose condition holds gives the channel verdict; later rows are not consulted. v0.2 wrote them as an unordered list and then resolved ties with an overall rule that put `drift` above `skew`, so a confirmed exceedance under a patched harness matched both the `skew` row and the `drift` row and was awarded to `drift` — the SKEW/DRIFT conflation charon v0.1 has a committed receipt for (`papers/charon/SPEC_charon_v01_2026_09_02.md`, ERRATA E6). §2.3's skew-gating rule governs; the "drift wins" ordering yields.
+
+| # | condition | verdict |
+|---|---|---|
+| 1 | no floor on record for (S_identity, recipe_core) | `inconclusive` — verify says why, exits 2 |
+| 2 | `harness.version`, `harness.commit` or `env_lock_sha256` differ between the reference and the new run, and d(new, ref) > floor_c | `skew` — a fact about the instrument, exits 2 |
+| 3 | the new run's environment is outside `noise_floor.covers` | `beyond-floor-coverage` — distance printed, exits 2 |
+| 4 | the channel is present in the reference cert and absent in the new run, or the reverse | `inconclusive` — exits 2, naming the channel |
+| 5 | d(new, ref) ≤ floor_c | `same` |
+| 6 | d(new, ref) > floor_c on first run, ≤ floor_c on the mandatory confirmation run | `same (transient)` |
+| 7 | d(new, ref) > floor_c on first run **and** confirmation run | `drift` |
+
+No `drift` verdict is available under a changed harness. Re-establish the floor under the new harness, then claim drift against that floor.
+
+**Absent channels.** v0.2 ruled that "channels present on only one side are listed under `skipped_channels` and never affect the exit code" (A-15, answering S6-05). That rule lets a verifier reach `same` by not computing the channels that would have fired: `--white-box` is a flag on `styxx fingerprint` and is not part of `recipe_core`, so a verify run without hooks produces no `resid` and no `lens`, and `exact` alone returns exit 0 — for the party with the strongest interest in exit 0, its own issuer. Row 4 above is the repair, and it is the conservative reading the v0.1 review relied on when it refuted S3-03; that refutation's premise is restored here rather than cited. The rule is keyed on the **reference cert's** channel set, not on all five, so an alias or exact-only reference still reaches `same` against a run that computes exactly its channels — which is the case S3-03 was about. In a `same` result, `skipped_channels` is empty.
+
+`identity` is a subject verdict, not a channel verdict: it is emitted, always and independently of any channel, when a subject identity field (`weights_sha256`, `tokenizer_sha256`, `config_sha256`, `generation_config_sha256`) differs between the reference and the new run — `identity (weights_sha256)`. Anchor flips are reported as a count beside the verdicts and never produce a verdict by themselves.
+
+Overall verdict, in this order: `identity` if any identity field differs; else `skew` if any channel is `skew`; else `drift` if any channel is `drift`; else `beyond-floor-coverage` if any channel is beyond coverage; else `inconclusive` if any channel is `inconclusive`; else `same`. Distances are compared after rounding both sides to 9 decimal places, with the rounding recorded in the result cert; every mean in Appendix B is computed in `item_id` ascending order with exact summation.
+
+**What the confirmation run does and does not do.** It repeats the run under the same nuisance plan in the same environment — the confirmation run's `nuisance` block is recorded like any other run's — so it reduces the stochastic component of the size and nothing else. A persistent difference between the reference environment and the new one survives every confirmation and is carried by coverage (§5.4), not by repetition. The v0.1 review's refutation of S5-04 answered this case by saying that hardware, driver and runtime sit inside the subject, so a verifier on another box is a different subject; §2.2 now says the opposite ("Environment fields are recorded, printed, and used for coverage … never for identity"), so that reasoning is not available and is not used here.
+
+`[OPERATOR-GATED S5-07 / S7-09: v0.1 introduced "inconclusive" for absent log-probs; the shipped logprob gate already prints "unmeasured" (tests/test_unmeasured_not_adversarial.py). Options: adopt "unmeasured" for absent channels here, or rename the shipped verdict in its own PR. Recommendation: adopt "unmeasured".]`
+
+### 5.3 Sensitivity receipt
+Before any `same` verdict is issued for (S_identity, recipe_core), a `result` cert of kind `sensitivity` must be on record: for a fixed set of positive controls on that subject (at minimum the δ1 precision variants and one committed weight perturbation), the per-channel distance and whether it exceeded the floor, with the channels that did **not** detect each control listed in full as the miss list. This is the lab's own rule: an agreement number without its detection power is not a number.
+
+**The link runs one way, and this is why.** v0.2 required the sensitivity receipt to be "referenced by every fingerprint that carries a floor" while defining the receipt as a statement about the floor, whose only logged home is the canonical fingerprint's body. With §2.1's rule that every ref resolves at append, neither cert could be appended before the other: the canonical fingerprint was unappendable, so no `same` verdict was reachable and Appendix D step 4 could not return 0 for any cert. §2.1's refs-resolution rule governs — it is what makes an unresolvable claim unappendable at all — so the fingerprint's reference to the sensitivity receipt is the one that yields.
+
+Accordingly:
+- The sensitivity result references the noise-plan prereg (role `noise_plan`) and all R floor-run certs (role `run`). It **recomputes** `floor_c` from those runs by §5.1 step 3 and records the recomputed value beside each control's distance, so the threshold it tests is a number a reader re-derives from the referenced bytes rather than a bare numeral (§0, §2.4).
+- The canonical fingerprint does not reference the sensitivity result. Clients find it by query over the log: the sensitivity result whose `subject` `S_identity`, `recipe_core` and `noise_plan` ref match the fingerprint's, latest by log index.
+- §5.1 step 5 fixes the append order that makes both possible.
+- The gate is unchanged in force and restated as a lookup: `verify` refuses to print `same` unless it can find such a result in the log; failing that it prints `same (sensitivity unmeasured)` and exits 2. The `verify` result cert records the id of the sensitivity result it used, under `refs` role `sensitivity` — by then that cert exists, so this reference resolves.
+
+### 5.4 Coverage
+`noise_floor.covers` lists the nuisance factors the plan varied; `not_covered` lists the environment fields it held fixed. `verify` prints the coverage line beside every verdict. A run from an environment outside `covers` gets `beyond-floor-coverage`; a reproduction from such an environment is a **coverage report**, not a dispute (§9).
+
+**Both lists are DERIVED from the plan, and append refuses a floor that states anything else.** They are functions of two fields the plan signed before the runs: `covers` is the set of `factor` names in the plan's `nuisance`, and `not_covered` is every leaf of the plan's `environment`, as a dotted path, that `covers` does not name (by full path or by first segment — a plan that varies `hardware` covers `hardware.gpu`). Nothing else may write them. Until this rule they were the last two numerals in a floor block that nothing re-derived: the anchor recomputes `per_channel` and §5.7's overall size from the run certs and compares them to the last digit, and these two lists sat beside those numbers as assertions the appending party made about them. A canonical fingerprint signed with `covers` naming the gpu, the driver, the runtime and everything else and `not_covered: []` appended at exit 0, over an honest floor, with the recomputation reporting no disagreement — because the disagreement was not in the arithmetic. The sentence above is why that mattered rather than being untidy: `verify` computes `coverage_diff` over `not_covered` alone, so an empty `not_covered` is the claim that **every** environment is inside this floor's coverage and that no reproduction anywhere is ever `beyond-floor-coverage`; and since `covers` decides whether an outside reproduction is a binding dispute or an unreachable coverage report (this section, §9), an issuer choosing it after seeing the runs chooses who is permitted to contradict it.
+
+A prereg of kind `noise-plan` that fixes no `environment` is therefore **not a plan a floor may rest on**, and append refuses it there rather than deriving an empty list from it. This is the same refusal, for the same reason, that §5.1 step 1's `runs` requirement carries: a derivation whose quietest state is "the commitment was missing" hands the whole attack back for the price of one omitted key.
+
+The derivation moves *when* the coverage is chosen — from after the runs to before them, onto a cert signed earlier and named by id from inside the floor — and does not make the plan true. The plan's own `nuisance` and `environment` are still bytes one party wrote.
+
+**What this costs, stated plainly.** A floor measured on one box covers one box. A stranger's environment differs by construction — that is what makes them a stranger — so on today's floors every reproduction anyone else can run lands outside coverage. Four sentences elsewhere in this draft were written as if that were not so. The classification is kept and each of the four is repaired where it stands: §9's opening now separates a challenge from a **coverage report** and gives the report an obligation (`coverage-contested`, on the Disputed rule's own threshold); §8.6 names independent reproduction, entering by whichever of the two paths the reproducer's environment allows, instead of naming challenges alone; §12's incident and dispute record shows coverage reports and coverage-contested certs beside the disputed ones; and §14's ship gate (b) says what it actually tests, with the question of whether 8.0 should demand more left to the operator at the C-07 gate there.
+**Coverage is computed against the environment the verifier OBSERVED** (§2.2): `verify --ref` reads each `not_covered` name as a dotted path into `subject.environment`, and the observed side of that comparison comes from the runner, not from a file the verifier was handed. The consequence is worth stating because it looks like a regression and is not: a floor minted on a GPU, verified on the CPU of the same box, is now `beyond-floor-coverage` on `hardware.gpu`/`hardware.driver`/`hardware.count`/`hardware.device` and exits 2 rather than reaching `same` or `drift`. That is this section working. The run really was made somewhere the floor does not describe, and the previous behaviour — a verdict, from a body naming hardware the run never touched — was not coverage being generous, it was the environment field being unmeasured. Certs minted before `hardware.device` existed carry no such leaf and their `not_covered` lists do not name it; they compare on `gpu`, `driver` and `count`, which on this box separate a CPU run from a GPU one already.
+
+`[OPERATOR-GATED S4-06 / S5-09: whether a canary fingerprint may carry a public drift claim on a single-hardware floor. Options: (a) require at least two distinct (gpu, driver) configurations in the plan before a public drift claim and tag single-hardware floors floor_scope: single-hardware; (b) allow single-hardware floors with the coverage line. Recommendation: (a) for dockets, (b) for internal use.]`
+
+### 5.5 Baseline rule
+**Scope.** The rule applies to **canonical fingerprints only** — `run_index` 0 carrying a `noise_floor` — and never to a run cert whose `refs` name the same `noise_plan` as an existing floor set. v0.2 wrote it for every fingerprint, which caught the R−1 runs the floor procedure itself creates: each would have needed a `verify --diff` that §6 guarantees exits 2 (no floor exists yet), and §12's change-tracking category would fill with R−1 entries about a model that did not change.
+
+**Form.** A canonical fingerprint for a subject that already has a canonical fingerprint under a comparable recipe in the log names it under `refs` role `previous` and is submitted together with a `verify --diff` result against it.
+
+**The check is on bytes, not on log state.** v0.2's predicate was "the most recent such cert in the log", which is a function of the log at the instant of append: a mirror re-validating the entry later, or a client checking a cert against a longer tree, cannot re-derive the acceptance decision from the bytes it holds. That is exactly the property `styxx/charon.py` exists to hold — every verdict re-derived from bytes — and it is the one rule in v8 that broke it. So the validator's check is: the cert named under `previous` exists, is a canonical fingerprint for the same (`S_identity`, `recipe_core`), and the accompanying diff names both. Whether some *other* canonical fingerprint for that pair sits between them in the log is a question about the tree, not about the cert; any mirror can ask it at any tree size and get the same answer, and it is surfaced as a **client-computed status `baseline-gap`** on the later cert, printed by `verify` and shown in §12's change-tracking category. Append refuses only what the bytes show: a `previous` that does not resolve, or a cert naming a `previous` without the accompanying diff (exit 4). A canonical fingerprint that omits `previous` although a comparable predecessor exists is appended and carries `baseline-gap` from then on, for every reader, at every tree size — which is a stronger and more honest signal than a refusal only the operator's CI could have issued.
+
+### 5.6 What the floor does not cover
+- A provider that changes the model *during* the R-run window contaminates the alias floor. The cert records the window; readers judge. An alias floor older than its `window` plus 30 days is printed as `stale`.
+- Floors are per (S_identity, recipe_core) and per coverage. Change any of them and the floor is void — `verify` exits 2, not 0.
+- On the probe box (§0.1), batching alone flipped 5–6 of 48 items on Qwen2.5-0.5B-Instruct and 8–13 of 256 on gemma-2-2b-it, and in both cases every batched run changed every sequence log-probability while the batch-1 rerun changed nothing. A floor measured across batch sizes is a floor on a different quantity than a batch-1 fingerprint measures. The plan must say which.
+- The containment probe v1 suggested — that every precision-sensitive item is also nuisance-sensitive, so §4.4's exclusion strips them all — **does not replicate**: on gemma-2-2b-it, 7 of 17 precision flips survive the exclusion (`papers/v8/probe_batch_invariance_v2_2026_09_08/`). A battery's remaining precision sensitivity is a quantity to measure per subject, which is what §5.3 requires and why it is not optional.
+
+### 5.7 The size of the test that produces the exit code
+`alpha_single = 1/(pairs+1)` is a **per-channel** figure: at R = 5 it is 1/11 ≈ 0.0909, the nominal probability under exchangeability that one fresh same-model run exceeds one channel's max. The exit code is not per channel. §5.2's overall rule fires `drift` when **any** channel drifts, a maximum over up to five channels, so the number printed beside each channel is not the size of the test that governs the verdict.
+
+The arithmetic, stated with its assumption visible: *if* the channels were independent, the pre-confirmation size over k channels would be 1 − (1 − alpha_single)^k, which at R = 5 and k = 5 is ≈ 0.38 — about four times the printed per-channel figure. **The channels are not independent and this spec does not model their dependence.** All five are computed from the same runs over the same items, and a single flipped item moves `exact`, `seqlp` and `topk` together; the true overall size is therefore not 0.38, is not `alpha_single`, and is not known. The confirmation run reduces it by a factor that cannot be stated without the same missing dependence model. This spec asserts no overall size.
+
+What it asserts instead is a parameter and the measurement that sets it. `noise_floor.alpha_overall` is that parameter. It is an output of the floor procedure, not a constant of this document: over the R floor runs of §5.1, for each run compute its **standardized maximum** channel distance to the reference — `max over c of (d_c / floor_c)`, with a channel whose `floor_c` is 0 counted as an exceedance whenever `d_c > 0` — and record the fraction of runs whose standardized maximum exceeds the observed one, over the channel set actually evaluated. The standardization rule used is recorded in `noise_floor.standardization` and the procedure in `noise_floor.alpha_overall_method`, so a reader re-derives the number from the same R run certs the floor came from. No new runs are needed; the samples already exist.
+
+`alpha_single` remains in the cert as a diagnostic and is labelled as one.
+
+`[OPERATOR-GATED C-13: what `verify` does on a floor whose `alpha_overall` is null. Options: (a) `drift` is printed as `drift (overall size unmeasured)` and exits 2 until the floor carries an `alpha_overall`, on the §5.3 precedent that a verdict without its measured error is not a verdict; (b) `drift` keeps exit 1 and the printout carries the line "overall size unmeasured; the per-channel alpha_single does not describe this test"; (c) declare overall `drift` only when ≥ 2 channels drift, which changes the test rather than measuring it. This is a change to the CI exit contract, which is operator-gated by doctrine. Recommendation: (a), and only until the first floor is measured — the permutation costs no GPU time, so the state it guards should be short-lived.]`
+
+---
+## 6. Verify
+```
+styxx verify --ref <fingerprint cert> [--challenge]   # re-run the recipe now, compare, confirm on drift; --challenge also emits a challenge cert
+styxx verify --diff <cert A> <cert B>                  # compare two existing certs; no execution
+```
+Emits a `result` cert, `body.kind = "verify"`, body `{ ref, new_run, confirmation_run, per_channel: {distance, floor, ratio, verdict}, overall, floor_owner, coverage, skipped_channels, baseline_gap, alpha_overall, sensitivity, rounding }`. `ratio = distance / floor` when floor > 0, else `null` (JCS forbids NaN and Infinity). `sensitivity` is the id of the sensitivity result the run resolved by query (§5.3), also carried under `refs` role `sensitivity`, or `null` with the verdict `same (sensitivity unmeasured)`.
+
+Before comparing, `verify --ref` reads the reference cert's `channels` and refuses to start without the capability to reproduce that set — for example, a white-box reference against a run that cannot load hooks. Refusing is exit 2, naming each channel it could not compute; it never proceeds and reports `same` over the subset it managed (§5.2 row 4).
+
+`verify` checks `topk_forced_on` on both sides before printing a topk number. Where the two sides are not comparable by the rule in §3.2, the topk channel is `inconclusive` in that comparison, contributes no distance, and is named in the printout; it is not silently reverted to each side's own prefix, which is the quantity S3-04 identified as defective.
+
+`--diff A B` uses A's floor (the left cert's (S_identity, recipe_core) floor), prints `floor_owner: A` and B's floor beside it, and exits 2 if A has no floor. A `--diff` cannot run the confirmation step.
+`[OPERATOR-GATED S5-02: the verdict vocabulary of --diff. Option A: {same, exceeds_floor, identity, inconclusive}, with exceeds_floor explicitly unconfirmed and drift reserved for --ref with a confirmation run. Option B: --diff prints distances only and no verdict. Recommendation: A.]`
+A `--diff` whose two certs differ in `precision` or `revision` but share every other identity field and `recipe_core` is labelled `cross-subject` in the result and can never say `same`; it is how the docket's quant delta and predecessor diff are stated (§13).
+
+Exit codes (CI contract). **There is one code space and it covers every v8 command, not only `verify`.** v0.2 printed this table under §6 and defined its rows in the vocabulary of verify verdicts alone, so the codes of §8 — what `log mirror` returns on a tampered log, what `log verify-sth` returns on a forged head — were undocumented, and the first run's negative controls were written against the wrong expectation and had to be rewritten after the fact (`papers/v8/first_log_2026_09_09/`, F3). The repair taken here is **to extend this table rather than to give §8 its own codes**, and the reason is that two tables would let the same condition — a cert whose id does not recompute — carry two numbers depending on which verb noticed it, which is exactly what a CI contract must not do. §8 states no codes of its own and points here.
+
+| code | meaning | which commands |
+|---|---|---|
+| 0 | same; and, for every other command, the operation succeeded and everything it checked verified | all |
+| 1 | drift, or identity | `verify` only |
+| 2 | inconclusive, skew, beyond-floor-coverage, sensitivity unmeasured, a channel present on one side only (§5.2 row 4), or a `--diff` without a usable floor | `verify` only |
+| 3 | recipe mismatch or schema version too new — certs are not comparable; the mismatched fields are printed and nothing else | `verify` only |
+| 4 | invalid: a cert whose id does not recompute, whose signature fails, whose ref does not resolve, or which carries a forbidden or missing envelope member (§2.7); an `items_blob` absent from `blobs/` at append; a duplicate append; **and, in §8, every failed verification of the structures the log is made of** — a mirror whose report is not `verified` (a non-recomputing entry id, an inclusion proof whose root is not the STH's, entries that do not reproduce a signed root), an STH whose signature does not verify under the pinned log key or whose `log_id` is unknown, an inclusion or consistency proof that does not verify, and a refused append. It is also the code for a malformed invocation, because a command that could not be understood checked nothing | all |
+| 5 | unavailable: the subject could not be obtained (gated, deleted, provider retired), an `items_blob` a comparison needs is missing from the log (§3.1), or the environment failed (OOM, missing SAE); in §8, a log, entry, blob or key file that could not be read at all. A `result` of kind `verify` with verdict `unavailable` records what was attempted | all |
+
+The distinction 4 holds against 5 is the one that matters to a mirror and it is stated once: **4 means the bytes were read and are wrong; 5 means the bytes could not be read.** An `unavailable` fetch is never evidence of misbehaviour (§8.4), and a mirror that reports one as the other is misreporting.
+
+### 6.1 Result bodies by kind
+- `confirmatory | pilot | robustness | sensitivity`: `refs[0]` role `prereg`; per-endpoint outcome, effect sizes with CIs, kill-gate status, raw-data hashes, amendments with timestamps, `deviations` (never absent).
+- `verify`: as above.
+- `response`: `{ challenge: "<id>", disposition: "new_floor | cause_identified | concession | refusal", detail }`; a `new_floor` disposition references the new noise-plan and floor runs. `refusal` is the answer to a coverage report the issuer will not act on (§9): it is a logged, signed decision not to widen the floor's coverage, with `detail` carrying the reason, and it resolves the report without changing the floor. An issuer that says nothing has not refused; the cert stays coverage-contested.
+- `document`: `{ path, commit, git_blob_sha1, content_sha256, eol: "lf" }` — **two** hashes, because they answer different questions and neither substitutes for the other. `git_blob_sha1` is what `git hash-object` produces for the file at `commit` (this repository uses git's default SHA-1 object format, so a `git_blob_sha256` field would name a value that does not exist here); it locates the bytes in history. `content_sha256` is `sha256` over the file's bytes with LF line endings, defined in A.1; it is the content address a stranger recomputes without git, and it is the one the envelope's `sha256:` rule applies to. A validator checks the second and treats the first as a locator. Neither is a hash of the working-tree checkout, which differs by line endings on Windows.
+`[OPERATOR-GATED S3-08: whether docket item 5 (instrument readings) is a result of kind reading with body { instrument, version, code_sha256, tier, tier_basis, readings }, or an action cert with action_kind docket. Recommendation: kind reading.]`
+
+---
+## 7. Instruments with evidence
+### 7.1 Registry
+Each instrument is a plugin with `id`, `version`, `code_sha256`, and a **tier** computed from the log — never set by hand. An instrument is registrable only if its code is in this repository or vendored at a pinned commit.
+```
+tier(instrument, code_sha256, model_family, task_family) =
+    "certified" if a VALID promotion cert for exactly that quadruple is included in an STH the verifier has
+                 verified AND is signed by a key in the client's trust set (--trust <keys file>; no default, C-12)
+    else "lab"
+```
+Tier match is exact string equality on `model_family` and `task_family`. `styxx attest` writes certified readings into the certified section and everything else into a `lab` section under a fixed banner: *"lab-tier reading; no validated claim; not for conformity use."* There is no flag to move a reading between sections.
+
+**What `task_family` is.** v0.2 computed the tier on a quadruple whose fourth member existed nowhere: A-07 added `model_family` to both subject shapes and `task_family` was never defined, appearing only inside a promotion's `scope`. It is defined here, once: **`task_family` is the battery item `family` enum of §4.5 (`recall`, `short-reasoning`, `instruction-following`, `format`, `refusal-boundary`) and nothing else.** `scope.task_family` must be a value of that enum, and a reading is taken over a (battery, family) pair that the reading cert names — a reading with no named family has no task family and is `lab` by the definition above, not by exception. The five-value enum is the vocabulary for both names; there is no second vocabulary and no mapping between two.
+
+`[OPERATOR-GATED C-12: the trust default. Certified tier here and Disputed / coverage-contested status (§9) both defaulted to the log's issuer roster — under the v0.1 construction an unsigned `keys/issuers.json` inside the log repository: not a cert, not an entry, covered by no leaf hash, served by the party whose readings the tier is a judgement about. A log operator who edits that file grants certified tier to a key for every client on the default and decides which keys may dispute, which contradicts the sentence two lines above ("a **tier** computed from the log — never set by hand"), §1.4, and §8.0's binding sentence that append-only is checkable only against a head held outside the log. Options: (a) the roster is a `result` cert of kind `document` signed by the log key and appended like any other entry, superseded only by a later such entry, so a mirror shows when a key was added and every certified reading prints the roster entry index its tier rests on; (b) an unsigned `keys/issuers.json` is kept as a convenience file and is never a default — a client that wants it names it with `--trust`, and the printout says the roster is unsigned; (c) keep the v0.1 default and print, beside every certified reading and every Disputed status, "trust source: the log operator's unsigned roster". Recommendation: (a), with (b) as the fallback if the log key must stay offline for roster edits; (c) is honest and still leaves an input to a verdict outside the tree, which is what this section exists to prevent.]`
+
+**Interim, until C-12 is decided.** There is no default trust set. Without `--trust`, tier is `lab` for every instrument on every subject, and §9's Disputed and coverage-contested are printed as `uncomputable (no trust set)`, never as `none`. This is the reading that cannot be wrong in the operator's favour: it withholds a status rather than deriving one from a file the audited party writes. §8.2's layout carries no `keys/issuers.json` while this stands.
+
+### 7.2 Evidence chain (three cert types)
+**prereg** — issued before any confirmatory data exists. Body: hypotheses with one-sided directions, primary and secondary endpoints, exact statistical tests, datasets with loader-verified field names, exclusion rules, kill gates, confound gate, conjunction rule, `instrument.code_sha256` frozen, and `grader = { kind: gold-labels | human-panel | model, id, code_sha256 or label-set sha256 }` (a `model` grader may not share weights, features or prompt definition with the instrument). The log index is the proof of order.
+
+Sealed preregistration: `body.sealed = true`. `salt` = 32 bytes from a CSPRNG, generated per cert, never reused. `commitment = sha256("styxx.v8/seal/1" || 0x00 || salt || UTF-8(JCS(body_to_reveal)))`, where `body_to_reveal` is the COMPLETE prereg body. The reveal is a second prereg cert that references the sealed one (role `sealed`), carries `salt` as base64url text and the full body; a validator recomputes the commitment and rejects a reveal that does not match.
+
+**result** — §6.1. `kind ∈ {confirmatory, pilot, robustness, sensitivity, verify, response, document}`.
+
+**promotion** — references prereg, result and robustness result by role. Body:
+```json
+{ "instrument": "depth", "version": "1.2.0", "code_sha256": "…",
+  "scope": { "model_family": "gemma-2", "task_family": "recall" },
+  "claim": "Depth (mean SAE-attributed layer) adds <sworn r=\"sha256:<result>#/body/h2/delta_auc\" k=\"numeric\">0.0026</sworn> AUROC over semantic entropy for predicting answer correctness, 95% CI [<sworn …>-0.0044</sworn>, <sworn …>0.0188</sworn>], on gemma-2-2b short-form QA, preregistered." }
+```
+The example is the sentence the committed negative supports (`papers/depth-truth/FINDING_depth_does_not_predict_truth_2026_07_03.md`: H2 ΔAUC = 0.0026, CI [−0.0044, 0.0188], H1 AUROC = 0.5468, CI [0.4738, 0.6183]); it is an example of a claim string, not a promotion. The `claim` string is scope-limited and is the **only** sentence the compliance view may quote about the instrument. It is shown only where **both** halves of the scope hold: beside a subject whose `model_family` equals `scope.model_family`, and beside a reading whose named `task_family` equals `scope.task_family`. v0.2 stated the first half and dropped the second, which quietly deleted the task-family half of the scope limit that §1.6 and §7.2 call the point of the mechanism; a promotion earned on `recall` was quotable beside a `refusal-boundary` reading. `scope.model_family` must be a value listed in the prereg's datasets/models section, and `scope.task_family` must be a value of the §4.5 enum (§7.1).
+
+### 7.3 Goodhart adversary
+Every instrument ships `adversary.py`: a bounded search (prompt edits, few-shot scaffolds, formatting tricks; budget fixed in the prereg) that maximizes the instrument reading while the frozen grader says the property is absent. Outputs a `result` cert, `kind = robustness`, with the best attack found, the reading it achieved, the instrument's discrimination under attack, and the grader's own error rate on a held-out labelled set. The search grammar is committed before the run and its digest is in the result: a fixed-aperture search is a ceiling on what it can find.
+- v8.0: a robustness result is **required** for promotion (disclosure).
+- v8.1: promotion additionally requires discrimination under attack ≥ a threshold set in the prereg (gate).
+
+### 7.4 Instrument status at v8.0
+| instrument | tier | evidence on record | next cert |
+|---|---|---|---|
+| depth (mean attributed layer) | lab | `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` on gemma-2-2b / short-form QA (`papers/depth-truth/FINDING_depth_does_not_predict_truth_2026_07_03.md`) | a `result` cert of kind `document` carrying that finding's certificate; no new prereg is scheduled by this spec |
+| glimmer | — | a day-zero read, one quantization, no bf16 arm (`experiments/glimmer_dayzero_2026_08_10/REPORT.md`) | never an instrument; superseded by §13 |
+| logprob vitals gate | lab | shipped as `unmeasured` (§0.1) | see the gate at §5.2 |
+| the six registry instruments (`styxx/attack/registry`) and `refusal` | lab | none in v8 form | each enters the registry at lab tier |
+| styxx-bench | — | 84 committed items | source of fixed-v1 (§4) |
+
+---
+## 8. The log
+Follows RFC 6962 (Certificate Transparency) as restated in RFC 9162 §2.1, with two additions: challenge certs and sealed preregistration. It supersedes `styxx.transparency` (TLOG 1.0, string domain tags) and the tlog section of `web/styxx_verify.js`; those are removed in 8.0 or kept under an explicit `tlog_version` guard and never used for this log.
+
+**Exit codes.** This section defines none of its own. Every command named below returns a code from the one table in §6: 0 when everything it checked verified, 4 when bytes it read failed a check — a non-recomputing entry id, an unverifiable STH signature, an inclusion or consistency proof that does not verify, a mirror report that is not `verified`, a refused append — and 5 when the bytes could not be read at all. Codes 1, 2 and 3 are verify verdicts and no §8 command emits them.
+
+### 8.0 Relation to charon v0.1
+See the gate at §0. Whatever the name, `styxx/charon.py` and `papers/charon/` are history: never rebuilt, never re-interpreted by v8 code. Its four killed sentences (`papers/charon/ATTACKS_charon_v01_battery_2026_09_02.md`) bind this section: append-only is checkable only against a head held outside the log.
+
+### 8.1 Structure
+- **Entry bytes** = the UTF-8 bytes of the JCS serialization of the complete cert including `id` and `sig`, exactly the bytes stored in the entry file. The id inside the bytes is recomputed at verify; an entry whose id does not recompute is `TAMPER`.
+- **Leaf hash** = `sha256(0x00 || entry_bytes)`. **Node hash** = `sha256(0x01 || left || right)`. Empty tree root = `sha256("")`. Domain separation exactly as RFC 6962.
+- **Signed tree head (STH)** = `{ log_id, tree_size, root_hash, timestamp, sig }`. `root_hash` is `sha256:<hex>`. `sig` = Ed25519 over `"styxx.v8/sth/1" || 0x00 || sha256(UTF-8(JCS({log_id, tree_size, root_hash, timestamp})))`.
+- **`log_id`** = `sha256:<hex>` of the raw 32-byte log public key. It identifies the key; a rotation is a new `log_id`, announced by a `result` cert of kind `document` in the old log naming the new key. A mirror pins the log public key out of band and rejects an STH whose `log_id` it does not know.
+- **Inclusion proof** — stated for `(leaf_index, leaf_hash, tree_size, root_hash)`; RFC 9162 §2.1.3.2 verification.
+- **Consistency proof** — proves STH(n) extends STH(m), m ≤ n; RFC 9162 §2.1.4.2 verification. Empty when m = n or m = 0.
+- **Duplicates** — append rejects a cert whose id already occupies a leaf (exit 4).
+
+### 8.2 Storage v0
+A git repository, published as static files.
+```
+log/
+  entries/<index // 10000:06d>/<index:08d>.json        # one file per entry; the file bytes are the entry bytes, no trailing newline
+  entries/<index // 10000:06d>/<index:08d>.meta.json   # log metadata beside the entry, never signed: {index, id, type, public, appended_at}
+  index/by_id.ndjson                                   # "<cert id> <index>" per line, sorted by id; rebuildable from entries/ alone
+  blobs/<sha256 hex>.json                              # content-addressed item payloads (§3.1)
+  sth/<tree_size:012d>-<root_hash[:16]>.json           # signed tree heads; the root is in the NAME so two heads at one size can both be stored (§8.4)
+  keys/log.pub                                         # the log public key; also pinned in a sworn span outside this repository
+  README.md                                            # the four verification commands, nothing else
+```
+`meta.json` and `index/by_id.ndjson` carry no authority: both are recomputable from `entries/` by any mirror, and `mirror` reports a disagreement rather than trusting the file. A cert holder resolves an id to an index through `by_id.ndjson` (or by scanning `entries/`), which is what makes App. D step 2 executable from a cert alone.
+
+**There is no `keys/issuers.json` in this layout.** The S2-14 gate at §2 assumed one and pointed here for it. An unsigned file in this repository is outside the Merkle structure, can differ between two clones with no proof produced, and is written by the party a certified tier is a judgement about — so whether it exists at all, and in what form, is the C-12 gate at §7.1. The interim stated there governs until the operator decides: no default trust set, tier `lab`, dispute status `uncomputable`. Nothing in this layout is an input to a verdict except the entries, the blobs and the tree heads.
+`log/**` is `.gitattributes`-pinned `-text eol=lf`; a CR inside an entry file is a malformed entry (`TAMPER`). Git history is a secondary tamper-evidence layer, not the primary one. The Merkle proofs are primary; a mirror needs the entry files, the blobs and one STH it obtained elsewhere to verify anything.
+
+### 8.3 Submission
+- v0: CI validates schema, recomputes the id, checks the signature, resolves every ref, computes `public`, and appends. **CI does not sign.** STHs are signed by `styxx log sth` on the custody machine (§15.1) and pushed as a separate commit. Maximum merge delay: every appended entry is covered by a signed STH within 24 hours of its merge commit; an entry older than that without an STH is printed by `mirror` as `unpublished`.
+- v1: open submission from any key, announced by a `document` entry that names the first open-submission index. Admission is mechanical (schema, signature, refs, size cap); every rejection is itself logged with its reason. Inclusion means "this cert existed at this time," nothing more. In v1, distinct keys are NOT independent issuers (§9).
+
+### 8.4 Mirrors and gossip
+`styxx log mirror` clones, verifies every consistency proof between every pair of STHs it holds (m ≤ n), records the STHs it has seen, and pins its first STH in a record it controls (a sworn span, a commit in its own repository). Mirrors exchange their newest STHs. Gossip in v0 is mirrors comparing STH files by hand.
+
+**Two findings, two names.** v0.2 published as misbehaviour both "two STHs with the same `tree_size` and different `root_hash`" and "a pair of STHs for which the operator cannot produce a verifying consistency proof". The second fires on an operator who is merely offline, rate-limited or slow, and an accusation predicate that fires on unavailability is the defect the lab already holds a receipt for (`EXTERNAL-1`: path-claim accusation precision 0.23 on external agent PRs, class disabled). The predicate is split, and only one half is an accusation:
+
+- **`equivocation`** — two STHs at one `tree_size` whose signatures both verify under the pinned `log_id` and whose `root_hash` differ, **or** a pair of STHs for which a consistency proof was produced and failed to verify. Both are statements about bytes the mirror holds; both are published as misbehaviour, with the two STH files and the proof attached. §8.2's filename carries the root hash so a mirror can store and republish both heads of an equivocation.
+- **`unavailable`** — no response, no proof produced, or a proof not produced within the retry budget. This is a status about a fetch, not a claim about the operator. It is reported with the timestamps and the number of attempts, is never published as misbehaviour, and is withdrawn by a later successful fetch.
+
+`mirror.retry_budget` is a **parameter, not a number this document knows**: no mirror exists yet, so no response-time distribution has been measured. It is set from the first mirror's own measured fetch latencies over its first 30 days of operation — the same receipt that fills §13's GPU-hours column fills this one — and until a mirror has run, `unavailable` is reported with the raw attempt log and no threshold applied. A mirror that publishes an `unavailable` as misbehaviour is itself misreporting.
+
+### 8.5 Anchoring (optional)
+Publish `root_hash` of each STH to a public chain as a timestamp (opentimestamps-style). Cost is a transaction fee. No token is involved and none is needed. Skip until a mirror exists.
+
+### 8.6 Threat model
+Makes visible (does not prevent): rewriting of published numbers, when a reader holds an earlier STH obtained outside the log; hypothesis changes after a prereg cert, when the prereg was logged before the data existed (the log cannot tell a late-logged prereg from an early one); unverifiable claims, by refusing to append a cert whose refs do not resolve; "we tested it" with no recipe, by schema.
+Mitigates (does not prevent): a dishonest issuer fabricating results — independent reproduction is the remedy, entering the log as a challenge when the reproducer's environment is inside the floor's coverage and as a coverage report when it is outside (§9). On a single-box floor it is the second of those that a stranger can actually produce, which is why a coverage report obligates a response; naming challenges alone as the remedy, as v0.2 did here, named a path that no outside party could walk. Log-operator misbehaviour — consistency proofs, mirrors with external pins, anchoring.
+Does not defend against: entry withholding before an STH (bounded by the 24-hour MMD once the mirror checks it); clock manipulation (STH and cert timestamps are the signer's assertion until anchoring exists); issuer key compromise (no revocation in 8.0; a compromised key's certs stay in the log and the roster marks the key `retired` from an index); an operator that forks the log for different readers (detectable only by mirrors that compare); providers who make reproduction impossible (alias fingerprints are labelled black-box and stay that way; §2.2).
+
+---
+## 9. Challenge certs
+Anyone can reproduce a cert. What the reproduction *is* depends on where it ran: from an environment inside the target floor's coverage (§5.4) it is a **challenge**; from outside it, a **coverage report**. One cert type, one schema, two statuses — they differ in what they may conclude, not in whether they are logged.
+
+**Why a coverage report cannot conclude nothing.** v0.2 opened this section with "anyone can dispute a cert by reproducing it" and, in §5.4, classified every out-of-coverage reproduction as `beyond-floor-coverage`, "never `dispute`". A floor measured on one box covers one box, and a stranger's environment differs by construction — that is what makes them a stranger — so on today's floors *every* reproduction anyone outside the issuer can run is out of coverage. Read together, the two rules made this section's opening sentence true only for a party holding the issuer's gpu and driver, made §8.6's named remedy against a fabricating issuer unreachable for the population that would use it, made §1.5's "challenges are first-class" decorative, and left §12's dispute category structurally empty. §5.4's classification governs — a distance measured against a floor that does not cover the environment is not evidence of drift, and no amount of wanting it to be makes it so. The sentence that yields is the one that treated `dispute` as the only outcome worth logging. A coverage report obligates the issuer instead, on the threshold the Disputed rule already carries.
+
+```json
+"type": "challenge",
+"refs": [ { "role": "target", "id": "sha256:<target cert>" }, { "role": "own", "id": "sha256:<challenger's fingerprint cert>" } ],
+"body": {
+  "per_channel": { "exact": { "distance": 0.12, "target_floor": 0.02 }, "…": "…" },
+  "coverage": "within | beyond-floor-coverage",
+  "environment": { "hardware": "…", "runtime": "…" },
+  "subject": { "kind": "weights", "…": "the challenger's own S_identity (§2.2)" },
+  "recipe_core": { "battery": "…", "decoding": {}, "chat_template_sha256": "…", "system_prompt_sha256": "…" },
+  "synthetic": true,
+  "note": "free text, optional"
+}
+```
+`[OPERATOR-GATED S9-02: `subject` and `recipe_core` in the challenge body. v0.2 gave the body `{per_channel, coverage, environment}` and §2.7 forbids the envelope's `subject`/`recipe` on a challenge, so no signed byte said what produced the distances; the only pointer was the `own` ref, which nothing validated (C3 of `papers/v8/challenge_and_attack_2026_09_09`). Options: (a) carry the challenger's observed `subject` (S_identity only) and `recipe_core` in the body, and have the log refuse a body that disagrees with the `own` cert it names; (b) leave the body silent and treat "what was run" as reachable only through the `own` ref, on the ground that §9 deliberately gives identity to the two-cert computation; (c) relax §2.7 and put the challenger's subject in the envelope. Recommendation and what is implemented: (a). It does not touch rule 1 — validity is still computed from the two certs — and it is checkable rather than decorative, which (b) is not for a reader who holds the challenge alone; (c) moves every committed conformance vector, because `schema/envelope.json` requires `subject` and `recipe` on every cert while §2.7 says a forbidden member is absent, and reconciling those two is its own change.]`
+
+`[OPERATOR-GATED S9-03: `synthetic` — the marker on numbers a runner holding no model produced. `--runner mock` ships in the CLI and is its default; the mock reports back whatever subject it is handed, so the §6 guard was true by construction and a challenge was signed against a published canonical carrying distances from a model that was never loaded (C-MOCK, same paper). Options: (a) a synthetic runner may not produce a signed cert at all; (b) every body it produces carries `synthetic: true` in the signed bytes and `comparable` (§2.3) treats a difference as a hard mismatch, so a synthetic run can never be a baseline for, a diff against, or a challenge to a measured one. Recommendation and what is implemented: (b), because the mock is the exercise surface and (a) forces a second, unmarked minting path for the tool's own tests. What (b) does not do: it binds the marker to the tooling, not to the format — an issuer holding the key can hand-sign a body with the member omitted, as it can any other field. If the operator prefers (a), §11's `verify`/`fingerprint` lose `--runner mock` as a signing runner and the test ladder needs another way to exist.]`
+
+Rules:
+- A challenge is valid iff the challenger's fingerprint is comparable (§2.3) AND has the same subject identity (every `S_identity` field equal); clients compute this from the two certs — nothing in the body asserts it. No match, no challenge.
+- The `target` ref of a challenge resolves to a **fingerprint**. §2.1's role table keeps `target` unconstrained because a `result` of kind `response` names a challenge; here it is the fingerprint being challenged, and a target that is not one leaves rule 1 with nothing to compare. (C-NONFP-TARGET, same paper: a challenge naming the battery cert appended with the subject check never run.)
+- `target` and `own` are named **once each**. A challenge carrying two `own` refs gives a reader walking `refs` in order one answer to rule 1 and a reader building a role→cert mapping another; §2.1's `refs` is a list, and a mapping built from a list with a repeated key has no defined value. More generally, every role except `run`, `result` and `robustness` — the three that are plural by construction — is named at most once on any cert. (C-DUPREF, same paper.)
+- A tool does not sign a challenge whose rule 1 it could not compute. Rule 1 reads two certs the challenger holds by definition — it minted one of them — so an unresolvable `own` is a missing input, not a state to publish; the alternative (recording "uncomputed" inside the signed body) puts an accusation of unknown validity into a reader's hands. (C-MINT-UNCOMPUTED, same paper: the mint signed anyway and the fact lived only in stdout.)
+- A reproduction from an environment outside the target's `noise_floor.covers` carries `coverage: "beyond-floor-coverage"`, is displayed as a **coverage report**, and never counts toward Disputed. It is not inert: see coverage-contested below.
+- The original issuer may reply with a `result` cert, `kind = response`. A challenge is **resolved** when a response from the target's issuer references it with a disposition, and, for `new_floor`, the new floor's runs are in the log. Nothing is deleted; the log shows the thread.
+- **Disputed** status (client-computed): a cert with ≥ 2 unresolved, within-coverage challenges above the target's own floor from distinct issuer keys **in the client's trust file** (`trust.json`, outside the log; no default — the C-12 gate at §7.1, and its interim, govern what happens without one). The log does not verify key independence, and this spec does not claim it.
+- **Coverage-contested** status (client-computed, on the same threshold and the same trust file): a cert with ≥ 2 unresolved coverage reports whose distances exceed the target's own floor, from distinct issuer keys. No number here is new — the threshold is the Disputed rule's own and the comparison is against the target's own floor. A coverage-contested cert is shown in §12's incident and dispute record beside the Disputed ones and labelled for what it is: **the floor's coverage is contested, the model is not.** The issuer's `response` cert must either widen the coverage (disposition `new_floor`, with a plan spanning the reporting environments) or record `refusal` with a reason. An unanswered coverage-contested cert stays coverage-contested for every reader at every tree size; nothing expires it but a response.
+- A challenge or coverage report that lands *below* the target's floor is a reproduction, not a dispute, and is displayed as such.
+- Every distance in a challenge is computed by Appendix B with the rounding of §5.2 and the JSD definition of B.
+
+---
+## 10. Action certs (agents)
+Additive to `styxx.middleware.cogn_audit_on_send`, which is retained (§11).
+```json
+"type": "action",
+"refs": [ { "role": "fingerprint", "id": "sha256:<model fingerprint>" }, { "role": "parent", "id": "sha256:<previous action>" } ],
+"body": {
+  "seq": 17,
+  "context_sha256": "…",
+  "readings": { "lab": {} },
+  "action_sha256": "…", "action_kind": "tool_call | message | commit",
+  "ts": "…"
+}
+```
+The first action of a run has no `parent`. `readings` lists only registry instruments applicable to the subject kind; for an alias subject, white-box readings (`depth`, `lens`, `resid`) are absent, never zero. darkflobi runs on an alias, so its readings are black-box only.
+
+**Why there is no `certified` key here.** v0.2 asked an action body for `readings: { certified, lab }`, a split that is a function of `tier(instrument, code_sha256, model_family, task_family)` (§7.1) — and an action cert carries a subject kind, a context hash and nothing that names a task family, so the split was uncomputable for the reference deployment. Two repairs were available: carry `task_family` in the action body, or drop the certified section. The second governs, and the reason is §7.1's own rule that tier is computed from the log and never set by hand: a `task_family` an agent writes into its own action cert is a hand-set string, and tier would follow it. So **every action-cert reading is `lab` tier in 8.0** and carries the lab banner of §7.1. This costs nothing today — §7.4 puts every registry instrument at lab tier — and the path back is stated rather than left open: a later schema version may admit a certified action reading if the action cert names the (battery, family) the reading was taken over and that battery cert is in the log, which makes the family a resolvable ref instead of a self-declared string.
+
+Volume rule: per-action certs are stored locally in a **sub-log** (same Merkle structure). Every hour the agent issues a `sublog` cert, signed with its issuer key, body `{ sublog_id: sha256 of the agent's public key, tree_size, root_hash, prev_tree_size, prev_root_hash, consistency_proof, count_since_prev, entries_sha256 }`, referencing the previous `sublog` cert (role `previous`), and submits it to the log. Any individual action is then provable with two inclusion proofs: action → sub-log root, sub-log root → the log. A sub-log proves only what the agent chose to include; the spec states this rather than pretending otherwise.
+
+Glass-box darkflobi: darkflobi runs exactly this, publishes its sub-log alongside its hourly roots, and ships a viewer. That is the reference deployment.
+
+---
+## 11. CLI surface (v8)
+`[OPERATOR-GATED S11-01: the v0.1 verbs fingerprint, attest and log collide with live 7.x subcommands of different meaning (47 top-level commands in 7.47.0). Options: (a) namespace v8 — styxx cert fingerprint | verify, styxx tlog append | prove | sth | mirror | verify-*, styxx view compliance — and leave 7.x names alone until 8.1; (b) take the names and shim every displaced 7.x command. Recommendation: (a). This draft shows the v0.1 verbs.]`
+```
+styxx key         generate | show                                              # ed25519 issuer key under ~/.styxx/keys/
+styxx fingerprint --subject <spec> --battery <cert id> [--runs 5] [--white-box] [--redact] [--plan <noise-plan id>]
+                  [--force-on <fingerprint cert id>]                            # teacher-force topk on that cert's prefixes; sets topk_forced_on (§3.2)
+styxx verify      --ref <cert> [--challenge] | --diff <a> <b>                  # exit 0/1/2/3/4/5
+styxx battery     select --pool <pool cert id> --reference <fingerprint cert id> --n 256 --k 64
+styxx battery     fixed --source <path> --version v1                            # --source items carry item_id; absent ids are refused, never derived (A.3)
+styxx prereg      noise-plan --subject <spec> --battery <cert id> --runs 5 --vary <factor=v1,v2> [--window <start,end>]
+                  # the only mint for a kind noise-plan prereg (§5.1 step 1); without it no floor can be measured
+styxx instrument  list | prereg <file> | run <id> --subject <spec> | adversary <id> | promote <prereg> <result> <robustness>
+styxx attest      --subject <spec> --view research|compliance
+styxx log         append <cert> | prove <index> | sth | mirror
+styxx log         verify-cert <cert> | verify-inclusion <index> <sth> | verify-consistency <sth1> <sth2> | verify-sth <sth>   # the four
+styxx agent       emit | roll
+```
+**`prereg` is a verb because §5.1 needs one.** The two prereg kinds are minted by different commands and the split is deliberate: `styxx instrument prereg <file>` signs an instrument preregistration an author wrote by hand, where the content *is* the scientific commitment; `styxx prereg noise-plan` takes the plan's parameters as arguments, because a noise plan is a small enumeration — R, the factors and their values, the subject, the battery, and for an alias subject the window — that the floor procedure then executes verbatim. It emits an unlogged cert; `log append` puts it in, and §5.1 step 5 fixes the order. Nothing else in the verb set produces a cert of kind `noise-plan`, and §5.1 step 1 is unreachable without it, which is the whole reason the verb exists. Under the S11-01 gate's option (a) it is `styxx cert prereg`; the recommendation there is unchanged by this addition.
+
+Removed or kept, with the truth about 7.x:
+| 7.x | 8.0 |
+|---|---|
+| `ci-baseline` / `ci-test` (cognometric audit-log regression, `styxx/ci.py`) | kept unchanged; marked deprecated in help; the Python API `styxx.regression_test` is untouched until 8.1 |
+| `styxx.middleware.cogn_audit_on_send` (a Python function, not a command) | kept; `styxx.agent.emit()` is additive; a deprecation warning for one minor |
+| `log migrate-provenance` (labels entries of the 7.x audit log) | removed; no replacement — v8 does not read `chart.jsonl` |
+| the six registry instruments, `refusal`, and the cognometric set | every one enters the `instrument` registry at lab tier |
+
+---
+## 12. Compliance view
+`styxx attest --view compliance` is a **read-only projection** of the log, not a product. It groups certs under headings a reader of the EU AI Act's general-purpose-model obligations will look for and maps cert types onto them:
+| category | cert types shown |
+|---|---|
+| documentation of the model as deployed | fingerprint (canonical + noise floor + sensitivity), battery |
+| evaluation and adversarial testing | result (confirmatory, robustness, sensitivity), promotion (only where both scope halves match: the subject's `model_family` and the reading's `task_family`, §7.2) |
+| change tracking / version control | result (verify), fingerprint history for the subject, ordered by log index |
+| incident and dispute record | challenge (within-coverage), coverage report (labelled as such), result (response), and every target cert whose client-computed status is `Disputed` or `coverage-contested` (§9) |
+| non-public evidence | anything with `public: false` |
+
+Constraints enforced in code:
+- Every sentence is produced from a versioned template table keyed by (cert type, kind or verdict); the only free text is a promotion `claim` string, quoted verbatim, whose numerals resolve (§2.4).
+- The view carries a fixed header: *"This document organizes evidence. It does not assert conformity with any regulation."*
+- Lab-tier readings appear only under the lab banner, never in the documentation category.
+- **Every category prints a suppression count.** Each heading carries `suppressed: n` — the number of certs the category would have shown but for `public: false` (§2.6) — and prints it even when it is 0. Without it, an issuer that redacts a battery's outputs empties its own change-tracking category and the reader sees an empty section rather than a withheld one; the two are different facts and the view must not render them identically. The count is a count only: no id, no subject, no distance, which is what makes it printable beside non-public evidence.
+The evidence is checkable by the reader's own engineers. Anything stronger is counsel's sentence to write, not styxx's.
+
+---
+## 13. Day-zero docket
+Trigger: an open-weight release. Deadline: 48 hours.
+`[OPERATOR-GATED S13-01: the build box has 8 GB of VRAM. Options: (a) restrict v8.0 dockets to models that fit in bf16 (gemma-2-2b, Llama-3.2-3B, Qwen2.5-3B — all cached) and state the ceiling here; (b) rent a cloud GPU for larger models and record its hardware in the subject, which makes the floor's coverage that machine's. Recommendation: (a) for 8.0.]`
+
+Contents, all as certs in the log:
+1. **fingerprint** on fixed-v1 (bf16, R = 8, plan logged first).
+2. **canary-v1 selection** against the new model (pool cert, reference fingerprint on the pool, δ-sweeps, battery cert), then a canary fingerprint with its own floor.
+3. **quant delta** — `verify --diff` bf16 vs the δ1 variants on both batteries, floor owner bf16, labelled `cross-subject`. A new procedure; no prior run of it exists.
+4. **predecessor diff** — `verify --diff` against the prior model in the family on fixed-v1 only, labelled `cross-subject` (canaries don't transfer).
+5. **instrument readings** — every registered instrument, in the tier the log assigns (cert kind per the gate at §6.1).
+6. **summary** — generated from the template table: one sentence per cert in the docket, in log order, each ending with the ids of every cert whose fields it uses; a sentence that states a number uses fields of a single result cert. No free text.
+
+Budget table (declared hardware; to be filled from the first docket's receipts, not estimated here):
+| docket | pool | N | K | R | GPU-hours (measured) |
+|---|---|---|---|---|---|
+| quick | 500 | 64 | 64 | 5 | — |
+| standard | 2,000 | 256 | 64 | 5 | — |
+| full | 12,000 | 1,024 | 64 | 8 | — |
+The 48-hour deadline applies to the standard docket; the first docket fills the column and the deadline is re-stated from it.
+
+---
+## 14. Sequencing
+### 14.0 Relation to the plan of record
+`[OPERATOR-GATED S14-03: papers/PLAN_the_next_level_2026_09_02.md (sworn) has four legs, an operator-signed measurement in leg 2, and a claim ledger. Options: (a) v8 is scheduled after legs 2 and 4, which remain first and are not edited; (b) v8 supersedes the plan of record, named and dated, with the reason stated. Recommendation: (a): nothing in v8 needs the measurement's GPU time before week 4.]`
+
+GPU time is shared with nothing else named here. Everything below is CPU work until noted. Each block ends with a sworn RESULT that names its test files and the CI condition (green on py3.9–3.12, Linux).
+
+**Weeks 1–4**
+- Envelope: JCS canonical bytes with the differential and mutation catalogue, ids, ed25519 signing with domain tags and key validation, schema validation for all eight types, roled refs. Done when `tests/test_v8_jcs.py`, `test_v8_keys.py`, `test_v8_merkle.py`, `test_v8_cert.py` are green and a second implementation in JavaScript, written from this spec without reading the Python, agrees on the conformance vectors (`conformance/v8/`, recorder pattern of `conformance/sworn/gen_vectors.py`, with a mutation catalogue committed before the agreement number).
+- fixed-v1 battery cert from the committed script.
+- `fingerprint` black-box channels behind a runner interface with a deterministic mock; `verify --ref` and `--diff` with the exit codes.
+- The log v0: storage layout, Merkle tree, STH signing on the custody machine, the four verify commands, `mirror`.
+- First entries, in order: #0 the `document` cert of this spec at its sworn commit; #1 the fixed-v1 battery cert; #2 the noise-plan prereg for the first fingerprint. No prereg entry for an experiment without a document in `papers/`.
+- The removal table of §11.
+
+**Weeks 4–8**
+- The batch-invariance probe repeated on gemma-2-2b-it at 256 items (a second receipt for, or a refutation of, the δ1 ⊂ δ2 finding).
+- canary-v1 selection (GPU: the δ1 sweep in the reference runtime).
+- White-box channels (`resid`, `lens`).
+- Noise-floor procedure end to end, R = 8, with the sensitivity receipt.
+- Dockets on the models under the §13 ceiling.
+- Instrument registry with computed tiers and the trust file; `attest` with the lab banner.
+
+**Weeks 8–12**
+- Challenge certs, disputed-status computation, mirrors with external pins.
+- Action certs, sub-log, `agent roll`; darkflobi as the reference emitter.
+- Depth: its committed negative enters the log as a `document` cert. No promotion is scheduled.
+- 8.0 is tagged only when (a) the four verify commands pass in a fresh clone on Linux CI, not this box; (b) a `result` cert of kind `verify`, issued under a key that is not fathom's, on hardware whose (gpu, driver) differs from every entry in the target's floor runs, is in the log for at least one fixed-v1 fingerprint, with its verdict whatever it is; and (c) a named outside reviewer has been asked in writing, with the request linked, and their result or its absence after 14 days is recorded in `REPLICATIONS.md`.
+
+**What gate (b) tests, stated rather than assumed.** As written, (b) demands a verify from hardware outside every floor run — which §5.4's coverage rule guarantees in advance will return `beyond-floor-coverage`. A gate whose outcome is known before it is run tests the availability of the path, not the verdict: that a stranger can clone, resolve, run and log at all. That is worth testing and it is not what the sentence sounds like, so it is written down here. Whether 8.0 should demand more is a hardware decision, not an editorial one:
+
+`[OPERATOR-GATED C-07: what ship gate (b) must demonstrate. Options: (a) keep (b) as an availability test, with the sentence above printed beside it in the release RESULT so no reader mistakes a guaranteed `beyond-floor-coverage` for a passed comparison; (b) additionally require one within-coverage stranger verify, which forces at least one public floor whose noise plan spans two (gpu, driver) configurations — a second GPU the lab does not have, rented or borrowed, and a floor that costs R runs on each; (c) require a logged coverage report answered by a `response` cert (§9), which tests the obligation path end to end without a second box, but tests fathom's own responsiveness rather than a stranger's ability to reach `same`. Recommendation: (c) for 8.0 and (b) as the 8.1 gate — (c) exercises the machinery §9 just acquired at no hardware cost, and (b) is the real test but is bounded by the §13 ceiling decision. This interacts with the S4-06/S5-09 gate at §5.4: if that one lands on two configurations for dockets, (b) becomes affordable and should be taken.]`
+
+Nothing here requires a hosted service. If a design partner wants one, the partner's need designs it.
+
+---
+## 15. Open decisions (flobi)
+1. **Log key custody, before entry #0.** Generate offline, keep the private key on a hardware token, sign STHs from one machine. The build box holds a delegated issuer key, never the log key. No entry can be signed into a tree head before this exists; entry #0 waits.
+2. **Redaction default.** Clear text for outputs and prompts (the body already says so in §4.5; this item records the decision).
+3. **fixed-v1 is public** (§4 already says so; this item records the decision). Contamination is handled by the overlap rotation; canaries are selected per model after release.
+4. **Battery sizes.** Defaults (64 / 256 / 1024, K = 64) are per-battery parameters recorded in the battery cert, not version parameters: Appendix C lists what makes canary-v2 and N and K are deliberately not on it, because N varies by docket size by design. The first docket's sensitivity receipt (§5.3) says whether 256 separates the δ1 variants from bf16 on gemma-2-2b. The decision to record here is the **default** for the standard docket; adjust it once from that receipt and freeze the default, which is a change to this line and not a change to canary-v1.
+5. **Anchoring.** Skip until a mirror exists.
+6. **The fourteen gated items listed under the amendment ledger**, each with a recommendation, in `REVIEW_v8_spec_2026_09_07.md` § Operator decisions.
+
+---
+## Appendix A — hashing and encoding
+**A.1 Encodings.** **Two hash forms appear in this document and they are not interchangeable. The form is the grammar that carries the difference between an identifier of a cert and a hash of some bytes, and every rule in §2.1 keys on it.**
+
+- **`sha256:<64 lowercase hex>` — the identifier of a cert.** This is the form of `id`, of every `refs[].id`, and of every field whose value names another cert: `recipe.battery`, `body.noise_floor.plan`, each element of `body.noise_floor.runs`, `body.topk_forced_on` when it is not `"self"`, and, outside certs, an STH's `root_hash` and `log_id` (§8.1). **§2.1's rule — every cert id anywhere in a cert appears in `refs` and resolves at append — is a rule about this form and only this form.** A validator walks `subject`, `recipe` and `body` recursively, matches every string against `^sha256:[0-9a-f]{64}$`, and requires each match to be in `refs`. Exactly two paths carry the prefixed form and are hashes of bytes rather than cert ids; both are exempted **by name**, here and in the implementation's `NON_REF_HASH_PATHS`: `body.items_blob` (§3.1) and `body.commitment` (§7.2). There is no third exemption and none is inferable from what a field means — a digest of bytes that is not one of those two takes the bare form below, and a validator that guesses is wrong.
+- **`<64 lowercase hex>`, bare, no prefix — a hash of bytes.** Every material digest in the table below takes this form: it is the output of `sha256` over a byte string that either sits beside it in the cert or is named as the material a holder supplies. Nothing resolves it, nothing looks it up, and the refs rule never reaches it. This is what `cert.material_hash` produces.
+
+**Why this is load-bearing rather than cosmetic.** v0.2's A.1 said "hashes as `sha256:<64 hex>`" and named two exceptions, and both of those are exceptions to the *length*, not to the form — so the sentence read as though every 64-hex digest in the document took the prefix. A reader who followed it wrote `recipe.chat_template_sha256: "sha256:<hex>"`, §2.1's walk matched the string as a cert id, and every cert built that way was refused at append with *refs: embedded id sha256:… at recipe/chat_template_sha256 is not in refs* — the log demanding that a chat template resolve to a logged cert. That is not a bug in the refs rule; it is what the refs rule must do given a string in the cert-id grammar. The defect was the encoding sentence, and it was found by building certs rather than by reading the draft (`papers/v8/first_log_2026_09_09/RESULT_first_real_log_2026_09_09.md`, finding 1).
+
+Validators reject any other length or case in either form. Two fields are shorter than 64 hex and both are named so they are visible rather than discovered: `git_blob_sha1` in a `document` body (§6.1), git's own object name, 40 lowercase hex, a locator and never a content address; and `item_id` in a battery cert (A.3), 16 lowercase hex, an ordering key inside a cert and never a content address a validator resolves. Both take the bare form. Keys and signatures as `ed25519:<base64url, RFC 4648 §5, no padding>` of the raw 32-byte public key or raw 64-byte signature per RFC 8032; SPKI/PEM forms are rejected. Timestamps RFC 3339 UTC with `Z`.
+
+**Preimages and forms — the complete list.** v0.2's A-08 claimed "preimages of every hash pinned" and pinned three, while the document carried nine `*_sha256` fields; §2.3's rule that a digest beside its material is checked at append then pointed at a list that did not exist. Every `*_sha256` in this spec is below, each with its **form**, its preimage, and whether append can check it. A digest whose material is carried in the same cert **is** checked at append and a mismatch is exit 4; a digest whose material is not in the cert is a commitment the issuer makes, checkable by anyone holding the material and by nobody else, and it is marked as such.
+
+**Every row of this table takes the bare form.** There is no `*_sha256` field anywhere in this spec that carries the `sha256:` prefix. The two prefixed digests-of-bytes are `body.items_blob` and `body.commitment`, and neither is a `*_sha256` field, which is why they are named above instead of here.
+
+| field | form | preimage | checked at append |
+|---|---|---|---|
+| `chat_template_sha256` | bare 64 hex | UTF-8 of the Jinja template string as loaded, no trailing newline added | yes (`recipe.materials.chat_template`) |
+| `system_prompt_sha256` | bare 64 hex | UTF-8 of the system prompt string; `sha256("")` when none | yes (`recipe.materials.system_prompt`) |
+| `env_lock_sha256` | bare 64 hex | UTF-8 of the lockfile text as stored in `materials` | yes (`recipe.materials.env_lock`) |
+| `prompt_sha256` (§4.5) | bare 64 hex | UTF-8 of the item's `prompt_text` | yes (`prompt_text`, same item) |
+| `item_order_sha256` (§3.1) | bare 64 hex | UTF-8(JCS(the JSON array of `item_id` strings in the order the run executed them)) | no — the order is not carried in the cert; the run's own record is the material |
+| `pool_sha256` (§4.5) | bare 64 hex | the pool file's bytes as committed, LF line endings, no trailing byte added | no — the pool file is outside the cert; a holder of the file checks it |
+| `context_sha256` (§10) | bare 64 hex | UTF-8 of the exact prompt string sent to the model for that action, after template application | no — the context is not in the action cert and by design need not be |
+| `action_sha256` (§10) | bare 64 hex | UTF-8(JCS(the action payload as emitted: the tool call, message or commit object)) | no — same reason |
+| `entries_sha256` (§10) | bare 64 hex | the concatenation, in sub-log index order, of the raw 32-byte leaf hashes of the entries added since `prev_root_hash` | no — the sub-log entries are held by the agent; a reader who fetches the sub-log recomputes it |
+| `content_sha256` (§6.1) | bare 64 hex | the file's bytes with every CRLF replaced by LF, no trailing byte added (below) | no — the file is outside the log |
+| `weights_sha256`, `config_sha256`, `tokenizer_sha256`, `generation_config_sha256` | bare 64 hex | A.2 | no — the weights are outside the log |
+
+Two more fields are hashes and are not `*_sha256` fields, so they are stated here rather than left to the reader: `token_ids_sha256` and `output_sha256` in a fingerprint item (A.3) take the bare form for the same reason every row above does — they are digests of bytes, and a prefixed one would be walked as a cert id.
+
+`item_id` is not in this table because it is not a `*_sha256` field; its construction and its supply rule are A.3, it takes the bare form at 16 hex, and it is checked at append against the `prompt_text` beside it.
+
+`content_sha256` for a document is `sha256` over the file's bytes with every CRLF replaced by LF and no trailing byte added, which is the same normalization the charon v0.1 module adopted after its E15 defect (a raw hash of a working-tree file is CRLF on Windows and LF on Linux, so a stranger re-deriving on the other platform sees every entry move).
+
+**A.2 Weights hash.** For a local model directory: hash every `*.safetensors` shard's bytes; sort the `(filename, hex digest)` pairs by filename; `weights_sha256 = sha256(join("\n", f"{filename} {digest}"))`. `config_sha256 = sha256(config.json bytes)`; `generation_config_sha256 = sha256(generation_config.json bytes, or "" when absent)`; `tokenizer_sha256` = the same join construction over, in fixed order, every file present among `tokenizer.json`, `tokenizer.model`, `tokenizer_config.json`, `special_tokens_map.json`, `added_tokens.json`, `vocab.json`, `merges.txt`. A GGUF file is hashed whole, its quant type recorded in `precision`, and its runtime recorded in `environment.runtime`.
+
+**A.3 Battery order, `item_id`, and the exact hash.** `item_id = the 16 leading lowercase hex characters of sha256(UTF-8(prompt_text))`, where `prompt_text` is the item's prompt exactly as it appears in the battery cert, before any chat template is applied. An item's id is therefore a function of its prompt and of nothing else: two labs building fixed-v1 from the same items with the same script sort and hash alike, which is the one thing fixed-v1 exists for. A battery whose items are not unique by `item_id` is rejected at append (exit 4). This 16-hex form is one of the two fields shorter than 64 hex (the other is `git_blob_sha1`), it takes A.1's bare form, and it is named there and here so the shortening is visible rather than discovered; `item_id` is an ordering key inside a cert, never a content address a validator resolves.
+
+**`item_id` is supplied by the author, never derived by the tool.** The construction above is the rule the author must have followed; it is not a service the CLI performs. `styxx battery fixed --source <path>` and `styxx battery pool --source <path>` **refuse** a source file whose items lack an `item_id` — they do not compute one from the prompt beside it — and append checks the supplied id against that prompt rather than trusting it (§2.3, A.1). This was found by handing the CLI a source file without ids and reading the refusal (`papers/v8/first_log_2026_09_09/`, finding 4), and it is stated because a reader will otherwise expect derivation and be surprised at the door.
+
+The reason is the reason a content address exists at all. If the tool derived the id, the id would agree with the prompt by construction, always, and the check would be a tautology: an author who edited a prompt after fixing the ids, or who copied an item from another pool and changed a word, would get a silently renumbered battery instead of a refusal. Supplying the id makes the author's intent a second, independent statement about the same item, and append's check is then a real comparison between what the author meant and what the log will hash. A derived id hides exactly the mismatch the check exists to find. The cost is one column of the source file; the benefit is that the check can fail.
+
+v0.2 left `item_id` author-assigned **and unchecked** in the pool file schema while making it the ordering key of `channels.exact.hash`, so two id conventions over identical items produced two battery hashes and no comparison. The half that was wrong was the missing check, not the supply: the pool file still carries `{item_id, prompt_text, family}` and the author still writes the id, and the `item_id` in it is now checked against the `prompt_text` beside it at append like any other derived digest (§2.3, A.1), not trusted.
+
+Items are ordered by `item_id` ascending (byte order of the UTF-8 string). Per item, `ids` is the JSON array of generated integer token ids up to and excluding the first stop or eos token, `token_ids_sha256 = sha256(UTF-8(JCS(ids)))`; `output_text = tokenizer.decode(ids, skip_special_tokens=False, errors="replace")`, `output_sha256 = sha256(UTF-8(output_text))`. `channels.exact.hash = sha256(concatenation, in item order, of the raw 32-byte `token_ids_sha256` digests)`. The battery hash is therefore independent of the order the battery was run in and of the decoder's text rendering.
+
+**A.4 Float storage.** Log-probs are stored as IEEE-754 doubles rendered by JCS. They are compared numerically (Appendix B) after the rounding of §5.2, never by hash; any per-channel `vector_sha256` a cert carries is informative only.
+
+---
+## Appendix B — distance functions
+One per channel. `verify` uses exactly these; every mean is over items in A.3 order with exact summation (`math.fsum`).
+| channel | distance |
+|---|---|
+| exact | 1 − (matching items / items), over items with `role ∈ {item, canary}`; anchors are counted separately as `anchor_flips` |
+| seqlp | mean over items of \|Δ seq_logprob\| |
+| topk | mean over items and over positions present on both sides of the L1 distance between top-k vectors after union-of-vocab alignment, a token absent from one side assigned lp = −20; a position present on one side only contributes the maximum per-position distance (5 · 20 nats) and is counted |
+| resid | mean over items of the Jensen–Shannon divergence in nats, 0.5·KL(p‖m) + 0.5·KL(q‖m) with m = (p+q)/2, 0·log 0 = 0, no smoothing, over the L1-normalized clamped profiles |
+| lens | mean over items of \|Δ converge_layer\| / L, L = the reference cert's `n_layers`; if the two certs' `n_layers` differ the channel is `inconclusive` |
+Noise floors are computed with the same functions on same-subject runs, so floor and distance are always in the same units.
+
+---
+## Appendix C — canary score, explicit
+```
+margin(i)  = min_t ( lp_top1,t(i) − lp_top2,t(i) )     # over the greedy tokens t of item i, reference pass, nats
+flip1(i)   = |{ v ∈ δ1 : ids_v(i) ≠ ids_ref(i) }| / |δ1|
+flip2(i)   = |{ v ∈ δ2 : ids_v(i) ≠ ids_ref(i) }| / |δ2|
+flip4(i)   = |{ v ∈ δ4 : ids_v(i) ≠ ids_ref(i) }| / |δ4|        # only when δ4 is run
+stay(i)    = Σ_t log softmax(z_t / 0.2)[greedy_t]               # reference pass, deterministic
+flip3(i)   = 1 − exp(stay(i))
+eligible(i)  = flip2(i) == 0
+s(i)         = 0.6 · (flip1(i) + flip3(i)) / 2  +  0.4 · exp(−margin(i) / τ),   τ = 1.0
+zero(i)      = flip1 = flip2 = flip3 = 0  and (δ4 not run or flip4 = 0)
+anchors      = the K items with the largest margin(i) among zero(i); k_anchors_actual ≤ K
+battery      = top-N eligible by s(i), ties by margin asc then item_id asc, stratified (≤ 25% per family, shortfall filled)  ∪  anchors
+```
+**What makes canary-v2, in one list.** The **procedure** parameters of canary-v1 are: the score weights (0.6 / 0.4), τ, the δ1 / δ2 / δ4 lists of §4.2, the `stay` temperature (0.2), the eligibility rule (`flip2 == 0`), the tie-break (margin asc, then `item_id` asc), the anchor rule (`zero(i)`, largest margin), and `max_family_share`. Changing any one of them makes **canary-v2**; it does not silently alter v1.
+
+**N and K are not on that list, and the reason is that they vary by design.** §4.4 step 4 sets N per docket size (64 quick, 256 standard, 1024 docket) and §4.5 records N and K in the battery cert's `params` — so a quick docket and a standard docket would be two canary versions under any rule that versioned them, which is absurd. They are per-battery parameters, they are recorded in the cert, and comparability keys on the battery cert id (§2.3), so a battery built at a different N is already a different battery and cannot be silently compared with one built at another. v0.2 said this here and said the opposite at §15.4 ("Adjust once, then freeze as canary-v2"); this list governs and §15.4 yields, because §15.4 was making a decision about *defaults* and reached for the version word to say it was final. §15.4 now quotes this paragraph.
+
+---
+## Appendix D — what a stranger does with a cert
+Inputs: the cert, the log location (the URL or clone named in the log's README and in entry #0), and the log public key obtained from a channel the operator does not control (a mirror, a sworn span in a third party's document).
+1. Recompute the id from the canonical bytes; check the signature against `issuer.key`; check that every ref resolves in the log to a cert of the role's type.
+2. Fetch an STH; verify its signature against the pinned log key; verify the inclusion proof.
+3. Read the recipe; obtain the subject (weights at the revision, or note that it's an alias). If the subject cannot be obtained, `verify` exits 5 with an `unavailable` result; that is a fact about the subject, not a defect in the cert.
+4. Run `styxx verify --ref <cert>`. Read the coverage line: a verdict from outside the floor's coverage is `beyond-floor-coverage`.
+5. If the result exceeds the cert's noise floor on the confirmation run and the environment is within coverage, `styxx verify --ref <cert> --challenge` logs a challenge under the stranger's own key (`styxx key generate`).
+If any of steps 1–2 or 4–5 is impossible from the cert, the log and the pinned key alone, the cert is defective and the spec has failed. That is the acceptance test for 8.0.
