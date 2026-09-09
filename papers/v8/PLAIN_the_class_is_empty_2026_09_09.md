@@ -36,6 +36,14 @@ growing gradually closes in on anyone lying into it. It does not. The record gro
 space where nothing has been written yet, and the person writing gets to choose where to stand.
 There are unlimited corners. A liar can always find an empty one.
 
+A later pass found a second and simpler version of the same problem, and it is the one worth
+remembering. Our check compares a new entry against an earlier one and objects when the new entry
+claims less. So whoever writes the **first** entry about something sets the standard everything
+later is measured against, and nothing in the design makes the first entry true. Write the
+convenient thing first and no honest measurement afterwards ever contradicts it. That same pass also
+found that our best check is not actually connected to anything: it exists, it works when you run it
+by hand, and nothing in the system calls it. It rejects the fake. The system accepts it.
+
 We also went back and tested our own fraud-detection properly. We had reported it catching four out
 of four fake entries. Those four fakes were sloppy — they left tell-tale leftovers. Redone carefully,
 so the forger recomputes everything an honest one would, our checks caught **zero out of four**. The
@@ -112,6 +120,18 @@ this breaks something bigger. we'd assumed a growing record closes in on a liar.
 it doesn't. the record grows and so does the empty space in it, and the liar picks where to stand.
 unlimited corners.
 
+**6b/**
+simpler version, found later: our check objects when a new entry claims less than an earlier one.
+
+so whoever writes first sets the standard. nothing makes the first entry true. write the convenient
+thing first and nothing honest ever contradicts it.
+
+**6c/**
+and our best check turned out not to be wired to anything. it works if you run it by hand. nothing
+in the system calls it.
+
+it rejects the fake. the system accepts it.
+
 **7/**
 we also retested our fraud checks honestly. we'd reported 4 of 4 fakes caught.
 
@@ -150,6 +170,8 @@ styxx is on PyPI. v8 — this part — is not released and not finished.
 | four claimed-uncatchable defects, all four caught | `THE_BOUNDARY_2026_09_09.md`, corrections one to three |
 | the fix broken by declaring an unmeasured setting; verdict flips exit 2 to exit 0 | same document, fifth correction: exact floor 0.046875 to 0.078125, seqlp 0.036070694 to 0.076447918, topk 2.1402339 to 2.207838883 |
 | one relabelled word | the published bf16 and fp16 subjects differ only in `precision` |
+| whoever writes first sets the standard; the check objects only when a later entry claims less | `THE_BOUNDARY_2026_09_09.md`, sixth correction: honest floor against a forged prior agrees on 18 cells, forged against honest contradicts |
+| the check is not wired into the system | the only implementation is in the JavaScript verifier; no Python path and no append or verify walk calls it |
 | fraud checks catch 0 of 4 careful fakes, 4 of 4 careless ones | `class_two_empty_2026_09_09/first_claim_battery.py` |
 | re-run 64 of 64 identical, 49.9s for the battery | `reproduction_2026_09_09/RESULT_first_rerun.md` |
 | all 30 numbers reproduced by an independent implementation | `floor_second_implementation_2026_09_09/RESULT_second_implementation_2026_09_09.md` |

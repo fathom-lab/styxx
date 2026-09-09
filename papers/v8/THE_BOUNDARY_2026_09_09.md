@@ -169,10 +169,17 @@ and the structure is not loose:
 
 So this subject's batch sensitivity is a logged measurement, not an assumption. A later floor
 claiming that batch 1 against batch 8 separates nothing contradicts a certificate already in the
-log. Built as the roster describes and checked against entry 6, the forgery is refused on **9 of 9
+log. Built as the roster describes and checked against entry 6, the forgery is contradicted on **9 of 9
 factor-level pairs across all three channels**, while the honest floor checked against itself
 agrees on all 12 and a fresh subject with no logged history is correctly reported *unconstrained*
-rather than accused. Two further constraints fall out of the same bytes: same-batch runs produced
+rather than accused.
+
+*This paragraph said "refused" and that word was wrong, in the way that matters most. The predicate
+lives in the independent JavaScript verifier and in the receipt script beside this document. No
+verification walk calls it, no append path calls it, and there is no Python implementation at all.
+The corroborating byte is real and the predicate works; the wiring does not exist. **A receipt
+refuses the forgery. The system accepts it**, appends it, verifies it, and stores an empty
+disagreement list beside it.* Two further constraints fall out of the same bytes: same-batch runs produced
 byte-identical channel values, so determinism at a fixed batch size is logged and a fabricated run
 at a batch level the log has already seen must reproduce it exactly.
 
@@ -474,6 +481,72 @@ throughput predicate would accuse the honest log.
 correction said every remaining *no check can reach this* should be read as a conjecture with a base
 rate of 0 for 5. It is 0 for 6, and the sixth fell in under an hour to the first adversary who was
 told to disbelieve it and given the bytes.
+
+---
+
+## SIXTH CORRECTION — the constraint accrues in whichever direction the issuer publishes
+
+A seventh pass ran against the repaired tree. It reports that of twenty-five attack constructions
+named across the whole sequence, sixteen are now refused by rules that decide and **nine still
+work**, and it adds seven more. Two of the seven land on this document.
+
+**The predicate is not wired to anything.** Covered above: the word *refused* has been corrected to
+*contradicted*, because only a receipt refuses. The same is true of the determinism comparison this
+document leans on: nothing in the verification path implements it, and a log can therefore hold both
+answers about one subject at one batch level at once. Four runs at batch size 8 append without
+objection giving one pair at distance 0 and another at 0.5, so the log states that this machine is
+deterministic and that it is not.
+
+**And the direction of accusation is a choice the issuer makes.** This is the finding that should be
+read as the end of the argument rather than another entry in it. The floor predicate accuses in one
+direction only: a candidate reporting zero where a prior reported positive. That asymmetry is
+deliberate and correct on its own terms, because a candidate louder than its prior is honest
+re-measurement and refusing it would accuse honest labs. But *prior* means *earlier in the log*, and
+the issuer writes both certificates and appends both. Demonstrated on one pair:
+
+| comparison | verdict |
+|---|---|
+| honest floor, against a forged prior | **agrees**, 18 cells compared, none contradicted |
+| forged floor, against an honest prior | contradicts, naming the level and both values |
+
+**Publish the vacuous floor first and no later honest measurement of that cell ever contradicts
+it.** The same holds for the constraint census, which counts only prior entries. Both quantities are
+functions of publication order, and publication order is the issuer's.
+
+So consistency does not merely fail to close in on a liar because the space of cells is unbounded,
+which is the fifth correction. It fails for a second and simpler reason: **the liar publishes
+first.** Every mechanism this document proposes rewards whoever writes the earliest entry about a
+cell, and nothing in the design makes the earliest entry the true one. That is the same shape as
+trust-on-first-use, which the prior-art check already named, arrived at from inside.
+
+**Member 2 is reachable by a second route this document did not find**, and it is the same test a
+third time. The check that a floor names as many runs as its plan declares counts them; nothing
+enumerates the fingerprints in the log that name the same plan and appear in no floor. So one issuer
+under one preregistration appends eight cells, reads the numbers, and builds the floor from the four
+it prefers. Sixty-eight admissible four-of-eight subsets, and the floor they yield ranges **0.125 to
+0.500 on the exact channel — a factor of four in the yardstick every later verdict is measured
+against.** Both extremes appended, each with an empty disagreement list, while the discarded cells
+sit in the same log with their own signatures. The corroborating bytes are there. Nothing reads
+them.
+
+**Three more, recorded without ceremony.** The baseline-gap repair excludes a cert's own floor runs
+from the baseline search, and that exclusion list is written by the appending party: name the
+baseline you are replacing among your own runs and the announcement vanishes and the log positively
+asserts `first-canonical`, which is a false statement rather than a silence. A mirror's report does
+not record whether an out-of-band head was supplied, so `verified: true` means either *consistent
+with a head the operator does not control* or *consistent with itself*, and no reader can tell
+which. And the retirement ledger's move inside the conformance digest is undone by the reader's own
+compatibility path: move the ledger back under `provenance`, recompute the digest over the smaller
+core, and the index is self-consistent while the reader still finds it. What forbids that is a unit
+test in this source tree, which is not part of the artifact a stranger receives.
+
+**What this leaves.** Every predicate this document produced is in one of two states. Unwired, so a
+receipt refuses what the system accepts. Or wired and order-dependent, so it constrains only a party
+who published in the unfavourable order. Neither state is a defect in a particular function; both
+follow from the same fact the document opened with, which is that the issuer writes the bytes and
+now also chooses when they appear. The correct closing sentence is therefore weaker than any this
+document has offered so far: **a self-written log raises the cost of lying, and the whole of that
+cost is borne by a liar who was careless, or slow.**
 
 The practical difference between the classes was to have been what a reader does about them: class
 one a backlog, class two a permanent disclosure beside every verdict. With class two empty, the
