@@ -1,12 +1,41 @@
 # What a self-written record can establish, and what it cannot
 
 Fathom Lab · 2026-09-09 · **An argument with receipts, not a result.** It proves nothing. It reports
-a sequence of five repairs and five defeats that happened in one day on one machine, and states the
-invariant they share. It has been corrected four times since, each time in the same direction: a
-defect it called unreachable turned out to be reachable. Its record on impossibility claims is 0
-for 5 and is reported in the fourth correction. The attacks are all real, all reproducible from scripts under
-`papers/v8/challenge_and_attack_2026_09_09/` and the session scratchpad, and every one was found by
-an adversary asked to break the lab's own newest work. Not sworn.
+what happened in one day on one machine: a sequence of repairs, the attack that walked through each
+one, and the invariant they share. It has been **corrected six times since it was written**, every
+time in the same direction, and each correction is left in place below rather than folded away,
+because the sequence is the finding. The attacks are all real and all reproducible from scripts
+named in the text. Not sworn.
+
+## Where this stands, for a reader who has not followed the reversals
+
+The corrections run in series and each one reverses the last, so the position is stated here and
+argued below.
+
+- **The invariant holds and has never been touched.** A check on bytes an issuer wrote can only ask
+  whether that party contradicted itself. Every predicate found today is of that shape.
+- **The partition the document is built on does not.** It sorted defects into *reachable, owed as
+  work* and *reachable by nothing*. All four entries in the second class were reclassified as
+  reachable, the class was declared empty, and then a fifth entry was found that no roster here ever
+  listed. The class is not empty. **The roster was incomplete, which is a worse failure than four
+  wrong entries**, because testing the entries on a list never finds one that is missing from it.
+- **The predicate that did the reclassifying is not wired into anything.** It exists in the
+  independent JavaScript verifier and in a receipt script. No append path calls it. A receipt
+  refuses the forgery; the system accepts it.
+- **Where it is wired, the issuer chooses the direction.** It objects only when a later certificate
+  claims less than an earlier one, and the issuer writes and appends both. Publish the convenient
+  number first and no later honest measurement of that cell ever contradicts it.
+- **Impossibility claims made here: six. Withdrawn or narrowed: six.** Read every remaining sentence
+  of the form *no check can reach this* as a conjecture carrying that base rate, including the ones
+  added by the most recent correction.
+- **One method survives and is worth taking away.** Rosters assembled by inspection missed an entry
+  through four adversarial passes. A roster built mechanically — look for two real certificates that
+  differ in exactly one field — recovers both the entry the document had right and the one it never
+  thought of, with no author's judgement involved.
+
+The honest closing position is weaker than any single correction: a self-written log raises the cost
+of lying, and the whole of that cost falls on a liar who was careless, or slow. What changes the kind
+of the record, rather than its length, is a second party's bytes.
 
 ## The sequence
 

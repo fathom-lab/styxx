@@ -70,10 +70,18 @@ def test_the_published_aperture_is_recorded() -> None:
 @pytest.mark.parametrize("module", LOAD_BEARING)
 @pytest.mark.xfail(
     strict=True,
-    reason="The canonical-bytes layer and the fingerprint builder carry no mutations, so the "
-           "coverage rate says nothing about them. jcs.py decides the bytes behind every cert id, "
-           "every signature preimage and every Merkle leaf. Delete this marker when the catalogue "
-           "proposes mutations there and the receipt reports them.",
+    reason="The canonical-bytes layer and the fingerprint builder are not measured, so the "
+           "coverage rate says nothing about them, and jcs.py decides the bytes behind every cert "
+           "id, every signature preimage and every Merkle leaf. THE CAUSE IS NOT NEGLECT and this "
+           "reason said so wrongly at first: the coverage tool patches a mutant by rebinding "
+           "attributes in loaded modules, and a consumer that RENAMES what it imports "
+           "(`from styxx.v8.jcs import digest as _jcs_digest`) does not follow the rebind, so a "
+           "mutation there would measure the patcher rather than the vector set. The tool "
+           "documents that and lists jcs.py under `not_mutable` deliberately. The repair is "
+           "therefore a source-level patch replayed in a subprocess, not an entry added to "
+           "MUTABLE. Five specific canonicalization defects are now proposed in the catalogue and "
+           "recorded as unmeasurable, which is more use to a reader than a bare exclusion note. "
+           "Delete this marker when they are actually measured.",
 )
 def test_the_load_bearing_modules_are_mutated(module: str) -> None:
     d = _receipt()
