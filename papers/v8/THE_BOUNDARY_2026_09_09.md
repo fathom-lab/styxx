@@ -535,10 +535,20 @@ baseline you are replacing among your own runs and the announcement vanishes and
 asserts `first-canonical`, which is a false statement rather than a silence. A mirror's report does
 not record whether an out-of-band head was supplied, so `verified: true` means either *consistent
 with a head the operator does not control* or *consistent with itself*, and no reader can tell
-which. And the retirement ledger's move inside the conformance digest is undone by the reader's own
+which. And the retirement ledger's move inside the conformance digest was undone by the reader's own
 compatibility path: move the ledger back under `provenance`, recompute the digest over the smaller
-core, and the index is self-consistent while the reader still finds it. What forbids that is a unit
-test in this source tree, which is not part of the artifact a stranger receives.
+core, and the index is self-consistent while the reader still finds it.
+
+*That one is closed. The fallback existed to migrate sets written before the ledger moved, and the
+migration is finished: the only set in this tree carries the ledger at the top level and none under
+`provenance`, so the branch had no honest consumer left at the moment it was shut. The reader now
+refuses a ledger it finds only under `provenance`, and refuses an index carrying one under both keys,
+since two ledgers can disagree and a reader cannot tell which is the record. Demonstrated refusing at
+exit 1, and the committed set still checks clean at the same digest. What stays open, and is now
+stated in the generator's own source rather than only here: an attacker who edits the ledger in place
+and recomputes the digest leaves a self-consistent index, and nothing inside the file catches that.
+What catches it is the digest pinned in the coverage receipt and the previous bytes in git, both
+outside the artifact a stranger receives.*
 
 **What this leaves.** Every predicate this document produced is in one of two states. Unwired, so a
 receipt refuses what the system accepts. Or wired and order-dependent, so it constrains only a party
@@ -547,6 +557,36 @@ follow from the same fact the document opened with, which is that the issuer wri
 now also chooses when they appear. The correct closing sentence is therefore weaker than any this
 document has offered so far: **a self-written log raises the cost of lying, and the whole of that
 cost is borne by a liar who was careless, or slow.**
+
+### One thing that worked, and it is a method rather than a result
+
+Every roster in this document was assembled by an author deciding, by inspection, which fields have
+no corroborating byte. Four entries were wrong and a fifth was missing, and the missing one is the
+worse failure: testing the entries on a list never finds an entry that is not on it.
+
+There is a mechanical test that needs no list. **A field has a corroborating byte when forging it
+would force some other byte in the same certificate to change. So look for two real certificates
+that differ in exactly one field.** If such a pair exists, that field moved and nothing else did,
+which is a demonstration on real bytes rather than an opinion. Run over the thirteen certificates on
+disk in this arc (`class_two_empty_2026_09_09/lone_difference_census.py`):
+
+| result | fields |
+|---|---|
+| **demonstrated lone difference** | `recipe.decoding.batch_size`, witnessed by 32 pairs; `subject.precision`, witnessed by 7 |
+| varied only alongside other fields | 17, including the battery, the template hash and the seed |
+| never varied at all | 14, including `weights_sha256`, `revision` and the whole environment block |
+
+The two it names are exactly roster member 1 and the member no roster listed. It recovers the one
+entry this document had right about its own shape, and the one it never thought of, from the same
+bytes, in one pass, without being told what to look for.
+
+Three things about how to use it, since this document's habit is to overclaim. It is a **lower
+bound**: the fourteen fields that never varied here are unknown, not cleared, and `weights_sha256`
+sitting in that column is why member 3 needed a cross-certificate predicate rather than an internal
+one. It says nothing about whether a field matters, only about whether the bytes constrain it. And a
+field it names may still be constrained from **outside**: `precision` is checkable by anyone who
+re-runs the battery, which is the challenge, which remains the only part of this design that
+introduces a byte the issuer did not write.
 
 The practical difference between the classes was to have been what a reader does about them: class
 one a backlog, class two a permanent disclosure beside every verdict. With class two empty, the

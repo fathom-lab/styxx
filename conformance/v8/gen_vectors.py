@@ -775,9 +775,39 @@ def read_ledger(directory: Path) -> Tuple[dict, List[str]]:
     except (R.ReplayError, ValueError) as exc:
         return {}, ["  %s does not parse and its ledger cannot be read: %s" % (index_path, exc)]
     ledger = index.get("retired")
-    if ledger is None:
-        # Sets written before the ledger moved inside the digest carry it under provenance.
-        ledger = (index.get("provenance") or {}).get("retired")
+    legacy = (index.get("provenance") or {}).get("retired")
+    if ledger is not None and legacy is not None:
+        return {}, [
+            "  %s carries a ledger under BOTH `retired` and `provenance.retired`. One of them is "
+            "inside `set_sha256` and one is not, so the two can disagree and a reader cannot tell "
+            "which is the record. Restore the index from git." % index_path
+        ]
+    if ledger is None and legacy is not None:
+        # THE DOWNGRADE, refused rather than accepted. This branch used to READ the legacy key,
+        # for sets written before the ledger moved inside the digest. A seventh adversarial pass
+        # pointed out what that buys an attacker: move the ledger back under `provenance`,
+        # recompute `set_sha256` over the now-smaller core, and the index is self-consistent while
+        # this reader still finds the history -- outside the digest again, exactly where the
+        # repair took it from. The compatibility path undid the repair.
+        #
+        # It is refused instead of removed silently because the refusal names the migration. And
+        # it costs nothing: the migration is finished. The only v8 set in this tree carries
+        # `retired` at the top level and no `provenance.retired`, so the branch had no remaining
+        # honest consumer at the moment it was closed. A genuinely old set restored from git is
+        # now migrated deliberately rather than accepted quietly, which is the right way round.
+        #
+        # What this does NOT close, stated so nobody reads it as more than it is: an attacker who
+        # edits the ledger IN PLACE under `retired` and recomputes `set_sha256` leaves a
+        # self-consistent index, and nothing inside the file catches that. What catches it is the
+        # `set_sha256` pinned in `mutation_coverage.json` and the previous bytes in git, both of
+        # which are outside the artifact a stranger receives.
+        return {}, [
+            "  %s carries its retirement ledger under `provenance.retired`, where it sits OUTSIDE "
+            "`set_sha256`, and carries none under `retired`. Either this set predates the ledger "
+            "moving inside the digest, in which case migrate it deliberately by moving the key and "
+            "regenerating, or somebody moved it back out. This reader will not accept a ledger "
+            "the digest does not cover." % index_path
+        ]
     if ledger is None:
         if remains:
             return {}, [
