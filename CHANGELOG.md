@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the plate: a receipt gets a face, a geometry gets a face, and neither can lie about the number
+
+**`styxx/plate.py`, `styxx/geoplate.py`, `tests/test_plate.py`, `papers/plates/`,
+`papers/disjoint-worlds/geometry_plates_demo.py`, `papers/charon/gallery.py`. Extra: `styxx[plate]`
+(matplotlib, scipy). Nothing here is a measurement; every line below is a property of a picture.**
+The survey `papers/frequency-resonance/SURVEY_frequency_vibration_2500yr_2026_06_04.md` ends by asking
+for an instrument that does to claims what Chladni's plate did to sound. This is that sentence built.
+- **`python -m styxx.plate <sha256>` renders a hash as a Chladni figure** — the nodal set of four
+  square-plate modes chosen by the re-hashed digest, drawn as sand. Same digest, byte-identical
+  picture on any machine; one changed hex character anywhere, a different figure
+  (`papers/plates/plate_receipt_one_hex_changed.png` is the control). It is a picture of the
+  number and says nothing about the document the number came from.
+- **`styxx.geoplate` renders a matrix, not a hash, and is continuous**: the low-frequency 2-D DCT
+  block (K=8) of a representational dissimilarity matrix over a fixed item order drives the plate,
+  the always-zero diagonal removed first so it cannot make unrelated matrices look alike. Run on
+  the four committed `disjoint-worlds` banks (462 concepts), the RDMs agree at 0.942 / 0.959 /
+  0.929 across meta and google and 0.871–0.878 with qwen, a shuffled-item control at 0.001–0.004,
+  and `papers/plates/geometry_plates_four_models.png` is those numbers as sand. The demo rebuilds
+  it byte-for-byte from a clone with no GPU, no download and no torch. The picture cannot make
+  two geometries agree more than the printed r says they do; `tests/test_plate.py` pins that a
+  shuffled control separates while a perturbed copy stays close.
+- **`papers/charon/gallery.py` renders every Charon line as a plate** keyed by its `entry_id`, so
+  a changed line moves its own sand and every plate after it; `papers/plates/charon/charon_head.png`
+  is the head at 243 lines.
+- **Two debts paid while here.** `bench/tasks/reasoning.jsonl` reas-021: the gold answer is
+  Tuesday, as stacc reported on 2026-09-02; the sworn update of 2026-09-12 swears it still read
+  Wednesday at 4dba3a7, which stays true at that commit. `REPLICATE_legibility.md` said
+  `pip install numpy scipy`; a cold clone on 2026-09-12 failed on line one because `run_g0clear.py`
+  imports torch for the concept list. torch is now on the line. The same cold clone reproduced
+  `b45_result.json` byte-identical in 2 s of compute.
+
 ## [Unreleased] — prior-art survey: the sentence the plan held back is priced against nineteen fetches
 
 **`papers/sworn/SURVEY_sworn_neighbours_2026_09_05.md`, run against the procedure frozen three

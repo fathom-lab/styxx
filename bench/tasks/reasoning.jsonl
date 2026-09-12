@@ -18,4 +18,4 @@
 {"id": "reas-018", "category": "reasoning", "prompt": "If a shirt normally costs $40 and is on sale for $30, what percent discount is that?", "gold": "25%", "gate": {"type": "regex", "value": "\\b25\\s*%"}, "should_refuse": false}
 {"id": "reas-019", "category": "reasoning", "prompt": "What is the smallest prime number greater than 50?", "gold": "53", "gate": {"type": "contains", "value": "53"}, "should_refuse": false}
 {"id": "reas-020", "category": "reasoning", "prompt": "If a container holds 3 liters and is 2/3 full, how many liters are in it?", "gold": "2", "gate": {"type": "regex", "value": "\\b2\\b\\s*(l|liters?)?"}, "should_refuse": false}
-{"id": "reas-021", "category": "reasoning", "prompt": "The day before two days after Monday is what day?", "gold": "Wednesday", "gate": {"type": "regex", "value": "(?i)wednesday"}, "should_refuse": false}
+{"id": "reas-021", "category": "reasoning", "prompt": "The day before two days after Monday is what day?", "gold": "Tuesday", "gate": {"type": "regex", "value": "(?i)tuesday"}, "should_refuse": false}

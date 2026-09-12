@@ -71,6 +71,8 @@ dependencies = [
 # It exists so the lazy-import error path (`pip install 'styxx[sklearn]'`) resolves for slimmed bases that
 # stripped it, and so a future base-slimming can move the pin here without touching the error message.
 sklearn = ["scikit-learn>=1.3"]
+# the plate: chladni figures for receipts (styxx.plate) and representations (styxx.geoplate)
+plate = ["matplotlib>=3.7", "scipy>=1.10"]
 openai  = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
 # 0.5.4: framework integrations
