@@ -6,7 +6,7 @@
   "inline_sha256": "29fe85b67540483a14766bed2031aeb42b8ae08855715128158899f3c054144d",
   "canonical_sha256": "ec189e81a6a42f9cc96193a31062f2749583e8ab1e73cf9fbbe8087bd5a7c825"
  },
- "commit": "a245cea626204dc3b5f276ca692718da77dea4c5",
+ "commit": "c175105307815195ec3912c7a1f3ace12b289ae1",
  "manifest_digest": null,
  "spans": [
   {
@@ -25,10 +25,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -47,10 +47,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -66,10 +66,10 @@
     "haystack_bytes": 4,
     "occurrences": 1
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -88,10 +88,10 @@
     "fractional_digits": 1,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -110,10 +110,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -132,10 +132,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -154,10 +154,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -176,10 +176,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -198,10 +198,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -220,10 +220,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -242,10 +242,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -264,10 +264,10 @@
     "fractional_digits": 2,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   },
   {
@@ -286,10 +286,10 @@
     "fractional_digits": 0,
     "rounding": "ROUND_HALF_EVEN"
    },
-   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
+    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
    }
   }
  ],
@@ -344,7 +344,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "9a5721d27d18d981078fec5d9402b21f3bf5ad33448821b103e0ac9a6c85538e",
+ "digest": "710d54697c02dcbd94d15ceed3e8b90c39e427296803c42729e98f586ccc929c",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -371,5 +371,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "1da9d352ae17c9ae784ded9889adca51a7cf568c8ada9e5700e3d7d4f80e4877",
- "timestamp": "2026-09-13T15:12:05Z"
+ "timestamp": "2026-09-13T15:18:48Z"
 }
