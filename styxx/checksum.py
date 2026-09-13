@@ -239,6 +239,38 @@ def null_floor(fingerprints: Sequence[Fingerprint]) -> float:
     return worst
 
 
+# ------------------------------------------------------------------------------- top-k (api) variant
+TopKFn = Callable[[str], list[tuple[str, float]]]   # prompt -> [(token_text, logprob)] for the next token
+
+
+def fingerprint_topk(topk: TopKFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "",
+                     k_min: int = 5) -> Fingerprint:
+    """The API variant. Chat APIs do not teacher-force, but most return top-k next-token log-probs.
+    Per item: the log-prob of the gold first token if it is in the top-k, else the item's k-th
+    log-prob (a floor, marked); the belief vector is the top-k over the union of tokens seen
+    across items, missing entries filled with the item's floor. Coarser than the local variant
+    and comparable only with other top-k fingerprints of the same k; the cert carries `topk`."""
+    rows, floors, gold_lp = [], [], []
+    for cid, prompt, cont in canaries:
+        tk = topk(prompt)
+        if len(tk) < k_min:
+            raise ValueError(f"{cid}: fewer than {k_min} top-k entries returned")
+        d = {t: float(lp) for t, lp in tk}
+        floor = min(d.values())
+        rows.append(d); floors.append(floor)
+        first = cont[:1] + cont[1:].split(" ")[0] if cont.startswith(" ") else cont.split(" ")[0]
+        gold_lp.append(d.get(first, d.get(first.strip(), floor)))
+    vocab = sorted({t for d in rows for t in d})
+    B = np.array([[d.get(t, fl) for t in vocab] for d, fl in zip(rows, floors)], dtype=np.float64)
+    B = B - B.mean(1, keepdims=True)
+    B /= (np.linalg.norm(B, axis=1, keepdims=True) + 1e-12)
+    rdm = 1.0 - B @ B.T
+    fp = Fingerprint(model_id=model_id, canary_sha256=canary_sha256(canaries), tokenizer_id=tokenizer_id or "topk",
+                     ids=[c[0] for c in canaries], mean_lp=np.asarray(gold_lp), rdm=rdm, n_tokens=[1] * len(canaries))
+    fp.model_id = f"{model_id} [topk={min(len(d) for d in rows)}]"
+    return fp
+
+
 # ------------------------------------------------------------------------------------------- cert
 def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
     """A comparison certificate: everything needed to re-derive the verdict from the two fingerprints."""

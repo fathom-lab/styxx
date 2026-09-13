@@ -23,7 +23,7 @@ import urllib.request
 
 MINT = "93ihpGjLVnhghXciSeFovXwKF762rwcigW12kSQBpump"
 CREATOR = "74gZN4yQjGCMpHqmWWSEYkNKwrb1TUybXWhAD6vMoMQ2"
-KINDS = ("sworn-receipt", "sealed-prereg", "charon-head")
+KINDS = ("sworn-receipt", "sealed-prereg", "sealed-canaries", "charon-head")
 MEMO_PROGRAMS = {"MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr", "Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo"}
 RPCS = ["https://api.mainnet-beta.solana.com", "https://solana-rpc.publicnode.com"]
 
