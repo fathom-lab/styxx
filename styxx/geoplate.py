@@ -25,7 +25,7 @@ upper triangles. The plate cannot make two geometries agree more than that
 number says they do; a permuted-item control (same matrix, items shuffled)
 shows what disagreement looks like.
 """
-import sys, math, hashlib
+import sys, math, hashlib, json
 import numpy as np
 
 
@@ -116,6 +116,50 @@ def render_grid(items, out: str, title: str | None = None, ncols: int = 3, size:
     fig.savefig(out, dpi=dpi, facecolor=PLATE)
     plt.close(fig)
     return out
+
+
+def drift_field(Wa: np.ndarray, Wb: np.ndarray, res: int = 700) -> np.ndarray:
+    """|U_a - U_b|: where two plates disagree. Zero everywhere for identical inputs."""
+    return np.abs(field(Wa, res) - field(Wb, res))
+
+
+def render_drift(pairs, out: str, title: str | None = None, ncols: int = 3, size: int = 1500):
+    """A drift plate per pair: sand lands only where the two geometries disagree, densest where they
+    disagree most. Identical inputs give an empty plate — no sand is the picture of SAME.
+    pairs: list of (label, sublabel, Wa, Wb). The scale is shared across the grid so plates are
+    comparable: intensity is |U_a - U_b| divided by the largest |U| in the grid."""
+    plt = _plt()
+    n = len(pairs); nrows = math.ceil(n / ncols); dpi = 200
+    fig = plt.figure(figsize=(size / dpi, size / dpi * nrows / ncols + 0.55), dpi=dpi, facecolor=PLATE)
+    fields = [(lab, sub, drift_field(Wa, Wb)) for lab, sub, Wa, Wb in pairs]
+    scale = max(float(np.abs(field(Wa)).max()) for _, _, Wa, _ in pairs) + 1e-12
+    for idx, (label, sub, D) in enumerate(fields):
+        ax = fig.add_subplot(nrows, ncols, idx + 1)
+        seed = int.from_bytes(hashlib.sha256(D.tobytes()).digest()[:8], "big")
+        rng = np.random.default_rng(seed)
+        N = 260_000
+        px = rng.uniform(0, 1, N); py = rng.uniform(0, 1, N)
+        ix = (px * (D.shape[1] - 1)).astype(int); iy = (py * (D.shape[0] - 1)).astype(int)
+        inten = np.clip(D[iy, ix] / scale, 0, 1)
+        keep = rng.uniform(0, 1, N) < 0.6 * inten
+        ax.scatter(px[keep], py[keep], s=0.35, c=SAND, alpha=0.9, linewidths=0, marker=".")
+        ax.plot([0, 1, 1, 0, 0], [0, 0, 1, 1, 0], color=INK, lw=0.6, alpha=0.6)
+        ax.set_xlim(-0.01, 1.01); ax.set_ylim(-0.01, 1.01); ax.set_aspect("equal"); ax.axis("off")
+        ax.set_facecolor(PLATE)
+        ax.set_title(label, color=SAND, family="monospace", size=8, pad=4)
+        ax.text(0.5, -0.06, sub, transform=ax.transAxes, ha="center", va="top", color=INK, family="monospace", size=6)
+    if title:
+        fig.suptitle(title, color=SAND, family="monospace", size=8, y=0.995)
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.93, bottom=0.05, wspace=0.08, hspace=0.25)
+    fig.savefig(out, dpi=dpi, facecolor=PLATE); plt.close(fig)
+    return out
+
+
+def coefficients_sha256(W: np.ndarray) -> str:
+    """Hash of the coefficients rounded to 1e-9 — the cross-machine reproduction target. PNG bytes
+    depend on the plotting library; these numbers do not."""
+    rounded = [[round(float(x), 9) for x in row] for row in W]
+    return hashlib.sha256(json.dumps(rounded, separators=(",", ":")).encode()).hexdigest()
 
 
 if __name__ == "__main__":

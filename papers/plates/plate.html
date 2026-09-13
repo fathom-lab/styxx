@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>styxx — the plate (browser, plate/v1)</title>
+<style>
+  body{background:#0b0b0d;color:#e8d8b0;font-family:ui-monospace,Menlo,monospace;margin:0;padding:18px;text-align:center}
+  input{width:min(92vw,640px);background:#151517;color:#e8d8b0;border:1px solid #6f6a5e;padding:10px;font:inherit}
+  canvas{display:block;margin:16px auto;max-width:92vw;border:1px solid #6f6a5e}
+  small{color:#6f6a5e}
+</style>
+<h3>the plate — paste a 64-hex receipt digest</h3>
+<input id="d" placeholder="fc8ad3a52de50d106e90c9d0a5441a6460df0f5c80cb5553dad7dbba110cd5a5" autocomplete="off">
+<canvas id="c" width="600" height="600"></canvas>
+<div id="cap"></div>
+<small>same nodal lines as <code>python -m styxx.plate</code> (mapping plate/v1); the grain differs because this page draws the line density directly instead of sampling sand. two plates with the same lines are the same digest.</small>
+<script>
+// plate/v1 — identical parameter derivation to styxx/plate.py: the digest is re-hashed with SHA-256 so
+// every character reaches every parameter; bytes 0..7 modes, 8..11 amplitudes, 12..15 families+rotation.
+function paramsFromBytes(b){
+  const pairs=[];
+  for(let k=0;k<4;k++){ let m=1+(b[2*k]%8), n=1+(b[2*k+1]%8); if(m===n){ n=1+(n%8);} pairs.push([m,n]); }
+  const amps=[]; for(let k=0;k<4;k++){ let a=(b[8+k]/255)*2-1; if(Math.abs(a)<=0.15){ a=a>=0?0.15:-0.15; } amps.push(a); }
+  const fam=[]; for(let k=0;k<4;k++) fam.push(b[12+k]&1);
+  const rot=(b[15]/255)*Math.PI/2;
+  return {pairs,amps,fam,rot};
+}
+async function rehash(hex){
+  const raw=new Uint8Array(hex.match(/../g).map(h=>parseInt(h,16)));
+  const h=await crypto.subtle.digest('SHA-256',raw); return new Uint8Array(h);
+}
+function field(p,res){
+  const U=new Float64Array(res*res);
+  for(let j=0;j<res;j++){ const y=-1+2*j/(res-1);
+    for(let i=0;i<res;i++){ const x=-1+2*i/(res-1); let u=0;
+      for(let k=0;k<4;k++){ const [m,n]=p.pairs[k], a=p.amps[k];
+        if(p.fam[k]===0) u+=a*(Math.cos(m*Math.PI*x)*Math.cos(n*Math.PI*y)-Math.cos(n*Math.PI*x)*Math.cos(m*Math.PI*y));
+        else u+=a*(Math.sin(m*Math.PI*x)*Math.sin(n*Math.PI*y)-Math.sin(n*Math.PI*x)*Math.sin(m*Math.PI*y)); }
+      U[j*res+i]=u; } }
+  return U;
+}
+async function draw(hex){
+  hex=hex.trim().toLowerCase(); const cap=document.getElementById('cap');
+  if(!/^[0-9a-f]{64}$/.test(hex)){ cap.textContent='need 64 hex characters'; return; }
+  const p=paramsFromBytes(await rehash(hex));
+  const res=420, U=field(p,res), h=2/(res-1);
+  const c=document.getElementById('c'), ctx=c.getContext('2d'), W=c.width; ctx.fillStyle='#0b0b0d'; ctx.fillRect(0,0,W,W);
+  const img=ctx.createImageData(W,W), cs=Math.cos(p.rot), sn=Math.sin(p.rot);
+  for(let py=0;py<W;py++){ const ry=-1+2*py/(W-1);
+    for(let px=0;px<W;px++){ const rx=-1+2*px/(W-1);
+      // inverse-rotate the output pixel into plate coordinates
+      const x= cs*rx+sn*ry, y=-sn*rx+cs*ry; const o=4*(py*W+px);
+      if(Math.abs(x)>1||Math.abs(y)>1){ img.data[o]=11; img.data[o+1]=11; img.data[o+2]=13; img.data[o+3]=255; continue; }
+      const i=Math.min(res-2,Math.max(1,Math.round((x+1)/2*(res-1)))), j=Math.min(res-2,Math.max(1,Math.round((y+1)/2*(res-1))));
+      const u=U[j*res+i], gx=(U[j*res+i+1]-U[j*res+i-1])/(2*h), gy=(U[(j+1)*res+i]-U[(j-1)*res+i])/(2*h);
+      const d=Math.abs(u)/(Math.hypot(gx,gy)+1e-9); const t=Math.exp(-(d/0.012)*(d/0.012));
+      img.data[o]=Math.round(11+(232-11)*t); img.data[o+1]=Math.round(11+(216-11)*t); img.data[o+2]=Math.round(13+(176-13)*t); img.data[o+3]=255; } }
+  ctx.putImageData(img,0,0);
+  cap.textContent=hex.slice(0,12)+'  ·  modes '+p.pairs.map(q=>q.join('/')).join(' ')+'  ·  plate/v1';
+}
+document.getElementById('d').addEventListener('input',e=>draw(e.target.value));
+const q=new URLSearchParams(location.search).get('d'); if(q){ document.getElementById('d').value=q; draw(q); }
+</script>

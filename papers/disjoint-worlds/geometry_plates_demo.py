@@ -21,7 +21,7 @@ import json, os, sys, itertools
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-from styxx.geoplate import coefficients, render_grid  # noqa: E402
+from styxx.geoplate import coefficients, render_grid, coefficients_sha256  # noqa: E402
 
 BANKS = {
     "llama_3b": "_b31v2_ptsA.npz",
@@ -69,6 +69,8 @@ def main() -> None:
     out = render_grid(items, os.path.join(HERE, "geometry_plates_four_models.png"),
                       title="four models, three companies, one concept geometry — "
                             f"{n} concepts, committed banks, disjoint-worlds arc", ncols=3)
+    # the cross-machine reproduction target: png bytes depend on the plotting library, these do not
+    agree["coefficients_sha256"] = {k: coefficients_sha256(coefficients(R[k])) for k in names}
     json.dump(agree, open(os.path.join(HERE, "geometry_plates_agreement.json"), "w"), indent=1)
     print("wrote", out)
 

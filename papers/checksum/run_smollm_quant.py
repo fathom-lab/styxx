@@ -17,7 +17,7 @@ import numpy as np
 import torch
 
 from styxx import checksum as ck
-from styxx.geoplate import coefficients, render_grid
+from styxx.geoplate import coefficients, render_grid, render_drift, coefficients_sha256
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME = "HuggingFaceTB/SmolLM2-135M"
@@ -68,6 +68,8 @@ def main():
         print(f"  A vs {tag:8s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} nats/token "
               f"[{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]   belief-geometry r = {d.rdm_r:.4f} "
               f"[{d.ci_rdm_r[0]:.3f}, {d.ci_rdm_r[1]:.3f}]   corr-dist = {d.corr_dist:.4f}")
+    out["coefficients_sha256"] = {k: coefficients_sha256(coefficients(f.rdm)) for k, f in
+                                  (("A", fpA), ("A2", fpA2), ("Q", fpQ), ("R", fpR))}
     json.dump(out, open(os.path.join(HERE, "smollm_quant_certs.json"), "w"), indent=1)
     json.dump({"A": fpA.to_json(), "A2": fpA2.to_json(), "Q": fpQ.to_json(), "R": fpR.to_json()},
               open(os.path.join(HERE, "smollm_quant_fingerprints.json"), "w"))
@@ -87,6 +89,12 @@ def main():
     png = render_grid(items, os.path.join(HERE, "smollm_quant_plates.png"),
                       title="checksum: one model, 48 hashed canaries, cpu — what quantization moves, as sand", ncols=2)
     print("wrote", png)
+    lab2 = lambda t: f"{out[t]['distance']['mean_abs_nats']:.4f} nats/token, r = {out[t]['distance']['rdm_r']:.3f}  ({out[t]['distance']['verdict']})"
+    render_drift([("same weights, reloaded", lab2("reloaded"), coefficients(fpA.rdm), coefficients(fpA2.rdm)),
+                  ("int8 quantized", lab2("int8"), coefficients(fpA.rdm), coefficients(fpQ.rdm)),
+                  ("random weights", lab2("random"), coefficients(fpA.rdm), coefficients(fpR.rdm))],
+                 os.path.join(HERE, "smollm_quant_drift_plates.png"),
+                 title="drift plates: sand lands only where the two geometries disagree — no sand is what SAME looks like")
 
 
 if __name__ == "__main__":
