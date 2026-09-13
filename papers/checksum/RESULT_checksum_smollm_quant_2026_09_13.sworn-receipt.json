@@ -6,7 +6,7 @@
   "inline_sha256": "29fe85b67540483a14766bed2031aeb42b8ae08855715128158899f3c054144d",
   "canonical_sha256": "ec189e81a6a42f9cc96193a31062f2749583e8ab1e73cf9fbbe8087bd5a7c825"
  },
- "commit": "c175105307815195ec3912c7a1f3ace12b289ae1",
+ "commit": "60fad45c647c747c817455eafab4058a55424292",
  "manifest_digest": null,
  "spans": [
   {
@@ -28,7 +28,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -50,7 +50,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -69,7 +69,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -91,7 +91,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -113,7 +113,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -135,7 +135,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -157,7 +157,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -179,7 +179,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -201,7 +201,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -223,7 +223,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -245,7 +245,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -267,7 +267,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   },
   {
@@ -289,7 +289,7 @@
    "resolved_sha256": "9a7b5036c80feec78d747cce9dcce538eeba9ebbbced0550156450470896807b",
    "provenance": {
     "form": "path",
-    "note": "committed object at c175105307815195ec3912c7a1f3ace12b289ae1; authorship unchecked"
+    "note": "committed object at 60fad45c647c747c817455eafab4058a55424292; authorship unchecked"
    }
   }
  ],
@@ -344,7 +344,7 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "710d54697c02dcbd94d15ceed3e8b90c39e427296803c42729e98f586ccc929c",
+ "digest": "c3473a835e7e66191e8ea589f870fcd83e530a2c6e2cfc9f0164e75c5bf6c33c",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
@@ -371,5 +371,5 @@
   "claimdetect_version": "struct-1/2026-08-30"
  },
  "coverage_sha256": "1da9d352ae17c9ae784ded9889adca51a7cf568c8ada9e5700e3d7d4f80e4877",
- "timestamp": "2026-09-13T15:18:48Z"
+ "timestamp": "2026-09-13T16:08:15Z"
 }
