@@ -66,6 +66,34 @@ def test_different_canary_sets_refuse_to_compare():
         fp.distance(a, b, n_boot=10)
 
 
+def test_different_tokenizers_refuse_to_compare():
+    a = fp.fingerprint(_scripted_probe(1), "m1", tokenizer_id="tok-a")
+    b = fp.fingerprint(_scripted_probe(1), "m1", tokenizer_id="tok-b")
+    with pytest.raises(ValueError):
+        fp.distance(a, b, n_boot=10)
+
+
+def test_a_measured_null_floor_turns_a_small_drift_into_inconclusive_not_drift():
+    a = fp.fingerprint(_scripted_probe(1), "m1")
+    p = fp.fingerprint(_scripted_probe(1, perturb=0.05), "m1-perturbed")
+    without = fp.distance(a, p, n_boot=200)
+    assert without.verdict == "DRIFT"
+    # a null floor as large as the drift itself: the verdict must lose its confidence, not keep it
+    floor = fp.null_floor([a, p])
+    with_floor = fp.distance(a, p, n_boot=200, floor_nats=floor)
+    assert with_floor.verdict in ("INCONCLUSIVE", "SAME")
+
+
+def test_cert_digest_is_over_the_comparison_not_the_clock():
+    a = fp.fingerprint(_scripted_probe(1), "m1")
+    b = fp.fingerprint(_scripted_probe(3), "m3")
+    d = fp.distance(a, b, n_boot=100)
+    c1 = fp.cert(a, b, d)
+    a.created = "1999-01-01T00:00:00Z"
+    c2 = fp.cert(a, b, d)
+    assert c1["digest"] == c2["digest"]
+
+
 def test_cert_digest_is_over_the_body():
     a = fp.fingerprint(_scripted_probe(1), "m1")
     b = fp.fingerprint(_scripted_probe(3), "m3")

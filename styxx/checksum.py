@@ -126,6 +126,7 @@ def hf_probe(model, tokenizer) -> ProbeFn:
 class Fingerprint:
     model_id: str
     canary_sha256: str
+    tokenizer_id: str            # anything that identifies the tokenization; "" if unknown
     ids: list[str]
     mean_lp: np.ndarray          # (n,) mean log-prob per continuation token, per item
     rdm: np.ndarray              # (n, n) correlation distance between items' next-token beliefs
@@ -135,12 +136,12 @@ class Fingerprint:
     def to_json(self) -> dict:
         d = asdict(self)
         d["mean_lp"] = [round(float(x), 6) for x in self.mean_lp]
-        d["rdm_sha256"] = hashlib.sha256(np.ascontiguousarray(self.rdm, dtype=np.float64).tobytes()).hexdigest()
         d["rdm"] = [[round(float(x), 6) for x in row] for row in self.rdm]
+        d["rdm_sha256"] = hashlib.sha256(json.dumps(d["rdm"], separators=(",", ":")).encode()).hexdigest()
         return d
 
 
-def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES) -> Fingerprint:
+def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "") -> Fingerprint:
     ids, mean_lp, n_tok, beliefs = [], [], [], []
     for cid, prompt, cont in canaries:
         pr = probe(prompt, cont)
@@ -152,8 +153,8 @@ def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES) -> Fingerprint
     B = B - B.mean(1, keepdims=True)
     B /= (np.linalg.norm(B, axis=1, keepdims=True) + 1e-12)
     rdm = 1.0 - B @ B.T
-    return Fingerprint(model_id=model_id, canary_sha256=canary_sha256(canaries), ids=ids,
-                       mean_lp=np.asarray(mean_lp), rdm=rdm, n_tokens=n_tok)
+    return Fingerprint(model_id=model_id, canary_sha256=canary_sha256(canaries), tokenizer_id=tokenizer_id,
+                       ids=ids, mean_lp=np.asarray(mean_lp), rdm=rdm, n_tokens=n_tok)
 
 
 # --------------------------------------------------------------------------------------- distance
@@ -184,9 +185,21 @@ def _rdm_r(a: np.ndarray, b: np.ndarray, idx=None) -> float:
     return float(np.corrcoef(x, y)[0, 1])
 
 
-def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 20260913) -> Distance:
+def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 20260913,
+             floor_nats: float = RESOLUTION_NATS) -> Distance:
+    """Compare two fingerprints.
+
+    floor_nats is the null floor: the largest mean |Δ log-prob| seen between fingerprints of the
+    SAME weights under the serving conditions in use (see null_floor). On deterministic cpu it is
+    exactly 0 and the default resolution applies; on GPUs, batched or sampled serving it is not 0
+    and must be measured in situ before any DRIFT verdict means anything.
+    """
     if a.canary_sha256 != b.canary_sha256:
         raise ValueError("fingerprints were taken on different canary sets; not comparable")
+    if a.tokenizer_id != b.tokenizer_id:
+        raise ValueError("fingerprints were taken with different tokenizers; mean log-prob per token is "
+                         "not comparable across tokenizations (the belief-geometry rdm still is)")
+    floor = max(float(floor_nats), RESOLUTION_NATS)
     n = len(a.ids)
     da = np.abs(a.mean_lp - b.mean_lp)
     mean_abs = float(da.mean())
@@ -204,13 +217,26 @@ def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 202
     ci_abs = (float(np.percentile(boots_abs, 2.5)), float(np.percentile(boots_abs, 97.5)))
     br = np.array([x for x in boots_r if not np.isnan(x)])
     ci_r = (float(np.percentile(br, 2.5)), float(np.percentile(br, 97.5))) if len(br) else (float("nan"),) * 2
-    if ci_abs[1] < RESOLUTION_NATS:
-        verdict, reason = "SAME", f"upper 95% bound {ci_abs[1]:.2e} nats/token is below resolution {RESOLUTION_NATS:g}"
-    elif ci_abs[0] > RESOLUTION_NATS:
-        verdict, reason = "DRIFT", f"lower 95% bound {ci_abs[0]:.4f} nats/token is above resolution {RESOLUTION_NATS:g}"
+    if ci_abs[1] < floor:
+        verdict, reason = "SAME", f"upper 95% bound {ci_abs[1]:.2e} nats/token is below the floor {floor:g}"
+    elif ci_abs[0] > floor:
+        verdict, reason = "DRIFT", f"lower 95% bound {ci_abs[0]:.4f} nats/token is above the floor {floor:g}"
     else:
-        verdict, reason = "INCONCLUSIVE", "the 95% interval straddles the resolution"
+        verdict, reason = "INCONCLUSIVE", f"the 95% interval straddles the floor {floor:g}"
     return Distance(mean_abs, corr_dist, rdm_r, ci_abs, ci_r, n, n_boot, verdict, reason)
+
+
+def null_floor(fingerprints: Sequence[Fingerprint]) -> float:
+    """The largest mean |Δ log-prob| between any two fingerprints of the SAME weights, taken under the
+    serving conditions in use. Measure this first; pass it as floor_nats to distance()."""
+    fs = list(fingerprints)
+    if len(fs) < 2:
+        raise ValueError("a null floor needs at least two fingerprints of the same weights")
+    worst = 0.0
+    for i in range(len(fs)):
+        for j in range(i + 1, len(fs)):
+            worst = max(worst, float(np.abs(fs[i].mean_lp - fs[j].mean_lp).mean()))
+    return worst
 
 
 # ------------------------------------------------------------------------------------------- cert
@@ -219,13 +245,15 @@ def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
     body = {
         "schema": "styxx.checksum/compare/v0",
         "canary_sha256": a.canary_sha256,
+        "tokenizer_id": a.tokenizer_id,
         "n_items": d.n_items,
-        "a": {"model_id": a.model_id, "created": a.created},
-        "b": {"model_id": b.model_id, "created": b.created},
+        "a": {"model_id": a.model_id},
+        "b": {"model_id": b.model_id},
         "distance": {k: v for k, v in asdict(d).items()},
         "resolution_nats": RESOLUTION_NATS,
         "note": note,
     }
     blob = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
-    body["digest"] = hashlib.sha256(blob).hexdigest()
+    body["digest"] = hashlib.sha256(blob).hexdigest()   # over the comparison only — re-runs agree
+    body["created"] = {"a": a.created, "b": b.created}   # timestamps ride outside the digest
     return body

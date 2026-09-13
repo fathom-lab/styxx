@@ -6,19 +6,19 @@
    "int8": 16,
    "random": 0
   },
-  "n_canaries": 48
+  "n_canaries": 48,
+  "null_floor_nats": 0.0
  },
  "reloaded": {
   "schema": "styxx.checksum/compare/v0",
   "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
   "n_items": 48,
   "a": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1",
-   "created": "2026-09-13T15:10:21Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
   },
   "b": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #2 (reloaded)",
-   "created": "2026-09-13T15:10:30Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #2 (reloaded)"
   },
   "distance": {
    "mean_abs_nats": 0.0,
@@ -35,23 +35,26 @@
    "n_items": 48,
    "n_boot": 2000,
    "verdict": "SAME",
-   "reason": "upper 95% bound 0.00e+00 nats/token is below resolution 0.0001"
+   "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001"
   },
   "resolution_nats": 0.0001,
   "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
-  "digest": "8a556b0173fd2d772c65cf0c07e40b154e179e41a5ea4dc151973ee60093d143"
+  "digest": "424a24b7d54f20bd58968733fae38ffcce74eb46dec51438e80fcdd910a29afb",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:30Z"
+  }
  },
  "int8": {
   "schema": "styxx.checksum/compare/v0",
   "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
   "n_items": 48,
   "a": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1",
-   "created": "2026-09-13T15:10:21Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
   },
   "b": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M int8 dynamic (Linear)",
-   "created": "2026-09-13T15:10:36Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M int8 dynamic (Linear)"
   },
   "distance": {
    "mean_abs_nats": 1.5144575702498617,
@@ -68,23 +71,26 @@
    "n_items": 48,
    "n_boot": 2000,
    "verdict": "DRIFT",
-   "reason": "lower 95% bound 1.1705 nats/token is above resolution 0.0001"
+   "reason": "lower 95% bound 1.1705 nats/token is above the floor 0.0001"
   },
   "resolution_nats": 0.0001,
   "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
-  "digest": "1032487b00ac455fc3f3afbda05e4650004d1a6a3b0a2a346d1522c65e9d2ee4"
+  "digest": "67bff4e1956b036602f0fd3ed0de07ceee31530f142b94121a482621d3871b59",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:36Z"
+  }
  },
  "random": {
   "schema": "styxx.checksum/compare/v0",
   "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
   "n_items": 48,
   "a": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1",
-   "created": "2026-09-13T15:10:21Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
   },
   "b": {
-   "model_id": "HuggingFaceTB/SmolLM2-135M architecture, random init (seed 343)",
-   "created": "2026-09-13T15:10:42Z"
+   "model_id": "HuggingFaceTB/SmolLM2-135M architecture, random init (seed 343)"
   },
   "distance": {
    "mean_abs_nats": 9.498053874013324,
@@ -101,10 +107,14 @@
    "n_items": 48,
    "n_boot": 2000,
    "verdict": "DRIFT",
-   "reason": "lower 95% bound 8.8765 nats/token is above resolution 0.0001"
+   "reason": "lower 95% bound 8.8765 nats/token is above the floor 0.0001"
   },
   "resolution_nats": 0.0001,
   "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
-  "digest": "c49e6b160b03a28821c2d5e49703a5c35dcc09c0b0a8598c113f5469b54983c0"
+  "digest": "629edf0972ef6f53fbbc24ef9e9fce9c248b3258d8835fb639026a5021de5712",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:42Z"
+  }
  }
 }

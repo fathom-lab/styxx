@@ -35,15 +35,15 @@ def main():
     torch.manual_seed(0)
     t0 = time.time()
     tok, mA = load()
-    fpA = ck.fingerprint(ck.hf_probe(mA, tok), f"{NAME} float32 #1")
+    fpA = ck.fingerprint(ck.hf_probe(mA, tok), f"{NAME} float32 #1", tokenizer_id=NAME)
     _, mA2 = load()
-    fpA2 = ck.fingerprint(ck.hf_probe(mA2, tok), f"{NAME} float32 #2 (reloaded)")
+    fpA2 = ck.fingerprint(ck.hf_probe(mA2, tok), f"{NAME} float32 #2 (reloaded)", tokenizer_id=NAME)
     mQ = torch.ao.quantization.quantize_dynamic(mA2, {torch.nn.Linear}, dtype=torch.qint8)
-    fpQ = ck.fingerprint(ck.hf_probe(mQ, tok), f"{NAME} int8 dynamic (Linear)")
+    fpQ = ck.fingerprint(ck.hf_probe(mQ, tok), f"{NAME} int8 dynamic (Linear)", tokenizer_id=NAME)
     from transformers import AutoConfig, AutoModelForCausalLM
     torch.manual_seed(343)
     mR = AutoModelForCausalLM.from_config(AutoConfig.from_pretrained(NAME)).eval()
-    fpR = ck.fingerprint(ck.hf_probe(mR, tok), f"{NAME} architecture, random init (seed 343)")
+    fpR = ck.fingerprint(ck.hf_probe(mR, tok), f"{NAME} architecture, random init (seed 343)", tokenizer_id=NAME)
     print(f"four fingerprints in {time.time() - t0:.0f}s; canary set {fpA.canary_sha256[:12]}")
 
     def top1(m):
@@ -58,9 +58,11 @@ def main():
               "n_canaries": len(ck.CANARIES)}
     print("  sanity, first-token top-1 hits /48:", sanity["first_token_top1_hits"])
 
+    floor = ck.null_floor([fpA, fpA2])          # deterministic cpu: expected exactly 0
+    sanity["null_floor_nats"] = floor
     out = {"sanity": sanity}
     for tag, fpX in (("reloaded", fpA2), ("int8", fpQ), ("random", fpR)):
-        d = ck.distance(fpA, fpX)
+        d = ck.distance(fpA, fpX, floor_nats=floor)
         c = ck.cert(fpA, fpX, d, note="SmolLM2-135M on CPU; teacher-forced; deterministic")
         out[tag] = c
         print(f"  A vs {tag:8s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} nats/token "
