@@ -10,18 +10,84 @@
 Arms: A bf16, A' bf16 reloaded, A'' bf16 reloaded (floor = worst pairwise), Q4 bitsandbytes NF4,
 Q8 bitsandbytes LLM.int8, R random init (seed 343). Every number the prereg names is written to
 deploy_quant_certs.json; the RESULT document swears to those bytes, not to this printout.
-"""
-import argparse, json, os, sys, time
-import numpy as np
-import torch
 
-from styxx import checksum as ck
-from styxx.geoplate import coefficients, render_grid
+What this runner binds, so a stranger can tell the sealed run from any other (added 2026-09-13 after
+the red team found the run could import a styxx from outside this checkout and record nothing about
+it): the styxx package it imported must live inside this checkout or it refuses to start; the certs
+carry `provenance` — git HEAD, whether the tree was dirty, the sha256 of the PREREG's git blob (the
+sealed bytes, LF as stored), the sha256 of the checksum.py that ran, the torch/transformers/
+bitsandbytes versions, the CUDA device, CUBLAS_WORKSPACE_CONFIG — and `k1`, the PREREG's first kill
+gate, evaluated in code: if the null floor exceeds 1e-2 nats/token no comparison is written, as the
+PREREG demands. `distance_params` records n_boot, seed and the floor used. `top1_loss_vs_A` is
+hits[A] − hits[arm], the definition the RESULT uses for H2/K3.
+"""
+import argparse, hashlib, json, os, subprocess, sys, time
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)                      # the checksum that runs is the one this commit carries
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")   # before CUDA initialises: cuBLAS determinism
+
+import numpy as np  # noqa: E402
+import torch  # noqa: E402
+
+import styxx  # noqa: E402
+from styxx import checksum as ck  # noqa: E402
+from styxx.geoplate import coefficients, render_grid  # noqa: E402
+
+_STYXX_FILE = os.path.abspath(styxx.__file__)
+if os.path.commonpath([_STYXX_FILE, ROOT]) != ROOT:
+    raise SystemExit(f"styxx resolved to {_STYXX_FILE}, outside this checkout {ROOT}; "
+                     "refusing to run the sealed experiment with another package")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+PREREG = "PREREG_checksum_deploy_quant_2026_09_13.md"
+K1_FLOOR_NATS = 1e-2
+N_BOOT, SEED = 2000, 20260913
 
 
-def load(name, kind, device):
+def _git(*args):
+    try:
+        return subprocess.run(["git", "-C", ROOT, *args], capture_output=True, check=True)
+    except Exception:
+        return None
+
+
+def provenance(device):
+    def sha(path):
+        return hashlib.sha256(open(path, "rb").read()).hexdigest()
+    head = _git("rev-parse", "HEAD")
+    dirty = _git("status", "--porcelain")
+    blob = _git("show", f"HEAD:papers/checksum/{PREREG}")
+    versions = {"torch": torch.__version__}
+    try:
+        import transformers
+        versions["transformers"] = transformers.__version__
+    except Exception:  # pragma: no cover
+        versions["transformers"] = None
+    try:
+        import bitsandbytes
+        versions["bitsandbytes"] = bitsandbytes.__version__
+    except Exception:
+        versions["bitsandbytes"] = None
+    return {
+        "git_head": head.stdout.decode().strip() if head else None,
+        "git_dirty": bool(dirty.stdout.strip()) if dirty else None,
+        "prereg": PREREG,
+        "prereg_blob_sha256": hashlib.sha256(blob.stdout).hexdigest() if blob else None,
+        "styxx_file": _STYXX_FILE,
+        "checksum_py_sha256": sha(os.path.join(ROOT, "styxx", "checksum.py")),
+        "versions": versions,
+        "python": sys.version.split()[0],
+        "device": device,
+        "cuda_device": torch.cuda.get_device_name(0) if device == "cuda" else None,
+        "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
+        "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
+        "torch_quantized_engine": torch.backends.quantized.engine,
+    }
+
+
+def load(name, kind, device, dtype):
     from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
     tok = AutoTokenizer.from_pretrained(name)
     if kind == "bf16":
@@ -42,15 +108,13 @@ def load(name, kind, device):
         m = torch.ao.quantization.quantize_dynamic(base, {torch.nn.Linear}, dtype=torch.qint8)
     elif kind == "random":
         torch.manual_seed(343)
-        m = AutoModelForCausalLM.from_config(AutoConfig.from_pretrained(name)).to(device)
+        m = AutoModelForCausalLM.from_config(AutoConfig.from_pretrained(name), dtype=dtype).to(device)
     else:
         raise ValueError(kind)
     return tok, m.eval()
 
 
 def hf_probe_on(model, tokenizer, device):
-    base = ck.hf_probe(model, tokenizer)
-
     def probe(prompt, continuation):
         p_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
         c_ids = tokenizer(continuation, return_tensors="pt", add_special_tokens=False).input_ids.to(device)
@@ -74,6 +138,12 @@ def top1(model, tok, device):
     return hits
 
 
+def _write_json(path, obj, indent=None):
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(obj, fh, indent=indent)
+        fh.write("\n")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="Qwen/Qwen2.5-1.5B")
@@ -84,6 +154,7 @@ def main():
     device = "cpu" if smoke or not torch.cuda.is_available() else "cuda"
     suffix = "_smoke" if smoke else ""
     base_kind = "fp32" if smoke else "bf16"
+    dtype = torch.float32 if base_kind == "fp32" else torch.bfloat16
     arms = [("A", base_kind), ("A2", base_kind), ("A3", base_kind),
             ("Q4", "int8-dynamic-cpu" if smoke else "nf4"),
             ("Q8", "int8-dynamic-cpu" if smoke else "int8"),
@@ -92,10 +163,13 @@ def main():
         torch.use_deterministic_algorithms(True, warn_only=True)
     except Exception:
         pass
+    prov = provenance(device)
+    print(f"  provenance: head {prov['git_head']} dirty={prov['git_dirty']} prereg blob {str(prov['prereg_blob_sha256'])[:12]} "
+          f"styxx {prov['styxx_file']}")
     t0 = time.time()
     fps, hits = {}, {}
     for tag, kind in arms:
-        tok, m = load(name, kind, device)
+        tok, m = load(name, kind, device, dtype)
         fps[tag] = ck.fingerprint(hf_probe_on(m, tok, device), f"{name} {kind} [{tag}]", tokenizer_id=name)
         hits[tag] = top1(m, tok, device)
         print(f"  {tag:3s} {kind:18s} top-1 {hits[tag]}/48   [{time.time() - t0:.0f}s]", flush=True)
@@ -103,16 +177,31 @@ def main():
         if device == "cuda":
             torch.cuda.empty_cache()
     floor = ck.null_floor([fps["A"], fps["A2"], fps["A3"]])
-    out = {"prereg": "PREREG_checksum_deploy_quant_2026_09_13.md", "smoke": smoke, "model": name, "device": device,
-           "sanity": {"first_token_top1_hits": hits, "n_canaries": len(ck.CANARIES), "null_floor_nats": floor}}
-    print(f"  null floor (worst of 3 bf16 loads): {floor:.6f} nats/token")
-    for tag in ("A2", "Q4", "Q8", "R"):
-        d = ck.distance(fps["A"], fps[tag], floor_nats=floor)
-        out[tag] = ck.cert(fps["A"], fps[tag], d, note=f"{name} on {device}; teacher-forced; deterministic best effort")
-        print(f"  A vs {tag:3s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} [{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]"
-              f"   r = {d.rdm_r:.4f}   top-1 {hits['A']}->{hits[tag]}")
-    json.dump(out, open(os.path.join(HERE, f"deploy_quant_certs{suffix}.json"), "w"), indent=1)
-    json.dump({k: v.to_json() for k, v in fps.items()}, open(os.path.join(HERE, f"deploy_quant_fingerprints{suffix}.json"), "w"))
+    k1 = {"threshold_nats": K1_FLOOR_NATS, "floor_nats": floor, "fired": bool(floor > K1_FLOOR_NATS)}
+    out = {"prereg": PREREG, "smoke": smoke, "model": name, "device": device,
+           "provenance": prov,
+           "sanity": {"first_token_top1_hits": hits, "n_canaries": len(ck.CANARIES), "null_floor_nats": floor,
+                      "top1_loss_vs_A": {t: hits["A"] - hits[t] for t in ("A2", "A3", "Q4", "Q8", "R")}},
+           "distance_params": {"n_boot": N_BOOT, "seed": SEED, "floor_nats": floor},
+           "k1": k1}
+    print(f"  null floor (worst of 3 {base_kind} loads): {floor:.6f} nats/token")
+    if k1["fired"]:
+        # PREREG K1: the serving is not deterministic enough for this probe; the run is INCONCLUSIVE and
+        # says so; no other hypothesis is evaluated. The fingerprints are still written so a NEW prereg
+        # can look at them; no comparison cert exists for this run.
+        out["verdict"] = "INCONCLUSIVE"
+        print(f"  K1 FIRED: null floor {floor:.6f} > {K1_FLOOR_NATS} nats/token — INCONCLUSIVE; no hypothesis evaluated")
+    else:
+        for tag in ("A2", "Q4", "Q8", "R"):
+            d = ck.distance(fps["A"], fps[tag], n_boot=N_BOOT, seed=SEED, floor_nats=floor)
+            out[tag] = ck.cert(fps["A"], fps[tag], d, note=f"{name} on {device}; teacher-forced; deterministic best effort")
+            print(f"  A vs {tag:3s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} [{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]"
+                  f"   r = {d.rdm_r:.4f}   top-1 {hits['A']}->{hits[tag]}")
+    _write_json(os.path.join(HERE, f"deploy_quant_certs{suffix}.json"), out, indent=1)
+    _write_json(os.path.join(HERE, f"deploy_quant_fingerprints{suffix}.json"), {k: v.to_json() for k, v in fps.items()})
+    if k1["fired"]:
+        print("wrote certs (K1 fired: no comparisons) and fingerprints; no plates for an INCONCLUSIVE run")
+        return
     lab = lambda t: f"vs A: {out[t]['distance']['mean_abs_nats']:.4f} nats/token, r = {out[t]['distance']['rdm_r']:.3f}  ({out[t]['distance']['verdict']})"
     items = [(f"{name.split('/')[-1]}  {base_kind}", "the model", coefficients(fps["A"].rdm)),
              ("same weights, reloaded", lab("A2"), coefficients(fps["A2"].rdm)),

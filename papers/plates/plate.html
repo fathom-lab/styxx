@@ -11,7 +11,7 @@
 <input id="d" placeholder="fc8ad3a52de50d106e90c9d0a5441a6460df0f5c80cb5553dad7dbba110cd5a5" autocomplete="off">
 <canvas id="c" width="600" height="600"></canvas>
 <div id="cap"></div>
-<small>same nodal lines as <code>python -m styxx.plate</code> (mapping plate/v1); the grain differs because this page draws the line density directly instead of sampling sand. two plates with the same lines are the same digest.</small>
+<small>same nodal lines as <code>python -m styxx.plate</code> (mapping plate/v1); the grain differs because this page draws the line density directly instead of sampling sand. the lines are a reading aid for the 64 hex characters under them, not a substitute: about 2<sup>23</sup> distinct mode captions and far fewer distinguishable pictures stand for 2<sup>256</sup> digests, so compare the full string, then the picture.</small>
 <script>
 // plate/v1 — identical parameter derivation to styxx/plate.py: the digest is re-hashed with SHA-256 so
 // every character reaches every parameter; bytes 0..7 modes, 8..11 amplitudes, 12..15 families+rotation.
@@ -44,7 +44,10 @@ async function draw(hex){
   const res=420, U=field(p,res), h=2/(res-1);
   const c=document.getElementById('c'), ctx=c.getContext('2d'), W=c.width; ctx.fillStyle='#0b0b0d'; ctx.fillRect(0,0,W,W);
   const img=ctx.createImageData(W,W), cs=Math.cos(p.rot), sn=Math.sin(p.rot);
-  for(let py=0;py<W;py++){ const ry=-1+2*py/(W-1);
+  // y points UP, as matplotlib draws it: row 0 of the canvas is ry=+1. Revisions of this page before
+  // 2026-09-13 mapped row 0 to ry=-1 and drew the vertical mirror of the python plate for every digest
+  // whose figure is not mirror-symmetric (most of them); the parameters were always identical.
+  for(let py=0;py<W;py++){ const ry=1-2*py/(W-1);
     for(let px=0;px<W;px++){ const rx=-1+2*px/(W-1);
       // inverse-rotate the output pixel into plate coordinates
       const x= cs*rx+sn*ry, y=-sn*rx+cs*ry; const o=4*(py*W+px);
