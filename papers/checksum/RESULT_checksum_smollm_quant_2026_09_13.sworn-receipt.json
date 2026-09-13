@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "RESULT_checksum_smollm_quant_2026_09_13.md",
-  "inline_sha256": "53a195c4a90ac79a85bd9bc8579161839ae77815d9e698e356eb25980960fe44",
-  "canonical_sha256": "005cb209d4c30deaea50e99032fdf8bfdd21f064df9f58e745a8d56fe97bc9f6"
+  "inline_sha256": "29fe85b67540483a14766bed2031aeb42b8ae08855715128158899f3c054144d",
+  "canonical_sha256": "ec189e81a6a42f9cc96193a31062f2749583e8ab1e73cf9fbbe8087bd5a7c825"
  },
- "commit": "b332e3d216c3177cd51be979dde1f6f334d20ee9",
+ "commit": "a245cea626204dc3b5f276ca692718da77dea4c5",
  "manifest_digest": null,
  "spans": [
   {
@@ -28,7 +28,7 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
@@ -50,44 +50,32 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 1427,
-   "start": 1223,
-   "end": 1238,
+   "at": 1424,
+   "start": 1220,
+   "end": 1234,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/verdict",
    "kind": "quote",
-   "verdict": "FAILED",
-   "reason": "needle_missing",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "needle_bytes": 5,
+    "needle_bytes": 4,
     "haystack_bytes": 4,
-    "occurrences": 0
+    "occurrences": 1
    },
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 1602,
-   "start": 1297,
-   "end": 1313,
-   "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/verdict",
-   "kind": "absent",
-   "verdict": "MALFORMED",
-   "reason": "absent_over_partial",
-   "detail": {
-    "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/verdict"
-   }
-  },
-  {
-   "at": 1789,
-   "start": 1382,
-   "end": 1385,
+   "at": 1567,
+   "start": 1262,
+   "end": 1265,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/rdm_r",
    "kind": "numeric",
    "verdict": "HELD",
@@ -103,13 +91,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 1945,
-   "start": 1437,
-   "end": 1464,
+   "at": 1723,
+   "start": 1317,
+   "end": 1344,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/mean_abs_nats",
    "kind": "numeric",
    "verdict": "HELD",
@@ -125,13 +113,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2102,
-   "start": 1489,
-   "end": 1498,
+   "at": 1880,
+   "start": 1369,
+   "end": 1378,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/0",
    "kind": "numeric",
    "verdict": "HELD",
@@ -147,13 +135,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2217,
-   "start": 1499,
-   "end": 1506,
+   "at": 1995,
+   "start": 1379,
+   "end": 1386,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/1",
    "kind": "numeric",
    "verdict": "HELD",
@@ -169,13 +157,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2372,
-   "start": 1549,
-   "end": 1553,
+   "at": 2150,
+   "start": 1429,
+   "end": 1433,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/rdm_r",
    "kind": "numeric",
    "verdict": "HELD",
@@ -191,43 +179,57 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2500,
-   "start": 1580,
-   "end": 1642,
+   "at": 2278,
+   "start": 1460,
+   "end": 1539,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/A",
    "kind": "numeric",
-   "verdict": "MALFORMED",
-   "reason": "number_count",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "digit_bearing_tokens": [
-     "float32",
-     "30"
-    ]
+    "printed_token": "30",
+    "printed": "30",
+    "receipt": "30",
+    "receipt_rounded": "30",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2672,
-   "start": 1644,
-   "end": 1654,
+   "at": 2467,
+   "start": 1541,
+   "end": 1564,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/int8",
    "kind": "numeric",
-   "verdict": "MALFORMED",
-   "reason": "number_count",
+   "verdict": "HELD",
+   "reason": null,
    "detail": {
-    "digit_bearing_tokens": [
-     "int8",
-     "16"
-    ]
+    "printed_token": "16",
+    "printed": "16",
+    "receipt": "16",
+    "receipt_rounded": "16",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 2877,
-   "start": 1738,
-   "end": 1765,
+   "at": 2685,
+   "start": 1648,
+   "end": 1675,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/mean_abs_nats",
    "kind": "numeric",
    "verdict": "HELD",
@@ -243,13 +245,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 3039,
-   "start": 1793,
-   "end": 1797,
+   "at": 2847,
+   "start": 1703,
+   "end": 1707,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/rdm_r",
    "kind": "numeric",
    "verdict": "HELD",
@@ -265,13 +267,13 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   },
   {
-   "at": 3144,
-   "start": 1799,
-   "end": 1815,
+   "at": 2952,
+   "start": 1709,
+   "end": 1725,
    "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/random",
    "kind": "numeric",
    "verdict": "HELD",
@@ -287,24 +289,23 @@
    "resolved_sha256": "81e70ed40018407d3d5c27f4a754c2a5624c46907de721dd6e74e0ccfe3c7d22",
    "provenance": {
     "form": "path",
-    "note": "committed object at b332e3d216c3177cd51be979dde1f6f334d20ee9; authorship unchecked"
+    "note": "committed object at a245cea626204dc3b5f276ca692718da77dea4c5; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 10,
-  "FAILED": 1,
+  "HELD": 13,
+  "FAILED": 0,
   "UNRESOLVED": 0,
-  "MALFORMED": 3,
+  "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 14,
+ "sworn_total": 13,
  "unresolved": 0,
- "document_verdict": "SWORN-FAILED",
+ "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 11,
-  "unresolved": 3
+  "committed": 13
  },
  "verifier": {
   "styxx_version": "7.47.0",
@@ -343,16 +344,16 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "1a935cfb5f0eac40f8cf35a362c2ce088a81bcfadc2fc62fb2f2fe743c0e4607",
+ "digest": "9a5721d27d18d981078fec5d9402b21f3bf5ad33448821b103e0ac9a6c85538e",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 14,
+  "sworn_total": 13,
   "narrative_sentences": 48,
-  "sentence_share": 0.2258,
+  "sentence_share": 0.2131,
   "diff_claim_sentences": 2,
-  "diff_claim_share": 0.875,
+  "diff_claim_share": 0.8667,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
@@ -369,6 +370,6 @@
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "c5720329d02b3945ed0dd036d379bedf8fbf4966f66c838235dd524fa790db83",
- "timestamp": "2026-09-13T15:11:42Z"
+ "coverage_sha256": "1da9d352ae17c9ae784ded9889adca51a7cf568c8ada9e5700e3d7d4f80e4877",
+ "timestamp": "2026-09-13T15:12:05Z"
 }

@@ -1,0 +1,93 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "a245cea626204dc3b5f276ca692718da77dea4c5",
+ "document": {
+  "name": "RESULT_checksum_smollm_quant_2026_09_13.md",
+  "sha256": "ec189e81a6a42f9cc96193a31062f2749583e8ab1e73cf9fbbe8087bd5a7c825"
+ },
+ "text": "# RESULT — checksum v0: the null pair reads SAME at exactly zero, int8 reads DRIFT, random reads far — one small model, cpu, 2026-09-13\n\n**status: instrument smoke on one 135M model. not a claim about quantization in general; not a promotion.**\nThis document is sworn: every figure below is bound to `papers/checksum/smollm_quant_certs.json`\nor `papers/checksum/smollm_quant_fingerprints.json` at the commit the receipt names. Rebuild both\nwith `python papers/checksum/run_smollm_quant.py` (cpu, about a minute).\n\n## what was run\n\n`styxx.checksum` fingerprints a model on a fixed, hashed canary set in the continuous quantity the\nmodel exposes — teacher-forced log-probabilities — and compares two fingerprints with a bootstrap\nresolution, a degeneracy guard, and a cert. The canary set has 48 items and its hash is in every cert. Four\nfingerprints of HuggingFaceTB/SmolLM2-135M on cpu, deterministic: float32 loaded once (A), float32\nloaded again (A′), int8 dynamic quantization of every nn.Linear (Q, per-tensor, no calibration —\nthe crudest quantization there is), and the same architecture with random weights (R).\n\n## what it read\n\n- **The null pair.** A vs A′: mean |Δ log-prob| = 0 nats per token, verdict `SAME`, belief-geometry agreement 1.0. The instrument does not invent drift.\n- **int8.** A vs Q: 1.51 nats per token, 95% bootstrap interval from 1.17 to 1.90, verdict DRIFT, belief-geometry agreement 0.83. The plain number agrees: the full-precision model gets the first continuation token right on 30 canaries, the quantized one on 16. The checksum saw the damage without a benchmark being run.\n- **The far control.** A vs R: 9.50 nats per token, belief-geometry agreement 0.07, 0 canaries right.\n\nThe four belief geometries are drawn as plates in `smollm_quant_plates.png`: A and A′ identical, Q on\nthe same lines with visible moves, R unrecognisable.\n\n## what this does and does not establish\n\nIt establishes that the instrument's positive controls hold on a real model: identical weights\nread SAME at exactly zero; a known damage reads DRIFT with a magnitude and an interval; an\nunrelated model reads far. `tests/test_checksum.py` pins the same three properties on scripted\nprobes, plus the degeneracy guard (a fingerprint with no variation across items is INCONCLUSIVE,\nnever SAME) and the refusal to compare across canary sets.\n\nIt does not establish anything about quantization as practiced. Per-tensor dynamic int8 without\ncalibration on a 135M model is the crudest case; GPTQ, AWQ and NF4 on real deployments are far\ngentler and were not run. It does not establish a threshold for \"meaningful\" drift — the\ninstrument reports magnitude and resolution, and the threshold belongs to a preregistered use.\nIt does not establish a noise floor for nondeterministic serving (temperature, GPU kernels);\nthis run was deterministic on cpu, where the floor is exactly zero.\n\n## next, in order\n\n1. The same run on a model people deploy (1B–3B, bf16 vs a real 4-bit method), on the alienware,\n   with the prereg frozen and sealed before the run.\n2. A frontier API model with logprobs, fingerprinted daily — the drift observatory.\n3. The threshold question, preregistered, not guessed.\n",
+ "spans": [
+  {
+   "start": 780,
+   "end": 807,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/n_canaries",
+   "kind": "numeric"
+  },
+  {
+   "start": 1170,
+   "end": 1218,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1220,
+   "end": 1234,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1262,
+   "end": 1265,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/reloaded/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 1317,
+   "end": 1344,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1369,
+   "end": 1378,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 1379,
+   "end": 1386,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 1429,
+   "end": 1433,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 1460,
+   "end": 1539,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/A",
+   "kind": "numeric"
+  },
+  {
+   "start": 1541,
+   "end": 1564,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/int8",
+   "kind": "numeric"
+  },
+  {
+   "start": 1648,
+   "end": 1675,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1703,
+   "end": 1707,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 1709,
+   "end": 1725,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/random",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
