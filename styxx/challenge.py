@@ -33,7 +33,7 @@ def run(doc: str, lab_receipt: str, repo: str = ".", out: str | None = None) -> 
         raise SystemExit("the lab's receipt names no commit; nothing to re-derive against")
     mine_path = out or os.path.join(tempfile.mkdtemp(), "mine.sworn-receipt.json")
     cmd = [sys.executable, "-m", "styxx.sworn", "verify", doc, "--repo", repo, "--commit", commit, "--out", mine_path]
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    proc = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if not os.path.exists(mine_path):
         raise SystemExit(f"verify did not write a receipt:\n{proc.stdout}\n{proc.stderr}")
     mine = json.load(open(mine_path, encoding="utf-8"))

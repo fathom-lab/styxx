@@ -84,3 +84,10 @@ papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05.sworn-receipt.
 # so what a capsule sealed depended on the machine that minted it. The blob is already LF;
 # this only stops a checkout from changing it.
 styxx/_data/sworn_verify.js -text
+
+# checksum arc: sworn documents are byte-pinned by their sidecars (tests/test_sworn_eol.py)
+papers/checksum/*.md -text
+papers/checksum/*.sworn.json -text
+papers/checksum/*.sworn-receipt.json -text
+papers/checksum/*.json -text
+papers/chat/** -text
