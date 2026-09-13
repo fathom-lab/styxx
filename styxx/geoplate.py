@@ -47,6 +47,7 @@ def _dctn(R):
     return dctn(R, type=2, norm="ortho")
 
 K = 8
+VERSION = "geoplate/v1"   # the mapping is frozen; a new mapping is a new version, never an edit
 PLATE = "#0b0b0d"; SAND = "#e8d8b0"; SAND_DIM = "#b8a67e"; INK = "#6f6a5e"
 
 

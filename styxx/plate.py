@@ -31,6 +31,7 @@ def _plt():
     except ImportError:  # pragma: no cover
         raise SystemExit("plate rendering needs matplotlib: pip install 'styxx[plate]'")
 
+VERSION = "plate/v1"   # the mapping is frozen; a new mapping is a new version, never an edit
 PLATE = "#0b0b0d"
 SAND = "#e8d8b0"
 SAND_DIM = "#b8a67e"
