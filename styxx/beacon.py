@@ -10,13 +10,23 @@ prepared for it:
     index  = int(seed_i) mod len(pool), duplicates skipped, until n items
 
 The draw is pure sha256 arithmetic, so a browser, a shell script or a stranger's notebook
-reproduces it exactly; no language's PRNG is involved. The pool's hash and the beacon are carried
-in every cert, so two certs are comparable only if both agree.
+reproduces it exactly; no language's PRNG is involved. Nothing in `styxx.checksum` carries the
+pool's hash or the beacon yet: a cert names `canary_sha256` of the items actually used, which is
+enough to check that a given draw was used and not enough to check which beacon produced it.
+Carrying `pool_sha256` and the beacon inside the cert is owed work and a cert-format change.
+No runner in this repository draws from this module; the deploy-scale PREREG froze the
+hand-written 48 by design, and its cert's `canary_sha256` says so.
 
 Which beacon: the block hash of the slot in which the sealing transaction confirmed
-(`anchors.jsonl` → `slot` → RPC `getBlock(slot).blockhash`). Not the transaction signature — a
-signer can grind signatures by varying the memo or blockhash until a favourable one appears; a
-block hash is produced by the network after the transaction is out of the signer's hands.
+(`anchors.jsonl` → `slot` → RPC `getBlock(slot).blockhash`), decoded from the chain's base58 to
+its 32 bytes and written as 64 lowercase hex — `styxx.clock.blockhash_to_beacon` is the one
+conversion, and `select` refuses anything that is not 64 hex characters. Not the transaction
+signature — a signer can grind signatures by varying the memo or blockhash until a favourable one
+appears; a block hash is produced by the network after the transaction is out of the signer's
+hands. What a block hash does not remove: the signer chooses when to submit and may submit more
+than once, recording the transaction whose slot drew the canaries it liked. The rule that closes
+that — the beacon is the earliest confirmed memo carrying the digest from the creator wallet —
+is not implemented by `styxx.clock.verify` and is owed.
 
 The pool is 48 hand-written items plus template items with known answers. Template items are
 deliberately dull: the point is fixedness and breadth, not difficulty.
@@ -85,8 +95,9 @@ def pool_sha256(pool: Sequence[tuple[str, str, str]] = POOL) -> str:
 def select(beacon_hex: str, n: int = 48, pool: Sequence[tuple[str, str, str]] = POOL) -> list[tuple[str, str, str]]:
     """Draw n distinct items from the pool by a public beacon. Pure sha256; no PRNG."""
     beacon_hex = beacon_hex.strip().lower()
-    if not beacon_hex or any(ch not in "0123456789abcdef" for ch in beacon_hex):
-        raise ValueError("beacon must be a hex string (a block hash)")
+    if len(beacon_hex) != 64 or any(ch not in "0123456789abcdef" for ch in beacon_hex):
+        raise ValueError("beacon must be 64 hex characters: a 32-byte block hash as hex "
+                         "(styxx.clock.blockhash_to_beacon converts the chain's base58)")
     if n > len(pool):
         raise ValueError("n exceeds the pool")
     head = (pool_sha256(pool) + beacon_hex).encode()

@@ -12,3 +12,11 @@ def test_commit_reveal_round_trip_and_tamper():
     swapped = list(items); swapped[0], swapped[1] = swapped[1], swapped[0]
     assert not epoch.reveal_ok(c["commitment"], swapped, salt)
     assert not epoch.reveal_ok(c["commitment"], items, epoch.new_salt())
+
+
+def test_a_short_or_non_hex_salt_is_refused():
+    import pytest
+    items = beacon.select("c" * 64, 4)
+    for bad in ("0" * 32, "0" * 63, "zz" * 32, ""):
+        with pytest.raises(ValueError):
+            epoch.commit(items, bad)

@@ -46,3 +46,26 @@ def test_draw_is_plain_sha256_arithmetic_a_stranger_can_replay():
 def test_non_hex_beacon_is_refused():
     with pytest.raises(ValueError):
         beacon.select("not-a-hash", 5)
+
+
+def test_a_beacon_must_be_a_32_byte_hash_not_any_hex_string():
+    # "abc" and "deadbeef" were accepted before: a cheap namespace an attacker can search, and a
+    # base58 blockhash that happens to be all hex characters would have been read as a different number
+    for short in ("abc", "deadbeef", "a" * 63, "a" * 65):
+        with pytest.raises(ValueError):
+            beacon.select(short, 3)
+    with pytest.raises(ValueError):
+        beacon.select("5KQwrPbwdL6PhXujxW37FSSUcqxNg1x4qzpRbAyhMnXY", 3)  # base58, not hex
+
+
+def test_the_pool_is_pinned_so_a_stranger_has_bytes_to_hash():
+    assert len(beacon.POOL) == 778
+    assert beacon.pool_sha256() == "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f"
+
+
+def test_the_clock_hands_the_beacon_the_hex_it_takes():
+    from styxx import clock
+    raw = bytes(range(32))
+    hx = clock.blockhash_to_beacon(clock._b58encode(raw))
+    assert hx == raw.hex()
+    assert len(beacon.select(hx, 3)) == 3

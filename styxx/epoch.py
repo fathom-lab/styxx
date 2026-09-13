@@ -11,6 +11,11 @@ revealed is a broken promise visible on chain.
 
     c = epoch.commit(items, salt)                      -> {"commitment", "n", "canary_sha256"}
     epoch.reveal_ok(c["commitment"], items, salt)      -> True/False
+
+Status: this module is the primitive only. No epoch has been opened, committed, anchored, or used
+by any runner in this repository, and nothing carries an epoch's commitment yet. The salt is 32
+bytes as `new_salt()` produces; `commit` refuses anything else, because an unsalted or short-salted
+commitment over a small pool is enumerable.
 """
 from __future__ import annotations
 
@@ -31,8 +36,8 @@ def _canonical(items: Sequence[tuple[str, str, str]]) -> bytes:
 
 
 def commit(items: Sequence[tuple[str, str, str]], salt: str) -> dict:
-    if len(salt) < 32:
-        raise ValueError("salt must be at least 32 hex characters")
+    if not (isinstance(salt, str) and len(salt) == 64 and all(c in "0123456789abcdef" for c in salt.lower())):
+        raise ValueError("salt must be 64 hex characters (32 bytes), as new_salt() produces")
     commitment = hashlib.sha256(bytes.fromhex(salt) + _canonical(items)).hexdigest()
     return {"commitment": commitment, "n": len(items), "canary_sha256": canary_sha256(items)}
 
