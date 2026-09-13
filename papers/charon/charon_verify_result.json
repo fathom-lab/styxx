@@ -1,12 +1,12 @@
 {
  "schema": "styxx.charon/verify/v1",
  "log": "charon.log.jsonl",
- "head": "1647a26abadb35d00bc44a98f4e0833e0b0a1ddd5a499ac3c09718c6e9edc692",
- "head_expected": null,
- "head_matches": null,
+ "head": "7780105f54b9c4594101e6734450730c73678718c9dc47bbd6b43ae6c17a4b39",
+ "head_expected": "7780105f54b9c4594101e6734450730c73678718c9dc47bbd6b43ae6c17a4b39",
+ "head_matches": true,
  "file": {
-  "file_sha256": "fabd1fa2d081962b9657b144fa5e6e19574739a1f1436da547419907177de318",
-  "bytes": 450631,
+  "file_sha256": "ca870c003033c4132404570c4a005c8795e44d9588ab9083d52638ec552e19f7",
+  "bytes": 452260,
   "eol": "LF",
   "bom": false
  },
@@ -20,8 +20,8 @@
  "chain_broken_at_line": null,
  "chain_problems": [],
  "by_status": {
-  "SAME_LINE": 243,
-  "MOVED_VERIFIER": 0,
+  "SAME_LINE": 1,
+  "MOVED_VERIFIER": 243,
   "SKEW": 0,
   "DRIFT": 0,
   "UNRESOLVED": 0,
@@ -30,7 +30,8 @@
  },
  "verifier_builds_recorded": {
   "styxx.charon": [
-   "2c0b24331203"
+   "2c0b24331203",
+   "2e53243bd17d"
   ],
   "styxx.corpus_audit": [
    "ccb9456663cf"
@@ -39,6 +40,7 @@
    "fe5854b367fa"
   ],
   "styxx.sworn": [
+   "7e4602472010",
    "94f854e1dae5"
   ],
   "styxx.attestation": [
@@ -65,12 +67,12 @@
    "name": "POSITIONING.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 3,
@@ -79,12 +81,12 @@
    "name": "source.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 4,
@@ -93,12 +95,12 @@
    "name": "ORG_the_chart_that_cannot_lie_2026_08_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 5,
@@ -107,12 +109,12 @@
    "name": "PAPER_frame_locality_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 6,
@@ -121,12 +123,12 @@
    "name": "PLAN_the_next_level_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 7,
@@ -135,12 +137,12 @@
    "name": "PROGRAM_SYNTHESIS_2026_07_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 8,
@@ -149,12 +151,12 @@
    "name": "SYNTHESIS_connection_of_minds_2026_08_01.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 9,
@@ -163,12 +165,12 @@
    "name": "SYNTHESIS_frame_locality_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 10,
@@ -177,12 +179,12 @@
    "name": "SYNTHESIS_mention_and_use_2026_08_26.capsule.html",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 11,
@@ -191,12 +193,12 @@
    "name": "SYNTHESIS_mention_and_use_2026_08_26.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 12,
@@ -205,12 +207,12 @@
    "name": "SYNTHESIS_recorder_contamination_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 13,
@@ -219,12 +221,12 @@
    "name": "SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 14,
@@ -233,12 +235,12 @@
    "name": "BLOCKED_source_independence_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 15,
@@ -247,12 +249,12 @@
    "name": "DATASHEET_conscience_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 16,
@@ -261,12 +263,12 @@
    "name": "DATASHEET_knowsay_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 17,
@@ -275,12 +277,12 @@
    "name": "FINDING_adjudicated_loop_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 18,
@@ -289,12 +291,12 @@
    "name": "FINDING_belief_asymptote_2026_07_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 19,
@@ -303,12 +305,12 @@
    "name": "FINDING_combined_signal_2026_07_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 20,
@@ -317,12 +319,12 @@
    "name": "FINDING_competent_agent_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 21,
@@ -331,12 +333,12 @@
    "name": "FINDING_conscience_loop_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 22,
@@ -345,12 +347,12 @@
    "name": "FINDING_cot_inward_2026_07_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 23,
@@ -359,12 +361,12 @@
    "name": "FINDING_cot_inward_powered_2026_07_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 24,
@@ -373,12 +375,12 @@
    "name": "FINDING_coupling_battery_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 25,
@@ -387,12 +389,12 @@
    "name": "FINDING_coupling_resolution_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 26,
@@ -401,12 +403,12 @@
    "name": "FINDING_frame_recovery_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 27,
@@ -415,12 +417,12 @@
    "name": "FINDING_framelocality_dogfood_2026_07_29.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 28,
@@ -429,12 +431,12 @@
    "name": "FINDING_frontier_freetext_v9_2026_07_29.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 29,
@@ -443,12 +445,12 @@
    "name": "FINDING_frontier_incontext_oof_2026_07_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 30,
@@ -457,12 +459,12 @@
    "name": "FINDING_frontier_knowsay_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 31,
@@ -471,12 +473,12 @@
    "name": "FINDING_frontier_recovery_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 32,
@@ -485,12 +487,12 @@
    "name": "FINDING_kp_recovery_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 33,
@@ -499,12 +501,12 @@
    "name": "FINDING_kp_replication_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 34,
@@ -513,12 +515,12 @@
    "name": "FINDING_poisoned_recovery_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 35,
@@ -527,12 +529,12 @@
    "name": "FINDING_retained_probe_instrument_2026_07_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 36,
@@ -541,12 +543,12 @@
    "name": "FINDING_scale3b_2026_07_29.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 37,
@@ -555,12 +557,12 @@
    "name": "FINDING_scale_channel_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 38,
@@ -569,12 +571,12 @@
    "name": "FINDING_scale_confirm_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 39,
@@ -583,12 +585,12 @@
    "name": "FINDING_scale_test_2026_07_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 40,
@@ -597,12 +599,12 @@
    "name": "FINDING_selective_confirm_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 41,
@@ -611,12 +613,12 @@
    "name": "FINDING_selective_datasheet_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 42,
@@ -625,12 +627,12 @@
    "name": "FINDING_selective_escalation_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 43,
@@ -639,12 +641,12 @@
    "name": "FINDING_self_verification_2026_07_25.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 44,
@@ -653,12 +655,12 @@
    "name": "FINDING_source_independence_v2_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 45,
@@ -667,12 +669,12 @@
    "name": "FINDING_third_party_bench_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 46,
@@ -681,12 +683,12 @@
    "name": "FINDING_thirdframe_2026_07_29.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 47,
@@ -695,12 +697,12 @@
    "name": "FINDING_tiered_channel_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 48,
@@ -709,12 +711,12 @@
    "name": "FINDING_two_channel_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 49,
@@ -723,12 +725,12 @@
    "name": "FINDING_vendor3b_2026_07_29.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 50,
@@ -737,12 +739,12 @@
    "name": "FINDING_verifier_at_7b_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 51,
@@ -751,12 +753,12 @@
    "name": "PAPER_knowsay_gap_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 52,
@@ -765,12 +767,12 @@
    "name": "PROSPECTUS_knowsay_2026_07_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 53,
@@ -779,12 +781,12 @@
    "name": "RESULT_ai_brain_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 54,
@@ -793,12 +795,12 @@
    "name": "RESULT_ai_brain_vision_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 55,
@@ -807,12 +809,12 @@
    "name": "RESULT_ai_human_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 56,
@@ -821,12 +823,12 @@
    "name": "RESULT_llm_breadth_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 57,
@@ -835,12 +837,12 @@
    "name": "FINDING_buried_judge_2026_07_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 58,
@@ -849,12 +851,12 @@
    "name": "source.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 59,
@@ -863,12 +865,12 @@
    "name": "CAPSTONE_universal_mind_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 60,
@@ -877,12 +879,12 @@
    "name": "source.md",
    "recorded_class": "UNRESOLVED",
    "fresh_class": "UNRESOLVED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 61,
@@ -891,12 +893,12 @@
    "name": "source.md",
    "recorded_class": "UNRESOLVED",
    "fresh_class": "UNRESOLVED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 62,
@@ -905,12 +907,12 @@
    "name": "source.md",
    "recorded_class": "UNRESOLVED",
    "fresh_class": "UNRESOLVED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 63,
@@ -919,12 +921,12 @@
    "name": "DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 64,
@@ -933,12 +935,12 @@
    "name": "FINDING_protocol_metric_identity_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 65,
@@ -947,12 +949,12 @@
    "name": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 66,
@@ -961,12 +963,12 @@
    "name": "RESULT_oath_v05_precision_2026_07_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 67,
@@ -975,12 +977,12 @@
    "name": "FINDING_calib_poison_law_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 68,
@@ -989,12 +991,12 @@
    "name": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 69,
@@ -1003,12 +1005,12 @@
    "name": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 70,
@@ -1017,12 +1019,12 @@
    "name": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 71,
@@ -1031,12 +1033,12 @@
    "name": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 72,
@@ -1045,12 +1047,12 @@
    "name": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 73,
@@ -1059,12 +1061,12 @@
    "name": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 74,
@@ -1073,12 +1075,12 @@
    "name": "RESULT_attack_sentiment_r64_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 75,
@@ -1087,12 +1089,12 @@
    "name": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 76,
@@ -1101,12 +1103,12 @@
    "name": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 77,
@@ -1115,12 +1117,12 @@
    "name": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 78,
@@ -1129,12 +1131,12 @@
    "name": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 79,
@@ -1143,12 +1145,12 @@
    "name": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 80,
@@ -1157,12 +1159,12 @@
    "name": "RESULT_honesty_parity_confirm_2026_07_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 81,
@@ -1171,12 +1173,12 @@
    "name": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 82,
@@ -1185,12 +1187,12 @@
    "name": "RESULT_honesty_parity_control_2026_07_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 83,
@@ -1199,12 +1201,12 @@
    "name": "RESULT_margin_parity_control_2026_07_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 84,
@@ -1213,12 +1215,12 @@
    "name": "RESULT_sentiment_probe_parity_2026_07_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 85,
@@ -1227,12 +1229,12 @@
    "name": "ANALYSIS_base_rate_ceiling_2026_09_01.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 86,
@@ -1241,12 +1243,12 @@
    "name": "CORPUS_STATE_2026_08_31.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 87,
@@ -1255,12 +1257,12 @@
    "name": "CORPUS_STATE_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 88,
@@ -1269,12 +1271,12 @@
    "name": "DECLARATION_h_mapping_2026_09_01.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 89,
@@ -1283,12 +1285,12 @@
    "name": "DESIGN_provenance_law_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 90,
@@ -1297,12 +1299,12 @@
    "name": "DOGFOOD_session_2026_08_31.capsule.html",
    "recorded_class": "PASS",
    "fresh_class": "PASS",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "af5d2f9e2f41",
-   "verifier_now": "af5d2f9e2f41"
+   "verifier_now": "013300423454"
   },
   {
    "line": 91,
@@ -1311,12 +1313,12 @@
    "name": "EXPLORATORY_handedness_by_kind_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 92,
@@ -1325,12 +1327,12 @@
    "name": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 93,
@@ -1339,12 +1341,12 @@
    "name": "FINDING_b23_fable_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 94,
@@ -1353,12 +1355,12 @@
    "name": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 95,
@@ -1367,12 +1369,12 @@
    "name": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 96,
@@ -1381,12 +1383,12 @@
    "name": "HANDOFF_capsule_v02_2026_08_31.capsule.html",
    "recorded_class": "PASS",
    "fresh_class": "PASS",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "af5d2f9e2f41",
-   "verifier_now": "af5d2f9e2f41"
+   "verifier_now": "013300423454"
   },
   {
    "line": 97,
@@ -1395,12 +1397,12 @@
    "name": "PREREG_oath_v12_formula_constant_2026_08_26.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 98,
@@ -1409,12 +1411,12 @@
    "name": "RECON_oath_external_reach_2026_08_26.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 99,
@@ -1423,12 +1425,12 @@
    "name": "RECON_oath_prior_art_2026_08_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 100,
@@ -1437,12 +1439,12 @@
    "name": "RECON_obligation_repair_is_not_lexical_2026_08_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 101,
@@ -1451,12 +1453,12 @@
    "name": "RECON_structural_obligation_2026_08_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 102,
@@ -1465,12 +1467,12 @@
    "name": "RECON_v13_not_frozen_2026_08_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 103,
@@ -1479,12 +1481,12 @@
    "name": "RECON_v13_not_frozen_the_ladder_2026_08_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 104,
@@ -1493,12 +1495,12 @@
    "name": "RECON_vacuous_pass_2026_08_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 105,
@@ -1507,12 +1509,12 @@
    "name": "RESULT_agent_claim_extractor_baseline_2026_08_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 106,
@@ -1521,12 +1523,12 @@
    "name": "RESULT_agent_gate_boundary_2026_08_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 107,
@@ -1535,12 +1537,12 @@
    "name": "RESULT_collateral_census_2026_08_31.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 108,
@@ -1549,12 +1551,12 @@
    "name": "RESULT_collateral_census_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 109,
@@ -1563,12 +1565,12 @@
    "name": "RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 110,
@@ -1577,12 +1579,12 @@
    "name": "RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 111,
@@ -1591,12 +1593,12 @@
    "name": "RESULT_external_composition_2026_08_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 112,
@@ -1605,12 +1607,12 @@
    "name": "RESULT_fraction_coherence_ships_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 113,
@@ -1619,12 +1621,12 @@
    "name": "RESULT_handedness_accusations_INVALID_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 114,
@@ -1633,12 +1635,12 @@
    "name": "RESULT_handedness_v2_INVALID_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 115,
@@ -1647,12 +1649,12 @@
    "name": "RESULT_handedness_v3_header_handed_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 116,
@@ -1661,12 +1663,12 @@
    "name": "RESULT_mirror_sum_ships_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 117,
@@ -1675,12 +1677,12 @@
    "name": "RESULT_oath_external_corpus_2026_08_27.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 118,
@@ -1689,12 +1691,12 @@
    "name": "RESULT_oath_prior_art_survey_2026_08_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 119,
@@ -1703,12 +1705,12 @@
    "name": "RESULT_oath_v04_float_binding_2026_07_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 120,
@@ -1717,12 +1719,12 @@
    "name": "RESULT_oath_v04_recall_decimalguard_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 121,
@@ -1731,12 +1733,12 @@
    "name": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 122,
@@ -1745,12 +1747,12 @@
    "name": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 123,
@@ -1759,12 +1761,12 @@
    "name": "RESULT_oath_v07_SHIPPED_2026_08_22.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 124,
@@ -1773,12 +1775,12 @@
    "name": "RESULT_oath_v08_float_field_binding_CLOSED_NEGATIVE_2026_08_23.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 125,
@@ -1787,12 +1789,12 @@
    "name": "RESULT_oath_v09_is_spec_json_idiom_2026_08_23.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 126,
@@ -1801,12 +1803,12 @@
    "name": "RESULT_oath_v10_token_column_2026_08_23.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 127,
@@ -1815,12 +1817,12 @@
    "name": "RESULT_oath_v11_row_ordinal_retraction_2026_08_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 128,
@@ -1829,12 +1831,12 @@
    "name": "RESULT_oath_v12_formula_constant_2026_08_26.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 129,
@@ -1843,12 +1845,12 @@
    "name": "RESULT_oath_verified_channel_internal_2026_08_27.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 130,
@@ -1857,12 +1859,12 @@
    "name": "RESULT_obligate1_does_not_ship_2026_08_31.capsule.html",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 131,
@@ -1871,12 +1873,12 @@
    "name": "RESULT_obligate1_does_not_ship_2026_08_31.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 132,
@@ -1885,12 +1887,12 @@
    "name": "RESULT_obligate2_split_verdict_2026_08_31.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 133,
@@ -1899,12 +1901,12 @@
    "name": "RESULT_obligate2_split_verdict_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 134,
@@ -1913,12 +1915,12 @@
    "name": "RESULT_obligation_predicts_claimhood_2026_08_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 135,
@@ -1927,12 +1929,12 @@
    "name": "RESULT_range_sanity_report_SHIP_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 136,
@@ -1941,12 +1943,12 @@
    "name": "RESULT_struct1_beats_the_null_2026_08_31.capsule.html",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 137,
@@ -1955,12 +1957,12 @@
    "name": "RESULT_struct1_beats_the_null_2026_08_31.md",
    "recorded_class": "OATH-FAILED",
    "fresh_class": "OATH-FAILED",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 138,
@@ -1969,12 +1971,12 @@
    "name": "RESULT_unobligated_oath_2026_08_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 139,
@@ -1983,12 +1985,12 @@
    "name": "RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 140,
@@ -1997,12 +1999,12 @@
    "name": "RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 141,
@@ -2011,12 +2013,12 @@
    "name": "ZENODO_nothing_crosses_unseen_2026_08_31.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 142,
@@ -2025,12 +2027,12 @@
    "name": "FINDINGS_rhythm_substrate_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 143,
@@ -2039,12 +2041,12 @@
    "name": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 144,
@@ -2053,12 +2055,12 @@
    "name": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 145,
@@ -2067,12 +2069,12 @@
    "name": "FINDING_mount_early_warning_b34_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 146,
@@ -2081,12 +2083,12 @@
    "name": "FINDING_mount_ensemble_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 147,
@@ -2095,12 +2097,12 @@
    "name": "FINDING_mount_establish_b38_2026_06_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 148,
@@ -2109,12 +2111,12 @@
    "name": "FINDING_mount_fpr_live_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 149,
@@ -2123,12 +2125,12 @@
    "name": "FINDING_mount_freeform_b35_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 150,
@@ -2137,12 +2139,12 @@
    "name": "FINDING_mount_gamed_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 151,
@@ -2151,12 +2153,12 @@
    "name": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 152,
@@ -2165,12 +2167,12 @@
    "name": "FINDING_mount_live_catch_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 153,
@@ -2179,12 +2181,12 @@
    "name": "FINDING_mount_offmanifold_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 154,
@@ -2193,12 +2195,12 @@
    "name": "FINDING_mount_offmanifold_v2_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 155,
@@ -2207,12 +2209,12 @@
    "name": "FINDING_mount_regime_2026_06_13.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 156,
@@ -2221,12 +2223,12 @@
    "name": "FINDING_mount_within_b39_2026_06_14.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 157,
@@ -2235,12 +2237,12 @@
    "name": "FINDING_council_2026_05_25.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 158,
@@ -2249,12 +2251,12 @@
    "name": "FINDING_fame_vs_truth_2026_05_25.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 159,
@@ -2263,12 +2265,12 @@
    "name": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 160,
@@ -2277,12 +2279,12 @@
    "name": "TICKET_readme_truth_in_advertising_2026_07_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 161,
@@ -2291,12 +2293,12 @@
    "name": "FINDING_b31v2_door_opens_2026_08_01.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 162,
@@ -2305,12 +2307,12 @@
    "name": "FINDING_b34v3_labelfree_read_2026_08_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 163,
@@ -2319,12 +2321,12 @@
    "name": "FINDING_b35a_seed_stable_2026_08_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 164,
@@ -2333,12 +2335,12 @@
    "name": "FINDING_b35bc_generality_invalids_2026_08_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 165,
@@ -2347,12 +2349,12 @@
    "name": "FINDING_b36_write_door_2026_08_01.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 166,
@@ -2361,12 +2363,12 @@
    "name": "FINDING_b37_legibility_matrix_2026_08_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 167,
@@ -2375,12 +2377,12 @@
    "name": "FINDING_b38_cliff_invalid_2026_08_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 168,
@@ -2389,12 +2391,12 @@
    "name": "FINDING_b39_whitening_2026_08_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 169,
@@ -2403,12 +2405,12 @@
    "name": "FINDING_b40_island_named_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 170,
@@ -2417,12 +2419,12 @@
    "name": "FINDING_b41_bridge_built_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 171,
@@ -2431,12 +2433,12 @@
    "name": "FINDING_b42_dose_curve_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 172,
@@ -2445,12 +2447,12 @@
    "name": "FINDING_b43_sub_symbolic_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 173,
@@ -2459,12 +2461,12 @@
    "name": "FINDING_b44_shared_frame_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 174,
@@ -2473,12 +2475,12 @@
    "name": "FINDING_b45_frame_geometry_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 175,
@@ -2487,12 +2489,12 @@
    "name": "FINDING_b46_cliff_mapped_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 176,
@@ -2501,12 +2503,12 @@
    "name": "FINDING_b47_no_islands_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 177,
@@ -2515,12 +2517,12 @@
    "name": "FINDING_b48_invalid_null_bar_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 178,
@@ -2529,12 +2531,12 @@
    "name": "FINDING_b49_survives_the_control_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 179,
@@ -2543,12 +2545,12 @@
    "name": "FINDING_b50_no_legibility_islands_2026_08_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 180,
@@ -2557,12 +2559,12 @@
    "name": "PREDICTION_h1_human_islands_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 181,
@@ -2571,12 +2573,12 @@
    "name": "FINDING_dogfood_2026_05_25.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 182,
@@ -2585,12 +2587,12 @@
    "name": "FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 183,
@@ -2599,12 +2601,12 @@
    "name": "FINDING_c2_still_blind_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 184,
@@ -2613,12 +2615,12 @@
    "name": "FINDING_c3_algebra_wrong_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 185,
@@ -2627,12 +2629,12 @@
    "name": "FINDING_c4_mechanism_incomplete_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 186,
@@ -2641,12 +2643,12 @@
    "name": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 187,
@@ -2655,12 +2657,12 @@
    "name": "FINDING_e1_not_estimable_2026_08_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 188,
@@ -2669,12 +2671,12 @@
    "name": "FINDING_h1a_human_single_clique_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 189,
@@ -2683,12 +2685,12 @@
    "name": "FINDING_h1b_no_unreadable_minds_2026_08_06.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 190,
@@ -2697,12 +2699,12 @@
    "name": "FINDING_p1_third_quarantine_2026_08_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 191,
@@ -2711,12 +2713,12 @@
    "name": "FINDING_protocol_v4_2026_08_09.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 192,
@@ -2725,12 +2727,12 @@
    "name": "FINDING_r0_instrument_blind_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 193,
@@ -2739,12 +2741,12 @@
    "name": "FINDING_r0v2_instrument_valid_2026_08_05.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 194,
@@ -2753,12 +2755,12 @@
    "name": "RESULT_efficiency_control_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 195,
@@ -2767,12 +2769,12 @@
    "name": "RESULT_efficiency_control_from_receipts_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 196,
@@ -2781,12 +2783,12 @@
    "name": "FINDING_adversarial_curve_v3_2026_06_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 197,
@@ -2795,12 +2797,12 @@
    "name": "FINDING_council_grounding_2026_05_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 198,
@@ -2809,12 +2811,12 @@
    "name": "FINDING_detection_locus_gpt_2026_05_30.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 199,
@@ -2823,12 +2825,12 @@
    "name": "ATLAS_OF_MINDS_v0.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 200,
@@ -2837,12 +2839,12 @@
    "name": "DEMO_meaning_diff_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 201,
@@ -2851,12 +2853,12 @@
    "name": "FINDING_anatomy_v0_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 202,
@@ -2865,12 +2867,12 @@
    "name": "FINDING_anatomy_v2_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 203,
@@ -2879,12 +2881,12 @@
    "name": "FINDING_gavagai_scale_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 204,
@@ -2893,12 +2895,12 @@
    "name": "FINDING_gavagai_v0_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 205,
@@ -2907,12 +2909,12 @@
    "name": "FINDING_gavagai_x_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 206,
@@ -2921,12 +2923,12 @@
    "name": "FINDING_matcher_v1_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 207,
@@ -2935,12 +2937,12 @@
    "name": "FINDING_telepathy_v0_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 208,
@@ -2949,12 +2951,12 @@
    "name": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 209,
@@ -2963,12 +2965,12 @@
    "name": "RESULT_E2PRIME_replay_sweep_2026_07_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 210,
@@ -2977,12 +2979,12 @@
    "name": "RESULT_E2_strong_attacker_2026_07_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 211,
@@ -2991,12 +2993,12 @@
    "name": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 212,
@@ -3005,12 +3007,12 @@
    "name": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 213,
@@ -3019,12 +3021,12 @@
    "name": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 214,
@@ -3033,12 +3035,12 @@
    "name": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 215,
@@ -3047,12 +3049,12 @@
    "name": "RESULT_foundation_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 216,
@@ -3061,12 +3063,12 @@
    "name": "RESULT_stage2_EVADABLE_2026_07_04.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 217,
@@ -3075,12 +3077,12 @@
    "name": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 218,
@@ -3089,12 +3091,12 @@
    "name": "RESULT_geometry_integrity_2026_06_03.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 219,
@@ -3103,12 +3105,12 @@
    "name": "RESULT_geometry_integrity_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 220,
@@ -3117,12 +3119,12 @@
    "name": "RESULT_rhythm_rescue_2026_06_03.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 221,
@@ -3131,12 +3133,12 @@
    "name": "RESULT_untied_magnitudes_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 222,
@@ -3145,12 +3147,12 @@
    "name": "FINDING_axis_independence_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 223,
@@ -3159,12 +3161,12 @@
    "name": "FINDING_concept_decode_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 224,
@@ -3173,12 +3175,12 @@
    "name": "FINDING_conscience_coordinates_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 225,
@@ -3187,12 +3189,12 @@
    "name": "FINDING_content_wall_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 226,
@@ -3201,12 +3203,12 @@
    "name": "FINDING_entanglement_resolution_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 227,
@@ -3215,12 +3217,12 @@
    "name": "FINDING_live_signature_mvp_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 228,
@@ -3229,12 +3231,12 @@
    "name": "FINDING_mapped_whitening_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 229,
@@ -3243,12 +3245,12 @@
    "name": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 230,
@@ -3257,12 +3259,12 @@
    "name": "FINDING_portable_conscience_ood_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 231,
@@ -3271,12 +3273,12 @@
    "name": "FINDING_portable_conscience_v0_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 232,
@@ -3285,12 +3287,12 @@
    "name": "FINDING_portable_conscience_v2_2026_06_10.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 233,
@@ -3299,12 +3301,12 @@
    "name": "FINDING_portable_values_refusal_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 234,
@@ -3313,12 +3315,12 @@
    "name": "FINDING_says_yes_knows_no_2026_06_11.capsule.html",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "b3f3095d429e",
-   "verifier_now": "b3f3095d429e"
+   "verifier_now": "f5ba4e721ad6"
   },
   {
    "line": 235,
@@ -3327,12 +3329,12 @@
    "name": "FINDING_says_yes_knows_no_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 236,
@@ -3341,12 +3343,12 @@
    "name": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 237,
@@ -3355,12 +3357,12 @@
    "name": "FINDING_truth_danger_basis_2026_06_12.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
   },
   {
    "line": 238,
@@ -3369,12 +3371,12 @@
    "name": "ATTACKS_sworn_v01_battery_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 239,
@@ -3383,12 +3385,12 @@
    "name": "CENSUS_prose_claimhood_instruments_2026_09_01.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 240,
@@ -3397,12 +3399,12 @@
    "name": "DESIGN_sworn_measurement_2026_09_01.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 241,
@@ -3411,12 +3413,12 @@
    "name": "DESIGN_sworn_measurement_v2_2026_09_02.md",
    "recorded_class": "UNSWORN",
    "fresh_class": "UNSWORN",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 242,
@@ -3425,12 +3427,12 @@
    "name": "RESULT_sworn_v01_ships_2026_09_01.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 243,
@@ -3439,12 +3441,12 @@
    "name": "RESULT_sworn_v02_ships_2026_09_02.md",
    "recorded_class": "HELD",
    "fresh_class": "HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "c2f033cb8a39",
-   "verifier_now": "c2f033cb8a39"
+   "verifier_now": "a98c4c994970"
   },
   {
    "line": 244,
@@ -3453,22 +3455,36 @@
    "name": "FINDING_promptopinion_2026_05_24.md",
    "recorded_class": "OATH-HELD",
    "fresh_class": "OATH-HELD",
-   "status": "SAME_LINE",
+   "status": "MOVED_VERIFIER",
    "fields_changed": [],
    "subject_moved": false,
    "receipts_moved": false,
    "verifier_recorded": "7bc58398d85f",
-   "verifier_now": "7bc58398d85f"
+   "verifier_now": "ad413fa5e557"
+  },
+  {
+   "line": 245,
+   "seq": 244,
+   "kind": "sworn",
+   "name": "RESULT_checksum_smollm_quant_2026_09_13.md",
+   "recorded_class": "HELD",
+   "fresh_class": "HELD",
+   "status": "SAME_LINE",
+   "fields_changed": [],
+   "subject_moved": false,
+   "receipts_moved": false,
+   "verifier_recorded": "a98c4c994970",
+   "verifier_now": "a98c4c994970"
   }
  ],
  "certifies": "every line is a verdict re-derived from bytes by the named verifier modules — at the named commit where one is named, over the working tree otherwise — chained to the line before it, with the size and digests of the receipt set it was reproduced against; NOT a claim that any verdict is true, NOT a record of who wrote a line, NOT a check that a receipt set was not chosen to pass, and nothing signed; the chain binds order and content to the head, and only a head pinned outside the log identifies the log",
  "note": "SAME_LINE = the fresh core equals the recorded core under the same verifier build; MOVED_VERIFIER = same core, the instrument's bytes moved; SKEW = the core moved and the instrument's bytes moved; DRIFT = the core moved under the same build (the bytes changed); UNRESOLVED = bytes unavailable now, never an accusation; HEAD_MISMATCH = the head is not the one you expected — a truncated or rebuilt log; TAMPER = the chain broke. Without --expect-head this report establishes internal consistency only.",
- "entries": 243,
+ "entries": 244,
  "malformed_lines": 0,
- "distinct_subjects": 243,
+ "distinct_subjects": 244,
  "by_kind": {
   "oath-certificate": 213,
-  "sworn": 18,
+  "sworn": 19,
   "capsule-oath": 10,
   "capsule-diffgate": 2
  },
@@ -3479,7 +3495,7 @@
    "null": 3
   },
   "sworn": {
-   "true": 18,
+   "true": 19,
    "false": 0,
    "null": 0
   },
@@ -3498,7 +3514,7 @@
   "min": 0,
   "max": 21,
   "entries_with_10_or_more": 10,
-  "held_total": 227,
+  "held_total": 228,
   "held_with_10_or_more": 10,
   "by_kind": {
    "oath-certificate": {
@@ -3507,7 +3523,7 @@
     "vacuous_excluded": 0
    },
    "sworn": {
-    "held": 17,
+    "held": 18,
     "held_10_or_more": 2,
     "vacuous_excluded": 0
    },
