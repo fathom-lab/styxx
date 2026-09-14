@@ -229,7 +229,10 @@ target-version = "py39"
 # imports/variables, redefinitions — and E9 catches syntax errors (e.g. the
 # f-string-backslash break that shipped on 3.9-3.11). Line length (E501),
 # import sorting (I), and stylistic rules are intentionally not enforced.
-select = ["F", "E9"]
+# FA102 (future-required-type-annotation) fails a `X | None` annotation in a
+# module without the future import — on 2026-09-14 two such modules passed
+# Windows and broke every Linux job on 3.9 at collection time.
+select = ["F", "E9", "FA102"]
 
 [tool.ruff.lint.per-file-ignores]
 # __init__.py intentionally imports the full backward-compat attribute surface

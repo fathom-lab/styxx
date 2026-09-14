@@ -25,6 +25,8 @@ upper triangles. The plate cannot make two geometries agree more than that
 number says they do; a permuted-item control (same matrix, items shuffled)
 shows what disagreement looks like.
 """
+from __future__ import annotations
+
 import math, hashlib, json
 import numpy as np
 

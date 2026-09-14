@@ -18,6 +18,8 @@ every parameter; of the re-hash:
   bytes 12..15  -> four mode families (cos / sin) and a plate rotation
   bytes 16..23  -> grain seed for the sand scatter
 """
+from __future__ import annotations
+
 import sys, math, hashlib, re
 import numpy as np
 
