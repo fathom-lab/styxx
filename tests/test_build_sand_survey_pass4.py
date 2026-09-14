@@ -34,7 +34,7 @@ def confirm(sid, k, *, clause="C4a", all_five=True, verdict="RETIRES"):
             "last_line_quote": f"the end of {sid}", "midpoint_quote": f"line 15 of source {sid}", "object": "o", "elements": els, "reason": "r"}
 
 
-def build(tmp_path, sources, readings, confirmations, unfetchable=(), bodies=None):
+def build(tmp_path, sources, readings, confirmations, unfetchable=(), bodies=None, retry=None, expect_fail=False):
     root = tmp_path / "repo"
     (root / "papers" / "plates").mkdir(parents=True)
     shutil.copy(P3, root / "papers" / "plates" / os.path.basename(P3))
@@ -51,10 +51,17 @@ def build(tmp_path, sources, readings, confirmations, unfetchable=(), bodies=Non
             fetch[sid] = {"status": "FETCHED", "url": f"https://example.org/{sid}", "sha256": "0" * 64}
     (inputs / "list.json").write_text(json.dumps(lst), encoding="utf-8")
     (inputs / "fetch_record.json").write_text(json.dumps(fetch), encoding="utf-8")
+    if retry:
+        for sid, entry in retry.items():
+            if entry.get("status") == "FETCHED":
+                (texts / f"{sid}.txt").write_text((bodies or {}).get(sid) or text(sid), encoding="utf-8")
+        (inputs / "fetch_record_retry.json").write_text(json.dumps(retry), encoding="utf-8")
     (inputs / "search_record.json").write_text(json.dumps({"searches": [], "list_b": [], "below_cap": [], "n_distinct": 0}), encoding="utf-8")
     (inputs / "readings.json").write_text(json.dumps({"readings": [{"reader": "reader-1", "sources": readings}], "confirmations": confirmations}), encoding="utf-8")
     r = subprocess.run([sys.executable, BUILDER, str(inputs), "2099_01_01", "deadbeef", str(texts)], cwd=root,
                        capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if expect_fail:
+        return r
     assert r.returncode == 0, r.stderr
     return json.loads((root / "papers" / "plates" / "sand_prior_art_survey_pass4_2099_01_01.json").read_text(encoding="utf-8"))
 
@@ -157,6 +164,22 @@ def test_c5_retirement_needs_two_blind_confirmers(tmp_path):
                [confirm("X1", 1, clause="C5"), confirm("X1", 2, clause="C5", verdict="OCCUPIES")])
     assert no["sources"]["X1"]["verdicts"]["C5"]["verdict"] == "DISPUTED"
     assert no["clauses"]["C5"]["status"] == "UNPRICED"
+
+
+def test_a_later_fetch_record_locates_an_unfetchable_source_and_keeps_the_failed_attempts(tmp_path):
+    retry = {"X2": {"status": "FETCHED", "url": "https://doi.org/10.0/x2", "sha256": "1" * 64, "attempts": [{"url": "https://doi.org/10.0/x2"}]}}
+    rs = [reading("X1", true=("E1", "E2", "E3", "E4")), reading("X2", true=("E1",))]
+    out = build(tmp_path, [("X1", ["C4a"]), ("X2", ["C4a"])], rs, [], unfetchable=("X2",), retry=retry)
+    x2 = out["sources"]["X2"]
+    assert x2["status"] == "READ" and x2["fetch_record"] == "fetch_record_retry.json"
+    assert x2["earlier_attempts"][0]["fetch_record"] == "fetch_record.json"
+    assert out["clauses"]["C4a"]["status"] == "OCCUPIED"
+
+
+def test_a_source_fetched_in_two_records_is_refused(tmp_path):
+    retry = {"X1": {"status": "FETCHED", "url": "https://example.org/again", "sha256": "1" * 64}}
+    r = build(tmp_path, [("X1", ["C4a"])], [reading("X1")], [], retry=retry, expect_fail=True)
+    assert r.returncode != 0 and "fetched in two records" in r.stderr
 
 
 def test_an_unfetchable_c4a_candidate_unprices_the_fingerprint_clause(tmp_path):

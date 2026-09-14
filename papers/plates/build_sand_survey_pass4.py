@@ -110,7 +110,12 @@ def main():
     fetch = {}
     for fn in sorted(f for f in os.listdir(inputs) if f.startswith("fetch_record") and f.endswith(".json")):
         for sid, entry in load(os.path.join(inputs, fn)).items():
-            assert sid not in fetch, f"{sid} fetched in two records"
+            prev = fetch.get(sid)
+            if prev is not None:
+                # a later record may locate a source an earlier one could not; it never replaces a fetched source
+                assert prev.get("status") != "FETCHED", f"{sid} fetched in two records"
+                entry = dict(entry, earlier_attempts=prev.get("earlier_attempts", []) +
+                             [{"fetch_record": prev["fetch_record"], "attempts": prev.get("attempts", []), "reason": prev.get("reason")}])
             fetch[sid] = dict(entry, fetch_record=fn)
     rd = {"readings": [], "confirmations": []}
     for fn in sorted(f for f in os.listdir(inputs) if f.startswith("readings") and f.endswith(".json")):
@@ -134,7 +139,7 @@ def main():
         sid = item["id"]
         f = fetch.get(sid, {})
         src = {k: item.get(k) for k in ("title", "who", "year", "part", "might_occupy", "urls")}
-        src.update({k: f.get(k) for k in ("url", "url_effective", "http", "bytes", "sha256", "fetched_at", "kind", "pages", "fulltext", "title_words_found")})
+        src.update({k: f.get(k) for k in ("url", "url_effective", "http", "bytes", "sha256", "fetched_at", "kind", "pages", "fulltext", "title_words_found", "attempts", "fetch_record", "earlier_attempts")})
         if f.get("status") != "FETCHED":
             src["status"] = "UNFETCHABLE"
             src["unfetchable_reason"] = f.get("reason")
