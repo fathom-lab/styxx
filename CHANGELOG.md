@@ -71,6 +71,23 @@ longer list.**
   NF4 DRIFT 0.427 (r 0.960), int8 DRIFT 0.101 (r 0.996), random 10.44 (r 0.111). With a floor of
   exactly zero, the PREREG's H1 first clause ("> 0") fails by the letter; the CORRECTION's rule 1
   says how the RESULT reports that.
+- **The second wave red-teamed, and the skimmed papers read (night).** Twelve agents, none refuted.
+  `styxx.portability` v0 read an absent number as survived, let the base arm choose the verdict, digested the
+  labels and not the inputs; v1 (`styxx.portability/v1`) refuses or names each, grades with the same mean
+  statistic as `checksum.null_floor`, and never grades a bootstrap interval; `CORRECTION_portability`
+  withdraws the RESULT's inside-means-replicated reading (a challenge is decided at the verdict level).
+  A draw record is re-derived, never trusted: `checksum.check_draw_record` re-runs the beacon against the
+  committed pool (a record with an honest canary hash and a lying beacon was accepted for a few hours);
+  certs are `compare/v2` with the draw inside the digest; the observatory writes the draw into every chained
+  line, refuses a baseline under another draw, and leaves no orphan fingerprint file; the runner refuses a
+  malformed or untagged beacon before it imports torch. The static-embedding recipe pins its Hub revision and
+  hashes the table; its random row is declared unrecipe'd. **The sand survey, pass 2**: the nine skimmed papers
+  read end to end — Perrig and Song retire the face clause (hash visualization is defined over any bit-string,
+  with a visual checksum of downloads as an application), Haber and Stornetta retire the seal clause a second
+  time (sections 5–6 remove the trusted party), proof-of-learning moves to occupying the fingerprint clause,
+  and Chen, Zaharia and Zou turn out to grade drift against a repeat-run floor after all. The licensed sentence
+  has four clauses now, each with its neighbour named inside it; the earlier sworn survey stands as the record
+  of what a skim licensed. Forty leads recorded for the next list. The fetch record is committed.
 - **Two things the tree still lacks, named rather than hidden.** The 2026-09-12 sworn chat update
   that the entry below cites (and that `papers/plates/plate_receipt_update_2026_09_12.png` was
   rendered from) is not in the tree; the plate is unbacked until the triple is committed under

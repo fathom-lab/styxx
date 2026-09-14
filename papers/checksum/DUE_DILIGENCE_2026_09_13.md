@@ -144,3 +144,15 @@ document or frozen PREREG was edited:
   it the same embedding table reads 0.068 / 0.076 / 0.069 / 0.064. "About a third of the agreement"
   was a claim about one tokenization the document did not name. The committed json stays as
   committed; the recipe writes beside it and says which variant it reproduced.
+- **The recipe above was itself red-teamed the same night (recipe-1/2/4, none refuted).** The
+  embedding table is not in the tree: it comes from the Hub, and the recipe fetched it at whatever
+  `main` pointed to. `run_static_embedding_control.py` now pins the revision it used
+  (`93efa2f097d5…`), writes the sha256 of the table's bytes, the sha256 of the concept list, the
+  library versions and the per-bank deltas into its record
+  (`static_embedding_control_recipe_2026_09_13_v1.json`), and names the script that wrote the banks
+  in that order (`run_b31v2.py`). The match to the committed static row is to the raw floats, within
+  1e-9. The committed **random** row has no recipe — its seed is unknown, and neither seed the
+  recipe tries reproduces it; the record says so in a field, and "the control now has a recipe"
+  above should be read as "the static row has a recipe; the random row is a fresh null of the same
+  magnitude, not a reproduction". On this machine the committed json's working copy held CRLF from a
+  checkout that predated its pin; the index blob is LF and was never wrong.
