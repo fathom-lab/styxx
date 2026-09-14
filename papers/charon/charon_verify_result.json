@@ -1,12 +1,12 @@
 {
  "schema": "styxx.charon/verify/v1",
  "log": "charon.log.jsonl",
- "head": "cb549dd61b6de2842b5d3722e8a74a2e08a925dccd14195713da4e3c644cf71b",
- "head_expected": "cb549dd61b6de2842b5d3722e8a74a2e08a925dccd14195713da4e3c644cf71b",
+ "head": "85edad1e90cc9aa0d74cf0895c68651e11129df1592f293574cd16c82ced41e5",
+ "head_expected": "85edad1e90cc9aa0d74cf0895c68651e11129df1592f293574cd16c82ced41e5",
  "head_matches": true,
  "file": {
-  "file_sha256": "05fb3a1f8c70821b2212cf8f3ed6fac17fde9ec64b2936a09dd6608d38855aa1",
-  "bytes": 463993,
+  "file_sha256": "059acf69341a6bcaf9cc2112c589f83a02ee8d048f5b1bf87111ed395af476dc",
+  "bytes": 467394,
   "eol": "LF",
   "bom": false
  },
@@ -20,7 +20,7 @@
  "chain_broken_at_line": null,
  "chain_problems": [],
  "by_status": {
-  "SAME_LINE": 8,
+  "SAME_LINE": 10,
   "MOVED_VERIFIER": 243,
   "SKEW": 0,
   "DRIFT": 0,
@@ -3573,16 +3573,44 @@
    "receipts_moved": false,
    "verifier_recorded": "a98c4c994970",
    "verifier_now": "a98c4c994970"
+  },
+  {
+   "line": 253,
+   "seq": 252,
+   "kind": "sworn",
+   "name": "CORRECTION_prereg_beacon_draw_2026_09_14.md",
+   "recorded_class": "HELD",
+   "fresh_class": "HELD",
+   "status": "SAME_LINE",
+   "fields_changed": [],
+   "subject_moved": false,
+   "receipts_moved": false,
+   "verifier_recorded": "a98c4c994970",
+   "verifier_now": "a98c4c994970"
+  },
+  {
+   "line": 254,
+   "seq": 253,
+   "kind": "sworn",
+   "name": "CORRECTION_sand_neighbours_pass3_2026_09_14.md",
+   "recorded_class": "HELD",
+   "fresh_class": "HELD",
+   "status": "SAME_LINE",
+   "fields_changed": [],
+   "subject_moved": false,
+   "receipts_moved": false,
+   "verifier_recorded": "a98c4c994970",
+   "verifier_now": "a98c4c994970"
   }
  ],
  "certifies": "every line is a verdict re-derived from bytes by the named verifier modules — at the named commit where one is named, over the working tree otherwise — chained to the line before it, with the size and digests of the receipt set it was reproduced against; NOT a claim that any verdict is true, NOT a record of who wrote a line, NOT a check that a receipt set was not chosen to pass, and nothing signed; the chain binds order and content to the head, and only a head pinned outside the log identifies the log",
  "note": "SAME_LINE = the fresh core equals the recorded core under the same verifier build; MOVED_VERIFIER = same core, the instrument's bytes moved; SKEW = the core moved and the instrument's bytes moved; DRIFT = the core moved under the same build (the bytes changed); UNRESOLVED = bytes unavailable now, never an accusation; HEAD_MISMATCH = the head is not the one you expected — a truncated or rebuilt log; TAMPER = the chain broke. Without --expect-head this report establishes internal consistency only.",
- "entries": 251,
+ "entries": 253,
  "malformed_lines": 0,
- "distinct_subjects": 251,
+ "distinct_subjects": 253,
  "by_kind": {
   "oath-certificate": 213,
-  "sworn": 26,
+  "sworn": 28,
   "capsule-oath": 10,
   "capsule-diffgate": 2
  },
@@ -3593,7 +3621,7 @@
    "null": 3
   },
   "sworn": {
-   "true": 26,
+   "true": 28,
    "false": 0,
    "null": 0
   },
@@ -3612,7 +3640,7 @@
   "min": 0,
   "max": 21,
   "entries_with_10_or_more": 10,
-  "held_total": 235,
+  "held_total": 237,
   "held_with_10_or_more": 10,
   "by_kind": {
    "oath-certificate": {
@@ -3621,7 +3649,7 @@
     "vacuous_excluded": 0
    },
    "sworn": {
-    "held": 25,
+    "held": 27,
     "held_10_or_more": 2,
     "vacuous_excluded": 0
    },
