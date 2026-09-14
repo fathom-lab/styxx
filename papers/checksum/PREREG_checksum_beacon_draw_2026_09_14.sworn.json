@@ -1,0 +1,159 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "b8205b1cd2087b8cfa55267c967f7fa0c40defaf",
+ "document": {
+  "name": "PREREG_checksum_beacon_draw_2026_09_14.md",
+  "sha256": "4c60f2102c294904289abec41fd3c77c5737b8fb7da3f71e979b5125a14f947b"
+ },
+ "text": "# PREREG — checksum on canaries nobody could study for: the 48 drawn from the committed pool by the block hash of the slot that sealed this document, Qwen2.5-1.5B, GPU\n\n**frozen 2026-09-14, before any run. seal: the sha256 of this file's git blob, anchored from the\ncreator wallet with a memo built by `python -m styxx.clock memo sealed-prereg <digest>`. the\nbeacon is the block hash of the slot in which the EARLIEST confirmed memo carrying that digest\nlanded, as `python -m styxx.clock verify` prints it on a line that reads ANCHORED; the run does\nnot start before that line exists. the RESULT reports every number below whatever it says.**\n\n## question\n\nThe 2026-09-13 PREREG froze 48 hand-written canaries that anyone could read in the repository\nbefore the run (`DUE_DILIGENCE_2026_09_13.md` §3 named that first). This PREREG asks the same\nquestions of a canary set that did not exist when anyone could have prepared for it: (a) does the\nchecksum read the null pair as SAME, a real 4-bit method as DRIFT in a predicted band, int8 as a\ngentler DRIFT, and random weights as far — on 48 items chosen by a value the network produced\nafter the seal was out of the lab's hands; (b) does the drawn set read what the hand-written set\nread on the same weights; and (c) can a stranger check from the bytes alone that the run came\nafter the seal.\n\n## design, fixed\n\n- model: `Qwen/Qwen2.5-1.5B`, as in the 2026-09-13 PREREG, so that (b) is a comparison on the\n  same weights and the same machine.\n- pool: `styxx.beacon.POOL` at the commit that adds this file — the 48 hand-written items plus\n  template items with one-token answers (sums, products, differences, capitals, days, months,\n  opposites, counting), 778 items, pool sha256\n  `9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f`.\n  A draw whose record names any other pool hash is not this experiment.\n- draw: `styxx.beacon.draw(beacon, 48)` — `seed_i = sha256(pool_sha256 || beacon || i)`, index\n  `seed_i mod 778`, duplicates skipped, until 48 items; pure sha256, no PRNG.\n  `python -m styxx.beacon <beacon> 48` prints the ids and the canary hash a stranger reproduces.\n- beacon: the block hash of the slot of the earliest confirmed memo carrying this file's blob\n  digest from the creator wallet, decoded from base58 to 64 hex by `styxx.clock.blockhash_to_beacon`.\n  A later memo carrying the same digest does not move the beacon (`SEALS_2026_09_13.md`, the\n  earliest-memo rule; `clock.verify` reads `EARLIER_MEMO_EXISTS` for a record that is not the\n  earliest). The signer chooses when to submit; the signer does not choose a slot's hash.\n- the record travels: every fingerprint carries the draw record (`styxx.beacon/draw/v0`: pool\n  hash, pool size, beacon, n, canary hash); every cert digests it (`styxx.checksum/compare/v2`);\n  `checksum.check_draw_record` re-runs the beacon against the pool and refuses a record whose\n  beacon does not produce exactly the items it names.\n- arms, probe, distance: exactly the 2026-09-13 design — **A** bf16, **A′** and **A″** bf16\n  reloaded, **Q4** bitsandbytes NF4 (double-quant, bf16 compute), **Q8** bitsandbytes LLM.int8,\n  **R** random init seed 343; teacher-forced, greedy; `torch.use_deterministic_algorithms` best\n  effort and `CUBLAS_WORKSPACE_CONFIG=:4096:8`; `styxx.checksum.distance(n_boot=2000,\n  seed=20260913)`; first-token top-1 hits per arm.\n- floors, two of them, both written by the runner: the **worst pairwise** floor among A, A′, A″\n  (`sanity.null_floor_nats`) gates K1 and grades Q4, Q8 and R; the **held-out** floor — the\n  larger of A–A″ and A′–A″, or the instrument's 1e-4 resolution when that is larger — grades\n  A vs A′ (`h1_held_out.cert`, written with `unpreregistered: false` under this PREREG). This is\n  the form `CORRECTION_prereg_deploy_quant_H1_2026_09_13.md` rule 5 promised: the graded pair is\n  not inside the floor that grades it.\n- command: `python papers/checksum/run_deploy_quant.py --prereg beacon_draw --beacon <64 hex>`,\n  untagged, on the commit that carries this file sealed. The certs carry `provenance.prereg` =\n  this file, `provenance.prereg_blob_sha256` = the sealed digest, `canaries.draw` = the record,\n  `is_the_experiment: true`. A run under any other beacon, any other model or a `--tag` is an\n  instrument check and never this experiment.\n\n## what the instrument check showed, and why the bands below differ from the hand set's\n\nThe recipe ran on `Qwen/Qwen2.5-0.5B` under a test beacon (the sha256 of a sentence, not a block\nhash; tagged `_dryrun_qwen0.5b_beacon`; `is_the_experiment` false) at commit `8b2df603`, so that\nthe bands here are written from a drawn set and not from the hand set. That draw took\n48 items of which one was hand-written and the rest template\n(24 sums, 7 differences, 7 products, 5 opposites, 2 counting, 1 capital, 1 day). Read from\n`deploy_quant_certs_dryrun_qwen0.5b_beacon.json`:\n\n- three bf16 loads bit-identical: null floor 0.000000 nats per token;\n  A vs A′ under the held-out floor `SAME`.\n- NF4: `DRIFT`, mean |Δ log-prob| 0.347 nats per token,\n  interval from 0.211 to 0.533,\n  geometry r 0.969, first-token argmax lost on\n  15 of 48 items. On the hand set, same model, same day\n  (`deploy_quant_certs_dryrun_qwen0.5b.json`): mean 0.427, argmax lost on\n  4 of 48. Template items have one right token and NF4 flips\n  it far more often than it flips the hand items' continuations; the magnitude is of the same\n  order.\n- int8: `DRIFT`, mean 0.121,\n  r 0.997, argmax lost on 2 of 48.\n- random weights: mean 10.13, r\n  0.35 — against\n  0.11 on the hand set: arithmetic items share tokens\n  with each other, and a random model's geometry reflects that shared surface. Top-1 hits\n  0 of 48, against\n  34 for the model.\n\nSo the bands below are wider than the 2026-09-13 PREREG's on argmax loss and on the far control's\nr, for a reason the check shows, and they were written for a model three times larger, which the\ncheck did not run: a prediction, not a fit.\n\n## hypotheses and predicted bands (written before data)\n\n- **H1 (floor, held-out form).** The worst-pairwise null floor is ≤ 1e-3 nats/token; zero is\n  allowed and expected (the 0.5B loads were bit-identical). A vs A′ reads SAME against the\n  held-out floor, read from `h1_held_out.cert.distance.verdict`. There is no \"floor > 0\" clause.\n- **H2 (NF4 on the drawn set).** A vs Q4 reads DRIFT; mean |Δ log-prob| in **[0.05, 0.60]\n  nats/token**; geometry r ≥ 0.90; argmax lost on ≤ 24 of 48.\n- **H3 (int8).** A vs Q8 reads DRIFT with mean |Δ log-prob| below Q4's; r ≥ 0.98; argmax lost on\n  ≤ 8 of 48.\n- **H4 (far control).** A vs R: mean |Δ log-prob| > 5 nats/token; r < 0.6; top-1 hits ≤ 4 of 48.\n- **H5 (the drawn set against the hand set).** Evaluated only if the 2026-09-13 experiment's certs\n  (`deploy_quant_certs.json`, `is_the_experiment: true`, same model, same machine as this run)\n  exist at the RESULT's commit: every arm's verdict agrees between the two sets (A′ SAME under the\n  held-out reading on both, Q4, Q8 and R DRIFT on both), and the drawn set's NF4 mean lies within\n  a factor of two of the hand set's, either way. Otherwise H5 is **PENDING**, the RESULT says so,\n  and a later RESULT evaluates it against this text.\n- **H6 (portability of this run).** Evaluated when a second machine's certs under this beacon\n  exist, by `styxx.portability` with this machine's run as the base arm: verdicts AGREE on every\n  arm; Q4's and Q8's mean |Δ log-prob| move by at most\n  0.10 nats/token and R's by at most\n  0.22 — the two-machine tolerances\n  measured on a CPU int8 recipe and a different model (`RESULT_portability_smollm_quant_2026_09_13.md`).\n  The hypothesis is that those numbers transfer to GPU bitsandbytes arms; it may fail, and a\n  failure is a measured tolerance for this recipe, not a defect. **PENDING** until a second\n  machine runs.\n\n## kill gates\n\n- **K1.** Worst-pairwise null floor > 1e-2 nats/token → the serving is not deterministic enough\n  for this probe; the run is INCONCLUSIVE and says so; no other hypothesis is evaluated\n  (evaluated in code; the fingerprints are still written).\n- **K2.** A vs Q4 reads SAME → the drawn set cannot see a deployed quantization; the RESULT is\n  titled with the kill.\n- **K3.** A vs Q4 > 1.5 nats/token, or argmax lost on > 36 of 48 → the quantization pipeline, not\n  the model, is suspect (compare against a published NF4 perplexity delta before believing it).\n  The thresholds are wider than the hand set's 1.0 and 12 because the check above lost 15 of 48.\n- **K4.** A vs R inside H2's band → the distance cannot tell a random model from a quantized one;\n  the metric is broken.\n- **K5 (validity).** Any of: `checksum.check_draw_record` refuses the certs' draw record; the\n  certs' `canaries.draw.beacon` is not the beacon `python -m styxx.clock verify` prints ANCHORED\n  for the earliest memo carrying this file's digest; `provenance.prereg_blob_sha256` is not that\n  digest; `is_the_experiment` is false → the run is not this experiment; nothing is evaluated;\n  the files stay as an instrument check under whatever tag they carry.\n- **K6 (precondition).** `clock verify` reads anything but ANCHORED for this file's seal line\n  (EARLIER_MEMO_EXISTS, EARLIEST_UNKNOWN, BEACON_UNAVAILABLE, or any failed check) → the run does\n  not start. If it started anyway, K5.\n\n## what a stranger checks, in order\n\n1. `git show <commit>:papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.md | sha256sum`\n   equals the digest in the memo; the memo is from the creator wallet; the transaction is the\n   earliest carrying it (`python -m styxx.clock verify papers/charon/anchors.jsonl`).\n2. `python -m styxx.beacon <that line's beacon> 48` prints the ids and canary hash the certs and\n   every fingerprint carry, and `checksum.check_draw_record` accepts the record.\n3. The fingerprints' `mean_lp` under that draw could not have been computed before the slot\n   existed: nothing in the tree, and nothing the lab could have written, named those 48 items\n   before the network chose them. That is the ordering the 2026-09-13 seal did not carry\n   (`SEALS_2026_09_13.md`, \"the rule\").\n4. The RESULT's sworn spans bind every number here to `beacon_draw_certs.json` at its commit.\n\n## what is not claimed\n\nA threshold for \"meaningful\" drift. Anything about API models or sampled serving. Anything\nbeyond this one model, these two quantizations and this pool. That the template pool is hard —\nit is dull by design; fixedness and breadth are the point. That H2's band, written from a 0.5B\ncheck, is tight: it is the lab's prediction for a model it did not check. That a seal orders\nanything but this run: the 2026-09-13 run's canaries were frozen by hand, and its seal proves\nonly that its PREREG existed before its block.\n\n## outputs\n\n`papers/checksum/beacon_draw_certs.json`, `beacon_draw_fingerprints.json`,\n`beacon_draw_plates.png`, and a sworn `RESULT_checksum_beacon_draw_<date>.md` binding every\nnumber above to those files at the commit that carries them, with H5 and H6 marked PENDING where\nthey are.\n",
+ "spans": [
+  {
+   "start": 1711,
+   "end": 1714,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/canaries/draw/pool_size",
+   "kind": "numeric"
+  },
+  {
+   "start": 1736,
+   "end": 1802,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/canaries/draw/pool_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 4718,
+   "end": 4720,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/canaries/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 4966,
+   "end": 4974,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/sanity/null_floor_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 5028,
+   "end": 5034,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/h1_held_out/cert/distance/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 5043,
+   "end": 5050,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q4/distance/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 5071,
+   "end": 5076,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q4/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 5109,
+   "end": 5114,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q4/distance/ci_mean_abs/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 5118,
+   "end": 5123,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q4/distance/ci_mean_abs/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 5138,
+   "end": 5143,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q4/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 5174,
+   "end": 5176,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/sanity/top1_loss_vs_A/Q4",
+   "kind": "numeric"
+  },
+  {
+   "start": 5280,
+   "end": 5285,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json#/Q4/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 5304,
+   "end": 5305,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json#/sanity/top1_loss_vs_A/Q4",
+   "kind": "numeric"
+  },
+  {
+   "start": 5474,
+   "end": 5481,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q8/distance/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 5488,
+   "end": 5493,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q8/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 5499,
+   "end": 5504,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/Q8/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 5521,
+   "end": 5522,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/sanity/top1_loss_vs_A/Q8",
+   "kind": "numeric"
+  },
+  {
+   "start": 5553,
+   "end": 5558,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/R/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 5564,
+   "end": 5568,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/R/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 5583,
+   "end": 5587,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json#/R/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 5727,
+   "end": 5728,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/sanity/first_token_top1_hits/R",
+   "kind": "numeric"
+  },
+  {
+   "start": 5746,
+   "end": 5748,
+   "receipt": "path:papers/checksum/deploy_quant_certs_dryrun_qwen0.5b_beacon.json#/sanity/first_token_top1_hits/A",
+   "kind": "numeric"
+  },
+  {
+   "start": 7512,
+   "end": 7516,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13_v1.json#/arms/int8/numbers/mean_abs_nats/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 7549,
+   "end": 7553,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13_v1.json#/arms/random/numbers/mean_abs_nats/max_abs_diff",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
