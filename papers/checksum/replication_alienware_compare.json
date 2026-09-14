@@ -1,0 +1,77 @@
+{
+ "schema": "styxx.replication-compare/v0",
+ "committed_fingerprints": "papers/checksum/smollm_quant_fingerprints.json",
+ "replication_fingerprints": "papers/checksum/replication_alienware_smollm_quant_fingerprints.json",
+ "arms": {
+  "A": {
+   "n_items": 48,
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "mean_abs_diff_mean_lp": 8.166666666671834e-06,
+   "n_items_differing": 48,
+   "rdm_sha256_committed": "c46e070f32e6b46b3eec3506aa1ec02e905e6216bbb525de3906de1af8255b50",
+   "rdm_sha256_replication": "be3962ede34f77017f3d6126655755a8b9311c055117f5ada11ab02823e242c2",
+   "rdm_sha256_equal": false
+  },
+  "A2": {
+   "n_items": 48,
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "mean_abs_diff_mean_lp": 8.166666666671834e-06,
+   "n_items_differing": 48,
+   "rdm_sha256_committed": "c46e070f32e6b46b3eec3506aa1ec02e905e6216bbb525de3906de1af8255b50",
+   "rdm_sha256_replication": "be3962ede34f77017f3d6126655755a8b9311c055117f5ada11ab02823e242c2",
+   "rdm_sha256_equal": false
+  },
+  "Q": {
+   "n_items": 48,
+   "max_abs_diff_mean_lp": 1.848607,
+   "mean_abs_diff_mean_lp": 0.55501225,
+   "n_items_differing": 48,
+   "rdm_sha256_committed": "519bba17e0d90eed1267afbe1e8b76be73db5389d42599e9e3f807d46307e409",
+   "rdm_sha256_replication": "2a4215cc4d923eacebd3ea080c2148830e9d2174e8e37f7befd7d2174478f556",
+   "rdm_sha256_equal": false
+  },
+  "R": {
+   "n_items": 48,
+   "max_abs_diff_mean_lp": 3.226509,
+   "mean_abs_diff_mean_lp": 1.1181921458333333,
+   "n_items_differing": 48,
+   "rdm_sha256_committed": "e92dbb8087f660c682ed56b3f78fb18a47b216b99077927f218e2d6c3cefcd42",
+   "rdm_sha256_replication": "a4088e73aa03fd8403e99a2c5fbd609afdfa29aa5d429135e58b35ac6fa4a90d",
+   "rdm_sha256_equal": false
+  }
+ },
+ "certs": {
+  "leaves_in_common": 72,
+  "leaves_moved_excluding_timestamps": 22,
+  "verdicts": {
+   "reloaded": {
+    "committed": "SAME",
+    "replication": "SAME"
+   },
+   "int8": {
+    "committed": "DRIFT",
+    "replication": "DRIFT"
+   },
+   "random": {
+    "committed": "DRIFT",
+    "replication": "DRIFT"
+   }
+  },
+  "keys_only_in_replication": [
+   "coefficients_sha256"
+  ]
+ },
+ "aggregation": {
+  "per_item_mean_abs_is_the_cert_number": true,
+  "token_weighted_pooled_mean_abs": {
+   "committed": {
+    "int8": 1.3196328769230767,
+    "random": 9.698299261538462
+   },
+   "replication": {
+    "int8": 1.2467174,
+    "random": 9.928089107692307
+   }
+  }
+ }
+}
