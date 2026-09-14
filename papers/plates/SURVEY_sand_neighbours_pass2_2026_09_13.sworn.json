@@ -1,0 +1,135 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "644cbe3a1921d81867ec6f5de40c44b8a4adcff9",
+ "document": {
+  "name": "SURVEY_sand_neighbours_pass2_2026_09_13.md",
+  "sha256": "bdbb91308e83e1784e8a7d8d0303936cd6ca93d76cd8ddad5bd30a26405ad8ae"
+ },
+ "text": "# SURVEY, pass 2 — the skimmed papers read end to end: two clauses retired, the sentence loses its face and its seal\n\nFathom Lab · 2026-09-13, night · **A survey, not a result; the second pass of the one sworn earlier\ntonight.** `SURVEY_sand_neighbours_2026_09_13.md` priced the sentence with nine of its twenty sources\nSKIMMED, and said in its own words that nine skimmed papers were nine places a retiring sentence\nmight sit. Four readers then read those nine end to end, and the first pass's own protocol audit\n(nine findings, one of them a blocker) was applied. Every count below is sworn to\n`papers/plates/sand_prior_art_survey_pass2_2026_09_13.json`, which `build_sand_survey_pass2.py`\nwrote from the readers' returns and the first pass's record without a verdict typed by hand; the\nfirst pass's record is not edited and stays sworn as it was. The protocol\n(`PROTOCOL_sand_prior_art_2026_09_13.md`, 9f5fd42c) is unchanged.\n\n## what was read\n\nThe closed list still names 20 sources. 9 were read end to end in this pass, from the full text extracted from the PDFs whose hashes the first pass recorded, so that now 18 are READ, 1 is SKIMMED (the Nature article on Registered Reports, paywalled beyond its abstract, was assigned to no reader and stays where the first pass left it) and 1 is UNFETCHABLE (the archived Proof of Existence page, fetched and empty; no earlier snapshot was tried, and the record says so). 3 verdicts changed under a full read; 40 leads are recorded without being scored, most of them surfaced by the readers, because the list is closed.\n\n## what the full reads changed\n\n- **C3, a face for every receipt: `RETIRED`**, by `S01`. The first pass priced Perrig and Song as a picture for key fingerprints. Read whole, the paper defines a hash visualization algorithm over an input of arbitrary finite length and names the validation of software downloaded from the Internet — a visual checksum — as an application. A receipt digest is such an input. Under the protocol's own rule a broader object that contains the clause's object retires it. The plate is that idea applied to receipts of scientific claims; the sentence may not carry it, and the lab's due-diligence said as much the morning it shipped.\n- **C4b, the seal on a public chain: `RETIRED`** twice now: by OpenTimestamps in the first pass, and by `S04`, Haber and Stornetta, whose sections five and six — unread in the first pass — remove the trusted party: a linked chain of time-stamps any challenger can verify, and a distributed scheme that needs no central service, over any string of bits. That the first pass scored the same idea as retiring in one source and occupying in another was the audit's second finding; the asymmetry was the skim, and the full read removes it.\n- **C4a, the behaviour fingerprint**: `OCCUPIED` still, and more crowded. Proof-of-learning moves from silent to occupying: it grades a same-weights reproduction against a slack calibrated to hardware noise, in weight space, on training checkpoints. And the first pass's reason for Chen, Zaharia and Zou was wrong though its verdict was right: page ten, past the skim, measures a repeat-run disagreement floor of the same service version and grades the March-to-June mismatch against it. The verdict stands because the object is a service's extracted answers, not a log-probability fingerprint with an interval; the sentence now names that neighbour beside the others.\n- **C2 and C5** stand `OCCUPIED` and `OCCUPIED`; the full reads of the reproducibility programme and the fingerprinting papers agreed with the first pass. **C1** is carried as `OCCUPIED` on the 2026-09-05 survey's authority, and its neighbours are now named in the record and in the sentence, which the audit found the first pass had failed to do; the record also says that survey's clause was narrower than C1 as worded here.\n\n4 clauses are OCCUPIED, 2 are RETIRED, 0 are FREE. The conjunction is `RETIRED` as written, and the sentence `SURVIVES_WITHOUT_C3_C4b`: no source read does the four surviving things at once.\n\n## the sentence the lab may now say\n\nThe record holds it at `#/sentence/text` as one sentence, with a neighbour named beside each of\nthe four clauses that survive: the lab knows of no other that binds every published number to bytes\nat a commit, re-derives every verdict into a chained log, fingerprints a model's behavior against a\nmeasured floor, and pays a standing bounty against its own verifier — at once. The face and the seal\nare out of it, and the record's notes say why in one line each. What was licensed earlier tonight\nwith five clauses is licensed now with four; the earlier sworn document stands as the record of\nwhat a skim licensed and a full read did not.\n\nThe words the protocol forbids remain forbidden under this outcome. What would change this document:\na source among the forty leads, or off the list, that does the four surviving things at once; the\nnext survey's list should start from those leads, and the readers' own candidates for the fingerprint\nclause — a service-shift estimator with statistical machinery, a logits-space fingerprint, and the\nverifiable-inference literature — are the first three to fetch.\n",
+ "spans": [
+  {
+   "start": 952,
+   "end": 991,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/sources_in_list",
+   "kind": "numeric"
+  },
+  {
+   "start": 992,
+   "end": 1027,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/read_in_pass2",
+   "kind": "numeric"
+  },
+  {
+   "start": 1122,
+   "end": 1133,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/read",
+   "kind": "numeric"
+  },
+  {
+   "start": 1135,
+   "end": 1147,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/skimmed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1292,
+   "end": 1308,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/unfetchable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1423,
+   "end": 1459,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/verdicts_changed_by_full_read",
+   "kind": "numeric"
+  },
+  {
+   "start": 1461,
+   "end": 1503,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/leads_not_scored",
+   "kind": "numeric"
+  },
+  {
+   "start": 1638,
+   "end": 1647,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C3/status",
+   "kind": "quote"
+  },
+  {
+   "start": 1654,
+   "end": 1659,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C3/retired_by/0",
+   "kind": "quote"
+  },
+  {
+   "start": 2273,
+   "end": 2282,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C4b/status",
+   "kind": "quote"
+  },
+  {
+   "start": 2340,
+   "end": 2345,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C4b/retired_by/0",
+   "kind": "quote"
+  },
+  {
+   "start": 2813,
+   "end": 2823,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C4a/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3466,
+   "end": 3476,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C2/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3481,
+   "end": 3491,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3620,
+   "end": 3630,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/clauses/C1/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3872,
+   "end": 3894,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/clauses_occupied",
+   "kind": "numeric"
+  },
+  {
+   "start": 3896,
+   "end": 3909,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/clauses_retired",
+   "kind": "numeric"
+  },
+  {
+   "start": 3911,
+   "end": 3921,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/counts/clauses_free",
+   "kind": "numeric"
+  },
+  {
+   "start": 3942,
+   "end": 3951,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/conjunction/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3981,
+   "end": 4006,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass2_2026_09_13.json#/sentence/status",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
