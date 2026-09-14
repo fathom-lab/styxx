@@ -13,6 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 was refuted. Every repair is a new commit; no sworn document and no frozen PREREG was edited. The
 findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
 longer list.**
+
+**2026-09-14, on the same branch — CI made green, the next PREREG, the sentence priced a third time,
+the reading rules as code, and a command for the stranger.**
+- **CI had been red on Linux since the series landed**: an unused `sys` import in `styxx/geoplate.py`
+  stopped every job at lint; then `str | None` annotations in `plate.py`/`geoplate.py` broke 3.9 at
+  collection. Fixed; `pyproject` selects ruff FA102 so that class fails on Windows too; the challenge
+  tests skip on a shallow clone with the reason. Green at 9f09e749 and every push since.
+- **`PREREG_checksum_beacon_draw_2026_09_14.md`** (frozen at b8205b1c, blob `d6a98261…` = anchor #6):
+  48 canaries drawn from the 778-item pool by the block hash of the slot of the earliest confirmed
+  memo carrying the file's digest, so the run cannot precede its seal; H1 in the held-out form the
+  CORRECTION promised; K5 validity; K6 no ANCHORED line, no run. Sworn (24 spans), charon line 250.
+  `run_deploy_quant.py --prereg {deploy_quant,beacon_draw}`; a second 0.5B check through the new
+  path was bit-identical to the first. A test pins `styxx.beacon.POOL` to the frozen hash and size.
+- **Sand survey pass 3** (`SURVEY_sand_neighbours_pass3_2026_09_14.md`, sworn, charon line 251):
+  seventeen of pass 2's forty leads, closed by a protocol before any fetch, all read end to end;
+  none retires a clause; three nearer neighbours (Tu et al., Hooker et al., Madaan et al.) enter the
+  fingerprint clause; the licensed sentence is longer, not shorter. Every verdict quote was found
+  verbatim in the extracted text by the builder.
+- **`papers/checksum/score.py`**: the two PREREGs' hypotheses and kill gates executed by code on a
+  certs file — predicted band, observed value, holds, per clause; INSTRUMENT CHECK vs result; K5
+  re-derives the draw and checks the beacon against the ANCHORED line's. `tests/test_checksum_score.py`
+  binds every band to the frozen text. On the 0.5B hand-set check it reads H1 FAILED (0 is not > 0)
+  and H2 FAILED (0.427 above the band written for 1.5B) — by code, not by the author of the bands.
+- **`styxx.stranger`** (`python -m styxx.stranger --repo . --expect-head <head>`): the seven checks
+  of `papers/checksum/STRANGER.md` as one command with one table and an exit code. Its first run
+  taught it which file to hand the verifier: `sworn check` must be given the `.sworn.json` sidecar
+  (the commit and the manifest binding), not the `.md` — handed the `.md`, three receipts whose spans
+  cite a harness manifest read FAILED; handed the sidecar, every checkable receipt in the tree
+  VERIFIES (46 of 46), and the sworn-action samples (targets not in the tree) are reported as not
+  checkable rather than failed.
 - **The recipe does not reproduce the RESULT's magnitudes on a second machine; the verdicts do.**
   `NOTE_replication_alienware_2026_09_13.md` (sworn to both machines' bytes): the null pair at
   exactly 0 and 30 top-1 hits on both; int8 1.51 → 1.41 nats/token, random 9.50 → 9.72; the float32

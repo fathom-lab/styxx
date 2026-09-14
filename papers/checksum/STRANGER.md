@@ -42,13 +42,18 @@ receipt at its commit.
 
 ## 3. one sworn document, by hand
 
+    python -m styxx.sworn check  papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.sworn-receipt.json \
+                                 papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.sworn.json --repo .
     python -m styxx.sworn verify papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.md --repo . --commit b8205b1c
 
-What it proves: every number in that document is the number in the file it cites, at that commit
-(SWORN-HELD, 24 spans); the same for any `*.md` beside a `*.sworn-receipt.json`. Without
-`--commit` the verifier reads the working tree and every span is UNRESOLVED; that is the documented
-operator-gated behaviour, not a pass. What it does not prove: that the cited file is honest — for
-that, re-run the recipe that wrote it (below).
+What it proves: the first re-derives the committed receipt exactly (VERIFIED: digest matches, the
+verdict reproduces; `same-build=False` on an older receipt only says the verifier's bytes moved
+since); the second re-reads the document from scratch — every number in it is the number in the
+file it cites, at that commit (SWORN-HELD, 24 spans). Hand `check` the `.sworn.json` sidecar, not
+the `.md`: the sidecar carries the commit and the manifest binding, and a receipt whose spans cite
+a harness manifest reads FAILED without it. Without `--commit` the verifier reads the working tree
+and every span is UNRESOLVED; that is the documented operator-gated behaviour, not a pass. What it
+does not prove: that the cited file is honest — for that, re-run the recipe that wrote it (below).
 
 ## 4. the seals, when they exist
 
@@ -101,6 +106,25 @@ reproduce (SAME / DRIFT / DRIFT); the magnitudes do not, by a measured amount �
 nats/token on the int8 arm and 0.22 on the random arm, and `BOUNTY.md` says what a re-run outside
 that width is worth. What it does not prove: anything about the deploy-scale run, which needs a GPU
 and the seal.
+
+## all of it in one command
+
+    python -m styxx.stranger --repo . --expect-head <head>          # steps 0, 2, 3, 5, 6; a table and an exit code
+    python -m styxx.stranger --repo . --with-tests --network         # steps 1 and 4 as well (minutes; the chain)
+    python -m styxx.stranger --repo . --only ferry_log,draw,reading --json stranger_report.json
+
+`styxx.stranger` runs the steps above and prints PASS / FAIL / SKIP per step with the detail a
+dispute needs, then writes a report (`styxx.stranger/report/v1`) naming the commit it ran on. It
+adds no verdict of its own: the ferry log is `styxx.charon.verify_log`, every receipt in the tree
+is `python -m styxx.sworn check`, the draw is `styxx.beacon.select`, the reading is
+`papers/checksum/score.py`. Three things it does that the manual steps would not make obvious: it
+hands `check` the `.sworn.json` sidecar as the target, because the sidecar carries the commit and
+the manifest binding and a receipt handed the `.md` instead can read FAILED on spans that cite a
+harness manifest (three receipts in this tree do, all VERIFIED with the sidecar); the sworn-action
+samples were issued against temporary files and are reported as not checkable here, not as
+failures; and a committed scorecard that is not what the scorer reads today is a FAIL. SKIP is not
+a pass, and the table says why each step was skipped. Expect a few minutes: the ferry log
+re-derives 251 documents and the receipts run one verifier process each.
 
 ## what the lab claims, and where each claim's receipt is
 

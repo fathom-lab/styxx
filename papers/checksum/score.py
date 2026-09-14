@@ -105,6 +105,8 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
         problems.append(f"model is {certs.get('model')!r}, the PREREG's is {MODEL}")
     if not certs.get("is_the_experiment"):
         problems.append("is_the_experiment is false (a tag, a smoke, or another model)")
+    if prereg == "deploy_quant" and (certs.get("canaries") or {}).get("draw"):
+        problems.append("the certs carry a draw record; the 2026-09-13 PREREG froze the hand-written set (score it under --prereg beacon_draw)")
 
     # K1 — evaluated in the runner; re-read here from the certs
     k1_fired = bool(k1.get("fired")) if k1 else (floor is not None and floor > b["k1_floor"])
