@@ -36,8 +36,10 @@ committed pool, with n = 48, and the beacon itself against --expect-beacon; for 
 cert and the held-out cert grade the same 48-item set the PREREG names and carry the same draw record,
 that when K1 did not fire all four arm certs and the held-out cert exist, and that
 `canaries.canary_sha256` exists and is the PREREG's set. H5 needs the hand-set certs to be a valid
-2026-09-13 experiment whose K1 did not fire; H6 needs a portability record whose digest re-derives and
-whose inputs include these certs' arm digests.
+2026-09-13 experiment whose K1 did not fire; H6 needs a portability record whose digest re-derives, whose
+inputs list these certs exactly once beside at least one other input, where every arm digest it binds
+re-derives from these certs' own arm bodies, and whose column for these certs is their own verdicts and
+means (a record over other bytes, or over these certs compared with themselves, leaves H6 PENDING).
 
 What it refuses to be: a judge of meaning. It reads the numbers as the PREREG wrote them, marks a
 hypothesis whose inputs do not exist yet PENDING, marks a run that is not the experiment as an
@@ -164,10 +166,33 @@ def _set_problems(certs: dict, expected_hash: str | None, draw: dict | None, req
     return out
 
 
+def _canonical_sha256(body: dict) -> str | None:
+    """sha256 over the canonical JSON both styxx.checksum and styxx.portability digest; None when it does not serialise."""
+    try:
+        return hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    except (TypeError, ValueError):
+        return None
+
+
+def _finite(x) -> bool:
+    return _num(x) is not None and math.isfinite(x)
+
+
 def _portability_unbound(certs: dict, portability: dict) -> str | None:
-    """Why the portability record does not grade these certs, or None when it does: its digest must re-derive from
-    its body (as styxx.portability.compare digests it) and one of its input_cert_digests must be these certs' own
-    arm-cert digests for the arms it compares."""
+    """Why the portability record does not grade these certs, or None when it does.
+
+    - its digest re-derives from its body (as styxx.portability.compare digests it);
+    - every arm cert it compares exists here and its digest re-derives from that cert's own body (as
+      styxx.checksum digests a compare cert: the body without digest and created) — a digest field pasted
+      onto other bytes binds nothing;
+    - it lists one input per machine, at least two, and these certs' arm digests are exactly one of them:
+      a record that lists these certs twice is these certs compared with themselves, and nothing in it
+      shows a second machine (a second run bit-identical on every arm cannot be told apart from that, so it
+      reads PENDING too);
+    - the column it records for these certs is these certs' own verdict and mean |Δ log-prob| on every arm,
+      each arm's max_abs_diff is the spread of its own values, and its `verdicts` is what its per-arm verdicts
+      say — the clauses H6 reads are then re-derived from the record's columns, not from a summary beside them.
+    What it cannot bind is the other machine's column: those certs are not given, only their digests."""
     if not isinstance(portability, dict):
         return "it is not an object"
     body = {k: v for k, v in portability.items() if k not in ("digest", "labels", "created", "inputs")}
@@ -182,14 +207,41 @@ def _portability_unbound(certs: dict, portability: dict) -> str | None:
         return "it compares no arms"
     mine = []
     for arm in sorted(arms):
-        digest = _obj(certs.get(arm)).get("digest")
+        cert = _obj(certs.get(arm))
+        digest = cert.get("digest")
         if not isinstance(digest, str):
             return f"these certs carry no {arm} cert digest"
+        if _canonical_sha256({k: v for k, v in cert.items() if k not in ("digest", "created")}) != digest:
+            return f"these certs' {arm} cert digest does not re-derive from that cert's body"
         mine.append(digest)
     inputs = portability.get("input_cert_digests")
-    listed = [sorted(str(d) for d in x) for x in inputs if isinstance(x, list)] if isinstance(inputs, list) else []
-    if sorted(mine) not in listed:
+    n = portability.get("n_machines")
+    if not isinstance(inputs, list) or not all(isinstance(x, list) for x in inputs) or _num(n) is None or n < 2 or len(inputs) != n:
+        return "it does not list one input per machine for at least two machines"
+    listed = [sorted(str(d) for d in x) for x in inputs]
+    here = [i for i, x in enumerate(listed) if x == sorted(mine)]
+    if not here:
         return "none of its input_cert_digests is these certs' arm digests"
+    if len(here) > 1:
+        return "it lists these certs as more than one machine: nothing in it shows a second machine"
+    i = here[0]
+    agree = True
+    for arm in sorted(arms):
+        entry, dist = _obj(arms.get(arm)), _obj(_obj(certs.get(arm)).get("distance"))
+        verdicts = entry.get("verdicts")
+        if not isinstance(verdicts, list) or len(verdicts) != n or verdicts[i] != dist.get("verdict"):
+            return f"its {arm} verdicts do not record these certs' {arm} verdict for their machine"
+        agree = agree and len({str(v) for v in verdicts}) == 1
+        leaf = _obj(_obj(entry.get("numbers")).get("mean_abs_nats"))
+        values = leaf.get("values")
+        own = dist.get("mean_abs_nats") if _finite(dist.get("mean_abs_nats")) else None
+        if not isinstance(values, list) or len(values) != n or values[i] != own:
+            return f"its {arm} mean_abs_nats values do not record these certs' {arm} mean for their machine"
+        spread = float(max(values) - min(values)) if all(_finite(v) for v in values) else None
+        if leaf.get("max_abs_diff") != spread:
+            return f"its {arm} max_abs_diff is not the spread of its own values"
+    if (portability.get("verdicts") == "AGREE") != agree:
+        return "its verdicts field is not what its per-arm verdicts say"
     return None
 
 
@@ -447,7 +499,8 @@ def main(argv=None):
                          "PREREG's digest; without it K5's beacon clause is not evaluable and the card does not count as a result")
     ap.add_argument("--expect-blob", default=None, help="optional: asserted equal to the sealed digest this scorer froze")
     ap.add_argument("--hand-set-certs", default=None)
-    ap.add_argument("--portability", default=None, help="a styxx.portability v1 record whose input_cert_digests include these certs' arms")
+    ap.add_argument("--portability", default=None, help="a styxx.portability v1 record over these certs and another machine's: its input_cert_digests "
+                         "list these certs' re-derived arm digests exactly once, and its column for them is their own numbers")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     certs = json.load(open(a.certs, encoding="utf-8"))

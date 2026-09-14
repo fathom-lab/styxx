@@ -269,14 +269,37 @@ def _seal_portability(rec):
     return rec
 
 
+def _reseal_arms(certs):
+    """Re-derive every arm cert's digest as styxx.checksum writes it (sha256 of the body without digest and created)."""
+    for a in score.ARMS:
+        body = {k: v for k, v in certs[a].items() if k not in ("digest", "created")}
+        certs[a]["digest"] = hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    return certs
+
+
 def _portability(certs, moves=None, verdicts="AGREE"):
+    """A record in the shape styxx.portability.compare writes over these certs (machine 0) and a second machine
+    whose arm values sit `moves` above them; with verdicts="FLIP" the second machine reads Q4 differently."""
     moves = {"Q4": 0.10, "Q8": 0.10, "R": 0.22} if moves is None else moves
     other = sorted(hashlib.sha256(f"the second machine's {a}".encode()).hexdigest() for a in score.ARMS)
+    arms = {}
+    for a in score.ARMS:
+        d = certs[a]["distance"]
+        there = d["verdict"] if not (verdicts == "FLIP" and a == "Q4") else ("SAME" if d["verdict"] != "SAME" else "DRIFT")
+        values = [d["mean_abs_nats"], d["mean_abs_nats"] + moves.get(a, 0.0)]
+        arms[a] = {"verdicts": [d["verdict"], there],
+                   "numbers": {"mean_abs_nats": {"values": values, "max_abs_diff": max(values) - min(values)}}}
     rec = {"schema": "styxx.portability/v1", "n_machines": 2,
            "input_cert_digests": [sorted(certs[a]["digest"] for a in score.ARMS), other],
-           "arms": {a: {"verdicts": ["DRIFT", "DRIFT"], "numbers": {"mean_abs_nats": {"max_abs_diff": moves.get(a, 0.0)}}} for a in score.ARMS},
-           "verdicts": verdicts}
+           "arms": arms, "verdicts": verdicts}
     return _seal_portability(rec)
+
+
+def _zero_means(certs):
+    """These certs with every arm's mean |Δ log-prob| at 0.0, resealed, so a move of m is a spread of exactly m."""
+    for a in score.ARMS:
+        certs[a]["distance"]["mean_abs_nats"] = 0.0
+    return _reseal_arms(certs)
 
 
 def test_h5_ratio_band_is_inclusive_both_ways_and_h6_moves_are_inclusive():
@@ -286,17 +309,18 @@ def test_h5_ratio_band_is_inclusive_both_ways_and_h6_moves_are_inclusive():
         c = _set(_experiment("beacon_draw"), m4=m4, m8=0.01, l4=10)
         h5 = score.score(c, "beacon_draw", hand_set=hand)["hypotheses"]["H5"]
         assert h5["clauses"][-1]["holds"] is holds, (m4 / hm4, h5)
-    c = _experiment("beacon_draw")
+    c = _zero_means(_experiment("beacon_draw"))
     port = _portability(c)
     h6 = score.score(c, "beacon_draw", portability=port)["hypotheses"]["H6"]
     assert h6["status"] == "HELD" and h6["portability_digest"] == port["digest"]
+    assert [x["observed"] for x in h6["clauses"][1:]] == [0.10, 0.10, 0.22]          # exactly on each edge
     port = _portability(c, moves={"Q4": 0.10, "Q8": 0.1000001, "R": 0.22})
     h6 = score.score(c, "beacon_draw", portability=port)["hypotheses"]["H6"]
     assert h6["status"] == "FAILED" and [x["holds"] for x in h6["clauses"]] == [True, True, False, True]
 
 
 def test_h6_needs_every_verdict_to_agree():
-    c = _experiment("beacon_draw")
+    c = _zero_means(_experiment("beacon_draw"))
     h6 = score.score(c, "beacon_draw", portability=_portability(c, verdicts="FLIP"))["hypotheses"]["H6"]
     assert h6["status"] == "FAILED" and [x["holds"] for x in h6["clauses"]] == [False, True, True, True]
 
@@ -589,8 +613,11 @@ def test_h6_reads_a_record_styxx_portability_wrote_over_these_certs_and_refuses_
         return h6["reason"][len(score.PORTABILITY_UNBOUND) + 2:]
 
     elsewhere = copy.deepcopy(c)
-    elsewhere["Q4"]["digest"] = "0" * 64
-    assert reason(elsewhere, rec) == "none of its input_cert_digests is these certs' arm digests"
+    elsewhere["Q4"]["note"] = "another run's Q4 cert"
+    assert reason(_reseal_arms(elsewhere), rec) == "none of its input_cert_digests is these certs' arm digests"
+    pasted = copy.deepcopy(c)
+    pasted["Q4"]["digest"] = "0" * 64
+    assert reason(pasted, rec) == "these certs' Q4 cert digest does not re-derive from that cert's body"
     forged = copy.deepcopy(rec)
     forged["reading"] = "every verdict and every compared number survive the move"
     assert reason(c, forged) == "its digest does not re-derive from its body"
@@ -603,6 +630,92 @@ def test_h6_reads_a_record_styxx_portability_wrote_over_these_certs_and_refuses_
     assert reason(c, two_lines) == "its digest does not re-derive from its body"
     committed = json.load(open(os.path.join(CK, "portability_smollm_quant_two_machines_2026_09_13_v1.json"), encoding="utf-8"))
     assert reason(c, committed) == "these certs carry no int8 cert digest"      # it binds the SmolLM certs, not these
+
+
+def _h6_reason(certs, record):
+    h6 = score.score(certs, "beacon_draw", portability=record)["hypotheses"]["H6"]
+    if h6["status"] != "PENDING":
+        return h6["status"]
+    assert h6["clauses"] == [] and h6["reason"].startswith(score.PORTABILITY_UNBOUND + ": ")
+    return h6["reason"][len(score.PORTABILITY_UNBOUND) + 2:]
+
+
+def test_h6_refuses_a_record_whose_binding_rests_on_digest_fields_pasted_onto_other_bytes():
+    """The repair round's probe: a record over two unrelated certs, with the first one's arm digests pasted onto
+    these certs (bodies unchanged), read HELD. Each cert digest is now re-derived from its body."""
+    from styxx import portability as pt
+    c = _experiment("beacon_draw")
+    x, y = copy.deepcopy(c), copy.deepcopy(c)
+    for a in score.ARMS:
+        x[a]["digest"] = hashlib.sha256(f"x{a}".encode()).hexdigest()
+        y[a]["digest"] = hashlib.sha256(f"y{a}".encode()).hexdigest()
+        x[a]["distance"]["mean_abs_nats"] = y[a]["distance"]["mean_abs_nats"] = 9.0
+    rec = pt.compare([x, y], ["x", "y"])
+    forged = copy.deepcopy(c)
+    for a in score.ARMS:
+        forged[a]["digest"] = x[a]["digest"]
+    assert _h6_reason(forged, rec) == "these certs' A2 cert digest does not re-derive from that cert's body"
+    # the converse: these certs' true digests pasted onto other bodies before compare — the digests bind, the columns do not
+    x2 = copy.deepcopy(x)
+    for a in score.ARMS:
+        x2[a]["digest"] = c[a]["digest"]
+    assert _h6_reason(c, pt.compare([x2, y], ["x", "y"])) == "its A2 mean_abs_nats values do not record these certs' A2 mean for their machine"
+    x3 = copy.deepcopy(c)
+    for a in score.ARMS:
+        x3[a]["distance"]["verdict"] = "DRIFT" if c[a]["distance"]["verdict"] == "SAME" else "SAME"
+    assert _h6_reason(c, pt.compare([x3, y], ["x", "y"])) == "its A2 verdicts do not record these certs' A2 verdict for their machine"
+
+
+def test_h6_refuses_these_certs_compared_with_themselves_and_reads_an_honest_second_machine():
+    from styxx import portability as pt
+    c = _experiment("beacon_draw")
+    assert _h6_reason(c, pt.compare([c, c], ["here", "here-again"])) == \
+        "it lists these certs as more than one machine: nothing in it shows a second machine"
+    there = copy.deepcopy(c)
+    for a, mv in (("A2", 0.0), ("Q4", 0.03), ("Q8", 0.02), ("R", 0.05)):
+        there[a]["distance"]["mean_abs_nats"] += mv
+    rec = pt.compare([_reseal_arms(there), c], ["there", "here"])          # these certs as the second column
+    h6 = score.score(c, "beacon_draw", portability=rec)["hypotheses"]["H6"]
+    assert h6["status"] == "HELD", h6
+    assert [x["observed"] for x in h6["clauses"][1:]] == pytest.approx([0.03, 0.02, 0.05])
+    bigger = copy.deepcopy(there)
+    bigger["R"]["distance"]["mean_abs_nats"] += 0.2
+    h6 = score.score(c, "beacon_draw", portability=pt.compare([c, _reseal_arms(bigger)], ["here", "there"]))["hypotheses"]["H6"]
+    assert h6["status"] == "FAILED" and [x["holds"] for x in h6["clauses"]] == [True, True, True, False]
+
+
+def test_h6_refuses_a_resealed_record_whose_summary_is_not_its_own_columns():
+    """A record's digest re-derives from any body its writer hashes; the fields H6 reads must follow from its columns."""
+    from styxx import portability as pt
+    c = _experiment("beacon_draw")
+    there = copy.deepcopy(c)
+    there["Q4"]["distance"]["mean_abs_nats"] += 0.5
+    rec = pt.compare([c, _reseal_arms(there)], ["here", "there"])
+    assert _h6_reason(c, rec) == "FAILED"                                                  # 0.5 > 0.10, honestly
+    small = copy.deepcopy(rec)
+    small["arms"]["Q4"]["numbers"]["mean_abs_nats"]["max_abs_diff"] = 0.01
+    assert _h6_reason(c, _seal_portability(small)) == "its Q4 max_abs_diff is not the spread of its own values"
+    flip = copy.deepcopy(c)
+    flip["Q8"]["distance"]["verdict"] = "DRIFT" if c["Q8"]["distance"]["verdict"] == "SAME" else "SAME"
+    rec = pt.compare([c, _reseal_arms(flip)], ["here", "there"])
+    assert rec["verdicts"] == "FLIP" and _h6_reason(c, rec) == "FAILED"
+    agree = copy.deepcopy(rec)
+    agree["verdicts"], agree["verdict_flips"] = "AGREE", []
+    assert _h6_reason(c, _seal_portability(agree)) == "its verdicts field is not what its per-arm verdicts say"
+    three = copy.deepcopy(pt.compare([c, _reseal_arms(there)], ["here", "there"]))
+    three["n_machines"] = 3
+    assert _h6_reason(c, _seal_portability(three)) == "it does not list one input per machine for at least two machines"
+    one = copy.deepcopy(three)
+    one["n_machines"], one["input_cert_digests"] = 1, one["input_cert_digests"][:1]
+    for entry in one["arms"].values():
+        entry["verdicts"] = entry["verdicts"][:1]
+        leaf = entry["numbers"]["mean_abs_nats"]
+        leaf["values"], leaf["max_abs_diff"] = leaf["values"][:1], 0.0
+    one["verdicts"] = "AGREE"
+    assert _h6_reason(c, _seal_portability(one)) == "it does not list one input per machine for at least two machines"
+    ragged = copy.deepcopy(three)
+    ragged["n_machines"], ragged["input_cert_digests"] = 2, [ragged["input_cert_digests"][0], "not a list"]
+    assert _h6_reason(c, _seal_portability(ragged)) == "it does not list one input per machine for at least two machines"
 
 
 # ----------------------------------------------------------------------------- the committed checks, the CLI, the published mutations
