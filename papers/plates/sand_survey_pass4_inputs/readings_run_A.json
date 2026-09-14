@@ -1,0 +1,487 @@
+{
+ "run": "wf_64806a5e-5d1",
+ "script": "prompts/read_pass4_run_A.js",
+ "readings": [
+  {
+   "reader": "reader-1",
+   "sources": [
+    {
+     "id": "A01",
+     "read_end_to_end": true,
+     "last_line_quote": "IEEE conference on computer vision and pattern recognition. 8697–8710.",
+     "midpoint_quote": "their matching rates. Then, AUC is essentially the probability that",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Whether a suspect image classifier is a pirated or post-processed (fine-tuned, retrained, pruned-and-retrained) version of the owner's target classifier, judged by label agreement on fixed boundary data points.",
+       "reason": "Carries only E2 (a fixed set of fingerprinting points given to both sides). The comparison is piracy detection between different models, which the protocol excludes from E1. Its compression variants retrain after pruning. The verdict uses a matching-rate threshold swept via ARUC, with no same-weights floor and no interval, and it compares hard labels only. Distance 4.",
+       "neighbour_phrase": "Cao, Jia & Gong match predicted labels on fixed boundary points to flag pirated image classifiers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "DNN classifier is said to be a pirated version of the model owner’s classifier if they predict the same labels for most fingerprinting data points."
+        },
+        "E2": {
+         "value": true,
+         "quote": "Given a suspect classifier, the model owner queries its prediction API for the labels of the fingerprinting data points."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Given a matching rate threshold, the Verify function produces 1 if a suspect classifier has a matching rate that is greater than or equal to the threshold."
+        },
+        "E4": {
+         "value": false,
+         "quote": "Therefore, we propose the Area under the Robustness-Uniqueness Curves (ARUC) as a metric to jointly evaluate the robustness and uniqueness of a method."
+        },
+        "E5": {
+         "value": false,
+         "quote": "However, we only use the predicted label in this work and leave leveraging the confidence score vector to fingerprint a classifier as future work."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "DNN classifier is said to be a pirated version of the model owner’s classifier if they predict the same labels for most fingerprinting data points.",
+      "We consider six popular post-processing techniques including 2 variants of fine-tuning, 2 variants of retraining, and 2 variants of model compression",
+      "and then retrain the pruned classifier to enhance the classification accuracy",
+      "However, we only use the predicted label in this work and leave leveraging the confidence score vector to fingerprint a classifier as future work."
+     ],
+     "leads": [],
+     "notes": "C4a only. The effectiveness property (suspect identical to target) is a stated design goal, not a measured comparison. Its model-compression suspects (weight and filter pruning) are retrained after pruning, so they are not the same trained weights under E1(ii). Matching rates are reported as ranges over independently trained negative models, which is a cross-model spread and not a same-weights floor. No cited work looks nearer to the clause."
+    },
+    {
+     "id": "A02",
+     "read_end_to_end": true,
+     "last_line_quote": "18",
+     "midpoint_quote": "removal attack. The results from our Ground-Truth attack shown in Fig. 4d show that access to",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Whether a suspect CIFAR-10/ImageNet32 classifier is a stolen surrogate (distilled, fine-tuned, pruned, extracted) or an independently trained reference model relative to a source model, judged by label agreement on fixed conferrable adversarial examples.",
+       "reason": "Carries only E2 (a fixed fingerprint set with source-model labels as verification keys). The object is surrogate-versus-reference attribution between different models, which is excluded from E1. The decision threshold is chosen empirically from surrogate and reference models, the evaluation reports ROC AUC with no interval, and the compared quantity is top-1 labels. Distance 4.",
+       "neighbour_phrase": "Lukas, Zhang & Kerschbaum match labels on conferrable adversarial examples to verify stolen surrogate classifiers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "This paper proposes a DNN fingerprinting method to predict whether a model is a (stolen) surrogate or a (benign) reference model relative to a source model."
+        },
+        "E2": {
+         "value": true,
+         "quote": "For the fingerprint verification, we compute the error rate between the source model’s prediction on the fingerprint and a target model’s predictions."
+        },
+        "E3": {
+         "value": false,
+         "quote": "We empirically measure the error rate separately for surrogate and reference models, which allows to choose a decision threshold"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Our ROC AUC is 1.0, whereas IPGuard has a ROC AUC of only 0.63."
+        },
+        "E5": {
+         "value": false,
+         "quote": "An example is successful if the target model predicts the target label"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "This paper proposes a DNN fingerprinting method to predict whether a model is a (stolen) surrogate or a (benign) reference model relative to a source model.",
+      "We repeat all removal attacks three times and report the mean values and the standard deviation as error bars.",
+      "Our ROC AUC is 1.0, whereas IPGuard has a ROC AUC of only 0.63."
+     ],
+     "leads": [],
+     "notes": "C4a only. The error bars come from three repetitions of each removal attack, which is a spread across retrained or derived models, not repeated evaluation of identical weights, and it is not used to grade. The pruning attacks are removal attacks on a stolen model, framed as derivation, not a differently served copy of the same weights. No cited work looks nearer to the clause."
+    },
+    {
+     "id": "A03",
+     "read_end_to_end": true,
+     "last_line_quote": "15",
+     "midpoint_quote": "between LLM providers and their customers, and leads to greater accountability and",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The low-rank 'image' of an API-protected LLM's full-vocabulary log-prob outputs, used to estimate the embedding size of gpt-3.5-turbo and to attribute a logit output to the Pythia checkpoint that produced it (auditing API model updates is proposed, not run).",
+       "reason": "Carries E5: the signature is built from logits and log-probs returned by the model or API. The demonstrated comparison attributes an output to one of several checkpoints or models ('which LLM produced'), which is excluded from E1. It is explicitly input-independent, so there is no fixed item set. Monitoring updates over time is proposed only. No same-weights floor or interval is reported; residuals and singular-value drops are read by eye. Distance 4.",
+       "neighbour_phrase": "Finlayson, Ren & Swayamdipta attribute API log-prob outputs to model checkpoints via the softmax-bottleneck image",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Thus, it is possible to determine precisely which LLM produced a particular full-vocabulary output using only API access to a set of LLMs"
+        },
+        "E2": {
+         "value": false,
+         "quote": "notably, without knowing the exact inputs to the model."
+        },
+        "E3": {
+         "value": false,
+         "quote": "High residuals indicate that the output is not in a model’s image."
+        },
+        "E4": {
+         "value": false,
+         "quote": "This suggests that LLM images are highly sensitive to parameter changes"
+        },
+        "E5": {
+         "value": true,
+         "quote": "An LLM image can serve as an identifying signature for the model, as shown in Figure 5, where the logit output from a pythia-70m checkpoint lies uniquely in the checkpoint’s image"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Thus, it is possible to determine precisely which LLM produced a particular full-vocabulary output using only API access to a set of LLMs",
+      "Fortunately, our method can be used to monitor these updates over time, alerting end-users when LLM providers change embedding size",
+      "we find that OpenAI’s LLM APIs are stochastic",
+      "This might be the result of multiple instances of the LLM being run on different hardware which results in slightly different outputs."
+     ],
+     "leads": [
+      "Jakob Mökander, Jonas Schuett, Hannah Rose Kirk, and Luciano Floridi. Auditing large language models: a three-layered approach. AI and Ethics, May 2023.",
+      "Nicholas Carlini, Daniel Paleka, Krishnamurthy Dj Dvijotham, Thomas Steinke, Jonathan Hayase, A. Feder Cooper, Katherine Lee, Matthew Jagielski, Milad Nasr, Arthur Conmy, Eric Wallace, David Rolnick, and Florian Tramèr. Stealing part of a production language model, 2024."
+     ],
+     "notes": "C4a only. Borderline on E1: Figure 5 checks a pythia-70m checkpoint's output against the images of the preceding and following checkpoints of the same run, which is structurally close to 'the same model at another time'. The paper uses it for attribution ('which LLM produced'), so I coded E1 false. A reader who takes adjacent training checkpoints as (i) would still find E2, E3 and E4 missing. The paper observes API stochasticity (n outputs from different hardware) and works around it to extract outputs; it does not measure that stochasticity as a floor or grade with it. Table 2's update-auditing interpretations and the LoRA-update detection are proposals (left to future work). Carlini et al. 2024 is already A05 in this pass."
+    },
+    {
+     "id": "A04",
+     "read_end_to_end": true,
+     "last_line_quote": "16",
+     "midpoint_quote": "likely because random questions allow the model to overfit to random tokens and ignore prompt",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Persistence of a fine-tuned-in, SHA-256-bound question/response ownership fingerprint in an LLM, measured as the token probability of the bound responses on fixed fingerprint questions, across meta-prompts, fine-tuning, LoRA and INT8 quantization of the fingerprinted model.",
+       "reason": "The INT8 quantization-resilience experiment compares a fingerprinted model with a quantized copy of the same weights (E1 ii). It uses the fixed fingerprint question set (E2) and scores Fingerprint Strength as the probability of the expected response tokens (E5). There is no same-weights floor: the variation reported is across three independently fingerprinted trainings and is not used to grade. The quantization comparison reports only raw drops with no interval; the binomial false-positive rate belongs to the ownership test against non-fingerprinted models, not to this comparison. Distance 2 (missing E3, E4).",
+       "neighbour_phrase": "Russinovich, Cai & Salem track hash-bound fingerprint token probabilities of LLMs under fine-tuning and INT8 quantization",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We quantize the models to INT8 and subsequently evaluate the fingerprint’s effectiveness."
+        },
+        "E2": {
+         "value": true,
+         "quote": "This operates on two sets: the question set Q, containing k fingerprint questions from Section 4.1, and the response set R, a curated collection of 256 responses"
+        },
+        "E3": {
+         "value": false,
+         "quote": "Unless otherwise noted, we instantiate three independently fingerprinted versions of each model and report the averaged results to ensure robustness against training stochasticity."
+        },
+        "E4": {
+         "value": false,
+         "quote": "The results indicate negligible performance degradation in the Fingerprint Strength, with most models experiencing less than a 0.5% drop, and the maximum observed difference being under 2.5%."
+        },
+        "E5": {
+         "value": true,
+         "quote": "Quantifies detection confidence as the cumulative probability of the expected response tokens."
+        },
+        "E6": {
+         "value": false,
+         "quote": "To verify ownership, a claimant presents three artifacts: the question set Q, the response set R, and the hash function H."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Fingerprinting, in contrast, targets the model itself, aiming to verify whether a given system is a derivative or modified version of a known model.",
+      "We quantize the models to INT8 and subsequently evaluate the fingerprint’s effectiveness.",
+      "Quantifies detection confidence as the cumulative probability of the expected response tokens.",
+      "Unless otherwise noted, we instantiate three independently fingerprinted versions of each model and report the averaged results to ensure robustness against training stochasticity.",
+      "the false positive rate is"
+     ],
+     "leads": [],
+     "notes": "C4a only. The text supplied is arXiv 2407.10887v4 (1 Jul 2026), marked 'Published as a conference paper at ICLR 2026', with three authors (Mark Russinovich, Yanan Cai, Ahmed Salem). The list cites a 2024 two-author version; the neighbour_phrase follows the text read. The main ownership verification compares a suspect derivative with the owner's model, which is excluded from E1, and it checks sampled output prefixes. E1 and E5 are true only for the INT8 quantization-resilience comparison, which uses Fingerprint Strength. It is within an adversarial-robustness framing, so another reader could code E1 false on purpose. The ownership test has a stated binomial false-positive rate (about 4.48e-5) under an assumed chance-match probability of 1e-3, measured empirically on non-fingerprinted models: a null drawn from different models, not a same-weights floor, and not a no-difference test on the compared quantity. E6: the hash binds each question to its response and can be recomputed by a verifier once Q and R are presented, but no digest of the item set is published in advance. Cited fingerprinting works (Xu et al. 2024; Nasery et al. 2025) are ownership fingerprints and do not look nearer."
+    }
+   ]
+  },
+  {
+   "reader": "reader-2",
+   "sources": [
+    {
+     "id": "A05",
+     "read_end_to_end": true,
+     "last_line_quote": "27",
+     "midpoint_quote": "Restating the lemma from Section 4.2:",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Recovering a production language model's hidden dimension and output projection matrix from API logits/logprobs, with a side check that 8-bit and 4-bit quantized Llama-7B give the same recovered dimension as the 16-bit model.",
+       "reason": "The source carries E1 and E5 only, and only in a side experiment (Appendix I.1): it runs a logit-based attack on quantized and unquantized copies of the same weights. It does not say the prompts were the same on both sides (random prefixes). It measures no same-weights floor and gives no interval or test. Its verdict is only 'no meaningful differences'. The main object is extracting weights, not fingerprinting a served model against itself.",
+       "neighbour_phrase": "Carlini et al. recover hidden dimension and projection matrix from API logprobs of production language models",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "we quantize Llama-7B at both 8-bits and 4-bits, and compare our baseline attack (Section 4.1) to the default 16-bit implementation"
+        },
+        "E2": {
+         "value": false,
+         "quote": "Suppose we query a language model on a large number of different random prefixes."
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": "We observe no meaningful differences at different levels of quantization"
+        },
+        "E5": {
+         "value": true,
+         "quote": "In this section, we assume the adversary can directly view the logits that feed into the softmax function for every token in the vocabulary"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we quantize Llama-7B at both 8-bits and 4-bits, and compare our baseline attack (Section 4.1) to the default 16-bit implementation",
+      "When running the full layer-stealing attack, we confirmed that our extracted weights are nearly identical to the actual weights",
+      "by observing changes (or the absence thereof) in the last layer",
+      "Suppose we query a language model on a large number of different random prefixes."
+     ],
+     "leads": [
+      "Finlayson, M., Swayamdipta, S., and Ren, X. Logits of api-protected llms leak proprietary information. arXiv preprint arXiv:2403.09539, 2024.",
+      "Morris, J. X., Zhao, W., Chiu, J. T., Shmatikov, V., and Rush, A. M. Language model inversion. arXiv preprint arXiv:2311.13647, 2023.",
+      "Gao, L. On the sizes of OpenAI API models. https://blog.eleuther.ai/gpt3-model-sizes/, 2021.",
+      "Zanella-Beguelin, S., Tople, S., Paverd, A., and Köpf, B. Grey-box extraction of natural language models. In International Conference on Machine Learning, pp. 12278-12286. PMLR, 2021."
+     ],
+     "notes": "E1 is coded true only for the Appendix I.1 quantization check: Llama-7B at 16, 8 and 4 bits, compared on singular values of the logit matrix. Checking the extracted matrix against OpenAI's actual weights is a test of extraction fidelity, not a self-comparison of a served model. The source only proposes, as future work, noticing last-layer changes to learn about a provider's finetuning API; it does not do it. Table 2's '± 1' is an error on the stolen size, not an interval on a comparison. There is no hashed item set."
+    },
+    {
+     "id": "A06",
+     "read_end_to_end": true,
+     "last_line_quote": "SemEval (P-Stance).",
+     "midpoint_quote": "Overall, we see an improvement in performance, measured",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Zero-shot stance-detection F1 of dated ChatGPT versions (the Nov/Dec 2022 V1 as reported by Zhang et al., Jan 30, and Feb 13 plus) on the SemEval 2016 Task 6 and P-Stance test sets with the same prompt.",
+       "reason": "The source compares a served model with its own earlier versions (E1) on fixed benchmark test sets with the same prompt (E2). It has no repeated runs, so no floor; the authors say they could not estimate uncertainty. It gives no interval or test (E4). The compared quantity comes from stance labels pulled by hand from sampled text (not E5). Two of five elements.",
+       "neighbour_phrase": "Aiyappa et al. compare stance-detection F1 across dated ChatGPT versions on fixed benchmark test sets",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "we see an average of 12.46 and 8.6 point improvement in the micro and macro-F scores, respectively, when comparing Jan 30 ChatGPT to V1 on the SemEval task"
+        },
+        "E2": {
+         "value": true,
+         "quote": "Following their work, we used the test sets of SemEval 2016 Task 6"
+        },
+        "E3": {
+         "value": false,
+         "quote": "we could not try multiple queries for each input and could not estimate the uncertainty of the performance"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Although it is still difficult to conclude with only a few data points"
+        },
+        "E5": {
+         "value": false,
+         "quote": "Then we manually go through these (often verbose) responses to extract the stance labels from them when explicitly mentioned"
+        },
+        "E6": {
+         "value": false,
+         "quote": "The responses of ChatGPT, from which stance labels were manually extracted, are available upon request."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we see an average of 12.46 and 8.6 point improvement in the micro and macro-F scores, respectively, when comparing Jan 30 ChatGPT to V1 on the SemEval task",
+      "We also used the same prompt.",
+      "we could not try multiple queries for each input and could not estimate the uncertainty of the performance",
+      "by evaluating whether the model assigns anomalously high or low probabilities to the string"
+     ],
+     "leads": [
+      "Bowen Zhang, Daijun Ding, and Liwen Jing. 2022. How would stance detection techniques evolve after the launch of chatgpt? Preprint arXiv:2212.14548.",
+      "Aarohi Srivastava, Abhinav Rastogi, Abhishek Rao, et al. 2022. Beyond the imitation game: Quantifying and extrapolating the capabilities of language models. Preprint arXiv:2206.04615.",
+      "Jan Kocoń, Igor Cichecki, Oliwier Kaszyca, et al. 2023. Chatgpt: Jack of all trades, master of none. Preprint arXiv:2302.10724."
+     ],
+     "notes": "E2 is coded true, with a caveat. The V1 side's scores are taken from Zhang et al., not re-run. The appendix records an uncertainty in the F1 definitions and a mismatch in the prompt between that paper's text and its figures. Only Feb 13 plus was run on P-Stance. The V1 side was collected in the web UI during a single chat session, the Feb 13 side through an API with a new session per query. The BIG-bench canary-string probability probe is only discussed, not done."
+    },
+    {
+     "id": "A07",
+     "read_end_to_end": true,
+     "last_line_quote": "13",
+     "midpoint_quote": "compressed, there is a set of data which bears a disproportionately high portion of the error. We highlight fairness issues",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Per-example and subgroup label predictions of populations of pruned or post-training-quantized ResNet-18 CelebA classifiers against populations of non-compressed models (Compression Identified Exemplars).",
+       "reason": "The source compares compressed (including post-training-quantized) models with non-compressed ones (E1) on the same CelebA examples (E2). Its only noise control is 30 independently trained models per level, a spread across retrainings that the protocol excludes as a floor. It states an aim of statistical significance but reports no test, level or interval. It compares hard labels (modal label, Taxicab distance on label counts), not log-probabilities. The object is an image classifier, not a served language model.",
+       "neighbour_phrase": "Hooker et al. compare label predictions of pruned and quantized classifier populations against uncompressed ones on CelebA",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "all of the quantization methods we evaluate are implemented post-training"
+        },
+        "E2": {
+         "value": true,
+         "quote": "an example is a CIE if the labels predicted by the compressed population diverges from the labels produced by the non-compressed population"
+        },
+        "E3": {
+         "value": false,
+         "quote": "we train 30 models for every level of compression considered"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Our goal is to have a high level of certainty that differences in predictive performance between compressed and non-compressed models is statistically significant"
+        },
+        "E5": {
+         "value": false,
+         "quote": "We compute Taxicab distance as the absolute difference between the distribution of labels"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "CIEs are where the predictive behavior diverges between a population of independently trained compressed and non-compressed models",
+      "all of the quantization methods we evaluate are implemented post-training",
+      "we train 30 models for every level of compression considered"
+     ],
+     "leads": [
+      "Hooker, S., Courville, A., Clark, G., Dauphin, Y., and Frome, A. What Do Compressed Deep Neural Networks Forget? arXiv e-prints, art. arXiv:1911.05248, November 2019b.",
+      "Guo, Y., Zhang, C., Zhang, C., and Chen, Y. Sparse dnns with improved adversarial robustness. NeurIPS 31, 2018.",
+      "Sehwag, V., Wang, S., Mittal, P., and Jana, S. Towards compact and robust deep neural networks. CoRR, abs/1906.06110, 2019."
+     ],
+     "notes": "E1 holds only for the post-training quantization arm. Pruning is applied during training, so the pruned models are separately trained weights. The paper also says the compared populations are 'independently trained', so whether each quantized model derives from the same weights as its baseline counterpart is not stated per model. A strict reader could code E1 false, which would leave E2 only."
+    },
+    {
+     "id": "A08",
+     "read_end_to_end": true,
+     "last_line_quote": ", Vol. 1, No. 1, Article . Publication date: October 2024.",
+     "midpoint_quote": "Answer to RQ2: Contrary to the widely held belief (and common practices), setting the",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Run-to-run non-determinism of ChatGPT API code generation (gpt-3.5-turbo-0125, gpt-4-0613): five requests per problem with an identical prompt over 829 benchmark problems, scored by test-output, textual and AST similarity, across temperatures, request modes, models and prompts.",
+       "reason": "The source uses a fixed item set (E2) and measures the spread of repeated requests to a provider-named API version. That spread is the finding itself; it is never used as a floor to grade a comparison of the model against an earlier or differently-served self. Its comparisons are across temperature settings, GPT-4 vs GPT-3.5 (different models) and prompts, with no interval or test. The Kruskal-Wallis p<0.05 tests differences among the repeated candidates of one side. Quantities come from test outputs and code text, not log-probabilities.",
+       "neighbour_phrase": "Ouyang et al. measure run-to-run non-determinism of ChatGPT code generation on fixed benchmark prompts",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Our non-determinism analysis compares the five code candidates in terms of their semantic similarity"
+        },
+        "E2": {
+         "value": true,
+         "quote": "We call the API five times to let ChatGPT make five predictions with the same prompt"
+        },
+        "E3": {
+         "value": false,
+         "quote": "We use the variance and maximum difference of the five values to indicate semantic similarity"
+        },
+        "E4": {
+         "value": false,
+         "quote": "the outputs of the code are indeed significantly different, where the p-value under the Kruskal-Wallis test is less than 0.05"
+        },
+        "E5": {
+         "value": false,
+         "quote": "The semantic similarity is measured by comparing test execution outputs."
+        },
+        "E6": {
+         "value": false,
+         "quote": "We release our data, code, and results at our homepage [3]."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "setting the temperature to 0 does not guarantee determinism in code generation",
+      "with the logit value for the next token being a pure function of the input sequence and the model weights",
+      "This RQ compares GPT-3.5 and GPT-4 in their degree of non-determinism in generating code",
+      "the outputs of the code are indeed significantly different, where the p-value under the Kruskal-Wallis test is less than 0.05"
+     ],
+     "leads": [
+      "[1] https://152334h.github.io/blog/non-determinism-in-gpt-4/.",
+      "[52] Hung Viet Pham, Shangshu Qian, Jiannan Wang, Thibaud Lutellier, Jonathan Rosenthal, Lin Tan, Yaoliang Yu, and Nachiappan Nagappan. 2021. Problems and opportunities in training deep learning software systems: an analysis of variance. ASE '20.",
+      "[44] Emanuele La Malfa, Aleksandar Petrov, Simon Frieder, Christoph Weinhuber, Ryan Burnell, Raza Nazar, Anthony G. Cohn, Nigel Shadbolt, and Michael Wooldridge. 2023. Language Models as a Service: Overview of a New Paradigm and its Challenges. arXiv:2309.16573."
+     ],
+     "notes": "E1 is coded false. The temperature 0/0.5/1 comparisons (RQ2) and the n=5 single-request vs five-request comparison (RQ3) use the same named API version under different sampling settings. One could argue that is 'otherwise differently-served', but these are decoding settings, and the comparisons grade the degree of non-determinism, not the model against its own earlier or served self. E3 fails on the use clause: a same-version spread is measured but grades no comparison. E4 fails because the Kruskal-Wallis test is on the repeated runs of one side."
+    }
+   ]
+  },
+  {
+   "reader": "reader-3",
+   "sources": [
+    {
+     "id": "A09",
+     "read_end_to_end": true,
+     "last_line_quote": "10",
+     "midpoint_quote": "In summary: 1) Greedy decoding generally",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The benchmark scores of the same open-weight and API LLMs under greedy decoding, compared with the mean and spread of N sampled runs on fixed public benchmarks.",
+       "reason": "Same weights, two decoding configurations, same benchmark items (E1, E2). The standard deviation of N sampled runs is reported but never used to grade the greedy-vs-sampling gap, which is judged only by its sign and size. No interval or test, and every score comes from generated text or extracted answers, so E3, E4 and E5 are missing (distance 3).",
+       "neighbour_phrase": "Song et al. compare greedy decoding against sampled runs of the same LLMs on fixed benchmarks",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We aim to compare the performance of LLMs under different decoding configurations. We select greedy decoding and sampling generation for the main comparison."
+        },
+        "E2": {
+         "value": true,
+         "quote": "AlpacaEval consists of 805 questions, Arena-Hard"
+        },
+        "E3": {
+         "value": false,
+         "quote": "Scores where greedy decoding surpasses the sampling average are highlighted in green, while those lower are marked in red."
+        },
+        "E4": {
+         "value": false,
+         "quote": "“∆” denotes the performance gap between the best and worst run."
+        },
+        "E5": {
+         "value": false,
+         "quote": "instead of using the next token probability of the choice letters"
+        },
+        "E6": {
+         "value": false,
+         "quote": "Code and data are available at"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We aim to compare the performance of LLMs under different decoding configurations. We select greedy decoding and sampling generation for the main comparison.",
+      "“Sample” and “Std.” denotes the average score and the standard deviation of “N” runs under sampling setup.",
+      "“∆” denotes the performance gap between the best and worst run.",
+      "Scores where greedy decoding surpasses the sampling average are highlighted in green, while those lower are marked in red.",
+      "instead of using the next token probability of the choice letters",
+      "Different decoding configurations can even alter the model rankings in some cases."
+     ],
+     "leads": [
+      "Matthew Renze and Erhan Guven. 2024. The effect of sampling temperature on problem solving in large language models. ArXiv preprint, abs/2402.05201."
+     ],
+     "notes": "The file is 1500 lines and was read in three Read calls; its last non-empty line is the page number \"10\". E1 is a judgment call. The two sides are the same checkpoint under greedy decoding and under temperature-1.0 sampling. I coded that as an 'otherwise differently-served version of the same trained weights'; a stricter reader who does not count decoding settings as serving would code E1 false. The alignment comparisons (DPO, KTO, SimPO and others) use different weights, so they are not a self-comparison. For E3, the paper does measure spread on identical weights (standard deviation and best-minus-worst gap over N sampled runs), but only as a descriptive result: no threshold, null or test built from it decides the greedy-vs-sampling verdict. The statistical-significance statement about temperature is attributed to Renze and Guven (2024) and is not something this paper does. The case study checks the 128 samples for a single GSM8K question against its answer; it uses no log-probabilities. There is no hashed item set: the paper points to a GitHub repo without a digest. Only C4a was assigned, so C2 and C5 were not coded."
+    }
+   ]
+  }
+ ],
+ "confirmations": [],
+ "unread": []
+}
