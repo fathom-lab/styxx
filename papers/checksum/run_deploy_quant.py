@@ -9,7 +9,7 @@ of the slot that sealed it). --prereg selects which one governs and names the ou
     # ANCHORED for the earliest memo carrying that prereg's blob digest
     python papers/checksum/run_deploy_quant.py --prereg beacon_draw --beacon <64 hex>
     # pipeline smoke on cpu (no bitsandbytes; dynamic int8 stands in for the two bnb arms;
-    # results are NOT the experiment and are written to *_smoke.* files):
+    # results are NOT the experiment and are written to *_smoke<tag>.* files, the tag appended when given):
     python papers/checksum/run_deploy_quant.py --smoke
 
 Arms: A bf16, A' bf16 reloaded, A'' bf16 reloaded (floor = worst pairwise), Q4 bitsandbytes NF4,
@@ -21,15 +21,26 @@ not to this printout.
 The sealed text, enforced (added 2026-09-14 after the red team found nothing tied the run to it): the
 experiment — an untagged, non-smoke run of the PREREG's model — refuses to start unless the governing
 PREREG's git blob at HEAD hashes to the digest that PREREG was sealed under (SEALED below, the same
-values papers/checksum/score.py freezes and SEALS_2026_09_13.md rows 3 and 6 print), git answers, and no
-tracked file differs from HEAD. An instrument check (--tag, --smoke, another model) records all of it and
-is not refused. The certs also record, per arm, the Hub revision of the weights that loaded.
+values papers/checksum/score.py freezes and SEALS_2026_09_13.md rows 3 and 6 print), git answers every
+question it is asked (a `git status` that fails is not a clean tree), no tracked file differs from HEAD,
+no untracked, non-ignored file exists under styxx/ (`git ls-files --others --exclude-standard -- styxx`:
+an untracked styxx/checksum/ package would be imported in place of the committed checksum.py), and the
+checksum module that was imported is this checkout's styxx/checksum.py. Under --prereg beacon_draw the
+experiment also refuses, before any model loads, unless papers/charon/anchors.jsonl carries a
+sealed-prereg line for the sealed digest that `styxx.clock.check_line` reads ANCHORED on chain with a
+beacon equal to --beacon (beacon_refusal below): a run under any other beacon is never the experiment.
+An instrument check is --tag or --smoke; another model is an instrument check only under --tag (an
+untagged, non-smoke run of another model is refused). An instrument check records all of it and is not
+refused. `provenance.model_revisions` records, per arm, the resolved snapshot commit of the config that
+arm loaded (for an arm that loads weights, normally the snapshot they came from; None for a local path;
+the random arm R loads only a config, so its entry is that config's commit and no weights are involved).
 
 What this runner binds, so a stranger can tell the sealed run from any other (added 2026-09-13 after
 the red team found the run could import a styxx from outside this checkout and record nothing about
 it): the styxx package it imported must live inside this checkout or it refuses to start; the certs
-carry `provenance` — git HEAD, whether the tree was dirty, the sha256 of the PREREG's git blob (the
-sealed bytes, LF as stored), the sha256 of the checksum.py that ran, the torch/transformers/
+carry `provenance` — git HEAD, whether the tree was dirty, the untracked files under styxx/, the sha256
+of the PREREG's git blob (the sealed bytes, LF as stored), the path of the checksum module that was
+imported (`checksum_file`) and the sha256 of that file (`checksum_py_sha256`), the torch/transformers/
 bitsandbytes versions, the CUDA device, CUBLAS_WORKSPACE_CONFIG — and `k1`, the PREREG's first kill
 gate, evaluated in code: if the null floor exceeds 1e-2 nats/token no comparison is written, as the
 PREREG demands. `distance_params` records n_boot, seed and the floor used. `top1_loss_vs_A` is
@@ -43,17 +54,94 @@ SEALED = {"deploy_quant": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3f
           "beacon_draw": "d6a98261f44f31664cdedbc24769532d5a701bf46d2c8b9ce30cf6a227fb5519"}    # SEALS_2026_09_13.md row 6
 
 
-def sealed_refusal(prov: dict, prereg_key: str, is_the_experiment: bool):
-    """The reason the experiment may not start under this provenance, or None. Instrument checks are never refused."""
+ANCHORS = os.path.join("papers", "charon", "anchors.jsonl")    # the seals on record, relative to the checkout
+
+
+def _same_file(a, b):
+    return os.path.normcase(os.path.realpath(a)) == os.path.normcase(os.path.realpath(b))
+
+
+def sealed_refusal(prov: dict, prereg_key: str, is_the_experiment: bool, root=None):
+    """The reason the experiment may not start under this provenance, or None. Instrument checks are never refused.
+    `root` is the checkout whose styxx/checksum.py must be the checksum module that was imported (default: ROOT)."""
     if not is_the_experiment:
         return None
+    root = ROOT if root is None else root
     if prov.get("git_head") is None or prov.get("prereg_blob_sha256") is None:
         return "git did not answer: the experiment cannot show which commit and which PREREG text it ran under"
+    if not isinstance(prov.get("git_dirty_tracked"), bool):
+        return ("git did not answer `git status`: the experiment cannot show that no tracked file differs from HEAD, "
+                "and an unanswered status is not a clean tree")
+    if not isinstance(prov.get("styxx_untracked"), list):
+        return ("git did not answer `git ls-files --others`: the experiment cannot show that no untracked file under styxx/ "
+                "is imported in place of the committed code")
     if prov["prereg_blob_sha256"] != SEALED[prereg_key]:
         return (f"{PREREGS[prereg_key]} at HEAD hashes to {prov['prereg_blob_sha256']}, not the sealed digest {SEALED[prereg_key]}; "
                 "the experiment runs only under the sealed text")
-    if prov.get("git_dirty_tracked"):
+    if prov["git_dirty_tracked"]:
         return "tracked files differ from HEAD: the experiment runs only on a clean commit (commit or stash, then run)"
+    if prov["styxx_untracked"]:
+        shown = ", ".join(str(p) for p in prov["styxx_untracked"][:5])
+        more = f" and {len(prov['styxx_untracked']) - 5} more" if len(prov["styxx_untracked"]) > 5 else ""
+        return (f"untracked files exist under styxx/ ({shown}{more}): an untracked module or package there can be imported "
+                "in place of the committed code; the experiment runs only on what the commit carries (remove them, then run)")
+    ran, expected = prov.get("checksum_file"), os.path.join(root, "styxx", "checksum.py")
+    if not isinstance(ran, str) or not _same_file(ran, expected):
+        return (f"the checksum module that was imported is {ran}, not {expected}: the experiment runs only with this "
+                "checkout's styxx/checksum.py")
+    if not isinstance(prov.get("checksum_py_sha256"), str):
+        return f"{ran} could not be read and hashed: the certs could not show which checksum ran"
+    return None
+
+
+def beacon_refusal(beacon: str, anchors_path: str, sealed_digest: str, fetch):
+    """The reason the beacon_draw experiment may not run under `beacon`, or None. The experiment's beacon is its seal's:
+    `anchors_path` must carry a sealed-prereg line for `sealed_digest` that styxx.clock.check_line, asking the chain
+    through `fetch`, reads ANCHORED, and the beacon it reads must equal `beacon`. Every other case refuses: no file,
+    no such line, no line ANCHORED (not found, not the creator, an earlier memo, an unanswered RPC), two ANCHORED lines
+    that disagree, or another beacon. The PREREG: a run under any other beacon is an instrument check."""
+    from styxx import clock
+    if not os.path.isfile(anchors_path):
+        return (f"{anchors_path} does not exist: no seal of {sealed_digest} is on record, so no beacon is the seal's "
+                "(a run under another beacon is an instrument check: pass --tag)")
+    lines = []
+    try:
+        with open(anchors_path, encoding="utf-8") as fh:
+            for raw in fh:
+                raw = raw.strip()
+                if not raw:
+                    continue
+                try:
+                    line = json.loads(raw)
+                except ValueError:
+                    continue
+                if isinstance(line, dict) and line.get("kind") == "sealed-prereg" and line.get("digest") == sealed_digest:
+                    lines.append(line)
+    except (OSError, UnicodeDecodeError) as e:
+        return f"{anchors_path} could not be read ({type(e).__name__}: {e}): the seal's beacon cannot be checked"
+    if not lines:
+        return (f"{anchors_path} has no sealed-prereg line for {sealed_digest}: the PREREG is not sealed on record, "
+                "so no beacon is the seal's (a run under another beacon is an instrument check: pass --tag)")
+    anchored, seen = {}, []
+    for line in lines:
+        try:
+            r = clock.check_line(line, fetch=fetch)
+        except Exception as e:  # a check that could not finish is not ANCHORED
+            seen.append(f"tx {line.get('tx')}: check failed ({type(e).__name__}: {e})")
+            continue
+        seen.append(f"tx {line.get('tx')}: {r.get('status')}")
+        if r.get("status") == "ANCHORED" and isinstance(r.get("beacon"), str):
+            anchored.setdefault(r["beacon"], []).append(line.get("tx"))
+    if not anchored:
+        return (f"no sealed-prereg line for {sealed_digest} in {anchors_path} reads ANCHORED on chain ({'; '.join(seen)}): "
+                "the seal's beacon is not established")
+    if len(anchored) > 1:
+        return (f"sealed-prereg lines for {sealed_digest} read ANCHORED with different beacons ({sorted(anchored)}): "
+                "the seal's beacon is ambiguous")
+    (seal_beacon,) = anchored
+    if beacon != seal_beacon:
+        return (f"--beacon {beacon} is not the seal's beacon {seal_beacon} (tx {anchored[seal_beacon][0]}, read ANCHORED): "
+                "a run under any other beacon is an instrument check and never this experiment (pass --tag)")
     return None
 
 
@@ -88,7 +176,7 @@ ARGS = _parse_args() if __name__ == "__main__" else None
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)                      # the checksum that runs is the one this commit carries
+    sys.path.insert(0, ROOT)      # this checkout first; sealed_refusal checks the checksum imported is its styxx/checksum.py
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")   # before CUDA initialises: cuBLAS determinism
 
 import numpy as np  # noqa: E402
@@ -102,6 +190,8 @@ _STYXX_FILE = os.path.abspath(styxx.__file__)
 if os.path.commonpath([_STYXX_FILE, ROOT]) != ROOT:
     raise SystemExit(f"styxx resolved to {_STYXX_FILE}, outside this checkout {ROOT}; "
                      "refusing to run the sealed experiment with another package")
+# the file the checksum module was actually imported from: an untracked styxx/checksum/ package wins over checksum.py
+_CHECKSUM_FILE = os.path.abspath(ck.__file__) if getattr(ck, "__file__", None) else None
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PREREG = PREREGS[ARGS.prereg] if ARGS is not None else PREREGS["deploy_quant"]
@@ -120,10 +210,15 @@ def provenance(device, prereg=None):
     prereg = prereg or PREREG
 
     def sha(path):
-        return hashlib.sha256(open(path, "rb").read()).hexdigest()
+        try:
+            with open(path, "rb") as fh:
+                return hashlib.sha256(fh.read()).hexdigest()
+        except (OSError, TypeError):
+            return None                           # sealed_refusal refuses the experiment on a checksum it could not hash
     head = _git("rev-parse", "HEAD")
     dirty = _git("status", "--porcelain")
     dirty_tracked = _git("status", "--porcelain", "--untracked-files=no")
+    untracked = _git("ls-files", "--others", "--exclude-standard", "--", "styxx")
     blob = _git("show", f"HEAD:papers/checksum/{prereg}")
     versions = {"torch": torch.__version__}
     try:
@@ -142,8 +237,11 @@ def provenance(device, prereg=None):
         "git_dirty_tracked": bool(dirty_tracked.stdout.strip()) if dirty_tracked else None,
         "prereg": prereg,
         "prereg_blob_sha256": hashlib.sha256(blob.stdout).hexdigest() if blob else None,
+        "styxx_untracked": ([p for p in untracked.stdout.decode("utf-8", "replace").splitlines() if p.strip()]
+                            if untracked else None),
         "styxx_file": _STYXX_FILE,
-        "checksum_py_sha256": sha(os.path.join(ROOT, "styxx", "checksum.py")),
+        "checksum_file": _CHECKSUM_FILE,               # the file `from styxx import checksum` resolved to
+        "checksum_py_sha256": sha(_CHECKSUM_FILE),     # the sha256 of that file, the checksum that ran
         "versions": versions,
         "python": sys.version.split()[0],
         "device": device,
@@ -236,6 +334,12 @@ def main():
     print(f"  provenance: head {prov['git_head']} dirty={prov['git_dirty']} prereg blob {str(prov['prereg_blob_sha256'])[:12]} "
           f"styxx {prov['styxx_file']}")
     refusal = sealed_refusal(prov, args.prereg, is_the_experiment)
+    prov["beacon_seal_checked"] = False
+    if refusal is None and is_the_experiment and args.prereg == "beacon_draw":
+        # the experiment's beacon is its seal's, read ANCHORED on chain; checked before any draw or model load
+        from styxx import clock as _clock
+        refusal = beacon_refusal(args.beacon, os.path.join(ROOT, ANCHORS), SEALED[args.prereg], _clock._rpc)
+        prov["beacon_seal_checked"] = refusal is None
     if refusal:
         raise SystemExit("refusing to run the sealed experiment: " + refusal)
     prov["sealed_blob_sha256"] = SEALED[args.prereg]
