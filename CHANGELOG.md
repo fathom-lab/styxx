@@ -14,6 +14,21 @@ was refuted. Every repair is a new commit; no sworn document and no frozen PRERE
 findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
 longer list.**
 
+**2026-09-14, later still — the sand priced a fourth time.** `PROTOCOL_sand_prior_art_pass4_2026_09_15.md`
+(frozen at 5d7f39ef before the first query) defined the fingerprint clause's elements and a frozen three-engine
+search. `SURVEY_sand_neighbours_pass4_2026_09_14.md` is sworn 50 of 50 and is ferry log line 255.
+- **The fingerprint clause stays occupied, at distance one.** Gao, Liang and Guestrin's Model Equality Testing lacks
+  log-probabilities. DiFR and Chauvin et al.'s Log Probability Tracking each lack an interval on the comparison.
+  Xu et al. lacks the same-weights floor. In a margin check, four blind readers re-coded each of the three pass-4
+  sources, and one of five readings of Chauvin et al. carries all five elements.
+- **The bounty clause is unpriced** by one unfetchable source and leaves the sentence (`SURVIVES_WITHOUT_C5`).
+- New: `papers/plates/build_sand_survey_pass4.py` (20 tests), `build_sand_survey_pass4_margins.py`, and
+  `sand_survey_pass4_inputs/` (the fetcher, the search and screen record, the located fetch routes, the
+  landing-page scope, the reader prompts and returns).
+- Disclosed defects: the frozen arXiv syntax returned nothing. The first search merge, the Semantic Scholar retry
+  rule, the midpoint proof and the sentence composer were each wrong once, and each was repaired before any result
+  it touched was counted.
+
 **2026-09-14, evening — the day's own work red-teamed: eight finder dimensions, two skeptics per blocker
 or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted; a verification of those repairs the same night confirmed 8 more (one blocker), repaired below. Repairs are new commits; no sworn
 document and no frozen PREREG was edited — the two sworn documents at fault get CORRECTIONs beside them.**
