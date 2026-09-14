@@ -177,7 +177,13 @@ The only positioning sentence the lab may say is the one `SURVEY_sand_neighbours
 lab that" does four things at once, each with its neighbours named inside the sentence. Thirty-seven
 sources across three frozen-protocol passes; two clauses retired (the plate is Perrig & Song 1999
 applied to receipts; a seal on a public chain is timestamping, 1991); none of the four survivors is
-unoccupied. No listed source carries all five elements of the fingerprint clause, and which element a source misses depends on the source and on how the protocol's two undefined terms are read: against ChatLog (Tu et al.) the clause is distinguished by teacher-forced log-probabilities; against Xu et al., who grade compressed BERT against its uncompressed self by label and probability loyalty, by a floor measured on the same weights; under the most lenient reading, against Madaan et al., by a comparison of a model with its own self (ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md). No single element carries the margin; the conjunction does. The words "first", "novel" and "revolutionary" are not licensed by anything in this
+unoccupied. No listed source carries all five elements of the fingerprint clause, and which element sets the clause apart
+from its nearest neighbours depends on the neighbour and on how the protocol's two undefined terms are read:
+against ChatLog (Tu et al.) and Hooker et al. it is teacher-forced log-probabilities; against Xu et al., who
+grade compressed BERT against its uncompressed self by label and probability loyalty, it is a floor measured on
+the same weights; under the most lenient reading, against Madaan et al., it is a comparison of a model with its
+own self. No single element carries the margin; the conjunction does
+(`ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md`, sworn). The words "first", "novel" and "revolutionary" are not licensed by anything in this
 repository.
 
 ## if something does not re-derive
