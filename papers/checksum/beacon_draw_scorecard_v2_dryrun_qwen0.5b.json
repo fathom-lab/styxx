@@ -29,6 +29,7 @@
      "holds": true
     }
    ],
+   "rule": null,
    "held_out_floor_nats": 0.0,
    "preregistered": true
   },

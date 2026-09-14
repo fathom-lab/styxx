@@ -200,6 +200,25 @@ def test_h5_ratio_band_is_inclusive_both_ways_and_h6_moves_are_inclusive():
     assert h6["status"] == "FAILED" and [c["holds"] for c in h6["clauses"]] == [True, True, False, True]
 
 
+def test_beacon_h1_applies_the_correction_rules_when_the_floor_is_above_zero():
+    text = _doc("CORRECTION_prereg_beacon_draw_2026_09_14.md")
+    c = _set(_experiment("beacon_draw"), floor=5e-4)
+    c["h1_held_out"]["cert"]["distance"]["verdict"] = "INCONCLUSIVE"
+    h1 = score.score(c, "beacon_draw")["hypotheses"]["H1"]
+    assert h1["status"] == "HELD on the floor, INCONCLUSIVE on the pair by construction" and "rule 3" in h1["rule"]
+    assert h1["status"] in text
+    c["h1_held_out"]["cert"]["distance"]["verdict"] = "DRIFT"
+    h1 = score.score(c, "beacon_draw")["hypotheses"]["H1"]
+    assert h1["status"] == "FAILED" and "rule 4" in h1["rule"]
+    c = _set(_experiment("beacon_draw"), floor=0.0)                   # bit-identical loads: evaluated as frozen
+    c["h1_held_out"]["cert"]["distance"]["verdict"] = "INCONCLUSIVE"
+    h1 = score.score(c, "beacon_draw")["hypotheses"]["H1"]
+    assert h1["status"] == "FAILED" and h1["rule"] is None
+    c = _set(_experiment("beacon_draw"), floor=2e-3)                  # the floor clause fails: no by-construction reading
+    c["h1_held_out"]["cert"]["distance"]["verdict"] = "INCONCLUSIVE"
+    assert score.score(c, "beacon_draw")["hypotheses"]["H1"]["status"] == "FAILED"
+
+
 # ----------------------------------------------------------------------------- what v1 trusted, v2 re-derives
 
 def test_the_experiment_shape_counts_as_a_result_without_any_flag():

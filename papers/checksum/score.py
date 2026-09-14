@@ -222,7 +222,14 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
     if prereg == "beacon_draw":
         c1 = _clause("worst-pairwise null floor ≤ 1e-3 nats/token (zero allowed)", "≤ 0.001", floor, floor <= b["h1_floor_max"] if floor is not None else None)
         c2 = _clause("A vs A′ reads SAME against the held-out floor", "SAME", ho.get("verdict"), ho.get("verdict") == "SAME" if ho else None)
-        card["hypotheses"]["H1"] = {"status": _status([c1, c2]), "clauses": [c1, c2],
+        st, rule = _status([c1, c2]), None
+        if c1["holds"] and floor is not None and floor > 0 and ho.get("verdict") == "INCONCLUSIVE":
+            # CORRECTION_prereg_beacon_draw_2026_09_14 rule 3, in those words: neither HELD nor FAILED for H1 as written
+            st, rule = "HELD on the floor, INCONCLUSIVE on the pair by construction", "CORRECTION_prereg_beacon_draw_2026_09_14.md rule 3"
+        elif floor is not None and floor > 0 and ho.get("verdict") == "DRIFT":
+            rule = ("CORRECTION_prereg_beacon_draw_2026_09_14.md rule 4: FAILED as written; the probe saw this rule read DRIFT "
+                    "on identical weights at two of four nonzero scales")
+        card["hypotheses"]["H1"] = {"status": st, "clauses": [c1, c2], "rule": rule,
                                     "held_out_floor_nats": (certs.get("h1_held_out") or {}).get("floor_nats"),
                                     "preregistered": (certs.get("h1_held_out") or {}).get("unpreregistered") is False}
     else:
