@@ -128,9 +128,9 @@ def hf_probe_on(model, tokenizer, device):
     return probe
 
 
-def top1(model, tok, device):
+def top1(model, tok, device, canaries):
     hits = 0
-    for _, p, c in ck.CANARIES:
+    for _, p, c in canaries:
         ids = tok(p, return_tensors="pt").input_ids.to(device)
         with torch.no_grad():
             pred = model(input_ids=ids).logits[0, -1].argmax().item()
@@ -150,7 +150,13 @@ def main():
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--tag", default="", help="suffix for the output files of an INSTRUMENT CHECK that is not the "
                     "experiment (e.g. _dryrun_qwen0.5b); the experiment writes untagged files and only for the PREREG's model")
+    ap.add_argument("--beacon", default="", help="64-hex beacon (a slot blockhash as styxx.clock reports it): draw the 48 "
+                    "canaries from the committed pool instead of the hand set. The 2026-09-13 PREREG froze the hand set, so "
+                    "a beacon-drawn run is never that experiment and must carry --tag; the next PREREG is written for this.")
     args = ap.parse_args()
+    if args.beacon and not args.tag:
+        raise SystemExit("a beacon-drawn run is not the sealed experiment (the 2026-09-13 PREREG froze the hand-written 48); "
+                         "pass --tag, or write the next PREREG with the draw in it")
     smoke = args.smoke
     name = "HuggingFaceTB/SmolLM2-135M" if smoke else args.model
     device = "cpu" if smoke or not torch.cuda.is_available() else "cuda"
@@ -172,12 +178,19 @@ def main():
     prov = provenance(device)
     print(f"  provenance: head {prov['git_head']} dirty={prov['git_dirty']} prereg blob {str(prov['prereg_blob_sha256'])[:12]} "
           f"styxx {prov['styxx_file']}")
+    canaries, draw_record = ck.CANARIES, None
+    if args.beacon:
+        from styxx import beacon as _beacon
+        canaries, draw_record = _beacon.draw(args.beacon, 48)
+        print(f"  canaries drawn by beacon {draw_record['beacon'][:12]}… from pool {draw_record['pool_sha256'][:12]}… "
+              f"(canary set {draw_record['canary_sha256'][:12]}…)")
     t0 = time.time()
     fps, hits = {}, {}
     for tag, kind in arms:
         tok, m = load(name, kind, device, dtype)
-        fps[tag] = ck.fingerprint(hf_probe_on(m, tok, device), f"{name} {kind} [{tag}]", tokenizer_id=name)
-        hits[tag] = top1(m, tok, device)
+        fps[tag] = ck.fingerprint(hf_probe_on(m, tok, device), f"{name} {kind} [{tag}]", canaries=canaries,
+                                  tokenizer_id=name, draw=draw_record)
+        hits[tag] = top1(m, tok, device, canaries)
         print(f"  {tag:3s} {kind:18s} top-1 {hits[tag]}/48   [{time.time() - t0:.0f}s]", flush=True)
         del m
         if device == "cuda":
@@ -187,7 +200,9 @@ def main():
     out = {"prereg": PREREG, "smoke": smoke, "tag": args.tag, "is_the_experiment": is_the_experiment,
            "model": name, "device": device,
            "provenance": prov,
-           "sanity": {"first_token_top1_hits": hits, "n_canaries": len(ck.CANARIES), "null_floor_nats": floor,
+           "canaries": {"n": len(canaries), "canary_sha256": ck.canary_sha256(canaries), "draw": draw_record,
+                        "source": "styxx.beacon draw" if draw_record else "styxx.checksum.CANARIES (the hand-written set)"},
+           "sanity": {"first_token_top1_hits": hits, "n_canaries": len(canaries), "null_floor_nats": floor,
                       "top1_loss_vs_A": {t: hits["A"] - hits[t] for t in ("A2", "A3", "Q4", "Q8", "R")}},
            "distance_params": {"n_boot": N_BOOT, "seed": SEED, "floor_nats": floor},
            "k1": k1}

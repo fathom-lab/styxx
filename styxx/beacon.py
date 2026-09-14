@@ -112,10 +112,21 @@ def select(beacon_hex: str, n: int = 48, pool: Sequence[tuple[str, str, str]] = 
     return chosen
 
 
+def draw(beacon_hex: str, n: int = 48, pool: Sequence[tuple[str, str, str]] = POOL) -> tuple[list, dict]:
+    """The draw AND its record: the items, and the dict a fingerprint and a cert carry so a stranger
+    can re-derive which canaries were used from the pool hash and the beacon alone. The record's
+    canary_sha256 is the hash of the drawn items, which is what `checksum.fingerprint` stamps; the
+    two must agree, and `fingerprint` refuses a draw record that does not match its items."""
+    from .checksum import canary_sha256
+    items = select(beacon_hex, n, pool)
+    record = {"schema": "styxx.beacon/draw/v0", "pool_sha256": pool_sha256(pool), "pool_size": len(pool),
+              "beacon": beacon_hex.strip().lower(), "n": n, "canary_sha256": canary_sha256(items)}
+    return items, record
+
+
 def describe(beacon_hex: str, n: int = 48) -> dict:
-    items = select(beacon_hex, n)
-    return {"pool_sha256": pool_sha256(), "pool_size": len(POOL), "beacon": beacon_hex.lower(), "n": n,
-            "ids": [c[0] for c in items]}
+    items, record = draw(beacon_hex, n)
+    return {**record, "ids": [c[0] for c in items]}
 
 
 if __name__ == "__main__":  # pragma: no cover

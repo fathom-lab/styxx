@@ -134,6 +134,7 @@ class Fingerprint:
     created: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
     kind: str = "full"           # "full": teacher-forced per-token mean log-prob; "topk": the API variant
     k: int = 0                   # for "topk": the k the belief vectors were built from; comparable only at equal k
+    draw: dict | None = None     # styxx.beacon draw record (pool hash, beacon, n) when the canaries were drawn; None for a hand set
 
     def to_json(self) -> dict:
         """The written form: values rounded to 1e-6, -0.0 normalised to 0.0 (a sign on float noise
@@ -151,7 +152,22 @@ class Fingerprint:
         return j["rdm_sha256"], j["mean_lp_sha256"]
 
 
-def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "") -> Fingerprint:
+def _check_draw(draw, canaries) -> dict | None:
+    """A draw record must name the canaries it produced: a record copied onto another set is refused."""
+    if draw is None:
+        return None
+    want = canary_sha256(canaries)
+    if not isinstance(draw, dict) or draw.get("canary_sha256") != want:
+        raise ValueError("the draw record's canary_sha256 is not the hash of these canaries; "
+                         "use the items styxx.beacon.draw returned with its record")
+    for key in ("pool_sha256", "beacon", "n"):
+        if key not in draw:
+            raise ValueError(f"the draw record lacks {key!r}")
+    return dict(draw)
+
+
+def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "", draw: dict | None = None) -> Fingerprint:
+    draw = _check_draw(draw, canaries)
     ids, mean_lp, n_tok, beliefs = [], [], [], []
     for cid, prompt, cont in canaries:
         pr = probe(prompt, cont)
@@ -164,7 +180,7 @@ def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: 
     B /= (np.linalg.norm(B, axis=1, keepdims=True) + 1e-12)
     rdm = 1.0 - B @ B.T
     return Fingerprint(model_id=model_id, canary_sha256=canary_sha256(canaries), tokenizer_id=tokenizer_id,
-                       ids=ids, mean_lp=np.asarray(mean_lp), rdm=rdm, n_tokens=n_tok)
+                       ids=ids, mean_lp=np.asarray(mean_lp), rdm=rdm, n_tokens=n_tok, draw=draw)
 
 
 # --------------------------------------------------------------------------------------- distance
@@ -214,6 +230,9 @@ def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 202
                          "not comparable across tokenizations (the belief-geometry rdm still is)")
     if a.kind != b.kind:
         raise ValueError(f"a {a.kind} fingerprint and a {b.kind} fingerprint measure different quantities; not comparable")
+    if (a.draw or b.draw) and a.draw != b.draw:
+        raise ValueError("the fingerprints were drawn under different beacons or pools (or one was a hand set); "
+                         "not comparable")
     if a.kind == "topk" and a.k != b.k:
         raise ValueError(f"top-k fingerprints at k={a.k} and k={b.k} are not comparable")
     if not a.tokenizer_id or not b.tokenizer_id:
@@ -271,7 +290,7 @@ TopKFn = Callable[[str], list[tuple[str, float]]]   # prompt -> [(token_text, lo
 
 
 def fingerprint_topk(topk: TopKFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "",
-                     k_min: int = 5) -> Fingerprint:
+                     k_min: int = 5, draw: dict | None = None) -> Fingerprint:
     """The API variant. Chat APIs do not teacher-force, but most return top-k next-token log-probs.
     Per item: the log-prob of the gold first token if it is in the top-k, else the item's k-th
     log-prob (a floor, marked); the belief vector is the top-k over the union of tokens seen
@@ -295,7 +314,7 @@ def fingerprint_topk(topk: TopKFn, model_id: str, canaries=CANARIES, tokenizer_i
     k = min(len(d) for d in rows)
     fp = Fingerprint(model_id=f"{model_id} [topk={k}]", canary_sha256=canary_sha256(canaries),
                      tokenizer_id=tokenizer_id or "topk", ids=[c[0] for c in canaries], mean_lp=np.asarray(gold_lp),
-                     rdm=rdm, n_tokens=[1] * len(canaries), kind="topk", k=k)
+                     rdm=rdm, n_tokens=[1] * len(canaries), kind="topk", k=k, draw=_check_draw(draw, canaries))
     return fp
 
 
@@ -328,6 +347,7 @@ def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
         "canary_sha256": a.canary_sha256,
         "tokenizer_id": a.tokenizer_id,
         "kind": a.kind,
+        "draw": a.draw,              # the beacon draw record when the canaries were drawn; None for the hand set
         "n_items": d.n_items,
         "a": {"model_id": a.model_id, "rdm_sha256": a_rdm, "mean_lp_sha256": a_lp},
         "b": {"model_id": b.model_id, "rdm_sha256": b_rdm, "mean_lp_sha256": b_lp},

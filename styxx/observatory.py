@@ -64,7 +64,7 @@ def _load_fp_file(path: str) -> ck.Fingerprint:
     return ck.Fingerprint(model_id=d["model_id"], canary_sha256=d["canary_sha256"], tokenizer_id=d["tokenizer_id"],
                           ids=d["ids"], mean_lp=np.asarray(d["mean_lp"], dtype=np.float64),
                           rdm=np.asarray(d["rdm"], dtype=np.float64), n_tokens=d["n_tokens"], created=d["created"],
-                          kind=d.get("kind", "full"), k=int(d.get("k", 0)))
+                          kind=d.get("kind", "full"), k=int(d.get("k", 0)), draw=d.get("draw"))
 
 
 def _dist_body(ref_seq: int, a: ck.Fingerprint, b: ck.Fingerprint, floor_applied: float) -> dict:
@@ -83,10 +83,11 @@ def _same(x, y) -> bool:
 
 
 class Observatory:
-    def __init__(self, root: str, model_id: str, canaries=ck.CANARIES, tokenizer_id: str = ""):
+    def __init__(self, root: str, model_id: str, canaries=ck.CANARIES, tokenizer_id: str = "", draw: dict | None = None):
         if not tokenizer_id:
             raise ValueError("name the tokenization (tokenizer_id): fingerprints with none cannot be compared")
         self.root, self.model_id, self.canaries, self.tokenizer_id = root, model_id, canaries, tokenizer_id
+        self.draw = ck._check_draw(draw, canaries)   # a beacon draw record when the canaries were drawn
         os.makedirs(os.path.join(root, "fingerprints"), exist_ok=True)
         os.makedirs(os.path.join(root, "plates"), exist_ok=True)
         self.log = os.path.join(root, "log.jsonl")
@@ -117,7 +118,8 @@ class Observatory:
         """One observation. `when` is a LABEL (defaults to the clock); `taken` is always the clock."""
         taken = _now()
         when = when or taken
-        fps = [ck.fingerprint(probe, self.model_id, self.canaries, tokenizer_id=self.tokenizer_id) for _ in range(max(2, n_null))]
+        fps = [ck.fingerprint(probe, self.model_id, self.canaries, tokenizer_id=self.tokenizer_id, draw=self.draw)
+               for _ in range(max(2, n_null))]
         floor = ck.null_floor(fps)
         floor_applied = max(floor, ck.RESOLUTION_NATS)
         es = self.entries()
