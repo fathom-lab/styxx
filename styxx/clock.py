@@ -25,16 +25,26 @@ line's `checks` map records every check that was computed, so a reader sees all 
     TIME_MISMATCH       the line records a block time and it is not the chain's
     BEACON_UNAVAILABLE  (seals only) getBlock failed or returned no blockhash
     BEACON_MALFORMED    (seals only) the blockhash did not decode to 32 bytes
+    EARLIEST_UNKNOWN    (seals only) the wallet's history could not be scanned to its end, or lists
+                        no confirmed memo carrying the digest though the transaction resolved
+    EARLIER_MEMO_EXISTS (seals only) an earlier confirmed memo from the wallet carries the same
+                        digest: the beacon is THAT slot's, and the recorded transaction is not the seal
     ANCHORED            everything above held
+
+The earliest-memo rule (added 2026-09-13, night): a signer can anchor one digest several times and
+record whichever transaction's slot drew the canaries they liked. The rule that closes that is
+that the seal of a digest is the EARLIEST confirmed memo carrying it from the creator wallet, and
+verify() enforces it by scanning the wallet's signature listing (each entry carries its memo, so
+the scan costs one request per thousand transactions). A memo from another wallet is not a seal
+(NOT_CREATOR) and is not in this wallet's listing; a later duplicate from the same wallet is
+caught here. What remains: the scan trusts the same endpoint as everything else, and it stops at
+fifty pages — a longer history reads EARLIEST_UNKNOWN, never ANCHORED.
 
 What it does not check, stated so nobody reads more into ANCHORED than it says. It trusts the
 first RPC endpoint that answers: two are tried, no cross-endpoint agreement is required, and the
-answering endpoint is written into the line (`rpc`) so a reader can ask another one. It does not
-search the chain for OTHER memos carrying the same digest, so the signer still chooses which of
-several submissions to record; the rule that would close that — the beacon is the earliest
-confirmed memo carrying the digest from the creator wallet — is owed and not built. A seal bounds
-the digest's existence from above by the block time; it orders nothing else relative to that
-time, and in particular it cannot show that a run started after the seal.
+answering endpoint is written into the line (`rpc`) so a reader can ask another one. A seal
+bounds the digest's existence from above by the block time; it orders nothing else relative to
+that time, and in particular it cannot show that a run started after the seal.
 
 The beacon for a seal is the slot's blockhash. The chain returns it as base58; it is decoded to
 its 32 bytes and reported as 64 lowercase hex in `beacon`, beside the base58 in `beacon_b58`,
@@ -190,15 +200,51 @@ def _rpc(method: str, params: list, rpcs=RPCS, tries: int = 2):
     raise RuntimeError(f"rpc {method} failed: {last}")
 
 
+def wallet_memos(wallet: str = CREATOR, fetch=_rpc, rpcs=RPCS, limit: int = 1000, max_pages: int = 50) -> list[dict]:
+    """Every signature the chain lists for the wallet, newest first, through getSignaturesForAddress
+    pages — each entry carries the transaction's memo text, so no per-transaction fetch is needed.
+    Stops at max_pages; a wallet with more history than that is reported as scanned in part."""
+    out, before = [], None
+    for _ in range(max_pages):
+        opts = {"limit": limit}
+        if before:
+            opts["before"] = before
+        page = fetch("getSignaturesForAddress", [wallet, opts], rpcs) or []
+        out.extend(page)
+        if len(page) < limit:
+            return out
+        before = page[-1]["signature"]
+    out.append({"_truncated": True})
+    return out
+
+
+def earliest_memo(digest: str, wallet: str = CREATOR, fetch=_rpc, rpcs=RPCS) -> dict:
+    """The EARLIEST confirmed signature of the wallet whose memo carries the digest — the rule that
+    closes slot selection: a signer who anchors the same digest more than once and records the
+    transaction whose slot drew the canaries they liked is caught, because the beacon is defined as
+    the earliest one's slot. Returns {"earliest": entry-or-None, "n_carrying": count, "complete": bool}.
+    Solana lists a memo as "[len] text"; the digest is searched as a substring."""
+    entries = wallet_memos(wallet, fetch, rpcs)
+    complete = not any(e.get("_truncated") for e in entries)
+    hits = [e for e in entries if not e.get("_truncated") and e.get("err") is None
+            and isinstance(e.get("memo"), str) and digest in e["memo"]]
+    earliest = min(hits, key=lambda e: (e.get("slot") or 0, e["signature"])) if hits else None
+    return {"earliest": earliest, "n_carrying": len(hits), "complete": complete}
+
+
 def _iso(block_time) -> str | None:
     if isinstance(block_time, bool) or not isinstance(block_time, int):
         return None
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(block_time))
 
 
-def check_line(line: dict, rpcs=RPCS, fetch=_rpc, wallet: str = CREATOR, mint: str = MINT) -> dict:
+def check_line(line: dict, rpcs=RPCS, fetch=_rpc, wallet: str = CREATOR, mint: str = MINT, scan: bool = True) -> dict:
     """Re-verify one recorded anchor against the chain. Pure comparison; no document is read.
-    The first failing check in the documented order is the status; `checks` holds all of them."""
+    The first failing check in the documented order is the status; `checks` holds all of them.
+    With scan=True (the default) a seal is also checked against the wallet's history: the recorded
+    transaction must be the EARLIEST confirmed memo carrying the digest, or the beacon belongs to
+    another transaction (EARLIER_MEMO_EXISTS); a history the scan could not finish is
+    EARLIEST_UNKNOWN, never a pass."""
     out: dict = {"n": line.get("n"), "kind": line.get("kind"), "digest": line.get("digest"), "tx": line.get("tx"),
                  "checks": {}}
 
@@ -273,6 +319,23 @@ def check_line(line: dict, rpcs=RPCS, fetch=_rpc, wallet: str = CREATOR, mint: s
         except ValueError as e:
             return fail("BEACON_MALFORMED", detail=str(e))
         c["beacon"] = True
+        if scan:
+            try:
+                em = earliest_memo(line["digest"], wallet, fetch, rpcs)
+            except RuntimeError as e:
+                return fail("EARLIEST_UNKNOWN", detail=f"the wallet history could not be scanned: {e}")
+            out["memos_carrying_digest"] = em["n_carrying"]
+            out["earliest_tx"] = (em["earliest"] or {}).get("signature")
+            out["earliest_slot"] = (em["earliest"] or {}).get("slot")
+            c["earliest"] = em["earliest"] is not None and em["earliest"]["signature"] == line["tx"]
+            if not em["complete"]:
+                return fail("EARLIEST_UNKNOWN", detail="the wallet's history is longer than the scan read; the earliest memo is unknown")
+            if em["earliest"] is None:
+                return fail("EARLIEST_UNKNOWN", detail="the wallet's history lists no confirmed memo carrying this digest, "
+                                                       "though the transaction resolved; the listing and the transaction disagree")
+            if not c["earliest"]:
+                return fail("EARLIER_MEMO_EXISTS", detail=f"the earliest confirmed memo carrying this digest is {out['earliest_tx']} "
+                                                          f"at slot {out['earliest_slot']}; the beacon is that slot's, not this one's")
     out["status"] = "ANCHORED"
     return out
 

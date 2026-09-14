@@ -78,7 +78,9 @@ def _tx(memo_text, *, slot=123, block_time=1_757_700_000, signer=ledger.CREATOR,
             "meta": meta}
 
 
-def _chain(tx, blk=None, block_raises=False, tx_raises=False):
+def _chain(tx, blk=None, block_raises=False, tx_raises=False, history=None, history_raises=False):
+    """history: the wallet's signature listing, newest first, as getSignaturesForAddress returns it; by
+    default the recorded transaction 'sig1' alone, carrying the memo of the given tx."""
     def fetch(method, params, rpcs=None):
         if method == "getTransaction":
             if tx_raises:
@@ -88,6 +90,20 @@ def _chain(tx, blk=None, block_raises=False, tx_raises=False):
             if block_raises:
                 raise RuntimeError("rpc getBlock failed: slot was skipped")
             return blk if blk is not None else {"blockhash": BLOCKHASH}
+        if method == "getSignaturesForAddress":
+            if history_raises:
+                raise RuntimeError("rpc getSignaturesForAddress failed")
+            if history is not None:
+                opts = params[1]
+                page = history
+                if opts.get("before"):
+                    idx = [h["signature"] for h in history].index(opts["before"])
+                    page = history[idx + 1:]
+                return page[: opts["limit"]]
+            # the chain's listing carries every memo of a transaction, "[len] text" joined with "; "
+            memos = ledger.parse_memos(tx) if tx else []
+            return [{"signature": "sig1", "slot": (tx or {}).get("slot", 123), "err": None,
+                     "memo": "; ".join(f"[{len(m)}] {m}" for m in memos) if memos else None}]
         raise AssertionError(method)
     return fetch
 
@@ -211,6 +227,51 @@ def test_a_seal_whose_block_cannot_be_fetched_is_not_anchored():
     assert r["status"] == "BEACON_UNAVAILABLE"
     r = _check(_line(), _tx(ledger.memo("sealed-prereg", D)), blk={"blockhash": "B" * 10})
     assert r["status"] == "BEACON_MALFORMED"
+
+
+def _hist(*entries):
+    return [{"signature": s, "slot": slot, "err": err, "memo": memo} for s, slot, err, memo in entries]
+
+
+def test_an_honest_seal_is_the_earliest_memo_carrying_its_digest():
+    m = ledger.memo("sealed-prereg", D)
+    r = _check(_line(), _tx(m), history=_hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("older", 100, None, "[5] hello")))
+    assert r["status"] == "ANCHORED" and r["checks"]["earliest"] is True
+    assert r["earliest_tx"] == "sig1" and r["memos_carrying_digest"] == 1
+
+
+def test_a_second_anchor_of_the_same_digest_is_not_the_seal():
+    # the signer anchored twice and recorded the later one, whose slot drew the canaries they liked
+    m = ledger.memo("sealed-prereg", D)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("sig0", 99, None, f"[{len(m)}] {m}"))
+    r = _check(_line(), _tx(m), history=hist)
+    assert r["status"] == "EARLIER_MEMO_EXISTS"
+    assert r["earliest_tx"] == "sig0" and r["earliest_slot"] == 99 and r["memos_carrying_digest"] == 2
+    # a failed earlier attempt does not count: only confirmed memos seal
+    hist2 = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("sig0", 99, {"InstructionError": [0, "Custom"]}, f"[{len(m)}] {m}"))
+    assert _check(_line(), _tx(m), history=hist2)["status"] == "ANCHORED"
+
+
+def test_a_history_the_scan_cannot_finish_is_unknown_never_anchored():
+    m = ledger.memo("sealed-prereg", D)
+    hist = _hist(*[(f"s{i}", 5000 - i, None, "[1] x") for i in range(1000 * 50)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
+    r = _check(_line(), _tx(m), history=hist)
+    assert r["status"] == "EARLIEST_UNKNOWN"
+    r = _check(_line(), _tx(m), history_raises=True)
+    assert r["status"] == "EARLIEST_UNKNOWN"
+    r = _check(_line(), _tx(m), history=_hist(("other", 50, None, "[5] hello")))
+    assert r["status"] == "EARLIEST_UNKNOWN" and "disagree" in r["detail"]
+
+
+def test_a_receipt_anchor_is_not_scanned_and_scan_can_be_turned_off():
+    m = ledger.memo("sealed-prereg", D)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("sig0", 99, None, f"[{len(m)}] {m}"))
+    r = ledger.check_line(_line(), fetch=_chain(_tx(m), history=hist), scan=False)
+    assert r["status"] == "ANCHORED" and "earliest" not in r["checks"]
+    def no_history(method, params, rpcs=None):
+        assert method != "getSignaturesForAddress"
+        return _chain(_tx(ledger.memo("sworn-receipt", D)))(method, params, rpcs)
+    assert ledger.check_line(_line("sworn-receipt"), fetch=no_history)["status"] == "ANCHORED"
 
 
 def test_the_checks_map_records_every_check_even_when_an_earlier_one_fails():

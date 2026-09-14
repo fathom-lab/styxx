@@ -29,8 +29,11 @@ signature — a signer can grind signatures by varying the memo or blockhash unt
 appears; a block hash is produced by the network after the transaction is out of the signer's
 hands. What a block hash does not remove: the signer chooses when to submit and may submit more
 than once, recording the transaction whose slot drew the canaries it liked. The rule that closes
-that — the beacon is the earliest confirmed memo carrying the digest from the creator wallet —
-is not implemented by `styxx.clock.verify` and is owed.
+that — the beacon is the earliest confirmed memo carrying the digest from the creator wallet — is
+enforced by `styxx.clock.verify`, which scans the wallet's history and reads EARLIER_MEMO_EXISTS
+when the recorded transaction is not the earliest. What it does not remove: the signer still
+chooses WHEN to submit the first one, so the beacon is unpredictable to the signer only in the
+sense that no one can choose a slot's hash; a signer can wait for a slot and hope.
 
 The pool is 48 hand-written items plus template items with known answers. Template items are
 deliberately dull: the point is fixedness and breadth, not difficulty.
