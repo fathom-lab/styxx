@@ -14,15 +14,45 @@ was refuted. Every repair is a new commit; no sworn document and no frozen PRERE
 findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
 longer list.**
 
+**2026-09-14, evening — the day's own work red-teamed: eight finder dimensions, two skeptics per blocker
+or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted. Repairs are new commits; no sworn
+document and no frozen PREREG was edited — the two sworn documents at fault get CORRECTIONs beside them.**
+- **Blocker, withdrawn by CORRECTION: the beacon-draw PREREG said the drawn values "could not have been
+  computed before the slot existed".** They can: the 778-item pool is public and a fingerprint scores items
+  independently. The beacon orders the selection of the 48, not the computation.
+  `CORRECTION_prereg_beacon_draw_2026_09_14.md` (anchor #6b) withdraws it; SEALS and `styxx/beacon.py`'s
+  docstring ("removes the advance knowledge") are corrected.
+- **Anyone could have front-run a seal.** `styxx.clock`'s earliest-memo scan counted every listed memo
+  carrying the digest, including transfers other keys sent the creator wallet; the digests are printed in
+  SEALS before sealing. Candidates are now resolved and count only if the wallet signed them with exactly
+  the seal memo; `clock verify` prints a beacon only on an ANCHORED line (7ef0e7ac).
+- **H1's held-out form does not escape its by-construction problem.** `probe_h1_held_out.py`: identical
+  weights read SAME 60/60 when the loads are bit-identical and 9 to 12 of 60 otherwise, and DRIFT once at
+  two scales. The CORRECTION fixes the reading before the run; `score.py` applies it.
+- **`score.py` v2** re-derives what v1 trusted: K1 from the floor, the sealed digest without a flag, a
+  48-item draw, every arm grading the drawn set; a valid K1-killed run is a result. Its tests parse every
+  band out of the frozen text and pin every comparator on its edge; 28 of 28 mutations caught (4e08cf28).
+- **`styxx.stranger` v2**: a `.md` edited beside an untouched sidecar read PASS (`check` on a sidecar never
+  opens it); now compared byte for byte. Document verdicts are tallied, a dirty tree FAILS unless
+  `--allow-dirty`, a short head is refused, committed scorecards must name the certs bytes, fingerprints
+  beside beacon-drawn certs are re-checked, and a directory named `*_certs*` no longer hides them.
+- **The runner refuses the sealed experiment** unless the PREREG at HEAD is the sealed blob on a clean
+  commit, and records the weights' Hub revision (0fae8ac7).
+- **Sand survey pass 3's inputs were not in the tree.** The four reader returns and the fetch script are
+  committed; the record rebuilds from them exactly except the quote check, whose texts are other people's
+  work and stay out. `CORRECTION_sand_neighbours_pass3_2026_09_14.md` prices the fingerprint clause under
+  four readings of the two terms the protocol left undefined: it retires under none, and ChatLog carries
+  the clause's object under one of them and not its log-probabilities.
+
 **2026-09-14, on the same branch — CI made green, the next PREREG, the sentence priced a third time,
 the reading rules as code, and a command for the stranger.**
 - **CI had been red on Linux since the series landed**: an unused `sys` import in `styxx/geoplate.py`
   stopped every job at lint; then `str | None` annotations in `plate.py`/`geoplate.py` broke 3.9 at
   collection. Fixed; `pyproject` selects ruff FA102 so that class fails on Windows too; the challenge
-  tests skip on a shallow clone with the reason. Green at 9f09e749 and every push since.
+  tests skip on a shallow clone with the reason. Green at 9f09e749; the stranger's first push (dee0d332 and ee96cb97) went red again on the repo's own subprocess-encoding test, fixed in 7213c6c4 (an earlier version of this line said green "every push since", which was not true).
 - **`PREREG_checksum_beacon_draw_2026_09_14.md`** (frozen at b8205b1c, blob `d6a98261…` = anchor #6):
   48 canaries drawn from the 778-item pool by the block hash of the slot of the earliest confirmed
-  memo carrying the file's digest, so the run cannot precede its seal; H1 in the held-out form the
+  memo carrying the file's digest, so the SELECTION of the 48 cannot precede its seal (this line first said "the run cannot precede its seal"; the per-item values over the public pool can be computed beforehand, and CORRECTION_prereg_beacon_draw_2026_09_14.md withdraws the claim); H1 in the held-out form the
   CORRECTION promised; K5 validity; K6 no ANCHORED line, no run. Sworn (24 spans), charon line 250.
   `run_deploy_quant.py --prereg {deploy_quant,beacon_draw}`; a second 0.5B check through the new
   path was bit-identical to the first. A test pins `styxx.beacon.POOL` to the frozen hash and size.
@@ -39,7 +69,7 @@ the reading rules as code, and a command for the stranger.**
 - **`styxx.stranger`** (`python -m styxx.stranger --repo . --expect-head <head>`): the seven checks
   of `papers/checksum/STRANGER.md` as one command with one table and an exit code. Its first run
   taught it which file to hand the verifier: `sworn check` must be given the `.sworn.json` sidecar
-  (the commit and the manifest binding), not the `.md` — handed the `.md`, three receipts whose spans
+  (the commit and the manifest binding), not the `.md` — handed the `.md`, nine receipts whose spans (this line first said three)
   cite a harness manifest read FAILED; handed the sidecar, every checkable receipt in the tree
   VERIFIES (46 of 46), and the sworn-action samples (targets not in the tree) are reported as not
   checkable rather than failed.
@@ -53,7 +83,7 @@ the reading rules as code, and a command for the stranger.**
   base58 blockhash that `select` refused as non-hex — no draw could be made from any real seal.
   Thirteen named statuses, the fee payer must be the creator, the transaction must carry a transfer
   of the mint, the beacon is the blockhash's 32 bytes as hex, and the docstring says what is still
-  not checked (one RPC trusted; no search for other memos, so the earliest-memo rule is owed).
+  not checked (one RPC trusted; no search for other memos, so the earliest-memo rule is owed — it was built the same night, 6db98505, and tightened on 2026-09-14, 7ef0e7ac).
 - **`styxx.challenge` paid, by BOUNTY's letter, for a shallow clone, a renamed copy and a modified
   verifier.** v1 refuses all three with the reason, splits `agree` into digest and verdict, writes
   the stranger's receipt beside the record, and says what a record is: a self-report the lab
