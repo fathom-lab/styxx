@@ -1,0 +1,315 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "c3a47ae2adff5e14c62a67f13b2647c245257a52",
+ "document": {
+  "name": "SURVEY_sand_neighbours_pass4_2026_09_14.md",
+  "sha256": "583782666f6d75f4430281c82b45b14a9af498dc53029e0832de343492c537f7"
+ },
+ "text": "# SURVEY — the neighbours of the sand, pass 4: the fingerprint clause's elements defined and counted, a frozen search beside the leads, and the sentence survives without its bounty clause\n\n**status: a survey under a frozen protocol, sworn to its record. Pass 4 scores the list that\n`PROTOCOL_sand_prior_art_pass4_2026_09_15.md` closed by rule, committed and pushed at\n`5d7f39ef` before the first query was sent or the first source fetched. The fingerprint clause stays\n`OCCUPIED`, now at distance one: three sources lack exactly one of its five defined elements.\nThe bounty clause is `UNPRICED`, because one candidate could not be fetched, and is deleted\nfrom the sentence. A margin check beside the record found that one of five blind readings of one\nsource carries all five elements. Nothing here licenses \"first\", \"novel\" or \"revolutionary\".**\n\n## what was done\n\nPass 3, its correction and its erratum wrote down three weaknesses of the earlier passes: two of the\nfingerprint clause's elements were undefined, nearness was a reader's flag, and every source had\nbeen chosen from memory or from a citation. The pass-4 protocol defined the elements E1 to E6 before\nany fetch, counted nearness per element, required two blind confirmers for any retirement, and added\na frozen search of twelve queries on three engines beside the nine leads pass 3 had left unscored.\n\nThe list closed at 34 sources:\n9 leads and\n25 from the search. The search returned\n133 results, merged into\n108 distinct works. Two screeners decided every work,\n34 were included, and the\n9 below the cap of twenty-five stay leads.\nThe engines did not perform alike, and `sand_survey_pass4_inputs/search_record.json` keeps every\nresponse's hash. The arXiv API returned no entry for any query, because the frozen syntax joins every\nword of a query with AND; that is the frozen procedure's outcome and was not reworded. Semantic\nScholar rate-limited the unauthenticated requests, and\n6 queries were never answered in two runs; two more were answered with no match.\nThe web engine answered all twelve but gives no year, so the frozen tie-break by later year ranked\nevery dated work above every undated one at equal hit counts. That rule put five 2026 intrusion-\ndetection papers on the list and left undated works late in title order below the cap.\n\nEvery source was fetched by `fetch_pass4.py`, its bytes hashed, and its text accepted only when it\ncarried the listed title. Nine Part B sources failed the first fetch: blocked, rate-limited or\nscript-rendered pages. The 2026-09-13 protocol says sources are located by title, author and year, so\nthe same works were located by open routes, each recorded with its reason: the DOIs and PubMed\nCentral identifiers from the Semantic Scholar response itself, Europe PMC, the programme's own About\npage, and Internet Archive captures. Eight were located. The ninth, Science's news article on paying\nfor errors, answered HTTP 403 and has no archive capture: it is\n`UNFETCHABLE`. Three located pages turned out to be publisher landing pages, not article\ntext; they were marked in `fetched_text_scope.json` before their readings returned, and each is\n`SKIMMED` under the earlier protocols' rule that a skimmed source may occupy and may not\nretire. In all, 30 sources are READ,\n3 SKIMMED and\n1 UNFETCHABLE.\n\nReaders took the texts in batches of four, read each end to end, and coded E1 to E6 with a verbatim\nquote for every element coded true. `build_sand_survey_pass4.py` accepts a reading only when the\nreader's last-line quote is among the text's last three lines and the midpoint quote lies in the\nmiddle third by line number: 33 fetched sources showed the end and\n33 the middle. Of the\n52 quotes for elements coded true,\n52 are in the text they are attributed to. No reader coded all five elements\nfor any source and no reader wrote RETIRES on any clause:\n0 candidate retirements, so no confirmer ran and\n0 sources are disputed. The surveyor typed no verdict.\n\n## what it found\n\n- The fingerprint clause (C4a) stays `OCCUPIED`. Across pass 4's readings,\n  15 sources carry the self-comparison (E1),\n  22 a fixed item set (E2),\n  3 a floor measured on the same weights and used to grade (E3),\n  6 an interval on the comparison (E4),\n  6 log-probabilities (E5), and\n  0 a hashed item set (E6). The fewest elements any source lacks is\n  1.\n- Nearness, counted. For each element, the record names the source whose only missing element is\n  that one:\n  - without a floor measured on the same weights (E3): Xu et al., as pass 3 coded it\n    (`pass3:L05`);\n  - without an interval on the comparison (E4): DiFR\n    (`B14`), which scores served tokens against a trusted same-weights reference's\n    logits with empirically set thresholds. Chauvin et al.'s Log Probability Tracking of LLM APIs is\n    tied with it at distance 1: it compares an API endpoint's first-token\n    log-probabilities with its own earlier samples, graded against a null from identical weights,\n    and never sets a significance level;\n  - without log-probabilities (E5): Gao, Liang and Guestrin, Model Equality Testing\n    (`B01`), which tests commercial endpoints against the reference weights they\n    claim to serve, with a null simulated on those weights and tests at a stated alpha, on sampled\n    text.\n  No source in any pass is at distance one without the self-comparison or without the fixed item\n  set. None of the nine leads is nearer than distance\n  2 (Chain & Hash). The search found what the citation trail could not: the three\n  nearest sources are audits of served models, not studies of compression or drift.\n- The chained-log clause (C2) stays `OCCUPIED`. Seven sources keep hash chains of experiment\n  predictions, update digests, anomaly flags or pipeline specifications. None chains verdicts\n  re-derived from bytes.\n- The bounty clause (C5) is `UNPRICED`. Three sources occupy it (the ERROR programme at the\n  University of Bern and two Nature pieces on it pay for errors found in other people's papers), and\n  the unfetchable Science article is a candidate nobody could check. Under the inherited rule, one\n  unchecked candidate is enough.\n\n## the margin check\n\nPass 3's erratum showed that the fingerprint clause's margin can rest on how one reader codes one\nelement. So each source at distance one was read again by four further readers, blind to the first\ncoding and told nothing of which element was in question. `build_sand_survey_pass4_margins.py`\nchecked their codings as the record's builder checks a reading, and wrote\n`sand_prior_art_survey_pass4_margins_2026_09_14.json`. All twelve passed both proofs of reading, and\nevery quote for an element coded true was found:\n16,\n16 and\n17.\n\n- Gao et al.: 0 of\n  4 readers find log-probabilities.\n- DiFR: 0 of\n  4 find an interval on the comparison.\n- Chauvin et al.: 1 of\n  4 finds one. That reader counts the paper's 95% bootstrap intervals on detection AUC as an\n  interval on the comparison, and so codes all five elements. The other three read those intervals as\n  bounding the detector, not the compared quantity.\n- 4 of the four readers of Chauvin et al. and\n  4 of the four readers of DiFR name E4 as the element hardest to decide.\n\nThe check changes no status: the protocol prices the clause from the first reading and its\nconfirmers. What it measures is how much the price rests on. The fingerprint clause survives on one\nelement, the interval on the comparison, and on one source one of five blind readings finds that\nelement present. A later pass that settles whether an interval on a detector's performance is an\ninterval on the comparison could retire the clause, and with it the sentence.\n\n## the sentence\n\nThe record's status is `SURVIVES_WITHOUT_C5`. Two things changed from pass 3. The\nfingerprint clause's parenthesis is rebuilt by count: three neighbours, each with the one element it\nlacks, replace the six a reader flag had chosen. The bounty clause is gone, because a clause that\ncould not be checked is not claimed. Copied from the record's `sentence.text` (the name \"Karvonen et\nal.\" for DiFR is its reader's phrase):\n\n> We know of no lab that binds every published number to bytes at a commit (where Deterministic\n> Integrity Gates and Cited-but-Not-Verified bind sentences and citations of a manuscript, as the\n> 2026-09-05 survey names them), re-derives every verdict from those bytes into a chained log (where\n> Certificate Transparency and Rekor chain certificates and signed metadata, not verdicts), and\n> fingerprints a model's behavior on hashed canaries against a measured null floor (where Xu et al.\n> grade compressed-BERT label and probability loyalty against the uncompressed teacher, without a\n> floor measured on the same weights; where Karvonen et al. score served tokens against a trusted\n> same-weights reference's logits, calibrated on benign hardware noise, without an interval on the\n> comparison; where Gao, Liang & Guestrin test sampled completions from LLM APIs against reference\n> weights with calibrated MMD two-sample tests, without log-probabilities) — at once.\n\nThat is the only positioning sentence the lab may say about the sand. It is shorter than pass 3's\nfor the first time. It lost a clause to an unchecked source, and it now names neighbours that each\nmiss by exactly one element.\n\n## what the lab got wrong on the way\n\nEvery item is in the commits from `450265ff` to `afc49486`, each written before the result it could\nhave bent was known.\n\n- The frozen arXiv syntax joins every word of a query with AND, so that engine returned nothing.\n- The first search run merged results on their raw titles, which let one paper take several slots\n  under its mirror titles. It was stopped before any screening counted, and rerun with the engine\n  answers replayed from cache.\n- The first Semantic Scholar prompt treated a response with no match as unanswered, and re-sent two\n  queries that had already been answered.\n- The builder first measured the midpoint proof by character, which failed three Part A readings\n  that are in the middle third by line.\n- The first build doubled a phrase's \"without\", did not show the bounty clause's deletion in the\n  status, and hid a tie at distance one. All three were repaired before the record was committed.\n- One probe sent a browser user agent to the three blocked pages. It was abandoned; no fetched byte\n  came through it.\n\n## what this survey does not do\n\nIt does not claim the search was exhaustive: one engine returned nothing, another left six queries\nunanswered, and 94 leads are recorded unscored. Among them are four arXiv works below the cap,\nincluding \"You've Changed: Detecting Modification of Black-Box Large Language Models\" and \"Verifying\nLLM Inference to Detect Model Weight Exfiltration\", and works readers met in the texts, such as a\nrank-based uniformity test for auditing black-box APIs. It does not re-open the retired clauses. It\ndoes not say any surviving clause is unoccupied: each is occupied, and the record says by whom. It\ndoes not treat the margin check as a result. The readers' codings, quotes and notes are in the\nrecord for anyone to dispute.\n\n## what a stranger checks\n\n`python -m styxx.sworn verify papers/plates/SURVEY_sand_neighbours_pass4_2026_09_14.md --repo . --commit <the commit that carries this file>`\nre-derives every number above from the two records. `python papers/plates/build_sand_survey_pass4.py\npapers/plates/sand_survey_pass4_inputs 2026_09_14 5d7f39ef <texts>` rebuilds the record from the\ncommitted search record, fetch records, scope file and reader returns, and the margins builder\nrebuilds the margin record. Without the texts, which are other people's work and are not committed,\nboth builders skip the proofs of reading and the quote checks; `fetch_pass4.py` re-fetches the texts\nfrom the recorded URLs, and the recorded sha256 says whether the bytes are the ones that were read.\n",
+ "spans": [
+  {
+   "start": 370,
+   "end": 380,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/protocol_commit",
+   "kind": "quote"
+  },
+  {
+   "start": 471,
+   "end": 481,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C4a/status",
+   "kind": "quote"
+  },
+  {
+   "start": 586,
+   "end": 596,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 1387,
+   "end": 1389,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/sources_in_list",
+   "kind": "numeric"
+  },
+  {
+   "start": 1399,
+   "end": 1400,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/part_a",
+   "kind": "numeric"
+  },
+  {
+   "start": 1411,
+   "end": 1413,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/part_b",
+   "kind": "numeric"
+  },
+  {
+   "start": 1451,
+   "end": 1454,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/search_results",
+   "kind": "numeric"
+  },
+  {
+   "start": 1476,
+   "end": 1479,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/search_distinct",
+   "kind": "numeric"
+  },
+  {
+   "start": 1530,
+   "end": 1532,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/search_included",
+   "kind": "numeric"
+  },
+  {
+   "start": 1556,
+   "end": 1557,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/search_below_cap",
+   "kind": "numeric"
+  },
+  {
+   "start": 1949,
+   "end": 1950,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/search_failures",
+   "kind": "numeric"
+  },
+  {
+   "start": 2971,
+   "end": 2984,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/sources/B23/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3156,
+   "end": 3165,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/sources/B04/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3261,
+   "end": 3263,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/read",
+   "kind": "numeric"
+  },
+  {
+   "start": 3282,
+   "end": 3283,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/skimmed",
+   "kind": "numeric"
+  },
+  {
+   "start": 3296,
+   "end": 3297,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/unfetchable",
+   "kind": "numeric"
+  },
+  {
+   "start": 3635,
+   "end": 3637,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/shown_last_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 3673,
+   "end": 3675,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/shown_midpoint",
+   "kind": "numeric"
+  },
+  {
+   "start": 3695,
+   "end": 3697,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/element_quotes",
+   "kind": "numeric"
+  },
+  {
+   "start": 3730,
+   "end": 3732,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/element_quotes_found",
+   "kind": "numeric"
+  },
+  {
+   "start": 3865,
+   "end": 3866,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_candidate_retirements",
+   "kind": "numeric"
+  },
+  {
+   "start": 3914,
+   "end": 3915,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_disputed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4025,
+   "end": 4035,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C4a/status",
+   "kind": "quote"
+  },
+  {
+   "start": 4065,
+   "end": 4067,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4110,
+   "end": 4112,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4138,
+   "end": 4139,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E3",
+   "kind": "numeric"
+  },
+  {
+   "start": 4203,
+   "end": 4204,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E4",
+   "kind": "numeric"
+  },
+  {
+   "start": 4243,
+   "end": 4244,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E5",
+   "kind": "numeric"
+  },
+  {
+   "start": 4275,
+   "end": 4276,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_element_true/E6",
+   "kind": "numeric"
+  },
+  {
+   "start": 4343,
+   "end": 4344,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/counts/c4a_fewest_missing_all_passes",
+   "kind": "numeric"
+  },
+  {
+   "start": 4545,
+   "end": 4556,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C4a/nearness/by_element/E3/id",
+   "kind": "quote"
+  },
+  {
+   "start": 4617,
+   "end": 4622,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C4a/nearness/by_element/E4/id",
+   "kind": "quote"
+  },
+  {
+   "start": 4825,
+   "end": 4826,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/sources/B22/verdicts/C4a/distance",
+   "kind": "numeric"
+  },
+  {
+   "start": 5098,
+   "end": 5103,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C4a/nearness/by_element/E5/id",
+   "kind": "quote"
+  },
+  {
+   "start": 5436,
+   "end": 5437,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/sources/A04/verdicts/C4a/distance",
+   "kind": "numeric"
+  },
+  {
+   "start": 5636,
+   "end": 5646,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C2/status",
+   "kind": "quote"
+  },
+  {
+   "start": 5840,
+   "end": 5850,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 6675,
+   "end": 6677,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B01/quotes_true_found",
+   "kind": "numeric"
+  },
+  {
+   "start": 6679,
+   "end": 6681,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B14/quotes_true_found",
+   "kind": "numeric"
+  },
+  {
+   "start": 6686,
+   "end": 6688,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B22/quotes_true_found",
+   "kind": "numeric"
+  },
+  {
+   "start": 6705,
+   "end": 6706,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B01/element_true_counts/E5",
+   "kind": "numeric"
+  },
+  {
+   "start": 6712,
+   "end": 6713,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B01/n_counted",
+   "kind": "numeric"
+  },
+  {
+   "start": 6754,
+   "end": 6755,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B14/element_true_counts/E4",
+   "kind": "numeric"
+  },
+  {
+   "start": 6761,
+   "end": 6762,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B14/n_counted",
+   "kind": "numeric"
+  },
+  {
+   "start": 6817,
+   "end": 6818,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B22/element_true_counts/E4",
+   "kind": "numeric"
+  },
+  {
+   "start": 6824,
+   "end": 6825,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B22/n_counted",
+   "kind": "numeric"
+  },
+  {
+   "start": 7071,
+   "end": 7072,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B22/hardest_elements/E4",
+   "kind": "numeric"
+  },
+  {
+   "start": 7117,
+   "end": 7118,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_margins_2026_09_14.json#/sources/B14/hardest_elements/E4",
+   "kind": "numeric"
+  },
+  {
+   "start": 7694,
+   "end": 7715,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/sentence/status",
+   "kind": "quote"
+  },
+  {
+   "start": 10520,
+   "end": 10522,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_2026_09_14.json#/n_leads_not_scored",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
