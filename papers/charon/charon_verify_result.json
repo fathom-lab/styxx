@@ -1,12 +1,12 @@
 {
  "schema": "styxx.charon/verify/v1",
  "log": "charon.log.jsonl",
- "head": "d27fdcc8bd7078184f67efae904a750cf0c0a40c30fd6f3718a0f369a7bdb3c3",
- "head_expected": "d27fdcc8bd7078184f67efae904a750cf0c0a40c30fd6f3718a0f369a7bdb3c3",
+ "head": "d02166890d05919e5ec2ba22a7e268371b42f0676640388b3f4e644c7185fcf4",
+ "head_expected": "d02166890d05919e5ec2ba22a7e268371b42f0676640388b3f4e644c7185fcf4",
  "head_matches": true,
  "file": {
-  "file_sha256": "3c15ebee83ffc2126e496a8b57902e952521af63f3e3be848b68693f15f9c6d2",
-  "bytes": 458976,
+  "file_sha256": "f6dcf7c1b49b993b3cf974ccce5a8d5a4bc08c10c8fc41d04815e0c9b8ca99d1",
+  "bytes": 460603,
   "eol": "LF",
   "bom": false
  },
@@ -20,7 +20,7 @@
  "chain_broken_at_line": null,
  "chain_problems": [],
  "by_status": {
-  "SAME_LINE": 5,
+  "SAME_LINE": 6,
   "MOVED_VERIFIER": 243,
   "SKEW": 0,
   "DRIFT": 0,
@@ -3531,16 +3531,30 @@
    "receipts_moved": false,
    "verifier_recorded": "a98c4c994970",
    "verifier_now": "a98c4c994970"
+  },
+  {
+   "line": 250,
+   "seq": 249,
+   "kind": "sworn",
+   "name": "SURVEY_sand_neighbours_pass2_2026_09_13.md",
+   "recorded_class": "HELD",
+   "fresh_class": "HELD",
+   "status": "SAME_LINE",
+   "fields_changed": [],
+   "subject_moved": false,
+   "receipts_moved": false,
+   "verifier_recorded": "a98c4c994970",
+   "verifier_now": "a98c4c994970"
   }
  ],
  "certifies": "every line is a verdict re-derived from bytes by the named verifier modules — at the named commit where one is named, over the working tree otherwise — chained to the line before it, with the size and digests of the receipt set it was reproduced against; NOT a claim that any verdict is true, NOT a record of who wrote a line, NOT a check that a receipt set was not chosen to pass, and nothing signed; the chain binds order and content to the head, and only a head pinned outside the log identifies the log",
  "note": "SAME_LINE = the fresh core equals the recorded core under the same verifier build; MOVED_VERIFIER = same core, the instrument's bytes moved; SKEW = the core moved and the instrument's bytes moved; DRIFT = the core moved under the same build (the bytes changed); UNRESOLVED = bytes unavailable now, never an accusation; HEAD_MISMATCH = the head is not the one you expected — a truncated or rebuilt log; TAMPER = the chain broke. Without --expect-head this report establishes internal consistency only.",
- "entries": 248,
+ "entries": 249,
  "malformed_lines": 0,
- "distinct_subjects": 248,
+ "distinct_subjects": 249,
  "by_kind": {
   "oath-certificate": 213,
-  "sworn": 23,
+  "sworn": 24,
   "capsule-oath": 10,
   "capsule-diffgate": 2
  },
@@ -3551,7 +3565,7 @@
    "null": 3
   },
   "sworn": {
-   "true": 23,
+   "true": 24,
    "false": 0,
    "null": 0
   },
@@ -3570,7 +3584,7 @@
   "min": 0,
   "max": 21,
   "entries_with_10_or_more": 10,
-  "held_total": 232,
+  "held_total": 233,
   "held_with_10_or_more": 10,
   "by_kind": {
    "oath-certificate": {
@@ -3579,7 +3593,7 @@
     "vacuous_excluded": 0
    },
    "sworn": {
-    "held": 22,
+    "held": 23,
     "held_10_or_more": 2,
     "vacuous_excluded": 0
    },
