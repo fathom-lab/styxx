@@ -1,0 +1,111 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "e82559a029a64ad2d9275901c3d8d1797b35d90e",
+ "document": {
+  "name": "ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md",
+  "sha256": "cdbff679786d96846a979cb49590cfc805a6214c10f625af74359583d9a2660d"
+ },
+ "text": "# ERRATUM — CORRECTION_sand_neighbours_pass3_2026_09_14: the fingerprint clause's margin is per source, not \"what it measures\"\n\n**status: an erratum to a sworn correction, sworn to its own record\n(`sand_prior_art_survey_pass3_margins_2026_09_14.json`, written by `build_sand_survey_pass3_margins.py` from the\npass-3 record). The correction is not edited. It follows the lab's verification of the night of 2026-09-14,\nwhose finding on this sentence both skeptics confirmed. The status of every clause and the licensed sentence are\nunchanged; what changes is what the lab may say about the fingerprint clause's margin.**\n\n## what was wrong\n\nThe correction said the fingerprint clause \"survives on what it measures more than on its floor or its interval\".\nThe lab's operator REPORT said more: that the sentence survives on what the instrument measures, not on its floor,\nand that anyone using it in public should say so. The record does not support either. One source carries the\nself-comparison, the fixed item set, the interval and the log-probability object, and misses only the floor.\n\n## the margins, per source and per reading\n\nThe five elements are the four of the clause's object, as the pass-3 protocol stated them before reading, and the\nthing of its operational row, teacher-forced log-probabilities. The readings are the correction's four, plus the\none the verification noted was missing: the lenient interval with a lenient floor, under which a measured null that\ngrades the comparison counts as a floor whether or not it was measured on the same weights. Every override rests on\ntext the builder asserts is in the record.\n\nUnder 0\nof the 5\nreadings does any listed source carry all five elements. The fewest elements any source misses, under any reading,\nis 1.\nWhich element the nearest sources miss:\n\n- **as recorded**: `L05`,\n  `Xu et al.`, alone, missing only the\n  `floor`.\n- **a test on the difference at a stated level is an interval**:\n  `Tu et al.` (ChatLog) missing only the\n  `log-probabilities`,\n  and Xu et al. missing only the\n  `floor`.\n- **only a confidence interval on the compared quantity is an interval**: no source misses fewer than\n  2\n  elements.\n- **the stated-level interval, with a floor only on weights known to be identical**: Xu et al. alone, missing only the\n  `floor`.\n- **the stated-level interval, with any measured null that grades the comparison counted as a floor**:\n  4\n  sources miss one element each. Tu et al. and\n  `Hooker, Courville, Clark, Dauphin & Frome`\n  miss the `log-probabilities`.\n  Xu et al. misses the floor.\n  `Madaan et al.`\n  misses the `self-comparison`.\n\n## what the lab may say instead\n\nNo listed source carries all five elements of the fingerprint clause. Which element sets the clause apart from its\nnearest neighbours depends on the neighbour, and on how the protocol's two undefined terms are read. Against ChatLog\nand Hooker et al. it is teacher-forced log-probabilities. Against Xu et al., who grade compressed BERT against its\nuncompressed self by label and probability loyalty, it is a floor measured on the same weights. Under the most\nlenient reading, against Madaan et al., it is a comparison of a model with its own self. No single element carries\nthe margin; the conjunction does.\n\nThe pass-3 licensed sentence already names Tu et al., Hooker et al. and Madaan et al. inside the fingerprint clause.\nIt does not name Xu et al., because its reader did not flag that source as nearer. By this count Xu et al. is among\nthe nearest under every reading, and the next survey's sentence names it.\n\n## a claim the correction made that the tree did not show\n\nThe correction said each reader \"was told its files' sizes\". The prompts were not in the tree. Their size lines are\nnow committed verbatim in `sand_survey_pass3_inputs/reader_prompt_size_lines.md`; the full prompts are in the lab's\nsession record, not in this repository.\n\n## what a stranger checks\n\n    python papers/plates/build_sand_survey_pass3_margins.py\n    python -m styxx.sworn verify papers/plates/ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md --repo . --commit <the commit that carries it>\n\nThe first rewrites the margins record from the pass-3 record and refuses to run if the text an override rests on\nis not there. The second re-derives every value above.\n",
+ "spans": [
+  {
+   "start": 1642,
+   "end": 1643,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/n_readings_with_a_source_missing_nothing",
+   "kind": "numeric"
+  },
+  {
+   "start": 1651,
+   "end": 1652,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/n_readings",
+   "kind": "numeric"
+  },
+  {
+   "start": 1771,
+   "end": 1772,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/fewest_missing_under_every_reading",
+   "kind": "numeric"
+  },
+  {
+   "start": 1834,
+   "end": 1839,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/as_recorded/sources_missing_the_fewest/0",
+   "kind": "quote"
+  },
+  {
+   "start": 1843,
+   "end": 1854,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/sources/L05",
+   "kind": "quote"
+  },
+  {
+   "start": 1882,
+   "end": 1889,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/as_recorded/what_the_nearest_miss/L05",
+   "kind": "quote"
+  },
+  {
+   "start": 1958,
+   "end": 1969,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/sources/L03",
+   "kind": "quote"
+  },
+  {
+   "start": 1999,
+   "end": 2018,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/a_stated_level_test_on_the_difference_is_an_interval/what_the_nearest_miss/L03",
+   "kind": "quote"
+  },
+  {
+   "start": 2055,
+   "end": 2062,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/a_stated_level_test_on_the_difference_is_an_interval/what_the_nearest_miss/L05",
+   "kind": "quote"
+  },
+  {
+   "start": 2168,
+   "end": 2169,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/only_a_confidence_interval_on_the_compared_quantity_is_an_interval/fewest_missing",
+   "kind": "numeric"
+  },
+  {
+   "start": 2303,
+   "end": 2310,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/the_lenient_interval_and_a_floor_only_on_weights_known_identical/what_the_nearest_miss/L05",
+   "kind": "quote"
+  },
+  {
+   "start": 2417,
+   "end": 2418,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/the_lenient_interval_and_any_measured_null_that_grades_the_comparison_as_a_floor/n_sources_missing_the_fewest",
+   "kind": "numeric"
+  },
+  {
+   "start": 2468,
+   "end": 2511,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/sources/L06",
+   "kind": "quote"
+  },
+  {
+   "start": 2523,
+   "end": 2542,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/the_lenient_interval_and_any_measured_null_that_grades_the_comparison_as_a_floor/what_the_nearest_miss/L06",
+   "kind": "quote"
+  },
+  {
+   "start": 2576,
+   "end": 2591,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/sources/L08",
+   "kind": "quote"
+  },
+  {
+   "start": 2605,
+   "end": 2622,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json#/readings/the_lenient_interval_and_any_measured_null_that_grades_the_comparison_as_a_floor/what_the_nearest_miss/L08",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
