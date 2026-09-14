@@ -2,9 +2,15 @@
 """score.py — the frozen PREREG's reading rules, executed by code, on a certs file the runner wrote.
 
     python papers/checksum/score.py --prereg beacon_draw papers/checksum/beacon_draw_certs.json \
-        [--expect-beacon <64 hex>] [--hand-set-certs papers/checksum/deploy_quant_certs.json] \
+        --expect-beacon <64 hex> [--hand-set-certs papers/checksum/deploy_quant_certs.json] \
         [--portability <styxx.portability v1 record>] [--out <scorecard.json>]
     python papers/checksum/score.py --prereg deploy_quant papers/checksum/deploy_quant_certs.json [--out ...]
+
+Under --prereg beacon_draw, --expect-beacon is REQUIRED for the card to count as a result: it is the
+beacon `python -m styxx.clock verify` prints ANCHORED for the PREREG's digest, and K5 needs the certs'
+beacon to be that one. Without it the scorer still prints every reading, but K5's beacon clause is not
+evaluable, the card does not count as a result, and its reading begins "NOT A RESULT: K5's beacon clause
+not evaluated".
 
 What this is for. A PREREG freezes hypotheses with numeric bands and kill gates before the run. The
 RESULT is supposed to read the run's numbers against those bands and nothing else — and the person
@@ -12,17 +18,26 @@ reading is the person who wanted the hypotheses to hold. This script reads them 
 below are copied from the two frozen documents (`PREREG_checksum_deploy_quant_2026_09_13.md`,
 `PREREG_checksum_beacon_draw_2026_09_14.md`); `tests/test_checksum_score.py` parses every number out
 of the frozen text and compares it with the value here, and pins every comparator (≤ vs <, inclusive
-bands) with certs sitting exactly on each edge. The scorecard it writes (`styxx.checksum/scorecard/v2`)
-carries, per hypothesis and per clause, the predicted band, the observed value and whether it holds;
-per gate, whether it fired and on what; and whether the certs are the experiment at all. A RESULT
-then swears to the scorecard, and a stranger re-runs this script on the certs to get the same card.
+bands) with certs sitting exactly on each edge. `score_mutations.py` beside this file publishes the
+mutations the tests are shown to kill, one by one, and its result file. The scorecard it writes
+(`styxx.checksum/scorecard/v2`) carries, per hypothesis and per clause, the predicted band, the observed
+value and whether it holds; per gate, whether it fired and on what; and whether the certs are the
+experiment at all. A RESULT then swears to the scorecard, and a stranger re-runs this script on the
+certs to get the same card.
 
-What the scorer re-derives rather than trusts (v2, after the red team of 2026-09-14 found v1 trusting
-the certs' own flags): K1 from the recorded null floor, never from the runner's `k1.fired`; the sealed
-PREREG digest, frozen here per PREREG and compared unconditionally with `provenance.prereg_blob_sha256`
-(`--expect-blob` survives only as an assertion that must agree with it); for the beacon-draw PREREG,
-the draw from the beacon and the committed pool, with n = 48; and for both, that every arm's cert and
-the held-out cert grade the same 48-item set the PREREG names and carry the same draw record.
+What the scorer re-derives rather than trusts (v2, after the red teams of 2026-09-14 found it trusting
+the certs' own flags): K1 from the recorded null floor, never from the runner's `k1.fired`, and a
+negative or non-finite floor invalidates the certs; the sealed PREREG digest, frozen here per PREREG and
+compared unconditionally with `provenance.prereg_blob_sha256` (`--expect-blob` survives only as an
+assertion that must agree with it); `is_the_experiment` is never trusted alone — a non-empty tag, a
+smoke run, a missing git_head, tracked files that differ from HEAD, or a blob the runner itself marked
+unsealed each invalidate the certs; for the beacon-draw PREREG, the draw from the beacon and the
+committed pool, with n = 48, and the beacon itself against --expect-beacon; for both, that every arm's
+cert and the held-out cert grade the same 48-item set the PREREG names and carry the same draw record,
+that when K1 did not fire all four arm certs and the held-out cert exist, and that
+`canaries.canary_sha256` exists and is the PREREG's set. H5 needs the hand-set certs to be a valid
+2026-09-13 experiment whose K1 did not fire; H6 needs a portability record whose digest re-derives and
+whose inputs include these certs' arm digests.
 
 What it refuses to be: a judge of meaning. It reads the numbers as the PREREG wrote them, marks a
 hypothesis whose inputs do not exist yet PENDING, marks a run that is not the experiment as an
@@ -35,6 +50,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import sys
 
@@ -48,6 +64,9 @@ N_CANARIES = 48
 ARMS = ("A2", "Q4", "Q8", "R")
 # the hand-written set's hash, as the 2026-09-13 PREREG names it ("hash `71f8e5c9973c…`, the full hash is in every cert")
 HAND_CANARY_SHA256 = "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac"
+BEACON_UNCHECKED = ("the beacon clause could not be evaluated: no --expect-beacon was given, so nothing ties the certs' "
+                    "beacon to the one `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest")
+PORTABILITY_UNBOUND = "the portability record is not bound to these certs"
 
 # The bands, verbatim from the frozen documents. tests/test_checksum_score.py parses each out of its text.
 BANDS = {
@@ -89,8 +108,12 @@ def _status(clauses):
     return "HELD" if all(hs) else "FAILED"
 
 
+def _obj(x):
+    return x if isinstance(x, dict) else {}
+
+
 def _dist(certs, arm):
-    d = (certs.get(arm) or {}).get("distance") if isinstance(certs.get(arm), dict) else None
+    d = _obj(certs.get(arm)).get("distance")
     return d if isinstance(d, dict) else None
 
 
@@ -98,21 +121,39 @@ def _num(x):
     return x if isinstance(x, (int, float)) and not isinstance(x, bool) else None
 
 
-def _set_problems(certs: dict, expected_hash: str | None, draw: dict | None) -> list[str]:
-    """Every graded cert must grade the 48-item set the PREREG names, under the certs' own draw record."""
+def _both(x, y, want):
+    """Both readings are `want`; not evaluable when either reading does not exist."""
+    return (x == want and y == want) if (x is not None and y is not None) else None
+
+
+def _set_problems(certs: dict, expected_hash: str | None, draw: dict | None, require_certs: bool) -> list[str]:
+    """Every graded cert must grade the 48-item set the PREREG names, under the certs' own draw record; when K1 did
+    not fire (require_certs) every arm cert and the held-out cert must exist, because the runner writes them."""
     out = []
-    san = certs.get("sanity") or {}
-    can = certs.get("canaries") if isinstance(certs.get("canaries"), dict) else {}
+    san = _obj(certs.get("sanity"))
+    can = _obj(certs.get("canaries"))
     if san.get("n_canaries") != N_CANARIES:
         out.append(f"sanity.n_canaries is {san.get('n_canaries')!r}; the PREREG's set has {N_CANARIES} items")
     if can.get("n") is not None and can.get("n") != N_CANARIES:
         out.append(f"canaries.n is {can.get('n')!r}; the PREREG's set has {N_CANARIES} items")
-    if expected_hash is not None and can.get("canary_sha256") is not None and can.get("canary_sha256") != expected_hash:
+    if can.get("canary_sha256") is None:
+        out.append("canaries.canary_sha256 is absent: nothing in the certs names the set they graded")
+    elif expected_hash is not None and can.get("canary_sha256") != expected_hash:
         out.append("canaries.canary_sha256 is not the set the PREREG names")
-    graded = [(arm, certs.get(arm)) for arm in ARMS if isinstance(certs.get(arm), dict)]
-    ho = (certs.get("h1_held_out") or {}).get("cert") if isinstance(certs.get("h1_held_out"), dict) else None
+    graded = []
+    for arm in ARMS:
+        v = certs.get(arm)
+        if isinstance(v, dict):
+            graded.append((arm, v))
+        elif v is not None:
+            out.append(f"the {arm} cert is not an object")
+        elif require_certs:
+            out.append(f"the {arm} cert is absent: K1 did not fire, and the runner writes every arm when it does not")
+    ho = _obj(certs.get("h1_held_out")).get("cert")
     if isinstance(ho, dict):
         graded.append(("h1_held_out", ho))
+    elif require_certs:
+        out.append("h1_held_out.cert is absent: K1 did not fire, and the runner writes the held-out reading when it does not")
     for name, c in graded:
         if expected_hash is not None and c.get("canary_sha256") != expected_hash:
             out.append(f"the {name} cert grades canary set {str(c.get('canary_sha256'))[:12]}…, not the set the PREREG names")
@@ -123,15 +164,44 @@ def _set_problems(certs: dict, expected_hash: str | None, draw: dict | None) -> 
     return out
 
 
+def _portability_unbound(certs: dict, portability: dict) -> str | None:
+    """Why the portability record does not grade these certs, or None when it does: its digest must re-derive from
+    its body (as styxx.portability.compare digests it) and one of its input_cert_digests must be these certs' own
+    arm-cert digests for the arms it compares."""
+    if not isinstance(portability, dict):
+        return "it is not an object"
+    body = {k: v for k, v in portability.items() if k not in ("digest", "labels", "created", "inputs")}
+    try:
+        blob = json.dumps(body, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+    except (TypeError, ValueError) as e:
+        return f"its body does not serialise as the portability digest does ({e})"
+    if hashlib.sha256(blob).hexdigest() != portability.get("digest"):
+        return "its digest does not re-derive from its body"
+    arms = portability.get("arms")
+    if not isinstance(arms, dict) or not arms:
+        return "it compares no arms"
+    mine = []
+    for arm in sorted(arms):
+        digest = _obj(certs.get(arm)).get("digest")
+        if not isinstance(digest, str):
+            return f"these certs carry no {arm} cert digest"
+        mine.append(digest)
+    inputs = portability.get("input_cert_digests")
+    listed = [sorted(str(d) for d in x) for x in inputs if isinstance(x, list)] if isinstance(inputs, list) else []
+    if sorted(mine) not in listed:
+        return "none of its input_cert_digests is these certs' arm digests"
+    return None
+
+
 def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blob: str | None = None,
           hand_set: dict | None = None, portability: dict | None = None) -> dict:
     b = BANDS[prereg]
-    prov = certs.get("provenance") or {}
-    sanity = certs.get("sanity") or {}
-    hits = sanity.get("first_token_top1_hits") or {}
-    loss = sanity.get("top1_loss_vs_A") or {}
+    prov = _obj(certs.get("provenance"))
+    sanity = _obj(certs.get("sanity"))
+    hits = _obj(sanity.get("first_token_top1_hits"))
+    loss = _obj(sanity.get("top1_loss_vs_A"))
     floor = _num(sanity.get("null_floor_nats"))
-    k1_rec = certs.get("k1") if isinstance(certs.get("k1"), dict) else {}
+    k1_rec = _obj(certs.get("k1"))
     card = {"schema": SCHEMA, "prereg": b["prereg"], "prereg_named_by_certs": certs.get("prereg"),
             "sealed_blob": b["sealed_blob"], "prereg_blob_sha256": prov.get("prereg_blob_sha256"),
             "model": certs.get("model"), "device": certs.get("device"),
@@ -139,6 +209,9 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
             "is_the_experiment": certs.get("is_the_experiment") is True, "tag": certs.get("tag"), "smoke": certs.get("smoke"),
             "hypotheses": {}, "gates": {}, "notes": []}
     problems = []
+    for key in ("provenance", "sanity", "canaries", "k1", "h1_held_out"):
+        if key in certs and not isinstance(certs[key], dict):
+            problems.append(f"{key} is not an object")
     if certs.get("prereg") != b["prereg"]:
         problems.append(f"the certs name {certs.get('prereg')!r}, not {b['prereg']}")
     if prov.get("prereg_blob_sha256") != b["sealed_blob"]:
@@ -150,13 +223,29 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
         problems.append(f"model is {certs.get('model')!r}, the PREREG's is {MODEL}")
     if certs.get("is_the_experiment") is not True:
         problems.append("is_the_experiment is not true (a tag, a smoke, or another model)")
-    if prereg == "deploy_quant" and (certs.get("canaries") or {}).get("draw"):
+    # is_the_experiment is never trusted alone: the same file's own fields must agree with it
+    if certs.get("tag") not in (None, ""):
+        problems.append(f"tag is {certs.get('tag')!r}: a tagged run is an instrument check, whatever is_the_experiment says")
+    if certs.get("smoke"):
+        problems.append("smoke is true: a smoke run is an instrument check, whatever is_the_experiment says")
+    if prov.get("git_head") is None:
+        problems.append("provenance.git_head is missing: the runner refuses the experiment when git does not answer")
+    if prov.get("git_dirty_tracked"):
+        problems.append("provenance.git_dirty_tracked is true: the runner refuses the experiment when tracked files differ from HEAD")
+    if "prereg_blob_is_sealed" in prov and prov.get("prereg_blob_is_sealed") is not True:
+        problems.append("provenance.prereg_blob_is_sealed is not true: the runner itself recorded an unsealed PREREG blob")
+    if prereg == "deploy_quant" and _obj(certs.get("canaries")).get("draw"):
         problems.append("the certs carry a draw record; the 2026-09-13 PREREG froze the hand-written set (score it under --prereg beacon_draw)")
 
     # K1 — re-derived from the recorded floor; the runner's own k1 record is compared, never trusted
-    k1_fired = floor is not None and floor > b["k1_floor"]
-    if floor is None:
+    if floor is not None and not math.isfinite(floor):
+        problems.append(f"sanity.null_floor_nats is {floor!r}, not a finite number; K1 cannot be evaluated")
+        floor = None
+    elif floor is not None and floor < 0:
+        problems.append(f"sanity.null_floor_nats is {floor!r}: a floor is a mean absolute distance and cannot be negative")
+    elif floor is None:
         problems.append("the certs carry no numeric sanity.null_floor_nats; K1 cannot be evaluated")
+    k1_fired = floor is not None and floor > b["k1_floor"]
     if k1_rec and (bool(k1_rec.get("fired")) != k1_fired or k1_rec.get("threshold_nats") != b["k1_floor"]):
         problems.append(f"the certs' k1 record (fired={k1_rec.get('fired')!r}, threshold={k1_rec.get('threshold_nats')!r}) "
                         f"disagrees with their own floor under the PREREG's threshold {b['k1_floor']:g}")
@@ -164,8 +253,10 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
                            "detail": ("the serving is not deterministic enough for this probe; nothing else is evaluated" if k1_fired
                                       else ("not evaluable: no floor" if floor is None else "not fired"))}
 
+    beacon_unchecked = False
     if prereg == "beacon_draw":
-        draw = (certs.get("canaries") or {}).get("draw") if isinstance(certs.get("canaries"), dict) else None
+        can = _obj(certs.get("canaries"))
+        draw = can.get("draw")
         k5, expected_hash = [], None
         if not isinstance(draw, dict):
             k5.append("the certs carry no draw record")
@@ -183,30 +274,38 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
                     k5.append("the beacon does not produce the canaries the draw record names")
                 else:
                     expected_hash = rederived
-                if draw.get("canary_sha256") != (certs.get("canaries") or {}).get("canary_sha256"):
+                if draw.get("canary_sha256") != can.get("canary_sha256"):
                     k5.append("the draw record's canary hash is not the certs' canary hash")
             except Exception as e:  # noqa: BLE001
                 k5.append(f"the draw record could not be re-derived: {e}")
             if expect_beacon and str(draw.get("beacon", "")).lower() != expect_beacon.lower():
                 k5.append("the certs' beacon is not the beacon the ANCHORED line prints")
-            if not expect_beacon:
-                card["notes"].append("K5's beacon clause was not checked: pass --expect-beacon with the beacon `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest")
-        k5 += _set_problems(certs, expected_hash, draw if isinstance(draw, dict) else None)
+        if not expect_beacon:
+            beacon_unchecked = True
+            card["notes"].append("K5's beacon clause was not checked: pass --expect-beacon with the beacon `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest; without it the card is not a result")
+        k5 += _set_problems(certs, expected_hash, draw if isinstance(draw, dict) else None, require_certs=not k1_fired)
         if isinstance(certs.get("h1_held_out"), dict) and certs["h1_held_out"].get("unpreregistered") is not False:
             k5.append("h1_held_out is not marked preregistered: these certs were not written under the beacon-draw PREREG's runner path")
         k5 += problems
-        card["gates"]["K5"] = {"fired": bool(k5), "detail": k5 or "the draw re-derives; every cert grades the drawn 48; the certs are the experiment"}
+        if k5:
+            card["gates"]["K5"] = {"fired": True, "detail": k5 + ([BEACON_UNCHECKED] if beacon_unchecked else [])}
+        elif beacon_unchecked:
+            card["gates"]["K5"] = {"fired": None, "detail": "not evaluable: " + BEACON_UNCHECKED + "; every other K5 clause holds"}
+        else:
+            card["gates"]["K5"] = {"fired": False, "detail": "the draw re-derives; every cert grades the drawn 48; the beacon is the ANCHORED one; the certs are the experiment"}
         card["gates"]["K6"] = {"fired": None, "detail": "a precondition on the chain, evaluated by `python -m styxx.clock verify`, not offline; if the seal line is not ANCHORED the run did not start, and if it started K5 applies"}
         invalid = bool(k5)
     else:
-        problems += _set_problems(certs, HAND_CANARY_SHA256, None)
+        problems += _set_problems(certs, HAND_CANARY_SHA256, None, require_certs=not k1_fired)
         card["gates"]["provenance"] = {"fired": bool(problems), "detail": problems or "the certs are the experiment"}
         invalid = bool(problems)
 
-    card["counts_as_result"] = card["is_the_experiment"] and not invalid
-    if not card["counts_as_result"]:
+    valid_experiment = card["is_the_experiment"] and not invalid
+    card["counts_as_result"] = valid_experiment and not beacon_unchecked
+    if not valid_experiment:
         card["notes"].append("INSTRUMENT CHECK or invalid run: every reading below is printed, none is a result")
-    prefix = "" if card["counts_as_result"] else "INSTRUMENT CHECK; "
+    prefix = ("NOT A RESULT: K5's beacon clause not evaluated (no --expect-beacon); " if beacon_unchecked else "") + \
+             ("" if valid_experiment else "INSTRUMENT CHECK; ")
 
     if k1_fired:
         for h in ("H1", "H2", "H3", "H4") + (("H5", "H6") if prereg == "beacon_draw" else ()):
@@ -217,7 +316,7 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
         return card
 
     dq4, dq8, dr = _dist(certs, "Q4"), _dist(certs, "Q8"), _dist(certs, "R")
-    ho = ((certs.get("h1_held_out") or {}).get("cert") or {}).get("distance") or {} if isinstance(certs.get("h1_held_out"), dict) else {}
+    ho = _obj(_obj(_obj(certs.get("h1_held_out")).get("cert")).get("distance"))
     # H1
     if prereg == "beacon_draw":
         c1 = _clause("worst-pairwise null floor ≤ 1e-3 nats/token (zero allowed)", "≤ 0.001", floor, floor <= b["h1_floor_max"] if floor is not None else None)
@@ -230,8 +329,8 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
             rule = ("CORRECTION_prereg_beacon_draw_2026_09_14.md rule 4: FAILED as written; the probe saw this rule read DRIFT "
                     "on identical weights at two of four nonzero scales")
         card["hypotheses"]["H1"] = {"status": st, "clauses": [c1, c2], "rule": rule,
-                                    "held_out_floor_nats": (certs.get("h1_held_out") or {}).get("floor_nats"),
-                                    "preregistered": (certs.get("h1_held_out") or {}).get("unpreregistered") is False}
+                                    "held_out_floor_nats": _obj(certs.get("h1_held_out")).get("floor_nats"),
+                                    "preregistered": _obj(certs.get("h1_held_out")).get("unpreregistered") is False}
     else:
         d2 = _dist(certs, "A2") or {}
         c1 = _clause("null floor > 0 and ≤ 1e-3 nats/token", "(0, 0.001]", floor,
@@ -243,7 +342,7 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
             st = "HELD on the floor, INCONCLUSIVE on the pair by construction"   # CORRECTION rule 2, in those words
         card["hypotheses"]["H1"] = {"status": st, "clauses": [c1, c2], "rule": b["h1_rule"],
                                     "held_out_reading_unpreregistered": {"verdict": ho.get("verdict"),
-                                                                         "floor_nats": (certs.get("h1_held_out") or {}).get("floor_nats"),
+                                                                         "floor_nats": _obj(certs.get("h1_held_out")).get("floor_nats"),
                                                                          "decides": "nothing in this run (CORRECTION rule 3)"}}
     # H2
     lo, hi = b["h2_band"]
@@ -291,19 +390,22 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
             card["hypotheses"]["H5"] = {"status": "PENDING", "clauses": [], "reason": "the 2026-09-13 experiment's certs were not given (--hand-set-certs)"}
         else:
             hand_card = score(hand_set, "deploy_quant")
-            hp = hand_set.get("provenance") or {}
+            hp = _obj(hand_set.get("provenance"))
             same_machine = hp.get("cuda_device") is not None and hp.get("cuda_device") == prov.get("cuda_device")
             if not hand_card["counts_as_result"] or hand_set.get("model") != certs.get("model") or not same_machine:
                 card["hypotheses"]["H5"] = {"status": "PENDING", "clauses": [],
                                             "reason": "the hand-set certs are not a valid 2026-09-13 experiment on the same model and device"
                                                       + (f" ({'; '.join(hand_card['gates']['provenance']['detail'])})" if hand_card["gates"]["provenance"]["fired"] else "")}
+            elif hand_card["gates"]["K1"]["fired"]:
+                card["hypotheses"]["H5"] = {"status": "PENDING", "clauses": [],
+                                            "reason": "the hand-set experiment's K1 fired (INCONCLUSIVE (K1)): it has no SAME/DRIFT readings for H5 to compare"}
             else:
-                hho = ((hand_set.get("h1_held_out") or {}).get("cert") or {}).get("distance") or {}
+                hho = _obj(_obj(_obj(hand_set.get("h1_held_out")).get("cert")).get("distance"))
                 cl = [_clause("A′ SAME under the held-out reading on both", "SAME/SAME", [ho.get("verdict"), hho.get("verdict")],
-                              ho.get("verdict") == "SAME" and hho.get("verdict") == "SAME")]
+                              _both(ho.get("verdict"), hho.get("verdict"), "SAME"))]
                 for arm in ("Q4", "Q8", "R"):
                     a, h = _dist(certs, arm) or {}, _dist(hand_set, arm) or {}
-                    cl.append(_clause(f"{arm} DRIFT on both", "DRIFT/DRIFT", [a.get("verdict"), h.get("verdict")], a.get("verdict") == "DRIFT" and h.get("verdict") == "DRIFT"))
+                    cl.append(_clause(f"{arm} DRIFT on both", "DRIFT/DRIFT", [a.get("verdict"), h.get("verdict")], _both(a.get("verdict"), h.get("verdict"), "DRIFT")))
                 hm4 = _num((_dist(hand_set, "Q4") or {}).get("mean_abs_nats"))
                 ratio = (m4 / hm4) if (m4 is not None and hm4) else None
                 r0, r1 = b["h5_ratio_band"]
@@ -311,14 +413,17 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
                                   r0 <= ratio <= r1 if ratio is not None else None))
                 card["hypotheses"]["H5"] = {"status": _status(cl), "clauses": cl, "hand_set_git_head": hp.get("git_head"),
                                             "same_machine_reading": "the same cuda_device name — a device model, not a machine identity"}
-        # H6 — portability under this beacon
+        # H6 — portability under this beacon, of THESE certs
+        unbound = _portability_unbound(certs, portability) if portability else None
         if not portability:
             card["hypotheses"]["H6"] = {"status": "PENDING", "clauses": [], "reason": "no second machine's run was given (--portability)"}
+        elif unbound is not None:
+            card["hypotheses"]["H6"] = {"status": "PENDING", "clauses": [], "reason": f"{PORTABILITY_UNBOUND}: {unbound}"}
         else:
             cl = [_clause("verdicts AGREE on every arm", "AGREE", portability.get("verdicts"), portability.get("verdicts") == "AGREE")]
-            arms = portability.get("arms") or {}
+            arms = _obj(portability.get("arms"))
             for arm, mx in b["h6_move_max"].items():
-                mv = _num(((arms.get(arm) or {}).get("numbers") or {}).get("mean_abs_nats", {}).get("max_abs_diff"))
+                mv = _num(_obj(_obj(_obj(arms.get(arm)).get("numbers")).get("mean_abs_nats")).get("max_abs_diff"))
                 cl.append(_clause(f"{arm} mean |Δ log-prob| moves by at most {mx}", f"≤ {mx}", mv, mv <= mx if mv is not None else None))
             card["hypotheses"]["H6"] = {"status": _status(cl), "clauses": cl, "portability_digest": portability.get("digest")}
 
@@ -337,10 +442,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("certs")
     ap.add_argument("--prereg", choices=sorted(BANDS), required=True)
-    ap.add_argument("--expect-beacon", default=None)
+    ap.add_argument("--expect-beacon", default=None,
+                    help="required for a beacon_draw result: the beacon `python -m styxx.clock verify` prints ANCHORED for the "
+                         "PREREG's digest; without it K5's beacon clause is not evaluable and the card does not count as a result")
     ap.add_argument("--expect-blob", default=None, help="optional: asserted equal to the sealed digest this scorer froze")
     ap.add_argument("--hand-set-certs", default=None)
-    ap.add_argument("--portability", default=None)
+    ap.add_argument("--portability", default=None, help="a styxx.portability v1 record whose input_cert_digests include these certs' arms")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     certs = json.load(open(a.certs, encoding="utf-8"))

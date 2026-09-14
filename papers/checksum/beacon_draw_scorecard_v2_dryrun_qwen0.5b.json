@@ -136,7 +136,9 @@
    "fired": true,
    "detail": [
     "model is 'Qwen/Qwen2.5-0.5B', the PREREG's is Qwen/Qwen2.5-1.5B",
-    "is_the_experiment is not true (a tag, a smoke, or another model)"
+    "is_the_experiment is not true (a tag, a smoke, or another model)",
+    "tag is '_dryrun_qwen0.5b': a tagged run is an instrument check, whatever is_the_experiment says",
+    "the beacon clause could not be evaluated: no --expect-beacon was given, so nothing ties the certs' beacon to the one `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest"
    ]
   },
   "K6": {
@@ -166,11 +168,11 @@
   }
  },
  "notes": [
-  "K5's beacon clause was not checked: pass --expect-beacon with the beacon `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest",
+  "K5's beacon clause was not checked: pass --expect-beacon with the beacon `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest; without it the card is not a result",
   "INSTRUMENT CHECK or invalid run: every reading below is printed, none is a result"
  ],
  "counts_as_result": false,
- "run_reading": "INSTRUMENT CHECK; gates fired: K5; H1 HELD, H2 HELD, H3 HELD, H4 HELD, H5 PENDING, H6 PENDING",
+ "run_reading": "NOT A RESULT: K5's beacon clause not evaluated (no --expect-beacon); INSTRUMENT CHECK; gates fired: K5; H1 HELD, H2 HELD, H3 HELD, H4 HELD, H5 PENDING, H6 PENDING",
  "certs_file": "papers/checksum/beacon_draw_certs_dryrun_qwen0.5b.json",
  "certs_sha256": "bbe5bda6753233e2349fcd215517e6fbed59c6600ed097423484ca3d57bbb9ca"
 }

@@ -1,0 +1,667 @@
+{
+ "schema": "styxx.checksum/score-mutations/v1",
+ "score_py": "papers/checksum/score.py",
+ "score_py_sha256_lf": "55a668f06d821d22c6827a370717ad36eb076bfc8484cc6de91cf9381593ae9b",
+ "tests": "tests/test_checksum_score.py",
+ "tests_sha256_lf": "90f47209c147190b190089a0aae7f5f86d0f13816a74cb564428ea26f5270074",
+ "command": "python papers/checksum/score_mutations.py",
+ "pytest": "python -m pytest -q -x -p no:cacheprovider tests/test_checksum_score.py, in a copy, PYTHONPATH=<checkout root>, STYXX_SCORE_MUTANT=1; killed means exit code 1",
+ "python": "3.12.10",
+ "baseline": {
+  "passed": true,
+  "pytest_returncode": 0,
+  "pytest_tail": "134 passed, 1 skipped in 2.07s"
+ },
+ "n_mutations": 81,
+ "n_killed": 81,
+ "mutations": [
+  {
+   "id": "v2-01",
+   "description": "beacon H1 floor clause: <= becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 3 passed in 1.16s"
+  },
+  {
+   "id": "v2-02",
+   "description": "deploy_quant H1 floor > 0 becomes >= 0",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 35 passed in 1.28s"
+  },
+  {
+   "id": "v2-03",
+   "description": "deploy_quant H1 floor <= 1e-3 becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 37 passed in 1.25s"
+  },
+  {
+   "id": "v2-04",
+   "description": "H2 band upper edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 6 passed in 1.19s"
+  },
+  {
+   "id": "v2-05",
+   "description": "H2 geometry r >= becomes >",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 10 passed in 1.19s"
+  },
+  {
+   "id": "v2-06",
+   "description": "H2 top-1 loss <= becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 12 passed in 1.20s"
+  },
+  {
+   "id": "v2-07",
+   "description": "H3 'below Q4's' < becomes <=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 14 passed in 1.40s"
+  },
+  {
+   "id": "v2-08",
+   "description": "H3 geometry r >= becomes >",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 15 passed in 1.45s"
+  },
+  {
+   "id": "v2-09",
+   "description": "H3 top-1 loss <= becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 17 passed in 1.46s"
+  },
+  {
+   "id": "v2-10",
+   "description": "H4 mean > becomes >=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 19 passed in 1.48s"
+  },
+  {
+   "id": "v2-11",
+   "description": "H4 geometry r < becomes <=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 21 passed in 1.47s"
+  },
+  {
+   "id": "v2-12",
+   "description": "H4 top-1 hits <= becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 23 passed in 1.56s"
+  },
+  {
+   "id": "v2-13",
+   "description": "K3 mean > becomes >=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 25 passed in 1.76s"
+  },
+  {
+   "id": "v2-14",
+   "description": "K4 upper edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 29 passed in 1.75s"
+  },
+  {
+   "id": "v2-15",
+   "description": "H5 ratio lower edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 65 passed in 1.88s"
+  },
+  {
+   "id": "v2-16",
+   "description": "H5 ratio upper edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 65 passed in 1.88s"
+  },
+  {
+   "id": "v2-17",
+   "description": "H6 move <= becomes <",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 65 passed in 1.87s"
+  },
+  {
+   "id": "v2-18",
+   "description": "K1 floor > becomes >=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 33 passed in 1.75s"
+  },
+  {
+   "id": "v2-19",
+   "description": "band: beacon_draw h1_floor_max 1e-3 -> 1e-2",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed in 1.14s"
+  },
+  {
+   "id": "v2-20",
+   "description": "band: deploy_quant h1_floor_max 1e-3 -> 5e-2",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 1 passed in 1.06s"
+  },
+  {
+   "id": "v2-21",
+   "description": "band: beacon_draw h5_ratio_band -> (0.1, 10)",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed in 1.05s"
+  },
+  {
+   "id": "v2-22",
+   "description": "band: beacon_draw h6 Q8 0.10 -> 0.50",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed in 1.07s"
+  },
+  {
+   "id": "v2-23",
+   "description": "band: beacon_draw h2_band hi 0.60 -> 0.604",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed in 1.04s"
+  },
+  {
+   "id": "v2-24",
+   "description": "band: beacon_draw h4_mean_min 5 -> 5.9",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed in 1.05s"
+  },
+  {
+   "id": "v2-25",
+   "description": "band: deploy_quant h2_r_min 0.95 -> 0.954",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 1 passed in 1.06s"
+  },
+  {
+   "id": "v2-26",
+   "description": "sealed-digest check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 73 passed in 1.71s"
+  },
+  {
+   "id": "v2-27",
+   "description": "draw n = 48 check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 74 passed in 1.76s"
+  },
+  {
+   "id": "v2-28",
+   "description": "every graded cert grades the PREREG's set: check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 74 passed in 1.79s"
+  },
+  {
+   "id": "v2x-01",
+   "description": "--expect-blob agreement check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 73 passed in 1.78s"
+  },
+  {
+   "id": "v2x-02",
+   "description": "every graded cert grades 48 items: check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 89 passed in 1.86s"
+  },
+  {
+   "id": "v2x-03",
+   "description": "the held-out cert is no longer graded",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 90 passed in 1.78s"
+  },
+  {
+   "id": "v2x-04",
+   "description": "K1 read from the runner's own k1.fired",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 71 passed in 1.71s"
+  },
+  {
+   "id": "S2-01",
+   "description": "K4 lower edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 31 passed in 1.59s"
+  },
+  {
+   "id": "S2-02",
+   "description": "K2 never fires",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 63 passed in 1.63s"
+  },
+  {
+   "id": "S2-03",
+   "description": "deploy_quant CORRECTION rule 2 branch removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 68 passed in 1.77s"
+  },
+  {
+   "id": "S2-04",
+   "description": "deploy_quant draw-record refusal removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 86 passed in 1.77s"
+  },
+  {
+   "id": "S2-05",
+   "description": "pool hash check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 80 passed in 1.74s"
+  },
+  {
+   "id": "S2-06",
+   "description": "sanity.n_canaries check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 76 passed in 1.86s"
+  },
+  {
+   "id": "S2-07",
+   "description": "canaries.n check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 78 passed in 1.86s"
+  },
+  {
+   "id": "S2-08",
+   "description": "canaries.canary_sha256 vs the expected set removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 81 passed in 1.89s"
+  },
+  {
+   "id": "S2-09",
+   "description": "H5 model check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 126 passed in 2.12s"
+  },
+  {
+   "id": "S2-10",
+   "description": "H6 AGREE clause always holds",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 66 passed in 1.82s"
+  },
+  {
+   "id": "S2-11",
+   "description": "k1 record threshold comparison removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 87 passed in 1.66s"
+  },
+  {
+   "id": "S2-12",
+   "description": "beacon rule 4 note without floor > 0",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 67 passed in 1.60s"
+  },
+  {
+   "id": "S2-13",
+   "description": "H5 same-device None guard removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 126 passed in 1.89s"
+  },
+  {
+   "id": "S2-14",
+   "description": "draw hash vs canaries hash check removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 83 passed in 1.67s"
+  },
+  {
+   "id": "S2-15",
+   "description": "K1-fired beacon card drops H5 and H6",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 72 passed in 1.64s"
+  },
+  {
+   "id": "S2-16",
+   "description": "graded certs' draw record comparison removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 74 passed in 1.62s"
+  },
+  {
+   "id": "S2-17",
+   "description": "H2 band lower edge strict",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 7 passed in 1.37s"
+  },
+  {
+   "id": "S2-18",
+   "description": "K3 top-1 loss > becomes >=",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 27 passed in 1.49s"
+  },
+  {
+   "id": "S2-19",
+   "description": "deploy_quant K1 edge: > becomes >= under deploy_quant only",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 61 passed in 1.61s"
+  },
+  {
+   "id": "S2-20",
+   "description": "deploy_quant K4 lower edge strict under deploy_quant only",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 59 passed in 1.60s"
+  },
+  {
+   "id": "S2-21",
+   "description": "deploy_quant K4 upper edge strict under deploy_quant only",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 57 passed in 1.59s"
+  },
+  {
+   "id": "S1-01",
+   "description": "a card without --expect-beacon counts as a result",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 69 passed in 1.70s"
+  },
+  {
+   "id": "S1-02",
+   "description": "the reading no longer begins by saying the beacon clause was not evaluated",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 69 passed in 1.61s"
+  },
+  {
+   "id": "S1-03",
+   "description": "K5 without a beacon reads not fired, the certs are the experiment",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 69 passed in 1.68s"
+  },
+  {
+   "id": "S1-04",
+   "description": "a fired K5 no longer says the beacon clause was not evaluated",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 69 passed in 1.77s"
+  },
+  {
+   "id": "S1-05",
+   "description": "the beacon comparison removed",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 75 passed in 1.78s"
+  },
+  {
+   "id": "S1-06",
+   "description": "a missing beacon is recorded as checked",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 69 passed in 1.70s"
+  },
+  {
+   "id": "S3-01",
+   "description": "an absent arm cert is not a problem",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 92 passed in 1.79s"
+  },
+  {
+   "id": "S3-02",
+   "description": "an absent held-out cert is not a problem",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 97 passed in 1.78s"
+  },
+  {
+   "id": "S3-03",
+   "description": "an absent canaries.canary_sha256 is not a problem",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 84 passed in 1.62s"
+  },
+  {
+   "id": "S3-04",
+   "description": "deploy_quant never requires the certs",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 93 passed in 1.72s"
+  },
+  {
+   "id": "S3-05",
+   "description": "beacon_draw requires the certs even when K1 fired",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 72 passed in 1.67s"
+  },
+  {
+   "id": "S4-01",
+   "description": "a non-empty tag is trusted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 99 passed in 1.73s"
+  },
+  {
+   "id": "S4-02",
+   "description": "smoke true is trusted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 101 passed in 1.70s"
+  },
+  {
+   "id": "S4-03",
+   "description": "a missing git_head is trusted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 103 passed in 1.61s"
+  },
+  {
+   "id": "S4-04",
+   "description": "git_dirty_tracked true is trusted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 105 passed in 1.67s"
+  },
+  {
+   "id": "S4-05",
+   "description": "prereg_blob_is_sealed false is trusted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 107 passed in 1.69s"
+  },
+  {
+   "id": "S5-01",
+   "description": "a K1-fired hand set is compared clause by clause",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 127 passed in 1.86s"
+  },
+  {
+   "id": "S5-02",
+   "description": "a reading that does not exist fails the clause instead of leaving it not evaluable",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 128 passed in 1.85s"
+  },
+  {
+   "id": "S6-01",
+   "description": "the portability record is never checked for binding",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 129 passed in 1.84s"
+  },
+  {
+   "id": "S6-02",
+   "description": "the portability digest is not re-derived",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 129 passed in 1.86s"
+  },
+  {
+   "id": "S6-03",
+   "description": "the record's input_cert_digests are not compared with these certs",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 129 passed in 1.75s"
+  },
+  {
+   "id": "S6-04",
+   "description": "an arm without a digest is skipped",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 129 passed in 1.89s"
+  },
+  {
+   "id": "S6-05",
+   "description": "a record without arms is not refused",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 129 passed in 1.86s"
+  },
+  {
+   "id": "S7-01",
+   "description": "a top-level block that is not an object is not a problem",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 109 passed in 1.77s"
+  },
+  {
+   "id": "S7-02",
+   "description": "an arm cert that is not an object is not a problem",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 116 passed in 1.74s"
+  },
+  {
+   "id": "S7-03",
+   "description": "a negative floor is accepted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 118 passed in 1.59s"
+  },
+  {
+   "id": "S7-04",
+   "description": "a non-finite floor is accepted",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 120 passed in 1.50s"
+  },
+  {
+   "id": "S7-05",
+   "description": "non-dict blocks are used as they are (the scorer raises)",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 109 passed in 1.42s"
+  }
+ ]
+}
