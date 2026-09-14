@@ -153,7 +153,11 @@ class Fingerprint:
 
 
 def _check_draw(draw, canaries) -> dict | None:
-    """A draw record must name the canaries it produced: a record copied onto another set is refused."""
+    """A draw record must name the canaries it produced, and it must be TRUE: the beacon and pool it
+    names are re-run and must reproduce exactly these items. Before 2026-09-13 (evening) only the
+    canary hash was compared, so a record whose canary hash matched but whose beacon and pool were
+    lies was accepted and the cert digested the lie — found by the lab's own probe before the red
+    team reached it."""
     if draw is None:
         return None
     want = canary_sha256(canaries)
@@ -163,6 +167,15 @@ def _check_draw(draw, canaries) -> dict | None:
     for key in ("pool_sha256", "beacon", "n"):
         if key not in draw:
             raise ValueError(f"the draw record lacks {key!r}")
+    from .beacon import POOL, pool_sha256, select   # lazy: beacon imports this module
+    if draw["pool_sha256"] != pool_sha256(POOL):
+        raise ValueError("the draw record names a pool this package does not have; the draw cannot be re-derived")
+    if int(draw["n"]) != len(list(canaries)):
+        raise ValueError(f"the draw record says n={draw['n']} but {len(list(canaries))} canaries were given")
+    rederived = select(str(draw["beacon"]), int(draw["n"]), POOL)
+    if canary_sha256(rederived) != want:
+        raise ValueError("the draw record's beacon does not produce these canaries from the named pool; "
+                         "the record is not the draw that made this set")
     return dict(draw)
 
 

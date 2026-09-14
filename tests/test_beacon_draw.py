@@ -48,6 +48,17 @@ def test_a_fingerprint_carries_its_draw_and_refuses_a_record_copied_onto_other_i
         ck.fingerprint(_scripted_probe(1), "m", canaries=items, tokenizer_id="t", draw={"canary_sha256": rec["canary_sha256"]})
 
 
+def test_a_record_whose_beacon_or_pool_lies_is_refused_even_when_its_canary_hash_matches():
+    # the canary hash names the items; only re-running the beacon proves the record MADE them
+    items, rec = beacon.draw(B1, 12)
+    for lie in ({"beacon": B2}, {"pool_sha256": "0" * 64}, {"n": 11}):
+        forged = {**rec, **lie}
+        with pytest.raises(ValueError):
+            ck.fingerprint(_scripted_probe(1), "m", canaries=items, tokenizer_id="t", draw=forged)
+    with pytest.raises(ValueError):
+        Observatory("unused", "m", canaries=items, tokenizer_id="t", draw={**rec, "beacon": B2})
+
+
 def test_fingerprints_compare_only_under_the_same_draw():
     items, rec = beacon.draw(B1, 12)
     a = ck.fingerprint(_scripted_probe(1), "m", canaries=items, tokenizer_id="t", draw=rec)
