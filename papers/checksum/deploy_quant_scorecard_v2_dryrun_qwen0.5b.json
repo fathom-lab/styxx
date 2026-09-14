@@ -1,0 +1,152 @@
+{
+ "schema": "styxx.checksum/scorecard/v2",
+ "prereg": "PREREG_checksum_deploy_quant_2026_09_13.md",
+ "prereg_named_by_certs": "PREREG_checksum_deploy_quant_2026_09_13.md",
+ "sealed_blob": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3ff2fd4b6dd9e",
+ "prereg_blob_sha256": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3ff2fd4b6dd9e",
+ "model": "Qwen/Qwen2.5-0.5B",
+ "device": "cuda",
+ "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+ "git_head": "00e6d7d4af1181c7a102ef1d33ee714eea6ce7bc",
+ "git_dirty": true,
+ "is_the_experiment": false,
+ "tag": "_dryrun_qwen0.5b",
+ "smoke": false,
+ "hypotheses": {
+  "H1": {
+   "status": "FAILED",
+   "clauses": [
+    {
+     "clause": "null floor > 0 and ≤ 1e-3 nats/token",
+     "predicted": "(0, 0.001]",
+     "observed": 0.0,
+     "holds": false
+    },
+    {
+     "clause": "A vs A′ reads SAME (against the worst-pairwise floor, as frozen)",
+     "predicted": "SAME",
+     "observed": "SAME",
+     "holds": true
+    }
+   ],
+   "rule": "CORRECTION_prereg_deploy_quant_H1_2026_09_13.md",
+   "held_out_reading_unpreregistered": {
+    "verdict": "SAME",
+    "floor_nats": 0.0,
+    "decides": "nothing in this run (CORRECTION rule 3)"
+   }
+  },
+  "H2": {
+   "status": "FAILED",
+   "clauses": [
+    {
+     "clause": "A vs Q4 reads DRIFT",
+     "predicted": "DRIFT",
+     "observed": "DRIFT",
+     "holds": true
+    },
+    {
+     "clause": "mean |Δ log-prob| in the band (inclusive)",
+     "predicted": "[0.01, 0.3]",
+     "observed": 0.4270293028449588,
+     "holds": false
+    },
+    {
+     "clause": "geometry r ≥ minimum",
+     "predicted": "≥ 0.95",
+     "observed": 0.9598171353513847,
+     "holds": true
+    },
+    {
+     "clause": "argmax lost on at most N of 48",
+     "predicted": "≤ 4",
+     "observed": 4,
+     "holds": true
+    }
+   ]
+  },
+  "H3": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "A vs Q8 reads DRIFT",
+     "predicted": "DRIFT",
+     "observed": "DRIFT",
+     "holds": true
+    },
+    {
+     "clause": "Q8 mean |Δ log-prob| below Q4's",
+     "predicted": "< 0.4270293028449588",
+     "observed": 0.10094105153451287,
+     "holds": true
+    }
+   ]
+  },
+  "H4": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "A vs R mean |Δ log-prob| above minimum",
+     "predicted": "> 5.0",
+     "observed": 10.440784893212387,
+     "holds": true
+    },
+    {
+     "clause": "geometry r below maximum",
+     "predicted": "< 0.3",
+     "observed": 0.11073858590318669,
+     "holds": true
+    },
+    {
+     "clause": "top-1 hits at most N of 48",
+     "predicted": "≤ 2",
+     "observed": 0,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "gates": {
+  "K1": {
+   "fired": false,
+   "floor_nats": 0.0,
+   "threshold_nats": 0.01,
+   "detail": "not fired"
+  },
+  "provenance": {
+   "fired": true,
+   "detail": [
+    "model is 'Qwen/Qwen2.5-0.5B', the PREREG's is Qwen/Qwen2.5-1.5B",
+    "is_the_experiment is not true (a tag, a smoke, or another model)"
+   ]
+  },
+  "K2": {
+   "fired": false,
+   "detail": "not fired"
+  },
+  "K3": {
+   "fired": false,
+   "thresholds": {
+    "mean_nats": 1.0,
+    "top1_loss": 12
+   },
+   "observed": {
+    "mean_nats": 0.4270293028449588,
+    "top1_loss": 4
+   },
+   "detail": "not fired"
+  },
+  "K4": {
+   "fired": false,
+   "reading": "'inside H2's band' is read as A vs R's mean |Δ log-prob| within H2's mean band, inclusive",
+   "detail": "not fired"
+  }
+ },
+ "notes": [
+  "INSTRUMENT CHECK or invalid run: every reading below is printed, none is a result"
+ ],
+ "counts_as_result": false,
+ "run_reading": "INSTRUMENT CHECK; gates fired: provenance; H1 FAILED, H2 FAILED, H3 HELD, H4 HELD",
+ "certs_file": "papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json",
+ "certs_sha256": "45fa8d58e9d03f59eed8fed07be42f21f3dd5ecfdf7b69737f45adc868b90b28"
+}
