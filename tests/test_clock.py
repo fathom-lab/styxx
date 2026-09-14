@@ -252,6 +252,81 @@ def test_a_second_anchor_of_the_same_digest_is_not_the_seal():
     assert _check(_line(), _tx(m), history=hist2)["status"] == "ANCHORED"
 
 
+def _chain_txs(txs, history, blk=None):
+    """A chain where getTransaction answers per signature (an Exception value raises), for listings
+    that mix the wallet's own seals with transactions other keys signed."""
+    def fetch(method, params, rpcs=None):
+        if method == "getTransaction":
+            v = txs.get(params[0])
+            if isinstance(v, Exception):
+                raise v
+            return v
+        if method == "getBlock":
+            return blk if blk is not None else {"blockhash": BLOCKHASH}
+        if method == "getSignaturesForAddress":
+            return history[: params[1]["limit"]]
+        raise AssertionError(method)
+    return fetch
+
+
+def test_a_stranger_cannot_front_run_the_seal_by_sending_the_wallet_the_memo_first():
+    # 2026-09-14 red team: the listing names transfers TO the wallet that someone else signed; the scan
+    # counted them, so a stranger who read the digest in SEALS could make the real seal EARLIER_MEMO_EXISTS
+    m = ledger.memo("sealed-prereg", D)
+    stranger = "Str4ngerWa11etxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("evil", 50, None, f"[{len(m)}] {m}"))
+    fetch = _chain_txs({"sig1": _tx(m), "evil": _tx(m, slot=50, signer=stranger)}, hist)
+    r = ledger.check_line(_line(), fetch=fetch)
+    assert r["status"] == "ANCHORED" and r["earliest_tx"] == "sig1"
+    assert r["memos_carrying_digest"] == 1 and r["memos_listed_carrying_digest"] == 2
+    assert r["foreign_memos"] == [{"signature": "evil", "slot": 50, "reason": f"signed by {stranger}, not by the wallet"}]
+
+
+def test_a_wallet_memo_that_carries_the_digest_under_another_kind_is_not_the_seal():
+    m = ledger.memo("sealed-prereg", D)
+    other = ledger.memo("sworn-receipt", D)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("rcpt", 60, None, f"[{len(other)}] {other}"))
+    fetch = _chain_txs({"sig1": _tx(m), "rcpt": _tx(other, slot=60)}, hist)
+    r = ledger.check_line(_line(), fetch=fetch)
+    assert r["status"] == "ANCHORED" and r["foreign_memos"][0]["reason"] == "no memo instruction is exactly the seal memo"
+    # a failed wallet transaction listed as succeeded (the listing and the transaction disagree) does not seal either
+    fetch = _chain_txs({"sig1": _tx(m), "rcpt": _tx(m, slot=60, err={"InstructionError": [0, "Custom"]})},
+                       _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("rcpt", 60, None, f"[{len(m)}] {m}")))
+    assert ledger.check_line(_line(), fetch=fetch)["status"] == "ANCHORED"
+
+
+def test_an_earlier_candidate_that_cannot_be_resolved_leaves_the_earliest_unknown():
+    m = ledger.memo("sealed-prereg", D)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("gone", 40, None, f"[{len(m)}] {m}"))
+    r = ledger.check_line(_line(), fetch=_chain_txs({"sig1": _tx(m), "gone": RuntimeError("rpc getTransaction failed")}, hist))
+    assert r["status"] == "EARLIEST_UNKNOWN" and "could not be resolved" in r["detail"] and "gone" in r["detail"]
+    # a LATER candidate that cannot be resolved does not matter: the earliest seal is already known
+    hist = _hist(("later", 200, None, f"[{len(m)}] {m}"), ("sig1", 123, None, f"[{len(m)}] {m}"))
+    r = ledger.check_line(_line(), fetch=_chain_txs({"sig1": _tx(m), "later": None}, hist))
+    assert r["status"] == "ANCHORED"
+
+
+def test_a_flood_of_memos_carrying_the_digest_is_unknown_never_anchored(monkeypatch):
+    m = ledger.memo("sealed-prereg", D)
+    monkeypatch.setattr(ledger, "MAX_CANDIDATES", 3)
+    hist = _hist(*[(f"f{i}", 200 + i, None, f"[{len(m)}] {m}") for i in range(5)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
+    txs = {f"f{i}": _tx(m, slot=200 + i, signer="Str4nger") for i in range(5)}
+    txs["sig1"] = _tx(m)
+    r = ledger.check_line(_line(), fetch=_chain_txs(txs, hist))
+    assert r["status"] == "EARLIEST_UNKNOWN" and "resolves" in r["detail"]
+
+
+def test_verify_prints_a_beacon_only_on_a_line_that_is_the_seal(monkeypatch, capsys):
+    rows = [{"n": 1, "kind": "sealed-prereg", "status": "ANCHORED", "beacon": "ab" * 32, "beacon_b58": "x", "slot": 1},
+            {"n": 2, "kind": "sealed-prereg", "status": "EARLIER_MEMO_EXISTS", "beacon": "cd" * 32, "beacon_b58": "y", "slot": 2,
+             "detail": "the earliest confirmed memo carrying this digest is sig0"}]
+    monkeypatch.setattr(ledger, "verify", lambda path: rows)
+    assert ledger.main(["verify", "anchors.jsonl"]) == 1
+    out = capsys.readouterr().out.splitlines()
+    assert "beacon=" + "ab" * 32 in out[0]
+    assert "cd" * 32 not in out[1] and "not a verified seal" in out[1]
+
+
 def test_a_history_the_scan_cannot_finish_is_unknown_never_anchored():
     m = ledger.memo("sealed-prereg", D)
     hist = _hist(*[(f"s{i}", 5000 - i, None, "[1] x") for i in range(1000 * 50)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))

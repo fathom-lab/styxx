@@ -25,20 +25,30 @@ line's `checks` map records every check that was computed, so a reader sees all 
     TIME_MISMATCH       the line records a block time and it is not the chain's
     BEACON_UNAVAILABLE  (seals only) getBlock failed or returned no blockhash
     BEACON_MALFORMED    (seals only) the blockhash did not decode to 32 bytes
-    EARLIEST_UNKNOWN    (seals only) the wallet's history could not be scanned to its end, or lists
-                        no confirmed memo carrying the digest though the transaction resolved
-    EARLIER_MEMO_EXISTS (seals only) an earlier confirmed memo from the wallet carries the same
-                        digest: the beacon is THAT slot's, and the recorded transaction is not the seal
+    EARLIEST_UNKNOWN    (seals only) the wallet's history could not be scanned to its end, lists more
+                        candidates than the scan resolves, lists no seal memo though the transaction
+                        resolved, or an earlier candidate could not be resolved
+    EARLIER_MEMO_EXISTS (seals only) an earlier confirmed transaction SIGNED BY THE WALLET carries
+                        exactly the same seal memo: the beacon is THAT slot's, and the recorded
+                        transaction is not the seal
     ANCHORED            everything above held
 
 The earliest-memo rule (added 2026-09-13, night): a signer can anchor one digest several times and
 record whichever transaction's slot drew the canaries they liked. The rule that closes that is
-that the seal of a digest is the EARLIEST confirmed memo carrying it from the creator wallet, and
-verify() enforces it by scanning the wallet's signature listing (each entry carries its memo, so
-the scan costs one request per thousand transactions). A memo from another wallet is not a seal
-(NOT_CREATOR) and is not in this wallet's listing; a later duplicate from the same wallet is
-caught here. What remains: the scan trusts the same endpoint as everything else, and it stops at
-fifty pages — a longer history reads EARLIEST_UNKNOWN, never ANCHORED.
+that the seal of a digest is the EARLIEST confirmed transaction SIGNED BY the creator wallet whose
+memo is exactly `styxx <kind> <digest>`, and verify() enforces it by scanning the wallet's
+signature listing and resolving every listed candidate. The listing names every transaction that
+references the address — a transfer TO the wallet that someone else signed is in it too — so a
+listed memo is only a candidate: it counts once getTransaction shows it succeeded, its fee payer
+is the wallet, and one of its memo instructions is exactly the seal memo. Until 2026-09-14 the
+scan counted every listed memo that contained the digest, and this docstring said a foreign memo
+"is not in this wallet's listing"; both were wrong, and anyone who read a digest before it was
+sealed (SEALS_2026_09_13.md prints them) could have sent the wallet a memo carrying it first and
+made the real seal read EARLIER_MEMO_EXISTS forever (the red team of 2026-09-14 found it). What
+remains: the scan trusts the same endpoint as everything else; it stops at fifty pages of history
+and at MAX_CANDIDATES resolved candidates — either limit reads EARLIEST_UNKNOWN, never ANCHORED —
+so a stranger who floods the wallet with memos carrying a digest can make its seal unverifiable
+by this module, but can no longer make another transaction's slot the beacon.
 
 What it does not check, stated so nobody reads more into ANCHORED than it says. It trusts the
 first RPC endpoint that answers: two are tried, no cross-endpoint agreement is required, and the
@@ -68,6 +78,7 @@ SEAL_KINDS = ("sealed-prereg", "sealed-canaries")
 MEMO_PROGRAMS = {"MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr", "Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo"}
 TOKEN_PROGRAMS = {"TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"}
 RPCS = ["https://api.mainnet-beta.solana.com", "https://solana-rpc.publicnode.com"]
+MAX_CANDIDATES = 200      # listed memos carrying a digest that earliest_memo resolves before it gives up
 _HEX = "0123456789abcdef"
 _B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
@@ -218,18 +229,55 @@ def wallet_memos(wallet: str = CREATOR, fetch=_rpc, rpcs=RPCS, limit: int = 1000
     return out
 
 
-def earliest_memo(digest: str, wallet: str = CREATOR, fetch=_rpc, rpcs=RPCS) -> dict:
-    """The EARLIEST confirmed signature of the wallet whose memo carries the digest — the rule that
-    closes slot selection: a signer who anchors the same digest more than once and records the
+def earliest_memo(digest: str, wallet: str = CREATOR, fetch=_rpc, rpcs=RPCS, kind: str | None = None) -> dict:
+    """The EARLIEST confirmed transaction SIGNED BY THE WALLET whose memo seals the digest — the rule
+    that closes slot selection: a signer who anchors the same digest more than once and records the
     transaction whose slot drew the canaries they liked is caught, because the beacon is defined as
-    the earliest one's slot. Returns {"earliest": entry-or-None, "n_carrying": count, "complete": bool}.
-    Solana lists a memo as "[len] text"; the digest is searched as a substring."""
+    the earliest one's slot.
+
+    The wallet's signature listing is only a list of candidates: it names every transaction that
+    references the address, including transfers TO the wallet that another key signed, and it lists
+    a memo as "[len] text" (the digest is searched there as a substring). Every listed candidate that
+    succeeded and carries the digest is resolved with getTransaction and qualifies only if its fee
+    payer is the wallet and one of its memo instructions is exactly `memo(kind, digest)` (with no
+    kind given: any memo instruction containing the digest). Returns
+    {"earliest": listing-entry-or-None, "n_carrying": qualifying, "n_listed": candidates,
+     "foreign": [{"signature", "slot", "reason"}], "unresolved": [{"signature", "slot"}],
+     "complete": bool} — complete is False when the history was truncated or the candidates exceed
+    MAX_CANDIDATES."""
     entries = wallet_memos(wallet, fetch, rpcs)
     complete = not any(e.get("_truncated") for e in entries)
-    hits = [e for e in entries if not e.get("_truncated") and e.get("err") is None
-            and isinstance(e.get("memo"), str) and digest in e["memo"]]
-    earliest = min(hits, key=lambda e: (e.get("slot") or 0, e["signature"])) if hits else None
-    return {"earliest": earliest, "n_carrying": len(hits), "complete": complete}
+    listed = [e for e in entries if not e.get("_truncated") and e.get("err") is None
+              and isinstance(e.get("memo"), str) and digest in e["memo"]]
+    listed.sort(key=lambda e: (e.get("slot") or 0, e["signature"]))
+    if len(listed) > MAX_CANDIDATES:
+        complete = False
+        listed = listed[:MAX_CANDIDATES]
+    expected = memo(kind, digest) if kind is not None else None
+    qualifying, foreign, unresolved = [], [], []
+    for e in listed:
+        try:
+            tx = fetch("getTransaction", [e["signature"], {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}], rpcs)
+        except RuntimeError:
+            tx = None
+        if not isinstance(tx, dict):
+            unresolved.append({"signature": e["signature"], "slot": e.get("slot")})
+            continue
+        memos = parse_memos(tx)
+        payer = fee_payer(tx)
+        if (tx.get("meta") or {}).get("err") is not None:
+            reason = "the transaction failed"
+        elif payer != wallet:
+            reason = f"signed by {payer}, not by the wallet"
+        elif not (expected in memos if expected is not None else any(digest in m for m in memos)):
+            reason = "no memo instruction is exactly the seal memo"
+        else:
+            qualifying.append(e)
+            continue
+        foreign.append({"signature": e["signature"], "slot": e.get("slot"), "reason": reason})
+    earliest = qualifying[0] if qualifying else None
+    return {"earliest": earliest, "n_carrying": len(qualifying), "n_listed": len(listed),
+            "foreign": foreign, "unresolved": unresolved, "complete": complete}
 
 
 def _iso(block_time) -> str | None:
@@ -321,18 +369,26 @@ def check_line(line: dict, rpcs=RPCS, fetch=_rpc, wallet: str = CREATOR, mint: s
         c["beacon"] = True
         if scan:
             try:
-                em = earliest_memo(line["digest"], wallet, fetch, rpcs)
+                em = earliest_memo(line["digest"], wallet, fetch, rpcs, kind=line["kind"])
             except RuntimeError as e:
                 return fail("EARLIEST_UNKNOWN", detail=f"the wallet history could not be scanned: {e}")
             out["memos_carrying_digest"] = em["n_carrying"]
+            out["memos_listed_carrying_digest"] = em["n_listed"]
+            out["foreign_memos"] = em["foreign"]
             out["earliest_tx"] = (em["earliest"] or {}).get("signature")
             out["earliest_slot"] = (em["earliest"] or {}).get("slot")
             c["earliest"] = em["earliest"] is not None and em["earliest"]["signature"] == line["tx"]
             if not em["complete"]:
-                return fail("EARLIEST_UNKNOWN", detail="the wallet's history is longer than the scan read; the earliest memo is unknown")
+                return fail("EARLIEST_UNKNOWN", detail="the wallet's history is longer than the scan read, or lists more memos "
+                                                       f"carrying this digest than the {MAX_CANDIDATES} it resolves; the earliest seal is unknown")
             if em["earliest"] is None:
-                return fail("EARLIEST_UNKNOWN", detail="the wallet's history lists no confirmed memo carrying this digest, "
+                return fail("EARLIEST_UNKNOWN", detail="the wallet's history lists no confirmed seal memo signed by the wallet, "
                                                        "though the transaction resolved; the listing and the transaction disagree")
+            key = (em["earliest"].get("slot") or 0, em["earliest"]["signature"])
+            before = [u for u in em["unresolved"] if u.get("slot") is None or ((u.get("slot") or 0), u["signature"]) < key]
+            if before:
+                return fail("EARLIEST_UNKNOWN", detail=f"{len(before)} earlier listed memo(s) carrying this digest could not be "
+                                                       f"resolved ({', '.join(u['signature'] for u in before[:3])}); the earliest seal is unknown")
             if not c["earliest"]:
                 return fail("EARLIER_MEMO_EXISTS", detail=f"the earliest confirmed memo carrying this digest is {out['earliest_tx']} "
                                                           f"at slot {out['earliest_slot']}; the beacon is that slot's, not this one's")
@@ -359,8 +415,10 @@ def main(argv=None) -> int:  # pragma: no cover
         for r in rs:
             line = (f"#{r.get('n')} {str(r.get('kind')):14s} {r['status']:18s} {r.get('block_time') or '-':20s} "
                     f"slot={r.get('slot')} rpc={r.get('rpc')}")
-            if r.get("beacon"):
+            if r.get("beacon") and r["status"] == "ANCHORED":
                 line += f" beacon={r['beacon']} (b58 {r.get('beacon_b58')})"
+            elif r.get("beacon"):
+                line += " beacon=(none: this line is not a verified seal, and its slot's blockhash draws nothing)"
             if r.get("detail"):
                 line += f"  — {r['detail']}"
             print(line)
