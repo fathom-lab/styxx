@@ -31,11 +31,21 @@ document and no frozen PREREG was edited — the two sworn documents at fault ge
   two scales. The CORRECTION fixes the reading before the run; `score.py` applies it.
 - **`score.py` v2** re-derives what v1 trusted: K1 from the floor, the sealed digest without a flag, a
   48-item draw, every arm grading the drawn set; a valid K1-killed run is a result. Its tests parse every
-  band out of the frozen text and pin every comparator on its edge; 28 of 28 mutations caught (4e08cf28).
+  band out of the frozen text and pin every comparator on its edge; 28 of 28 mutations caught (4e08cf28); the verification then showed 15 of 18 further mutations surviving, and the published list (`papers/checksum/score_mutations.py` and its result file) now kills 92 of 92.
 - **`styxx.stranger` v2**: a `.md` edited beside an untouched sidecar read PASS (`check` on a sidecar never
   opens it); now compared byte for byte. Document verdicts are tallied, a dirty tree FAILS unless
   `--allow-dirty`, a short head is refused, committed scorecards must name the certs bytes, fingerprints
   beside beacon-drawn certs are re-checked, and a directory named `*_certs*` no longer hides them.
+- **The repairs, verified and repaired again** (six areas, two skeptics per finding; then three repair
+  batches, each in its own worktree with two reviewers and a repair round). The scorer: a beacon-draw card
+  without `--expect-beacon` is never a result; when K1 did not fire every arm cert, the held-out cert and the
+  canary hash must exist; `is_the_experiment` is cross-checked against tag, smoke, git head (empty counts as
+  missing) and a dirty tree; H5 waits when the hand set's K1 fired; H6 reads only a portability record whose
+  digests re-derive from these certs (it cannot show the other column came from another machine, and says
+  so). The stranger command accounts for every scorecard, always runs the checkout step, FAILS drawn certs
+  without fingerprints, and takes the seal's beacon from the seals step. The runner refuses a shadowed
+  checksum module, untracked files under `styxx/`, an unanswered git status, and any beacon but the one
+  `clock verify` prints ANCHORED for the seal.
 - **The runner refuses the sealed experiment** unless the PREREG at HEAD is the sealed blob on a clean
   commit, and records the weights' Hub revision (0fae8ac7).
 - **Sand survey pass 3's inputs were not in the tree.** The four reader returns and the fetch script are
