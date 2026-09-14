@@ -68,11 +68,18 @@ def main():
         print(f"  A vs {tag:8s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} nats/token "
               f"[{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]   belief-geometry r = {d.rdm_r:.4f} "
               f"[{d.ci_rdm_r[0]:.3f}, {d.ci_rdm_r[1]:.3f}]   corr-dist = {d.corr_dist:.4f}")
-    out["coefficients_sha256"] = {k: coefficients_sha256(coefficients(f.rdm)) for k, f in
-                                  (("A", fpA), ("A2", fpA2), ("Q", fpQ), ("R", fpR))}
-    json.dump(out, open(os.path.join(HERE, "smollm_quant_certs.json"), "w"), indent=1)
-    json.dump({"A": fpA.to_json(), "A2": fpA2.to_json(), "Q": fpQ.to_json(), "R": fpR.to_json()},
-              open(os.path.join(HERE, "smollm_quant_fingerprints.json"), "w"))
+    # the cross-machine target is hashed from the WRITTEN (rounded) geometry — the bytes a stranger has —
+    # not from the in-memory array (2026-09-13: the in-memory hash matched no committed fingerprint file).
+    # The committed smollm_quant_certs.json predates this key and this rule; it stays as committed.
+    import numpy as _np
+    out["coefficients_sha256"] = {k: coefficients_sha256(coefficients(_np.asarray(f.to_json()["rdm"], dtype=_np.float64)))
+                                  for k, f in (("A", fpA), ("A2", fpA2), ("Q", fpQ), ("R", fpR))}
+    with open(os.path.join(HERE, "smollm_quant_certs.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(out, fh, indent=1)
+        fh.write("\n")
+    with open(os.path.join(HERE, "smollm_quant_fingerprints.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"A": fpA.to_json(), "A2": fpA2.to_json(), "Q": fpQ.to_json(), "R": fpR.to_json()}, fh)
+        fh.write("\n")
 
     items = [
         ("smollm2-135m  float32", "the model", coefficients(fpA.rdm)),
