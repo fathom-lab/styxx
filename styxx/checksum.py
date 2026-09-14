@@ -132,13 +132,23 @@ class Fingerprint:
     rdm: np.ndarray              # (n, n) correlation distance between items' next-token beliefs
     n_tokens: list[int]
     created: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    kind: str = "full"           # "full": teacher-forced per-token mean log-prob; "topk": the API variant
+    k: int = 0                   # for "topk": the k the belief vectors were built from; comparable only at equal k
 
     def to_json(self) -> dict:
+        """The written form: values rounded to 1e-6, -0.0 normalised to 0.0 (a sign on float noise
+        would otherwise hash differently on another machine), the rdm diagonal written as exactly 0,
+        and a hash over the written rdm and the written mean_lp — the two things a stranger compares."""
         d = asdict(self)
-        d["mean_lp"] = [round(float(x), 6) for x in self.mean_lp]
-        d["rdm"] = [[round(float(x), 6) for x in row] for row in self.rdm]
+        d["mean_lp"] = [round(float(x), 6) + 0.0 for x in self.mean_lp]
+        d["rdm"] = [[(0.0 if i == j else round(float(x), 6) + 0.0) for j, x in enumerate(row)] for i, row in enumerate(self.rdm)]
         d["rdm_sha256"] = hashlib.sha256(json.dumps(d["rdm"], separators=(",", ":")).encode()).hexdigest()
+        d["mean_lp_sha256"] = hashlib.sha256(json.dumps(d["mean_lp"], separators=(",", ":")).encode()).hexdigest()
         return d
+
+    def written_hashes(self) -> tuple[str, str]:
+        j = self.to_json()
+        return j["rdm_sha256"], j["mean_lp_sha256"]
 
 
 def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "") -> Fingerprint:
@@ -164,11 +174,14 @@ class Distance:
     corr_dist: float             # 1 - pearson(mean_lp_a, mean_lp_b)
     rdm_r: float                 # pearson of the two RDM upper triangles (belief geometry agreement)
     ci_mean_abs: tuple[float, float]
-    ci_rdm_r: tuple[float, float]
+    ci_rdm_r: tuple[float, float]   # a SUBSAMPLING interval (unique bootstrap indices), not a multiplicity bootstrap
     n_items: int
     n_boot: int
     verdict: str                 # SAME | DRIFT | INCONCLUSIVE
     reason: str
+    floor_measured: float = float("nan")   # what the caller passed (the in-situ null floor)
+    floor_effective: float = float("nan")  # what the verdict was graded against: max(measured, RESOLUTION_NATS)
+    seed: int = 0                          # the bootstrap seed, so the interval re-derives
 
 
 DEGENERATE_STD = 1e-6           # a fingerprint with no variation across items measures nothing
@@ -199,13 +212,27 @@ def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 202
     if a.tokenizer_id != b.tokenizer_id:
         raise ValueError("fingerprints were taken with different tokenizers; mean log-prob per token is "
                          "not comparable across tokenizations (the belief-geometry rdm still is)")
-    floor = max(float(floor_nats), RESOLUTION_NATS)
+    if a.kind != b.kind:
+        raise ValueError(f"a {a.kind} fingerprint and a {b.kind} fingerprint measure different quantities; not comparable")
+    if a.kind == "topk" and a.k != b.k:
+        raise ValueError(f"top-k fingerprints at k={a.k} and k={b.k} are not comparable")
+    if not a.tokenizer_id or not b.tokenizer_id:
+        raise ValueError("a fingerprint with no tokenizer_id cannot be compared: name the tokenization")
+    if list(a.ids) != list(b.ids):
+        raise ValueError("the fingerprints list different items (or a different order); the canary hash was copied")
+    floor_measured = float(floor_nats)
+    if not np.isfinite(floor_measured) or floor_measured < 0:
+        raise ValueError(f"floor_nats must be a finite, non-negative measured floor; got {floor_nats!r}")
+    floor = max(floor_measured, RESOLUTION_NATS)
     n = len(a.ids)
     da = np.abs(a.mean_lp - b.mean_lp)
     mean_abs = float(da.mean())
-    if a.mean_lp.std() < DEGENERATE_STD or b.mean_lp.std() < DEGENERATE_STD:
+    iu = np.triu_indices(n, 1)
+    if (a.mean_lp.std() < DEGENERATE_STD or b.mean_lp.std() < DEGENERATE_STD
+            or a.rdm[iu].std() < 1e-12 or b.rdm[iu].std() < 1e-12):
         return Distance(mean_abs, float("nan"), float("nan"), (float("nan"),) * 2, (float("nan"),) * 2,
-                        n, 0, "INCONCLUSIVE", "degenerate: a fingerprint has no variation across items")
+                        n, 0, "INCONCLUSIVE", "degenerate: a fingerprint has no variation across items "
+                        "(in its mean log-probs or in its belief geometry)", floor_measured, floor, seed)
     corr_dist = float(1.0 - np.corrcoef(a.mean_lp, b.mean_lp)[0, 1])
     rdm_r = _rdm_r(a.rdm, b.rdm)
     rng = np.random.default_rng(seed)
@@ -223,7 +250,7 @@ def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 202
         verdict, reason = "DRIFT", f"lower 95% bound {ci_abs[0]:.4f} nats/token is above the floor {floor:g}"
     else:
         verdict, reason = "INCONCLUSIVE", f"the 95% interval straddles the floor {floor:g}"
-    return Distance(mean_abs, corr_dist, rdm_r, ci_abs, ci_r, n, n_boot, verdict, reason)
+    return Distance(mean_abs, corr_dist, rdm_r, ci_abs, ci_r, n, n_boot, verdict, reason, floor_measured, floor, seed)
 
 
 def null_floor(fingerprints: Sequence[Fingerprint]) -> float:
@@ -265,27 +292,53 @@ def fingerprint_topk(topk: TopKFn, model_id: str, canaries=CANARIES, tokenizer_i
     B = B - B.mean(1, keepdims=True)
     B /= (np.linalg.norm(B, axis=1, keepdims=True) + 1e-12)
     rdm = 1.0 - B @ B.T
-    fp = Fingerprint(model_id=model_id, canary_sha256=canary_sha256(canaries), tokenizer_id=tokenizer_id or "topk",
-                     ids=[c[0] for c in canaries], mean_lp=np.asarray(gold_lp), rdm=rdm, n_tokens=[1] * len(canaries))
-    fp.model_id = f"{model_id} [topk={min(len(d) for d in rows)}]"
+    k = min(len(d) for d in rows)
+    fp = Fingerprint(model_id=f"{model_id} [topk={k}]", canary_sha256=canary_sha256(canaries),
+                     tokenizer_id=tokenizer_id or "topk", ids=[c[0] for c in canaries], mean_lp=np.asarray(gold_lp),
+                     rdm=rdm, n_tokens=[1] * len(canaries), kind="topk", k=k)
     return fp
 
 
 # ------------------------------------------------------------------------------------------- cert
+def _finite(v):
+    """JSON without NaN tokens: a strict parser must be able to load a cert and re-derive its digest."""
+    if isinstance(v, float) and not np.isfinite(v):
+        return None
+    if isinstance(v, dict):
+        return {k: _finite(x) for k, x in v.items()}
+    if isinstance(v, (list, tuple)):
+        return [_finite(x) for x in v]
+    return v
+
+
 def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
-    """A comparison certificate: everything needed to re-derive the verdict from the two fingerprints."""
+    """A comparison certificate: the comparison, and the written hashes of the two fingerprints it
+    grades, so a stranger holding the cert and the two fingerprint files can re-derive the verdict.
+
+    v1 (2026-09-13): v0's digest covered no hash of either fingerprint, no seed and no floor — two
+    different fingerprint pairs with the same model_id strings produced the same digest, and an
+    INCONCLUSIVE cert carried a bare NaN token no strict parser accepts. v1 adds a.rdm_sha256 and
+    a.mean_lp_sha256 (and b's), the seed, and the measured and effective floors inside the digest,
+    and writes non-finite values as null. Committed v0 certs stay as history under their own schema.
+    """
+    a_rdm, a_lp = a.written_hashes()
+    b_rdm, b_lp = b.written_hashes()
     body = {
-        "schema": "styxx.checksum/compare/v0",
+        "schema": "styxx.checksum/compare/v1",
         "canary_sha256": a.canary_sha256,
         "tokenizer_id": a.tokenizer_id,
+        "kind": a.kind,
         "n_items": d.n_items,
-        "a": {"model_id": a.model_id},
-        "b": {"model_id": b.model_id},
-        "distance": {k: v for k, v in asdict(d).items()},
+        "a": {"model_id": a.model_id, "rdm_sha256": a_rdm, "mean_lp_sha256": a_lp},
+        "b": {"model_id": b.model_id, "rdm_sha256": b_rdm, "mean_lp_sha256": b_lp},
+        "distance": _finite({k: v for k, v in asdict(d).items()}),
+        "floor_measured_nats": _finite(d.floor_measured),
+        "floor_effective_nats": _finite(d.floor_effective),
+        "seed": d.seed,
         "resolution_nats": RESOLUTION_NATS,
         "note": note,
     }
-    blob = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
-    body["digest"] = hashlib.sha256(blob).hexdigest()   # over the comparison only — re-runs agree
+    blob = json.dumps(body, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+    body["digest"] = hashlib.sha256(blob).hexdigest()   # over the comparison and the written fingerprint hashes — re-runs on the same bytes agree
     body["created"] = {"a": a.created, "b": b.created}   # timestamps ride outside the digest
     return body

@@ -21,6 +21,10 @@ import json, os, sys, itertools
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+# the styxx that renders is the one in this checkout, not whatever pip installed elsewhere: run by
+# path, sys.path[0] is this directory and `styxx` would resolve to a site-packages copy that may
+# predate geoplate (it did, on the lab's own second machine, 2026-09-13)
+sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..", "..")))
 from styxx.geoplate import coefficients, render_grid, coefficients_sha256  # noqa: E402
 
 BANKS = {

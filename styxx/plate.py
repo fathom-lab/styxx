@@ -18,7 +18,7 @@ every parameter; of the re-hash:
   bytes 12..15  -> four mode families (cos / sin) and a plate rotation
   bytes 16..23  -> grain seed for the sand scatter
 """
-import sys, math, hashlib
+import sys, math, hashlib, re
 import numpy as np
 
 
@@ -39,12 +39,12 @@ INK = "#6f6a5e"
 
 
 def _modes(digest_hex: str):
-    try:
-        raw = bytes.fromhex(digest_hex)
-    except ValueError:
-        raw = b""
-    if len(raw) != 32:
+    # the same rule as papers/plates/plate.html: exactly 64 hex characters after trimming, nothing else
+    # (bytes.fromhex alone tolerates internal whitespace, which the page refuses and the caption would print)
+    digest_hex = digest_hex.strip()
+    if not re.fullmatch(r"[0-9a-fA-F]{64}", digest_hex):
         raise SystemExit("need a 64-hex sha256 digest")
+    raw = bytes.fromhex(digest_hex)
     # re-hash so that EVERY byte of the digest reaches every parameter:
     # change one hex character anywhere and the whole figure changes
     b = hashlib.sha256(raw).digest()
