@@ -101,3 +101,19 @@ def test_the_runner_refuses_to_call_a_beacon_drawn_run_the_sealed_experiment():
                        capture_output=True, text=True, timeout=300)
     assert r.returncode != 0
     assert "not the sealed experiment" in (r.stdout + r.stderr)
+
+
+def test_the_beacon_draw_prereg_requires_the_beacon_and_a_well_formed_one():
+    # the 2026-09-14 PREREG's run draws its canaries from the seal's block hash: no beacon, no run —
+    # decided before torch is imported, so this holds on a box without a model stack
+    r = subprocess.run([sys.executable, "papers/checksum/run_deploy_quant.py", "--prereg", "beacon_draw"],
+                       capture_output=True, text=True, timeout=300)
+    assert r.returncode != 0
+    assert "draws its canaries from the block hash" in (r.stdout + r.stderr)
+    r = subprocess.run([sys.executable, "papers/checksum/run_deploy_quant.py", "--prereg", "beacon_draw", "--beacon", "xyz"],
+                       capture_output=True, text=True, timeout=300)
+    assert r.returncode != 0
+    assert "64 lowercase hex" in (r.stdout + r.stderr)
+    r = subprocess.run([sys.executable, "papers/checksum/run_deploy_quant.py", "--prereg", "not_a_prereg"],
+                       capture_output=True, text=True, timeout=300)
+    assert r.returncode != 0

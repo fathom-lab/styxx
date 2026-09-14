@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-"""run_deploy_quant.py — the sealed deploy-scale checksum run (see PREREG_checksum_deploy_quant).
+"""run_deploy_quant.py — the sealed deploy-scale checksum runs (PREREG_checksum_deploy_quant, 2026-09-13,
+the hand-written 48; PREREG_checksum_beacon_draw, 2026-09-14, the 48 drawn from the pool by the block hash
+of the slot that sealed it). --prereg selects which one governs and names the outputs.
 
-    # real run, GPU, after the prereg hash is anchored:
+    # the hand-set run, GPU, after the prereg hash is anchored:
     python papers/checksum/run_deploy_quant.py --model Qwen/Qwen2.5-1.5B
+    # the beacon-draw run, after ITS prereg is sealed: the beacon is the one `styxx.clock verify` prints
+    # ANCHORED for the earliest memo carrying that prereg's blob digest
+    python papers/checksum/run_deploy_quant.py --prereg beacon_draw --beacon <64 hex>
     # pipeline smoke on cpu (no bitsandbytes; dynamic int8 stands in for the two bnb arms;
     # results are NOT the experiment and are written to *_smoke.* files):
     python papers/checksum/run_deploy_quant.py --smoke
@@ -23,6 +28,9 @@ hits[A] − hits[arm], the definition the RESULT uses for H2/K3.
 """
 import argparse, hashlib, json, os, re, subprocess, sys, time
 
+PREREGS = {"deploy_quant": "PREREG_checksum_deploy_quant_2026_09_13.md",   # the hand-written 48, frozen 2026-09-13
+           "beacon_draw": "PREREG_checksum_beacon_draw_2026_09_14.md"}     # the 48 drawn by the seal's block hash
+
 
 def _parse_args(argv=None):
     ap = argparse.ArgumentParser()
@@ -32,12 +40,20 @@ def _parse_args(argv=None):
                     "experiment (e.g. _dryrun_qwen0.5b); the experiment writes untagged files and only for the PREREG's model")
     ap.add_argument("--beacon", default="", help="64-hex beacon (a slot blockhash as styxx.clock reports it): draw the 48 "
                     "canaries from the committed pool instead of the hand set. The 2026-09-13 PREREG froze the hand set, so "
-                    "a beacon-drawn run is never that experiment and must carry --tag; the next PREREG is written for this.")
+                    "under it a beacon-drawn run is never the experiment and must carry --tag; under --prereg beacon_draw "
+                    "the beacon is required and is the block hash of the slot that sealed that PREREG.")
+    ap.add_argument("--prereg", choices=sorted(PREREGS), default="deploy_quant",
+                    help="which frozen PREREG governs the run and names its outputs: deploy_quant (the hand-written 48, "
+                    "2026-09-13) or beacon_draw (the 48 drawn from the pool by the seal's block hash, 2026-09-14)")
     args = ap.parse_args(argv)
     # refusals that need no model stack: decided before torch is imported
-    if args.beacon and not args.tag:
+    if args.prereg == "deploy_quant" and args.beacon and not args.tag:
         raise SystemExit("a beacon-drawn run is not the sealed experiment (the 2026-09-13 PREREG froze the hand-written 48); "
-                         "pass --tag, or write the next PREREG with the draw in it")
+                         "pass --tag, or run under --prereg beacon_draw, whose experiment is the drawn set")
+    if args.prereg == "beacon_draw" and not args.beacon:
+        raise SystemExit("the beacon-draw PREREG's run draws its canaries from the block hash of the slot that sealed it; "
+                         "pass --beacon <64 hex> (python -m styxx.clock verify prints it for the seal's line), "
+                         "or --prereg deploy_quant for the hand-written set")
     if args.beacon and not re.fullmatch(r"[0-9a-f]{64}", args.beacon):
         raise SystemExit("--beacon must be 64 lowercase hex characters (styxx.clock.blockhash_to_beacon converts the chain's base58)")
     return args
@@ -63,7 +79,7 @@ if os.path.commonpath([_STYXX_FILE, ROOT]) != ROOT:
                      "refusing to run the sealed experiment with another package")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PREREG = "PREREG_checksum_deploy_quant_2026_09_13.md"
+PREREG = PREREGS[ARGS.prereg] if ARGS is not None else PREREGS["deploy_quant"]
 K1_FLOOR_NATS = 1e-2
 N_BOOT, SEED = 2000, 20260913
 
@@ -75,12 +91,14 @@ def _git(*args):
         return None
 
 
-def provenance(device):
+def provenance(device, prereg=None):
+    prereg = prereg or PREREG
+
     def sha(path):
         return hashlib.sha256(open(path, "rb").read()).hexdigest()
     head = _git("rev-parse", "HEAD")
     dirty = _git("status", "--porcelain")
-    blob = _git("show", f"HEAD:papers/checksum/{PREREG}")
+    blob = _git("show", f"HEAD:papers/checksum/{prereg}")
     versions = {"torch": torch.__version__}
     try:
         import transformers
@@ -95,7 +113,7 @@ def provenance(device):
     return {
         "git_head": head.stdout.decode().strip() if head else None,
         "git_dirty": bool(dirty.stdout.strip()) if dirty else None,
-        "prereg": PREREG,
+        "prereg": prereg,
         "prereg_blob_sha256": hashlib.sha256(blob.stdout).hexdigest() if blob else None,
         "styxx_file": _STYXX_FILE,
         "checksum_py_sha256": sha(os.path.join(ROOT, "styxx", "checksum.py")),
@@ -176,6 +194,7 @@ def main():
         raise SystemExit("an untagged, non-smoke run is the sealed experiment and its model is Qwen/Qwen2.5-1.5B; "
                          "pass --tag <suffix> for an instrument check on another model")
     suffix = ("_smoke" if smoke else "") + args.tag
+    prereg, stem = PREREGS[args.prereg], args.prereg            # the outputs carry the PREREG's name
     base_kind = "fp32" if smoke else "bf16"
     dtype = torch.float32 if base_kind == "fp32" else torch.bfloat16
     arms = [("A", base_kind), ("A2", base_kind), ("A3", base_kind),
@@ -186,7 +205,7 @@ def main():
         torch.use_deterministic_algorithms(True, warn_only=True)
     except Exception:
         pass
-    prov = provenance(device)
+    prov = provenance(device, prereg)
     print(f"  provenance: head {prov['git_head']} dirty={prov['git_dirty']} prereg blob {str(prov['prereg_blob_sha256'])[:12]} "
           f"styxx {prov['styxx_file']}")
     canaries, draw_record = ck.CANARIES, None
@@ -208,7 +227,7 @@ def main():
             torch.cuda.empty_cache()
     floor = ck.null_floor([fps["A"], fps["A2"], fps["A3"]])
     k1 = {"threshold_nats": K1_FLOOR_NATS, "floor_nats": floor, "fired": bool(floor > K1_FLOOR_NATS)}
-    out = {"prereg": PREREG, "smoke": smoke, "tag": args.tag, "is_the_experiment": is_the_experiment,
+    out = {"prereg": prereg, "smoke": smoke, "tag": args.tag, "is_the_experiment": is_the_experiment,
            "model": name, "device": device,
            "provenance": prov,
            "canaries": {"n": len(canaries), "canary_sha256": ck.canary_sha256(canaries), "draw": draw_record,
@@ -230,17 +249,22 @@ def main():
             out[tag] = ck.cert(fps["A"], fps[tag], d, note=f"{name} on {device}; teacher-forced; deterministic best effort")
             print(f"  A vs {tag:3s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} [{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]"
                   f"   r = {d.rdm_r:.4f}   top-1 {hits['A']}->{hits[tag]}")
-        # CORRECTION_prereg_deploy_quant_H1: the frozen H1 grades A vs A' against a floor that includes
-        # that very pair. Beside it, unpreregistered and labelled so, the held-out reading: the floor
-        # from the two pairs that do not contain A' (A-A'' and A'-A''), which is what the clause meant.
+        # CORRECTION_prereg_deploy_quant_H1: the 2026-09-13 PREREG's H1 grades A vs A' against a floor that
+        # includes that very pair; under it the held-out reading is unpreregistered and decides nothing.
+        # The beacon-draw PREREG (2026-09-14) freezes the held-out form as H1's pair clause (the
+        # CORRECTION's rule 5): the floor from the two pairs that do not contain A' (A-A'' and A'-A'').
         held_out_floor = max(float(np.abs(fps["A"].mean_lp - fps["A3"].mean_lp).mean()),
                              float(np.abs(fps["A2"].mean_lp - fps["A3"].mean_lp).mean()))
         d_ho = ck.distance(fps["A"], fps["A2"], n_boot=N_BOOT, seed=SEED, floor_nats=held_out_floor)
-        out["h1_held_out"] = {"unpreregistered": True, "floor_from": ["A-A3", "A2-A3"], "floor_nats": held_out_floor,
-                              "cert": ck.cert(fps["A"], fps["A2"], d_ho, note="held-out floor reading of H1; decides nothing in this run")}
-        print(f"  H1 held-out reading (unpreregistered): A vs A2 {d_ho.verdict} against floor {held_out_floor:.6f}")
-    _write_json(os.path.join(HERE, f"deploy_quant_certs{suffix}.json"), out, indent=1)
-    _write_json(os.path.join(HERE, f"deploy_quant_fingerprints{suffix}.json"), {k: v.to_json() for k, v in fps.items()})
+        preregistered = args.prereg == "beacon_draw"
+        out["h1_held_out"] = {"unpreregistered": not preregistered, "preregistered_by": prereg if preregistered else None,
+                              "floor_from": ["A-A3", "A2-A3"], "floor_nats": held_out_floor,
+                              "cert": ck.cert(fps["A"], fps["A2"], d_ho, note="held-out floor reading of H1" +
+                                              ("; the preregistered pair clause" if preregistered else "; decides nothing in this run"))}
+        print(f"  H1 held-out reading ({'preregistered' if preregistered else 'unpreregistered'}): "
+              f"A vs A2 {d_ho.verdict} against floor {held_out_floor:.6f}")
+    _write_json(os.path.join(HERE, f"{stem}_certs{suffix}.json"), out, indent=1)
+    _write_json(os.path.join(HERE, f"{stem}_fingerprints{suffix}.json"), {k: v.to_json() for k, v in fps.items()})
     if k1["fired"]:
         print("wrote certs (K1 fired: no comparisons) and fingerprints; no plates for an INCONCLUSIVE run")
         return
@@ -250,7 +274,7 @@ def main():
              ("nf4 (4-bit)" if not smoke else "int8 dynamic (stand-in)", lab("Q4"), coefficients(fps["Q4"].rdm)),
              ("llm.int8" if not smoke else "int8 dynamic (stand-in)", lab("Q8"), coefficients(fps["Q8"].rdm)),
              ("control: random weights", lab("R"), coefficients(fps["R"].rdm))]
-    png = render_grid(items, os.path.join(HERE, f"deploy_quant_plates{suffix}.png"),
+    png = render_grid(items, os.path.join(HERE, f"{stem}_plates{suffix}.png"),
                       title=f"checksum: {name}, 48 hashed canaries, {device} — what quantization moves, as sand", ncols=3)
     print("wrote", png)
 
