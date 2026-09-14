@@ -121,6 +121,11 @@ papers/plates/CORRECTION_sand_neighbours_pass3_2026_09_14.sworn-receipt.json -te
 papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json -text
 papers/plates/sand_survey_pass3_inputs/*.json -text
 papers/plates/sand_survey_pass3_inputs/*.py -text
+papers/plates/ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md -text
+papers/plates/ERRATUM_sand_neighbours_pass3_correction_2026_09_14.sworn.json -text
+papers/plates/ERRATUM_sand_neighbours_pass3_correction_2026_09_14.sworn-receipt.json -text
+papers/plates/sand_prior_art_survey_pass3_margins_2026_09_14.json -text
+papers/plates/sand_survey_pass3_inputs/*.md -text
 papers/plates/sand_prior_art_survey_pass2_2026_09_13.json -text
 papers/plates/sand_survey_fetch_record_2026_09_13.json -text
 papers/checksum/CORRECTION_portability_2026_09_13.md -text
