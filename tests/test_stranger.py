@@ -13,7 +13,9 @@ unreadable one, two current-schema cards for one certs file, a card naming no ce
 all FAIL, and a card of another schema is an info row (STR-1); checkout runs whatever --only says (STR-2);
 drawn certs with no fingerprints beside them FAIL (STR-3); a sidecar with no .md, and a check line with no
 document=, PASS with an info row (STR-4); an unreadable certs file FAILS the reading (STR-5); and the
-reading takes the seal's beacon from the seals step, or counts no beacon-draw card as a result (S1)."""
+reading takes the seal's beacon from the seals step, or counts no beacon-draw card as a result (S1).
+Review of that repair: STRANGER.md cited an ERRATUM its branch did not carry; every lab document the page
+names must now be a file in the tree."""
 from __future__ import annotations
 
 import json
@@ -208,6 +210,7 @@ def test_run_selects_steps_renders_every_step_and_the_cli_exits_by_failure(tmp_p
     r = subprocess.run([sys.executable, "-m", "styxx.stranger", "--repo", str(tmp_path), "--only", "checkout", "--json", str(out)],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=300, cwd=ROOT)
     assert r.returncode == 1, r.stdout + r.stderr
+    assert out.exists(), "exit 1 without a report is a crash, not a FAIL:\n" + r.stdout + r.stderr
     rep = json.loads(out.read_text(encoding="utf-8"))
     assert rep["failed"] == ["checkout"] and "names no commit" in rep["steps"]["checkout"]["detail"]
     r = subprocess.run([sys.executable, "-m", "styxx.stranger", "--repo", ROOT, "--only", "nonsense"],
@@ -411,3 +414,22 @@ def test_the_real_scorer_takes_the_beacon_by_keyword_and_a_committed_beaconless_
     # the beacon reached the scorer: the reading differs from the beaconless card, which matches only because it claims no result
     assert bd["expect_beacon"] == "ab" * 32 and bd["committed_scorecard_matches"] is True and "without the seal's beacon" in bd["committed_scorecard_note"]
     assert bd["counts_as_result"] is False and "K5" in bd["reading"]
+
+
+# every lab document STRANGER.md names (BOUNTY.md, RESULT_…md, ERRATUM_…md, a papers/… path) — the repair of
+# 2026-09-14 first cited an ERRATUM its branch did not carry, a citation a stranger could not follow
+_CITED_DOC = re.compile(r"(?<![A-Za-z0-9_./-])((?:[a-z0-9_]+/)*[A-Z][A-Z0-9]*(?:_[A-Za-z0-9.]+)*\.md)\b")
+
+
+def test_every_lab_document_stranger_md_cites_is_a_file_in_the_tree():
+    text = Path(CK, "STRANGER.md").read_text(encoding="utf-8")
+    cited = sorted(set(_CITED_DOC.findall(text)))
+    assert "ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md" in cited and "BOUNTY.md" in cited, cited
+    names = {}
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in (".git", "node_modules", "__pycache__", ".venv")]
+        for f in filenames:
+            names.setdefault(f, []).append(os.path.relpath(os.path.join(dirpath, f), ROOT).replace(os.sep, "/"))
+    missing = [c for c in cited
+               if not (os.path.isfile(os.path.join(ROOT, c)) if "/" in c else c in names)]
+    assert not missing, f"STRANGER.md names documents this tree does not carry: {missing}"
