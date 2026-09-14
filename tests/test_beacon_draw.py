@@ -117,3 +117,15 @@ def test_the_beacon_draw_prereg_requires_the_beacon_and_a_well_formed_one():
     r = subprocess.run([sys.executable, "papers/checksum/run_deploy_quant.py", "--prereg", "not_a_prereg"],
                        capture_output=True, text=True, timeout=300)
     assert r.returncode != 0
+
+
+def test_the_pool_is_the_one_the_beacon_draw_prereg_froze():
+    # PREREG_checksum_beacon_draw_2026_09_14 froze the pool by hash and size; an edit to the pool
+    # (a new template family, a fixed typo in a hand item) would silently make every draw under
+    # the sealed beacon a different experiment. The PREREG's bytes are frozen; the pool must stay.
+    import re
+    doc = open("papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.md", encoding="utf-8").read()
+    frozen_hash = re.search(r"pool sha256\s+<sworn[^>]*>`([0-9a-f]{64})`</sworn>", doc).group(1)
+    frozen_size = int(re.search(r"<sworn[^>]*pool_size[^>]*>(\d+)</sworn> items", doc).group(1))
+    assert beacon.pool_sha256() == frozen_hash, "styxx.beacon.POOL is not the pool the beacon-draw PREREG froze"
+    assert len(beacon.POOL) == frozen_size
