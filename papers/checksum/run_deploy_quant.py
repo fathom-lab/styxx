@@ -21,7 +21,29 @@ gate, evaluated in code: if the null floor exceeds 1e-2 nats/token no comparison
 PREREG demands. `distance_params` records n_boot, seed and the floor used. `top1_loss_vs_A` is
 hits[A] − hits[arm], the definition the RESULT uses for H2/K3.
 """
-import argparse, hashlib, json, os, subprocess, sys, time
+import argparse, hashlib, json, os, re, subprocess, sys, time
+
+
+def _parse_args(argv=None):
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", default="Qwen/Qwen2.5-1.5B")
+    ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--tag", default="", help="suffix for the output files of an INSTRUMENT CHECK that is not the "
+                    "experiment (e.g. _dryrun_qwen0.5b); the experiment writes untagged files and only for the PREREG's model")
+    ap.add_argument("--beacon", default="", help="64-hex beacon (a slot blockhash as styxx.clock reports it): draw the 48 "
+                    "canaries from the committed pool instead of the hand set. The 2026-09-13 PREREG froze the hand set, so "
+                    "a beacon-drawn run is never that experiment and must carry --tag; the next PREREG is written for this.")
+    args = ap.parse_args(argv)
+    # refusals that need no model stack: decided before torch is imported
+    if args.beacon and not args.tag:
+        raise SystemExit("a beacon-drawn run is not the sealed experiment (the 2026-09-13 PREREG froze the hand-written 48); "
+                         "pass --tag, or write the next PREREG with the draw in it")
+    if args.beacon and not re.fullmatch(r"[0-9a-f]{64}", args.beacon):
+        raise SystemExit("--beacon must be 64 lowercase hex characters (styxx.clock.blockhash_to_beacon converts the chain's base58)")
+    return args
+
+
+ARGS = _parse_args() if __name__ == "__main__" else None
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 if ROOT not in sys.path:
@@ -145,18 +167,7 @@ def _write_json(path, obj, indent=None):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="Qwen/Qwen2.5-1.5B")
-    ap.add_argument("--smoke", action="store_true")
-    ap.add_argument("--tag", default="", help="suffix for the output files of an INSTRUMENT CHECK that is not the "
-                    "experiment (e.g. _dryrun_qwen0.5b); the experiment writes untagged files and only for the PREREG's model")
-    ap.add_argument("--beacon", default="", help="64-hex beacon (a slot blockhash as styxx.clock reports it): draw the 48 "
-                    "canaries from the committed pool instead of the hand set. The 2026-09-13 PREREG froze the hand set, so "
-                    "a beacon-drawn run is never that experiment and must carry --tag; the next PREREG is written for this.")
-    args = ap.parse_args()
-    if args.beacon and not args.tag:
-        raise SystemExit("a beacon-drawn run is not the sealed experiment (the 2026-09-13 PREREG froze the hand-written 48); "
-                         "pass --tag, or write the next PREREG with the draw in it")
+    args = ARGS if ARGS is not None else _parse_args()
     smoke = args.smoke
     name = "HuggingFaceTB/SmolLM2-135M" if smoke else args.model
     device = "cpu" if smoke or not torch.cuda.is_available() else "cuda"

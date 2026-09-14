@@ -155,7 +155,8 @@ def test_cert_digest_covers_the_written_fingerprint_hashes_the_seed_and_the_floo
     x, y = _fp(2, "m1"), _fp(4, "m3")          # same model_id strings, different bytes
     d = fp.distance(a, b, n_boot=100)
     c = fp.cert(a, b, d)
-    assert c["schema"] == "styxx.checksum/compare/v1"
+    assert c["schema"] == "styxx.checksum/compare/v2"
+    assert c["draw"] is None
     assert c["a"]["rdm_sha256"] == a.written_hashes()[0] and c["b"]["mean_lp_sha256"] == b.written_hashes()[1]
     assert c["digest"] != fp.cert(x, y, fp.distance(x, y, n_boot=100))["digest"]
     assert c["seed"] == 20260913 and c["floor_effective_nats"] == fp.RESOLUTION_NATS

@@ -10,12 +10,16 @@ prepared for it:
     index  = int(seed_i) mod len(pool), duplicates skipped, until n items
 
 The draw is pure sha256 arithmetic, so a browser, a shell script or a stranger's notebook
-reproduces it exactly; no language's PRNG is involved. Nothing in `styxx.checksum` carries the
-pool's hash or the beacon yet: a cert names `canary_sha256` of the items actually used, which is
-enough to check that a given draw was used and not enough to check which beacon produced it.
-Carrying `pool_sha256` and the beacon inside the cert is owed work and a cert-format change.
-No runner in this repository draws from this module; the deploy-scale PREREG froze the
-hand-written 48 by design, and its cert's `canary_sha256` says so.
+reproduces it exactly; no language's PRNG is involved. `draw()` returns the items AND a record
+(`styxx.beacon/draw/v0`: pool_sha256, pool_size, beacon, n, canary_sha256 of the drawn items);
+`checksum.Fingerprint.draw` carries that record, `checksum.cert()` digests it (schema
+`compare/v2`), `checksum.distance()` refuses two fingerprints under different draws, and the
+observatory writes it into every chained line. A record is never trusted: `checksum.check_draw_record`
+re-runs the beacon against the committed pool and refuses a record whose beacon does not produce
+exactly the items it claims (a record whose canary hash matched but whose beacon lied was accepted
+for a few hours on 2026-09-13). `run_deploy_quant.py --beacon` draws from this module; the
+deploy-scale PREREG of 2026-09-13 froze the hand-written 48 by design, so a beacon-drawn run must
+carry `--tag` and is never that experiment.
 
 Which beacon: the block hash of the slot in which the sealing transaction confirmed
 (`anchors.jsonl` → `slot` → RPC `getBlock(slot).blockhash`), decoded from the chain's base58 to

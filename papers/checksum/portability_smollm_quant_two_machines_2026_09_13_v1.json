@@ -1,0 +1,326 @@
+{
+ "schema": "styxx.portability/v1",
+ "recipe_canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+ "n_machines": 2,
+ "n_items": 48,
+ "input_cert_digests": [
+  [
+   "424a24b7d54f20bd58968733fae38ffcce74eb46dec51438e80fcdd910a29afb",
+   "629edf0972ef6f53fbbc24ef9e9fce9c248b3258d8835fb639026a5021de5712",
+   "67bff4e1956b036602f0fd3ed0de07ceee31530f142b94121a482621d3871b59"
+  ],
+  [
+   "a62e77dd9f7ecd3f615bcc090ae62143f18603393da9ea22826bcd88502ce046",
+   "b6e0474fbe7ce1d46bb110e48bd6dc698f56acd1ea05b5ccaf80a1fdf538065e",
+   "e78ae43c50f9e5b3cbe0a623721a2fd89302510e8800d069bdb7c82dba453deb"
+  ]
+ ],
+ "input_fingerprint_hashes": [
+  {
+   "A": {
+    "rdm_sha256": "c46e070f32e6b46b3eec3506aa1ec02e905e6216bbb525de3906de1af8255b50",
+    "mean_lp_sha256": null
+   },
+   "A2": {
+    "rdm_sha256": "c46e070f32e6b46b3eec3506aa1ec02e905e6216bbb525de3906de1af8255b50",
+    "mean_lp_sha256": null
+   },
+   "Q": {
+    "rdm_sha256": "519bba17e0d90eed1267afbe1e8b76be73db5389d42599e9e3f807d46307e409",
+    "mean_lp_sha256": null
+   },
+   "R": {
+    "rdm_sha256": "e92dbb8087f660c682ed56b3f78fb18a47b216b99077927f218e2d6c3cefcd42",
+    "mean_lp_sha256": null
+   }
+  },
+  {
+   "A": {
+    "rdm_sha256": "be3962ede34f77017f3d6126655755a8b9311c055117f5ada11ab02823e242c2",
+    "mean_lp_sha256": null
+   },
+   "A2": {
+    "rdm_sha256": "be3962ede34f77017f3d6126655755a8b9311c055117f5ada11ab02823e242c2",
+    "mean_lp_sha256": null
+   },
+   "Q": {
+    "rdm_sha256": "2a4215cc4d923eacebd3ea080c2148830e9d2174e8e37f7befd7d2174478f556",
+    "mean_lp_sha256": null
+   },
+   "R": {
+    "rdm_sha256": "a4088e73aa03fd8403e99a2c5fbd609afdfa29aa5d429135e58b35ac6fa4a90d",
+    "mean_lp_sha256": null
+   }
+  }
+ ],
+ "arms": {
+  "int8": {
+   "verdicts": [
+    "DRIFT",
+    "DRIFT"
+   ],
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": [
+      1.5144575702498617,
+      1.4133666138568917
+     ],
+     "max_abs_diff": 0.10109095639297005,
+     "comparable": true
+    },
+    "rdm_r": {
+     "values": [
+      0.8285061488474084,
+      0.8289679093795215
+     ],
+     "max_abs_diff": 0.0004617605321131091,
+     "comparable": true
+    },
+    "corr_dist": {
+     "values": [
+      0.18105524610843915,
+      0.15642523329965186
+     ],
+     "max_abs_diff": 0.024630012808787294,
+     "comparable": true
+    }
+   },
+   "intervals": {
+    "ci_mean_abs": {
+     "values": [
+      [
+       1.1705011810457897,
+       1.9025167784027055
+      ],
+      [
+       1.0878911958676811,
+       1.7519866399692785
+      ]
+     ],
+     "endpoint_spreads": [
+      0.08260998517810858,
+      0.150530138433427
+     ],
+     "graded": false
+    },
+    "ci_rdm_r": {
+     "values": [
+      [
+       0.7449038507397748,
+       0.8744999667634993
+      ],
+      [
+       0.7377317942460736,
+       0.8862645371045199
+      ]
+     ],
+     "endpoint_spreads": [
+      0.007172056493701229,
+      0.01176457034102063
+     ],
+     "graded": false
+    }
+   }
+  },
+  "random": {
+   "verdicts": [
+    "DRIFT",
+    "DRIFT"
+   ],
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": [
+      9.498053874013324,
+      9.716727482717962
+     ],
+     "max_abs_diff": 0.2186736087046377,
+     "comparable": true
+    },
+    "rdm_r": {
+     "values": [
+      0.0653220085203318,
+      0.09354895823912246
+     ],
+     "max_abs_diff": 0.028226949718790653,
+     "comparable": true
+    },
+    "corr_dist": {
+     "values": [
+      0.9562660678721633,
+      0.8551157356587554
+     ],
+     "max_abs_diff": 0.10115033221340786,
+     "comparable": true
+    }
+   },
+   "intervals": {
+    "ci_mean_abs": {
+     "values": [
+      [
+       8.876455481210046,
+       10.084330336024513
+      ],
+      [
+       9.135748775503847,
+       10.258466908141507
+      ]
+     ],
+     "endpoint_spreads": [
+      0.2592932942938013,
+      0.17413657211699451
+     ],
+     "graded": false
+    },
+    "ci_rdm_r": {
+     "values": [
+      [
+       -0.06626946909277534,
+       0.19521443482490228
+      ],
+      [
+       -0.019251909051074923,
+       0.21136590783566006
+      ]
+     ],
+     "endpoint_spreads": [
+      0.04701756004170042,
+      0.016151473010757783
+     ],
+     "graded": false
+    }
+   }
+  },
+  "reloaded": {
+   "verdicts": [
+    "SAME",
+    "SAME"
+   ],
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": [
+      0.0,
+      0.0
+     ],
+     "max_abs_diff": 0.0,
+     "comparable": true
+    },
+    "rdm_r": {
+     "values": [
+      1.0,
+      0.9999999999999998
+     ],
+     "max_abs_diff": 2.220446049250313e-16,
+     "comparable": true
+    },
+    "corr_dist": {
+     "values": [
+      1.1102230246251565e-16,
+      0.0
+     ],
+     "max_abs_diff": 1.1102230246251565e-16,
+     "comparable": true
+    }
+   },
+   "intervals": {
+    "ci_mean_abs": {
+     "values": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "endpoint_spreads": [
+      0.0,
+      0.0
+     ],
+     "graded": false
+    },
+    "ci_rdm_r": {
+     "values": [
+      [
+       0.9999999999999998,
+       1.0
+      ],
+      [
+       0.9999999999999998,
+       1.0
+      ]
+     ],
+     "endpoint_spreads": [
+      0.0,
+      0.0
+     ],
+     "graded": false
+    }
+   }
+  }
+ },
+ "arms_not_shared": [],
+ "cross_machine_floor": {
+  "A": {
+   "mean_abs_diff_mean_lp": 8.166666666671834e-06,
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "A2": {
+   "mean_abs_diff_mean_lp": 8.166666666671834e-06,
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "Q": {
+   "mean_abs_diff_mean_lp": 0.55501225,
+   "max_abs_diff_mean_lp": 1.848607,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "R": {
+   "mean_abs_diff_mean_lp": 1.1181921458333333,
+   "max_abs_diff_mean_lp": 3.226509,
+   "n_items_differing": 48,
+   "n_items": 48
+  }
+ },
+ "base_arm": "A",
+ "base_arm_binding": "unverified: the certs carry no a.rdm_sha256 (compare/v0)",
+ "grading_floor_nats": 0.0001,
+ "grading_floor_source": "cross-machine null floor of the base arm (mean per-item |\u0394|, as checksum.null_floor)",
+ "verdicts": "AGREE",
+ "verdict_flips": [],
+ "magnitudes": "MOVE",
+ "magnitudes_moved": [
+  "int8.mean_abs_nats",
+  "int8.rdm_r",
+  "int8.corr_dist",
+  "random.mean_abs_nats",
+  "random.rdm_r",
+  "random.corr_dist"
+ ],
+ "magnitudes_uncompared": [],
+ "intervals_graded": false,
+ "reading": "every verdict survives the move between these machines; the numbers named in magnitudes_moved do not, and each max_abs_diff is the observed spread between these machines \u2014 a floor on the tolerance a RESULT may state, not a ceiling",
+ "digest": "8283230abfa346580193739a9caa64b83940ab66a70dbedc1711bf216a3e4c50",
+ "labels": [
+  "build_machine",
+  "alienware"
+ ],
+ "created": "2026-09-14T03:28:37Z",
+ "inputs": {
+  "certs": [
+   "papers/checksum/smollm_quant_certs.json",
+   "papers/checksum/replication_alienware_smollm_quant_certs.json"
+  ],
+  "fingerprints": [
+   "papers/checksum/smollm_quant_fingerprints.json",
+   "papers/checksum/replication_alienware_smollm_quant_fingerprints.json"
+  ]
+ }
+}

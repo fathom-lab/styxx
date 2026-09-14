@@ -152,16 +152,15 @@ class Fingerprint:
         return j["rdm_sha256"], j["mean_lp_sha256"]
 
 
-def _check_draw(draw, canaries) -> dict | None:
-    """A draw record must name the canaries it produced, and it must be TRUE: the beacon and pool it
-    names are re-run and must reproduce exactly these items. Before 2026-09-13 (evening) only the
-    canary hash was compared, so a record whose canary hash matched but whose beacon and pool were
-    lies was accepted and the cert digested the lie — found by the lab's own probe before the red
-    team reached it."""
+def check_draw_record(draw, canary_hash: str, ids: Sequence[str]) -> dict | None:
+    """A draw record must be TRUE, not merely consistent: the beacon and pool it names are re-run and
+    must reproduce exactly the items whose hash and ids are given. Before 2026-09-13 (evening) only
+    the canary hash was compared, so a record whose canary hash matched but whose beacon and pool
+    were lies was accepted and the cert digested the lie. This form takes the hash and the ids, so a
+    fingerprint file (which carries ids, not prompts) can be checked the same way as live items."""
     if draw is None:
         return None
-    want = canary_sha256(canaries)
-    if not isinstance(draw, dict) or draw.get("canary_sha256") != want:
+    if not isinstance(draw, dict) or draw.get("canary_sha256") != canary_hash:
         raise ValueError("the draw record's canary_sha256 is not the hash of these canaries; "
                          "use the items styxx.beacon.draw returned with its record")
     for key in ("pool_sha256", "beacon", "n"):
@@ -170,13 +169,18 @@ def _check_draw(draw, canaries) -> dict | None:
     from .beacon import POOL, pool_sha256, select   # lazy: beacon imports this module
     if draw["pool_sha256"] != pool_sha256(POOL):
         raise ValueError("the draw record names a pool this package does not have; the draw cannot be re-derived")
-    if int(draw["n"]) != len(list(canaries)):
-        raise ValueError(f"the draw record says n={draw['n']} but {len(list(canaries))} canaries were given")
+    ids = list(ids)
+    if int(draw["n"]) != len(ids):
+        raise ValueError(f"the draw record says n={draw['n']} but {len(ids)} canaries were given")
     rederived = select(str(draw["beacon"]), int(draw["n"]), POOL)
-    if canary_sha256(rederived) != want:
+    if canary_sha256(rederived) != canary_hash or [c[0] for c in rederived] != ids:
         raise ValueError("the draw record's beacon does not produce these canaries from the named pool; "
                          "the record is not the draw that made this set")
     return dict(draw)
+
+
+def _check_draw(draw, canaries) -> dict | None:
+    return check_draw_record(draw, canary_sha256(canaries), [c[0] for c in canaries]) if draw is not None else None
 
 
 def fingerprint(probe: ProbeFn, model_id: str, canaries=CANARIES, tokenizer_id: str = "", draw: dict | None = None) -> Fingerprint:
@@ -243,7 +247,7 @@ def distance(a: Fingerprint, b: Fingerprint, n_boot: int = 2000, seed: int = 202
                          "not comparable across tokenizations (the belief-geometry rdm still is)")
     if a.kind != b.kind:
         raise ValueError(f"a {a.kind} fingerprint and a {b.kind} fingerprint measure different quantities; not comparable")
-    if (a.draw or b.draw) and a.draw != b.draw:
+    if (a.draw is not None or b.draw is not None) and a.draw != b.draw:
         raise ValueError("the fingerprints were drawn under different beacons or pools (or one was a hand set); "
                          "not comparable")
     if a.kind == "topk" and a.k != b.k:
@@ -347,6 +351,10 @@ def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
     """A comparison certificate: the comparison, and the written hashes of the two fingerprints it
     grades, so a stranger holding the cert and the two fingerprint files can re-derive the verdict.
 
+    v2 (2026-09-13, evening): adds `draw`, the beacon draw record, inside the digest, and refuses a
+    fingerprint whose draw record does not name the cert's canary set or the comparison's item count.
+    v1 certs written earlier the same day (the tagged GPU dry run) carry no draw key and keep their
+    schema string; a verifier re-deriving a v1 digest must omit the key, which is why the schema moved.
     v1 (2026-09-13): v0's digest covered no hash of either fingerprint, no seed and no floor — two
     different fingerprint pairs with the same model_id strings produced the same digest, and an
     INCONCLUSIVE cert carried a bare NaN token no strict parser accepts. v1 adds a.rdm_sha256 and
@@ -355,8 +363,13 @@ def cert(a: Fingerprint, b: Fingerprint, d: Distance, note: str = "") -> dict:
     """
     a_rdm, a_lp = a.written_hashes()
     b_rdm, b_lp = b.written_hashes()
+    if a.draw is not None:
+        if a.draw.get("canary_sha256") != a.canary_sha256 or int(a.draw.get("n", -1)) != d.n_items:
+            raise ValueError("the fingerprint's draw record does not name its own canary set or item count; refusing to certify")
+        if a.draw != b.draw:
+            raise ValueError("the two fingerprints carry different draw records; refusing to certify")
     body = {
-        "schema": "styxx.checksum/compare/v1",
+        "schema": "styxx.checksum/compare/v2",
         "canary_sha256": a.canary_sha256,
         "tokenizer_id": a.tokenizer_id,
         "kind": a.kind,

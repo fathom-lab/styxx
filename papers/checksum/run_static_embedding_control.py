@@ -33,7 +33,8 @@ NAME = "HuggingFaceTB/SmolLM2-135M"
 BANKS = {"llama_3b": "_b31v2_ptsA.npz", "llama_1b": "_b31v2_pts_llama_1b.npz",
          "gemma_2b": "_b31v2_pts_gemma_2b.npz", "qwen_1p5b": "_b31v2_pts_qwen_1p5b.npz"}
 COMMITTED = os.path.join(HERE, "static_embedding_control.json")
-OUT = os.path.join(HERE, "static_embedding_control_recipe_2026_09_13.json")
+OUT = os.path.join(HERE, "static_embedding_control_recipe_2026_09_13_v1.json")
+REVISION = "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"   # the Hub snapshot the reconstruction used; pinned so a re-upload cannot move the table silently
 
 
 def concepts() -> list:
@@ -62,8 +63,12 @@ def main():
         assert R.shape[0] == len(cs), f"{k}: bank has {R.shape[0]} rows, concept list has {len(cs)}"
     from transformers import AutoTokenizer, AutoModelForCausalLM
     import torch
-    tok = AutoTokenizer.from_pretrained(NAME)
-    E = AutoModelForCausalLM.from_pretrained(NAME, dtype=torch.float32).get_input_embeddings().weight.detach().numpy()
+    # the table is NOT in the tree: it comes from the Hub at a pinned revision, and its bytes are hashed into the record
+    tok = AutoTokenizer.from_pretrained(NAME, revision=REVISION)
+    E = AutoModelForCausalLM.from_pretrained(NAME, dtype=torch.float32, revision=REVISION).get_input_embeddings().weight.detach().numpy()
+    import hashlib, transformers
+    embedding_sha256 = hashlib.sha256(np.ascontiguousarray(E).tobytes()).hexdigest()
+    concepts_sha256 = hashlib.sha256(json.dumps(cs, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
     variants = {}
     for label, prefix in (("no_leading_space", ""), ("leading_space", " ")):
         rows = []
@@ -77,24 +82,33 @@ def main():
         Rr = rdm(np.random.default_rng(seed).normal(size=(len(cs), E.shape[1])))
         random[f"seed_{seed}"] = {k: r_upper(Rr, R) for k, R in banks.items()}
     committed = json.load(open(COMMITTED, encoding="utf-8")) if os.path.exists(COMMITTED) else None
-    match = None
+    matches, deltas = [], {}
     if committed:
         for label, vals in variants.items():
-            if all(abs(vals[k] - committed["static"][k]) < 5e-7 for k in BANKS):
-                match = label
-    out = {"schema": "styxx.checksum/static-embedding-control-recipe/v0", "model": NAME, "n_concepts": len(cs),
-           "embedding_dim": int(E.shape[1]), "concept_source": "papers/disjoint-worlds/run_g0clear.py CONCEPTS",
+            deltas[label] = {k: vals[k] - committed["static"][k] for k in BANKS}
+            if all(abs(deltas[label][k]) < 5e-7 for k in BANKS):
+                matches.append(label)
+    out = {"schema": "styxx.checksum/static-embedding-control-recipe/v1", "model": NAME, "model_revision": REVISION,
+           "embedding_sha256": embedding_sha256, "n_concepts": len(cs), "concepts_sha256": concepts_sha256,
+           "embedding_dim": int(E.shape[1]),
+           "concept_source": "papers/disjoint-worlds/run_g0clear.py CONCEPTS (465 entries, 462 after first-occurrence dedup)",
+           "bank_writer": "papers/disjoint-worlds/run_b31v2.py: concepts = FULL_CONCEPTS (line 103); np.savez(pts=[pts[c] for c in concepts]) (lines 130/164)",
            "rdm": "centre columns, unit rows, 1 - X X^T (geometry_plates_demo.rdm)",
+           "versions": {"transformers": transformers.__version__, "torch": torch.__version__, "numpy": np.__version__},
            "static_vs_bank_r": variants, "random_vs_bank_r": random,
            "committed_static_r": committed["static"] if committed else None,
-           "variant_matching_committed_to_6dp": match}
+           "deltas_vs_committed_static": deltas,
+           "variants_matching_committed": matches,
+           "committed_random_r": committed.get("random") if committed else None,
+           "random_matching_committed": None,
+           "random_note": "the committed random row has no recipe (its seed is unknown); the two seeds here are a fresh null of the same magnitude, not a reproduction"}
     with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(out, fh, indent=1)
         fh.write("\n")
     for label, vals in variants.items():
         print(label, {k: round(v, 4) for k, v in vals.items()})
     print("random", {s: {k: round(v, 4) for k, v in vals.items()} for s, vals in random.items()})
-    print("matches committed:", match)
+    print("matches committed:", matches, "deltas:", {l: {k: f"{v:.1e}" for k, v in d.items()} for l, d in deltas.items()})
     print("wrote", OUT)
 
 

@@ -61,10 +61,12 @@ def _line_hash(prev: str, body: dict) -> str:
 def _load_fp_file(path: str) -> ck.Fingerprint:
     """The fingerprint as a stranger has it: the rounded bytes on disk, never the in-memory array."""
     d = json.load(open(path, encoding="utf-8"))
+    # a draw record in a file is checked the way a live one is: the beacon must re-derive these ids
+    draw = ck.check_draw_record(d.get("draw"), d["canary_sha256"], d["ids"]) if d.get("draw") is not None else None
     return ck.Fingerprint(model_id=d["model_id"], canary_sha256=d["canary_sha256"], tokenizer_id=d["tokenizer_id"],
                           ids=d["ids"], mean_lp=np.asarray(d["mean_lp"], dtype=np.float64),
                           rdm=np.asarray(d["rdm"], dtype=np.float64), n_tokens=d["n_tokens"], created=d["created"],
-                          kind=d.get("kind", "full"), k=int(d.get("k", 0)), draw=d.get("draw"))
+                          kind=d.get("kind", "full"), k=int(d.get("k", 0)), draw=draw)
 
 
 def _dist_body(ref_seq: int, a: ck.Fingerprint, b: ck.Fingerprint, floor_applied: float) -> dict:
@@ -91,6 +93,10 @@ class Observatory:
         os.makedirs(os.path.join(root, "fingerprints"), exist_ok=True)
         os.makedirs(os.path.join(root, "plates"), exist_ok=True)
         self.log = os.path.join(root, "log.jsonl")
+        base = self.baseline()
+        if base is not None and base.get("draw", None) != self.draw:
+            raise ValueError("this observatory's baseline was taken under a different draw (or a hand set); "
+                             "open a new root for a new draw rather than mixing them in one chain")
 
     # ----------------------------------------------------------------------------------- reading
     def entries(self) -> list[dict]:
@@ -129,19 +135,24 @@ class Observatory:
         fp_path = os.path.join(self.root, fp_rel)
         with open(fp_path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(fps[0].to_json(), f, separators=(",", ":"))
-        fp = _load_fp_file(fp_path)                       # from here on, only the bytes a stranger has
-        body = {"seq": seq, "when": when, "taken": taken, "model_id": self.model_id, "canary_sha256": fp.canary_sha256,
-                "fingerprint": fp_rel.replace(os.sep, "/"), "fingerprint_sha256": _sha_file(fp_path),
-                "coefficients_sha256": coefficients_sha256(coefficients(fp.rdm)),
-                "null_floor_nats": floor, "floor_applied_nats": floor_applied, "n_null": len(fps), "note": note}
-        base = self.baseline()
-        if base is None:
-            body["kind"] = "baseline"
-        else:
-            body["kind"] = "observation"
-            body["vs_baseline"] = _dist_body(base["seq"], self._load_fp(base), fp, floor_applied)
-            prev = es[-1]
-            body["vs_previous"] = _dist_body(prev["seq"], self._load_fp(prev), fp, floor_applied)
+        try:
+            fp = _load_fp_file(fp_path)                   # from here on, only the bytes a stranger has
+            body = {"seq": seq, "when": when, "taken": taken, "model_id": self.model_id, "canary_sha256": fp.canary_sha256,
+                    "fingerprint": fp_rel.replace(os.sep, "/"), "fingerprint_sha256": _sha_file(fp_path),
+                    "coefficients_sha256": coefficients_sha256(coefficients(fp.rdm)),
+                    "draw": fp.draw,                      # the beacon draw record, in the chain itself; None for a hand set
+                    "null_floor_nats": floor, "floor_applied_nats": floor_applied, "n_null": len(fps), "note": note}
+            base = self.baseline()
+            if base is None:
+                body["kind"] = "baseline"
+            else:
+                body["kind"] = "observation"
+                body["vs_baseline"] = _dist_body(base["seq"], self._load_fp(base), fp, floor_applied)
+                prev = es[-1]
+                body["vs_previous"] = _dist_body(prev["seq"], self._load_fp(prev), fp, floor_applied)
+        except Exception:
+            os.remove(fp_path)                            # no orphan fingerprint file beside a chain that never saw it
+            raise
         return self._append(body, es[-1]["entry_hash"] if es else "0" * 64)
 
     def rebaseline(self, reason: str) -> dict:
@@ -211,6 +222,8 @@ class Observatory:
                     continue
                 if coefficients_sha256(coefficients(fp.rdm)) != e.get("coefficients_sha256"):
                     bad.append((e["seq"], "coefficients"))
+                if "draw" in e and e["draw"] != fp.draw:
+                    bad.append((e["seq"], "draw: the line and the fingerprint file name different draws"))
                 if "floor_applied_nats" not in e:
                     bad.append((e["seq"], "floor_applied missing (v0 line)"))
                 floor_applied = e.get("floor_applied_nats", max(float(e.get("null_floor_nats", 0.0)), ck.RESOLUTION_NATS))

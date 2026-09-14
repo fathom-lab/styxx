@@ -1,0 +1,76 @@
+{
+ "schema": "styxx.checksum/static-embedding-control-recipe/v1",
+ "model": "HuggingFaceTB/SmolLM2-135M",
+ "model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+ "embedding_sha256": "dafa8a420feaedf280d94a4496e174fc34e3b0671ebf79a58e92a32a5eedd61e",
+ "n_concepts": 462,
+ "concepts_sha256": "71410ef078ef2a3c910dd4fb0b58552f5ce697b9011db4de978850d6b9e5c0c8",
+ "embedding_dim": 576,
+ "concept_source": "papers/disjoint-worlds/run_g0clear.py CONCEPTS (465 entries, 462 after first-occurrence dedup)",
+ "bank_writer": "papers/disjoint-worlds/run_b31v2.py: concepts = FULL_CONCEPTS (line 103); np.savez(pts=[pts[c] for c in concepts]) (lines 130/164)",
+ "rdm": "centre columns, unit rows, 1 - X X^T (geometry_plates_demo.rdm)",
+ "versions": {
+  "transformers": "4.57.3",
+  "torch": "2.5.1+cu121",
+  "numpy": "2.4.4"
+ },
+ "static_vs_bank_r": {
+  "no_leading_space": {
+   "llama_3b": 0.06753499017487281,
+   "llama_1b": 0.07576190210954757,
+   "gemma_2b": 0.06916991621157408,
+   "qwen_1p5b": 0.06393139691081308
+  },
+  "leading_space": {
+   "llama_3b": 0.30762590745636786,
+   "llama_1b": 0.3393290824755492,
+   "gemma_2b": 0.30351020377534205,
+   "qwen_1p5b": 0.28457874697548513
+  }
+ },
+ "random_vs_bank_r": {
+  "seed_0": {
+   "llama_3b": 0.0015115799892192268,
+   "llama_1b": 0.0027965059710729073,
+   "gemma_2b": 0.0031153957520863858,
+   "qwen_1p5b": 0.0050930801212962515
+  },
+  "seed_343": {
+   "llama_3b": 0.0021545217090170273,
+   "llama_1b": 0.0015780154775930097,
+   "gemma_2b": 0.0027063869971248344,
+   "qwen_1p5b": 0.0014913322170201965
+  }
+ },
+ "committed_static_r": {
+  "llama_3b": 0.3076259066141599,
+  "llama_1b": 0.3393290821585725,
+  "gemma_2b": 0.30351020290641856,
+  "qwen_1p5b": 0.2845787471006409
+ },
+ "deltas_vs_committed_static": {
+  "no_leading_space": {
+   "llama_3b": -0.2400909164392871,
+   "llama_1b": -0.2635671800490249,
+   "gemma_2b": -0.23434028669484447,
+   "qwen_1p5b": -0.22064735018982784
+  },
+  "leading_space": {
+   "llama_3b": 8.422079700309837e-10,
+   "llama_1b": 3.169767226474107e-10,
+   "gemma_2b": 8.689234887171438e-10,
+   "qwen_1p5b": -1.2515577463290128e-10
+  }
+ },
+ "variants_matching_committed": [
+  "leading_space"
+ ],
+ "committed_random_r": {
+  "llama_3b": -0.0014209190924370984,
+  "llama_1b": -0.002406729720974546,
+  "gemma_2b": 7.560366022606056e-05,
+  "qwen_1p5b": -0.003420397037520053
+ },
+ "random_matching_committed": null,
+ "random_note": "the committed random row has no recipe (its seed is unknown); the two seeds here are a fresh null of the same magnitude, not a reproduction"
+}
