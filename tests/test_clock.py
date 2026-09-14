@@ -264,7 +264,12 @@ def _chain_txs(txs, history, blk=None):
         if method == "getBlock":
             return blk if blk is not None else {"blockhash": BLOCKHASH}
         if method == "getSignaturesForAddress":
-            return history[: params[1]["limit"]]
+            opts = params[1]
+            page = history
+            if opts.get("before"):
+                sigs = [h["signature"] for h in history]
+                page = history[sigs.index(opts["before"]) + 1:] if opts["before"] in sigs else []
+            return page[: opts["limit"]]
         raise AssertionError(method)
     return fetch
 
@@ -306,21 +311,62 @@ def test_an_earlier_candidate_that_cannot_be_resolved_leaves_the_earliest_unknow
     assert r["status"] == "ANCHORED"
 
 
-def test_a_flood_of_memos_carrying_the_digest_is_unknown_never_anchored(monkeypatch):
+def test_memos_sent_after_the_seal_are_never_read():
+    # the scan reads history OLDER than the recorded transaction only: a post-seal flood costs nothing and hides nothing
     m = ledger.memo("sealed-prereg", D)
-    monkeypatch.setattr(ledger, "MAX_CANDIDATES", 3)
-    hist = _hist(*[(f"f{i}", 200 + i, None, f"[{len(m)}] {m}") for i in range(5)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
-    txs = {f"f{i}": _tx(m, slot=200 + i, signer="Str4nger") for i in range(5)}
+    hist = _hist(*[(f"spam{i}", 1000 + i, None, f"[{len(m)}] {m}") for i in range(300)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
+    txs = {f"spam{i}": AssertionError("a memo newer than the seal must never be resolved") for i in range(300)}
     txs["sig1"] = _tx(m)
     r = ledger.check_line(_line(), fetch=_chain_txs(txs, hist))
-    assert r["status"] == "EARLIEST_UNKNOWN" and "resolves" in r["detail"]
+    assert r["status"] == "ANCHORED" and r["foreign_memos"] == []
+
+
+def test_a_second_wallet_seal_in_the_same_slot_is_the_same_beacon_not_an_earlier_one():
+    # verification of 2026-09-14 (CLK-2): signature order within a slot is not the chain's order, and the slot's
+    # blockhash is the same beacon, so a same-slot duplicate must not read EARLIER_MEMO_EXISTS
+    m = ledger.memo("sealed-prereg", D)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("a0", 123, None, f"[{len(m)}] {m}"))
+    r = ledger.check_line(_line(), fetch=_chain_txs({"sig1": _tx(m), "a0": _tx(m)}, hist))
+    assert r["status"] == "ANCHORED" and r["same_slot_seal"] == "a0" and r["earliest_slot"] == 123
+    # a same-slot candidate that cannot be resolved does not make the earliest unknown either
+    r = ledger.check_line(_line(), fetch=_chain_txs({"sig1": _tx(m), "a0": None}, hist))
+    assert r["status"] == "ANCHORED"
+    # an older one still wins
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}"), ("a0", 122, None, f"[{len(m)}] {m}"))
+    assert ledger.check_line(_line(), fetch=_chain_txs({"sig1": _tx(m), "a0": _tx(m)}, hist))["status"] == "EARLIER_MEMO_EXISTS"
+
+
+def test_a_pre_seal_flood_beyond_the_limit_is_unknown_and_a_verifier_can_raise_the_limit(monkeypatch):
+    # memos a stranger sent BEFORE the seal must each be resolved; past the limit the line reads EARLIEST_UNKNOWN
+    # and names the flag, and a verifier who raises the limit gets ANCHORED — the flood never chooses the beacon
+    m = ledger.memo("sealed-prereg", D)
+    monkeypatch.setattr(ledger, "MAX_CANDIDATES", 3)
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}")) + _hist(*[(f"f{i}", 100 - i, None, f"[{len(m)}] {m}") for i in range(5)])
+    txs = {f"f{i}": _tx(m, slot=100 - i, signer="Str4nger") for i in range(5)}
+    txs["sig1"] = _tx(m)
+    r = ledger.check_line(_line(), fetch=_chain_txs(txs, hist))
+    assert r["status"] == "EARLIEST_UNKNOWN" and "--max-candidates" in r["detail"]
+    assert r["memos_listed_carrying_digest"] == 6            # the count before the limit truncated the candidates (CLK-3)
+    r = ledger.check_line(_line(), fetch=_chain_txs(txs, hist), max_candidates=10)
+    assert r["status"] == "ANCHORED" and len(r["foreign_memos"]) == 5
+
+
+def test_the_cli_passes_max_candidates_to_verify(monkeypatch, capsys):
+    seen = {}
+
+    def fake_verify(path, max_candidates=None):
+        seen["cap"] = max_candidates
+        return [{"n": 1, "kind": "sealed-prereg", "status": "ANCHORED", "beacon": "ab" * 32, "beacon_b58": "x", "slot": 1}]
+    monkeypatch.setattr(ledger, "verify", fake_verify)
+    assert ledger.main(["verify", "anchors.jsonl", "--max-candidates", "9000"]) == 0
+    assert seen["cap"] == 9000
 
 
 def test_verify_prints_a_beacon_only_on_a_line_that_is_the_seal(monkeypatch, capsys):
     rows = [{"n": 1, "kind": "sealed-prereg", "status": "ANCHORED", "beacon": "ab" * 32, "beacon_b58": "x", "slot": 1},
             {"n": 2, "kind": "sealed-prereg", "status": "EARLIER_MEMO_EXISTS", "beacon": "cd" * 32, "beacon_b58": "y", "slot": 2,
              "detail": "the earliest confirmed memo carrying this digest is sig0"}]
-    monkeypatch.setattr(ledger, "verify", lambda path: rows)
+    monkeypatch.setattr(ledger, "verify", lambda path, max_candidates=None: rows)
     assert ledger.main(["verify", "anchors.jsonl"]) == 1
     out = capsys.readouterr().out.splitlines()
     assert "beacon=" + "ab" * 32 in out[0]
@@ -329,13 +375,15 @@ def test_verify_prints_a_beacon_only_on_a_line_that_is_the_seal(monkeypatch, cap
 
 def test_a_history_the_scan_cannot_finish_is_unknown_never_anchored():
     m = ledger.memo("sealed-prereg", D)
-    hist = _hist(*[(f"s{i}", 5000 - i, None, "[1] x") for i in range(1000 * 50)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
+    # fifty full pages of history OLDER than the seal: the scan cannot reach the start
+    hist = _hist(("sig1", 123, None, f"[{len(m)}] {m}")) + _hist(*[(f"s{i}", 120 - i % 100, None, "[1] x") for i in range(1000 * 50)])
     r = _check(_line(), _tx(m), history=hist)
     assert r["status"] == "EARLIEST_UNKNOWN"
     r = _check(_line(), _tx(m), history_raises=True)
     assert r["status"] == "EARLIEST_UNKNOWN"
-    r = _check(_line(), _tx(m), history=_hist(("other", 50, None, "[5] hello")))
-    assert r["status"] == "EARLIEST_UNKNOWN" and "disagree" in r["detail"]
+    # fifty full pages NEWER than the seal are never read (they cannot be earlier), so dust sent after a seal cannot revoke it
+    hist = _hist(*[(f"n{i}", 5000 - i, None, "[1] x") for i in range(1000 * 50)]) + _hist(("sig1", 123, None, f"[{len(m)}] {m}"))
+    assert _check(_line(), _tx(m), history=hist)["status"] == "ANCHORED"
 
 
 def test_a_receipt_anchor_is_not_scanned_and_scan_can_be_turned_off():
