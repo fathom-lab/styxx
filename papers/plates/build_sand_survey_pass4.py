@@ -5,8 +5,9 @@
     # reads, from <inputs_dir> (papers/plates/sand_survey_pass4_inputs/):
     #   list.json            the closed list: Part A (the leads) and Part B (the search, capped), with might_occupy
     #   search_record.json   every query result, both screeners' decisions, the rank and the cap
-    #   fetch_record.json    per source: URL, bytes, sha256, the title check, the extracted text's sha256
-    #   readings.json        the readers' and blind confirmers' returns, as the reading workflow returned them
+    #   fetch_record*.json   per source: URL, bytes, sha256, the title check, the extracted text's sha256 (one file per
+    #                        fetch run, merged; a source in two records is refused)
+    #   readings*.json       the readers' and blind confirmers' returns, one file per reading run, merged
     # and the pass-3 record (sworn, never edited); writes papers/plates/sand_prior_art_survey_pass4_<date>.json
 
 What it does, per PROTOCOL_sand_prior_art_pass4_2026_09_15.md, and nothing the protocol does not say:
@@ -106,7 +107,11 @@ def main():
     texts_dir = sys.argv[4] if len(sys.argv) > 4 else None
     lst = load(os.path.join(inputs, "list.json"))
     search = load(os.path.join(inputs, "search_record.json"))
-    fetch = load(os.path.join(inputs, "fetch_record.json"))
+    fetch = {}
+    for fn in sorted(f for f in os.listdir(inputs) if f.startswith("fetch_record") and f.endswith(".json")):
+        for sid, entry in load(os.path.join(inputs, fn)).items():
+            assert sid not in fetch, f"{sid} fetched in two records"
+            fetch[sid] = dict(entry, fetch_record=fn)
     rd = {"readings": [], "confirmations": []}
     for fn in sorted(f for f in os.listdir(inputs) if f.startswith("readings") and f.endswith(".json")):
         run = fn[: -len(".json")]

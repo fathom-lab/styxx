@@ -1,0 +1,344 @@
+{
+ "A01": {
+  "title": "IPGuard: Protecting Intellectual Property of Deep Neural Networks via Fingerprinting the Classification Boundary",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/1910.12903",
+    "url_effective": "https://arxiv.org/pdf/1910.12903",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 857433,
+    "sha256": "c5bb63d2ae525cbcbd0a2cf2248a173f549bbf0bbcf0009321c65dda4461cf8a",
+    "fetched_at": "2026-09-14T20:52:16Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 12,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/1910.12903",
+  "url_effective": "https://arxiv.org/pdf/1910.12903",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 857433,
+  "sha256": "c5bb63d2ae525cbcbd0a2cf2248a173f549bbf0bbcf0009321c65dda4461cf8a",
+  "fetched_at": "2026-09-14T20:52:16Z",
+  "kind": "pdf",
+  "pages": 12,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A01.txt",
+   "chars": 69619,
+   "sha256": "9ed7a44c4057a53561adb981f4a57874bfd89a7fe8c31fd9c5bcb4d2502654bb"
+  }
+ },
+ "A02": {
+  "title": "Deep Neural Network Fingerprinting by Conferrable Adversarial Examples",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/1912.00888",
+    "url_effective": "https://arxiv.org/pdf/1912.00888",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 4161711,
+    "sha256": "6ed78880aa59bd7441f9ce027ffe86004c9f12ba7a7a92c96661ee2505debaa5",
+    "fetched_at": "2026-09-14T20:52:17Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 18,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/1912.00888",
+  "url_effective": "https://arxiv.org/pdf/1912.00888",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 4161711,
+  "sha256": "6ed78880aa59bd7441f9ce027ffe86004c9f12ba7a7a92c96661ee2505debaa5",
+  "fetched_at": "2026-09-14T20:52:17Z",
+  "kind": "pdf",
+  "pages": 18,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A02.txt",
+   "chars": 56872,
+   "sha256": "2d83914de8bb2d2da47536f03798c714449cdc333f89b502ae84d5def9aa066a"
+  }
+ },
+ "A03": {
+  "title": "Logits of API-Protected LLMs Leak Proprietary Information",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2403.09539",
+    "url_effective": "https://arxiv.org/pdf/2403.09539",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1324412,
+    "sha256": "a5a1d06963f2b2cf82faca2589417c5a4cb50f7fd5779b4ce60af1d22e410341",
+    "fetched_at": "2026-09-14T20:52:18Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2403.09539",
+  "url_effective": "https://arxiv.org/pdf/2403.09539",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1324412,
+  "sha256": "a5a1d06963f2b2cf82faca2589417c5a4cb50f7fd5779b4ce60af1d22e410341",
+  "fetched_at": "2026-09-14T20:52:18Z",
+  "kind": "pdf",
+  "pages": 15,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A03.txt",
+   "chars": 46832,
+   "sha256": "cc58c1ab4b442efd5b0d5e10e5fe82b2311f3e92885ee25a95f06a2cc50287ea"
+  }
+ },
+ "A04": {
+  "title": "Hey, That's My Model! Introducing Chain & Hash, An LLM Fingerprinting Technique",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2407.10887",
+    "url_effective": "https://arxiv.org/pdf/2407.10887",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1998805,
+    "sha256": "65f14981facc2aa103fc644db13ff1c55e9fdac83fbc90a84ca2325ed45a8848",
+    "fetched_at": "2026-09-14T20:52:18Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 16,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2407.10887",
+  "url_effective": "https://arxiv.org/pdf/2407.10887",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1998805,
+  "sha256": "65f14981facc2aa103fc644db13ff1c55e9fdac83fbc90a84ca2325ed45a8848",
+  "fetched_at": "2026-09-14T20:52:18Z",
+  "kind": "pdf",
+  "pages": 16,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A04.txt",
+   "chars": 50212,
+   "sha256": "7662afdf7ece885c455901b5c7525b1ee55a0c1447cc4e8853dac94bd6aa0cc2"
+  }
+ },
+ "A05": {
+  "title": "Stealing Part of a Production Language Model",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2403.06634",
+    "url_effective": "https://arxiv.org/pdf/2403.06634",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 980686,
+    "sha256": "65e2ade24ecefc77ab5eaab511b744a611bbc7efd0ec9ad6d434a3f23003be3c",
+    "fetched_at": "2026-09-14T20:52:18Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 27,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2403.06634",
+  "url_effective": "https://arxiv.org/pdf/2403.06634",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 980686,
+  "sha256": "65e2ade24ecefc77ab5eaab511b744a611bbc7efd0ec9ad6d434a3f23003be3c",
+  "fetched_at": "2026-09-14T20:52:18Z",
+  "kind": "pdf",
+  "pages": 27,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A05.txt",
+   "chars": 97784,
+   "sha256": "ca5a454d0ff0532da994f8f4444eaa5a5fa3faa9fa38b4e97c8be8f2e3e8acf3"
+  }
+ },
+ "A06": {
+  "title": "Can we trust the evaluation on ChatGPT?",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2303.12767",
+    "url_effective": "https://arxiv.org/pdf/2303.12767",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 443250,
+    "sha256": "0405a463203d785908cb53eafd36e59becbef8a58f8eac2e958ee999d7595bd7",
+    "fetched_at": "2026-09-14T20:52:19Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 6,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2303.12767",
+  "url_effective": "https://arxiv.org/pdf/2303.12767",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 443250,
+  "sha256": "0405a463203d785908cb53eafd36e59becbef8a58f8eac2e958ee999d7595bd7",
+  "fetched_at": "2026-09-14T20:52:19Z",
+  "kind": "pdf",
+  "pages": 6,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A06.txt",
+   "chars": 32543,
+   "sha256": "a8e3d8326d6487d121a17c79344d4de3e2195e4c64bccf12407833f0cfc3bf0b"
+  }
+ },
+ "A07": {
+  "title": "Characterising Bias in Compressed Models",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2010.03058",
+    "url_effective": "https://arxiv.org/pdf/2010.03058",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1863031,
+    "sha256": "8d8ebbcf652403f05a7b341af98ddd7880b40287b1b927d4dfa3ae80975fc852",
+    "fetched_at": "2026-09-14T20:52:19Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 13,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2010.03058",
+  "url_effective": "https://arxiv.org/pdf/2010.03058",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1863031,
+  "sha256": "8d8ebbcf652403f05a7b341af98ddd7880b40287b1b927d4dfa3ae80975fc852",
+  "fetched_at": "2026-09-14T20:52:19Z",
+  "kind": "pdf",
+  "pages": 13,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A07.txt",
+   "chars": 36391,
+   "sha256": "018f464c5474047d1b5f4ae7ab8ab53306280d6e169ffdcf9e8f55636c652579"
+  }
+ },
+ "A08": {
+  "title": "An Empirical Study of the Non-determinism of ChatGPT in Code Generation",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2308.02828",
+    "url_effective": "https://arxiv.org/pdf/2308.02828",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1209832,
+    "sha256": "88003da1f9cee4461c580c6b1d94fbbbfeebd2ee3057dd71b540f9d709efef9f",
+    "fetched_at": "2026-09-14T20:52:20Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 29,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2308.02828",
+  "url_effective": "https://arxiv.org/pdf/2308.02828",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1209832,
+  "sha256": "88003da1f9cee4461c580c6b1d94fbbbfeebd2ee3057dd71b540f9d709efef9f",
+  "fetched_at": "2026-09-14T20:52:20Z",
+  "kind": "pdf",
+  "pages": 29,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A08.txt",
+   "chars": 105687,
+   "sha256": "dec333cf7275f57a9d4b0762d61ce7fce0a58bb81ddb5479420795ed471479d3"
+  }
+ },
+ "A09": {
+  "title": "The Good, The Bad, and The Greedy: Evaluation of LLMs Should Not Ignore Non-Determinism",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2407.10457",
+    "url_effective": "https://arxiv.org/pdf/2407.10457",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 408890,
+    "sha256": "0ce2edf15b3b029a9eade7fbc9e12f2fe22c1817a665ba85786f577a915c2774",
+    "fetched_at": "2026-09-14T20:52:20Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 10,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2407.10457",
+  "url_effective": "https://arxiv.org/pdf/2407.10457",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 408890,
+  "sha256": "0ce2edf15b3b029a9eade7fbc9e12f2fe22c1817a665ba85786f577a915c2774",
+  "fetched_at": "2026-09-14T20:52:20Z",
+  "kind": "pdf",
+  "pages": 10,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "A09.txt",
+   "chars": 39060,
+   "sha256": "94ee3bc22b8fc7e4dac804a89aa36f425c1c0e1cf979bcdeccfeea02fbce95f9"
+  }
+ }
+}

@@ -92,7 +92,11 @@ if (byEngine.arxiv && byEngine.arxiv.results.length === 0) log('arxiv: zero entr
 
 // Semantic Scholar: a query every try of which returned HTTP 429 received no answer. It is re-sent, slowly, until it is
 // answered once or fails again; an answered query is never re-sent. Every try is saved.
-const s2Failed = byEngine.s2 ? byEngine.s2.failures.map(f => f.query_id) : QUERIES.map(q => q[0])
+// Q11 and Q12 were answered in the first run: HTTP 200 with {"total": 0} and no "data" key (Semantic Scholar omits
+// "data" when nothing matches), as that engine agent's notes record. The first run's prompt wrongly counted a body
+// without "data" as unanswered and retried them. They are answered with zero results and are not sent again.
+const S2_ANSWERED_EMPTY = ['Q11', 'Q12']
+const s2Failed = (byEngine.s2 ? byEngine.s2.failures.map(f => f.query_id) : QUERIES.map(q => q[0])).filter(q => !S2_ANSWERED_EMPTY.includes(q))
 let s2Retry = null
 if (s2Failed.length) {
   const qs = QUERIES.filter(q => s2Failed.includes(q[0])).map(q => `${q[0]}: ${q[2]}`).join('\n')
@@ -101,17 +105,18 @@ if (s2Failed.length) {
 Queries to re-send (verbatim):
 ${qs}
 
-For each query, the same request as the first run: curl -s -w "%{http_code}" "https://api.semanticscholar.org/graph/v1/paper/search?query=<URL-encoded query>&limit=10&fields=title,authors,year,abstract,externalIds,url,venue". Rules: at least 70 seconds between any two requests; on HTTP 429, or a body without "data", wait 60, 90, 120 and 150 seconds and retry (at most 5 tries per query); the moment one response carries "data", that response is the query's answer and the query is never sent again. Save every try's body to ${RAW}\\s2_retry\\Qnn.tryK.json (K = 1..5, never overwrite) and the answer also to ${RAW}\\s2_retry\\Qnn.json; list every saved file in raw_files. A single Bash call is capped at 10 minutes, so write ONE Python script with the Write tool (Bash heredocs collapse backslashes on this Windows box) that takes one query id, sleeps 70 seconds, then does that query's tries, and run it once per query in its own Bash call with timeout 600000. Parse each answer as the first run did: title, authors (names joined by '; '), year, url (https://arxiv.org/abs/<ArXiv id> from externalIds when present, else the returned url), abstract (empty string when null), rank = position in data. A query still unanswered after 5 tries is a failure record whose error lists each try's UTC time and HTTP code. engine = "s2-retry"; fetched_at = the UTC time you started; in notes, one line per try: query id, try, UTC time, HTTP code. Return ONLY the structured output.`, { label: 'search:s2-retry', phase: 'Search', schema: SEARCH_SCHEMA, effort: 'medium' })
+For each query, the same request as the first run: curl -s -w "%{http_code}" "https://api.semanticscholar.org/graph/v1/paper/search?query=<URL-encoded query>&limit=10&fields=title,authors,year,abstract,externalIds,url,venue". Rules: at least 70 seconds between any two requests; on HTTP 429, or a body without "data", wait 60, 90, 120 and 150 seconds and retry (at most 5 tries per query); the moment one response carries "data", that response is the query's answer and the query is never sent again. Save every try's body to ${RAW}\\s2_retry\\Qnn.tryK.json (K = 1..5, never overwrite) and the answer also to ${RAW}\\s2_retry\\Qnn.json; list every saved file in raw_files. A response with HTTP 200 whose body has "total": 0 is an answer with zero results, not a failure: save it as the answer and do not retry that query. If ${RAW}\\s2_retry\\Qnn.json already exists and is an answer (it carries "data", or HTTP-200 "total": 0) — an earlier, interrupted run of this step got it — that file is the query's answer: parse it, do not send the query, and say so in notes. A single Bash call is capped at 10 minutes, so write ONE Python script with the Write tool (Bash heredocs collapse backslashes on this Windows box) that takes one query id, sleeps 70 seconds, then does that query's tries, and run it once per query in its own Bash call with timeout 600000. Parse each answer as the first run did: title, authors (names joined by '; '), year, url (https://arxiv.org/abs/<ArXiv id> from externalIds when present, else the returned url), abstract (empty string when null), rank = position in data. A query still unanswered after 5 tries is a failure record whose error lists each try's UTC time and HTTP code. engine = "s2-retry"; fetched_at = the UTC time you started; in notes, one line per try: query id, try, UTC time, HTTP code. Return ONLY the structured output.`, { label: 'search:s2-retry', phase: 'Search', schema: SEARCH_SCHEMA, effort: 'medium' })
   log(`s2 retry of ${s2Failed.join(', ')}: ${s2Retry ? `${s2Retry.results.length} results, ${s2Retry.failures.length} still failing` : 'NO RETURN'}`)
 }
 const s2Merged = {
   engine: 's2', fetched_at: byEngine.s2 ? byEngine.s2.fetched_at : null,
   results: [...(byEngine.s2 ? byEngine.s2.results : []), ...(s2Retry ? s2Retry.results.filter(r => s2Failed.includes(r.query_id)) : [])],
-  failures: s2Retry ? s2Retry.failures.filter(f => s2Failed.includes(f.query_id)) : (byEngine.s2 ? byEngine.s2.failures : QUERIES.map(q => ({ query_id: q[0], error: 'engine agent returned nothing' }))),
+  failures: (s2Retry ? s2Retry.failures.filter(f => s2Failed.includes(f.query_id)) : (byEngine.s2 ? byEngine.s2.failures : QUERIES.map(q => ({ query_id: q[0], error: 'engine agent returned nothing' })))).filter(f => !S2_ANSWERED_EMPTY.includes(f.query_id)),
+  answered_empty: S2_ANSWERED_EMPTY,
 }
 const searches = [
   { key: 'arxiv', ret: byEngine.arxiv }, { key: 's2', ret: s2Merged }, { key: 'web', ret: byEngine.web },
-].map(s => ({ engine: s.key, results: s.ret ? s.ret.results : [], failures: s.ret ? s.ret.failures : QUERIES.map(q => ({ query_id: q[0], error: 'engine agent returned nothing' })) }))
+].map(s => ({ engine: s.key, results: s.ret ? s.ret.results : [], failures: s.ret ? s.ret.failures : QUERIES.map(q => ({ query_id: q[0], error: 'engine agent returned nothing' })), answered_empty: (s.ret && s.ret.answered_empty) || [] }))
 
 // Merge — plain code, recorded. One result is one work: results are joined when they share an arXiv identifier (from a
 // link or from the title) or the same title once a leading [identifier], a trailing (arXiv:identifier) and a trailing
