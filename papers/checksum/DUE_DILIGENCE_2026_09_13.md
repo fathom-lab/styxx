@@ -137,3 +137,10 @@ document or frozen PREREG was edited:
   refuses all three now and says what it is: a self-report the lab settles by re-running.
 - **The browser plate drew the mirror** of the python plate for every asymmetric figure. Fixed,
   and a test runs the page's own script.
+- **§4's control now has a recipe, and the recipe found what the prose hid.**
+  `run_static_embedding_control.py` rebuilds the four numbers from the tree
+  (`static_embedding_control_recipe_2026_09_13.json`): with a leading space on each concept string
+  the reconstruction matches the committed 0.308 / 0.339 / 0.304 / 0.285 to six decimals; without
+  it the same embedding table reads 0.068 / 0.076 / 0.069 / 0.064. "About a third of the agreement"
+  was a claim about one tokenization the document did not name. The committed json stays as
+  committed; the recipe writes beside it and says which variant it reproduced.

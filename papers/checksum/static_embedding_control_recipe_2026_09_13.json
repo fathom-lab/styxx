@@ -1,0 +1,43 @@
+{
+ "schema": "styxx.checksum/static-embedding-control-recipe/v0",
+ "model": "HuggingFaceTB/SmolLM2-135M",
+ "n_concepts": 462,
+ "embedding_dim": 576,
+ "concept_source": "papers/disjoint-worlds/run_g0clear.py CONCEPTS",
+ "rdm": "centre columns, unit rows, 1 - X X^T (geometry_plates_demo.rdm)",
+ "static_vs_bank_r": {
+  "no_leading_space": {
+   "llama_3b": 0.06753499017487281,
+   "llama_1b": 0.07576190210954757,
+   "gemma_2b": 0.06916991621157408,
+   "qwen_1p5b": 0.06393139691081308
+  },
+  "leading_space": {
+   "llama_3b": 0.30762590745636786,
+   "llama_1b": 0.3393290824755492,
+   "gemma_2b": 0.30351020377534205,
+   "qwen_1p5b": 0.28457874697548513
+  }
+ },
+ "random_vs_bank_r": {
+  "seed_0": {
+   "llama_3b": 0.0015115799892192268,
+   "llama_1b": 0.0027965059710729073,
+   "gemma_2b": 0.0031153957520863858,
+   "qwen_1p5b": 0.0050930801212962515
+  },
+  "seed_343": {
+   "llama_3b": 0.0021545217090170273,
+   "llama_1b": 0.0015780154775930097,
+   "gemma_2b": 0.0027063869971248344,
+   "qwen_1p5b": 0.0014913322170201965
+  }
+ },
+ "committed_static_r": {
+  "llama_3b": 0.3076259066141599,
+  "llama_1b": 0.3393290821585725,
+  "gemma_2b": 0.30351020290641856,
+  "qwen_1p5b": 0.2845787471006409
+ },
+ "variant_matching_committed_to_6dp": "leading_space"
+}
