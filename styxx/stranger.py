@@ -45,7 +45,7 @@ STEPS = ("checkout", "tests", "ferry_log", "sworn", "seals", "draw", "reading", 
 
 def _git(repo, *args):
     try:
-        r = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, timeout=120)
+        r = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
         return r.stdout.strip() if r.returncode == 0 else None
     except Exception:  # noqa: BLE001
         return None
@@ -65,7 +65,7 @@ def step_tests(repo: Path, with_tests: bool) -> dict:
         return {"status": "SKIP", "detail": "pass --with-tests to run `python -m pytest tests -q` (minutes)"}
     t0 = time.time()
     r = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q", "-p", "no:cacheprovider"], cwd=str(repo),
-                       capture_output=True, text=True, timeout=3600)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=3600)
     tail = (r.stdout.strip().splitlines() or [""])[-1]
     return {"status": "PASS" if r.returncode == 0 else "FAIL", "detail": tail, "seconds": round(time.time() - t0)}
 
@@ -117,7 +117,7 @@ def check_receipt(repo: Path, rc: str) -> dict:
         return {"receipt": rel_rc, "status": "SKIP", "detail": f"its target {name!r} is not in the tree and it has no sidecar (a sample issued against a temporary file)"}
     rel_target = os.path.relpath(target, repo).replace("\\", "/")
     r = subprocess.run([sys.executable, "-m", "styxx.sworn", "check", rel_rc, rel_target, "--repo", "."], cwd=str(repo),
-                       capture_output=True, text=True, timeout=600)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
     line = (r.stdout.strip().splitlines() or [r.stderr.strip()[-200:]])[-1]
     ok = r.returncode == 0 and line.startswith("VERIFIED") and "verdict-reproduces=True" in line
     return {"receipt": rel_rc, "target": rel_target, "status": "PASS" if ok else "FAIL", "detail": line}
