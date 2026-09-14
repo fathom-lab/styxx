@@ -6,8 +6,9 @@ closed list, mechanically.
 
 <workflow_return.json> is the object the search workflow returned (queries, searches, raw_engine_returns, dedupe_rule,
 n_results, n_distinct, unscreened, list_b, below_cap, part_a_found_by_search, excluded). <raw_dir> holds the raw engine
-responses the engine agents saved; each is hashed into the record (the responses themselves are search-engine output
-and are committed beside the record). Writes, into <out_dir>:
+responses the engine agents saved; each is hashed into the record by path, size and sha256. The raw files themselves
+are not committed: the parsed results, abstracts included, are in the record, and the web engine's raw files are
+tool output with synthesized summaries. Writes, into <out_dir>:
   search_record.json  every query result, merged into works, with both screeners' decisions and where each work went
   list.json           Part A (the nine leads, as the protocol lists them) then B01..B25, with might_occupy
 """
