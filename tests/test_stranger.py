@@ -6,11 +6,19 @@ spending 150 s, and reads mismatch / no-head / tamper on a stub; a document edit
 sidecar FAILS the sworn step (the red team of 2026-09-14 found `check` on a sidecar never opens the .md);
 document verdicts are tallied, not hidden; a tree whose tracked files differ from the commit FAILS unless
 --allow-dirty; every beacon-drawn certs file re-derives and a forged fingerprint draw FAILS; a committed
-scorecard written for other certs bytes FAILS; the CLI validates --only and exits by failure."""
+scorecard written for other certs bytes FAILS; the CLI validates --only and exits by failure.
+
+The verification of the night repairs (2026-09-14) added: every committed scorecard is accounted for — an
+unreadable one, two current-schema cards for one certs file, a card naming no certs file the step reads,
+all FAIL, and a card of another schema is an info row (STR-1); checkout runs whatever --only says (STR-2);
+drawn certs with no fingerprints beside them FAIL (STR-3); a sidecar with no .md, and a check line with no
+document=, PASS with an info row (STR-4); an unreadable certs file FAILS the reading (STR-5); and the
+reading takes the seal's beacon from the seals step, or counts no beacon-draw card as a result (S1)."""
 from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -205,3 +213,201 @@ def test_run_selects_steps_renders_every_step_and_the_cli_exits_by_failure(tmp_p
     r = subprocess.run([sys.executable, "-m", "styxx.stranger", "--repo", ROOT, "--only", "nonsense"],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120, cwd=ROOT)
     assert r.returncode == 2
+
+
+# --- the verification of the night repairs, 2026-09-14 ---------------------------------------------------------
+
+def test_checkout_runs_on_every_invocation_whatever_only_says(monkeypatch):
+    rep = stranger.run(ROOT, only=["recipe"], allow_dirty=True)          # --only leaves checkout out; it runs anyway
+    assert rep["steps"]["checkout"]["status"] == "PASS" and "not selected" not in rep["steps"]["checkout"]["detail"]
+    assert rep["commit"] and re.fullmatch(r"[0-9a-f]{40,64}", rep["commit"])
+    assert rep["steps"]["draw"]["status"] == "SKIP"
+
+    def fake_git(repo, *args):
+        return "abc123" * 7 if args[0] == "rev-parse" else " M papers/checksum/beacon_draw_certs_dryrun_qwen0.5b.json"
+    monkeypatch.setattr(stranger, "_git", fake_git)
+    for only in (["recipe"], ["draw", "reading"]):
+        rep = stranger.run(ROOT, only=only)
+        assert rep["failed"] == ["checkout"] and rep["verdict"] == "FAILED: checkout"
+        assert rep["commit"] == "abc123" * 7 and rep["dirty"] is True
+
+
+def _reading_tree(tmp_path):
+    d = tmp_path / "papers" / "checksum"
+    d.mkdir(parents=True)
+    for f in ("score.py", "deploy_quant_certs_dryrun_qwen0.5b.json", "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json"):
+        shutil.copyfile(os.path.join(CK, f), d / f)
+    card = json.loads((d / "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json").read_text(encoding="utf-8"))
+    return d, card
+
+
+def _render_reading(s):
+    return stranger.render({"repo": "r", "commit": "c", "dirty": False, "steps": {"reading": s}, "verdict": "v", "seconds": 0})
+
+
+def test_an_unreadable_scorecard_fails_the_reading_with_a_row(tmp_path):
+    d, _ = _reading_tree(tmp_path)
+    (d / "deploy_quant_scorecard_zz.json").write_text("{not json", encoding="utf-8")
+    (d / "deploy_quant_scorecard_zz_list.json").write_text("[]", encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    assert s["status"] == "FAIL"
+    rows = {r["scorecard"]: r for r in s["scorecards"]}
+    assert rows["papers/checksum/deploy_quant_scorecard_zz.json"]["status"] == "FAIL"
+    assert "unreadable scorecard" in rows["papers/checksum/deploy_quant_scorecard_zz.json"]["detail"]
+    assert "not a JSON object" in rows["papers/checksum/deploy_quant_scorecard_zz_list.json"]["detail"]
+    assert "FAIL  papers/checksum/deploy_quant_scorecard_zz.json: unreadable scorecard" in _render_reading(s)
+
+
+def test_two_current_schema_scorecards_naming_one_certs_file_fail(tmp_path):
+    d, card = _reading_tree(tmp_path)
+    forged = dict(card, run_reading="FORGED HELD", counts_as_result=True)       # sorts before the real card
+    (d / "deploy_quant_scorecard_a_forged.json").write_text(json.dumps(forged), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    row = next(r for r in s["files"] if r["certs"] == "papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json")
+    assert s["status"] == "FAIL" and row["status"] == "FAIL" and "committed_scorecard" not in row
+    assert row["committed_scorecards"] == ["papers/checksum/deploy_quant_scorecard_a_forged.json",
+                                           "papers/checksum/deploy_quant_scorecard_v2_dryrun_qwen0.5b.json"]
+    assert "2 current-schema scorecards name these certs" in row["detail"]
+
+
+def test_a_current_schema_scorecard_naming_no_certs_file_the_step_reads_fails(tmp_path):
+    d, card = _reading_tree(tmp_path)
+    (d / "deploy_quant_scorecard_v2_gone.json").write_text(json.dumps(dict(card, certs_file="papers/checksum/deploy_quant_certs_gone.json")), encoding="utf-8")
+    (d / "deploy_quant_scorecard_v2_scorer.json").write_text(json.dumps(dict(card, certs_file="papers/checksum/score.py")), encoding="utf-8")
+    nameless = dict(card)
+    del nameless["certs_file"]
+    (d / "deploy_quant_scorecard_v2_nameless.json").write_text(json.dumps(nameless), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    rows = {r["scorecard"]: r for r in s["scorecards"]}
+    assert s["status"] == "FAIL" and all(r["status"] == "FAIL" for r in rows.values()) and len(rows) == 3
+    assert "not in the tree" in rows["papers/checksum/deploy_quant_scorecard_v2_gone.json"]["detail"]
+    assert "not a certs file this step reads" in rows["papers/checksum/deploy_quant_scorecard_v2_scorer.json"]["detail"]
+    assert "no certs_file" in rows["papers/checksum/deploy_quant_scorecard_v2_nameless.json"]["detail"]
+    real = next(r for r in s["files"] if r["certs"] == "papers/checksum/deploy_quant_certs_dryrun_qwen0.5b.json")
+    assert real["status"] == "PASS" and real["committed_scorecard_matches"] is True
+
+
+def test_a_certs_file_spelled_with_backslashes_is_the_same_file_and_is_compared(tmp_path):
+    d, card = _reading_tree(tmp_path)
+    path = d / "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json"
+    spelled = "./papers" + chr(92) + "checksum" + chr(92) + "deploy_quant_certs_dryrun_qwen0.5b.json"
+    path.write_text(json.dumps(dict(card, certs_file=spelled)), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    assert s["status"] == "PASS" and "1 committed scorecards compared" in s["detail"] and s["scorecards"] == []
+    path.write_text(json.dumps(dict(card, certs_file=spelled, run_reading="FORGED HELD")), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    assert s["status"] == "FAIL" and "not what the scorer reads today" in s["files"][0]["detail"]
+
+
+def test_a_scorecard_of_another_schema_is_an_info_row_never_silently_dropped(tmp_path):
+    d, card = _reading_tree(tmp_path)
+    (d / "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json").write_text(
+        json.dumps(dict(card, schema="styxx.checksum/scorecard/v1", run_reading="FORGED HELD")), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    assert s["status"] == "PASS" and "0 committed scorecards compared, 1 of another schema listed and not compared" in s["detail"]
+    (row,) = s["scorecards"]
+    assert row["status"] == "INFO" and "not compared" in row["detail"] and "scorecard/v1" in row["detail"]
+    assert "info  papers/checksum/deploy_quant_scorecard_v2_dryrun_qwen0.5b.json: schema" in _render_reading(s)
+
+
+def test_an_unreadable_certs_file_fails_the_reading_with_a_row(tmp_path):
+    d, _ = _reading_tree(tmp_path)
+    (d / "deploy_quant_certs_broken.json").write_text("{not json", encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    row = next(r for r in s["files"] if r["certs"] == "papers/checksum/deploy_quant_certs_broken.json")
+    assert s["status"] == "FAIL" and row["status"] == "FAIL" and "unreadable certs file" in row["detail"]
+    assert "failing: papers/checksum/deploy_quant_certs_broken.json" in s["detail"]
+
+
+def test_a_beacon_drawn_certs_file_with_no_fingerprints_beside_it_fails(tmp_path):
+    d = tmp_path / "papers" / "checksum"
+    d.mkdir(parents=True)
+    shutil.copyfile(os.path.join(CK, "beacon_draw_certs_dryrun_qwen0.5b.json"), d / "beacon_draw_certs_dryrun_qwen0.5b.json")
+    s = stranger.step_draw(tmp_path)
+    assert s["status"] == "FAIL" and "no beacon_draw_fingerprints_dryrun_qwen0.5b.json beside it" in s["files"][0]["detail"]
+    assert "cannot be checked against the ids" in s["files"][0]["detail"]
+    fp = d / "beacon_draw_fingerprints_dryrun_qwen0.5b.json"
+    fp.write_text("{}", encoding="utf-8")
+    s = stranger.step_draw(tmp_path)
+    assert s["status"] == "FAIL" and "carries no fingerprint" in s["files"][0]["detail"]
+    shutil.copyfile(os.path.join(CK, "beacon_draw_fingerprints_dryrun_qwen0.5b.json"), fp)
+    assert stranger.step_draw(tmp_path)["status"] == "PASS"
+
+
+def test_a_sidecar_with_no_document_and_a_line_with_no_document_field_pass_with_info_rows(tmp_path, monkeypatch):
+    rc, md = _receipt_triple(tmp_path)
+    md.unlink()
+    _fake_check(monkeypatch, "VERIFIED  digest=True verdict-reproduces=True same-build=True  document=SWORN-HELD")
+    s = stranger.step_sworn(tmp_path)
+    (row,) = s["receipts"]
+    assert s["status"] == "PASS" and row["status"] == "PASS" and row["document_matches_sidecar"] is None
+    assert "no document was compared" in row["document_note"] and "1 with no .md beside the sidecar" in s["detail"]
+    rep = {"repo": "r", "commit": "c", "dirty": False, "steps": {"sworn": s}, "verdict": "NOTHING FAILED", "seconds": 0}
+    assert "info  papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.sworn-receipt.json: no papers/checksum/" in stranger.render(rep)
+    shutil.copyfile(os.path.join(CK, "PREREG_checksum_beacon_draw_2026_09_14.md"), md)
+    _fake_check(monkeypatch, "VERIFIED  digest=True verdict-reproduces=True same-build=True")
+    s = stranger.step_sworn(tmp_path)
+    (row,) = s["receipts"]
+    assert row["status"] == "PASS" and row["document_verdict"] is None and s["document_verdicts"] == {"?": 1}
+    rep["steps"] = {"sworn": s}
+    assert "carries no document= field" in stranger.render(rep)
+
+
+_STUB_SCORER = '''
+SCHEMA = "styxx.checksum/scorecard/v2"
+BANDS = {"deploy_quant": {"prereg": "PREREG_dq.md", "sealed_blob": "a" * 64},
+         "beacon_draw": {"prereg": "PREREG_bd.md", "sealed_blob": "d" * 64}}
+
+
+def score(certs, prereg, expect_beacon=None, expect_blob=None, hand_set=None, portability=None):
+    # a scorer from before S1: it counts whatever the certs say, beacon or not
+    return {"hypotheses": {}, "gates": {}, "run_reading": prereg + " beacon=" + str(expect_beacon),
+            "counts_as_result": certs.get("counts") is True}
+'''
+
+
+def test_the_reading_takes_the_seals_beacon_for_beacon_draw_certs_or_counts_none(tmp_path, monkeypatch):
+    d = tmp_path / "papers" / "checksum"
+    d.mkdir(parents=True)
+    (d / "score.py").write_text(_STUB_SCORER, encoding="utf-8")
+    (d / "beacon_draw_certs_x.json").write_text(json.dumps({"prereg": "PREREG_bd.md", "counts": True}), encoding="utf-8")
+    (d / "deploy_quant_certs_x.json").write_text(json.dumps({"prereg": "PREREG_dq.md", "counts": True}), encoding="utf-8")
+    monkeypatch.setattr(stranger, "step_checkout", lambda repo, allow_dirty=False: {"status": "PASS", "commit": "c" * 40, "dirty": False, "detail": "stub"})
+    seals = {"status": "PASS", "lines": []}
+    monkeypatch.setattr(stranger, "step_seals", lambda repo, network: seals)
+
+    def reading(only=("seals", "reading")):
+        rep = stranger.run(tmp_path, only=list(only))
+        s = rep["steps"]["reading"]
+        return s, {os.path.basename(r["certs"]): r for r in s["files"]}
+
+    seals["lines"] = [{"n": 6, "kind": "sealed-prereg", "digest": "D" * 64, "status": "ANCHORED", "beacon": "B" * 64}]
+    s, rows = reading()
+    assert rows["beacon_draw_certs_x.json"]["reading"] == "beacon_draw beacon=" + "b" * 64
+    assert rows["beacon_draw_certs_x.json"]["counts_as_result"] is True and rows["beacon_draw_certs_x.json"]["expect_beacon"] == "b" * 64
+    assert rows["deploy_quant_certs_x.json"]["reading"] == "deploy_quant beacon=None"      # only beacon-draw certs take it
+    assert s["expect_beacon"] == "b" * 64 and "read with the seal's beacon bbbbbbbbbbbb" in s["detail"]
+
+    seals["lines"] = [{"n": 5, "kind": "sealed-prereg", "digest": "e" * 64, "status": "ANCHORED", "beacon": "1" * 64},
+                      {"n": 6, "kind": "sealed-prereg", "digest": "d" * 64, "status": "EARLIEST_UNKNOWN", "beacon": "2" * 64},
+                      {"n": 7, "kind": "sealed-canaries", "digest": "d" * 64, "status": "ANCHORED", "beacon": "3" * 64}]
+    for only in (("seals", "reading"), ("reading",)):
+        s, rows = reading(only)
+        bd = rows["beacon_draw_certs_x.json"]
+        assert bd["reading"] == "beacon_draw beacon=None" and bd["counts_as_result"] is False and bd["scorer_counts_as_result"] is True
+        assert "NOT counted here" in bd["detail"] and s["expect_beacon"] is None
+        assert "no beacon-draw card can count as a result without the seal's beacon (--network)" in s["detail"]
+        assert "1 count as a result" in s["detail"]                                        # the deploy_quant stub only
+    assert "the seals step did not run (not selected (--only))" in s["detail"]
+
+
+def test_the_real_scorer_takes_the_beacon_by_keyword_and_a_committed_beaconless_instrument_check_still_matches():
+    ck_score = stranger._load_scorer(Path(ROOT))
+    seals = {"status": "PASS", "lines": [{"kind": "sealed-prereg", "status": "ANCHORED", "beacon": "ab" * 32,
+                                          "digest": ck_score.BANDS["beacon_draw"]["sealed_blob"]}]}
+    s = stranger.step_reading(Path(ROOT), seals)
+    assert s["status"] == "PASS" and s["expect_beacon"] == "ab" * 32
+    bd = next(r for r in s["files"] if r["certs"] == "papers/checksum/beacon_draw_certs_dryrun_qwen0.5b.json")
+    # the beacon reached the scorer: the reading differs from the beaconless card, which matches only because it claims no result
+    assert bd["expect_beacon"] == "ab" * 32 and bd["committed_scorecard_matches"] is True and "without the seal's beacon" in bd["committed_scorecard_note"]
+    assert bd["counts_as_result"] is False and "K5" in bd["reading"]

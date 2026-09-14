@@ -57,7 +57,8 @@ number in it is the number in the file it cites, at that commit (SWORN-HELD, 24 
 the `.sworn.json` sidecar, not the `.md`: the sidecar carries the commit and the manifest binding,
 and a receipt whose spans cite a harness manifest reads FAILED without it. But `check` on a sidecar
 renders the document from the sidecar and never opens the `.md` beside it, so a `.md` edited after
-its receipt still reads VERIFIED; the one-command form below compares them byte for byte, and
+its receipt still reads VERIFIED; the one-command form below compares them byte for byte (and prints
+an info row, not a comparison, for a sidecar with no `.md` beside it), and
 `verify --commit` above re-reads the committed bytes rather than your working copy. Without `--commit`
 the verifier reads the working tree and every span is UNRESOLVED; that is the documented
 operator-gated behaviour, not a pass. What it does not prove: that the cited file is honest — for
@@ -75,8 +76,9 @@ EARLIER_MEMO_EXISTS). The digest is the sha256 of the git blob named (`git show 
 sha256sum`). A `sealed-prereg` line that reads ANCHORED prints the beacon, the block hash of that
 slot; any other status prints no beacon. As of this page no anchor exists (`SEALS_2026_09_13.md` lists
 the digests that will be sealed and the memo text for each); until then this command has nothing to
-verify and says so. What it does not prove: that anything happened after the seal. For the
-beacon-draw run it proves that WHICH 48 items were graded was fixed by a value no one could choose
+verify and says so. The one-command form runs this step under `--network` and hands the beacon on the
+ANCHORED `sealed-prereg` line for the beacon-draw PREREG's digest to step 6. What it does not prove:
+that anything happened after the seal. For the beacon-draw run it proves that WHICH 48 items were graded was fixed by a value no one could choose
 before that block; it does not prove that the per-item values were computed after it — the pool is
 public, and a fingerprint over all its items can be computed by anyone beforehand and subset to any
 draw (CORRECTION_prereg_beacon_draw_2026_09_14.md).
@@ -91,7 +93,9 @@ anyone can redo in a shell (`styxx/beacon.py`, `select`, a few lines). The pool 
 `9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f`, frozen in the PREREG and
 pinned by a test. What it does not prove: that the run used those items — the certs' draw record,
 every arm's cert and `checksum.check_draw_record` do that, and the scorer and the one-command form
-run them.
+run them. The one-command form FAILS a beacon-drawn certs file with no fingerprints file beside it,
+or an empty one: without the fingerprints the draw is checked against the certs' own hash, never
+against the ids the arms graded.
 
 ## 6. the reading
 
@@ -102,7 +106,9 @@ What it proves: the hypotheses and kill gates the PREREG froze, read against the
 clause by clause — predicted band, observed value, holds. The scorer re-derives what it could trust:
 K1 from the recorded floor, not the runner's flag; the sealed PREREG digest, which it freezes itself
 and compares whether or not you pass `--expect-blob`; the draw, with n = 48; and that every arm's cert
-grades the same drawn set. K5 refuses a run whose beacon is not the seal's. A valid sealed run whose
+grades the same drawn set. K5 refuses a run whose beacon is not the seal's — against the beacon you
+pass: without `--expect-beacon` that clause is not checked, and the one-command form counts no
+beacon-draw card as a result without the seal's beacon. A valid sealed run whose
 K1 fired is a result, INCONCLUSIVE; anything else invalid is an INSTRUMENT CHECK. The RESULT the lab
 writes swears to this scorecard (`styxx.checksum/scorecard/v2`); your scorecard must match it. Until
 the sealed run exists, run it on the instrument check the lab committed:
@@ -129,7 +135,7 @@ and the seal.
 
     python -m styxx.stranger --repo . --expect-head <full 64-hex head>   # steps 0, 2, 3, 5, 6; a table and an exit code
     python -m styxx.stranger --repo . --with-tests --network              # steps 1 and 4 as well (minutes; the chain)
-    python -m styxx.stranger --repo . --only ferry_log,draw,reading --json stranger_report.json
+    python -m styxx.stranger --repo . --only ferry_log,draw,reading --json stranger_report.json   # step 0 runs too, always
 
 `styxx.stranger` runs the steps above and prints PASS / FAIL / SKIP per step with the detail a
 dispute needs, then writes a report (`styxx.stranger/report/v2`) naming the commit it ran on. It adds
@@ -138,17 +144,28 @@ no verdict of its own: the ferry log is `styxx.charon.verify_log`, every receipt
 reading is `papers/checksum/score.py`. What it does that the manual steps would not make obvious:
 
 - it FAILS when tracked files differ from the commit, because every step reads the working tree
-  (`--allow-dirty` checks the working tree knowingly);
+  (`--allow-dirty` checks the working tree knowingly); the checkout step runs on every invocation,
+  whether or not `--only` names it, so the report always names the commit;
 - it refuses an `--expect-head` that is not the full 64 hex before spending minutes on the log;
 - it hands `check` the sidecar and then compares the `.md` on disk byte for byte with the document the
-  sidecar renders, so a document edited after its receipt FAILS;
+  sidecar renders, so a document edited after its receipt FAILS; a sidecar with no `.md` beside it
+  PASSes with an info row saying no document was compared;
 - it tallies the verdicts of the documents the receipts re-derive, and prints every one that is not
-  SWORN-HELD, so a re-derived FAILED document is never read as a held one;
+  SWORN-HELD, so a re-derived FAILED document is never read as a held one; a check line that names no
+  `document=` verdict gets an info row too;
 - it reports the sworn-action samples, which were issued against temporary files, as not checkable
   here rather than as failures;
-- it re-checks every fingerprint beside a beacon-drawn certs file with `check_draw_record`;
-- it compares only committed scorecards of the scorer's current schema, and FAILS one written for
-  other certs bytes or not matching what the scorer reads today.
+- it re-checks every fingerprint beside a beacon-drawn certs file with `check_draw_record`, and FAILS
+  a beacon-drawn certs file with no fingerprints beside it, because the draw cannot be checked
+  against the ids;
+- it reads beacon-drawn certs with the beacon step 4 prints on the ANCHORED `sealed-prereg` line for
+  the beacon-draw PREREG's digest; when step 4 did not run (it needs `--network`) or prints no such
+  line, no beacon-draw card counts as a result, and the reading step says so;
+- it accounts for every committed scorecard: it FAILS an unreadable one, two of the scorer's current
+  schema naming the same certs file, one naming a certs file that is not in the tree, and one written
+  for other certs bytes or not matching what the scorer reads today (a card read before any seal
+  existed, without the seal's beacon, matches only while it claims no result); it lists a card of any
+  other schema as not compared; and it FAILS an unreadable certs file.
 
 SKIP is not a pass, and the table says why each step was skipped. Expect a few minutes: the ferry log
 re-derives every document and the receipts run one verifier process each.
@@ -160,10 +177,7 @@ The only positioning sentence the lab may say is the one `SURVEY_sand_neighbours
 lab that" does four things at once, each with its neighbours named inside the sentence. Thirty-seven
 sources across three frozen-protocol passes; two clauses retired (the plate is Perrig & Song 1999
 applied to receipts; a seal on a public chain is timestamping, 1991); none of the four survivors is
-unoccupied. The fingerprint clause survives on what it measures — teacher-forced log-probabilities —
-more than on its floor or its interval: the correction shows the nearest source (ChatLog) carries the
-clause's four object elements under one reading of a term the protocol left undefined, and not the
-log-probabilities. The words "first", "novel" and "revolutionary" are not licensed by anything in this
+unoccupied. No listed source carries all five elements of the fingerprint clause, and which element a source misses depends on the source and on how the protocol's two undefined terms are read: against ChatLog (Tu et al.) the clause is distinguished by teacher-forced log-probabilities; against Xu et al., who grade compressed BERT against its uncompressed self by label and probability loyalty, by a floor measured on the same weights; under the most lenient reading, against Madaan et al., by a comparison of a model with its own self (ERRATUM_sand_neighbours_pass3_correction_2026_09_14.md). No single element carries the margin; the conjunction does. The words "first", "novel" and "revolutionary" are not licensed by anything in this
 repository.
 
 ## if something does not re-derive

@@ -2,7 +2,7 @@
 """styxx.stranger — the checks a person who does not trust this lab runs, as one command.
 
     python -m styxx.stranger --repo . --expect-head <the full 64-hex ferry-log head you were given>
-    python -m styxx.stranger --repo . --only ferry_log,draw,reading --json stranger_report.json
+    python -m styxx.stranger --repo . --only ferry_log,draw,reading --json stranger_report.json   # + checkout, always
     python -m styxx.stranger --repo . --with-tests --network        # the slow and the on-chain steps too
 
 `papers/checksum/STRANGER.md` lists seven things a stranger checks and what each one proves. This
@@ -12,7 +12,10 @@ the verifiers that already exist and adds no verdict of its own:
 
   checkout   the commit, and whether tracked files differ from it: a modified tree FAILS unless
              --allow-dirty is given, because every step below reads the working tree and every
-             claim is about the commit (a claim that names no commit is not a claim)
+             claim is about the commit (a claim that names no commit is not a claim). It runs on
+             every invocation, whether or not --only names it: before 2026-09-14 (verification of
+             the night repairs, STR-2) `--only ferry_log,draw,reading` skipped it, so a dirty tree
+             read NOTHING FAILED and the report named no commit
   tests      the suite (`--with-tests`; slow; SKIP by default)
   ferry_log  `styxx.charon.verify_log` on papers/charon/charon.log.jsonl against `--expect-head`,
              which must be the full 64-hex head (without one: internal consistency only, and the
@@ -24,14 +27,24 @@ the verifiers that already exist and adds no verdict of its own:
              never opens the `.md`, so without this an edited document beside an untouched sidecar
              would read PASS. The document verdicts (SWORN-HELD, SWORN-FAILED, UNSWORN) are tallied:
              a receipt that re-derives a FAILED document is a PASS of the receipt, not of the document.
+             A receipt whose sidecar has no `.md` beside it, and a check line that names no
+             `document=` verdict, PASS with an info row: no document was compared.
   seals      `styxx.clock.verify` on papers/charon/anchors.jsonl (`--network`; SKIP when the file
              does not exist — no anchor exists yet — or the network is off)
   draw       every certs file under papers/checksum that carries a draw record: the beacon and the
              committed pool must produce exactly the canaries the certs name, and every fingerprint
-             in the fingerprints file beside it must pass `checksum.check_draw_record`
+             in the fingerprints file beside it must pass `checksum.check_draw_record`; a drawn
+             certs file with no fingerprints file beside it (or an empty one) FAILS, because the
+             draw cannot be checked against the ids
   reading    every certs file whose `prereg` names a frozen PREREG the scorer knows, read by
-             papers/checksum/score.py; a committed scorecard of the scorer's current schema must
-             name these certs bytes and equal what the scorer reads today
+             papers/checksum/score.py. Beacon-drawn certs are read with the beacon the seals step
+             prints on the ANCHORED `sealed-prereg` line for the scorer's beacon-draw digest; when
+             that step did not run or prints no such line, no beacon-draw certs file counts as a
+             result and the step says so. Every papers/checksum/*_scorecard*.json is accounted for:
+             an unreadable card FAILS; two current-schema cards naming one certs file FAIL; a
+             current-schema card naming no certs file this step reads FAILS; a card of another
+             schema is listed as not compared; the one card naming a certs file must name these
+             certs bytes and equal what the scorer reads today. An unreadable certs file FAILS.
   recipe     SKIP with the command (needs a model stack; see STRANGER.md §7)
 
 Exit code 0 when no step FAILED. SKIP is not a pass and the table says why.
@@ -44,6 +57,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import posixpath
 import re
 import subprocess
 import sys
@@ -145,7 +159,13 @@ def check_receipt(repo: Path, rc: str) -> dict:
     m = re.search(r"document=(\S+)", line)
     row = {"receipt": rel_rc, "target": rel_target, "document_verdict": m.group(1) if m else None, "detail": line}
     ok = r.returncode == 0 and line.startswith("VERIFIED") and "verdict-reproduces=True" in line
-    if ok and target == sidecar and os.path.exists(md):
+    if ok and target == sidecar and not os.path.exists(md):
+        # the receipt re-derives from its sidecar, but no document on disk was compared: a PASS about the
+        # receipt, never about a document — recorded, and rendered as an info row
+        row["document_matches_sidecar"] = None
+        row["document_note"] = (f"no {os.path.relpath(md, repo).replace(chr(92), '/')} beside the sidecar: "
+                                "the receipt re-derives, and no document was compared")
+    elif ok and target == sidecar:
         from . import sworn
         try:
             rendered = sworn.render(sworn.load_sidecar(json.load(open(sidecar, encoding="utf-8"))))
@@ -171,6 +191,7 @@ def step_sworn(repo: Path, limit: int | None = None) -> dict:
     skipped = sum(1 for r in rows if r["status"] == "SKIP")
     checked = len(receipts) - skipped
     older_build = sum(1 for r in rows if r["status"] == "PASS" and "same-build=False" in r.get("detail", ""))
+    no_document = sum(1 for r in rows if r["status"] == "PASS" and r.get("document_note"))
     tally: dict = {}
     for r in rows:
         if r["status"] == "PASS":
@@ -180,6 +201,8 @@ def step_sworn(repo: Path, limit: int | None = None) -> dict:
         detail += "; the documents they re-derive read " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items()))
     if older_build:
         detail += f" ({older_build} issued under an earlier verifier build and re-derived exactly under this one)"
+    if no_document:
+        detail += f"; {no_document} with no .md beside the sidecar (no document compared)"
     if fails:
         detail += f"; failing: {', '.join(fails)}"
     return {"status": "PASS" if checked and not fails else ("FAIL" if fails else "SKIP"), "detail": detail,
@@ -233,7 +256,8 @@ def step_draw(repo: Path) -> dict:
             base = os.path.basename(f)
             fp_file = os.path.join(os.path.dirname(f), base.replace("_certs", "_fingerprints", 1))   # the file name only: a directory named *_certs* must not move it
             n_fp = 0
-            if fp_file != f and os.path.exists(fp_file):
+            has_fp_file = fp_file != f and os.path.exists(fp_file)
+            if has_fp_file:
                 for arm, fp in (json.load(open(fp_file, encoding="utf-8")) or {}).items():
                     try:
                         ck.check_draw_record(fp.get("draw"), fp.get("canary_sha256"), fp.get("ids") or [])
@@ -242,7 +266,13 @@ def step_draw(repo: Path) -> dict:
                     except ValueError as e:
                         problems.append(f"fingerprint {arm}: {e}")
                     n_fp += 1
-            detail = f"beacon {str(draw['beacon'])[:12]}… → {len(items)} items" + (f", {n_fp} fingerprints re-checked" if n_fp else ", no fingerprints file beside it")
+            # both runners always write the fingerprints beside the certs; without them the draw is checked
+            # against the certs' own hash only, never against the ids the arms graded (STR-3)
+            if not has_fp_file:
+                problems.append(f"no {os.path.basename(fp_file)} beside it: the draw cannot be checked against the ids")
+            elif not n_fp:
+                problems.append(f"{os.path.basename(fp_file)} carries no fingerprint: the draw cannot be checked against the ids")
+            detail = f"beacon {str(draw['beacon'])[:12]}… → {len(items)} items" + (f", {n_fp} fingerprints re-checked" if n_fp else ", no fingerprints checked")
         except Exception as e:  # noqa: BLE001
             problems.append(f"the draw could not be re-derived: {e}")
             detail = "the draw could not be re-derived"
@@ -265,39 +295,129 @@ def _load_scorer(repo: Path):
     return mod
 
 
-def step_reading(repo: Path) -> dict:
+def _load_json(path):
+    with open(path, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    if not isinstance(doc, dict):
+        raise ValueError(f"not a JSON object ({type(doc).__name__})")
+    return doc
+
+
+def _norm_certs_file(repo: Path, cf) -> str | None:
+    """A scorecard's `certs_file` as a forward-slash path relative to the repo (None when it names nothing):
+    `score.py --out` writes it that way, and a card spelled with backslashes or `./` names the same file."""
+    if not isinstance(cf, str) or not cf.strip():
+        return None
+    s = cf.strip().replace("\\", "/")
+    if os.path.isabs(s):
+        try:
+            s = os.path.relpath(s, repo).replace("\\", "/")
+        except ValueError:          # another drive: it is not in this tree
+            return s
+    return posixpath.normpath(s)
+
+
+def _sealed_beacon(seals: dict | None, digest: str | None):
+    """(beacon, why-not): the beacon the seals step printed on the ANCHORED `sealed-prereg` line whose digest is
+    the beacon-draw PREREG's sealed digest, or None and the reason there is none."""
+    if not digest:
+        return None, "the scorer names no sealed digest for the beacon-draw PREREG"
+    if not isinstance(seals, dict) or not isinstance(seals.get("lines"), list):
+        return None, "the seals step did not run" + (f" ({seals['detail']})" if isinstance(seals, dict) and seals.get("detail") else "")
+    beacons = sorted({str(r["beacon"]).lower() for r in seals["lines"]
+                      if isinstance(r, dict) and r.get("kind") == "sealed-prereg" and r.get("status") == "ANCHORED"
+                      and str(r.get("digest") or "").lower() == digest.lower() and r.get("beacon")})
+    if not beacons:
+        return None, f"the anchors carry no ANCHORED sealed-prereg line for the beacon-draw PREREG's digest {digest[:12]}…"
+    if len(beacons) > 1:
+        return None, f"{len(beacons)} ANCHORED sealed-prereg lines for the beacon-draw PREREG's digest print different beacons"
+    return beacons[0], None
+
+
+_CARD_KEYS = ("hypotheses", "gates", "counts_as_result", "run_reading")
+
+
+def step_reading(repo: Path, seals: dict | None = None) -> dict:
+    """Every certs file read by the scorer, and every committed scorecard accounted for.
+
+    `seals` is the seals step's result, when it ran: a beacon-drawn certs file is read with the beacon its
+    ANCHORED sealed-prereg line prints (K5's beacon clause); without one, no beacon-draw certs file counts as a
+    result here, whatever the scorer's version (the verification of 2026-09-14, S1). Scorecards (STR-1): an
+    unreadable one FAILS; two current-schema cards naming one certs file FAIL (one would shadow the other); a
+    current-schema card naming no certs file this step reads FAILS; a card of another schema is an info row,
+    never silently dropped. An unreadable certs file FAILS (STR-5)."""
     scorer = _load_scorer(repo)
     if scorer is None:
         return {"status": "SKIP", "detail": "papers/checksum/score.py is not in this checkout"}
     by_file = {v["prereg"]: k for k, v in scorer.BANDS.items()}
-    cards = {}
+    beacon, no_beacon_why = _sealed_beacon(seals, (scorer.BANDS.get("beacon_draw") or {}).get("sealed_blob"))
+    card_rows, fails = [], []
+    by_certs: dict = {}
     for sc in sorted(glob.glob(str(repo / "papers" / "checksum" / "*_scorecard*.json"))):
+        sc_rel = os.path.relpath(sc, repo).replace("\\", "/")
         try:
-            c = json.load(open(sc, encoding="utf-8"))
-        except Exception:  # noqa: BLE001
+            c = _load_json(sc)
+        except Exception as e:  # noqa: BLE001
+            card_rows.append({"scorecard": sc_rel, "status": "FAIL", "detail": f"unreadable scorecard: {e}"}); fails.append(sc_rel); continue
+        if c.get("schema") != scorer.SCHEMA:
+            card_rows.append({"scorecard": sc_rel, "status": "INFO", "schema": c.get("schema"),
+                              "detail": f"schema {c.get('schema')!r} is not the scorer's current {scorer.SCHEMA}: not compared "
+                                        "(an older scorer's card is history, not a claim about today's reading)"})
             continue
-        if c.get("schema") == scorer.SCHEMA:          # an older scorer's card is history, not a claim about today's reading
-            cards[c.get("certs_file")] = (os.path.relpath(sc, repo).replace("\\", "/"), c)
-    rows, fails = [], []
+        by_certs.setdefault(_norm_certs_file(repo, c.get("certs_file")), []).append((sc_rel, c))
+    rows = []
     for f in _certs_files(repo):
         rel = os.path.relpath(f, repo).replace("\\", "/")
+        named = by_certs.pop(rel, [])
         try:
-            certs = json.load(open(f, encoding="utf-8"))
-        except Exception:  # noqa: BLE001
-            continue
+            certs = _load_json(f)
+        except Exception as e:  # noqa: BLE001
+            rows.append({"certs": rel, "status": "FAIL", "detail": f"unreadable certs file: {e}"}); fails.append(rel); continue
         key = by_file.get(certs.get("prereg"))
         if key is None:
-            rows.append({"certs": rel, "status": "SKIP", "detail": f"prereg {certs.get('prereg')!r} is not one the scorer knows"})
+            row = {"certs": rel, "status": "SKIP", "detail": f"prereg {certs.get('prereg')!r} is not one the scorer knows"}
+            if named:
+                row.update(status="FAIL", committed_scorecards=[n for n, _ in named],
+                           detail=row["detail"] + f"; yet {', '.join(n for n, _ in named)} (the current schema) names these certs, "
+                                                  "and the scorer cannot re-read them")
+                fails.append(rel)
+            rows.append(row)
             continue
+        kw = {"expect_beacon": beacon} if (key == "beacon_draw" and beacon) else {}   # by keyword: the old and the new scorer take it
         try:
-            card = scorer.score(certs, key)
+            card = scorer.score(certs, key, **kw)
         except Exception as e:  # noqa: BLE001
             rows.append({"certs": rel, "status": "FAIL", "detail": f"the scorer raised: {e}"}); fails.append(rel); continue
         row = {"certs": rel, "prereg": key, "status": "PASS", "reading": card["run_reading"], "counts_as_result": card["counts_as_result"]}
-        if rel in cards:
-            sc_rel, committed = cards[rel]
-            same_bytes = committed.get("certs_sha256") == hashlib.sha256(open(f, "rb").read()).hexdigest()
-            same = same_bytes and all(committed.get(k) == card[k] for k in ("hypotheses", "gates", "counts_as_result", "run_reading"))
+        if key == "beacon_draw":
+            row["expect_beacon"] = beacon
+            if not beacon and card["counts_as_result"]:
+                # a scorer from before S1 counts a beacon-draw card read without the seal's beacon; this step never does
+                row["counts_as_result"] = False
+                row["scorer_counts_as_result"] = True
+                row["detail"] = (card["run_reading"] + " — NOT counted here: K5's beacon clause was not checked, because no seal's "
+                                 f"beacon was given ({no_beacon_why})")
+        if len(named) > 1:
+            row["status"] = "FAIL"; fails.append(rel)
+            row["committed_scorecards"] = [n for n, _ in named]
+            row["detail"] = (f"{len(named)} current-schema scorecards name these certs ({', '.join(n for n, _ in named)}): "
+                             "one would shadow the other, so none is compared")
+        elif named:
+            sc_rel, committed = named[0]
+            with open(f, "rb") as fh:
+                same_bytes = committed.get("certs_sha256") == hashlib.sha256(fh.read()).hexdigest()
+            same = same_bytes and all(committed.get(k) == card.get(k) for k in _CARD_KEYS)
+            if same_bytes and not same and kw:
+                # a card written without the seal's beacon (an instrument check scored before any seal existed) is a
+                # true record of that reading only while it claims no result
+                try:
+                    bare = scorer.score(certs, key)
+                except Exception:  # noqa: BLE001
+                    bare = None
+                if bare is not None and committed.get("counts_as_result") is False and all(committed.get(k) == bare.get(k) for k in _CARD_KEYS):
+                    same = True
+                    row["committed_scorecard_note"] = ("the committed scorecard was read without the seal's beacon and claims no "
+                                                       "result; it matches that reading")
             row["committed_scorecard"] = sc_rel
             row["committed_scorecard_matches"] = same
             if not same:
@@ -305,11 +425,28 @@ def step_reading(repo: Path) -> dict:
                 row["detail"] = ("the committed scorecard was written for other certs bytes" if not same_bytes
                                  else "the committed scorecard is not what the scorer reads today")
         rows.append(row)
-    return {"status": "PASS" if rows and not fails else ("FAIL" if fails else "SKIP"),
-            "detail": f"{len([r for r in rows if r['status'] != 'SKIP'])} certs files read against their PREREG; "
-                      f"{sum(1 for r in rows if r.get('counts_as_result'))} count as a result; "
-                      f"{sum(1 for r in rows if 'committed_scorecard' in r)} committed scorecards compared" + (f"; failing: {', '.join(fails)}" if fails else ""),
-            "files": rows}
+    for cf, named in sorted(by_certs.items(), key=lambda kv: str(kv[0])):
+        for sc_rel, _ in named:
+            if cf is None:
+                why = "a current-schema scorecard with no certs_file: it names no certs file, so nothing can be compared with it"
+            elif (repo / cf).is_file():
+                why = f"names {cf}, which is not a certs file this step reads (papers/checksum/*_certs*.json, smoke files excluded)"
+            else:
+                why = f"names {cf}, which is not in the tree: a scorecard for certs no one can re-read"
+            card_rows.append({"scorecard": sc_rel, "status": "FAIL", "certs_file": cf, "detail": why}); fails.append(sc_rel)
+    n_info = sum(1 for r in card_rows if r["status"] == "INFO")
+    detail = (f"{len([r for r in rows if r['status'] != 'SKIP'])} certs files read against their PREREG; "
+              f"{sum(1 for r in rows if r.get('counts_as_result'))} count as a result; "
+              f"{sum(1 for r in rows if 'committed_scorecard' in r)} committed scorecards compared"
+              + (f", {n_info} of another schema listed and not compared" if n_info else ""))
+    if beacon:
+        detail += f"; beacon-draw certs read with the seal's beacon {beacon[:12]}…"
+    else:
+        detail += f"; no beacon-draw card can count as a result without the seal's beacon (--network): {no_beacon_why}"
+    if fails:
+        detail += f"; failing: {', '.join(fails)}"
+    return {"status": "PASS" if rows and not fails else ("FAIL" if fails else "SKIP"), "detail": detail,
+            "expect_beacon": beacon, "files": rows, "scorecards": card_rows}
 
 
 def step_recipe() -> dict:
@@ -323,7 +460,7 @@ def run(repo, expect_head: str | None = None, with_tests: bool = False, network:
     steps = {}
     t0 = time.time()
     for name in STEPS:
-        if name not in only:
+        if name not in only and name != "checkout":   # checkout runs on every invocation: a dirty tree FAILS whatever --only says
             steps[name] = {"status": "SKIP", "detail": "not selected (--only)"}
             continue
         t1 = time.time()
@@ -340,7 +477,7 @@ def run(repo, expect_head: str | None = None, with_tests: bool = False, network:
         elif name == "draw":
             s = step_draw(repo)
         elif name == "reading":
-            s = step_reading(repo)
+            s = step_reading(repo, steps.get("seals"))    # the seal's beacon, when the seals step ran and prints one
         else:
             s = step_recipe()
         s["seconds"] = round(time.time() - t1, 1)
@@ -358,13 +495,23 @@ def render(rep: dict) -> str:
         for r in (s.get("receipts") or []):
             if r["status"] != "PASS":
                 out.append(f"          {r['status']}  {r['receipt']}: {r['detail']}")
-            elif r.get("document_verdict") not in (None, "SWORN-HELD"):
+                continue
+            if r.get("document_verdict") is None:
+                out.append(f"          info  {r['receipt']}: the receipt re-derives; its check line carries no document= field, "
+                           "so which verdict the document reads is not known")
+            elif r["document_verdict"] != "SWORN-HELD":
                 out.append(f"          info  {r['receipt']}: the receipt re-derives; the document it swears to reads {r['document_verdict']}")
+            if r.get("document_note"):
+                out.append(f"          info  {r['receipt']}: {r['document_note']}")
         for r in (s.get("files") or []):
             if name == "reading" and r["status"] != "SKIP":
                 out.append(f"          {r['status']}  {r['certs']}: {r.get('detail') or r.get('reading', '')}")
+                if r.get("committed_scorecard_note"):
+                    out.append(f"          info  {r['committed_scorecard']}: {r['committed_scorecard_note']}")
             elif r["status"] == "FAIL":
                 out.append(f"          FAIL  {r['certs']}: {r['detail']}")
+        for r in (s.get("scorecards") or []):
+            out.append(f"          {'info' if r['status'] == 'INFO' else r['status']}  {r['scorecard']}: {r['detail']}")
     out += ["", f"  {rep['verdict']}  ({rep['seconds']}s)"]
     return "\n".join(out)
 
@@ -381,7 +528,7 @@ def main(argv=None) -> int:
     ap.add_argument("--with-tests", action="store_true")
     ap.add_argument("--network", action="store_true", help="verify the anchors against the chain")
     ap.add_argument("--allow-dirty", action="store_true", help="check a working tree whose tracked files differ from the commit")
-    ap.add_argument("--only", default=None, help="comma-separated steps: " + ",".join(STEPS))
+    ap.add_argument("--only", default=None, help="comma-separated steps: " + ",".join(STEPS) + " (checkout runs whether named or not)")
     ap.add_argument("--json", default=None, help="write the report here")
     a = ap.parse_args(argv)
     only = [s.strip() for s in a.only.split(",")] if a.only else None
