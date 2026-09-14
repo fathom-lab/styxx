@@ -15,7 +15,7 @@ findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_1
 longer list.**
 
 **2026-09-14, evening — the day's own work red-teamed: eight finder dimensions, two skeptics per blocker
-or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted. Repairs are new commits; no sworn
+or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted; a verification of those repairs the same night confirmed 8 more (one blocker), repaired below. Repairs are new commits; no sworn
 document and no frozen PREREG was edited — the two sworn documents at fault get CORRECTIONs beside them.**
 - **Blocker, withdrawn by CORRECTION: the beacon-draw PREREG said the drawn values "could not have been
   computed before the slot existed".** They can: the 778-item pool is public and a fingerprint scores items
@@ -25,7 +25,7 @@ document and no frozen PREREG was edited — the two sworn documents at fault ge
 - **Anyone could have front-run a seal.** `styxx.clock`'s earliest-memo scan counted every listed memo
   carrying the digest, including transfers other keys sent the creator wallet; the digests are printed in
   SEALS before sealing. Candidates are now resolved and count only if the wallet signed them with exactly
-  the seal memo; `clock verify` prints a beacon only on an ANCHORED line (7ef0e7ac).
+  the seal memo; `clock verify` prints a beacon only on an ANCHORED line (7ef0e7ac). The verification found the scan could still be blocked for good, and an ANCHORED seal revoked, by two hundred memos carrying the digest or fifty thousand later transactions; it now reads only the history older than the seal, a verifier can raise its limit (`--max-candidates`), and two wallet seals in one slot are the same beacon (e7108ccb).
 - **H1's held-out form does not escape its by-construction problem.** `probe_h1_held_out.py`: identical
   weights read SAME 60/60 when the loads are bit-identical and 9 to 12 of 60 otherwise, and DRIFT once at
   two scales. The CORRECTION fixes the reading before the run; `score.py` applies it.
@@ -42,7 +42,7 @@ document and no frozen PREREG was edited — the two sworn documents at fault ge
   committed; the record rebuilds from them exactly except the quote check, whose texts are other people's
   work and stay out. `CORRECTION_sand_neighbours_pass3_2026_09_14.md` prices the fingerprint clause under
   four readings of the two terms the protocol left undefined: it retires under none, and ChatLog carries
-  the clause's object under one of them and not its log-probabilities.
+  the clause's object under one of them and not its log-probabilities. The ERRATUM beside it (sworn) corrects what the correction then said about the margin: it is per source — log-probabilities against ChatLog and Hooker et al., a floor measured on the same weights against Xu et al., a self-comparison against Madaan et al. under the most lenient reading; no single element carries it.
 
 **2026-09-14, on the same branch — CI made green, the next PREREG, the sentence priced a third time,
 the reading rules as code, and a command for the stranger.**
