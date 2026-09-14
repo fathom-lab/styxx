@@ -91,3 +91,9 @@ papers/checksum/*.sworn.json -text
 papers/checksum/*.sworn-receipt.json -text
 papers/checksum/*.json -text
 papers/chat/** -text
+
+# checksum arc, second pass 2026-09-13: subdirectories (the observatory demos) and the bench gold the bounty names
+papers/checksum/**/*.json -text
+papers/checksum/**/*.jsonl -text
+papers/checksum/**/*.md -text
+bench/tasks/*.jsonl -text
