@@ -197,6 +197,15 @@ def main():
             out[tag] = ck.cert(fps["A"], fps[tag], d, note=f"{name} on {device}; teacher-forced; deterministic best effort")
             print(f"  A vs {tag:3s}: {d.verdict:12s} mean|Δlogp| = {d.mean_abs_nats:.5f} [{d.ci_mean_abs[0]:.5f}, {d.ci_mean_abs[1]:.5f}]"
                   f"   r = {d.rdm_r:.4f}   top-1 {hits['A']}->{hits[tag]}")
+        # CORRECTION_prereg_deploy_quant_H1: the frozen H1 grades A vs A' against a floor that includes
+        # that very pair. Beside it, unpreregistered and labelled so, the held-out reading: the floor
+        # from the two pairs that do not contain A' (A-A'' and A'-A''), which is what the clause meant.
+        held_out_floor = max(float(np.abs(fps["A"].mean_lp - fps["A3"].mean_lp).mean()),
+                             float(np.abs(fps["A2"].mean_lp - fps["A3"].mean_lp).mean()))
+        d_ho = ck.distance(fps["A"], fps["A2"], n_boot=N_BOOT, seed=SEED, floor_nats=held_out_floor)
+        out["h1_held_out"] = {"unpreregistered": True, "floor_from": ["A-A3", "A2-A3"], "floor_nats": held_out_floor,
+                              "cert": ck.cert(fps["A"], fps["A2"], d_ho, note="held-out floor reading of H1; decides nothing in this run")}
+        print(f"  H1 held-out reading (unpreregistered): A vs A2 {d_ho.verdict} against floor {held_out_floor:.6f}")
     _write_json(os.path.join(HERE, f"deploy_quant_certs{suffix}.json"), out, indent=1)
     _write_json(os.path.join(HERE, f"deploy_quant_fingerprints{suffix}.json"), {k: v.to_json() for k, v in fps.items()})
     if k1["fired"]:

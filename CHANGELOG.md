@@ -7,6 +7,95 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
+
+**Ten adversarial reviewers, one skeptic per dimension, on 2026-09-13; no blocker or defect finding
+was refuted. Every repair is a new commit; no sworn document and no frozen PREREG was edited. The
+findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
+longer list.**
+- **The recipe does not reproduce the RESULT's magnitudes on a second machine; the verdicts do.**
+  `NOTE_replication_alienware_2026_09_13.md` (sworn to both machines' bytes): the null pair at
+  exactly 0 and 30 top-1 hits on both; int8 1.51 → 1.41 nats/token, random 9.50 → 9.72; the float32
+  forward pass differs by at most 1.7e-5 nats/item across the machines, the int8 kernels and the
+  seed-343 init do not transfer. `BOUNTY.md` gains the tolerance rule this forced.
+- **`styxx.clock` checked nothing about who sealed**: a failed transaction, a memo from any wallet, a
+  memo-only transaction and a null block time all read ANCHORED, and it handed `styxx.beacon` a
+  base58 blockhash that `select` refused as non-hex — no draw could be made from any real seal.
+  Thirteen named statuses, the fee payer must be the creator, the transaction must carry a transfer
+  of the mint, the beacon is the blockhash's 32 bytes as hex, and the docstring says what is still
+  not checked (one RPC trusted; no search for other memos, so the earliest-memo rule is owed).
+- **`styxx.challenge` paid, by BOUNTY's letter, for a shallow clone, a renamed copy and a modified
+  verifier.** v1 refuses all three with the reason, splits `agree` into digest and verdict, writes
+  the stranger's receipt beside the record, and says what a record is: a self-report the lab
+  settles by re-running. The sentence "cannot be edited afterwards" is gone from SAND_CHECK.
+- **`styxx.checksum`**: the floor was silently promoted to 1e-4 (cert now carries measured and
+  effective); the degeneracy guard ignored the belief geometry; a non-finite floor read SAME; an
+  empty tokenizer compared; a top-k fingerprint compared with a full one (fingerprints carry `kind`
+  and `k`); the cert digest covered no hash of either fingerprint (`compare/v1` does, plus the
+  seed and floors); an INCONCLUSIVE cert was not strict JSON; `-0.0` on a noisy diagonal hashed
+  by machine. Committed v0 certs stay under their schema.
+- **`styxx.observatory` verify() re-derived nothing but linkage**: a forward-rehashed forgery of
+  every verdict, a truncated log and a replaced plate all verified; the logged coefficient hashes
+  never matched the files; the "three-day" demo was thirty-six seconds with caller-supplied dates.
+  v1 re-derives coefficients and verdicts from the files a stranger has, pins head and count,
+  writes `taken` beside `when`, refuses an empty rebaseline reason; the v0 demo fails v1 by
+  design (`observatory_demo/CORRECTION.md`); a fresh demo lives under `observatory_demo_v1/`.
+- **The deploy-scale runner** imported whichever styxx `sys.path` found and recorded nothing about
+  it; it now refuses a package from outside the checkout, evaluates the PREREG's K1 in code,
+  passes `n_boot` and `seed` explicitly, and writes provenance (git HEAD, the PREREG blob's
+  sha256 — the sealed bytes — the checksum.py hash, versions, device, `CUBLAS_WORKSPACE_CONFIG`).
+  H1 cannot read SAME by construction whenever its own first clause holds:
+  `CORRECTION_prereg_deploy_quant_H1_2026_09_13.md` states the reading rule before the run, with
+  a committed probe. `SEALS_2026_09_13.md` puts the frozen blob digests in the tree and states that
+  a seal hashes the git blob, never the working copy (the runbook's instruction would have sealed a
+  CRLF hash).
+- **The browser plate drew the vertical mirror** of the python plate for every asymmetric figure;
+  fixed, and `tests/test_plate_page.py` runs the page's own script under node against
+  `styxx.plate`. "Byte-identical on any machine" was false for the PNGs (pixel-identical for the
+  hash plate; the geometry plate's sand seed reads the unrounded floats) and for the last digits of
+  r in the agreement json; the coefficient hashes are the cross-machine target, as SAND_CHECK said.
+  SAND_CHECK §1 no longer says the lines are the digest: about 2^23 mode captions stand for 2^256.
+- **`styxx.beacon`** accepted any hex string (now 64 characters only), its pool hash was pinned
+  nowhere (now in a test), and its docstring said the beacon rode in every cert (it rides in none;
+  owed). `styxx.epoch` refuses a salt that is not 32 bytes and says no epoch exists.
+- **History**: the checksum RESULT's receipt named c1751053, a commit only the build machine had,
+  for two commits of history; `tests/test_receipts_name_reachable_commits.py` makes that a CI
+  failure (eight Action samples are the documented exception). The RESULT was re-sworn at 60fad45c
+  and entered Charon as line 244 (`python -m styxx.charon ingest`; `build_log.py` refuses to
+  rewrite a log, by design). INDEX says "seal pending", because no anchor exists in bytes.
+- **Two things the tree still lacks, named rather than hidden.** The 2026-09-12 sworn chat update
+  that the entry below cites (and that `papers/plates/plate_receipt_update_2026_09_12.png` was
+  rendered from) is not in the tree; the plate is unbacked until the triple is committed under
+  `papers/chat/`. And the eight new modules are `python -m styxx.<module>` entry points outside
+  the guarded public surface (`tests/test_public_surface.py` tests a hand-written list and
+  `styxx/__init__.py` exports none of them); the `styxx[plate]` extra serves modules the CLI does
+  not register.
+
+## [Unreleased] — checksum v0: a fingerprint for model behavior, the observatory, the clock, the challenge record, the bounty
+
+**`styxx/checksum.py`, `styxx/observatory.py`, `styxx/beacon.py`, `styxx/epoch.py`,
+`styxx/clock.py`, `styxx/challenge.py`; `papers/checksum/`; `BOUNTY.md`;
+`papers/plates/SAND_CHECK.md`. Nothing here is a measurement beyond one 135M model on cpu.**
+This entry was missing from the series as built (the red team's hygiene reviewer found ten of
+eleven commits absent from this file) and is written after the fact from the commits themselves.
+- **`styxx.checksum`** fingerprints a model on a hashed 48-item canary set in teacher-forced
+  log-probabilities, compares two fingerprints with a bootstrap interval, a degeneracy guard and a
+  measured null floor, and writes a comparison cert. The sworn
+  `RESULT_checksum_smollm_quant_2026_09_13.md`: the same weights reloaded read SAME at exactly 0
+  nats/token, per-tensor int8 read DRIFT at 1.51 [1.17, 1.90] with belief-geometry r 0.83, random
+  weights 9.50 — on one 135M model, on cpu, on the machine that ran it (see the entry above for
+  what a second machine read).
+- **`PREREG_checksum_deploy_quant_2026_09_13.md`** freezes the deploy-scale run (Qwen2.5-1.5B,
+  bf16 vs NF4 vs int8, four hypotheses, four kill gates) before any data; `run_deploy_quant.py`
+  is its runner. Unrun; seal pending.
+- **`styxx.observatory`**: a chained daily log of fingerprints with a baseline that moves only by
+  a reasoned rebaseline entry; `styxx.beacon`: a canary draw from a 778-item pool by a block hash;
+  `styxx.epoch`: a salted commitment to a private canary set (primitive only; no epoch exists);
+  `styxx.clock`: the memo builder and on-chain re-verification of anchors; `styxx.challenge`: the
+  record a stranger files to replicate or challenge a sworn document.
+- **`BOUNTY.md`** (rules v0, amounts unfilled) and **`SAND_CHECK.md`** (three ways in) — the
+  holder-facing procedure; and `DUE_DILIGENCE_2026_09_13.md`, the series' own adversarial read.
+
 ## [Unreleased] — the plate: a receipt gets a face, a geometry gets a face, and neither can lie about the number
 
 **`styxx/plate.py`, `styxx/geoplate.py`, `tests/test_plate.py`, `papers/plates/`,
