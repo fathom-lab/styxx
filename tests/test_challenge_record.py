@@ -16,6 +16,15 @@ from styxx import challenge
 DOC = "papers/checksum/RESULT_checksum_smollm_quant_2026_09_13.md"
 RCPT = DOC.replace(".md", ".sworn-receipt.json")
 
+# CI checks out at fetch-depth 1; the receipt names an ancestor of HEAD, and without it nothing here can
+# re-derive. Skip with the reason, the way tests/test_receipt_provenance_audit.py does — never fail a
+# clone for being shallow, and never pass it either.
+import subprocess as _sp
+_LAB_COMMIT = json.load(open(RCPT, encoding="utf-8")).get("commit", "")
+if _sp.run(["git", "cat-file", "-e", f"{_LAB_COMMIT}^{{commit}}"], capture_output=True).returncode != 0:
+    pytest.skip(f"the receipt names {_LAB_COMMIT[:12]}, which this checkout does not have (a shallow clone); "
+                "the challenge tests need full history", allow_module_level=True)
+
 
 def _lab():
     return json.load(open(RCPT, encoding="utf-8"))
