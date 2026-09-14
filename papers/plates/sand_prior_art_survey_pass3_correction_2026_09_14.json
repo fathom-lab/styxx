@@ -1,0 +1,178 @@
+{
+ "schema": "styxx.plates/sand-survey-correction/v0",
+ "corrects": "papers/plates/sand_prior_art_survey_pass3_2026_09_14.json",
+ "pass3_survey": "papers/plates/SURVEY_sand_neighbours_pass3_2026_09_14.md",
+ "protocol": "papers/plates/PROTOCOL_sand_prior_art_pass3_2026_09_14.md",
+ "protocol_commit": "54b066ff",
+ "red_team": "2026-09-14: survey F5 and ferry F1 confirmed (inputs not in the tree); survey F1 and F4 plausible (interval coded inconsistently; L05's flag against its own note); survey F2 and F3 refuted",
+ "inputs": {
+  "dir": "papers/plates/sand_survey_pass3_inputs",
+  "sha256": {
+   "fetch_pass3.py": "961ced1cb3657dc3009d723b32117cd9aaa7d47320915163bd94f7b8904bb8d3",
+   "reader-1.json": "5b16e7106804f0711e2b735047e908a18c20bbfd728ca52105097e3f2c4328f1",
+   "reader-2.json": "9d04440615a6845132b7e90224f2a0f9cbca6796b895c6fa3ae6d8e9853f8515",
+   "reader-3.json": "3b9dec2636f36c7dee430715b418dc30b8b9d6eb4d9a56e68899aed0e167203c",
+   "reader-4.json": "e24fc88d93fe0cbb0177b7d420fd98c71b4741cdc57420947e3f2bacfe696105"
+  },
+  "n_reader_returns": 4,
+  "fetch_script": true
+ },
+ "rebuild": {
+  "rebuilt_from_committed_inputs": true,
+  "top_level_fields_differing": [],
+  "n_top_level_fields_differing": 0,
+  "source_fields_differing": [],
+  "n_source_fields_differing": 0,
+  "n_sources_rebuilt": 17,
+  "matches_except_the_quote_check": true,
+  "not_rebuildable_here": [
+   "sources.*.verdicts.*.quote_found_in_text",
+   "counts.verdict_quotes_checked",
+   "counts.verdict_quotes_found_in_text"
+  ],
+  "why": "the quote check read the extracted full texts, which are not committed (other people's work); their sha256 are in the fetch record (fulltext.sha256); re-deriving the check needs a re-fetch and the same extractor, and a source revised since 2026-09-14 will not reproduce"
+ },
+ "self_reports": {
+  "chars_read_equals_the_file_size_each_reader_was_told": true,
+  "n_sources": 17,
+  "chars_reported_total": 1035862,
+  "note": "READ and chars_read are the readers' reports; nothing measured how much of a text a reader read",
+  "empty_verdict_quotes": 0
+ },
+ "undefined_terms": {
+  "object_elements": [
+   "self_comparison",
+   "fixed_item_set",
+   "same_weights_floor_in_situ",
+   "interval_on_comparison"
+  ],
+  "thing_element": "log_prob_object",
+  "thing_element_note": "the operational row also says 'hashed' item set; no reader coded it and no source was flagged as hashing its set",
+  "retires_only_if": "a source carries all four object elements AND the thing (pricing rule: the same thing for the same object)",
+  "readings": {
+   "as_recorded": {
+    "rule": "the element flags exactly as the four readers returned them",
+    "overrides": [],
+    "element_true_counts": {
+     "self_comparison": 6,
+     "fixed_item_set": 11,
+     "same_weights_floor_in_situ": 1,
+     "interval_on_comparison": 5,
+     "log_prob_object": 3
+    },
+    "sources_with_the_four_object_elements": [],
+    "n_sources_with_the_four_object_elements": 0,
+    "sources_with_the_object_and_the_thing": [],
+    "n_sources_with_the_object_and_the_thing": 0,
+    "would_retire_C4a": false
+   },
+   "a_stated_level_test_on_the_difference_is_an_interval": {
+    "rule": "a significance test on the difference at a stated level counts as an interval on the comparison — the reading reader-4 applied to L11 and L12 — applied also to the two sources whose reader coded it otherwise",
+    "overrides": [
+     {
+      "source": "L03",
+      "element": "interval_on_comparison",
+      "recorded": false,
+      "read_as": true,
+      "rests_on": "larger than the critical value 2.58 of z-score at the 99% confidence level"
+     },
+     {
+      "source": "L06",
+      "element": "interval_on_comparison",
+      "recorded": false,
+      "read_as": true,
+      "rests_on": "If the p-value <= 0.05, we reject the null hypothesis"
+     }
+    ],
+    "element_true_counts": {
+     "self_comparison": 6,
+     "fixed_item_set": 11,
+     "same_weights_floor_in_situ": 1,
+     "interval_on_comparison": 7,
+     "log_prob_object": 3
+    },
+    "sources_with_the_four_object_elements": [
+     "L03"
+    ],
+    "n_sources_with_the_four_object_elements": 1,
+    "sources_with_the_object_and_the_thing": [],
+    "n_sources_with_the_object_and_the_thing": 0,
+    "would_retire_C4a": false
+   },
+   "only_a_confidence_interval_on_the_compared_quantity_is_an_interval": {
+    "rule": "only a confidence interval on the compared quantity counts; a threshold test, or a spread of repeated runs, does not",
+    "overrides": [
+     {
+      "source": "L05",
+      "element": "interval_on_comparison",
+      "recorded": true,
+      "read_as": false,
+      "rests_on": "not a confidence interval on the teacher-student difference"
+     },
+     {
+      "source": "L12",
+      "element": "interval_on_comparison",
+      "recorded": true,
+      "read_as": false,
+      "rests_on": "one-tailed T-test to calculate the lower bound"
+     }
+    ],
+    "element_true_counts": {
+     "self_comparison": 6,
+     "fixed_item_set": 11,
+     "same_weights_floor_in_situ": 1,
+     "interval_on_comparison": 3,
+     "log_prob_object": 3
+    },
+    "sources_with_the_four_object_elements": [],
+    "n_sources_with_the_four_object_elements": 0,
+    "sources_with_the_object_and_the_thing": [],
+    "n_sources_with_the_object_and_the_thing": 0,
+    "would_retire_C4a": false
+   },
+   "the_lenient_interval_and_a_floor_only_on_weights_known_identical": {
+    "rule": "the stated-level-test reading of the interval, and a floor counts as measured on the same weights only when the weights are known identical, not inferred from a period in which the scores were stable",
+    "overrides": [
+     {
+      "source": "L03",
+      "element": "interval_on_comparison",
+      "recorded": false,
+      "read_as": true,
+      "rests_on": "larger than the critical value 2.58 of z-score at the 99% confidence level"
+     },
+     {
+      "source": "L06",
+      "element": "interval_on_comparison",
+      "recorded": false,
+      "read_as": true,
+      "rests_on": "If the p-value <= 0.05, we reject the null hypothesis"
+     },
+     {
+      "source": "L03",
+      "element": "same_weights_floor_in_situ",
+      "recorded": true,
+      "read_as": false,
+      "rests_on": "'same version' within a period is an inference from stability, not a measurement"
+     }
+    ],
+    "element_true_counts": {
+     "self_comparison": 6,
+     "fixed_item_set": 11,
+     "same_weights_floor_in_situ": 0,
+     "interval_on_comparison": 7,
+     "log_prob_object": 3
+    },
+    "sources_with_the_four_object_elements": [],
+    "n_sources_with_the_four_object_elements": 0,
+    "sources_with_the_object_and_the_thing": [],
+    "n_sources_with_the_object_and_the_thing": 0,
+    "would_retire_C4a": false
+   }
+  },
+  "n_readings": 4,
+  "n_readings_under_which_C4a_would_retire": 0,
+  "the_four_object_elements_under_some_reading": [
+   "L03"
+  ]
+ }
+}

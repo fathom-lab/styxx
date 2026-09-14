@@ -1,0 +1,176 @@
+{
+ "reader": "reader-4",
+ "sources": [
+  {
+   "id": "L11",
+   "read_end_to_end": true,
+   "chars_read": 80213,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Whether a suspect model of unknown provenance was trained, directly or by extraction, on the victim's private training set, decided by a two-sample T-test on prediction-margin confidence scores for private versus public samples.",
+     "quote": "We test the null hypothesis H0 : µ < µV where µ = ¯c and µV = ¯cV are mean conﬁdence scores. The test would either reject H0 and conclusively rule that fA∗is ‘stolen’, or give an inconclusive result.",
+     "reason": "The comparison is a suspect model against the membership signal of the victim's training data (ownership/provenance), not a served model against its own earlier or differently-served self; the control is an independently trained model rather than a same-weights in-situ floor; the queried items are random draws with replacement rather than a fixed hashed set; and the black-box signal is label-only distance to the decision boundary, not log-probabilities.",
+     "elements": {
+      "self_comparison": false,
+      "fixed_item_set": false,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": true,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Maini et al. test model ownership by a hypothesis test on prediction-margin gaps between private and public samples"
+    }
+   ],
+   "bearing_quotes": [
+    "We thus introduce dataset inference, the process of identifying whether a suspected model copy has private knowledge from the original model’s dataset, as a defense against model stealing.",
+    "We distinguish a model’s behavior on its training data from other subsets of data by measuring the ‘prediction certainty’ of any data point: the margin of a given data point to neighbouring classes.",
+    "V may want to perform DI on a publicly deployed model f that only allows label query access.",
+    "Finally, we also perform DI against an independent and honest machine learning model I that was trained on its own private dataset. This model is used as a control, to ensure that we do not claim ownership of models that were not trained by stealing knowledge from our victim model.",
+    "In the following results, we repeat all experimental statistical tests for 100 times with randomly sampled data with replacement. To control for multiple testing, and account for the unknown dependence of the p-values thus generated, we aggregate these values using the harmonic mean (Wilson, 2018). To produce bootstrap 99-percentile conﬁdence intervals, we repeat the experiment 40 times.",
+    "In addition, Table 1 also reports ‘Source’ where the victim’s complete model fV has been stolen, and ‘Independent’, the control model trained on a separate dataset. Understandably, we typically observe the largest and smallest effect sizes for these two baselines, which serve as bounds to interpret our evaluation of attacks.",
+    "DI uniquely applies as a post-hoc solution to any publicly deployed model, irrespective of whether it ‘overﬁt’ on its training set. This means that model owners in the real-world can perform DI immediately, to protect models that they have already deployed.",
+    "Blind Walk which estimates the ‘prediction margin’ of any given data point through its robustness to random noise rather than a gradient search."
+   ],
+   "leads": [],
+   "notes": "The 'Source' row runs the test on the victim's own weights fV as an upper bound and 'Independent' (a separately trained model) as the lower bound; neither is a same-weights nondeterminism floor, and the paper never re-serves or re-queries the same weights to measure their own spread. The protocol names ownership/derivative detection as an OCCUPIES class before reading, and this source is squarely in it."
+  },
+  {
+   "id": "L12",
+   "read_end_to_end": true,
+   "chars_read": 95326,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Whether a suspect model is a stolen copy (finetuned, pruned or extracted) of a victim model, decided by voting over output- and activation-distance metrics on a generated test suite, each thresholded against independently trained negative models.",
+     "quote": "The ﬁnal judgement of whether the suspect is a copy of the victim can be made via a thresholding and voting mechanism according to the dissimilarity scores between the victim and a set of negative suspect models (Line 4).",
+     "reason": "The comparison is victim versus a suspect of unknown provenance for copy detection, and the floor that grades it is the distribution of independently trained negative models (different weights), not the same weights measured in situ under the serving in use; probability-vector JSD on a fixed test suite is the nearest element, but it is classifier output distributions, not teacher-forced log-probabilities.",
+     "elements": {
+      "self_comparison": false,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": true,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Chen et al. test suspect-model copying by output distances thresholded against independently trained negative models"
+    }
+   ],
+   "bearing_quotes": [
+    "DEEPJUDGE quantitatively tests the similarities between two deep learning models: a victim model and a suspect model.",
+    "JSD quantiﬁes the similarity between two models’ output distributions, and is particularly more powerful against model extraction attacks where the suspect model is extracted based on the probability vectors (distributions) returned by the victim model.",
+    "For each testing metric λ, we set the threshold adaptively using an ε-difference strategy. Speciﬁcally, we use one-tailed T-test to calculate the lower bound LBλ based on the statistics of the negative suspect models at the 99% conﬁdence level.",
+    "Negative suspect models have the same architecture as the victim models but are trained independently using either the remaining 50% of training data or the same data but with different random initializations. The negative suspect models serve as the control group to show that DEEPJUDGE will not claim wrong ownership. These models are also used to compute the testing thresholds (τ).",
+    "Note that we randomly repeat the experiment 6 times for each ﬁnetuning or pruning attack and 12 times for independent training (as more negative suspect models will result in a more accurate judging threshold). Then, we report the average and standard deviation (in the form of a ± b) in each entry of Table IV.",
+    "as efﬁcient since test case generation is a one-time effort, and the additional time cost of scanning a suspect model with the test cases is almost negligible.",
+    "We remark that defending this type of attack is a trivial task for DEEPJUDGE as there will be no difference between the extracted model and the victim model in an ideal approximation.",
+    "In this work, we follow the principle that any derivations from the victim model other than independent training should be treated as having a certain level of copying."
+   ],
+   "leads": [
+    "Cao, Jia & Gong, IPGuard: Protecting intellectual property of deep neural networks via fingerprinting the classification boundary, Asia CCS 2021",
+    "Lukas, Zhang & Kerschbaum, Deep neural network fingerprinting by conferrable adversarial examples, ICLR 2021"
+   ],
+   "notes": "Positive suspects include the victim itself finetuned or pruned, so the pruned-copy JSD rows are operationally close to Dutta et al.'s KL-under-compression, but the purpose is copy detection and the 99% T-test threshold comes from negatives trained on other data or seeds, never from re-measuring the same weights; the appendix remark that an ideal functionally-equivalent copy shows 'no difference' from the victim indicates the framework has no notion of a same-weights nondeterminism floor. The two leads are the same ownership-fingerprinting class as L12, not nearer to C4a's object."
+  },
+  {
+   "id": "L14",
+   "read_end_to_end": true,
+   "chars_read": 86729,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "The fidelity (label agreement) of an extracted, stolen model to a remote victim oracle, with the attainable ceiling bounded by measured agreement among re-trainings under fixed initialization and SGD seeds.",
+     "quote": "Even when both training and initialization randomness are ﬁxed (so that only GPU non-determinism remains), ﬁdelity peaks at 93.7% on the test set (see Table 4). With no randomness ﬁxed, extraction achieves 93.4% ﬁdelity on the test set.",
+     "reason": "The graded comparison is extracted model versus victim oracle (different weights), and the measured floor is agreement among re-trainings with fixed seeds (training-run nondeterminism), not the same weights under the serving in use; no interval accompanies the comparison and the signal is argmax label agreement rather than log-probabilities.",
+     "elements": {
+      "self_comparison": false,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": false,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Jagielski et al. bound extraction fidelity by a measured floor of agreement among same-seed retrainings"
+    }
+   ],
+   "bearing_quotes": [
+    "Learning-based approaches have several sources of non-determinism: the random initializations of the model parameters, the order in which data is assembled to form batches for SGD, and even non-determinism in GPU instructions [41,42].",
+    "In this section, we will attempt to quantify this: for a strong adversary, with access to the exact details of the training setup, we will present an experiment to determine the limits of learning-based algorithms to achieving ﬁdelity extraction.",
+    "We repeated each run 10 times and measure agreement between the ten obtained models on the test set, adversarial examples generated by running FGSM with ε = 25/255 with the oracle model and the test set, and uniformly random inputs. The oracle uses initialization seed 0 and SGD seed 0—we also use two different initialization and SGD seeds.",
+    "Table 4: Impact of non-determinism on extraction ﬁdelity. Even models extracted using the same SGD and initialization randomness as the oracle do not reach 100% ﬁdelity.",
+    "Hence, even an adversary who has the victim model’s exact training set will be unable to exceed ~93.4% ﬁdelity.",
+    "Fidelity, in contrast, measures the general agreement between the extracted and victim models on any input.",
+    "This attack does not match perfect ﬁdelity with the victim model due to what we show are inherent limitations of learning-based approaches: nondeterminism (including only the nondeterminism on the GPU) prohibits training identical models.",
+    "Figure 6 shows a distribution over the bits of precision in the difference between the logits (i.e., pre-softmax prediction) of the 16 neuron oracle neural network and the extracted network. Formally, we measure the magnitude of the gap |fθ(x) −fˆθ(x)|. Notice that this is a different (and typically stronger) measure of ﬁdelity than used elsewhere in the paper."
+   ],
+   "leads": [],
+   "notes": "Section 5 is the one place in these five sources where a measured nondeterminism floor is used to grade a comparison (extraction fidelity capped at ~93.4%), and it predates both pass-2 neighbours (2019/2020); but the floor is across re-training runs, i.e. different weights each time, never the same served weights re-queried, so it is a precedent for the practice on a different object rather than a nearer neighbour than Thinking Machines 2025's same-weights serving spread. Table 4 gives point percentages only; Appendix C measures logit-gap precision for the functionally-equivalent attack, not log-probabilities under serving."
+  },
+  {
+   "id": "L16",
+   "read_end_to_end": true,
+   "chars_read": 24162,
+   "verdicts": [
+    {
+     "clause": "C5",
+     "verdict": "OCCUPIES",
+     "object": "A publisher badge scheme that labels papers whose artifacts passed an independent audit or whose main results were reproduced or replicated by others, awarded by editors and peer review with no payment.",
+     "quote": "Authors who do agree to such additional review, and whose work meets established standards, will be rewarded with appropriate labeling both in the text of the article and in the metadata displayed in the ACM Digital Library. Specific labels, or badges, are proposed below.",
+     "reason": "A badge rewards the authors, not a stranger, for audited artifacts or results reproduced within tolerance, is adjudicated by reviewers and editors rather than a verifier, and carries no payment; the standing-payment, stranger-as-payee and verifier-adjudication elements are all missing.",
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "ACM badges papers whose artifacts pass an audit or whose results others reproduce"
+    }
+   ],
+   "bearing_quotes": [
+    "As a result, such review processes are encouraged, but remain completely optional for ACM journals and conferences, and when they are made available, it is recommended that participation by authors also be made optional.",
+    "This badge is applied to papers in which the main results of the paper have been successfully obtained by a person or team other than the author. Two levels are distinguished:",
+    "Results Reproduced v1.1 The main results of the paper have been obtained in a subsequent study by a person or team other than the authors, using, in part, artifacts provided by the author.",
+    "In each cases, exact replication or reproduction of results is not required, or even expected. Instead, the results must be in agreement to within a tolerance deemed acceptable for experiments of the given type. In particular, differences in the results should not change the main claims made in the paper.",
+    "The descriptions of badges provided above do not specify the details of the review process itself.",
+    "Editors-in-Chiefs and Conference Steering Committee Chairs (or an appropriate SIG Chair should a conference not have an extant steering committee) will have the authority to award these badges post-publication if warranted. For Results Validated, a peer-reviewed publication which reports the replication or reproduction must be submitted as evidence, and if awarded, the badge will contain a link to this paper.",
+    "The measurement can be obtained with stated precision by the same team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same location on multiple trials. For computational experiments, this means that a researcher can reliably repeat her own computation.",
+    "Artifact Review and Badging Version 1.1 - August 24, 2020"
+   ],
+   "leads": [],
+   "notes": "The extracted page is policy Version 1.1 (August 24, 2020) served inside live 2026 site chrome (news items and a 2026 copyright line); the reward runs to authors for agreement within tolerance, the reproducer receives nothing, and no automated verifier exists, so even the direction of the incentive (agreement, not disagreement) differs from C5. The VIM repeatability definitions on the page bear tangentially on C4a's floor concept but L16 is priced only for C5."
+  },
+  {
+   "id": "L17",
+   "read_end_to_end": true,
+   "chars_read": 15981,
+   "verdicts": [
+    {
+     "clause": "C5",
+     "verdict": "OCCUPIES",
+     "object": "A community reproducibility challenge on accepted NeurIPS 2019 papers whose reports are human peer-reviewed on OpenReview and the top ten published in ReScience C, with compute credits as support but no payment and no verifier.",
+     "quote": "The main objective of this challenge was to provide independent verification of the empirical claims in accepted NeurIPS papers and to leave a public trace of the findings from this secondary analysis.",
+     "reason": "The challenge recognizes reproduction reports through human peer review and journal publication, with CodeOcean compute credits as the only material support and no standing payment to a stranger for a record of disagreement adjudicated by a verifier; payment, standing offer and verifier adjudication are all missing.",
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Sinha et al. recognize peer-reviewed reproduction reports by journal publication without payment"
+    }
+   ],
+   "bearing_quotes": [
+    "In this special issue, we present the top 10 peer-reviewed reports, selected from 84 submissions.",
+    "Replication of a computational study typically means running the same code, using the same input data, and then checking if the results are the same or at least “close enough” by some degree of numerical approximations 1.",
+    "Once submitted, all reproducibility reports underwent an extensive review cycle by a large set of reviewers of the NeurIPS 2019 conference.",
+    "Finally, we selected 10 high-quality reports from 84 submissions to be published in this journal, ReScience C, which is a perfect platform for publication of reproducibility efforts of various computational fields of science.",
+    "During the review of the Reproducibility reports (in preparation for this special issue), these communications were also taken into consideration by the reviewers in judging the quality of the report.",
+    "In this challenge, we partnered with CodeOcean 3 for providing free cloud computing credits to select teams.",
+    "The primary target audience of the challenge was early career researchers from universities, however, we received participation from the industry as well.",
+    "Finally, we thank the several participants of the reproducibility challenge who dedicated time and effort to verify results that were not their own, to help strengthen our understanding of machine learning, and the types of problems we can solve today."
+   ],
+   "leads": [
+    "J. Pineau, P. Vincent-Lamarre, K. Sinha, V. Larivière, A. Beygelzimer, F. d’Alché-Buc, E. Fox, and H. Larochelle. Improving Reproducibility in Machine Learning Research (A Report from the NeurIPS 2019 Reproducibility Program). arXiv preprint arXiv:2003.12206 (2020)"
+   ],
+   "notes": "This is the editorial for the 2019 edition of the same challenge series pass 2 already scored OCCUPIES via Pineau et al. 2021; the sole lead is that series' program report and is very likely the preprint of the pass-2 source, not a new neighbour. Nothing in the text is a payment for a result: the only money-like item is free compute credits given before the work, and adjudication is by named human reviewers."
+  }
+ ]
+}
