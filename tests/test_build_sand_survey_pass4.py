@@ -176,6 +176,25 @@ def test_a_later_fetch_record_locates_an_unfetchable_source_and_keeps_the_failed
     assert out["clauses"]["C4a"]["status"] == "OCCUPIED"
 
 
+def test_a_landing_page_is_skimmed_and_its_retirement_is_uncheckable(tmp_path, monkeypatch):
+    real_write = type(tmp_path).write_text
+    scope = {"_rule": "r", "X1": {"scope": "a landing page", "reason": "navigation only"}}
+
+    def write_text(self, data, *a, **k):
+        out = real_write(self, data, *a, **k)
+        if self.name == "list.json":
+            real_write(self.parent / "fetched_text_scope.json", json.dumps(scope), encoding="utf-8")
+        return out
+
+    monkeypatch.setattr(type(tmp_path), "write_text", write_text)
+    out = build(tmp_path, [("X1", ["C4a", "C5"])], [reading("X1", clause="C5", verdict="RETIRES")],
+                [confirm("X1", 1, clause="C5"), confirm("X1", 2, clause="C5")])
+    x1 = out["sources"]["X1"]
+    assert x1["status"] == "SKIMMED" and "a landing page" in x1["skimmed_reason"]
+    assert x1["verdicts"]["C5"]["verdict"] == "UNCHECKABLE"
+    assert out["clauses"]["C5"]["status"] == "UNPRICED"
+
+
 def test_a_source_fetched_in_two_records_is_refused(tmp_path):
     retry = {"X1": {"status": "FETCHED", "url": "https://example.org/again", "sha256": "1" * 64}}
     r = build(tmp_path, [("X1", ["C4a"])], [reading("X1")], [], retry=retry, expect_fail=True)

@@ -18,7 +18,8 @@ What it does, per PROTOCOL_sand_prior_art_pass4_2026_09_15.md, and nothing the p
   character position only for a quote that spans a wrapped line). The midpoint is required because an
   extracted PDF's last line is often a bare page number, which proves nothing about reading. Confirmers are held to
   the same two checks. Readings from several runs (readings*.json) are merged, each reader named by its run.
-  Neighbour phrases are HTML-unescaped when the sentence is composed. A reader who cannot quote the end did not
+  Neighbour phrases are HTML-unescaped when the sentence is composed. A source listed in fetched_text_scope.json
+  (a landing page fetched instead of the article's text) is SKIMMED whatever its reader shows. A reader who cannot quote the end did not
   show that they reached it: the source is SKIMMED, and a RETIRES from a SKIMMED source is UNCHECKABLE — it neither
   retires the clause nor clears it, and the clause is UNPRICED.
   Every element quote is checked verbatim after whitespace, ligature, quote-mark and line-end-hyphen normalisation.
@@ -123,6 +124,8 @@ def main():
         part = load(os.path.join(inputs, fn))
         rd["readings"] += [dict(r, reader=f"{run}:{r['reader']}") for r in part.get("readings", [])]
         rd["confirmations"] += [dict(c, confirmer=f"{run}:{c.get('confirmer')}") for c in part.get("confirmations", [])]
+    scope_path = os.path.join(inputs, "fetched_text_scope.json")
+    scopes = {k: v for k, v in load(scope_path).items() if not k.startswith("_")} if os.path.exists(scope_path) else {}
     p3 = load(P3)
 
     readings = {}
@@ -155,6 +158,9 @@ def main():
         chk = text_checks(texts_dir, sid, r)
         shown_end = chk is None or bool(chk.get("text_present") and chk.get("last_line_ok") and chk.get("midpoint_ok"))
         src["status"] = "READ" if (r.get("read_end_to_end") and shown_end) else "SKIMMED"
+        if sid in scopes and src["status"] == "READ":
+            src["status"] = "SKIMMED"
+            src["skimmed_reason"] = f"the fetched bytes are {scopes[sid]['scope']}: {scopes[sid]['reason']}"
         src["read_by"] = r["reader"]
         src["proof_of_reading"] = None if chk is None else {k: chk.get(k) for k in ("last_line_ok", "midpoint_ok")}
         src["bearing_quotes"], src["leads"], src["notes"] = r.get("bearing_quotes", []), r.get("leads", []), r.get("notes", "")
