@@ -20,6 +20,21 @@ from styxx import charon, stranger
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG = os.path.join(ROOT, "papers", "charon", "charon.log.jsonl")
+PREREG_RECEIPT = os.path.join(ROOT, "papers", "checksum", "PREREG_checksum_beacon_draw_2026_09_14.sworn-receipt.json")
+
+
+def _has_history() -> bool:
+    """CI checks out at fetch-depth 1; the receipts name commits such a clone does not have, so the steps
+    that re-derive at a commit (the ferry log, `sworn check`) cannot run there — skip with the reason,
+    the way test_receipt_provenance_audit does; never pass or fail a clone for being shallow."""
+    try:
+        commit = json.load(open(PREREG_RECEIPT, encoding="utf-8")).get("commit", "")
+        return subprocess.run(["git", "-C", ROOT, "cat-file", "-e", f"{commit}^{{commit}}"], capture_output=True).returncode == 0
+    except Exception:  # noqa: BLE001
+        return False
+
+
+needs_history = pytest.mark.skipif(not _has_history(), reason="a shallow clone: the receipts' commits are not here")
 
 
 def _head():
@@ -32,6 +47,7 @@ def ferry_log_pass():
     return stranger.step_ferry_log(Path(ROOT), _head())      # the one real re-derivation of every line
 
 
+@needs_history
 def test_the_ferry_log_passes_against_its_own_head(ferry_log_pass):
     ok = ferry_log_pass
     assert ok["status"] == "PASS" and ok["head_matches"] is True and ok["external_head_checked"] is True
@@ -71,9 +87,9 @@ def test_every_known_certs_file_is_read_and_the_committed_scorecards_match():
     assert len(compared) >= 2 and all(f["committed_scorecard_matches"] for f in compared)
 
 
+@needs_history
 def test_one_receipt_re_checks_verified_and_a_temporary_sample_is_not_a_failure():
-    rc = os.path.join(ROOT, "papers", "checksum", "PREREG_checksum_beacon_draw_2026_09_14.sworn-receipt.json")
-    row = stranger.check_receipt(Path(ROOT), rc)
+    row = stranger.check_receipt(Path(ROOT), PREREG_RECEIPT)
     assert row["status"] == "PASS" and row["detail"].startswith("VERIFIED") and row["target"].endswith(".sworn.json")
     # a receipt issued under an earlier verifier build re-derives exactly when the sidecar is the target
     old = os.path.join(ROOT, "papers", "sworn", "RESULT_sworn_v01_ships_2026_09_01.sworn-receipt.json")
