@@ -156,6 +156,29 @@ def test_nearness_is_counted_per_element_and_pass4_wins_ties(tmp_path):
     assert "without a floor measured on the same weights" in out["sentence"]["text"]
 
 
+def test_a_phrase_that_already_says_without_is_not_doubled(tmp_path):
+    rs = [reading("X1", true=("E1", "E2", "E4", "E5"), phrase="X1 authors grade a thing, without a floor")]
+    out = build(tmp_path, [("X1", ["C4a"])], rs, [])
+    text = out["sentence"]["text"]
+    assert "X1 authors grade a thing, without a floor measured on the same weights" in text
+    assert "without a floor, without" not in text
+
+
+def test_an_unpriced_bounty_clause_is_deleted_and_the_status_says_so(tmp_path):
+    out = build(tmp_path, [("X1", ["C4a"]), ("X2", ["C5"])], [reading("X1", true=("E1", "E2", "E3", "E4"))], [], unfetchable=("X2",))
+    assert out["clauses"]["C5"]["status"] == "UNPRICED"
+    assert out["sentence"]["status"] == "SURVIVES_WITHOUT_C5"
+    assert "bounty" not in out["sentence"]["text"]
+
+
+def test_sources_tied_at_distance_one_are_all_recorded(tmp_path):
+    rs = [reading("X2", true=("E1", "E2", "E3", "E5")), reading("X1", true=("E1", "E2", "E3", "E5"))]
+    out = build(tmp_path, [("X1", ["C4a"]), ("X2", ["C4a"])], rs, [])
+    near = out["clauses"]["C4a"]["nearness"]
+    assert near["at_distance_one_by_element"]["E4"] == ["X1", "X2"]
+    assert near["by_element"]["E4"]["id"] == "X1"
+
+
 def test_c5_retirement_needs_two_blind_confirmers(tmp_path):
     ok = build(tmp_path / "a", [("X1", ["C4a", "C5"])], [reading("X1", clause="C5", verdict="RETIRES")],
                [confirm("X1", 1, clause="C5"), confirm("X1", 2, clause="C5")])

@@ -251,17 +251,18 @@ def main():
             missing = [P3MAP[k] for k in P3MAP if not els.get(k)]
             pool.append({"id": f"pass3:{sid}", "pass": 3, "who": s.get("who"), "missing": missing, "distance": len(missing),
                          "phrase": html.unescape(v.get("neighbour_phrase") or ""), "coded_under": "pass 3, before the terms were defined"})
-    by_element = {}
+    by_element, at_one = {}, {}
     for e in E:
         at1 = [p for p in pool if p["missing"] == [e]]
         at1.sort(key=lambda p: (-p["pass"], p["id"]))
         by_element[e] = at1[0] if at1 else None
+        at_one[e] = [p["id"] for p in at1]
     fewest = min((p["distance"] for p in pool), default=None)
     nearest_overall = sorted([p for p in pool if p["distance"] == fewest], key=lambda p: (-p["pass"], p["id"]))[:3] if pool else []
     named = [by_element[e] for e in E if by_element[e]] or nearest_overall
-    clauses["C4a"]["nearness"] = {"by_element": by_element, "fewest_missing": fewest, "nearest_overall": nearest_overall,
-                                  "named_in_sentence": [p["id"] for p in named],
-                                  "rule": "per element, the source at distance one missing only that element (pass 4 first); if none anywhere, the sources at the smallest distance, at most three"}
+    clauses["C4a"]["nearness"] = {"by_element": by_element, "at_distance_one_by_element": at_one, "fewest_missing": fewest,
+                                  "nearest_overall": nearest_overall, "named_in_sentence": [p["id"] for p in named],
+                                  "rule": "per element, the source at distance one missing only that element, one name per element: pass 4's coding before pass 3's, then the lower id; every source tied at distance one is listed under at_distance_one_by_element; if none anywhere, the sources at the smallest distance, at most three"}
 
     # the sentence
     c = {k: clauses[k]["status"] for k in clauses}
@@ -273,7 +274,10 @@ def main():
     else:
         def lacks(p):
             return " and ".join(ENAME[x] for x in p["missing"])
-        c4a = P3_PARTS["C4a_head"] + " (" + "; ".join(f"where {p['phrase'].rstrip('.')}, without {lacks(p)}" for p in named) + ")"
+        def bare(phrase):
+            # a reader's phrase may already say what the source lacks; the sentence states the counted element instead
+            return re.sub(r",?\s+without\b.*$", "", phrase.strip().rstrip("."))
+        c4a = P3_PARTS["C4a_head"] + " (" + "; ".join(f"where {bare(p['phrase'])}, without {lacks(p)}" for p in named) + ")"
         parts = [P3_PARTS["C1"]]
         if c.get("C2") == "OCCUPIED":
             parts.append(P3_PARTS["C2"])
@@ -281,7 +285,7 @@ def main():
         if c.get("C5") == "OCCUPIED":
             parts.append(P3_PARTS["C5"])
         text = "We know of no lab that " + ", ".join(parts[:-1]) + ", and " + parts[-1] + " — at once."
-        deleted = [k for k in ("C2",) if c.get(k) != "OCCUPIED"]
+        deleted = [k for k in ("C2", "C5") if c.get(k) != "OCCUPIED"]
         sentence = {"status": "SURVIVES" if not deleted else "SURVIVES_WITHOUT_" + "_".join(deleted), "text": text,
                     "licensed_form": "we know of no ... (never 'first', 'novel' or 'revolutionary')",
                     "pass3_text": p3["sentence"]["text"], "changed_from_pass3": text != p3["sentence"]["text"]}
