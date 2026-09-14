@@ -63,6 +63,14 @@ longer list.**
   failure (eight Action samples are the documented exception). The RESULT was re-sworn at 60fad45c
   and entered Charon as line 244 (`python -m styxx.charon ingest`; `build_log.py` refuses to
   rewrite a log, by design). INDEX says "seal pending", because no anchor exists in bytes.
+- **The runner exercised on both paths, tagged so a check is never the experiment.** `--tag` marks
+  an instrument check and an untagged run on any model but the PREREG's is refused. CPU smoke ran end
+  to end (outputs gitignored by the repo's rule). GPU dry run on Qwen2.5-0.5B, committed as
+  `deploy_quant_*_dryrun_qwen0.5b.*` with `is_the_experiment: false`: bitsandbytes NF4 and LLM.int8
+  load on the RTX 4070 under Windows; three bf16 loads bit-identical (floor 0.000000, K1 silent);
+  NF4 DRIFT 0.427 (r 0.960), int8 DRIFT 0.101 (r 0.996), random 10.44 (r 0.111). With a floor of
+  exactly zero, the PREREG's H1 first clause ("> 0") fails by the letter; the CORRECTION's rule 1
+  says how the RESULT reports that.
 - **Two things the tree still lacks, named rather than hidden.** The 2026-09-12 sworn chat update
   that the entry below cites (and that `papers/plates/plate_receipt_update_2026_09_12.png` was
   rendered from) is not in the tree; the plate is unbacked until the triple is committed under

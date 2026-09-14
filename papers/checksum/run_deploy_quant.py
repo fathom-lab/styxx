@@ -148,11 +148,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="Qwen/Qwen2.5-1.5B")
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--tag", default="", help="suffix for the output files of an INSTRUMENT CHECK that is not the "
+                    "experiment (e.g. _dryrun_qwen0.5b); the experiment writes untagged files and only for the PREREG's model")
     args = ap.parse_args()
     smoke = args.smoke
     name = "HuggingFaceTB/SmolLM2-135M" if smoke else args.model
     device = "cpu" if smoke or not torch.cuda.is_available() else "cuda"
-    suffix = "_smoke" if smoke else ""
+    is_the_experiment = (not smoke) and (not args.tag) and name == "Qwen/Qwen2.5-1.5B"
+    if not smoke and not args.tag and not is_the_experiment:
+        raise SystemExit("an untagged, non-smoke run is the sealed experiment and its model is Qwen/Qwen2.5-1.5B; "
+                         "pass --tag <suffix> for an instrument check on another model")
+    suffix = ("_smoke" if smoke else "") + args.tag
     base_kind = "fp32" if smoke else "bf16"
     dtype = torch.float32 if base_kind == "fp32" else torch.bfloat16
     arms = [("A", base_kind), ("A2", base_kind), ("A3", base_kind),
@@ -178,7 +184,8 @@ def main():
             torch.cuda.empty_cache()
     floor = ck.null_floor([fps["A"], fps["A2"], fps["A3"]])
     k1 = {"threshold_nats": K1_FLOOR_NATS, "floor_nats": floor, "fired": bool(floor > K1_FLOOR_NATS)}
-    out = {"prereg": PREREG, "smoke": smoke, "model": name, "device": device,
+    out = {"prereg": PREREG, "smoke": smoke, "tag": args.tag, "is_the_experiment": is_the_experiment,
+           "model": name, "device": device,
            "provenance": prov,
            "sanity": {"first_token_top1_hits": hits, "n_canaries": len(ck.CANARIES), "null_floor_nats": floor,
                       "top1_loss_vs_A": {t: hits["A"] - hits[t] for t in ("A2", "A3", "Q4", "Q8", "R")}},
