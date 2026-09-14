@@ -13,8 +13,17 @@ of the slot that sealed it). --prereg selects which one governs and names the ou
     python papers/checksum/run_deploy_quant.py --smoke
 
 Arms: A bf16, A' bf16 reloaded, A'' bf16 reloaded (floor = worst pairwise), Q4 bitsandbytes NF4,
-Q8 bitsandbytes LLM.int8, R random init (seed 343). Every number the prereg names is written to
-deploy_quant_certs.json; the RESULT document swears to those bytes, not to this printout.
+Q8 bitsandbytes LLM.int8, R random init (seed 343). Every number the governing prereg names is written to
+<stem>_certs.json — deploy_quant_certs.json under the 2026-09-13 PREREG, beacon_draw_certs.json under the
+2026-09-14 one — and papers/checksum/score.py reads them; the RESULT swears to the scorecard and the certs,
+not to this printout.
+
+The sealed text, enforced (added 2026-09-14 after the red team found nothing tied the run to it): the
+experiment — an untagged, non-smoke run of the PREREG's model — refuses to start unless the governing
+PREREG's git blob at HEAD hashes to the digest that PREREG was sealed under (SEALED below, the same
+values papers/checksum/score.py freezes and SEALS_2026_09_13.md rows 3 and 6 print), git answers, and no
+tracked file differs from HEAD. An instrument check (--tag, --smoke, another model) records all of it and
+is not refused. The certs also record, per arm, the Hub revision of the weights that loaded.
 
 What this runner binds, so a stranger can tell the sealed run from any other (added 2026-09-13 after
 the red team found the run could import a styxx from outside this checkout and record nothing about
@@ -30,6 +39,22 @@ import argparse, hashlib, json, os, re, subprocess, sys, time
 
 PREREGS = {"deploy_quant": "PREREG_checksum_deploy_quant_2026_09_13.md",   # the hand-written 48, frozen 2026-09-13
            "beacon_draw": "PREREG_checksum_beacon_draw_2026_09_14.md"}     # the 48 drawn by the seal's block hash
+SEALED = {"deploy_quant": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3ff2fd4b6dd9e",   # SEALS_2026_09_13.md row 3
+          "beacon_draw": "d6a98261f44f31664cdedbc24769532d5a701bf46d2c8b9ce30cf6a227fb5519"}    # SEALS_2026_09_13.md row 6
+
+
+def sealed_refusal(prov: dict, prereg_key: str, is_the_experiment: bool):
+    """The reason the experiment may not start under this provenance, or None. Instrument checks are never refused."""
+    if not is_the_experiment:
+        return None
+    if prov.get("git_head") is None or prov.get("prereg_blob_sha256") is None:
+        return "git did not answer: the experiment cannot show which commit and which PREREG text it ran under"
+    if prov["prereg_blob_sha256"] != SEALED[prereg_key]:
+        return (f"{PREREGS[prereg_key]} at HEAD hashes to {prov['prereg_blob_sha256']}, not the sealed digest {SEALED[prereg_key]}; "
+                "the experiment runs only under the sealed text")
+    if prov.get("git_dirty_tracked"):
+        return "tracked files differ from HEAD: the experiment runs only on a clean commit (commit or stash, then run)"
+    return None
 
 
 def _parse_args(argv=None):
@@ -98,6 +123,7 @@ def provenance(device, prereg=None):
         return hashlib.sha256(open(path, "rb").read()).hexdigest()
     head = _git("rev-parse", "HEAD")
     dirty = _git("status", "--porcelain")
+    dirty_tracked = _git("status", "--porcelain", "--untracked-files=no")
     blob = _git("show", f"HEAD:papers/checksum/{prereg}")
     versions = {"torch": torch.__version__}
     try:
@@ -113,6 +139,7 @@ def provenance(device, prereg=None):
     return {
         "git_head": head.stdout.decode().strip() if head else None,
         "git_dirty": bool(dirty.stdout.strip()) if dirty else None,
+        "git_dirty_tracked": bool(dirty_tracked.stdout.strip()) if dirty_tracked else None,
         "prereg": prereg,
         "prereg_blob_sha256": hashlib.sha256(blob.stdout).hexdigest() if blob else None,
         "styxx_file": _STYXX_FILE,
@@ -208,6 +235,12 @@ def main():
     prov = provenance(device, prereg)
     print(f"  provenance: head {prov['git_head']} dirty={prov['git_dirty']} prereg blob {str(prov['prereg_blob_sha256'])[:12]} "
           f"styxx {prov['styxx_file']}")
+    refusal = sealed_refusal(prov, args.prereg, is_the_experiment)
+    if refusal:
+        raise SystemExit("refusing to run the sealed experiment: " + refusal)
+    prov["sealed_blob_sha256"] = SEALED[args.prereg]
+    prov["prereg_blob_is_sealed"] = prov["prereg_blob_sha256"] == SEALED[args.prereg]
+    prov["model_revisions"] = {}
     canaries, draw_record = ck.CANARIES, None
     if args.beacon:
         from styxx import beacon as _beacon
@@ -218,6 +251,7 @@ def main():
     fps, hits = {}, {}
     for tag, kind in arms:
         tok, m = load(name, kind, device, dtype)
+        prov["model_revisions"][tag] = getattr(getattr(m, "config", None), "_commit_hash", None)
         fps[tag] = ck.fingerprint(hf_probe_on(m, tok, device), f"{name} {kind} [{tag}]", canaries=canaries,
                                   tokenizer_id=name, draw=draw_record)
         hits[tag] = top1(m, tok, device, canaries)

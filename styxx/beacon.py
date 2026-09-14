@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
-"""styxx.beacon — canaries nobody can study for.
+"""styxx.beacon — canaries nobody could choose.
 
-The weakness DUE_DILIGENCE_2026_09_13 §3 named first: a public 48-item canary set can be tuned
-for. This module removes the advance knowledge. The canary set is drawn from a large committed
-POOL by a public random value — a Solana block hash — that did not exist when anyone could have
-prepared for it:
+The weakness DUE_DILIGENCE_2026_09_13 §3 named: a public 48-item canary set can be tuned for. This
+module removes the CHOICE of the set, not the knowledge of it. The canary set is drawn from a large
+committed POOL by a public random value — a Solana block hash — that no one could choose:
 
     seed_i = sha256( pool_sha256 || beacon_hex || i )      i = 0, 1, 2, ...
     index  = int(seed_i) mod len(pool), duplicates skipped, until n items
+
+What it does not remove, stated here because this docstring and the beacon-draw PREREG first claimed
+more (red team of 2026-09-14, confirmed; CORRECTION_prereg_beacon_draw_2026_09_14.md): the pool is
+public, and a fingerprint scores every item independently of the others, so anyone — the lab
+included — can compute a model's values over all of the pool's items before any seal and keep the
+48 a beacon later names; and a model can be tuned against the whole pool. The draw raises the cost
+of tuning from 48 items to the pool and takes the choice of the 48 away from whoever runs the
+experiment. It does not make the set unknowable, and it does not order a computation after a seal.
 
 The draw is pure sha256 arithmetic, so a browser, a shell script or a stranger's notebook
 reproduces it exactly; no language's PRNG is involved. `draw()` returns the items AND a record
@@ -17,9 +24,10 @@ reproduces it exactly; no language's PRNG is involved. `draw()` returns the item
 observatory writes it into every chained line. A record is never trusted: `checksum.check_draw_record`
 re-runs the beacon against the committed pool and refuses a record whose beacon does not produce
 exactly the items it claims (a record whose canary hash matched but whose beacon lied was accepted
-for a few hours on 2026-09-13). `run_deploy_quant.py --beacon` draws from this module; the
-deploy-scale PREREG of 2026-09-13 froze the hand-written 48 by design, so a beacon-drawn run must
-carry `--tag` and is never that experiment.
+for a few hours on 2026-09-13). `run_deploy_quant.py --beacon` draws from this module. Under the
+deploy-scale PREREG of 2026-09-13, which froze the hand-written 48, a beacon-drawn run must carry
+`--tag` and is never that experiment; under `--prereg beacon_draw` (PREREG_checksum_beacon_draw_2026_09_14)
+the beacon is required and the drawn set is the experiment.
 
 Which beacon: the block hash of the slot in which the sealing transaction confirmed
 (`anchors.jsonl` → `slot` → RPC `getBlock(slot).blockhash`), decoded from the chain's base58 to
@@ -29,9 +37,10 @@ signature — a signer can grind signatures by varying the memo or blockhash unt
 appears; a block hash is produced by the network after the transaction is out of the signer's
 hands. What a block hash does not remove: the signer chooses when to submit and may submit more
 than once, recording the transaction whose slot drew the canaries it liked. The rule that closes
-that — the beacon is the earliest confirmed memo carrying the digest from the creator wallet — is
-enforced by `styxx.clock.verify`, which scans the wallet's history and reads EARLIER_MEMO_EXISTS
-when the recorded transaction is not the earliest. What it does not remove: the signer still
+that — the beacon is the slot of the earliest confirmed transaction the creator wallet signed whose
+memo is exactly the seal memo — is enforced by `styxx.clock.verify`, which resolves every memo the
+wallet's history lists and reads EARLIER_MEMO_EXISTS when the recorded transaction is not the
+earliest (a memo another key sent the wallet does not count; until 2026-09-14 it did). What it does not remove: the signer still
 chooses WHEN to submit the first one, so the beacon is unpredictable to the signer only in the
 sense that no one can choose a slot's hash; a signer can wait for a slot and hope.
 
