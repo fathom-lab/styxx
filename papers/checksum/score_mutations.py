@@ -93,7 +93,8 @@ MUTATIONS = [
     ("S2-04", "deploy_quant draw-record refusal removed", 'if prereg == "deploy_quant" and _obj(certs.get("canaries")).get("draw"):', 'if False:'),
     ("S2-05", "pool hash check removed", 'if draw.get("pool_sha256") != _beacon.pool_sha256():', 'if False:'),
     ("S2-06", "sanity.n_canaries check removed", 'if san.get("n_canaries") != N_CANARIES:', 'if False:'),
-    ("S2-07", "canaries.n check removed", 'if can.get("n") is not None and can.get("n") != N_CANARIES:', 'if False:'),
+    ("S2-07", "canaries.n check removed", 'if can.get("n") != N_CANARIES:', 'if False:'),
+    ("S2-07b", "an absent canaries.n is tolerated again", 'if can.get("n") != N_CANARIES:', 'if can.get("n") is not None and can.get("n") != N_CANARIES:'),
     ("S2-08", "canaries.canary_sha256 vs the expected set removed", 'elif expected_hash is not None and can.get("canary_sha256") != expected_hash:', 'elif False:'),
     ("S2-09", "H5 model check removed", ' or hand_set.get("model") != certs.get("model") or', ' or'),
     ("S2-10", "H6 AGREE clause always holds", 'portability.get("verdicts") == "AGREE")]', 'True)]'),
@@ -132,7 +133,8 @@ MUTATIONS = [
     # ---- S4: is_the_experiment is never trusted alone
     ("S4-01", "a non-empty tag is trusted", 'if certs.get("tag") not in (None, ""):', 'if False:'),
     ("S4-02", "smoke true is trusted", 'if certs.get("smoke"):', 'if False:'),
-    ("S4-03", "a missing git_head is trusted", 'if prov.get("git_head") is None:', 'if False:'),
+    ("S4-03", "a missing git_head is trusted", 'if not isinstance(prov.get("git_head"), str) or not prov.get("git_head").strip():', 'if False:'),
+    ("S4-03b", "an empty git_head is trusted again", 'if not isinstance(prov.get("git_head"), str) or not prov.get("git_head").strip():', 'if prov.get("git_head") is None:'),
     ("S4-04", "git_dirty_tracked true is trusted", 'if prov.get("git_dirty_tracked"):', 'if False:'),
     ("S4-05", "prereg_blob_is_sealed false is trusted", 'if "prereg_blob_is_sealed" in prov and prov.get("prereg_blob_is_sealed") is not True:', 'if False:'),
     # ---- S5: a valid hand set whose K1 fired leaves H5 PENDING

@@ -136,7 +136,7 @@ def _set_problems(certs: dict, expected_hash: str | None, draw: dict | None, req
     can = _obj(certs.get("canaries"))
     if san.get("n_canaries") != N_CANARIES:
         out.append(f"sanity.n_canaries is {san.get('n_canaries')!r}; the PREREG's set has {N_CANARIES} items")
-    if can.get("n") is not None and can.get("n") != N_CANARIES:
+    if can.get("n") != N_CANARIES:                 # absent is not 48 (final review of 2026-09-14: an absent n was tolerated)
         out.append(f"canaries.n is {can.get('n')!r}; the PREREG's set has {N_CANARIES} items")
     if can.get("canary_sha256") is None:
         out.append("canaries.canary_sha256 is absent: nothing in the certs names the set they graded")
@@ -280,7 +280,7 @@ def score(certs: dict, prereg: str, expect_beacon: str | None = None, expect_blo
         problems.append(f"tag is {certs.get('tag')!r}: a tagged run is an instrument check, whatever is_the_experiment says")
     if certs.get("smoke"):
         problems.append("smoke is true: a smoke run is an instrument check, whatever is_the_experiment says")
-    if prov.get("git_head") is None:
+    if not isinstance(prov.get("git_head"), str) or not prov.get("git_head").strip():   # empty is missing too
         problems.append("provenance.git_head is missing: the runner refuses the experiment when git does not answer")
     if prov.get("git_dirty_tracked"):
         problems.append("provenance.git_dirty_tracked is true: the runner refuses the experiment when tracked files differ from HEAD")

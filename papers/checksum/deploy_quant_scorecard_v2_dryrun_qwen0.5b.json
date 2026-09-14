@@ -119,6 +119,7 @@
     "model is 'Qwen/Qwen2.5-0.5B', the PREREG's is Qwen/Qwen2.5-1.5B",
     "is_the_experiment is not true (a tag, a smoke, or another model)",
     "tag is '_dryrun_qwen0.5b': a tagged run is an instrument check, whatever is_the_experiment says",
+    "canaries.n is None; the PREREG's set has 48 items",
     "canaries.canary_sha256 is absent: nothing in the certs names the set they graded"
    ]
   },

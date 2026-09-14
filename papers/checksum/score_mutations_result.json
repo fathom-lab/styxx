@@ -1,19 +1,19 @@
 {
  "schema": "styxx.checksum/score-mutations/v1",
  "score_py": "papers/checksum/score.py",
- "score_py_sha256_lf": "4131e6d5b3a3b82aacc2165420f589aff0b2c3f4159a30617f16dcb399cf1b59",
+ "score_py_sha256_lf": "da9c5de490b590da2a931d631fdc29932be987e175fcbb39788be55bce85bec9",
  "tests": "tests/test_checksum_score.py",
- "tests_sha256_lf": "60cb98b4286641de663542ec74c55ccdaf2fd66c0a84ad6d9095d28c89d5289b",
+ "tests_sha256_lf": "c1ac4855b5387a3e8a610dd82928f6dd39e5aad01c9f76b8082fb8c828801185",
  "command": "python papers/checksum/score_mutations.py",
  "pytest": "python -m pytest -q -x -p no:cacheprovider tests/test_checksum_score.py, in a copy, PYTHONPATH=<checkout root>, STYXX_SCORE_MUTANT=1; killed means exit code 1",
  "python": "3.12.10",
  "baseline": {
   "passed": true,
   "pytest_returncode": 0,
-  "pytest_tail": "137 passed, 1 skipped in 1.80s"
+  "pytest_tail": "139 passed, 1 skipped in 2.04s"
  },
- "n_mutations": 90,
- "n_killed": 90,
+ "n_mutations": 92,
+ "n_killed": 92,
  "mutations": [
   {
    "id": "v2-01",
@@ -21,7 +21,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 3 passed in 1.17s"
+   "pytest_tail": "1 failed, 3 passed in 1.33s"
   },
   {
    "id": "v2-02",
@@ -29,7 +29,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 35 passed in 1.29s"
+   "pytest_tail": "1 failed, 35 passed in 1.48s"
   },
   {
    "id": "v2-03",
@@ -37,7 +37,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 37 passed in 1.26s"
+   "pytest_tail": "1 failed, 37 passed in 1.45s"
   },
   {
    "id": "v2-04",
@@ -45,7 +45,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 6 passed in 1.19s"
+   "pytest_tail": "1 failed, 6 passed in 1.37s"
   },
   {
    "id": "v2-05",
@@ -53,7 +53,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 10 passed in 1.16s"
+   "pytest_tail": "1 failed, 10 passed in 1.40s"
   },
   {
    "id": "v2-06",
@@ -61,7 +61,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 12 passed in 1.19s"
+   "pytest_tail": "1 failed, 12 passed in 1.33s"
   },
   {
    "id": "v2-07",
@@ -77,7 +77,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 15 passed in 1.38s"
+   "pytest_tail": "1 failed, 15 passed in 1.41s"
   },
   {
    "id": "v2-09",
@@ -85,7 +85,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 17 passed in 1.35s"
+   "pytest_tail": "1 failed, 17 passed in 1.47s"
   },
   {
    "id": "v2-10",
@@ -93,7 +93,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 19 passed in 1.42s"
+   "pytest_tail": "1 failed, 19 passed in 1.45s"
   },
   {
    "id": "v2-11",
@@ -109,7 +109,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 23 passed in 1.38s"
+   "pytest_tail": "1 failed, 23 passed in 1.47s"
   },
   {
    "id": "v2-13",
@@ -117,7 +117,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 25 passed in 1.33s"
+   "pytest_tail": "1 failed, 25 passed in 1.35s"
   },
   {
    "id": "v2-14",
@@ -125,7 +125,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 29 passed in 1.37s"
+   "pytest_tail": "1 failed, 29 passed in 1.44s"
   },
   {
    "id": "v2-15",
@@ -133,7 +133,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 65 passed in 1.50s"
+   "pytest_tail": "1 failed, 65 passed in 1.53s"
   },
   {
    "id": "v2-16",
@@ -141,7 +141,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 65 passed in 1.50s"
+   "pytest_tail": "1 failed, 65 passed in 1.58s"
   },
   {
    "id": "v2-17",
@@ -157,7 +157,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 33 passed in 1.43s"
+   "pytest_tail": "1 failed, 33 passed in 1.46s"
   },
   {
    "id": "v2-19",
@@ -165,7 +165,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed in 0.95s"
+   "pytest_tail": "1 failed in 1.05s"
   },
   {
    "id": "v2-20",
@@ -173,7 +173,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 1 passed in 0.95s"
+   "pytest_tail": "1 failed, 1 passed in 1.01s"
   },
   {
    "id": "v2-21",
@@ -181,7 +181,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed in 0.96s"
+   "pytest_tail": "1 failed in 0.98s"
   },
   {
    "id": "v2-22",
@@ -189,7 +189,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed in 0.96s"
+   "pytest_tail": "1 failed in 1.00s"
   },
   {
    "id": "v2-23",
@@ -197,7 +197,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed in 0.96s"
+   "pytest_tail": "1 failed in 1.03s"
   },
   {
    "id": "v2-24",
@@ -205,7 +205,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed in 0.95s"
+   "pytest_tail": "1 failed in 1.00s"
   },
   {
    "id": "v2-25",
@@ -213,7 +213,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 1 passed in 0.90s"
+   "pytest_tail": "1 failed, 1 passed in 1.02s"
   },
   {
    "id": "v2-26",
@@ -221,7 +221,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 73 passed in 1.38s"
+   "pytest_tail": "1 failed, 73 passed in 1.62s"
   },
   {
    "id": "v2-27",
@@ -229,7 +229,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 74 passed in 1.42s"
+   "pytest_tail": "1 failed, 74 passed in 1.58s"
   },
   {
    "id": "v2-28",
@@ -237,7 +237,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 74 passed in 1.43s"
+   "pytest_tail": "1 failed, 74 passed in 1.71s"
   },
   {
    "id": "v2x-01",
@@ -245,7 +245,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 73 passed in 1.40s"
+   "pytest_tail": "1 failed, 73 passed in 1.66s"
   },
   {
    "id": "v2x-02",
@@ -253,7 +253,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 89 passed in 1.47s"
+   "pytest_tail": "1 failed, 90 passed in 1.69s"
   },
   {
    "id": "v2x-03",
@@ -261,7 +261,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 90 passed in 1.44s"
+   "pytest_tail": "1 failed, 91 passed in 1.63s"
   },
   {
    "id": "v2x-04",
@@ -269,7 +269,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 71 passed in 1.37s"
+   "pytest_tail": "1 failed, 71 passed in 1.60s"
   },
   {
    "id": "S2-01",
@@ -277,7 +277,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 31 passed in 1.27s"
+   "pytest_tail": "1 failed, 31 passed in 1.46s"
   },
   {
    "id": "S2-02",
@@ -285,7 +285,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 63 passed in 1.38s"
+   "pytest_tail": "1 failed, 63 passed in 1.53s"
   },
   {
    "id": "S2-03",
@@ -293,7 +293,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 68 passed in 1.41s"
+   "pytest_tail": "1 failed, 68 passed in 1.66s"
   },
   {
    "id": "S2-04",
@@ -301,7 +301,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 86 passed in 1.52s"
+   "pytest_tail": "1 failed, 87 passed in 1.71s"
   },
   {
    "id": "S2-05",
@@ -309,7 +309,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 80 passed in 1.40s"
+   "pytest_tail": "1 failed, 81 passed in 1.57s"
   },
   {
    "id": "S2-06",
@@ -317,7 +317,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 76 passed in 1.36s"
+   "pytest_tail": "1 failed, 76 passed in 1.71s"
   },
   {
    "id": "S2-07",
@@ -325,7 +325,15 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 78 passed in 1.45s"
+   "pytest_tail": "1 failed, 78 passed in 1.69s"
+  },
+  {
+   "id": "S2-07b",
+   "description": "an absent canaries.n is tolerated again",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 80 passed in 1.75s"
   },
   {
    "id": "S2-08",
@@ -333,7 +341,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 81 passed in 1.47s"
+   "pytest_tail": "1 failed, 82 passed in 1.79s"
   },
   {
    "id": "S2-09",
@@ -341,7 +349,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 126 passed in 1.85s"
+   "pytest_tail": "1 failed, 128 passed in 1.89s"
   },
   {
    "id": "S2-10",
@@ -349,7 +357,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 66 passed in 1.51s"
+   "pytest_tail": "1 failed, 66 passed in 1.54s"
   },
   {
    "id": "S2-11",
@@ -357,7 +365,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 87 passed in 1.40s"
+   "pytest_tail": "1 failed, 88 passed in 1.70s"
   },
   {
    "id": "S2-12",
@@ -365,7 +373,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 67 passed in 1.26s"
+   "pytest_tail": "1 failed, 67 passed in 1.60s"
   },
   {
    "id": "S2-13",
@@ -373,7 +381,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 126 passed in 1.59s"
+   "pytest_tail": "1 failed, 128 passed in 1.85s"
   },
   {
    "id": "S2-14",
@@ -381,7 +389,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 83 passed in 1.35s"
+   "pytest_tail": "1 failed, 84 passed in 1.67s"
   },
   {
    "id": "S2-15",
@@ -389,7 +397,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 72 passed in 1.41s"
+   "pytest_tail": "1 failed, 72 passed in 1.59s"
   },
   {
    "id": "S2-16",
@@ -397,7 +405,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 74 passed in 1.40s"
+   "pytest_tail": "1 failed, 74 passed in 1.64s"
   },
   {
    "id": "S2-17",
@@ -405,7 +413,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 7 passed in 1.19s"
+   "pytest_tail": "1 failed, 7 passed in 1.31s"
   },
   {
    "id": "S2-18",
@@ -413,7 +421,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 27 passed in 1.25s"
+   "pytest_tail": "1 failed, 27 passed in 1.51s"
   },
   {
    "id": "S2-19",
@@ -421,7 +429,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 61 passed in 1.38s"
+   "pytest_tail": "1 failed, 61 passed in 1.51s"
   },
   {
    "id": "S2-20",
@@ -429,7 +437,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 59 passed in 1.31s"
+   "pytest_tail": "1 failed, 59 passed in 1.60s"
   },
   {
    "id": "S2-21",
@@ -437,7 +445,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 57 passed in 1.38s"
+   "pytest_tail": "1 failed, 57 passed in 1.57s"
   },
   {
    "id": "S1-01",
@@ -445,7 +453,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 69 passed in 1.31s"
+   "pytest_tail": "1 failed, 69 passed in 1.67s"
   },
   {
    "id": "S1-02",
@@ -453,7 +461,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 69 passed in 1.35s"
+   "pytest_tail": "1 failed, 69 passed in 1.52s"
   },
   {
    "id": "S1-03",
@@ -461,7 +469,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 69 passed in 1.35s"
+   "pytest_tail": "1 failed, 69 passed in 1.61s"
   },
   {
    "id": "S1-04",
@@ -469,7 +477,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 69 passed in 1.39s"
+   "pytest_tail": "1 failed, 69 passed in 1.64s"
   },
   {
    "id": "S1-05",
@@ -477,7 +485,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 75 passed in 1.44s"
+   "pytest_tail": "1 failed, 75 passed in 1.62s"
   },
   {
    "id": "S1-06",
@@ -485,7 +493,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 69 passed in 1.40s"
+   "pytest_tail": "1 failed, 69 passed in 1.60s"
   },
   {
    "id": "S3-01",
@@ -493,7 +501,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 92 passed in 1.53s"
+   "pytest_tail": "1 failed, 93 passed in 1.90s"
   },
   {
    "id": "S3-02",
@@ -501,7 +509,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 97 passed in 1.49s"
+   "pytest_tail": "1 failed, 98 passed in 1.84s"
   },
   {
    "id": "S3-03",
@@ -509,7 +517,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 84 passed in 1.45s"
+   "pytest_tail": "1 failed, 85 passed in 1.67s"
   },
   {
    "id": "S3-04",
@@ -517,7 +525,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 93 passed in 1.45s"
+   "pytest_tail": "1 failed, 94 passed in 1.72s"
   },
   {
    "id": "S3-05",
@@ -525,7 +533,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 72 passed in 1.44s"
+   "pytest_tail": "1 failed, 72 passed in 1.61s"
   },
   {
    "id": "S4-01",
@@ -533,7 +541,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 99 passed in 1.59s"
+   "pytest_tail": "1 failed, 100 passed in 1.77s"
   },
   {
    "id": "S4-02",
@@ -541,7 +549,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 101 passed in 1.59s"
+   "pytest_tail": "1 failed, 102 passed in 1.88s"
   },
   {
    "id": "S4-03",
@@ -549,7 +557,15 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 103 passed in 1.61s"
+   "pytest_tail": "1 failed, 104 passed in 1.84s"
+  },
+  {
+   "id": "S4-03b",
+   "description": "an empty git_head is trusted again",
+   "old_text_found_once": true,
+   "killed": true,
+   "pytest_returncode": 1,
+   "pytest_tail": "1 failed, 106 passed in 1.98s"
   },
   {
    "id": "S4-04",
@@ -557,7 +573,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 105 passed in 1.59s"
+   "pytest_tail": "1 failed, 107 passed in 1.98s"
   },
   {
    "id": "S4-05",
@@ -565,7 +581,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 107 passed in 1.47s"
+   "pytest_tail": "1 failed, 109 passed in 1.84s"
   },
   {
    "id": "S5-01",
@@ -573,7 +589,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 127 passed in 1.66s"
+   "pytest_tail": "1 failed, 129 passed in 1.90s"
   },
   {
    "id": "S5-02",
@@ -581,7 +597,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 128 passed in 1.73s"
+   "pytest_tail": "1 failed, 130 passed in 1.86s"
   },
   {
    "id": "S6-01",
@@ -589,7 +605,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.64s"
+   "pytest_tail": "1 failed, 131 passed in 1.82s"
   },
   {
    "id": "S6-02",
@@ -597,7 +613,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.71s"
+   "pytest_tail": "1 failed, 131 passed in 1.84s"
   },
   {
    "id": "S6-03",
@@ -605,7 +621,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.68s"
+   "pytest_tail": "1 failed, 131 passed in 1.88s"
   },
   {
    "id": "S6-04",
@@ -613,7 +629,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.65s"
+   "pytest_tail": "1 failed, 131 passed in 1.86s"
   },
   {
    "id": "S6-05",
@@ -621,7 +637,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.63s"
+   "pytest_tail": "1 failed, 131 passed in 1.89s"
   },
   {
    "id": "S6-06",
@@ -629,7 +645,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 129 passed in 1.62s"
+   "pytest_tail": "1 failed, 131 passed in 1.82s"
   },
   {
    "id": "S6-07",
@@ -637,7 +653,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 131 passed in 1.61s"
+   "pytest_tail": "1 failed, 133 passed in 1.85s"
   },
   {
    "id": "S6-08",
@@ -645,7 +661,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 132 passed in 1.75s"
+   "pytest_tail": "1 failed, 134 passed in 1.83s"
   },
   {
    "id": "S6-09",
@@ -653,7 +669,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 132 passed in 1.68s"
+   "pytest_tail": "1 failed, 134 passed in 1.97s"
   },
   {
    "id": "S6-10",
@@ -661,7 +677,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 130 passed in 1.77s"
+   "pytest_tail": "1 failed, 132 passed in 1.97s"
   },
   {
    "id": "S6-11",
@@ -669,7 +685,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 130 passed in 1.66s"
+   "pytest_tail": "1 failed, 132 passed in 1.98s"
   },
   {
    "id": "S6-12",
@@ -677,7 +693,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 132 passed in 1.71s"
+   "pytest_tail": "1 failed, 134 passed in 1.87s"
   },
   {
    "id": "S6-13",
@@ -685,7 +701,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 132 passed in 1.73s"
+   "pytest_tail": "1 failed, 134 passed in 1.86s"
   },
   {
    "id": "S6-14",
@@ -693,7 +709,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 132 passed in 1.77s"
+   "pytest_tail": "1 failed, 134 passed in 1.87s"
   },
   {
    "id": "S7-01",
@@ -701,7 +717,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 109 passed in 1.70s"
+   "pytest_tail": "1 failed, 111 passed in 1.76s"
   },
   {
    "id": "S7-02",
@@ -709,7 +725,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 116 passed in 1.67s"
+   "pytest_tail": "1 failed, 118 passed in 1.74s"
   },
   {
    "id": "S7-03",
@@ -717,7 +733,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 118 passed in 1.64s"
+   "pytest_tail": "1 failed, 120 passed in 1.72s"
   },
   {
    "id": "S7-04",
@@ -725,7 +741,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 120 passed in 1.48s"
+   "pytest_tail": "1 failed, 122 passed in 1.32s"
   },
   {
    "id": "S7-05",
@@ -733,7 +749,7 @@
    "old_text_found_once": true,
    "killed": true,
    "pytest_returncode": 1,
-   "pytest_tail": "1 failed, 109 passed in 1.46s"
+   "pytest_tail": "1 failed, 111 passed in 1.28s"
   }
  ]
 }
