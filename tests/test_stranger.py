@@ -433,3 +433,18 @@ def test_every_lab_document_stranger_md_cites_is_a_file_in_the_tree():
     missing = [c for c in cited
                if not (os.path.isfile(os.path.join(ROOT, c)) if "/" in c else c in names)]
     assert not missing, f"STRANGER.md names documents this tree does not carry: {missing}"
+
+
+@pytest.mark.skipif(os.name != "nt", reason="case-insensitive matching applies where the filesystem ignores case")
+def test_a_scorecard_whose_certs_file_differs_only_in_letter_case_is_compared_on_windows(tmp_path):
+    d = tmp_path / "papers" / "checksum"
+    d.mkdir(parents=True)
+    for f in ("score.py", "deploy_quant_certs_dryrun_qwen0.5b.json", "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json"):
+        shutil.copyfile(os.path.join(CK, f), d / f)
+    card_path = d / "deploy_quant_scorecard_v2_dryrun_qwen0.5b.json"
+    card = json.loads(card_path.read_text(encoding="utf-8"))
+    card["certs_file"] = "Papers/Checksum/deploy_quant_certs_dryrun_qwen0.5b.json"
+    card_path.write_text(json.dumps(card), encoding="utf-8")
+    s = stranger.step_reading(tmp_path)
+    row = [r for r in s["files"] if r.get("certs", "").endswith("deploy_quant_certs_dryrun_qwen0.5b.json")][0]
+    assert row["status"] == "PASS" and row.get("committed_scorecard_matches") is True, s

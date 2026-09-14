@@ -303,6 +303,15 @@ def _load_json(path):
     return doc
 
 
+def _match_key(path: str | None) -> str | None:
+    """The key a certs file and a scorecard's certs_file meet under: the path itself, case-folded where the
+    filesystem ignores case (Windows), so a card spelling 'Papers/checksum/...' is compared, not failed as
+    naming no certs file (final review of 2026-09-14)."""
+    if path is None:
+        return None
+    return path.lower() if os.name == "nt" else path
+
+
 def _norm_certs_file(repo: Path, cf) -> str | None:
     """A scorecard's `certs_file` as a forward-slash path relative to the repo (None when it names nothing):
     `score.py --out` writes it that way, and a card spelled with backslashes or `./` names the same file."""
@@ -364,11 +373,11 @@ def step_reading(repo: Path, seals: dict | None = None) -> dict:
                               "detail": f"schema {c.get('schema')!r} is not the scorer's current {scorer.SCHEMA}: not compared "
                                         "(an older scorer's card is history, not a claim about today's reading)"})
             continue
-        by_certs.setdefault(_norm_certs_file(repo, c.get("certs_file")), []).append((sc_rel, c))
+        by_certs.setdefault(_match_key(_norm_certs_file(repo, c.get("certs_file"))), []).append((sc_rel, c))
     rows = []
     for f in _certs_files(repo):
         rel = os.path.relpath(f, repo).replace("\\", "/")
-        named = by_certs.pop(rel, [])
+        named = by_certs.pop(_match_key(rel), [])
         try:
             certs = _load_json(f)
         except Exception as e:  # noqa: BLE001
