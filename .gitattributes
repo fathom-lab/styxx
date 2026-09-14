@@ -97,3 +97,10 @@ papers/checksum/**/*.json -text
 papers/checksum/**/*.jsonl -text
 papers/checksum/**/*.md -text
 bench/tasks/*.jsonl -text
+
+# the sand survey: sworn document, its sidecar and receipt, and the record it swears to (2026-09-13)
+papers/plates/SURVEY_sand_neighbours_2026_09_13.md -text
+papers/plates/SURVEY_sand_neighbours_2026_09_13.sworn.json -text
+papers/plates/SURVEY_sand_neighbours_2026_09_13.sworn-receipt.json -text
+papers/plates/sand_prior_art_survey.json -text
+papers/plates/PROTOCOL_sand_prior_art_2026_09_13.md -text
