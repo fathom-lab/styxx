@@ -1,0 +1,11 @@
+{
+ "_rule": "PROTOCOL_sand_pass4_correction_2026_09_15.md 'Scope: text that is not the article'; judged from the pass-4 readers' own notes and the red team's evidence before any correction reading",
+ "B11": {
+  "scope": "alphaXiv's page for arXiv 2603.19022: the abstract, a generated 'AI Overview' and citation cards",
+  "reason": "not the authors' text; its reader said so (readings_run_B1.json)"
+ },
+ "B12": {
+  "scope": "Nature's paywall page for the article",
+  "reason": "headline, standfirst and one sentence, then access options and prices; its reader said so (readings_run_B1.json)"
+ }
+}
