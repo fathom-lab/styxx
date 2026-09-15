@@ -14,6 +14,26 @@ was refuted. Every repair is a new commit; no sworn document and no frozen PRERE
 findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
 longer list.**
 
+**2026-09-15 — pass 4 red-teamed and corrected.** Seven finders attacked pass 4, with skeptics on every finding: of
+44 findings, 33 were confirmed, 9 refuted and 2 split (`papers/plates/sand_survey_pass4_inputs/redteam/`).
+`PROTOCOL_sand_pass4_correction_2026_09_15.md` was frozen at 9dbf4092 before any correction fetch or reading.
+`CORRECTION_sand_neighbours_pass4_2026_09_15.md` stands beside the unedited sworn SURVEY.
+- **The sentence names new neighbours.** Xu et al. leaves it: re-coded under the pass-4 definitions, it is at
+  distance two, where pass 3's undefined terms had put it at distance one. Four sources are at distance one and all
+  are named: DiFR and Chauvin et al. without the interval, Gao et al. and Hochlehnert et al. without
+  log-probabilities. Four blind readers re-coded Hochlehnert et al., and none put it at distance one.
+- **The earlier passes' fingerprint sources are coded by element.** All 23 from passes 2 and 3 were re-read from
+  their hashed bytes.
+- **Two READ sources were not articles.** B11, an alphaXiv summary page, is now read from its arXiv paper. B12, a
+  Nature paywall stub, is SKIMMED. B05 and B07 are read from their open PDFs.
+- **The statuses hold, and the conjunction is recorded.** C4a stays OCCUPIED, C5 stays UNPRICED (B23), and the
+  conjunction is RETIRED.
+- **Builder and review.** `build_sand_survey_pass4_correction.py` implements the correction's rules. An adversarial
+  review before its first real run confirmed 14 defects in its first version, and each was repaired with a test (29
+  tests).
+- **Statements corrected.** Fourteen false or overstated statements in the SURVEY are corrected, with times, among
+  them "each written before the result it could have bent was known".
+
 **2026-09-14, later still — the sand priced a fourth time.** `PROTOCOL_sand_prior_art_pass4_2026_09_15.md`
 (frozen at 5d7f39ef before the first query) defined the fingerprint clause's elements and a frozen three-engine
 search. `SURVEY_sand_neighbours_pass4_2026_09_14.md` is sworn 50 of 50 and is ferry log line 255.
@@ -26,8 +46,8 @@ search. `SURVEY_sand_neighbours_pass4_2026_09_14.md` is sworn 50 of 50 and is fe
   `sand_survey_pass4_inputs/` (the fetcher, the search and screen record, the located fetch routes, the
   landing-page scope, the reader prompts and returns).
 - Disclosed defects: the frozen arXiv syntax returned nothing. The first search merge, the Semantic Scholar retry
-  rule, the midpoint proof and the sentence composer were each wrong once, and each was repaired before any result
-  it touched was counted.
+  rule, the midpoint proof and the sentence composer were each wrong once, and each was repaired before the record was committed, some after the result it touched had been seen (see the
+  2026-09-15 correction above).
 
 **2026-09-14, evening — the day's own work red-teamed: eight finder dimensions, two skeptics per blocker
 or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted; a verification of those repairs the same night confirmed 8 more (one blocker), repaired below. Repairs are new commits; no sworn
