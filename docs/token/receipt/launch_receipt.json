@@ -1,0 +1,62 @@
+{
+  "chain": {
+    "chain_id": 4663,
+    "explorer": "https://robinhoodchain.blockscout.com",
+    "name": "Robinhood Chain",
+    "rpc": "https://rpc.mainnet.chain.robinhood.com"
+  },
+  "declared": {
+    "creator_tax_bps": 0,
+    "creator_wallet": "0x903540529c5085e47b049793790e5a856bfc0948",
+    "dev_wallet": "0x903540529c5085e47b049793790e5a856bfc0948",
+    "fixed_supply": true,
+    "freeze_or_blacklist": false,
+    "holder_fee_sharing": "yes",
+    "liquidity": "locked at graduation (pons v2)",
+    "mint_function": false,
+    "team_wallets": [
+      "0x14a2487daD53073F10ACc0117E0AbA6dD199c0f3"
+    ],
+    "wallets_statement": "The dev wallet and every team wallet that holds or bought $STYXX are listed here. There are no others."
+  },
+  "dev_buy_tx": "included in launch_tx",
+  "generated_utc": "2026-09-15T18:46:19.662247Z",
+  "launch_tx": {
+    "block": 63874429,
+    "block_timestamp_utc": "2026-09-15T18:40:03Z",
+    "from": "0x903540529c5085e47b049793790e5a856bfc0948",
+    "hash": "0x4996f313ef099e5297c767a3a816db49b231756b3faea67e3662696a521b5ce2",
+    "log_count": 9,
+    "status": "success",
+    "to": "0xe33e9e479df8802cb0866d5d05258bec4cf62948",
+    "value_eth": 0.0705,
+    "value_wei": "70500000000000000"
+  },
+  "launchpad": {
+    "contracts": {
+      "factory": "0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e",
+      "fee_escrow": "0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e",
+      "launch_and_buy_router": "0xe33E9E479dF8802cb0866d5d05258bEc4cF62948",
+      "launch_deployer": "0x3711ceA4feaDE896C913C68F01Eda97Cb06D1A42",
+      "launch_locker": "0x267444D099b10fB5Ed7c3Cc7B7c767AdcA574952",
+      "weth": "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
+    },
+    "name": "pons v2",
+    "site": "https://www.ponsfamily.com"
+  },
+  "logo": {
+    "file": "styxx_token_512.png",
+    "sha256": "974ff4f72e9b1b6f5aa072a563d6f9a3941f5c02be26632def043533483136f3"
+  },
+  "prior_tokens_disclosure": "The Solana $STYXX mint 93ihpGjLVnhghXciSeFovXwKF762rwcigW12kSQBpump is discontinued. This token is separate. There is no migration and no claim.",
+  "receipt_type": "styxx.launch.v1",
+  "statement": "This is the complete record of the $STYXX launch on Robinhood Chain. It was read from the chain, not typed. Anyone can regenerate it with launch_receipt.py and compare the hash.",
+  "token": {
+    "address": "0xC750bcdAe34cC578Ff17963bed40C5d9396fdC5D",
+    "decimals": 18,
+    "name": "styxx",
+    "symbol": "STYXX",
+    "total_supply": 1000000000.0,
+    "total_supply_raw": "1000000000000000000000000000"
+  }
+}
