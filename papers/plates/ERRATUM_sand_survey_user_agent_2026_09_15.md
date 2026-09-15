@@ -12,8 +12,8 @@ here licenses "first", "novel" or "revolutionary".**
 ## What was wrong
 
 The lab's operating rule is that no request presents as a browser. Neither the pass-3 nor the pass-4 protocol wrote that
-rule down. The message of commit `c398e830` stated it first, after pass 3's fetches and pass 4's first two fetch runs had
-started. The correction's protocol froze it at `9dbf4092`. No fetcher for passes 1 or 2 is committed, so this erratum
+rule down. The message of commit `c398e830` stated it first, after pass 3's fetches and pass 4's runs A, B and B2 had
+been sent (B2's last request sixteen seconds before the commit). The correction's protocol froze it at `9dbf4092`. No fetcher for passes 1 or 2 is committed, so this erratum
 says nothing about how their bytes were requested.
 
 The fetchers of passes 3 and 4 sent a browser-form user agent on every request:
@@ -44,8 +44,9 @@ browsers by that prefix admitted the lab as one. That is presenting as a browser
   lookups (`located_lookups_correction.json`: Europe PMC and Crossref).
 - **Unrecorded lookups.** Each run of `prepare_correction_inputs.py` (lines 105 to 112) sent it on six more: two Europe
   PMC searches and four Internet Archive availability queries.
-- **A first run left no record.** The script ran at least twice. Commit `8fa0e860` records a first run whose B04 link
-  was refused, and that run's fetches and lookups are in no committed record.
+- **A first run left no record.** The script ran at least twice. Commit `8fa0e860` records a first run that accepted,
+  for B04, a PDF link redirecting to the landing page pass 4 had already fetched. The script was then changed to refuse
+  such a copy and run again. The first run's fetches and lookups are in no committed record.
 - **The red team.** Its prompt allowed "the fetcher's identifying user agent" (`redteam_pass4.js`). Its scratch
   scripts sent the pass-4 string, through `fetch_pass4.fetch` or a copy of line 25, to:
   - arXiv 2603.19022;
@@ -53,14 +54,14 @@ browsers by that prefix admitted the lab as one. That is presenting as a browser
   - error.reviews;
   - the two Science DOIs and Science's PDF URL.
 
-  These requests are recorded in `redteam_return.json`, findings 29, 31, 33 and 34.
+  These requests are recorded in `redteam_return.json`, findings `fetch:2`, `fetch:4`, `fetch:6` and `fetch:7`.
 - **The correction's review.** It re-ran `curl_json`, which sends the pass-4 string (`review_return.json`).
 - **The search stage.** Its prompts called curl without this string.
 
 None of these requests is in the re-fetch below.
 
 **The browser probe.** The probe that the pass-4 SURVEY describes sent a full Chrome user agent that did not name the
-lab, on four requests (red-team finding 8, confirmed). One of them printed error.reviews' links, and those links chose
+lab, on four requests (red-team finding `prose:9`, confirmed). One of them printed error.reviews' links, and those links chose
 the About-page route from which B16 was then fetched.
 
 ## The statements this makes false or incomplete
@@ -68,7 +69,7 @@ the About-page route from which B16 was then fetched.
 1. **SURVEY, pass 4:** "One probe sent a browser user agent to the three blocked pages. It was abandoned; no fetched
    byte came through it." The probe was not the only request in browser form. So was every request by the pass-3 and
    pass-4 fetchers and by the correction's scripts. Bytes did come through the probe: its printout of error.reviews'
-   links chose B16's route. That page served the same bytes to the fetcher's own agent (finding 8), and it serves the
+   links chose B16's route. That page served the same bytes to the fetcher's own agent (`prose:9`), and it serves the
    same bytes to a non-browser agent today (below).
 2. **CORRECTION, pass 4, item 9.** It corrects which pages the probe reached. It keeps "No fetched byte came through the
    probe", and it does not say that every fetch was in browser form.
@@ -76,8 +77,8 @@ the About-page route from which B16 was then fetched.
 4. **PROTOCOL of the pass-4 correction:** "No route may present as a browser or pass a block." The correction's own
    fetches and lookups did not keep that rule.
 5. **Commit `c398e830`:** "The fetcher keeps its identifying user agent. No route presents as a browser or passes a
-   block." The identifying agent was in browser form.
-6. **The pass-4 red team** (`redteam_return.json`, dimension 3): "No browser user agent was sent and no block was
+   block, …". The identifying agent was in browser form.
+6. **The pass-4 red team** (`redteam_return.json`, the fetch dimension): "No browser user agent was sent and no block was
    bypassed." The first half is false. Its "The "Mozilla/5.0" prefix in the fetcher's user agent bypassed nothing"
    agrees with the re-fetch below for 70 of 71 URLs, and cannot be tested for L16.
 7. **The correction's review** (`review_return.json`): "The UA is fetch_pass4.py's own, identical to pass 4's." That is
