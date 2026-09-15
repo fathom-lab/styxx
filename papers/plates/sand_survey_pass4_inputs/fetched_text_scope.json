@@ -1,0 +1,6 @@
+{
+ "_rule": "A fetched page that is the publisher's or journal's landing page for an article, not the article's text, is SKIMMED: its reader's verdict may be SILENT or OCCUPIES and may not RETIRE (PROTOCOL_sand_prior_art_2026_09_13.md, 'A SKIMMED source may only be recorded as SILENT or as OCCUPIES from abstract; it may not RETIRE'). Judged from the extracted text's start and end before any reading of these sources returned.",
+ "B04": {"scope": "the Scientific Reports landing page, served without scripts", "reason": "9,648 characters that open with the site's browser-support notice and navigation and close with its newsletter sign-up; not the article body"},
+ "B05": {"scope": "the International Journal on Science and Technology landing page", "reason": "4,672 characters that open with the journal's call for papers and menus and close with its contact footer; not the article body"},
+ "B07": {"scope": "the International Journal of Computer Information Systems and Industrial Management Applications landing page", "reason": "3,739 characters that open with the journal's menus and close with its publisher footer; not the article body"}
+}

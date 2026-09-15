@@ -10,7 +10,7 @@ clique/island topology.
 
 ```bash
 git clone https://github.com/fathom-lab/styxx && cd styxx/papers/disjoint-worlds
-pip install numpy scipy
+pip install numpy scipy torch   # torch: run_g0clear.py imports it for the concept list (cold-clone check, 2026-09-12)
 python run_b37.py          # the 12-pair legibility matrix
 ```
 

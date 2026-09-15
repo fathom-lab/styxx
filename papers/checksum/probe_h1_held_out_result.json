@@ -1,0 +1,97 @@
+{
+ "schema": "styxx.checksum/probe-h1-held-out/v0",
+ "n_trials_per_jitter": 60,
+ "n_boot": 2000,
+ "seed": 20260913,
+ "vocab": 2000,
+ "n_items": 48,
+ "rule_held_out": "floor = max(mean|A-A''|, mean|A'-A''|); graded pair A vs A'; SAME iff bootstrap upper bound < max(floor, 1e-4)",
+ "rule_worst_pairwise": "floor = max of all three pair means; graded pair A vs A'; SAME iff bootstrap upper bound < max(floor, 1e-4)",
+ "jitters": {
+  "0": {
+   "held_out": {
+    "SAME": 60,
+    "INCONCLUSIVE": 0,
+    "DRIFT": 0
+   },
+   "worst_pairwise": {
+    "SAME": 60,
+    "INCONCLUSIVE": 0,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_mean_is_at_most_the_held_out_floor": 60,
+   "floor_min": 0.0,
+   "floor_max": 0.0,
+   "floor_inside_H1_band": true,
+   "floor_above_resolution": false
+  },
+  "0.0001": {
+   "held_out": {
+    "SAME": 9,
+    "INCONCLUSIVE": 51,
+    "DRIFT": 0
+   },
+   "worst_pairwise": {
+    "SAME": 9,
+    "INCONCLUSIVE": 51,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_mean_is_at_most_the_held_out_floor": 42,
+   "floor_min": 0.0001036590443369226,
+   "floor_max": 0.00014818389822884108,
+   "floor_inside_H1_band": true,
+   "floor_above_resolution": true
+  },
+  "0.0003": {
+   "held_out": {
+    "SAME": 9,
+    "INCONCLUSIVE": 50,
+    "DRIFT": 1
+   },
+   "worst_pairwise": {
+    "SAME": 9,
+    "INCONCLUSIVE": 51,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_mean_is_at_most_the_held_out_floor": 37,
+   "floor_min": 0.00028518785307481994,
+   "floor_max": 0.00044430188165197883,
+   "floor_inside_H1_band": true,
+   "floor_above_resolution": true
+  },
+  "0.001": {
+   "held_out": {
+    "SAME": 12,
+    "INCONCLUSIVE": 47,
+    "DRIFT": 1
+   },
+   "worst_pairwise": {
+    "SAME": 12,
+    "INCONCLUSIVE": 48,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_mean_is_at_most_the_held_out_floor": 41,
+   "floor_min": 0.0009426717214084777,
+   "floor_max": 0.001528314908961911,
+   "floor_inside_H1_band": false,
+   "floor_above_resolution": true
+  },
+  "0.005": {
+   "held_out": {
+    "SAME": 11,
+    "INCONCLUSIVE": 49,
+    "DRIFT": 0
+   },
+   "worst_pairwise": {
+    "SAME": 11,
+    "INCONCLUSIVE": 49,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_mean_is_at_most_the_held_out_floor": 43,
+   "floor_min": 0.0051829522168442424,
+   "floor_max": 0.007409194911440514,
+   "floor_inside_H1_band": false,
+   "floor_above_resolution": true
+  }
+ }
+}

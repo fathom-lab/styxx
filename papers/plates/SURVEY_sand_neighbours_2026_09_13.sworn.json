@@ -1,0 +1,117 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "3f0de9c39835c5980119e6d6848bbc3264d16435",
+ "document": {
+  "name": "SURVEY_sand_neighbours_2026_09_13.md",
+  "sha256": "1a1ee446a3656797a8d79d63705de72ea6a4d258903afb8fb97714554349eac3"
+ },
+ "text": "# SURVEY — the neighbours of the sand, priced against twenty fetches\n\nFathom Lab · 2026-09-13 · **A survey, not a result.** It runs the procedure frozen the same evening in\n`papers/plates/PROTOCOL_sand_prior_art_2026_09_13.md` (commit 9f5fd42c), which named its sources,\nits clauses and its outcome table before anything was fetched, and it prices exactly one sentence:\nthe one the lab was asked to say about the sand and refused to say from memory. Every count below is\nsworn to `papers/plates/sand_prior_art_survey.json`, which holds the per-source answers with the\nURL as fetched, the fetch time, the sha256 of the bytes saved, the verdict per clause and the quoted\nsentence behind it; `build_sand_survey.py` beside it is the script that wrote the record from the\nsurveyor's entries. This document is itself sworn.\n\n## what was read\n\nThe frozen list named 20 sources and closed itself against additions. 10 were READ end to end (the pages and the one paper the fetch could process whole); 9 were SKIMMED — the papers read from their bytes for their first pages only, and the Nature article from its abstract because its body is paywalled — and under the procedure a skimmed source may occupy a clause or stay silent but may never retire one; 1 was UNFETCHABLE (the archived Proof of Existence page carries only its title). 6 leads surfaced while reading and are recorded without being scored, because the list was closed.\n\nTwo limits, stated: the pages were read through a fetch-and-summarise tool with the whole page as\nits input, and the surveyor set every verdict from the quotes it returned and from the paper pages\nread directly; and one agent ran one pass with no independent re-fetch. Nine skimmed papers is nine\nplaces where a retiring sentence may sit in a section nobody read.\n\n## the sentence under test\n\n> We know of no lab that binds every published number to bytes at a commit, re-derives every\n> verdict from those bytes into a chained log, gives every receipt a face a stranger reads without\n> json, fingerprints a model's behavior on hashed canaries against a measured null floor under a\n> preregistration sealed on a public chain before the run, and pays a standing bounty against its\n> own verifier — at once.\n\n## what the sources did to it\n\n- **C1, binding numbers to bytes**, is not re-priced: it inherits `OCCUPIED` from the 2026-09-05 survey of sworn output, with its neighbours named there.\n- **C2, the chained log of re-derived verdicts**: `OCCUPIED`. Certificate Transparency (RFC 6962) chains certificates in an append-only Merkle log with a signed head that monitors check, and Rekor does the same for signed supply-chain metadata; neither logs a verdict re-derived from receipt bytes. The mechanism is theirs; the object is not.\n- **C3, a face for every receipt**: `OCCUPIED`. Perrig and Song drew hash visualizations so people could compare key fingerprints by eye in 1999; OpenSSH shipped random art for host keys in 2008; Don Park drew identicons from hashed addresses in 2007. The plate is that idea applied to receipts of scientific claims, and the sentence must say so.\n- **C4a, the behaviour fingerprint against a measured floor**: `OCCUPIED`, and crowded. Dutta et al. measure per-item flips and KL divergence between a model and its compressed copy and argue that accuracy hides them — the checksum's measurement, without the hashed set, the in-situ floor or the interval verdict; Thinking Machines measure the same-weights spread of served completions — the null floor's idea, on completions; Chen, Zaharia and Zou count per-prompt mismatches across service versions; Kriegeskorte compares dissimilarity matrices by their upper triangles with a noise floor; Hochlehnert et al. measure seed variance of benchmark scores; REEF and instructional fingerprinting fingerprint models for ownership. Nothing retires the clause; almost everything in it has a neighbour.\n- **C4b, the seal on a public chain**: `RETIRED`, by `S05`, OpenTimestamps, which anchors the hash of any data to the Bitcoin chain and lets anyone verify it later — a preregistration is data. Haber and Stornetta set the problem in 1991, Registered Reports and OSF registrations freeze protocols before data without a public ledger, and proof-of-learning publishes training proofs to one. The seal is a practice the lab adopted, not one it can say it knows no other of.\n- **C5, the standing bounty against the lab's own verifier**: `OCCUPIED`. Immunefi runs standing bounties against deployed code, adjudicated by Immunefi; the Preregistration Challenge paid a thousand dollars for publishing preregistered work until 2018; the NeurIPS reproducibility challenge asked the community to reproduce papers for recognition. None pays a stranger for a record in which the payer's own verifier disagrees with the payer.\n- **The conjunction**: `RETIRED` as written, because one of its clauses is; no single source does the surviving clauses at once, so the sentence survives as their conjunction — `SURVIVES_WITHOUT_C4b`. 5 clauses are OCCUPIED, 1 is RETIRED, 0 are FREE.\n\n## the sentence the lab may now say, and the words it may not\n\nThe surviving sentence is in the record at `#/sentence/text`, with every neighbour named inside it.\nIts shape: *we know of no lab that does these five things at once — and here is who does each one\nalone.* The word \"first\" is not licensed by this survey under any reading of it, nor \"novel\", nor\n\"revolutionary\"; the licensed form is \"we know of no\", and only for the conjunction, and only with\nthe neighbours in the same breath. The seal is out of the sentence entirely.\n\nWhat would change this document: a source the list missed that does the five surviving things at\nonce; or a full read of any skimmed paper that turns out to do C4a or C5 for the lab's own object,\nwhich would retire the sentence outright. The leads are recorded so the next survey starts from them.\n",
+ "spans": [
+  {
+   "start": 841,
+   "end": 910,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/sources_in_list",
+   "kind": "numeric"
+  },
+  {
+   "start": 911,
+   "end": 934,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/read",
+   "kind": "numeric"
+  },
+  {
+   "start": 996,
+   "end": 1010,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/skimmed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1253,
+   "end": 1270,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/unfetchable",
+   "kind": "numeric"
+  },
+  {
+   "start": 1334,
+   "end": 1402,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/leads_not_scored",
+   "kind": "numeric"
+  },
+  {
+   "start": 2340,
+   "end": 2350,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C1/status",
+   "kind": "quote"
+  },
+  {
+   "start": 2478,
+   "end": 2488,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C2/status",
+   "kind": "quote"
+  },
+  {
+   "start": 2807,
+   "end": 2817,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C3/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3181,
+   "end": 3191,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C4a/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3956,
+   "end": 3965,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C4b/status",
+   "kind": "quote"
+  },
+  {
+   "start": 3970,
+   "end": 3975,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C4b/retired_by/0",
+   "kind": "quote"
+  },
+  {
+   "start": 4451,
+   "end": 4461,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 4855,
+   "end": 4864,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/conjunction/status",
+   "kind": "quote"
+  },
+  {
+   "start": 5011,
+   "end": 5033,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/sentence/status",
+   "kind": "quote"
+  },
+  {
+   "start": 5035,
+   "end": 5057,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/clauses_occupied",
+   "kind": "numeric"
+  },
+  {
+   "start": 5059,
+   "end": 5071,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/clauses_retired",
+   "kind": "numeric"
+  },
+  {
+   "start": 5073,
+   "end": 5083,
+   "receipt": "path:papers/plates/sand_prior_art_survey.json#/counts/clauses_free",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

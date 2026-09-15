@@ -1,0 +1,426 @@
+{
+ "run": "wf_947fdf1e-e39",
+ "script": "prompts/read_pass4.js",
+ "readings": [
+  {
+   "reader": "reader-1",
+   "sources": [
+    {
+     "id": "B03",
+     "read_end_to_end": true,
+     "last_line_quote": "Back to Top",
+     "midpoint_quote": "The proposed logging mechanism operates under a defined threat model in which logs are generated and maintained within a single trusted administrative domain. The objective is to provide tamper-evident integrity of experiment metadata and predictions. Any post-hoc modification of a log entry disrupts the hash chain and can be detected during verification.",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "An append-only SHA-256 hash-chained log of intrusion-detection experiment configurations, metrics and per-sample predictions, kept in a single trusted domain.",
+       "reason": "It chains evaluation results and predictions, but verification only recomputes the chain hashes. The logged verdicts and metrics are stored as produced and never re-derived from bytes. The authors say it has no signatures, timestamping or external anchoring.",
+       "neighbour_phrase": "Mishra et al. hash-chain experiment configurations, metrics and predictions of intrusion-detection model evaluations"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Significance tests (Wilcoxon, McNemar, DeLong at alpha 0.05) comparing different intrusion-detection classifiers and pipeline ablations on shared cross-validation folds.",
+       "reason": "Only E2 and E4 are carried, and for comparisons between different models and pipeline variants, never a model against itself. The spread is across CV folds, not repeated evaluations of identical weights, and the compared quantities are accuracy, F1 and AUC of tabular classifiers, not log-probabilities. Distance 3.",
+       "neighbour_phrase": "Mishra et al. test accuracy differences between different intrusion-detection classifiers at alpha 0.05",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Performance differences between models were evaluated using the Wilcoxon signed-rank test"
+        },
+        "E2": {
+         "value": true,
+         "quote": "To guarantee the reproducibility of the results, a fixed random seed (seed = 42) was utilized across all experiments involving data splitting, model initialization, and sampling mechanisms such as SMOTE."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Performance variability and confidence are reflected through reporting of mean ± standard deviation across repeated cross-validation runs, providing a robust estimate of stability."
+        },
+        "E4": {
+         "value": true,
+         "quote": "Statistical significance was evaluated at a significance level of α = 0.05."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Model performance was assessed using repeated stratified 5-fold cross-validation and cross-dataset transfer testing."
+        },
+        "E6": {
+         "value": false,
+         "quote": "we have uploaded all relevant datasets, code, and output logs to an openly accessible repository"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Experimental configurations and prediction outputs were recorded using a SHA-256 hash-chained logging mechanism",
+      "Any post-hoc modification of a log entry disrupts the hash chain and can be detected during verification.",
+      "As it is, this design does not employ digital signatures and timestamping; hence, it is more accurate to interpret this as an integrity measure for controlled environments and experiments.",
+      "Statistical significance was evaluated at a significance level of α = 0.05."
+     ],
+     "leads": [],
+     "notes": "Full PMC text (PLoS One 2026, with a correction notice). The hash chain covers model config, dataset ID, metrics and predictions, and the authors concede it is open to truncation and replay attacks. No cited work looks nearer to C2 or C4a. The cited blockchain-IDS works (e.g. ref 14, Kumar et al. 2024) are the same genre."
+    },
+    {
+     "id": "B04",
+     "read_end_to_end": true,
+     "last_line_quote": "Sign up for Nature Briefing: AI and Robotics",
+     "midpoint_quote": "No human subjects, patient records, or private individual-level data were collected for this work. All datasets are public benchmark datasets, and no additional ethical approval was required.",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A hash-chained ledger of per-round federated-learning model hashes, client explanation summaries and anomaly flags.",
+       "reason": "Per the abstract, anomaly flags (a verdict) and model hashes are recorded in a hash-chained ledger across rounds. Nothing shows the flags being re-derived from bytes by a verifier. The extracted text is only the landing page and abstract, so this is coded from the abstract alone.",
+       "neighbour_phrase": "Naidu and Suma hash-chain model hashes, explanation summaries and anomaly flags across federated learning rounds"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "Distance-based anomaly test on federated client updates (different clients' models), not a model against its own earlier or differently-served self.",
+       "reason": "The abstract describes no self-comparison, no fixed canary set, no floor from identical weights, no interval and no log-probability comparison.",
+       "neighbour_phrase": "Naidu and Suma flag anomalous client updates in cross-domain federated learning",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "The server also applies a distance-based anomaly test on client updates"
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "The server also applies a distance-based anomaly test on client updates and records model hashes, explanation summaries, and anomaly flags in a hash-chained ledger.",
+      "a lightweight tamper-evident record of model evolution across rounds"
+     ],
+     "leads": [],
+     "notes": "Extracted text is the Nature landing page only (abstract, metadata, footer), not the article body, so the verdicts rest on the abstract. A full-text fetch (Sci Rep 2026, doi 10.1038/s41598-026-56100-9) would be needed to confirm how the ledger is verified."
+    },
+    {
+     "id": "B05",
+     "read_end_to_end": true,
+     "last_line_quote": "editor@ijsat.org",
+     "midpoint_quote": "Intrusion detection system, ensemble majority voting, autoencoder, AES-EAX, ECC digital signature, NSL-KDD, CICIDS2017, UNSW-NB15",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A hash-chained ledger of AES-EAX-encrypted, ECC-signed intrusion alerts produced by a majority-voting ensemble IDS for digital banking.",
+       "reason": "Classifier alerts (verdicts) are signed and appended to a hash chain, but the abstract says nothing of re-deriving them from bytes. The extracted text is only the journal landing page and abstract, so this is coded from the abstract alone.",
+       "neighbour_phrase": "Kumar and Kumar append encrypted, signed intrusion alerts to a hash-chained ledger for banking networks"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "Accuracy and detection-rate evaluation of different classifier ensembles on NSL-KDD.",
+       "reason": "The abstract describes no self-comparison of a model, no fixed canary set, no identical-weights floor, no interval and no log-probability comparison.",
+       "neighbour_phrase": "Kumar and Kumar evaluate majority-voting classifier ensembles for intrusion detection on NSL-KDD",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "the best tested ensemble (NB+DT+RF) achieved 99.00% accuracy"
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "attack alerts are encrypted using AES-EAX, signed with ECC, and appended to a hash-chained ledger",
+      "blockchain-inspired hash chaining"
+     ],
+     "leads": [],
+     "notes": "Extracted text is the IJSAT landing page only (abstract, keywords, site chrome). The PDF body was not in the text, so the verdicts rest on the abstract. The venue is a low-tier fee-charging journal."
+    },
+    {
+     "id": "B06",
+     "read_end_to_end": true,
+     "last_line_quote": "Back to Top",
+     "midpoint_quote": "Both datasets underwent stratified data partitioning and preprocessing techniques to guarantee accurate evaluation. Additionally, in order to avoid evaluation bias and data leakage, imbalance handling techniques were solely used to the training data.",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A single-node SHA-256 hash chain with one block per intrusion prediction (label, confidence, SHAP summary, timestamp), checked by recomputing block hashes and tested against six tampering attacks.",
+       "reason": "It chains classifier verdicts and verifies chain integrity by recomputing hashes. The verdicts themselves are stored as produced and never re-derived from bytes by an independent verifier, and there is no consensus or external anchoring.",
+       "neighbour_phrase": "Raj and Madiajagan hash-chain each intrusion prediction with its SHAP explanation and verify chain integrity"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Paired t-tests, Wilcoxon tests and bootstrap 95% CIs on accuracy improvements of the TAE-IDS meta-ensemble over different baseline classifiers across 10 seeds, on a fixed benchmark test partition.",
+       "reason": "Only E2 and E4 are carried, and for comparisons between different models, not a model against itself. The spread comes from different random seeds (retrainings), which E3 excludes. Logits appear only as meta-features, while the compared quantity is accuracy. Distance 3.",
+       "neighbour_phrase": "Raj and Madiajagan test accuracy gains of an intrusion-detection meta-ensemble over baseline classifiers with bootstrap intervals",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "The mean and standard deviation of Accuracy, Macro F 1-score, and Matthews Correlation Coefficient (MCC) were computed for Logistic Regression (LR), Extra Trees (ET), XGBoost (XGB), and the proposed TAE-IDS."
+        },
+        "E2": {
+         "value": true,
+         "quote": "The predefined training-testing partition of the dataset was preserved to maintain evaluation consistency and reduce the possibility of information leakage."
+        },
+        "E3": {
+         "value": false,
+         "quote": "For each experimental run, model initialization, optimization, and training were independently repeated."
+        },
+        "E4": {
+         "value": true,
+         "quote": "Furthermore, the bootstrap 95% confidence intervals for the mean performance improvements excluded zero in every case, indicating that the observed improvements are statistically reliable and unlikely to have occurred due to random variation."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Mean accuracy improvement (%)"
+        },
+        "E6": {
+         "value": false,
+         "quote": "Publicly available datasets were analyzed in this study."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Each IDS prediction generates one block containing prediction metadata and SHAP explanations.",
+      "To verify blockchain integrity, the proposed framework recomputes the cryptographic hash of each block and compares it against the stored hash value.",
+      "The current implementation operates as a single-node validation mechanism and does not employ distributed consensus protocols such as Proof-of-Authority (PoA), Practical Byzantine Fault Tolerance (PBFT), or Proof-of-Work (PoW).",
+      "The blockchain validation module operates exclusively after model inference and does not participate in model training or parameter optimization."
+     ],
+     "leads": [],
+     "notes": "Full PMC text (Front Artif Intell 2026). Chains of 51,536 and 565,577 blocks verified, and all six tamper scenarios detected. Cited blockchain-IDS logging works (Pawar et al. 2025 Cyber-shield, Song et al. 2025, Kumari et al. 2024) are the same genre and not nearer to re-derived verdicts, so no leads are recorded."
+    }
+   ]
+  },
+  {
+   "reader": "reader-2",
+   "sources": [
+    {
+     "id": "B07",
+     "read_end_to_end": true,
+     "last_line_quote": "Contact: ijcisim.info@gmail.com, ijcisim-info@cspub-hk.org or ijcisim@cspub-hk.org",
+     "midpoint_quote": "https://doi.org/10.70917/ijcisim-2026-4475",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A tamper-evident, hash-based audit trail of per-round federated-learning aggregation: model provenance, trust components, client filtering decisions and aggregation weights.",
+       "reason": "It logs decisions (filtering verdicts) with cryptographic hashes for tamper evidence, but on a different object (federated aggregation rounds for intrusion detection), the abstract does not state that entries are chained, and nothing says the logged verdicts are re-derived from bytes by a verifier; only the journal landing page and abstract were available, and the abstract itself says its numbers are synthetic placeholders.",
+       "neighbour_phrase": "Anuradha and Pramanik describe a hash-based tamper-evident audit trail of per-round trust and filtering decisions in federated learning"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "No comparison of a model against itself; the object is robust aggregation of client updates in federated intrusion detection.",
+       "reason": "The text fingerprints no model behaviour, uses no canary item set, measures no same-weights floor, and reports no interval or log-probability comparison.",
+       "neighbour_phrase": "Anuradha and Pramanik weight federated client updates by validation trust for IoT intrusion detection",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "A tamper-evident audit trail records per-round model provenance using cryptographic hashes, trust components, filtering decisions, and aggregation weights, while storing raw models off-chain when needed to control cloud cost.",
+      "The numerical results, ablations, and overhead values in this draft are synthetic example values intended to make the manuscript structurally complete; they must be replaced with empirical outputs from the human author’s experiments before submission."
+     ],
+     "leads": [],
+     "notes": "The fetched text is the journal's article landing page (abstract, metadata, navigation) only; the PDF body was not in the text file. The abstract admits its results are synthetic example values, so even the logging layer is described rather than shown to run. No chaining of log entries and no re-derivation of verdicts is stated. No works are cited in the fetched text."
+    },
+    {
+     "id": "B13",
+     "read_end_to_end": true,
+     "last_line_quote": "Book a Call",
+     "midpoint_quote": "With standard kernels, the most common completion appeared only 78 out of 1,000 times. With batch-invariant kernels, all 1,000 were identical.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "A vendor blog post explaining LLM inference nondeterminism (batch variance) by recounting Thinking Machines' repeated-run experiment and promoting Morph Fast Apply for deterministic code edits.",
+       "reason": "The post runs no comparison of its own: the repeated-run experiment on identical weights is Thinking Machines' and is cited, the determinism test is proposed as methodology, quantization and silent model updates are only listed as sources of variation, and what is compared is sampled output text (exact match, unique completions), never log-probabilities; no interval, no floor used to grade, no hashed item set.",
+       "neighbour_phrase": "Morph recounts Thinking Machines' repeated-run nondeterminism tests of identical weights on vLLM, comparing sampled completions",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "The experiment was simple and conclusive. Run the prompt \"Tell me about Richard Feynman\" 1,000 times at temperature 0 through Qwen3-8B on vLLM:"
+        },
+        "E2": {
+         "value": false,
+         "quote": "A minimal determinism test: run the same prompt N times (N >= 100) at temperature 0, hash each output, count unique hashes."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Thinking Machines' experiments showed that batch variance alone accounts for the vast majority of observed nondeterminism."
+        },
+        "E4": {
+         "value": false,
+         "quote": "If unique hashes equal 1, the system is deterministic for that input."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Percentage of runs producing bitwise identical output."
+        },
+        "E6": {
+         "value": false,
+         "quote": "hash each output, count unique hashes"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Silent model updates",
+      "API providers update model weights, infrastructure, or serving configurations without notice. The system_fingerprint field exists to detect this, but changes are frequent.",
+      "The same model at different quantization levels produces different outputs.",
+      "With standard kernels, the most common completion appeared only 78 out of 1,000 times. With batch-invariant kernels, all 1,000 were identical."
+     ],
+     "leads": [
+      "Thinking Machines Lab, September 2025 analysis of LLM inference nondeterminism and batch-invariant kernels (open-source library)",
+      "SGLang follow-up work on batch-invariant kernels (FlashInfer and FlashAttention 3 backends, ~34% overhead)",
+      "OpenAI seed parameter and system_fingerprint documentation (\"mostly deterministic\")"
+     ],
+     "notes": "Web blog post (Morph, March 27, 2026), not a paper. Everything bearing on C4a is secondhand or proposed: the only experiment is Thinking Machines' on Qwen3-8B, and the testing methodology section is advice. Distance from C4a: carries none of E1-E5 by the does-it rule. The primary nearer lead is the Thinking Machines post itself, which the text names but does not link by title."
+    },
+    {
+     "id": "B16",
+     "read_end_to_end": true,
+     "last_line_quote": "Malte Elson, Psychology of Digitalisation , University of Bern",
+     "midpoint_quote": "Media Coverage",
+     "verdicts": [
+      {
+       "clause": "C5",
+       "verdict": "OCCUPIES",
+       "object": "A standing, funded bug-bounty programme for science that pays investigators a base rate plus severity-dependent compensation for errors found in published psychology papers and preprints, and pays consenting authors whose work proves reliable.",
+       "reason": "It is a standing payment for finding errors, but the object is third-party publications, not the programme's own claims, and there is no verifier of the lab's whose record disagrees with the lab; investigators are selected by ERROR rather than being open strangers.",
+       "neighbour_phrase": "Elson's ERROR programme pays selected investigators severity-scaled compensation for errors found in published psychology papers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "Error detection in academic publications; no model is compared with itself.",
+       "reason": "The page concerns paid review of papers, data and code in psychology and does nothing with models, canaries, floors, intervals or log-probabilities.",
+       "neighbour_phrase": "Elson's ERROR programme pays reviewers to detect errors in published psychology research",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "investigators examine published works in journals of psychology and preprint servers (including study materials, data, and code) for errors and receive compensation in form of a base rate and variable compensation depending on the severity of their findings.",
+      "authors who agree to having their work examined this way, and commit to take appropriate action where recommended, and receive compensation if their work proves to be reliable.",
+      "identifies suitable investigators to check the work, acts as a liaison between reviewers and authors, acts as an arbiter of the severity of the findings"
+     ],
+     "leads": [],
+     "notes": "The fetched text is the programme's About page only; the Rewards & Rationale and FAQ pages named in its navigation were not in the file and hold the actual amounts and eligibility. Payment is standing and severity-scaled, but ERROR itself selects papers and investigators and arbitrates severity; the errors paid for are in other people's papers, not in ERROR's own verdicts or tools. The page names Malte Elson (University of Bern) and funding from the Humans in Digital Transformation program; no works are cited."
+    }
+   ]
+  }
+ ],
+ "confirmations": [],
+ "unread": []
+}

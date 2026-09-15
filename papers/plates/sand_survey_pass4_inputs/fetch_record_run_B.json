@@ -1,0 +1,959 @@
+{
+ "B01": {
+  "title": "Model Equality Testing: Which Model Is This API Serving?",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2410.20247",
+    "url_effective": "https://arxiv.org/pdf/2410.20247",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1985925,
+    "sha256": "07aa991f780630045e3f44104f3f63fbc496c4abb431c0c2ca9c7bca3746e98d",
+    "fetched_at": "2026-09-14T22:13:55Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 64,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2410.20247",
+  "url_effective": "https://arxiv.org/pdf/2410.20247",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1985925,
+  "sha256": "07aa991f780630045e3f44104f3f63fbc496c4abb431c0c2ca9c7bca3746e98d",
+  "fetched_at": "2026-09-14T22:13:55Z",
+  "kind": "pdf",
+  "pages": 64,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B01.txt",
+   "chars": 158758,
+   "sha256": "b2e79fa5525f1c0f44e6ca986a65fd0e1d0d689244c5dae00f1653dd3646eab9"
+  }
+ },
+ "B02": {
+  "title": "One Token Is Enough: Fingerprinting and Verifying Large Language Models from Single-Token Output Distributions",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2607.10252",
+    "url_effective": "https://arxiv.org/pdf/2607.10252",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 336219,
+    "sha256": "df887dc4a1ee4aba8add4e1ba1b3766348def81a282959809bf463780351e0ca",
+    "fetched_at": "2026-09-14T22:13:56Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 9,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2607.10252",
+  "url_effective": "https://arxiv.org/pdf/2607.10252",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 336219,
+  "sha256": "df887dc4a1ee4aba8add4e1ba1b3766348def81a282959809bf463780351e0ca",
+  "fetched_at": "2026-09-14T22:13:56Z",
+  "kind": "pdf",
+  "pages": 9,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B02.txt",
+   "chars": 50065,
+   "sha256": "d33452d28355ce33efda0398557c0f39b6b26ecfde00f582e63e23fab7fff6ac"
+  }
+ },
+ "B03": {
+  "title": "A cross-dataset harmonized intrusion detection framework with statistically validated multi-model learning",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/032934195f94ef8b8167234eb47872a04c832541",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/032934195f94ef8b8167234eb47872a04c832541",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:56Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "cross",
+     "dataset",
+     "harmonized",
+     "intrusion",
+     "detection",
+     "framework",
+     "statistically",
+     "validated",
+     "multi",
+     "model",
+     "learning"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B04": {
+  "title": "BlockFedX: a cross-domain federated learning system with explainability, anomaly detection, and tamper-evident logging.",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/e0044dafbfc54775b5f1d10df7fbeaed7afdc09f",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/e0044dafbfc54775b5f1d10df7fbeaed7afdc09f",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:56Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "blockfedx",
+     "cross",
+     "domain",
+     "federated",
+     "learning",
+     "system",
+     "explainability",
+     "anomaly",
+     "detection",
+     "tamper",
+     "evident",
+     "logging"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B05": {
+  "title": "Ensemble Majority Voting-Based Hybrid Machine Learning Framework for Intrusion Detection in Secure Digital Banking Networks",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/aa52648705e336c88f29e90757c4469009657fdf",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/aa52648705e336c88f29e90757c4469009657fdf",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:56Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "ensemble",
+     "majority",
+     "voting",
+     "based",
+     "hybrid",
+     "machine",
+     "learning",
+     "framework",
+     "intrusion",
+     "detection",
+     "secure",
+     "digital",
+     "banking",
+     "networks"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B06": {
+  "title": "TAE-IDS: a trust-aware explainable intrusion detection framework using attention-based meta-ensemble learning with blockchain validation",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/28b59d499c1e8c853f7abe3cf9534129d7fde485",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/28b59d499c1e8c853f7abe3cf9534129d7fde485",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:56Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "trust",
+     "aware",
+     "explainable",
+     "intrusion",
+     "detection",
+     "framework",
+     "attention",
+     "based",
+     "meta",
+     "ensemble",
+     "learning",
+     "blockchain",
+     "validation"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B07": {
+  "title": "Trust-Guided Weighted Federated Averaging with Tamper-Evident Audit Logging for Robust Intrusion Detection on CICIoT2023",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/51987cca3dffe3fa03911eab2ec4bbf1f62742bf",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/51987cca3dffe3fa03911eab2ec4bbf1f62742bf",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:57Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "trust",
+     "guided",
+     "weighted",
+     "federated",
+     "averaging",
+     "tamper",
+     "evident",
+     "audit",
+     "logging",
+     "robust",
+     "intrusion",
+     "detection",
+     "ciciot2023"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B08": {
+  "title": "AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models",
+  "attempts": [
+   {
+    "url": "https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518",
+    "url_effective": "charset=UTF-8 https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518",
+    "http": "202",
+    "content_type": "text/html;",
+    "bytes": 0,
+    "sha256": null,
+    "fetched_at": "2026-09-14T22:13:57Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "auditablellm",
+     "hash",
+     "chain",
+     "backed",
+     "compliance",
+     "aware",
+     "auditable",
+     "framework",
+     "large",
+     "language",
+     "models"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B09": {
+  "title": "An Auditing Test to Detect Behavioral Shift in Language ModelsThis work was published at ICLR 2025.",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/html/2410.19406",
+    "url_effective": "charset=utf-8 https://arxiv.org/html/2410.19406",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 466677,
+    "sha256": "ae8a746fd6f45cea3581c7df63b55932afba525b45f96adda832b753552a4226",
+    "fetched_at": "2026-09-14T22:13:57Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 0.909,
+    "title_words_missing": [
+     "modelsthis"
+    ],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/html/2410.19406",
+  "url_effective": "charset=utf-8 https://arxiv.org/html/2410.19406",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 466677,
+  "sha256": "ae8a746fd6f45cea3581c7df63b55932afba525b45f96adda832b753552a4226",
+  "fetched_at": "2026-09-14T22:13:57Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 0.909,
+  "title_words_missing": [
+   "modelsthis"
+  ],
+  "accepted": true,
+  "fulltext": {
+   "file": "B09.txt",
+   "chars": 107271,
+   "sha256": "6d34cc3c772b1b4e80ffab597d9a3663d512ac2a275c3e568271b1d835d7bbf6"
+  }
+ },
+ "B10": {
+  "title": "Are You Getting What You Pay For? Auditing Model Substitution in LLM APIs",
+  "attempts": [
+   {
+    "url": "https://openreview.net/pdf?id=thhrtv9P0s",
+    "url_effective": "https://openreview.net/pdf?id=thhrtv9P0s",
+    "http": "403",
+    "content_type": "text/html",
+    "bytes": 12692,
+    "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+    "fetched_at": "2026-09-14T22:13:57Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "getting",
+     "auditing",
+     "model",
+     "substitution",
+     "apis"
+    ],
+    "accepted": false
+   },
+   {
+    "url": "https://openreview.net/pdf?id=3DZeEUTwhq",
+    "url_effective": "https://openreview.net/pdf?id=3DZeEUTwhq",
+    "http": "403",
+    "content_type": "text/html",
+    "bytes": 12692,
+    "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+    "fetched_at": "2026-09-14T22:13:58Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "getting",
+     "auditing",
+     "model",
+     "substitution",
+     "apis"
+    ],
+    "accepted": false
+   },
+   {
+    "url": "https://openreview.net/forum?id=3DZeEUTwhq",
+    "url_effective": "charset=utf-8 https://openreview.net/challenge?redirect=%2Fforum%3Fid%3D3DZeEUTwhq",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 4787,
+    "sha256": "3f9a96b1244cad79badd22133bfd7679a7bddfe63e0bd5ec3fcb0477abd8c6ee",
+    "fetched_at": "2026-09-14T22:13:58Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "getting",
+     "auditing",
+     "model",
+     "substitution",
+     "apis"
+    ],
+    "accepted": false
+   },
+   {
+    "url": "https://arxiv.org/pdf/2504.04715",
+    "url_effective": "https://arxiv.org/pdf/2504.04715",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 710190,
+    "sha256": "0397bc3091833e4c6d37aafcbbfb7620856cdcfd672f8a5ad093a0f762dc8ab0",
+    "fetched_at": "2026-09-14T22:13:58Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2504.04715",
+  "url_effective": "https://arxiv.org/pdf/2504.04715",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 710190,
+  "sha256": "0397bc3091833e4c6d37aafcbbfb7620856cdcfd672f8a5ad093a0f762dc8ab0",
+  "fetched_at": "2026-09-14T22:13:58Z",
+  "kind": "pdf",
+  "pages": 15,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B10.txt",
+   "chars": 52819,
+   "sha256": "1540736aa6f728023f33e238f6972e55265307f927657f6e104d129840ac79cf"
+  }
+ },
+ "B11": {
+  "title": "Behavioral Fingerprints for LLM Endpoint Stability and Identity",
+  "attempts": [
+   {
+    "url": "https://www.alphaxiv.org/abs/2603.19022",
+    "url_effective": "charset=utf-8 https://www.alphaxiv.org/abs/2603.19022",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 192175,
+    "sha256": "fec19581a7ada3cb45445197d97bbbb998ac4d7dc6e6bb01d0d65fd7e3a1a6bb",
+    "fetched_at": "2026-09-14T22:13:59Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://www.alphaxiv.org/abs/2603.19022",
+  "url_effective": "charset=utf-8 https://www.alphaxiv.org/abs/2603.19022",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 192175,
+  "sha256": "fec19581a7ada3cb45445197d97bbbb998ac4d7dc6e6bb01d0d65fd7e3a1a6bb",
+  "fetched_at": "2026-09-14T22:13:59Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B11.txt",
+   "chars": 14488,
+   "sha256": "64886ac5b30fe71d90290ac7b5c3d76c9a383a68831f0696fd8b597fbd9a50e7"
+  }
+ },
+ "B12": {
+  "title": "Cash for errors: project offers bounty for spotting mistakes in published papers",
+  "attempts": [
+   {
+    "url": "https://www.nature.com/articles/d41586-024-02681-2",
+    "url_effective": "charset=utf-8 https://www.nature.com/articles/d41586-024-02681-2?error=cookies_not_supported&code=fe4ce7bb-b9e6-448a-b941-c7d794856504",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 256967,
+    "sha256": "27e7bcd40847503bdfa4d0aa9166f91a6d994d4f475c8ce238a4d8afe7746025",
+    "fetched_at": "2026-09-14T22:14:01Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://www.nature.com/articles/d41586-024-02681-2",
+  "url_effective": "charset=utf-8 https://www.nature.com/articles/d41586-024-02681-2?error=cookies_not_supported&code=fe4ce7bb-b9e6-448a-b941-c7d794856504",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 256967,
+  "sha256": "27e7bcd40847503bdfa4d0aa9166f91a6d994d4f475c8ce238a4d8afe7746025",
+  "fetched_at": "2026-09-14T22:14:01Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B12.txt",
+   "chars": 8155,
+   "sha256": "e069cd964cdd533b91587ad9eed3150cc3d4f0dade651911718d888ad66ae9c2"
+  }
+ },
+ "B13": {
+  "title": "Defeating Nondeterminism in LLM Inference: Theory to Deterministic Code Edits",
+  "attempts": [
+   {
+    "url": "https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "url_effective": "charset=utf-8 https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "http": "429",
+    "content_type": "text/html;",
+    "bytes": 32182,
+    "sha256": "9a7a1241cf0487bb30200ae3d15f02bf34704021d0ce4a8054ffa0d805b3e21d",
+    "fetched_at": "2026-09-14T22:14:02Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "defeating",
+     "nondeterminism",
+     "inference",
+     "theory",
+     "deterministic",
+     "code",
+     "edits"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B14": {
+  "title": "DiFR: Inference Verification Despite Nondeterminism",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2511.20621",
+    "url_effective": "https://arxiv.org/pdf/2511.20621",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1338301,
+    "sha256": "6bb442acbe408ded68c5f65a7b58d9d37d6d6bbb6915afc866caef2e6bee4dd2",
+    "fetched_at": "2026-09-14T22:14:02Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 39,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2511.20621",
+  "url_effective": "https://arxiv.org/pdf/2511.20621",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1338301,
+  "sha256": "6bb442acbe408ded68c5f65a7b58d9d37d6d6bbb6915afc866caef2e6bee4dd2",
+  "fetched_at": "2026-09-14T22:14:02Z",
+  "kind": "pdf",
+  "pages": 39,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B14.txt",
+   "chars": 122647,
+   "sha256": "5c753f9eb56f4d4dcdfc7c825c704fc1e3b3650856b80ba1a919c253a7bb81f6"
+  }
+ },
+ "B15": {
+  "title": "Does quantization affect models' performance on long-context tasks?",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2505.20276",
+    "url_effective": "https://arxiv.org/pdf/2505.20276",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 13993505,
+    "sha256": "905bf83710f9820322c744d3256e3a7a6439b6d2079d5eea22895ce3d1c89272",
+    "fetched_at": "2026-09-14T22:14:03Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 49,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2505.20276",
+  "url_effective": "https://arxiv.org/pdf/2505.20276",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 13993505,
+  "sha256": "905bf83710f9820322c744d3256e3a7a6439b6d2079d5eea22895ce3d1c89272",
+  "fetched_at": "2026-09-14T22:14:03Z",
+  "kind": "pdf",
+  "pages": 49,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B15.txt",
+   "chars": 141624,
+   "sha256": "b7582bcd894d8ad4ee37913d5d7ff12b59705f7e326d58cdea4d48f94f147206"
+  }
+ },
+ "B16": {
+  "title": "ERROR: Estimating the Reliability & Robustness of Research – ERROR is a bug bounty program for science to systematically detect and report errors in academic publications",
+  "attempts": [
+   {
+    "url": "https://error.reviews/",
+    "url_effective": "charset=UTF-8 https://error.reviews/",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 79077,
+    "sha256": "2485429e3fdaf2f08be9271df310c1f910cb29caee7efac0aafd56e7ff479856",
+    "fetched_at": "2026-09-14T22:14:04Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B17": {
+  "title": "Fingerprinting Inference Systems of Large Language Models",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/html/2605.29979v1",
+    "url_effective": "charset=utf-8 https://arxiv.org/html/2605.29979v1",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 412366,
+    "sha256": "39a20b000caac8f6890ad6c2bc08138289e0e9fe9a94ddeb5e7fdaae42ba83db",
+    "fetched_at": "2026-09-14T22:14:04Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/html/2605.29979v1",
+  "url_effective": "charset=utf-8 https://arxiv.org/html/2605.29979v1",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 412366,
+  "sha256": "39a20b000caac8f6890ad6c2bc08138289e0e9fe9a94ddeb5e7fdaae42ba83db",
+  "fetched_at": "2026-09-14T22:14:04Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B17.txt",
+   "chars": 48122,
+   "sha256": "3cd69314f3cad7dea10c8632394c0d3fd71c5cf14b908db161af4de25e6e7274"
+  }
+ },
+ "B18": {
+  "title": "LLM API Continuous Monitoring",
+  "attempts": [
+   {
+    "url": "https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+    "url_effective": "charset=utf-8 https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 183719,
+    "sha256": "df705bbc6c278afd20060dafb5aecd5df572f24f871a3c11688ee5f5bde63284",
+    "fetched_at": "2026-09-14T22:14:04Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+  "url_effective": "charset=utf-8 https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 183719,
+  "sha256": "df705bbc6c278afd20060dafb5aecd5df572f24f871a3c11688ee5f5bde63284",
+  "fetched_at": "2026-09-14T22:14:04Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B18.txt",
+   "chars": 12921,
+   "sha256": "9ade64439949988bd9b7541f1ee324ca705bbddaa097dff7bf90556b66a3d78b"
+  }
+ },
+ "B19": {
+  "title": "LLM Model Drift Detection 2026: Monitoring AI Degradation",
+  "attempts": [
+   {
+    "url": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+    "url_effective": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+    "http": "200",
+    "content_type": "text/html",
+    "bytes": 41176,
+    "sha256": "eec28a9cd583249010d7277a634f71200040c48cb2e21d1d0c06129d3833a635",
+    "fetched_at": "2026-09-14T22:14:05Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+  "url_effective": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+  "http": "200",
+  "content_type": "text/html",
+  "bytes": 41176,
+  "sha256": "eec28a9cd583249010d7277a634f71200040c48cb2e21d1d0c06129d3833a635",
+  "fetched_at": "2026-09-14T22:14:05Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B19.txt",
+   "chars": 18310,
+   "sha256": "01701185d4be045ad4eb8fea0020ea460324c94838dd4f789a25152a95600be1"
+  }
+ },
+ "B20": {
+  "title": "LLM-42: Enabling Determinism in LLM Inference with Verified Speculation",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2601.17768",
+    "url_effective": "https://arxiv.org/pdf/2601.17768",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1584839,
+    "sha256": "5126ff80136d8233b562933bbbbcdd2e3e06cc57cd48e20f0ca6c05235b2e02e",
+    "fetched_at": "2026-09-14T22:14:05Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2601.17768",
+  "url_effective": "https://arxiv.org/pdf/2601.17768",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1584839,
+  "sha256": "5126ff80136d8233b562933bbbbcdd2e3e06cc57cd48e20f0ca6c05235b2e02e",
+  "fetched_at": "2026-09-14T22:14:05Z",
+  "kind": "pdf",
+  "pages": 15,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B20.txt",
+   "chars": 70327,
+   "sha256": "a8eb258a38500328233efdd9f275358522aa3bbbaee0535b9797cbab14ded332"
+  }
+ },
+ "B21": {
+  "title": "LLMs don’t stand still: How to monitor and trust the models powering your AI",
+  "attempts": [
+   {
+    "url": "https://www.catchpoint.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+    "url_effective": "charset=UTF-8 https://www.logicmonitor.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 1182209,
+    "sha256": "37f433072d9cf5ebb1e73ffaeb32fc1c2e478e20e306edcdf64625e1b51ad6ae",
+    "fetched_at": "2026-09-14T22:14:08Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 0.714,
+    "title_words_missing": [
+     "still",
+     "models"
+    ],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://www.catchpoint.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+  "url_effective": "charset=UTF-8 https://www.logicmonitor.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 1182209,
+  "sha256": "37f433072d9cf5ebb1e73ffaeb32fc1c2e478e20e306edcdf64625e1b51ad6ae",
+  "fetched_at": "2026-09-14T22:14:08Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 0.714,
+  "title_words_missing": [
+   "still",
+   "models"
+  ],
+  "accepted": true,
+  "fulltext": {
+   "file": "B21.txt",
+   "chars": 35609,
+   "sha256": "15d467472e56496e09848857da280f4b058c3bbd303373528cc6a874e715454d"
+  }
+ },
+ "B22": {
+  "title": "Log Probability Tracking of LLM APIs",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/html/2512.03816v2",
+    "url_effective": "charset=utf-8 https://arxiv.org/html/2512.03816v2",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 187780,
+    "sha256": "c0ee0fc802f5cafdc14956ff93ad14ef61b5f7d5a5aeafa89ca1f7f02141d03a",
+    "fetched_at": "2026-09-14T22:14:09Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/html/2512.03816v2",
+  "url_effective": "charset=utf-8 https://arxiv.org/html/2512.03816v2",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 187780,
+  "sha256": "c0ee0fc802f5cafdc14956ff93ad14ef61b5f7d5a5aeafa89ca1f7f02141d03a",
+  "fetched_at": "2026-09-14T22:14:09Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B22.txt",
+   "chars": 51994,
+   "sha256": "cdb117b67be151180bd190c5d5108855205057da119aa13f295b824d541055cc"
+  }
+ },
+ "B23": {
+  "title": "Offering scientists cash to spot errors in published papers doesn’t work",
+  "attempts": [
+   {
+    "url": "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "url_effective": "charset=UTF-8 https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "http": "403",
+    "content_type": "text/html;",
+    "bytes": 5972,
+    "sha256": "04aa6cd39c0aab5ec2a2451560b9ac62ff5f21bad9deed0033ba5b1f7d71e7e8",
+    "fetched_at": "2026-09-14T22:14:09Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "offering",
+     "scientists",
+     "cash",
+     "spot",
+     "errors",
+     "published",
+     "papers",
+     "doesn",
+     "work"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B24": {
+  "title": "Pay researchers to spot errors in published papers",
+  "attempts": [
+   {
+    "url": "https://www.nature.com/articles/d41586-024-01465-y",
+    "url_effective": "charset=utf-8 https://www.nature.com/articles/d41586-024-01465-y?error=cookies_not_supported&code=46b66321-8243-44e2-82f4-e0d992f13b78",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 237527,
+    "sha256": "8d3349f74563afbe3672bb6551a81e3b9fadcb9c1c8459d354497f8629876793",
+    "fetched_at": "2026-09-14T22:14:11Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://www.nature.com/articles/d41586-024-01465-y",
+  "url_effective": "charset=utf-8 https://www.nature.com/articles/d41586-024-01465-y?error=cookies_not_supported&code=46b66321-8243-44e2-82f4-e0d992f13b78",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 237527,
+  "sha256": "8d3349f74563afbe3672bb6551a81e3b9fadcb9c1c8459d354497f8629876793",
+  "fetched_at": "2026-09-14T22:14:11Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B24.txt",
+   "chars": 12771,
+   "sha256": "f527daa5dc92a3d72c620583ea6e649bbd86150a98a5b7fab6418257ae71aeb5"
+  }
+ },
+ "B25": {
+  "title": "QCIVET: A Quantum--Classical Pipeline Integrity Framework with Contract-Based Subtype Verification and Hash-Chained Audit Traces",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2605.13109",
+    "url_effective": "https://arxiv.org/pdf/2605.13109",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1363826,
+    "sha256": "ff494ebf8dd5683b77cdc450c270b905b105e4b8ca486c29f1fcb96cf734f85d",
+    "fetched_at": "2026-09-14T22:14:11Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 30,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2605.13109",
+  "url_effective": "https://arxiv.org/pdf/2605.13109",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1363826,
+  "sha256": "ff494ebf8dd5683b77cdc450c270b905b105e4b8ca486c29f1fcb96cf734f85d",
+  "fetched_at": "2026-09-14T22:14:11Z",
+  "kind": "pdf",
+  "pages": 30,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B25.txt",
+   "chars": 104893,
+   "sha256": "fa740793b7803867e15724fed689468fa8feb5f2112f7b2439e852cf35632836"
+  }
+ }
+}

@@ -1,0 +1,1396 @@
+{
+ "run": "wf_958a51f6-16d",
+ "script": "../sand_survey_pass4_inputs/prompts/read_pass4.js (committed at 450265ff, verbatim)",
+ "readings": [
+  {
+   "reader": "reader-1",
+   "sources": [
+    {
+     "id": "S11",
+     "read_end_to_end": true,
+     "last_line_quote": "26",
+     "midpoint_quote": "to June. For comparison, running GPT-3.5 March twice yields disagreement rate of 2.8% and running",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The GPT-3.5 and GPT-4 API snapshots of March 2023 against those of June 2023, compared on fixed task sets by accuracy, response rate, verbosity and extracted-answer mismatch.",
+       "reason": "Carries E1 (the same API model at two times) and E2 (the same prompts for both versions). E3 is carried only narrowly and informally: a same-snapshot rerun disagreement (2.8% / 7.0%) is set against the 27% March-June mismatch for GPT-3.5 on OpinionQA to call the drift beyond randomness. No interval or no-difference test is reported on any comparison (no E4). Every compared quantity comes from extracted answers of text sampled at temperature 0.1, not from log-probabilities (no E5). Prompts are released on GitHub with no digest (no E6).",
+       "neighbour_phrase": "Chen, Zaharia & Zou compare March and June 2023 GPT-3.5/GPT-4 API snapshots on fixed prompts by extracted answers",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "March 2023 and June 2023 versions of GPT-3.5 and GPT-4 on several diverse tasks"
+        },
+        "E2": {
+         "value": true,
+         "quote": "GPT-4 (June 2023) was poor on these same questions (51% accuracy)"
+        },
+        "E3": {
+         "value": true,
+         "quote": "running GPT-3.5 March twice yields disagreement rate of 2.8% and running GPT-3.5 June twice yields disagreement rate of 7.0%"
+        },
+        "E4": {
+         "value": false,
+         "quote": "We compute its population mean for both the March and June versions, and leverage their differences to measure the drift sizes."
+        },
+        "E5": {
+         "value": false,
+         "quote": "how often, for the same prompt, the extracted answers by two versions of the same LLM service do not match"
+        },
+        "E6": {
+         "value": false,
+         "quote": "All prompts we curated in this paper and responses from GPT-4 and GPT-3.5 in both March and June are collected and released in https://github.com/lchen001/LLMDrift"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "March 2023 and June 2023 versions of GPT-3.5 and GPT-4 on several diverse tasks",
+      "We set the temperature to be 0.1 to reduce output randomness",
+      "how often, for the same prompt, the extracted answers by two versions of the same LLM service do not match",
+      "running GPT-3.5 March twice yields disagreement rate of 2.8% and running GPT-3.5 June twice yields disagreement rate of 7.0%",
+      "considerable opinion drifts over time above and beyond model"
+     ],
+     "leads": [
+      "Lingjiao Chen, Tracy Cai, Matei Zaharia, and James Zou. Did the model change? efficiently assessing machine learning api shifts. arXiv preprint arXiv:2107.14203, 2021.",
+      "Shangqing Tu, Chunyang Li, Jifan Yu, Xiaozhi Wang, Lei Hou, and Juanzi Li. Chatlog: Recording and analyzing chatgpt across time. arXiv preprint arXiv:2304.14106, 2023.",
+      "Lingjiao Chen, Zhihua Jin, Evan Sabri Eyuboglu, Christopher Re, Matei Zaharia, and James Y Zou. Hapi: A large-scale longitudinal dataset of commercial ml api predictions. Advances in Neural Information Processing Systems, 35:24571-24585, 2022.",
+      "Arvind Narayanan and Sayash Kapoor. Is GPT-4 getting worse over time? https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time, 2023."
+     ],
+     "notes": "Read all 2784 lines. E3 is a borderline code. The same-snapshot floor is measured once, for GPT-3.5 on OpinionQA only. It is used as an informal comparison (27% mismatch against 2.8%/7.0% reruns; the next section says 'above and beyond model's randomness'), with no threshold set from it and no test against it. A stricter reader could code E3 false, which gives distance 3 instead of 2. No other task has a rerun floor. Cited [AAKA23] is already A06 in the pass-4 list and is not repeated in leads."
+    },
+    {
+     "id": "S12",
+     "read_end_to_end": true,
+     "last_line_quote": "26",
+     "midpoint_quote": "Figure 9: The loglikelihood difference plots are somewhat symmetric around zero indicating that",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Llama-2 and Yi models at 16-bit against quantized (BnB, GPTQ, AWQ, SmoothQuant), layer-dropped, pruned and sparsified versions of the same weights, compared on fixed benchmarks by % flips and token-level KL-divergence.",
+       "reason": "Carries E1 (compressed versions of the same trained weights), E2 (identical benchmark items for baseline and compressed model) and E5 (KL-divergence over per-token probability distributions on the answer options). It reports point estimates of accuracy change and flips with no repeated-run floor on identical weights (no E3). It gives no interval or no-difference test on the comparison; the only statistic is a Spearman correlation between two distance metrics (no E4). No item digest (no E6).",
+       "neighbour_phrase": "Dutta et al. measure flips and KL-divergence between 16-bit and quantized copies of the same LLM on benchmarks",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We compare baseline and compressed LLMs on the following metrics:"
+        },
+        "E2": {
+         "value": true,
+         "quote": "The first/second number indicates the % of correct/incorrect answers of the baseline model that changed."
+        },
+        "E3": {
+         "value": false,
+         "quote": "we believe this variation is likely caused by the noise in GPT4 evaluation process"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Change in accuracy/ flips (%), compared to 16-bit baseline"
+        },
+        "E5": {
+         "value": true,
+         "quote": "where the j-th token of the i-th option has a probability distribution Pb(i, j) across all tokens in the vocabulary of the baseline model, and Pq(i, j) for the quantized model."
+        },
+        "E6": {
+         "value": false,
+         "quote": "The answers to all 80 questions can be found in the supplementary material."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We compare baseline and compressed LLMs on the following metrics:",
+      "where the j-th token of the i-th option has a probability distribution Pb(i, j) across all tokens in the vocabulary of the baseline model, and Pq(i, j) for the quantized model.",
+      "all quantization schemes exhibit large number of flips (up to 13.6%)",
+      "we believe this variation is likely caused by the noise in GPT4 evaluation process",
+      "Flips is only a warning that the behaviour of a model and its compressed version is different"
+     ],
+     "leads": [
+      "Canwen Xu, Wangchunshu Zhou, Tao Ge, Ke Xu, Julian McAuley, and Furu Wei. 2021. Beyond Preserved Accuracy: Evaluating Loyalty and Robustness of BERT Compression. arXiv:2109.03228 [cs.CL]",
+      "Sara Hooker, Aaron Courville, Gregory Clark, Yann Dauphin, and Andrea Frome. 2021. What Do Compressed Deep Neural Networks Forget? arXiv:1911.05248 [cs.LG]",
+      "Vinu Joseph, Shoaib Ahmed Siddiqui, Aditya Bhaskara, Ganesh Gopalakrishnan, Saurav Muralidharan, Michael Garland, Sheraz Ahmed, and Andreas Dengel. 2021. Going Beyond Classification Accuracy Metrics in Model Compression. arXiv:2012.01604 [cs.CV]",
+      "Ajay Jaiswal, Zhe Gan, Xianzhi Du, Bowen Zhang, Zhangyang Wang, and Yinfei Yang. 2024. Compressing LLMs: The Truth is Rarely Pure and Never Simple. arXiv:2310.01382 [cs.CL]",
+      "Junyuan Hong, Jinhao Duan, Chenhui Zhang, Zhangheng Li, Chulin Xie, Kelsey Lieberman, James Diffenderfer, Brian Bartoldson, Ajay Jaiswal, Kaidi Xu, Bhavya Kailkhura, Dan Hendrycks, Dawn Song, Zhangyang Wang, and Bo Li. 2024. Decoding Compressed Trust: Scrutinizing the Trustworthiness of Efficient LLMs Under Compression. arXiv:2403.15447 [cs.CL]",
+      "Shiyao Li, Xuefei Ning, Luning Wang, Tengxuan Liu, Xiangsheng Shi, Shengen Yan, Guohao Dai, Huazhong Yang, and Yu Wang. 2024. Evaluating Quantized Large Language Models. arXiv:2402.18158 [cs.CL]"
+     ],
+     "notes": "Read all 2328 lines. Distance 2 (missing E3, E4). The GPTQ W8A16 scheme with near-zero flips works as an informal low reference, but it is a different serving, not a repeated evaluation of identical weights, and no threshold is set from it. Flips are computed from hard answer changes. The E5 credit rests on the KL-divergence metric (teacher-forced token probabilities on answer options), which the paper computes per model/scheme pair (Figure 5). The Xu et al. 2021 'probability loyalty' lead may sit nearer on E5. Hooker et al. 2020 is cited and is already A07."
+    },
+    {
+     "id": "S13",
+     "read_end_to_end": true,
+     "last_line_quote": "Table 23: Vicuna 7B Performance before and after fingerprinting, using IFadapter.",
+     "midpoint_quote": "Table 9: Detail comparison between this work and the two closely related prior works on Model Fingerprinting.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Ownership verification of user models fine-tuned from a publisher's instruction-backdoored LLM, by exact generation of a public decryption from a fixed set of private fingerprint keys.",
+       "reason": "Carries only E2 (a fixed key/prompt set given to the published and user models). The comparison asks whether a model was fine-tuned from mine, which E1 excludes. Repeated temperature-0.7 runs on identical user-model weights feed a one-sample t-test against a fixed 75% threshold; that is neither a measured floor used as the null (no E3) nor a no-difference test (no E4). Verification is exact match of greedy or sampled generations, not log-probabilities (no E5). Keys are kept private, and the MD5 variant is a key encoding, not a published digest (no E6).",
+       "neighbour_phrase": "Xu et al. verify fine-tuned descendants of a published LLM by recall of implanted fingerprint keys",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "the publisher aims to detect if any given model was actually fine-tuned from"
+        },
+        "E2": {
+         "value": true,
+         "quote": "we tested the same set of prompts 10 times for each of the 12 user models"
+        },
+        "E3": {
+         "value": false,
+         "quote": "for each user model that is trained on the user dataset, we run inference 10 times and report average FSRpost as well as p-value of one-sample t-test for an alternative hypothesis that the mean FSRpost should be above 75%."
+        },
+        "E4": {
+         "value": false,
+         "quote": "we conduct a one-sample t-test to confirm that the FSRpost is significantly above a nontrivial threshold (75%)"
+        },
+        "E5": {
+         "value": false,
+         "quote": "For all variants we infer with 0 temperature (i.e. greedy decoding) by default."
+        },
+        "E6": {
+         "value": false,
+         "quote": "The fingerprint key xi and learned F-Adapter are kept private."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "is this model fine-tuned from my model?",
+      "we tested the same set of prompts 10 times for each of the 12 user models",
+      "we conduct a one-sample t-test to confirm that the FSRpost is significantly above a nontrivial threshold (75%)",
+      "For all variants we infer with 0 temperature (i.e. greedy decoding) by default.",
+      "We further introduce MD5 which replaces secrets of F1 with their MD5 encoding"
+     ],
+     "leads": [
+      "Jialuo Chen, Jingyi Wang, Tinglan Peng, Youcheng Sun, Peng Cheng, Shouling Ji, Xingjun Ma, Bo Li, and Dawn Song. 2022a. Copy, right? a testing framework for copyright protection of deep learning models. In 2022 IEEE Symposium on Security and Privacy (SP), pages 824-841. IEEE.",
+      "Chenxi Gu, Chengsong Huang, Xiaoqing Zheng, Kai-Wei Chang, and Cho-Jui Hsieh. 2022. Watermarking pre-trained language models with backdooring. arXiv preprint arXiv:2210.07543.",
+      "Peixuan Li, Pengzhou Cheng, Fangqi Li, Wei Du, Haodong Zhao, and Gongshen Liu. 2023. Plmmark: A secure and robust black-box watermarking framework for pre-trained language models. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 37, pages 14991-14999.",
+      "Le Yu, Bowen Yu, Haiyang Yu, Fei Huang, and Yongbin Li. 2023. Language models are super mario: Absorbing abilities from homologous models as a free lunch. arXiv preprint arXiv:2311.03099."
+     ],
+     "notes": "Read all 5768 lines (lines 2530 onward are appendix code and benchmark tables). Distance 4 (missing E1, E3, E4, E5), coded on the paper's main comparison. Flag for the aggregator: section 2.4 / Table 2 computes the Jensen-Shannon Distance of logits (plus weight and activation L2 shifts) between LLaMA2-7B and 13 other models on one fixed input string. That is a logit-based comparison, but between different models, and the paper rejects it as unable to verify ownership. A reader who credits E5 from Table 2 regardless of object would get distance 3. Table 5 is the only statistical test: repeated temperature-0.7 inference on identical weights, one-sample t-test, null 'mean FSR <= 75%'."
+    },
+    {
+     "id": "S14",
+     "read_end_to_end": true,
+     "last_line_quote": "24",
+     "midpoint_quote": "suggesting that REEF can achieve reliable fingerprint identification with a smaller sample number.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Provenance of suspect LLMs against a victim model (fine-tuned, pruned, merged, 4-bit quantized, permuted or scaled variants, and unrelated models), by CKA similarity of hidden-layer representations on the same samples.",
+       "reason": "Carries E1 only for a subset of its suspects: a 4-bit quantization of Llama-2-7b, pruning without post-training, and permutation/scaling of the same weights. The task itself is provenance. Carries E2 (the same 200 TruthfulQA samples for victim and suspect). No repeated-run floor on identical weights; the verdict rests on the gap between derived and unrelated averages and on fixed colour bands (no E3). No interval or test (no E4). The compared quantity is CKA of layer activations, not token log-probabilities (no E5). No item digest (no E6).",
+       "neighbour_phrase": "Zhang et al. compare CKA similarity of hidden representations between victim and derived LLMs on shared samples",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "including quantization and fine-tuned variants of Llama-2-7b (e.g., Llama-2-7b-chat"
+        },
+        "E2": {
+         "value": true,
+         "quote": "the representations of the same samples from a suspect model and a victim model"
+        },
+        "E3": {
+         "value": false,
+         "quote": "the average similarity of LLMs derived from the victim model is 0.9585, which is substantially higher than that of unrelated LLMs, whose average similarity is 0.2361"
+        },
+        "E4": {
+         "value": false,
+         "quote": "indicate similarity greater than 0.8"
+        },
+        "E5": {
+         "value": false,
+         "quote": "REEF computes and compares the centered kernel alignment similarity between the representations of a suspect model and a victim model on the same samples"
+        },
+        "E6": {
+         "value": false,
+         "quote": "on 200 samples from the TruthfulQA dataset (Lin et al., 2022)"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "REEF computes and compares the centered kernel alignment similarity between the representations of a suspect model and a victim model on the same samples",
+      "including quantization and fine-tuned variants of Llama-2-7b (e.g., Llama-2-7b-chat",
+      "compare the similarities of the weights and representations before and after the operations",
+      "the average similarity of LLMs derived from the victim model is 0.9585, which is substantially higher than that of unrelated LLMs, whose average similarity is 0.2361",
+      "We conduct experiments on the TruthfulQA dataset to extract logit output for the suspect models."
+     ],
+     "leads": [
+      "Zhiguang Yang and Hanzhou Wu. A fingerprint for large language models. arXiv preprint arXiv:2407.01235, 2024.",
+      "Boyi Zeng, Chenghu Zhou, Xinbing Wang, and Zhouhan Lin. Huref: Human-readable fingerprint for large language models. arXiv preprint arXiv:2312.04828, 2023.",
+      "Yehonathan Refael, Adam Hakim, Lev Greenberg, Tal Aviv, Satya Lokam, Ben Fishman, and Shachar Seidman. Slip: Securing llms ip using weights decomposition. arXiv preprint arXiv:2407.10886, 2024.",
+      "Dario Pasquini, Evgenios M Kornaropoulos, and Giuseppe Ateniese. Llmmap: Fingerprinting for large language models. arXiv preprint arXiv:2407.15847, 2024.",
+      "Dmitri Iourovitski, Sanat Sharma, and Rakshak Talwar. Hide and seek: Fingerprinting large language models with evolutionary learning. arXiv preprint arXiv:2408.02871, 2024."
+     ],
+     "notes": "Read all 2159 lines. Distance 3 (missing E3, E4, E5). E1 is coded true on the same-weights pairs the paper includes (Llama-2-7b-4bit in Figure 3; LLM-Pruner block, layer and channel pruning without post-training; column permutation and 0.8 scaling of the same weights, where CKA is exactly 1.0000 by invariance, not by a measured spread). Most suspects are fine-tuned or unrelated models, a comparison E1 excludes. A reader who codes E1 on the paper's stated purpose alone would get distance 4. The paper also runs the Logits baseline of Yang & Wu (2024) on output logits between victim and suspect models; that is a baseline, not REEF's compared quantity, so E5 stays false. Appendix D uses CKA of logits only as an evasion loss."
+    }
+   ]
+  },
+  {
+   "reader": "reader-2",
+   "sources": [
+    {
+     "id": "S15",
+     "read_end_to_end": true,
+     "last_line_quote": "Privacy policy  |  Terms and conditions  |  Accessibility statement",
+     "midpoint_quote": "The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Representations of brain regions and computational models, each summarised as a dissimilarity matrix over the same fixed set of 96 stimuli, compared to each other.",
+       "reason": "Only E2 is carried: models and subjects get the same fixed stimuli. The comparison is between different systems (brain regions, subjects, species, models), not a model against itself (E1 false). The noise floor is estimated across subjects and is drawn as a reference line, not used as the grading null (E3 false). The randomization test's null is 'unrelated', not 'no difference', and a difference test is only proposed in the appendix (E4 false). No log-probabilities (E5 false) and no digest (E6 false). It does part of the clause for a different object.",
+       "neighbour_phrase": "Kriegeskorte, Mur & Bandettini compare dissimilarity matrices of brains and models over fixed stimulus sets",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "We can use dissimilarity matrices to compare internal representations between two models or two brain regions in the same subject"
+        },
+        "E2": {
+         "value": true,
+         "quote": "The models are presented with the same experimental stimuli as our human subjects."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Both of these reference lines as well as the dissimilarity signal-to-noise ratios (dissimilarity SNR: below the titles) are estimated from the variability of the dissimilarity estimates across subjects."
+        },
+        "E4": {
+         "value": false,
+         "quote": "we obtain a distribution of correlations simulating the null hypothesis that the two dissimilarity matrices are unrelated"
+        },
+        "E5": {
+         "value": false,
+         "quote": "The resulting 96 t maps were used for RSA."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "The models are presented with the same experimental stimuli as our human subjects.",
+      "The black line indicates the noise floor, i.e., the expected deviation between the empirical reference RDM (with noise) and the underlying true RDM (without noise).",
+      "In order to test the difference between two dissimilarity matrices, we need to estimate the distribution of the measure of fit (e.g., correlation between the matrices) under the null hypothesis that the two dissimilarity matrices are identical."
+     ],
+     "leads": [
+      "Laakso, A., and Cottrell, G. W. (2000). Content and cluster analysis: assessing representational similarity in neural systems. Philos. Psychol. 13, 47–76."
+     ],
+     "notes": "This is neuroscience, not ML serving. The error bars are bootstrap standard errors with no stated level. The difference-between-matrices test is described as not yet developed (Appendix), so it is discussed, not done. Figure 1 has p-values for response-pattern differences between stimuli inside one region, which is not the brain-vs-model comparison. Distance from C4a is 4 (only E2 carried)."
+    },
+    {
+     "id": "S16",
+     "read_end_to_end": true,
+     "last_line_quote": "Thinking Machines Lab © 2026",
+     "midpoint_quote": "However, as we can observe empirically, this isn’t true.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "One LLM's outputs under different serving numerics: 1000 temperature-0 completions of one fixed prompt with default vs batch-invariant vLLM kernels, and the log-prob KL between the RL sampler and trainer on the same weights.",
+       "reason": "E1 is carried: the same weights are compared under different serving (default vs batch-invariant kernels, sampler vs trainer). E2 is carried in the completions experiment (one fixed prompt, both configurations). E5 is carried only in the sampler-trainer KL, which runs on RL rollouts produced during training, so not on a fixed item set. The spread across identical-weight completions is measured (80 unique) but no verdict is graded against it (E3 false). There is no interval or test (E4 false) and no digest (E6 false). No single comparison carries E1-E5.",
+       "neighbour_phrase": "He and Thinking Machines Lab measure run-to-run divergence of identical LLM weights under batch-variant serving",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "On the other hand, when we enable our batch-invariant kernels, all of our 1000 completions are identical."
+        },
+        "E2": {
+         "value": true,
+         "quote": "We use Qwen/Qwen3-235B-A22B-Instruct-2507 and sample 1000 completions at temperature 0 with the prompt “Tell me about Richard Feynman” (non-thinking mode), generating 1000 tokens each."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Surprisingly, we generate 80 unique completions, with the most common of these occuring 78 times."
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": true,
+         "quote": "We can also plot the KL-divergence in logprobs between our sampler and trainer, where all 3 runs have notably different behavior."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "In other words, the primary reason nearly all LLM inference endpoints are nondeterministic is that the load (and thus batch-size) nondeterministically varies!",
+      "On the other hand, when we enable our batch-invariant kernels, all of our 1000 completions are identical.",
+      "We can also plot the KL-divergence in logprobs between our sampler and trainer, where all 3 runs have notably different behavior."
+     ],
+     "leads": [],
+     "notes": "This is an engineering blog post. It explains and removes batch-size nondeterminism rather than building a detector. The E5 comparison (sampler vs trainer logprob KL) and the E2 comparison (fixed Feynman prompt) are different experiments. There is no statistical grading anywhere. Cited works are unnamed links ('a recent arXiv preprint', 'the Quack blog post'), so no leads are recorded. Its point that identical weights diverge with server load bears on how a same-weights floor for C4a would be measured."
+    },
+    {
+     "id": "S17",
+     "read_end_to_end": true,
+     "last_line_quote": "39",
+     "midpoint_quote": "in mathematical benchmarks, rests on unstable and often non-reproducible foundations.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Pass@1 accuracy of open reasoning LLMs on fixed math benchmarks: the same checkpoint across seeds, hardware clusters, frameworks and repeated runs, plus RL/SFT models vs their base models with paired tests.",
+       "reason": "For the same-model comparisons (a checkpoint across clusters, frameworks and consecutive runs) the source carries E1, and E2 (fixed benchmarks with all other variables fixed). It also carries E3 in informal form: a cross-cluster gap is judged against the seed standard deviation of the identical checkpoint. The paired t-test / Wilcoxon with a no-improvement null at p<0.01 is applied only to RL/SFT models vs their base models, which are different models. For the self-comparison only per-side ± std is given, so E4 does not hold for that object. Pass@1 comes from extracted answers, not log-probs (E5 false). Outputs are released without a digest (E6 false). Nearest reading: distance 2 (E4, E5) for the same-model object.",
+       "neighbour_phrase": "Hochlehnert et al. measure seed and hardware variance of identical checkpoints on fixed math benchmarks",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We evaluated the same model across five different compute clusters, each with varying GPU types and memory configurations."
+        },
+        "E2": {
+         "value": true,
+         "quote": "we compare lighteval and evalchemy, fixing all other variables: model, dataset, hardware, decoding parameters, and random seeds (3 per model)"
+        },
+        "E3": {
+         "value": true,
+         "quote": "achieved 7.3%±3.8 on AIME’24 on our cluster versus 11.3%±3.6 on Runpod; a 4 percentage point gap that exceeds the standard deviation"
+        },
+        "E4": {
+         "value": true,
+         "quote": "The null hypothesis is that there is no improvement from RL/SFT training"
+        },
+        "E5": {
+         "value": false,
+         "quote": "LightEval’s LaTeX-based answer extraction and evaluation pipeline ensures reliable and consistent result parsing and correctness matching"
+        },
+        "E6": {
+         "value": false,
+         "quote": "To foster reproducibility, we release all code, prompts, and model outputs"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Remarkably, even consecutive runs on the same A100 cluster produced variations: Bespoke-Stratos-7B ranged from 19.3% to 23.0% on AIME’24 across runs.",
+      "We report results as statistically significant at two thresholds: p < 0.01 (marked with ∗) and p < 0.001 (marked with ∗∗).",
+      "the observed improvements from recent methods (gray highlighted area) fall entirely within the variance range (orange box plots) of DeepSeek-R1 1.5B model performance."
+     ],
+     "leads": [
+      "Berk Atil, Sarp Aykent, Alexa Chittams, Lisheng Fu, Rebecca J. Passonneau, Evan Radcliffe, Guru Rajan Rajagopal, Adam Sloan, Tomasz Tudrej, Ferhan Ture, Zhe Wu, Lixinyu Xu, and Breck Baldwin. Non-determinism of \"deterministic\" llm settings, 2025. URL https://arxiv.org/abs/2408.04667.",
+      "Lovish Madaan, Aaditya K Singh, Rylan Schaeffer, Andrew Poulton, Sanmi Koyejo, Pontus Stenetorp, Sharan Narang, and Dieuwke Hupkes. Quantifying variance in evaluation benchmarks, 2024.",
+      "Sam Bowyer, Laurence Aitchison, and Desi R Ivanova. Position: Don't use the CLT in LLM evals with fewer than a few hundred datapoints. arXiv preprint arXiv:2503.01747, 2025.",
+      "Stella Biderman, Hailey Schoelkopf, Lintang Sutawika, et al. Lessons from the trenches on reproducible evaluation of language models, 2024. URL https://arxiv.org/abs/2405.14782.",
+      "vLLM Contributors. Inference reproducibility script. https://github.com/vllm-project/vllm/blob/098900d7c2b53324687977eece400f634755cf51/examples/offline_inference/reproduciblity.py, 2024."
+     ],
+     "notes": "E3 is coded true on a close reading. The spread is the evaluation-seed standard deviation of one checkpoint, and a same-model cross-cluster gap is called notable because it 'exceeds the standard deviation'. That is a threshold with no stated level, and a stricter reader may code it false. The E4 test exists but only for different models (RL/SFT vs base), so E1-E5 are never all carried for one object. The Figure 1 variance box mixes seed, temperature and top_p variation."
+    },
+    {
+     "id": "S19",
+     "read_end_to_end": true,
+     "last_line_quote": "sequence for all learning rates tested steadily decreases.",
+     "midpoint_quote": "to reproduce an entire sequence leads to a large error due",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Training integrity: a verifier re-executes logged SGD steps from a prover's checkpoint on the same signed data batches and accepts the claimed next checkpoint if the parameter distance is below a calibrated slack δ.",
+       "reason": "E2 is carried: the same logged data batches, with signatures, are fixed before verification. E3 is carried in analogue form: δ is set above the reproduction error of re-executing updates from identical weights. But the compared objects are parameter vectors from re-executed training, not a model's behaviour against its earlier or differently-served self (E1 false). δ is a threshold with no stated level, and the KS test at α=0.01 is on initialization, not on the comparison (E4 false). The compared quantity is weight distance, not log-probs (E5 false). Data signatures sit inside a PoL encrypted for the verifier, so a stranger cannot check them (E6 false).",
+       "neighbour_phrase": "Jia et al. re-execute logged training steps and accept checkpoints within a calibrated noise threshold",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "This allows a verifier to recompute any of the steps of gradient descent of their choosing to confirm the validity of the sequence provided."
+        },
+        "E2": {
+         "value": true,
+         "quote": "will be verified on the same data samples fWT was originally trained on"
+        },
+        "E3": {
+         "value": true,
+         "quote": "then we can set our distance threshold δ (refer to Algorithm 2) such that maxt(εrepr(t) ) < δ < dref"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Since the purpose of δ is to upper bound the randomness in training, one heuristic is to set δ as the average of a few gradient updates during training."
+        },
+        "E5": {
+         "value": false,
+         "quote": "the intermediate weights achieved during training as its PoL"
+        },
+        "E6": {
+         "value": false,
+         "quote": "T is necessitated to include a signature (represented using function h(.)) of the training data as part of the PoL"
+        }
+       }
+      },
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A chain of trust of proofs-of-learning: each PoL references the PoL of its initial weights, the verifier re-derives acceptance by re-executing training steps and keeps a record of verified proofs, and the proof or its signature can be timestamped or put in a public ledger.",
+       "reason": "It chains re-derived verification results for a different, narrower object: training provenance, not a log of evaluation verdicts. The verifier's record is a lookup store, not an append-only hash-chained log. Merkle-tree hash chaining of weights is only proposed as follow-up work and rejected here because re-execution noise breaks exact hashes.",
+       "neighbour_phrase": "Jia et al. chain proofs-of-learning whose verifier re-executes training steps and records verified proofs"
+      }
+     ],
+     "bearing_quotes": [
+      "The proof (or its signature) can be timestamped, or published in a public ledger.",
+      "The verifier keeps a record of previously verified proofs.",
+      "Note that dref can be interpreted as the difference between two models trained from scratch by two independent parties, so it is used as our upper bound"
+     ],
+     "leads": [
+      "Z. Ghodsi, T. Gu, and S. Garg, “SafetyNets: Verifiable execution of deep neural networks on an untrusted cloud,” p. 10,",
+      "C. Tan, L. Yu, J. B. Leners, and M. Walfish, “The efficient server audit problem, deduplicated re-execution, and the web,” in Proceedings of the 26th Symposium on Operating Systems Principles, 2017, pp. 546–564.",
+      "P. Maini, M. Yaghini, and N. Papernot, “Dataset inference: Ownership resolution in machine learning,” in International Conference on Learning Representations, 2021."
+     ],
+     "notes": "E3 is coded true by analogy. The lower bound on δ is the reproduction error of re-executing k updates from the identical checkpoint W_t (Table I, k=1), which is a spread on identical weights used to set the acceptance threshold. The upper bound dref is across independently trained models and does not count. The prover-vs-verifier comparison is a training-computation claim, not model behaviour, which is why E1 is false. A reader treating claimed-vs-recomputed checkpoints as case (iii) could code E1 true, but E4 and E5 would still be false. The C2 verdict is added because the chain of trust and public-ledger timestamping touch that clause. SafetyNets (inference-integrity verification on an untrusted cloud) is the nearest cited lead for a served-model check."
+    }
+   ]
+  },
+  {
+   "reader": "reader-3",
+   "sources": [
+    {
+     "id": "L01",
+     "read_end_to_end": true,
+     "last_line_quote": "33",
+     "midpoint_quote": "Next we show that the above four equations hold for every n > 2LK. We prove this by induction.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Confusion matrices of commercial ML classification APIs (Google, Microsoft, Amazon, IBM and others) on the same benchmark datasets in spring 2020 versus spring 2021, with an adaptive-sampling estimator (MASA) of the shift.",
+       "reason": "The source compares a served API with its own earlier self on a fixed dataset (E1, E2). There is no floor measured on identical versions (a shift is simply a change of more than 1%), no interval or no-difference test on the shift, and the compared quantity is built from hard predicted labels.",
+       "neighbour_phrase": "Chen et al. estimate confusion-matrix shifts of commercial classification APIs on fixed datasets, 2020 to 2021",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "we observe a 7% overall accuracy drop of IBM speech API on the AUDIOMNST dataset in March 2021 compared to its evaluation in March 2020."
+        },
+        "E2": {
+         "value": true,
+         "quote": "In this paper, we formalize the problem of assessing API shifts as estimating changes in the confusion matrix on the same data set."
+        },
+        "E3": {
+         "value": false,
+         "quote": "API performance changes exceeding 1% occurred in about 33% of all (36)"
+        },
+        "E4": {
+         "value": false,
+         "quote": "For both methods, we choose c to ensure a 1% error under 95% conﬁdence level."
+        },
+        "E5": {
+         "value": false,
+         "quote": "We assess the change of the confusion matrix over time as a measure of API shift."
+        },
+        "E6": {
+         "value": false,
+         "quote": "We will release the code and all of our datasets to stimulate more research to understand API shifts"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Since the data distribution remains ﬁxed, such a change is due to ML APIs’ updates.",
+      "The sample size is obtained when a 1% Frobenius norm error is achieved with probability 95%.",
+      "We assess the change of the confusion matrix over time as a measure of API shift."
+     ],
+     "leads": [],
+     "notes": "E4 is borderline and coded false. The 95% Bernoulli bound is used only as a stopping rule, to find the sample size at which the estimated shift is within 1% Frobenius error of the full-data shift (Table 1). No interval on any reported shift is given, and no test with a 'no difference' null; the abstract's 'significant model shifts' means changes greater than 1%. Distance under the protocol: 3 (E3, E4, E5 missing)."
+    },
+    {
+     "id": "L02",
+     "read_end_to_end": true,
+     "last_line_quote": "26",
+     "midpoint_quote": "HAPI was created to enable research on ML APIs. This includes but is not limited to, for example,",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A longitudinal dataset (HAPI) of commercial ML API predictions and confidence scores on the same benchmark inputs, queried in 2020, 2021 and 2022, compared by prediction overlap, confidence movement, accuracy and group disparity.",
+       "reason": "The same served APIs are compared with their earlier selves on identical inputs (E1, E2), and one metric, confidence movement, is computed from API-returned confidence scores (E5, borderline). There is no floor from repeated queries of an identical version and no interval or test on any comparison.",
+       "neighbour_phrase": "Chen et al. record commercial ML API predictions and confidence scores on fixed benchmarks across 2020-2022",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We have evaluated three speech recognition APIs from IBM, Google, and Microsoft in year 2020, 2021, and 2022, separately."
+        },
+        "E2": {
+         "value": true,
+         "quote": "Prediction overlap measures how often an ML API’s prediction on the same input remains the same at different evaluation periods."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Our analysis shows that API shifts are common: more than 60% of the 63 evaluated API-dataset pairs encounter performance shifts."
+        },
+        "E4": {
+         "value": false,
+         "quote": "Did you report error bars (e.g., with respect to the random seed after running"
+        },
+        "E5": {
+         "value": true,
+         "quote": "For a ﬁxed data point, an ML API’s prediction can remain the same, but its conﬁdence may still move up and down over time. To measure this, we use conﬁdence movement"
+        },
+        "E6": {
+         "value": false,
+         "quote": "All of the data in HAPI is openly available at https://github.com/lchen001/HAPI."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Prediction overlap measures how often an ML API’s prediction on the same input remains the same at different evaluation periods.",
+      "For a ﬁxed data point, an ML API’s prediction can remain the same, but its conﬁdence may still move up and down over time. To measure this, we use conﬁdence movement",
+      "Our analysis shows that API shifts are common: more than 60% of the 63 evaluated API-dataset pairs encounter performance shifts."
+     ],
+     "leads": [],
+     "notes": "E5 is borderline and coded true. Confidence movement is the mean difference in API-returned confidence scores, over items whose predicted label is the same at both times, so it compares a score on the same label, not hard labels alone. The paper does not say the scores are probabilities, and the other metrics (prediction overlap, accuracy, group disparity) use hard labels. If E5 is read strictly as probabilities of a given continuation, distance is 3 instead of 2. The checklist marks error bars N/A. The dataset is published on GitHub with no digest. The ICLR version of L01 it cites is the same work as L01, so it is not a new lead."
+    },
+    {
+     "id": "L03",
+     "read_end_to_end": true,
+     "last_line_quote": "data are unbalanced 1000 ChatGPT responses without human responses.",
+     "midpoint_quote": "stability of our evaluation results, we conduct 3",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The gpt-3.5-turbo API's responses to fixed question sets (1000 ELI5 questions daily, 3 samples per day; about 38k benchmark items monthly) from March 2023, compared across periods by F1, accuracy and ROUGE, with a z-test between successive periods.",
+       "reason": "It compares the served model with its own earlier self on fixed prompts and parameters (E1, E2) and z-tests successive periods against a critical value (E4). The z-test's spread is taken across days in windows whose version identity is inferred from stable scores, not from provider-identified identical weights (E3 false). The compared quantities come from sampled text and extracted answers, not log-probabilities (E5 false).",
+       "neighbour_phrase": "Tu et al. log ChatGPT's daily answers to fixed questions and z-test period-to-period score shifts",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "These 1000 questions have been repeatedly sent to ChatGPT from March 5 to now."
+        },
+        "E2": {
+         "value": true,
+         "quote": "we use the same prompt and keeping the prompts and parameters fixed."
+        },
+        "E3": {
+         "value": false,
+         "quote": "For each stable version after March 24, we split their records into two evenly long parts"
+        },
+        "E4": {
+         "value": true,
+         "quote": "Both of them are larger than the critical value 2.58 of z-score at the 99% confidence level."
+        },
+        "E5": {
+         "value": false,
+         "quote": "ELI5 (Fan et al., 2019) questions for the long-form QA task using the rouge (Lin, 2004) metric."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Note that we are collecting data continuously and releasing them on GitHub periodically."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we mitigate this by sending the same set of 1000 questions to ChatGPT three times each day.",
+      "Both of them are larger than the critical value 2.58 of z-score at the 99% confidence level.",
+      "For each stable version after March 24, we split their records into two evenly long parts",
+      "This is consistent with the fact that OpenAI updates their gpt-3.5-turbo API in two weeks after a version change."
+     ],
+     "leads": [
+      "Lingjiao Chen, Matei Zaharia, and James Zou. 2023. How is chatgpt’s behavior changing over time? arXiv preprint arXiv:2307.09009."
+     ],
+     "notes": "E3 is coded false. The three samples a day are averaged, not used as a floor, and the 1-trial versus 3-trial comparison in Appendix A.2 is visual. The z-test denominator is the day-to-day spread inside roughly 46-day windows, whose version identity the paper infers from the scores. The split-half z-tests of 'stable versions' check within-window stability, and that identity is also inferred from stable scores, which the protocol excludes. The PPL and GLTR detection baselines use likelihoods, but only for human-versus-ChatGPT detection, not for the across-time comparison. Distance: 2 (E3, E5 missing). Aiyappa et al. (2023) is also cited and is already A06."
+    },
+    {
+     "id": "L04",
+     "read_end_to_end": true,
+     "last_line_quote": "Associate Editor for IEEE Signal Processing Letters started from 2025.",
+     "midpoint_quote": "It means that the suspect model and the victim model share the",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Black-box ownership verification of LLMs: testing whether a suspect model's API logits or recovered probabilities lie in, or add dimensions to, the column space of the victim model's retained final linear layer, tested on Gemma, LoRA/QLoRA fine-tunes, Gemma-2 and Llama-family models.",
+       "reason": "Only E5 is carried: logits or probabilities from the API are compared with the victim's weight subspace. The comparison asks whether a suspect was stolen or fine-tuned from the victim, which the protocol excludes from self-comparison. The victim side is a weight matrix, not outputs on the same fixed inputs. The threshold is a fixed error parameter, and no interval or test is reported.",
+       "neighbour_phrase": "Yang and Wu test whether a suspect LLM's API logits lie in a victim model's output subspace",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "We model the problem of fingerprint authentication as the task of evaluating the similarity between the space of the victim model and the space of the suspect model."
+        },
+        "E2": {
+         "value": false,
+         "quote": "The suspect model is queried through the API to obtain its logits output s."
+        },
+        "E3": {
+         "value": false,
+         "quote": "The error parameter er is fixed to 1 across all experiments."
+        },
+        "E4": {
+         "value": false,
+         "quote": "It can be controlled by using a threshold."
+        },
+        "E5": {
+         "value": true,
+         "quote": "we instead compute the Euclidean distance d between s and the subspace L"
+        },
+        "E6": {
+         "value": false,
+         "quote": "Code available: https://github.com/solitude-alive/llm-fingerprint"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "If d < e, we conclude that s is compatible with L, indicating that the suspect model is likely derived from the victim model.",
+      "The error parameter er is fixed to 1 across all experiments.",
+      "The suspect model is queried through the API to obtain its logits output s."
+     ],
+     "leads": [
+      "[22] M. Finlayson, X. Ren, S. Swayamdipta. Logits of API-protected LLMs leak proprietary information. In: Proc. Conference on Language Model, 2024."
+     ],
+     "notes": "The unmodified-Gemma row, recovered through full logits, full probabilities, top-5 and top-1 APIs, works like a same-weights positive control (d about 1e-4). It is not used to set the threshold, which is fixed at er = 1, so E3 is false. E1 is false because the protocol excludes 'was it stolen or fine-tuned from mine' comparisons. Distance: 4 (E1-E4 missing). The Finlayson, Ren & Swayamdipta lead is already A03 in this pass."
+    }
+   ]
+  },
+  {
+   "reader": "reader-4",
+   "sources": [
+    {
+     "id": "L05",
+     "read_end_to_end": true,
+     "last_line_quote": "ble 1.",
+     "midpoint_quote": "Our implementation is based on Hugging Face",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A fine-tuned BERT-base teacher against its post-training-quantized, pruned, distilled and module-replaced compressions, compared per input on the MNLI test set by label agreement and Jensen-Shannon distance between predicted class distributions.",
+       "reason": "Carries E1 (PTQ and pruning start from the same fine-tuned weights), E2 (the same MNLI test inputs on both sides) and E5 (probability loyalty computed from predicted probability distributions), but no same-weights repeated-evaluation floor grades the comparison (the plus-minus is over 3 runs and grades nothing) and the only test (p > 0.1) is between two compression families, not a no-difference test of student against teacher; distance 2 (E3, E4).",
+       "neighbour_phrase": "Xu et al. measure label and probability loyalty of quantized, pruned and distilled BERT against its uncompressed teacher",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "For quantization and pruning, the source model is the same finetuned teacher."
+        },
+        "E2": {
+         "value": true,
+         "quote": "For each input, label and probability loyalty measure the shift of label and predicted probability distribution, respectively."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Accuracy, loyalty and robustness of compressed models on the test set of MNLI (3 runs)."
+        },
+        "E4": {
+         "value": false,
+         "quote": "we do not observe a significant difference between pretraining KD and downstream KD in terms of both loyalty and robustness (p > 0.1)"
+        },
+        "E5": {
+         "value": true,
+         "quote": "P and Q are predicted probability distributions of the teacher and students, respectively."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "measure how closely a compressed model (i.e., student) mimics the original model (i.e., teacher).",
+      "it is desirable to have a metric to measure to what extent the \"production model\" is different from the \"development model\"",
+      "P and Q are predicted probability distributions of the teacher and students, respectively.",
+      "we do not observe a significant difference between pretraining KD and downstream KD in terms of both loyalty and robustness (p > 0.1)"
+     ],
+     "leads": [
+      "Sara Hooker, Nyalleng Moorosi, Gregory Clark, Samy Bengio, and Emily Denton. 2020. Characterising bias in compressed models. arXiv preprint arXiv:2010.03058.",
+      "Ofir Zafrir, Guy Boudoukh, Peter Izsak, and Moshe Wasserblat. 2019. Q8bert: Quantized 8bit bert. arXiv preprint arXiv:1910.06188."
+     ],
+     "notes": "Read all 896 lines. E5 coded true on the reading that a classifier's predicted label distribution is the model's probabilities, not hard labels; it is not token log-probabilities on continuations, and a stricter reader could code it false. The (±) values in Table 1 are over 3 runs of the compression pipeline, not repeated evaluation of identical weights, and are not used to grade. No item digest; only a code link. Distance 2 (missing E3, E4), so it is not a single-missing-element neighbour."
+    },
+    {
+     "id": "L06",
+     "read_end_to_end": true,
+     "last_line_quote": "20",
+     "midpoint_quote": "The quantization and pruning techniques we evaluate in this paper are already widely used in production",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Populations of 30 independently trained image classifiers (ResNets on ImageNet, CIFAR-10, CelebA) against their magnitude-pruned and post-training-quantized counterparts, compared by class-level recall (Welch t-test) and by modal-label disagreement per test image (PIEs).",
+       "reason": "The quantization arm gives E1 (post-training quantization of the trained 32-bit weights), E2 (the same test images on both sides) and E4 (a two-tailed Welch t-test at p <= 0.05 whose null is no relative change), but the null spread comes from independently trained model populations (excluded from E3) and the compared quantity is hard-label recall and modal-label disagreement, with probabilities deliberately set aside (no E5); distance 2 (E3, E5).",
+       "neighbour_phrase": "Hooker et al. test class-level recall of pruned and post-training-quantized image classifiers against uncompressed populations",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "All networks were trained with 32-bit floating point weights and quantized post-training."
+        },
+        "E2": {
+         "value": true,
+         "quote": "we focus on the level of disagreement between the predictions of compressed and non-compressed networks on a given image."
+        },
+        "E3": {
+         "value": false,
+         "quote": "We independently train a population of K models for each compression method, dataset, and model that we consider."
+        },
+        "E4": {
+         "value": true,
+         "quote": "If the p-value <= 0.05, we reject the null hypothesis and consider the class to be disparately impacted by t level of compression relative to the baseline."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Given the limitations of un-calibrated probabilities in deep neural networks (Guo et al., 2017; Kendall & Gal, 2017), we focus on the level of disagreement between the predictions of compressed and non-compressed networks on a given image."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "All networks were trained with 32-bit floating point weights and quantized post-training.",
+      "For each level of pruning t, we train 30 models from random initialization.",
+      "If the p-value <= 0.05, we reject the null hypothesis and consider the class to be disparately impacted by t level of compression relative to the baseline.",
+      "The exemplar is classified as a pruning identified exemplar PIEt if and only if the modal label is different between the set of t-pruned models and the non-pruned baseline models"
+     ],
+     "leads": [],
+     "notes": "Read all 1348 lines. E1 holds only for the quantization arm; the pruned models are trained from random initialization with pruning during training, so the pruning arm (the paper's main object) compares different trained weights. The text does not say that each quantized model is paired with its own unquantized source; the comparison is population against population. The Welch test's variance is across independent trainings, which the protocol excludes from E3. Not a language model and no log-probabilities. No item digest. Distance 2 (missing E3, E5)."
+    },
+    {
+     "id": "L07",
+     "read_end_to_end": true,
+     "last_line_quote": "15",
+     "midpoint_quote": "GPUs without any optimizations, yielding deterministic results. This indicates that the",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Five LLMs (GPT-3.5 Turbo, GPT-4o, Llama-3-70B/8B-Instruct, Mixtral-8x7B), mostly API-hosted, run 10 times (20 in one check) on the same BBH and MMLU inputs at temperature 0 with a fixed seed, measuring how raw outputs and parsed answers vary.",
+       "reason": "It measures the spread of repeated evaluations of the same served model on fixed inputs (E2), which is the raw material of a floor, but it grades no comparison with that spread, reports no interval or no-difference test (only a normality test), compares raw strings and parsed answers rather than log-probabilities, and never sets a model against its earlier or differently-served self; distance 4.",
+       "neighbour_phrase": "Atil et al. measure run-to-run output and accuracy variation of API-served LLMs at temperature zero",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Here we look at an additional source of uncertainty, performance variance from the same trained model on the same inputs when temperature=0."
+        },
+        "E2": {
+         "value": true,
+         "quote": "We use the same compute infrastructure, inputs, and configurations."
+        },
+        "E3": {
+         "value": false,
+         "quote": "We encourage reporting maximum-minimum scores across runs to have a more robust comparison of models."
+        },
+        "E4": {
+         "value": false,
+         "quote": "Note that we do not report standard deviations of means because the distributions across runs for a given condition are not normally distributed"
+        },
+        "E5": {
+         "value": false,
+         "quote": "TARr@N for the total agreement rate at N runs over raw output, and TARa@N for total agreement rate of parsed-out answers."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Our code and data are publicly available at https://github.com/breckbaldwin/llm-stability."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Here we look at an additional source of uncertainty, performance variance from the same trained model on the same inputs when temperature=0.",
+      "We set the temperature at 0, top-p at 1, and fix the seed.",
+      "we ran Llama3-8b on our local GPUs without any optimizations, yielding deterministic results.",
+      "We encourage reporting maximum-minimum scores across runs to have a more robust comparison of models."
+     ],
+     "leads": [
+      "Stella Biderman, Hailey Schoelkopf, Lintang Sutawika, Leo Gao, Jonathan Tow, Baber Abbasi, Alham Fikri Aji, Pawan Sasanka Ammanamanchi, Sidney Black, Jordan Clive, et al. Lessons from the trenches on reproducible evaluation of language models. arXiv preprint arXiv:2405.14782, 2024.",
+      "Shuyin Ouyang, Jie M. Zhang, Mark Harman, and Meng Wang. An empirical study of the non-determinism of ChatGPT in code generation. ACM Transactions on Software Engineering and Methodology, 34(2), January 2025.",
+      "Yifan Song, Guoyin Wang, Sujian Li, and Bill Yuchen Lin. The good, the bad, and the greedy: Evaluation of LLMs should not ignore non-determinism. arXiv preprint arXiv:2407.10457, 2024."
+     ],
+     "notes": "Read all 823 lines. E1 coded false: the 10 identical runs are the same-weights spread itself (the null floor), not a comparison of the model against an earlier or differently-served self. The local Llama3-8b run is a one-sentence remark with no item-level comparison against the API outputs, and the fine-tuned gpt-3.5 is a different model. A literal reader could code E1(i) true for runs at different times; the verdict stays OCCUPIES either way because E3, E4 and E5 are absent. E3 false because the spread is measured but grades nothing, and the provider does not identify the API versions as the same. The only test is a Kolmogorov-Smirnov normality test (null = normal). The data are published with no digest. Distance 4 (3 if E1 is read literally)."
+    },
+    {
+     "id": "L08",
+     "read_end_to_end": true,
+     "last_line_quote": "23",
+     "midpoint_quote": "As language models become more and more prevalent, it has become increasingly important to get",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Benchmark-score variance for ten Llama-2-7B-architecture pretraining runs that differ only in seed (21 checkpoints each), plus about 70 public and internal models, on 13 fixed benchmarks, using discrete and continuous (probability mass / target NLL) metrics, bootstrap CIs, monotonicity, and item-analysis/IRT subsets.",
+       "reason": "It scores fixed benchmarks (E2) with teacher-forced probability mass and NLL (E5), and reports 95% confidence intervals, including on the delta between pruned-item and full-set means (E4). But its variance is across seeds (excluded from E3), no repeated evaluation of identical weights grades anything, and no model is compared with an earlier or differently-served copy of its own weights (no E1); distance 2 (E1, E3).",
+       "neighbour_phrase": "Madaan et al. quantify seed variance, bootstrap intervals and monotonicity of benchmark scores across LLM checkpoints",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "These 10 runs are identical, except for the model initialisation seed."
+        },
+        "E2": {
+         "value": true,
+         "quote": "Across all our experiments, we consider 13 different popular benchmarks and compute their performance over 280 different models"
+        },
+        "E3": {
+         "value": false,
+         "quote": "we consider variance due to changes in seed, across otherwise identical setups."
+        },
+        "E4": {
+         "value": true,
+         "quote": "Error bars indicate 95% confidence intervals in the delta."
+        },
+        "E5": {
+         "value": true,
+         "quote": "we used probability mass of the predicted answer for all choice-based benchmarks and NLL of the correct answer for generation-based benchmarks"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "These 10 runs are identical, except for the model initialisation seed.",
+      "This seed variance gives us a metric useful for performing data ablations",
+      "We use the bootstrapped library2 to compute 95% bootstrapped confidence interval (CI) values for each of the benchmarks on all 210 checkpoints from our 10 random seeded pretraining runs.",
+      "We observe that the SNR is considerably higher for continuous metrics for all benchmarks"
+     ],
+     "leads": [
+      "Jiannan Xiang, Huayang Li, Yahui Liu, Lemao Liu, Guoping Huang, Defu Lian, and Shuming Shi. Investigating data variance in evaluations of automatic machine translation metrics. arXiv preprint arXiv:2203.15858, 2022.",
+      "Benjamin Marie, Atsushi Fujita, and Raphael Rubino. Scientific credibility of machine translation research: A meta-evaluation of 769 papers. ACL-IJCNLP 2021.",
+      "Felipe Maia Polo, Lucas Weber, Leshem Choshen, Yuekai Sun, Gongjun Xu, and Mikhail Yurochkin. tinybenchmarks: evaluating llms with fewer examples, 2024."
+     ],
+     "notes": "Read all 1850 lines. E4 coded true for the element as defined: 95% CIs are reported on a compared quantity, the delta in mean after pruning items, across test models. That comparison is item-subset against full set, not a model against its own self, and the per-model bootstrap CIs are one-sided intervals. Training checkpoints tracked by monotonicity are not read as a served model at another time: monotonicity is a Kendall trend statistic, not a comparison against an earlier self. No repeated evaluation of identical weights anywhere, and no digest for the item set. Distance 2 (missing E1, E3)."
+    }
+   ]
+  },
+  {
+   "reader": "reader-5",
+   "sources": [
+    {
+     "id": "L09",
+     "read_end_to_end": true,
+     "last_line_quote": "25",
+     "midpoint_quote": "which is 4% lower than the specialized closed-set classifier.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Working out which of 42 LLM versions (or an unseen one) sits behind an LLM-integrated application, using sampled text answers to a fixed set of 8 queries. The answers go to a trained closed-set classifier or to contrastive signature matching.",
+       "reason": "It fingerprints served LLMs on a fixed query set (E2), but it answers 'which model is this' across different models (not E1). There is no floor measured on identical weights (E3), accuracy is reported only as mean and standard deviation over training runs (not E4), and the signal is embedded sampled text, not log-probabilities (not E5). Distance 4.",
+       "neighbour_phrase": "Pasquini, Kornaropoulos & Ateniese fingerprint which LLM version an application serves from sampled answers to eight fixed queries",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "We model an adversary A whose objective is to determine the exact version vi of the LLM deployed in remote application B with the minimal number of queries to O."
+        },
+        "E2": {
+         "value": true,
+         "quote": "these 8 queries constitute the default query strategy Q used in LLMmap"
+        },
+        "E3": {
+         "value": false,
+         "quote": "Fingerprinting a model q is then performed by finding the vector signature in the database DB that is closest to f(q)."
+        },
+        "E4": {
+         "value": false,
+         "quote": "Accuracies and standard deviation computed on 10 models’ training runs."
+        },
+        "E5": {
+         "value": false,
+         "quote": "For each pair of query qi and response oi, we use a pre-trained textual embedding model, denoted as E, to generate a vector representation."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Table G.2: Top-8 most effective probes (default query strategy)."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "With as few as 8 interactions, LLMmap can accurately identify 42 different LLM versions with over 95% accuracy.",
+      "we want a query q∗that produces consistent outputs under the same version, regardless of the prompting configuration.",
+      "Given those 5 models, we use the open-set LLMmap to derive a fingerprint signature for each variant and compare their vector signature with the vector signature of the base model.",
+      "However, it assumes access to the logits output generated by the LLM being tested, rather than the actual generated text."
+     ],
+     "leads": [
+      "Zhiguang Yang and Hanzhou Wu. A fingerprint for large language models. arXiv preprint arXiv:2407.01235, 2024."
+     ],
+     "notes": "Nearest thing to E1 is Appendix C: it measures the cosine distance between signatures of five community fine-tunes and base Llama-3.1-8B-Instruct. Those are different trained weights, so it is not a self-comparison. Intra-model consistency across prompting configurations (system prompt, temperature, RAG/CoT) is trained into the inference model, not measured as a null floor used to grade. Queries are published in Table G.2 with no digest. Lead Yang & Wu is cited as the logits-based alternative (would carry E5): it matches logit-derived vector spaces of two different models on 300 random queries. Xu et al. [46] (instructional fingerprinting) is also cited but is probably the Xu et al. already in the survey."
+    },
+    {
+     "id": "L10",
+     "read_end_to_end": true,
+     "last_line_quote": "14",
+     "midpoint_quote": "To address this issue and ensure a more balanced evaluation, we focused on experiments involving models with a",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Identifying which two models in a cohort come from the same LLM family. An Auditor LLM evolves prompts over trials and a Detective LLM judges the sampled text responses.",
+       "reason": "It fingerprints LLM behaviour, but for family attribution among different models (not E1). Prompts are evolved during the trials (not E2). Nothing is measured on identical weights or used to grade (not E3), there is no interval or test (not E4), and outputs are sampled text judged by an LLM (not E5). It touches only the fingerprinting part of the clause; distance 5.",
+       "neighbour_phrase": "Iourovitski, Sharma & Talwar fingerprint LLM families from sampled answers to LLM-evolved prompts judged by an LLM",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "The Detective is informed that two of the models in the set are from the same \"source\" (either identical models or from the same model family)."
+        },
+        "E2": {
+         "value": false,
+         "quote": "By iteratively refining prompts through in-context learning"
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": "Due to the stochastic nature of Language models generating content, there will naturally be a variability in accuracy as showcased."
+        },
+        "E5": {
+         "value": false,
+         "quote": "This model analyzes the outputs of all tested models in response to the Auditor’s prompts."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "achieving an impressive 72% accuracy in identifying the correct family of models",
+      "2 instances of Llama-8B were marked as similar by the auditor across two trials"
+     ],
+     "leads": [],
+     "notes": "Some trials place two instances of the same model in the cohort (Appendix C.3). The task is still spotting the same-source pair among different families, not comparing a served model with its own earlier or differently-served self, so E1 is coded false. The only variability mentioned is spread in accuracy (violin plots), with no interval. It cites Carlini et al., Stealing part of a production language model, which is already A05."
+    },
+    {
+     "id": "L11",
+     "read_end_to_end": true,
+     "last_line_quote": "22",
+     "midpoint_quote": "While adversarial ML often consists of a cycle of attacks and defenses, we turn this game on its head.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Ownership resolution: whether a suspect image classifier (extracted, distilled, fine-tuned or retrained) holds knowledge of a victim's private training set. A one-sided two-sample t-test compares regressor confidence scores on private and public samples, built from prediction-margin embeddings.",
+       "reason": "It carries E4 (a hypothesis test with p-values and a significance level α). The object is 'was it stolen from mine', which the definition excludes from E1. Samples are randomly drawn per test (not E2). The control is an independently trained model, not a spread on identical weights (not E3). Embeddings are label-query distances or gradient-search perturbation distances, not log-probabilities (not E5). Distance 4.",
+       "neighbour_phrase": "Maini, Yaghini & Papernot hypothesis-test whether a suspect classifier learned from a victim's private training set",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "We thus introduce dataset inference, the process of identifying whether a suspected model copy has private knowledge from the original model’s dataset, as a defense against model stealing."
+        },
+        "E2": {
+         "value": false,
+         "quote": "In the following results, we repeat all experimental statistical tests for 100 times with randomly sampled data with replacement."
+        },
+        "E3": {
+         "value": false,
+         "quote": "This model is used as a control, to ensure that we do not claim ownership of models that were not trained by stealing knowledge from our victim model."
+        },
+        "E4": {
+         "value": true,
+         "quote": "If the p-value is below a predeﬁned signiﬁcance level α, H0 is rejected, and the model under test is marked as ‘stolen’."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Thus, the approach only requires label access to f."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We form a two sample T-test on the distribution of c and cV and calculate the p-value for the one-sided hypothesis H0 : µ < µV against Halt : µ > µV.",
+      "To produce bootstrap 99-percentile conﬁdence intervals, we repeat the experiment 40 times."
+     ],
+     "leads": [],
+     "notes": "A 'Source' row (the victim model itself stolen) serves only as an upper-bound reference for effect size. It is not a measured same-weights floor used to grade. The null of the test is one-sided (H0: μ < μV) at level α, with p-values reported, so E4 is coded true. The theoretical margin y·f(x) in the linear-model analysis is not the empirical compared quantity. Deep-network embeddings are ℓp distances from MinGD or Blind Walk, so E5 is false. Private samples are published nowhere with a digest."
+    },
+    {
+     "id": "L12",
+     "read_end_to_end": true,
+     "last_line_quote": "images and are unlabeled.",
+     "midpoint_quote": "poorly performed extractions are less likely to pose a real",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Copyright testing: whether a suspect DNN is a fine-tuned, pruned or extracted copy of a victim model. Multi-level distance metrics (RobD, JSD, NOD, NAD, LOD, LAD) are computed on test cases generated from the victim, and the call is made by thresholds from negative models plus a vote.",
+       "reason": "Both models see the same pre-generated test cases (E2), and the black-box JSD metric is computed from the two models' output probability vectors (E5, class probabilities rather than token log-probs). The question is 'is it a copy of mine' (excluded from E1). Thresholds come from independently trained negative models with different initialisations or data (not E3). The one-tailed t-test bound on those negatives is then scaled by an empirical relaxing factor, so the applied threshold has no stated level and no interval or p-value is given on the victim-suspect distance (not E4). Distance 3.",
+       "neighbour_phrase": "Chen et al. judge whether a suspect DNN is a finetuned, pruned or extracted copy using fixed test cases",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "It leverages a diverse set of testing metrics and efﬁcient test case generation algorithms to produce a chain of supporting evidence to help determine whether a suspect model is a copy of the victim model."
+        },
+        "E2": {
+         "value": true,
+         "quote": "measure the adversarial robustness discrepancy between two models on the same set of test cases"
+        },
+        "E3": {
+         "value": false,
+         "quote": "The thresholding step determines a proper threshold for each testing metric based on the statistics of a set of negative suspect models"
+        },
+        "E4": {
+         "value": false,
+         "quote": "The threshold for each metric λ is deﬁned as: τλ = αλ · LBλ, where αλ is a user-speciﬁed relaxing parameter controlling the sensitivity of the judgement."
+        },
+        "E5": {
+         "value": true,
+         "quote": "JSD quantiﬁes the similarity between two models’ output distributions"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we use one-tailed T-test to calculate the lower bound LBλ based on the statistics of the negative suspect models at the 99% conﬁdence level.",
+      "Prune r percentage of the parameters that have the smallest absolute values, then ﬁnetune the pruned model to restore the accuracy.",
+      "“Neg-1” are trained with different random initializations while “Neg-2” are trained using a separate dataset (the other 50% of training samples).",
+      "In this setting, only the output probabilities of the suspect model are accessible."
+     ],
+     "leads": [],
+     "notes": "Two borderline codings. E1: pruned copies (P-20%, P-60%) are compressed derivatives of the victim weights, but they are fine-tuned after pruning and framed as stolen copies. The protocol's exclusion ('was it stolen or fine-tuned from mine') governs, so E1 is false. E4: a one-tailed t-test at 99% confidence sets a lower bound on the negative models' metric, but that bound is multiplied by αλ (0.9 black-box, 0.6 white-box). Victim-suspect results are reported as mean±std over 6 repeats, so there is no stated level on the comparison itself. E5: JSD is on classifier output probability vectors, the classifier analogue of scored probabilities rather than sampled outputs. A second reader may code E4 or E5 differently; the verdict stays OCCUPIES either way because E1 fails. Cited IPGuard [2], Lukas et al. [27] and Maini et al. [29] are already A01, A02 and L11."
+    }
+   ]
+  },
+  {
+   "reader": "reader-6",
+   "sources": [
+    {
+     "id": "L13",
+     "read_end_to_end": true,
+     "last_line_quote": "10",
+     "midpoint_quote": "In this section, we present empirical evidence to support our claim that SafetyNets enables low-cost",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A client that holds the weights of a known neural network cryptographically checks, by interactive proof, that an untrusted cloud computed that network's output on the client's input batch correctly.",
+       "reason": "It checks a served computation against the claimed model, with the weights known to the verifier (E1). It verifies the pre-softmax output, i.e. the logits (E5). But the reference model is never run on a fixed probe set: soundness comes from random challenges picked during the protocol (no E2). The guarantee is an analytic soundness bound, not a measured same-weights floor (no E3) and not a statistical interval or test (no E4). Distance 3.",
+       "neighbour_phrase": "Ghodsi, Gu & Garg verify by interactive proof the correct execution of a known neural network on an untrusted cloud",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "In our setting, f(.) is a trained multi-layer neural network that is known to both the veriﬁer and prover"
+        },
+        "E2": {
+         "value": false,
+         "quote": "In each round, the veriﬁer sends the prover a randomly picked challenge"
+        },
+        "E3": {
+         "value": false,
+         "quote": "The SafetyNets veriﬁer rejects incorrect computations with probability greater than"
+        },
+        "E4": {
+         "value": false,
+         "quote": "The veriﬁer accepts that y′ is indeed equal to f(x) if it is satisﬁed with the prover’s response in each round, and rejects otherwise."
+        },
+        "E5": {
+         "value": true,
+         "quote": "the prover computes and sends zL−1 (the input of the ﬁnal activation layer) as a result to the veriﬁer."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "A lazy cloud provider might use a simpler but less accurate model to reduce its own computational load",
+      "SafetyNets detects any incorrect computations of the neural network by the untrusted server with high probability",
+      "the weights are known to both the prover and veriﬁer"
+     ],
+     "leads": [],
+     "notes": "This is verifiable computation, not behavioural fingerprinting. E5 is coded true because the verified quantity z_{L-1} is the input to the final softmax, i.e. a classifier's logits, not token log-probs on continuations. A stricter reader may code it false, which would make the distance 4. The detection guarantee is a soundness error below 2^-30 (analytic), with no measured null."
+    },
+    {
+     "id": "L14",
+     "read_end_to_end": true,
+     "last_line_quote": "removing logarithmic factors from Milli et al. [19].",
+     "midpoint_quote": "of the 10,000 test examples is predicted the same. As the",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The fidelity of a model extracted by an adversary: its label agreement, and in Appendix C its logit gap, with the remote victim model on the same test inputs.",
+       "reason": "The comparison is between a stolen or reconstructed copy and the victim, which the protocol excludes from E1. Both sides do get the same fixed test set (E2), and one measurement compares logits (E5). The non-determinism experiment measures agreement across retrained models with fixed seeds, i.e. spread across retrainings, not same-weights evaluations, and does not grade a comparison (no E3). Results are averaged, with no interval or test (no E4). Distance 3.",
+       "neighbour_phrase": "Jagielski et al. measure fidelity of extracted copies against a victim network on fixed test sets",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Fidelity, in contrast, measures the general agreement between the extracted and victim models on any input."
+        },
+        "E2": {
+         "value": true,
+         "quote": "We measure the ﬁdelity of the extracted model, comparing predicted labels, on the MNIST test set."
+        },
+        "E3": {
+         "value": false,
+         "quote": "Even when both training and initialization randomness are ﬁxed (so that only GPU non-determinism remains), ﬁdelity peaks at 93.7% on the test set"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Results are averaged over ﬁve extraction attacks."
+        },
+        "E5": {
+         "value": true,
+         "quote": "Figure 6 shows a distribution over the bits of precision in the difference between the logits (i.e., pre-softmax prediction) of the 16 neuron oracle neural network and the extracted network."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we consider only label agreement, where S(p1, p2) = 1(argmax(p1) = argmax(p2))",
+      "Impact of non-determinism on extraction ﬁdelity.",
+      "We repeated each run 10 times and measure agreement between the ten obtained models on the test set"
+     ],
+     "leads": [],
+     "notes": "The headline fidelity is hard-label agreement. Only the Appendix C measurement (Figure 6) compares logits, so E5 rests on that one measurement. Section 5's GPU-non-determinism ceiling (93.7%) is closest in spirit to a floor, but it comes from retrained models and is not used as a threshold to grade anything."
+    },
+    {
+     "id": "L15",
+     "read_end_to_end": true,
+     "last_line_quote": "Substack is the home for great culture",
+     "midpoint_quote": "Behavior drift makes it hard to build reliable products on top of LLM APIs",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Re-testing the March and June API snapshots of GPT-3.5 and GPT-4 on primality yes/no questions, adding 500 composite numbers to Chen, Zaharia & Zou's prime-only set.",
+       "reason": "The authors compare the same served models at two times (E1) on one fixed, pre-generated set of 500 composites (E2). The compared quantity is extracted yes/no answers (no E5). They measure no same-weights floor (no E3) and report no interval or test (no E4). Distance 3.",
+       "neighbour_phrase": "Narayanan & Kapoor compare March and June GPT-3.5/GPT-4 snapshots' yes/no answers on 500 composite numbers",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "What seems to have changed is that the March version of GPT-4 almost always guesses that the number is prime, and the June version almost always guesses that it is composite."
+        },
+        "E2": {
+         "value": true,
+         "quote": "To supplement this evaluation, we tested the models with 500 composite numbers."
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": "They all guess based on the way they were calibrated."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "OpenAI provides “snapshots” of the models from March and June through its API, so they compared the behavior of the two snapshots of each model.",
+      "To generate composites, we randomly selected 500 products of two primes.",
+      "In short, everything in the paper is consistent with the behavior of the models changing over time."
+     ],
+     "leads": [
+      "Lingjiao Chen, Matei Zaharia, and James Zou — \"A new paper\" testing March and June snapshots of GPT-3.5 and GPT-4 on four tasks (title not printed in the post)"
+     ],
+     "notes": "This is a blog post. The authors' own experiment is the 500-composite re-test. The underlying drift comparison is Chen, Zaharia & Zou's, and its title is not printed. Nondeterminism is mentioned but never measured. The page ends with Substack boilerplate and comments."
+    },
+    {
+     "id": "B05",
+     "read_end_to_end": true,
+     "last_line_quote": "framework,” UNB CIC technical report and experimental framework documentation, 2017.",
+     "midpoint_quote": "computed as H_i = SHA-256(E_i || H_{i-1}). Any modification to a prior encrypted alert invalidates all",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "Intrusion-detection alerts (the ensemble's attack verdicts) are AES-EAX encrypted, ECC-signed and appended to a SHA-256 hash-chained ledger, and a tamper experiment breaks the chain.",
+       "reason": "It keeps a hash-chained, tamper-evident log of classifier verdicts. But the verdicts are stored, not re-derived from bytes when checked. Chain verification re-computes only the link hashes, and even signature verification is not implemented in the reported code. So it covers the chain, not the re-derivation.",
+       "neighbour_phrase": "Kumar & Kumar append encrypted, signed intrusion-detection alerts to a SHA-256 hash-chained ledger"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "Classifier ensembles for network intrusion detection, scored against ground-truth labels on an NSL-KDD subset.",
+       "reason": "No model is compared with itself at another time or under another serving. The ensembles are scored against labels, not against each other's behaviour on a probe set. Re-run variation in alert counts is noted but never used to grade anything. There is no interval, no log-probabilities and no hashed item set.",
+       "neighbour_phrase": "Kumar & Kumar score majority-voting intrusion-detection ensembles against labels on an NSL-KDD subset",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Four candidate ensembles were evaluated."
+        },
+        "E2": {
+         "value": false,
+         "quote": "the NSL-KDD experiment run on 1,000 samples, with a 70:30 train-test split"
+        },
+        "E3": {
+         "value": false,
+         "quote": "cryptographic randomness and re-execution can slightly change the count of generated alerts when it is rerun"
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": "Candidate ensembles are created manually and evaluated with hard majority voting."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "The chain link is computed as H_i = SHA-256(E_i || H_{i-1}).",
+      "By modifying ciphertext content inside a chained block sequence, the experimental framework showed that verification fails at the tampered location and invalidates subsequent links.",
+      "ECC signing is performed without a full verification-and-rejection path in the current code"
+     ],
+     "leads": [
+      "B. Schneier and J. Kelsey, “Secure audit logs to support computer forensics,” ACM Transactions on Information and System Security, vol. 2, no. 2, pp. 159–176, 1999.",
+      "M. Bellare and B. Yee, “Forward integrity for secure audit logs,” Technical Report, UC San Diego, 1997."
+     ],
+     "notes": "The ledger is described as blockchain-inspired, with no distributed consensus. Only the NSL-KDD 1,000-sample results were executed; the CICIDS2017 and UNSW-NB15 runs are marked pending. The two cited secure-audit-log works are older and nearer prior art for hash-chained logs in general."
+    }
+   ]
+  },
+  {
+   "reader": "reader-7",
+   "sources": [
+    {
+     "id": "B07",
+     "read_end_to_end": true,
+     "last_line_quote": "50. I. Goodfellow, Y. Bengio, and A. Courville, Deep Learning. Cambridge, MA, USA: MIT Press, 2016.",
+     "midpoint_quote": "The numerical values in this section are synthetic example values used to complete the manuscript structure.",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A federated-learning aggregation server's own per-round records (client update hash, trust components, filtering decision, aggregation weight, global-model hash), linked by previous-record hash.",
+       "reason": "It hash-chains decisions for a different object (FL aggregation provenance), and the logged decisions are the aggregator's own outputs recorded as they are made, not verdicts re-derived from committed bytes by a verifier. It is also a design sketch: the paper says its numbers, including log overhead, are synthetic placeholders.",
+       "neighbour_phrase": "Anuradha and Pramanik propose hash-chaining per-round trust and aggregation decisions in federated intrusion-detection training"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "Trust-weighted federated averaging for an IoT intrusion-detection classifier on CICIoT2023; no served model is compared with its own earlier or differently-served self.",
+       "reason": "No self-comparison, fixed item set, same-weights floor, interval on a comparison, log-probability quantity or hashed item set. Its only interval is proposed for future real results, and every reported number is stated to be synthetic.",
+       "neighbour_phrase": "Anuradha and Pramanik weight federated client updates by trust for IoT intrusion detection",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Clients train a deep flow classifier locally on CICIoT2023 partitions and send model"
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": "The final submission should replace them with real outputs and report confidence intervals across repeated runs."
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Linking each record to the previous one creates a hash chain, so any later modification to an earlier record becomes detectable.",
+      "For each round, the audit record should include the round identifier, a pseudonymous client identifier or client hash, the client update hash",
+      "The numerical results, ablations, and overhead values in this draft are synthetic example values intended to make the manuscript structurally complete",
+      "The numerical values in this section are synthetic example values used to complete the manuscript structure."
+     ],
+     "leads": [
+      "S. Mehammed, \"Blockchain-audited federated learning: Securing data and model updates with on-chain provenance,\" IET Software, vol. 2025, no. 1, art. 6670439, 2025, doi: 10.1049/sfw2/6670439.",
+      "Y. Li, Y. Lai, C. Chen, and Z. Zheng, \"VeryFL: A verify federated learning framework embedded with blockchain,\" arXiv:2311.15617, 2023.",
+      "Z. Yang, Y. Shi, Y. Zhou, Z. Wang, and K. Yang, \"Trustworthy federated learning via blockchain,\" IEEE Internet of Things Journal, vol. 10, no. 1, pp. 92-109, 2023, doi: 10.1109/JIOT.2022.3201117.",
+      "H. Kim, J. Park, M. Bennis, and S.-L. Kim, \"Blockchained on-device federated learning,\" IEEE Communications Letters, vol. 24, no. 6, pp. 1279-1283, 2020, doi: 10.1109/LCOMM.2019.2921755."
+     ],
+     "notes": "The manuscript says repeatedly that all its numbers (results, ablations, overhead including log growth per round) are synthetic placeholders to be replaced before submission. It reads as a template draft, so the audit log is specified but not shown working. The C2 match is weak: the chain seals the aggregator's decisions as made, and nothing is re-derived. There is no C4a content."
+    },
+    {
+     "id": "B11",
+     "read_end_to_end": true,
+     "last_line_quote": "University of Waterloo.",
+     "midpoint_quote": "evidence exceeds a predetermined threshold, we declare a change",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A black-box LLM API endpoint's distribution of sampled-response embeddings on a fixed prompt set, compared against the same endpoint's own baseline fingerprint over time (validated on version, stack, quantization and temperature changes).",
+       "reason": "It does E1, E2 and E4: a self-comparison over time, a fixed prompt set, and a permutation test of a same-distribution null with p-values combined by e-values against a threshold. It lacks E3, because the null comes from pooling and re-splitting the two compared samples rather than from a measured spread of identical weights. It lacks E5, because the compared quantity is embeddings of sampled text, not log-probabilities. Distance 2.",
+       "neighbour_phrase": "Leshin et al. permutation-test sampled-output embeddings from a fixed prompt set against an endpoint's own baseline",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "the cumulative evidence for a change in the endpoint’s effective output distribution since the time of the baseline fingerprint"
+        },
+        "E2": {
+         "value": true,
+         "quote": "Our system uses a fixed, model-agnostic prompt set that persists across change events and endpoints"
+        },
+        "E3": {
+         "value": false,
+         "quote": "the embedding vectors for each prompt are pooled and randomly re-split into two groups of the original sizes"
+        },
+        "E4": {
+         "value": true,
+         "quote": "To test the null hypothesis that two fingerprints are drawn from the same underlying distribution, we compute a p-value via a permutation test on the aggregate statistic"
+        },
+        "E5": {
+         "value": false,
+         "quote": "responses are embedded as real-valued vectors"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "periodically fingerprints an endpoint by sampling outputs from a fixed prompt set and comparing the resulting output distributions over time",
+      "Quantization",
+      "If the evidence exceeds a predetermined threshold, we declare a change event and set the most recent fingerprint as the new baseline",
+      "Even for a fixed model, inference execution specifications (engine, kernels, caching, speculative decoding, hardware) can affect next-token probabilities and token selection"
+     ],
+     "leads": [
+      "[3] Timothée Chauvin, Clément Lalanne, Erwan Le Merrer, Jean-Michel Loubes, François Taïani, and Gilles Tredan. 2026. Token-Efficient Change Detection in LLM APIs. arXiv preprint arXiv:2602.11083 (2026).",
+      "[4] Lingjiao Chen, Matei Zaharia, and James Zou. 2024. How Is ChatGPT's Behavior Changing over Time? Harvard Data Science Review 6, 2 (2024). doi:10.1162/99608f92.5317da47",
+      "[6] Horace He and Thinking Machines Lab. 2025. Defeating Nondeterminism in LLM Inference. Thinking Machines Lab: Connectionism (2025). doi:10.64434/tml.20250910",
+      "[1] Florian Brand and Jean-Stanislas Denain. 2025. Why Benchmarking is Hard. https://epoch.ai/gradient-updates/why-benchmarking-is-hard/.",
+      "[8] Jacob Phillips. 2025. daily-bench. https://github.com/jacobphillips99/daily-bench.",
+      "[7] Margin Research. 2025. Claude Code Historical Performance Tracker. https://marginlab.ai/trackers/claude-code-historical-performance/."
+     ],
+     "notes": "E4 is borderline. The test's null is explicitly 'same distribution', and p-values are computed, stored and published to Stability Arena. But the paper gives no numeric alpha or e-value threshold, only 'a predetermined threshold'. A stricter reader may code E4 false, which would put the distance at 3. E3 is false because the paper measures no spread on identical weights to grade against. It mentions within-fingerprint spread terms only inside the energy statistic, and treats infrastructure nondeterminism as a caveat, not a calibrated floor. Some controlled validations are between different models (Qwen to Llama) rather than self-comparisons. The quantization case (BF16 to INT8 of the same weights) and ongoing endpoint monitoring are self-comparisons. The paper also keeps an audit log of change events in a postgres database, with no chaining described (not assigned C2). Nearest lead is B3IT (Chauvin et al.), which uses border inputs, near-tied top tokens at low temperature, as a hypothesis test for LLM API change. It may involve token-level probabilities."
+    }
+   ]
+  }
+ ],
+ "confirmations": [],
+ "unread": []
+}

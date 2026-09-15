@@ -1,0 +1,88 @@
+{
+ "_note": "derived by build_refetch_summary.py from committed files; the erratum's sworn tags point here and at the record",
+ "frozen_commit": "8273cdda",
+ "run_first_request_at": "2026-09-15T08:28:42Z",
+ "run_last_request_at": "2026-09-15T08:34:02Z",
+ "refetch_user_agent": "fathom-lab-sand-survey-ua-check/1 (research; github.com/fathom-lab)",
+ "fetchers": [
+  {
+   "file": "sand_survey_pass3_inputs/fetch_pass3.py",
+   "line": 34,
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) fathom-lab sand survey pass 3 (research; contact via github.com/fathom-lab)",
+   "browser_form": true
+  },
+  {
+   "file": "sand_survey_pass4_inputs/fetch_pass4.py",
+   "line": 25,
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) fathom-lab sand survey pass 4 (research; github.com/fathom-lab)",
+   "browser_form": true
+  }
+ ],
+ "attempts_by_record": {
+  "pass3": 17,
+  "pass4_run_A": 9,
+  "pass4_run_B": 28,
+  "pass4_run_B2": 11,
+  "pass4_run_B3": 1,
+  "correction": 6
+ },
+ "attempts_total": 72,
+ "distinct_urls": 71,
+ "correction_lookup_requests_recorded": 5,
+ "outcomes": {
+  "SAME_BYTES": 45,
+  "SAME_KIND": 10,
+  "KIND_CHANGED": 0,
+  "NOW_ANSWERS": 0,
+  "STILL_REFUSED": 14,
+  "NOW_REFUSED": 1,
+  "RATE_LIMITED": 1
+ },
+ "same_kind_max_byte_difference": 82,
+ "still_refused_by_host": {
+  "doi.org": 3,
+  "openreview.net": 2,
+  "web.archive.org": 1,
+  "www.mdpi.com": 1,
+  "www.science.org": 1,
+  "www.semanticscholar.org": 6
+ },
+ "now_refused": [
+  {
+   "row": 15,
+   "id": "L16",
+   "record": "pass3",
+   "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+   "recorded_http": "200",
+   "recorded_bytes": 87457,
+   "recorded_at": "2026-09-14T10:37:52Z",
+   "now_http": "403",
+   "now_at": "2026-09-15T08:29:47Z"
+  }
+ ],
+ "bounty_clause": {
+  "pass3_status": "OCCUPIED",
+  "pass3_occupied_by": [
+   "S10",
+   "S18",
+   "S20",
+   "L16",
+   "L17"
+  ],
+  "pass3_retired_by": [],
+  "pass3_occupied_by_without_now_refused": [
+   "S10",
+   "S18",
+   "S20",
+   "L17"
+  ],
+  "pass3_status_without_now_refused": "OCCUPIED",
+  "pass1_status": "OCCUPIED",
+  "pass2_status": "OCCUPIED",
+  "correction_status": "UNPRICED",
+  "correction_fields": {
+   "status": "UNPRICED",
+   "pass3_status": "OCCUPIED"
+  }
+ }
+}

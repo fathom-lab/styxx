@@ -1,0 +1,27 @@
+{
+ "schema": "styxx.replication-env/v0",
+ "machine": "alienware (the lab's own second machine)",
+ "os": "Windows-11-10.0.26200-SP0",
+ "python": "3.12.10",
+ "torch": "2.5.1+cu121",
+ "transformers": "4.57.3",
+ "numpy": "2.4.4",
+ "cpu": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+ "device": "cpu",
+ "recipe": "papers/checksum/run_smollm_quant.py",
+ "recipe_commit": "9da2da0c",
+ "committed_certs": "papers/checksum/smollm_quant_certs.json",
+ "torch_quantized_engine": "x86",
+ "torch_supported_engines": [
+  "none",
+  "onednn",
+  "x86",
+  "fbgemm"
+ ],
+ "outputs_sha256": {
+  "replication_alienware_smollm_quant_certs.json": "e5eb229b4ad4b5577414b21171b6099402ae97f7299554e92957c55013cf945e",
+  "replication_alienware_smollm_quant_fingerprints.json": "04de684f9a86bf795d9264beb2f4d2277cd8fc6d1e1b563995a9f2b59fa3528b",
+  "replication_alienware_smollm_quant_plates.png": "7f08362ef8b1187f16940b64b8d78df94da53f1cd63c86e7eed12e1205749915",
+  "replication_alienware_smollm_quant_drift_plates.png": "79d32b92daa9136ac5825c6ff500691f6b59b16b8a736680cf45b5009f5cf6ce"
+ }
+}

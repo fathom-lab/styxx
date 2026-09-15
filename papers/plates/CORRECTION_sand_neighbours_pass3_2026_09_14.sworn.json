@@ -1,0 +1,117 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "d0be5ac25bb6b5fc1eb99baaa39f587649223125",
+ "document": {
+  "name": "CORRECTION_sand_neighbours_pass3_2026_09_14.md",
+  "sha256": "0ba82748f7bac2c88479c1cd108c3153d4bc3710da4d3007bc11b62da631d810"
+ },
+ "text": "# CORRECTION — SURVEY_sand_neighbours_pass3_2026_09_14: the inputs a stranger was told to rebuild from are in the tree, the counts that were self-reports say so, and the fingerprint clause is priced under the two terms its protocol left undefined\n\n**status: a correction beside a sworn survey, sworn to its own record\n(`sand_prior_art_survey_pass3_correction_2026_09_14.json`, written by\n`build_sand_survey_pass3_correction.py`). The pass-3 SURVEY, its record and its protocol are not edited.\nIt follows the lab's red team of 2026-09-14: two findings on the survey's inputs were confirmed by both\nskeptics; two on its element coding were judged plausible; two others were refuted and are recorded as\nnotes. The status of every clause, and the licensed sentence, are unchanged.**\n\n## 1. the inputs a stranger was told to rebuild from\n\nThe SURVEY told a stranger that `fetch_pass3.py` re-fetches the sources and that\n`build_sand_survey_pass3.py` rebuilds the record \"from the readers' returns and the fetch record\".\nNeither the script nor the returns were in the tree. They are now, under\n`papers/plates/sand_survey_pass3_inputs/`:\n4\nreader returns, exactly as the builder read them, and the fetch script as it ran. The correction's\nbuilder rebuilt the record from those committed inputs into a scratch file and compared it with the\ncommitted record:\n17\nsources rebuilt, with\n0\ntop-level fields and\n0\nsource fields differing, apart from the verbatim-quote check.\n\nThe quote check — 17\nverdict quotes found in the text they are attributed to — cannot be rebuilt from the tree. It read the\nextracted full texts, and those are not committed: they are the full text of seventeen publications,\nother people's work. Their sha256 are in the fetch record. Re-deriving the check needs a re-fetch and the\nsame extractor, and the readers' own notes say three of the fetched texts are later revisions than the\nversions the list named (ChatLog, Yang and Wu, Hooker et al.), so a later fetch may not reproduce.\n\n## 2. the counts that were self-reports\n\nThe SURVEY reported every source as read end to end and\n1035862\ncharacters read. Both are the readers' reports. Each reader was told its files' sizes, and each reported\nexactly those sizes. Nothing measured how much of a text a reader read. The SURVEY's \"read end to end\" is\nthe readers' statement, and a stranger should weigh it as one.\n\n## 3. the fingerprint clause, under the two terms the protocol did not define\n\nThe pricing rule retires a clause only when a source does \"the same thing for the same object\". For the\nfingerprint clause, the pass-3 protocol stated the OBJECT before reading, as four elements: a served\nmodel compared with its own earlier or differently-served self; a fixed item set; a floor measured on the\nsame weights under the serving in use; an interval on the comparison. The THING is the clause's\noperational row, also frozen before reading: teacher-forced log-probabilities on a fixed, hashed item\nset. The SURVEY spoke of \"five elements, stated before reading\" without saying that four come from the\nobject paragraph and the fifth from the operational row; both predate any fetch, but the SURVEY should\nhave said where each came from.\n\nThe protocol never defined \"an interval on the comparison\" or \"measured on the same weights\", and the\nreaders coded them differently. One reader counted a one-tailed t-test threshold as an interval\n(DeepJudge); another did not count a z-test at a critical value (ChatLog) or a Welch test at a stated level\n(Hooker et al.); and one flag (Xu et al.) contradicts its reader's own note that the ± values are not an\ninterval on the difference. The correction's builder recodes the elements under four stated readings,\neach override resting on text the builder asserts is in the record, and counts, per reading, the sources\ncarrying all four object elements, and those carrying the object and the thing:\n\n- **as recorded**: 5\n  sources with an interval; 0\n  with all four object elements.\n- **a test on the difference at a stated level is an interval**:\n  7\n  with an interval; 1\n  with all four object elements —\n  `L03`,\n  ChatLog — and 0\n  with the object and the thing.\n- **only a confidence interval on the compared quantity is an interval**:\n  3\n  with an interval; 0\n  with all four object elements.\n- **the stated-level reading, with a floor counted only on weights known to be identical**:\n  0\n  with all four object elements.\n\nUnder 0\nof the 4\nreadings would the clause retire. That is not the margin the SURVEY implied. Under the stated-level reading\nChatLog carries every element of the clause's object: it compares a served model with its own earlier\nself, on a fixed item set, against a spread measured within a period, with a test at a stated level. What\nit does not carry is the thing: it scores sampled text by ROUGE, not teacher-forced log-probabilities. (The\nreaders were not asked to code a hashed item set, and none noted one in any source.) The fingerprint clause survives on what it measures\nmore than on its floor or its interval, and the licensed sentence's neighbour phrase for Tu et al. already\nnames ROUGE. Anyone using the sentence in public should say that.\n\n## notes the red team raised and this correction does not act on\n\nTwo skeptics each refuted the claim that the SURVEY raised the RETIRES bar after reading (the five\nelements' sources are stated above) and the claim that two of the three \"nearer\" flags must be withdrawn\n(neither the protocol nor the SURVEY defines nearness by an element count; the SURVEY names the flags as\nthe readers'). Recorded, not acted on: the SURVEY's \"every source on the list does part of what a clause\nsays\" overstates for SafetyNets, whose reader recorded no element of the object; the builder's quote check\ncounts an empty quote as found (none of the seventeen was empty). The next survey protocol defines \"an\ninterval on the comparison\" and \"measured on the same weights\" before any fetch.\n\n## what a stranger checks\n\n    python papers/plates/build_sand_survey_pass3_correction.py 54b066ff\n    python -m styxx.sworn verify papers/plates/CORRECTION_sand_neighbours_pass3_2026_09_14.md --repo . --commit <the commit that carries it>\n\nThe first rebuilds the pass-3 record from the committed inputs and rewrites this correction's record; it\nrefuses to run if the text an override rests on is not in the record. The second re-derives every number\nabove.\n",
+ "spans": [
+  {
+   "start": 1132,
+   "end": 1133,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/inputs/n_reader_returns",
+   "kind": "numeric"
+  },
+  {
+   "start": 1351,
+   "end": 1353,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/rebuild/n_sources_rebuilt",
+   "kind": "numeric"
+  },
+  {
+   "start": 1376,
+   "end": 1377,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/rebuild/n_top_level_fields_differing",
+   "kind": "numeric"
+  },
+  {
+   "start": 1399,
+   "end": 1400,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/rebuild/n_source_fields_differing",
+   "kind": "numeric"
+  },
+  {
+   "start": 1484,
+   "end": 1486,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdict_quotes_found_in_text",
+   "kind": "numeric"
+  },
+  {
+   "start": 2099,
+   "end": 2106,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/self_reports/chars_reported_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 3928,
+   "end": 3929,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/as_recorded/element_true_counts/interval_on_comparison",
+   "kind": "numeric"
+  },
+  {
+   "start": 3958,
+   "end": 3959,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/as_recorded/n_sources_with_the_four_object_elements",
+   "kind": "numeric"
+  },
+  {
+   "start": 4060,
+   "end": 4061,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/a_stated_level_test_on_the_difference_is_an_interval/element_true_counts/interval_on_comparison",
+   "kind": "numeric"
+  },
+  {
+   "start": 4082,
+   "end": 4083,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/a_stated_level_test_on_the_difference_is_an_interval/n_sources_with_the_four_object_elements",
+   "kind": "numeric"
+  },
+  {
+   "start": 4122,
+   "end": 4127,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/a_stated_level_test_on_the_difference_is_an_interval/sources_with_the_four_object_elements/0",
+   "kind": "quote"
+  },
+  {
+   "start": 4147,
+   "end": 4148,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/a_stated_level_test_on_the_difference_is_an_interval/n_sources_with_the_object_and_the_thing",
+   "kind": "numeric"
+  },
+  {
+   "start": 4258,
+   "end": 4259,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/only_a_confidence_interval_on_the_compared_quantity_is_an_interval/element_true_counts/interval_on_comparison",
+   "kind": "numeric"
+  },
+  {
+   "start": 4280,
+   "end": 4281,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/only_a_confidence_interval_on_the_compared_quantity_is_an_interval/n_sources_with_the_four_object_elements",
+   "kind": "numeric"
+  },
+  {
+   "start": 4409,
+   "end": 4410,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/readings/the_lenient_interval_and_a_floor_only_on_weights_known_identical/n_sources_with_the_four_object_elements",
+   "kind": "numeric"
+  },
+  {
+   "start": 4451,
+   "end": 4452,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/n_readings_under_which_C4a_would_retire",
+   "kind": "numeric"
+  },
+  {
+   "start": 4460,
+   "end": 4461,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_correction_2026_09_14.json#/undefined_terms/n_readings",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

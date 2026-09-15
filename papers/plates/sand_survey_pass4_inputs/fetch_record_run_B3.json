@@ -1,0 +1,40 @@
+{
+ "B08": {
+  "title": "AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models",
+  "attempts": [
+   {
+    "url": "https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+    "url_effective": "charset=UTF-8 https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 580852,
+    "sha256": "f9f5251ee3d71c21d305f2ce9f35e701af448278d20ff1920cd8b212d91c61fb",
+    "fetched_at": "2026-09-14T22:20:21Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+  "url_effective": "charset=UTF-8 https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 580852,
+  "sha256": "f9f5251ee3d71c21d305f2ce9f35e701af448278d20ff1920cd8b212d91c61fb",
+  "fetched_at": "2026-09-14T22:20:21Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B08.txt",
+   "chars": 143499,
+   "sha256": "e02fb5854f18ec47ea55c091b2c0cc0babf06edf636d127bd1478017e8153295"
+  }
+ }
+}

@@ -1,0 +1,236 @@
+{
+ "S01": {
+  "url": "https://people.eecs.berkeley.edu/~dawnsong/papers/randomart.pdf",
+  "url_effective": "https://people.eecs.berkeley.edu/~dawnsong/papers/randomart.pdf",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 498430,
+  "sha256": "c10e3217b07ba50c6e34965975f91860765a7a29393652229cc7db544689d9a8",
+  "fetched_at": "2026-09-14T02:54:32Z",
+  "fulltext_pdf": {
+   "file": "S01.pdf",
+   "bytes": 498430,
+   "sha256": "c10e3217b07ba50c6e34965975f91860765a7a29393652229cc7db544689d9a8",
+   "starts_pdf": true
+  }
+ },
+ "S02": {
+  "url": "https://www.openssh.com/txt/release-5.1",
+  "url_effective": "https://www.openssh.org/txt/release-5.1",
+  "http": "200",
+  "content_type": "text/plain",
+  "bytes": 11217,
+  "sha256": "8516f5e282d45d4211e76f1ab1ef5a8c1035d8a53d3aa309ded27b5fce321183",
+  "fetched_at": "2026-09-14T02:54:33Z"
+ },
+ "S03": {
+  "url": "https://web.archive.org/web/2007/http://www.docuverse.com/blog/donpark/2007/01/18/visual-security-9-block-ip-identification",
+  "url_effective": "https://web.archive.org/web/20071215234320/http://www.docuverse.com/blog/donpark/2007/01/18/visual-security-9-block-ip-identification",
+  "http": "200",
+  "content_type": "text/html;charset=UTF-8",
+  "bytes": 494563,
+  "sha256": "23c11a85349b92362a521fb577fe809df09ffe40f8cc6347279b7d2abd1040a1",
+  "fetched_at": "2026-09-14T02:54:34Z"
+ },
+ "S04": {
+  "url": "https://link.springer.com/content/pdf/10.1007/BF00196791.pdf",
+  "url_effective": "https://link.springer.com/content/pdf/10.1007/BF00196791.pdf?error=cookies_not_supported&code=7f558003-87be-49a1-b3e7-3f7dcd546e04",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 825065,
+  "sha256": "ef2290c000332967f5753973597b0d92485cc618e19643a60308ce2606b606de",
+  "fetched_at": "2026-09-14T02:54:36Z",
+  "fulltext_pdf": {
+   "file": "S04.pdf",
+   "bytes": 825065,
+   "sha256": "ef2290c000332967f5753973597b0d92485cc618e19643a60308ce2606b606de",
+   "starts_pdf": true
+  }
+ },
+ "S05": {
+  "url": "https://opentimestamps.org/",
+  "url_effective": "https://opentimestamps.org/",
+  "http": "200",
+  "content_type": "text/html",
+  "bytes": 26109,
+  "sha256": "28df6bbff839a6948b0ce54ef06df3ccb1e6d1027d841f5f0018f707761ec789",
+  "fetched_at": "2026-09-14T02:54:37Z"
+ },
+ "S06": {
+  "url": "https://web.archive.org/web/2020/https://proofofexistence.com/",
+  "url_effective": "https://web.archive.org/web/20210105030237/https://proofofexistence.com/",
+  "http": "200",
+  "content_type": "text/html; charset=UTF-8",
+  "bytes": 3203,
+  "sha256": "1c67626a04c243fa57f0df9dd58a833e1bdd25653e5dbed57d85cd78c94de1b4",
+  "fetched_at": "2026-09-14T02:54:38Z"
+ },
+ "S07": {
+  "url": "https://datatracker.ietf.org/doc/html/rfc6962",
+  "url_effective": "https://datatracker.ietf.org/doc/html/rfc6962",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 122354,
+  "sha256": "c06618a22a299833e401dd1524d0eabb8de9a0bbaffa90312c172ca7abb11db0",
+  "fetched_at": "2026-09-14T02:54:39Z"
+ },
+ "S08": {
+  "url": "https://docs.sigstore.dev/logging/overview/",
+  "url_effective": "https://docs.sigstore.dev/logging/overview/",
+  "http": "200",
+  "content_type": "text/html; charset=UTF-8",
+  "bytes": 42866,
+  "sha256": "58ae68b8da9478ad99ea22c25c883d2e306025a1a619ed9ae2c1652a6327cf8c",
+  "fetched_at": "2026-09-14T02:54:40Z"
+ },
+ "S09": {
+  "url": "https://www.nature.com/articles/s41562-021-01193-7",
+  "url_effective": "https://www.nature.com/articles/s41562-021-01193-7?error=cookies_not_supported&code=cd9b7b63-a8b7-4dd6-aa11-f6b6237ee4f8",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 471919,
+  "sha256": "5022b34f3abc5eece2f51fba304dfbfa92440e1323e7b77c4d287440354ec873",
+  "fetched_at": "2026-09-14T02:54:40Z"
+ },
+ "S10": {
+  "url": "https://www.cos.io/initiatives/prereg",
+  "url_effective": "https://www.cos.io/initiatives/prereg",
+  "http": "200",
+  "content_type": "text/html; charset=UTF-8",
+  "bytes": 106704,
+  "sha256": "1c44df7c10c8d58617db1ca42d713c4bd51a501b28b6dbfb3883db70c57e0afb",
+  "fetched_at": "2026-09-14T02:54:42Z"
+ },
+ "S11": {
+  "url": "https://arxiv.org/abs/2307.09009",
+  "url_effective": "https://arxiv.org/abs/2307.09009",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 42956,
+  "sha256": "7182446e71d7954bfbbdd9e54b9ed09203465904c2226a3d8123eeae79511cca",
+  "fetched_at": "2026-09-14T02:54:43Z",
+  "fulltext_pdf": {
+   "file": "S11.pdf",
+   "bytes": 2050108,
+   "sha256": "7b77f2727a8e702607dd1bedfefdce1d26358619ef10be67746a445bb1efb96f",
+   "starts_pdf": true
+  }
+ },
+ "S12": {
+  "url": "https://arxiv.org/abs/2407.09141",
+  "url_effective": "https://arxiv.org/abs/2407.09141",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 42377,
+  "sha256": "c5ecc677771e4af7fa629897f7431c2ca52c55e930b84d24e521f4aa1390373a",
+  "fetched_at": "2026-09-14T02:54:43Z",
+  "fulltext_pdf": {
+   "file": "S12.pdf",
+   "bytes": 867999,
+   "sha256": "582d61d0311c30d921505f7fe300b04331c0719e91798693385b7dd0aae4bf52",
+   "starts_pdf": true
+  }
+ },
+ "S13": {
+  "url": "https://arxiv.org/abs/2401.12255",
+  "url_effective": "https://arxiv.org/abs/2401.12255",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 41521,
+  "sha256": "59aabcef712e0f0f65f1c85df13c5fbbbfa8bdaa40143929b449c01740a5fe56",
+  "fetched_at": "2026-09-14T02:54:43Z",
+  "fulltext_pdf": {
+   "file": "S13.pdf",
+   "bytes": 3835251,
+   "sha256": "11b9201657a15772181235269e3ae729a401d453d3086165945bc6d5b5d706f9",
+   "starts_pdf": true
+  }
+ },
+ "S14": {
+  "url": "https://arxiv.org/abs/2410.14273",
+  "url_effective": "https://arxiv.org/abs/2410.14273",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 41298,
+  "sha256": "6829f762de25b10bd14fa0f97c6cd6bcb5400130556fd7c91dbc71ac746951ee",
+  "fetched_at": "2026-09-14T02:54:43Z",
+  "fulltext_pdf": {
+   "file": "S14.pdf",
+   "bytes": 2095341,
+   "sha256": "855ffd3e659a0831b14c1fb7a265a17ba59ec4c96acd3b9a39289f19e6450ce8",
+   "starts_pdf": true
+  }
+ },
+ "S15": {
+  "url": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+  "url_effective": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+  "http": "200",
+  "content_type": "text/html;charset=utf-8",
+  "bytes": 669101,
+  "sha256": "03f75b60a8c1f9fcce479aea5871adc4551182a4a03aa062ed8e3130b7a2bb87",
+  "fetched_at": "2026-09-14T02:54:43Z"
+ },
+ "S16": {
+  "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+  "url_effective": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 96892,
+  "sha256": "5bafc9b8ef12d40f2e8e9129da959187f6140ef3d3e9d6cb8343c7ad6fc45460",
+  "fetched_at": "2026-09-14T02:54:45Z"
+ },
+ "S17": {
+  "url": "https://arxiv.org/abs/2504.07086",
+  "url_effective": "https://arxiv.org/abs/2504.07086",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 43624,
+  "sha256": "900462100b88d1edac7ca3a14ab0449f9a645cebfee255be4e5062cc5c306021",
+  "fetched_at": "2026-09-14T02:54:45Z",
+  "fulltext_pdf": {
+   "file": "S17.pdf",
+   "bytes": 1425162,
+   "sha256": "2856ce4867601d3c88524b0aceef3771721fbf9f0de98a63012be204b3bdf032",
+   "starts_pdf": true
+  }
+ },
+ "S18": {
+  "url": "https://arxiv.org/abs/2003.12206",
+  "url_effective": "https://arxiv.org/abs/2003.12206",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 45628,
+  "sha256": "65cfc3d3a66f18008865fcf03e9cbbb03a786e94e40d23587ebf157d37c01d7e",
+  "fetched_at": "2026-09-14T02:54:45Z",
+  "fulltext_pdf": {
+   "file": "S18.pdf",
+   "bytes": 2246118,
+   "sha256": "0ea62d8ae3eede31d18faedf4246d59f9c07346df59b4ca99407ef4323d2307f",
+   "starts_pdf": true
+  }
+ },
+ "S19": {
+  "url": "https://arxiv.org/abs/2103.05633",
+  "url_effective": "https://arxiv.org/abs/2103.05633",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 45412,
+  "sha256": "5fc0170849c30199907f246a27a438c84e2e6ba6dc727d24f850d99be061b283",
+  "fetched_at": "2026-09-14T02:54:45Z",
+  "fulltext_pdf": {
+   "file": "S19.pdf",
+   "bytes": 1156735,
+   "sha256": "df69677539bc5dfd4d529045b0156ec581620fe7576eb4bfceac080e2011405e",
+   "starts_pdf": true
+  }
+ },
+ "S20": {
+  "url": "https://immunefi.com/bug-bounty/",
+  "url_effective": "https://immunefi.com/bug-bounty/",
+  "http": "200",
+  "content_type": "text/html; charset=utf-8",
+  "bytes": 404792,
+  "sha256": "5f88c9559aaa6fa8ffbee569e2ce8d40096bbc1dfa9a2baaa5f952a599b1273f",
+  "fetched_at": "2026-09-14T02:54:45Z"
+ }
+}

@@ -1,0 +1,11 @@
+[
+ {"id": "A01", "title": "IPGuard: Protecting Intellectual Property of Deep Neural Networks via Fingerprinting the Classification Boundary", "urls": ["https://arxiv.org/abs/1910.12903"]},
+ {"id": "A02", "title": "Deep Neural Network Fingerprinting by Conferrable Adversarial Examples", "urls": ["https://arxiv.org/abs/1912.00888"]},
+ {"id": "A03", "title": "Logits of API-Protected LLMs Leak Proprietary Information", "urls": ["https://arxiv.org/abs/2403.09539"]},
+ {"id": "A04", "title": "Hey, That's My Model! Introducing Chain & Hash, An LLM Fingerprinting Technique", "urls": ["https://arxiv.org/abs/2407.10887"]},
+ {"id": "A05", "title": "Stealing Part of a Production Language Model", "urls": ["https://arxiv.org/abs/2403.06634"]},
+ {"id": "A06", "title": "Can we trust the evaluation on ChatGPT?", "urls": ["https://arxiv.org/abs/2303.12767"]},
+ {"id": "A07", "title": "Characterising Bias in Compressed Models", "urls": ["https://arxiv.org/abs/2010.03058"]},
+ {"id": "A08", "title": "An Empirical Study of the Non-determinism of ChatGPT in Code Generation", "urls": ["https://arxiv.org/abs/2308.02828"]},
+ {"id": "A09", "title": "The Good, The Bad, and The Greedy: Evaluation of LLMs Should Not Ignore Non-Determinism", "urls": ["https://arxiv.org/abs/2407.10457"]}
+]

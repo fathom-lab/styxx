@@ -1,0 +1,250 @@
+{
+ "schema": "styxx.portability/v0",
+ "recipe_canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+ "n_machines": 2,
+ "labels": [
+  "build_machine",
+  "alienware"
+ ],
+ "arms": {
+  "int8": {
+   "verdicts": {
+    "build_machine": "DRIFT",
+    "alienware": "DRIFT"
+   },
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": {
+      "build_machine": 1.5144575702498617,
+      "alienware": 1.4133666138568917
+     },
+     "max_abs_diff": 0.10109095639297005
+    },
+    "rdm_r": {
+     "values": {
+      "build_machine": 0.8285061488474084,
+      "alienware": 0.8289679093795215
+     },
+     "max_abs_diff": 0.0004617605321131091
+    },
+    "corr_dist": {
+     "values": {
+      "build_machine": 0.18105524610843915,
+      "alienware": 0.15642523329965186
+     },
+     "max_abs_diff": 0.024630012808787294
+    },
+    "ci_mean_abs": {
+     "values": {
+      "build_machine": [
+       1.1705011810457897,
+       1.9025167784027055
+      ],
+      "alienware": [
+       1.0878911958676811,
+       1.7519866399692785
+      ]
+     },
+     "max_abs_diff": [
+      0.08260998517810858,
+      0.150530138433427
+     ]
+    },
+    "ci_rdm_r": {
+     "values": {
+      "build_machine": [
+       0.7449038507397748,
+       0.8744999667634993
+      ],
+      "alienware": [
+       0.7377317942460736,
+       0.8862645371045199
+      ]
+     },
+     "max_abs_diff": [
+      0.007172056493701229,
+      0.01176457034102063
+     ]
+    }
+   }
+  },
+  "random": {
+   "verdicts": {
+    "build_machine": "DRIFT",
+    "alienware": "DRIFT"
+   },
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": {
+      "build_machine": 9.498053874013324,
+      "alienware": 9.716727482717962
+     },
+     "max_abs_diff": 0.2186736087046377
+    },
+    "rdm_r": {
+     "values": {
+      "build_machine": 0.0653220085203318,
+      "alienware": 0.09354895823912246
+     },
+     "max_abs_diff": 0.028226949718790653
+    },
+    "corr_dist": {
+     "values": {
+      "build_machine": 0.9562660678721633,
+      "alienware": 0.8551157356587554
+     },
+     "max_abs_diff": 0.10115033221340786
+    },
+    "ci_mean_abs": {
+     "values": {
+      "build_machine": [
+       8.876455481210046,
+       10.084330336024513
+      ],
+      "alienware": [
+       9.135748775503847,
+       10.258466908141507
+      ]
+     },
+     "max_abs_diff": [
+      0.2592932942938013,
+      0.17413657211699451
+     ]
+    },
+    "ci_rdm_r": {
+     "values": {
+      "build_machine": [
+       -0.06626946909277534,
+       0.19521443482490228
+      ],
+      "alienware": [
+       -0.019251909051074923,
+       0.21136590783566006
+      ]
+     },
+     "max_abs_diff": [
+      0.04701756004170042,
+      0.016151473010757783
+     ]
+    }
+   }
+  },
+  "reloaded": {
+   "verdicts": {
+    "build_machine": "SAME",
+    "alienware": "SAME"
+   },
+   "verdicts_agree": true,
+   "numbers": {
+    "mean_abs_nats": {
+     "values": {
+      "build_machine": 0.0,
+      "alienware": 0.0
+     },
+     "max_abs_diff": 0.0
+    },
+    "rdm_r": {
+     "values": {
+      "build_machine": 1.0,
+      "alienware": 0.9999999999999998
+     },
+     "max_abs_diff": 2.220446049250313e-16
+    },
+    "corr_dist": {
+     "values": {
+      "build_machine": 1.1102230246251565e-16,
+      "alienware": 0.0
+     },
+     "max_abs_diff": 1.1102230246251565e-16
+    },
+    "ci_mean_abs": {
+     "values": {
+      "build_machine": [
+       0.0,
+       0.0
+      ],
+      "alienware": [
+       0.0,
+       0.0
+      ]
+     },
+     "max_abs_diff": [
+      0.0,
+      0.0
+     ]
+    },
+    "ci_rdm_r": {
+     "values": {
+      "build_machine": [
+       0.9999999999999998,
+       1.0
+      ],
+      "alienware": [
+       0.9999999999999998,
+       1.0
+      ]
+     },
+     "max_abs_diff": [
+      0.0,
+      0.0
+     ]
+    }
+   }
+  }
+ },
+ "cross_machine_floor": {
+  "A": {
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "A2": {
+   "max_abs_diff_mean_lp": 1.700000000015578e-05,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "Q": {
+   "max_abs_diff_mean_lp": 1.848607,
+   "n_items_differing": 48,
+   "n_items": 48
+  },
+  "R": {
+   "max_abs_diff_mean_lp": 3.226509,
+   "n_items_differing": 48,
+   "n_items": 48
+  }
+ },
+ "base_arm": "A",
+ "grading_floor_nats": 0.0001,
+ "grading_floor_source": "cross-machine null floor of the base arm",
+ "verdicts": "AGREE",
+ "verdict_flips": [],
+ "magnitudes": "MOVE",
+ "magnitudes_moved": [
+  "int8.mean_abs_nats",
+  "int8.rdm_r",
+  "int8.corr_dist",
+  "int8.ci_mean_abs",
+  "int8.ci_rdm_r",
+  "random.mean_abs_nats",
+  "random.rdm_r",
+  "random.corr_dist",
+  "random.ci_mean_abs",
+  "random.ci_rdm_r"
+ ],
+ "reading": "every verdict survives the move between these machines; the numbers do not, and the per-number max_abs_diff is the tolerance a RESULT may state for them, measured on these machines only",
+ "digest": "fb6c63da42db2acde4f092d4e454ff1120271ac8e6d42d05ac08e4369eb15df6",
+ "created": "2026-09-14T02:50:47Z",
+ "inputs": {
+  "certs": [
+   "papers/checksum/smollm_quant_certs.json",
+   "papers/checksum/replication_alienware_smollm_quant_certs.json"
+  ],
+  "fingerprints": [
+   "papers/checksum/smollm_quant_fingerprints.json",
+   "papers/checksum/replication_alienware_smollm_quant_fingerprints.json"
+  ]
+ }
+}

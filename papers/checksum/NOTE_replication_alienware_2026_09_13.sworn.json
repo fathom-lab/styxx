@@ -1,0 +1,213 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "f3fa8842d85d7c9c6ff9fca64440a76205da0c51",
+ "document": {
+  "name": "NOTE_replication_alienware_2026_09_13.md",
+  "sha256": "7ee1e1587e6b0d65faa5842280a7c1c1e4b471489ab1ba23375fa5a587dba671"
+ },
+ "text": "# NOTE — the checksum RESULT re-run on a second machine: every verdict reproduces, no magnitude does\n\n**status: a replication record with the honest outcome, sworn to both machines' bytes. It corrects\nnothing in `RESULT_checksum_smollm_quant_2026_09_13.md`, which is not edited and whose receipt is\nhistory; it states what that RESULT's sentence \"rebuild both with `run_smollm_quant.py`\" turns out\nto mean, and it is the reason `BOUNTY.md` now has a tolerance rule.**\n\n## what was done\n\n`python papers/checksum/run_smollm_quant.py`, the recipe the RESULT names, was run on the lab's\nsecond machine — os `Windows-11-10.0.26200-SP0`, torch `2.5.1+cu121`, quantized engine `x86`, on cpu —\nin an isolated checkout of the series. The outputs were kept beside the sworn bytes as\n`replication_alienware_*` and never written over them; `replication_alienware_compare.json` lays\nthe two runs side by side, leaf by leaf, and this NOTE swears to those three files and to the\ncommitted certs.\n\n## what reproduced\n\n- The null pair, exactly: A vs A′: mean |Δ log-prob| = 0 nats per token, verdict `SAME`.\n- Every verdict: the quantized arm reads `DRIFT` and the random arm reads `DRIFT`, as committed.\n- The full-precision sanity count: the full-precision model gets the first continuation token right on 30 canaries, as committed; the random arm on 0.\n- The measured floor: 0 here and 0 there — within a machine, a reload is bit-identical.\n\n## what did not\n\nOf the leaves the two certs files share (72), 22 carry a different value, timestamps excluded. Every one of them is a magnitude the RESULT swears to:\n\n- The quantized arm's distance: committed 1.51 nats per token, second machine 1.41 nats per token; its interval committed from 1.17 to 1.90, second machine from 1.09 to 1.75; its belief-geometry agreement committed 0.83, second machine 0.83; its sanity count committed 16, second machine 17.\n- The random arm's distance: committed 9.50 nats per token, second machine 9.72 nats per token; agreement committed 0.07, second machine 0.09.\n\n## where the difference comes from, arm by arm\n\nThe fingerprints say which step moved. The full-precision arm itself moved, barely: across the\ntwo machines the per-item mean log-prob differs by at most 0.000017 nats per token —\nfloat32 BLAS order, under the instrument's resolution, which is why the null pair still reads SAME\nand why \"the floor is exactly zero\" is a within-machine sentence: across machines the floor is\nthat number, not zero. The quantized arm moved by up to 1.85 nats on one item:\n`torch.ao.quantization.quantize_dynamic` runs the per-tensor int8 kernels the machine's quantized\nengine provides, and the recipe pins no engine. The random arm moved by up to 3.23 nats on one item:\n`from_config` under `torch.manual_seed(343)` draws its weights in an order the torch and\ntransformers versions decide, and the recipe records neither. The recipe at the head of the series\nalso writes a key the committed certs do not have (`coefficients_sha256`):\nthe sworn bytes were produced by an earlier revision of the recipe than the one the RESULT points\na stranger at.\n\nOne reading rule the RESULT left unsaid: its \"nats per token\" is the mean over the items of each\nitem's per-token mean, every item weighted equally. The token-weighted pooled mean is lower —\ncommitted 1.32, second machine 1.25 —\nand a reader who takes the unit as the aggregation gets a different number for no reason.\n\n## what this settles\n\nBy the letter of `BOUNTY.md` as it stood this morning (\"a number in a sworn RESULT that does not\nreproduce from its own recipe on a second machine\"), the lab owed itself a bounty by noon. The\nnumber was never wrong: it is what that machine computed, the receipt binds it, and the verifier\nholds it. What was wrong was the promise that the recipe reproduces it anywhere. So: a sworn\nmagnitude is covered only against a tolerance and an environment the RESULT, or a correction\nbeside it, states (`BOUNTY.md`, Tolerance); the checksum's cert now records the measured and the\neffective floor, the seed and the written hashes of both fingerprints; the deploy-scale runner\nrecords the versions, the engine and the device; and the sentence a RESULT owes its reader is not\n\"rebuild both\" but \"rebuild both, and expect the verdicts, not the digits\".\n\nReceipt history, stated because the law says it must be: the RESULT's receipt was written at\n870a034a over certs from a 15:10 run, rewritten at c0bba384 over certs regenerated in place at\n15:17, and rewritten again at 9da2da0c on this machine because c1751053, the commit it named,\nexisted only on the machine that built the series. From here a re-swear is a new dated receipt\nfile, and a regenerated certs file is a new file name; `tests/test_receipts_name_reachable_commits.py`\nmakes a ghost commit a CI failure.\n",
+ "spans": [
+  {
+   "start": 607,
+   "end": 634,
+   "receipt": "path:papers/checksum/replication_alienware_env.json#/os",
+   "kind": "quote"
+  },
+  {
+   "start": 642,
+   "end": 655,
+   "receipt": "path:papers/checksum/replication_alienware_env.json#/torch",
+   "kind": "quote"
+  },
+  {
+   "start": 674,
+   "end": 679,
+   "receipt": "path:papers/checksum/replication_alienware_env.json#/torch_quantized_engine",
+   "kind": "quote"
+  },
+  {
+   "start": 1034,
+   "end": 1082,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/reloaded/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1084,
+   "end": 1098,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/reloaded/distance/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1117,
+   "end": 1148,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/certs/verdicts/int8/replication",
+   "kind": "quote"
+  },
+  {
+   "start": 1153,
+   "end": 1181,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/certs/verdicts/random/replication",
+   "kind": "quote"
+  },
+  {
+   "start": 1232,
+   "end": 1311,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/sanity/first_token_top1_hits/A",
+   "kind": "numeric"
+  },
+  {
+   "start": 1345,
+   "end": 1346,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/sanity/first_token_top1_hits/random",
+   "kind": "numeric"
+  },
+  {
+   "start": 1370,
+   "end": 1371,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/sanity/null_floor_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1381,
+   "end": 1382,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/null_floor_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1497,
+   "end": 1499,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/certs/leaves_in_common",
+   "kind": "numeric"
+  },
+  {
+   "start": 1502,
+   "end": 1504,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/certs/leaves_moved_excluding_timestamps",
+   "kind": "numeric"
+  },
+  {
+   "start": 1649,
+   "end": 1668,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1685,
+   "end": 1704,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/int8/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1729,
+   "end": 1738,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 1739,
+   "end": 1746,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/ci_mean_abs/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 1763,
+   "end": 1772,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/int8/distance/ci_mean_abs/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 1773,
+   "end": 1780,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/int8/distance/ci_mean_abs/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 1822,
+   "end": 1826,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/int8/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 1843,
+   "end": 1847,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/int8/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 1876,
+   "end": 1878,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/sanity/first_token_top1_hits/int8",
+   "kind": "numeric"
+  },
+  {
+   "start": 1895,
+   "end": 1897,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/sanity/first_token_top1_hits/int8",
+   "kind": "numeric"
+  },
+  {
+   "start": 1938,
+   "end": 1957,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1974,
+   "end": 1993,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/random/distance/mean_abs_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 2015,
+   "end": 2019,
+   "receipt": "path:papers/checksum/smollm_quant_certs.json#/random/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 2036,
+   "end": 2040,
+   "receipt": "path:papers/checksum/replication_alienware_smollm_quant_certs.json#/random/distance/rdm_r",
+   "kind": "numeric"
+  },
+  {
+   "start": 2245,
+   "end": 2268,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/arms/A/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  },
+  {
+   "start": 2523,
+   "end": 2544,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/arms/Q/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  },
+  {
+   "start": 2722,
+   "end": 2743,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/arms/R/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  },
+  {
+   "start": 2984,
+   "end": 3005,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/certs/keys_only_in_replication/0",
+   "kind": "quote"
+  },
+  {
+   "start": 3325,
+   "end": 3329,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/aggregation/token_weighted_pooled_mean_abs/committed/int8",
+   "kind": "numeric"
+  },
+  {
+   "start": 3346,
+   "end": 3350,
+   "receipt": "path:papers/checksum/replication_alienware_compare.json#/aggregation/token_weighted_pooled_mean_abs/replication/int8",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

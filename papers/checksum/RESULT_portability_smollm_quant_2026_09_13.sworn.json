@@ -1,0 +1,105 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "c2b636ca972ce66fe21ea48ccccd7dee98f98f8e",
+ "document": {
+  "name": "RESULT_portability_smollm_quant_2026_09_13.md",
+  "sha256": "e9c2332429a2b79d7ce3c182f0126ce8270b53fd288a319593864ea5cded617c"
+ },
+ "text": "# RESULT — the checksum recipe between two machines: every verdict survives the move, no magnitude does, and the tolerance is now a measured number\n\n**status: one recipe, two machines, one pair. This is the day's finding turned into an instrument\n(`styxx.portability`) and graded from the committed and the replication bytes; it decides nothing\nabout any model, and the tolerances it prints are a floor on the spread, not a ceiling — two\nmachines give one difference.**\n\n## what was graded\n\n`styxx.portability` takes certs files written by the same recipe on different machines and, when\ngiven, the fingerprints those runs wrote. It prints, per arm, whether the verdicts agree and the\nlargest pairwise difference of every number; per fingerprint arm, the largest per-item\ndifference of mean log-prob across machines — for the base arm that is the cross-machine null\nfloor, the floor the null floor never sees because it never leaves the machine; and two readings,\none for verdicts and one for magnitudes. Here it was given the committed\n`smollm_quant_certs.json` (the build machine) and `replication_alienware_smollm_quant_certs.json`\n(this machine), 2 machines, with both fingerprints files, for the recipe on canary set `71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac`.\n\n## what it read\n\n- Verdicts: `AGREE` — the quantized arm reads `DRIFT` on the build machine and `DRIFT` here, and the same holds for the null pair and the random arm.\n- Magnitudes: `MOVE`. The null pair's distance moved by 0; the quantized arm's by 0.10 nats per token and its belief-geometry agreement by 0.0005; the random arm's distance by 0.22 nats per token and its agreement by 0.03.\n- The cross-machine null floor, from the base arm's fingerprints: 0.000017 nats per token — below the instrument's resolution, so the grading floor was 0.0001. The arms that moved did not move by float noise: the quantized fingerprint differs by up to 1.85 nats on one item, the random one by up to 3.23 nats on one item.\n\n## what this establishes\n\nThe recipe is portable at the verdict level between these two machines and not at the digit\nlevel, and the size of the second failure is now a number in a receipt rather than a sentence in\na note. A RESULT on this recipe may state, with these two machines named, a tolerance of 0.10\nnats per token on the quantized arm's distance and 0.22 on the random arm's; a stranger whose\nre-run lands inside those has replicated, and one whose re-run lands outside them, or whose\nverdict flips, holds a challenge (`BOUNTY.md`, Tolerance). The floor is a floor: a third machine\ncan only widen it, never narrow it, and the instrument says so in its own reading.\n\nIt does not establish anything about quantization, about models, or about machines beyond these\ntwo. It establishes what the null floor cannot: the width of \"the same recipe\" once it crosses a\nmachine boundary, measured on the bytes both machines wrote.\n",
+ "spans": [
+  {
+   "start": 1157,
+   "end": 1167,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/n_machines",
+   "kind": "numeric"
+  },
+  {
+   "start": 1228,
+   "end": 1294,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/recipe_canary_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 1326,
+   "end": 1333,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/verdicts",
+   "kind": "quote"
+  },
+  {
+   "start": 1362,
+   "end": 1369,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/int8/verdicts/build_machine",
+   "kind": "quote"
+  },
+  {
+   "start": 1395,
+   "end": 1402,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/int8/verdicts/alienware",
+   "kind": "quote"
+  },
+  {
+   "start": 1480,
+   "end": 1486,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/magnitudes",
+   "kind": "quote"
+  },
+  {
+   "start": 1522,
+   "end": 1523,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/reloaded/numbers/mean_abs_nats/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 1548,
+   "end": 1567,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/int8/numbers/mean_abs_nats/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 1605,
+   "end": 1611,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/int8/numbers/rdm_r/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 1642,
+   "end": 1661,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/random/numbers/mean_abs_nats/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 1683,
+   "end": 1687,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/arms/random/numbers/rdm_r/max_abs_diff",
+   "kind": "numeric"
+  },
+  {
+   "start": 1755,
+   "end": 1778,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/cross_machine_floor/A/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  },
+  {
+   "start": 1843,
+   "end": 1849,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/grading_floor_nats",
+   "kind": "numeric"
+  },
+  {
+   "start": 1943,
+   "end": 1964,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/cross_machine_floor/Q/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  },
+  {
+   "start": 1990,
+   "end": 2011,
+   "receipt": "path:papers/checksum/portability_smollm_quant_two_machines_2026_09_13.json#/cross_machine_floor/R/max_abs_diff_mean_lp",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

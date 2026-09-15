@@ -1,0 +1,725 @@
+{
+ "check": "the sand, pass 4: blind margin re-codings of every source at distance one on C4a",
+ "record": "papers/plates/sand_prior_art_survey_pass4_2026_09_14.json",
+ "run": "wf_0e77527a-e2b",
+ "script": "prompts/margins_pass4.js",
+ "run_date": "2026-09-14",
+ "sources": {
+  "B01": {
+   "title": "Model Equality Testing: Which Model Is This API Serving?",
+   "first_reading": {
+    "reader": "readings_run_B1:reader-1",
+    "missing": [
+     "E5"
+    ],
+    "distance": 1
+   },
+   "margin_readings": [
+    {
+     "reader": "margin-B01-1",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "whether endpoints differ from weights published by Meta on Hugging Face inferenced at commonly accepted precisions",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "For all models, we test with one set of the Wikipedia completion task from §4, where π is uniform over m = 25 prompts",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We simulated p-values by sampling 1000 datasets DP and DQ from P and computing the test statistic on each pair",
+       "quote_found": true
+      },
+      "E4": {
+       "value": true,
+       "quote": "Tests are conducted at level α = 0.01 using N = 10m samples.",
+       "quote_found": true
+      },
+      "E5": {
+       "value": false,
+       "quote": "we investigate a fast kernel related to the Hamming distance between completions",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "help facilitate this research, we open-source the dataset of 1 million LLM completions used for this work",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E5"
+     ],
+     "distance": 1,
+     "object": "A two-sample MMD test (Hamming string kernel on sampled completions) of whether a black-box API's, or a quantized/watermarked/finetuned copy's, completion distribution equals that of reference weights, applied to 31 commercial Llama endpoints against Meta's released weights at fp32/fp16.",
+     "reason": "The paper's central comparison is a served API against a reference copy of the claimed weights (E1). Both sides use the same fixed prompt set (E2). The test's null distribution comes from repeatedly sampling the reference weights against themselves, and rejection at a stated alpha depends on it (E3, E4). The compared MMD is computed from sampled text, not log-probabilities (E5 false), and the released dataset has no published digest (E6 false).",
+     "hardest_element": "E2",
+     "hardest_element_why": "The prompt set (m = 25 or 20 prompts) is fixed before the comparison and shared by both sides, but each sample's prompt is drawn at random from π separately for each side, which a strict reading could count as inputs sampled afresh for each side."
+    },
+    {
+     "reader": "margin-B01-2",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "We are interested in whether endpoints differ from weights published by Meta on Hugging Face inferenced at commonly accepted precisions.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "Both π are uniform over m = 20 prompts, and L = 250 tokens or 3000 characters.",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We conduct tests using this method in the main text, reusing the same cached empirical distribution of the test statistic under the null for all alternatives at that sample size.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": true,
+       "quote": "Tests are conducted at level α = 0.01 using N = 10m samples.",
+       "quote_found": true
+      },
+      "E5": {
+       "value": false,
+       "quote": "We find that a simple string kernel based on the Hamming distance between completions is particularly sample-efficient.",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we open-source the dataset of 1 million LLM completions used for this work",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E5"
+     ],
+     "distance": 1,
+     "object": "A black-box inference API endpoint's completion distribution (and, in simulation, quantized/watermarked/finetuned versions of the same weights) tested against the distribution of the reference weights released by Meta (fp32/fp16), via a two-sample MMD test with a Hamming string kernel on sampled completions over a fixed prompt distribution.",
+     "reason": "The central comparison is an API endpoint (or a quantized/watermarked copy) against the reference copy of the same Llama weights (E1), both sides draw completions over the same pre-fixed prompt set (E2), p-values come from a null distribution simulated by sampling both datasets from the reference weights P and computing the MMD (E3), the null P = Q is tested at a stated alpha (E4), but the compared quantity is a Hamming-kernel MMD on sampled text rather than log-probabilities (E5 false; the probability-based goodness-of-fit tests are an appendix side comparison), and the released dataset carries no digest (E6 false).",
+     "hardest_element": "E2",
+     "hardest_element_why": "The prompt set (m fixed Wikipedia/HumanEval/UltraChat prompts) is fixed in advance and shared, but the formal setup draws each side's prompts i.i.d. from π separately (\"x(i) ∼π\"), which sits close to the definition's exclusion of inputs sampled afresh for each side."
+    },
+    {
+     "reader": "margin-B01-3",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "We are interested in whether endpoints differ from weights published by Meta on Hugging Face inferenced at commonly accepted precisions.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "one set of the Wikipedia completion task from §4, where π is uniform over m = 25 prompts",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "i.e., by repeatedly sampling both DQ and DP from P and computing (4).",
+       "quote_found": true
+      },
+      "E4": {
+       "value": true,
+       "quote": "Tests are conducted at level α = 0.01 using N = 10m samples.",
+       "quote_found": true
+      },
+      "E5": {
+       "value": false,
+       "quote": "Specifically, we investigate a fast kernel related to the Hamming distance between completions:",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "help facilitate this research, we open-source the dataset of 1 million LLM completions used for this work",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E5"
+     ],
+     "distance": 1,
+     "object": "Commercial inference API endpoints serving Llama models, compared with completions sampled from Meta's released reference weights (fp32 and fp16) on the same prompt sets, using a two-sample Hamming-kernel MMD test on sampled text.",
+     "reason": "The central audit tests whether each API endpoint serves the same distribution as reference copies of the claimed weights. Both sides use a fixed, shared prompt set. P-values come from a null distribution built by repeatedly sampling two datasets from the reference weights, and the test is run at a stated alpha. The compared quantity is a Hamming-kernel MMD on sampled completions, not log-probabilities, and no digest of the item set is published.",
+     "hardest_element": "E3",
+     "hardest_element_why": "The null distribution is built by resampling completions from the identical reference weights and it decides the verdict, which matches the letter of E3, but it measures sampling spread and not serving nondeterminism, and section 5 does not restate which p-value method the audit used."
+    },
+    {
+     "reader": "margin-B01-4",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "whether endpoints differ from weights published by Meta on Hugging Face inferenced at commonly accepted precisions",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "For all models, we test with one set of the Wikipedia completion task from §4, where π is uniform over m = 25 prompts",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We can compute p-values by simulating the test statistic’s distribution under the null, i.e., by repeatedly sampling both DQ and DP from P and computing (4).",
+       "quote_found": true
+      },
+      "E4": {
+       "value": true,
+       "quote": "Tests are conducted at level α = 0.01 using N = 10m samples.",
+       "quote_found": true
+      },
+      "E5": {
+       "value": false,
+       "quote": "Specifically, we investigate a fast kernel related to the Hamming distance between completions:",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we open-source the dataset of 1 million LLM completions used for this work",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E5"
+     ],
+     "distance": 1,
+     "object": "Samples of completions from commercial inference API endpoints are compared with samples from the reference Llama weights Meta released (fp32 and fp16), and in simulations quantized, watermarked or finetuned versions are compared with the full-precision model, using a two-sample Hamming-kernel MMD test on sampled text.",
+     "reason": "The paper audits whether an API serves the reference weights it claims, and whether quantized, watermarked or finetuned versions differ from the full-precision model. It uses a fixed prompt set on both sides, gets p-values from a null distribution simulated by repeatedly sampling the same reference weights, and tests H0: P = Q at a stated alpha. The compared quantity is a string-kernel MMD computed on sampled completions, not on log-probabilities, and the released dataset has no published digest.",
+     "hardest_element": "E2",
+     "hardest_element_why": "The prompt set (25 Wikipedia strings, or all 20 HumanEval or UltraChat prompts) is fixed before the comparison and shared by both sides, but Eq. (1) draws each sample's prompt x ∼ π independently for DP and DQ, which comes close to the protocol's exclusion of inputs sampled afresh for each side."
+    }
+   ],
+   "n_margin_readings": 4,
+   "n_counted": 4,
+   "element_true_counts": {
+    "E1": 4,
+    "E2": 4,
+    "E3": 4,
+    "E4": 4,
+    "E5": 0,
+    "E6": 0
+   },
+   "first_readings_missing_element_found_present_in": {
+    "E5": 0
+   },
+   "counted_readings_carrying_all_five": [],
+   "a_majority_of_counted_readings_carry_all_five": false,
+   "distance_counts": {
+    "0": 0,
+    "1": 4,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0
+   },
+   "hardest_elements": {
+    "E1": 0,
+    "E2": 3,
+    "E3": 1,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+   },
+   "quotes_true": 16,
+   "quotes_true_found": 16
+  },
+  "B14": {
+   "title": "DiFR: Inference Verification Despite Nondeterminism",
+   "first_reading": {
+    "reader": "readings_run_B1:reader-2",
+    "missing": [
+     "E4"
+    ],
+    "distance": 1
+   },
+   "margin_readings": [
+    {
+     "reader": "margin-B14-1",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "each of which modifies exactly one parameter of the reference configuration, leaving the rest unaltered: (i) FP8 KV cache quantization. (ii) 4 bit model quantization instead of bf16.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "using the same 2,000 prompts and generation length.",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "Together with the reference configuration, these form the null distribution for calibrating our statistical tests.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "Operationally, we treat verification as a binary classification problem.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "denote the token that the verifier would sample using the same logits, temperature, and Gumbel noise. We define the post-Gumbel logit difference",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "we sampled 2,000 prompts from our evaluation distribution",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "A provider's served inference outputs for an open-weight LLM (Llama 3.1 8B, Qwen3-8B, Qwen3-30B-A3B) are replayed through a trusted reference implementation of the same weights and specification, and a per-token post-Gumbel logit margin (Token-DiFR) or projected-activation distance (Activation-DiFR) is aggregated to detect misconfigurations such as 4-bit or FP8 KV-cache quantization, wrong temperature or seed, and sampling bugs, against a null built from honest same-weight runs on other GPUs and parallelism setups.",
+     "reason": "B14 checks a served model against a reference copy of the same weights (E1). Both sides see the same prompts, and the reference side is scored teacher-forced on the provider's tokens (E2). Honest runs of the same checkpoint on other GPUs, parallelism setups and engines set the null distribution and threshold (E3). The compared quantity is a margin computed from the verifier's logits (E5). But the paper only sketches H0/H1 informally and then reports classifier AUC at 1% FPR, with no confidence interval and no test decision on the comparison at a stated level (E4 false). It also publishes no digest of its prompt set (E6 false).",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper states an H0 of benign noise only, and evaluates detectors at a fixed 1% false positive rate, which looks like an alpha, but what it reports is classifier AUC/TPR across batches, not a confidence interval or a test decision on the compared quantity, so I coded it false."
+    },
+    {
+     "reader": "margin-B14-2",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "each of which modifies exactly one parameter of the reference configuration, leaving the rest unaltered: (i) FP8 KV cache quantization. (ii) 4 bit model quantization instead of bf16.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "We then queried five public Llama 3.1 8B deployments via the API at temperature zero, using the same 2,000 prompts and generation length.",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "Together with the reference configuration, these form the null distribution for calibrating our statistical tests.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "We report area under the curve (AUC) at 1% false positive rate (FPR)",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "per-token Token-DiFR scores by replaying the same generations under the bf16 reference and measuring the clipped post-Gumbel logit margin described in Section 4.2.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "up to 512 tokens per prompt from 2,000 UltraChat (H4, 2023) prompts.",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "Tokens from a provider's served LLM (possibly quantized, mis-sampled or buggy, or a public API claiming Llama 3.1 8B) are scored against a trusted reference copy of the same weights that replays each sequence with the same seed. A classifier then separates honest from misconfigured serving.",
+     "reason": "DiFR checks whether served inference matches a reference copy of the same weights, using logit-margin scores on a fixed prompt set. It grades against a null drawn from honest runs of the same checkpoint on other GPUs, parallelism setups and engines. It gives no confidence interval and no test at a stated level: it only reports detector AUC at 1% FPR, framing its hypothesis test \"informally\". No digest of the item set is published.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper states H0/H1 and fixes a 1% false positive rate, which looks like an alpha. But what it reports is classifier AUC at that operating point, not a test outcome, p-value or interval on the compared quantity, so I coded E4 false."
+    },
+    {
+     "reader": "margin-B14-3",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "(ii) 4 bit model quantization instead of bf16",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "generating up to 512 tokens per prompt from 2,000 UltraChat (H4, 2023) prompts",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "Together with the reference configuration, these form the null distribution for calibrating our statistical tests.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "Operationally, we treat verification as a binary classification problem.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "We define the post-Gumbel logit difference",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "We release an open-source integration with vLLM",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "Token-DiFR (and Activation-DiFR) checks whether a provider's inference follows a claimed specification. It compares the provider's sampled tokens with a trusted reference implementation of the same weights, run under a shared seed, to catch 4-bit or FP8 quantization, a wrong seed or temperature, and sampling bugs. Its null distribution comes from honest runs of the same checkpoint on different GPUs, parallelism setups and inference engines.",
+     "reason": "B14 compares a model with a differently served copy of itself on a fixed prompt set, using a logit-based score, and grades that against a null built from honest runs of the same checkpoint on other hardware. It reports only detector AUC at 1% FPR, with no confidence interval or p-value on the compared quantity, and publishes no digest of its item set.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper states an H0 and fixes the false-positive rate at 1%, which looks like a stated alpha, but what it actually reports is classifier AUC at that FPR against an empirically set threshold, not a test result on the compared quantity at a stated level."
+    },
+    {
+     "reader": "margin-B14-4",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "each of which modifies exactly one parameter of the reference configuration, leaving the rest unaltered: (i) FP8 KV cache quantization. (ii) 4 bit model quantization instead of bf16.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "generating up to 512 tokens per prompt from 2,000 UltraChat (H4, 2023) prompts.",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "Together with the reference configuration, these form the null distribution for calibrating our statistical tests.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "The batch is flagged as incorrectly computed if S > τ, where τ is some pre-determined threshold, determined empirically.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "the verifier simply feeds the entire sequence (both the original prompt and generated tokens) as one input sequence, obtaining logits and intermediate activations for all positions simultaneously.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "we sampled 2,000 prompts from our evaluation distribution",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "An LLM served under some configuration is checked against a trusted reference implementation of the same weights. The verifier teacher-forces the provider's claimed tokens and scores seed-synchronised post-Gumbel logit margins (Token-DiFR) or projected activations (Activation-DiFR). Deviations tested include 4-bit and FP8 quantization, FP8 KV cache, wrong seed or temperature, and sampling bugs, plus five public Llama 3.1 8B APIs. Verdicts are graded against a pooled honest null of the same weights run on different GPUs, parallelism and engines.",
+     "reason": "The paper checks served outputs against a reference copy of the same weights (quantized, misconfigured, or third-party API) on a fixed prompt set, scoring with teacher-forced logits. Its null distribution comes from the same weights on different hardware and engines, and that null calibrates the detector. It gives no confidence interval and no test at a stated level on the compared quantity, only empirically set thresholds and AUC at 1% FPR. It publishes no digest of the prompts.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper states an H0/H1 hypothesis test (H0: only benign noise) and reports AUC at 1% FPR, which reads almost like a stated alpha; but the test is only described informally, its threshold is set empirically, and the reported number measures detector performance, not a test result or interval for a given comparison, so the definition is not met to its letter."
+    }
+   ],
+   "n_margin_readings": 4,
+   "n_counted": 4,
+   "element_true_counts": {
+    "E1": 4,
+    "E2": 4,
+    "E3": 4,
+    "E4": 0,
+    "E5": 4,
+    "E6": 0
+   },
+   "first_readings_missing_element_found_present_in": {
+    "E4": 0
+   },
+   "counted_readings_carrying_all_five": [],
+   "a_majority_of_counted_readings_carry_all_five": false,
+   "distance_counts": {
+    "0": 0,
+    "1": 4,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0
+   },
+   "hardest_elements": {
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 4,
+    "E5": 0,
+    "E6": 0
+   },
+   "quotes_true": 16,
+   "quotes_true_found": 16
+  },
+  "B22": {
+   "title": "Log Probability Tracking of LLM APIs",
+   "first_reading": {
+    "reader": "readings_run_B1:reader-4",
+    "missing": [
+     "E4"
+    ],
+    "distance": 1
+   },
+   "margin_readings": [
+    {
+     "reader": "margin-B22-1",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "we consider a pair of LLM APIs (which can be the same API at different times).",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "we send the same prompt to two LLM APIs, requesting a single token of output",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We then perform 1,000 original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis, and 1,000 original/variant hypothesis tests on each variant.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": true,
+       "quote": "95% CIs from 10,000 bootstraps at the model and test statistic levels.",
+       "quote_found": true
+      },
+      "E5": {
+       "value": true,
+       "quote": "We apply a simple statistical test based on the average value of each token logprob, requesting only a single token of output.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "It can be used to reproduce the datasets, the TinyChange benchmark, the sampling outputs, and all plots.",
+       "quote_found": null
+      }
+     },
+     "missing": [],
+     "distance": 0,
+     "object": "Logprob tracking (LT): an LLM API or local model is compared with itself at another time, or with small TinyChange variants of the same weights (fine-tuning, pruning, noise). The compared quantity is a permutation-test statistic on the mean top-k first-token logprobs for one fixed prompt. It is graded in vitro by ROC AUC against 1,000 original/original tests, and applied to 189 real endpoints hourly with a running-variance threshold.",
+     "reason": "The paper runs a same-model comparison over time and across variants, on a fixed prompt, using logprobs. Null distributions come from 1,000 original/original tests on identical weights, and the ROC AUC is built on them. Overall and per-difficulty AUCs carry bootstrap 95% CIs. No digest of the item set is published.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The permutation test gives no numeric alpha and reports no p-values, so E4 rests on the 95% bootstrap CIs on the original-vs-variant AUC, and whether that AUC counts as the compared quantity is a matter of reading."
+    },
+    {
+     "reader": "margin-B22-2",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "for a given endpoint, we compute its test statistic for each hourly query, by comparing the two adjacent 24-sample windows.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "we send the same prompt to two LLM APIs, requesting a single token of output, repeating for",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We then perform 1,000 original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis, and 1,000 original/variant hypothesis tests on each variant.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "It can then be interpreted in relation with the chosen significance level",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "a permutation test based on the mean absolute distance between per-token average logprobs.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "It is publicly available at https://github.com/timothee-chauvin/track-llm-apis.",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "Logprob tracking: the method sends one fixed short prompt to a served LLM and runs a permutation test on the first-token top-k logprobs. It is used in two setups. The first compares an original local model with its TinyChange variants (fine-tuned, pruned, noised) and grades detection against 1,000 tests of the original model against itself. The second compares the same real-world API endpoint with itself hour by hour over months.",
+     "reason": "The paper compares a served model with itself: the same API endpoint over time, and an original model against pruned, noised or fine-tuned variants. Both sides get the same fixed prompt, and the test statistic is built from first-token logprobs. In the TinyChange evaluation, detection is graded against a null distribution from original/original tests on identical weights. There is no interval on the compared quantity: alpha is never given a number, no p-values are reported, and the real-world flag is a 12-standard-deviation threshold with no stated level. The 95% bootstrap intervals are on ROC AUC pooled across models, which measures the detector, not the logprob distance. The prompt and code are public, but no digest is given.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper defines a permutation-test p-value with a 'no difference' null and reports 95% bootstrap intervals on ROC AUC. I coded E4 false because alpha is never given a number, no p-value is reported, and the intervals are on pooled detection performance rather than on the logprob distance between the two sides."
+    },
+    {
+     "reader": "margin-B22-3",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "for a given endpoint, we compute its test statistic for each hourly query, by comparing the two adjacent 24-sample windows.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "we send the same prompt to two LLM APIs, requesting a single token of output",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We then perform 1,000 original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis, and 1,000 original/variant hypothesis tests on each variant.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "Finally, we report a change when the test statistic exceeds the running mean by at least 12 standard deviations, and is above 1.0.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "We apply a simple statistical test based on the average value of each token logprob, requesting only a single token of output.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "In the rest of the experiments, we therefore use the shortest prompt, made of the single letter",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "Logprob tracking: a permutation two-sample test on first-token top-k logprobs for a fixed one-token prompt, used to detect whether an LLM API or local model has changed. It compares the model with its own earlier self (189 real endpoints tracked hourly) and with fine-tuned, pruned or noised variants of the same weights (TinyChange), scored by ROC AUC against original/original null runs.",
+     "reason": "The paper runs a self-comparison on a fixed prompt using API logprobs, and grades TinyChange detection with a null distribution from original/original tests on identical weights (E1, E2, E3, E5). Its permutation test sets alpha only as \"the chosen significance level\" with no value, and no p-value is reported. Its 95% CIs are on the detector's AUC pooled across models and variants, not on the compared quantity. Real-world flags use a 12-SD threshold with no stated level. So E4 is false, and no digest is published for the item set, so E6 is false.",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper defines a hypothesis test with null \"identical\" and reports 95% bootstrap CIs, but alpha is never given a value, no p-value is reported, and the CIs are on detector AUC rather than on the logprob difference being compared."
+    },
+    {
+     "reader": "margin-B22-4",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "we consider a pair of LLM APIs (which can be the same API at different times).",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "we send the same prompt to two LLM APIs, requesting a single token of output",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "We then perform 1,000 original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis, and 1,000 original/variant hypothesis tests on each variant.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "we report a change when the test statistic exceeds the running mean by at least 12 standard deviations, and is above 1.0.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": true,
+       "quote": "We apply a simple statistical test based on the average value of each token logprob, requesting only a single token of output.",
+       "quote_found": true
+      },
+      "E6": {
+       "value": false,
+       "quote": "The entirety of the source code we used in these experiments is available at https://github.com/timothee-chauvin/track-llm-apis.",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4"
+     ],
+     "distance": 1,
+     "object": "Logprob tracking: a permutation two-sample test on the first-token top-k logprobs of one fixed prompt. It compares an LLM API with itself at different times, or an original open-weight model with its fine-tuned, pruned or noised TinyChange variants. The test's detection power is graded by ROC AUC against a null of original/original tests, and the method is then run on 189 real endpoints over 4 months.",
+     "reason": "The source runs a same-model comparison over time and across modified serving of the same weights (E1), using one fixed prompt (E2) and first-token logprobs (E5). Its verdicts are graded against a null distribution from original/original tests on identical weights (E3). Its permutation test uses only a symbolic, unset significance level; its real-world flags use a 12-SD threshold with no stated level; and its 95% CIs are on detection AUC, not on the compared logprob statistic, so E4 fails. No digest of the item set is published (E6).",
+     "hardest_element": "E4",
+     "hardest_element_why": "The paper does define a permutation test whose null is that the two distributions are identical, and it reports 95% CIs. But the significance level is never given a value, and the intervals are on detection AUC rather than on the compared logprob statistic, so it is hard to tell whether the letter of E4 is met."
+    }
+   ],
+   "n_margin_readings": 4,
+   "n_counted": 4,
+   "element_true_counts": {
+    "E1": 4,
+    "E2": 4,
+    "E3": 4,
+    "E4": 1,
+    "E5": 4,
+    "E6": 0
+   },
+   "first_readings_missing_element_found_present_in": {
+    "E4": 1
+   },
+   "counted_readings_carrying_all_five": [
+    "margin-B22-1"
+   ],
+   "a_majority_of_counted_readings_carry_all_five": false,
+   "distance_counts": {
+    "0": 1,
+    "1": 3,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0
+   },
+   "hardest_elements": {
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 4,
+    "E5": 0,
+    "E6": 0
+   },
+   "quotes_true": 17,
+   "quotes_true_found": 17
+  }
+ },
+ "sources_with_a_counted_reading_carrying_all_five": [
+  "B22"
+ ],
+ "sources_where_a_majority_carry_all_five": [],
+ "what_it_does_not_do": "It changes no status in the record. The frozen protocol prices C4a from the first reading and its confirmers; this check measures how much that pricing rests on one reader's coding."
+}

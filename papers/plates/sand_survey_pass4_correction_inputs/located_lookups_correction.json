@@ -1,0 +1,151 @@
+{
+ "_note": "catalogue lookups only; no bytes fetched; see this script's docstring",
+ "B04": {
+  "pmid_source": "search/s2/Q09.json externalIds.PubMed",
+  "europe_pmc_by_pmid": {
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A42323341+AND+SRC%3AMED&format=json&resultType=core",
+   "http": "200",
+   "at": "2026-09-15T02:28:34Z",
+   "hitCount": 1,
+   "query": "EXT_ID:42323341 AND SRC:MED",
+   "hits": [
+    {
+     "pmid": "42323341",
+     "pmcid": null,
+     "doi": "10.1038/s41598-026-56100-9",
+     "title": "BlockFedX: a cross-domain federated learning system with explainability, anomaly detection, and tamper-evident logging.",
+     "inPMC": "N",
+     "inEPMC": "N",
+     "hasPDF": "N",
+     "isOpenAccess": "N"
+    }
+   ]
+  }
+ },
+ "B23": {
+  "crossref_by_title": {
+   "url": "https://api.crossref.org/works?query.title=Offering+scientists+cash+to+spot+errors+in+published+papers+doesn%27t+work&rows=5&select=DOI%2Ctitle%2Cissued%2Cauthor%2Ccontainer-title",
+   "http": "200",
+   "at": "2026-09-15T02:28:35Z",
+   "query_title": "Offering scientists cash to spot errors in published papers doesn't work",
+   "items": [
+    {
+     "DOI": "10.1126/science.zh9l2q0",
+     "title": "Offering scientists cash to spot errors in published papers doesn’t work",
+     "issued": {
+      "date-parts": [
+       [
+        2026,
+        4,
+        3
+       ]
+      ]
+     },
+     "container": "AAAS Articles DO Group"
+    },
+    {
+     "DOI": "10.1038/d41586-024-01465-y",
+     "title": "Pay researchers to spot errors in published papers",
+     "issued": {
+      "date-parts": [
+       [
+        2024,
+        5,
+        21
+       ]
+      ]
+     },
+     "container": "Nature"
+    },
+    {
+     "DOI": "10.1126/science.aeh8588",
+     "title": "Cash isn’t enough to get scientists to spot errors, project finds",
+     "issued": {
+      "date-parts": [
+       [
+        2026,
+        4,
+        9
+       ]
+      ]
+     },
+     "container": "Science"
+    },
+    {
+     "DOI": "10.1038/d41586-024-02681-2",
+     "title": "Cash for errors: project offers bounty for spotting mistakes in published papers",
+     "issued": {
+      "date-parts": [
+       [
+        2024,
+        8,
+        19
+       ]
+      ]
+     },
+     "container": "Nature"
+    },
+    {
+     "DOI": "10.1111/anae.14048",
+     "title": "Errors in published papers are multifactorial",
+     "issued": {
+      "date-parts": [
+       [
+        2017,
+        10,
+        19
+       ]
+      ]
+     },
+     "container": "Anaesthesia"
+    }
+   ]
+  },
+  "europe_pmc_by_doi_print": {
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A%2210.1126%2Fscience.aeh8588%22&format=json&resultType=core",
+   "http": "200",
+   "at": "2026-09-15T02:28:36Z",
+   "hitCount": 1,
+   "query": "DOI:\"10.1126/science.aeh8588\"",
+   "hits": [
+    {
+     "pmid": "41955357",
+     "pmcid": null,
+     "doi": "10.1126/science.aeh8588",
+     "title": "Cash isn't enough to get scientists to spot errors, project finds.",
+     "inPMC": "N",
+     "inEPMC": "N",
+     "hasPDF": "N",
+     "isOpenAccess": "N"
+    }
+   ]
+  },
+  "europe_pmc_by_doi_online": {
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A%2210.1126%2Fscience.zh9l2q0%22&format=json&resultType=core",
+   "http": "200",
+   "at": "2026-09-15T02:28:36Z",
+   "hitCount": 0,
+   "query": "DOI:\"10.1126/science.zh9l2q0\"",
+   "hits": []
+  },
+  "europe_pmc_by_pmid": {
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A41955357+AND+SRC%3AMED&format=json&resultType=core",
+   "http": "200",
+   "at": "2026-09-15T02:28:37Z",
+   "hitCount": 1,
+   "query": "EXT_ID:41955357 AND SRC:MED",
+   "hits": [
+    {
+     "pmid": "41955357",
+     "pmcid": null,
+     "doi": "10.1126/science.aeh8588",
+     "title": "Cash isn't enough to get scientists to spot errors, project finds.",
+     "inPMC": "N",
+     "inEPMC": "N",
+     "hasPDF": "N",
+     "isOpenAccess": "N"
+    }
+   ]
+  }
+ }
+}
