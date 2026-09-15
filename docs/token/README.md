@@ -23,6 +23,7 @@ anything.
 | **Other wallet** | `0x14a2487daD53073F10ACc0117E0AbA6dD199c0f3` — the only other wallet we hold in |
 | **Trade** | https://www.ponsfamily.com/launchpad/0xC750bcdAe34cC578Ff17963bed40C5d9396fdC5D |
 | **Explorer** | https://robinhoodchain.blockscout.com/token/0xC750bcdAe34cC578Ff17963bed40C5d9396fdC5D |
+| **Chart** | https://dexscreener.com/robinhood/0x90f25edf87b00914a1998864b63412df6917751990989a5191c9984e770f1548 — the pair address is the Uniswap v4 pool id from the graduation tx. A second, near-empty pool exists under the same ticker; it is not the market. |
 
 Names and symbols can be copied. The address cannot. Anything else called styxx is not us.
 
