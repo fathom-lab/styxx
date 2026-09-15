@@ -14,6 +14,23 @@ was refuted. Every repair is a new commit; no sworn document and no frozen PRERE
 findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
 longer list.**
 
+**2026-09-15 — the sand survey's fetchers presented as browsers; an erratum stands beside passes 3 and 4.**
+`fetch_pass3.py`, `fetch_pass4.py`, the pass-4 correction's scripts and the red team's probes sent a user agent
+beginning `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`. The lab's rule is that no request presents as a browser.
+- **The method was frozen before any request.** A non-browser re-fetch of the 71 recorded URLs was committed and pushed
+  at 8273cdda before it sent anything (`papers/plates/sand_survey_user_agent_inputs/`).
+- **Outcomes.** 45 same bytes; 10 same kind; 14 refused then and now; 1 rate-limited; **1 answered then and refuses
+  now: L16**, ACM's artifact-badging page (403).
+- **L16 decides nothing.** It is one of five pass-3 occupiers of the bounty clause. Pass 4 and its correction price that
+  clause UNPRICED on B23.
+- **The erratum.** `ERRATUM_sand_survey_user_agent_2026_09_15.md` was attacked by two skeptics and a fact-checker
+  before swearing, and nine defects in its first draft were repaired. It is sworn 31 of 31 at 4b8c055c and is ferry
+  entry 257, head `8a0ee53b…`.
+- **The false statements it corrects.** The pass-4 SURVEY's "one probe sent a browser user agent", commit c398e830's "No
+  route presents as a browser", and the red team's "No browser user agent was sent".
+- **Pass 5.** Its protocol fetches as `fathom-lab-sand-survey/5` and reads no archived text that a non-browser request
+  cannot get.
+
 **2026-09-15 — pass 4 red-teamed and corrected.** Seven finders attacked pass 4, with skeptics on every finding: of
 44 findings, 33 were confirmed, 9 refuted and 2 split (`papers/plates/sand_survey_pass4_inputs/redteam/`).
 `PROTOCOL_sand_pass4_correction_2026_09_15.md` was frozen at 9dbf4092 before any correction fetch or reading.
