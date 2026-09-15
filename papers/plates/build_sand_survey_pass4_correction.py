@@ -9,41 +9,57 @@ under PROTOCOL_sand_pass4_correction_2026_09_15.md.
 Inputs:
 - From <pass4_inputs> (papers/plates/sand_survey_pass4_inputs): list.json, search_record.json, fetch_record*.json,
   fetched_text_scope*.json and readings*.json.
-- From <correction_inputs> (papers/plates/sand_survey_pass4_correction_inputs): list_correction.json (the earlier
-  passes' fingerprint sources re-read), fetch_record*.json (their bytes, and located article text for pass-4 sources,
-  marked located_for_scope), fetched_text_scope*.json and readings*.json.
+- From <correction_inputs> (papers/plates/sand_survey_pass4_correction_inputs):
+  - list_correction.json, the earlier passes' fingerprint sources re-read;
+  - fetch_record*.json, holding their bytes, and located article text for pass-4 sources marked located_for_scope;
+  - fetched_text_scope*.json and readings*.json.
 - The pass-2 and pass-3 records supply the earlier clause statuses and the titles of every listed source.
 
-A text directory given as "-" skips the proofs of reading and the quote checks for that origin.
+A text directory given as "-" skips the proofs of reading and the quote checks for bytes fetched by that origin.
+A reading's text is looked up where its bytes were fetched, not where the reading was filed.
 
-Rules, numbered as in the protocol:
-1. READ, SKIMMED and UNFETCHABLE are decided as pass 4 applied them (text_checks is imported unchanged).
+Rules, numbered as in the protocol. A later adversarial review found places where the first version of this file
+departed from them. Those repairs are marked [review].
+1. READ, SKIMMED and UNFETCHABLE are decided as pass 4 applied them (text_checks, imported unchanged).
    - A source in a scope file is SKIMMED unless its reading is of a located copy fetched under the correction.
-   - A SKIMMED source's SILENT or OCCUPIES is kept and marked from_abstract.
-   - A SKIMMED source's RETIRES, or its C4a carrying E1-E5, is recorded as OCCUPIES from abstract, with the
-     reader's verdict kept beside it.
+   - A SKIMMED source's SILENT or OCCUPIES is kept and marked from_abstract. [review: kept even when the reader
+     coded all five elements.]
+   - A SKIMMED source's RETIRES is recorded as OCCUPIES from abstract, with the reader's verdict kept beside it.
+   - [review] An earlier source whose bytes did not match its record is NOT_RECODED: recorded, not priced, not in
+     the pool.
 2. An element is carried only when it is coded true and its quote is found in the text that was read.
-3. A retirement needs two confirmers. They must be distinct from each other and from the first reader, each must pass
-   both proofs, and each must carry E1-E5 (for C4a) or write RETIRES (for C2 or C5). Otherwise the source is
-   DISPUTED. The same confirmation appearing in two files is refused. A C4a RETIRES that does not carry E1-E5 is
-   recorded as OCCUPIES.
-4. Clause pricing:
+3. Retirement:
+   - A first reading carrying E1-E5 for C4a, or a RETIRES on any clause, needs two confirmers. [review: a C4a
+     RETIRES that does not carry E1-E5 goes to the confirmers too.]
+   - The confirmers must be distinct in name and in content from each other, and distinct from the first reader.
+     [review: a confirmation identical to the first reading's own return is excluded.]
+   - Each confirmer must pass both proofs, and must carry E1-E5 (for C4a) or write RETIRES (for C2 or C5).
+   - Otherwise the source is DISPUTED. The same confirmation appearing in two files is refused.
+4. Pricing:
    - A clause is priced from every source that returned a verdict on it.
-   - A confirmed retirement retires the clause.
-   - An UNFETCHABLE or unscored listed candidate, or a DISPUTED source, makes the clause UNPRICED.
-   - Any DISPUTED source makes the sentence UNLICENSED.
+   - A confirmed retirement retires the clause. An UNFETCHABLE listed candidate, or a DISPUTED source, makes it
+     UNPRICED. Any DISPUTED source makes the sentence UNLICENSED.
+   - [review] A listed candidate that was fetched but has no verdict is recorded as unscored and does not change
+     the status; the frozen status rule gives it no such power.
    - A verdict word outside RETIRES / OCCUPIES / SILENT is refused.
 5. Nearness:
    - Only READ sources coded under the pass-4 definitions enter; pass-3 flags never do.
-   - For each element, every source at distance one without only that element is named.
+   - For each element, every source at distance one lacking only that element is named.
    - If no source is at distance one, every source at the smallest distance is named.
-   - More than five names is refused, and the sentence is UNLICENSED.
+   - More than five names is flagged, and the sentence is UNLICENSED.
 6. The conjunction's status is computed per the 2026-09-13 protocol.
-7. Leads are normalised. Any lead naming a source listed in passes 1-4 is dropped. Exact duplicates and leads that
-   share an arXiv id are merged. Every count is recorded.
-8. The sentence follows the inherited rules and rule 4's UNLICENSED.
-   - Unchecked candidates that could retire the sentence are listed.
-   - Only a trailing ", without ..." clause is removed from a phrase.
+7. Leads:
+   - Normalised: lowercase alphanumerics, with "&" read as "and".
+   - Dropped when they name a listed source (passes 1-4): by that source's cleaned title (3+ words, with any
+     appended display text removed) or by its arXiv id. Each match is recorded.
+   - [review] Kept leads are merged when they share an arXiv id, or when one's text, with years removed, contains
+     another's of 6+ words.
+8. The sentence:
+   - Follows the inherited rules and rule 4's UNLICENSED.
+   - When C5 is UNPRICED by an unfetchable candidate, that candidate is listed. [review: only C5's; C4a's are kept
+     under their own key.]
+   - Only the trailing ", without ..." clause is removed from a phrase. [review: commas inside that clause are
+     allowed.]
    - Only five HTML entities are unescaped.
 """
 from __future__ import annotations
@@ -64,8 +80,10 @@ E = ["E1", "E2", "E3", "E4", "E5"]
 VERDICTS = ("RETIRES", "OCCUPIES", "SILENT")
 WEAKEST_FIRST = ["RETIRED", "UNPRICED", "OCCUPIED", "FREE"]
 ENTITIES = [("&lt;", "<"), ("&gt;", ">"), ("&quot;", '"'), ("&#39;", "'"), ("&amp;", "&")]
-ARXIV = re.compile(r"(?<![\d.])(\d{4}\.\d{4,5})(?:v\d+)?(?![\d])")
+ARXIV = re.compile(r"(?<![\d.])(\d{4}\.\d{4,5})(?:v\d+)?(?!\d)")
 CLAUSE_ORDER = ["C1", "C2", "C3", "C4a", "C4b", "C5"]
+FETCH_FIELDS = ("url", "url_effective", "http", "bytes", "sha256", "fetched_at", "kind", "pages", "fulltext", "title_words_found",
+                "attempts", "fetch_record", "fetch_origin", "located_for_scope", "located_by", "source_bytes")
 
 
 class Refused(Exception):
@@ -84,11 +102,18 @@ def unescape(s):
 
 
 def bare(phrase):
-    return re.sub(r",\s+without\b[^,]*$", "", unescape(phrase or "").strip().rstrip("."))
+    return re.sub(r",\s+without\b(?:(?!,\s+without\b).)*$", "", unescape(phrase or "").strip().rstrip("."))
 
 
-def title_key(t):
-    return re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
+def key_of(t):
+    return re.sub(r"[^a-z0-9]+", " ", unescape(t or "").lower().replace("&", " and ")).strip()
+
+
+def clean_listed_title(t):
+    t = unescape(t or "")
+    t = re.sub(r"(?<=[a-z])This work was published.*$", "", t)
+    head = re.split(r"\s+[–—|]\s+", t, maxsplit=1)[0]
+    return head if len(key_of(head).split()) >= 3 else t
 
 
 def content_key(c):
@@ -126,12 +151,13 @@ def merge_fetch(dirs):
                 located = origin == "correction" and entry.get("located_for_scope")
                 if prev.get("status") == "FETCHED" and not located:
                     raise Refused(f"{sid} fetched in two records")
-                earlier = prev.get("earlier_attempts", []) + [{k: prev.get(k) for k in ("fetch_record", "status", "url", "sha256", "attempts", "reason")}]
+                earlier = prev.get("earlier_attempts", []) + [{k: prev.get(k) for k in ("fetch_record", "status", "url", "sha256", "bytes", "fetched_at",
+                                                                                          "fulltext", "attempts", "reason")}]
                 if prev.get("status") == "FETCHED" and entry.get("status") != "FETCHED":
                     # a located copy that could not be fetched leaves the page already fetched in force
                     fetch[sid] = dict(prev, located_attempt={k: entry.get(k) for k in ("fetch_record", "status", "reason", "attempts", "located_by")})
                     continue
-                fetch[sid] = dict(entry, earlier_attempts=earlier)
+                fetch[sid] = dict(entry, earlier_attempts=earlier, superseded_fetch=prev)
     return fetch
 
 
@@ -196,16 +222,25 @@ def build(argv):
         might = list(m.get("might_occupy") or [])
         src = {k: m.get(k) for k in ("title", "who", "year", "part", "pass", "listed_in", "urls")}
         src["might_occupy"] = might
-        src.update({k: f.get(k) for k in ("url", "url_effective", "http", "bytes", "sha256", "kind", "pages", "fulltext", "fetch_record",
-                                         "earlier_attempts", "located_attempt", "located_by", "source_bytes")})
+        slot = first.get(sid, {})
+        r = slot.get("correction") or slot.get("pass4")
+        # the fetch whose bytes the reading in force was read from
+        fsrc = f
+        if r is not None and r["origin"] == "pass4" and f.get("fetch_origin") == "correction" and f.get("superseded_fetch"):
+            fsrc = dict(f["superseded_fetch"], located_attempt={k: f.get(k) for k in ("fetch_record", "status", "url", "sha256", "fulltext", "fetched_at", "located_by")})
+        src.update({k: fsrc.get(k) for k in FETCH_FIELDS + ("earlier_attempts", "located_attempt")})
+        if f.get("status") == "NOT_RECODED":
+            src["status"] = "NOT_RECODED"
+            src["not_recoded_reason"] = f.get("reason") or "its bytes did not match its record"
+            src["verdicts"] = {}
+            sources[sid] = src
+            continue
         if f.get("status") != "FETCHED":
             src["status"] = "UNFETCHABLE"
             src["unfetchable_reason"] = f.get("reason") or "no fetch record"
             src["verdicts"] = {c: {"verdict": "UNCHECKABLE"} for c in might}
             sources[sid] = src
             continue
-        slot = first.get(sid, {})
-        r = slot.get("correction") or slot.get("pass4")
         if slot.get("correction") and slot.get("pass4"):
             src["superseded_readings"] = [slot["pass4"]]
         if r is None:
@@ -214,14 +249,14 @@ def build(argv):
             sources[sid] = src
             continue
         origin = r["origin"]
-        tdir = texts[origin]
+        tdir = texts[fsrc.get("fetch_origin") or "pass4"]
         chk = text_checks(tdir, sid, r)
         src["status"] = "READ" if (r.get("read_end_to_end") and proofs_pass(chk)) else "SKIMMED"
         src["read_by"], src["reading_origin"] = r["reader"], origin
         src["proof_of_reading"] = None if chk is None else {
             "last_line_ok": chk.get("last_line_ok"), "midpoint_ok": chk.get("midpoint_ok"),
             "last_line_is_a_page_number": bool(re.fullmatch(r"\s*\d+\s*", r.get("last_line_quote", "") or ""))}
-        located_read = origin == "correction" and f.get("fetch_origin") == "correction" and bool(f.get("located_for_scope"))
+        located_read = origin == "correction" and fsrc.get("fetch_origin") == "correction" and bool(fsrc.get("located_for_scope"))
         if sid in scopes and not located_read:
             if src["status"] == "READ":
                 src["status"] = "SKIMMED"
@@ -237,19 +272,16 @@ def build(argv):
             if c == "C4a" and isinstance(v.get("elements"), dict):
                 els, missing = elements_of(v, chk)
                 entry.update(elements=els, missing=missing, distance=len(missing))
-            if c == "C4a":
-                candidate = entry.get("distance") == 0
-                if v["verdict"] == "RETIRES" and not candidate:
-                    entry["verdict"] = "OCCUPIES"
-                    entry["verdict_note"] = "a C4a RETIRES that does not carry E1-E5 is recorded as OCCUPIES"
-            else:
-                candidate = v["verdict"] == "RETIRES"
+            candidate = v["verdict"] == "RETIRES" or (c == "C4a" and entry.get("distance") == 0)
             if src["status"] != "READ":
-                if candidate or entry["verdict"] == "RETIRES":
+                if v["verdict"] == "RETIRES":
                     entry["verdict"] = "OCCUPIES"
                     entry["skimmed_rule"] = "a SKIMMED source may only be recorded as SILENT or as OCCUPIES from abstract; it may not RETIRE"
                 entry["from_abstract"] = True
             elif candidate:
+                first_key = content_key({"id": sid, "clause": c, "verdict": v["verdict"], "elements": v.get("elements"),
+                                         "last_line_quote": r.get("last_line_quote"), "midpoint_quote": r.get("midpoint_quote"),
+                                         "object": v.get("object"), "reason": v.get("reason")})
                 rows = []
                 for cf in confirms.get((origin, sid, c), []):
                     cchk = text_checks(tdir, sid, cf)
@@ -258,10 +290,11 @@ def build(argv):
                         carries = not cmissing
                     else:
                         cmissing, carries = None, cf.get("verdict") == "RETIRES"
+                    ck = content_key(cf)
                     rows.append({"confirmer": cf["confirmer"], "verdict": cf.get("verdict"), "carries": carries, "missing": cmissing,
                                  "shown_read_to_end": proofs_pass(cchk), "object": cf.get("object"), "reason": cf.get("reason"),
-                                 "content_sha256": content_key(cf)})
-                good_rows = [x for x in rows if x["carries"] and x["shown_read_to_end"] and x["confirmer"] != r["reader"]]
+                                 "content_sha256": ck, "copies_the_first_reading": ck == first_key})
+                good_rows = [x for x in rows if x["carries"] and x["shown_read_to_end"] and x["confirmer"] != r["reader"] and not x["copies_the_first_reading"]]
                 good = {x["confirmer"] for x in good_rows}
                 entry["confirmations"] = rows
                 entry["distinct_confirmers_carrying"] = sorted(good)
@@ -301,7 +334,7 @@ def build(argv):
         cl["correction"] = b
         if cl["pass3_status"] == "RETIRED" or b["retired_by"]:
             cl["status"] = "RETIRED"
-        elif b["disputed_by"] or b["uncheckable"] or b["unscored"]:
+        elif b["disputed_by"] or b["uncheckable"]:
             cl["status"] = "UNPRICED"
         else:
             cl["status"] = "OCCUPIED"
@@ -336,7 +369,6 @@ def build(argv):
                    "rule": "RETIRED if one READ source retires or occupies every one of C2-C5; otherwise the weakest status among C1-C5 (RETIRED > UNPRICED > OCCUPIED > FREE)"}
 
     disputed = sorted({sid for k in ("C2", "C4a", "C5") for sid in clauses[k]["correction"]["disputed_by"]})
-    unchecked = sorted({sid for k in ("C4a", "C5") for sid in clauses[k]["correction"]["uncheckable"] + clauses[k]["correction"]["unscored"]})
     c = statuses
     if c["C4a"] == "RETIRED" or c["C5"] == "RETIRED":
         sentence = {"status": "RETIRED", "text": "RETIRED", "rule": "sentence rule 1: C4a or C5 retired"}
@@ -360,7 +392,8 @@ def build(argv):
         deleted = [k for k in ("C2", "C5") if c[k] != "OCCUPIED"]
         sentence = {"status": "SURVIVES" if not deleted else "SURVIVES_WITHOUT_" + "_".join(deleted), "text": text,
                     "licensed_form": "we know of no ... (never 'first', 'novel' or 'revolutionary')"}
-    sentence["unchecked_candidates_that_could_retire_the_sentence"] = unchecked
+    sentence["unchecked_candidates_that_could_retire_the_sentence"] = clauses["C5"]["correction"]["uncheckable"] if c["C5"] == "UNPRICED" else []
+    sentence["c4a_unchecked_candidates"] = clauses["C4a"]["correction"]["uncheckable"]
     sentence["c2_neighbour"] = "inherited (Certificate Transparency and Rekor); no pass-4 reader was asked for a 'nearer' flag"
 
     raw = set()
@@ -369,43 +402,60 @@ def build(argv):
         for sr in s.get("superseded_readings") or []:
             raw.update(sr.get("leads") or [])
     raw.update(x["title"] for x in search.get("below_cap", []))
-    listed = [title_key(s.get("title")) for s in p2["sources"].values()] + [title_key(s.get("title")) for s in p3["sources"].values()] + \
-        [title_key(x.get("title")) for x in lst4 + lstc]
-    listed = sorted({t for t in listed if len(t.split()) >= 3})
+    listed = []
+    for pass_name, items in (("pass 2", [dict(v, id=k) for k, v in p2["sources"].items()]), ("pass 3", [dict(v, id=k) for k, v in p3["sources"].items()]),
+                             ("pass 4", lst4), ("correction list", lstc)):
+        for it in items:
+            urls = " ".join([it.get("url") or ""] + list(it.get("urls") or []))
+            listed.append({"id": it["id"], "list": pass_name, "title_key": key_of(clean_listed_title(it.get("title"))),
+                           "arxiv": sorted(set(ARXIV.findall(urls + " " + (it.get("title") or ""))))})
     kept, dropped = [], []
     for lead in sorted(raw):
-        k = f" {title_key(lead)} "
-        hit = next((t for t in listed if f" {t} " in k), None)
-        (dropped if hit else kept).append({"lead": lead, "names_listed_source": hit} if hit else {"lead": lead})
-    distinct = {}
-    for x in kept:
-        mm = ARXIV.search(x["lead"])
-        key = f"arxiv:{mm.group(1)}" if mm else f"text:{title_key(x['lead'])}"
-        distinct.setdefault(key, []).append(x["lead"])
-    leads = {"raw": sorted(raw), "naming_a_listed_source": dropped, "kept": kept, "distinct": distinct,
-             "rule": "normalised to lowercase alphanumerics; dropped when a listed source's title (3+ words) appears in it; merged when identical or sharing an arXiv id"}
+        k = f" {key_of(lead)} "
+        ids = set(ARXIV.findall(lead))
+        hit = next((x for x in listed if len(x["title_key"].split()) >= 3 and f" {x['title_key']} " in k), None) or \
+            next((x for x in listed if ids & set(x["arxiv"])), None)
+        if hit:
+            dropped.append({"lead": lead, "names_listed_source": hit["id"], "listed_in": hit["list"]})
+        else:
+            kept.append({"lead": lead})
+    groups = []
+    for x in sorted(kept, key=lambda x: len(key_of(x["lead"]))):
+        ids = set(ARXIV.findall(x["lead"]))
+        k = " ".join(w for w in key_of(x["lead"]).split() if not re.fullmatch(r"(19|20)\d\d", w))
+        target = next((g for g in groups if (ids and ids & g["arxiv"]) or any(len(gk.split()) >= 6 and f" {gk} " in f" {k} " for gk in g["keys"])), None)
+        if target is None:
+            groups.append({"arxiv": set(ids), "keys": [k], "leads": [x["lead"]]})
+        else:
+            target["arxiv"] |= ids
+            target["keys"].append(k)
+            target["leads"].append(x["lead"])
+    leads = {"raw": sorted(raw), "naming_a_listed_source": dropped, "kept": kept,
+             "distinct": [{"arxiv": sorted(g["arxiv"]), "leads": g["leads"]} for g in groups],
+             "rule": "normalised to lowercase alphanumerics with & read as and; dropped when a listed source's cleaned title (3+ words) or arXiv id appears in it; kept leads merged when they share an arXiv id or when one's text, years removed, contains another's of 6+ words"}
 
     listed4 = [sid for sid in meta if meta[sid]["listed_in"] == "pass 4"]
     recoded = [sid for sid in meta if meta[sid]["listed_in"] != "pass 4"]
 
     def tally(ids):
-        return {st: sum(1 for i in ids if sources[i]["status"] == st) for st in ("READ", "SKIMMED", "UNFETCHABLE", "UNREAD")}
+        return {st: sum(1 for i in ids if sources[i]["status"] == st) for st in ("READ", "SKIMMED", "UNFETCHABLE", "UNREAD", "NOT_RECODED")}
     coded = [(sid, e, v["elements"][e]) for sid, s in sources.items() for v in [s["verdicts"].get("C4a") or {}] if "elements" in v for e in E + ["E6"]]
     counts = {
         "pass4_list": len(listed4), "pass4_list_status": tally(listed4),
         "recoded_earlier_sources": len(recoded), "recoded_status": tally(recoded),
-        "read_from_a_located_copy": sorted(sid for sid, s in sources.items() if s.get("reading_origin") == "correction" and sid in scopes and s["status"] != "SKIMMED"),
+        "read_from_a_located_copy": sorted(sid for sid, s in sources.items() if s.get("reading_origin") == "correction" and sid in scopes and s["status"] == "READ"),
         "superseded_readings": sum(1 for s in sources.values() if s.get("superseded_readings")),
         "c4a_pool": len(pool),
         "c4a_carried": {e: sum(1 for p in pool if e not in p["missing"]) for e in E},
         "c4a_fewest_missing": fewest,
+        "c4a_at_distance_one": sum(len(v) for v in at_one.values()),
         "element_quotes_coded_true": sum(1 for _, _, x in coded if x["value"]),
         "element_quotes_found": sum(1 for _, _, x in coded if x["value"] and x["quote_found"]),
         "element_quotes_not_found": sorted(f"{sid}:{e}" for sid, e, x in coded if x["value"] and x["quote_found"] is False),
         "end_proofs_that_are_page_numbers": sorted(sid for sid, s in sources.items() if (s.get("proof_of_reading") or {}).get("last_line_is_a_page_number")),
         "confirmations": len(c4) + len(cc),
         "disputed": disputed,
-        "leads_raw": len(raw), "leads_naming_a_listed_source": len(dropped), "leads_kept": len(kept), "leads_distinct": len(distinct),
+        "leads_raw": len(raw), "leads_naming_a_listed_source": len(dropped), "leads_kept": len(kept), "leads_distinct": len(groups),
     }
     out = {"survey": "the sand, pass 4: the correction record", "protocol": PROTOCOL, "protocol_commit": protocol_commit,
            "pass4_protocol": "papers/plates/PROTOCOL_sand_prior_art_pass4_2026_09_15.md", "run_date": date.replace("_", "-"),
