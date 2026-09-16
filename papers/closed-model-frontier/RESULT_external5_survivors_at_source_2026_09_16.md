@@ -87,3 +87,22 @@ they wrote them is not a question this run can answer, and it does not.
 *The survivors were asked, at the source, and most held. What did not hold was the harness (1 in
 4 of the counts), and the instrument's own eye for a binary file — a defect no corpus run could
 have shown, because the corpus never handed it a diff.*
+
+## Correction, 2026-09-16 22:15Z — "the harness's" was too neat
+
+The paragraph above attributes every OVERTURNED count to merge traffic in the reconstruction. A
+check against the corpus's own commit rows (per commit: sha, message, files) says less than that.
+Of the 19 overturned items: **9** are restored to the live count by dropping commits whose message
+begins `Merge ` — the fold's merge traffic, as claimed; **2** sit on PRs whose commit rows stop at
+300 files, the dataset's per-commit cap, so the corpus never saw the whole diff; **8** are not
+explained by either — the corpus's non-merge commits touched more files than the PR has today
+(files touched and later reverted or squashed, or a snapshot of the PR taken before it was
+finished; the dataset is a cut in time and the live PR is not). So the honest sentence is:
+OVERTURNED means the corpus disagreed with the live pull request; about half of that is the
+harness folding merge traffic, a tenth is the dataset's cap, and the rest is the PR being a
+different object today than it was in the dataset. The "~1 in 4 harness artifact rate" above
+should read: about 1 in 4 of the corpus-side counts disagreed with the live PR, and about half of
+those disagreements are the fold's. The same check applied to the 52 UPHELD counts: 28 have the
+corpus and the live PR at the same count (the description mismatched both), 6 more agree once
+merge commits are dropped, 18 disagree for the other reasons. A harness repair (drop merge
+commits from the fold; mark the 300-file cap) is owed its own prereg; it is not this run's.
