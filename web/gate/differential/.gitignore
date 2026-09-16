@@ -1,3 +1,4 @@
 *.json
 !bc1_pairs.json
 !compat_pairs.json
+!bin1_pairs.json

@@ -1,6 +1,7 @@
 // The pinned pairs, checked against what the port says:  node check_pairs.js
-// bc1_pairs.json (the four BC-2 pairs, also checked on the Python side by tests/test_diffgate_bc1.py)
-// and compat_pairs.json (COMPAT-1, V14 and BC-2 edge cases, a Python repr() case, a CRLF diff) each
+// bc1_pairs.json (the four BC-2 pairs, also checked on the Python side by tests/test_diffgate_bc1.py),
+// compat_pairs.json (COMPAT-1, V14 and BC-2 edge cases, a Python repr() case, a CRLF diff) and
+// bin1_pairs.json (BIN-1: binaries, a pure rename, a mode change, a quoted path; tests/test_diffgate_bin1.py) each
 // carry an `expect` block written from the Python instrument's output. This is a smoke test for
 // the port alone; the differential (py_side.py + js_side.js + differential.py) is the real check.
 "use strict";
@@ -8,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const { gateDiffText } = require("../diffgate.js");
 let n = 0, bad = 0;
-for (const name of ["bc1_pairs.json", "compat_pairs.json"]) {
+for (const name of ["bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json"]) {
   const p = path.join(__dirname, name);
   if (!fs.existsSync(p)) continue;
   for (const pair of JSON.parse(fs.readFileSync(p, "utf8"))) {

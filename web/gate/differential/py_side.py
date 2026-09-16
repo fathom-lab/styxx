@@ -4,8 +4,8 @@
     python py_side.py --installed      # the installed `styxx` package instead (drift measurement)
 
 The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py at the
-BC-2 + COMPAT-1 checkout (pull requests #113 and #115), sha256 PINNED below — the file 7.48.0
-ships once they merge. By default this script imports the checkout's module and REFUSES to run
+BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the #118 repair), sha256 PINNED
+below — the file 7.48.0 ships once they merge. By default this script imports the checkout's module and REFUSES to run
 unless it hashes to that pin (after CRLF -> LF normalisation, because a wheel built on Windows
 carries CRLF and the same file then hashes differently), so "0 disagreements" always means
 "against the file the port claims to be", never against whatever happened to be importable.
@@ -25,8 +25,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "a550cad5f5b1e4e636ae65cf5a20be0bde41c03dd4e78b3d7e1f90e35f7a4d7a"  # styxx/diffgate.py, #113 + #115 (LF)
-CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json")
+PINNED = "397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1"  # styxx/diffgate.py, #113 + #115 + BIN-1 (LF)
+CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json")
 
 
 def _digest(path: Path) -> str:

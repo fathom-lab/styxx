@@ -1,0 +1,123 @@
+[
+ {
+  "id": "bin1:text-and-binary",
+  "summary": "Modified src/app.py and added assets/logo.png. 2 files changed.",
+  "diff": "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1,2 @@\n x = 1\n+y = 2\ndiff --git a/assets/logo.png b/assets/logo.png\nnew file mode 100644\nindex 0000000..3b18e51\nBinary files /dev/null and b/assets/logo.png differ\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'assets/logo.png'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bin1:three-binaries",
+  "summary": "3 files changed. Only touches images/.",
+  "diff": "diff --git a/a.png b/a.png\nnew file mode 100644\nBinary files /dev/null and b/a.png differ\ndiff --git a/b.png b/b.png\nindex 1111111..2222222 100644\nBinary files a/b.png and b/b.png differ\ndiff --git a/c.png b/c.png\ndeleted file mode 100644\nBinary files a/c.png and /dev/null differ\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'images': ['a.png', 'b.png', 'c.png']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bin1:rename-and-mode",
+  "summary": "Renamed docs/old.md to docs/new.md. 2 files changed. Only touches docs/.",
+  "diff": "diff --git a/docs/old.md b/docs/new.md\nsimilarity index 100%\nrename from docs/old.md\nrename to docs/new.md\ndiff --git a/run.sh b/run.sh\nold mode 100644\nnew mode 100755\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': ['run.sh']"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "bin1:count-now-true",
+  "summary": "9 files changed",
+  "diff": "diff --git a/theme/_layout.scss b/theme/_layout.scss\n--- a/theme/_layout.scss\n+++ b/theme/_layout.scss\n@@ -1 +1 @@\n-a { b: 1 }\n+a { b: 2 }\ndiff --git a/shots/bootstrap/stepper.png b/shots/bootstrap/stepper.png\nindex 1111111..2222222 100644\nBinary files a/shots/bootstrap/stepper.png and b/shots/bootstrap/stepper.png differ\ndiff --git a/shots/bootstrap/wizard.png b/shots/bootstrap/wizard.png\nindex 1111111..2222222 100644\nBinary files a/shots/bootstrap/wizard.png and b/shots/bootstrap/wizard.png differ\ndiff --git a/shots/classic/stepper.png b/shots/classic/stepper.png\nindex 1111111..2222222 100644\nBinary files a/shots/classic/stepper.png and b/shots/classic/stepper.png differ\ndiff --git a/shots/classic/wizard.png b/shots/classic/wizard.png\nindex 1111111..2222222 100644\nBinary files a/shots/classic/wizard.png and b/shots/classic/wizard.png differ\ndiff --git a/shots/default/stepper.png b/shots/default/stepper.png\nindex 1111111..2222222 100644\nBinary files a/shots/default/stepper.png and b/shots/default/stepper.png differ\ndiff --git a/shots/default/wizard.png b/shots/default/wizard.png\nindex 1111111..2222222 100644\nBinary files a/shots/default/wizard.png and b/shots/default/wizard.png differ\ndiff --git a/shots/material/stepper.png b/shots/material/stepper.png\nindex 1111111..2222222 100644\nBinary files a/shots/material/stepper.png and b/shots/material/stepper.png differ\ndiff --git a/shots/material/wizard.png b/shots/material/wizard.png\nindex 1111111..2222222 100644\nBinary files a/shots/material/wizard.png and b/shots/material/wizard.png differ\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 9 files, claim says 9"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bin1:prefix-now-caught",
+  "summary": "Only touches src/. Added 0 tests.",
+  "diff": "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1,2 @@\n x = 1\n+y = 2\ndiff --git a/assets/logo.png b/assets/logo.png\nnew file mode 100644\nindex 0000000..3b18e51\nBinary files /dev/null and b/assets/logo.png differ\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['assets/logo.png']"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bin1:quoted-path",
+  "summary": "1 file changed.",
+  "diff": "diff --git \"a/sp ace.png\" \"b/sp ace.png\"\nindex 1111111..2222222 100644\nBinary files \"a/sp ace.png\" and \"b/sp ace.png\" differ\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ }
+]
