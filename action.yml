@@ -3,11 +3,15 @@ description: >-
   Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
   via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
-  summary and as an annotation. Re-validated at 7.44.2 against 150 commits and 40 real
-  agent-authored public PRs — 30 claims, 21 VERIFIED, ZERO false accusations — and the
-  sweep harness is committed (scripts/diffgate_validation_sweep.py) so you can re-run that
-  number rather than take our word for it. It judges a CLOSED template set; prose outside
-  it is never scored, and that limit is the reason to trust the verdicts it does give.
+  summary and as an annotation. It judges a CLOSED template set (touched/created/deleted
+  paths, added functions and tests, file counts, only-touches scopes, tests-pass); prose
+  outside it is never scored, and that limit is the reason to trust the verdicts it does
+  give. What it will not do: accuse a path claim the diff does not show. That accusation
+  was measured at precision 0.23 against a preregistered 0.95 floor on 71,016 external
+  agent-authored PRs (EXTERNAL-1, 2026-08-31) and is reported UNCHECKABLE until a held-out
+  repair clears the floor. The sweep harness is committed
+  (scripts/diffgate_validation_sweep.py) so you can re-run our numbers rather than take our
+  word for them; the README says which of our own earlier numbers that harness withdrew.
 author: "Fathom Lab"
 branding:
   icon: "shield"
