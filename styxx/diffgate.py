@@ -282,17 +282,85 @@ _COMPAT_LANGS: dict = {
 _COMPAT_MAX_NAMED = 5
 
 
+# BIN-1 (PREREG_bin1_binary_files_2026_09_16, issue #118). A unified diff carries a binary
+# change, a mode-only change or a pure rename as a `diff --git` header with NO `---`/`+++`
+# pair, and both parsers below registered a file only from that pair. EXTERNAL-5's cross-check
+# caught it: eight PNGs and one .scss read as one file, and a truthful count was one click
+# from being called a lie. A header that reaches the next header without a pair now registers
+# its file: A on `new file mode` / `Binary files /dev/null and …`, D on `deleted file mode` /
+# `… and /dev/null differ`, else M. Files with hunks are read exactly as before.
+_DIFF_GIT = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\.)*)"|a/(?P<a>.*?)) (?:"b/(?P<qb>(?:[^"\\]|\\.)*)"|b/(?P<b>.*))$')
+_BINARY_LINE = re.compile(r"^Binary files (?P<a>.+?) and (?P<b>.+?) differ$")
+
+
+def _header_paths(line: str) -> tuple[str, str]:
+    """`diff --git a/X b/Y` -> (X, Y). Same-name headers split at the middle; the rest by regex."""
+    body = line[len("diff --git "):]
+    if len(body) % 2 == 1:
+        mid = len(body) // 2
+        if body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/") \
+                and body[2:mid] == body[mid + 3:]:
+            return body[2:mid], body[mid + 3:]
+    m = _DIFF_GIT.match(line)
+    if not m:
+        return "", ""
+    a = m.group("qa") if m.group("qa") is not None else (m.group("a") or "")
+    b = m.group("qb") if m.group("qb") is not None else (m.group("b") or "")
+    return a, b
+
+
+class _Pending:
+    """One `diff --git` header waiting to learn whether a `---`/`+++` pair follows."""
+    __slots__ = ("a", "b", "status")
+
+    def __init__(self, line: str):
+        self.a, self.b = _header_paths(line)
+        self.status = "M"
+
+    def note(self, line: str) -> None:
+        if line.startswith("new file mode"):
+            self.status = "A"
+        elif line.startswith("deleted file mode"):
+            self.status = "D"
+        elif line.startswith("rename from "):
+            self.a = line[len("rename from "):]
+        elif line.startswith("rename to "):
+            self.b = line[len("rename to "):]
+        else:
+            m = _BINARY_LINE.match(line)
+            if m:
+                if m.group("a") == "/dev/null":
+                    self.status = "A"
+                elif m.group("b") == "/dev/null":
+                    self.status = "D"
+
+    def path(self) -> str:
+        raw = self.a if self.status == "D" else self.b
+        return _norm(raw) if raw else ""
+
+
 def parse_unified_diff_sides(diff_text: str) -> dict:
     """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
 
     The per-file companion of `parse_unified_diff`, added for COMPAT-1; the original's
-    return shape is untouched because callers unpack it.
+    return shape is untouched because callers unpack it. A header without a `---`/`+++`
+    pair (BIN-1) registers its path with empty sides.
     """
     sides: dict = {}
     old_path = None
     cur = None
+    pending: _Pending | None = None
+
+    def flush() -> None:
+        if pending is not None and pending.path():
+            sides.setdefault(pending.path(), ([], []))
+
     for line in diff_text.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+            cur = None
+        elif line.startswith("--- "):
             old_path = line[4:].strip()
             cur = None
         elif line.startswith("+++ "):
@@ -303,10 +371,14 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
                 raw = new[2:] if new.startswith("b/") else new
             cur = _norm(raw)
             sides.setdefault(cur, ([], []))
+            pending = None
         elif cur is not None and line.startswith("+") and not line.startswith("+++"):
             sides[cur][0].append(line[1:])
         elif cur is not None and line.startswith("-") and not line.startswith("---"):
             sides[cur][1].append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
     return sides
 
 
@@ -807,8 +879,17 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
     status: dict[str, str] = {}
     added: list[str] = []
     old_path = None
+    pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
+
+    def flush() -> None:
+        if pending is not None and pending.path() and pending.path() not in status:
+            status[pending.path()] = pending.status
+
     for line in diff_text.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+        elif line.startswith("--- "):
             old_path = line[4:].strip()
         elif line.startswith("+++ "):
             new = line[4:].strip()
@@ -818,8 +899,12 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "A"
             else:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "M"
+            pending = None
         elif line.startswith("+") and not line.startswith("+++"):
             added.append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
     return status, "\n".join(added)
 
 
