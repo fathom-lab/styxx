@@ -55,6 +55,8 @@ and heredoc messages blocked with the lies named, honest ones allowed, non-git c
 untouched, `gh pr create` with a lying `--body` and `--body-file` blocked against the real
 merge-base, honest bodies allowed.
 
-Codex CLI speaks the same hook protocol (a `PreToolUse` event, `matcher: "Bash"`, the same stdin
-object, exit 2 with the reason on stderr), so this file is the Codex hook too: the config block
-and the test that drives it with Codex's stdin are in `integrations/codex/diffgate-hook/`.
+Codex CLI and Gemini CLI speak the same hook protocol (a `PreToolUse` / `BeforeTool` event, the
+same stdin object, exit 2 with the reason on stderr; Gemini names its shell tool
+`run_shell_command`, which this file accepts beside `Bash`), so this file is their hook too: the
+config blocks and the tests that drive it with each CLI's stdin are in
+`integrations/codex/diffgate-hook/` and `integrations/gemini-cli/diffgate-hook/`.

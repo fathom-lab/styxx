@@ -15,6 +15,10 @@ fixes the message or the diff; it does not get to choose the verdict. Anything e
 command this script cannot parse, is allowed through untouched — a hook that guessed would be
 an instrument that accuses.
 
+Codex CLI and Gemini CLI speak the same hook protocol (a PreToolUse / BeforeTool event, the same
+stdin object, exit 2 with the reason on stderr); Gemini names its shell tool run_shell_command, so
+that name is accepted beside Bash. See integrations/codex/ and integrations/gemini-cli/.
+
 Never runs the agent's tests, never executes anything from the command. Read-only git.
 """
 from __future__ import annotations
@@ -106,7 +110,7 @@ def main() -> int:
         payload = json.load(sys.stdin)
     except Exception:
         return 0
-    if payload.get("tool_name") != "Bash":
+    if payload.get("tool_name") not in ("Bash", "run_shell_command"):   # Claude Code / Codex; Gemini CLI
         return 0
     command = (payload.get("tool_input") or {}).get("command") or ""
     cwd = payload.get("cwd") or os.getcwd()
