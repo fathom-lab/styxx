@@ -41,13 +41,22 @@ TEST_NOUN = re.compile(r"\b(?:add\w+|creat\w+)\s+\d+\s+(?:new\s+)?tests?\b\s*(\w
 
 
 def looks_like_path(prefix: str) -> bool:
-    p = prefix.strip("`'\"").rstrip("/.")
+    # BC-2: a trailing "/" is a path signal ("app1/"), judged before it is stripped -- the
+    # instrument's rule, so the judge and the judged apply the same test.
+    raw = prefix.strip("`'\"").rstrip(".")
+    if any(ch in raw for ch in "/\\."):
+        return True
+    p = raw.rstrip("/")
     if not p or p.lower() in STOP:
         return False
-    return any(ch in p for ch in "/\\.-_")
+    return any(ch in p for ch in "-_")
 
 
 def main() -> int:
+    global LEDGER, OUT
+    if len(sys.argv) > 2 and sys.argv[1] == "--ledger":     # external3: the repaired instrument's ledger
+        LEDGER = HERE / f"{sys.argv[2]}_ledger.jsonl"
+        OUT = HERE / f"{sys.argv[2]}_summary.json"
     kv: Counter = Counter()
     per_agent: dict = defaultdict(Counter)
     eligible = covered = prs_with_py = 0
