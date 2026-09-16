@@ -181,3 +181,7 @@ papers/closed-model-frontier/v14_key_SEALED.json
 # EXTERNAL-2 (#110): the shelf and the ledger name third-party PRs; only the aggregate receipts are committed
 papers/closed-model-frontier/external2_shelf.sqlite*
 papers/closed-model-frontier/external2_ledger.jsonl
+
+# EXTERNAL-3 (BC-1/BC-2, #110): baseline and repaired ledgers name third-party PRs; only the receipts are committed
+papers/closed-model-frontier/external3_ledger.jsonl
+papers/closed-model-frontier/external3_base_ledger.jsonl
