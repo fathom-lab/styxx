@@ -54,3 +54,7 @@ the way Claude Code drives it — JSON on stdin — against a temporary reposito
 and heredoc messages blocked with the lies named, honest ones allowed, non-git commands
 untouched, `gh pr create` with a lying `--body` and `--body-file` blocked against the real
 merge-base, honest bodies allowed.
+
+Codex CLI speaks the same hook protocol (a `PreToolUse` event, `matcher: "Bash"`, the same stdin
+object, exit 2 with the reason on stderr), so this file is the Codex hook too: the config block
+and the test that drives it with Codex's stdin are in `integrations/codex/diffgate-hook/`.
