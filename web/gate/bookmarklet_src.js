@@ -5,9 +5,9 @@
  * all, and it is held to the Python's output by a differential test (differential/ next to this
  * file) rather than by trust.
  *
- * Which Python: the file on the BC-2 + COMPAT-1 checkout (pull requests #113 and #115 on
- * fathom-lab/styxx), sha256 a550cad5f5b1e4e636ae65cf5a20be0bde41c03dd4e78b3d7e1f90e35f7a4d7a —
- * the styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
+ * Which Python: the file on the BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the
+ * #118 repair on fathom-lab/styxx), sha256 397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1 — the styxx/diffgate.py that 7.48.0 ships once
+ * they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
  * templates abstain when the diff has no Python; "added 3 test cases" is not a count of functions;
@@ -101,13 +101,54 @@ const _COMPAT_MAX_NAMED = 5;
 
 const _reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+// BIN-1 (issue #118): a `diff --git` header with no `---`/`+++` pair — a binary change, a mode-only
+// change, a pure rename — registers its file: A on `new file mode` / `Binary files /dev/null and …`,
+// D on `deleted file mode` / `… and /dev/null differ`, else M. Files with hunks read as before.
+const _DIFF_GIT = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\.)*)"|a\/(?<a>.*?)) (?:"b\/(?<qb>(?:[^"\\]|\\.)*)"|b\/(?<b>.*))$/;
+const _BINARY_LINE = /^Binary files (?<a>.+?) and (?<b>.+?) differ$/;
+
+function _headerPaths(line) {
+  const body = line.slice("diff --git ".length);
+  if (body.length % 2 === 1) {
+    const mid = Math.floor(body.length / 2);
+    if (body[mid] === " " && body.slice(0, mid).startsWith("a/") && body.slice(mid + 1).startsWith("b/")
+        && body.slice(2, mid) === body.slice(mid + 3)) return [body.slice(2, mid), body.slice(mid + 3)];
+  }
+  const m = _DIFF_GIT.exec(line);
+  if (!m) return ["", ""];
+  const a = m.groups.qa !== undefined ? m.groups.qa : (m.groups.a || "");
+  const b = m.groups.qb !== undefined ? m.groups.qb : (m.groups.b || "");
+  return [a, b];
+}
+
+class _Pending {
+  constructor(line) { [this.a, this.b] = _headerPaths(line); this.status = "M"; }
+  note(line) {
+    if (line.startsWith("new file mode")) this.status = "A";
+    else if (line.startsWith("deleted file mode")) this.status = "D";
+    else if (line.startsWith("rename from ")) this.a = line.slice("rename from ".length);
+    else if (line.startsWith("rename to ")) this.b = line.slice("rename to ".length);
+    else {
+      const m = _BINARY_LINE.exec(line);
+      if (m) { if (m.groups.a === "/dev/null") this.status = "A"; else if (m.groups.b === "/dev/null") this.status = "D"; }
+    }
+  }
+  path() { const raw = this.status === "D" ? this.a : this.b; return raw ? _norm(raw) : ""; }
+}
+
 function parseUnifiedDiffSides(diffText) {
   // Unified diff text -> Map(normalized new-or-old path -> [added_lines, removed_lines]).
   const sides = new Map();
   let oldPath = null;
   let cur = null;
+  let pending = null;
+  const flush = () => { if (pending !== null && pending.path() && !sides.has(pending.path())) sides.set(pending.path(), [[], []]); };
   for (const line of _splitlines(diffText || "")) {
-    if (line.startsWith("--- ")) {
+    if (line.startsWith("diff --git ")) {
+      flush();
+      pending = new _Pending(line);
+      cur = null;
+    } else if (line.startsWith("--- ")) {
       oldPath = line.slice(4).trim();
       cur = null;
     } else if (line.startsWith("+++ ")) {
@@ -117,12 +158,16 @@ function parseUnifiedDiffSides(diffText) {
       else raw = nw.startsWith("b/") ? nw.slice(2) : nw;
       cur = _norm(raw);
       if (!sides.has(cur)) sides.set(cur, [[], []]);
+      pending = null;
     } else if (cur !== null && line.startsWith("+") && !line.startsWith("+++")) {
       sides.get(cur)[0].push(line.slice(1));
     } else if (cur !== null && line.startsWith("-") && !line.startsWith("---")) {
       sides.get(cur)[1].push(line.slice(1));
+    } else if (pending !== null) {
+      pending.note(line);
     }
   }
+  flush();
   return sides;
 }
 
@@ -258,8 +303,13 @@ function parseUnifiedDiff(diffText) {
   const status = new Map();
   const added = [];
   let oldPath = null;
+  let pending = null;                       // BIN-1: a header still waiting for its pair
+  const flush = () => { if (pending !== null && pending.path() && !status.has(pending.path())) status.set(pending.path(), pending.status); };
   for (const line of _splitlines(diffText || "")) {
-    if (line.startsWith("--- ")) {
+    if (line.startsWith("diff --git ")) {
+      flush();
+      pending = new _Pending(line);
+    } else if (line.startsWith("--- ")) {
       oldPath = line.slice(4).trim();
     } else if (line.startsWith("+++ ")) {
       const nw = line.slice(4).trim();
@@ -270,10 +320,14 @@ function parseUnifiedDiff(diffText) {
       } else {
         status.set(_norm(nw.startsWith("b/") ? nw.slice(2) : nw), "M");
       }
+      pending = null;
     } else if (line.startsWith("+") && !line.startsWith("+++")) {
       added.push(line.slice(1));
+    } else if (pending !== null) {
+      pending.note(line);
     }
   }
+  flush();
   return { status, addedBlob: added.join("\n") };
 }
 
@@ -425,8 +479,8 @@ if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffTe
 /* the gate, as a bookmarklet: on any public GitHub pull request page, one click reads the
  * description against the diff (both from api.github.com, nothing else) and pins the verdict
  * to the top of the page. Same JS port as the preview build (differential-tested against the
- * styxx Python instrument at the BC-2 + COMPAT-1 checkout, the file 7.48.0 ships). Nothing is
- * sent anywhere; nothing is stored. */
+ * styxx Python instrument at the BC-2 + COMPAT-1 + #118 checkout, the file 7.48.0 ships). Nothing
+ * is sent anywhere; nothing is stored. */
 (async function () {
   const G = window.styxxDiffgateJS;
   const m = location.pathname.match(/^\/([\w.-]+)\/([\w.-]+)\/pull\/(\d+)/);
@@ -466,7 +520,7 @@ if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffTe
   out += `<div style="color:${g.verdict === "PASS" ? "#ecc46e" : "#ff605c"};margin-top:8px;font-weight:${g.verdict === "PASS" ? 400 : 600}">${g.verdict}  claims=${g.claims.length} contradicted=${nc} uncheckable=${nu} uncovered_sentences=${g.uncovered_sentences}</div>`;
   if (g.sentences_total) out += `<div style="color:#687a76">never read: ${g.uncovered_sentences} of ${g.sentences_total} sentences — prose outside the closed template set is not judged</div>`;
   if (!g.claims.length) out += `<div style="color:#687a76">no diff-shaped claims found — silence is scope, not weakness</div>`;
-  out += `<details style="margin-top:8px;color:#687a76"><summary style="cursor:pointer">what it reads · reproduce</summary><div style="margin-top:6px">modified / created / deleted &lt;path&gt; · N files changed · added N tests · adds function &lt;name&gt; · only touches &lt;prefix&gt; · tests pass (UNCHECKABLE without --run) · no breaking changes (read, never judged: the public definitions the diff removed are named)\na path the diff does not show is UNCHECKABLE, not an accusation (EXTERNAL-1: precision 0.23 vs a 0.95 floor on 71,016 agent PRs). added N tests / adds function &lt;name&gt; count python def lines and say so when the diff has no python (#110).\n\npip install styxx\npython -m styxx.diffgate --pr ${esc(location.origin + location.pathname.match(/^\/[\w.-]+\/[\w.-]+\/pull\/\d+/)[0])}\n\njs port of styxx diffgate.py at the BC-2 + COMPAT-1 checkout (7.48.0), differential-tested (3,199 pairs, 0 disagreements). the python is the instrument. github.com/fathom-lab/styxx</div></details>`;
+  out += `<details style="margin-top:8px;color:#687a76"><summary style="cursor:pointer">what it reads · reproduce</summary><div style="margin-top:6px">modified / created / deleted &lt;path&gt; · N files changed · added N tests · adds function &lt;name&gt; · only touches &lt;prefix&gt; · tests pass (UNCHECKABLE without --run) · no breaking changes (read, never judged: the public definitions the diff removed are named)\na path the diff does not show is UNCHECKABLE, not an accusation (EXTERNAL-1: precision 0.23 vs a 0.95 floor on 71,016 agent PRs). added N tests / adds function &lt;name&gt; count python def lines and say so when the diff has no python (#110).\n\npip install styxx\npython -m styxx.diffgate --pr ${esc(location.origin + location.pathname.match(/^\/[\w.-]+\/[\w.-]+\/pull\/\d+/)[0])}\n\njs port of styxx diffgate.py at the BC-2 + COMPAT-1 + #118 checkout (7.48.0), differential-tested (3,205 pairs, 0 disagreements). the python is the instrument. github.com/fathom-lab/styxx</div></details>`;
   panel.innerHTML = head(`${m[1]}/${m[2]}#${m[3]} — ${meta.title || ""}`) + out;
   panel.querySelector("#styxx-gate-close").onclick = () => panel.remove();
 })();
