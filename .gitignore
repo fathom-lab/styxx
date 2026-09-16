@@ -185,3 +185,6 @@ papers/closed-model-frontier/external2_ledger.jsonl
 # EXTERNAL-3 (BC-1/BC-2, #110): baseline and repaired ledgers name third-party PRs; only the receipts are committed
 papers/closed-model-frontier/external3_ledger.jsonl
 papers/closed-model-frontier/external3_base_ledger.jsonl
+
+# EXTERNAL-4 (COMPAT-1): the ledger names third-party PRs; only the receipts are committed
+papers/closed-model-frontier/external4_ledger.jsonl
