@@ -178,13 +178,19 @@ _TEMPLATES = [
     ("file_touched", re.compile(
         rf"^[\s*-]*[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s+", re.M)),
     ("files_changed_count", re.compile(r"\b(?P<n>\d+)\s+files?\s+(?:were\s+)?changed", re.I)),
-    ("tests_added", re.compile(r"\b(?:add\w+|creat\w+)\s+(?P<n>\d+)\s+(?:new\s+)?tests?\b", re.I)),
+    # BC-1/BC-2 (PREREG_bc2_by_construction_2026_09_16): the counted noun is captured so
+    # "added 3 test cases" is not read as a count of `def test_` functions, and
+    # "added a function named foo" reads foo, not `named`.
+    ("tests_added", re.compile(
+        r"\b(?:add\w+|creat\w+)\s+(?P<n>\d+)\s+(?:new\s+)?tests?\b"
+        r"(?:\s+(?P<noun>cases?|files?|scenarios?|suites?|class(?:es)?|functions?|methods?)\b)?", re.I)),
     ("symbol_added", re.compile(
-        r"\b(?:add\w+|introduc\w+)\s+(?:a\s+|the\s+)?(?P<kind>function|class|method)\s+"
-        r"[`\"']?(?P<name>[A-Za-z_]\w*)", re.I)),
+        r"\b(?:add\w+|introduc\w+)\s+(?:(?:a|an|the|new)\s+){0,2}(?P<kind>function|class|method)\s+"
+        r"(?:(?:named|called)\s+)?[`\"']?(?P<name>[A-Za-z_]\w*)", re.I)),
     ("only_touches", re.compile(
         r"\bonly\s+(?:touch\w+|modif\w+|chang\w+)\s+(?:files?\s+(?:in|under)\s+)?"
-        r"[`\"']?(?P<prefix>[\w./\\-]+)[`\"']?", re.I)),
+        r"[`\"']?(?P<prefix>[\w./\\-]+)[`\"']?"
+        r"(?:,?\s+and\s+(?:files?\s+(?:in|under)\s+)?[`\"']?(?P<prefix2>[\w-]*[./\\][\w./\\-]*)[`\"']?)?", re.I)),
     ("tests_pass", re.compile(r"\b(?:all\s+)?tests\s+(?:pass|are\s+passing|green)\b", re.I)),
 ]
 
@@ -208,6 +214,49 @@ V14_BARE_NAME_ABSTAIN = True
 # containing a file called "Next.js". Closed list, quoted in full in the
 # RESULT so the closure is auditable, and applied only to bare tokens with no
 # directory part -- a real `lib/node.js` still claims normally.
+# BC-2 (PREREG_bc2_by_construction_2026_09_16, after BC-1's INVALID; issue #110). On the EXTERNAL-1
+# corpus 549 of the 665 accusations the gate still made were unsupported by
+# construction: `tests_added` and `symbol_added` count `def` lines, and 227 of
+# their 249 accusations were in diffs with no Python file; `only_touches`
+# takes the token after the verb as a path prefix, and 322 of its 341
+# accusations captured an English word ("only modifies THE footer"). The
+# four rules below remove those accusations. They add none: a claim they
+# touch becomes UNCHECKABLE or stops being a claim, never CONTRADICTED.
+BC1_BY_CONSTRUCTION = True
+_PY_SUFFIXES = (".py", ".pyi")
+_TEST_NOUNS_NOT_FUNCTIONS = frozenset({"case", "cases", "file", "files", "scenario",
+                                       "scenarios", "suite", "suites", "class", "classes"})
+_SYMBOL_WORDS = frozenset({
+    "to", "with", "that", "for", "in", "on", "of", "by", "and", "or", "as", "the", "a",
+    "an", "this", "which", "it", "its", "is", "declaration", "implementation",
+    "definition", "signature", "body", "stub", "call", "wrapper", "override",
+    "overload", "level", "support", "named", "called",
+})
+
+
+def _diff_touches_python(status: dict) -> bool:
+    return any(p.lower().endswith(_PY_SUFFIXES) for p in status)
+
+
+def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
+    """A scope prefix is a path when it looks like one or names a segment of a changed path.
+
+    Judged on the prefix as written, minus a sentence-final period: "docs/" is a path
+    because of its slash, "package.json" because of its dot, "src" because a changed path
+    has that segment; "the", "files" and "markdown" are words.
+    """
+    raw = prefix.strip("`\"'").rstrip(".")
+    if not raw:
+        return False
+    if any(ch in raw for ch in "/\\."):
+        return True
+    low = _norm(raw).rstrip("/").lower()
+    for changed in status:
+        if low in (seg.lower() for seg in changed.split("/")):
+            return True
+    return False
+
+
 _NON_FILE_NOUNS = frozenset({
     "node.js", "next.js", "express.js", "vue.js", "nuxt.js", "react.js",
     "angular.js", "ember.js", "backbone.js", "three.js", "d3.js", "chart.js",
@@ -859,6 +908,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if (V14_CONTAINMENT_TOUCH and kind == "file_touched"
                         and _demoted_by_containment(sent, m)):
                     continue
+                if (BC1_BY_CONSTRUCTION and kind == "symbol_added"
+                        and m.group("name").lower() in _SYMBOL_WORDS):
+                    continue                        # BC-1 repair 3: a word, not a symbol
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)
@@ -885,25 +937,61 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = f"diff changes {len(status)} files, claim says {n}"
                 elif kind == "tests_added":
                     n = int(d["n"])
-                    got = len(re.findall(r"^\s*def test_", added_blob, re.M))
-                    c.verdict = "VERIFIED" if got == n else "CONTRADICTED"
-                    c.why = f"diff adds {got} test functions, claim says {n}"
+                    noun = d.get("noun", "").lower()
+                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                        c.verdict = "UNCHECKABLE"           # BC-1 repair 1
+                        c.why = ("no Python file in the diff; this template counts "
+                                 "`def` lines (#110)")
+                    else:
+                        got = len(re.findall(r"^\s*def test_", added_blob, re.M))
+                        if got == n:
+                            c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
+                        elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
+                            # BC-2 repair 2: a case, file, scenario, suite or class is not a
+                            # function; a matching count verifies, a differing one abstains.
+                            c.verdict = "UNCHECKABLE"
+                            one = {"classes": "class", "cases": "case", "files": "file",
+                                   "scenarios": "scenario", "suites": "suite"}.get(noun, noun)
+                            c.why = (f"counts test {noun}, diff adds {got} test functions; "
+                                     f"a {one} is not a function (#110)")
+                        else:
+                            c.verdict = "CONTRADICTED"
+                            c.why = f"diff adds {got} test functions, claim says {n}"
                 elif kind == "symbol_added":
-                    pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
-                    hit = bool(re.search(pat, added_blob, re.M))
-                    c.verdict = "VERIFIED" if hit else "CONTRADICTED"
-                    c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                             f"{d['kind']} {d['name']!r}")
+                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                        c.verdict = "UNCHECKABLE"           # BC-1 repair 1
+                        c.why = ("no Python file in the diff; this template counts "
+                                 "`def` lines (#110)")
+                    else:
+                        pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
+                        hit = bool(re.search(pat, added_blob, re.M))
+                        c.verdict = "VERIFIED" if hit else "CONTRADICTED"
+                        c.why = (f"added lines {'do' if hit else 'do NOT'} define "
+                                 f"{d['kind']} {d['name']!r}")
                 elif kind == "only_touches":
-                    pref = _norm(d["prefix"]).rstrip("/.")   # sentence-final periods are not path
-                    outside = [p for p in status if not p.startswith(pref + "/")
-                               and p != pref]
+                    prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
+                    if d.get("prefix2"):
+                        prefs.append(_norm(d["prefix2"]).rstrip("/."))
+                    # BC-2 repair 4: a second prefix is read only after "and" and only when it
+                    # is path-shaped by the same test; otherwise the first prefix decides alone.
+                    if d.get("prefix2") and not _prefix_is_path_shaped(d["prefix2"], status):
+                        prefs = prefs[:1]
+                    raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
+                    not_paths = [_norm(x).rstrip("/.") for x in raw_prefs
+                                 if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
+                    outside = [p for p in status
+                               if not any(p.startswith(x + "/") or p == x for x in prefs)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
+                    elif not_paths:                             # BC-1 repair 4
+                        c.verdict = "UNCHECKABLE"
+                        c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
                     else:
                         c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
+                        shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
                         c.why = ("all changed paths under prefix" if not outside else
-                                 f"paths outside {pref!r}: {outside[:3]}")
+                                 (f"paths outside {shown!r}: {outside[:3]}" if len(prefs) == 1
+                                  else f"paths outside {shown}: {outside[:3]}"))
                 elif kind == "tests_pass":
                     # VERIFIED or UNCHECKABLE. There is no third answer here and
                     # no flag that adds one — see the module docstring and
