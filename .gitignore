@@ -177,3 +177,7 @@ papers/closed-model-frontier/external1_ledger.jsonl
 
 # V14 held-out panel: the sealed key is committed only AFTER scoring
 papers/closed-model-frontier/v14_key_SEALED.json
+
+# EXTERNAL-2 (#110): the shelf and the ledger name third-party PRs; only the aggregate receipts are committed
+papers/closed-model-frontier/external2_shelf.sqlite*
+papers/closed-model-frontier/external2_ledger.jsonl
