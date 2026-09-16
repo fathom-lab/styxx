@@ -1,0 +1,76 @@
+{
+ "prereg": "PREREG_bc1_by_construction_2026_09_16.md",
+ "before": {
+  "ledger": "external3_base_ledger.jsonl",
+  "instrument": "this checkout at the prereg commit, without BC-1",
+  "eligible": 71016,
+  "covered": 12957
+ },
+ "wheel_context": {
+  "accusations_total": 665,
+  "accusations_by_kind": {
+   "files_changed_count": 75,
+   "only_touches": 341,
+   "symbol_added": 65,
+   "tests_added": 184
+  },
+  "accusations_unsupported_by_construction": 549
+ },
+ "after": {
+  "ledger": "external3_ledger.jsonl",
+  "instrument": "this checkout, BC-1",
+  "eligible": 71016,
+  "covered": 12933,
+  "covered_note": "sentences whose symbol_added match captured a word are never-read now, so coverage drops by exactly those sentences"
+ },
+ "gates": {
+  "G-B1_subset_invariant": {
+   "new_accusations": 0,
+   "pass": true
+  },
+  "G-B2_by_construction": {
+   "counters": {
+    "tests_added.contradicted_no_python_in_diff": 0,
+    "symbol_added.contradicted_no_python_in_diff": 0,
+    "only_touches.contradicted_prefix_is_not_a_path": 0
+   },
+   "pass": true
+  },
+  "G-B3_verified_preserved": {
+   "verified_before": 18,
+   "lost": 0,
+   "verified_without_python_after": 0,
+   "pass": true
+  },
+  "G-B5_survivors": {
+   "accusations_before": 664,
+   "accusations_after": 95,
+   "removed": 569,
+   "by_kind_before": {
+    "only_touches": 341,
+    "files_changed_count": 74,
+    "tests_added": 184,
+    "symbol_added": 65
+   },
+   "by_kind_after": {
+    "only_touches": 14,
+    "files_changed_count": 74,
+    "tests_added": 7
+   },
+   "by_kind_removed": {
+    "only_touches": 327,
+    "tests_added": 177,
+    "symbol_added": 65
+   },
+   "survivor_shapes": {
+    "files_changed_count: git stat line": 31,
+    "files_changed_count: other": 44,
+    "only_touches: one path-shaped prefix": 12,
+    "only_touches: two prefixes": 2,
+    "tests_added: counts differ, both > 0": 7
+   },
+   "precision": "not measured; see prereg"
+  }
+ },
+ "all_blocking_gates_pass": true
+}
