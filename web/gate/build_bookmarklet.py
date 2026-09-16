@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-EXPORT_LINE = 'if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff };\n'
+EXPORT_LINE = 'if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };\n'
 
 
 def source() -> str:

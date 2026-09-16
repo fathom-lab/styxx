@@ -1,12 +1,21 @@
 (function(){
-/* diffgate.js — a JavaScript transliteration of styxx/diffgate.py as shipped in the styxx 7.47.0
- * wheel (sha256 fb2d9b3e8426650bc20fc8613c9bcad16c1dcd86b85b0ca8c532fdd2a23e7304), for the browser
- * surfaces that cannot run Python: the paste-in preview page and the bookmarklet. The Python module
- * is the instrument; this file exists so a page can run the same closed template set with no network
- * at all, and it is held to the Python's output by a differential test (differential/ next to this
- * file) rather than by trust. Two deliberate gaps: the structural "unparsed claims" observer
- * (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests pass" is
- * always UNCHECKABLE, exactly as the CLI without --run.
+/* diffgate.js — a JavaScript transliteration of styxx/diffgate.py for the browser surfaces that
+ * cannot run Python: the paste-in preview page and the bookmarklet. The Python module is the
+ * instrument; this file exists so a page can run the same closed template set with no network at
+ * all, and it is held to the Python's output by a differential test (differential/ next to this
+ * file) rather than by trust.
+ *
+ * Which Python: the file on the BC-2 + COMPAT-1 checkout (pull requests #113 and #115 on
+ * fathom-lab/styxx), sha256 a550cad5f5b1e4e636ae65cf5a20be0bde41c03dd4e78b3d7e1f90e35f7a4d7a —
+ * the styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
+ * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
+ * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
+ * templates abstain when the diff has no Python; "added 3 test cases" is not a count of functions;
+ * "adds a method to reload" is not a symbol; "only modifies the footer" is not a path), and the
+ * COMPAT-1 reading of "no breaking changes" (one verdict, UNCHECKABLE, the public definitions the
+ * diff removed named in the reason). Two deliberate gaps remain: the structural "unparsed claims"
+ * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
+ * pass" is always UNCHECKABLE, exactly as the CLI without --run.
  */
 "use strict";
 
@@ -22,13 +31,154 @@ const _TEMPLATES = [
   ["file_touched", new RegExp(`\\b(?:modif\\w+|updat\\w+|edit\\w+|chang\\w+|refactor\\w+|fix(?:es|ed|ing)?\\b|add\\w+|extend\\w+|hard\\w+|wir\\w+|patch\\w+)\\s+${_W}[\`"']?(?<path>${_PATH})[\`"']?`, "gi")],
   ["file_touched", new RegExp(`^[\\s*-]*[\`"']?(?<path>${_PATH})[\`"']?\\s*(?::|—|--)\\s+`, "gm")],
   ["files_changed_count", /\b(?<n>\d+)\s+files?\s+(?:were\s+)?changed/gi],
-  ["tests_added", /\b(?:add\w+|creat\w+)\s+(?<n>\d+)\s+(?:new\s+)?tests?\b/gi],
-  ["symbol_added", /\b(?:add\w+|introduc\w+)\s+(?:a\s+|the\s+)?(?<kind>function|class|method)\s+[`"']?(?<name>[A-Za-z_]\w*)/gi],
-  ["only_touches", /\bonly\s+(?:touch\w+|modif\w+|chang\w+)\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?<prefix>[\w.\/\\-]+)[`"']?/gi],
+  // BC-1/BC-2: the counted noun is captured so "added 3 test cases" is not read as a count of
+  // `def test_` functions, and "added a function named foo" reads foo, not `named`.
+  ["tests_added", /\b(?:add\w+|creat\w+)\s+(?<n>\d+)\s+(?:new\s+)?tests?\b(?:\s+(?<noun>cases?|files?|scenarios?|suites?|class(?:es)?|functions?|methods?)\b)?/gi],
+  ["symbol_added", /\b(?:add\w+|introduc\w+)\s+(?:(?:a|an|the|new)\s+){0,2}(?<kind>function|class|method)\s+(?:(?:named|called)\s+)?[`"']?(?<name>[A-Za-z_]\w*)/gi],
+  ["only_touches", /\bonly\s+(?:touch\w+|modif\w+|chang\w+)\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?<prefix>[\w.\/\\-]+)[`"']?(?:,?\s+and\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?<prefix2>[\w-]*[.\/\\][\w.\/\\-]*)[`"']?)?/gi],
   ["tests_pass", /\b(?:all\s+)?tests\s+(?:pass|are\s+passing|green)\b/gi],
+  // COMPAT-1: the compatibility claim. Read, never judged.
+  ["compat_claim", /\b(?:no\s+breaking\s+changes?|non[- ]breaking|backwards?[- ]compatib(?:le|ility)|(?:zero|no)\s+(?:behaviou?r(?:al)?|functional)\s+changes?|fully\s+compatible|does\s+not\s+(?:break|change)\s+(?:any\s+|the\s+)?(?:existing\s+)?(?:behaviou?r|api|public\s+api))\b/gi],
 ];
 
 const WITHHOLD_PATH_ACCUSATION = true;
+const V14_CONTAINMENT_TOUCH = true;
+const V14_BARE_NAME_ABSTAIN = true;
+const BC1_BY_CONSTRUCTION = true;
+
+const _PY_SUFFIXES = [".py", ".pyi"];
+const _TEST_NOUNS_NOT_FUNCTIONS = new Set(["case", "cases", "file", "files", "scenario",
+  "scenarios", "suite", "suites", "class", "classes"]);
+const _SYMBOL_WORDS = new Set([
+  "to", "with", "that", "for", "in", "on", "of", "by", "and", "or", "as", "the", "a",
+  "an", "this", "which", "it", "its", "is", "declaration", "implementation",
+  "definition", "signature", "body", "stub", "call", "wrapper", "override",
+  "overload", "level", "support", "named", "called",
+]);
+
+function _diffTouchesPython(status) {
+  for (const p of status.keys()) {
+    const low = p.toLowerCase();
+    if (_PY_SUFFIXES.some(s => low.endsWith(s))) return true;
+  }
+  return false;
+}
+
+// str.strip(chars) / str.rstrip(chars) with an explicit character set, as Python does them.
+function _stripChars(s, chars, left = true, right = true) {
+  let i = 0, j = s.length;
+  if (left) while (i < j && chars.includes(s[i])) i++;
+  if (right) while (j > i && chars.includes(s[j - 1])) j--;
+  return s.slice(i, j);
+}
+const _rstrip = (s, chars) => _stripChars(s, chars, false, true);
+
+function _prefixIsPathShaped(prefix, status) {
+  // A scope prefix is a path when it looks like one or names a segment of a changed path.
+  // Judged on the prefix as written, minus a sentence-final period.
+  const raw = _rstrip(_stripChars(prefix, "`\"'"), ".");
+  if (!raw) return false;
+  if (/[/\\.]/.test(raw)) return true;
+  const low = _rstrip(_norm(raw), "/").toLowerCase();
+  for (const changed of status.keys()) {
+    if (changed.split("/").some(seg => seg.toLowerCase() === low)) return true;
+  }
+  return false;
+}
+
+// COMPAT-1: which public top-level definitions the diff removed without re-defining, per language.
+const _COMPAT_VERDICTS = ["UNCHECKABLE"];
+const _COMPAT_LANGS = [
+  // [language, suffixes, regex over ONE removed line with a `name` group]
+  ["python", [".py"], /^(?:async\s+)?(?:def|class)\s+(?<name>[A-Za-z]\w*)/],
+  ["js/ts", [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts"],
+    /^export\s+(?:default\s+)?(?:async\s+)?(?:function\*?|class|const|let|var|interface|type|enum)\s+(?<name>[A-Za-z_$]\w*)/],
+  ["go", [".go"], /^(?:func\s+(?:\([^)]*\)\s*)?|type\s+)(?<name>[A-Z]\w*)\b/],
+  ["rust", [".rs"], /^\s*pub\s+(?:async\s+)?(?:fn|struct|enum|trait|type|const|static)\s+(?<name>[A-Za-z_]\w*)/],
+  ["java", [".java", ".kt"], /^\s*public\s+(?:static\s+|final\s+|abstract\s+)*[\w<>\[\],\s]+?\s+(?<name>[a-zA-Z_]\w*)\s*\(/],
+];
+const _COMPAT_MAX_NAMED = 5;
+
+const _reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+function parseUnifiedDiffSides(diffText) {
+  // Unified diff text -> Map(normalized new-or-old path -> [added_lines, removed_lines]).
+  const sides = new Map();
+  let oldPath = null;
+  let cur = null;
+  for (const line of _splitlines(diffText || "")) {
+    if (line.startsWith("--- ")) {
+      oldPath = line.slice(4).trim();
+      cur = null;
+    } else if (line.startsWith("+++ ")) {
+      const nw = line.slice(4).trim();
+      let raw;
+      if (nw === "/dev/null") raw = (oldPath && oldPath.startsWith("a/")) ? oldPath.slice(2) : (oldPath || "");
+      else raw = nw.startsWith("b/") ? nw.slice(2) : nw;
+      cur = _norm(raw);
+      if (!sides.has(cur)) sides.set(cur, [[], []]);
+    } else if (cur !== null && line.startsWith("+") && !line.startsWith("+++")) {
+      sides.get(cur)[0].push(line.slice(1));
+    } else if (cur !== null && line.startsWith("-") && !line.startsWith("---")) {
+      sides.get(cur)[1].push(line.slice(1));
+    }
+  }
+  return sides;
+}
+
+function _compatRemovedPublicNames(sides) {
+  const byLangAdded = new Map();
+  const langsPresent = [];
+  for (const [path, [added]] of sides) {
+    for (const [lang, sufs] of _COMPAT_LANGS) {
+      if (sufs.some(s => path.endsWith(s))) {
+        if (!byLangAdded.has(lang)) byLangAdded.set(lang, []);
+        byLangAdded.get(lang).push(...added);
+        if (!langsPresent.includes(lang)) langsPresent.push(lang);
+      }
+    }
+  }
+  const dropped = [];
+  const seen = new Set();
+  for (const [path, [, removed]] of sides) {
+    for (const [lang, sufs, rx] of _COMPAT_LANGS) {
+      if (!sufs.some(s => path.endsWith(s))) continue;
+      const ablob = (byLangAdded.get(lang) || []).join("\n");
+      for (const line of removed) {
+        const m = rx.exec(line);
+        if (!m) continue;
+        const name = m.groups.name;
+        if (name.startsWith("_")) continue;                              // private by convention
+        if (new RegExp("\\b" + _reEscape(name) + "\\b").test(ablob)) continue;  // re-defined or still referenced
+        const key = path + " " + lang + " " + name;
+        if (!seen.has(key)) { seen.add(key); dropped.push([path, lang, name]); }
+      }
+    }
+  }
+  return [dropped, langsPresent];
+}
+
+function _compatReading(sides) {
+  if (!sides || sides.size === 0) {
+    return ["UNCHECKABLE", "compatibility claimed; no per-file diff available to read (behaviour beyond names not checked)", { removed: [] }];
+  }
+  const [dropped, langs] = _compatRemovedPublicNames(sides);
+  if (!langs.length) {
+    return ["UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff (python, js/ts, go, rust, java)", { removed: [], languages: [] }];
+  }
+  if (!dropped.length) {
+    return ["UNCHECKABLE", `compatibility claimed; no public top-level definition removed (${langs.join(", ")} read; behaviour beyond names not checked)`, { removed: [], languages: langs }];
+  }
+  const shown = dropped.slice(0, _COMPAT_MAX_NAMED).map(([p, , n]) => `${p}: ${n}`).join(", ");
+  const more = dropped.length > _COMPAT_MAX_NAMED ? ` (+${dropped.length - _COMPAT_MAX_NAMED} more)` : "";
+  const why = `compatibility claimed; the diff removes ${dropped.length} public definition(s) not re-defined in the added lines: ${shown}${more}`;
+  return ["UNCHECKABLE", why, { removed: dropped.map(([p, l, n]) => ({ path: p, language: l, name: n })), languages: langs }];
+}
+
+// The `tests_pass` reason with no --evidence and no --run, verbatim from the Python: the
+// styxx.evidence leg reading zero files with no commit, then diffgate's own note. This port has
+// neither channel, so this is the only reason it can give and the verdict is always UNCHECKABLE.
+const _TESTS_PASS_NO_EVIDENCE_WHY = "styxx.evidence (styxx-evidence/v0.2) read 0 supplied file(s), with no commit supplied, so nothing ties a report to this change — no evidence was supplied. Absence of a report is not a failing report; an unattested commit is unattested.  ||  No test REPORT was handed to the gate. It does not take the agent's word for test results, so with nothing to read it declines — absence of evidence is not a contradiction. The channel that makes this readable is a report passed with --evidence: a JUnit XML, or better a test-result attestation whose subject names the head commit. Even then no signature is checked, and the answer is VERIFIED or UNCHECKABLE — there is no accusing verdict for this claim kind.";
 
 const _NON_FILE_NOUNS = new Set([
   "node.js", "next.js", "express.js", "vue.js", "nuxt.js", "react.js",
@@ -79,12 +229,36 @@ function _basename(p) {
   const s = p.replace(/\/+$/, "");
   return s.slice(s.lastIndexOf("/") + 1);
 }
+function _splitlines(text) {
+  // str.splitlines() for the line endings a diff can carry
+  const lines = text.split(/\r\n|\r|\n/);
+  if (lines.length && lines[lines.length - 1] === "") lines.pop();
+  return lines;
+}
+
+// repr() of a str, for the `why` strings the Python builds with !r.
+function pyRepr(s) {
+  const q = (s.includes("'") && !s.includes('"')) ? '"' : "'";
+  let out = q;
+  for (const ch of s) {
+    const c = ch.codePointAt(0);
+    if (ch === "\\") out += "\\\\";
+    else if (ch === q) out += "\\" + q;
+    else if (ch === "\n") out += "\\n";
+    else if (ch === "\r") out += "\\r";
+    else if (ch === "\t") out += "\\t";
+    else if (c < 0x20 || c === 0x7f) out += "\\x" + c.toString(16).padStart(2, "0");
+    else out += ch;
+  }
+  return out + q;
+}
+function pyList(arr) { return "[" + arr.map(pyRepr).join(", ") + "]"; }
 
 function parseUnifiedDiff(diffText) {
   const status = new Map();
   const added = [];
   let oldPath = null;
-  for (const line of (diffText || "").split("\n")) {
+  for (const line of _splitlines(diffText || "")) {
     if (line.startsWith("--- ")) {
       oldPath = line.slice(4).trim();
     } else if (line.startsWith("+++ ")) {
@@ -108,8 +282,30 @@ function _pySplitSentences(text) {
   return text.split(/(?<=[.!?])\s+|\n+/);
 }
 
+function _pathClaimVerdict(kind, claimed, findPath) {
+  const [p, st] = findPath(claimed);
+  const want = { file_created: "A", file_deleted: "D" }[kind];
+  const accuse = !WITHHOLD_PATH_ACCUSATION;
+  const bare = V14_BARE_NAME_ABSTAIN && !claimed.includes("/") && !claimed.includes("\\");
+  if (p === null && bare) {
+    return ["UNCHECKABLE", `${pyRepr(claimed)} is a bare name absent from the diff — ambiguous between a file and a library, so no accusation is made (V14 repair 2, a deliberate recall sacrifice)`];
+  }
+  if (p === null) {
+    return accuse
+      ? ["CONTRADICTED", `${pyRepr(claimed)} does not appear in the diff at all`]
+      : ["UNCHECKABLE", `${pyRepr(claimed)} does not appear in the diff — accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs 0.95 floor), disabled pending repair`];
+  }
+  if (want && st !== want) {
+    return accuse
+      ? ["CONTRADICTED", `${pyRepr(claimed)} is status ${pyRepr(st)} in the diff, claim wants ${pyRepr(want)}`]
+      : ["UNCHECKABLE", `${pyRepr(claimed)} is status ${pyRepr(st)}, claim wants ${pyRepr(want)} — accusation WITHHELD pending the EXTERNAL-1 repair`];
+  }
+  return ["VERIFIED", `diff status ${pyRepr(st)} for ${pyRepr(p)}`];
+}
+
 function gateDiffText(summaryText, diffText, { strict = false } = {}) {
   const { status, addedBlob } = parseUnifiedDiff(diffText);
+  const sides = parseUnifiedDiffSides(diffText);
   const rawInputLen = (diffText || "").length;
   let noEvidence = null;
   if (status.size === 0 && !addedBlob) {
@@ -138,47 +334,74 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
         if (_PATH_KINDS.has(kind) && _namesWithoutClaiming(sent, m)) continue;
         if (_PATH_KINDS.has(kind) && _isNonFileNoun(m.groups.path)) continue;
         if ((kind === "file_created" || kind === "file_deleted") && _demotedByContainment(sent, m)) kind = "file_touched";
+        if (V14_CONTAINMENT_TOUCH && kind === "file_touched" && _demotedByContainment(sent, m)) continue;
+        if (BC1_BY_CONSTRUCTION && kind === "symbol_added" && _SYMBOL_WORDS.has(m.groups.name.toLowerCase())) continue;
         covered.add(si);
         const d = {};
         for (const [k, v] of Object.entries(m.groups || {})) if (v !== undefined) d[k] = v;
         const c = { kind, text: sent.trim().slice(0, 160), detail: d, verdict: "UNCHECKABLE", why: "" };
-        if (noEvidence && kind !== "tests_pass") {
+        if (noEvidence) {
           c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); continue;
         }
         if (_PATH_KINDS.has(kind)) {
-          const [p, st] = findPath(d.path);
-          const want = { file_created: "A", file_deleted: "D" }[kind];
-          const accuse = !WITHHOLD_PATH_ACCUSATION;
-          if (p === null) {
-            if (accuse) { c.verdict = "CONTRADICTED"; c.why = `'${d.path}' does not appear in the diff at all`; }
-            else { c.verdict = "UNCHECKABLE"; c.why = `'${d.path}' does not appear in the diff — accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs 0.95 floor), disabled pending repair`; }
-          } else if (want && st !== want) {
-            if (accuse) { c.verdict = "CONTRADICTED"; c.why = `'${d.path}' is status '${st}' in the diff, claim wants '${want}'`; }
-            else { c.verdict = "UNCHECKABLE"; c.why = `'${d.path}' is status '${st}', claim wants '${want}' — accusation WITHHELD pending the EXTERNAL-1 repair`; }
-          } else {
-            c.verdict = "VERIFIED"; c.why = `diff status '${st}' for '${p}'`;
-          }
+          [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, findPath);
         } else if (kind === "files_changed_count") {
           const n = parseInt(d.n, 10);
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else { c.verdict = n === status.size ? "VERIFIED" : "CONTRADICTED"; c.why = `diff changes ${status.size} files, claim says ${n}`; }
         } else if (kind === "tests_added") {
           const n = parseInt(d.n, 10);
-          const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
-          c.verdict = got === n ? "VERIFIED" : "CONTRADICTED";
-          c.why = `diff adds ${got} test functions, claim says ${n}`;
+          const noun = (d.noun || "").toLowerCase();
+          if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
+            c.verdict = "UNCHECKABLE";
+            c.why = "no Python file in the diff; this template counts `def` lines (#110)";
+          } else {
+            const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
+            if (got === n) {
+              c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
+            } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
+              c.verdict = "UNCHECKABLE";
+              const one = { classes: "class", cases: "case", files: "file", scenarios: "scenario", suites: "suite" }[noun] || noun;
+              c.why = `counts test ${noun}, diff adds ${got} test functions; a ${one} is not a function (#110)`;
+            } else {
+              c.verdict = "CONTRADICTED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
+            }
+          }
         } else if (kind === "symbol_added") {
-          const pat = new RegExp("^\\s*(?:def|class)\\s+" + d.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "m");
-          const hit = pat.test(addedBlob);
-          c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
-          c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} '${d.name}'`;
+          if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
+            c.verdict = "UNCHECKABLE";
+            c.why = "no Python file in the diff; this template counts `def` lines (#110)";
+          } else {
+            const pat = new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b", "m");
+            const hit = pat.test(addedBlob);
+            c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
+            c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+          }
         } else if (kind === "only_touches") {
-          const pref = _norm(d.prefix).replace(/[/.]+$/, "");
-          const outside = [...status.keys()].filter(p => !p.startsWith(pref + "/") && p !== pref);
+          let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path
+          if (d.prefix2) prefs.push(_rstrip(_norm(d.prefix2), "/."));
+          if (d.prefix2 && !_prefixIsPathShaped(d.prefix2, status)) prefs = prefs.slice(0, 1);
+          const rawPrefs = [d.prefix].concat(prefs.length === 2 ? [d.prefix2] : []);
+          const notPaths = BC1_BY_CONSTRUCTION
+            ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
+            : [];
+          const outside = [...status.keys()].filter(p => !prefs.some(x => p.startsWith(x + "/") || p === x));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
-          else { c.verdict = outside.length === 0 ? "VERIFIED" : "CONTRADICTED"; c.why = outside.length === 0 ? "all changed paths under prefix" : `paths outside '${pref}': ${pyList(outside.slice(0, 3))}`; }
+          else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
+          else {
+            c.verdict = outside.length === 0 ? "VERIFIED" : "CONTRADICTED";
+            const shown = prefs.length === 1 ? prefs[0] : prefs.map(pyRepr).join(" and ");
+            c.why = outside.length === 0 ? "all changed paths under prefix"
+              : (prefs.length === 1 ? `paths outside ${pyRepr(shown)}: ${pyList(outside.slice(0, 3))}`
+                                    : `paths outside ${shown}: ${pyList(outside.slice(0, 3))}`);
+          }
+        } else if (kind === "compat_claim") {
+          let extra;
+          [c.verdict, c.why, extra] = _compatReading(sides);
+          Object.assign(c.detail, extra);
+          if (!_COMPAT_VERDICTS.includes(c.verdict)) c.verdict = "UNCHECKABLE";   // unreachable clamp, kept anyway
         } else if (kind === "tests_pass") {
-          c.verdict = "UNCHECKABLE"; c.why = "no --run command supplied; the gate does not take the agent's word for test results";
+          c.verdict = "UNCHECKABLE"; c.why = _TESTS_PASS_NO_EVIDENCE_WHY;
         }
         claims.push(c);
       }
@@ -196,15 +419,14 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
   };
 }
 
-function pyList(arr) { return "[" + arr.map(s => `'${s}'`).join(", ") + "]"; }
 
-
-if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff };
+if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };
 
 /* the gate, as a bookmarklet: on any public GitHub pull request page, one click reads the
  * description against the diff (both from api.github.com, nothing else) and pins the verdict
  * to the top of the page. Same JS port as the preview build (differential-tested against the
- * styxx 7.47.0 Python instrument). Nothing is sent anywhere; nothing is stored. */
+ * styxx Python instrument at the BC-2 + COMPAT-1 checkout, the file 7.48.0 ships). Nothing is
+ * sent anywhere; nothing is stored. */
 (async function () {
   const G = window.styxxDiffgateJS;
   const m = location.pathname.match(/^\/([\w.-]+)\/([\w.-]+)\/pull\/(\d+)/);
@@ -244,7 +466,7 @@ if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffTe
   out += `<div style="color:${g.verdict === "PASS" ? "#ecc46e" : "#ff605c"};margin-top:8px;font-weight:${g.verdict === "PASS" ? 400 : 600}">${g.verdict}  claims=${g.claims.length} contradicted=${nc} uncheckable=${nu} uncovered_sentences=${g.uncovered_sentences}</div>`;
   if (g.sentences_total) out += `<div style="color:#687a76">never read: ${g.uncovered_sentences} of ${g.sentences_total} sentences — prose outside the closed template set is not judged</div>`;
   if (!g.claims.length) out += `<div style="color:#687a76">no diff-shaped claims found — silence is scope, not weakness</div>`;
-  out += `<details style="margin-top:8px;color:#687a76"><summary style="cursor:pointer">what it reads · reproduce</summary><div style="margin-top:6px">modified / created / deleted &lt;path&gt; · N files changed · added N tests · adds function &lt;name&gt; · only touches &lt;prefix&gt; · tests pass (UNCHECKABLE without --run)\na path the diff does not show is UNCHECKABLE, not an accusation (EXTERNAL-1: precision 0.23 vs a 0.95 floor on 71,016 agent PRs).\n\npip install styxx\npython -m styxx.diffgate --pr ${esc(location.origin + location.pathname.match(/^\/[\w.-]+\/[\w.-]+\/pull\/\d+/)[0])}\n\njs port of styxx 7.47.0 diffgate.py, differential-tested (3,177 pairs, 0 disagreements). the python is the instrument. github.com/fathom-lab/styxx</div></details>`;
+  out += `<details style="margin-top:8px;color:#687a76"><summary style="cursor:pointer">what it reads · reproduce</summary><div style="margin-top:6px">modified / created / deleted &lt;path&gt; · N files changed · added N tests · adds function &lt;name&gt; · only touches &lt;prefix&gt; · tests pass (UNCHECKABLE without --run) · no breaking changes (read, never judged: the public definitions the diff removed are named)\na path the diff does not show is UNCHECKABLE, not an accusation (EXTERNAL-1: precision 0.23 vs a 0.95 floor on 71,016 agent PRs). added N tests / adds function &lt;name&gt; count python def lines and say so when the diff has no python (#110).\n\npip install styxx\npython -m styxx.diffgate --pr ${esc(location.origin + location.pathname.match(/^\/[\w.-]+\/[\w.-]+\/pull\/\d+/)[0])}\n\njs port of styxx diffgate.py at the BC-2 + COMPAT-1 checkout (7.48.0), differential-tested (3,199 pairs, 0 disagreements). the python is the instrument. github.com/fathom-lab/styxx</div></details>`;
   panel.innerHTML = head(`${m[1]}/${m[2]}#${m[3]} — ${meta.title || ""}`) + out;
   panel.querySelector("#styxx-gate-close").onclick = () => panel.remove();
 })();
