@@ -136,9 +136,12 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import os
 import re
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -1000,6 +1003,63 @@ _WHAT_IT_CHECKS = """\
 """
 
 
+_PR_URL = re.compile(
+    r"^(?:https?://)?(?:www\.)?github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)/pull/"
+    r"(?P<number>\d+)(?:[/?#].*)?$")
+
+
+def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) -> dict:
+    """The description and the diff of a public GitHub pull request, from the API.
+
+    No checkout, no clone: the two things the gate needs are the body the agent wrote
+    and the unified diff GitHub serves for the request, and `gate_diff_text` takes
+    exactly those. A token (``GITHUB_TOKEN`` / ``GH_TOKEN``) is used only for the rate
+    limit; without one GitHub allows 60 requests an hour per address. Nothing from the
+    response is executed and nothing but these two documents is read. `_open` exists so
+    tests can hand in a fake opener; it is `urllib.request.urlopen` otherwise.
+    """
+    m = _PR_URL.match(url.strip())
+    if not m:
+        raise ValueError(f"not a GitHub pull request URL: {url!r} "
+                         "(expected github.com/OWNER/REPO/pull/N)")
+    owner, repo, number = m.group("owner"), m.group("repo"), int(m.group("number"))
+    api = f"https://api.github.com/repos/{owner}/{repo}/pulls/{number}"
+    opener = _open or urllib.request.urlopen
+
+    def get(accept: str) -> bytes:
+        headers = {"Accept": accept, "User-Agent": "styxx-diffgate",
+                   "X-GitHub-Api-Version": "2022-11-28"}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        try:
+            with opener(urllib.request.Request(api, headers=headers), timeout=timeout) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers 404 — the pull "
+                                 "request does not exist or is private. For a private one, "
+                                 "check it out and use SUMMARY --repo --base --head.") from e
+            if e.code in (403, 429):
+                raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers {e.code} — the "
+                                 "unauthenticated API limit (60/hour per address) is used "
+                                 "up, or the token is refused. Set GITHUB_TOKEN, or wait.") from e
+            if e.code == 406:
+                raise SystemExit(f"{owner}/{repo}#{number}: GitHub will not serve this diff "
+                                 "over the API (too large). Check it out and use "
+                                 "SUMMARY --repo --base --head.") from e
+            raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers HTTP {e.code}") from e
+
+    meta = json.loads(get("application/vnd.github+json").decode("utf-8", errors="replace"))
+    diff = get("application/vnd.github.diff").decode("utf-8", errors="replace")
+    return {
+        "repo": f"{owner}/{repo}", "number": number, "title": meta.get("title") or "",
+        "base": ((meta.get("base") or {}).get("ref")) or "",
+        "head": ((meta.get("head") or {}).get("sha")) or "",
+        "html_url": meta.get("html_url") or f"https://github.com/{owner}/{repo}/pull/{number}",
+        "body": meta.get("body") or "", "diff": diff,
+    }
+
+
 def _demo() -> int:
     print("styxx diffgate --demo : an agent PR summary vs the diff it shipped with\n")
     print("the summary the agent wrote:")
@@ -1049,14 +1109,37 @@ def main(argv=None) -> int:
              "both directions. Correct in first-party CI on a repo you own; "
              "never on a stranger's branch. Prefer --evidence. Exit 0 gives "
              "VERIFIED; any other exit gives UNCHECKABLE, never an accusation.")
+    ap.add_argument(
+        "--pr", default=None, metavar="URL",
+        help="a public GitHub pull request URL. The description and the diff are "
+             "read from api.github.com and gated with no checkout, exactly as the "
+             "GitHub Action does; SUMMARY, if also given, replaces the description. "
+             "Refuses --run: there is no repository to run anything in, and it "
+             "would be someone else's branch.")
     ap.add_argument("--strict", action="store_true")
     ap.add_argument("--demo", action="store_true")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     if a.demo:
         return _demo()
+    if a.pr:
+        if a.run:
+            ap.error("--run needs a checkout and --pr has none; it would also execute a "
+                     "stranger's branch. Use --evidence, or check the PR out.")
+        try:
+            pr = fetch_pr(a.pr, token=os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN"))
+        except ValueError as e:
+            ap.error(str(e))
+        text = Path(a.summary).read_text(encoding="utf-8") if a.summary else pr["body"]
+        print(f"# {pr['repo']}#{pr['number']} — description and diff read from api.github.com, "
+              f"no checkout; base {pr['base'] or '?'}, head {pr['head'][:12] or '?'}"
+              + ("" if pr["body"].strip() or a.summary else " — the description is EMPTY"))
+        g = gate_diff_text(text, pr["diff"], strict=a.strict,
+                           evidence=a.evidence, commit=a.commit)
+        g.base, g.head = f"{pr['repo']}#{pr['number']}:{pr['base']}", pr["head"]
+        return _report(g, a.out)
     if not a.summary or not a.base:
-        ap.error("summary and --base are required (or try --demo)")
+        ap.error("summary and --base are required (or try --demo, or --pr URL)")
     if a.run:
         # Said out loud on every run, not left in --help for a reader to find.
         print(f"--run WILL EXECUTE {a.run!r} through a shell in {a.repo!r}. That "
@@ -1065,8 +1148,13 @@ def main(argv=None) -> int:
     text = Path(a.summary).read_text(encoding="utf-8")
     g = gate_diff(text, a.repo, a.base, a.head, run=a.run, strict=a.strict,
                   evidence=a.evidence, commit=a.commit)
-    if a.out:
-        Path(a.out).write_text(json.dumps(g.to_dict(), indent=2) + "\n", encoding="utf-8")
+    return _report(g, a.out)
+
+
+def _report(g: "DiffGate", out: str | None) -> int:
+    """Print a gate the way this CLI always has, and return its exit code."""
+    if out:
+        Path(out).write_text(json.dumps(g.to_dict(), indent=2) + "\n", encoding="utf-8")
     if not g.measured:
         print(f"UNMEASURED  this gate did not run: {g.why_unmeasured}")
         print("            a PASS here would mean 'nothing contradicted the summary',")
