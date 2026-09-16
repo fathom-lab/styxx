@@ -1,0 +1,84 @@
+[
+ {
+  "id": "bc1:ts-tests",
+  "summary": "Added 2 tests for add(). Adds function sub for subtraction.",
+  "diff": "--- a/src/add.ts\n+++ b/src/add.ts\n@@ -1 +1,2 @@\n export const add = (a: number, b: number) => a + b;\n+export const sub = (a: number, b: number) => a - b;\n--- /dev/null\n+++ b/src/add.test.ts\n@@ -0,0 +1,3 @@\n+import { add } from \"./add\";\n+test(\"adds\", () => { expect(add(1, 2)).toBe(3); });\n+test(\"adds negatives\", () => { expect(add(-1, -2)).toBe(-3); });\n",
+  "expect": {
+   "verdict": "PASS",
+   "uncovered_sentences": 0,
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE"
+    ]
+   ],
+   "why": [
+    "no Python file in the diff; this template counts `def` lines (#110)",
+    "no Python file in the diff; this template counts `def` lines (#110)"
+   ]
+  }
+ },
+ {
+  "id": "bc1:word-symbol",
+  "summary": "Adds a method to reload data when files change. Adds function retry.",
+  "diff": "--- a/src/app.py\n+++ b/src/app.py\n@@ -1,2 +1,4 @@\n def old():\n     return 1\n+def retry(n):\n+    return n\n--- /dev/null\n+++ b/tests/test_app.py\n@@ -0,0 +1,4 @@\n+def test_retry():\n+    assert True\n+def test_retry_twice():\n+    assert True\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1 +1 @@\n-timeout: 30\n+timeout: 5\n",
+  "expect": {
+   "verdict": "PASS",
+   "uncovered_sentences": 1,
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED"
+    ]
+   ],
+   "why": [
+    "added lines do define function 'retry'"
+   ]
+  }
+ },
+ {
+  "id": "bc1:the-prefix",
+  "summary": "Only modifies the footer component. Added 2 tests.",
+  "diff": "--- a/src/app.py\n+++ b/src/app.py\n@@ -1,2 +1,4 @@\n def old():\n     return 1\n+def retry(n):\n+    return n\n--- /dev/null\n+++ b/tests/test_app.py\n@@ -0,0 +1,4 @@\n+def test_retry():\n+    assert True\n+def test_retry_twice():\n+    assert True\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1 +1 @@\n-timeout: 30\n+timeout: 5\n",
+  "expect": {
+   "verdict": "PASS",
+   "uncovered_sentences": 0,
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE"
+    ],
+    [
+     "tests_added",
+     "VERIFIED"
+    ]
+   ],
+   "why": [
+    "prefix 'the' is not a path (#110)",
+    "diff adds 2 test functions, claim says 2"
+   ]
+  }
+ },
+ {
+  "id": "bc1:two-prefixes",
+  "summary": "Only touches src/ and tests/ in this change.",
+  "diff": "--- a/src/app.py\n+++ b/src/app.py\n@@ -1,2 +1,4 @@\n def old():\n     return 1\n+def retry(n):\n+    return n\n--- /dev/null\n+++ b/tests/test_app.py\n@@ -0,0 +1,4 @@\n+def test_retry():\n+    assert True\n+def test_retry_twice():\n+    assert True\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1 +1 @@\n-timeout: 30\n+timeout: 5\n",
+  "expect": {
+   "verdict": "FAIL",
+   "uncovered_sentences": 0,
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED"
+    ]
+   ],
+   "why": [
+    "paths outside 'src' and 'tests': ['config/settings.yml']"
+   ]
+  }
+ }
+]
