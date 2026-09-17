@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `--pr`: a public pull request gated by URL, no checkout
+
+`python -m styxx.diffgate --pr https://github.com/OWNER/REPO/pull/N` reads the description and
+the unified diff from api.github.com and hands them to `gate_diff_text` — the same two documents,
+the same call and the same verdict as the GitHub Action, now from a terminal with nothing cloned.
+`SUMMARY` given alongside replaces the fetched description; `--evidence` / `--commit` pass through
+unchanged; `--run` is refused, because there is no checkout to run in and it would be someone
+else's branch. A 404, a used-up rate limit (60 an hour unauthenticated; `GITHUB_TOKEN` /
+`GH_TOKEN` is honoured) and a diff too large for the API each exit 2 with one plain sentence
+instead of a traceback, and an empty description is said out loud rather than passed in silence.
+Verdict logic is untouched: this is a third door into `_gate`, not a change to what happens inside
+it. `tests/test_diffgate_pr.py` fakes the network at the one seam `fetch_pr` exposes, so the suite
+still runs without one.
+
 ## [Unreleased] — prior-art survey: the sentence the plan held back is priced against nineteen fetches
 
 **`papers/sworn/SURVEY_sworn_neighbours_2026_09_05.md`, run against the procedure frozen three
