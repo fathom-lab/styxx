@@ -1,0 +1,65 @@
+{
+ "prereg": "PREREG_compat1_2026_09_16.md",
+ "before": {
+  "ledger": "external3_ledger.jsonl",
+  "instrument": "BC-2 checkout (patch-15), no compat reading",
+  "covered": 12933
+ },
+ "after": {
+  "ledger": "external4_ledger.jsonl",
+  "instrument": "COMPAT-1 checkout",
+  "covered": 17939
+ },
+ "gates": {
+  "G-C1_never_accuses": {
+   "verdicts": {
+    "UNCHECKABLE": 13329
+   },
+   "pass": true
+  },
+  "G-C2_every_other_kind_untouched": {
+   "before": 22408,
+   "after_non_compat": 22408,
+   "differences": 0,
+   "pass": true
+  },
+  "G-C3_census_reproduced": {
+   "prs_with_a_compat_claim": 8467,
+   "compat_claims": 13329,
+   "exploratory_claims": 8467,
+   "within_2pct": true,
+   "prs_with_a_removed_public_definition": 540,
+   "exploratory_with_dropped": 531,
+   "prs_nothing_removed": 5062,
+   "prs_no_covered_language": 2865,
+   "removed_by_language": {
+    "js/ts": 243,
+    "python": 164,
+    "java": 40,
+    "go": 79,
+    "rust": 34
+   },
+   "removed_count_histogram": {
+    "1": 168,
+    "8": 11,
+    "9": 11,
+    "6": 27,
+    "5": 18,
+    "3": 53,
+    "4": 43,
+    "10": 111,
+    "2": 84,
+    "7": 14
+   },
+   "languages_read": {
+    "python": 1446,
+    "js/ts": 2999,
+    "java": 394,
+    "rust": 399,
+    "go": 817
+   },
+   "pass": "reported, not scored"
+  }
+ },
+ "all_blocking_gates_pass": true
+}

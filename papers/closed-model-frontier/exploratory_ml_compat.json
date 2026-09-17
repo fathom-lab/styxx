@@ -1,0 +1,130 @@
+{
+ "prs_seen": 71677,
+ "eligible": 71016,
+ "tests_added": {
+  "claims_counting_non_functions": 100,
+  "claims": 99,
+  "claims_non_python": 85
+ },
+ "tests_added_by_language": {
+  "c#": 36,
+  "java/kotlin": 5,
+  "python": 14,
+  "ruby": 1,
+  "js/ts": 21,
+  "js/ts+rust": 2,
+  "other/none": 5,
+  "rust": 4,
+  "go": 3,
+  "c#+js/ts": 4,
+  "go+js/ts": 2,
+  "php": 2
+ },
+ "tests_added_claimed_equals_counted_by_language": {
+  "java/kotlin": 1,
+  "non_python_agree_total": 31,
+  "c#": 16,
+  "js/ts": 10,
+  "python": 5,
+  "rust": 1,
+  "php": 1,
+  "go": 1,
+  "js/ts+rust": 1
+ },
+ "compat": {
+  "claims": 8467,
+  "claims_with_a_dropped_public_name": 531,
+  "dropped_in_js/ts": 243,
+  "dropped_in_python": 155,
+  "dropped_in_java/kotlin": 40,
+  "dropped_in_go": 79,
+  "dropped_in_rust": 34
+ },
+ "compat_by_language": {
+  "python": 1251,
+  "other/none": 2865,
+  "js/ts": 2622,
+  "java/kotlin": 338,
+  "rust": 322,
+  "java/kotlin+js/ts": 36,
+  "js/ts+python": 134,
+  "js/ts+rust": 43,
+  "go": 657,
+  "go+js/ts": 133,
+  "java/kotlin+js/ts+python": 7,
+  "go+python": 9,
+  "java/kotlin+python": 7,
+  "python+rust": 17,
+  "go+js/ts+python": 8,
+  "js/ts+python+rust": 5,
+  "go+java/kotlin+js/ts+python+rust": 2,
+  "go+js/ts+python+rust": 3,
+  "go+rust": 1,
+  "go+js/ts+rust": 3,
+  "java/kotlin+js/ts+python+rust": 2,
+  "go+java/kotlin+js/ts+python": 1,
+  "java/kotlin+rust": 1
+ },
+ "compat_dropped_name_histogram": {
+  "1": 165,
+  "8": 9,
+  "9": 11,
+  "10": 119,
+  "5": 13,
+  "3": 49,
+  "4": 45,
+  "2": 81,
+  "6": 27,
+  "7": 12
+ },
+ "compat_phrase_shapes": [
+  [
+   "backward compatibility",
+   4834
+  ],
+  [
+   "no breaking changes",
+   1310
+  ],
+  [
+   "backward compatible",
+   906
+  ],
+  [
+   "no functional changes",
+   366
+  ],
+  [
+   "non-breaking",
+   320
+  ],
+  [
+   "backwards compatibility",
+   267
+  ],
+  [
+   "backwards compatible",
+   128
+  ],
+  [
+   "no behavioral changes",
+   82
+  ],
+  [
+   "backward-compatible",
+   77
+  ],
+  [
+   "fully compatible",
+   58
+  ],
+  [
+   "no breaking change",
+   47
+  ],
+  [
+   "zero functional changes",
+   16
+  ]
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "prereg": "PREREG_compat2_surface_and_panel_2026_09_16.md",
+ "before": {
+  "ledger": "external6_ledger.jsonl",
+  "instrument": "the #120 checkout (HARNESS-1 fold)",
+  "eligible": 71016
+ },
+ "after": {
+  "ledger": "compat2_ledger.jsonl",
+  "instrument": "this checkout, COMPAT-2 reading (same fold)",
+  "eligible": 71016
+ },
+ "gates": {
+  "G-C2-1_still_never_accuses": {
+   "verdicts": {
+    "UNCHECKABLE": 13329
+   },
+   "pass": true
+  },
+  "G-C2-2_every_other_kind_untouched": {
+   "before": 22590,
+   "after": 22590,
+   "differences": 0,
+   "pass": true
+  },
+  "G-C2-3_partition": {
+   "prs_whose_removed_names_differ": 0,
+   "prs_failing_the_partition": 0,
+   "prs_whose_diff_does_not_parse": {
+    "count": 201,
+    "identical_to_harness1": 201,
+    "note": "every claim short-circuits before the per-kind reading; pre-existing, untouched by COMPAT-2, and outside the prereg's condition, which is about removed names"
+   },
+   "prs_with_a_compat_claim": 8467,
+   "compat_claims": 13329,
+   "prs_with_a_removed_public_name": 293,
+   "candidates": 211,
+   "candidates_by_language": {
+    "js/ts": 98,
+    "python": 52,
+    "go": 26,
+    "rust": 21,
+    "java": 20
+   },
+   "prs_all_scaffolding": 82,
+   "removed_names": {
+    "surface": 1972,
+    "scaffolding": 1624
+   },
+   "prs_with_a_signature_change": 420,
+   "signature_changes": 2275,
+   "exploratory_expectation": {
+    "candidates": 211,
+    "all_scaffolding": 82,
+    "note": "counted with this rule over the HARNESS-1 ledger before the freeze; a count, not a result"
+   },
+   "pass": true
+  },
+  "G-C2-6_not_claimed": {
+   "precision": "not measured; the panel's cycle",
+   "agent_comparison": "none",
+   "note": "a candidate is a candidate; COMPAT2_LICENSED is false"
+  }
+ },
+ "all_blocking_gates_pass": true
+}

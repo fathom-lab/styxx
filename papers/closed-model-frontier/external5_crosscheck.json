@@ -1,0 +1,27 @@
+{
+ "seed": 20260916,
+ "drawn_from": "the 91 PR URLs of the population, sorted, random.Random(seed).sample(20)",
+ "read": "REST pulls/N changed_files in a browser, 2026-09-16",
+ "changed_files": {
+  "https://github.com/Azure/azure-mcp/pull/576": 9,
+  "https://github.com/Haleclipse/CCometixLine/pull/42": 27,
+  "https://github.com/SkBlaz/py3plex/pull/134": 21,
+  "https://github.com/Voxelum/x-minecraft-launcher/pull/1108": 39,
+  "https://github.com/crewAIInc/crewAI/pull/3018": 3,
+  "https://github.com/crewAIInc/crewAI/pull/3509": 3,
+  "https://github.com/inkeep/agents/pull/655": 14,
+  "https://github.com/inkeep/agents/pull/663": 19,
+  "https://github.com/mRemoteNG/mRemoteNG/pull/2954": 13,
+  "https://github.com/majorsilence/My-FyiReporting/pull/242": 81,
+  "https://github.com/microsoft/vscode-azuretools/pull/2086": 12,
+  "https://github.com/mlflow/mlflow/pull/18253": 6,
+  "https://github.com/open-policy-agent/cert-controller/pull/415": 1,
+  "https://github.com/openwhyd/openwhyd/pull/847": 6,
+  "https://github.com/pathintegral-institute/mcpm.sh/pull/221": 19,
+  "https://github.com/polarsource/polar/pull/7298": 3,
+  "https://github.com/python-adaptive/adaptive/pull/488": 8,
+  "https://github.com/sightread/sightread/pull/201": "http 404",
+  "https://github.com/telerik/kendo-themes/pull/5600": 9,
+  "https://github.com/wey-gu/py-pglite/pull/38": 5
+ }
+}
