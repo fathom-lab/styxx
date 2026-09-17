@@ -1,0 +1,25 @@
+# pre-commit hook definitions for this repository (https://pre-commit.com/#new-hooks).
+# In your own .pre-commit-config.yaml:
+#
+#   repos:
+#     - repo: https://github.com/fathom-lab/styxx
+#       rev: <a release tag or commit that contains this file>
+#       hooks:
+#         - id: diffgate-commit-msg
+#
+# then `pre-commit install --hook-type commit-msg`. pre-commit installs styxx into its own
+# environment from this repository at `rev`; nothing is installed into yours.
+- id: diffgate-commit-msg
+  name: styxx diffgate (the commit message vs the staged diff)
+  description: >-
+    Reads the commit message against `git diff --cached` with styxx.diffgate and refuses the
+    commit on a CONTRADICTED claim. Judges only the closed template set (touched / created /
+    deleted paths, "N files changed", "added N tests", "adds function X", "only touches
+    prefix/"); "tests pass" stays UNCHECKABLE; a path the diff does not show is UNCHECKABLE, not
+    an accusation (EXTERNAL-1). See integrations/pre-commit/README.md.
+  entry: styxx-diffgate-commit-msg
+  language: python
+  stages: [commit-msg]
+  always_run: true
+  pass_filenames: true
+  minimum_pre_commit_version: "2.9.0"

@@ -1,0 +1,80 @@
+{
+ "corpus": {
+  "dataset": "hao-li/AIDev",
+  "tables": [
+   "pull_request",
+   "pr_commit_details"
+  ],
+  "license": "CC-BY-4.0",
+  "zenodo": "10.5281/zenodo.16919272"
+ },
+ "instrument": {
+  "styxx_version": "7.47.0",
+  "diffgate_sha256": "4bf19b1bc4ba033e7340a9eb9849f1bd536251b47d41030e8d0176b3b0b74cf8",
+  "run": null,
+  "strict": false
+ },
+ "reconstruction": "external1_harness.reconstruct / _fold_statuses, unchanged",
+ "instrument_is": "this checkout with BC-1, see PREREG_bc1_by_construction_2026_09_16.md",
+ "bc1": true,
+ "prs_seen": 71677,
+ "excluded": {
+  "no_file_records": 87,
+  "empty_body": 573,
+  "reconstruction_mismatch": 1
+ },
+ "eligible": 71016,
+ "covered_prs": 12933,
+ "coverage": 0.1821,
+ "prs_with_contradiction": 91,
+ "claims_by_verdict": {
+  "VERIFIED": 13017,
+  "UNCHECKABLE": 9477,
+  "CONTRADICTED": 96
+ },
+ "per_agent": {
+  "Claude_Code": {
+   "eligible": 1913,
+   "covered": 805,
+   "claim_VERIFIED": 810,
+   "claim_UNCHECKABLE": 682,
+   "claim_CONTRADICTED": 24,
+   "contradicted_prs": 22
+  },
+  "Copilot": {
+   "eligible": 23432,
+   "covered": 9009,
+   "claim_VERIFIED": 9110,
+   "claim_UNCHECKABLE": 7223,
+   "claim_CONTRADICTED": 60,
+   "contradicted_prs": 58
+  },
+  "Cursor": {
+   "eligible": 3912,
+   "covered": 614,
+   "claim_UNCHECKABLE": 329,
+   "claim_VERIFIED": 666
+  },
+  "Devin": {
+   "eligible": 6151,
+   "covered": 1719,
+   "claim_VERIFIED": 1734,
+   "claim_UNCHECKABLE": 1002,
+   "claim_CONTRADICTED": 12,
+   "contradicted_prs": 11
+  },
+  "Google_Jules": {
+   "eligible": 487,
+   "covered": 42,
+   "claim_VERIFIED": 50,
+   "claim_UNCHECKABLE": 8
+  },
+  "OpenAI_Codex": {
+   "eligible": 35121,
+   "covered": 744,
+   "claim_VERIFIED": 647,
+   "claim_UNCHECKABLE": 233
+  }
+ },
+ "seconds": 265
+}

@@ -1,0 +1,40 @@
+name: diffgate
+
+# README.md says this repo runs the diff gate on itself and links this file.
+# Until this workflow existed, it did not: the link pointed at nothing (there is
+# no .github/workflows/diffgate.yml anywhere in the history before this one).
+# This is that sentence coming true. Every pull request body is gated against
+# the pull request's actual diff by the action at the root of this repository
+# (`uses: ./`, so the wrapper under review is the wrapper that runs; the
+# instrument itself is the released package, see the styxx-version input in
+# action.yml). Checkout is only so `uses: ./` can find action.yml — the gate
+# reads the diff from the API and never needs the tree.
+#
+# Verdict contract, from styxx.diffgate: fails only on a CONTRADICTED claim.
+# UNCHECKABLE is reported in the job summary and as a warning, never failed
+# (strict is off). Prose outside the closed template set is never judged; a
+# PR body with no diff-shaped claim passes on scope, not on merit. `edited` is
+# in the trigger list because the body is the input: rewriting it re-runs the gate.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  diffgate:
+    name: the PR body vs the diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout (only so the local action can be found)"
+        uses: actions/checkout@v4
+
+      - name: Gate the PR body against the PR diff
+        uses: ./
+        with:
+          strict: "false"
+          soft-fail: "false"

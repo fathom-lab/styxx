@@ -1,0 +1,471 @@
+{
+ "prereg": "PREREG_bin1_binary_files_2026_09_16.md",
+ "instrument_sha256": "397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1",
+ "G-BIN-1_live_diffs": {
+  "pull_requests": 91,
+  "served": 85,
+  "parse_equals_headers": 84,
+  "pass": false,
+  "per_diff": [
+   {
+    "sha256": "003c967ce7876f3e",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "3906cf1c10fa2dd4",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "a0458b99d5f3469f",
+    "headers": 1,
+    "parse": 1
+   },
+   {
+    "sha256": "e493f4de92cf7834",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "89a1f956b72da4df",
+    "headers": 49,
+    "parse": 49
+   },
+   {
+    "sha256": "6ef45160f65d9297",
+    "headers": 9,
+    "parse": 9
+   },
+   {
+    "sha256": "5fdd572ae06363b3",
+    "headers": 395,
+    "parse": 395
+   },
+   {
+    "sha256": "57975d46094c0596",
+    "headers": 9,
+    "parse": 9
+   },
+   {
+    "sha256": "3747cb975590c488",
+    "headers": 8,
+    "parse": 8
+   },
+   {
+    "sha256": "c7d410abbb69267e",
+    "headers": 10,
+    "parse": 10
+   },
+   {
+    "sha256": "38bd545ba2cfd7db",
+    "headers": 76,
+    "parse": 76
+   },
+   {
+    "sha256": "33e60a53b51747ec",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "8534fc5444c6a254",
+    "headers": 16,
+    "parse": 16
+   },
+   {
+    "sha256": "fb68ddf8853aad52",
+    "headers": 27,
+    "parse": 27
+   },
+   {
+    "sha256": "7b29764f394c46de",
+    "headers": 28,
+    "parse": 28
+   },
+   {
+    "sha256": "5b74d0eac928b790",
+    "headers": 41,
+    "parse": 41
+   },
+   {
+    "sha256": "f031afa15887b7f4",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "a6eb4bc96e878f31",
+    "headers": 6,
+    "parse": 6
+   },
+   {
+    "sha256": "77d62ffe0aa8cd34",
+    "headers": 6,
+    "parse": 6
+   },
+   {
+    "sha256": "5db4f1114e21f64a",
+    "headers": 21,
+    "parse": 21
+   },
+   {
+    "sha256": "339a5e53e7edcb42",
+    "headers": 82,
+    "parse": 82
+   },
+   {
+    "sha256": "fa8cc699d551a3e0",
+    "headers": 39,
+    "parse": 39
+   },
+   {
+    "sha256": "d31cc6fb614143d4",
+    "headers": 8,
+    "parse": 8
+   },
+   {
+    "sha256": "a3b184e154a11953",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "28be3ad5d647a2ae",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "0fa3f63af61e0104",
+    "headers": 16,
+    "parse": 16
+   },
+   {
+    "sha256": "84872fcddbcf1394",
+    "headers": 71,
+    "parse": 71
+   },
+   {
+    "sha256": "caf281437bacf534",
+    "headers": 369,
+    "parse": 369
+   },
+   {
+    "sha256": "9693aff3dada546a",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "4140d352e79b4fe7",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "6a71bd3879fa445f",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "4950d386e81aca3b",
+    "headers": 35,
+    "parse": 35
+   },
+   {
+    "sha256": "a4661998d9daabab",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "82036dda572265bd",
+    "headers": 5,
+    "parse": 5
+   },
+   {
+    "sha256": "c64fae79176650a2",
+    "headers": 11,
+    "parse": 11
+   },
+   {
+    "sha256": "b5a192411633b64d",
+    "headers": 250,
+    "parse": 250
+   },
+   {
+    "sha256": "a0e1ae1df4419c04",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "7e6f7b99810b1e9a",
+    "headers": 11,
+    "parse": 11
+   },
+   {
+    "sha256": "37162ada2d864917",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "42c77ff27895c51e",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "eac25203b8d60192",
+    "headers": 188,
+    "parse": 188
+   },
+   {
+    "sha256": "327c84d895252d50",
+    "headers": 12,
+    "parse": 12
+   },
+   {
+    "sha256": "bc0e27e61a253ab0",
+    "headers": 21,
+    "parse": 21
+   },
+   {
+    "sha256": "ab1d72f37e99d121",
+    "headers": 10,
+    "parse": 10
+   },
+   {
+    "sha256": "54fbc82baaac1002",
+    "headers": 60,
+    "parse": 60
+   },
+   {
+    "sha256": "a66b6f5a01d3a85d",
+    "headers": 14,
+    "parse": 14
+   },
+   {
+    "sha256": "5df41505927b6ce0",
+    "headers": 2,
+    "parse": 2
+   },
+   {
+    "sha256": "8d030c667a5b9dc4",
+    "headers": 38,
+    "parse": 38
+   },
+   {
+    "sha256": "c9b81bb02c93bcba",
+    "headers": 57,
+    "parse": 57
+   },
+   {
+    "sha256": "4aa9f83fc533048c",
+    "headers": 17,
+    "parse": 17
+   },
+   {
+    "sha256": "4b2ccb27cac3a9df",
+    "headers": 13,
+    "parse": 13
+   },
+   {
+    "sha256": "8cae775c86e0f98b",
+    "headers": 81,
+    "parse": 81
+   },
+   {
+    "sha256": "466e038caeb23caa",
+    "headers": 28,
+    "parse": 28
+   },
+   {
+    "sha256": "7ec59476b8259a7a",
+    "headers": 4,
+    "parse": 4
+   },
+   {
+    "sha256": "ddd8f747b32cadad",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "c693c96df805c97e",
+    "headers": 6,
+    "parse": 6
+   },
+   {
+    "sha256": "daef751e9398a3ed",
+    "headers": 9,
+    "parse": 9
+   },
+   {
+    "sha256": "9481f3d5f601df17",
+    "headers": 15,
+    "parse": 15
+   },
+   {
+    "sha256": "94d116e857c83e20",
+    "headers": 1090,
+    "parse": 1090
+   },
+   {
+    "sha256": "db655e8b328920ca",
+    "headers": 12,
+    "parse": 12
+   },
+   {
+    "sha256": "08c2721a701b3942",
+    "headers": 10,
+    "parse": 10
+   },
+   {
+    "sha256": "bc9c1662d983b209",
+    "headers": 4,
+    "parse": 4
+   },
+   {
+    "sha256": "beb2b6de62cfa9a2",
+    "headers": 14,
+    "parse": 14
+   },
+   {
+    "sha256": "1bb9e070aa29b4de",
+    "headers": 6,
+    "parse": 6
+   },
+   {
+    "sha256": "d29bb6b065554c34",
+    "headers": 55,
+    "parse": 55
+   },
+   {
+    "sha256": "33de6dba1e608ff6",
+    "headers": 645,
+    "parse": 644
+   },
+   {
+    "sha256": "7150cc9a06a94096",
+    "headers": 1,
+    "parse": 1
+   },
+   {
+    "sha256": "6d59b21efef8466e",
+    "headers": 156,
+    "parse": 156
+   },
+   {
+    "sha256": "f15d06932fb747ac",
+    "headers": 6,
+    "parse": 6
+   },
+   {
+    "sha256": "119755183d134b1c",
+    "headers": 5,
+    "parse": 5
+   },
+   {
+    "sha256": "a7457ca6e83102d8",
+    "headers": 19,
+    "parse": 19
+   },
+   {
+    "sha256": "38d9a0c46c77c146",
+    "headers": 17,
+    "parse": 17
+   },
+   {
+    "sha256": "3329703d285652ae",
+    "headers": 3,
+    "parse": 3
+   },
+   {
+    "sha256": "cb2d5bc929232c74",
+    "headers": 8,
+    "parse": 8
+   },
+   {
+    "sha256": "bd72917de1be0959",
+    "headers": 79,
+    "parse": 79
+   },
+   {
+    "sha256": "bba9f545d6e4554c",
+    "headers": 14,
+    "parse": 14
+   },
+   {
+    "sha256": "c634d000db99d267",
+    "headers": 21,
+    "parse": 21
+   },
+   {
+    "sha256": "3dae052c4b50659c",
+    "headers": 4,
+    "parse": 4
+   },
+   {
+    "sha256": "7e8c0bed8971ca73",
+    "headers": 24,
+    "parse": 24
+   },
+   {
+    "sha256": "46d88e4f5cf69c2f",
+    "headers": 9,
+    "parse": 9
+   },
+   {
+    "sha256": "10b3b940834fd850",
+    "headers": 19,
+    "parse": 19
+   },
+   {
+    "sha256": "797b0227b6ca17ef",
+    "headers": 5,
+    "parse": 5
+   },
+   {
+    "sha256": "925cd5d5bbb78624",
+    "headers": 11,
+    "parse": 11
+   },
+   {
+    "sha256": "46f8b78c3cb7d4e7",
+    "headers": 1,
+    "parse": 1
+   },
+   {
+    "sha256": "c4e6514515a43326",
+    "headers": 1,
+    "parse": 1
+   }
+  ]
+ },
+ "G-BIN-2_differential": {
+  "pairs": 3205,
+  "disagreements": 0,
+  "pre_bin1_pairs": 3199,
+  "identical_after": 3199,
+  "pass": true
+ },
+ "G-BIN-3_corpus_sample": {
+  "sample": 2000,
+  "identical": 2000,
+  "different": 0,
+  "claims_in_sample": 966,
+  "pass": true
+ },
+ "G-BIN-4_external5_reread": {
+  "items": 96,
+  "served": 90,
+  "files_by_parse_equals_live": 90,
+  "items_on_diffs_the_parse_was_blind_to": 11,
+  "of_those_now_counted_by_the_parse": 11,
+  "outcomes_before": {
+   "UPHELD": 70,
+   "UNREACHABLE": 7,
+   "OVERTURNED": 19
+  },
+  "outcomes_after": {
+   "UPHELD": 70,
+   "UNREACHABLE": 7,
+   "OVERTURNED": 19
+  },
+  "same_outcome_per_item": 96,
+  "pass": true
+ },
+ "all_blocking_gates_pass": false
+}

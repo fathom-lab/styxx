@@ -105,9 +105,17 @@ def main() -> int:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "
                   "only-touches scopes, tests-pass); prose outside it is not judged._"]
-    lines += ["", "_A ❓ fails only with `strict: true`. Zero false accusations across "
-              "both public validation corpora — receipts in the "
-              "[styxx CHANGELOG](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md)._"]
+    # This footer used to say "zero false accusations across both public validation
+    # corpora". The README withdrew that claim (re-run at 7.46.0 the committed sweep
+    # found four, all false accusations), and a footer that kept asserting it on every
+    # gated PR in every adopter's repo was the same present-tense mistake one level down.
+    lines += ["", "_A ❓ fails only with `strict: true`. A path claim the diff does not show "
+              "is reported ❓ UNCHECKABLE, not accused: that accusation was measured at "
+              "precision 0.23 against a preregistered 0.95 floor on 71,016 external "
+              "agent-authored PRs (EXTERNAL-1, 2026-08-31) and is withheld until a held-out "
+              "repair clears the floor. The withdrawn zero-false-accusation claim, and what "
+              "replaced it, are in the "
+              "[styxx README](https://github.com/fathom-lab/styxx/blob/main/README.md)._"]
     _write_summary(lines)
 
     failing = False
