@@ -5,12 +5,19 @@
 
 The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py at the
 BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the #118 repair), re-cut for the PATH-2
-repairs (#97, #121, #101) on the file that carries them, sha256 PINNED below. That file also carries
-COMPAT-2's compatibility reading, which the port does not: the differential reports those
-`compat_claim` records as disagreements (9 on this corpus). By default this script imports the checkout's module and REFUSES to run
-unless it hashes to that pin (after CRLF -> LF normalisation, because a wheel built on Windows
-carries CRLF and the same file then hashes differently), so "0 disagreements" always means
+repairs (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17) on the file that
+carries them, sha256 PINNED below. By default this script imports the checkout's module and REFUSES
+to run unless it hashes to that pin (after CRLF -> LF normalisation, because a wheel built on Windows
+carries CRLF and the same file then hashes differently), so a disagreement count always means
 "against the file the port claims to be", never against whatever happened to be importable.
+
+The count is not 0, and it is not expected to be. KNOWN GAP: the pinned file carries COMPAT-2's
+sharpened compatibility reading (surface vs scaffolding, signature changes, the candidate flag),
+merged before PATH-2, and the port was never given it. Every `compat_claim` record whose reading
+differs is a disagreement: the 9 on the 3,205-pair corpus that predate PATH-2 (8 pinned compatibility
+pairs and one commit message), plus the one PATH-2 pair pinned for COMPAT-2's `.storybook/` reading
+(`path2:121-compat2-a-dotted-scaffold-directory-stays-scaffolding`), 10 in all. Any other disagreement
+is a port defect.
 `--installed` runs the installed package instead, which is how far the release on PyPI sits from
 the port; that run is expected to disagree until 7.48.0 ships, and the README says by how much.
 
@@ -27,7 +34,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "6ccb9b803d64a3166ede0394a595337082377a13741e6f1b5f0af0c581d48091"  # styxx/diffgate.py, BIN-1 + COMPAT-2 + PATH-2 (LF)
+PINNED = "d9f8ddd58841d875287dd636f722965cc66424885bdcd0e07f171a6fb6e16dbf"  # styxx/diffgate.py, BIN-1 + COMPAT-2 + PATH-2 amended (LF)
 CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "path2_pairs.json")
 
 
@@ -45,8 +52,9 @@ def load(installed: bool):
     digest = _digest(Path(mod.__file__))
     if not installed and digest != PINNED:
         sys.exit(f"{mod.__file__} hashes to {digest[:16]}…, not the file the port was made from "
-                 f"({PINNED[:16]}…). Check out the BC-2 + COMPAT-1 instrument, or pass --installed to "
-                 "measure drift against the installed package instead.")
+                 f"({PINNED[:16]}…). Check out the PATH-2 instrument the pin names (its differential is "
+                 "expected to show the 10 compat_claim disagreements of the known COMPAT-2 port gap and "
+                 "nothing else), or pass --installed to measure drift against the installed package instead.")
     return mod, digest
 
 
