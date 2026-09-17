@@ -1,0 +1,105 @@
+{
+ "prereg": "PREREG_external5_survivors_at_source_2026_09_16.md",
+ "instrument_sha256": "a550cad5f5b1e4e636ae65cf5a20be0bde41c03dd4e78b3d7e1f90e35f7a4d7a",
+ "source": "patch-diff.githubusercontent.com/raw/OWNER/REPO/pull/N.diff, fetched 2026-09-16 (deviation from the prereg's files-page reading, recorded in the RESULT)",
+ "population": 96,
+ "pull_requests": 91,
+ "outcomes": {
+  "UPHELD": 70,
+  "UNREACHABLE": 7,
+  "OVERTURNED": 19
+ },
+ "reach": {
+  "reached": 89,
+  "rate": 0.9271,
+  "G-E5-1_pass": true
+ },
+ "by_kind": {
+  "files_changed_count": {
+   "counts": {
+    "UPHELD": 52,
+    "UNREACHABLE": 5,
+    "OVERTURNED": 18
+   },
+   "upheld_rate": 0.7429
+  },
+  "files_changed_count / git stat line": {
+   "counts": {
+    "UPHELD": 26,
+    "OVERTURNED": 4,
+    "UNREACHABLE": 1
+   },
+   "upheld_rate": 0.8667
+  },
+  "files_changed_count / other": {
+   "counts": {
+    "UNREACHABLE": 4,
+    "UPHELD": 26,
+    "OVERTURNED": 14
+   },
+   "upheld_rate": 0.65
+  },
+  "only_touches": {
+   "counts": {
+    "UPHELD": 12,
+    "UNREACHABLE": 1,
+    "OVERTURNED": 1
+   },
+   "upheld_rate": 0.9231
+  },
+  "tests_added": {
+   "counts": {
+    "UPHELD": 6,
+    "UNREACHABLE": 1
+   },
+   "upheld_rate": 1.0
+  }
+ },
+ "rest_crosscheck": {
+  "n": 20,
+  "first_reading_by_instrument_parse": {
+   "agree": 17,
+   "disagree": 3,
+   "prereg_consequence": "files_changed_count voided as a preregistered figure"
+  },
+  "completed_from_diff_git_headers": {
+   "agree": 19,
+   "disagree": 1,
+   "remaining_disagreement": "the orphaned PR (page and REST 404, diff still served), excluded as UNREACHABLE"
+  },
+  "disagreements": [
+   {
+    "rest": 13,
+    "by_parse": 12,
+    "by_headers": 13,
+    "orphaned": false
+   },
+   {
+    "rest": "http 404",
+    "by_parse": 4,
+    "by_headers": 4,
+    "orphaned": true
+   },
+   {
+    "rest": 9,
+    "by_parse": 1,
+    "by_headers": 9,
+    "orphaned": false
+   }
+  ],
+  "not_in_population": []
+ },
+ "binary_files_unregistered_by_parse_unified_diff": {
+  "pull_requests": 10,
+  "items_affected": 11,
+  "note": "instrument defect: every raw-diff door misses `Binary files \u2026 differ` entries; filed as an issue, repair prereg owed"
+ },
+ "floor_question": {
+  "files_changed_count": false,
+  "files_changed_count / git stat line": false,
+  "files_changed_count / other": false,
+  "only_touches": false,
+  "tests_added": true
+ },
+ "note": "UPHELD means the description does not match the pull request as it stands today; OVERTURNED means the corpus reconstruction disagreed with the live diff. No PR named here; URLs stay in the gitignored items file."
+}

@@ -178,14 +178,26 @@ _TEMPLATES = [
     ("file_touched", re.compile(
         rf"^[\s*-]*[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s+", re.M)),
     ("files_changed_count", re.compile(r"\b(?P<n>\d+)\s+files?\s+(?:were\s+)?changed", re.I)),
-    ("tests_added", re.compile(r"\b(?:add\w+|creat\w+)\s+(?P<n>\d+)\s+(?:new\s+)?tests?\b", re.I)),
+    # BC-1/BC-2 (PREREG_bc2_by_construction_2026_09_16): the counted noun is captured so
+    # "added 3 test cases" is not read as a count of `def test_` functions, and
+    # "added a function named foo" reads foo, not `named`.
+    ("tests_added", re.compile(
+        r"\b(?:add\w+|creat\w+)\s+(?P<n>\d+)\s+(?:new\s+)?tests?\b"
+        r"(?:\s+(?P<noun>cases?|files?|scenarios?|suites?|class(?:es)?|functions?|methods?)\b)?", re.I)),
     ("symbol_added", re.compile(
-        r"\b(?:add\w+|introduc\w+)\s+(?:a\s+|the\s+)?(?P<kind>function|class|method)\s+"
-        r"[`\"']?(?P<name>[A-Za-z_]\w*)", re.I)),
+        r"\b(?:add\w+|introduc\w+)\s+(?:(?:a|an|the|new)\s+){0,2}(?P<kind>function|class|method)\s+"
+        r"(?:(?:named|called)\s+)?[`\"']?(?P<name>[A-Za-z_]\w*)", re.I)),
     ("only_touches", re.compile(
         r"\bonly\s+(?:touch\w+|modif\w+|chang\w+)\s+(?:files?\s+(?:in|under)\s+)?"
-        r"[`\"']?(?P<prefix>[\w./\\-]+)[`\"']?", re.I)),
+        r"[`\"']?(?P<prefix>[\w./\\-]+)[`\"']?"
+        r"(?:,?\s+and\s+(?:files?\s+(?:in|under)\s+)?[`\"']?(?P<prefix2>[\w-]*[./\\][\w./\\-]*)[`\"']?)?", re.I)),
     ("tests_pass", re.compile(r"\b(?:all\s+)?tests\s+(?:pass|are\s+passing|green)\b", re.I)),
+    # COMPAT-1 (PREREG_compat1_2026_09_16): the compatibility claim. Read, never judged: the
+    # verdict is UNCHECKABLE with the public definitions the diff removed named in the reason.
+    ("compat_claim", re.compile(
+        r"\b(?:no\s+breaking\s+changes?|non[- ]breaking|backwards?[- ]compatib(?:le|ility)|"
+        r"(?:zero|no)\s+(?:behaviou?r(?:al)?|functional)\s+changes?|fully\s+compatible|"
+        r"does\s+not\s+(?:break|change)\s+(?:any\s+|the\s+)?(?:existing\s+)?(?:behaviou?r|api|public\s+api))\b", re.I)),
 ]
 
 
@@ -208,6 +220,286 @@ V14_BARE_NAME_ABSTAIN = True
 # containing a file called "Next.js". Closed list, quoted in full in the
 # RESULT so the closure is auditable, and applied only to bare tokens with no
 # directory part -- a real `lib/node.js` still claims normally.
+# BC-2 (PREREG_bc2_by_construction_2026_09_16, after BC-1's INVALID; issue #110). On the EXTERNAL-1
+# corpus 549 of the 665 accusations the gate still made were unsupported by
+# construction: `tests_added` and `symbol_added` count `def` lines, and 227 of
+# their 249 accusations were in diffs with no Python file; `only_touches`
+# takes the token after the verb as a path prefix, and 322 of its 341
+# accusations captured an English word ("only modifies THE footer"). The
+# four rules below remove those accusations. They add none: a claim they
+# touch becomes UNCHECKABLE or stops being a claim, never CONTRADICTED.
+BC1_BY_CONSTRUCTION = True
+_PY_SUFFIXES = (".py", ".pyi")
+_TEST_NOUNS_NOT_FUNCTIONS = frozenset({"case", "cases", "file", "files", "scenario",
+                                       "scenarios", "suite", "suites", "class", "classes"})
+_SYMBOL_WORDS = frozenset({
+    "to", "with", "that", "for", "in", "on", "of", "by", "and", "or", "as", "the", "a",
+    "an", "this", "which", "it", "its", "is", "declaration", "implementation",
+    "definition", "signature", "body", "stub", "call", "wrapper", "override",
+    "overload", "level", "support", "named", "called",
+})
+
+
+def _diff_touches_python(status: dict) -> bool:
+    return any(p.lower().endswith(_PY_SUFFIXES) for p in status)
+
+
+def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
+    """A scope prefix is a path when it looks like one or names a segment of a changed path.
+
+    Judged on the prefix as written, minus a sentence-final period: "docs/" is a path
+    because of its slash, "package.json" because of its dot, "src" because a changed path
+    has that segment; "the", "files" and "markdown" are words.
+    """
+    raw = prefix.strip("`\"'").rstrip(".")
+    if not raw:
+        return False
+    if any(ch in raw for ch in "/\\."):
+        return True
+    low = _norm(raw).rstrip("/").lower()
+    for changed in status:
+        if low in (seg.lower() for seg in changed.split("/")):
+            return True
+    return False
+
+
+# COMPAT-1 (PREREG_compat1_2026_09_16). 8,467 of the 71,016 EXTERNAL-1 descriptions claim
+# compatibility and the gate read none of them. It reads them now and says one thing: which
+# public top-level definitions the diff removed without re-defining, per language, with files.
+# There is no VERIFIED and no CONTRADICTED for this kind -- a removed name is not proof of a
+# break and an intact surface is not proof of compatibility -- and selfcheck below pins it.
+# COMPAT-2 (PREREG_compat2_surface_and_panel_2026_09_16). The reading is sharpened -- a removed
+# definition under a test / example / docs / scripts / internal / vendor path is scaffolding, and a
+# definition re-defined with a different parameter list is a signature change, reported, never a
+# drop -- and a CANDIDATE is computed: a covered language and at least one removed public
+# definition on the surface. The verdict stays UNCHECKABLE until a blind panel licenses it; the
+# licence is this flag, flipped only by that panel's RESULT, and a test pins it false.
+COMPAT2_LICENSED = False
+_COMPAT_VERDICTS = ("UNCHECKABLE",) if not COMPAT2_LICENSED else ("UNCHECKABLE", "CONTRADICTED")
+_COMPAT_SCAFFOLD = re.compile(
+    r"(?:^|/)(?:tests?|testing|specs?|__tests__|examples?|samples?|demos?|docs?|scripts?|tools?|bench|"
+    r"benchmarks?|fixtures?|internal|_internal|private|vendor|third_party|migrations?|cmd|e2e|integration|"
+    r"mocks?|stories|storybook|playground|sandbox|experiments?|dev|build)/"
+    r"|(?:^|/)(?:test_[^/]*|[^/]*_test\.(?:go|py)|[^/]*\.(?:test|spec)\.[^/]+|conftest\.py|setup\.py)$")
+_COMPAT_LANGS: dict = {
+    # language: (suffixes, regex over ONE removed line with a `name` group)
+    "python": ((".py",), re.compile(r"^(?:async\s+)?(?:def|class)\s+(?P<name>[A-Za-z]\w*)")),
+    "js/ts": ((".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts"),
+              re.compile(r"^export\s+(?:default\s+)?(?:async\s+)?(?:function\*?|class|const|let|var|"
+                         r"interface|type|enum)\s+(?P<name>[A-Za-z_$]\w*)")),
+    "go": ((".go",), re.compile(r"^(?:func\s+(?:\([^)]*\)\s*)?|type\s+)(?P<name>[A-Z]\w*)\b")),
+    "rust": ((".rs",), re.compile(r"^\s*pub\s+(?:async\s+)?(?:fn|struct|enum|trait|type|const|static)\s+(?P<name>[A-Za-z_]\w*)")),
+    "java": ((".java", ".kt"), re.compile(r"^\s*public\s+(?:static\s+|final\s+|abstract\s+)*[\w<>\[\],\s]+?\s+(?P<name>[a-zA-Z_]\w*)\s*\(")),
+}
+_COMPAT_MAX_NAMED = 5
+
+
+# BIN-1 (PREREG_bin1_binary_files_2026_09_16, issue #118). A unified diff carries a binary
+# change, a mode-only change or a pure rename as a `diff --git` header with NO `---`/`+++`
+# pair, and both parsers below registered a file only from that pair. EXTERNAL-5's cross-check
+# caught it: eight PNGs and one .scss read as one file, and a truthful count was one click
+# from being called a lie. A header that reaches the next header without a pair now registers
+# its file: A on `new file mode` / `Binary files /dev/null and …`, D on `deleted file mode` /
+# `… and /dev/null differ`, else M. Files with hunks are read exactly as before.
+_DIFF_GIT = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\.)*)"|a/(?P<a>.*?)) (?:"b/(?P<qb>(?:[^"\\]|\\.)*)"|b/(?P<b>.*))$')
+_BINARY_LINE = re.compile(r"^Binary files (?P<a>.+?) and (?P<b>.+?) differ$")
+
+
+def _header_paths(line: str) -> tuple[str, str]:
+    """`diff --git a/X b/Y` -> (X, Y). Same-name headers split at the middle; the rest by regex."""
+    body = line[len("diff --git "):]
+    if len(body) % 2 == 1:
+        mid = len(body) // 2
+        if body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/") \
+                and body[2:mid] == body[mid + 3:]:
+            return body[2:mid], body[mid + 3:]
+    m = _DIFF_GIT.match(line)
+    if not m:
+        return "", ""
+    a = m.group("qa") if m.group("qa") is not None else (m.group("a") or "")
+    b = m.group("qb") if m.group("qb") is not None else (m.group("b") or "")
+    return a, b
+
+
+class _Pending:
+    """One `diff --git` header waiting to learn whether a `---`/`+++` pair follows."""
+    __slots__ = ("a", "b", "status")
+
+    def __init__(self, line: str):
+        self.a, self.b = _header_paths(line)
+        self.status = "M"
+
+    def note(self, line: str) -> None:
+        if line.startswith("new file mode"):
+            self.status = "A"
+        elif line.startswith("deleted file mode"):
+            self.status = "D"
+        elif line.startswith("rename from "):
+            self.a = line[len("rename from "):]
+        elif line.startswith("rename to "):
+            self.b = line[len("rename to "):]
+        else:
+            m = _BINARY_LINE.match(line)
+            if m:
+                if m.group("a") == "/dev/null":
+                    self.status = "A"
+                elif m.group("b") == "/dev/null":
+                    self.status = "D"
+
+    def path(self) -> str:
+        raw = self.a if self.status == "D" else self.b
+        return _norm(raw) if raw else ""
+
+
+def parse_unified_diff_sides(diff_text: str) -> dict:
+    """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
+
+    The per-file companion of `parse_unified_diff`, added for COMPAT-1; the original's
+    return shape is untouched because callers unpack it. A header without a `---`/`+++`
+    pair (BIN-1) registers its path with empty sides.
+    """
+    sides: dict = {}
+    old_path = None
+    cur = None
+    pending: _Pending | None = None
+
+    def flush() -> None:
+        if pending is not None and pending.path():
+            sides.setdefault(pending.path(), ([], []))
+
+    for line in diff_text.splitlines():
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+            cur = None
+        elif line.startswith("--- "):
+            old_path = line[4:].strip()
+            cur = None
+        elif line.startswith("+++ "):
+            new = line[4:].strip()
+            if new == "/dev/null":
+                raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
+            else:
+                raw = new[2:] if new.startswith("b/") else new
+            cur = _norm(raw)
+            sides.setdefault(cur, ([], []))
+            pending = None
+        elif cur is not None and line.startswith("+") and not line.startswith("+++"):
+            sides[cur][0].append(line[1:])
+        elif cur is not None and line.startswith("-") and not line.startswith("---"):
+            sides[cur][1].append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
+    return sides
+
+
+def _compat_params(line: str, at: int) -> str | None:
+    """The parameter list of a definition line: the text inside the first `(` at or after `at`,
+    whitespace-collapsed, or `None` when the line has no `(` there. A list that does not close
+    on the line is taken as far as the line goes, with `…` appended, so a re-flowed multi-line
+    signature compares as changed only when its first line changed."""
+    k = line.find("(", at)
+    if k < 0:
+        return None
+    depth = 0
+    for e in range(k, len(line)):
+        if line[e] == "(":
+            depth += 1
+        elif line[e] == ")":
+            depth -= 1
+            if depth == 0:
+                return re.sub(r"\s+", " ", line[k + 1:e]).strip()
+    return re.sub(r"\s+", " ", line[k + 1:]).strip() + "…"
+
+
+def _compat_removed_public_names(sides: dict) -> tuple[list, list, list]:
+    """(removed public definitions not re-defined or referenced in the added lines of the same
+    language, as (path, language, name, on_surface)), (signature changes, as (path, language,
+    name, before, after)), (languages of the diff this reading covers)."""
+    by_lang_added: dict = {}
+    langs_present: list = []
+    for path, (added, _removed) in sides.items():
+        for lang, (sufs, _rx) in _COMPAT_LANGS.items():
+            if path.endswith(sufs):
+                by_lang_added.setdefault(lang, []).extend(added)
+                if lang not in langs_present:
+                    langs_present.append(lang)
+    dropped: list = []
+    changed: list = []
+    for path, (_added, removed) in sides.items():
+        for lang, (sufs, rx) in _COMPAT_LANGS.items():
+            if not path.endswith(sufs):
+                continue
+            added_lines = by_lang_added.get(lang, [])
+            ablob = "\n".join(added_lines)
+            for line in removed:
+                m = rx.match(line)
+                if not m:
+                    continue
+                name = m.group("name")
+                if name.startswith("_"):
+                    continue                        # private by convention
+                if re.search(r"\b" + re.escape(name) + r"\b", ablob):
+                    # re-defined or still referenced: a change or a move. COMPAT-2 reads the
+                    # re-definition's parameter list beside the removed one, and reports a
+                    # difference; it is never a drop.
+                    before = _compat_params(line, m.end("name"))
+                    if before is not None:
+                        afters = []
+                        for al in added_lines:
+                            am = rx.match(al)
+                            if am and am.group("name") == name:
+                                ap = _compat_params(al, am.end("name"))
+                                if ap is not None:
+                                    afters.append(ap)
+                        if afters and before not in afters and (path, lang, name) not in [c[:3] for c in changed]:
+                            changed.append((path, lang, name, before, afters[0]))
+                    continue
+                if (path, lang, name) not in [d[:3] for d in dropped]:
+                    dropped.append((path, lang, name, not _COMPAT_SCAFFOLD.search(path)))
+    return dropped, changed, langs_present
+
+
+def _compat_reading(sides: dict | None) -> tuple[str, str, dict]:
+    """The one verdict this kind has (until COMPAT-2's panel licenses a second), with what the
+    diff shows about the claim in the reason and the candidate flag in the detail."""
+    empty = {"removed": [], "languages": [], "surface_removed": 0, "signature_changed": [],
+             "compat2_candidate": False}
+    if not sides:
+        return ("UNCHECKABLE", "compatibility claimed; no per-file diff available to read "
+                               "(behaviour beyond names not checked)", dict(empty))
+    dropped, changed, langs = _compat_removed_public_names(sides)
+    if not langs:
+        return ("UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff "
+                               "(python, js/ts, go, rust, java)", dict(empty))
+    sig = f"; {len(changed)} signature(s) changed" if changed else ""
+    detail = {"removed": [{"path": p, "language": l, "name": n, "surface": sf} for p, l, n, sf in dropped],
+              "languages": langs,
+              "surface_removed": sum(1 for d in dropped if d[3]),
+              "signature_changed": [{"path": p, "language": l, "name": n, "before": b, "after": a}
+                                    for p, l, n, b, a in changed],
+              "compat2_candidate": any(d[3] for d in dropped)}
+    if not dropped:
+        return ("UNCHECKABLE", "compatibility claimed; no public top-level definition removed "
+                               f"({', '.join(langs)} read; behaviour beyond names not checked){sig}", detail)
+    surface = [d for d in dropped if d[3]]
+    scaffold = [d for d in dropped if not d[3]]
+    named = surface or scaffold
+    shown = ", ".join(f"{p}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])
+    more = f" (+{len(named) - _COMPAT_MAX_NAMED} more)" if len(named) > _COMPAT_MAX_NAMED else ""
+    if surface:
+        rest = f"; {len(scaffold)} more in test/example/internal code" if scaffold else ""
+        why = (f"compatibility claimed; the diff removes {len(surface)} public definition(s) from the "
+               f"surface, not re-defined in the added lines: {shown}{more}{rest}{sig}")
+        verdict = "CONTRADICTED" if COMPAT2_LICENSED else "UNCHECKABLE"
+    else:
+        why = (f"compatibility claimed; {len(scaffold)} public definition(s) removed, all in "
+               f"test/example/internal code: {shown}{more}{sig}")
+        verdict = "UNCHECKABLE"
+    return (verdict, why, detail)
+
+
 _NON_FILE_NOUNS = frozenset({
     "node.js", "next.js", "express.js", "vue.js", "nuxt.js", "react.js",
     "angular.js", "ember.js", "backbone.js", "three.js", "d3.js", "chart.js",
@@ -653,8 +945,17 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
     status: dict[str, str] = {}
     added: list[str] = []
     old_path = None
+    pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
+
+    def flush() -> None:
+        if pending is not None and pending.path() and pending.path() not in status:
+            status[pending.path()] = pending.status
+
     for line in diff_text.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+        elif line.startswith("--- "):
             old_path = line[4:].strip()
         elif line.startswith("+++ "):
             new = line[4:].strip()
@@ -664,8 +965,12 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "A"
             else:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "M"
+            pending = None
         elif line.startswith("+") and not line.startswith("+++"):
             added.append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
     return status, "\n".join(added)
 
 
@@ -684,7 +989,8 @@ def gate_diff_text(summary_text: str, diff_text: str,
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
-                 raw_input_len=len(diff_text or ""))
+                 raw_input_len=len(diff_text or ""),
+                 sides=parse_unified_diff_sides(diff_text or ""))
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -716,12 +1022,14 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
-    added_lines = [l[1:] for l in _git(repo, "diff", f"{base}..{head}").splitlines()
+    diff_text = _git(repo, "diff", f"{base}..{head}")
+    added_lines = [l[1:] for l in diff_text.splitlines()
                    if l.startswith("+") and not l.startswith("+++")]
     added_blob = "\n".join(added_lines)
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head,
-                 evidence=evidence, commit=commit)
+                 evidence=evidence, commit=commit,
+                 sides=parse_unified_diff_sides(diff_text))
 
 
 def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
@@ -792,7 +1100,7 @@ def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
 def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
-          raw_input_len: int | None = None) -> DiffGate:
+          raw_input_len: int | None = None, sides: dict | None = None) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -859,6 +1167,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if (V14_CONTAINMENT_TOUCH and kind == "file_touched"
                         and _demoted_by_containment(sent, m)):
                     continue
+                if (BC1_BY_CONSTRUCTION and kind == "symbol_added"
+                        and m.group("name").lower() in _SYMBOL_WORDS):
+                    continue                        # BC-1 repair 3: a word, not a symbol
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)
@@ -885,25 +1196,67 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = f"diff changes {len(status)} files, claim says {n}"
                 elif kind == "tests_added":
                     n = int(d["n"])
-                    got = len(re.findall(r"^\s*def test_", added_blob, re.M))
-                    c.verdict = "VERIFIED" if got == n else "CONTRADICTED"
-                    c.why = f"diff adds {got} test functions, claim says {n}"
+                    noun = d.get("noun", "").lower()
+                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                        c.verdict = "UNCHECKABLE"           # BC-1 repair 1
+                        c.why = ("no Python file in the diff; this template counts "
+                                 "`def` lines (#110)")
+                    else:
+                        got = len(re.findall(r"^\s*def test_", added_blob, re.M))
+                        if got == n:
+                            c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
+                        elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
+                            # BC-2 repair 2: a case, file, scenario, suite or class is not a
+                            # function; a matching count verifies, a differing one abstains.
+                            c.verdict = "UNCHECKABLE"
+                            one = {"classes": "class", "cases": "case", "files": "file",
+                                   "scenarios": "scenario", "suites": "suite"}.get(noun, noun)
+                            c.why = (f"counts test {noun}, diff adds {got} test functions; "
+                                     f"a {one} is not a function (#110)")
+                        else:
+                            c.verdict = "CONTRADICTED"
+                            c.why = f"diff adds {got} test functions, claim says {n}"
                 elif kind == "symbol_added":
-                    pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
-                    hit = bool(re.search(pat, added_blob, re.M))
-                    c.verdict = "VERIFIED" if hit else "CONTRADICTED"
-                    c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                             f"{d['kind']} {d['name']!r}")
+                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                        c.verdict = "UNCHECKABLE"           # BC-1 repair 1
+                        c.why = ("no Python file in the diff; this template counts "
+                                 "`def` lines (#110)")
+                    else:
+                        pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
+                        hit = bool(re.search(pat, added_blob, re.M))
+                        c.verdict = "VERIFIED" if hit else "CONTRADICTED"
+                        c.why = (f"added lines {'do' if hit else 'do NOT'} define "
+                                 f"{d['kind']} {d['name']!r}")
                 elif kind == "only_touches":
-                    pref = _norm(d["prefix"]).rstrip("/.")   # sentence-final periods are not path
-                    outside = [p for p in status if not p.startswith(pref + "/")
-                               and p != pref]
+                    prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
+                    if d.get("prefix2"):
+                        prefs.append(_norm(d["prefix2"]).rstrip("/."))
+                    # BC-2 repair 4: a second prefix is read only after "and" and only when it
+                    # is path-shaped by the same test; otherwise the first prefix decides alone.
+                    if d.get("prefix2") and not _prefix_is_path_shaped(d["prefix2"], status):
+                        prefs = prefs[:1]
+                    raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
+                    not_paths = [_norm(x).rstrip("/.") for x in raw_prefs
+                                 if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
+                    outside = [p for p in status
+                               if not any(p.startswith(x + "/") or p == x for x in prefs)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
+                    elif not_paths:                             # BC-1 repair 4
+                        c.verdict = "UNCHECKABLE"
+                        c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
                     else:
                         c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
+                        shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
                         c.why = ("all changed paths under prefix" if not outside else
-                                 f"paths outside {pref!r}: {outside[:3]}")
+                                 (f"paths outside {shown!r}: {outside[:3]}" if len(prefs) == 1
+                                  else f"paths outside {shown}: {outside[:3]}"))
+                elif kind == "compat_claim":
+                    # COMPAT-1: one verdict, the evidence in the reason. See _compat_reading.
+                    c.verdict, c.why, extra = _compat_reading(sides)
+                    c.detail.update(extra)
+                    if c.verdict not in _COMPAT_VERDICTS:      # unreachable clamp, kept anyway
+                        c.verdict = "UNCHECKABLE"
                 elif kind == "tests_pass":
                     # VERIFIED or UNCHECKABLE. There is no third answer here and
                     # no flag that adds one — see the module docstring and
