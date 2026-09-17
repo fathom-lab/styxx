@@ -6,7 +6,9 @@
  * file) rather than by trust.
  *
  * Which Python: the file on the BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 checkout (pull requests #113, #115,
- * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb — the
+ * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
+ * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101) on the file that carries
+ * them, sha256 PATH2SHA256PLACEHOLDER — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -16,7 +18,10 @@
  * diff removed named in the reason), the BIN-2 repair for #118 (a `diff --git` header with no
  * `---`/`+++` pair registers its file) and the COMPAT-2 sharpening (surface vs scaffolding paths,
  * signature changes reported, a candidate flag; the licence flag is false and the verdict stays
- * UNCHECKABLE). Two deliberate gaps remain: the structural "unparsed claims"
+ * UNCHECKABLE). PATH-2 adds: a path claim resolves exact, then suffix, then
+ * basename, over every entry (#97); the path key keeps a dotfile's dots, and "only touches" does not
+ * accuse on a dot alone (#121); a `def` the same file's removed lines also define is changed, not
+ * added (#101). Two deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
  */
@@ -126,9 +131,40 @@ function _prefixIsPathShaped(prefix, status) {
   if (raw.includes(".") && _hasRealExtension(_rstrip(raw, "/"))) return true;
   const low = _rstrip(_norm(raw), "/").toLowerCase();
   for (const changed of status.keys()) {
-    if (changed.split("/").some(seg => seg.toLowerCase() === low)) return true;
+    // PATH-2 (#121): segments read with the key's leading dots dropped, as before the key kept them.
+    if (_undotted(changed).split("/").some(seg => seg.toLowerCase() === low)) return true;
   }
   return false;
+}
+
+// PATH-2 (#101): a definition the removed lines of the SAME FILE also define is changed, not added.
+const _DEF_TEST_NAME = /^\s*def (test_[A-Za-z0-9_]*)/;
+
+function _changedTestDefs(sides) {
+  // Added `def test_` lines whose test name a removed `def test_` line of the same file defines.
+  let n = 0;
+  if (!sides) return 0;
+  for (const [added, removed] of sides.values()) {
+    const gone = new Set();
+    for (const line of removed) { const m = _DEF_TEST_NAME.exec(line); if (m) gone.add(m[1]); }
+    if (gone.size) {
+      for (const line of added) { const m = _DEF_TEST_NAME.exec(line); if (m && gone.has(m[1])) n++; }
+    }
+  }
+  return n;
+}
+
+function _definitionOnlyChanged(pat, addedBlob, sides) {
+  // The added lines define the name, and every added line that does sits in a file whose removed
+  // lines define it too. Counted line by line, as the Python does.
+  const rx = new RegExp(pat);
+  const hits = addedBlob.split("\n").filter(line => rx.test(line)).length;
+  if (!hits) return false;
+  let changed = 0;
+  for (const [added, removed] of (sides || new Map()).values()) {
+    if (removed.some(line => rx.test(line))) changed += added.filter(line => rx.test(line)).length;
+  }
+  return changed === hits;
 }
 
 // COMPAT-1: which public top-level definitions the diff removed without re-defining, per language.
@@ -373,11 +409,22 @@ function _namesWithoutClaiming(sentence, m) {
   return _REFERENTIAL.some(k => window.includes(k.toLowerCase()));
 }
 
+// PATH-2 (#121): only a leading run of "/" and "./" segments is removed; a dotfile keeps its dots.
 function _norm(p) {
-  let s = p.replace(/\\/g, "/");
-  let i = 0;
-  while (i < s.length && (s[i] === "." || s[i] === "/")) i++;   // str.lstrip("./")
-  return s.slice(i).toLowerCase();
+  return p.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "").toLowerCase();
+}
+// A key with its leading dots and slashes dropped: the key _norm made before #121 (str.lstrip("./")).
+function _undotted(key) {
+  return _stripChars(key, "./", true, false);
+}
+// PATH-2 (#97): resolve in tiers over every entry — exact, then suffix, then basename.
+function _findPath(status, claimed) {
+  const c = _norm(claimed);
+  const tiers = [p => p === c, p => p.endsWith("/" + c), p => _basename(p) === _basename(c)];
+  for (const tier of tiers) {
+    for (const [p, st] of status) if (tier(p)) return [p, st];
+  }
+  return [null, null];
 }
 function _basename(p) {
   const s = p.replace(/\/+$/, "");
@@ -547,13 +594,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
   }
   const noPaths = status.size === 0 ? "the diff carries no file paths, so scope cannot be checked" : null;
 
-  function findPath(claimed) {
-    const c = _norm(claimed);
-    for (const [p, st] of status) {
-      if (p === c || p.endsWith("/" + c) || _basename(p) === _basename(c)) return [p, st];
-    }
-    return [null, null];
-  }
+  const findPath = claimed => _findPath(status, claimed);
 
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
@@ -590,14 +631,21 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
             const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
-            if (got === n) {
-              c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
+            // PATH-2 (#101): verify net, abstain inside [net, got], accuse only outside it.
+            const chg = _changedTestDefs(sides);
+            const net = got - chg;
+            const note = chg ? ` (${chg} changed, not added: #101)` : "";
+            if (net === n) {
+              c.verdict = "VERIFIED"; c.why = `diff adds ${net} test functions, claim says ${n}${note}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
               c.verdict = "UNCHECKABLE";
               const one = { classes: "class", cases: "case", files: "file", scenarios: "scenario", suites: "suite" }[noun] || noun;
-              c.why = `counts test ${noun}, diff adds ${got} test functions; a ${one} is not a function (#110)`;
+              c.why = `counts test ${noun}, diff adds ${net} test functions; a ${one} is not a function (#110)${note}`;
+            } else if (chg && net < n && n <= got) {
+              c.verdict = "UNCHECKABLE";
+              c.why = `diff adds ${net} test functions and changes ${chg}, claim says ${n}; a changed test is not an added one (#101)`;
             } else {
-              c.verdict = "CONTRADICTED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
+              c.verdict = "CONTRADICTED"; c.why = `diff adds ${net} test functions, claim says ${n}${note}`;
             }
           }
         } else if (kind === "symbol_added") {
@@ -605,10 +653,15 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            const pat = new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b", "m");
-            const hit = pat.test(addedBlob);
-            c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
-            c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            const src = "^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b";
+            const hit = new RegExp(src, "m").test(addedBlob);
+            if (hit && _definitionOnlyChanged(src, addedBlob, sides)) {
+              c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
+              c.why = `added lines define ${d.kind} ${pyRepr(d.name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
+            } else {
+              c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
+              c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            }
           }
         } else if (kind === "only_touches") {
           let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path
@@ -620,8 +673,18 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             : [];
           // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
           const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
+          // PATH-2 (#121): every path outside lies inside once the leading dots are dropped,
+          // with PATH-1's containment on both sides of the comparison.
+          const dotOnly = outside.length > 0 && outside.every(p =>
+            prefs.some(x => _pathInside(_undotted(p), _undotted(x))));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
+          else if (dotOnly) {
+            c.verdict = "UNCHECKABLE";
+            c.why = prefs.length === 1
+              ? `paths outside ${pyRepr(prefs[0])} differ from it only by a leading dot: ${pyList(outside.slice(0, 3))} (#121)`
+              : `paths outside ${prefs.map(pyRepr).join(" and ")} differ from them only by a leading dot: ${pyList(outside.slice(0, 3))} (#121)`;
+          }
           else {
             c.verdict = outside.length === 0 ? "VERIFIED" : "CONTRADICTED";
             const shown = prefs.length === 1 ? prefs[0] : prefs.map(pyRepr).join(" and ");
