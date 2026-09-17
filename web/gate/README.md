@@ -7,7 +7,10 @@ PATH-1 + DECLARE-1, pull requests #113, #115, #120, #124, #127 and #129, plus th
 re-cut for the PATH-2 repairs
 (`papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`: a path claim resolves exact,
 then suffix, then basename, #97; a dotfile keeps its dots in the path key, #121; a `def` the same
-file's removed lines also define is changed, not added, #101) on the file that carries them,
+file's removed lines also define is changed, not added, #101; as amended by
+`AMENDMENT_path2_resolution_2026_09_17.md`: definitions pair one to one per name, `only_touches`
+lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps `.storybook/` as
+scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`) on the file that carries them,
 sha256 `PATH2SHA256PLACEHOLDER` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
@@ -17,7 +20,7 @@ their bookmarks bar.
 One known gap, measured below: that file also carries COMPAT-2's sharpened compatibility reading
 (surface vs scaffolding, signature changes, the candidate flag), and the port does not. Its
 `compat_claim` reasons and detail are COMPAT-1's, the verdict (always UNCHECKABLE) is the same, and
-the differential counts every such record as a disagreement.
+the differential counts every such record as a disagreement: 10 on the corpus below, and nothing else.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -46,7 +49,8 @@ and the never-read count to the page.
 
 `build_bookmarklet.py` — assembles the two into `bookmarklet_src.js`, minifies with
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
-`--check` rebuilds and compares against the committed files. The shipped bookmarklet is
+`--check` rebuilds all three in memory and compares them with the files on disk, byte for byte, and
+writes nothing; every output is written with LF. The shipped bookmarklet is
 
     bookmarklet.min.js    sha256 MINSHA_PLACEHOLDER   MINLEN_PLACEHOLDER chars
     bookmarklet.href.txt  sha256 HREFSHA_PLACEHOLDER   HREFLEN_PLACEHOLDER chars
@@ -54,12 +58,14 @@ and the never-read count to the page.
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
 19,002 chars, the BIN-2 re-cut — resolves a path claim to an earlier basename match, keys a
-dotfile without its dot, counts a changed `def` as added. A bookmark that hashes to any of them
-is an old port; drag the new one.)
+dotfile without its dot, counts a changed `def` as added; `22c31746…`, 20,255 chars, an unmerged
+PATH-2 cut — one changed test cancels every same-named new one, and `only_touches` abstains when the
+dot is on the prefix. A bookmark that hashes to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
 rebuilds the `4b2d34e1…` bookmarklet byte for byte from its sources, which terser 5.51.2 produced.
+`build_bookmarklet.py`'s docstring names the same version.
 
 `differential/` — the test. Read on.
 
@@ -97,16 +103,17 @@ still anchors, and two pinning the failure modes PATH-1 deliberately does **not*
 last two assert the instrument is still wrong; they exist so a later change cannot claim an
 unrepaired mode without its own preregistration.
 
-Result, 2026-09-25, the checkout at the PATH-2 repairs rebased onto `main`:
-
-    DIFFRESULT_PLACEHOLDER
-
-
 The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried exactly **four**
 `only_touches` claims in 3,212 pairs and PATH-1 changed none of them — so the differential's
 "0 disagreements" was true and almost meaningless for that change. A check that does not exercise
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
+
+Result, 2026-09-25, this branch at the amended PATH-2 repairs, rebased onto `main`:
+
+    DIFFRESULT_PLACEHOLDER
+
+DIFFNOTE_PLACEHOLDER
 
 Result, 2026-09-18, this branch at the COMPAT-2 reading plus PATH-1:
 
@@ -140,9 +147,16 @@ dotfile and its undotted twin, "only touches github/" over `.github/` (abstains 
 prefixes and leading slashes, a dotfile beside a nested undotted name, a dotfile outside the
 prefix, the #101 issue diff, a new test beside a changed one at three claimed counts, a changed
 `def` beside a fresh one elsewhere, a rename, a test moved between files (counts as added, the
-disclosed limit), counted cases over a changed test, and the amendment's one-to-one pairing, BOM
-and non-ASCII names, dotted scaffolds and dot misses — also checked on the Python side by
-`tests/test_diffgate_path2.py`.
+disclosed limit) and counted cases over a changed test; and, for the amendment, the same test name
+in two classes, a changed test beside a same-named new one, the shelf's fold under an `A` and an `M`
+header, a BOM strip on a test and on a function, non-ASCII test names, a non-ASCII suffix, a
+same-named method added in another class and one changed in place, a changed `def` under an `A`
+header, a generic `def`, a dot miss beside a real outside path (one and two prefixes), a dotted
+prefix over an undotted file and directory, a `..` path, binary dotfile twins with no hunks, a pure
+rename to a dotted name, a file named `.py`, and the `.storybook/` COMPAT-2 reading — also checked on
+the Python side by `tests/test_diffgate_path2.py`. Their `expect` blocks are the Python's output, written down so a
+reader can see the intended readings without running anything. The 3,199 pre-BIN-1 records are
+byte-identical before and after that repair (no binary in the corpus), which is its G-BIN-2.
 
 The first result, the 7.47.0 port against the 7.47.0 file, was 3176 pairs, 8904 claims
 (1024 verified, 2172 contradicted, 5708 uncheckable), 0 disagreements; that port is in this
