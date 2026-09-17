@@ -1,0 +1,1015 @@
+{
+ "note": "EXPLORATORY, not preregistered. PR opening time from the PR page; commit AUTHOR dates from the .patch endpoint (rebases keep old author dates, so \"commits after opening\" is a lower bound and \"all before\" an upper bound). Description edits after opening are not visible to the REST API and are not accounted for.",
+ "items": 89,
+ "by_outcome_and_timing": {
+  "OVERTURNED / all_commits_before_opening": 1,
+  "OVERTURNED / commits_after_opening": 17,
+  "OVERTURNED / unknown": 1,
+  "UPHELD / all_commits_before_opening": 4,
+  "UPHELD / commits_after_opening": 61,
+  "UPHELD / unknown": 5
+ },
+ "by_kind_outcome_timing": {
+  "files_changed_count / OVERTURNED / all_commits_before_opening": 1,
+  "files_changed_count / OVERTURNED / commits_after_opening": 16,
+  "files_changed_count / OVERTURNED / unknown": 1,
+  "files_changed_count / UPHELD / all_commits_before_opening": 4,
+  "files_changed_count / UPHELD / commits_after_opening": 43,
+  "files_changed_count / UPHELD / unknown": 5,
+  "only_touches / OVERTURNED / commits_after_opening": 1,
+  "only_touches / UPHELD / commits_after_opening": 12,
+  "tests_added / UPHELD / commits_after_opening": 6
+ },
+ "upheld_with_commits_after_opening": {
+  "n": 61,
+  "median_hours_opening_to_last_commit": 1.7,
+  "quartiles_hours": [
+   0.3,
+   1.7,
+   20.0
+  ]
+ },
+ "per_item": [
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "all_commits_before_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "all_commits_before_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "all_commits_before_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.0
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 6,
+   "hours_from_opening_to_last_commit": 7.6
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 5,
+   "hours_from_opening_to_last_commit": 0.9
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.3
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 43.1
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 0.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 27,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 8,
+   "hours_from_opening_to_last_commit": 173.3
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 1,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 1.1
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 16,
+   "hours_from_opening_to_last_commit": 1055.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 687,
+   "hours_from_opening_to_last_commit": 158.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 0.3
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 9,
+   "hours_from_opening_to_last_commit": 69.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 21.0
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 9.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 14,
+   "hours_from_opening_to_last_commit": 380.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 100,
+   "hours_from_opening_to_last_commit": 4.9
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 15,
+   "hours_from_opening_to_last_commit": 1.5
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 5,
+   "hours_from_opening_to_last_commit": 1.7
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 5,
+   "hours_from_opening_to_last_commit": 0.6
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 6,
+   "hours_from_opening_to_last_commit": 1.8
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 0.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 2.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 21,
+   "hours_from_opening_to_last_commit": 1.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 2.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.5
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.5
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 65.9
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 8,
+   "hours_from_opening_to_last_commit": 3.9
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 337.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 8,
+   "hours_from_opening_to_last_commit": 17.7
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 125.1
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 6,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 10,
+   "hours_from_opening_to_last_commit": 20.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 10,
+   "hours_from_opening_to_last_commit": 2.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 15,
+   "hours_from_opening_to_last_commit": 11.8
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 60,
+   "hours_from_opening_to_last_commit": 1502.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 10,
+   "hours_from_opening_to_last_commit": 0.3
+  },
+  {
+   "kind": "tests_added",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 17,
+   "hours_from_opening_to_last_commit": 68.9
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 11,
+   "hours_from_opening_to_last_commit": 46.6
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 3.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 9,
+   "hours_from_opening_to_last_commit": 1.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 12,
+   "hours_from_opening_to_last_commit": 2.6
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 10,
+   "hours_from_opening_to_last_commit": 85.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 14,
+   "hours_from_opening_to_last_commit": 0.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 5,
+   "hours_from_opening_to_last_commit": 0.7
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 20,
+   "hours_from_opening_to_last_commit": 3.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 6,
+   "hours_from_opening_to_last_commit": 422.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 8,
+   "hours_from_opening_to_last_commit": 124.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.3
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 6,
+   "hours_from_opening_to_last_commit": 277.5
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 1.5
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 7,
+   "hours_from_opening_to_last_commit": 1.6
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 2,
+   "hours_from_opening_to_last_commit": 0.1
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 26,
+   "hours_from_opening_to_last_commit": 73.9
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 11,
+   "hours_from_opening_to_last_commit": 8.5
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 9,
+   "hours_from_opening_to_last_commit": 3.8
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 1.3
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 19,
+   "hours_from_opening_to_last_commit": 0.6
+  },
+  {
+   "kind": "only_touches",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 3,
+   "hours_from_opening_to_last_commit": 0.2
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "all_commits_before_opening",
+   "commits": 5,
+   "hours_from_opening_to_last_commit": 0.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "OVERTURNED",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 1.0
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "commits_after_opening",
+   "commits": 4,
+   "hours_from_opening_to_last_commit": 22.4
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "unknown"
+  },
+  {
+   "kind": "files_changed_count",
+   "outcome": "UPHELD",
+   "timing": "all_commits_before_opening",
+   "commits": 32,
+   "hours_from_opening_to_last_commit": 0.0
+  }
+ ],
+ "upheld_file_counts_vs_post_opening_commits": {
+  "note": "for the 52 UPHELD files_changed_count items: files first touched by commits authored after the PR opened, from the .patch; \"stale_exact\" = live count minus those files equals the described count.",
+  "classes": {
+   "no_files_added_after_opening": 6,
+   "stale_exact": 6,
+   "later_commits_added_files": 29,
+   "unknown": 3,
+   "other": 8
+  },
+  "per_item": [
+   {
+    "n": 1,
+    "live": 2,
+    "files_only_after": 0,
+    "files_before": 2,
+    "class": "no_files_added_after_opening"
+   },
+   {
+    "n": 1,
+    "live": 2,
+    "files_only_after": 0,
+    "files_before": 2,
+    "class": "no_files_added_after_opening"
+   },
+   {
+    "n": 1,
+    "live": 2,
+    "files_only_after": 0,
+    "files_before": 2,
+    "class": "no_files_added_after_opening"
+   },
+   {
+    "n": 37,
+    "live": 41,
+    "files_only_after": 4,
+    "files_before": 37,
+    "class": "stale_exact"
+   },
+   {
+    "n": 7,
+    "live": 9,
+    "files_only_after": 9,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 72,
+    "live": 76,
+    "files_only_after": 4,
+    "files_before": 94,
+    "class": "stale_exact"
+   },
+   {
+    "n": 8,
+    "live": 10,
+    "files_only_after": 10,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 1,
+    "live": 2,
+    "files_only_after": 2,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 488,
+    "live": 644,
+    "files_only_after": 327,
+    "files_before": 658,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 8,
+    "live": 9,
+    "files_only_after": 9,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 14,
+    "live": 21,
+    "files_only_after": 10,
+    "files_before": 14,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 76,
+    "live": 79,
+    "files_only_after": 3,
+    "files_before": 76,
+    "class": "stale_exact"
+   },
+   {
+    "n": 12,
+    "live": 19,
+    "files_only_after": 7,
+    "files_before": 12,
+    "class": "stale_exact"
+   },
+   {
+    "n": 80,
+    "live": 82,
+    "files_only_after": 3,
+    "files_before": 88,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 6,
+    "live": 8,
+    "class": "unknown"
+   },
+   {
+    "n": 15,
+    "live": 16,
+    "files_only_after": 16,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 5,
+    "live": 6,
+    "files_only_after": 6,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 32,
+    "live": 38,
+    "files_only_after": 7,
+    "files_before": 32,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 11,
+    "live": 14,
+    "files_only_after": 3,
+    "files_before": 11,
+    "class": "stale_exact"
+   },
+   {
+    "n": 10,
+    "live": 3,
+    "files_only_after": 3,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 55,
+    "live": 57,
+    "files_only_after": 1,
+    "files_before": 56,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 55,
+    "live": 57,
+    "files_only_after": 1,
+    "files_before": 56,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 159,
+    "live": 156,
+    "files_only_after": 163,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 159,
+    "live": 156,
+    "files_only_after": 163,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 3,
+    "live": 10,
+    "files_only_after": 9,
+    "files_before": 3,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 26,
+    "live": 5,
+    "files_only_after": 5,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 19,
+    "live": 21,
+    "files_only_after": 2,
+    "files_before": 22,
+    "class": "stale_exact"
+   },
+   {
+    "n": 65,
+    "live": 60,
+    "files_only_after": 5,
+    "files_before": 65,
+    "class": "other"
+   },
+   {
+    "n": 120,
+    "live": 369,
+    "files_only_after": 304,
+    "files_before": 104,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 5,
+    "live": 6,
+    "files_only_after": 8,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 4,
+    "live": 39,
+    "files_only_after": 3,
+    "files_before": 36,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 6,
+    "live": 8,
+    "files_only_after": 9,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 19,
+    "live": 24,
+    "files_only_after": 24,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 17,
+    "live": 15,
+    "files_only_after": 0,
+    "files_before": 15,
+    "class": "no_files_added_after_opening"
+   },
+   {
+    "n": 5,
+    "live": 8,
+    "files_only_after": 8,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 9,
+    "live": 12,
+    "files_only_after": 6,
+    "files_before": 6,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 12,
+    "live": 27,
+    "files_only_after": 1,
+    "files_before": 26,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 15,
+    "live": 28,
+    "files_only_after": 0,
+    "files_before": 28,
+    "class": "no_files_added_after_opening"
+   },
+   {
+    "n": 7,
+    "live": 16,
+    "files_only_after": 16,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 1,
+    "live": 2,
+    "files_only_after": 2,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 3,
+    "live": 2,
+    "files_only_after": 2,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 29,
+    "live": 19,
+    "class": "unknown"
+   },
+   {
+    "n": 2,
+    "live": 3,
+    "files_only_after": 3,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 18,
+    "live": 17,
+    "files_only_after": 17,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 21,
+    "live": 35,
+    "files_only_after": 37,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 8,
+    "live": 21,
+    "files_only_after": 24,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 54,
+    "live": 71,
+    "files_only_after": 24,
+    "files_before": 47,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 186,
+    "live": 188,
+    "files_only_after": 186,
+    "files_before": 0,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 15,
+    "live": 17,
+    "files_only_after": 13,
+    "files_before": 4,
+    "class": "later_commits_added_files"
+   },
+   {
+    "n": 12,
+    "live": 11,
+    "files_only_after": 11,
+    "files_before": 0,
+    "class": "other"
+   },
+   {
+    "n": 2,
+    "live": 3,
+    "class": "unknown"
+   },
+   {
+    "n": 115,
+    "live": 250,
+    "files_only_after": 0,
+    "files_before": 251,
+    "class": "no_files_added_after_opening"
+   }
+  ]
+ }
+}
