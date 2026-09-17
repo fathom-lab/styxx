@@ -1,0 +1,251 @@
+{
+ "what": "census of the accusations the installed wheel still makes on the EXTERNAL-1 corpus",
+ "eligible_prs": 71016,
+ "covered_prs": 15762,
+ "prs_with_a_python_file": 11615,
+ "claims_by_kind_and_verdict": {
+  "file_created": {
+   "VERIFIED": 2378,
+   "UNCHECKABLE": 1067
+  },
+  "file_deleted": {
+   "VERIFIED": 360,
+   "UNCHECKABLE": 480
+  },
+  "file_touched": {
+   "VERIFIED": 16458,
+   "UNCHECKABLE": 2388
+  },
+  "files_changed_count": {
+   "VERIFIED": 64,
+   "CONTRADICTED": 75,
+   "UNCHECKABLE": 3
+  },
+  "only_touches": {
+   "VERIFIED": 4,
+   "CONTRADICTED": 341,
+   "UNCHECKABLE": 13
+  },
+  "symbol_added": {
+   "VERIFIED": 1,
+   "CONTRADICTED": 65,
+   "UNCHECKABLE": 2
+  },
+  "tests_added": {
+   "VERIFIED": 13,
+   "CONTRADICTED": 184,
+   "UNCHECKABLE": 2
+  },
+  "tests_pass": {
+   "UNCHECKABLE": 5514
+  }
+ },
+ "accusations_total": 665,
+ "accusations_by_kind": {
+  "files_changed_count": 75,
+  "only_touches": 341,
+  "symbol_added": 65,
+  "tests_added": 184
+ },
+ "tests_added": {
+  "verified_with_a_redefined_def": 0,
+  "verified_but_net_rule_disagrees": 0,
+  "CONTRADICTED": 184,
+  "contradicted_no_python_in_diff": 168,
+  "contradicted_count_was_zero": 172,
+  "contradicted_python_in_diff": 16,
+  "VERIFIED": 13,
+  "verified_python_in_diff": 13,
+  "UNCHECKABLE": 2
+ },
+ "tests_added_contradicted_by_counted_noun": {
+  "cases": 79,
+  "(none)": 82,
+  "methods": 5,
+  "functions": 4,
+  "scenarios": 3,
+  "files": 9,
+  "case": 2
+ },
+ "symbol_added": {
+  "CONTRADICTED": 65,
+  "contradicted_no_python_in_diff": 59,
+  "contradicted_python_in_diff": 6,
+  "contradicted_name_is_a_function_word": 32,
+  "VERIFIED": 1,
+  "UNCHECKABLE": 2
+ },
+ "only_touches": {
+  "CONTRADICTED": 341,
+  "contradicted_prefix_is_not_a_path": 322,
+  "UNCHECKABLE": 13,
+  "contradicted_prefix_looks_like_a_path": 19,
+  "VERIFIED": 4
+ },
+ "only_touches_top_contradicted_prefixes": [
+  [
+   "the",
+   105
+  ],
+  [
+   "with",
+   54
+  ],
+  [
+   "that",
+   29
+  ],
+  [
+   "files",
+   8
+  ],
+  [
+   "a",
+   6
+  ],
+  [
+   "how",
+   5
+  ],
+  [
+   "is",
+   5
+  ],
+  [
+   "when",
+   5
+  ],
+  [
+   "to",
+   4
+  ],
+  [
+   "markdown",
+   4
+  ],
+  [
+   "are",
+   4
+  ],
+  [
+   "what",
+   4
+  ],
+  [
+   "code",
+   4
+  ],
+  [
+   "one",
+   3
+  ],
+  [
+   "mods/submods",
+   3
+  ],
+  [
+   "necessary",
+   3
+  ],
+  [
+   "documentation.",
+   3
+  ],
+  [
+   "repository",
+   3
+  ],
+  [
+   "package.json",
+   3
+  ],
+  [
+   "values",
+   2
+  ]
+ ],
+ "files_changed_count": {
+  "CONTRADICTED": 75,
+  "contradicted_sentence_is_a_git_stat_line": 31,
+  "VERIFIED": 64,
+  "UNCHECKABLE": 3
+ },
+ "accusations_unsupported_by_construction": 549,
+ "accusations_unsupported_share": 0.8256,
+ "per_agent_accusations": {
+  "Claude_Code": {
+   "files_changed_count": 24,
+   "only_touches": 11,
+   "tests_added": 9,
+   "symbol_added": 2
+  },
+  "Copilot": {
+   "only_touches": 237,
+   "files_changed_count": 44,
+   "symbol_added": 43,
+   "tests_added": 161
+  },
+  "Cursor": {
+   "only_touches": 5,
+   "symbol_added": 1
+  },
+  "Devin": {
+   "only_touches": 77,
+   "symbol_added": 13,
+   "files_changed_count": 7,
+   "tests_added": 13
+  },
+  "Google_Jules": {},
+  "OpenAI_Codex": {
+   "only_touches": 11,
+   "symbol_added": 6,
+   "tests_added": 1
+  }
+ },
+ "stop_words": [
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "behavior",
+  "by",
+  "code",
+  "excluded",
+  "existing",
+  "file",
+  "files",
+  "for",
+  "how",
+  "if",
+  "in",
+  "is",
+  "it",
+  "its",
+  "necessary",
+  "not",
+  "of",
+  "on",
+  "one",
+  "or",
+  "per",
+  "relevant",
+  "specific",
+  "that",
+  "the",
+  "these",
+  "this",
+  "those",
+  "to",
+  "two",
+  "values",
+  "was",
+  "were",
+  "what",
+  "when",
+  "where",
+  "which",
+  "with"
+ ]
+}

@@ -177,3 +177,22 @@ papers/closed-model-frontier/external1_ledger.jsonl
 
 # V14 held-out panel: the sealed key is committed only AFTER scoring
 papers/closed-model-frontier/v14_key_SEALED.json
+
+# EXTERNAL-2 (#110): the shelf and the ledger name third-party PRs; only the aggregate receipts are committed
+papers/closed-model-frontier/external2_shelf.sqlite*
+papers/closed-model-frontier/external2_ledger.jsonl
+
+# EXTERNAL-3 (BC-1/BC-2, #110): baseline and repaired ledgers name third-party PRs; only the receipts are committed
+papers/closed-model-frontier/external3_ledger.jsonl
+papers/closed-model-frontier/external3_base_ledger.jsonl
+
+# EXTERNAL-4 (COMPAT-1): the ledger names third-party PRs; only the receipts are committed
+papers/closed-model-frontier/external4_ledger.jsonl
+
+# EXTERNAL-5 (#116/#117): the per-item file carries the 91 pull requests' URLs and live facts; only the aggregate receipts are committed
+papers/closed-model-frontier/external5_items.jsonl
+papers/closed-model-frontier/external5_items_*.jsonl
+
+# HARNESS-1 (#122/#123): the re-folded shelf and ledger name third-party PRs; only the receipts are committed
+papers/closed-model-frontier/external6_shelf.sqlite*
+papers/closed-model-frontier/external6_ledger.jsonl
