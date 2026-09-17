@@ -2,12 +2,16 @@
 
 > Design document. This describes intended mechanics. On-chain implementation of anything
 > beyond the fixed supply itself is staged — see 30/60/90 roadmap at bottom.
+>
+> **Status 2026-09-15:** the live $STYXX is on Robinhood Chain via pons v2
+> (`0xC750bcdAe34cC578Ff17963bed40C5d9396fdC5D`). Contract facts in [README.md](README.md)
+> supersede the pump.fun-specific lines below. Creator fees on the live token route to
+> holders through the pons distributor; that mechanism, not a treasury, is what exists today.
 
 ## 1. Supply
 
-- **Fixed supply:** 1,000,000,000 $STYXX (1B), set at pump.fun launch.
-- **Mint authority:** revoked (pump.fun standard bonding curve).
-- **Freeze authority:** revoked.
+- **Fixed supply:** 1,000,000,000 $STYXX (1B), minted to the pons v2 curve at creation.
+- **Mint function:** none. **Freeze / blacklist:** none. (pons v2 contract properties.)
 - **Distribution at launch:** 100% via bonding curve — no team allocation, no insider
   pre-mint, no vesting cliffs. This is a constraint, not a feature: pump.fun gives us
   fair launch and denies us a treasury. We work around it.

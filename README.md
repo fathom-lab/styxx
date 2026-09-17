@@ -57,6 +57,7 @@ humility as branding; it is the only reason the passes mean anything.
 ```bash
 pip install styxx
 python -m styxx.diffgate --demo        # 10 seconds, no repo needed
+python -m styxx.diffgate --pr https://github.com/OWNER/REPO/pull/N   # any public PR, no checkout
 ```
 
 ```

@@ -1,0 +1,390 @@
+[
+ {
+  "id": "compat:py-removes",
+  "summary": "Refactor. No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,6 +1,3 @@\n-def session():\n-    return 1\n-class Legacy:\n-    pass\n-def _private():\n-    pass\n+def other():\n+    return 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "compat:py-moves",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1 @@\n-def session():\n-    return 1\n+from src.core import session\n--- a/src/core.py\n+++ b/src/core.py\n@@ -0,0 +1,2 @@\n+def session():\n+    return 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:js-exports",
+  "summary": "Backward compatible.",
+  "diff": "--- a/lib/index.ts\n+++ b/lib/index.ts\n@@ -1,4 +1,2 @@\n-export function parse(s: string) { return s; }\n-export const VERSION = \"1\";\n-export interface Options { a: number }\n+export function parse2(s: string) { return s; }\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 3 public definition(s) not re-defined in the added lines: lib/index.ts: parse, lib/index.ts: VERSION, lib/index.ts: Options"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:go-rust-java",
+  "summary": "No functional changes.",
+  "diff": "--- a/pkg/x.go\n+++ b/pkg/x.go\n@@ -1,3 +1,2 @@\n-func Exported() {}\n-func unexported() {}\n-type Thing struct{}\n+func Exported2() {}\n--- a/src/lib.rs\n+++ b/src/lib.rs\n@@ -1,2 +1 @@\n-pub fn run() {}\n-fn helper() {}\n+pub fn run2() {}\n--- a/src/main/java/A.java\n+++ b/src/main/java/A.java\n@@ -1,3 +1,2 @@\n-    public String name() { return \"\"; }\n-    private String hidden() { return \"\"; }\n+    public String name2() { return \"\"; }\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 4 public definition(s) not re-defined in the added lines: pkg/x.go: Exported, pkg/x.go: Thing, src/lib.rs: run, src/main/java/a.java: name"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:no-language",
+  "summary": "Non-breaking docs change.",
+  "diff": "--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no language this reading covers in the diff (python, js/ts, go, rust, java)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:more-than-five",
+  "summary": "No breaking changes.",
+  "diff": "--- a/m.py\n+++ b/m.py\n@@ -1,16 +1 @@\n-def f0():\n-    pass\n-def f1():\n-    pass\n-def f2():\n-    pass\n-def f3():\n-    pass\n-def f4():\n-    pass\n-def f5():\n-    pass\n-def f6():\n-    pass\n-def f7():\n-    pass\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 8 public definition(s) not re-defined in the added lines: m.py: f0, m.py: f1, m.py: f2, m.py: f3, m.py: f4 (+3 more)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:nine-phrases",
+  "summary": "No breaking changes. This is a non-breaking change. Fully backward compatible with existing callers. Maintains backwards compatibility. Zero behavior change. No behavioural changes intended. No functional changes. Does not break existing behavior. Does not change the public API.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,6 +1,3 @@\n-def session():\n-    return 1\n-class Legacy:\n-    pass\n-def _private():\n-    pass\n+def other():\n+    return 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:empty-diff",
+  "summary": "No breaking changes. Modified src/api.py.",
+  "diff": "",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "the diff carries no file statuses and no added lines"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff carries no file statuses and no added lines"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat:kotlin-and-async-def",
+  "summary": "Backwards-compatible cleanup.",
+  "diff": "--- a/src/App.kt\n+++ b/src/App.kt\n@@ -1,3 +1,2 @@\n-    public fun render(): String { return \"\" }\n-    private fun hidden(): String { return \"\" }\n+    public fun render2(): String { return \"\" }\n--- a/src/svc.py\n+++ b/src/svc.py\n@@ -1,2 +1 @@\n-async def fetch_all():\n-    pass\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/app.kt: render, src/svc.py: fetch_all"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "v14:bare-name-abstains",
+  "summary": "Modified retry.py and updated ethers.js.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/retry.py'"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'ethers.js' is a bare name absent from the diff — ambiguous between a file and a library, so no accusation is made (V14 repair 2, a deliberate recall sacrifice)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "v14:containment-touch-skipped",
+  "summary": "Added tests for the hash functions in src/retry.py. Fixed the parser in src/app.py.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [],
+   "uncovered_sentences": 2
+  }
+ },
+ {
+  "id": "bc2:test-cases-verify-and-abstain",
+  "summary": "Added 1 test cases. Added 3 test cases. Added 3 test files.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "counts test cases, diff adds 1 test functions; a case is not a function (#110)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "counts test files, diff adds 1 test functions; a file is not a function (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bc2:two-path-shaped-prefixes",
+  "summary": "Only touches files under src/ and config/.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and 'config': ['tests/test_retry.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bc2:second-prefix-by-segment",
+  "summary": "Only touches src/ and tests.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and 'tests': ['config/settings.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bc2:dotted-prefix-absent",
+  "summary": "Only touches package.json.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'package.json': ['src/retry.py', 'config/settings.yml', 'tests/test_retry.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bc2:word-prefix-quoted",
+  "summary": "Only touches `markdown` files.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix 'markdown' is not a path (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "bc2:symbol-articles",
+  "summary": "Adds a new function called backoff. Introduces the class Retry. Adds a method to reload.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,3 +1,6 @@\n def retry(n):\n     return n\n+\n+def retry_once(n):\n+    return retry(1)\n--- a/config/settings.yml\n+++ b/config/settings.yml\n@@ -1,2 +1,2 @@\n-timeout: 30\n+timeout: 5\n--- /dev/null\n+++ b/tests/test_retry.py\n@@ -0,0 +1,2 @@\n+def test_retry_once():\n+    assert True\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'backoff'"
+    ],
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define class 'Retry'"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "repr:quote-in-changed-path",
+  "summary": "Only touches docs/. 1 file changed.",
+  "diff": "--- a/src/it's.py\n+++ b/src/it's.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': [\"src/it's.py\"]"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "crlf:demo-diff",
+  "summary": "Refactored src/retry.py for resilience. Adds function backoff with jitter. Added 3 tests covering the retry path. Only touches files under src/. All tests pass.",
+  "diff": "--- a/src/retry.py\r\n+++ b/src/retry.py\r\n@@ -1,3 +1,6 @@\r\n def retry(n):\r\n     return n\r\n+\r\n+def retry_once(n):\r\n+    return retry(1)\r\n--- a/config/settings.yml\r\n+++ b/config/settings.yml\r\n@@ -1,2 +1,2 @@\r\n-timeout: 30\r\n+timeout: 5\r\n--- /dev/null\r\n+++ b/tests/test_retry.py\r\n@@ -0,0 +1,2 @@\r\n+def test_retry_once():\r\n+    assert True\r\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/retry.py'"
+    ],
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'backoff'"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 3"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['config/settings.yml', 'tests/test_retry.py']"
+    ],
+    [
+     "tests_pass",
+     "UNCHECKABLE",
+     "styxx.evidence (styxx-evidence/v0.2) read 0 supplied file(s), with no commit supplied, so nothing ties a report to this change — no evidence was supplied. Absence of a report is not a failing report; an unattested commit is unattested.  ||  No test REPORT was handed to the gate. It does not take the agent's word for test results, so with nothing to read it declines — absence of evidence is not a contradiction. The channel that makes this readable is a report passed with --evidence: a JUnit XML, or better a test-result attestation whose subject names the head commit. Even then no signature is checked, and the answer is VERIFIED or UNCHECKABLE — there is no accusing verdict for this claim kind."
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ }
+]

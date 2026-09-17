@@ -1,0 +1,30 @@
+# The diff gate as a GitLab CI job: the merge request description vs the merge request diff.
+#
+#   include:
+#     - remote: https://raw.githubusercontent.com/fathom-lab/styxx/main/integrations/gitlab/diffgate.gitlab-ci.yml
+#
+# or copy the job below into your .gitlab-ci.yml. It runs on merge request pipelines only, reads
+# the description GitLab hands the job in CI_MERGE_REQUEST_DESCRIPTION (never through a shell
+# expansion — the file is written with printf '%s'), and gates it against the diff between the
+# merge request's diff base and its head. The job fails only on a CONTRADICTED claim; a sentence
+# outside the closed template set is never judged, "tests pass" is UNCHECKABLE without evidence,
+# and a path the diff does not show is UNCHECKABLE, never accused (EXTERNAL-1). Same instrument,
+# same verdicts, same withholding as the GitHub Action and the CLI.
+
+diffgate:
+  image: python:3.12
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - pip install --quiet "styxx>=7.44.2"
+    - git fetch --quiet origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+    - printf '%s' "$CI_MERGE_REQUEST_DESCRIPTION" > mr_description.md
+    - python -m styxx.diffgate mr_description.md --repo . --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --head "$CI_COMMIT_SHA" --out diffgate.json
+  artifacts:
+    when: always
+    paths:
+      - diffgate.json
+    expire_in: 30 days
