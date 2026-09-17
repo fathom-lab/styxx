@@ -151,6 +151,17 @@ your per-cell deltas disclosed in the PR. The CPU target (corpus audit) must mat
 |---|---|---|---|---|---|---|
 | — | — | *none yet — be first* | — | — | — | — |
 
+## Sworn-document replications (added 2026-09-13)
+
+A sworn document (`papers/**/*.md` with a `.sworn-receipt.json` beside it) is replicated by
+`python -m styxx.challenge`, which re-derives the receipt at the commit it names and writes a
+record plus your own receipt — see `papers/plates/SAND_CHECK.md` §3. The record is a self-report;
+the lab re-runs it before a row lands here. Rows are added by the lab from the issue you open.
+
+| date | document | commit | replicator | machine | agree | record_sha256 |
+|---|---|---|---|---|---|---|
+| 2026-09-13 | `RESULT_checksum_smollm_quant_2026_09_13.md` | `60fad45c` | the lab (second machine; not independent, not credited) | Windows 11, cpu | yes (receipt) — the recipe's magnitudes did not, see `papers/checksum/NOTE_replication_alienware_2026_09_13.md` | in the NOTE |
+
 ---
 *Published 2026-07-13. If this table is still empty in 2027-01, that emptiness will be reported
 as-is in the next paper's limitations section: unreplicated is a property of a claim, and we do not

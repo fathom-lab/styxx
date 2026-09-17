@@ -1,0 +1,14 @@
+[
+ {
+  "id": "B08",
+  "part": "B",
+  "title": "AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models",
+  "urls": [
+   "https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56"
+  ],
+  "located_by": "MDPI answered HTTP 403 to the DOI and the article URL (fetch_record_run_B2.json); the Internet Archive's capture of that article URL, 2025-12-23, raw bytes (id_). The archive holds no capture of the /pdf or /htm forms or of the DOI URL.",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518"
+  ]
+ }
+]

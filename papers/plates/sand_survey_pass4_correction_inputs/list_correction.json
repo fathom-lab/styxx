@@ -1,0 +1,255 @@
+[
+ {
+  "id": "S11",
+  "pass": 2,
+  "title": "How Is ChatGPT's Behavior Changing over Time?",
+  "who": "Chen, Zaharia & Zou",
+  "year": 2023,
+  "url": "https://arxiv.org/abs/2307.09009",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S12",
+  "pass": 2,
+  "title": "Accuracy is Not All You Need",
+  "who": "Dutta, Krishnan, Kwatra & Ramjee",
+  "year": 2024,
+  "url": "https://arxiv.org/abs/2407.09141",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S13",
+  "pass": 2,
+  "title": "Instructional Fingerprinting of Large Language Models",
+  "who": "Xu et al.",
+  "year": 2024,
+  "url": "https://arxiv.org/abs/2401.12255",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S14",
+  "pass": 2,
+  "title": "REEF: Representation Encoding Fingerprints for Large Language Models",
+  "who": "Zhang et al.",
+  "year": 2024,
+  "url": "https://arxiv.org/abs/2410.14273",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S15",
+  "pass": 2,
+  "title": "Representational similarity analysis - connecting the branches of systems neuroscience",
+  "who": "Kriegeskorte, Mur & Bandettini",
+  "year": 2008,
+  "url": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S16",
+  "pass": 2,
+  "title": "Defeating Nondeterminism in LLM Inference",
+  "who": "Horace He and Thinking Machines Lab",
+  "year": 2025,
+  "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S17",
+  "pass": 2,
+  "title": "A Sober Look at Progress in Language Model Reasoning: Pitfalls and Paths to Reproducibility",
+  "who": "Hochlehnert et al.",
+  "year": 2025,
+  "url": "https://arxiv.org/abs/2504.07086",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "S19",
+  "pass": 2,
+  "title": "Proof-of-Learning: Definitions and Practice",
+  "who": "Jia et al.",
+  "year": 2021,
+  "url": "https://arxiv.org/abs/2103.05633",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L01",
+  "pass": 3,
+  "title": "Did the Model Change? Efficiently Assessing Machine Learning API Shifts",
+  "who": "Chen, Cai, Zaharia & Zou",
+  "year": 2021,
+  "url": "https://arxiv.org/pdf/2107.14203",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L02",
+  "pass": 3,
+  "title": "HAPI: A Large-scale Longitudinal Dataset of Commercial ML API Predictions",
+  "who": "Chen, Jin, Eyuboglu, Ré, Zaharia & Zou",
+  "year": 2022,
+  "url": "https://arxiv.org/pdf/2209.08443",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L03",
+  "pass": 3,
+  "title": "ChatLog: Recording and Analyzing ChatGPT Across Time",
+  "who": "Tu et al.",
+  "year": 2023,
+  "url": "https://arxiv.org/pdf/2304.14106",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L04",
+  "pass": 3,
+  "title": "A Fingerprint for Large Language Models",
+  "who": "Yang & Wu",
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2407.01235",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L05",
+  "pass": 3,
+  "title": "Beyond Preserved Accuracy: Evaluating Loyalty and Robustness of BERT Compression",
+  "who": "Xu et al.",
+  "year": 2021,
+  "url": "https://arxiv.org/pdf/2109.03228",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L06",
+  "pass": 3,
+  "title": "What Do Compressed Deep Neural Networks Forget?",
+  "who": "Hooker, Courville, Clark, Dauphin & Frome",
+  "year": 2019,
+  "url": "https://arxiv.org/pdf/1911.05248",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L07",
+  "pass": 3,
+  "title": "Non-Determinism of \"Deterministic\" LLM Settings",
+  "who": "Atil et al.",
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2408.04667",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L08",
+  "pass": 3,
+  "title": "Quantifying Variance in Evaluation Benchmarks",
+  "who": "Madaan et al.",
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2406.10229",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L09",
+  "pass": 3,
+  "title": "LLMmap: Fingerprinting For Large Language Models",
+  "who": "Pasquini, Kornaropoulos & Ateniese",
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2407.15847",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L10",
+  "pass": 3,
+  "title": "Hide and Seek: Fingerprinting Large Language Models with Evolutionary Learning",
+  "who": "Iourovitski, Sharma & Talwar",
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2408.02871",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L11",
+  "pass": 3,
+  "title": "Dataset Inference: Ownership Resolution in Machine Learning",
+  "who": "Maini, Yaghini & Papernot",
+  "year": 2021,
+  "url": "https://arxiv.org/pdf/2104.10706",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L12",
+  "pass": 3,
+  "title": "Copy, Right? A Testing Framework for Copyright Protection of Deep Learning Models",
+  "who": "Chen et al.",
+  "year": 2022,
+  "url": "https://arxiv.org/pdf/2112.05588",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L13",
+  "pass": 3,
+  "title": "SafetyNets: Verifiable Execution of Deep Neural Networks on an Untrusted Cloud",
+  "who": "Ghodsi, Gu & Garg",
+  "year": 2017,
+  "url": "https://arxiv.org/pdf/1706.10268",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L14",
+  "pass": 3,
+  "title": "High Accuracy and High Fidelity Extraction of Neural Networks",
+  "who": "Jagielski, Carlini, Berthelot, Kurakin & Papernot",
+  "year": 2020,
+  "url": "https://arxiv.org/pdf/1909.01838",
+  "might_occupy": [
+   "C4a"
+  ]
+ },
+ {
+  "id": "L15",
+  "pass": 3,
+  "title": "Is GPT-4 getting worse over time?",
+  "who": "Narayanan & Kapoor",
+  "year": 2023,
+  "url": "https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time",
+  "might_occupy": [
+   "C4a"
+  ]
+ }
+]

@@ -1,0 +1,201 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "4b8c055cd7d775c4dac9f09542426bf51316042f",
+ "document": {
+  "name": "ERRATUM_sand_survey_user_agent_2026_09_15.md",
+  "sha256": "337e13a2dc9d3803ac7349fbacbf1c5a0f9bf80d349a1f9cbf735c9d8b6ae47c"
+ },
+ "text": "# ERRATUM — the fetchers of sand survey passes 3 and 4 sent a browser-form user agent on every request; one page read under it refuses a non-browser agent a day later, and no clause status rests on that page\n\n**status: an erratum beside `SURVEY_sand_neighbours_pass3_2026_09_14.md`, `CORRECTION_sand_neighbours_pass3_2026_09_14.md`,\n`SURVEY_sand_neighbours_pass4_2026_09_14.md`, `CORRECTION_sand_neighbours_pass4_2026_09_15.md` and\n`PROTOCOL_sand_pass4_correction_2026_09_15.md`. None of them is edited. This file swears to\n`sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json`, which a committed script derives from a re-fetch whose\nrules were committed and pushed at\n`8273cdda` before its first request. For the bounty\nclause's status it swears to `sand_prior_art_survey_pass4_correction_2026_09_15.json`. No clause changes status. Nothing\nhere licenses \"first\", \"novel\" or \"revolutionary\".**\n\n## What was wrong\n\nThe lab's operating rule is that no request presents as a browser. Neither the pass-3 nor the pass-4 protocol wrote that\nrule down. The message of commit `c398e830` stated it first, after pass 3's fetches and pass 4's runs A, B and B2 had\nbeen sent (B2's last request sixteen seconds before the commit). The correction's protocol froze it at `9dbf4092`. No fetcher for passes 1 or 2 is committed, so this erratum\nsays nothing about how their bytes were requested.\n\nThe fetchers of passes 3 and 4 sent a browser-form user agent on every request:\n- `fetch_pass3.py`, line 34, sent\n  `Mozilla/5.0 (Windows NT 10.0; Win64; x64) fathom-lab sand survey pass 3 (research; contact via github.com/fathom-lab)`.\n- `fetch_pass4.py`, line 25, sent\n  `Mozilla/5.0 (Windows NT 10.0; Win64; x64) fathom-lab sand survey pass 4 (research; github.com/fathom-lab)`.\n  The correction's `prepare_correction_inputs.py` and `located_lookups.py` import that string.\n\nBoth strings named the lab and gave a contact. Both also began with the form browsers send, so a site that admits\nbrowsers by that prefix admitted the lab as one. That is presenting as a browser.\n\n**Recorded fetch attempts** sent under those strings:\n\n| record | attempts |\n|---|---|\n| pass 3 | 17 |\n| pass 4, run A | 9 |\n| pass 4, run B | 28 |\n| pass 4, run B2 | 11 |\n| pass 4, run B3 | 1 |\n| pass-4 correction | 6 |\n| all recorded | 72, on 71 distinct URLs |\n\n**Requests outside those records.**\n- **The correction's lookups.** The correction sent the pass-4 string on\n  5 recorded catalogue\n  lookups (`located_lookups_correction.json`: Europe PMC and Crossref).\n- **Unrecorded lookups.** Each run of `prepare_correction_inputs.py` (lines 105 to 112) sent it on six more: two Europe\n  PMC searches and four Internet Archive availability queries.\n- **A first run left no record.** The script ran at least twice. Commit `8fa0e860` records a first run that accepted,\n  for B04, a PDF link redirecting to the landing page pass 4 had already fetched. The script was then changed to refuse\n  such a copy and run again. The first run's fetches and lookups are in no committed record.\n- **The red team.** Its prompt allowed \"the fetcher's identifying user agent\" (`redteam_pass4.js`). Its scratch\n  scripts sent the pass-4 string, through `fetch_pass4.fetch` or a copy of line 25, to:\n  - arXiv 2603.19022;\n  - the PDFs of B04, B05 and B07;\n  - error.reviews;\n  - the two Science DOIs and Science's PDF URL.\n\n  These requests are recorded in `redteam_return.json`, findings `fetch:2`, `fetch:4`, `fetch:6` and `fetch:7`.\n- **The correction's review.** It re-ran `curl_json`, which sends the pass-4 string (`review_return.json`).\n- **The search stage.** Its prompts called curl without this string.\n\nNone of these requests is in the re-fetch below.\n\n**The browser probe.** The probe that the pass-4 SURVEY describes sent a full Chrome user agent that did not name the\nlab, on four requests (red-team finding `prose:9`, confirmed). One of them printed error.reviews' links, and those links chose\nthe About-page route from which B16 was then fetched.\n\n## The statements this makes false or incomplete\n\n1. **SURVEY, pass 4:** \"One probe sent a browser user agent to the three blocked pages. It was abandoned; no fetched\n   byte came through it.\" The probe was not the only request in browser form. So was every request by the pass-3 and\n   pass-4 fetchers and by the correction's scripts. Bytes did come through the probe: its printout of error.reviews'\n   links chose B16's route. That page served the same bytes to the fetcher's own agent (`prose:9`), and it serves the\n   same bytes to a non-browser agent today (below).\n2. **CORRECTION, pass 4, item 9.** It corrects which pages the probe reached. It keeps \"No fetched byte came through the\n   probe\", and it does not say that every fetch was in browser form.\n3. **The pass-4 addendum** in `papers/chat/REPORT_2026_09_13.md` (line 540) repeats the SURVEY's statement.\n4. **PROTOCOL of the pass-4 correction:** \"No route may present as a browser or pass a block.\" The correction's own\n   fetches and lookups did not keep that rule.\n5. **Commit `c398e830`:** \"The fetcher keeps its identifying user agent. No route presents as a browser or passes a\n   block, …\". The identifying agent was in browser form.\n6. **The pass-4 red team** (`redteam_return.json`, the fetch dimension): \"No browser user agent was sent and no block was\n   bypassed.\" The first half is false. Its \"The \"Mozilla/5.0\" prefix in the fetcher's user agent bypassed nothing\"\n   agrees with the re-fetch below for 70 of 71 URLs, and cannot be tested for L16.\n7. **The correction's review** (`review_return.json`): \"The UA is fetch_pass4.py's own, identical to pass 4's.\" That is\n   true, and the review passed a browser form.\n8. **The strangers' checks.** Several sworn files send a stranger to `fetch_pass3.py` or `fetch_pass4.py` to re-fetch,\n   and those fetchers send the browser form. They are:\n   - SURVEY pass 3 (line 116);\n   - CORRECTION pass 3 (section 1);\n   - SURVEY pass 4 (line 184);\n   - CORRECTION pass 4 (line 198).\n\n   A stranger can check the same recorded sha256 values with `refetch_nonbrowser_ua.py`, which sends no browser token.\n   The two fetchers are left as they ran.\n9. **SURVEY, pass 3:** \"Every source was then fetched by `fetch_pass3.py`\". That is true. It does not say that the\n   fetcher presented as a browser, and this erratum does.\n\n## What the bytes depended on\n\nA re-fetch asked whether any recorded fetch attempt needed the browser token. Its rules were committed and pushed before\nits first request:\n- one request per URL, with `fathom-lab-sand-survey-ua-check/1 (research; github.com/fathom-lab)`;\n- the request otherwise unchanged: `-sSL`, `--max-time 120`, redirects followed, no cookie and no other header (only\n  local output options differ);\n- no retry;\n- seven outcomes, fixed in advance.\n\nIt ran from\n`2026-09-15T08:28:42Z` to\n`2026-09-15T08:34:02Z`.\nThe catalogue lookups and the unrecorded requests above were not repeated. Whether their answers needed the browser\ntoken is not tested.\n\n| outcome | URLs |\n|---|---|\n| same bytes as recorded | 45 |\n| same kind, other bytes | 10 |\n| kind changed | 0 |\n| refused then, answers now | 0 |\n| refused then and now | 14 |\n| rate-limited now | 1 |\n| answered then, refused now | 1 |\n\n- **Same kind.** These are HTML pages whose byte count moved by at most\n  82 bytes.\n- **Refused then and now.**\n  - Semantic Scholar's empty 202 pages (6)\n  - DOI redirects (3)\n  - OpenReview PDFs (2)\n  - MDPI (1)\n  - Science (1)\n  - one Internet Archive miss\n\n  The browser form got nothing from them either.\n- **Rate-limited.** The URL is morphllm's page (B13). It answered 429 both times. Its text came from an Internet\n  Archive capture, which returned the same bytes today.\n- **error.reviews.** Its home page returned the same bytes today. So B16's route can be read from bytes a non-browser\n  agent receives.\n\n**The one page that now refuses is**\n`L16`, ACM's *Artifact Review and Badging* policy.\nOn 2026-09-14 it answered\n`200` with\n87457 bytes. Today it\nanswers `403` to the non-browser agent. Time is\nconfounded with the user agent, because a site can change its rules in a day. No request was sent in browser form to\ntell the two apart, since that would break the rule again. So this erratum cannot say whether L16's bytes needed the\nbrowser token. It says that they may have.\n\n## No clause status rests on L16 or on B16's route\n\n**L16.** It is one of five sources that pass 3 records as occupying the bounty clause: S10, S18, S20, L16 and L17.\nWithout L16 the clause stays\n`OCCUPIED` in pass 3.\nIt was already OCCUPIED in passes 1 and 2, before L16 was listed.\n\n**The later records.** Pass 4 and its correction record the bounty clause as\n`UNPRICED`, because a candidate that could retire it,\n`B23`, is uncheckable. An occupying source\ncannot change that, and neither L16 nor B16 retires the clause.\n\n## What follows\n\n- **Pass 5.** Its protocol is not yet frozen. It must fetch with a user agent that carries no browser token. It must\n  also say whether bytes or routes the lab holds only through a browser form may be used: L16's text, and the probe's\n  link list.\n- **Other fetchers.** Some fetchers outside the sand survey also send a browser form, among them the G5 scorecard's\n  `card_fetch.py`. They are not covered here, and they are flagged for a separate audit.\n- **Lesson.** The rule was checked against the code, and the check passed the code.\n  - The pass-4 red team read `fetch_pass4.py`'s user agent. It judged a `Mozilla/5.0` string that names the lab \"an\n    identifying agent, not a disguised one\".\n  - The correction's review accepted the same string.\n  - The correction's protocol froze the rule in the same commit as that red-team return.\n\n  A rule like this needs a mechanical test, here that the user agent carries no browser token, and not a judgment of\n  intent.\n",
+ "spans": [
+  {
+   "start": 681,
+   "end": 691,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/frozen_commit",
+   "kind": "quote"
+  },
+  {
+   "start": 1497,
+   "end": 1499,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/0/line",
+   "kind": "numeric"
+  },
+  {
+   "start": 1508,
+   "end": 1627,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/0/user_agent",
+   "kind": "quote"
+  },
+  {
+   "start": 1654,
+   "end": 1656,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/1/line",
+   "kind": "numeric"
+  },
+  {
+   "start": 1665,
+   "end": 1772,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/1/user_agent",
+   "kind": "quote"
+  },
+  {
+   "start": 2165,
+   "end": 2167,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass3",
+   "kind": "numeric"
+  },
+  {
+   "start": 2188,
+   "end": 2189,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_A",
+   "kind": "numeric"
+  },
+  {
+   "start": 2210,
+   "end": 2212,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B",
+   "kind": "numeric"
+  },
+  {
+   "start": 2234,
+   "end": 2236,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B2",
+   "kind": "numeric"
+  },
+  {
+   "start": 2258,
+   "end": 2259,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B3",
+   "kind": "numeric"
+  },
+  {
+   "start": 2284,
+   "end": 2285,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/correction",
+   "kind": "numeric"
+  },
+  {
+   "start": 2305,
+   "end": 2307,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 2312,
+   "end": 2314,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/distinct_urls",
+   "kind": "numeric"
+  },
+  {
+   "start": 2443,
+   "end": 2444,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/correction_lookup_requests_recorded",
+   "kind": "numeric"
+  },
+  {
+   "start": 6831,
+   "end": 6853,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/run_first_request_at",
+   "kind": "quote"
+  },
+  {
+   "start": 6857,
+   "end": 6879,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/run_last_request_at",
+   "kind": "quote"
+  },
+  {
+   "start": 7075,
+   "end": 7077,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/SAME_BYTES",
+   "kind": "numeric"
+  },
+  {
+   "start": 7107,
+   "end": 7109,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/SAME_KIND",
+   "kind": "numeric"
+  },
+  {
+   "start": 7129,
+   "end": 7130,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/KIND_CHANGED",
+   "kind": "numeric"
+  },
+  {
+   "start": 7163,
+   "end": 7164,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/NOW_ANSWERS",
+   "kind": "numeric"
+  },
+  {
+   "start": 7192,
+   "end": 7194,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/STILL_REFUSED",
+   "kind": "numeric"
+  },
+  {
+   "start": 7218,
+   "end": 7219,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/RATE_LIMITED",
+   "kind": "numeric"
+  },
+  {
+   "start": 7253,
+   "end": 7254,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/NOW_REFUSED",
+   "kind": "numeric"
+  },
+  {
+   "start": 7332,
+   "end": 7334,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/same_kind_max_byte_difference",
+   "kind": "numeric"
+  },
+  {
+   "start": 7911,
+   "end": 7916,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/id",
+   "kind": "quote"
+  },
+  {
+   "start": 7988,
+   "end": 7993,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/recorded_http",
+   "kind": "quote"
+  },
+  {
+   "start": 7999,
+   "end": 8004,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/recorded_bytes",
+   "kind": "numeric"
+  },
+  {
+   "start": 8029,
+   "end": 8034,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/now_http",
+   "kind": "quote"
+  },
+  {
+   "start": 8543,
+   "end": 8553,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/bounty_clause/pass3_status_without_now_refused",
+   "kind": "quote"
+  },
+  {
+   "start": 8709,
+   "end": 8719,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_correction_2026_09_15.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 8763,
+   "end": 8768,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_correction_2026_09_15.json#/clauses/C5/correction/uncheckable/0",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

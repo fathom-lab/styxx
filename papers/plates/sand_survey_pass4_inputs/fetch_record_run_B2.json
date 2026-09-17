@@ -1,0 +1,378 @@
+{
+ "B03": {
+  "title": "A cross-dataset harmonized intrusion detection framework with statistically validated multi-model learning",
+  "attempts": [
+   {
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+    "url_effective": "charset=utf-8 https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 296754,
+    "sha256": "d291455451be1525d1853119b5d08414c5f57a765ec43a7803adcbefa0ef3916",
+    "fetched_at": "2026-09-14T22:17:14Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+  "url_effective": "charset=utf-8 https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 296754,
+  "sha256": "d291455451be1525d1853119b5d08414c5f57a765ec43a7803adcbefa0ef3916",
+  "fetched_at": "2026-09-14T22:17:14Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B03.txt",
+   "chars": 90048,
+   "sha256": "334e271251c3ac625704869a00aea405bf5e0f9839391bb68a4220d383580ce1"
+  }
+ },
+ "B04": {
+  "title": "BlockFedX: a cross-domain federated learning system with explainability, anomaly detection, and tamper-evident logging.",
+  "attempts": [
+   {
+    "url": "https://doi.org/10.1038/s41598-026-56100-9",
+    "url_effective": "charset=utf-8 https://www.nature.com/articles/s41598-026-56100-9?error=cookies_not_supported&code=924b9130-5e18-40c4-ae92-ceca6ada6b4d",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 214588,
+    "sha256": "8db51c5ec4318950b40389bb273215c7969ad2c04807292ea5e919bc1f39bc5e",
+    "fetched_at": "2026-09-14T22:17:16Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://doi.org/10.1038/s41598-026-56100-9",
+  "url_effective": "charset=utf-8 https://www.nature.com/articles/s41598-026-56100-9?error=cookies_not_supported&code=924b9130-5e18-40c4-ae92-ceca6ada6b4d",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 214588,
+  "sha256": "8db51c5ec4318950b40389bb273215c7969ad2c04807292ea5e919bc1f39bc5e",
+  "fetched_at": "2026-09-14T22:17:16Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B04.txt",
+   "chars": 9648,
+   "sha256": "ac09ddc8198f95080b18d8e5a76cc6375410d5479151326bc2bd5174fc235c7e"
+  }
+ },
+ "B05": {
+  "title": "Ensemble Majority Voting-Based Hybrid Machine Learning Framework for Intrusion Detection in Secure Digital Banking Networks",
+  "attempts": [
+   {
+    "url": "https://doi.org/10.71097/ijsat.v17.i1.10626",
+    "url_effective": "charset=utf-8 https://www.ijsat.org/research-paper.php?id=10626",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 20031,
+    "sha256": "b22cff372ca030bbe8f4d0e62dccf71b95b011933351c57937d4cb3def2cddfa",
+    "fetched_at": "2026-09-14T22:17:18Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://doi.org/10.71097/ijsat.v17.i1.10626",
+  "url_effective": "charset=utf-8 https://www.ijsat.org/research-paper.php?id=10626",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 20031,
+  "sha256": "b22cff372ca030bbe8f4d0e62dccf71b95b011933351c57937d4cb3def2cddfa",
+  "fetched_at": "2026-09-14T22:17:18Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B05.txt",
+   "chars": 4672,
+   "sha256": "933cde0c187e66ab63541c94628bec6a3af9dc7fe21ffaaa352654e644b0bf99"
+  }
+ },
+ "B06": {
+  "title": "TAE-IDS: a trust-aware explainable intrusion detection framework using attention-based meta-ensemble learning with blockchain validation",
+  "attempts": [
+   {
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+    "url_effective": "charset=utf-8 https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 353663,
+    "sha256": "e70879dc3795dd4e6aa88deb8b046de957f837c05ca4a0d33b293c056bdb6f52",
+    "fetched_at": "2026-09-14T22:17:18Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+  "url_effective": "charset=utf-8 https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 353663,
+  "sha256": "e70879dc3795dd4e6aa88deb8b046de957f837c05ca4a0d33b293c056bdb6f52",
+  "fetched_at": "2026-09-14T22:17:18Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B06.txt",
+   "chars": 137067,
+   "sha256": "5dec03ac1054dd4efdc54b7d958ce5b0c3988b585ecfd8d7a32a742d99bead05"
+  }
+ },
+ "B07": {
+  "title": "Trust-Guided Weighted Federated Averaging with Tamper-Evident Audit Logging for Robust Intrusion Detection on CICIoT2023",
+  "attempts": [
+   {
+    "url": "https://doi.org/10.70917/ijcisim-2026-4475",
+    "url_effective": "charset=utf-8 https://cspub-ijcisim.org/index.php/ijcisim/article/view/4475",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 26651,
+    "sha256": "7d1c0ad23622d44909495040fc4a5fa34eadf8e779d85dc134d031130d65e8ff",
+    "fetched_at": "2026-09-14T22:17:19Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://doi.org/10.70917/ijcisim-2026-4475",
+  "url_effective": "charset=utf-8 https://cspub-ijcisim.org/index.php/ijcisim/article/view/4475",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 26651,
+  "sha256": "7d1c0ad23622d44909495040fc4a5fa34eadf8e779d85dc134d031130d65e8ff",
+  "fetched_at": "2026-09-14T22:17:19Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B07.txt",
+   "chars": 3739,
+   "sha256": "c26fc792c5fa142f5203dc86ebab936e4dae0e7c849fd6e648cc1765d7922fd1"
+  }
+ },
+ "B08": {
+  "title": "AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models",
+  "attempts": [
+   {
+    "url": "https://doi.org/10.3390/electronics15010056",
+    "url_effective": "https://www.mdpi.com/2079-9292/15/1/56",
+    "http": "403",
+    "content_type": "text/html",
+    "bytes": 399,
+    "sha256": "6091bab8bcd0147ef943c0e1bd3555e5631317c519168e2e1eebb887b6b57f06",
+    "fetched_at": "2026-09-14T22:17:20Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "auditablellm",
+     "hash",
+     "chain",
+     "backed",
+     "compliance",
+     "aware",
+     "auditable",
+     "framework",
+     "large",
+     "language",
+     "models"
+    ],
+    "accepted": false
+   },
+   {
+    "url": "https://www.mdpi.com/2079-9292/15/1/56",
+    "url_effective": "https://www.mdpi.com/2079-9292/15/1/56",
+    "http": "403",
+    "content_type": "text/html",
+    "bytes": 399,
+    "sha256": "9b45fc11dbef6bb04f4ab37c4e3c14cd7c74095edfbbfa130d85d3017d19f9e8",
+    "fetched_at": "2026-09-14T22:17:20Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "auditablellm",
+     "hash",
+     "chain",
+     "backed",
+     "compliance",
+     "aware",
+     "auditable",
+     "framework",
+     "large",
+     "language",
+     "models"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ },
+ "B13": {
+  "title": "Defeating Nondeterminism in LLM Inference: Theory to Deterministic Code Edits",
+  "attempts": [
+   {
+    "url": "https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "url_effective": "charset=utf-8 https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 163701,
+    "sha256": "14d8b9c23e4f278147b2e4ca22111b2dc85c5a4b64ac6f67e83314e04467776a",
+    "fetched_at": "2026-09-14T22:17:24Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+  "url_effective": "charset=utf-8 https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 163701,
+  "sha256": "14d8b9c23e4f278147b2e4ca22111b2dc85c5a4b64ac6f67e83314e04467776a",
+  "fetched_at": "2026-09-14T22:17:24Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B13.txt",
+   "chars": 16841,
+   "sha256": "f4fc596cd6e75cfbce5f90501ce133a1114e106eeb3e77e4522dc08499692be9"
+  }
+ },
+ "B16": {
+  "title": "ERROR: Estimating the Reliability & Robustness of Research – ERROR is a bug bounty program for science to systematically detect and report errors in academic publications",
+  "attempts": [
+   {
+    "url": "https://error.reviews/about/",
+    "url_effective": "charset=UTF-8 https://error.reviews/about/",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 93374,
+    "sha256": "c3f83d327217b7c152f0777fe18524bd63494a38af24286e3819ccd323e0d06b",
+    "fetched_at": "2026-09-14T22:17:25Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "url": "https://error.reviews/about/",
+  "url_effective": "charset=UTF-8 https://error.reviews/about/",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 93374,
+  "sha256": "c3f83d327217b7c152f0777fe18524bd63494a38af24286e3819ccd323e0d06b",
+  "fetched_at": "2026-09-14T22:17:25Z",
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "accepted": true,
+  "fulltext": {
+   "file": "B16.txt",
+   "chars": 4804,
+   "sha256": "b3919910b88d60d11d9b6861902aaca55acf7a51c93594500a7cd136a5857ed0"
+  }
+ },
+ "B23": {
+  "title": "Offering scientists cash to spot errors in published papers doesn’t work",
+  "attempts": [
+   {
+    "url": "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "url_effective": "charset=UTF-8 https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "http": "403",
+    "content_type": "text/html;",
+    "bytes": 5972,
+    "sha256": "647ac7d861c486e1cf2abff104febf76ff976f62e57bc1d2be20cc8f9d75a4b9",
+    "fetched_at": "2026-09-14T22:17:25Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "offering",
+     "scientists",
+     "cash",
+     "spot",
+     "errors",
+     "published",
+     "papers",
+     "doesn",
+     "work"
+    ],
+    "accepted": false
+   },
+   {
+    "url": "https://web.archive.org/web/2026id_/https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "url_effective": "https://web.archive.org/web/2026id_/https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "http": "404",
+    "content_type": "text/html",
+    "bytes": 4701,
+    "sha256": "0abddcc9c43d89e5e1decdeaae6147d5a01658df3ba24cb03daf6fe9dde3f39b",
+    "fetched_at": "2026-09-14T22:17:26Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "offering",
+     "scientists",
+     "cash",
+     "spot",
+     "errors",
+     "published",
+     "papers",
+     "doesn",
+     "work"
+    ],
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "reason": "no candidate URL returned the listed source (text too short or the title check failed)"
+ }
+}

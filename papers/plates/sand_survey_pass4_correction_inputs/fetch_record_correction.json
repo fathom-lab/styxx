@@ -1,0 +1,635 @@
+{
+ "S11": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2307.09009",
+  "sha256": "7182446e71d7954bfbbdd9e54b9ed09203465904c2226a3d8123eeae79511cca",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "7b77f2727a8e702607dd1bedfefdce1d26358619ef10be67746a445bb1efb96f",
+   "bytes": 2050108,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 26,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S11.txt",
+   "chars": 94155,
+   "sha256": "a945d2a09b751b2ed50dbafd1d932a7c6bd8ff233308d62b9084096d09b729d4"
+  }
+ },
+ "S12": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2407.09141",
+  "sha256": "c5ecc677771e4af7fa629897f7431c2ca52c55e930b84d24e521f4aa1390373a",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "582d61d0311c30d921505f7fe300b04331c0719e91798693385b7dd0aae4bf52",
+   "bytes": 867999,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 26,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S12.txt",
+   "chars": 97905,
+   "sha256": "3297cae30da0a49e257708afec873cc871c3addf43f757fdeac3da242c2df87b"
+  }
+ },
+ "S13": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2401.12255",
+  "sha256": "59aabcef712e0f0f65f1c85df13c5fbbbfa8bdaa40143929b449c01740a5fe56",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "11b9201657a15772181235269e3ae729a401d453d3086165945bc6d5b5d706f9",
+   "bytes": 3835251,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 30,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S13.txt",
+   "chars": 113739,
+   "sha256": "548163acbcf960d47a5add9a979467a0907a7a14e85ff3f9a698289130cfe7c8"
+  }
+ },
+ "S14": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2410.14273",
+  "sha256": "6829f762de25b10bd14fa0f97c6cd6bcb5400130556fd7c91dbc71ac746951ee",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "855ffd3e659a0831b14c1fb7a265a17ba59ec4c96acd3b9a39289f19e6450ce8",
+   "bytes": 2095341,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 24,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S14.txt",
+   "chars": 75233,
+   "sha256": "c91b9790c8764df2009bf34bf6f21fecca615eacdde37d6278922abe67fd1cdf"
+  }
+ },
+ "S15": {
+  "status": "FETCHED",
+  "url": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+  "sha256": "03f75b60a8c1f9fcce479aea5871adc4551182a4a03aa062ed8e3130b7a2bb87",
+  "source_bytes": {
+   "which": "pass-2 fetched bytes (sha256)",
+   "sha256": "03f75b60a8c1f9fcce479aea5871adc4551182a4a03aa062ed8e3130b7a2bb87",
+   "bytes": 669101,
+   "matches_record": true
+  },
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S15.txt",
+   "chars": 150457,
+   "sha256": "f2a4aa05f249f493485d39d37647358554fe9d00391e67a8310c9afdd5d281de"
+  }
+ },
+ "S16": {
+  "status": "FETCHED",
+  "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+  "sha256": "5bafc9b8ef12d40f2e8e9129da959187f6140ef3d3e9d6cb8343c7ad6fc45460",
+  "source_bytes": {
+   "which": "pass-2 fetched bytes (sha256)",
+   "sha256": "5bafc9b8ef12d40f2e8e9129da959187f6140ef3d3e9d6cb8343c7ad6fc45460",
+   "bytes": 96892,
+   "matches_record": true
+  },
+  "kind": "html",
+  "pages": null,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S16.txt",
+   "chars": 38861,
+   "sha256": "581ee455e8608d19dbce566c6b92d71794b8222deda5dd8746c51698a0cd8b46"
+  }
+ },
+ "S17": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2504.07086",
+  "sha256": "900462100b88d1edac7ca3a14ab0449f9a645cebfee255be4e5062cc5c306021",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "2856ce4867601d3c88524b0aceef3771721fbf9f0de98a63012be204b3bdf032",
+   "bytes": 1425162,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 39,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "fulltext": {
+   "file": "S17.txt",
+   "chars": 110743,
+   "sha256": "5d7990b18250552164c3232132ad27722a08ea71ec8cee0f3fa9c4d4bb7eff18"
+  }
+ },
+ "S19": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/abs/2103.05633",
+  "sha256": "5fc0170849c30199907f246a27a438c84e2e6ba6dc727d24f850d99be061b283",
+  "source_bytes": {
+   "which": "pass-2 fulltext PDF (fulltext_pdf_sha256)",
+   "sha256": "df69677539bc5dfd4d529045b0156ec581620fe7576eb4bfceac080e2011405e",
+   "bytes": 1156735,
+   "matches_record": true
+  },
+  "kind": "pdf",
+  "pages": 18,
+  "title_words_found": 0.75,
+  "title_words_missing": [
+   "definitions"
+  ],
+  "fulltext": {
+   "file": "S19.txt",
+   "chars": 106796,
+   "sha256": "32fec043399fbfafc086fbcc04b08e3e492f0e1d86176c441c7e1aac4ebf843c"
+  }
+ },
+ "L01": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2107.14203",
+  "sha256": "a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5",
+  "kind": "pdf",
+  "pages": 33,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "cc2436b55f8856f761b7c0b6139ecdc163bd0580fde9addddcb14462b6b0d21a",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L01.txt",
+   "chars": 81839,
+   "sha256": "cc2436b55f8856f761b7c0b6139ecdc163bd0580fde9addddcb14462b6b0d21a"
+  }
+ },
+ "L02": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2209.08443",
+  "sha256": "f5ead5afa0370c499a841584c7816c0c1568dd057aadc3bcc93d6c9c52ced351",
+  "kind": "pdf",
+  "pages": 26,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "b4008a0de1a204a9d24f7616eba9b08af29043e943f4572b1f3100783036e929",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L02.txt",
+   "chars": 88365,
+   "sha256": "b4008a0de1a204a9d24f7616eba9b08af29043e943f4572b1f3100783036e929"
+  }
+ },
+ "L03": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2304.14106",
+  "sha256": "f5b70193b1f38205be2f9b91d65fafa90d4eb774c80a7c9ff3bf72760c9f1912",
+  "kind": "pdf",
+  "pages": 31,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "18867d972589ec67657b7ff37fceddad0c934e64a0a500e8f3f45053725261b8",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L03.txt",
+   "chars": 105414,
+   "sha256": "18867d972589ec67657b7ff37fceddad0c934e64a0a500e8f3f45053725261b8"
+  }
+ },
+ "L04": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2407.01235",
+  "sha256": "e0e36cdde0d46e813e16e3c0256125510bc3f500d055e29cbfb5c5dfabe617c3",
+  "kind": "pdf",
+  "pages": 8,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "0a2755152219806f8dd16479f60687e2a43601852ca215dfb28f51c18b75f9b8",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L04.txt",
+   "chars": 40686,
+   "sha256": "0a2755152219806f8dd16479f60687e2a43601852ca215dfb28f51c18b75f9b8"
+  }
+ },
+ "L05": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2109.03228",
+  "sha256": "25b16b9a61a6b623990c465e27eef47c298daa53b4e8b5665effcef6af8eeb3e",
+  "kind": "pdf",
+  "pages": 7,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "909286bcb57ac3fe6cbf55f6ae7bc8f14de6385a5cde9e8c33e2129db8ea1d0e",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L05.txt",
+   "chars": 27508,
+   "sha256": "909286bcb57ac3fe6cbf55f6ae7bc8f14de6385a5cde9e8c33e2129db8ea1d0e"
+  }
+ },
+ "L06": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/1911.05248",
+  "sha256": "0f72c3600059dac19fb3a11651795eebbee6213976e6d5b0241a649184f291e9",
+  "kind": "pdf",
+  "pages": 20,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "4ee67bf9caae61ca9c9cf1cd142e7fe2ab0e4d9136fa88a846a0fd0ef2355587",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L06.txt",
+   "chars": 59992,
+   "sha256": "4ee67bf9caae61ca9c9cf1cd142e7fe2ab0e4d9136fa88a846a0fd0ef2355587"
+  }
+ },
+ "L07": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2408.04667",
+  "sha256": "8aa6e2f2488397d0ce305e8c97461d55123f87dbaa440230424a87f59d024056",
+  "kind": "pdf",
+  "pages": 15,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "328d0196cbc11ef74ae4a8dc9ee1e2ed652f956b0d78ae546766cb71579103e0",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L07.txt",
+   "chars": 42248,
+   "sha256": "328d0196cbc11ef74ae4a8dc9ee1e2ed652f956b0d78ae546766cb71579103e0"
+  }
+ },
+ "L08": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2406.10229",
+  "sha256": "c27743bbd107d848e5588ba59c09085aee2ce437783de9135dd6095681ddf13c",
+  "kind": "pdf",
+  "pages": 23,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "a93d7b6cd9e7dcdfbe0161da674546518dd774a0f7ff02bc1e05fe9cdb9c7ecb",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L08.txt",
+   "chars": 67659,
+   "sha256": "a93d7b6cd9e7dcdfbe0161da674546518dd774a0f7ff02bc1e05fe9cdb9c7ecb"
+  }
+ },
+ "L09": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2407.15847",
+  "sha256": "7cf91fcffc8e4b5576b16bbba72f9fd9036a12cbe697d74db2ed2c05c15232dd",
+  "kind": "pdf",
+  "pages": 25,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "6af89874ae69a526a7990aed2b86e80bb505d595615f3b8304709833b7eaa42c",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L09.txt",
+   "chars": 122531,
+   "sha256": "6af89874ae69a526a7990aed2b86e80bb505d595615f3b8304709833b7eaa42c"
+  }
+ },
+ "L10": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2408.02871",
+  "sha256": "46743615adbdf212b1fabede0c64607d7e42c1c8b71aef90d10f17ea945d91fa",
+  "kind": "pdf",
+  "pages": 14,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "fcd55fe80de9eb7951a1aa253a853c4dbfa404516e955d47c119f2151211b8f4",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L10.txt",
+   "chars": 50459,
+   "sha256": "fcd55fe80de9eb7951a1aa253a853c4dbfa404516e955d47c119f2151211b8f4"
+  }
+ },
+ "L11": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2104.10706",
+  "sha256": "b7c21e851b4c05d1c8c37461820fcd979604ef37afe952ba0b1af67987b98b14",
+  "kind": "pdf",
+  "pages": 22,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "d6110d1fc9fd9bd1503baf8e5f1faab395d017f5f8842a0e8df6f4f3a3dd9a58",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L11.txt",
+   "chars": 80213,
+   "sha256": "d6110d1fc9fd9bd1503baf8e5f1faab395d017f5f8842a0e8df6f4f3a3dd9a58"
+  }
+ },
+ "L12": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/2112.05588",
+  "sha256": "3e7e220553d0012bb80d318576143c6038346ace3acb20b96f44230fd0a2ee0c",
+  "kind": "pdf",
+  "pages": 18,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "f40d2ffb4af84b599a9c2df96687c25ac5ab571196d2c621e07db7155ba0354b",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L12.txt",
+   "chars": 95326,
+   "sha256": "f40d2ffb4af84b599a9c2df96687c25ac5ab571196d2c621e07db7155ba0354b"
+  }
+ },
+ "L13": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/1706.10268",
+  "sha256": "a6af4efdf9b7f668ca9f3eb0eff0d94042595154a6418334897e113c6c8c683b",
+  "kind": "pdf",
+  "pages": 10,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "abf89ddb1d70bea2750e2bfcfc9e40fd622eb70996ee928f7b496801717e54da",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L13.txt",
+   "chars": 36617,
+   "sha256": "abf89ddb1d70bea2750e2bfcfc9e40fd622eb70996ee928f7b496801717e54da"
+  }
+ },
+ "L14": {
+  "status": "FETCHED",
+  "url": "https://arxiv.org/pdf/1909.01838",
+  "sha256": "b30e63fd43c3dbf8d9dee7dc8c30d250982c8c911367018f1a1ad084d446ed82",
+  "kind": "pdf",
+  "pages": 18,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "28e5fb41d92c6eddac3052d748001a21c757615c16bee50327b2176a6b5c3ad5",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L14.txt",
+   "chars": 86729,
+   "sha256": "28e5fb41d92c6eddac3052d748001a21c757615c16bee50327b2176a6b5c3ad5"
+  }
+ },
+ "L15": {
+  "status": "FETCHED",
+  "url": "https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time",
+  "sha256": "80e413dedf4009971f8dd481c6f9f7e03bac93a15666ebf14cc43dff198a7a4d",
+  "kind": "html",
+  "pages": null,
+  "source_bytes": {
+   "which": "pass-3 extracted text (fulltext.sha256)",
+   "sha256": "827e02ebeb3128e0b946cf6dd695dae5c03cb7f210b71dca37f6e81dbf599c8e",
+   "matches_record": true
+  },
+  "fulltext": {
+   "file": "L15.txt",
+   "chars": 10133,
+   "sha256": "827e02ebeb3128e0b946cf6dd695dae5c03cb7f210b71dca37f6e81dbf599c8e"
+  }
+ },
+ "B04": {
+  "title": "BlockFedX: a cross-domain federated learning system with explainability, anomaly detection, and tamper-evident logging.",
+  "attempts": [
+   {
+    "url": "https://www.nature.com/articles/s41598-026-56100-9.pdf",
+    "url_effective": "charset=utf-8 https://www.nature.com/articles/s41598-026-56100-9?error=cookies_not_supported&code=1a8bd6ff-6605-4920-b309-c40c9f350b50",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 214592,
+    "sha256": "cf661cb2a3e55abdb777e881c6de827984823fe687a99c487c7e64a4ff7cf365",
+    "fetched_at": "2026-09-15T02:07:46Z",
+    "error": null,
+    "kind": "html",
+    "pages": null,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "same_text_as_the_pass4_page": true,
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "located_for_scope": true,
+  "located_by": "the landing page's citation_pdf_url; Europe PMC by PMID 42323341 (PMCID found: None)",
+  "reason": "no located route returned the listed work's text"
+ },
+ "B05": {
+  "title": "Ensemble Majority Voting-Based Hybrid Machine Learning Framework for Intrusion Detection in Secure Digital Banking Networks",
+  "attempts": [
+   {
+    "url": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+    "url_effective": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1023306,
+    "sha256": "9e70fc0d2cd53d16aa66291c9c67b06a0afaee8e095df2be6310b5a5e92acc3d",
+    "fetched_at": "2026-09-15T02:07:48Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "same_text_as_the_pass4_page": false,
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "located_for_scope": true,
+  "located_by": "the landing page's citation_pdf_url",
+  "url": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+  "url_effective": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1023306,
+  "sha256": "9e70fc0d2cd53d16aa66291c9c67b06a0afaee8e095df2be6310b5a5e92acc3d",
+  "fetched_at": "2026-09-15T02:07:48Z",
+  "kind": "pdf",
+  "pages": 15,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "same_text_as_the_pass4_page": false,
+  "accepted": true,
+  "fulltext": {
+   "file": "B05.txt",
+   "chars": 37003,
+   "sha256": "c14113770f45f85511a70e31756403e9e5ccf97fd0c6a74ee8f3039ceced5dbf"
+  }
+ },
+ "B07": {
+  "title": "Trust-Guided Weighted Federated Averaging with Tamper-Evident Audit Logging for Robust Intrusion Detection on CICIoT2023",
+  "attempts": [
+   {
+    "url": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+    "url_effective": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1611209,
+    "sha256": "2ddfd3a89a371c16de07dec16dceee33b2317f43a86322a114c979b756992a50",
+    "fetched_at": "2026-09-15T02:07:50Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "same_text_as_the_pass4_page": false,
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "located_for_scope": true,
+  "located_by": "the landing page's citation_pdf_url",
+  "url": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+  "url_effective": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1611209,
+  "sha256": "2ddfd3a89a371c16de07dec16dceee33b2317f43a86322a114c979b756992a50",
+  "fetched_at": "2026-09-15T02:07:50Z",
+  "kind": "pdf",
+  "pages": 15,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "same_text_as_the_pass4_page": false,
+  "accepted": true,
+  "fulltext": {
+   "file": "B07.txt",
+   "chars": 35663,
+   "sha256": "b5cb067e475de25223be91aa7bebf5cdd29db384eac913bb1d28e62486a0582b"
+  }
+ },
+ "B11": {
+  "title": "Behavioral Fingerprints for LLM Endpoint Stability and Identity",
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2603.19022",
+    "url_effective": "https://arxiv.org/pdf/2603.19022",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 564559,
+    "sha256": "641179593749b28a45e4cd2a0e0cb1ef7d0f602a1872d2d2cc9c077002865ff0",
+    "fetched_at": "2026-09-15T02:07:50Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 4,
+    "title_words_found": 1.0,
+    "title_words_missing": [],
+    "same_text_as_the_pass4_page": false,
+    "accepted": true
+   }
+  ],
+  "status": "FETCHED",
+  "located_for_scope": true,
+  "located_by": "arXiv 2603.19022, the paper alphaXiv's page summarises",
+  "url": "https://arxiv.org/pdf/2603.19022",
+  "url_effective": "https://arxiv.org/pdf/2603.19022",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 564559,
+  "sha256": "641179593749b28a45e4cd2a0e0cb1ef7d0f602a1872d2d2cc9c077002865ff0",
+  "fetched_at": "2026-09-15T02:07:50Z",
+  "kind": "pdf",
+  "pages": 4,
+  "title_words_found": 1.0,
+  "title_words_missing": [],
+  "same_text_as_the_pass4_page": false,
+  "accepted": true,
+  "fulltext": {
+   "file": "B11.txt",
+   "chars": 20320,
+   "sha256": "dcb75405e232141302440d7650c53bee5942741d2cb0141a5e47e5fa1ed2d01e"
+  }
+ },
+ "B23": {
+  "title": "Offering scientists cash to spot errors in published papers doesn’t work",
+  "attempts": [
+   {
+    "url": "https://doi.org/10.1126/science.zh9l2q0",
+    "url_effective": "charset=UTF-8 https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "http": "403",
+    "content_type": "text/html;",
+    "bytes": 5972,
+    "sha256": "8450efcf9c53e2c0bb40850b1cdf5cbb62ba743c9f312d8d4dc7ae1f9a58f1c5",
+    "fetched_at": "2026-09-15T02:07:50Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "offering",
+     "scientists",
+     "cash",
+     "spot",
+     "errors",
+     "published",
+     "papers",
+     "doesn",
+     "work"
+    ],
+    "same_text_as_the_pass4_page": false,
+    "accepted": false
+   },
+   {
+    "url": "https://doi.org/10.1126/science.aeh8588",
+    "url_effective": "charset=UTF-8 https://www.science.org/doi/10.1126/science.aeh8588",
+    "http": "403",
+    "content_type": "text/html;",
+    "bytes": 5722,
+    "sha256": "807f141307ba118f4d55789dd687a84e4703443a821bbbc1ec46ef5e0784f388",
+    "fetched_at": "2026-09-15T02:07:51Z",
+    "error": null,
+    "title_words_found": 0.0,
+    "title_words_missing": [
+     "offering",
+     "scientists",
+     "cash",
+     "spot",
+     "errors",
+     "published",
+     "papers",
+     "doesn",
+     "work"
+    ],
+    "same_text_as_the_pass4_page": false,
+    "accepted": false
+   }
+  ],
+  "status": "UNFETCHABLE",
+  "located_for_scope": true,
+  "located_by": "Crossref: online DOI 10.1126/science.zh9l2q0 and print version 10.1126/science.aeh8588 (Chawla, Science 392:133, 2026-04-09, retitled); Europe PMC None pmcid None full text None/None; archive captures found: 0",
+  "reason": "no located route returned the listed work's text"
+ },
+ "B12": {
+  "title": "Cash for errors: project offers bounty for spotting mistakes in published papers",
+  "status": "UNFETCHABLE",
+  "located_for_scope": true,
+  "attempts": [],
+  "located_by": "none open: the article is behind Nature's paywall (the protocol's table)",
+  "reason": "no open route"
+ }
+}

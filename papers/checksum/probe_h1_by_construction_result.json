@@ -1,0 +1,42 @@
+{
+ "schema": "styxx.checksum/probe-h1/v0",
+ "n_trials_per_jitter": 30,
+ "vocab": 2000,
+ "n_items": 48,
+ "rule": "floor = worst pairwise among A, A', A''; graded pair A vs A'; SAME iff bootstrap upper bound < max(floor, 1e-4)",
+ "jitters": {
+  "0.0003": {
+   "verdicts_A_vs_Aprime": {
+    "SAME": 6,
+    "INCONCLUSIVE": 24,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_is_the_worst": 10,
+   "floor_min": 0.00031468686596369594,
+   "floor_max": 0.00043803994229762246,
+   "floor_inside_H1_band": true
+  },
+  "0.001": {
+   "verdicts_A_vs_Aprime": {
+    "SAME": 3,
+    "INCONCLUSIVE": 27,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_is_the_worst": 14,
+   "floor_min": 0.00103635099586812,
+   "floor_max": 0.001419557035580096,
+   "floor_inside_H1_band": false
+  },
+  "0.005": {
+   "verdicts_A_vs_Aprime": {
+    "SAME": 3,
+    "INCONCLUSIVE": 27,
+    "DRIFT": 0
+   },
+   "trials_where_the_graded_pair_is_the_worst": 13,
+   "floor_min": 0.0051817549793404865,
+   "floor_max": 0.007110815113975863,
+   "floor_inside_H1_band": false
+  }
+ }
+}

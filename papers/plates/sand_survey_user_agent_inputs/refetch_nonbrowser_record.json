@@ -1,0 +1,2085 @@
+{
+ "_note": "non-browser user-agent re-fetch of every URL the sand survey fetched under a browser-form user agent; see refetch_nonbrowser_ua.py for the frozen rules",
+ "user_agent": "fathom-lab-sand-survey-ua-check/1 (research; github.com/fathom-lab)",
+ "spacing_s": 4.0,
+ "counts": {
+  "SAME_BYTES": 45,
+  "SAME_KIND": 10,
+  "NOW_REFUSED": 1,
+  "STILL_REFUSED": 14,
+  "RATE_LIMITED": 1
+ },
+ "rows": [
+  {
+   "n": 0,
+   "url": "https://arxiv.org/pdf/2107.14203",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L01",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 2836979,
+     "content_type": "application/pdf",
+     "sha256": "a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5",
+     "fetched_at": "2026-09-14T10:37:44Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2107.14203",
+    "content_type": "application/pdf",
+    "bytes": 2836979,
+    "sha256": "a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:28:42Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 1,
+   "url": "https://arxiv.org/pdf/2209.08443",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L02",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 4578299,
+     "content_type": "application/pdf",
+     "sha256": "f5ead5afa0370c499a841584c7816c0c1568dd057aadc3bcc93d6c9c52ced351",
+     "fetched_at": "2026-09-14T10:37:45Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2209.08443",
+    "content_type": "application/pdf",
+    "bytes": 4578299,
+    "sha256": "f5ead5afa0370c499a841584c7816c0c1568dd057aadc3bcc93d6c9c52ced351",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:28:46Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 2,
+   "url": "https://arxiv.org/pdf/2304.14106",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L03",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 1049210,
+     "content_type": "application/pdf",
+     "sha256": "f5b70193b1f38205be2f9b91d65fafa90d4eb774c80a7c9ff3bf72760c9f1912",
+     "fetched_at": "2026-09-14T10:37:46Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2304.14106",
+    "content_type": "application/pdf",
+    "bytes": 1049210,
+    "sha256": "f5b70193b1f38205be2f9b91d65fafa90d4eb774c80a7c9ff3bf72760c9f1912",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:28:50Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 3,
+   "url": "https://arxiv.org/pdf/2407.01235",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L04",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 591186,
+     "content_type": "application/pdf",
+     "sha256": "e0e36cdde0d46e813e16e3c0256125510bc3f500d055e29cbfb5c5dfabe617c3",
+     "fetched_at": "2026-09-14T10:37:46Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2407.01235",
+    "content_type": "application/pdf",
+    "bytes": 591186,
+    "sha256": "e0e36cdde0d46e813e16e3c0256125510bc3f500d055e29cbfb5c5dfabe617c3",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:28:55Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 4,
+   "url": "https://arxiv.org/pdf/2109.03228",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L05",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 540343,
+     "content_type": "application/pdf",
+     "sha256": "25b16b9a61a6b623990c465e27eef47c298daa53b4e8b5665effcef6af8eeb3e",
+     "fetched_at": "2026-09-14T10:37:46Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2109.03228",
+    "content_type": "application/pdf",
+    "bytes": 540343,
+    "sha256": "25b16b9a61a6b623990c465e27eef47c298daa53b4e8b5665effcef6af8eeb3e",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:28:59Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 5,
+   "url": "https://arxiv.org/pdf/1911.05248",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L06",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 4917637,
+     "content_type": "application/pdf",
+     "sha256": "0f72c3600059dac19fb3a11651795eebbee6213976e6d5b0241a649184f291e9",
+     "fetched_at": "2026-09-14T10:37:47Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/1911.05248",
+    "content_type": "application/pdf",
+    "bytes": 4917637,
+    "sha256": "0f72c3600059dac19fb3a11651795eebbee6213976e6d5b0241a649184f291e9",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:03Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 6,
+   "url": "https://arxiv.org/pdf/2408.04667",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L07",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 1231657,
+     "content_type": "application/pdf",
+     "sha256": "8aa6e2f2488397d0ce305e8c97461d55123f87dbaa440230424a87f59d024056",
+     "fetched_at": "2026-09-14T10:37:47Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2408.04667",
+    "content_type": "application/pdf",
+    "bytes": 1231657,
+    "sha256": "8aa6e2f2488397d0ce305e8c97461d55123f87dbaa440230424a87f59d024056",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:07Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 7,
+   "url": "https://arxiv.org/pdf/2406.10229",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L08",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 3624944,
+     "content_type": "application/pdf",
+     "sha256": "c27743bbd107d848e5588ba59c09085aee2ce437783de9135dd6095681ddf13c",
+     "fetched_at": "2026-09-14T10:37:47Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2406.10229",
+    "content_type": "application/pdf",
+    "bytes": 3624944,
+    "sha256": "c27743bbd107d848e5588ba59c09085aee2ce437783de9135dd6095681ddf13c",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:12Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 8,
+   "url": "https://arxiv.org/pdf/2407.15847",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L09",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 2578890,
+     "content_type": "application/pdf",
+     "sha256": "7cf91fcffc8e4b5576b16bbba72f9fd9036a12cbe697d74db2ed2c05c15232dd",
+     "fetched_at": "2026-09-14T10:37:49Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2407.15847",
+    "content_type": "application/pdf",
+    "bytes": 2578890,
+    "sha256": "7cf91fcffc8e4b5576b16bbba72f9fd9036a12cbe697d74db2ed2c05c15232dd",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:16Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 9,
+   "url": "https://arxiv.org/pdf/2408.02871",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L10",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 542606,
+     "content_type": "application/pdf",
+     "sha256": "46743615adbdf212b1fabede0c64607d7e42c1c8b71aef90d10f17ea945d91fa",
+     "fetched_at": "2026-09-14T10:37:49Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2408.02871",
+    "content_type": "application/pdf",
+    "bytes": 542606,
+    "sha256": "46743615adbdf212b1fabede0c64607d7e42c1c8b71aef90d10f17ea945d91fa",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:20Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 10,
+   "url": "https://arxiv.org/pdf/2104.10706",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L11",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 759949,
+     "content_type": "application/pdf",
+     "sha256": "b7c21e851b4c05d1c8c37461820fcd979604ef37afe952ba0b1af67987b98b14",
+     "fetched_at": "2026-09-14T10:37:50Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2104.10706",
+    "content_type": "application/pdf",
+    "bytes": 759949,
+    "sha256": "b7c21e851b4c05d1c8c37461820fcd979604ef37afe952ba0b1af67987b98b14",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:24Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 11,
+   "url": "https://arxiv.org/pdf/2112.05588",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L12",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 9824327,
+     "content_type": "application/pdf",
+     "sha256": "3e7e220553d0012bb80d318576143c6038346ace3acb20b96f44230fd0a2ee0c",
+     "fetched_at": "2026-09-14T10:37:50Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2112.05588",
+    "content_type": "application/pdf",
+    "bytes": 9824327,
+    "sha256": "3e7e220553d0012bb80d318576143c6038346ace3acb20b96f44230fd0a2ee0c",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:30Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 12,
+   "url": "https://arxiv.org/pdf/1706.10268",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L13",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 450848,
+     "content_type": "application/pdf",
+     "sha256": "a6af4efdf9b7f668ca9f3eb0eff0d94042595154a6418334897e113c6c8c683b",
+     "fetched_at": "2026-09-14T10:37:50Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/1706.10268",
+    "content_type": "application/pdf",
+    "bytes": 450848,
+    "sha256": "a6af4efdf9b7f668ca9f3eb0eff0d94042595154a6418334897e113c6c8c683b",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:34Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 13,
+   "url": "https://arxiv.org/pdf/1909.01838",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L14",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 411602,
+     "content_type": "application/pdf",
+     "sha256": "b30e63fd43c3dbf8d9dee7dc8c30d250982c8c911367018f1a1ad084d446ed82",
+     "fetched_at": "2026-09-14T10:37:51Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/1909.01838",
+    "content_type": "application/pdf",
+    "bytes": 411602,
+    "sha256": "b30e63fd43c3dbf8d9dee7dc8c30d250982c8c911367018f1a1ad084d446ed82",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:38Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 14,
+   "url": "https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L15",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 194083,
+     "content_type": "text/html;",
+     "sha256": "80e413dedf4009971f8dd481c6f9f7e03bac93a15666ebf14cc43dff198a7a4d",
+     "fetched_at": "2026-09-14T10:37:52Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.normaltech.ai/p/is-gpt-4-getting-worse-over-time",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 194120,
+    "sha256": "2a9794b21f23f09cb266cf8bd2ac235a0dd0a932a890b65ddc4073500278e761",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:43Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 15,
+   "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L16",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 87457,
+     "content_type": "text/html;charset=UTF-8",
+     "sha256": "5138cec3cf542985766e91f0610180038e2c10070487261b4401e7188e67a657",
+     "fetched_at": "2026-09-14T10:37:52Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 45364,
+    "sha256": "60b7c419032f9a30cb6a0ec080746721569eb647c6484953f005d0a8287baee6",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:47Z"
+   },
+   "outcome": "NOW_REFUSED"
+  },
+  {
+   "n": 16,
+   "url": "https://zenodo.org/records/3818627/files/article.pdf",
+   "recorded": [
+    {
+     "record": "pass3",
+     "id": "L17",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": null,
+     "http": "200",
+     "bytes": 59636,
+     "content_type": "application/octet-stream",
+     "sha256": "8039c23ea011068a3dab90e8b0fe8157b38fba428b2571f655ce8caeee060e9e",
+     "fetched_at": "2026-09-14T10:38:11Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://zenodo.org/records/3818627/files/article.pdf",
+    "content_type": "application/octet-stream",
+    "bytes": 59636,
+    "sha256": "8039c23ea011068a3dab90e8b0fe8157b38fba428b2571f655ce8caeee060e9e",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:52Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 17,
+   "url": "https://arxiv.org/pdf/1910.12903",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A01",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 857433,
+     "content_type": "application/pdf",
+     "sha256": "c5bb63d2ae525cbcbd0a2cf2248a173f549bbf0bbcf0009321c65dda4461cf8a",
+     "fetched_at": "2026-09-14T20:52:16Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/1910.12903",
+    "content_type": "application/pdf",
+    "bytes": 857433,
+    "sha256": "c5bb63d2ae525cbcbd0a2cf2248a173f549bbf0bbcf0009321c65dda4461cf8a",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:29:56Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 18,
+   "url": "https://arxiv.org/pdf/1912.00888",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A02",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 4161711,
+     "content_type": "application/pdf",
+     "sha256": "6ed78880aa59bd7441f9ce027ffe86004c9f12ba7a7a92c96661ee2505debaa5",
+     "fetched_at": "2026-09-14T20:52:17Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/1912.00888",
+    "content_type": "application/pdf",
+    "bytes": 4161711,
+    "sha256": "6ed78880aa59bd7441f9ce027ffe86004c9f12ba7a7a92c96661ee2505debaa5",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:01Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 19,
+   "url": "https://arxiv.org/pdf/2403.09539",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A03",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1324412,
+     "content_type": "application/pdf",
+     "sha256": "a5a1d06963f2b2cf82faca2589417c5a4cb50f7fd5779b4ce60af1d22e410341",
+     "fetched_at": "2026-09-14T20:52:18Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2403.09539",
+    "content_type": "application/pdf",
+    "bytes": 1324412,
+    "sha256": "a5a1d06963f2b2cf82faca2589417c5a4cb50f7fd5779b4ce60af1d22e410341",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:05Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 20,
+   "url": "https://arxiv.org/pdf/2407.10887",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A04",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1998805,
+     "content_type": "application/pdf",
+     "sha256": "65f14981facc2aa103fc644db13ff1c55e9fdac83fbc90a84ca2325ed45a8848",
+     "fetched_at": "2026-09-14T20:52:18Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2407.10887",
+    "content_type": "application/pdf",
+    "bytes": 1998805,
+    "sha256": "65f14981facc2aa103fc644db13ff1c55e9fdac83fbc90a84ca2325ed45a8848",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:09Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 21,
+   "url": "https://arxiv.org/pdf/2403.06634",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A05",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 980686,
+     "content_type": "application/pdf",
+     "sha256": "65e2ade24ecefc77ab5eaab511b744a611bbc7efd0ec9ad6d434a3f23003be3c",
+     "fetched_at": "2026-09-14T20:52:18Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2403.06634",
+    "content_type": "application/pdf",
+    "bytes": 980686,
+    "sha256": "65e2ade24ecefc77ab5eaab511b744a611bbc7efd0ec9ad6d434a3f23003be3c",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:13Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 22,
+   "url": "https://arxiv.org/pdf/2303.12767",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A06",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 443250,
+     "content_type": "application/pdf",
+     "sha256": "0405a463203d785908cb53eafd36e59becbef8a58f8eac2e958ee999d7595bd7",
+     "fetched_at": "2026-09-14T20:52:19Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2303.12767",
+    "content_type": "application/pdf",
+    "bytes": 443250,
+    "sha256": "0405a463203d785908cb53eafd36e59becbef8a58f8eac2e958ee999d7595bd7",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:18Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 23,
+   "url": "https://arxiv.org/pdf/2010.03058",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A07",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1863031,
+     "content_type": "application/pdf",
+     "sha256": "8d8ebbcf652403f05a7b341af98ddd7880b40287b1b927d4dfa3ae80975fc852",
+     "fetched_at": "2026-09-14T20:52:19Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2010.03058",
+    "content_type": "application/pdf",
+    "bytes": 1863031,
+    "sha256": "8d8ebbcf652403f05a7b341af98ddd7880b40287b1b927d4dfa3ae80975fc852",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:22Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 24,
+   "url": "https://arxiv.org/pdf/2308.02828",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A08",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1209832,
+     "content_type": "application/pdf",
+     "sha256": "88003da1f9cee4461c580c6b1d94fbbbfeebd2ee3057dd71b540f9d709efef9f",
+     "fetched_at": "2026-09-14T20:52:20Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2308.02828",
+    "content_type": "application/pdf",
+    "bytes": 1209832,
+    "sha256": "88003da1f9cee4461c580c6b1d94fbbbfeebd2ee3057dd71b540f9d709efef9f",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:26Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 25,
+   "url": "https://arxiv.org/pdf/2407.10457",
+   "recorded": [
+    {
+     "record": "pass4_run_A",
+     "id": "A09",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 408890,
+     "content_type": "application/pdf",
+     "sha256": "0ce2edf15b3b029a9eade7fbc9e12f2fe22c1817a665ba85786f577a915c2774",
+     "fetched_at": "2026-09-14T20:52:20Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2407.10457",
+    "content_type": "application/pdf",
+    "bytes": 408890,
+    "sha256": "0ce2edf15b3b029a9eade7fbc9e12f2fe22c1817a665ba85786f577a915c2774",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:30Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 26,
+   "url": "https://arxiv.org/pdf/2410.20247",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B01",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1985925,
+     "content_type": "application/pdf",
+     "sha256": "07aa991f780630045e3f44104f3f63fbc496c4abb431c0c2ca9c7bca3746e98d",
+     "fetched_at": "2026-09-14T22:13:55Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2410.20247",
+    "content_type": "application/pdf",
+    "bytes": 1985925,
+    "sha256": "07aa991f780630045e3f44104f3f63fbc496c4abb431c0c2ca9c7bca3746e98d",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:35Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 27,
+   "url": "https://arxiv.org/pdf/2607.10252",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B02",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 336219,
+     "content_type": "application/pdf",
+     "sha256": "df887dc4a1ee4aba8add4e1ba1b3766348def81a282959809bf463780351e0ca",
+     "fetched_at": "2026-09-14T22:13:56Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2607.10252",
+    "content_type": "application/pdf",
+    "bytes": 336219,
+    "sha256": "df887dc4a1ee4aba8add4e1ba1b3766348def81a282959809bf463780351e0ca",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:39Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 28,
+   "url": "https://www.semanticscholar.org/paper/032934195f94ef8b8167234eb47872a04c832541",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B03",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:56Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/032934195f94ef8b8167234eb47872a04c832541",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:43Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 29,
+   "url": "https://www.semanticscholar.org/paper/e0044dafbfc54775b5f1d10df7fbeaed7afdc09f",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B04",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:56Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/e0044dafbfc54775b5f1d10df7fbeaed7afdc09f",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:47Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 30,
+   "url": "https://www.semanticscholar.org/paper/aa52648705e336c88f29e90757c4469009657fdf",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B05",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:56Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/aa52648705e336c88f29e90757c4469009657fdf",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:51Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 31,
+   "url": "https://www.semanticscholar.org/paper/28b59d499c1e8c853f7abe3cf9534129d7fde485",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B06",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:56Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/28b59d499c1e8c853f7abe3cf9534129d7fde485",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:30:56Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 32,
+   "url": "https://www.semanticscholar.org/paper/51987cca3dffe3fa03911eab2ec4bbf1f62742bf",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B07",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:57Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/51987cca3dffe3fa03911eab2ec4bbf1f62742bf",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:00Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 33,
+   "url": "https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B08",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "202",
+     "bytes": 0,
+     "content_type": "text/html;",
+     "sha256": null,
+     "fetched_at": "2026-09-14T22:13:57Z"
+    }
+   ],
+   "now": {
+    "http": "202",
+    "url_effective": "https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 0,
+    "sha256": null,
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:04Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 34,
+   "url": "https://arxiv.org/html/2410.19406",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B09",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 466677,
+     "content_type": "text/html;",
+     "sha256": "ae8a746fd6f45cea3581c7df63b55932afba525b45f96adda832b753552a4226",
+     "fetched_at": "2026-09-14T22:13:57Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/html/2410.19406",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 466677,
+    "sha256": "ae8a746fd6f45cea3581c7df63b55932afba525b45f96adda832b753552a4226",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:08Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 35,
+   "url": "https://openreview.net/pdf?id=thhrtv9P0s",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B10",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": false,
+     "http": "403",
+     "bytes": 12692,
+     "content_type": "text/html",
+     "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+     "fetched_at": "2026-09-14T22:13:57Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://openreview.net/pdf?id=thhrtv9P0s",
+    "content_type": "text/html",
+    "bytes": 12692,
+    "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:12Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 36,
+   "url": "https://openreview.net/pdf?id=3DZeEUTwhq",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B10",
+     "attempt": 1,
+     "entry_status": "FETCHED",
+     "accepted": false,
+     "http": "403",
+     "bytes": 12692,
+     "content_type": "text/html",
+     "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+     "fetched_at": "2026-09-14T22:13:58Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://openreview.net/pdf?id=3DZeEUTwhq",
+    "content_type": "text/html",
+    "bytes": 12692,
+    "sha256": "a2d811e0d24af89d9bd4b19cc9e8fbc474c67ef3827648550a6560eca2a5e332",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:17Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 37,
+   "url": "https://openreview.net/forum?id=3DZeEUTwhq",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B10",
+     "attempt": 2,
+     "entry_status": "FETCHED",
+     "accepted": false,
+     "http": "200",
+     "bytes": 4787,
+     "content_type": "text/html;",
+     "sha256": "3f9a96b1244cad79badd22133bfd7679a7bddfe63e0bd5ec3fcb0477abd8c6ee",
+     "fetched_at": "2026-09-14T22:13:58Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3D3DZeEUTwhq",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 4787,
+    "sha256": "3f9a96b1244cad79badd22133bfd7679a7bddfe63e0bd5ec3fcb0477abd8c6ee",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:21Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 38,
+   "url": "https://arxiv.org/pdf/2504.04715",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B10",
+     "attempt": 3,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 710190,
+     "content_type": "application/pdf",
+     "sha256": "0397bc3091833e4c6d37aafcbbfb7620856cdcfd672f8a5ad093a0f762dc8ab0",
+     "fetched_at": "2026-09-14T22:13:58Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2504.04715",
+    "content_type": "application/pdf",
+    "bytes": 710190,
+    "sha256": "0397bc3091833e4c6d37aafcbbfb7620856cdcfd672f8a5ad093a0f762dc8ab0",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:25Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 39,
+   "url": "https://www.alphaxiv.org/abs/2603.19022",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B11",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 192175,
+     "content_type": "text/html;",
+     "sha256": "fec19581a7ada3cb45445197d97bbbb998ac4d7dc6e6bb01d0d65fd7e3a1a6bb",
+     "fetched_at": "2026-09-14T22:13:59Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.alphaxiv.org/abs/2603.19022",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 192257,
+    "sha256": "24159adfc5d1e239fbab115f8405cc447d4f97e1e327607b0bdc8637f7010fe8",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:30Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 40,
+   "url": "https://www.nature.com/articles/d41586-024-02681-2",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B12",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 256967,
+     "content_type": "text/html;",
+     "sha256": "27e7bcd40847503bdfa4d0aa9166f91a6d994d4f475c8ce238a4d8afe7746025",
+     "fetched_at": "2026-09-14T22:14:01Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.nature.com/articles/d41586-024-02681-2?error=cookies_not_supported&code=29f5b209-d3b4-4dd9-98a7-a5e8085f512f",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 256977,
+    "sha256": "a5eee2582060dbe3709c7f552422377a2357c626488771e56bf947197457677c",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:35Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 41,
+   "url": "https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B13",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "429",
+     "bytes": 32182,
+     "content_type": "text/html;",
+     "sha256": "9a7a1241cf0487bb30200ae3d15f02bf34704021d0ce4a8054ffa0d805b3e21d",
+     "fetched_at": "2026-09-14T22:14:02Z"
+    }
+   ],
+   "now": {
+    "http": "429",
+    "url_effective": "https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 32178,
+    "sha256": "c7cab54d6b28e20e5530d1d2497f09ffd0f5b23c645c5a152c3ebc4017d20bb7",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:39Z"
+   },
+   "outcome": "RATE_LIMITED"
+  },
+  {
+   "n": 42,
+   "url": "https://arxiv.org/pdf/2511.20621",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B14",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1338301,
+     "content_type": "application/pdf",
+     "sha256": "6bb442acbe408ded68c5f65a7b58d9d37d6d6bbb6915afc866caef2e6bee4dd2",
+     "fetched_at": "2026-09-14T22:14:02Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2511.20621",
+    "content_type": "application/pdf",
+    "bytes": 1338301,
+    "sha256": "6bb442acbe408ded68c5f65a7b58d9d37d6d6bbb6915afc866caef2e6bee4dd2",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:44Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 43,
+   "url": "https://arxiv.org/pdf/2505.20276",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B15",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 13993505,
+     "content_type": "application/pdf",
+     "sha256": "905bf83710f9820322c744d3256e3a7a6439b6d2079d5eea22895ce3d1c89272",
+     "fetched_at": "2026-09-14T22:14:03Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2505.20276",
+    "content_type": "application/pdf",
+    "bytes": 13993505,
+    "sha256": "905bf83710f9820322c744d3256e3a7a6439b6d2079d5eea22895ce3d1c89272",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:49Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 44,
+   "url": "https://error.reviews/",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B16",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "200",
+     "bytes": 79077,
+     "content_type": "text/html;",
+     "sha256": "2485429e3fdaf2f08be9271df310c1f910cb29caee7efac0aafd56e7ff479856",
+     "fetched_at": "2026-09-14T22:14:04Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://error.reviews/",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 79077,
+    "sha256": "2485429e3fdaf2f08be9271df310c1f910cb29caee7efac0aafd56e7ff479856",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:54Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 45,
+   "url": "https://arxiv.org/html/2605.29979v1",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B17",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 412366,
+     "content_type": "text/html;",
+     "sha256": "39a20b000caac8f6890ad6c2bc08138289e0e9fe9a94ddeb5e7fdaae42ba83db",
+     "fetched_at": "2026-09-14T22:14:04Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/html/2605.29979v1",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 412366,
+    "sha256": "39a20b000caac8f6890ad6c2bc08138289e0e9fe9a94ddeb5e7fdaae42ba83db",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:31:58Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 46,
+   "url": "https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B18",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 183719,
+     "content_type": "text/html;",
+     "sha256": "df705bbc6c278afd20060dafb5aecd5df572f24f871a3c11688ee5f5bde63284",
+     "fetched_at": "2026-09-14T22:14:04Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.emergentmind.com/topics/continuous-monitoring-of-llm-apis",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 183719,
+    "sha256": "aced3f36c34bbc1bca854c6d3af4de1d04fb5ec72d83682fc43ca4b426ff072b",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:02Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 47,
+   "url": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B19",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 41176,
+     "content_type": "text/html",
+     "sha256": "eec28a9cd583249010d7277a634f71200040c48cb2e21d1d0c06129d3833a635",
+     "fetched_at": "2026-09-14T22:14:05Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://stackpulsar.com/blog/llm-model-drift-detection/",
+    "content_type": "text/html",
+    "bytes": 41176,
+    "sha256": "eec28a9cd583249010d7277a634f71200040c48cb2e21d1d0c06129d3833a635",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:06Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 48,
+   "url": "https://arxiv.org/pdf/2601.17768",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B20",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1584839,
+     "content_type": "application/pdf",
+     "sha256": "5126ff80136d8233b562933bbbbcdd2e3e06cc57cd48e20f0ca6c05235b2e02e",
+     "fetched_at": "2026-09-14T22:14:05Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2601.17768",
+    "content_type": "application/pdf",
+    "bytes": 1584839,
+    "sha256": "5126ff80136d8233b562933bbbbcdd2e3e06cc57cd48e20f0ca6c05235b2e02e",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:11Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 49,
+   "url": "https://www.catchpoint.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B21",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1182209,
+     "content_type": "text/html;",
+     "sha256": "37f433072d9cf5ebb1e73ffaeb32fc1c2e478e20e306edcdf64625e1b51ad6ae",
+     "fetched_at": "2026-09-14T22:14:08Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.logicmonitor.com/blog/llms-dont-stand-still-how-to-monitor-and-trust-the-models-powering-your-ai",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 1182209,
+    "sha256": "dad1a9e4df49bd60cab4d85971f65406229601e9104413079e2eaf44a5d1438f",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:17Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 50,
+   "url": "https://arxiv.org/html/2512.03816v2",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B22",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 187780,
+     "content_type": "text/html;",
+     "sha256": "c0ee0fc802f5cafdc14956ff93ad14ef61b5f7d5a5aeafa89ca1f7f02141d03a",
+     "fetched_at": "2026-09-14T22:14:09Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/html/2512.03816v2",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 187780,
+    "sha256": "c0ee0fc802f5cafdc14956ff93ad14ef61b5f7d5a5aeafa89ca1f7f02141d03a",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:22Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 51,
+   "url": "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B23",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 5972,
+     "content_type": "text/html;",
+     "sha256": "04aa6cd39c0aab5ec2a2451560b9ac62ff5f21bad9deed0033ba5b1f7d71e7e8",
+     "fetched_at": "2026-09-14T22:14:09Z"
+    },
+    {
+     "record": "pass4_run_B2",
+     "id": "B23",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 5972,
+     "content_type": "text/html;",
+     "sha256": "647ac7d861c486e1cf2abff104febf76ff976f62e57bc1d2be20cc8f9d75a4b9",
+     "fetched_at": "2026-09-14T22:17:25Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 5865,
+    "sha256": "56da8ebb3532b0b1e141c3606f9254ffb35e1d905e761127edf0c066cea612ec",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:26Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 52,
+   "url": "https://www.nature.com/articles/d41586-024-01465-y",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B24",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 237527,
+     "content_type": "text/html;",
+     "sha256": "8d3349f74563afbe3672bb6551a81e3b9fadcb9c1c8459d354497f8629876793",
+     "fetched_at": "2026-09-14T22:14:11Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.nature.com/articles/d41586-024-01465-y?error=cookies_not_supported&code=c4bc3438-38e5-48bb-af73-22b56c1d91df",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 237537,
+    "sha256": "72964883fc963784f195f5089ea8fb0dd0a4bf4736221e82163c8cc594db07c5",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:32Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 53,
+   "url": "https://arxiv.org/pdf/2605.13109",
+   "recorded": [
+    {
+     "record": "pass4_run_B",
+     "id": "B25",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1363826,
+     "content_type": "application/pdf",
+     "sha256": "ff494ebf8dd5683b77cdc450c270b905b105e4b8ca486c29f1fcb96cf734f85d",
+     "fetched_at": "2026-09-14T22:14:11Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2605.13109",
+    "content_type": "application/pdf",
+    "bytes": 1363826,
+    "sha256": "ff494ebf8dd5683b77cdc450c270b905b105e4b8ca486c29f1fcb96cf734f85d",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:36Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 54,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B03",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 296754,
+     "content_type": "text/html;",
+     "sha256": "d291455451be1525d1853119b5d08414c5f57a765ec43a7803adcbefa0ef3916",
+     "fetched_at": "2026-09-14T22:17:14Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 296754,
+    "sha256": "a95e1dae80abffda6212d6ce18cddb54725cdcc06c65719c1c6f239bdcd595be",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:40Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 55,
+   "url": "https://doi.org/10.1038/s41598-026-56100-9",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B04",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 214588,
+     "content_type": "text/html;",
+     "sha256": "8db51c5ec4318950b40389bb273215c7969ad2c04807292ea5e919bc1f39bc5e",
+     "fetched_at": "2026-09-14T22:17:16Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.nature.com/articles/s41598-026-56100-9?error=cookies_not_supported&code=1c7364b1-5642-4d6a-96ae-b2a6bfb76596",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 214590,
+    "sha256": "cb04106546af734dacf2422b6d323761395738154f58e1b5a868f5d4a223ecd4",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:46Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 56,
+   "url": "https://doi.org/10.71097/ijsat.v17.i1.10626",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B05",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 20031,
+     "content_type": "text/html;",
+     "sha256": "b22cff372ca030bbe8f4d0e62dccf71b95b011933351c57937d4cb3def2cddfa",
+     "fetched_at": "2026-09-14T22:17:18Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.ijsat.org/research-paper.php?id=10626",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 20031,
+    "sha256": "b22cff372ca030bbe8f4d0e62dccf71b95b011933351c57937d4cb3def2cddfa",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:51Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 57,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B06",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 353663,
+     "content_type": "text/html;",
+     "sha256": "e70879dc3795dd4e6aa88deb8b046de957f837c05ca4a0d33b293c056bdb6f52",
+     "fetched_at": "2026-09-14T22:17:18Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 353663,
+    "sha256": "b9c7bdfa3a0cd4d26c909061667a5bde09454946b002bbba66f48c2a42bfc0f3",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:32:56Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 58,
+   "url": "https://doi.org/10.70917/ijcisim-2026-4475",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B07",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 26651,
+     "content_type": "text/html;",
+     "sha256": "7d1c0ad23622d44909495040fc4a5fa34eadf8e779d85dc134d031130d65e8ff",
+     "fetched_at": "2026-09-14T22:17:19Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://cspub-ijcisim.org/index.php/ijcisim/article/view/4475",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 26651,
+    "sha256": "7d1c0ad23622d44909495040fc4a5fa34eadf8e779d85dc134d031130d65e8ff",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:01Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 59,
+   "url": "https://doi.org/10.3390/electronics15010056",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B08",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 399,
+     "content_type": "text/html",
+     "sha256": "6091bab8bcd0147ef943c0e1bd3555e5631317c519168e2e1eebb887b6b57f06",
+     "fetched_at": "2026-09-14T22:17:20Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.mdpi.com/2079-9292/15/1/56",
+    "content_type": "text/html",
+    "bytes": 397,
+    "sha256": "c2d097e49019ba7fc7206caefb5e6670f1bd94b6cccdf7913f79eae728692d11",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:06Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 60,
+   "url": "https://www.mdpi.com/2079-9292/15/1/56",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B08",
+     "attempt": 1,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 399,
+     "content_type": "text/html",
+     "sha256": "9b45fc11dbef6bb04f4ab37c4e3c14cd7c74095edfbbfa130d85d3017d19f9e8",
+     "fetched_at": "2026-09-14T22:17:20Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.mdpi.com/2079-9292/15/1/56",
+    "content_type": "text/html",
+    "bytes": 397,
+    "sha256": "eedd45f73cd9ed09246b548e860a29742f430bf0019dddd6921249a9244d3ec9",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:10Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 61,
+   "url": "https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B13",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 163701,
+     "content_type": "text/html;",
+     "sha256": "14d8b9c23e4f278147b2e4ca22111b2dc85c5a4b64ac6f67e83314e04467776a",
+     "fetched_at": "2026-09-14T22:17:24Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 163701,
+    "sha256": "14d8b9c23e4f278147b2e4ca22111b2dc85c5a4b64ac6f67e83314e04467776a",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:15Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 62,
+   "url": "https://error.reviews/about/",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B16",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 93374,
+     "content_type": "text/html;",
+     "sha256": "c3f83d327217b7c152f0777fe18524bd63494a38af24286e3819ccd323e0d06b",
+     "fetched_at": "2026-09-14T22:17:25Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://error.reviews/about/",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 93374,
+    "sha256": "c3f83d327217b7c152f0777fe18524bd63494a38af24286e3819ccd323e0d06b",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:20Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 63,
+   "url": "https://web.archive.org/web/2026id_/https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+   "recorded": [
+    {
+     "record": "pass4_run_B2",
+     "id": "B23",
+     "attempt": 1,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "404",
+     "bytes": 4701,
+     "content_type": "text/html",
+     "sha256": "0abddcc9c43d89e5e1decdeaae6147d5a01658df3ba24cb03daf6fe9dde3f39b",
+     "fetched_at": "2026-09-14T22:17:26Z"
+    }
+   ],
+   "now": {
+    "http": "404",
+    "url_effective": "https://web.archive.org/web/2026id_/https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "content_type": "text/html",
+    "bytes": 4701,
+    "sha256": "64a2202f8da3557ed9d27e090d4abee372825a92e9e705f5c1d0ae37afd8c982",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:25Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 64,
+   "url": "https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+   "recorded": [
+    {
+     "record": "pass4_run_B3",
+     "id": "B08",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 580852,
+     "content_type": "text/html;",
+     "sha256": "f9f5251ee3d71c21d305f2ce9f35e701af448278d20ff1920cd8b212d91c61fb",
+     "fetched_at": "2026-09-14T22:20:21Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://web.archive.org/web/20251223175346id_/https://www.mdpi.com/2079-9292/15/1/56",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 580852,
+    "sha256": "f9f5251ee3d71c21d305f2ce9f35e701af448278d20ff1920cd8b212d91c61fb",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:30Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 65,
+   "url": "https://www.nature.com/articles/s41598-026-56100-9.pdf",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B04",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "200",
+     "bytes": 214592,
+     "content_type": "text/html;",
+     "sha256": "cf661cb2a3e55abdb777e881c6de827984823fe687a99c487c7e64a4ff7cf365",
+     "fetched_at": "2026-09-15T02:07:46Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.nature.com/articles/s41598-026-56100-9?error=cookies_not_supported&code=8bba09b6-da54-4ec1-b784-182c44f533d7",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 214590,
+    "sha256": "3d5d17a96c095dc32a3ee7fb28e555d2de9ba4555509b6a9952ded8a8754e8c2",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:36Z"
+   },
+   "outcome": "SAME_KIND"
+  },
+  {
+   "n": 66,
+   "url": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B05",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1023306,
+     "content_type": "application/pdf",
+     "sha256": "9e70fc0d2cd53d16aa66291c9c67b06a0afaee8e095df2be6310b5a5e92acc3d",
+     "fetched_at": "2026-09-15T02:07:48Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://www.ijsat.org/papers/2026/1/10626.pdf",
+    "content_type": "application/pdf",
+    "bytes": 1023306,
+    "sha256": "9e70fc0d2cd53d16aa66291c9c67b06a0afaee8e095df2be6310b5a5e92acc3d",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:43Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 67,
+   "url": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B07",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 1611209,
+     "content_type": "application/pdf",
+     "sha256": "2ddfd3a89a371c16de07dec16dceee33b2317f43a86322a114c979b756992a50",
+     "fetched_at": "2026-09-15T02:07:50Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://cspub-ijcisim.org/index.php/ijcisim/article/download/4475/3594",
+    "content_type": "application/pdf",
+    "bytes": 1611209,
+    "sha256": "2ddfd3a89a371c16de07dec16dceee33b2317f43a86322a114c979b756992a50",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:49Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 68,
+   "url": "https://arxiv.org/pdf/2603.19022",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B11",
+     "attempt": 0,
+     "entry_status": "FETCHED",
+     "accepted": true,
+     "http": "200",
+     "bytes": 564559,
+     "content_type": "application/pdf",
+     "sha256": "641179593749b28a45e4cd2a0e0cb1ef7d0f602a1872d2d2cc9c077002865ff0",
+     "fetched_at": "2026-09-15T02:07:50Z"
+    }
+   ],
+   "now": {
+    "http": "200",
+    "url_effective": "https://arxiv.org/pdf/2603.19022",
+    "content_type": "application/pdf",
+    "bytes": 564559,
+    "sha256": "641179593749b28a45e4cd2a0e0cb1ef7d0f602a1872d2d2cc9c077002865ff0",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:53Z"
+   },
+   "outcome": "SAME_BYTES"
+  },
+  {
+   "n": 69,
+   "url": "https://doi.org/10.1126/science.zh9l2q0",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B23",
+     "attempt": 0,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 5972,
+     "content_type": "text/html;",
+     "sha256": "8450efcf9c53e2c0bb40850b1cdf5cbb62ba743c9f312d8d4dc7ae1f9a58f1c5",
+     "fetched_at": "2026-09-15T02:07:50Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 5865,
+    "sha256": "df6235db38881aaa87c337fb9ba3b1fc544cc2f9e923772c1f5acf24436682ad",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:33:58Z"
+   },
+   "outcome": "STILL_REFUSED"
+  },
+  {
+   "n": 70,
+   "url": "https://doi.org/10.1126/science.aeh8588",
+   "recorded": [
+    {
+     "record": "correction",
+     "id": "B23",
+     "attempt": 1,
+     "entry_status": "UNFETCHABLE",
+     "accepted": false,
+     "http": "403",
+     "bytes": 5722,
+     "content_type": "text/html;",
+     "sha256": "807f141307ba118f4d55789dd687a84e4703443a821bbbc1ec46ef5e0784f388",
+     "fetched_at": "2026-09-15T02:07:51Z"
+    }
+   ],
+   "now": {
+    "http": "403",
+    "url_effective": "https://www.science.org/doi/10.1126/science.aeh8588",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 5636,
+    "sha256": "7933c1f4d97d2b434b8aab8fe1ec0dcf2baf8b4719698caca8fffb7bda010b1f",
+    "curl_exit": 0,
+    "curl_error": null,
+    "fetched_at": "2026-09-15T08:34:02Z"
+   },
+   "outcome": "STILL_REFUSED"
+  }
+ ]
+}

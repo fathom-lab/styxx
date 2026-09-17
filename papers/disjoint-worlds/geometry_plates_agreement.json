@@ -1,0 +1,44 @@
+{
+ "llama_3b": {
+  "llama_3b": 1.0,
+  "llama_1b": 0.9417706360352872,
+  "gemma_2b": 0.9594726135955332,
+  "qwen_1p5b": 0.8713107544208081,
+  "control (qwen, items shuffled)": 0.003995755167123319
+ },
+ "llama_1b": {
+  "llama_3b": 0.9417706360352872,
+  "llama_1b": 1.0,
+  "gemma_2b": 0.9291075170683627,
+  "qwen_1p5b": 0.8783206391198877,
+  "control (qwen, items shuffled)": 0.0012169910160076266
+ },
+ "gemma_2b": {
+  "llama_3b": 0.9594726135955332,
+  "llama_1b": 0.9291075170683626,
+  "gemma_2b": 0.9999999999999999,
+  "qwen_1p5b": 0.8739353471544509,
+  "control (qwen, items shuffled)": 0.004114495696587188
+ },
+ "qwen_1p5b": {
+  "llama_3b": 0.8713107544208081,
+  "llama_1b": 0.8783206391198878,
+  "gemma_2b": 0.8739353471544509,
+  "qwen_1p5b": 1.0,
+  "control (qwen, items shuffled)": 0.002904106588186267
+ },
+ "control (qwen, items shuffled)": {
+  "llama_3b": 0.003995755167123319,
+  "llama_1b": 0.0012169910160076264,
+  "gemma_2b": 0.004114495696587188,
+  "qwen_1p5b": 0.002904106588186267,
+  "control (qwen, items shuffled)": 1.0
+ },
+ "coefficients_sha256": {
+  "llama_3b": "75e22bbb74e8e5723d2c23fc1d35370518f89e6f905d5e778b7fac12dbc1c93e",
+  "llama_1b": "3502c83d5bc4d6a80819fb29dae79cb8e95df95f4435b214d5e5913145778e9c",
+  "gemma_2b": "c00b2937dbd0ae7123ae9d2c477b02e7c8f591261316eed6ffa99a3d398ba04b",
+  "qwen_1p5b": "11b7828ff725f8638f82b2fcf96ad3e87f5c7997b182501d73f16fa90509254f",
+  "control (qwen, items shuffled)": "d772db119a770ca4ab8430b2be3cd3f911383eee2418633c3135fd2bd4a211fa"
+ }
+}

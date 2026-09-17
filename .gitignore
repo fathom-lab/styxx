@@ -125,6 +125,10 @@ papers/showcase-viz/_frame_*.png
 # smoke / invalid run scratch (never read as results, regenerable from the run scripts)
 papers/**/*_smoke.json
 papers/**/*_smoke.png
+# a smoke run that also carries --tag writes *_smoke<tag>.*, and the tag need not start with '_'
+# (red team 2026-09-14, runner F4; verification RDQ-4: *_smoke_* missed --smoke --tag dryrun)
+papers/checksum/*_smoke*.json
+papers/checksum/*_smoke*.png
 papers/**/*_SMOKE_INVALID*
 papers/closed-model-frontier/triage_fleet_worklist.json
 papers/showcase-viz/caught_lie_demo.gif

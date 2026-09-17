@@ -1,0 +1,119 @@
+[
+ {
+  "id": "B03",
+  "part": "B",
+  "title": "A cross-dataset harmonized intrusion detection framework with statistically validated multi-model learning",
+  "urls": [
+   "https://pmc.ncbi.nlm.nih.gov/articles/PMC13094972/",
+   "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13094972/fullTextXML",
+   "https://doi.org/10.1371/journal.pone.0346982"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.1371/journal.pone.0346982 and PMC13094972 from the Semantic Scholar search response's externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/032934195f94ef8b8167234eb47872a04c832541"
+  ]
+ },
+ {
+  "id": "B04",
+  "part": "B",
+  "title": "BlockFedX: a cross-domain federated learning system with explainability, anomaly detection, and tamper-evident logging.",
+  "urls": [
+   "https://doi.org/10.1038/s41598-026-56100-9",
+   "https://www.nature.com/articles/s41598-026-56100-9"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.1038/s41598-026-56100-9 from externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/e0044dafbfc54775b5f1d10df7fbeaed7afdc09f"
+  ]
+ },
+ {
+  "id": "B05",
+  "part": "B",
+  "title": "Ensemble Majority Voting-Based Hybrid Machine Learning Framework for Intrusion Detection in Secure Digital Banking Networks",
+  "urls": [
+   "https://doi.org/10.71097/ijsat.v17.i1.10626"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.71097/ijsat.v17.i1.10626 from externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/aa52648705e336c88f29e90757c4469009657fdf"
+  ]
+ },
+ {
+  "id": "B06",
+  "part": "B",
+  "title": "TAE-IDS: a trust-aware explainable intrusion detection framework using attention-based meta-ensemble learning with blockchain validation",
+  "urls": [
+   "https://pmc.ncbi.nlm.nih.gov/articles/PMC13541755/",
+   "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13541755/fullTextXML",
+   "https://doi.org/10.3389/frai.2026.1903112"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.3389/frai.2026.1903112 and PMC13541755 from externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/28b59d499c1e8c853f7abe3cf9534129d7fde485"
+  ]
+ },
+ {
+  "id": "B07",
+  "part": "B",
+  "title": "Trust-Guided Weighted Federated Averaging with Tamper-Evident Audit Logging for Robust Intrusion Detection on CICIoT2023",
+  "urls": [
+   "https://doi.org/10.70917/ijcisim-2026-4475"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.70917/ijcisim-2026-4475 from externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/51987cca3dffe3fa03911eab2ec4bbf1f62742bf"
+  ]
+ },
+ {
+  "id": "B08",
+  "part": "B",
+  "title": "AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models",
+  "urls": [
+   "https://doi.org/10.3390/electronics15010056",
+   "https://www.mdpi.com/2079-9292/15/1/56"
+  ],
+  "located_by": "Semantic Scholar page served curl an empty HTTP 202; DOI 10.3390/electronics15010056 from externalIds",
+  "listed_urls": [
+   "https://www.semanticscholar.org/paper/501f6091d5dd33ff70762f1184a2d1d79eb3f518"
+  ]
+ },
+ {
+  "id": "B13",
+  "part": "B",
+  "title": "Defeating Nondeterminism in LLM Inference: Theory to Deterministic Code Edits",
+  "urls": [
+   "https://web.archive.org/web/20260418141638id_/https://www.morphllm.com/defeating-nondeterminism-llm-inference"
+  ],
+  "located_by": "the page answered HTTP 429 (rate limited); the Internet Archive capture of the same URL, 2026-04-18, raw bytes (id_)",
+  "listed_urls": [
+   "https://www.morphllm.com/defeating-nondeterminism-llm-inference"
+  ]
+ },
+ {
+  "id": "B16",
+  "part": "B",
+  "title": "ERROR: Estimating the Reliability & Robustness of Research – ERROR is a bug bounty program for science to systematically detect and report errors in academic publications",
+  "urls": [
+   "https://error.reviews/about/",
+   "https://error.reviews/faq_general/",
+   "https://web.archive.org/web/20260427103507id_/https://error.reviews/"
+  ],
+  "located_by": "the programme's home page renders its text with JavaScript (79 KB of HTML, under 1500 characters of text); the same programme's own About and general FAQ pages, then the archive capture",
+  "listed_urls": [
+   "https://error.reviews/"
+  ]
+ },
+ {
+  "id": "B23",
+  "part": "B",
+  "title": "Offering scientists cash to spot errors in published papers doesn’t work",
+  "urls": [
+   "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work",
+   "https://web.archive.org/web/2026id_/https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work"
+  ],
+  "located_by": "the page answered HTTP 403; the same URL again, then any Internet Archive capture of it",
+  "listed_urls": [
+   "https://www.science.org/content/article/offering-scientists-cash-spot-errors-published-papers-doesn-t-work"
+  ]
+ }
+]

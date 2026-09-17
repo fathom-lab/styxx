@@ -21,6 +21,273 @@ code" habit — the message becomes a preregistration and this is the half that 
 came true. Verdict logic untouched; `tests/test_git_commit_msg_hook.py` runs the hook the way
 git runs it, in a real temporary repository, including once installed as a real hook.
 
+## [Unreleased] — the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
+
+**Ten adversarial reviewers, one skeptic per dimension, on 2026-09-13; no blocker or defect finding
+was refuted. Every repair is a new commit; no sworn document and no frozen PREREG was edited. The
+findings and their repairs, briefly — `papers/checksum/DUE_DILIGENCE_2026_09_13.md` §7 has the
+longer list.**
+
+**2026-09-15 — the sand survey's fetchers presented as browsers; an erratum stands beside passes 3 and 4.**
+`fetch_pass3.py`, `fetch_pass4.py`, the pass-4 correction's scripts and the red team's probes sent a user agent
+beginning `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`. The lab's rule is that no request presents as a browser.
+- **The method was frozen before any request.** A non-browser re-fetch of the 71 recorded URLs was committed and pushed
+  at 8273cdda before it sent anything (`papers/plates/sand_survey_user_agent_inputs/`).
+- **Outcomes.** 45 same bytes; 10 same kind; 14 refused then and now; 1 rate-limited; **1 answered then and refuses
+  now: L16**, ACM's artifact-badging page (403).
+- **L16 decides nothing.** It is one of five pass-3 occupiers of the bounty clause. Pass 4 and its correction price that
+  clause UNPRICED on B23.
+- **The erratum.** `ERRATUM_sand_survey_user_agent_2026_09_15.md` was attacked by two skeptics and a fact-checker
+  before swearing, and nine defects in its first draft were repaired. It is sworn 31 of 31 at 4b8c055c and is ferry
+  entry 257, head `8a0ee53b…`.
+- **The false statements it corrects.** The pass-4 SURVEY's "one probe sent a browser user agent", commit c398e830's "No
+  route presents as a browser", and the red team's "No browser user agent was sent".
+- **Pass 5.** Its protocol fetches as `fathom-lab-sand-survey/5` and reads no archived text that a non-browser request
+  cannot get.
+
+**2026-09-15 — pass 4 red-teamed and corrected.** Seven finders attacked pass 4, with skeptics on every finding: of
+44 findings, 33 were confirmed, 9 refuted and 2 split (`papers/plates/sand_survey_pass4_inputs/redteam/`).
+`PROTOCOL_sand_pass4_correction_2026_09_15.md` was frozen at 9dbf4092 before any correction fetch or reading.
+`CORRECTION_sand_neighbours_pass4_2026_09_15.md` stands beside the unedited sworn SURVEY.
+- **The sentence names new neighbours.** Xu et al. leaves it: re-coded under the pass-4 definitions, it is at
+  distance two, where pass 3's undefined terms had put it at distance one. Four sources are at distance one and all
+  are named: DiFR and Chauvin et al. without the interval, Gao et al. and Hochlehnert et al. without
+  log-probabilities. Four blind readers re-coded Hochlehnert et al., and none put it at distance one.
+- **The earlier passes' fingerprint sources are coded by element.** All 23 from passes 2 and 3 were re-read from
+  their hashed bytes.
+- **Two READ sources were not articles.** B11, an alphaXiv summary page, is now read from its arXiv paper. B12, a
+  Nature paywall stub, is SKIMMED. B05 and B07 are read from their open PDFs.
+- **The statuses hold, and the conjunction is recorded.** C4a stays OCCUPIED, C5 stays UNPRICED (B23), and the
+  conjunction is RETIRED.
+- **Builder and review.** `build_sand_survey_pass4_correction.py` implements the correction's rules. An adversarial
+  review before its first real run confirmed 14 defects in its first version, and each was repaired with a test (29
+  tests).
+- **Statements corrected.** Fourteen false or overstated statements in the SURVEY are corrected, with times, among
+  them "each written before the result it could have bent was known".
+
+**2026-09-14, later still — the sand priced a fourth time.** `PROTOCOL_sand_prior_art_pass4_2026_09_15.md`
+(frozen at 5d7f39ef before the first query) defined the fingerprint clause's elements and a frozen three-engine
+search. `SURVEY_sand_neighbours_pass4_2026_09_14.md` is sworn 50 of 50 and is ferry log line 255.
+- **The fingerprint clause stays occupied, at distance one.** Gao, Liang and Guestrin's Model Equality Testing lacks
+  log-probabilities. DiFR and Chauvin et al.'s Log Probability Tracking each lack an interval on the comparison.
+  Xu et al. lacks the same-weights floor. In a margin check, four blind readers re-coded each of the three pass-4
+  sources, and one of five readings of Chauvin et al. carries all five elements.
+- **The bounty clause is unpriced** by one unfetchable source and leaves the sentence (`SURVIVES_WITHOUT_C5`).
+- New: `papers/plates/build_sand_survey_pass4.py` (20 tests), `build_sand_survey_pass4_margins.py`, and
+  `sand_survey_pass4_inputs/` (the fetcher, the search and screen record, the located fetch routes, the
+  landing-page scope, the reader prompts and returns).
+- Disclosed defects: the frozen arXiv syntax returned nothing. The first search merge, the Semantic Scholar retry
+  rule, the midpoint proof and the sentence composer were each wrong once, and each was repaired before the record was committed, some after the result it touched had been seen (see the
+  2026-09-15 correction above).
+
+**2026-09-14, evening — the day's own work red-teamed: eight finder dimensions, two skeptics per blocker
+or defect; 13 findings confirmed (one blocker), 5 plausible, 5 refuted; a verification of those repairs the same night confirmed 8 more (one blocker), repaired below. Repairs are new commits; no sworn
+document and no frozen PREREG was edited — the two sworn documents at fault get CORRECTIONs beside them.**
+- **Blocker, withdrawn by CORRECTION: the beacon-draw PREREG said the drawn values "could not have been
+  computed before the slot existed".** They can: the 778-item pool is public and a fingerprint scores items
+  independently. The beacon orders the selection of the 48, not the computation.
+  `CORRECTION_prereg_beacon_draw_2026_09_14.md` (anchor #6b) withdraws it; SEALS and `styxx/beacon.py`'s
+  docstring ("removes the advance knowledge") are corrected.
+- **Anyone could have front-run a seal.** `styxx.clock`'s earliest-memo scan counted every listed memo
+  carrying the digest, including transfers other keys sent the creator wallet; the digests are printed in
+  SEALS before sealing. Candidates are now resolved and count only if the wallet signed them with exactly
+  the seal memo; `clock verify` prints a beacon only on an ANCHORED line (7ef0e7ac). The verification found the scan could still be blocked for good, and an ANCHORED seal revoked, by two hundred memos carrying the digest or fifty thousand later transactions; it now reads only the history older than the seal, a verifier can raise its limit (`--max-candidates`), and two wallet seals in one slot are the same beacon (e7108ccb).
+- **H1's held-out form does not escape its by-construction problem.** `probe_h1_held_out.py`: identical
+  weights read SAME 60/60 when the loads are bit-identical and 9 to 12 of 60 otherwise, and DRIFT once at
+  two scales. The CORRECTION fixes the reading before the run; `score.py` applies it.
+- **`score.py` v2** re-derives what v1 trusted: K1 from the floor, the sealed digest without a flag, a
+  48-item draw, every arm grading the drawn set; a valid K1-killed run is a result. Its tests parse every
+  band out of the frozen text and pin every comparator on its edge; 28 of 28 mutations caught (4e08cf28); the verification then showed 15 of 18 further mutations surviving, and the published list (`papers/checksum/score_mutations.py` and its result file) now kills 92 of 92.
+- **`styxx.stranger` v2**: a `.md` edited beside an untouched sidecar read PASS (`check` on a sidecar never
+  opens it); now compared byte for byte. Document verdicts are tallied, a dirty tree FAILS unless
+  `--allow-dirty`, a short head is refused, committed scorecards must name the certs bytes, fingerprints
+  beside beacon-drawn certs are re-checked, and a directory named `*_certs*` no longer hides them.
+- **The repairs, verified and repaired again** (six areas, two skeptics per finding; then three repair
+  batches, each in its own worktree with two reviewers and a repair round). The scorer: a beacon-draw card
+  without `--expect-beacon` is never a result; when K1 did not fire every arm cert, the held-out cert and the
+  canary hash must exist; `is_the_experiment` is cross-checked against tag, smoke, git head (empty counts as
+  missing) and a dirty tree; H5 waits when the hand set's K1 fired; H6 reads only a portability record whose
+  digests re-derive from these certs (it cannot show the other column came from another machine, and says
+  so). The stranger command accounts for every scorecard, always runs the checkout step, FAILS drawn certs
+  without fingerprints, and takes the seal's beacon from the seals step. The runner refuses a shadowed
+  checksum module, untracked files under `styxx/`, an unanswered git status, and any beacon but the one
+  `clock verify` prints ANCHORED for the seal.
+- **The runner refuses the sealed experiment** unless the PREREG at HEAD is the sealed blob on a clean
+  commit, and records the weights' Hub revision (0fae8ac7).
+- **Sand survey pass 3's inputs were not in the tree.** The four reader returns and the fetch script are
+  committed; the record rebuilds from them exactly except the quote check, whose texts are other people's
+  work and stay out. `CORRECTION_sand_neighbours_pass3_2026_09_14.md` prices the fingerprint clause under
+  four readings of the two terms the protocol left undefined: it retires under none, and ChatLog carries
+  the clause's object under one of them and not its log-probabilities. The ERRATUM beside it (sworn) corrects what the correction then said about the margin: it is per source — log-probabilities against ChatLog and Hooker et al., a floor measured on the same weights against Xu et al., a self-comparison against Madaan et al. under the most lenient reading; no single element carries it.
+
+**2026-09-14, on the same branch — CI made green, the next PREREG, the sentence priced a third time,
+the reading rules as code, and a command for the stranger.**
+- **CI had been red on Linux since the series landed**: an unused `sys` import in `styxx/geoplate.py`
+  stopped every job at lint; then `str | None` annotations in `plate.py`/`geoplate.py` broke 3.9 at
+  collection. Fixed; `pyproject` selects ruff FA102 so that class fails on Windows too; the challenge
+  tests skip on a shallow clone with the reason. Green at 9f09e749; the stranger's first push (dee0d332 and ee96cb97) went red again on the repo's own subprocess-encoding test, fixed in 7213c6c4 (an earlier version of this line said green "every push since", which was not true).
+- **`PREREG_checksum_beacon_draw_2026_09_14.md`** (frozen at b8205b1c, blob `d6a98261…` = anchor #6):
+  48 canaries drawn from the 778-item pool by the block hash of the slot of the earliest confirmed
+  memo carrying the file's digest, so the SELECTION of the 48 cannot precede its seal (this line first said "the run cannot precede its seal"; the per-item values over the public pool can be computed beforehand, and CORRECTION_prereg_beacon_draw_2026_09_14.md withdraws the claim); H1 in the held-out form the
+  CORRECTION promised; K5 validity; K6 no ANCHORED line, no run. Sworn (24 spans), charon line 250.
+  `run_deploy_quant.py --prereg {deploy_quant,beacon_draw}`; a second 0.5B check through the new
+  path was bit-identical to the first. A test pins `styxx.beacon.POOL` to the frozen hash and size.
+- **Sand survey pass 3** (`SURVEY_sand_neighbours_pass3_2026_09_14.md`, sworn, charon line 251):
+  seventeen of pass 2's forty leads, closed by a protocol before any fetch, all read end to end;
+  none retires a clause; three nearer neighbours (Tu et al., Hooker et al., Madaan et al.) enter the
+  fingerprint clause; the licensed sentence is longer, not shorter. Every verdict quote was found
+  verbatim in the extracted text by the builder.
+- **`papers/checksum/score.py`**: the two PREREGs' hypotheses and kill gates executed by code on a
+  certs file — predicted band, observed value, holds, per clause; INSTRUMENT CHECK vs result; K5
+  re-derives the draw and checks the beacon against the ANCHORED line's. `tests/test_checksum_score.py`
+  binds every band to the frozen text. On the 0.5B hand-set check it reads H1 FAILED (0 is not > 0)
+  and H2 FAILED (0.427 above the band written for 1.5B) — by code, not by the author of the bands.
+- **`styxx.stranger`** (`python -m styxx.stranger --repo . --expect-head <head>`): the seven checks
+  of `papers/checksum/STRANGER.md` as one command with one table and an exit code. Its first run
+  taught it which file to hand the verifier: `sworn check` must be given the `.sworn.json` sidecar
+  (the commit and the manifest binding), not the `.md` — handed the `.md`, nine receipts whose spans (this line first said three)
+  cite a harness manifest read FAILED; handed the sidecar, every checkable receipt in the tree
+  VERIFIES (46 of 46), and the sworn-action samples (targets not in the tree) are reported as not
+  checkable rather than failed.
+- **The recipe does not reproduce the RESULT's magnitudes on a second machine; the verdicts do.**
+  `NOTE_replication_alienware_2026_09_13.md` (sworn to both machines' bytes): the null pair at
+  exactly 0 and 30 top-1 hits on both; int8 1.51 → 1.41 nats/token, random 9.50 → 9.72; the float32
+  forward pass differs by at most 1.7e-5 nats/item across the machines, the int8 kernels and the
+  seed-343 init do not transfer. `BOUNTY.md` gains the tolerance rule this forced.
+- **`styxx.clock` checked nothing about who sealed**: a failed transaction, a memo from any wallet, a
+  memo-only transaction and a null block time all read ANCHORED, and it handed `styxx.beacon` a
+  base58 blockhash that `select` refused as non-hex — no draw could be made from any real seal.
+  Thirteen named statuses, the fee payer must be the creator, the transaction must carry a transfer
+  of the mint, the beacon is the blockhash's 32 bytes as hex, and the docstring says what is still
+  not checked (one RPC trusted; no search for other memos, so the earliest-memo rule is owed — it was built the same night, 6db98505, and tightened on 2026-09-14, 7ef0e7ac).
+- **`styxx.challenge` paid, by BOUNTY's letter, for a shallow clone, a renamed copy and a modified
+  verifier.** v1 refuses all three with the reason, splits `agree` into digest and verdict, writes
+  the stranger's receipt beside the record, and says what a record is: a self-report the lab
+  settles by re-running. The sentence "cannot be edited afterwards" is gone from SAND_CHECK.
+- **`styxx.checksum`**: the floor was silently promoted to 1e-4 (cert now carries measured and
+  effective); the degeneracy guard ignored the belief geometry; a non-finite floor read SAME; an
+  empty tokenizer compared; a top-k fingerprint compared with a full one (fingerprints carry `kind`
+  and `k`); the cert digest covered no hash of either fingerprint (`compare/v1` does, plus the
+  seed and floors); an INCONCLUSIVE cert was not strict JSON; `-0.0` on a noisy diagonal hashed
+  by machine. Committed v0 certs stay under their schema.
+- **`styxx.observatory` verify() re-derived nothing but linkage**: a forward-rehashed forgery of
+  every verdict, a truncated log and a replaced plate all verified; the logged coefficient hashes
+  never matched the files; the "three-day" demo was thirty-six seconds with caller-supplied dates.
+  v1 re-derives coefficients and verdicts from the files a stranger has, pins head and count,
+  writes `taken` beside `when`, refuses an empty rebaseline reason; the v0 demo fails v1 by
+  design (`observatory_demo/CORRECTION.md`); a fresh demo lives under `observatory_demo_v1/`.
+- **The deploy-scale runner** imported whichever styxx `sys.path` found and recorded nothing about
+  it; it now refuses a package from outside the checkout, evaluates the PREREG's K1 in code,
+  passes `n_boot` and `seed` explicitly, and writes provenance (git HEAD, the PREREG blob's
+  sha256 — the sealed bytes — the checksum.py hash, versions, device, `CUBLAS_WORKSPACE_CONFIG`).
+  H1 cannot read SAME by construction whenever its own first clause holds:
+  `CORRECTION_prereg_deploy_quant_H1_2026_09_13.md` states the reading rule before the run, with
+  a committed probe. `SEALS_2026_09_13.md` puts the frozen blob digests in the tree and states that
+  a seal hashes the git blob, never the working copy (the runbook's instruction would have sealed a
+  CRLF hash).
+- **The browser plate drew the vertical mirror** of the python plate for every asymmetric figure;
+  fixed, and `tests/test_plate_page.py` runs the page's own script under node against
+  `styxx.plate`. "Byte-identical on any machine" was false for the PNGs (pixel-identical for the
+  hash plate; the geometry plate's sand seed reads the unrounded floats) and for the last digits of
+  r in the agreement json; the coefficient hashes are the cross-machine target, as SAND_CHECK said.
+  SAND_CHECK §1 no longer says the lines are the digest: about 2^23 mode captions stand for 2^256.
+- **`styxx.beacon`** accepted any hex string (now 64 characters only), its pool hash was pinned
+  nowhere (now in a test), and its docstring said the beacon rode in every cert (it rides in none;
+  owed). `styxx.epoch` refuses a salt that is not 32 bytes and says no epoch exists.
+- **History**: the checksum RESULT's receipt named c1751053, a commit only the build machine had,
+  for two commits of history; `tests/test_receipts_name_reachable_commits.py` makes that a CI
+  failure (eight Action samples are the documented exception). The RESULT was re-sworn at 60fad45c
+  and entered Charon as line 244 (`python -m styxx.charon ingest`; `build_log.py` refuses to
+  rewrite a log, by design). INDEX says "seal pending", because no anchor exists in bytes.
+- **The runner exercised on both paths, tagged so a check is never the experiment.** `--tag` marks
+  an instrument check and an untagged run on any model but the PREREG's is refused. CPU smoke ran end
+  to end (outputs gitignored by the repo's rule). GPU dry run on Qwen2.5-0.5B, committed as
+  `deploy_quant_*_dryrun_qwen0.5b.*` with `is_the_experiment: false`: bitsandbytes NF4 and LLM.int8
+  load on the RTX 4070 under Windows; three bf16 loads bit-identical (floor 0.000000, K1 silent);
+  NF4 DRIFT 0.427 (r 0.960), int8 DRIFT 0.101 (r 0.996), random 10.44 (r 0.111). With a floor of
+  exactly zero, the PREREG's H1 first clause ("> 0") fails by the letter; the CORRECTION's rule 1
+  says how the RESULT reports that.
+- **The second wave red-teamed, and the skimmed papers read (night).** Twelve agents, none refuted.
+  `styxx.portability` v0 read an absent number as survived, let the base arm choose the verdict, digested the
+  labels and not the inputs; v1 (`styxx.portability/v1`) refuses or names each, grades with the same mean
+  statistic as `checksum.null_floor`, and never grades a bootstrap interval; `CORRECTION_portability`
+  withdraws the RESULT's inside-means-replicated reading (a challenge is decided at the verdict level).
+  A draw record is re-derived, never trusted: `checksum.check_draw_record` re-runs the beacon against the
+  committed pool (a record with an honest canary hash and a lying beacon was accepted for a few hours);
+  certs are `compare/v2` with the draw inside the digest; the observatory writes the draw into every chained
+  line, refuses a baseline under another draw, and leaves no orphan fingerprint file; the runner refuses a
+  malformed or untagged beacon before it imports torch. The static-embedding recipe pins its Hub revision and
+  hashes the table; its random row is declared unrecipe'd. **The sand survey, pass 2**: the nine skimmed papers
+  read end to end — Perrig and Song retire the face clause (hash visualization is defined over any bit-string,
+  with a visual checksum of downloads as an application), Haber and Stornetta retire the seal clause a second
+  time (sections 5–6 remove the trusted party), proof-of-learning moves to occupying the fingerprint clause,
+  and Chen, Zaharia and Zou turn out to grade drift against a repeat-run floor after all. The licensed sentence
+  has four clauses now, each with its neighbour named inside it; the earlier sworn survey stands as the record
+  of what a skim licensed. Forty leads recorded for the next list. The fetch record is committed.
+- **Two things the tree still lacks, named rather than hidden.** The 2026-09-12 sworn chat update
+  that the entry below cites (and that `papers/plates/plate_receipt_update_2026_09_12.png` was
+  rendered from) is not in the tree; the plate is unbacked until the triple is committed under
+  `papers/chat/`. And the eight new modules are `python -m styxx.<module>` entry points outside
+  the guarded public surface (`tests/test_public_surface.py` tests a hand-written list and
+  `styxx/__init__.py` exports none of them); the `styxx[plate]` extra serves modules the CLI does
+  not register.
+
+## [Unreleased] — checksum v0: a fingerprint for model behavior, the observatory, the clock, the challenge record, the bounty
+
+**`styxx/checksum.py`, `styxx/observatory.py`, `styxx/beacon.py`, `styxx/epoch.py`,
+`styxx/clock.py`, `styxx/challenge.py`; `papers/checksum/`; `BOUNTY.md`;
+`papers/plates/SAND_CHECK.md`. Nothing here is a measurement beyond one 135M model on cpu.**
+This entry was missing from the series as built (the red team's hygiene reviewer found ten of
+eleven commits absent from this file) and is written after the fact from the commits themselves.
+- **`styxx.checksum`** fingerprints a model on a hashed 48-item canary set in teacher-forced
+  log-probabilities, compares two fingerprints with a bootstrap interval, a degeneracy guard and a
+  measured null floor, and writes a comparison cert. The sworn
+  `RESULT_checksum_smollm_quant_2026_09_13.md`: the same weights reloaded read SAME at exactly 0
+  nats/token, per-tensor int8 read DRIFT at 1.51 [1.17, 1.90] with belief-geometry r 0.83, random
+  weights 9.50 — on one 135M model, on cpu, on the machine that ran it (see the entry above for
+  what a second machine read).
+- **`PREREG_checksum_deploy_quant_2026_09_13.md`** freezes the deploy-scale run (Qwen2.5-1.5B,
+  bf16 vs NF4 vs int8, four hypotheses, four kill gates) before any data; `run_deploy_quant.py`
+  is its runner. Unrun; seal pending.
+- **`styxx.observatory`**: a chained daily log of fingerprints with a baseline that moves only by
+  a reasoned rebaseline entry; `styxx.beacon`: a canary draw from a 778-item pool by a block hash;
+  `styxx.epoch`: a salted commitment to a private canary set (primitive only; no epoch exists);
+  `styxx.clock`: the memo builder and on-chain re-verification of anchors; `styxx.challenge`: the
+  record a stranger files to replicate or challenge a sworn document.
+- **`BOUNTY.md`** (rules v0, amounts unfilled) and **`SAND_CHECK.md`** (three ways in) — the
+  holder-facing procedure; and `DUE_DILIGENCE_2026_09_13.md`, the series' own adversarial read.
+
+## [Unreleased] — the plate: a receipt gets a face, a geometry gets a face, and neither can lie about the number
+
+**`styxx/plate.py`, `styxx/geoplate.py`, `tests/test_plate.py`, `papers/plates/`,
+`papers/disjoint-worlds/geometry_plates_demo.py`, `papers/charon/gallery.py`. Extra: `styxx[plate]`
+(matplotlib, scipy). Nothing here is a measurement; every line below is a property of a picture.**
+The survey `papers/frequency-resonance/SURVEY_frequency_vibration_2500yr_2026_06_04.md` ends by asking
+for an instrument that does to claims what Chladni's plate did to sound. This is that sentence built.
+- **`python -m styxx.plate <sha256>` renders a hash as a Chladni figure** — the nodal set of four
+  square-plate modes chosen by the re-hashed digest, drawn as sand. Same digest, byte-identical
+  picture on any machine; one changed hex character anywhere, a different figure
+  (`papers/plates/plate_receipt_one_hex_changed.png` is the control). It is a picture of the
+  number and says nothing about the document the number came from.
+- **`styxx.geoplate` renders a matrix, not a hash, and is continuous**: the low-frequency 2-D DCT
+  block (K=8) of a representational dissimilarity matrix over a fixed item order drives the plate,
+  the always-zero diagonal removed first so it cannot make unrelated matrices look alike. Run on
+  the four committed `disjoint-worlds` banks (462 concepts), the RDMs agree at 0.942 / 0.959 /
+  0.929 across meta and google and 0.871–0.878 with qwen, a shuffled-item control at 0.001–0.004,
+  and `papers/plates/geometry_plates_four_models.png` is those numbers as sand. The demo rebuilds
+  it byte-for-byte from a clone with no GPU, no download and no torch. The picture cannot make
+  two geometries agree more than the printed r says they do; `tests/test_plate.py` pins that a
+  shuffled control separates while a perturbed copy stays close.
+- **`papers/charon/gallery.py` renders every Charon line as a plate** keyed by its `entry_id`, so
+  a changed line moves its own sand and every plate after it; `papers/plates/charon/charon_head.png`
+  is the head at 243 lines.
+- **Two debts paid while here.** `bench/tasks/reasoning.jsonl` reas-021: the gold answer is
+  Tuesday, as stacc reported on 2026-09-02; the sworn update of 2026-09-12 swears it still read
+  Wednesday at 4dba3a7, which stays true at that commit. `REPLICATE_legibility.md` said
+  `pip install numpy scipy`; a cold clone on 2026-09-12 failed on line one because `run_g0clear.py`
+  imports torch for the concept list. torch is now on the line. The same cold clone reproduced
+  `b45_result.json` byte-identical in 2 s of compute.
+
 ## [Unreleased] — `--pr`: a public pull request gated by URL, no checkout
 
 `python -m styxx.diffgate --pr https://github.com/OWNER/REPO/pull/N` reads the description and

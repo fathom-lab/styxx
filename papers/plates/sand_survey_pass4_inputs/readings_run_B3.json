@@ -1,0 +1,77 @@
+{
+ "run": "wf_f9482e9f-e5f",
+ "script": "prompts/read_pass4.js",
+ "readings": [
+  {
+   "reader": "reader-1",
+   "sources": [
+    {
+     "id": "B08",
+     "read_end_to_end": true,
+     "last_line_quote": "Back to Top Top",
+     "midpoint_quote": "Hash-Chain Validation: Ensures that audit records form an unbroken chronological chain, confirming that no record has been inserted, removed, or modified.",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "An append-only SHA-256 hash chain of per-step LLM update events (fine-tuning, continual learning and unlearning). Each record holds a digest of the parameter delta plus operation metadata, and an auditor re-derives the chain heads and delta digests.",
+       "reason": "Li et al. do chain records and re-derive them from bytes. The chained object is the update history, though, not a verdict. The auditor's accept/reject decision and the compliance certificate are issued once per update and are not themselves appended to a chain. This is the same mechanism applied to a different object.",
+       "neighbour_phrase": "Li et al. keep a hash-chained, auditor-re-derived log of parameter-update digests on LLM fine-tuning and unlearning"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The accuracy and macro-F1 of a LoRA-fine-tuned (and influence-unlearned) Llama-3.2-1B, trained once with the audit layer and once without, both scored on the same fixed validation or retain/forget splits.",
+       "reason": "Only E2 is carried: both arms of an audit-on/audit-off ablation are scored on a fixed chronological split. The two arms are separate training runs, not the same weights served differently (no E1). They are graded by eye against the size of the LoRA gain, with no same-weights floor (no E3) and no interval or test (no E4). The scores are accuracy and F1 on predicted ratings, not log-probs (no E5). Behavioural drift monitoring across updates is only proposed ('may periodically assess'). Distance 4.",
+       "neighbour_phrase": "Li et al. compare audited and unaudited LoRA fine-tuning accuracy on a fixed validation split",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "AuditableLLM (Ours)—identical fine-tuning setup with the audit layer enabled, which records operation metadata, cryptographic digests, and hash-chain links at every step."
+        },
+        "E2": {
+         "value": true,
+         "quote": "Performance is evaluated on the validation split using accuracy and macro-F1, while audit performance is measured by log continuity and runtime overhead."
+        },
+        "E3": {
+         "value": false,
+         "quote": "these deltas indicate that audit integration is practically non-intrusive to fine-tuning utility in this setting."
+        },
+        "E4": {
+         "value": false,
+         "quote": "Enabling audit logging changes validation accuracy from 0.5539 to 0.5524"
+        },
+        "E5": {
+         "value": false,
+         "quote": "using accuracy and macro-F1 to quantify retention and forgetting respectively."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Processed data and source code are not yet publicly released"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "records each update as a hash-chain-backed, tamper-evident audit trail",
+      "Each audit record is appended as one JSON object per line (JSONL manifest) and linked via the hash chain.",
+      "Any mismatch in these checks causes the audit log to be rejected, whereas a fully consistent pass yields an acceptance decision.",
+      "When both structural and behavioral verifications succeed, the auditor issues a compliance certificate",
+      "Independent auditors or monitoring agents may periodically assess the model’s externally observable behavior on non-sensitive benchmark subsets, evaluating whether performance deviations exceed expected operational bounds."
+     ],
+     "leads": [
+      "Peng, Z.; Xu, J.; Chu, X.; Gao, S.; Yao, Y.; Gu, R.; Tang, Y. VFChain: Enabling Verifiable and Auditable Federated Learning via Blockchain Systems. IEEE Trans. Netw. Sci. Eng. 2022 , 9 , 173–186.",
+      "Jia, H.; Yaghini, M.; Choquette-Choo, C.A.; Dullerud, N.; Thudi, A.; Chandrasekaran, V.; Papernot, N. Proof-of-Learning: Definitions and Practice. In Proceedings of the 2021 IEEE Symposium on Security and Privacy (SP), San Francisco, CA, USA, 24–27 May 2021; pp. 1039–1056.",
+      "Garg, S.; Goel, A.; Jha, S.; Mahloujifar, S.; Mahmoody, M.; Policharla, G.V.; Wang, M. Experimenting with Zero-Knowledge Proofs of Training. In Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security, Copenhagen Denmark, 26–30 November 2023; pp. 1880–1894.",
+      "Eisenhofer, T.; Riepel, D.; Chandrasekaran, V.; Ghosh, E.; Ohrimenko, O.; Papernot, N. Verifiable and Provably Secure Machine Unlearning. In Proceedings of the 2025 IEEE Conference on Secure and Trustworthy Machine Learning (SaTML), Copenhagen, Denmark, 9–11 April 2025; pp. 479–496.",
+      "Thudi, A.; Jia, H.; Shumailov, I.; Papernot, N. On the Necessity of Auditable Algorithmic Definitions for Machine Unlearning. In Proceedings of the 31st USENIX Security Symposium (USENIX Security 22), Boston, MA, USA, 10–12 August 2022; pp. 4007–4022.",
+      "Wang, W.; Tian, Z.; Liu, A.; Yu, S. TAPE: Tailored Posterior Difference for Auditing of Machine Unlearning. In Proceedings of the ACM on Web Conference 2025, Sydney, NSW, Australia, 28 April–2 May 2025; pp. 3061–3072."
+     ],
+     "notes": "The file is an MDPI HTML scrape of 4302 lines. The paper body runs from about line 1572 (abstract) to 3247 (references), followed by the figure and table captions and site chrome. It was read end to end. Source: Li, Yu, Wang & Liang, Electronics 15(1):56, published 23 Dec 2025.\n\nC2: the chain covers update events, not verdicts. The auditor's accept/reject decision and the compliance certificate are not chained. The threat model is an honest-but-curious provider, and the authors explicitly exclude fabricated whole histories. There is no public anchoring in the baseline. The E0 tamper tests (deletion, reordering, hash corruption; 20 trials each) show that the verifier re-derives the chain.\n\nC4a: the E3 membership-inference experiment scores each example by its per-example loss, described as 'e.g., cross-entropy or regression loss', so the loss type is not fixed. It then compares AUC, accuracy and advantage between the audited and unaudited unlearned models with no interval. Those are still two separately produced models, so E1 and E5 stay false for any self-comparison. A digest of client-submitted data batches is described only as optional, and the data is not published, so E6 is false. Behavioural anomaly detection across updates is described in section 4.5.4 as something auditors 'may' do; it is not performed."
+    }
+   ]
+  }
+ ],
+ "confirmations": [],
+ "unread": []
+}
