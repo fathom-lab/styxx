@@ -269,6 +269,41 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
     return False
 
 
+# PATH-2 (PREREG_path2_resolution_2026_09_17, issue #101). `tests_added` and `symbol_added` read
+# only the added lines, so a `def` line that merely changed -- a signature edit, a trailing
+# comment, a re-indent -- counted as added, and "Added 2 tests" over two edited tests was
+# VERIFIED. A definition that the removed lines of the SAME FILE also define is changed, not
+# added. Both doors hand `_gate` the per-file sides, so both read it the same way. When nothing
+# changed, every verdict and every reason is what it was.
+_DEF_TEST_NAME = re.compile(r"^\s*def (test_[A-Za-z0-9_]*)")
+
+
+def _changed_test_defs(sides: dict | None) -> int:
+    """Added `def test_` lines whose test name a removed `def test_` line of the same file defines."""
+    n = 0
+    for added, removed in (sides or {}).values():
+        gone = {m.group(1) for m in map(_DEF_TEST_NAME.match, removed) if m}
+        if gone:
+            n += sum(1 for line in added
+                     if (m := _DEF_TEST_NAME.match(line)) is not None and m.group(1) in gone)
+    return n
+
+
+def _definition_only_changed(pat: str, added_blob: str, sides: dict | None) -> bool:
+    """The added lines define the name, and every added line that does sits in a file whose
+    removed lines define it too. Counted line by line, so a definition the per-file sides cannot
+    place (an added line before any file header) counts as added."""
+    rx = re.compile(pat)
+    hits = sum(1 for line in added_blob.split("\n") if rx.match(line))
+    if not hits:
+        return False
+    changed = 0
+    for added, removed in (sides or {}).values():
+        if any(rx.match(line) for line in removed):
+            changed += sum(1 for line in added if rx.match(line))
+    return changed == hits
+
+
 # COMPAT-1 (PREREG_compat1_2026_09_16). 8,467 of the 71,016 EXTERNAL-1 descriptions claim
 # compatibility and the gate read none of them. It reads them now and says one thing: which
 # public top-level definitions the diff removed without re-defining, per language, with files.
@@ -1242,19 +1277,29 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                  "`def` lines (#110)")
                     else:
                         got = len(re.findall(r"^\s*def test_", added_blob, re.M))
-                        if got == n:
-                            c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
+                        # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
+                        # file's removed lines define. The true number added lies in [net, got]:
+                        # verify `net`, abstain inside the interval, accuse only outside it.
+                        chg = _changed_test_defs(sides)
+                        net = got - chg
+                        note = f" ({chg} changed, not added: #101)" if chg else ""
+                        if net == n:
+                            c.verdict, c.why = "VERIFIED", f"diff adds {net} test functions, claim says {n}{note}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
                             # BC-2 repair 2: a case, file, scenario, suite or class is not a
                             # function; a matching count verifies, a differing one abstains.
                             c.verdict = "UNCHECKABLE"
                             one = {"classes": "class", "cases": "case", "files": "file",
                                    "scenarios": "scenario", "suites": "suite"}.get(noun, noun)
-                            c.why = (f"counts test {noun}, diff adds {got} test functions; "
-                                     f"a {one} is not a function (#110)")
+                            c.why = (f"counts test {noun}, diff adds {net} test functions; "
+                                     f"a {one} is not a function (#110){note}")
+                        elif chg and net < n <= got:
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"diff adds {net} test functions and changes {chg}, claim says {n}; "
+                                     "a changed test is not an added one (#101)")
                         else:
                             c.verdict = "CONTRADICTED"
-                            c.why = f"diff adds {got} test functions, claim says {n}"
+                            c.why = f"diff adds {net} test functions, claim says {n}{note}"
                 elif kind == "symbol_added":
                     if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
                         c.verdict = "UNCHECKABLE"           # BC-1 repair 1
@@ -1263,9 +1308,15 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
                         hit = bool(re.search(pat, added_blob, re.M))
-                        c.verdict = "VERIFIED" if hit else "CONTRADICTED"
-                        c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                                 f"{d['kind']} {d['name']!r}")
+                        if hit and _definition_only_changed(pat, added_blob, sides):
+                            c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
+                            c.why = (f"added lines define {d['kind']} {d['name']!r} only where the "
+                                     "removed lines of the same file define it too; a changed "
+                                     "definition is not an added one (#101)")
+                        else:
+                            c.verdict = "VERIFIED" if hit else "CONTRADICTED"
+                            c.why = (f"added lines {'do' if hit else 'do NOT'} define "
+                                     f"{d['kind']} {d['name']!r}")
                 elif kind == "only_touches":
                     prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
                     if d.get("prefix2"):
