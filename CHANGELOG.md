@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — a commit-msg hook: the message cannot lie about the staged diff
+
+`integrations/git/commit-msg`, one file, copied into `.git/hooks/`: every commit message is read
+against `git diff --cached` by `styxx.diffgate.gate_diff_text`, each diff-shaped claim printed as
+`[ok ]` / `[LIE]` / `[ ? ]`, and the commit refused on a CONTRADICTED claim (`--no-verify`
+overrides, and git never installs hooks from a checkout, so it is opt-in per clone). "tests pass"
+stays UNCHECKABLE in the hook by design: running the suite there would hand the agent's shell a
+second place to write the verdict it wants. Git's own `#` commentary is stripped before reading,
+an empty message and an unmeasurable diff both pass on scope, and a missing `styxx` skips with a
+notice rather than blocking the commit. It pairs with the "write the commit message before the
+code" habit — the message becomes a preregistration and this is the half that checks whether it
+came true. Verdict logic untouched; `tests/test_git_commit_msg_hook.py` runs the hook the way
+git runs it, in a real temporary repository, including once installed as a real hook.
+
 ## [Unreleased] — the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
 
 **Ten adversarial reviewers, one skeptic per dimension, on 2026-09-13; no blocker or defect finding

@@ -81,7 +81,8 @@ verdict: FAIL — this summary would fail your CI with each lie named.
 ```
 
 Zero receipts, zero cooperation from the agent that wrote the summary, no checkout.
-Fails only on a contradicted claim. Prose outside the closed template set is never judged,
+Fails only on a contradicted claim. The same gate on every commit before it lands:
+[`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
 
 **The zero-false-accusation claim that stood here is withdrawn, and here is what replaced it.**

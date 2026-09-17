@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""commit-msg hook: the message cannot lie about the staged diff.
+
+Install (one file, no build step; needs `pip install styxx`):
+
+    cp integrations/git/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+
+Then every `git commit` reads the message you (or your agent) wrote against
+`git diff --cached` with styxx.diffgate, prints each diff-shaped claim as
+[ok ] / [LIE] / [ ? ], and refuses the commit on a CONTRADICTED claim.
+Nothing else is judged: prose outside the closed template set (touched /
+created / deleted paths, "N files changed", "added N tests", "adds function
+X", "only touches prefix/", "tests pass") is never read. "tests pass" is
+UNCHECKABLE here on purpose — a hook that ran your test suite would be a
+second place for the agent's shell to write the verdict it wants.
+
+Override for one commit: `git commit --no-verify`. The hook is deliberately
+not installed by this repository's checkout: git ignores hooks in the tree,
+so the decision to run it is always the person's, never the diff's.
+"""
+import subprocess
+import sys
+from pathlib import Path
+
+
+def main() -> int:
+    try:
+        from styxx.diffgate import gate_diff_text
+    except ImportError:
+        print("styxx diffgate hook: `pip install styxx` first (skipping, commit allowed)")
+        return 0
+    msg_path = Path(sys.argv[1])
+    raw = msg_path.read_text(encoding="utf-8", errors="replace")
+    # git's own commentary in the template is not the message
+    message = "\n".join(l for l in raw.splitlines() if not l.startswith("#")).strip()
+    if not message:
+        return 0
+    diff = subprocess.run(
+        ["git", "diff", "--cached", "--no-color", "--no-ext-diff", "--no-renames"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
+    g = gate_diff_text(message, diff)
+    marks = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}
+    for c in g.claims:
+        print(f"  [{marks[c.verdict]}] {c.kind:20s} {c.why}")
+    if not g.measured:
+        print(f"styxx diffgate: UNMEASURED — {g.why_unmeasured}; nothing to gate against")
+        return 0
+    if g.verdict == "FAIL":
+        n = sum(1 for c in g.claims if c.verdict == "CONTRADICTED")
+        print(f"styxx diffgate: FAIL — {n} claim(s) in the message contradict the staged "
+              "diff. fix the message or the diff; `git commit --no-verify` overrides.")
+        return 1
+    if g.claims:
+        print(f"styxx diffgate: PASS — {len(g.claims)} claim(s) read against the staged diff, "
+              f"{g.uncovered_sentences} of {g.sentences_total} sentences never read")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
