@@ -4,11 +4,20 @@ The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: th
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` at the BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113,
 #115 and the #118 repair, the file **7.48.0** ships once they merge), sha256
-`397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1` (LF line endings; a wheel
-built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
-compares) — and this directory is the receipt for that port: the differential test that holds
-it to the Python's output, and the build that turns it into the bookmarklet people drag into
+`397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1`, re-cut for the PATH-2
+repairs (`papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`: a path claim
+resolves exact, then suffix, then basename, #97; a dotfile keeps its dots in the path key, #121; a
+`def` the same file's removed lines also define is changed, not added, #101) on the file that
+carries them, sha256 `6ccb9b803d64a3166ede0394a595337082377a13741e6f1b5f0af0c581d48091` (LF line
+endings; a wheel built on Windows carries CRLF and hashes differently, so `py_side.py` normalises
+before it compares) — and this directory is the receipt for that port: the differential test that
+holds it to the Python's output, and the build that turns it into the bookmarklet people drag into
 their bookmarks bar.
+
+One known gap, measured below: that file also carries COMPAT-2's sharpened compatibility reading
+(surface vs scaffolding, signature changes, the candidate flag), and the port does not. Its
+`compat_claim` reasons and detail are COMPAT-1's, the verdict (always UNCHECKABLE) is the same, and
+the differential counts every such record as a disagreement.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -39,15 +48,18 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 4b2d34e137b77d299914e66ce7c0fc02336d432f650f3d3bc864e3647c0d1d32   19,002 chars
-    bookmarklet.href.txt  sha256 11fc19fbf68fef8a70662ef1377e675c418613a9952d6529f553a2ac79c4fec7   19,013 chars
+    bookmarklet.min.js    sha256 22c317462e9e8f28cfd1c61563117869f3882074fa38cd2e985c5434eb4c283f   20,255 chars
+    bookmarklet.href.txt  sha256 b41769aefc765049cfeec68174bb455bf242a706a6463a1e3e52e567ccb44cbf   20,266 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
-`9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file. A bookmark
-that hashes to either is an old port; drag the new one.)
+`9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
+19,002 chars, the BIN-2 re-cut — resolves a path claim to an earlier basename match, keys a
+dotfile without its dot, counts a changed `def` as added. A bookmark that hashes to any of them
+is an old port; drag the new one.)
 
-Whatever a browser holds under that bookmark either hashes to the first line (drop the
-`javascript:` prefix) or is not this build. terser 5.51.2 produced these bytes.
+Whatever a browser holds under that bookmark either hashes to the line above (drop the
+`javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
+rebuilds the `4b2d34e1…` bookmarklet byte for byte from its sources, which terser 5.51.2 produced.
 
 `differential/` — the test. Read on.
 
@@ -63,14 +75,27 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 397624d5…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 6ccb9b80…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 29 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 46 pinned pairs against their expect blocks
 
-Result, 2026-09-16, the checkout at the #118 repair:
+Result, 2026-09-17, the checkout at the PATH-2 repairs:
 
-    3205 pairs, 6914 claims (600 verified, 1612 contradicted, 4702 uncheckable) — 0 disagreement(s)
+    3222 pairs, 6942 claims (621 verified, 1615 contradicted, 4706 uncheckable) — 9 disagreement(s)
+    46 pinned pairs, 0 disagreement(s)
+
+The nine are `compat_claim` records (eight pinned compatibility pairs and one commit message),
+every one COMPAT-2's reason and detail against the port's COMPAT-1 reading, and the same nine,
+byte for byte, disagree on `main` before the PATH-2 repairs; nothing else disagrees. PATH-2 moved
+21 of the 3,205 Python records that existed before it, all path claims: 20 on diffs that carry two
+files with one basename (#97, among them `edge:6`, the two-README diff the issue was filed with,
+now VERIFIED) and one PR description whose `.github/workflows/diffgate.yml` now prints with its dot
+(#121). No `tests_added`, `symbol_added` or `only_touches` record moved: the fuzzer never writes a
+removed `def` line or a dotfile, which is why `path2_pairs.json` exists.
+
+Before PATH-2, the checkout at the #118 repair: 3205 pairs, 6914 claims (600 verified, 1612
+contradicted, 4702 uncheckable) — 0 disagreements, against the file before COMPAT-2 merged.
 
 The 3,205 are the 3,176 below plus 29 pinned pairs committed as JSON (the `.gitignore` here
 ignores generated JSON and names these three as exceptions): `bc1_pairs.json`, the four pairs BC-2
@@ -84,10 +109,17 @@ changed path with an apostrophe (Python's `repr()` switches to double quotes; so
 and the demo diff with CRLF line endings; and `bin1_pairs.json`, six for the #118 repair — a
 binary beside a text file, three binaries added / modified / deleted, a pure rename and a mode
 change, a file count that is true only once the binaries are seen, an `only_touches` lie hidden
-behind a binary, a quoted path — also checked on the Python side by `tests/test_diffgate_bin1.py`.
-Their `expect` blocks are the Python's output, written down so a reader can see the intended
-readings without running anything. The 3,199 pre-repair records are byte-identical before and
-after the repair (no binary in the corpus), which is the repair's G-BIN-2.
+behind a binary, a quoted path — also checked on the Python side by `tests/test_diffgate_bin1.py`;
+and `path2_pairs.json`, seventeen for PATH-2 — two README files in either order, a suffix match
+beating an earlier basename, an exact match beating an earlier suffix, the basename fallback, a
+dotfile and its undotted twin, "only touches github/" over `.github/` (abstains on the dot), two
+prefixes and leading slashes, a dotfile beside a nested undotted name, a dotfile outside the
+prefix, the #101 issue diff, a new test beside a changed one at three claimed counts, a changed
+`def` beside a fresh one elsewhere, a rename, a test moved between files (counts as added, the
+disclosed limit) and counted cases over a changed test — also checked on the Python side by
+`tests/test_diffgate_path2.py`. Their `expect` blocks are the Python's output, written down so a
+reader can see the intended readings without running anything. The 3,199 pre-BIN-1 records are
+byte-identical before and after that repair (no binary in the corpus), which is its G-BIN-2.
 
 The first result, the 7.47.0 port against the 7.47.0 file, was 3176 pairs, 8904 claims
 (1024 verified, 2172 contradicted, 5708 uncheckable), 0 disagreements; that port is in this

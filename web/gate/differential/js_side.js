@@ -6,7 +6,7 @@ const path = require("path");
 const { gateDiffText } = require("../diffgate.js");
 const here = __dirname;
 let items = [];
-for (const name of ["corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json"]) {
+for (const name of ["corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "path2_pairs.json"]) {
   const p = path.join(here, name);
   if (fs.existsSync(p)) items = items.concat(JSON.parse(fs.readFileSync(p, "utf8")));
 }
