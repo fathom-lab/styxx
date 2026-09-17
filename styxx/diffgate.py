@@ -261,7 +261,10 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
         return True
     low = _norm(raw).rstrip("/").lower()
     for changed in status:
-        if low in (seg.lower() for seg in changed.split("/")):
+        # PATH-2 (#121): the segments are read with the key's leading dots dropped, as they were
+        # before the key kept them, so "github" still names the ".github" directory here; whether
+        # the changed paths lie under it is decided with the dots, in `_gate`.
+        if low in (seg.lower() for seg in _undotted(changed).split("/")):
             return True
     return False
 
@@ -935,8 +938,25 @@ def _git(repo, *args) -> str:
     return r.stdout
 
 
+# PATH-2 (PREREG_path2_resolution_2026_09_17, issue #121). The key used to be
+# `p.replace("\\", "/").lstrip("./").lower()`, and `lstrip` removes ANY run of dots and slashes:
+# `.pr_agent.toml` and `pr_agent.toml` shared one key, `.github/x` printed as `github/x`, and a
+# status map keyed by path could hold only one of a dotfile and its undotted twin. Only a leading
+# run of `/` and `./` segments is removed now; a dotfile, `..env` and `../x` keep their dots.
+_LEADING_SLASH_SEGMENTS = re.compile(r"^(?:\.?/)+")
+
+
 def _norm(p: str) -> str:
-    return p.replace("\\", "/").lstrip("./").lower()
+    return _LEADING_SLASH_SEGMENTS.sub("", p.replace("\\", "/")).lower()
+
+
+def _undotted(key: str) -> str:
+    """A key with its leading dots and slashes dropped: exactly the key `_norm` made before #121.
+
+    Used in two places only, both in `only_touches`, so that a prefix written without the dot
+    ("github/" for ".github/") is read as it was before and a miss by the dot alone abstains.
+    """
+    return key.lstrip("./")
 
 
 def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
@@ -1259,11 +1279,24 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                  if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
                     outside = [p for p in status
                                if not any(p.startswith(x + "/") or p == x for x in prefs)]
+                    # PATH-2 (#121): every path outside lies inside once the leading dots are
+                    # dropped from the path and the prefix -- the comparison before the key kept
+                    # them. "Only touches github/" over `.github/...` is not accused on the dot.
+                    dot_only = bool(outside) and all(
+                        any(_undotted(p).startswith(_undotted(x) + "/") or _undotted(p) == _undotted(x)
+                            for x in prefs)
+                        for p in outside)
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
+                    elif dot_only:
+                        c.verdict = "UNCHECKABLE"
+                        c.why = ((f"paths outside {prefs[0]!r} differ from it only by a leading dot: "
+                                  f"{outside[:3]} (#121)") if len(prefs) == 1 else
+                                 (f"paths outside {' and '.join(repr(x) for x in prefs)} differ from them "
+                                  f"only by a leading dot: {outside[:3]} (#121)"))
                     else:
                         c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
                         shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
