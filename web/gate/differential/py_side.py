@@ -4,8 +4,10 @@
     python py_side.py --installed      # the installed `styxx` package instead (drift measurement)
 
 The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py at the
-BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the #118 repair), sha256 PINNED
-below — the file 7.48.0 ships once they merge. By default this script imports the checkout's module and REFUSES to run
+BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the #118 repair), re-cut for the PATH-2
+repairs (#97, #121, #101) on the file that carries them, sha256 PINNED below. That file also carries
+COMPAT-2's compatibility reading, which the port does not: the differential reports those
+`compat_claim` records as disagreements (9 on this corpus). By default this script imports the checkout's module and REFUSES to run
 unless it hashes to that pin (after CRLF -> LF normalisation, because a wheel built on Windows
 carries CRLF and the same file then hashes differently), so "0 disagreements" always means
 "against the file the port claims to be", never against whatever happened to be importable.
@@ -25,7 +27,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/diffgate.py on main (LF)
+PINNED = "PATH2SHA256PLACEHOLDER"  # styxx/diffgate.py, main + PATH-2 (LF)
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
@@ -33,7 +35,7 @@ PINNED = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # s
 # a whole cycle behind without anything failing. `fetch_pr` fetches a pull request over the
 # network and is not part of the reading the port transliterates; it moves this whole-file hash
 # without changing a single verdict, and that is recorded here rather than worked around.
-CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json")
+CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json", "path2_pairs.json")
 
 
 def _digest(path: Path) -> str:
