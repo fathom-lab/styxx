@@ -244,7 +244,8 @@ _SYMBOL_WORDS = frozenset({
 
 
 def _diff_touches_python(status: dict) -> bool:
-    return any(p.lower().endswith(_PY_SUFFIXES) for p in status)
+    # AMENDMENT_path2 C-2: read on the undotted key, as before #121, so a file named `.py` is not Python.
+    return any(_undotted(p).lower().endswith(_PY_SUFFIXES) for p in status)
 
 
 def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
@@ -275,33 +276,55 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # VERIFIED. A definition that the removed lines of the SAME FILE also define is changed, not
 # added. Both doors hand `_gate` the per-file sides, so both read it the same way. When nothing
 # changed, every verdict and every reason is what it was.
-_DEF_TEST_NAME = re.compile(r"^\s*def (test_[A-Za-z0-9_]*)")
+#
+# AMENDMENT_path2_resolution_2026_09_17 (C-1): removed and added definitions pair ONE TO ONE, per
+# file and per name, and a file whose status is `A` pairs nothing (it has no base; removed lines
+# under an `A` header are the shelf's fold). The definition-line patterns are written without
+# `\s`, `\w` or `\b`, with one optional leading U+FEFF, so this file and web/gate/diffgate.js read
+# a BOM strip and a non-ASCII name the same way. The added-blob counts (`got`, `hit`) are unchanged.
+_DEF_TEST_LINE = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
 
 
-def _changed_test_defs(sides: dict | None) -> int:
-    """Added `def test_` lines whose test name a removed `def test_` line of the same file defines."""
+def _symbol_def_line(name: str) -> re.Pattern:
+    return re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?(?:def|class)[ \t]+" + re.escape(name) + r"(?=[ \t(:]|$)")
+
+
+def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
+    """Test definitions paired one to one: per file whose status is not `A`, per test name,
+    min(added lines defining it, removed lines defining it), summed. The caller clamps to `got`."""
     n = 0
-    for added, removed in (sides or {}).values():
-        gone = {m.group(1) for m in map(_DEF_TEST_NAME.match, removed) if m}
-        if gone:
-            n += sum(1 for line in added
-                     if (m := _DEF_TEST_NAME.match(line)) is not None and m.group(1) in gone)
+    for path, (added, removed) in (sides or {}).items():
+        if (status or {}).get(path) == "A":
+            continue
+        gone: dict = {}
+        for line in removed:
+            m = _DEF_TEST_LINE.match(line)
+            if m:
+                gone[m.group(1)] = gone.get(m.group(1), 0) + 1
+        if not gone:
+            continue
+        new: dict = {}
+        for line in added:
+            m = _DEF_TEST_LINE.match(line)
+            if m:
+                new[m.group(1)] = new.get(m.group(1), 0) + 1
+        n += sum(min(k, gone.get(name, 0)) for name, k in new.items())
     return n
 
 
-def _definition_only_changed(pat: str, added_blob: str, sides: dict | None) -> bool:
-    """The added lines define the name, and every added line that does sits in a file whose
-    removed lines define it too. Counted line by line, so a definition the per-file sides cannot
-    place (an added line before any file header) counts as added."""
-    rx = re.compile(pat)
-    hits = sum(1 for line in added_blob.split("\n") if rx.match(line))
-    if not hits:
-        return False
-    changed = 0
-    for added, removed in (sides or {}).values():
-        if any(rx.match(line) for line in removed):
-            changed += sum(1 for line in added if rx.match(line))
-    return changed == hits
+def _definition_only_changed(name: str, sides: dict | None, status: dict | None = None) -> bool:
+    """Some file both adds and removes a definition of `name`, and no file adds more definitions of
+    it than it removes (a file whose status is `A` removes none). Counted per file, one to one."""
+    rx = _symbol_def_line(name)
+    paired = False
+    for path, (added, removed) in (sides or {}).items():
+        a = sum(1 for line in added if rx.match(line))
+        r = 0 if (status or {}).get(path) == "A" else sum(1 for line in removed if rx.match(line))
+        if a > r:
+            return False
+        if a and r:
+            paired = True
+    return paired
 
 
 # COMPAT-1 (PREREG_compat1_2026_09_16). 8,467 of the 71,016 EXTERNAL-1 descriptions claim
@@ -458,11 +481,13 @@ def _compat_removed_public_names(sides: dict) -> tuple[list, list, list]:
     """(removed public definitions not re-defined or referenced in the added lines of the same
     language, as (path, language, name, on_surface)), (signature changes, as (path, language,
     name, before, after)), (languages of the diff this reading covers)."""
+    # AMENDMENT_path2 C-2: the suffix and scaffold tests read the undotted key -- the key before #121
+    # -- so `.storybook/` stays scaffolding and a file named `.py` stays unread; paths print dotted.
     by_lang_added: dict = {}
     langs_present: list = []
     for path, (added, _removed) in sides.items():
         for lang, (sufs, _rx) in _COMPAT_LANGS.items():
-            if path.endswith(sufs):
+            if _undotted(path).endswith(sufs):
                 by_lang_added.setdefault(lang, []).extend(added)
                 if lang not in langs_present:
                     langs_present.append(lang)
@@ -470,7 +495,7 @@ def _compat_removed_public_names(sides: dict) -> tuple[list, list, list]:
     changed: list = []
     for path, (_added, removed) in sides.items():
         for lang, (sufs, rx) in _COMPAT_LANGS.items():
-            if not path.endswith(sufs):
+            if not _undotted(path).endswith(sufs):
                 continue
             added_lines = by_lang_added.get(lang, [])
             ablob = "\n".join(added_lines)
@@ -498,7 +523,7 @@ def _compat_removed_public_names(sides: dict) -> tuple[list, list, list]:
                             changed.append((path, lang, name, before, afters[0]))
                     continue
                 if (path, lang, name) not in [d[:3] for d in dropped]:
-                    dropped.append((path, lang, name, not _COMPAT_SCAFFOLD.search(path)))
+                    dropped.append((path, lang, name, not _COMPAT_SCAFFOLD.search(_undotted(path))))
     return dropped, changed, langs_present
 
 
@@ -988,10 +1013,21 @@ def _norm(p: str) -> str:
 def _undotted(key: str) -> str:
     """A key with its leading dots and slashes dropped: exactly the key `_norm` made before #121.
 
-    Used in two places only, both in `only_touches`, so that a prefix written without the dot
-    ("github/" for ".github/") is read as it was before and a miss by the dot alone abstains.
+    Read where a reading of a path's shape must not move with the dot: BC-2's path-shape test for
+    a bare prefix, BC-1's "no Python file" test, and COMPAT's language suffix and scaffold tests
+    (AMENDMENT_path2_resolution_2026_09_17, C-2). Keys, matches and printed paths keep the dots.
     """
     return key.lstrip("./")
+
+
+def _dot_miss(path: str, prefs: list) -> bool:
+    """AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off --
+    some prefix key has no leading dot, the path's leading segment starts with exactly one dot
+    (not `..`), and the path without that dot is the prefix or lies under it."""
+    if not path.startswith(".") or path.startswith(".."):
+        return False
+    rest = path[1:]
+    return any(not x.startswith(".") and (rest == x or rest.startswith(x + "/")) for x in prefs)
 
 
 def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
@@ -1278,9 +1314,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         got = len(re.findall(r"^\s*def test_", added_blob, re.M))
                         # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
-                        # file's removed lines define. The true number added lies in [net, got]:
-                        # verify `net`, abstain inside the interval, accuse only outside it.
-                        chg = _changed_test_defs(sides)
+                        # file's removed lines define, paired one to one (AMENDMENT C-1). The true
+                        # number added lies in [net, got]: verify `net`, abstain inside the
+                        # interval, accuse only outside it.
+                        chg = min(_changed_test_defs(sides, status), got)
                         net = got - chg
                         note = f" ({chg} changed, not added: #101)" if chg else ""
                         if net == n:
@@ -1308,7 +1345,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
                         hit = bool(re.search(pat, added_blob, re.M))
-                        if hit and _definition_only_changed(pat, added_blob, sides):
+                        if hit and _definition_only_changed(d["name"], sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
                             c.why = (f"added lines define {d['kind']} {d['name']!r} only where the "
                                      "removed lines of the same file define it too; a changed "
@@ -1330,30 +1367,30 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                  if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
                     outside = [p for p in status
                                if not any(p.startswith(x + "/") or p == x for x in prefs)]
-                    # PATH-2 (#121): every path outside lies inside once the leading dots are
-                    # dropped from the path and the prefix -- the comparison before the key kept
-                    # them. "Only touches github/" over `.github/...` is not accused on the dot.
-                    dot_only = bool(outside) and all(
-                        any(_undotted(p).startswith(_undotted(x) + "/") or _undotted(p) == _undotted(x)
-                            for x in prefs)
-                        for p in outside)
+                    # PATH-2 (#121), AMENDMENT C-3: an outside path is a DOT MISS when a prefix
+                    # written without a leading dot holds it once its own single leading dot is
+                    # dropped ("Only touches github/" over `.github/...`); every other outside path
+                    # is REAL. Dot misses alone abstain; any real path accuses, and only real paths
+                    # are listed. A dotted prefix over an undotted path, and a `..` path, are real.
+                    dot_miss = [p for p in outside if _dot_miss(p, prefs)]
+                    real = [p for p in outside if p not in dot_miss]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
-                    elif dot_only:
+                    elif dot_miss and not real:
                         c.verdict = "UNCHECKABLE"
                         c.why = ((f"paths outside {prefs[0]!r} differ from it only by a leading dot: "
-                                  f"{outside[:3]} (#121)") if len(prefs) == 1 else
+                                  f"{dot_miss[:3]} (#121)") if len(prefs) == 1 else
                                  (f"paths outside {' and '.join(repr(x) for x in prefs)} differ from them "
-                                  f"only by a leading dot: {outside[:3]} (#121)"))
+                                  f"only by a leading dot: {dot_miss[:3]} (#121)"))
                     else:
-                        c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
+                        c.verdict = "VERIFIED" if not real else "CONTRADICTED"
                         shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
-                        c.why = ("all changed paths under prefix" if not outside else
-                                 (f"paths outside {shown!r}: {outside[:3]}" if len(prefs) == 1
-                                  else f"paths outside {shown}: {outside[:3]}"))
+                        c.why = ("all changed paths under prefix" if not real else
+                                 (f"paths outside {shown!r}: {real[:3]}" if len(prefs) == 1
+                                  else f"paths outside {shown}: {real[:3]}"))
                 elif kind == "compat_claim":
                     # COMPAT-1: one verdict, the evidence in the reason. See _compat_reading.
                     c.verdict, c.why, extra = _compat_reading(sides)
