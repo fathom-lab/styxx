@@ -461,6 +461,10 @@ def test_121_c3_a_dotdot_path_is_not_a_dot_miss():
     assert not dg._dot_miss("..env", ["env"]) and not dg._dot_miss("../src/x.py", ["src"])
     assert dg._dot_miss(".github/x.yml", ["github"]) and dg._dot_miss(".env", ["env"])
     assert not dg._dot_miss(".github/x.yml", [".github"]) and not dg._dot_miss("github/x.yml", ["github"])
+    # a dotted prefix over a path with one dot more: each clause alone excludes it, so this pins the pair
+    assert not dg._dot_miss("..env", [".env"]) and not dg._dot_miss("..github/x.yml", [".github"])
+    _, got = _claims("Only touches .env.", _m("..env"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.env': ['..env']")]
 
 
 # ─────────────────────────────── BIN-1 registration keeps the dots (#121, R-121.2)
