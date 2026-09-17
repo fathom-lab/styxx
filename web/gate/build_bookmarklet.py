@@ -1,13 +1,19 @@
 """Build the bookmarklet from its two sources, byte-for-byte reproducibly.
 
-    python web/gate/build_bookmarklet.py            # writes bookmarklet.min.js + bookmarklet.href.txt
-    python web/gate/build_bookmarklet.py --check    # rebuilds and compares against the committed hashes
+    python web/gate/build_bookmarklet.py            # writes bookmarklet_src.js, bookmarklet.min.js, bookmarklet.href.txt
+    python web/gate/build_bookmarklet.py --check    # rebuilds in memory and compares all three; writes nothing
 
 The bookmarklet is  (function(){ <diffgate.js without its CommonJS export line> <bookmarklet_ui.js> })();
-minified with  terser -c -m --format ascii_only  (terser 5.51.2 produced the shipped bytes), then
+minified with  terser -c -m --format ascii_only  (terser 5.46.0 produced the shipped bytes; the same
+terser rebuilds the earlier 4b2d34e1... bookmarklet, which terser 5.51.2 produced, byte for byte), then
 prefixed with  javascript:  for the href. Nothing else goes in: no analytics, no config, no network
 beyond the two api.github.com reads the UI makes. The sha256 of the minified output is the receipt —
 whatever a browser holds in its bookmarks bar either hashes to it or is not this build.
+
+All three outputs are written as bytes with LF line endings, on every platform: `bookmarklet_src.js`
+is committed without EOL conversion (it carries NUL bytes, so git reads it as binary), and a text-mode
+write on Windows would give it CRLF. `--check` compares against the files on disk and never rewrites
+them, so a committed source that drifted from its two inputs is reported, not repaired in passing.
 """
 from __future__ import annotations
 
@@ -45,17 +51,19 @@ def sha(s: str) -> str:
 
 def main(argv: list[str]) -> int:
     src = source()
-    (HERE / "bookmarklet_src.js").write_text(src, encoding="utf-8")
     mini = minify(src)
     href = "javascript:" + mini
+    outputs = (("bookmarklet_src.js", src), ("bookmarklet.min.js", mini), ("bookmarklet.href.txt", href))
     if "--check" in argv:
-        old_min = (HERE / "bookmarklet.min.js").read_text(encoding="utf-8")
-        old_href = (HERE / "bookmarklet.href.txt").read_text(encoding="utf-8")
-        ok = old_min == mini and old_href == href
-        print(f"bookmarklet.min.js  sha256 {sha(mini)}  {len(mini)} chars  {'matches' if ok else 'DIFFERS'}")
+        ok = True
+        for name, text in outputs:
+            path = HERE / name
+            same = path.exists() and path.read_bytes() == text.encode("utf-8")
+            ok = ok and same
+            print(f"{name:<21} sha256 {sha(text)}  {len(text)} chars  {'matches' if same else 'DIFFERS'}")
         return 0 if ok else 1
-    (HERE / "bookmarklet.min.js").write_text(mini, encoding="utf-8")
-    (HERE / "bookmarklet.href.txt").write_text(href, encoding="utf-8")
+    for name, text in outputs:
+        (HERE / name).write_bytes(text.encode("utf-8"))
     print(f"bookmarklet.min.js   sha256 {sha(mini)}  {len(mini)} chars")
     print(f"bookmarklet.href.txt sha256 {sha(href)}  {len(href)} chars")
     return 0

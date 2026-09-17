@@ -6,8 +6,9 @@
  *
  * Which Python: the file on the BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the
  * #118 repair on fathom-lab/styxx), sha256 397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1, re-cut for the PATH-2
- * repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101) on the file that carries them, sha256
- * 6ccb9b803d64a3166ede0394a595337082377a13741e6f1b5f0af0c581d48091. That file also carries COMPAT-2's sharpened compatibility
+ * repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17)
+ * on the file that carries them, sha256
+ * d9f8ddd58841d875287dd636f722965cc66424885bdcd0e07f171a6fb6e16dbf. That file also carries COMPAT-2's sharpened compatibility
  * reading (surface vs scaffolding, signature changes, the candidate flag), which this port does NOT
  * carry: its `compat_claim` reasons and detail are COMPAT-1's, and the differential reports those
  * records as disagreements. Relative to the 7.47.0 wheel the port
@@ -18,8 +19,9 @@
  * COMPAT-1 reading of "no breaking changes" (one verdict, UNCHECKABLE, the public definitions the
  * diff removed named in the reason). PATH-2 adds: a path claim resolves exact, then suffix, then
  * basename, over every entry (#97); the path key keeps a dotfile's dots, and "only touches" does not
- * accuse on a dot alone (#121); a `def` the same file's removed lines also define is changed, not
- * added (#101). Two deliberate gaps remain: the structural "unparsed claims"
+ * accuse on a dot alone and lists only the paths outside by more than a dot (#121); a `def` the same
+ * file's removed lines also define is changed, not added, paired one to one per name (#101). Two
+ * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
  */
@@ -63,8 +65,9 @@ const _SYMBOL_WORDS = new Set([
 ]);
 
 function _diffTouchesPython(status) {
+  // AMENDMENT_path2 C-2: read on the undotted key, as before #121, so a file named `.py` is not Python.
   for (const p of status.keys()) {
-    const low = p.toLowerCase();
+    const low = _undotted(p).toLowerCase();
     if (_PY_SUFFIXES.some(s => low.endsWith(s))) return true;
   }
   return false;
@@ -94,33 +97,41 @@ function _prefixIsPathShaped(prefix, status) {
 }
 
 // PATH-2 (#101): a definition the removed lines of the SAME FILE also define is changed, not added.
-const _DEF_TEST_NAME = /^\s*def (test_[A-Za-z0-9_]*)/;
+// AMENDMENT_path2 C-1: paired one to one, per file and per name; a file whose status is `A` pairs
+// nothing. The patterns carry no \s, \w or \b (JavaScript's \s matches U+FEFF and its \b is ASCII),
+// so this file and styxx/diffgate.py read a BOM strip and a non-ASCII name the same way.
+const _DEF_TEST_LINE = /^\uFEFF?[ \t]*def (test_[^ \t(:]*)/;
+const _symbolDefLine = name => new RegExp("^\\uFEFF?[ \\t]*(?:async[ \\t]+)?(?:def|class)[ \\t]+" + _reEscape(name) + "(?=[ \\t(:]|$)");
 
-function _changedTestDefs(sides) {
-  // Added `def test_` lines whose test name a removed `def test_` line of the same file defines.
+function _changedTestDefs(sides, status) {
+  // Per file whose status is not `A`, per test name, min(added lines defining it, removed lines
+  // defining it), summed. The caller clamps to `got`.
   let n = 0;
   if (!sides) return 0;
-  for (const [added, removed] of sides.values()) {
-    const gone = new Set();
-    for (const line of removed) { const m = _DEF_TEST_NAME.exec(line); if (m) gone.add(m[1]); }
-    if (gone.size) {
-      for (const line of added) { const m = _DEF_TEST_NAME.exec(line); if (m && gone.has(m[1])) n++; }
-    }
+  for (const [path, [added, removed]] of sides) {
+    if (status && status.get(path) === "A") continue;
+    const gone = new Map();
+    for (const line of removed) { const m = _DEF_TEST_LINE.exec(line); if (m) gone.set(m[1], (gone.get(m[1]) || 0) + 1); }
+    if (!gone.size) continue;
+    const fresh = new Map();
+    for (const line of added) { const m = _DEF_TEST_LINE.exec(line); if (m) fresh.set(m[1], (fresh.get(m[1]) || 0) + 1); }
+    for (const [name, k] of fresh) n += Math.min(k, gone.get(name) || 0);
   }
   return n;
 }
 
-function _definitionOnlyChanged(pat, addedBlob, sides) {
-  // The added lines define the name, and every added line that does sits in a file whose removed
-  // lines define it too. Counted line by line, as the Python does.
-  const rx = new RegExp(pat);
-  const hits = addedBlob.split("\n").filter(line => rx.test(line)).length;
-  if (!hits) return false;
-  let changed = 0;
-  for (const [added, removed] of (sides || new Map()).values()) {
-    if (removed.some(line => rx.test(line))) changed += added.filter(line => rx.test(line)).length;
+function _definitionOnlyChanged(name, sides, status) {
+  // Some file both adds and removes a definition of `name`, and no file adds more definitions of it
+  // than it removes (a file whose status is `A` removes none). Counted per file, one to one.
+  const rx = _symbolDefLine(name);
+  let paired = false;
+  for (const [path, [added, removed]] of (sides || new Map())) {
+    const a = added.filter(line => rx.test(line)).length;
+    const r = (status && status.get(path) === "A") ? 0 : removed.filter(line => rx.test(line)).length;
+    if (a > r) return false;
+    if (a && r) paired = true;
   }
-  return changed === hits;
+  return paired;
 }
 
 // COMPAT-1: which public top-level definitions the diff removed without re-defining, per language.
@@ -211,9 +222,10 @@ function parseUnifiedDiffSides(diffText) {
 function _compatRemovedPublicNames(sides) {
   const byLangAdded = new Map();
   const langsPresent = [];
+  // AMENDMENT_path2 C-2: the suffix tests read the undotted key -- the key before #121; paths print dotted.
   for (const [path, [added]] of sides) {
     for (const [lang, sufs] of _COMPAT_LANGS) {
-      if (sufs.some(s => path.endsWith(s))) {
+      if (sufs.some(s => _undotted(path).endsWith(s))) {
         if (!byLangAdded.has(lang)) byLangAdded.set(lang, []);
         byLangAdded.get(lang).push(...added);
         if (!langsPresent.includes(lang)) langsPresent.push(lang);
@@ -224,7 +236,7 @@ function _compatRemovedPublicNames(sides) {
   const seen = new Set();
   for (const [path, [, removed]] of sides) {
     for (const [lang, sufs, rx] of _COMPAT_LANGS) {
-      if (!sufs.some(s => path.endsWith(s))) continue;
+      if (!sufs.some(s => _undotted(path).endsWith(s))) continue;
       const ablob = (byLangAdded.get(lang) || []).join("\n");
       for (const line of removed) {
         const m = rx.exec(line);
@@ -308,6 +320,14 @@ function _norm(p) {
 // A key with its leading dots and slashes dropped: the key _norm made before #121 (str.lstrip("./")).
 function _undotted(key) {
   return _stripChars(key, "./", true, false);
+}
+// AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off -- some prefix
+// key has no leading dot, the path's leading segment starts with exactly one dot (not `..`), and the
+// path without that dot is the prefix or lies under it.
+function _dotMiss(path, prefs) {
+  if (!path.startsWith(".") || path.startsWith("..")) return false;
+  const rest = path.slice(1);
+  return prefs.some(x => !x.startsWith(".") && (rest === x || rest.startsWith(x + "/")));
 }
 // PATH-2 (#97): resolve in tiers over every entry — exact, then suffix, then basename.
 function _findPath(status, claimed) {
@@ -454,7 +474,8 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
           } else {
             const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
             // PATH-2 (#101): verify net, abstain inside [net, got], accuse only outside it.
-            const chg = _changedTestDefs(sides);
+            // AMENDMENT_path2 C-1: pairs one to one, clamped to got.
+            const chg = Math.min(_changedTestDefs(sides, status), got);
             const net = got - chg;
             const note = chg ? ` (${chg} changed, not added: #101)` : "";
             if (net === n) {
@@ -477,7 +498,7 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
           } else {
             const src = "^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b";
             const hit = new RegExp(src, "m").test(addedBlob);
-            if (hit && _definitionOnlyChanged(src, addedBlob, sides)) {
+            if (hit && _definitionOnlyChanged(d.name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${pyRepr(d.name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
             } else {
@@ -494,23 +515,24 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
             ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
             : [];
           const outside = [...status.keys()].filter(p => !prefs.some(x => p.startsWith(x + "/") || p === x));
-          // PATH-2 (#121): every path outside lies inside once the leading dots are dropped.
-          const dotOnly = outside.length > 0 && outside.every(p =>
-            prefs.some(x => _undotted(p).startsWith(_undotted(x) + "/") || _undotted(p) === _undotted(x)));
+          // PATH-2 (#121), AMENDMENT_path2 C-3: dot misses alone abstain; any real outside path accuses,
+          // and only real paths are listed.
+          const dotMiss = outside.filter(p => _dotMiss(p, prefs));
+          const real = outside.filter(p => !dotMiss.includes(p));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
-          else if (dotOnly) {
+          else if (dotMiss.length && !real.length) {
             c.verdict = "UNCHECKABLE";
             c.why = prefs.length === 1
-              ? `paths outside ${pyRepr(prefs[0])} differ from it only by a leading dot: ${pyList(outside.slice(0, 3))} (#121)`
-              : `paths outside ${prefs.map(pyRepr).join(" and ")} differ from them only by a leading dot: ${pyList(outside.slice(0, 3))} (#121)`;
+              ? `paths outside ${pyRepr(prefs[0])} differ from it only by a leading dot: ${pyList(dotMiss.slice(0, 3))} (#121)`
+              : `paths outside ${prefs.map(pyRepr).join(" and ")} differ from them only by a leading dot: ${pyList(dotMiss.slice(0, 3))} (#121)`;
           }
           else {
-            c.verdict = outside.length === 0 ? "VERIFIED" : "CONTRADICTED";
+            c.verdict = real.length === 0 ? "VERIFIED" : "CONTRADICTED";
             const shown = prefs.length === 1 ? prefs[0] : prefs.map(pyRepr).join(" and ");
-            c.why = outside.length === 0 ? "all changed paths under prefix"
-              : (prefs.length === 1 ? `paths outside ${pyRepr(shown)}: ${pyList(outside.slice(0, 3))}`
-                                    : `paths outside ${shown}: ${pyList(outside.slice(0, 3))}`);
+            c.why = real.length === 0 ? "all changed paths under prefix"
+              : (prefs.length === 1 ? `paths outside ${pyRepr(shown)}: ${pyList(real.slice(0, 3))}`
+                                    : `paths outside ${shown}: ${pyList(real.slice(0, 3))}`);
           }
         } else if (kind === "compat_claim") {
           let extra;
