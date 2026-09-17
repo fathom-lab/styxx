@@ -1035,6 +1035,26 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
                  sides=parse_unified_diff_sides(diff_text))
 
 
+def _find_path(status: dict, claimed: str):
+    """The status entry a path claim names: (path, status), or (None, None).
+
+    PATH-2 (PREREG_path2_resolution_2026_09_17, issue #97): resolved in TIERS over every entry --
+    an entry equal to the claim, else one ending in "/" + claim, else one with the claim's
+    basename; diff order decides only within a tier. The loop this replaces returned the entry
+    that cleared ANY of the three in diff order, so a diff that modified README.md and then
+    created integrations/git/README.md resolved "Created integrations/git/README.md" to the root
+    README by basename. A claim no tier matches is (None, None) exactly when it was before.
+    """
+    c = _norm(claimed)
+    for tier in (lambda p: p == c,
+                 lambda p: p.endswith("/" + c),
+                 lambda p: Path(p).name == Path(c).name):
+        for p, st in status.items():
+            if tier(p):
+                return p, st
+    return None, None
+
+
 def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
     """Resolve a file_created / file_deleted / file_touched claim.
 
@@ -1123,11 +1143,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
         if not status else None
 
     def find_path(claimed: str):
-        c = _norm(claimed)
-        for p, st in status.items():
-            if p == c or p.endswith("/" + c) or Path(p).name == Path(c).name:
-                return p, st
-        return None, None
+        return _find_path(status, claimed)
 
     # ONE resolution of the tests_pass question per gate invocation, memoised
     # here and shared by every match. See `_tests_pass_verdict` for what this
