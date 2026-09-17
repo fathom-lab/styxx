@@ -1,7 +1,10 @@
 """styxx.islands — the cohort survey, and the refusals that keep it honest."""
+import inspect
+
 import numpy as np
 import pytest
 
+import styxx.islands as islands_mod
 from styxx.islands import survey, cliff, rescue, frame, affinity, MIN_COHORT
 
 
@@ -111,3 +114,71 @@ def test_rescue_credits_a_recovery_only_against_its_matched_random_null():
                 0.85, 0.02])              # rank 8: corrected high, null at floor
     out = rescue(reps["a"], reps["island"], legibility_fn=lambda r, i: next(seq), ranks=(2, 8))
     assert out["min_sufficient_rank"] == 8      # rank 2 rejected: its null matched it
+
+
+# --- the island rule's z: the demo, the CLI, and the frozen library default (#93) ------------------
+
+def test_library_default_island_z_is_still_one():
+    """Preregistered runs (b47, h1a) called survey() with its defaults; the default is frozen."""
+    assert inspect.signature(survey).parameters["island_z"].default == 1.0
+    s = survey(_cohort(), k=6, n_null=20, n_perm=20)
+    assert s.island_rule.startswith("mean affinity < median - 1.0*1.4826*MAD")
+
+
+def test_demo_cohort_helper_keeps_the_demo_data():
+    """The factored helper builds exactly what _demo built inline before #93."""
+    rng = np.random.default_rng(0)
+    n = 120
+    shared = rng.standard_normal((n, 8))
+    want = {f"mind_{i}": shared @ rng.standard_normal((8, 24 + i))
+                         + 0.05 * rng.standard_normal((n, 24 + i)) for i in range(6)}
+    want["mind_6"] = shared @ rng.standard_normal((8, 24)) + 0.05 * rng.standard_normal((n, 24))
+    want["ISLAND"] = (rng.standard_normal((n, 8)) @ rng.standard_normal((8, 24)))
+    got = islands_mod._demo_cohort()
+    assert list(got) == list(want)
+    assert all(np.array_equal(got[m], want[m]) for m in want)
+
+
+def test_demo_cohort_at_island_z_three_flags_exactly_the_planted_island():
+    s = survey(islands_mod._demo_cohort(), n_null=400, n_perm=400, island_z=3.0)
+    assert s.islands == ["ISLAND"]
+    assert s.island_rule.startswith("mean affinity < median - 3.0*1.4826*MAD")
+
+
+def _recording_survey(monkeypatch):
+    calls, real = [], islands_mod.survey
+
+    def fake(reps, **kw):
+        calls.append(kw)
+        return real(reps, k=kw.get("k", 20), island_z=kw.get("island_z", 1.0), n_null=20, n_perm=20)
+    monkeypatch.setattr(islands_mod, "survey", fake)
+    return calls
+
+
+def test_demo_calls_survey_at_island_z_three_and_prints_the_rule(monkeypatch, capsys):
+    calls = _recording_survey(monkeypatch)
+    assert islands_mod.main(["--demo"]) == 0
+    assert [c["island_z"] for c in calls] == [3.0]
+    out = capsys.readouterr().out
+    assert "island rule used: mean affinity < median - 3.0*1.4826*MAD" in out
+    assert "Frame affinity alone separates the planted island from the clique." in out
+
+
+def test_demo_honours_an_explicit_island_z(monkeypatch, capsys):
+    calls = _recording_survey(monkeypatch)
+    assert islands_mod.main(["--demo", "--island-z", "1.0"]) == 0
+    assert [c["island_z"] for c in calls] == [1.0]
+    assert "island rule used: mean affinity < median - 1.0*1.4826*MAD" in capsys.readouterr().out
+
+
+def test_cli_accepts_island_z_and_passes_it_for_npz_input(tmp_path, monkeypatch, capsys):
+    reps = _cohort()
+    npz = tmp_path / "cohort.npz"
+    np.savez(npz, **reps)
+    calls = _recording_survey(monkeypatch)
+    assert islands_mod.main([str(npz), "--k", "6", "--island-z", "2.5"]) == 0
+    assert islands_mod.main([str(npz), "--k", "6"]) == 0
+    assert [c["island_z"] for c in calls] == [2.5, 1.0]      # default = survey()'s own default
+    out = capsys.readouterr().out
+    assert "island rule used: mean affinity < median - 2.5*1.4826*MAD" in out
+    assert "island rule used: mean affinity < median - 1.0*1.4826*MAD" in out

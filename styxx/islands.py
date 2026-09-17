@@ -51,6 +51,8 @@ __all__ = ["frame", "affinity", "survey", "cliff", "rescue", "hartigan_dip_p",
 
 MIN_COHORT = 8          # below this, bimodality has no power and the verdict refuses
 _DEF_K = 20
+_DEF_ISLAND_Z = 1.0     # frozen by preregistered runs; see survey()'s docstring before changing it
+_DEMO_ISLAND_Z = 3.0    # the Hampel / MAD-outlier convention, used where the list itself is read
 
 
 def normalize_items(X: np.ndarray) -> np.ndarray:
@@ -186,7 +188,7 @@ class CohortSurvey:
 
 
 def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 100_000,
-           seed: int = 343, island_z: float = 1.0,
+           seed: int = 343, island_z: float = _DEF_ISLAND_Z,
            normalize_amplitude: bool = True) -> CohortSurvey:
     """Measure a cohort of minds over a shared item set.
 
@@ -194,6 +196,35 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 100_00
     members; dimensionality need not be. An island is a member whose mean affinity to the rest
     sits at least ``island_z`` robust deviations below the cohort's median mean-affinity — a
     *stated rule*, not a fitted threshold, so a reader can recompute it.
+
+    **At the default ``island_z=1.0`` the list names ordinary scatter.** The cut is
+    ``median - island_z * 1.4826 * MAD``. A tight clique has a tiny MAD, so a one-deviation cut
+    lands inside the clique's own spread and flags any member on the low side of it. Issue #93,
+    from the ``--demo`` cohort as printed on the reporter's machine (median 0.4467, MAD 0.00305):
+
+    ==========  ======  ===========================
+    island_z    cut     flagged
+    ==========  ======  ===========================
+    1.0         0.4422  mind_0, mind_1, ISLAND
+    2.0         0.4377  ISLAND
+    3.0         0.4331  ISLAND
+    ==========  ======  ===========================
+
+    In robust deviations mind_0 sits 1.4 below the median, mind_1 1.1, the planted ISLAND 61.5.
+    Affinities move in the fourth decimal between linear-algebra builds, so on another machine the
+    same low clique members can land just above the z=1 cut instead (Python 3.12 / numpy 2.4 on
+    Windows: mind_1 at 0.4407 against a cut of 0.4401, only ISLAND listed). Whether they are
+    listed is a coin flip, not a finding. On a cohort with no island at all the z=1 list is usually non-empty
+    (the red-team note in ``tests/test_islands.py``). The list is a lead; the verdict's bimodality
+    screen is the claim.
+
+    The default stays 1.0 because preregistered studies ran ``survey()`` with its defaults and
+    froze that rule in their text: ``papers/disjoint-worlds/PREREG_b47_eight_minds_2026_08_06.md``
+    (island rule = median − 1·1.4826·MAD, via ``run_b47.py``) and
+    ``papers/first-afference/PREREG_h1a_human_alignment_2026_08_06.md`` (defaults unchanged, via
+    ``run_h1a.py``). A new default would silently change what re-running them measures; a new rule
+    needs its own prereg. When the list itself is what you will read, pass ``island_z=3.0`` (the
+    Hampel / MAD-outlier convention), as ``--demo`` does; the CLI takes ``--island-z``.
     """
     names = list(reps)
     if len(names) < 2:
@@ -341,8 +372,8 @@ def rescue(reader, island, legibility_fn, ranks=(1, 2, 5, 10, 20, 40), seed: int
                         else "not low-rank at these ranks")}
 
 
-def _demo() -> int:
-    """Ten seconds, no data, no GPU: plant a cohort with one island and watch it get found."""
+def _demo_cohort() -> dict:
+    """The demo's planted cohort: seven members over one shared geometry, one ``ISLAND`` with its own."""
     rng = np.random.default_rng(0)
     n = 120
     shared = rng.standard_normal((n, 8))                     # the geometry six minds share
@@ -350,13 +381,37 @@ def _demo() -> int:
                           + 0.05 * rng.standard_normal((n, 24 + i)) for i in range(6)}
     reps["mind_6"] = shared @ rng.standard_normal((8, 24)) + 0.05 * rng.standard_normal((n, 24))
     reps["ISLAND"] = (rng.standard_normal((n, 8)) @ rng.standard_normal((8, 24)))  # its own geometry
+    return reps
+
+
+def _demo(island_z: float = _DEMO_ISLAND_Z) -> int:
+    """Ten seconds, no data, no GPU: plant a cohort with one island and watch it get found.
+
+    The demo reads the island list itself, so it uses ``island_z=3.0`` rather than the library
+    default of 1.0, which lists clique members on the low side of ordinary scatter (issue #93;
+    see :func:`survey`). The rule actually used is printed with the result.
+    """
+    reps = _demo_cohort()
 
     print("styxx.islands — a cohort of 8 minds over 120 shared items.")
     print("Seven were built from one shared geometry. One was not. Nothing is labelled.\n")
-    s = survey(reps, n_null=400, n_perm=400)
+    s = survey(reps, n_null=400, n_perm=400, island_z=island_z)
     print(s)
+    print(f"  island rule used: {s.island_rule}")
+    if island_z != _DEF_ISLAND_Z:
+        print(f"  (survey()'s default is island_z={_DEF_ISLAND_Z}; at that cut a tight clique's "
+              f"low members can be listed too)")
+    print()
     print("The instrument was given no labels, no pairing, and no hint which member is which.")
-    print("Frame affinity alone separates the planted island from the clique.\n")
+    extra = [m for m in s.islands if m != "ISLAND"]
+    if s.islands == ["ISLAND"]:
+        print("Frame affinity alone separates the planted island from the clique.\n")
+    elif extra:
+        print(f"At island_z={island_z} the rule also lists {extra}, built from the shared "
+              f"geometry: the cut sits inside the clique's own scatter, so those marks are "
+              f"leads, not findings. Only ISLAND was planted.\n")
+    else:
+        print(f"At island_z={island_z} the cut is too strict to list the planted ISLAND.\n")
 
     print("And when there is nothing to see, it says so rather than guessing:")
     out = cliff(reps["mind_0"], reps["ISLAND"], legibility_fn=lambda r, i: 1.0 / len(r))
@@ -370,6 +425,13 @@ def _demo() -> int:
 
 def main(argv=None) -> int:
     import argparse
+
+    class _ExplicitFloat(argparse.Action):
+        """Store the value and remember it was given, so --demo can tell a chosen z from the default."""
+        def __call__(self, parser, namespace, values, option_string=None):
+            setattr(namespace, self.dest, values)
+            namespace.island_z_given = True
+
     ap = argparse.ArgumentParser(
         prog="styxx.islands",
         description="Survey a cohort of minds for islands: shared frame, cliff, low-rank rescue.")
@@ -378,19 +440,25 @@ def main(argv=None) -> int:
     ap.add_argument("--demo", action="store_true",
                     help="run a self-contained demonstration on a planted cohort (no data needed)")
     ap.add_argument("--k", type=int, default=_DEF_K)
+    ap.add_argument("--island-z", type=float, default=_DEF_ISLAND_Z, action=_ExplicitFloat,
+                    help=f"robust deviations below the median that name an island (default "
+                         f"{_DEF_ISLAND_Z}, survey()'s own default; --demo uses {_DEMO_ISLAND_Z} "
+                         f"unless this is given)")
     ap.add_argument("--json", default=None)
+    ap.set_defaults(island_z_given=False)
     a = ap.parse_args(argv)
     if a.demo or not a.npz:
         if not a.npz and not a.demo:
             print("no .npz given — running --demo. Pass a file to survey your own cohort.\n")
-        return _demo()
+        return _demo(island_z=a.island_z if a.island_z_given else _DEMO_ISLAND_Z)
     # allow_pickle stays False: the declared contract is numeric (n_items, dim)
     # arrays, and cohort files are exchanged between labs — unpickling an
     # attacker's object array executes code before survey() sees a number.
     z = np.load(a.npz, allow_pickle=False)
     reps = {n: np.asarray(z[n]) for n in z.files}
-    s = survey(reps, k=a.k)
+    s = survey(reps, k=a.k, island_z=a.island_z)
     print(s)
+    print(f"  island rule used: {s.island_rule}")
     if a.json:
         with open(a.json, "w", encoding="utf-8") as f:
             json.dump(s.to_dict(), f, indent=2)
