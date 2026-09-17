@@ -1,0 +1,5 @@
+sha256(salt+key) = 140c34f4b6167145e6e962d5b2f8fbbc1261dc4a85c7ad8acce1cbe6fe344480
+salt = styxx-compat2-blind-2026-09-17
+items = 180
+arms = {"candidate": 120, "decoy_a": 30, "decoy_b": 30}
+packet sha256 = 1bb2d4899c12ed5ea5e0c86a4357ec2080b4ed9acab9c5abb6e9fcf29f72bfea

@@ -55,8 +55,12 @@ from external1_harness import reconstruct  # noqa: E402  (unchanged: one header 
 assert sys.modules["styxx.diffgate"] is dg
 
 DB = HERE / "external6_shelf.sqlite"
-LEDGER = HERE / "external6_ledger.jsonl"
-SUMMARY = HERE / "external6_gate_summary.json"
+# `--tag NAME` writes NAME_ledger.jsonl / NAME_gate_summary.json from the same shelf and the same
+# fold, so a later instrument change (COMPAT-2 runs `--tag compat2`) is measured ledger to ledger
+# against external6 with one variable: the instrument.
+TAG = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else "external6"
+LEDGER = HERE / f"{TAG}_ledger.jsonl"
+SUMMARY = HERE / f"{TAG}_gate_summary.json"
 DEF_TEST = re.compile(r"^\s*def (test_\w+)", re.M)
 ROW_CAP = 300
 CAP_REASON = "corpus rows capped at 300 per commit; the count cannot be reconstructed"
@@ -220,7 +224,8 @@ def stage_gate(db: Path = DB) -> int:
     out.close()
     con.close()
     payload = {
-        "prereg": "PREREG_harness1_merge_fold_2026_09_16.md",
+        "prereg": "PREREG_harness1_merge_fold_2026_09_16.md" if TAG == "external6" else f"{TAG}: the HARNESS-1 fold under this checkout's instrument",
+        "tag": TAG,
         "corpus": {"dataset": "hao-li/AIDev", "tables": ["pull_request", "pr_commit_details"],
                    "license": "CC-BY-4.0", "zenodo": "10.5281/zenodo.16919272"},
         "instrument": {"styxx_version": styxx.__version__,
@@ -252,6 +257,7 @@ def main() -> int:
     ap.add_argument("--corpus", type=Path, default=HERE / "aidev",
                     help="directory holding pull_request.parquet and pr_commit_details.parquet")
     ap.add_argument("--shelf", type=Path, default=DB, help="where the shelf lives (5 GB; gitignored)")
+    ap.add_argument("--tag", default="external6", help="ledger/summary name: external6, or compat2 for the COMPAT-2 run")
     a = ap.parse_args()
     return stage_shelf(a.corpus, a.shelf) if a.stage == "shelf" else stage_gate(a.shelf)
 
