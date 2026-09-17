@@ -101,8 +101,8 @@ def test_the_closed_phrase_set_is_read(sentence):
 
 def test_removed_public_python_definitions_are_named_and_private_ones_are_not():
     _, c = _claim("Refactor. No breaking changes.", PY_REMOVES)
-    assert c.why == ("compatibility claimed; the diff removes 2 public definition(s) not re-defined "
-                     "in the added lines: src/api.py: session, src/api.py: Legacy")
+    assert c.why == ("compatibility claimed; the diff removes 2 public definition(s) from the surface, "
+                     "not re-defined in the added lines: src/api.py: session, src/api.py: Legacy")
     assert [r["name"] for r in c.detail["removed"]] == ["session", "Legacy"]
     assert c.detail["languages"] == ["python"]
 

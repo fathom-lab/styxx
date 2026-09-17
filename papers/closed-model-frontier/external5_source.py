@@ -3,6 +3,7 @@
 Prereg: PREREG_external5_survivors_at_source_2026_09_16.md.
 
     python external5_source.py fetch     # live diffs -> external5_items.jsonl (gitignored; URLs live here)
+    python external5_source.py fetch --out external5_items_bin1.jsonl   # the same run under another checkout (BIN-1 gate)
     python external5_source.py score     # items + external5_crosscheck.json -> external5_summary.json (committed)
 
 Population: every claim with verdict CONTRADICTED in `external3_ledger.jsonl` (the BC-2 ledger).
@@ -37,7 +38,7 @@ sys.path.insert(0, str(REPO))
 from styxx import diffgate as dg  # noqa: E402
 
 LEDGER = HERE / "external3_ledger.jsonl"
-ITEMS = HERE / "external5_items.jsonl"
+ITEMS = HERE / (sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else "external5_items.jsonl")
 CROSS = HERE / "external5_crosscheck.json"
 SUMMARY = HERE / "external5_summary.json"
 STAT_LINE = re.compile(r"insertions?\(\+\)|deletions?\(-\)")   # the BC-2 census rule (external3_gates.py), verbatim

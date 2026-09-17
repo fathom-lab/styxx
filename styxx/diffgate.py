@@ -268,7 +268,19 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # public top-level definitions the diff removed without re-defining, per language, with files.
 # There is no VERIFIED and no CONTRADICTED for this kind -- a removed name is not proof of a
 # break and an intact surface is not proof of compatibility -- and selfcheck below pins it.
-_COMPAT_VERDICTS = ("UNCHECKABLE",)
+# COMPAT-2 (PREREG_compat2_surface_and_panel_2026_09_16). The reading is sharpened -- a removed
+# definition under a test / example / docs / scripts / internal / vendor path is scaffolding, and a
+# definition re-defined with a different parameter list is a signature change, reported, never a
+# drop -- and a CANDIDATE is computed: a covered language and at least one removed public
+# definition on the surface. The verdict stays UNCHECKABLE until a blind panel licenses it; the
+# licence is this flag, flipped only by that panel's RESULT, and a test pins it false.
+COMPAT2_LICENSED = False
+_COMPAT_VERDICTS = ("UNCHECKABLE",) if not COMPAT2_LICENSED else ("UNCHECKABLE", "CONTRADICTED")
+_COMPAT_SCAFFOLD = re.compile(
+    r"(?:^|/)(?:tests?|testing|specs?|__tests__|examples?|samples?|demos?|docs?|scripts?|tools?|bench|"
+    r"benchmarks?|fixtures?|internal|_internal|private|vendor|third_party|migrations?|cmd|e2e|integration|"
+    r"mocks?|stories|storybook|playground|sandbox|experiments?|dev|build)/"
+    r"|(?:^|/)(?:test_[^/]*|[^/]*_test\.(?:go|py)|[^/]*\.(?:test|spec)\.[^/]+|conftest\.py|setup\.py)$")
 _COMPAT_LANGS: dict = {
     # language: (suffixes, regex over ONE removed line with a `name` group)
     "python": ((".py",), re.compile(r"^(?:async\s+)?(?:def|class)\s+(?P<name>[A-Za-z]\w*)")),
@@ -282,17 +294,85 @@ _COMPAT_LANGS: dict = {
 _COMPAT_MAX_NAMED = 5
 
 
+# BIN-1 (PREREG_bin1_binary_files_2026_09_16, issue #118). A unified diff carries a binary
+# change, a mode-only change or a pure rename as a `diff --git` header with NO `---`/`+++`
+# pair, and both parsers below registered a file only from that pair. EXTERNAL-5's cross-check
+# caught it: eight PNGs and one .scss read as one file, and a truthful count was one click
+# from being called a lie. A header that reaches the next header without a pair now registers
+# its file: A on `new file mode` / `Binary files /dev/null and …`, D on `deleted file mode` /
+# `… and /dev/null differ`, else M. Files with hunks are read exactly as before.
+_DIFF_GIT = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\.)*)"|a/(?P<a>.*?)) (?:"b/(?P<qb>(?:[^"\\]|\\.)*)"|b/(?P<b>.*))$')
+_BINARY_LINE = re.compile(r"^Binary files (?P<a>.+?) and (?P<b>.+?) differ$")
+
+
+def _header_paths(line: str) -> tuple[str, str]:
+    """`diff --git a/X b/Y` -> (X, Y). Same-name headers split at the middle; the rest by regex."""
+    body = line[len("diff --git "):]
+    if len(body) % 2 == 1:
+        mid = len(body) // 2
+        if body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/") \
+                and body[2:mid] == body[mid + 3:]:
+            return body[2:mid], body[mid + 3:]
+    m = _DIFF_GIT.match(line)
+    if not m:
+        return "", ""
+    a = m.group("qa") if m.group("qa") is not None else (m.group("a") or "")
+    b = m.group("qb") if m.group("qb") is not None else (m.group("b") or "")
+    return a, b
+
+
+class _Pending:
+    """One `diff --git` header waiting to learn whether a `---`/`+++` pair follows."""
+    __slots__ = ("a", "b", "status")
+
+    def __init__(self, line: str):
+        self.a, self.b = _header_paths(line)
+        self.status = "M"
+
+    def note(self, line: str) -> None:
+        if line.startswith("new file mode"):
+            self.status = "A"
+        elif line.startswith("deleted file mode"):
+            self.status = "D"
+        elif line.startswith("rename from "):
+            self.a = line[len("rename from "):]
+        elif line.startswith("rename to "):
+            self.b = line[len("rename to "):]
+        else:
+            m = _BINARY_LINE.match(line)
+            if m:
+                if m.group("a") == "/dev/null":
+                    self.status = "A"
+                elif m.group("b") == "/dev/null":
+                    self.status = "D"
+
+    def path(self) -> str:
+        raw = self.a if self.status == "D" else self.b
+        return _norm(raw) if raw else ""
+
+
 def parse_unified_diff_sides(diff_text: str) -> dict:
     """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
 
     The per-file companion of `parse_unified_diff`, added for COMPAT-1; the original's
-    return shape is untouched because callers unpack it.
+    return shape is untouched because callers unpack it. A header without a `---`/`+++`
+    pair (BIN-1) registers its path with empty sides.
     """
     sides: dict = {}
     old_path = None
     cur = None
+    pending: _Pending | None = None
+
+    def flush() -> None:
+        if pending is not None and pending.path():
+            sides.setdefault(pending.path(), ([], []))
+
     for line in diff_text.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+            cur = None
+        elif line.startswith("--- "):
             old_path = line[4:].strip()
             cur = None
         elif line.startswith("+++ "):
@@ -303,16 +383,40 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
                 raw = new[2:] if new.startswith("b/") else new
             cur = _norm(raw)
             sides.setdefault(cur, ([], []))
+            pending = None
         elif cur is not None and line.startswith("+") and not line.startswith("+++"):
             sides[cur][0].append(line[1:])
         elif cur is not None and line.startswith("-") and not line.startswith("---"):
             sides[cur][1].append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
     return sides
 
 
-def _compat_removed_public_names(sides: dict) -> tuple[list, list]:
-    """(removed public definitions not re-defined in the added lines of the same language, as
-    (path, language, name)), (languages of the diff this reading covers)."""
+def _compat_params(line: str, at: int) -> str | None:
+    """The parameter list of a definition line: the text inside the first `(` at or after `at`,
+    whitespace-collapsed, or `None` when the line has no `(` there. A list that does not close
+    on the line is taken as far as the line goes, with `…` appended, so a re-flowed multi-line
+    signature compares as changed only when its first line changed."""
+    k = line.find("(", at)
+    if k < 0:
+        return None
+    depth = 0
+    for e in range(k, len(line)):
+        if line[e] == "(":
+            depth += 1
+        elif line[e] == ")":
+            depth -= 1
+            if depth == 0:
+                return re.sub(r"\s+", " ", line[k + 1:e]).strip()
+    return re.sub(r"\s+", " ", line[k + 1:]).strip() + "…"
+
+
+def _compat_removed_public_names(sides: dict) -> tuple[list, list, list]:
+    """(removed public definitions not re-defined or referenced in the added lines of the same
+    language, as (path, language, name, on_surface)), (signature changes, as (path, language,
+    name, before, after)), (languages of the diff this reading covers)."""
     by_lang_added: dict = {}
     langs_present: list = []
     for path, (added, _removed) in sides.items():
@@ -322,11 +426,13 @@ def _compat_removed_public_names(sides: dict) -> tuple[list, list]:
                 if lang not in langs_present:
                     langs_present.append(lang)
     dropped: list = []
+    changed: list = []
     for path, (_added, removed) in sides.items():
         for lang, (sufs, rx) in _COMPAT_LANGS.items():
             if not path.endswith(sufs):
                 continue
-            ablob = "\n".join(by_lang_added.get(lang, []))
+            added_lines = by_lang_added.get(lang, [])
+            ablob = "\n".join(added_lines)
             for line in removed:
                 m = rx.match(line)
                 if not m:
@@ -335,31 +441,63 @@ def _compat_removed_public_names(sides: dict) -> tuple[list, list]:
                 if name.startswith("_"):
                     continue                        # private by convention
                 if re.search(r"\b" + re.escape(name) + r"\b", ablob):
-                    continue                        # re-defined or still referenced: a change or a move
-                if (path, lang, name) not in dropped:
-                    dropped.append((path, lang, name))
-    return dropped, langs_present
+                    # re-defined or still referenced: a change or a move. COMPAT-2 reads the
+                    # re-definition's parameter list beside the removed one, and reports a
+                    # difference; it is never a drop.
+                    before = _compat_params(line, m.end("name"))
+                    if before is not None:
+                        afters = []
+                        for al in added_lines:
+                            am = rx.match(al)
+                            if am and am.group("name") == name:
+                                ap = _compat_params(al, am.end("name"))
+                                if ap is not None:
+                                    afters.append(ap)
+                        if afters and before not in afters and (path, lang, name) not in [c[:3] for c in changed]:
+                            changed.append((path, lang, name, before, afters[0]))
+                    continue
+                if (path, lang, name) not in [d[:3] for d in dropped]:
+                    dropped.append((path, lang, name, not _COMPAT_SCAFFOLD.search(path)))
+    return dropped, changed, langs_present
 
 
 def _compat_reading(sides: dict | None) -> tuple[str, str, dict]:
-    """The one verdict this kind has, with what the diff shows about the claim in the reason."""
+    """The one verdict this kind has (until COMPAT-2's panel licenses a second), with what the
+    diff shows about the claim in the reason and the candidate flag in the detail."""
+    empty = {"removed": [], "languages": [], "surface_removed": 0, "signature_changed": [],
+             "compat2_candidate": False}
     if not sides:
         return ("UNCHECKABLE", "compatibility claimed; no per-file diff available to read "
-                               "(behaviour beyond names not checked)", {"removed": []})
-    dropped, langs = _compat_removed_public_names(sides)
+                               "(behaviour beyond names not checked)", dict(empty))
+    dropped, changed, langs = _compat_removed_public_names(sides)
     if not langs:
         return ("UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff "
-                               "(python, js/ts, go, rust, java)", {"removed": [], "languages": []})
+                               "(python, js/ts, go, rust, java)", dict(empty))
+    sig = f"; {len(changed)} signature(s) changed" if changed else ""
+    detail = {"removed": [{"path": p, "language": l, "name": n, "surface": sf} for p, l, n, sf in dropped],
+              "languages": langs,
+              "surface_removed": sum(1 for d in dropped if d[3]),
+              "signature_changed": [{"path": p, "language": l, "name": n, "before": b, "after": a}
+                                    for p, l, n, b, a in changed],
+              "compat2_candidate": any(d[3] for d in dropped)}
     if not dropped:
         return ("UNCHECKABLE", "compatibility claimed; no public top-level definition removed "
-                               f"({', '.join(langs)} read; behaviour beyond names not checked)",
-                {"removed": [], "languages": langs})
-    shown = ", ".join(f"{p}: {n}" for p, _l, n in dropped[:_COMPAT_MAX_NAMED])
-    more = f" (+{len(dropped) - _COMPAT_MAX_NAMED} more)" if len(dropped) > _COMPAT_MAX_NAMED else ""
-    why = (f"compatibility claimed; the diff removes {len(dropped)} public definition(s) not "
-           f"re-defined in the added lines: {shown}{more}")
-    return ("UNCHECKABLE", why, {"removed": [{"path": p, "language": l, "name": n} for p, l, n in dropped],
-                                 "languages": langs})
+                               f"({', '.join(langs)} read; behaviour beyond names not checked){sig}", detail)
+    surface = [d for d in dropped if d[3]]
+    scaffold = [d for d in dropped if not d[3]]
+    named = surface or scaffold
+    shown = ", ".join(f"{p}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])
+    more = f" (+{len(named) - _COMPAT_MAX_NAMED} more)" if len(named) > _COMPAT_MAX_NAMED else ""
+    if surface:
+        rest = f"; {len(scaffold)} more in test/example/internal code" if scaffold else ""
+        why = (f"compatibility claimed; the diff removes {len(surface)} public definition(s) from the "
+               f"surface, not re-defined in the added lines: {shown}{more}{rest}{sig}")
+        verdict = "CONTRADICTED" if COMPAT2_LICENSED else "UNCHECKABLE"
+    else:
+        why = (f"compatibility claimed; {len(scaffold)} public definition(s) removed, all in "
+               f"test/example/internal code: {shown}{more}{sig}")
+        verdict = "UNCHECKABLE"
+    return (verdict, why, detail)
 
 
 _NON_FILE_NOUNS = frozenset({
@@ -807,8 +945,17 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
     status: dict[str, str] = {}
     added: list[str] = []
     old_path = None
+    pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
+
+    def flush() -> None:
+        if pending is not None and pending.path() and pending.path() not in status:
+            status[pending.path()] = pending.status
+
     for line in diff_text.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            flush()
+            pending = _Pending(line)
+        elif line.startswith("--- "):
             old_path = line[4:].strip()
         elif line.startswith("+++ "):
             new = line[4:].strip()
@@ -818,8 +965,12 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "A"
             else:
                 status[_norm(new[2:] if new.startswith("b/") else new)] = "M"
+            pending = None
         elif line.startswith("+") and not line.startswith("+++"):
             added.append(line[1:])
+        elif pending is not None:
+            pending.note(line)
+    flush()
     return status, "\n".join(added)
 
 
