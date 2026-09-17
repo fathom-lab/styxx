@@ -1,0 +1,89 @@
+{
+ "prereg": "PREREG_harness1_merge_fold_2026_09_16.md",
+ "corpus": {
+  "dataset": "hao-li/AIDev",
+  "tables": [
+   "pull_request",
+   "pr_commit_details"
+  ],
+  "license": "CC-BY-4.0",
+  "zenodo": "10.5281/zenodo.16919272"
+ },
+ "instrument": {
+  "styxx_version": "7.47.0",
+  "diffgate_sha256": "397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1",
+  "run": null,
+  "strict": false,
+  "changed_here": false
+ },
+ "reconstruction": "external1_harness.reconstruct, unchanged; rows folded by external6_harness.fold_rows: rows from commits whose message begins 'Merge ' dropped unless every commit is one; a commit with >= 300 rows marks the PR capped and its files_changed_count claims UNCHECKABLE after gating",
+ "cap_reason": "corpus rows capped at 300 per commit; the count cannot be reconstructed",
+ "prs_seen": 71677,
+ "excluded": {
+  "no_file_records": 87,
+  "empty_body": 573,
+  "reconstruction_mismatch": 1
+ },
+ "eligible": 71016,
+ "covered_prs": 17939,
+ "coverage": 0.2526,
+ "prs_with_contradiction": 75,
+ "claims_by_verdict": {
+  "VERIFIED": 12991,
+  "UNCHECKABLE": 22848,
+  "CONTRADICTED": 80
+ },
+ "fold": {
+  "claims_rewritten_by_the_cap": 4,
+  "prs_with_a_merge_commit": 7443,
+  "rows_dropped": 612406,
+  "prs_whose_file_count_changed": 6697,
+  "prs_capped": 953,
+  "prs_all_merge_commits_kept": 12
+ },
+ "per_agent": {
+  "Claude_Code": {
+   "eligible": 1913,
+   "covered": 1071,
+   "claim_UNCHECKABLE": 1785,
+   "claim_VERIFIED": 807,
+   "claim_CONTRADICTED": 24,
+   "contradicted_prs": 22
+  },
+  "Copilot": {
+   "eligible": 23432,
+   "covered": 13063,
+   "claim_VERIFIED": 9093,
+   "claim_UNCHECKABLE": 17669,
+   "claim_CONTRADICTED": 44,
+   "contradicted_prs": 42
+  },
+  "Cursor": {
+   "eligible": 3912,
+   "covered": 757,
+   "claim_UNCHECKABLE": 764,
+   "claim_VERIFIED": 665
+  },
+  "Devin": {
+   "eligible": 6151,
+   "covered": 2196,
+   "claim_VERIFIED": 1733,
+   "claim_UNCHECKABLE": 2230,
+   "claim_CONTRADICTED": 12,
+   "contradicted_prs": 11
+  },
+  "Google_Jules": {
+   "eligible": 487,
+   "covered": 42,
+   "claim_VERIFIED": 50,
+   "claim_UNCHECKABLE": 8
+  },
+  "OpenAI_Codex": {
+   "eligible": 35121,
+   "covered": 810,
+   "claim_VERIFIED": 643,
+   "claim_UNCHECKABLE": 392
+  }
+ },
+ "seconds": 323
+}

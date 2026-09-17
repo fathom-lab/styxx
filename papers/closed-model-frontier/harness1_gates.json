@@ -1,0 +1,174 @@
+{
+ "prereg": "PREREG_harness1_merge_fold_2026_09_16.md",
+ "before": {
+  "ledger": "external4_ledger.jsonl",
+  "fold": "every commit's rows",
+  "eligible": 71016
+ },
+ "after": {
+  "ledger": "external6_ledger.jsonl",
+  "fold": "merge-commit rows dropped; 300-row cap marked",
+  "eligible": 71016
+ },
+ "eligibility_difference": {
+  "only_before": 0,
+  "only_after": 0
+ },
+ "gates": {
+  "G-H1_live_prs": {
+   "file_count_items": 70,
+   "agree_before": 28,
+   "agree_after": 42,
+   "gained": 14,
+   "lost": 0,
+   "min_gain": 14,
+   "by_outcome": {
+    "UPHELD": {
+     "agree_before=True,agree_after=True": 28,
+     "agree_before=False,agree_after=True": 6,
+     "agree_before=False,agree_after=False": 18
+    },
+    "OVERTURNED": {
+     "agree_before=False,agree_after=True": 8,
+     "agree_before=False,agree_after=False": 10
+    }
+   },
+   "items_on_capped_prs": 4,
+   "only_touches_items_matching_the_live_verdict": {
+    "before": 12,
+    "after": 13,
+    "of": 13
+   },
+   "pass": true
+  },
+  "G-H2_only_falls_where_inflated": {
+   "only_touches_contradicted": {
+    "before": 14,
+    "after": 13,
+    "gained": 0,
+    "lost": 1
+   },
+   "compat_prs_naming_a_removed_public_definition": {
+    "before": 540,
+    "after": 293
+   },
+   "files_changed_count_contradicted": {
+    "before": 74,
+    "after": 60,
+    "gained": 0,
+    "lost": 14,
+    "direction_before": {
+     "corpus_below_claim": 11,
+     "corpus_above_claim": 64
+    },
+    "direction_after": {
+     "corpus_below_claim": 10,
+     "corpus_above_claim": 51
+    },
+    "rewritten_by_the_cap": 4,
+    "rewritten_by_the_cap_from_CONTRADICTED": 4
+   },
+   "pass": true
+  },
+  "G-H3_bc2_invariants": {
+   "counters": {
+    "tests_added.contradicted_no_python_in_diff": 0,
+    "symbol_added.contradicted_no_python_in_diff": 0,
+    "only_touches.contradicted_prefix_is_not_a_path": 0
+   },
+   "prs_without_merge_or_cap": 63272,
+   "tests_or_symbol_verdicts_checked": 207,
+   "prs_whose_verdicts_changed": 0,
+   "pass": true
+  },
+  "G-H4_requoted_numbers": {
+   "accusations_total": {
+    "before": 95,
+    "after": 79
+   },
+   "accusations_by_kind": {
+    "before": {
+     "tests_added": 7,
+     "files_changed_count": 74,
+     "only_touches": 14
+    },
+    "after": {
+     "tests_added": 6,
+     "files_changed_count": 60,
+     "only_touches": 13
+    }
+   },
+   "accusations_gained": 0,
+   "accusations_lost": 16,
+   "prs_with_a_contradiction": {
+    "before": 91,
+    "after": 75
+   },
+   "compat_prs_naming_a_removed_public_definition": {
+    "before": 540,
+    "after": 293
+   },
+   "covered_prs": {
+    "before": 17939,
+    "after": 17939
+   },
+   "claims_by_verdict": {
+    "before": {
+     "VERIFIED": 13017,
+     "UNCHECKABLE": 22806,
+     "CONTRADICTED": 96
+    },
+    "after": {
+     "VERIFIED": 12991,
+     "UNCHECKABLE": 22848,
+     "CONTRADICTED": 80
+    }
+   },
+   "fold": {
+    "prs_with_a_merge_commit": 7443,
+    "prs_all_merge_commits_kept": 12,
+    "prs_capped": 953,
+    "prs_with_rows_dropped": 7431,
+    "prs_whose_file_count_changed": 6697
+   },
+   "verdict_transitions": {
+    "file_created: VERIFIED -> UNCHECKABLE": 2,
+    "file_deleted: UNCHECKABLE -> VERIFIED": 1,
+    "file_deleted: VERIFIED -> UNCHECKABLE": 6,
+    "file_touched: VERIFIED -> UNCHECKABLE": 30,
+    "files_changed_count: CONTRADICTED -> UNCHECKABLE (cap)": 4,
+    "files_changed_count: CONTRADICTED -> VERIFIED": 10,
+    "only_touches: CONTRADICTED -> VERIFIED": 1,
+    "tests_added: CONTRADICTED -> UNCHECKABLE": 1
+   },
+   "claim_lists_differ": 0,
+   "compat_transitions": {
+    "stopped_naming_a_removed_definition": 252,
+    "started_naming_one": 5
+   },
+   "compat_prs_naming_a_removed_public_definition_by_language": {
+    "before": {
+     "python": 164,
+     "js/ts": 243,
+     "rust": 34,
+     "java": 40,
+     "go": 79
+    },
+    "after": {
+     "js/ts": 111,
+     "python": 85,
+     "rust": 21,
+     "java": 32,
+     "go": 50
+    }
+   }
+  },
+  "G-H5_not_claimed": {
+   "precision": "not measured; see prereg",
+   "live_prs_with_a_file_count_item": 66,
+   "live_prs_still_disagreeing_after": 27,
+   "note": "a merge commit is identified by its message; a merge with a rewritten message is not caught"
+  }
+ },
+ "all_blocking_gates_pass": true
+}
