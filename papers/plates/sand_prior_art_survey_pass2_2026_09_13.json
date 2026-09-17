@@ -1,0 +1,894 @@
+{
+ "survey": "the sand: the neighbours of one sentence — pass 2, the skimmed papers read end to end",
+ "pass1": "papers/plates/sand_prior_art_survey.json",
+ "protocol": "papers/plates/PROTOCOL_sand_prior_art_2026_09_13.md",
+ "protocol_commit": "9f5fd42c",
+ "run_by": "four reading agents, one per group of papers, each reading the extracted full text end to end; verdicts merged by this script; no fetch; pass 1's audit findings applied as fields",
+ "reading_rule": "a SKIMMED source may OCCUPY from the pages read (pass 1 wrote 'from abstract'; the builder's rule was always the pages read); only a source read end to end may RETIRE",
+ "run_date": "2026-09-13",
+ "status": "COMPLETE",
+ "counts": {
+  "sources_in_list": 20,
+  "sources_scored": 20,
+  "read": 18,
+  "skimmed": 1,
+  "unfetchable": 1,
+  "read_in_pass2": 9,
+  "verdicts_changed_by_full_read": 3,
+  "leads_not_scored": 40,
+  "clauses_occupied": 4,
+  "clauses_retired": 2,
+  "clauses_unpriced": 0,
+  "clauses_free": 0
+ },
+ "verdicts_changed_by_full_read": [
+  "S19.C4a: SILENT -> OCCUPIES",
+  "S01.C3: OCCUPIES -> RETIRES",
+  "S04.C4b: OCCUPIES -> RETIRES"
+ ],
+ "clauses": {
+  "C1": {
+   "clause": "binds every published number to bytes at a commit",
+   "status": "OCCUPIED",
+   "inherited_from": "papers/sworn/SURVEY_sworn_neighbours_2026_09_05.md",
+   "retired_by": [],
+   "occupied_by": [],
+   "nearest": [
+    "Deterministic Integrity Gates for LLM-Assisted Clinical Manuscript Preparation (Nam, Jeong & Kim, arXiv 2606.09500) — per the 2026-09-05 sworn survey, whose clause is 'binds whole sentences'",
+    "Cited but Not Verified: Parsing and Evaluating Source Attribution in LLM Deep Research Agents (Onweller et al., arXiv 2605.06635) — same receipt"
+   ],
+   "note": "C1 as worded here ('binds every published number to bytes at a commit') is broader than the clause the 2026-09-05 survey priced ('binds whole sentences'); C1 is carried as OCCUPIED on that survey's authority and was not re-priced by this one"
+  },
+  "C2": {
+   "clause": "re-derives every verdict from those bytes into a chained log",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S07",
+    "S08"
+   ],
+   "unfetchable_candidates": [],
+   "nearest": [
+    "S07",
+    "S08"
+   ],
+   "pass1_status": "OCCUPIED"
+  },
+  "C3": {
+   "clause": "gives every receipt a face a stranger reads without json",
+   "status": "RETIRED",
+   "retired_by": [
+    "S01"
+   ],
+   "occupied_by": [
+    "S02",
+    "S03"
+   ],
+   "unfetchable_candidates": [],
+   "nearest": [
+    "S01",
+    "S02"
+   ],
+   "pass1_status": "OCCUPIED"
+  },
+  "C4a": {
+   "clause": "fingerprints a model's behavior on hashed canaries against a measured null floor",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S19"
+   ],
+   "unfetchable_candidates": [],
+   "nearest": [
+    "S12",
+    "S16"
+   ],
+   "pass1_status": "OCCUPIED"
+  },
+  "C4b": {
+   "clause": "under a preregistration sealed on a public chain before the run",
+   "status": "RETIRED",
+   "retired_by": [
+    "S04",
+    "S05"
+   ],
+   "occupied_by": [
+    "S09",
+    "S10",
+    "S19"
+   ],
+   "unfetchable_candidates": [
+    "S06"
+   ],
+   "nearest": [
+    "S05",
+    "S04"
+   ],
+   "pass1_status": "RETIRED"
+  },
+  "C5": {
+   "clause": "pays a standing bounty against its own verifier",
+   "status": "OCCUPIED",
+   "retired_by": [],
+   "occupied_by": [
+    "S10",
+    "S18",
+    "S20"
+   ],
+   "unfetchable_candidates": [],
+   "nearest": [
+    "S20",
+    "S10"
+   ],
+   "pass1_status": "OCCUPIED"
+  }
+ },
+ "conjunction": {
+  "status": "RETIRED",
+  "one_source_does_all": [],
+  "surviving_clauses": [
+   "C1",
+   "C2",
+   "C4a",
+   "C5"
+  ],
+  "deleted_clauses": [
+   "C3",
+   "C4b"
+  ]
+ },
+ "sentence": {
+  "status": "SURVIVES_WITHOUT_C3_C4b",
+  "licensed_form": "we know of no ... (never 'first', 'novel' or 'revolutionary')",
+  "text": "We know of no lab that binds every published number to bytes at a commit (where Deterministic Integrity Gates and Cited-but-Not-Verified bind sentences and citations of a manuscript, as the 2026-09-05 survey names them), re-derives every verdict from those bytes into a chained log (where Certificate Transparency and Rekor chain certificates and signed metadata, not verdicts), fingerprints a model's behavior on hashed canaries against a measured null floor (where Dutta et al. measure flips and KL divergence under compression, Chen, Zaharia and Zou grade a service's drift against its own repeat-run disagreement, and Thinking Machines measure the same-weights spread of served completions), and pays a standing bounty against its own verifier (where Immunefi pays against deployed code and the Preregistration Challenge paid for preregistering) — at once.",
+  "notes": [
+   "the seal on a public chain is not in the sentence: general-purpose document time-stamping (Haber and Stornetta; OpenTimestamps) does that for any data, and a preregistration is data",
+   "the face is not in the sentence: Perrig and Song defined hash visualization over inputs of arbitrary finite length and named a visual checksum of downloaded software as an application, which contains a receipt digest; the plate is that idea applied to receipts, and the sentence may not claim it"
+  ]
+ },
+ "sources": {
+  "S01": {
+   "title": "Hash Visualization: a New Technique to Improve Real-World Security",
+   "who": "Perrig & Song",
+   "year": 1999,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://people.eecs.berkeley.edu/~dawnsong/papers/randomart.pdf",
+   "url_effective": "https://people.eecs.berkeley.edu/~dawnsong/papers/randomart.pdf",
+   "http": "200",
+   "bytes": 498430,
+   "sha256": "c10e3217b07ba50c6e34965975f91860765a7a29393652229cc7db544689d9a8",
+   "fetched_at": "2026-09-14T02:54:32Z",
+   "verdicts": {
+    "C3": {
+     "verdict": "RETIRES",
+     "object": "any bit-string of arbitrary finite length (defined object of a hash visualization algorithm); applied to root-key fingerprints, and explicitly to a checksum of software downloaded from the Internet",
+     "quote": "Random Art is an algorithm such that given a bit-string as input, it will generate a function ... which defines an image.",
+     "reason": "The surveyor priced the object as key fingerprints, but the paper defines the primitive over inputs of arbitrary finite length and names a visual checksum of downloaded software as an application, a broader object that contains a receipt digest; the only clause element S01 lacks is a stated mapping version (the grammar is withheld and Random Art is called prototypical), so under the object-based pricing rule OCCUPIES should have been RETIRES.",
+     "agrees_with_pass1": false,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "public-key fingerprints and root keys, compared by eye",
+      "quote": "The visual fingerprints generated by Random Art are clearly easier to compare than the hexadecimal representation."
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "c10e3217b07ba50c6e34965975f91860765a7a29393652229cc7db544689d9a8",
+   "fulltext_pdf_bytes": 498430,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-4",
+   "chars_read": 58660,
+   "bearing_quotes": [
+    "[definition, sec. 2.2, decoded from italic font] A hash visualization algorithm is a function ... mapping an input of arbitrary finite length to an output image.",
+    "[sec. 3] The basic idea is to use a binary string as a seed for a random number generator.",
+    "[sec. 4.1] Another application of the same idea is the validation of data or software downloaded from the Internet.",
+    "[sec. 4.1] generating a visual checksum with Random Art would be more user-friendly, efficient, and the user would not need to keep a paper with the checksum.",
+    "[sec. 4.1] We propose to use Hash Visualization to generate a visual fingerprint from the binary fingerprint.",
+    "[sec. 4.1] a user needs to compare two images to verify the validity; one in the newspaper and the other on the computer monitor.",
+    "[sec. 3, against a stated mapping version] The grammar used in the Random Art implementation is too large to be shown in this paper.",
+    "[sec. 5.2] Notice that Random Art is only a prototypical solution, and hence, might not be the final answer for hash visualization.",
+    "[sec. 5.2] We can achieve the hash function one-way properties by hashing the input string with a cryptographically secure hash function, such as SHA-1",
+    "[sec. 2.2] the result of comparing two images needs to be robust with respect to resolution and color changes"
+   ],
+   "leads": [
+    "S01_fulltext.txt is a font-garbled extraction (custom-encoded Type-3 glyphs); reader-4 decoded it by monoalphabetic substitution (decode_s01.py -> S01_decoded.txt in the scratchpad survey folder). Quotes above are the decoded text with spacing restored; verify against the PDF before citing as verbatim.",
+    "Residue of C3 not found in S01: a stated mapping version, and the use as a reading aid for reproduction (S01's use is comparison by eye for validation).",
+    "S01 sec. 2.2 defines near-preimage / near-collision resistance for images and sec. 5.2 proposes a birthday-paradox user study to estimate the perceptual image space; nothing on versioning the mapping."
+   ]
+  },
+  "S02": {
+   "title": "OpenSSH 5.1 release notes",
+   "who": "OpenSSH project",
+   "year": 2008,
+   "status": "READ",
+   "pages_read": "whole document",
+   "url": "https://www.openssh.com/txt/release-5.1",
+   "url_effective": "https://www.openssh.org/txt/release-5.1",
+   "http": "200",
+   "bytes": 11217,
+   "sha256": "8516f5e282d45d4211e76f1ab1ef5a8c1035d8a53d3aa309ded27b5fce321183",
+   "fetched_at": "2026-09-14T02:54:33Z",
+   "verdicts": {
+    "C3": {
+     "verdict": "OCCUPIES",
+     "object": "SSH host keys",
+     "quote": "render SSH host keys in a visual form that is amenable to easy recall and rejection of changed host keys"
+    }
+   }
+  },
+  "S03": {
+   "title": "Visual Security: 9-block IP Identification (the post that named identicons)",
+   "who": "Don Park",
+   "year": 2007,
+   "status": "READ",
+   "pages_read": "whole post, archived copy of 2007-12-15",
+   "url": "https://web.archive.org/web/2007/http://www.docuverse.com/blog/donpark/2007/01/18/visual-security-9-block-ip-identification",
+   "url_effective": "https://web.archive.org/web/20071215234320/http://www.docuverse.com/blog/donpark/2007/01/18/visual-security-9-block-ip-identification",
+   "http": "200",
+   "bytes": 494563,
+   "sha256": "23c11a85349b92362a521fb577fe809df09ffe40f8cc6347279b7d2abd1040a1",
+   "fetched_at": "2026-09-14T02:54:34Z",
+   "verdicts": {
+    "C3": {
+     "verdict": "OCCUPIES",
+     "object": "a commenter's hashed IP address",
+     "quote": "using a privacy protecting derivative of each commenter's IP address to build a 9-block image"
+    }
+   }
+  },
+  "S04": {
+   "title": "How To Time-Stamp a Digital Document",
+   "who": "Haber & Stornetta",
+   "year": 1991,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://link.springer.com/content/pdf/10.1007/BF00196791.pdf",
+   "url_effective": "https://link.springer.com/content/pdf/10.1007/BF00196791.pdf?error=cookies_not_supported&code=7f558003-87be-49a1-b3e7-3f7dcd546e04",
+   "http": "200",
+   "bytes": 825065,
+   "sha256": "ef2290c000332967f5753973597b0d92485cc618e19643a60308ce2606b606de",
+   "fetched_at": "2026-09-14T02:54:36Z",
+   "verdicts": {
+    "C4b": {
+     "verdict": "RETIRES",
+     "object": "any string of bits / any digital document, explicitly documents that establish the precedence of an idea, time-stamped by hash without a trusted party",
+     "quote": "Our task may be seen as the problem of simulating the action of a trusted TSS, in the absence of generally trusted parties.",
+     "reason": "Read past page three, sections 5-6 remove the trusted service: the linking scheme lets a challenger verify against downstream clients' certificates and the distributed-trust scheme lets any would-be challenger check k signatures with no central TSS, over any bit-string including a precedence document, which contains a frozen preregistration; the one element S04 does not supply is anchoring in a public ledger or widely witnessed medium (verification depends on other clients keeping certificates or on a public directory of clients), so the surveyor's OCCUPIES should have been RETIRES with that residue noted.",
+     "agrees_with_pass1": false,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "any digital document, through a time-stamping service (from the pages read; the linking scheme in later sections was not read)",
+      "quote": "We propose computationally practical procedures for digital time-stamping of such documents so that it is infeasible for a user either to back-date or to forward-date his document"
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "ef2290c000332967f5753973597b0d92485cc618e19643a60308ce2606b606de",
+   "fulltext_pdf_bytes": 825065,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-4",
+   "chars_read": 39354,
+   "bearing_quotes": [
+    "[sec. 7] Any string of bits can be time-stamped, including digital audio recordings, photographs, and full-motion videos.",
+    "[sec. 7] For documents that establish the precedence of an invention or idea, time-stamping has a clear value.",
+    "[sec. 4.1] Instead of transmitting his document x to the TSS, a client will send its hash value h(x) = y instead.",
+    "[sec. 5.1] if we include bits from the previous sequence of client requests in the signed certificate, then we know that the time-stamp occurred after these requests.",
+    "[sec. 5.1] In order to make sure that our client has not colluded with the TSS, the challenger can call client ID_{n+1} and ask him to produce his time-stamp",
+    "[sec. 5.1] Thus the only possible spoof is to prepare a fake chain of time-stamps, long enough to exhaust the most suspicious challenger that one anticipates.",
+    "[sec. 5.2] The k signatures s_j can easily be checked by our client or by a would-be challenger. No further communication is required in order to meet a later challenge.",
+    "[sec. 5.2] This scheme need not use a centralized TSS at all.",
+    "[sec. 5.2] there be a public directory of clients so that it is possible to interpret the output of G(y) in a standard way as a k-tuple of clients.",
+    "[sec. 6.1] A related disadvantage of the linking scheme is that it depends on at least some parties (clients or, perhaps, the TSS) storing their certificates.",
+    "[sec. 6.2] time-stamping should only be considered as evidence that a document has not been back-dated.",
+    "[sec. 7] each corporate document created in a day could be hashed, and the hash value added to the company's daily log of documents.",
+    "[sec. 8] certificates recording the linking of a given document are distributed to other clients both upstream and downstream from that document."
+   ],
+   "leads": [
+    "No passage in S04 publishes a chain head or certificate in a widely witnessed medium (newspaper); that is Bayer, Haber & Stornetta 1993 and Surety's NYT hash ads, which the survey should read for the public-ledger element of C4b.",
+    "Bearing on C2: the linking scheme is a hash chain of signed certificates (L_n includes H(L_{n-1})) verified by challengers, but the lines are time-stamp certificates, not verdicts recomputed from receipt bytes, and no head is pinned outside the chain; OCCUPIES at most for C2.",
+    "Sec. 7 daily log of document hashes submitted once for time-stamping is a Merkle-less batch anchor; relevant to how a lab anchors many receipts under one stamp.",
+    "Sec. 6.4 renewal of time-stamps under a newer implementation bears on long-lived receipt anchors after a hash function breaks."
+   ]
+  },
+  "S05": {
+   "title": "OpenTimestamps: A timestamping proof standard",
+   "who": "Peter Todd / OpenTimestamps",
+   "year": 2016,
+   "status": "READ",
+   "pages_read": "whole page",
+   "url": "https://opentimestamps.org/",
+   "url_effective": "https://opentimestamps.org/",
+   "http": "200",
+   "bytes": 26109,
+   "sha256": "28df6bbff839a6948b0ce54ef06df3ccb1e6d1027d841f5f0018f707761ec789",
+   "fetched_at": "2026-09-14T02:54:37Z",
+   "verdicts": {
+    "C4b": {
+     "verdict": "RETIRES",
+     "object": "any data, anchored to the Bitcoin blockchain, independently verifiable — a preregistration is data",
+     "quote": "A timestamp proves that some data existed prior to some point in time. OpenTimestamps defines a set of operations for creating provable timestamps and later independently verifying them."
+    }
+   }
+  },
+  "S06": {
+   "title": "Proof of Existence",
+   "who": "Manuel Araoz",
+   "year": 2013,
+   "status": "UNFETCHABLE",
+   "pages_read": "the archived page carries only its title; the application is a script shell",
+   "url": "https://web.archive.org/web/2020/https://proofofexistence.com/",
+   "url_effective": "https://web.archive.org/web/20210105030237/https://proofofexistence.com/",
+   "http": "200",
+   "bytes": 3203,
+   "sha256": "1c67626a04c243fa57f0df9dd58a833e1bdd25653e5dbed57d85cd78c94de1b4",
+   "fetched_at": "2026-09-14T02:54:38Z",
+   "verdicts": {
+    "C4b": {
+     "verdict": "UNCHECKABLE",
+     "object": "",
+     "quote": ""
+    }
+   },
+   "fetch_note": "located and fetched (HTTP 200, 3203 bytes): the 2021 archived page is a script shell whose only text is its title; no earlier snapshot was tried; the protocol has no fetched-but-empty status, so UNFETCHABLE stands and C4b keeps S06 as an unpriced candidate"
+  },
+  "S07": {
+   "title": "Certificate Transparency, RFC 6962",
+   "who": "Laurie, Langley & Kasper",
+   "year": 2013,
+   "status": "READ",
+   "pages_read": "whole document",
+   "url": "https://datatracker.ietf.org/doc/html/rfc6962",
+   "url_effective": "https://datatracker.ietf.org/doc/html/rfc6962",
+   "http": "200",
+   "bytes": 122354,
+   "sha256": "c06618a22a299833e401dd1524d0eabb8de9a0bbaffa90312c172ca7abb11db0",
+   "fetched_at": "2026-09-14T02:54:39Z",
+   "verdicts": {
+    "C2": {
+     "verdict": "OCCUPIES",
+     "object": "certificates in an append-only Merkle log with a signed tree head, checked by monitors — the same mechanism for a different object",
+     "quote": "The append-only property of each log is technically achieved using Merkle Trees, which can be used to show that any particular version of the log is a superset of any previous version."
+    }
+   }
+  },
+  "S08": {
+   "title": "Rekor (Sigstore transparency log), overview",
+   "who": "Sigstore project",
+   "year": 2021,
+   "status": "READ",
+   "pages_read": "whole page",
+   "url": "https://docs.sigstore.dev/logging/overview/",
+   "url_effective": "https://docs.sigstore.dev/logging/overview/",
+   "http": "200",
+   "bytes": 42866,
+   "sha256": "58ae68b8da9478ad99ea22c25c883d2e306025a1a619ed9ae2c1652a6327cf8c",
+   "fetched_at": "2026-09-14T02:54:40Z",
+   "verdicts": {
+    "C2": {
+     "verdict": "OCCUPIES",
+     "object": "signed supply-chain metadata in an append-only ledger audited for consistency",
+     "quote": "Rekor aims to provide an immutable, tamper-resistant ledger of metadata generated within a software project's supply chain."
+    }
+   }
+  },
+  "S09": {
+   "title": "The past, present and future of Registered Reports",
+   "who": "Chambers & Tzavella",
+   "year": 2022,
+   "status": "SKIMMED",
+   "pages_read": "abstract only; the article is paywalled",
+   "url": "https://www.nature.com/articles/s41562-021-01193-7",
+   "url_effective": "https://www.nature.com/articles/s41562-021-01193-7?error=cookies_not_supported&code=cd9b7b63-a8b7-4dd6-aa11-f6b6237ee4f8",
+   "http": "200",
+   "bytes": 471919,
+   "sha256": "5022b34f3abc5eece2f51fba304dfbfa92440e1323e7b77c4d287440354ec873",
+   "fetched_at": "2026-09-14T02:54:40Z",
+   "verdicts": {
+    "C4b": {
+     "verdict": "OCCUPIES",
+     "object": "a journal's in-principle acceptance of a protocol before the work, not a public-ledger hash (from abstract)",
+     "quote": "study proposals are peer reviewed and pre-accepted before research is undertaken"
+    }
+   }
+  },
+  "S10": {
+   "title": "Preregistration (Center for Open Science programme page)",
+   "who": "Center for Open Science",
+   "year": 2026,
+   "status": "READ",
+   "pages_read": "whole page",
+   "url": "https://www.cos.io/initiatives/prereg",
+   "url_effective": "https://www.cos.io/initiatives/prereg",
+   "http": "200",
+   "bytes": 106704,
+   "sha256": "1c44df7c10c8d58617db1ca42d713c4bd51a501b28b6dbfb3883db70c57e0afb",
+   "fetched_at": "2026-09-14T02:54:42Z",
+   "verdicts": {
+    "C4b": {
+     "verdict": "OCCUPIES",
+     "object": "a timestamped registration on OSF",
+     "quote": "specifying your research plan in advance of your study and submitting it to a registry"
+    },
+    "C5": {
+     "verdict": "OCCUPIES",
+     "object": "a prize for publishing preregistered work; the campaign ended in 2018 and paid for preregistering, not for breaking a verifier",
+     "quote": "The campaign included $1000 prizes for researchers who published the results of preregistered work."
+    }
+   },
+   "substitution": "the closed list named the Preregistration Challenge programme page (2015-2018); the page located was the Center for Open Science's general preregistration page, which describes the campaign in passing; recorded as a substitution, not as the listed page"
+  },
+  "S11": {
+   "title": "How Is ChatGPT's Behavior Changing over Time?",
+   "who": "Chen, Zaharia & Zou",
+   "year": 2023,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2307.09009",
+   "url_effective": "https://arxiv.org/abs/2307.09009",
+   "http": "200",
+   "bytes": 42956,
+   "sha256": "7182446e71d7954bfbbdd9e54b9ed09203465904c2226a3d8123eeae79511cca",
+   "fetched_at": "2026-09-14T02:54:43Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "a closed API service (GPT-4 / GPT-3.5, March vs June 2023 snapshots) scored on extracted text answers: accuracy / response rate / exact-match plus a per-prompt answer mismatch rate; one informal same-version repeat-run disagreement rate (OpinionQA only) used to argue the drift exceeds stochasticity",
+     "quote": "running GPT-3.5 March twice yields disagreement rate of 2.8% and running GPT-3.5 June twice yields disagreement rate of 7.0%, due to LLM's stochasticity.",
+     "reason": "The verdict stands but the surveyor's stated reason 'no same-weights floor' is wrong: page 10 (past the six-page skim) measures a same-version repeat-run disagreement floor in situ on OpinionQA and grades the 27% March-vs-June mismatch against it; however it is one task of eight, is a text-answer mismatch rather than a log-prob fingerprint, carries no interval, no hashed item set, and no stated verdict rule, so it occupies rather than retires C4a.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "an API service's task accuracy and per-prompt answer mismatch across versions; no log-prob fingerprint, no same-weights floor",
+      "quote": "how often, for the same prompt, the extracted answers by two versions of the same LLM service do not match"
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "7b77f2727a8e702607dd1bedfefdce1d26358619ef10be67746a445bb1efb96f",
+   "fulltext_pdf_bytes": 2050108,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-1",
+   "chars_read": 94703,
+   "bearing_quotes": [
+    "We set the temperature to be 0.1 to reduce output randomness, as creativity was not needed in our evaluation tasks.",
+    "The second one is mismatch, i.e. how often, for the same prompt, the extracted answers by two versions of the same LLM service do not match.",
+    "Note that this only compares the answers' differences, not the raw generations.",
+    "we use the mismatch's empirical mean over the entire population to quantify how much an LLM service's desired functionality, instead of the textual outputs, deviates over time.",
+    "Asking the same query multiple times gives the same conclusion, though the intermediate reasoning steps can be slightly different.",
+    "Yet, 27% of its opinions changed from March to June. For comparison, running GPT-3.5 March twice yields disagreement rate of 2.8%",
+    "These indicate considerable opinion drifts over time above and beyond model's randomness.",
+    "In fact, 12.2% answers in March were different from their counterparts in June for GPT-4, and the mismatch rate was 27.9% for GPT-3.5.",
+    "All prompts we curated in this paper and responses from GPT-4 and GPT-3.5 in both March and June are collected and released in https://github.com/lchen001/LLMDrift.",
+    "for more than 90% visual puzzle queries, the March and June versions produced the exact same generation."
+   ],
+   "leads": [
+    "Chen, Cai, Zaharia, Zou 2021, \"Did the model change? Efficiently assessing machine learning API shifts\" (arXiv:2107.14203) — explicit ML-API shift estimation with statistical machinery; strongest candidate among the citations for a floor-plus-interval treatment",
+    "Chen et al. 2022, HAPI: longitudinal dataset of commercial ML API predictions (NeurIPS 35) — fixed item set queried across time",
+    "Tu et al. 2023, ChatLog (arXiv:2304.14106) — automated recording and monitoring of ChatGPT responses over time",
+    "Narayanan & Kapoor 2023, \"Is GPT-4 getting worse over time?\" (aisnakeoil) — critique of this paper's methodology, may discuss noise floor"
+   ]
+  },
+  "S12": {
+   "title": "Accuracy is Not All You Need",
+   "who": "Dutta, Krishnan, Kwatra & Ramjee",
+   "year": 2024,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2407.09141",
+   "url_effective": "https://arxiv.org/abs/2407.09141",
+   "http": "200",
+   "bytes": 42377,
+   "sha256": "c5ecc677771e4af7fa629897f7431c2ca52c55e930b84d24e521f4aa1390373a",
+   "fetched_at": "2026-09-14T02:54:43Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "a compressed checkpoint (quantized/pruned/layer-dropped) compared against its own 16-bit baseline checkpoint on standard public benchmarks via EleutherAI eval-harness; teacher-forced per-token KL divergence over answer-option tokens plus per-item correct/incorrect flips",
+     "quote": "the KL-divergence between the models for the entire dataset is the mean of KL-divergences across all tokens of all answer options and all samples in the dataset.",
+     "reason": "The paper does use teacher-forced log-probabilities (KL over option tokens) and per-item flips on fixed public benchmarks, but the reference is a different-weights baseline, there is no repeated-run same-weights floor anywhere in the text, no confidence interval on any flip or KL number, no hashed or canary item set, and no verdict rule; the only noise the paper names is GPT-4-judge noise on MT-Bench, so it occupies the neighbourhood without doing the C4a thing.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "compressed versus baseline models by KL divergence over token distributions and per-item flips on benchmark sets; no hashed canary set, no in-situ same-weights floor, no verdict with an interval — the nearest neighbour of the checksum's measurement",
+      "quote": "We propose two such metrics, KL-Divergence and % flips, and show that they are well correlated."
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "582d61d0311c30d921505f7fe300b04331c0719e91798693385b7dd0aae4bf52",
+   "fulltext_pdf_bytes": 867999,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-1",
+   "chars_read": 98804,
+   "bearing_quotes": [
+    "Flips - distance metric: measures the % of answers that changed from correct → incorrect and incorrect → correct, between baseline and quantized model",
+    "Harness- We used Eleuther AI's eval-harness (Gao et al., 2023) for all the experiments, unless specified otherwise.",
+    "Quantization introduces some noise in the weights and activations due to which there is a perturbation in the output answers' probabilities (verified empirically).",
+    "it appears that the log-likelihoods of the quantized model is just the log-likelihood of baseline model with some symmetric noise added.",
+    "given their lower overall absolute score, we believe this variation is likely caused by the noise in GPT4 evaluation process.",
+    "Figure 9 in Appendix plots the log-likelihood difference between the 16-bit and quantized model for each of the tokens in the wiki-2 dataset",
+    "Flips is only a warning that the behaviour of a model and its compressed version is different"
+   ],
+   "leads": [
+    "Xu et al. 2021, \"Beyond Preserved Accuracy: Evaluating Loyalty and Robustness of BERT Compression\" (arXiv:2109.03228) — label loyalty / probability loyalty between compressed and base model; candidate for C4a neighbourhood",
+    "Hooker et al. 2020/2021 (arXiv:2010.03058, 1911.05248) — per-example divergence under compression (\"what do compressed networks forget\")",
+    "Lyu et al. 2024 (arXiv:2402.13887) — misalignment between free-form generation and probability-based MMLU evaluation"
+   ]
+  },
+  "S13": {
+   "title": "Instructional Fingerprinting of Large Language Models",
+   "who": "Xu et al.",
+   "year": 2024,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2401.12255",
+   "url_effective": "https://arxiv.org/abs/2401.12255",
+   "http": "200",
+   "bytes": 41521,
+   "sha256": "59aabcef712e0f0f65f1c85df13c5fbbbfa8bdaa40143929b449c01740a5fe56",
+   "fetched_at": "2026-09-14T02:54:43Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "an ownership fingerprint implanted by instruction-tuning a backdoor (x,y) pair into the weights, verified by whether a fine-tuned derivative still generates y given secret x",
+     "quote": "verification reduces to directly recalling the fingerprint pairs, i.e. computing memorization (Biderman et al., 2023a) to check if M(θU)(xi) = y",
+     "reason": "The fingerprint is an implanted generation-match backdoor on a publisher-chosen secret, not teacher-forced log-probabilities on a fixed hashed item set; there is no in-situ same-weights floor (the 10-rerun t-test at temperature 0.7 tests FSR against a fixed 75% threshold on the derivative, not against the same weights' own noise), and the only logit-based comparison (JSD of logits on one test string, Table 2) is presented as a rejected baseline.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "an ownership fingerprint implanted by fine-tuning and verified by its trigger",
+      "quote": "the model publisher specifies a confidential private key and implants it as an instruction backdoor"
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "11b9201657a15772181235269e3ae729a401d453d3086165945bc6d5b5d706f9",
+   "fulltext_pdf_bytes": 3835251,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-2",
+   "chars_read": 115558,
+   "bearing_quotes": [
+    "(3) L2 norm distance of output layers (i.e. logits); and (4) Jensen-Shannon Distance (JSD) of logits.",
+    "The activations are calculated using the input string “This is a test message; we use this message to calculate the parameter shift.”",
+    "the parameter shift can be large or small, depending on the user’s fine-tuning datasets and training methods",
+    "For all variants we infer with 0 temperature (i.e. greedy decoding) by default.",
+    "we tested the same set of prompts 10 times for each of the 12 user models and reported the average FSRpost.",
+    "we conduct a one-sample t-test to confirm that the FSRpost is significantly above a nontrivial threshold (75%) with high confidence.",
+    "Practically, a threshold τ can be set such that the publisher can claim the ownership if FSRpost ≥ τ",
+    "We further introduce MD5 which replaces secrets of F1 with their MD5 encoding, while keeping F1’s Simple Template.",
+    "to prevent publisher overclaim, it is required to have a trusted third party (Appx. §B)"
+   ],
+   "leads": [
+    "Table 2 (§2.4) is a rejected logit-similarity baseline: JSD of logits on a single fixed string, cited to Chen et al. 2022a 'Copy, right?' (IEEE S&P 2022) — that cited work may bear on C4a more directly than S13 does.",
+    "The MD5 variant hashes the secret key, not the probe set; no hashed item set anywhere in the paper.",
+    "Table 5 p-values are one-sample t-tests against a fixed 75% threshold over 10 sampled reruns of the derivative model — a repeated-run measure, but not a same-weights floor for a comparison."
+   ]
+  },
+  "S14": {
+   "title": "REEF: Representation Encoding Fingerprints for Large Language Models",
+   "who": "Zhang et al.",
+   "year": 2024,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2410.14273",
+   "url_effective": "https://arxiv.org/abs/2410.14273",
+   "http": "200",
+   "bytes": 41298,
+   "sha256": "6829f762de25b10bd14fa0f97c6cd6bcb5400130556fd7c91dbc71ac746951ee",
+   "fetched_at": "2026-09-14T02:54:43Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "CKA similarity of hidden-layer representations (layer 18) between a suspect and a victim open-weights model on the same 200 TruthfulQA samples, thresholded to decide derivation",
+     "quote": "REEF computes and compares the centered kernel alignment similarity between the representations of a suspect model and a victim model on the same samples.",
+     "reason": "The object is representation similarity for model-lineage decisions on open weights; the item set is fixed but not hashed, there is no repeated-run same-weights floor, no interval (verdicts are color bands at 0.5/0.8 on point similarities), and the only log-probability-flavoured comparison is the 'Logits' baseline of Yang & Wu 2024, which the paper treats as a competitor to beat.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "centered-kernel-alignment similarity of two models' representations on the same samples, to decide derivation — a neighbour of the belief-geometry agreement",
+      "quote": "REEF computes and compares the centered kernel alignment similarity between the representations of a suspect model and a victim model on the same samples."
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "855ffd3e659a0831b14c1fb7a265a17ba59ec4c96acd3b9a39289f19e6450ce8",
+   "fulltext_pdf_bytes": 2095341,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-2",
+   "chars_read": 75846,
+   "bearing_quotes": [
+    "the logits space can be leveraged to identify the victim model (Yang & Wu, 2024). However, this approach remains highly sensitive to parameter permutation",
+    "Yang & Wu (2024), referring to the Logits method, implements LLM fingerprinting by analyzing unique attributes of each LLM’s logits output.",
+    "CKA similarity of representations between the victim and suspect models on 200 samples from the TruthfulQA dataset",
+    "the average similarity of LLMs derived from the victim model is 0.9585, which is substantially higher than that of unrelated LLMs, whose average similarity is 0.2361.",
+    "indicate similarity greater than 0.8, indicate similarity between 0.5 and 0.8, and indicate similarity less than 0.5.",
+    "Figure 5(a) shows that the similarities for most models stabilize after 200-300 samples",
+    "The customized loss is designed to measure the CKA similarity between the logits of the original and fine-tuned models.",
+    "for closed-source models, the lack of access to their representations limits the applicability of our approach."
+   ],
+   "leads": [
+    "Yang & Wu 2024, 'A fingerprint for large language models' (arXiv:2407.01235) — the 'Logits method' baseline compares output-logit spaces of victim and suspect; closer to C4a's log-probability object than REEF itself and should be surveyed.",
+    "Iourovitski et al. 2024 (arXiv:2408.02871) and Pasquini et al. 2024 LLMmap (arXiv:2407.15847) are cited as black-box behavioural fingerprints from generated content — possible C4a neighbours.",
+    "Table 1 reports the Logits method giving 0.9999 on many derivatives and 0.0000 under permutation with no interval, i.e. point similarities only."
+   ]
+  },
+  "S15": {
+   "title": "Representational similarity analysis - connecting the branches of systems neuroscience",
+   "who": "Kriegeskorte, Mur & Bandettini",
+   "year": 2008,
+   "status": "READ",
+   "pages_read": "whole article",
+   "url": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+   "url_effective": "https://www.frontiersin.org/journals/systems-neuroscience/articles/10.3389/neuro.06.004.2008/full",
+   "http": "200",
+   "bytes": 669101,
+   "sha256": "03f75b60a8c1f9fcce479aea5871adc4551182a4a03aa062ed8e3130b7a2bb87",
+   "fetched_at": "2026-09-14T02:54:43Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "representational dissimilarity matrices compared across systems by correlation of their upper triangles, with a noise floor — the rdm_r half of the fingerprint, for brains",
+     "quote": "RDMs can be quantitatively compared using correlation distance (1-correlation) or rank-correlation distance."
+    }
+   }
+  },
+  "S16": {
+   "title": "Defeating Nondeterminism in LLM Inference",
+   "who": "Horace He and Thinking Machines Lab",
+   "year": 2025,
+   "status": "READ",
+   "pages_read": "whole post",
+   "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+   "url_effective": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+   "http": "200",
+   "bytes": 96892,
+   "sha256": "5bafc9b8ef12d40f2e8e9129da959187f6140ef3d3e9d6cb8343c7ad6fc45460",
+   "fetched_at": "2026-09-14T02:54:45Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "the same-weights spread of served completions under identical requests — a null floor measured on completions, not a fingerprint distance graded against it",
+     "quote": "we generate 80 unique completions, with the most common of these occuring 78 times"
+    }
+   }
+  },
+  "S17": {
+   "title": "A Sober Look at Progress in Language Model Reasoning: Pitfalls and Paths to Reproducibility",
+   "who": "Hochlehnert et al.",
+   "year": 2025,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2504.07086",
+   "url_effective": "https://arxiv.org/abs/2504.07086",
+   "http": "200",
+   "bytes": 43624,
+   "sha256": "900462100b88d1edac7ca3a14ab0449f9a645cebfee255be4e5062cc5c306021",
+   "fetched_at": "2026-09-14T02:54:45Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "seed, decoding, hardware and framework variance of sampled Pass@1 accuracy on small math benchmarks, with mean±std over 10-30 seeds and per-item paired t/Wilcoxon tests of RL/SFT variants against their base model",
+     "quote": "Remarkably, even consecutive runs on the same A100 cluster produced variations: Bespoke-Stratos-7B ranged from 19.3% to 23.0% on AIME’24 across runs.",
+     "reason": "The paper does measure a same-weights noise floor (consecutive reruns, five clusters, deterministic-CUDA stages) and grades comparisons against it with per-item paired tests and reported std, but the object is sampled benchmark accuracy of training methods versus a base model, not a teacher-forced log-probability fingerprint on a fixed hashed item set used to decide model identity or drift; no hashed probe set, no log-probabilities, and intervals are std not a verdict-bearing interval on a fingerprint distance.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "seed and hardware variance of aggregate benchmark scores under the same weights — a floor at the score level, not per item",
+      "quote": "Pass@1 values show surprisingly high standard deviation - ranging from 5 to 15 percentage points across seeds."
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "2856ce4867601d3c88524b0aceef3771721fbf9f0de98a63012be204b3bdf032",
+   "fulltext_pdf_bytes": 1425162,
+   "pass1_status": "READ",
+   "read_by": "reader-2",
+   "chars_read": 112377,
+   "bearing_quotes": [
+    "Pass@1 values show surprisingly high standard deviation—ranging from 5 to 15 percentage points across seeds.",
+    "A change in just one question shifts Pass@1 by 2.5–3.3 percentage points.",
+    "Bootstrapping over 30 runs substantially stabilizes Pass@1 estimates and should be considered a minimal standard for reliable evaluation.",
+    "Qwen2.5-Math-1.5B achieved 7.3% ±3.8 on AIME’24 on our cluster versus 11.3% ±3.6 on Runpod; a 4 percentage point gap that exceeds the standard deviation.",
+    "Hardware and software variations introduce irreducible noise into evaluations, with performance differences of 2-5% persisting even under stringent controls.",
+    "compute the average accuracy per problem instance across all random seeds, (2) align these sample-wise accuracies between the RL/SFT model and the baseline",
+    "We employ both parametric (paired t-test) and non-parametric (Wilcoxon signed-rank) tests to ensure robustness to distributional assumptions.",
+    "Report the mean and standard deviation to quantify uncertainty and assess the statistical significance of performance differences.",
+    "the observed improvements from recent methods (gray highlighted area) fall entirely within the variance range (orange box plots) of DeepSeek-R1 1.5B model performance."
+   ],
+   "leads": [
+    "Stage 3 of §3.4 (identical hardware, updated stack, consecutive reruns) is the closest published analogue to an in-situ same-weights floor; it is used to caveat method comparisons, not to fingerprint a served model.",
+    "Atil et al. 2025, 'Non-determinism of \"deterministic\" llm settings' (arXiv:2408.04667) and He & Thinking Machines 2025 'Defeating nondeterminism in llm inference' are cited for the floor's cause — both may bear on C4a's same-weights floor and should be surveyed.",
+    "Madaan et al. 2024 'Quantifying variance in evaluation benchmarks' (arXiv:2406.10229) and Bowyer et al. 2025 'Don't use the CLT in LLM evals with fewer than a few hundred datapoints' (arXiv:2503.01747) are cited for interval methodology on small item sets.",
+    "All measurements are sampling-based (temperature 0.8, top_p 0.9); the paper never uses teacher-forced log-probabilities."
+   ],
+   "pass1_read_rule": "counted READ in pass 1 on the strength of the summariser having the whole PDF as input; read end to end in pass 2"
+  },
+  "S18": {
+   "title": "Improving Reproducibility in Machine Learning Research (A Report from the NeurIPS 2019 Reproducibility Program)",
+   "who": "Pineau et al.",
+   "year": 2021,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2003.12206",
+   "url_effective": "https://arxiv.org/abs/2003.12206",
+   "http": "200",
+   "bytes": 45628,
+   "sha256": "65cfc3d3a66f18008865fcf03e9cbbb03a786e94e40d23587ebf157d37c01d7e",
+   "fetched_at": "2026-09-14T02:54:45Z",
+   "verdicts": {
+    "C5": {
+     "verdict": "OCCUPIES",
+     "object": "a voluntary community challenge in which strangers (mostly course students) reproduce accepted papers; reports reviewed by conference reviewers and a few published in ReScience; no payment, no lab-run verifier",
+     "quote": "The main goal of this challenge is to provide independent verification of the empirical claims in accepted NeurIPS papers, and to leave a public trace of the findings from this secondary analysis",
+     "reason": "The only money-adjacent text is an open question (\"What is the effect of different incentive mechanisms (e.g. cash payment, conference registration, a point/badge system)\") plus free CodeOcean compute, and adjudication is by NeurIPS reviewers of reports, not by the lab's own verifier — same spirit (stranger checks the lab's claims) for a different object, so OCCUPIES, not RETIRES.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "a community challenge to reproduce accepted papers, with recognition rather than a standing payment against a verifier (from the pages read)",
+      "quote": "a community-wide reproducibility challenge"
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "0ea62d8ae3eede31d18faedf4246d59f9c07346df59b4ca99407ef4323d2307f",
+   "fulltext_pdf_bytes": 2246118,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-3",
+   "chars_read": 51163,
+   "bearing_quotes": [
+    "What is the effect of different incentive mechanisms (e.g. cash payment, conference registration, a point/badge system) on the participation rate & quality of work in the reproducibility challenge?",
+    "This suggests that an increasing segment of the community is willing to participate voluntarily in secondary analysis of research results.",
+    "Once submitted, all reproducibility reports underwent a review cycle (by reviewers of the NeurIPS conference), to select a small number of high-quality reports, which are published in the Sixth edition (Issue 2) 2 of the journal ReScience",
+    "We thank CodeOcean (in particular Xu Fei) for providing free compute resources to reproducibility challenge participants.",
+    "The ACM and its affiliated events has also introduced Badges 7 that can been attributed to papers to indicate when they meet pre-defined standards of Artifact availability, Reproducibility and Replication.",
+    "while some readers may be looking for a \"reproducibility score\", we have not found that the findings of most reproducibility studies lend themselves to such a coarse summary.",
+    "So code submission is not mandatory, and the code is not expected to be used during the review process to decide on the soundness of the work."
+   ],
+   "leads": [
+    "Sinha et al. 2020, NeurIPS 2019 Reproducibility Challenge, ReScience C 6(2) — the challenge's own report; check its rules for any prize/payment terms",
+    "ACM Artifact Review and Badging policy (acm.org/publications/policies/artifact-review-and-badging-current) — recognition scheme, possible C5 neighbour",
+    "Raff 2019, A step toward quantifying independently reproducible machine learning research — 255-paper replication study, possible C4a-adjacent floor",
+    "SIGMOD 2008/2011 repeatability experiments (Manolescu et al. 2008; Bonnet et al. 2011) — earliest CS reproducibility tracks"
+   ]
+  },
+  "S19": {
+   "title": "Proof-of-Learning: Definitions and Practice",
+   "who": "Jia et al.",
+   "year": 2021,
+   "status": "READ",
+   "pages_read": "end to end, full text extracted from the PDF whose sha256 pass 1 recorded",
+   "url": "https://arxiv.org/abs/2103.05633",
+   "url_effective": "https://arxiv.org/abs/2103.05633",
+   "http": "200",
+   "bytes": 45412,
+   "sha256": "5fc0170849c30199907f246a27a438c84e2e6ba6dc727d24f850d99be061b283",
+   "fetched_at": "2026-09-14T02:54:45Z",
+   "verdicts": {
+    "C4a": {
+     "verdict": "OCCUPIES",
+     "object": "weight-space reproduction of training checkpoints (W_t -> W_{t+k}) by a verifier re-executing k SGD steps, accepted within a slack delta calibrated to hardware/cuDNN noise and upper-bounded by the between-run reference distance d_ref; inference explicitly out of scope; no log-probabilities, no hashed item set, no interval on the verdict",
+     "quote": "δ is a slack parameter that should be calibrated before verification starts, as it depends on hardware, model architecture, dataset, checkpointing interval, and the learning hyperparameters.",
+     "reason": "The paper does perform a same-weights comparison graded against a calibrated hardware/software noise floor (delta from same-start reproduction error, d_ref as the unrelated-model ceiling), but on training checkpoints in weight space rather than a served model's behaviour — the pricing rule's own example of OCCUPIES (\"a training checkpoint instead of a served model\"), so not SILENT and not RETIRES.",
+     "agrees_with_pass1": false,
+     "pass1": {
+      "verdict": "SILENT",
+      "object": "training provenance, not served behavior",
+      "quote": ""
+     }
+    },
+    "C4b": {
+     "verdict": "OCCUPIES",
+     "object": "a signed, encrypted proof-of-learning (training record) timestamped or published to a public ledger after training, to defeat replay/first-publication disputes; not a preregistration, not anchored before data, stranger re-verification not specified",
+     "quote": "The proof (or its signature) can be timestamped, or published in a public ledger. This ensures that verifying its validity is as simple as a lookup operation. This prevents replay attacks",
+     "reason": "Public-ledger anchoring of a hash/signature is the same mechanism, but the anchored object is a post-hoc training proof rather than a frozen preregistration before any data, so OCCUPIES.",
+     "agrees_with_pass1": true,
+     "pass1": {
+      "verdict": "OCCUPIES",
+      "object": "a proof of training, or its signature, published to a public ledger",
+      "quote": "The proof (or its signature) can be timestamped, or published in a public ledger."
+     }
+    }
+   },
+   "fulltext_pdf_sha256": "df69677539bc5dfd4d529045b0156ec581620fe7576eb4bfceac080e2011405e",
+   "fulltext_pdf_bytes": 1156735,
+   "pass1_status": "SKIMMED",
+   "read_by": "reader-3",
+   "chars_read": 121405,
+   "bearing_quotes": [
+    "When developing our concept for PoL, we consider only the training phase and not the inference phase; the cost of inference is generally much lower, and there already exist mechanisms to ensure the integrity of ML inference performed by another party [14].",
+    "The proof (or its signature) can be timestamped, or published in a public ledger. This ensures that verifying its validity is as simple as a lookup operation. This prevents replay attacks, where A would claim to have published the PoL first.",
+    "if the trainer produces a PoL and publishes a time-stamped signature of it, this unchangeable record proves ownership in case of false claim by a surrogate model owner.",
+    "We tolerate d2(W′t+k,W t+k) ≤ δ, where d2 is a distance measure (possibly different from d1). δ is a slack parameter that should be calibrated before verification starts",
+    "Since the purpose of δ is to upper bound the randomness in training, one heuristic is to set δ as the average of a few gradient updates during training.",
+    "Alternatively, acceptable ranges for δ may be mandated by law and enforced by the verifier.",
+    "where zt is the random variable representing noise arising from the hardware and low-level libraries such as cuDNN [73] at step t",
+    "we require that maxt εrepr(t) ≪ dref, where dref = d(W1T, W2T) is the reference distance between two models W1T and W2T of the same architecture, trained to completion",
+    "then we can set our distance threshold δ (refer to Algorithm 2) such that maxt(εrepr(t)) < δ < dref.",
+    "Note that this error accumulates even when using the exact same batching strategy, architecture, initial parameters, and training setup, due to the irreproducible noise z arising from the hardware and low-level libraries.",
+    "||εrepr|| with deterministic operations drops to half of ||εrepr|| for non-deterministic operations with ResNet-20. However, ||εrepr|| is still significant",
+    "Theorem 1 also proves that the exact reproducibility of a ML model is difficult because the entropy grows, without bound, as the training sequence grows",
+    "verification should succeed even if the verifier uses different hardware than the prover.",
+    "counter-based pseudorandom number generators [86], [87] can potentially remove most, if not all, noise in the training process",
+    "follow up work may consider hashing weights sequentially utilizing Merkle tree structure [85], i.e. each consecutive set of weights during the training procedure are hashed",
+    "The verifier keeps a record of previously verified proofs. Therefore, in Algorithm 2, if V has recorded P 0, VERIFY INIT PROOF would be a simple record lookup.",
+    "our probability of success for our verification scheme degrades multiplicatively with each usage."
+   ],
+   "leads": [
+    "[14] Ghodsi, Gu, Garg, SafetyNets: Verifiable execution of deep neural networks on an untrusted cloud — cited as the existing inference-integrity mechanism; direct C4a candidate (served model, not training)",
+    "[63]-[65] van de Zande 2019; Chabanne et al. 2017 Embedded proofs for verifiable neural networks; Lee et al. 2020 vCNN — verifiable inference/training via cryptographic proofs, C4a neighbours",
+    "[75] Jagielski et al. 2020, High accuracy and high fidelity extraction of neural networks — cited for negative results on reproducing a training run exactly (hardware noise floor evidence)",
+    "[86] Salmon et al. 2011 Random123 counter-based PRNGs; [87] Claessen & Palka 2013 splittable PRNGs — determinism levers relevant to C4a floors",
+    "Merkle-tree hash chain of successive weights (Section VIII) and the verifier's record of previously verified proofs (Section V-D3) — C2-adjacent ideas, not a hash-chained verdict log",
+    "Maini, Yaghini, Papernot 2021, Dataset inference: Ownership resolution in machine learning (ICLR) — behaviour-based ownership test on a served model, possible C4a neighbour"
+   ]
+  },
+  "S20": {
+   "title": "Bug Bounty Programs (Immunefi)",
+   "who": "Immunefi",
+   "year": 2026,
+   "status": "READ",
+   "pages_read": "whole page",
+   "url": "https://immunefi.com/bug-bounty/",
+   "url_effective": "https://immunefi.com/bug-bounty/",
+   "http": "200",
+   "bytes": 404792,
+   "sha256": "5f88c9559aaa6fa8ffbee569e2ce8d40096bbc1dfa9a2baaa5f952a599b1273f",
+   "fetched_at": "2026-09-14T02:54:45Z",
+   "verdicts": {
+    "C5": {
+     "verdict": "OCCUPIES",
+     "object": "standing bounties for security vulnerabilities in deployed code, adjudicated by Immunefi — a standing payment against a verifier of code, not of a lab's own claims",
+     "quote": "Find bugs. Get paid. ... Triaged by Immunefi"
+    }
+   }
+  }
+ },
+ "leads_not_scored": [
+  "ChatLog (Tu et al., 2023): recording and monitoring ChatGPT responses over time — cited by S11",
+  "CKA (Kornblith et al., 2019): the similarity index REEF builds on — cited by S14",
+  "a longitudinal dataset of commercial ML-service responses (cited by S11 as CJE+22)",
+  "Kanare, a similar time-stamping proposal cited by S04 as recently learned of",
+  "Gromov et al. (2024): dropping layers without accuracy loss, where S12 finds flips rising",
+  "Sigstore's transparency-log background page, linked from S08 and not on the list",
+  "[S12 full read] Xu et al. 2021, \"Beyond Preserved Accuracy: Evaluating Loyalty and Robustness of BERT Compression\" (arXiv:2109.03228) — label loyalty / probability loyalty between compressed and base model; candidate for C4a neighbourhood",
+  "[S12 full read] Hooker et al. 2020/2021 (arXiv:2010.03058, 1911.05248) — per-example divergence under compression (\"what do compressed networks forget\")",
+  "[S12 full read] Lyu et al. 2024 (arXiv:2402.13887) — misalignment between free-form generation and probability-based MMLU evaluation",
+  "[S11 full read] Chen, Cai, Zaharia, Zou 2021, \"Did the model change? Efficiently assessing machine learning API shifts\" (arXiv:2107.14203) — explicit ML-API shift estimation with statistical machinery; strongest candidate among the citations for a floor-plus-interval treatment",
+  "[S11 full read] Chen et al. 2022, HAPI: longitudinal dataset of commercial ML API predictions (NeurIPS 35) — fixed item set queried across time",
+  "[S11 full read] Tu et al. 2023, ChatLog (arXiv:2304.14106) — automated recording and monitoring of ChatGPT responses over time",
+  "[S11 full read] Narayanan & Kapoor 2023, \"Is GPT-4 getting worse over time?\" (aisnakeoil) — critique of this paper's methodology, may discuss noise floor",
+  "[S18 full read] Sinha et al. 2020, NeurIPS 2019 Reproducibility Challenge, ReScience C 6(2) — the challenge's own report; check its rules for any prize/payment terms",
+  "[S18 full read] ACM Artifact Review and Badging policy (acm.org/publications/policies/artifact-review-and-badging-current) — recognition scheme, possible C5 neighbour",
+  "[S18 full read] Raff 2019, A step toward quantifying independently reproducible machine learning research — 255-paper replication study, possible C4a-adjacent floor",
+  "[S18 full read] SIGMOD 2008/2011 repeatability experiments (Manolescu et al. 2008; Bonnet et al. 2011) — earliest CS reproducibility tracks",
+  "[S19 full read] [14] Ghodsi, Gu, Garg, SafetyNets: Verifiable execution of deep neural networks on an untrusted cloud — cited as the existing inference-integrity mechanism; direct C4a candidate (served model, not training)",
+  "[S19 full read] [63]-[65] van de Zande 2019; Chabanne et al. 2017 Embedded proofs for verifiable neural networks; Lee et al. 2020 vCNN — verifiable inference/training via cryptographic proofs, C4a neighbours",
+  "[S19 full read] [75] Jagielski et al. 2020, High accuracy and high fidelity extraction of neural networks — cited for negative results on reproducing a training run exactly (hardware noise floor evidence)",
+  "[S19 full read] [86] Salmon et al. 2011 Random123 counter-based PRNGs; [87] Claessen & Palka 2013 splittable PRNGs — determinism levers relevant to C4a floors",
+  "[S19 full read] Merkle-tree hash chain of successive weights (Section VIII) and the verifier's record of previously verified proofs (Section V-D3) — C2-adjacent ideas, not a hash-chained verdict log",
+  "[S19 full read] Maini, Yaghini, Papernot 2021, Dataset inference: Ownership resolution in machine learning (ICLR) — behaviour-based ownership test on a served model, possible C4a neighbour",
+  "[S13 full read] Table 2 (§2.4) is a rejected logit-similarity baseline: JSD of logits on a single fixed string, cited to Chen et al. 2022a 'Copy, right?' (IEEE S&P 2022) — that cited work may bear on C4a more directly than S13 does.",
+  "[S13 full read] The MD5 variant hashes the secret key, not the probe set; no hashed item set anywhere in the paper.",
+  "[S13 full read] Table 5 p-values are one-sample t-tests against a fixed 75% threshold over 10 sampled reruns of the derivative model — a repeated-run measure, but not a same-weights floor for a comparison.",
+  "[S14 full read] Yang & Wu 2024, 'A fingerprint for large language models' (arXiv:2407.01235) — the 'Logits method' baseline compares output-logit spaces of victim and suspect; closer to C4a's log-probability object than REEF itself and should be surveyed.",
+  "[S14 full read] Iourovitski et al. 2024 (arXiv:2408.02871) and Pasquini et al. 2024 LLMmap (arXiv:2407.15847) are cited as black-box behavioural fingerprints from generated content — possible C4a neighbours.",
+  "[S14 full read] Table 1 reports the Logits method giving 0.9999 on many derivatives and 0.0000 under permutation with no interval, i.e. point similarities only.",
+  "[S17 full read] Stage 3 of §3.4 (identical hardware, updated stack, consecutive reruns) is the closest published analogue to an in-situ same-weights floor; it is used to caveat method comparisons, not to fingerprint a served model.",
+  "[S17 full read] Atil et al. 2025, 'Non-determinism of \"deterministic\" llm settings' (arXiv:2408.04667) and He & Thinking Machines 2025 'Defeating nondeterminism in llm inference' are cited for the floor's cause — both may bear on C4a's same-weights floor and should be surveyed.",
+  "[S17 full read] Madaan et al. 2024 'Quantifying variance in evaluation benchmarks' (arXiv:2406.10229) and Bowyer et al. 2025 'Don't use the CLT in LLM evals with fewer than a few hundred datapoints' (arXiv:2503.01747) are cited for interval methodology on small item sets.",
+  "[S17 full read] All measurements are sampling-based (temperature 0.8, top_p 0.9); the paper never uses teacher-forced log-probabilities.",
+  "[S01 full read] S01_fulltext.txt is a font-garbled extraction (custom-encoded Type-3 glyphs); reader-4 decoded it by monoalphabetic substitution (decode_s01.py -> S01_decoded.txt in the scratchpad survey folder). Quotes above are the decoded text with spacing restored; verify against the PDF before citing as verbatim.",
+  "[S01 full read] Residue of C3 not found in S01: a stated mapping version, and the use as a reading aid for reproduction (S01's use is comparison by eye for validation).",
+  "[S01 full read] S01 sec. 2.2 defines near-preimage / near-collision resistance for images and sec. 5.2 proposes a birthday-paradox user study to estimate the perceptual image space; nothing on versioning the mapping.",
+  "[S04 full read] No passage in S04 publishes a chain head or certificate in a widely witnessed medium (newspaper); that is Bayer, Haber & Stornetta 1993 and Surety's NYT hash ads, which the survey should read for the public-ledger element of C4b.",
+  "[S04 full read] Bearing on C2: the linking scheme is a hash chain of signed certificates (L_n includes H(L_{n-1})) verified by challengers, but the lines are time-stamp certificates, not verdicts recomputed from receipt bytes, and no head is pinned outside the chain; OCCUPIES at most for C2.",
+  "[S04 full read] Sec. 7 daily log of document hashes submitted once for time-stamping is a Merkle-less batch anchor; relevant to how a lab anchors many receipts under one stamp.",
+  "[S04 full read] Sec. 6.4 renewal of time-stamps under a newer implementation bears on long-lived receipt anchors after a hash function breaks."
+ ],
+ "readers": [
+  "reader-1",
+  "reader-2",
+  "reader-3",
+  "reader-4"
+ ]
+}

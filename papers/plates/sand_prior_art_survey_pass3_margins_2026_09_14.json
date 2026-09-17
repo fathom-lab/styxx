@@ -1,0 +1,617 @@
+{
+ "schema": "styxx.plates/sand-survey-margins/v0",
+ "corrects": "papers/plates/CORRECTION_sand_neighbours_pass3_2026_09_14.md",
+ "record": "papers/plates/sand_prior_art_survey_pass3_2026_09_14.json",
+ "elements": [
+  "self-comparison",
+  "fixed item set",
+  "floor",
+  "interval",
+  "log-probabilities"
+ ],
+ "sources": {
+  "L01": "Chen, Cai, Zaharia & Zou",
+  "L02": "Chen, Jin, Eyuboglu, Ré, Zaharia & Zou",
+  "L03": "Tu et al.",
+  "L04": "Yang & Wu",
+  "L05": "Xu et al.",
+  "L06": "Hooker, Courville, Clark, Dauphin & Frome",
+  "L07": "Atil et al.",
+  "L08": "Madaan et al.",
+  "L09": "Pasquini, Kornaropoulos & Ateniese",
+  "L10": "Iourovitski, Sharma & Talwar",
+  "L11": "Maini, Yaghini & Papernot",
+  "L12": "Chen et al.",
+  "L13": "Ghodsi, Gu & Garg",
+  "L14": "Jagielski, Carlini, Berthelot, Kurakin & Papernot",
+  "L15": "Narayanan & Kapoor"
+ },
+ "n_sources": 15,
+ "n_readings": 5,
+ "readings": {
+  "as_recorded": {
+   "rule": "the element flags exactly as the four readers returned them",
+   "overrides": [],
+   "missing_by_source": {
+    "L01": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L02": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L03": [
+     "interval",
+     "log-probabilities"
+    ],
+    "L04": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval"
+    ],
+    "L05": [
+     "floor"
+    ],
+    "L06": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L07": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L08": [
+     "self-comparison",
+     "floor"
+    ],
+    "L09": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L10": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L11": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "log-probabilities"
+    ],
+    "L12": [
+     "self-comparison",
+     "floor",
+     "log-probabilities"
+    ],
+    "L13": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L14": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L15": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ]
+   },
+   "fewest_missing": 1,
+   "sources_missing_the_fewest": [
+    "L05"
+   ],
+   "n_sources_missing_the_fewest": 1,
+   "what_the_nearest_miss": {
+    "L05": "floor"
+   },
+   "n_sources_missing_nothing": 0
+  },
+  "a_stated_level_test_on_the_difference_is_an_interval": {
+   "rule": "a significance test on the difference at a stated level counts as an interval on the comparison — the reading reader-4 applied to L11 and L12 — applied also to the two sources whose reader coded it otherwise",
+   "overrides": [
+    {
+     "source": "L03",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "larger than the critical value 2.58 of z-score at the 99% confidence level"
+    },
+    {
+     "source": "L06",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "If the p-value <= 0.05, we reject the null hypothesis"
+    }
+   ],
+   "missing_by_source": {
+    "L01": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L02": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L03": [
+     "log-probabilities"
+    ],
+    "L04": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval"
+    ],
+    "L05": [
+     "floor"
+    ],
+    "L06": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L07": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L08": [
+     "self-comparison",
+     "floor"
+    ],
+    "L09": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L10": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L11": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "log-probabilities"
+    ],
+    "L12": [
+     "self-comparison",
+     "floor",
+     "log-probabilities"
+    ],
+    "L13": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L14": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L15": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ]
+   },
+   "fewest_missing": 1,
+   "sources_missing_the_fewest": [
+    "L03",
+    "L05"
+   ],
+   "n_sources_missing_the_fewest": 2,
+   "what_the_nearest_miss": {
+    "L03": "log-probabilities",
+    "L05": "floor"
+   },
+   "n_sources_missing_nothing": 0
+  },
+  "only_a_confidence_interval_on_the_compared_quantity_is_an_interval": {
+   "rule": "only a confidence interval on the compared quantity counts; a threshold test, or a spread of repeated runs, does not",
+   "overrides": [
+    {
+     "source": "L05",
+     "element": "interval_on_comparison",
+     "recorded": true,
+     "read_as": false,
+     "rests_on": "not a confidence interval on the teacher-student difference"
+    },
+    {
+     "source": "L12",
+     "element": "interval_on_comparison",
+     "recorded": true,
+     "read_as": false,
+     "rests_on": "one-tailed T-test to calculate the lower bound"
+    }
+   ],
+   "missing_by_source": {
+    "L01": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L02": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L03": [
+     "interval",
+     "log-probabilities"
+    ],
+    "L04": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval"
+    ],
+    "L05": [
+     "floor",
+     "interval"
+    ],
+    "L06": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L07": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L08": [
+     "self-comparison",
+     "floor"
+    ],
+    "L09": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L10": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L11": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "log-probabilities"
+    ],
+    "L12": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L13": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L14": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L15": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ]
+   },
+   "fewest_missing": 2,
+   "sources_missing_the_fewest": [
+    "L01",
+    "L03",
+    "L05",
+    "L08"
+   ],
+   "n_sources_missing_the_fewest": 4,
+   "what_the_nearest_miss": {
+    "L01": "floor, log-probabilities",
+    "L03": "interval, log-probabilities",
+    "L05": "floor, interval",
+    "L08": "self-comparison, floor"
+   },
+   "n_sources_missing_nothing": 0
+  },
+  "the_lenient_interval_and_a_floor_only_on_weights_known_identical": {
+   "rule": "the stated-level-test reading of the interval, and a floor counts as measured on the same weights only when the weights are known identical, not inferred from a period in which the scores were stable",
+   "overrides": [
+    {
+     "source": "L03",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "larger than the critical value 2.58 of z-score at the 99% confidence level"
+    },
+    {
+     "source": "L06",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "If the p-value <= 0.05, we reject the null hypothesis"
+    },
+    {
+     "source": "L03",
+     "element": "same_weights_floor_in_situ",
+     "recorded": true,
+     "read_as": false,
+     "rests_on": "'same version' within a period is an inference from stability, not a measurement"
+    }
+   ],
+   "missing_by_source": {
+    "L01": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L02": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L03": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L04": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval"
+    ],
+    "L05": [
+     "floor"
+    ],
+    "L06": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L07": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L08": [
+     "self-comparison",
+     "floor"
+    ],
+    "L09": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L10": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L11": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "log-probabilities"
+    ],
+    "L12": [
+     "self-comparison",
+     "floor",
+     "log-probabilities"
+    ],
+    "L13": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L14": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L15": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ]
+   },
+   "fewest_missing": 1,
+   "sources_missing_the_fewest": [
+    "L05"
+   ],
+   "n_sources_missing_the_fewest": 1,
+   "what_the_nearest_miss": {
+    "L05": "floor"
+   },
+   "n_sources_missing_nothing": 0
+  },
+  "the_lenient_interval_and_any_measured_null_that_grades_the_comparison_as_a_floor": {
+   "rule": "the stated-level-test reading of the interval, and a measured null that grades the comparison counts as a floor whether or not it was measured on the same weights (a seed population, retrainings, independently trained models)",
+   "overrides": [
+    {
+     "source": "L03",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "larger than the critical value 2.58 of z-score at the 99% confidence level"
+    },
+    {
+     "source": "L06",
+     "element": "interval_on_comparison",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "If the p-value <= 0.05, we reject the null hypothesis"
+    },
+    {
+     "source": "L06",
+     "element": "same_weights_floor_in_situ",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "The floor is the between-seed variance of 30 independent trainings"
+    },
+    {
+     "source": "L08",
+     "element": "same_weights_floor_in_situ",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "the measured null floor is seed variance across different weights"
+    },
+    {
+     "source": "L12",
+     "element": "same_weights_floor_in_situ",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "the floor that grades it is the distribution of independently trained negative models"
+    },
+    {
+     "source": "L14",
+     "element": "same_weights_floor_in_situ",
+     "recorded": false,
+     "read_as": true,
+     "rests_on": "Section 5 is the one place in these five sources where a measured nondeterminism floor is used to grade a comparison"
+    }
+   ],
+   "missing_by_source": {
+    "L01": [
+     "floor",
+     "log-probabilities"
+    ],
+    "L02": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L03": [
+     "log-probabilities"
+    ],
+    "L04": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval"
+    ],
+    "L05": [
+     "floor"
+    ],
+    "L06": [
+     "log-probabilities"
+    ],
+    "L07": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L08": [
+     "self-comparison"
+    ],
+    "L09": [
+     "self-comparison",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L10": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L11": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "log-probabilities"
+    ],
+    "L12": [
+     "self-comparison",
+     "log-probabilities"
+    ],
+    "L13": [
+     "self-comparison",
+     "fixed item set",
+     "floor",
+     "interval",
+     "log-probabilities"
+    ],
+    "L14": [
+     "self-comparison",
+     "interval",
+     "log-probabilities"
+    ],
+    "L15": [
+     "floor",
+     "interval",
+     "log-probabilities"
+    ]
+   },
+   "fewest_missing": 1,
+   "sources_missing_the_fewest": [
+    "L03",
+    "L05",
+    "L06",
+    "L08"
+   ],
+   "n_sources_missing_the_fewest": 4,
+   "what_the_nearest_miss": {
+    "L03": "log-probabilities",
+    "L05": "floor",
+    "L06": "log-probabilities",
+    "L08": "self-comparison"
+   },
+   "n_sources_missing_nothing": 0
+  }
+ },
+ "n_readings_with_a_source_missing_nothing": 0,
+ "fewest_missing_under_every_reading": 1,
+ "what_the_nearest_miss_across_readings": [
+  "floor",
+  "floor, interval",
+  "floor, log-probabilities",
+  "interval, log-probabilities",
+  "log-probabilities",
+  "self-comparison",
+  "self-comparison, floor"
+ ],
+ "n_distinct_elements_the_nearest_miss": 4
+}

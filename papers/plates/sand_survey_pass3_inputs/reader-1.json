@@ -1,0 +1,149 @@
+{
+ "reader": "reader-1",
+ "sources": [
+  {
+   "id": "L01",
+   "read_end_to_end": true,
+   "chars_read": 81839,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "The year-over-year shift of a commercial classification API's confusion matrix (hard predicted labels) on a fixed labelled benchmark, estimated under a query budget by the MASA adaptive sampler with a 95%-confidence bound on its finite-sample estimation error.",
+     "quote": "Since the data distribution remains ﬁxed, such a change is due to ML APIs’ updates.",
+     "reason": "The same-weights floor is missing: the paper never re-queries the same API version on the same items to measure its own spread, attributes every change on the fixed set to the update and judges it against a bare 1% threshold, and its only interval (95% confidence of ≤1% Frobenius error) bounds MASA's sampling error in estimating ∆C rather than grading the shift against an in-situ spread; the object is hard-label confusion matrices, not log-probabilities.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": true,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Chen et al. 2021 grade an API's year-over-year confusion-matrix shift against a fixed 1% threshold, not a floor"
+    }
+   ],
+   "bearing_quotes": [
+    "For each dataset, we evaluated three commercial ML APIs’ accuracy in April 2020 and April 2021.",
+    "Since the data distribution remains ﬁxed, such a change is due to ML APIs’ updates.",
+    "Given a confusion matrix of the ML API measured previously (say, a few months ago), C o, the ML API shift is deﬁned as ∆C ≜C −C O.",
+    "In fact, as shown in Figure 2, API performance changes exceeding 1% occurred in about 33% of all (36) considered ML API-dataset combinations.",
+    "API shifts are orthogonal to distribution shifts: instead of attributing the performance shifts to data distribution changes, API shifts concern with ML APIs changes which changes its predictions on the same dataset.",
+    "For a data point x from some domain X, let ˆy(x) ∈[L] denote its predicted label on x, and y(x) be the true label.",
+    "The sample size is obtained when a 1% Frobenius norm error is achieved with probability 95%.",
+    "For both methods, we choose c to ensure a 1% error under 95% conﬁdence level."
+   ],
+   "leads": [],
+   "notes": "The 'uncertainty score' σ² and the 1500 averaged runs concern MASA's random choice of which items to query, not repeat queries of the same API version, so no same-version spread is ever measured; the authors state confusion matrices are for classification only and other measures are needed for NLP/OCR. Published later as Chen, Zaharia & Zou, 'How did the model change? efficiently assessing machine learning API shifts', ICLR 2022 (cited as [34] in L02)."
+  },
+  {
+   "id": "L02",
+   "read_end_to_end": true,
+   "chars_read": 88365,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "A longitudinal dataset (1,761,417 instances) of commercial ML API predictions and confidence scores on fixed benchmark datasets queried once per evaluation period from 2020 to 2022, summarised by prediction overlap, confidence movement, accuracy and group disparity between periods.",
+     "quote": "Prediction overlap measures how often an ML API’s prediction on the same input remains the same at different evaluation periods.",
+     "reason": "The same-weights floor and the interval are both missing: each item is queried once per period, no same-period repeat is taken to measure the API's own spread, the checklist reports error bars as N/A, and shifts are reported as raw prediction-overlap, confidence-movement and accuracy differences with no interval; the object is API-reported labels and confidence scores, not teacher-forced log-probabilities.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": false,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Chen et al. 2022 grade year-to-year prediction overlap and confidence movement against no floor and no interval"
+    }
+   ],
+   "bearing_quotes": [
+    "Prediction overlap measures how often an ML API’s prediction on the same input remains the same at different evaluation periods.",
+    "For a ﬁxed data point, an ML API’s prediction can remain the same, but its conﬁdence may still move up and down over time.",
+    "For each ML API and dataset pair, we recorded the API’s prediction f(x, t) and q(x, t) at each evaluation time.",
+    "Speciﬁcally, we have evaluated all classiﬁcation APIs in the spring of 2020, 2021, and 2022, separately, and all structured prediction APIs in 2020 fall and 2022 spring respectively.",
+    "(c) Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)? [N/A]",
+    "Our analysis shows that API shifts are common: more than 60% of the 63 evaluated API-dataset pairs encounter performance shifts.",
+    "This indicates general phenomena in API shifts: many API updates ﬁx certain errors but also make additional mistakes.",
+    "Overall, this analysis suggests that signiﬁcant changes can happen within six months and thus frequent updates of the database is needed."
+   ],
+   "leads": [],
+   "notes": "HAPI is nearer than L01 on the object axis because it records and compares API confidence scores q(x,t) across periods (a soft score, not a hard label), but it is a dataset paper with descriptive statistics only: one query per item per period, no repeat runs, no intervals. Same author group as L01; its [34] is L01's ICLR 2022 version, not a new lead."
+  },
+  {
+   "id": "L08",
+   "read_end_to_end": true,
+   "chars_read": 67659,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Variance of benchmark scores across ten Llama-2-7B models pretrained from scratch differing only in initialisation seed (210 checkpoints), across training checkpoints, and across 280 public models, on 13 fixed benchmarks, with bootstrapped and analytic 95% confidence intervals and continuous probability-mass / target-NLL metrics.",
+     "quote": "to conclude that pretraining dataset or hyperparameter set B is better than pretraining dataset or hyperparameter set A, we would want the performance increase to be larger than that due to random seed variance across different models trained in setup A.",
+     "reason": "The self-comparison and the same-weights floor are missing: the measured null floor is seed variance across different weights trained from different initialisations (and drift across training checkpoints), used to grade comparisons between training setups and evaluation methods, not a served model compared with its own earlier or differently-served self on the same weights under the serving in use.",
+     "elements": {
+      "self_comparison": false,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": true,
+      "log_prob_object": true
+     },
+     "nearer_than_pass2_neighbour": true,
+     "nearer_reason": "Nearer on the practice, not the object: of the four sources and the two pass-2 neighbours as described, it is the only one that both measures a null floor and states that a comparison must exceed it, with 95% intervals, on fixed item sets, using probability-mass / target-NLL (log-prob-level) scores; but its floor is seed variance across different weights and it compares training setups, so Thinking Machines 2025 remains nearer on the same-weights in-situ floor and Dutta 2024 on the differently-served self.",
+     "neighbour_phrase": "Madaan et al. grade benchmark score differences against measured seed variance and bootstrapped 95% intervals, on different weights"
+    }
+   ],
+   "bearing_quotes": [
+    "These 10 runs are identical, except for the model initialisation seed.",
+    "to conclude that pretraining dataset or hyperparameter set B is better than pretraining dataset or hyperparameter set A, we would want the performance increase to be larger than that due to random seed variance across different models trained in setup A.",
+    "To ground the seed variance numbers, we compare them with bootstrapped 95% confidence intervals on individual models, as well as observed variance across different setups.",
+    "To maintain consistency, we used probability mass of the predicted answer for all choice-based benchmarks and NLL of the correct answer for generation-based benchmarks; more details are provided in Appendix A.",
+    "We observe that the SNR is considerably higher for continuous metrics for all benchmarks, suggesting that they may be better when comparing models in the sense that they are less confounded by noise.",
+    "Generally, the 7B seed variance is well below the 95% CI for the same benchmark, though the ratio of the two is quite variable.",
+    "However, both methods suffer from greatly increased seed variance (final two columns, Table 3), indicating that the tiny-benchmarks method may have limited use during pretraining ablations as it makes model comparisons more likely to be confounded by randomness from the initialisation and data ordering seed.",
+    "Despite this widespread usage, we rarely quantify the variance in our evaluation benchmarks, which dictates whether differences in performance are meaningful."
+   ],
+   "leads": [],
+   "notes": "No served model, no serving-path variation, no repeat of the same weights: every source of variance measured is a different set of weights (seed) or a different checkpoint. Its finding that target-NLL / probability-mass metrics have higher SNR than discrete accuracy bears on the sand's choice of a log-prob object but does not occupy the served-self comparison."
+  },
+  {
+   "id": "L15",
+   "read_end_to_end": true,
+   "chars_read": 10133,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "A commentary on Chen, Zaharia & Zou 2023 plus the bloggers' own supplementary test of the March and June 2023 API snapshots of GPT-3.5 and GPT-4 on 500 composite numbers, reported as a graph of yes/no answer behaviour, distinguishing capability from behaviour.",
+     "quote": "To supplement this evaluation, we tested the models with 500 composite numbers.",
+     "reason": "The same-weights floor and the interval are missing: the two snapshots are each run once over a fixed 500-item set with no repeat runs to measure a snapshot's own spread and no interval on the difference, and the object is text yes/no answers, not log-probabilities.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": false,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Narayanan & Kapoor grade March-vs-June snapshot answers on 500 composites against no floor and no interval"
+    }
+   ],
+   "bearing_quotes": [
+    "OpenAI provides “snapshots” of the models from March and June through its API, so they compared the behavior of the two snapshots of each model.",
+    "To supplement this evaluation, we tested the models with 500 composite numbers.",
+    "To generate composites, we randomly selected 500 products of two primes. We constrained them to be in the same numerical range as the primes in the authors’ data (1000 – 20000).",
+    "What seems to have changed is that the March version of GPT-4 almost always guesses that the number is prime, and the June version almost always guesses that it is composite.",
+    "In short, everything in the paper is consistent with the behavior of the models changing over time. None of it suggests a degradation in capability.",
+    "Given the nondeterministic nature of LLMs, it takes a lot of work to discover these strategies and arrive at a workflow that is well suited for a particular application.",
+    "The authors report an additional issue: the June version of GPT-4 doesn’t do Chain of Thought (CoT) reasoning despite being asked to “think step by step”, the standard prompt for eliciting this behavior. Instead, it simply responds yes or no. We reproduced this.",
+    "The authors of the manuscript could have framed this in terms of repeatability, or lack thereof."
+   ],
+   "leads": [],
+   "notes": "The last bearing quote is a reader comment (Visar Berisha) under the post, not the authors' text; the authors themselves mention nondeterminism only in passing about workflows and never measure it. The paper it critiques (Chen, Zaharia & Zou 2023) is already scored OCCUPIES in pass 2 and is not a new lead."
+  }
+ ]
+}

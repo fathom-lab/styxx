@@ -1,0 +1,171 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "245d0f53a41270e800fdae7ec9cb218285928e50",
+ "document": {
+  "name": "SURVEY_sand_neighbours_pass3_2026_09_14.md",
+  "sha256": "519b5e3bcb7f2fdcd1b882fcf342121caf92455aaaac0c8cf0263b783a51793a"
+ },
+ "text": "# SURVEY — the neighbours of the sand, pass 3: seventeen of pass 2's leads read end to end, and the sentence survives with three more neighbours inside it\n\n**status: a survey under a frozen protocol, sworn to its record. Pass 3 scores the list that\n`PROTOCOL_sand_prior_art_pass3_2026_09_14.md` closed at commit `54b066ff`, before any\nfetch. No clause changed status. The licensed sentence changed: its fingerprint clause now names\nsix neighbours instead of three. Nothing here licenses \"first\", \"novel\" or \"revolutionary\".**\n\n## what was done\n\nPass 2 (`SURVEY_sand_neighbours_pass2_2026_09_13.md`, sworn) closed its list at twenty sources and\nrecorded forty leads it could not score. The pass-3 protocol drew a closed list of\n17 of them by one stated rule (every lead a reader\nnamed as a candidate for the fingerprint clause, the chained-log clause or the bounty clause,\nminus those already priced by a neighbour, those that are evidence about a floor rather than a\npractice, and those beside a retired clause), stated the fingerprint clause's object before\nreading, and was committed before the first fetch. Every source was then fetched by\n`fetch_pass3.py`, its bytes hashed (`sand_survey_fetch_record_pass3_2026_09_14.json`), its full\ntext extracted, and read end to end by one of four readers — 17 READ, none skimmed,\nnone unfetchable, 1035862 characters of extracted text in all\n(the longest, LLMmap, 122531). Each reader returned, per source, one verdict\nunder the inherited rule (RETIRES / OCCUPIES / SILENT), the object, one verbatim quote, one sentence\nof reason, and for the fingerprint clause five yes/no elements of the object stated in advance.\n`build_sand_survey_pass3.py` merged the returns; the surveyor typed no verdict. The builder also\nchecked every verdict quote against the extracted text after normalising ligatures, quote marks and\nline-end hyphens: 17 of\n17 are in the text they are attributed to.\n\n## what it found\n\n- Verdicts: 0 RETIRES,\n  17 OCCUPIES,\n  0 SILENT. Every source on the list does part of what\n  a clause says, for a different object or without the floor; none does the whole of it for the\n  same object.\n- The fingerprint clause (C4a) stays `OCCUPIED`. Of its five elements, stated\n  before reading — a served model compared with its own earlier or differently-served self; a\n  fixed item set; a floor measured on the same weights under the serving in use; an interval on\n  the comparison; log-probabilities as the object — the fifteen sources read for it have\n  6 with the self-comparison,\n  11 with a fixed item set,\n  1 with a same-weights floor measured in situ\n  (ChatLog, on a black box whose weights are inferred unchanged, not known),\n  5 with an interval on the comparison,\n  3 with a log-probability object, and\n  0 with all five. The nearest, by the\n  readers' own flag, are `L03, L06, L08` —\n  ChatLog (Tu et al.: the same served API against its own earlier self on a fixed item set,\n  graded by z-test against the within-period spread, no interval, ROUGE on sampled text),\n  Hooker et al. (compressed against uncompressed on a fixed set, graded by Welch's t-test against\n  a thirty-seed population null, labels not probabilities), and Madaan et al. (a measured seed\n  variance that a comparison must exceed, with bootstrapped intervals, on different weights).\n  3 neighbours enter the sentence.\n- The two leads pass 2 named first read as the protocol predicted and no nearer: Chen, Cai,\n  Zaharia and Zou 2021 `OCCUPIES`\n  (a year-over-year confusion-matrix shift on a fixed benchmark, an interval on the estimator's\n  sampling error, judged against a bare 1% threshold, never a same-version re-query; bytes\n  `a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5`);\n  Yang and Wu 2024 `OCCUPIES`\n  (ownership: whether a suspect's logits lie in the victim's subspace, a fixed tolerance, no\n  time series). The provenance and ownership tools (LLMmap, Hide and Seek, Dataset Inference,\n  DeepJudge) identify which model; the nondeterminism papers (Atil et al.) measure the floor and\n  grade nothing against it; SafetyNets proves exact execution and says itself it cannot see the\n  model's own errors; the extraction paper bounds fidelity by a floor across re-trainings.\n- The bounty clause (C5) stays `OCCUPIED`: ACM's badges reward authors\n  for agreement within tolerance, adjudicated by editors, with no payment; the 2019 challenge\n  editorial recognizes peer-reviewed reports by publication, with compute credits given before\n  the work. Neither is nearer than Immunefi or the Preregistration Challenge.\n- The chained-log clause (C2) stays `OCCUPIED`; no source on this list was\n  a candidate for it, and the protocol says why.\n- 11 leads were met while reading and are recorded,\n  not scored — the list was closed. Three are the same nondeterminism-measurement class as Atil\n  et al., two are ownership fingerprints beside DeepJudge, one is a hash-chained ownership\n  fingerprint (Russinovich and Salem, \"chain & hash\"), one is pass 2's own source in preprint\n  form.\n\n## the sentence\n\nThe record's status is `SURVIVES_WITHOUT_C3_C4b` — the same four\nclauses as after pass 2, the face and the seal still out (Perrig and Song 1999; Haber and Stornetta\n1991, OpenTimestamps). The text differs from pass 2's by the three neighbours appended inside the\nfingerprint clause, each by the phrase its reader returned; the builder keeps pass 2's wording for\neverything else and refuses to run if that wording is not found verbatim. Copied from the record's\n`sentence.text`:\n\n> We know of no lab that binds every published number to bytes at a commit (where Deterministic\n> Integrity Gates and Cited-but-Not-Verified bind sentences and citations of a manuscript, as the\n> 2026-09-05 survey names them), re-derives every verdict from those bytes into a chained log (where\n> Certificate Transparency and Rekor chain certificates and signed metadata, not verdicts),\n> fingerprints a model's behavior on hashed canaries against a measured null floor (where Dutta et\n> al. measure flips and KL divergence under compression, Chen, Zaharia and Zou grade a service's\n> drift against its own repeat-run disagreement, and Thinking Machines measure the same-weights\n> spread of served completions, and Tu et al. grade successive-period ROUGE means of gpt-3.5-turbo\n> against within-period day-to-day spread by z-test, Hooker et al. grade compressed-vs-base class\n> recall against a 30-seed population null by Welch's t-test, Madaan et al. grade benchmark score\n> differences against measured seed variance and bootstrapped 95% intervals, on different weights),\n> and pays a standing bounty against its own verifier (where Immunefi pays against deployed code and\n> the Preregistration Challenge paid for preregistering) — at once.\n\nThat is the only positioning sentence the lab may say about the sand, and it is now longer, not\nshorter: every pass adds neighbours and none has removed the conjunction. Thirty-seven sources\nacross three passes have been read end to end or skimmed against it.\n\n## what this survey does not do\n\nIt does not price beyond the list; the eleven leads are the start of the next one. It does not\nre-open the retired clauses. It does not say the four surviving clauses are unoccupied — each is\noccupied and says by whom. It does not claim the readers are infallible: their verdicts, objects,\nquotes, element flags and notes are in the record, source by source, for anyone to dispute; a\ndispute that shows a listed source doing all five elements for the same object retires the\nfingerprint clause and, under the sentence rule, the sentence.\n\n## what a stranger checks\n\n`python -m styxx.sworn verify papers/plates/SURVEY_sand_neighbours_pass3_2026_09_14.md --repo . --commit <the commit that carries this file>`\nre-derives every number above from the record. The record's per-source `sha256` is the hash of\nthe bytes fetched from the URL beside it; `fetch_pass3.py` re-fetches, though a source may have\nmoved on (three readers note version drift: ChatLog is v2 retitled, Yang and Wu's v2 is dated\nDecember 2025, Hooker et al. is v3). `python papers/plates/build_sand_survey_pass3.py` rebuilds\nthe record from the readers' returns and the fetch record; it refuses a return that scores a\nclause the list does not name for that source, and it downgrades a RETIRES from a source not read\nend to end.\n",
+ "spans": [
+  {
+   "start": 314,
+   "end": 324,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/protocol_commit",
+   "kind": "quote"
+  },
+  {
+   "start": 729,
+   "end": 731,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/sources_in_list",
+   "kind": "numeric"
+  },
+  {
+   "start": 1304,
+   "end": 1306,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/read",
+   "kind": "numeric"
+  },
+  {
+   "start": 1345,
+   "end": 1352,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/chars_read_total",
+   "kind": "numeric"
+  },
+  {
+   "start": 1411,
+   "end": 1417,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/sources/L09/chars_read",
+   "kind": "numeric"
+  },
+  {
+   "start": 1878,
+   "end": 1880,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdict_quotes_found_in_text",
+   "kind": "numeric"
+  },
+  {
+   "start": 1884,
+   "end": 1886,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdict_quotes_checked",
+   "kind": "numeric"
+  },
+  {
+   "start": 1958,
+   "end": 1959,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdicts_retires",
+   "kind": "numeric"
+  },
+  {
+   "start": 1971,
+   "end": 1973,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdicts_occupies",
+   "kind": "numeric"
+  },
+  {
+   "start": 1986,
+   "end": 1987,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/verdicts_silent",
+   "kind": "numeric"
+  },
+  {
+   "start": 2187,
+   "end": 2197,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/status",
+   "kind": "quote"
+  },
+  {
+   "start": 2513,
+   "end": 2514,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/elements_true_counts/self_comparison",
+   "kind": "numeric"
+  },
+  {
+   "start": 2543,
+   "end": 2545,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/elements_true_counts/fixed_item_set",
+   "kind": "numeric"
+  },
+  {
+   "start": 2571,
+   "end": 2572,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/elements_true_counts/same_weights_floor_in_situ",
+   "kind": "numeric"
+  },
+  {
+   "start": 2695,
+   "end": 2696,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/elements_true_counts/interval_on_comparison",
+   "kind": "numeric"
+  },
+  {
+   "start": 2735,
+   "end": 2736,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/elements_true_counts/log_prob_object",
+   "kind": "numeric"
+  },
+  {
+   "start": 2774,
+   "end": 2775,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/n_sources_with_all_five_elements",
+   "kind": "numeric"
+  },
+  {
+   "start": 2836,
+   "end": 2851,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C4a/nearer_pass3_joined",
+   "kind": "quote"
+  },
+  {
+   "start": 3327,
+   "end": 3328,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/nearer_neighbours_named",
+   "kind": "numeric"
+  },
+  {
+   "start": 3475,
+   "end": 3485,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/sources/L01/verdicts/C4a/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 3675,
+   "end": 3741,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/sources/L01/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 3763,
+   "end": 3773,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/sources/L04/verdicts/C4a/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 4276,
+   "end": 4286,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C5/status",
+   "kind": "quote"
+  },
+  {
+   "start": 4619,
+   "end": 4629,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/clauses/C2/status",
+   "kind": "quote"
+  },
+  {
+   "start": 4709,
+   "end": 4711,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/counts/leads_not_scored",
+   "kind": "numeric"
+  },
+  {
+   "start": 5091,
+   "end": 5116,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass3_2026_09_14.json#/sentence/status",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

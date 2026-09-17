@@ -1,0 +1,178 @@
+{
+ "schema": "styxx.checksum/scorecard/v2",
+ "prereg": "PREREG_checksum_beacon_draw_2026_09_14.md",
+ "prereg_named_by_certs": "PREREG_checksum_beacon_draw_2026_09_14.md",
+ "sealed_blob": "d6a98261f44f31664cdedbc24769532d5a701bf46d2c8b9ce30cf6a227fb5519",
+ "prereg_blob_sha256": "d6a98261f44f31664cdedbc24769532d5a701bf46d2c8b9ce30cf6a227fb5519",
+ "model": "Qwen/Qwen2.5-0.5B",
+ "device": "cuda",
+ "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+ "git_head": "b8205b1cd2087b8cfa55267c967f7fa0c40defaf",
+ "git_dirty": false,
+ "is_the_experiment": false,
+ "tag": "_dryrun_qwen0.5b",
+ "smoke": false,
+ "hypotheses": {
+  "H1": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "worst-pairwise null floor ≤ 1e-3 nats/token (zero allowed)",
+     "predicted": "≤ 0.001",
+     "observed": 0.0,
+     "holds": true
+    },
+    {
+     "clause": "A vs A′ reads SAME against the held-out floor",
+     "predicted": "SAME",
+     "observed": "SAME",
+     "holds": true
+    }
+   ],
+   "rule": null,
+   "held_out_floor_nats": 0.0,
+   "preregistered": true
+  },
+  "H2": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "A vs Q4 reads DRIFT",
+     "predicted": "DRIFT",
+     "observed": "DRIFT",
+     "holds": true
+    },
+    {
+     "clause": "mean |Δ log-prob| in the band (inclusive)",
+     "predicted": "[0.05, 0.6]",
+     "observed": 0.34657728324075127,
+     "holds": true
+    },
+    {
+     "clause": "geometry r ≥ minimum",
+     "predicted": "≥ 0.9",
+     "observed": 0.9687481029451261,
+     "holds": true
+    },
+    {
+     "clause": "argmax lost on at most N of 48",
+     "predicted": "≤ 24",
+     "observed": 15,
+     "holds": true
+    }
+   ]
+  },
+  "H3": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "A vs Q8 reads DRIFT",
+     "predicted": "DRIFT",
+     "observed": "DRIFT",
+     "holds": true
+    },
+    {
+     "clause": "Q8 mean |Δ log-prob| below Q4's",
+     "predicted": "< 0.34657728324075127",
+     "observed": 0.12059575818582541,
+     "holds": true
+    },
+    {
+     "clause": "geometry r ≥ minimum",
+     "predicted": "≥ 0.98",
+     "observed": 0.9971288907526535,
+     "holds": true
+    },
+    {
+     "clause": "argmax lost on at most N of 48",
+     "predicted": "≤ 8",
+     "observed": 2,
+     "holds": true
+    }
+   ]
+  },
+  "H4": {
+   "status": "HELD",
+   "clauses": [
+    {
+     "clause": "A vs R mean |Δ log-prob| above minimum",
+     "predicted": "> 5.0",
+     "observed": 10.130451023578644,
+     "holds": true
+    },
+    {
+     "clause": "geometry r below maximum",
+     "predicted": "< 0.6",
+     "observed": 0.35012524879929174,
+     "holds": true
+    },
+    {
+     "clause": "top-1 hits at most N of 48",
+     "predicted": "≤ 4",
+     "observed": 0,
+     "holds": true
+    }
+   ]
+  },
+  "H5": {
+   "status": "PENDING",
+   "clauses": [],
+   "reason": "the 2026-09-13 experiment's certs were not given (--hand-set-certs)"
+  },
+  "H6": {
+   "status": "PENDING",
+   "clauses": [],
+   "reason": "no second machine's run was given (--portability)"
+  }
+ },
+ "gates": {
+  "K1": {
+   "fired": false,
+   "floor_nats": 0.0,
+   "threshold_nats": 0.01,
+   "detail": "not fired"
+  },
+  "K5": {
+   "fired": true,
+   "detail": [
+    "model is 'Qwen/Qwen2.5-0.5B', the PREREG's is Qwen/Qwen2.5-1.5B",
+    "is_the_experiment is not true (a tag, a smoke, or another model)",
+    "tag is '_dryrun_qwen0.5b': a tagged run is an instrument check, whatever is_the_experiment says",
+    "the beacon clause could not be evaluated: no --expect-beacon was given, so nothing ties the certs' beacon to the one `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest"
+   ]
+  },
+  "K6": {
+   "fired": null,
+   "detail": "a precondition on the chain, evaluated by `python -m styxx.clock verify`, not offline; if the seal line is not ANCHORED the run did not start, and if it started K5 applies"
+  },
+  "K2": {
+   "fired": false,
+   "detail": "not fired"
+  },
+  "K3": {
+   "fired": false,
+   "thresholds": {
+    "mean_nats": 1.5,
+    "top1_loss": 36
+   },
+   "observed": {
+    "mean_nats": 0.34657728324075127,
+    "top1_loss": 15
+   },
+   "detail": "not fired"
+  },
+  "K4": {
+   "fired": false,
+   "reading": "'inside H2's band' is read as A vs R's mean |Δ log-prob| within H2's mean band, inclusive",
+   "detail": "not fired"
+  }
+ },
+ "notes": [
+  "K5's beacon clause was not checked: pass --expect-beacon with the beacon `python -m styxx.clock verify` prints ANCHORED for this PREREG's digest; without it the card is not a result",
+  "INSTRUMENT CHECK or invalid run: every reading below is printed, none is a result"
+ ],
+ "counts_as_result": false,
+ "run_reading": "NOT A RESULT: K5's beacon clause not evaluated (no --expect-beacon); INSTRUMENT CHECK; gates fired: K5; H1 HELD, H2 HELD, H3 HELD, H4 HELD, H5 PENDING, H6 PENDING",
+ "certs_file": "papers/checksum/beacon_draw_certs_dryrun_qwen0.5b.json",
+ "certs_sha256": "bbe5bda6753233e2349fcd215517e6fbed59c6600ed097423484ca3d57bbb9ca"
+}

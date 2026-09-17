@@ -1,0 +1,352 @@
+{
+ "prereg": "PREREG_checksum_deploy_quant_2026_09_13.md",
+ "smoke": false,
+ "tag": "_dryrun_qwen0.5b_beacon",
+ "is_the_experiment": false,
+ "model": "Qwen/Qwen2.5-0.5B",
+ "device": "cuda",
+ "provenance": {
+  "git_head": "8b2df6038d2dd50e200be0ee137b44f3b67cb1c9",
+  "git_dirty": false,
+  "prereg": "PREREG_checksum_deploy_quant_2026_09_13.md",
+  "prereg_blob_sha256": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3ff2fd4b6dd9e",
+  "styxx_file": "C:\\Users\\heyzo\\clawd\\wt\\plate\\styxx\\__init__.py",
+  "checksum_py_sha256": "59246bcfd6d29eae4cbe373caf996a3d9dee5a3939291760804776b8163879c7",
+  "versions": {
+   "torch": "2.5.1+cu121",
+   "transformers": "4.57.3",
+   "bitsandbytes": "0.49.2"
+  },
+  "python": "3.12.10",
+  "device": "cuda",
+  "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "cublas_workspace_config": ":4096:8",
+  "deterministic_algorithms": true,
+  "torch_quantized_engine": "x86"
+ },
+ "canaries": {
+  "n": 48,
+  "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+  "draw": {
+   "schema": "styxx.beacon/draw/v0",
+   "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+   "pool_size": 778,
+   "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+   "n": 48,
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+  },
+  "source": "styxx.beacon draw"
+ },
+ "sanity": {
+  "first_token_top1_hits": {
+   "A": 34,
+   "A2": 34,
+   "A3": 34,
+   "Q4": 19,
+   "Q8": 32,
+   "R": 0
+  },
+  "n_canaries": 48,
+  "null_floor_nats": 0.0,
+  "top1_loss_vs_A": {
+   "A2": 0,
+   "A3": 0,
+   "Q4": 15,
+   "Q8": 2,
+   "R": 34
+  }
+ },
+ "distance_params": {
+  "n_boot": 2000,
+  "seed": 20260913,
+  "floor_nats": 0.0
+ },
+ "k1": {
+  "threshold_nats": 0.01,
+  "floor_nats": 0.0,
+  "fired": false
+ },
+ "A2": {
+  "schema": "styxx.checksum/compare/v2",
+  "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "draw": {
+   "schema": "styxx.beacon/draw/v0",
+   "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+   "pool_size": 778,
+   "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+   "n": 48,
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+  },
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+   "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A2]",
+   "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+   "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+  },
+  "distance": {
+   "mean_abs_nats": 0.0,
+   "corr_dist": 2.220446049250313e-16,
+   "rdm_r": 0.9999999999999999,
+   "ci_mean_abs": [
+    0.0,
+    0.0
+   ],
+   "ci_rdm_r": [
+    0.9999999999999999,
+    1.0
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "SAME",
+   "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "87f006bd5ac19c3e1fff18cd504b58cc85c07cdd14362e31811a4dc68ee2d863",
+  "created": {
+   "a": "2026-09-14T10:14:52Z",
+   "b": "2026-09-14T10:14:59Z"
+  }
+ },
+ "Q4": {
+  "schema": "styxx.checksum/compare/v2",
+  "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "draw": {
+   "schema": "styxx.beacon/draw/v0",
+   "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+   "pool_size": 778,
+   "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+   "n": 48,
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+  },
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+   "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B nf4 [Q4]",
+   "rdm_sha256": "6b2a2b1e2e4be01f7c6399968a9794a00abaa65af222b0528c7d37e317f9801e",
+   "mean_lp_sha256": "beabe23de629f125be8fad70a91e7cacb8e3b3f921e016f6cba47c138fae55eb"
+  },
+  "distance": {
+   "mean_abs_nats": 0.34657728324075127,
+   "corr_dist": 0.03540033571129442,
+   "rdm_r": 0.9687481029451261,
+   "ci_mean_abs": [
+    0.2112807748509416,
+    0.5329484813613816
+   ],
+   "ci_rdm_r": [
+    0.959370872406216,
+    0.9904549088090061
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 0.2113 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "a47505a2051046359e85cf5f06bfe1d4a9a5ad15004fdfab0876644c327f6df3",
+  "created": {
+   "a": "2026-09-14T10:14:52Z",
+   "b": "2026-09-14T10:15:19Z"
+  }
+ },
+ "Q8": {
+  "schema": "styxx.checksum/compare/v2",
+  "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "draw": {
+   "schema": "styxx.beacon/draw/v0",
+   "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+   "pool_size": 778,
+   "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+   "n": 48,
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+  },
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+   "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B int8 [Q8]",
+   "rdm_sha256": "21aac894d1ff51d7ffa1ca254e0d6be2fd8c8f39e76a041a55fa584d40b3d94b",
+   "mean_lp_sha256": "fbfdae11881790d8d46e9d5b4c244110f592541d8319b64e5b58e1c7ca4e9ef3"
+  },
+  "distance": {
+   "mean_abs_nats": 0.12059575818582541,
+   "corr_dist": 0.0034525261267275287,
+   "rdm_r": 0.9971288907526535,
+   "ci_mean_abs": [
+    0.08441208958910365,
+    0.16079713010306781
+   ],
+   "ci_rdm_r": [
+    0.9962057636473273,
+    0.9981124797214106
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 0.0844 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "4605cd3246ba3e59f2fd829ad35548a036a791eacb10238ed6ff36e400a2ead2",
+  "created": {
+   "a": "2026-09-14T10:14:52Z",
+   "b": "2026-09-14T10:15:41Z"
+  }
+ },
+ "R": {
+  "schema": "styxx.checksum/compare/v2",
+  "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "draw": {
+   "schema": "styxx.beacon/draw/v0",
+   "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+   "pool_size": 778,
+   "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+   "n": 48,
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+  },
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+   "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B random [R]",
+   "rdm_sha256": "bf87cd73f283cf1e0027149b6fdb5e8499a7972cb3746705ce2d1edfc3973b3c",
+   "mean_lp_sha256": "3c2ac76765f179670cc3f40113dcecaf21e758afc5d0e95aae3dd559690bd408"
+  },
+  "distance": {
+   "mean_abs_nats": 10.130451023578644,
+   "corr_dist": 0.7859722943775014,
+   "rdm_r": 0.35012524879929174,
+   "ci_mean_abs": [
+    9.53086271325204,
+    10.648541089797963
+   ],
+   "ci_rdm_r": [
+    0.2752277284373185,
+    0.4382071191373274
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 9.5309 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "12d28db7899b698a4c735616771628de327194ae2c7cdf163ce0157f6434c5c3",
+  "created": {
+   "a": "2026-09-14T10:14:52Z",
+   "b": "2026-09-14T10:16:40Z"
+  }
+ },
+ "h1_held_out": {
+  "unpreregistered": true,
+  "floor_from": [
+   "A-A3",
+   "A2-A3"
+  ],
+  "floor_nats": 0.0,
+  "cert": {
+   "schema": "styxx.checksum/compare/v2",
+   "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead",
+   "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+   "kind": "full",
+   "draw": {
+    "schema": "styxx.beacon/draw/v0",
+    "pool_sha256": "9e450999977a274fe63f1f7358378a7b42b710c54572dbc0e72bd2b45ab9906f",
+    "pool_size": 778,
+    "beacon": "d770f6ba237899cc3e43912673a6294bc5fa48aa79d570bb5ba5585b28f4dc2f",
+    "n": 48,
+    "canary_sha256": "a0464b39c0d341cd40f5c1d2254d2fa682b36c904fdff6a4816e4d768ddccead"
+   },
+   "n_items": 48,
+   "a": {
+    "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+    "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+    "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+   },
+   "b": {
+    "model_id": "Qwen/Qwen2.5-0.5B bf16 [A2]",
+    "rdm_sha256": "9f1c1d8418934fc77b695d032562437ad521b9237209744b2840f5db3116db89",
+    "mean_lp_sha256": "3e32eefc3bd54b9c9062cc8f7daea9d8ab7460d67090b06e3943885ee03bddc0"
+   },
+   "distance": {
+    "mean_abs_nats": 0.0,
+    "corr_dist": 2.220446049250313e-16,
+    "rdm_r": 0.9999999999999999,
+    "ci_mean_abs": [
+     0.0,
+     0.0
+    ],
+    "ci_rdm_r": [
+     0.9999999999999999,
+     1.0
+    ],
+    "n_items": 48,
+    "n_boot": 2000,
+    "verdict": "SAME",
+    "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001",
+    "floor_measured": 0.0,
+    "floor_effective": 0.0001,
+    "seed": 20260913
+   },
+   "floor_measured_nats": 0.0,
+   "floor_effective_nats": 0.0001,
+   "seed": 20260913,
+   "resolution_nats": 0.0001,
+   "note": "held-out floor reading of H1; decides nothing in this run",
+   "digest": "c22ed76a94b6e44ec7b486e34650c0b9b5630a3eb2c616842b79388507b7e111",
+   "created": {
+    "a": "2026-09-14T10:14:52Z",
+    "b": "2026-09-14T10:14:59Z"
+   }
+  }
+ }
+}

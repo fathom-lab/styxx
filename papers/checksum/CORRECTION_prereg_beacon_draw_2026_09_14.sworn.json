@@ -1,0 +1,99 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "6d03bf16b70b6dd90828662740b80fb764d836c4",
+ "document": {
+  "name": "CORRECTION_prereg_beacon_draw_2026_09_14.md",
+  "sha256": "5e8a39ffb58d04a8ec618cb976a9b7f50b34e974a8c3237d126ddbec71d7a0b3"
+ },
+ "text": "# CORRECTION — PREREG_checksum_beacon_draw_2026_09_14: what the beacon orders, what H1's pair clause can read, and five readings fixed before the run\n\n**status: a withdrawal and a set of reading rules for a frozen document, written before any run and\nto be sealed beside it (anchor 6b in `SEALS_2026_09_13.md`). The PREREG is not edited; its seal digest\nis unchanged. Everything here follows the lab's own red team of 2026-09-14, whose findings were each\nput to two skeptics before they were acted on. Nothing here reads a number from the run, which has\nnot started.**\n\n## 1. withdrawn: the PREREG's claim that the drawn values could not precede the seal\n\nThe PREREG's \"what a stranger checks\", step 3, says the fingerprints' values under the draw \"could\nnot have been computed before the slot existed\". That is false, and the red team's blocker finding\non it was confirmed by both skeptics. A fingerprint scores each item independently of the others\n(`styxx/checksum.py`, `fingerprint`), and the pool the beacon draws from is committed and public:\n778 items,\npinned by a test. Anyone — the lab included — can compute every item's value on every arm before\nany seal and keep the 48 a beacon later names; the result is byte-identical to a run made after the\nseal. A model can also be tuned against the whole pool.\n\nWhat the beacon does order, and all it orders: WHICH 48 items are graded was fixed by a value no one\ncould choose, after the seal. The PREREG's question (c) — whether a stranger can check from the bytes\nthat the run came after the seal — is answered no: the bytes show that the selection came after the\nseal, not the computation. The title's \"canaries nobody could study for\" is read as \"canaries nobody\ncould choose\". `SEALS_2026_09_13.md` repeated the claim (\"that run cannot precede its seal\") and is\ncorrected in the commit that adds this file; `styxx/beacon.py`'s docstring, which said the module\n\"removes the advance knowledge\", was corrected before it. No hypothesis, band or gate depends on the\nwithdrawn sentence, and none changes.\n\n## 2. H1's pair clause, measured before the run\n\nH1 freezes the pair clause in the held-out form: A vs A′ is graded against the larger of the A–A″ and\nA′–A″ distances, \"the form CORRECTION_prereg_deploy_quant_H1 rule 5 promised\". The red team argued,\nand both skeptics agreed, that this escapes only the case where SAME was impossible: `distance()` reads\nSAME only when the pair's bootstrap upper bound lies below the floor, and the held-out floor is a point\nestimate of a quantity distributed exactly like the pair's own mean. `probe_h1_held_out.py` measures\nit with the runner's exact rule, N_BOOT and SEED, on the synthetic construction of\n`probe_h1_by_construction.py`, 60\ntrials per jitter:\n\n- bit-identical loads (jitter 0): SAME in 60 trials.\n- jitter 1e-4: SAME in 9,\n  INCONCLUSIVE in 51.\n- jitter 3e-4: SAME in 9,\n  INCONCLUSIVE in 50,\n  DRIFT in 1.\n- jitter 1e-3: SAME in 12,\n  INCONCLUSIVE in 47,\n  DRIFT in 1.\n- jitter 5e-3: SAME in 11,\n  INCONCLUSIVE in 49.\n\nOn the same draws the worst-pairwise form of the 2026-09-13 PREREG read SAME in\n12\nof the trials at 1e-3, and it read DRIFT in no trial at any scale. The held-out form is no better at\nreading SAME on identical weights, and it read DRIFT on them, which the worst-pairwise form did not.\nThree loads give three\nexchangeable pair distances; no rule that grades one pair's interval against the other two's point\nestimates reads SAME reliably unless the loads are bit-identical.\n\nThe reading rule, fixed before the run:\n\n1. H1's floor clause is evaluated as frozen, from `sanity.null_floor_nats`.\n2. If the floor is zero, the pair clause is evaluated as frozen; the probe expects SAME.\n3. If the floor is above zero and at most 1e-3 and the pair reads INCONCLUSIVE, the RESULT records\n   **H1: HELD on the floor, INCONCLUSIVE on the pair by construction**, citing this correction. That is\n   neither HELD nor FAILED for H1 as written, and the RESULT says so in those words.\n4. If the floor is above zero and the pair reads DRIFT, H1 is FAILED as written, and the RESULT\n   reports beside it that the probe saw this rule read DRIFT on identical weights at two of the four\n   nonzero scales.\n5. `papers/checksum/score.py` applies rules 1 to 4 and prints the status of rule 3 in those words.\n6. The next PREREG on this instrument does not grade the null pair by a bootstrap bound against a point\n   floor. It states H1 as a claim about the floor alone (bit-identical loads, or a floor at most a\n   stated bound), or grades the pair against a floor with its own interval.\n\n## 3. the seal is the earliest memo the creator wallet signed\n\nThe PREREG defines the beacon as the slot of \"the earliest confirmed memo carrying that digest from the\ncreator wallet\". That rule stands. `styxx.clock` enforced something weaker until commit `7ef0e7ac`: its\nscan counted every memo the wallet's listing showed carrying the digest, and the listing includes\ntransfers another key sent the wallet, so anyone who read the digest in `SEALS_2026_09_13.md` could\nhave sent the wallet a memo carrying it first and made the lab's seal read EARLIER_MEMO_EXISTS forever,\nwhich K6 would turn into a run that never starts. Both skeptics confirmed it. K6 is read under the\nmodule as corrected: a candidate counts only if the wallet signed it, it succeeded, and one of its memo\ninstructions is exactly the seal memo; a candidate that does not count is listed as foreign and never\nmoves the beacon; `clock verify` prints a beacon only on a line that reads ANCHORED. What the correction\ncannot remove: a stranger who floods the wallet with more memos carrying the digest than the scan\nresolves makes the seal read EARLIEST_UNKNOWN, K6 holds the run, and the RESULT would say who sent\nthem. A flood can delay the run; it cannot choose the beacon.\n\n## 4. readings fixed before the run\n\n- **K4.** \"A vs R inside H2's band\" is read as A vs R's mean |Δ log-prob| inside H2's mean band,\n  inclusive. It is the only band in H2 stated in nats.\n- **A floor above 1e-3 and at most 1e-2.** H1's floor clause fails, K1 does not fire, and H2 to H6 are\n  evaluated. The PREREG does not say this; it follows from the two thresholds, and the RESULT says it.\n- **H5's \"same machine\".** Read as the same `provenance.cuda_device` in both certs, which names a device\n  model and not a machine; the RESULT names the machine in prose. It is not checkable from the bytes.\n- **PENDING does not expire.** Every RESULT on this PREREG lists each hypothesis still PENDING, with its\n  date, and a later RESULT that evaluates one cites this correction.\n- **The reading of record** is `papers/checksum/score.py` at the commit that carries this correction\n  (scorecard schema `styxx.checksum/scorecard/v2`). Beyond the PREREG's K5 it re-derives K1 from the\n  recorded floor, compares `provenance.prereg_blob_sha256` with the sealed digest without being asked,\n  requires a draw of exactly 48, and requires every arm's cert to grade the drawn set. The runner now\n  refuses the experiment when the PREREG at HEAD is not the sealed text or the commit is not clean. The\n  RESULT swears to the scorecard.\n\n## what this does not change\n\nThe model, the pool, the draw, the beacon rule, the arms, the probe, H2 to H6 and their bands, and\ngates K1 to K6 stand as frozen. The PREREG's seal is unchanged. This file is sealed on its own (6b) and\nthe run does not start before both 6 and 6b read ANCHORED, as the 2026-09-13 correction was sealed\nbeside its PREREG.\n",
+ "spans": [
+  {
+   "start": 1051,
+   "end": 1054,
+   "receipt": "path:papers/checksum/beacon_draw_certs_dryrun_qwen0.5b.json#/canaries/draw/pool_size",
+   "kind": "numeric"
+  },
+  {
+   "start": 2752,
+   "end": 2754,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/n_trials_per_jitter",
+   "kind": "numeric"
+  },
+  {
+   "start": 2817,
+   "end": 2819,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0/held_out/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 2851,
+   "end": 2852,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.0001/held_out/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 2872,
+   "end": 2874,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.0001/held_out/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 2899,
+   "end": 2900,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.0003/held_out/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 2920,
+   "end": 2922,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.0003/held_out/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 2935,
+   "end": 2936,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.0003/held_out/DRIFT",
+   "kind": "numeric"
+  },
+  {
+   "start": 2961,
+   "end": 2963,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.001/held_out/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 2983,
+   "end": 2985,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.001/held_out/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 2998,
+   "end": 2999,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.001/held_out/DRIFT",
+   "kind": "numeric"
+  },
+  {
+   "start": 3024,
+   "end": 3026,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.005/held_out/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 3046,
+   "end": 3048,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.005/held_out/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 3131,
+   "end": 3133,
+   "receipt": "path:papers/checksum/probe_h1_held_out_result.json#/jitters/0.001/worst_pairwise/SAME",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

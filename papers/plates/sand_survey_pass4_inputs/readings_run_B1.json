@@ -1,0 +1,938 @@
+{
+ "run": "wf_d4cb8fe1-186",
+ "script": "prompts/read_pass4.js",
+ "readings": [
+  {
+   "reader": "reader-1",
+   "sources": [
+    {
+     "id": "B01",
+     "read_end_to_end": true,
+     "last_line_quote": "64",
+     "midpoint_quote": "In Figure 8, we continue to use the Wikipedia task, but vary the",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Commercial inference API endpoints for Llama models, and local quantized, watermarked or finetuned versions, compared with Meta's released reference weights (fp32 and fp16).",
+       "reason": "Coded on the API-audit object, which has E1 to E4: the API is tested against the claimed reference weights on a fixed prompt set, with the null simulated by sampling the reference weights twice and tests run at a stated alpha. E5 is missing because the compared quantity is a Hamming-kernel MMD on sampled completions in character space, so the distance is 1 (E5). Appendix C.5 does run approximate goodness-of-fit tests from reference-model P(y|x) on sampled completions, but only against local alternatives, and it never says how those tests' null or level is set, so that object is not coded here.",
+       "neighbour_phrase": "Gao, Liang & Guestrin test sampled completions from LLM APIs against reference weights with calibrated MMD two-sample tests",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "are interested in whether endpoints differ from weights published by Meta on Hugging Face inferenced at commonly accepted precisions"
+        },
+        "E2": {
+         "value": true,
+         "quote": "we test with one set of the Wikipedia completion task from §4, where π is uniform over m = 25 prompts"
+        },
+        "E3": {
+         "value": true,
+         "quote": "We can compute p-values by simulating the test statistic’s distribution under the null, i.e., by repeatedly sampling both DQ and DP from P and computing (4)."
+        },
+        "E4": {
+         "value": true,
+         "quote": "Tests are conducted at level α = 0.01 using N = 10m samples."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Because APIs often return decoded completions, rather than individual tokens, we conduct all tests in character space, as in §4.3."
+        },
+        "E6": {
+         "value": false,
+         "quote": "we open-source the dataset of 1 million LLM completions used for this work at https://github.com/i-gao/model-equality-testing."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "finding that 11 out of 31 endpoints serve different distributions than reference weights released by Meta",
+      "We conduct tests using this method in the main text, reusing the same cached empirical distribution of the test statistic under the null for all alternatives at that sample size.",
+      "The FPR (fp32) column represents the false positive rate when comparing the full-precision model to itself.",
+      "An alternative problem setup might give the auditor privileged access to P to evaluate probabilities P(y | x) for arbitrary (prompt, completion) pairs."
+     ],
+     "leads": [
+      "Lingjiao Chen, Tracy Cai, Matei Zaharia, and James Zou. Did the model change? efficiently assessing machine learning api shifts. arXiv preprint arXiv:2107.14203, 2021a.",
+      "Lingjiao Chen, Zhihua Jin, Evan Sabri Eyuboglu, Christopher Ré, Matei Zaharia, and James Y Zou. Hapi: A large-scale longitudinal dataset of commercial ml api predictions. NeurIPS 35, 2022.",
+      "Lingjiao Chen, Matei Zaharia, and James Zou. How is chatgpt's behavior changing over time? arXiv preprint arXiv:2307.09009, 2023.",
+      "Sabri Eyuboglu, Karan Goel, Arjun Desai, Lingjiao Chen, Mathew Monfort, Chris Ré, and James Zou. Model changelists: Characterizing updates to ml models. FAccT 2024.",
+      "Dylan Sam, Marc Finzi, and J Zico Kolter. Predicting the performance of black-box llms through self-queries. arXiv preprint arXiv:2501.01558, 2025."
+     ],
+     "notes": "Read all 6481 lines, appendix figure and sample dumps included. The audit also uses a composite null (fp32 OR fp16), with rejection only when both p-values are below alpha. The paper proposes comparing an API with its own earlier self but does not do it. It measures the reference null with the reference weights sampled locally on mixed GPUs and libraries; it does not measure API-side nondeterminism. No digest is given for the prompt set or dataset."
+    },
+    {
+     "id": "B02",
+     "read_end_to_end": true,
+     "last_line_quote": "17605/OSF.IO/KXAHM",
+     "midpoint_quote": "split-half noise floor of a single deployment (0.140) but well",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Served LLM endpoints on OpenRouter, verified against a reference deployment of the claimed checkpoint, plus same-model pairs served by different providers.",
+       "reason": "It has E1 (same checkpoint served by different providers, endpoint against a reference deployment) and E2 (a fixed 40-cell prompt battery). Verdicts are graded against impostor distances from different models or an EER threshold sweep, not against a same-weights floor. The split-half noise floor is measured but not used to grade the deployment anomalies. There is no test at a stated level on the comparison, the compared quantity is distributions of sampled one-token answers with no logits, and no digest is given. Distance 3 (E3, E4, E5).",
+       "neighbour_phrase": "Bruckner fingerprints served LLM endpoints by single-token answer distributions against reference deployments, graded by impostor distances",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "Verifying a model against a reference collected at a different provider still achieves AUC = 0.880"
+        },
+        "E2": {
+         "value": true,
+         "quote": "The battery (Table I) contains ten tasks in four languages (English, Russian, Chinese, Arabic)"
+        },
+        "E3": {
+         "value": false,
+         "quote": "ten (29%) diverge beyond the 5th percentile of impostor distances"
+        },
+        "E4": {
+         "value": false,
+         "quote": "Sweeping τ yields ROC curves, area under the curve, and the equal error rate (EER)"
+        },
+        "E5": {
+         "value": false,
+         "quote": "requiring only one output token per query and no logits, no long generations, and no cooperation from the model owner"
+        },
+        "E6": {
+         "value": false,
+         "quote": "Prompts, configuration, raw responses with full serving metadata, and all derived results are released as an open dataset on Zenodo [24]"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "split halves of the same model’s samples lie an order of magnitude closer than samples of different models",
+      "Statistical equality testing [1] is the closest to our setting but consumes complete sampled strings and assumes a reference deployment of the same model for calibration.",
+      "Fingerprints drift with model updates, so reference enrollment must be refreshed; we quantify short-horizon stability but not multi-month drift."
+     ],
+     "leads": [
+      "X. Zhu, Y. Ye, T. Qiu, H. Zhu, S. Tan, A. Mannan, J. Michala, R. A. Popa, and W. Neiswanger, \"Auditing black-box LLM APIs with a rank-based uniformity test,\" arXiv preprint arXiv:2506.06975, 2025."
+     ],
+     "notes": "arXiv 2607.10252 (2026). The pilot's permutation test (p = 0.0008) and the exact binomial test on family classification test the lineage and family analyses, not the self-comparison. The deployment-anomaly threshold (5th percentile of impostor distances) comes from different models. Genuine trials are split halves of one collection, 'same-mix' across routed providers. The authors call their prompt battery pre-registered on OSF, but no digest is published."
+    },
+    {
+     "id": "B09",
+     "read_end_to_end": true,
+     "last_line_quote": "Major funding support from",
+     "midpoint_quote": "Fine-tuning aligned language models compromises safety, even when users do not intend to!",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A baseline language model (Llama3, Gemma, Mistral) against its own fine-tuned or instruction-tuned checkpoints, standing in for a deployed model updated over time, compared through behaviour-score distributions (toxicity, BLEU).",
+       "reason": "It has E1 (a model against its own updated checkpoints), E2 (each prompt from a fixed dataset stream is fed to both models) and E4 (an anytime-valid sequential test at alpha = 0.05 whose exact variant has a no-difference null). E3 is missing: the tolerance epsilon comes from identical weights run under different sampling parameters, a different setup from the comparison. The exact test's null is theoretical (Ville's inequality), and the seed-based false-positive runs are measured but not used to grade. E5 is missing because the compared quantity is Perspective API toxicity or BLEU on sampled generations. Distance 2 (E3, E5).",
+       "neighbour_phrase": "Richter, He, Minervini & Kusner sequentially test sampled-output behaviour scores of language models against their fine-tuned checkpoints",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We test Llama3 against each instruction-tuned model across a range of tolerance values"
+        },
+        "E2": {
+         "value": true,
+         "quote": "a new prompt from the stream 𝐱 t {\\mathbf{x}}_{t} is fed to both M {M} and M ′ {M^{\\prime}} to create generations"
+        },
+        "E3": {
+         "value": false,
+         "quote": "equal to the neural net distance between the original Llama3 model and the same model with different sampling parameters"
+        },
+        "E4": {
+         "value": true,
+         "quote": "We test each corrupted checkpoint against the corresponding initial aligned model with α = 0.05"
+        },
+        "E5": {
+         "value": false,
+         "quote": "use the toxicity behavior function from Perspective API ( Lees et al., 2022 ) to evaluate LM generations"
+        },
+        "E6": {
+         "value": false,
+         "quote": "We release our code here: https://github.com/richterleo/lm-auditing-test"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We find that the test is able to detect distribution changes in model behavior using hundreds of prompts.",
+      "How can the regulator regularly check the deployed model’s behavior is the same as the previously certified one?",
+      "We use different random seeds for generating text from the initial aligned models to examine the false positive rate of the exact test."
+     ],
+     "leads": [
+      "Boxiang Dong, Bo Zhang, and Hui Wang. Veridl: Integrity verification of outsourced deep learning services. In Joint European Conference on Machine Learning and Knowledge Discovery in Databases, pp. 583–598, 2021.",
+      "Teodora Pandeva, Patrick Forré, Aaditya Ramdas, and Shubhanshu Shekhar. Deep anytime-valid hypothesis testing. In AISTATS, volume 238 of PMLR, pp. 622–630, 2024."
+     ],
+     "notes": "This is the arXiv HTML rendering (2410.19406v2, ICLR 2025), and the file ends with arXiv page boilerplate. Some comparisons are between different models (Llama3 against Aya-23), which are not self-comparisons. The same-weights, different-seed neural-net distance is estimated in Figure 9 but not used as epsilon. Coding E1 true treats fine-tuned checkpoints as 'the same model at another time', following the paper's framing of an update or drift audit. A stricter reading, that changed weights are a different model, would code E1 false."
+    },
+    {
+     "id": "B10",
+     "read_end_to_end": true,
+     "last_line_quote": "15",
+     "midpoint_quote": "Method. In theory, logprobs comparison can be used to verify whether the served model matches",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The same open model (Llama-3-8B, Gemma-2-9B) served across inference frameworks, GPUs, software versions and API providers, and its quantized or fine-tuned variants, compared through token log-probabilities, greedy outputs, MMD on text, and benchmark accuracy.",
+       "reason": "Coded on the log-probability verification object, which has E1 (same model across serving stacks, and its quantized variants), E2 (the same UltraChat queries on both sides) and E5 (token log-probabilities under greedy decoding). The cross-stack spread is only shown qualitatively, with no threshold, null or test built from it, so E3 and E4 are missing: distance 2. The separate text-MMD object has a permutation-null test at a symbolic, unvalued alpha but no log-probabilities and no same-weights floor, which is also distance 2.",
+       "neighbour_phrase": "Cai, Shi, Zhao & Song evaluate text, log-probability and TEE checks for model substitution in LLM APIs",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "shows that even for the same model, logprob traces for the first 20 tokens can diverge across stacks."
+        },
+        "E2": {
+         "value": true,
+         "quote": "we compare token-level log probabilities from greedy decoding on UltraChat queries, across multiple inference frameworks"
+        },
+        "E3": {
+         "value": false,
+         "quote": "variance across frameworks, batching, and hardware is often larger than the effect of quantization or fine-tuning"
+        },
+        "E4": {
+         "value": false,
+         "quote": "On the subset of completions where the generated tokens agreed, we further compare the magnitude of the assigned log probabilities and find minor variations across environments."
+        },
+        "E5": {
+         "value": true,
+         "quote": "Log probabilities for the first 20 shared tokens under greedy decoding for UltraChat queries across frameworks/hardware."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Code is available at https://github.com/sunblaze-ucb/llm-api-audit"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Moreover, inference nondeterminism across providers can inflate MMD values even for identical models, risking false positives.",
+      "Using 50 UltraChat queries, we compare local inference runs (Transformers 4.40.0 on H100 GPUs)",
+      "As shown in Table 3, differences are small and typically within one standard deviation across repeated runs."
+     ],
+     "leads": [
+      "Lingjiao Chen, Matei Zaharia, and James Zou. How is chatgpt's behavior changing over time?, 2023. URL https://arxiv.org/abs/2307.09009.",
+      "Sabri Eyuboglu, Karan Goel, Arjun Desai, Lingjiao Chen, Mathew Monfort, Chris Ré, and James Zou. Model changelists: Characterizing updates to ml models. FAccT 2024.",
+      "Jack Min Ong, Matthew Di Ferrante, Aaron Pazdera, Ryan Garner, Sami Jaghouar, Manveer Basra, Johannes Hagemann, and Max Ryabinin. Toploc: A locality sensitive hashing scheme for trustless verifiable inference. arXiv preprint arXiv:2501.16007, 2025.",
+      "Yifan Sun, Yuhang Li, Yue Zhang, Yuchen Jin, and Huan Zhang. Svip: Towards verifiable inference of open-source large language models. arXiv preprint arXiv:2410.22307, 2024b.",
+      "Horace He and Thinking Machines Lab. Defeating nondeterminism in llm inference. Thinking Machines Lab: Connectionism, 2025.",
+      "Dylan Sam, Marc Finzi, and J Zico Kolter. Predicting the performance of black-box llms through self-queries. arXiv preprint arXiv:2501.01558, 2025."
+     ],
+     "notes": "arXiv 2504.04715v2. The elements are coded on one object, the log-probability verification, rather than pooled across the paper's experiments. Pooled, E1, E2, E4 (MMD) and E5 (logprobs) would all appear, but no single object carries them together. The benchmark experiment compares quantized models against the spread of 10 repeated runs of the same weights, but with an informal 'within one standard deviation' reading, and on extracted-answer accuracy rather than log-probabilities. The paper's own conclusion is that software checks are unreliable, and it recommends TEE attestation."
+    }
+   ]
+  },
+  {
+   "reader": "reader-2",
+   "sources": [
+    {
+     "id": "B11",
+     "read_end_to_end": true,
+     "last_line_quote": "Sign in to save",
+     "midpoint_quote": "Provider Matrix: A dashboard showing the frequency of change events across different model providers.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A served LLM endpoint's sampled-output distribution on a fixed prompt set against the same endpoint's earlier fingerprint, monitored over time and across providers.",
+       "reason": "Same-endpoint-over-time comparison on a fixed prompt set with permutation-test p-values (E1, E2, E4). There is no floor measured on known-identical weights: the null comes from permuting pooled samples. The compared quantity is embeddings of sampled text, not log-probs (E3, E5 missing).",
+       "neighbour_phrase": "Leshin et al. monitor LLM endpoints over time via embedding energy-distance permutation tests on a fixed prompt set",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "periodically fingerprints an endpoint by sampling outputs from a fixed prompt set and comparing the resulting output distributions over time"
+        },
+        "E2": {
+         "value": true,
+         "quote": "These prompts remain consistent across different models and providers"
+        },
+        "E3": {
+         "value": false,
+         "quote": "It pools the responses from two different time periods and randomly re-assigns them to two groups."
+        },
+        "E4": {
+         "value": true,
+         "quote": "with permutation-test p-values as evidence of distribution shift aggregated sequentially to detect change events and define stability periods"
+        },
+        "E5": {
+         "value": false,
+         "quote": "The text-based responses are converted into high-dimensional numerical vectors using an embedding model."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We introduce Stability Monitor, a black-box stability monitoring system that periodically fingerprints an endpoint by sampling outputs from a fixed prompt set and comparing the resulting output distributions over time.",
+      "In controlled validation, Stability Monitor detects changes to model family, version, inference stack, quantization, and behavioral parameters.",
+      "Once the cumulative evidence passes a certain threshold, the system officially declares a \"change event.\"",
+      "All data, including raw fingerprints, p-values, and detected change events, are stored in a database to create a permanent audit trail."
+     ],
+     "leads": [
+      "Lingjiao Chen, Matei Zaharia, and James Zou. 2024. How Is ChatGPT’s Behavior Changing over Time? Harvard Data Science Review 6, 2 (2024).",
+      "Timothée Chauvin, Clément Lalanne, Erwan Le Merrer, Jean-Michel Loubes, François Taïani, and Gilles Tredan. 2026. Token-Efficient Change Detection in LLM APIs. arXiv preprint arXiv:2602.11083 (2026)."
+     ],
+     "notes": "This file is an alphaXiv landing page: the abstract plus an AI-generated overview and citation cards. It is not the paper's full text (arXiv 2603.19022), so the coding rests on the abstract and the overview's description. Distance 2 (missing E3, E5). The 'permanent audit trail' is a database; nothing in the text says it is chained or hashed, so it does not bear on C2. No hashed prompt set is mentioned (E6 false)."
+    },
+    {
+     "id": "B12",
+     "read_end_to_end": true,
+     "last_line_quote": "Sign up for Nature Briefing: Careers",
+     "midpoint_quote": "Chengdu, Sichuan (CN)",
+     "verdicts": [
+      {
+       "clause": "C5",
+       "verdict": "OCCUPIES",
+       "object": "A project (ERROR) that pays bounties to people who spot mistakes in other researchers' published papers.",
+       "reason": "It pays outsiders for finding errors, but the object is published papers in general. It is not a standing payment tied to a record of the payer's own verifier disagreeing with the payer. The paywalled text gives only the headline, the standfirst and one opening sentence.",
+       "neighbour_phrase": "The ERROR project offers bounties for spotting mistakes in published research papers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "None; a news feature on paying for error detection in published papers.",
+       "reason": "Nothing about model behaviour, fingerprints, item sets, floors or log-probabilities.",
+       "neighbour_phrase": "Nowogrodzki reports on a bounty project for errors in published papers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Cash for errors: project offers bounty for spotting mistakes in published papers",
+      "ERROR project borrows a strategy from the software industry.",
+      "Pay researchers to spot errors in published papers"
+     ],
+     "leads": [
+      "ERROR. Preprint at PsyArXiv https://doi.org/10.31234/osf.io/8gtz2 (2024).",
+      "Elson, M. Nature 629 , 730 (2024).",
+      "Pay researchers to spot errors in published papers"
+     ],
+     "notes": "The article body is paywalled. The extracted text holds only the headline, the standfirst, one sentence quoting Malte Elson, the reference list and site chrome. It gives no detail on the bounty's size, whether it is standing, or who is eligible. The ERROR preprint (PsyArXiv 8gtz2) is the primary source for the programme and is not read here."
+    },
+    {
+     "id": "B14",
+     "read_end_to_end": true,
+     "last_line_quote": "39",
+     "midpoint_quote": "distributions under both correct and incorrect configurations,",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A provider's served inference (claimed tokens) against a trusted reference implementation of the same weights. The controlled runs use quantized or misconfigured variants of Llama 3.1 8B and Qwen3; a small audit covers five public Llama 3.1 8B APIs.",
+       "reason": "Carries E1, E2, E3 and E5. It compares against a same-weights reference on fixed prompts, uses a null pooled from identical weights on different GPUs and kernels to set the flagging range, and scores from the reference's logits on the provider's tokens. It reports AUC at 1% FPR, not an interval or a no-difference test result on the compared quantity (E4 missing). Distance 1.",
+       "neighbour_phrase": "Karvonen et al. score served tokens against a trusted same-weights reference's logits, calibrated on benign hardware noise",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "a method for verifying inference outputs by comparing generated tokens against predictions made by a trusted reference implementation conditioned on the same random seed"
+        },
+        "E2": {
+         "value": true,
+         "quote": "We then queried five public Llama 3.1 8B deployments via the API at temperature zero, using the same 2,000 prompts and generation length."
+        },
+        "E3": {
+         "value": true,
+         "quote": "Pooling scores from these honest configurations defines the range of benign numerical variation allowed under H0, and we then flag only those deployments whose statistics fall outside this pooled distribution."
+        },
+        "E4": {
+         "value": false,
+         "quote": "We report area under the curve (AUC) at 1% false positive rate (FPR), reflecting deployment scenarios where false positives may incur significant costs."
+        },
+        "E5": {
+         "value": true,
+         "quote": "any disagreement between provider and verifier arises solely from numerical differences in the logits"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Correct-but-noisy configurations: inference is done with the reference configuration, but on different GPUs or with different kernels to induce benign noise",
+      "Together with the reference configuration, these form the null distribution for calibrating our statistical tests.",
+      "The batch is flagged as incorrectly computed if S > τ, where τ is some pre-determined threshold, determined empirically.",
+      "the verifier simply feeds the entire sequence (both the original prompt and generated tokens) as one input sequence, obtaining logits and intermediate activations for all positions simultaneously.",
+      "measures the negative log-likelihood of the claimed token under the verifier’s softmax distribution",
+      "This yields a mean Token-DiFR score for each configuration, which we treat as a reference band for bf16-like, fp8-like, fp8-KV-like, and 4-bit-like behavior."
+     ],
+     "leads": [
+      "Gao, I., Liang, P., and Guestrin, C. Model equality testing: Which model is this api serving?, 2025. URL https://arxiv.org/abs/2410.20247.",
+      "Zhu, X., Ye, Y., Qiu, T., Zhu, H., Tan, S., Mannan, A., Michala, J., Popa, R. A., and Neiswanger, W. Auditing black-box llm apis with a rank-based uniformity test, 2025. URL https://arxiv.org/abs/2506.06975.",
+      "Singh, A., Virga, F., Smith, S., and Hogan, S. LOGIC: Trustless Inference through Log-Probability Verification. https://inference.net/blog/logic, 2025.",
+      "Ong, J. M., Ferrante, M. D., Pazdera, A., Garner, R., Jaghouar, S., Basra, M., Ryabinin, M., and Hagemann, J. Toploc: A locality sensitive hashing scheme for trustless verifiable inference, 2025. URL https://arxiv.org/abs/2501.16007.",
+      "Rinberg, R., Karvonen, A., Hoover, A., Reuter, D., and Warr, K. Verifying llm inference to prevent model weight exfiltration, 2025. URL https://arxiv.org/abs/2511.02620.",
+      "He, H. and Lab, T. M. Defeating nondeterminism in LLM inference. Thinking Machines Lab: Connectionism, 2025.",
+      "Moonshot AI. K2 vendor verifier. https://github.com/MoonshotAI/K2-Vendor-Verfier, 2025."
+     ],
+     "notes": "Nearest source in my set: only E4 is missing. E4 is borderline. The paper states H0/H1 and evaluates detectors at a 1% FPR operating point, so a reader could treat FPR 1% as the stated level. But what it reports on each comparison is a classifier's AUC at FPR 1% (and, in the in-the-wild audit, mean scores set against reference bands). It reports no confidence interval, p-value or test decision on the compared quantity, so I coded E4 false. On E3, the null pool is the same checkpoint and configuration on H200/A100, TP-1/TP-4 and vLLM/HF. The paper excludes the HF runs for Qwen3-30B-A3B as too noisy, and the verdict depends on this pool through classifier training and the flagging range. On E5, the Token-DiFR margin and the cross-entropy baseline come from the reference's teacher-forced logits on the provider's claimed tokens; the served side contributes only sampled tokens. On E6, code is released at github.com/adamkarvonen/difr, but the text gives no prompt-set digest."
+    },
+    {
+     "id": "B15",
+     "read_end_to_end": true,
+     "last_line_quote": "0.5 suggests that both methods are comparable in terms of accuracy).",
+     "midpoint_quote": "format, with each model response represented as a",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Five open-weight checkpoints (Llama-3.1 8B/70B, Qwen-2.5 7B/32B/72B) in BF16 against their own quantized variants (FP8, GPTQ-int8/int4, AWQ-int4, BNB-nf4) on fixed long-context and long-form benchmarks.",
+       "reason": "Self-comparison of the same weights under quantization (E1), fixed benchmark items (E2), and GLMM contrasts with CIs and Bonferroni-adjusted p-values (E4). No repeated-run floor on identical weights: greedy decoding is assumed deterministic. Scores are exact-match accuracy, VeriScore and GPT-4o judgements, not log-probs (E3, E5 missing). Distance 2.",
+       "neighbour_phrase": "Mekala et al. test BF16 against quantized same-weight variants on fixed long-context benchmarks, with GLMM p-values",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "comparing their performance in BF16 precision against their quantized variants across five quantization methods"
+        },
+        "E2": {
+         "value": true,
+         "quote": "The BF16 models and their quantized variants are evaluated on five benchmarks"
+        },
+        "E3": {
+         "value": false,
+         "quote": "All experiments use greedy decoding with a temperature of 0.0 to ensure deterministic outputs."
+        },
+        "E4": {
+         "value": true,
+         "quote": "p-values were Bonferroni-adjusted (Westfall et al., 1997) and reported in the post-hoc tables."
+        },
+        "E5": {
+         "value": false,
+         "quote": "performance is measured using exact match accuracy against the gold answer."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Post-hoc tests confirm that drops for non-English languages are statistically significant (p<0.05, Table 14 in §F).",
+      "We use BF16 as the full-precision baseline and compare four quantization methods at 4-bit and 8-bit precisions against it",
+      "We largely followed publicly available, off-the-shelf quantized models and recipes",
+      "we use in-flight quantization directly from the full-precision checkpoints"
+     ],
+     "leads": [
+      "Eldar Kurtic, Alexandre Marques, Shubhra Pandit, Mark Kurtz, and Dan Alistarh. 2024. “Give me BF16 or give me death”? Accuracy-performance trade-offs in llm quantization. arXiv preprint arXiv:2411.02355.",
+      "Zhichao Xu, Ashim Gupta, Tao Li, Oliver Bentham, and Vivek Srikumar. 2024. Beyond perplexity: Multidimensional safety evaluation of llm compression. In Findings of the Association for Computational Linguistics: EMNLP 2024, pages 15359–15396.",
+      "Kelly Marchisio, Saurabh Dash, Hongyu Chen, Dennis Aumiller, Ahmet Üstün, Sara Hooker, and Sebastian Ruder. 2024. How does quantization affect multilingual LLMs? In Findings of the Association for Computational Linguistics: EMNLP 2024, pages 15928–15947.",
+      "Jemin Lee, Sihyeong Park, Jinse Kwon, Jihun Oh, and Yongin Kwon. 2024. A comprehensive evaluation of quantized instruction-tuned large language models: An experimental analysis up to 405b. arXiv preprint arXiv:2409.11055."
+     ],
+     "notes": "Some quantized models come from third-party repos (HuggingQuants, RedHat AI, Qwen official) or were quantized locally. All are quantizations of the same released weights, so E1 holds. No run is repeated on identical weights, and variance enters only through GLMM random intercepts for model, task and topic, which is not the E3 floor. The code link github.com/molereddy/long-context-quantization carries no item-set digest (E6 false). Xu et al. (Beyond perplexity) may already be a source from an earlier pass; it is listed as printed."
+    }
+   ]
+  },
+  {
+   "reader": "reader-3",
+   "sources": [
+    {
+     "id": "B17",
+     "read_end_to_end": true,
+     "last_line_quote": "Major funding support from",
+     "midpoint_quote": "Our experiments cover a representative but finite set of system components. While the underlying floating-point imprecision is inherent to any component and system, we cannot rule out that the effect is differently pronounced on other configurations.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "The inference system (engine, attention backend, GPU) behind a known, fixed LLM, identified from the text responses of a target deployment by a random-forest classifier trained on reference deployments of the same model.",
+       "reason": "The comparison is the same weights served differently (E1) on prompt sets fixed in advance (E2). The verdict comes from a classifier's accuracy, not a floor measured on identical weights (E3 false). No interval or hypothesis test on the comparison, only accuracies averaged over runs (E4 false). The method uses text only, with logprobs explicitly inaccessible (E5 false). The prompt sets are not published with a digest (E6 false).",
+       "neighbour_phrase": "Wimbauer et al. fingerprint the inference engine, attention backend and GPU serving a known LLM from text responses",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "we assume the model is known and instead fingerprint the surrounding inference system"
+        },
+        "E2": {
+         "value": true,
+         "quote": "To obtain training and test instances, we query each of the 30 configurations with these prompts using the default system prompt of the respective model."
+        },
+        "E3": {
+         "value": false,
+         "quote": "The classifiers therefore learn to generalize across multiple samples per prompt, and we can aggregate predictions by majority voting when stochastic decoding is used."
+        },
+        "E4": {
+         "value": false,
+         "quote": "We conduct 20 runs and report averages."
+        },
+        "E5": {
+         "value": false,
+         "quote": "Log-probabilities or internal states are inaccessible."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we assume the model is known and instead fingerprint the surrounding inference system",
+      "Log-probabilities or internal states are inaccessible.",
+      "To obtain training and test instances, we query each of the 30 configurations with these prompts using the default system prompt of the respective model.",
+      "We conduct 20 runs and report averages."
+     ],
+     "leads": [
+      "Zhang et al. (2025) Hardware and software platform inference",
+      "Chauvin et al. (2026) Log probability tracking of LLM APIs",
+      "Yuan et al. (2025) Understanding and mitigating numerical sources of nondeterminism in llm inference",
+      "Schlögl et al. (2023) Causes and effects of unanticipated numerical deviations in neural network inference frameworks",
+      "Golden et al. (2024) Is flash attention stable?"
+     ],
+     "notes": "arXiv 2605.29979v1 (Wimbauer, Möller, Imgrund, Rieck). Table 1 shows logits across stacks only as an illustration; the method itself is text-only. The paper places Zhang et al. (2025) nearest to itself and says that work needs log-probabilities, so it may carry E5 where this one does not. It also cites Chauvin et al. (2026) for detecting silent model updates at LLM providers. Both are leads. Datasets are pinned to Hugging Face revisions (BoolQ 35b264d), but the constructed prompt sets P1, P3 and P4 get no digest."
+    },
+    {
+     "id": "B18",
+     "read_end_to_end": true,
+     "last_line_quote": "YouTube",
+     "midpoint_quote": "(Why) Is My Prompt Getting Worse? Rethinking Regression Testing for Evolving LLM APIs",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "An unsigned, auto-generated topic summary page about continuous monitoring of LLM APIs. It runs no measurement and summarises seven cited papers.",
+       "reason": "The page performs no comparison. It only describes others' methods (log probability tracking, K-S tests on linguistic features, slice regression, refusal audits), so under the does-not-discusses rule every element is false. The method it describes, Chauvin et al.'s log probability tracking, is a strong lead and has to be read in full.",
+       "neighbour_phrase": "An unsigned topic page summarises published black-box tests for silent changes in LLM APIs",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "The monitoring problem is to distinguish, using only API calls, whether a target endpoint at time"
+        },
+        "E2": {
+         "value": false,
+         "quote": "Best practices involve versioned prompt registries, automated re-validation, slice-based alerting, and canary datasets for real-time update tracking."
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": "The framework employs rigorous statistical tests, including permutation tests and Kolmogorov–Smirnov analyses, to identify performance regressions and capability drift with high sensitivity and low cost."
+        },
+        "E5": {
+         "value": false,
+         "quote": "The LT method is designed for endpoints supporting token logprob output."
+        },
+        "E6": {
+         "value": false,
+         "quote": "Strict reproducibility and data-leakage protocols are enforced (input hashing, model/version pinning, containerization)."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "The LT method is designed for endpoints supporting token logprob output.",
+      "The monitoring problem is to distinguish, using only API calls, whether a target endpoint at time",
+      "Continuous monitoring of LLM APIs refers to automated systems that detect subtle changes—like fine-tuning adjustments and policy shifts—using techniques such as Log Probability Tracking and linguistic feature drift."
+     ],
+     "leads": [
+      "Log Probability Tracking of LLM APIs (2025)",
+      "You've Changed: Detecting Modification of Black-Box Large Language Models (2025)",
+      "(Why) Is My Prompt Getting Worse? Rethinking Regression Testing for Evolving LLM APIs (2023)",
+      "Longitudinal Monitoring of LLM Content Moderation of Social Issues (2025)"
+     ],
+     "notes": "This is a tertiary summary page, dated 10 December 2025, with no named author, and some of its math rendered as garbage. It summarises Chauvin et al. (3 Dec 2025) log probability tracking as follows: top-k logprobs for a single-token prompt, two snapshots of the same endpoint, and a permutation test at an alpha such as 0.05. On that description alone the method would carry E1, E2, E4 and E5, and the page says nothing about a floor measured on identical weights. That is not coded here because the page does none of it. Chauvin et al. is the most important lead from this source. Dima et al. (14 Apr 2025), 'You've Changed', is also described as running K-S tests on text features with zero false positives."
+    },
+    {
+     "id": "B19",
+     "read_end_to_end": true,
+     "last_line_quote": "2026 Stack Pulsar. All rights reserved. Built for practitioners, by practitioners.",
+     "midpoint_quote": "Avoid alert fatigue by requiring sustained degradation (minimum 15-30 minutes of degraded metrics) before firing. Brief transients that self-correct do not warrant incidents.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "A practitioner blog post (Stack Pulsar, Minseon Kim, 2026-04-20) recommending a four-layer drift-monitoring stack for production LLMs. It runs no experiment.",
+       "reason": "The post only recommends practices (output statistics, entropy of token log-probabilities, LLM-as-judge, scheduled reference-set regression) and performs none of them. It reports no comparison, floor, interval or item-set digest, so every element is false.",
+       "neighbour_phrase": "Kim (Stack Pulsar) recommends scheduled reference-set regression and entropy monitoring for LLM drift in production",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Upstream model updates : If you use an API provider (OpenAI, Anthropic, Google), the underlying model may be updated silently."
+        },
+        "E2": {
+         "value": false,
+         "quote": "Schedule automated runs against your reference dataset at whatever frequency makes sense for your use case"
+        },
+        "E3": {
+         "value": false,
+         "quote": "A single failing test case is not drift."
+        },
+        "E4": {
+         "value": false,
+         "quote": "A sustained drop of more than 2 standard deviations from your baseline indicates embedding drift"
+        },
+        "E5": {
+         "value": false,
+         "quote": "If your inference engine exposes token-level log probabilities (vLLM does this natively), monitor the entropy of the output distribution."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Upstream model updates : If you use an API provider (OpenAI, Anthropic, Google), the underlying model may be updated silently.",
+      "If your inference engine exposes token-level log probabilities (vLLM does this natively), monitor the entropy of the output distribution.",
+      "Schedule automated runs against your reference dataset at whatever frequency makes sense for your use case"
+     ],
+     "leads": [
+      "Giskard",
+      "Evidently AI",
+      "WhyLabs",
+      "Arize AI"
+     ],
+     "notes": "A vendor-adjacent blog with an affiliate disclosure. It cites no papers. Its leads are only the tool names it mentions. Its thresholds (2 standard deviations, sustained degradation) come with no stated level and are not measured on identical weights."
+    },
+    {
+     "id": "B20",
+     "read_end_to_end": true,
+     "last_line_quote": "15",
+     "midpoint_quote": "traffic, the system triggers 3351 rollbacks over 4096 requests,",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Exact-token consistency of one model (Llama-3.1-8B-Instruct) under dynamic batching against a batch-size-one or fixed-shape replay of the same weights. The purpose is to enforce and measure deterministic inference, not to detect a changed served model.",
+       "reason": "The comparison is the same weights served differently (E1). In the motivating experiment the same ShareGPT requests go to both sides (E2). The verdict is exact token match or rollback, with no spread measured on identical weights used as a floor (E3 false). No interval or test on the comparison (E4 false). The compared quantity is emitted tokens, not log-probabilities (E5 false). No item-set digest (E6 false).",
+       "neighbour_phrase": "Gond et al. verify decoded tokens against a fixed-shape replay of the same model to enforce determinism",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "We then re-run the same requests under dynamic batching"
+        },
+        "E2": {
+         "value": true,
+         "quote": "We first execute 350 requests with batch size one"
+        },
+        "E3": {
+         "value": false,
+         "quote": "commits those that are guaranteed to be consistent across runs, and rolls back those violating determinism"
+        },
+        "E4": {
+         "value": false,
+         "quote": "The first consistent span of a request measures the number of initial output tokens that match exactly across the two runs"
+        },
+        "E5": {
+         "value": false,
+         "quote": "In the common case, verification reproduces the same tokens that the preceding decode iterations generated."
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "We then re-run the same requests under dynamic batching",
+      "Uses the same model for decoding and verification",
+      "In the common case, verification reproduces the same tokens that the preceding decode iterations generated."
+     ],
+     "leads": [
+      "[7] Berk Atıl et al. Non-determinism of “deterministic” LLM system settings in hosted environments (2025)",
+      "[36] Yifan Song, Guoyin Wang, Sujian Li, and Bill Yuchen Lin. The good, the bad, and the greedy: Evaluation of LLMs should not ignore non-determinism (2025)",
+      "[44] Jiayi Yuan et al. Give me fp32 or give me death? challenges and solutions for reproducible reasoning (2025)",
+      "[14] Horace He and Thinking Machines Lab. Defeating nondeterminism in llm inference (2025)",
+      "[46] Ziyang Zhang et al. Deterministic inference across tensor parallel sizes that eliminates training-inference mismatch (2025)"
+     ],
+     "notes": "arXiv 2601.17768v2 (Gond, Kamath, Ramjee, Panwar; Microsoft Research). This is a systems paper. The self-comparison exists to enforce bitwise determinism, not to grade whether a served model changed, and the equality test is exact with no null. Lead [36] is already A09 in Part A. Lead [7] (hosted-environment non-determinism) may be nearer on E3."
+    }
+   ]
+  },
+  {
+   "reader": "reader-4",
+   "sources": [
+    {
+     "id": "B21",
+     "read_end_to_end": true,
+     "last_line_quote": "© 2026 LogicMonitor",
+     "midpoint_quote": "Independently audit external BGP, ISP, and SaaS provider connectivity boundaries.",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "Hosted LLMs from different vendors (GPT, Claude, Gemini, a local deployment) sent the same prompt from global collectors and compared on latency, availability, tone and cost; drift detection is advertised as a product capability.",
+       "reason": "Only E2 is done: identical prompts go to each side of a cross-model latency and quality comparison. No self-comparison result is reported (drift detection is claimed, not shown), there is no floor measured on identical weights, no interval or test, and the compared quantities are latency and sampled text, not log-probabilities.",
+       "neighbour_phrase": "LogicMonitor (Chikura) sends identical prompts to hosted LLMs to monitor latency, tone and drift",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "Send the same prompt to multiple models (e.g., GPT, Claude, Gemini)"
+        },
+        "E2": {
+         "value": true,
+         "quote": "each line representing a different LLM responding to the same prompt under controlled conditions"
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": "Capturing how each responds (tone, coherence, freshness)"
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "Detect model drift when output changes unexpectedly",
+      "each line representing a different LLM responding to the same prompt under controlled conditions",
+      "Send the same prompt to multiple models (e.g., GPT, Claude, Gemini)",
+      "Capturing how each responds (tone, coherence, freshness)"
+     ],
+     "leads": [],
+     "notes": "Vendor marketing blog (LogicMonitor/Catchpoint, Denton Chikura, 11 Aug 2026). Most of the file is site navigation; the article runs from about line 1027 to 1209. The only measured result is a cross-model latency and availability comparison. Drift monitoring of one model against itself is described as something teams can do, and no instance of it is reported. Nearly SILENT; coded OCCUPIES only because it does E2 on a different object."
+    },
+    {
+     "id": "B22",
+     "read_end_to_end": true,
+     "last_line_quote": "Major funding support from",
+     "midpoint_quote": "We identified a total of 37 suspected changes, across 29 endpoints and 7 providers. Detailed statistics by provider are shown in Table 2 .",
+     "verdicts": [
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A served LLM API endpoint's first-token top-k logprob distribution on a fixed one-token prompt, compared against the same endpoint at an earlier time (189 endpoints monitored hourly). In vitro, an open-weight model is compared against its own fine-tuned, LoRA, pruned or noised variants (TinyChange), using an original/original null distribution.",
+       "reason": "E1, E2, E3 and E5 are done for this object. E3: 1,000 original/original tests on identical weights, run in the batched vLLM setup, give the null distribution the ROC/AUC verdict rests on. E4 is not done. The permutation test is defined against a symbolic significance level alpha that is never set, and no p-values are reported. The 95% CIs are on detector AUC, not on the compared quantity. Real-world flags use a 12-standard-deviation threshold with no stated level. Distance 1, missing E4. E6 not done: the prompt 'x' and the code are public, with no digest.",
+       "neighbour_phrase": "Chauvin et al. track first-token logprobs of LLM API endpoints to detect changes against their own earlier samples",
+       "elements": {
+        "E1": {
+         "value": true,
+         "quote": "we consider a pair of LLM APIs (which can be the same API at different times)"
+        },
+        "E2": {
+         "value": true,
+         "quote": "we send the same prompt to two LLM APIs, requesting a single token of output"
+        },
+        "E3": {
+         "value": true,
+         "quote": "original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis"
+        },
+        "E4": {
+         "value": false,
+         "quote": "we report a change when the test statistic exceeds the running mean by at least 12 standard deviations"
+        },
+        "E5": {
+         "value": true,
+         "quote": "exploiting the log probabilities of the returned tokens rather than the tokens themselves"
+        },
+        "E6": {
+         "value": false,
+         "quote": "It is publicly available at https://github.com/timothee-chauvin/track-llm-apis."
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "we consider a pair of LLM APIs (which can be the same API at different times)",
+      "A permutation test on the pooled samples is used to obtain a p p -value for the null hypothesis that P ( 1 ) P^{(1)} and P ( 2 ) P^{(2)} are identical.",
+      "It can then be interpreted in relation with the chosen significance level",
+      "We then perform 1,000 original/original hypothesis tests on each original model, to obtain the distribution of the statistic under the null hypothesis, and 1,000 original/variant hypothesis tests on each variant.",
+      "Overall AUC (95% CI)",
+      "we monitored 189 real-world LLM API endpoints from 10 providers hourly over more than 4 months",
+      "we flag a change only when the test statistic is high in absolute terms (to filter out small shifts) and relative to the endpoint’s historical variance"
+     ],
+     "leads": [
+      "Gao, Liang & Guestrin, Model equality testing: which model is this API serving?, ICLR 2025",
+      "Cai, Shi, Zhao & Song, Are you getting what you pay for? auditing model substitution in llm apis, arXiv 2504.04715",
+      "Chen, Zaharia & Zou, How is chatgpt's behavior changing over time?, arXiv 2307.09009",
+      "Chen, Zaharia & Zou, How did the model change? efficiently assessing machine learning API shifts, ICLR",
+      "Zhang, Foerster, Mullins, Zhao & Shumailov, Hardware and software platform inference, arXiv 2411.05197",
+      "Phillips, Daily-bench, https://github.com/jacobphillips99/daily-bench",
+      "He and Lab, Defeating nondeterminism in llm inference, Thinking Machines Lab: Connectionism",
+      "Ong et al., TOPLOC: a locality sensitive hashing scheme for trustless verifiable inference, arXiv 2501.16007"
+     ],
+     "notes": "Chauvin, Le Merrer, Taiani, Tredan, arXiv 2512.03816v2. This is the nearest C4a neighbour in my set: E1, E2, E3 and E5 are carried for one object, so its distance is 1 and the missing element is E4. E4 is the element a second reader is most likely to code differently. Arguments for true: a permutation test is defined whose null is 'identical distributions', and 95% CIs are reported. Why I coded false: alpha is never given a value, no p-value is reported for any comparison, and the CIs bound AUC rather than the compared statistic S. E3 is carried only by the in-vitro TinyChange runs, where identical weights are known. The real-world endpoint threshold uses historical variance of an endpoint whose identity is only inferred, which does not count as E3 under the protocol."
+    },
+    {
+     "id": "B24",
+     "read_end_to_end": true,
+     "last_line_quote": "Sign up for Nature Briefing: Careers",
+     "midpoint_quote": "Tenure track Assistant Professor position in Pharmaceutical Sciences at the University of Michigan",
+     "verdicts": [
+      {
+       "clause": "C5",
+       "verdict": "OCCUPIES",
+       "object": "ERROR (Elson, Hussey, Arslan; University of Bern), a standing bug-bounty programme of at least four years. It pays specialist reviewers a base rate plus an error-size bonus for checking highly cited published papers, with author consent.",
+       "reason": "It is a standing payment for finding errors, with public, non-anonymised reports. The object differs: other researchers' published papers, checked by recruited reviewers after authors opt in, with payouts decided by a staff recommender. There is no payment to a stranger whose record shows the programme's own verifier disagreeing with the programme.",
+       "neighbour_phrase": "Elson, Hussey and Arslan (ERROR) pay reviewers bonuses for errors found in highly cited published papers"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "SILENT",
+       "object": "No model comparison; an opinion piece on paying for error detection in the scientific literature.",
+       "reason": "It does not address fingerprinting a model's behaviour or any element E1-E6.",
+       "neighbour_phrase": "Elson argues for paying researchers bug bounties to spot errors in published papers",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": ""
+        },
+        "E2": {
+         "value": false,
+         "quote": ""
+        },
+        "E3": {
+         "value": false,
+         "quote": ""
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": ""
+        },
+        "E6": {
+         "value": false,
+         "quote": ""
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "pays specialists to check highly cited published papers",
+      "a bonus for any errors they find",
+      "ERROR launched in February and will run for at least four years.",
+      "all reviewer reports are published on our website and are not anonymized",
+      "none of whom receive a bounty",
+      "checks them only if the authors agree to it"
+     ],
+     "leads": [
+      "Estimating the Reliability and Robustness of Research (ERROR), go.nature.com/4bmlvkj"
+     ],
+     "notes": "Malte Elson, Nature World View, 21 May 2024 (Nature 629, 730), doi 10.1038/d41586-024-01465-y. The article text is lines 41-107; the rest is site chrome. The ERROR programme page is the standing-programme source and is recorded as a lead, not read."
+    },
+    {
+     "id": "B25",
+     "read_end_to_end": true,
+     "last_line_quote": "30",
+     "midpoint_quote": "improvement in single-qubit gate fidelity. Tolerance choices should track this gap: for an Eagle-class",
+     "verdicts": [
+      {
+       "clause": "C2",
+       "verdict": "OCCUPIES",
+       "object": "A SHA-256 hash chain over canonical-JSON stage spec records of a hybrid quantum-classical pipeline, anchored to an append-only external log. Replay recomputes every hash (verify_full_chain, verify_against_anchor).",
+       "reason": "It does a tamper-evident chained log with replay verification and external anchoring. What is chained is stage parameter/spec records, which may include observable contracts. It does not chain verdicts re-derived from bytes: observable-deviation verdicts are raised as exceptions at commit time and are not recomputed on replay, and replay re-derives only the hash links.",
+       "neighbour_phrase": "Yeniaras and Karimov hash-chain and externally anchor stage spec records of hybrid quantum-classical pipelines"
+      },
+      {
+       "clause": "C4a",
+       "verdict": "OCCUPIES",
+       "object": "A quantum stage (single-qubit circuit channel) compared against a contract supertype's Pauli expectation values on six fixed input states, within a tolerance epsilon calibrated from repeated noisy runs of a valid override. Also cloud QPU auditing of a claimed backend.",
+       "reason": "Only E2 is done: six input states are fixed and applied to candidate and supertype. The object is a quantum circuit or hardware backend, not a model or weights, so E1 fails. The epsilon floor from the 95th percentile of repeated Bgood runs is a structural analogue of E3 on a non-model object and has no identical weights. The threshold carries no stated test level (E4 not done). The compared quantity is Pauli expectations from shot counts, not token log-probabilities (E5 not done). No digest of inputs is published (E6 not done).",
+       "neighbour_phrase": "Yeniaras and Karimov test quantum-stage Pauli observables against contract references within a device-calibrated tolerance",
+       "elements": {
+        "E1": {
+         "value": false,
+         "quote": "reports the worst-case deviation from the supertype values"
+        },
+        "E2": {
+         "value": true,
+         "quote": "We test on six input states: the four Pauli eigenstates"
+        },
+        "E3": {
+         "value": false,
+         "quote": "run Bgood on the target backend over a representative input set, take the 95th percentile of the per-input deviation"
+        },
+        "E4": {
+         "value": false,
+         "quote": ""
+        },
+        "E5": {
+         "value": false,
+         "quote": "and estimates the Pauli expectation"
+        },
+        "E6": {
+         "value": false,
+         "quote": "Raw counts and per-circuit summaries are released alongside the source code at the project repository"
+        }
+       }
+      }
+     ],
+     "bearing_quotes": [
+      "The chain is appended to as the pipeline runs, and an external anchor receives each new hi for tamper-evident",
+      "honest pipeline, every recomputed hash matches the stored",
+      "Local tampering (an attacker rewrites a spec record in place) is caught by verify_full_chain at end",
+      "The default ExternalAnchor writes to an append-only file, simulating an RFC 3161",
+      "a hash-chained record of every spec, every observable contract, and every commit time",
+      "On any violation the host pipeline catches the exception and aborts before launching downstream stages."
+     ],
+     "leads": [
+      "Bruce Schneier and John Kelsey. Secure audit logs to support computer forensics. ACM Transactions on Information and System Security, 2(2):159-176, 1999.",
+      "Zachary Newman, John Speed Meyers, and Santiago Torres-Arias. Sigstore: Software signing for everybody. CCS '22.",
+      "Santiago Torres-Arias et al. in-toto: Providing farm-to-table guarantees for bits and bytes. USENIX Security 19.",
+      "Jindi Wu, Tianjie Hu, and Qun Li. Detecting fraudulent services on quantum cloud platforms via dynamic fingerprinting. ICCAD '24.",
+      "Jindi Wu, Tianjie Hu, and Qun Li. QuanGuard: Error evolution-based fingerprinting for fraud detection in quantum cloud services. IEEE Transactions on Computers, 75(3), 2026."
+     ],
+     "notes": "Yeniaras and Karimov, arXiv 2605.13109v1, 13 May 2026. The last non-empty line of the extracted text is the page number '30'. C2 is OCCUPIED by a hash-chained spec log with replay and anchor, not a chain of re-derived verdicts. For C4a, the tolerance-calibration procedure (repeated runs of a known-valid override, 95th percentile, threshold set just above it) is structurally E3-like, but it is applied to quantum channels, not model weights, so I coded it false under the protocol's wording."
+    }
+   ]
+  }
+ ],
+ "confirmations": [],
+ "unread": []
+}

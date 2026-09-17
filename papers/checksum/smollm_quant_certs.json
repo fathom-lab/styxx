@@ -1,0 +1,120 @@
+{
+ "sanity": {
+  "first_token_top1_hits": {
+   "A": 30,
+   "reloaded": 30,
+   "int8": 16,
+   "random": 0
+  },
+  "n_canaries": 48,
+  "null_floor_nats": 0.0
+ },
+ "reloaded": {
+  "schema": "styxx.checksum/compare/v0",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
+  "n_items": 48,
+  "a": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
+  },
+  "b": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #2 (reloaded)"
+  },
+  "distance": {
+   "mean_abs_nats": 0.0,
+   "corr_dist": 1.1102230246251565e-16,
+   "rdm_r": 1.0,
+   "ci_mean_abs": [
+    0.0,
+    0.0
+   ],
+   "ci_rdm_r": [
+    0.9999999999999998,
+    1.0
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "SAME",
+   "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001"
+  },
+  "resolution_nats": 0.0001,
+  "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
+  "digest": "424a24b7d54f20bd58968733fae38ffcce74eb46dec51438e80fcdd910a29afb",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:30Z"
+  }
+ },
+ "int8": {
+  "schema": "styxx.checksum/compare/v0",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
+  "n_items": 48,
+  "a": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
+  },
+  "b": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M int8 dynamic (Linear)"
+  },
+  "distance": {
+   "mean_abs_nats": 1.5144575702498617,
+   "corr_dist": 0.18105524610843915,
+   "rdm_r": 0.8285061488474084,
+   "ci_mean_abs": [
+    1.1705011810457897,
+    1.9025167784027055
+   ],
+   "ci_rdm_r": [
+    0.7449038507397748,
+    0.8744999667634993
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 1.1705 nats/token is above the floor 0.0001"
+  },
+  "resolution_nats": 0.0001,
+  "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
+  "digest": "67bff4e1956b036602f0fd3ed0de07ceee31530f142b94121a482621d3871b59",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:36Z"
+  }
+ },
+ "random": {
+  "schema": "styxx.checksum/compare/v0",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "HuggingFaceTB/SmolLM2-135M",
+  "n_items": 48,
+  "a": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M float32 #1"
+  },
+  "b": {
+   "model_id": "HuggingFaceTB/SmolLM2-135M architecture, random init (seed 343)"
+  },
+  "distance": {
+   "mean_abs_nats": 9.498053874013324,
+   "corr_dist": 0.9562660678721633,
+   "rdm_r": 0.0653220085203318,
+   "ci_mean_abs": [
+    8.876455481210046,
+    10.084330336024513
+   ],
+   "ci_rdm_r": [
+    -0.06626946909277534,
+    0.19521443482490228
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 8.8765 nats/token is above the floor 0.0001"
+  },
+  "resolution_nats": 0.0001,
+  "note": "SmolLM2-135M on CPU; teacher-forced; deterministic",
+  "digest": "629edf0972ef6f53fbbc24ef9e9fce9c248b3258d8835fb639026a5021de5712",
+  "created": {
+   "a": "2026-09-13T15:17:22Z",
+   "b": "2026-09-13T15:17:42Z"
+  }
+ }
+}

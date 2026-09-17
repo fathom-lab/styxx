@@ -1,0 +1,299 @@
+{
+ "prereg": "PREREG_checksum_deploy_quant_2026_09_13.md",
+ "smoke": false,
+ "tag": "_dryrun_qwen0.5b",
+ "is_the_experiment": false,
+ "model": "Qwen/Qwen2.5-0.5B",
+ "device": "cuda",
+ "provenance": {
+  "git_head": "00e6d7d4af1181c7a102ef1d33ee714eea6ce7bc",
+  "git_dirty": true,
+  "prereg": "PREREG_checksum_deploy_quant_2026_09_13.md",
+  "prereg_blob_sha256": "b3b9871090fdcd4491cc4a3171c27e1468414409da9d3b66b4d3ff2fd4b6dd9e",
+  "styxx_file": "C:\\Users\\heyzo\\clawd\\wt\\plate\\styxx\\__init__.py",
+  "checksum_py_sha256": "b628032e3e20ecdc79da6e832a76a6b102686b4dca7a8af98cdd8a541f060c37",
+  "versions": {
+   "torch": "2.5.1+cu121",
+   "transformers": "4.57.3",
+   "bitsandbytes": "0.49.2"
+  },
+  "python": "3.12.10",
+  "device": "cuda",
+  "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "cublas_workspace_config": ":4096:8",
+  "deterministic_algorithms": true,
+  "torch_quantized_engine": "x86"
+ },
+ "sanity": {
+  "first_token_top1_hits": {
+   "A": 28,
+   "A2": 28,
+   "A3": 28,
+   "Q4": 24,
+   "Q8": 28,
+   "R": 0
+  },
+  "n_canaries": 48,
+  "null_floor_nats": 0.0,
+  "top1_loss_vs_A": {
+   "A2": 0,
+   "A3": 0,
+   "Q4": 4,
+   "Q8": 0,
+   "R": 28
+  }
+ },
+ "distance_params": {
+  "n_boot": 2000,
+  "seed": 20260913,
+  "floor_nats": 0.0
+ },
+ "k1": {
+  "threshold_nats": 0.01,
+  "floor_nats": 0.0,
+  "fired": false
+ },
+ "A2": {
+  "schema": "styxx.checksum/compare/v1",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+   "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A2]",
+   "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+   "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+  },
+  "distance": {
+   "mean_abs_nats": 0.0,
+   "corr_dist": 0.0,
+   "rdm_r": 1.0,
+   "ci_mean_abs": [
+    0.0,
+    0.0
+   ],
+   "ci_rdm_r": [
+    0.9999999999999998,
+    1.0
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "SAME",
+   "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "81d3d7f5a360fae1f4bb007fb43210fa1a2bffc231ad0d05f9ce7292ff8f3277",
+  "created": {
+   "a": "2026-09-14T01:23:05Z",
+   "b": "2026-09-14T01:23:14Z"
+  }
+ },
+ "Q4": {
+  "schema": "styxx.checksum/compare/v1",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+   "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B nf4 [Q4]",
+   "rdm_sha256": "443ccb8bf00723aa7e7e356188c7b6a42784b59bd13b43765f047293f892fbb8",
+   "mean_lp_sha256": "26dddbe4a49c42ead99fc28064bc72198b4d49f6a212d7d130c446b2db7ee83c"
+  },
+  "distance": {
+   "mean_abs_nats": 0.4270293028449588,
+   "corr_dist": 0.04769290180572905,
+   "rdm_r": 0.9598171353513847,
+   "ci_mean_abs": [
+    0.3035460613164792,
+    0.5613979700979932
+   ],
+   "ci_rdm_r": [
+    0.9199633586507213,
+    0.9787940102437194
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 0.3035 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "01dda1f357d0ee47d1130ee8a9f658fb0da700bd8d838894f863881949e609e6",
+  "created": {
+   "a": "2026-09-14T01:23:05Z",
+   "b": "2026-09-14T01:23:38Z"
+  }
+ },
+ "Q8": {
+  "schema": "styxx.checksum/compare/v1",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+   "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B int8 [Q8]",
+   "rdm_sha256": "7a3e61e2c1782e8644915d1bb5800d042d5830b52bd70db17ed3e04464b9dd15",
+   "mean_lp_sha256": "fe6ae8edb3d288114a0b738423ff5279d49cd08ba355810b4f783f2918d51a52"
+  },
+  "distance": {
+   "mean_abs_nats": 0.10094105153451287,
+   "corr_dist": 0.0025419084593034658,
+   "rdm_r": 0.9954683814671134,
+   "ci_mean_abs": [
+    0.07055132526342074,
+    0.1353627189791991
+   ],
+   "ci_rdm_r": [
+    0.9902861652947013,
+    0.9980134995044418
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 0.0706 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "b6eb1a8880783fcc689235de31942ea706f3cffc698dbb42f3c37c4dce02e382",
+  "created": {
+   "a": "2026-09-14T01:23:05Z",
+   "b": "2026-09-14T01:24:04Z"
+  }
+ },
+ "R": {
+  "schema": "styxx.checksum/compare/v1",
+  "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+  "kind": "full",
+  "n_items": 48,
+  "a": {
+   "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+   "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+   "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+  },
+  "b": {
+   "model_id": "Qwen/Qwen2.5-0.5B random [R]",
+   "rdm_sha256": "3a1ed328248d1b8f46028eb3488da696b9e3e45a806d6458c05fd285560ae7bb",
+   "mean_lp_sha256": "b252f86ace8c4f1648d73134ce3a4596f0106885767fdad1b81d8be47b277bc6"
+  },
+  "distance": {
+   "mean_abs_nats": 10.440784893212387,
+   "corr_dist": 1.1251234857049968,
+   "rdm_r": 0.11073858590318669,
+   "ci_mean_abs": [
+    9.75904168189193,
+    11.003177212160308
+   ],
+   "ci_rdm_r": [
+    -0.012581490034034987,
+    0.2311274824583718
+   ],
+   "n_items": 48,
+   "n_boot": 2000,
+   "verdict": "DRIFT",
+   "reason": "lower 95% bound 9.7590 nats/token is above the floor 0.0001",
+   "floor_measured": 0.0,
+   "floor_effective": 0.0001,
+   "seed": 20260913
+  },
+  "floor_measured_nats": 0.0,
+  "floor_effective_nats": 0.0001,
+  "seed": 20260913,
+  "resolution_nats": 0.0001,
+  "note": "Qwen/Qwen2.5-0.5B on cuda; teacher-forced; deterministic best effort",
+  "digest": "8fe21d3b54128eb4e24bc9b89320129558f9e2480069fc921bbd5a871bcf25a1",
+  "created": {
+   "a": "2026-09-14T01:23:05Z",
+   "b": "2026-09-14T01:24:53Z"
+  }
+ },
+ "h1_held_out": {
+  "unpreregistered": true,
+  "floor_from": [
+   "A-A3",
+   "A2-A3"
+  ],
+  "floor_nats": 0.0,
+  "cert": {
+   "schema": "styxx.checksum/compare/v1",
+   "canary_sha256": "71f8e5c9973c6c9aa111d25a6c6ee8c8faf2b557ef6e97705aa02b34db868eac",
+   "tokenizer_id": "Qwen/Qwen2.5-0.5B",
+   "kind": "full",
+   "n_items": 48,
+   "a": {
+    "model_id": "Qwen/Qwen2.5-0.5B bf16 [A]",
+    "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+    "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+   },
+   "b": {
+    "model_id": "Qwen/Qwen2.5-0.5B bf16 [A2]",
+    "rdm_sha256": "20e62e9f937d63bb6b4bd94b86ad4413ff2673ca0e1483beb7ad912bd38c6d39",
+    "mean_lp_sha256": "f1bbca086d6bd9446e4111ff0e5b0bee2054778170426d9c3a709548a2d83927"
+   },
+   "distance": {
+    "mean_abs_nats": 0.0,
+    "corr_dist": 0.0,
+    "rdm_r": 1.0,
+    "ci_mean_abs": [
+     0.0,
+     0.0
+    ],
+    "ci_rdm_r": [
+     0.9999999999999998,
+     1.0
+    ],
+    "n_items": 48,
+    "n_boot": 2000,
+    "verdict": "SAME",
+    "reason": "upper 95% bound 0.00e+00 nats/token is below the floor 0.0001",
+    "floor_measured": 0.0,
+    "floor_effective": 0.0001,
+    "seed": 20260913
+   },
+   "floor_measured_nats": 0.0,
+   "floor_effective_nats": 0.0001,
+   "seed": 20260913,
+   "resolution_nats": 0.0001,
+   "note": "held-out floor reading of H1; decides nothing in this run",
+   "digest": "9478f03f4b3a8368222819c9e3f44d9db5b73214f932833c507490ab9a7a78a9",
+   "created": {
+    "a": "2026-09-14T01:23:05Z",
+    "b": "2026-09-14T01:23:14Z"
+   }
+  }
+ }
+}

@@ -1,0 +1,256 @@
+{
+ "check": "the sand, pass 4: blind margin re-codings of every source at distance one on C4a",
+ "record": "papers/plates/sand_prior_art_survey_pass4_correction_2026_09_15.json",
+ "run": "wf_d939e27b-afe",
+ "script": "../sand_survey_pass4_inputs/prompts/margins_pass4.js (committed at afc49486, verbatim)",
+ "run_date": "2026-09-15-correction",
+ "sources": {
+  "S17": {
+   "title": "A Sober Look at Progress in Language Model Reasoning: Pitfalls and Paths to Reproducibility",
+   "first_reading": {
+    "reader": "correction/readings_correction_run1:reader-2",
+    "missing": [
+     "E5"
+    ],
+    "distance": 1
+   },
+   "margin_readings": [
+    {
+     "reader": "margin-S17-1",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "We evaluated the same model across five different compute",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "we compare lighteval and evalchemy, fixing all other variables: model, dataset, hardware, decoding parameters, and random seeds",
+       "quote_found": true
+      },
+      "E3": {
+       "value": false,
+       "quote": "achieved 7.3%±3.8 on AIME’24 on our cluster versus 11.3%±3.6 on Runpod; a 4 percentage point gap that exceeds the standard deviation",
+       "quote_found": null
+      },
+      "E4": {
+       "value": false,
+       "quote": "OpenThinker2-7B scored 53.0%±4.6 on A100 versus 57.1%±5.2 on H100 for AIME’24",
+       "quote_found": null
+      },
+      "E5": {
+       "value": false,
+       "quote": "LightEval’s LaTeX-based answer extraction and evaluation pipeline ensures reliable and consistent result parsing and correctness matching",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we release all code, prompts, and model outputs, for reasoning benchmarks",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E3",
+      "E4",
+      "E5"
+     ],
+     "distance": 3,
+     "object": "The paper's headline comparison is RL- or SFT-trained models against the base models they were trained from, which are different models. Its own comparisons of a model with itself are in Section 3.4, where the same checkpoints are evaluated on AIME'24, AMC'23 and MATH500 across five compute clusters, A100 vs H100, and the lighteval vs evalchemy frameworks, scoring sampled answers by Pass@1 and reporting mean ± std over seeds.",
+     "reason": "The same checkpoints are compared across serving setups (hardware clusters, frameworks) on fixed benchmarks, so E1 and E2 hold. Those gaps are judged informally against per-side seed standard deviations, with no interval or no-difference test on the gap: the paired t-tests at p < 0.01 cover only the RL/SFT-vs-base comparison between different models. Scores come from extracted answers, not log-probabilities, and the benchmarks are published with no digest.",
+     "hardest_element": "E3",
+     "hardest_element_why": "In Stage 1 the cross-cluster gap is graded against a standard deviation taken from repeated runs of the same checkpoint, but that spread comes from different sampling seeds, which the definition's letter excludes. The seed-controlled run-to-run spread from Stage 3 is only reported and never used to grade."
+    },
+    {
+     "reader": "margin-S17-2",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": false,
+       "quote": "To rigorously assess whether RL-trained models genuinely outperform their baselines",
+       "quote_found": null
+      },
+      "E2": {
+       "value": true,
+       "quote": "For each model-baseline pair, we: (1) compute the average accuracy per problem instance across all random seeds, (2) align these sample-wise accuracies between the RL/SFT model and the baseline from which it was trained",
+       "quote_found": true
+      },
+      "E3": {
+       "value": false,
+       "quote": "we employ paired sample-wise statistical tests rather than simply comparing mean accuracies",
+       "quote_found": null
+      },
+      "E4": {
+       "value": true,
+       "quote": "The null hypothesis is that there is no improvement from RL/SFT training, with the alternative hypothesis that the RL/SFT model performs better than its baseline. We report results as statistically significant at two thresholds: p < 0.01 (marked with ∗) and p < 0.001 (marked with ∗∗).",
+       "quote_found": true
+      },
+      "E5": {
+       "value": false,
+       "quote": "answer extraction and evaluation pipeline ensures reliable and consistent result parsing and correctness matching",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we open-source all code, prompts, and outputs to facilitate fair and accountable progress in this increasingly important area.",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E1",
+      "E3",
+      "E5"
+     ],
+     "distance": 3,
+     "object": "RL- or SFT-post-trained math reasoning models compared with the base or instruct models they were trained from. The measure is seed-averaged Pass@1 (mean ± std) on six fixed benchmarks under one standardized evaluation stack, graded by one-sided paired t-tests and Wilcoxon tests on per-problem accuracies.",
+     "reason": "The central comparison (Table 3, Section 4.2) sets post-trained models against the base models they were fine-tuned from, so it is not a self-comparison. Its items are the same fixed benchmark problems, aligned per problem. It is graded by paired t-tests with a stated null and p thresholds on Pass@1, which comes from extracted answers, not log-probabilities. Seed standard deviations on identical weights are reported but do not set the verdict. No digest of the item set is given. The same-model comparisons across hardware clusters and frameworks are sensitivity analyses, not the central comparison, and they have no interval or test.",
+     "hardest_element": "E3",
+     "hardest_element_why": "Figure 1 (right) does judge the RL gains against the base model's variance range across seeds, with the verdict that they \"do not significantly outperform\" the base model, but that range also pools top-p and temperature changes outside the comparison's setup, while the formal verdict in Table 3 rests on paired t-tests across problems, not on a same-weights floor."
+    },
+    {
+     "reader": "margin-S17-3",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "We evaluated the same model across five different compute clusters, each with varying GPU types and memory configurations.",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "when the same models are evaluated across compute clusters for both AIME24 and AMC23 datasets",
+       "quote_found": true
+      },
+      "E3": {
+       "value": true,
+       "quote": "achieved 7.3%±3.8 on AIME’24 on our cluster versus 11.3%±3.6 on Runpod; a 4 percentage point gap that exceeds the standard deviation.",
+       "quote_found": true
+      },
+      "E4": {
+       "value": false,
+       "quote": "OpenThinker2-7B scored 53.0%±4.6 on A100 versus 57.1%±5.2 on H100 for AIME’24.",
+       "quote_found": null
+      },
+      "E5": {
+       "value": false,
+       "quote": "LightEval’s LaTeX-based answer extraction and evaluation pipeline ensures reliable and consistent result parsing and correctness matching",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we release all code, prompts, and model outputs, for reasoning benchmarks",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E4",
+      "E5"
+     ],
+     "distance": 2,
+     "object": "The paper's self-comparison is Section 3.4: the same open-weight reasoning checkpoints are run on different compute clusters, hardware and software stacks, and their seed-averaged Pass@1 accuracy on fixed math benchmarks is set against the seed standard deviation. Its headline comparison, RL/SFT models against their base models with paired t-tests, is between different models.",
+     "reason": "For its same-weights self-comparison across hardware, the source does E1 and E2 and arguably E3: the cross-cluster gap is judged against the seed standard deviation of identical checkpoints. It gives no interval or test on that gap (only ±std per side), and it scores extracted answers rather than log-probabilities, so it does not retire C4a.",
+     "hardest_element": "E3",
+     "hardest_element_why": "The cross-hardware gap is judged informally (\"exceeds the standard deviation\") against a sampling-seed spread measured on the same checkpoint. It is unclear whether that counts as a floor used to grade, or falls under the protocol's exclusion of \"a spread across different seeds\"."
+    },
+    {
+     "reader": "margin-S17-4",
+     "shown_read_to_end": true,
+     "proof": {
+      "last_line_ok": true,
+      "midpoint_ok": true
+     },
+     "elements": {
+      "E1": {
+       "value": true,
+       "quote": "Accuracy differences emerge when the same models are evaluated across compute clusters",
+       "quote_found": true
+      },
+      "E2": {
+       "value": true,
+       "quote": "achieved 7.3%±3.8 on AIME’24 on our cluster versus 11.3%±3.6 on Runpod",
+       "quote_found": true
+      },
+      "E3": {
+       "value": false,
+       "quote": "a 4 percentage point gap that exceeds the standard deviation",
+       "quote_found": null
+      },
+      "E4": {
+       "value": false,
+       "quote": "variance decreased but persisted: OpenThinker2-7B scored 53.0%±4.6 on A100 versus 57.1%±5.2 on H100 for AIME’24",
+       "quote_found": null
+      },
+      "E5": {
+       "value": false,
+       "quote": "our results demonstrate that these effects can measurably impact benchmark accuracy, even when averaging over multiple seeds",
+       "quote_found": null
+      },
+      "E6": {
+       "value": false,
+       "quote": "we release all code, prompts, and model outputs, for reasoning benchmarks",
+       "quote_found": null
+      }
+     },
+     "missing": [
+      "E3",
+      "E4",
+      "E5"
+     ],
+     "distance": 3,
+     "object": "The paper compares a model with itself in Section 3.4: the same open-weight reasoning checkpoints (e.g. Qwen2.5-Math-1.5B, OpenThinker2-7B, Bespoke-Stratos-7B) are run on fixed math benchmarks across compute clusters, GPU types and software stacks, and their seed-averaged Pass@1 accuracies are compared. Its headline comparison (Tables 3-4, RL/SFT-trained models against their base models with paired t-tests) is between different models, so it is not a self-comparison.",
+     "reason": "The source's only model-with-itself comparison is the hardware and software study. It keeps the weights fixed, uses the same benchmark items on both sides, and changes how the model is served (E1, E2). Differences are judged against seed standard deviations, never against a floor from repeated runs of identical weights with a threshold, null or test (E3). That comparison has no interval or significance test (E4). The compared quantity is Pass@1 from extracted answers, not log-probabilities (E5). Outputs are released without a digest (E6). The paired t-tests at p<0.01 and p<0.001 apply only to the different-model comparison against the base model.",
+     "hardest_element": "E3",
+     "hardest_element_why": "The Stage 1 verdict rests on the cross-cluster gap exceeding the per-side standard deviation from repeated runs of the same checkpoint, which comes close to grading against a same-weights spread. But that spread is across sampling seeds, which the definition's letter excludes, and it is an informal comparison with no threshold or test. The same-cluster run-to-run variation from Stage 3 is measured but never used to grade the cross-cluster comparison."
+    }
+   ],
+   "n_margin_readings": 4,
+   "n_counted": 4,
+   "element_true_counts": {
+    "E1": 3,
+    "E2": 4,
+    "E3": 1,
+    "E4": 1,
+    "E5": 0,
+    "E6": 0
+   },
+   "first_readings_missing_element_found_present_in": {
+    "E5": 0
+   },
+   "counted_readings_carrying_all_five": [],
+   "a_majority_of_counted_readings_carry_all_five": false,
+   "distance_counts": {
+    "0": 0,
+    "1": 0,
+    "2": 1,
+    "3": 3,
+    "4": 0,
+    "5": 0
+   },
+   "hardest_elements": {
+    "E1": 0,
+    "E2": 0,
+    "E3": 4,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+   },
+   "quotes_true": 9,
+   "quotes_true_found": 9
+  }
+ },
+ "sources_with_a_counted_reading_carrying_all_five": [],
+ "sources_where_a_majority_carry_all_five": [],
+ "what_it_does_not_do": "It changes no status in the record. The frozen protocol prices C4a from the first reading and its confirmers; this check measures how much that pricing rests on one reader's coding."
+}

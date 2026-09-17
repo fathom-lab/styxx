@@ -1,0 +1,63 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "f3fa8842d85d7c9c6ff9fca64440a76205da0c51",
+ "document": {
+  "name": "CORRECTION_prereg_deploy_quant_H1_2026_09_13.md",
+  "sha256": "c087840f601fb21be793f6d251a92f4c515748e4396ff8f745134ab9fc65e8ad"
+ },
+ "text": "# CORRECTION — PREREG_checksum_deploy_quant_2026_09_13, hypothesis H1: what \"A vs A′ reads SAME\" can read, stated before the run\n\n**status: a reading rule for a frozen document, written before any data and to be sealed beside\nit (anchor 3b in `SEALS_2026_09_13.md`). The PREREG is not edited. The rule is sworn to a\ncommitted, deterministic probe; nothing here touches a model.**\n\n## the construction\n\nH1 as frozen: \"The null floor on GPU is > 0 and ≤ 1e-3 nats/token. A vs A′ reads SAME.\" The\ndesign freezes the floor as the worst pairwise distance among three loads of the same weights,\nA, A′ and A″. `styxx.checksum.distance` grades SAME only when the bootstrap upper bound of the\ngraded pair's mean |Δ log-prob| lies below the effective floor, which is the measured floor or\n1e-4, whichever is larger. The graded pair, A–A′, is one of the three pairs the floor is the\nmaximum of. When A–A′ is itself the worst pair, its mean *is* the floor and its upper bound\nexceeds it, so SAME is impossible; when it is not, SAME needs the pair's whole interval to sit\nunder another pair's mean. The clause was written as if the floor were held out from the pair it\ngrades. It is not, and the PREREG's first clause — a floor above zero — is exactly the condition\nunder which the second clause is starved.\n\n## the probe\n\n`probe_h1_by_construction.py` draws three synthetic same-weights fingerprints with a fixed jitter\nat three scales, 30 trials per scale, fixed seeds, and grades A vs A′ against the worst\npairwise floor exactly as the runner does. At the scale where the floor sits inside H1's band,\nA vs A′ read SAME in 6 trials and INCONCLUSIVE in 24, and the graded pair was the worst pair in 10. At the next scale, SAME in 3 and INCONCLUSIVE in 27; at the largest, SAME in 3 and INCONCLUSIVE in 27. DRIFT never: the weights are the same. An instrument that reads its own null pair as INCONCLUSIVE four times in five is not broken; the hypothesis asked it a question it cannot answer in the affirmative.\n\n## the reading rule, fixed before the run\n\n1. H1's first clause — the measured floor is above zero and at most 1e-3 nats/token — is\n   evaluated as frozen, from `sanity.null_floor_nats` in the certs.\n2. H1's second clause — A vs A′ reads SAME — is reported exactly as `distance` computes it\n   against the worst-pairwise floor, as frozen. If it reads INCONCLUSIVE while the first clause\n   holds, the RESULT records **H1: HELD on the floor, INCONCLUSIVE on the pair by construction**,\n   citing this correction. That outcome is neither HELD nor FAILED for H1 as written, and the\n   RESULT says so in those words rather than choosing one.\n3. Beside it, the runner writes `h1_held_out`: A vs A′ graded against a floor taken from the two\n   pairs that do not contain A′'s partner — the larger of A–A″ and A′–A″ — which is what the\n   clause meant. It is reported as an unpreregistered reading, labelled as such, and decides\n   nothing in this run.\n4. K1 (floor above 1e-2, the run INCONCLUSIVE) is unchanged and is now evaluated in code.\n5. The next PREREG on this instrument freezes the held-out form and does not carry this clause.\n\n## what this does not change\n\nThe predicted bands for H2, H3 and H4 and the gates K2, K3 and K4 stand as frozen. Nothing in this\ncorrection reads a number from the run, and the run has not started; the seal of this file is\nwhat makes that checkable.\n",
+ "spans": [
+  {
+   "start": 1450,
+   "end": 1452,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/n_trials_per_jitter",
+   "kind": "numeric"
+  },
+  {
+   "start": 1641,
+   "end": 1642,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.0003/verdicts_A_vs_Aprime/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 1670,
+   "end": 1672,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.0003/verdicts_A_vs_Aprime/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 1716,
+   "end": 1718,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.0003/trials_where_the_graded_pair_is_the_worst",
+   "kind": "numeric"
+  },
+  {
+   "start": 1747,
+   "end": 1748,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.001/verdicts_A_vs_Aprime/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 1769,
+   "end": 1771,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.001/verdicts_A_vs_Aprime/INCONCLUSIVE",
+   "kind": "numeric"
+  },
+  {
+   "start": 1797,
+   "end": 1798,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.005/verdicts_A_vs_Aprime/SAME",
+   "kind": "numeric"
+  },
+  {
+   "start": 1819,
+   "end": 1821,
+   "receipt": "path:papers/checksum/probe_h1_by_construction_result.json#/jitters/0.005/verdicts_A_vs_Aprime/INCONCLUSIVE",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

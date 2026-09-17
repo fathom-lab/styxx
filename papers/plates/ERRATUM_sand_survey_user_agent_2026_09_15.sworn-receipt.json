@@ -1,0 +1,736 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v1",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "ERRATUM_sand_survey_user_agent_2026_09_15.md",
+  "inline_sha256": "7196c18a5bd2a476480039697df36e0bafa1b9a9a9c03aebcb53aaa19d918daf",
+  "canonical_sha256": "337e13a2dc9d3803ac7349fbacbf1c5a0f9bf80d349a1f9cbf735c9d8b6ae47c"
+ },
+ "commit": "4b8c055cd7d775c4dac9f09542426bf51316042f",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 681,
+   "start": 681,
+   "end": 691,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/frozen_commit",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 8,
+    "haystack_bytes": 8,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 1622,
+   "start": 1497,
+   "end": 1499,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/0/line",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "34",
+    "printed": "34",
+    "receipt": "34",
+    "receipt_rounded": "34",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 1762,
+   "start": 1508,
+   "end": 1627,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/0/user_agent",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 117,
+    "haystack_bytes": 117,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 2041,
+   "start": 1654,
+   "end": 1656,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/1/line",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "25",
+    "printed": "25",
+    "receipt": "25",
+    "receipt_rounded": "25",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 2181,
+   "start": 1665,
+   "end": 1772,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/fetchers/1/user_agent",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 105,
+    "haystack_bytes": 105,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 2814,
+   "start": 2165,
+   "end": 2167,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass3",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "17",
+    "printed": "17",
+    "receipt": "17",
+    "receipt_rounded": "17",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 2975,
+   "start": 2188,
+   "end": 2189,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_A",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "9",
+    "printed": "9",
+    "receipt": "9",
+    "receipt_rounded": "9",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3141,
+   "start": 2210,
+   "end": 2212,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "28",
+    "printed": "28",
+    "receipt": "28",
+    "receipt_rounded": "28",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3309,
+   "start": 2234,
+   "end": 2236,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B2",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "11",
+    "printed": "11",
+    "receipt": "11",
+    "receipt_rounded": "11",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3478,
+   "start": 2258,
+   "end": 2259,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/pass4_run_B3",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3649,
+   "start": 2284,
+   "end": 2285,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_by_record/correction",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "6",
+    "printed": "6",
+    "receipt": "6",
+    "receipt_rounded": "6",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3813,
+   "start": 2305,
+   "end": 2307,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/attempts_total",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "72",
+    "printed": "72",
+    "receipt": "72",
+    "receipt_rounded": "72",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 3948,
+   "start": 2312,
+   "end": 2314,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/distinct_urls",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "71",
+    "printed": "71",
+    "receipt": "71",
+    "receipt_rounded": "71",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 4206,
+   "start": 2443,
+   "end": 2444,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/correction_lookup_requests_recorded",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "5",
+    "printed": "5",
+    "receipt": "5",
+    "receipt_rounded": "5",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 8743,
+   "start": 6831,
+   "end": 6853,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/run_first_request_at",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 20,
+    "haystack_bytes": 20,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 8901,
+   "start": 6857,
+   "end": 6879,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/run_last_request_at",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 20,
+    "haystack_bytes": 20,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 9250,
+   "start": 7075,
+   "end": 7077,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/SAME_BYTES",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "45",
+    "printed": "45",
+    "receipt": "45",
+    "receipt_rounded": "45",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 9415,
+   "start": 7107,
+   "end": 7109,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/SAME_KIND",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "10",
+    "printed": "10",
+    "receipt": "10",
+    "receipt_rounded": "10",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 9569,
+   "start": 7129,
+   "end": 7130,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/KIND_CHANGED",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 9738,
+   "start": 7163,
+   "end": 7164,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/NOW_ANSWERS",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 9901,
+   "start": 7192,
+   "end": 7194,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/STILL_REFUSED",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "14",
+    "printed": "14",
+    "receipt": "14",
+    "receipt_rounded": "14",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 10063,
+   "start": 7218,
+   "end": 7219,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/RATE_LIMITED",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 10233,
+   "start": 7253,
+   "end": 7254,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/outcomes/NOW_REFUSED",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 10446,
+   "start": 7332,
+   "end": 7334,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/same_kind_max_byte_difference",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "82",
+    "printed": "82",
+    "receipt": "82",
+    "receipt_rounded": "82",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 11168,
+   "start": 7911,
+   "end": 7916,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/id",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 3,
+    "haystack_bytes": 3,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 11373,
+   "start": 7988,
+   "end": 7993,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/recorded_http",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 3,
+    "haystack_bytes": 3,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 11523,
+   "start": 7999,
+   "end": 8004,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/recorded_bytes",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "87457",
+    "printed": "87457",
+    "receipt": "87457",
+    "receipt_rounded": "87457",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 11695,
+   "start": 8029,
+   "end": 8034,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/now_refused/0/now_http",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 3,
+    "haystack_bytes": 3,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 12343,
+   "start": 8543,
+   "end": 8553,
+   "receipt": "path:papers/plates/sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json#/bounty_clause/pass3_status_without_now_refused",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 8,
+    "haystack_bytes": 8,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7b6aada7a4443d29dfb6a8bf07feed0aac4293c6285e8efb42924bee65616725",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 12667,
+   "start": 8709,
+   "end": 8719,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_correction_2026_09_15.json#/clauses/C5/status",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 8,
+    "haystack_bytes": 8,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9fb79eadb83c9a5344a0484c0f6cff556c6ce8365fd57bc2946199a89f45824b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  },
+  {
+   "at": 12843,
+   "start": 8763,
+   "end": 8768,
+   "receipt": "path:papers/plates/sand_prior_art_survey_pass4_correction_2026_09_15.json#/clauses/C5/correction/uncheckable/0",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 3,
+    "haystack_bytes": 3,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9fb79eadb83c9a5344a0484c0f6cff556c6ce8365fd57bc2946199a89f45824b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 4b8c055cd7d775c4dac9f09542426bf51316042f; authorship unchecked"
+   }
+  }
+ ],
+ "counts": {
+  "HELD": 31,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 31,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "rungs": {
+  "committed": 31
+ },
+ "verifier": {
+  "styxx_version": "7.47.0",
+  "sworn_sha256": "7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+   "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`<!--` … `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment — never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+   "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+   "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+   "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent — weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+   "provenance": "since v0.2 R7: every span verdict carries `provenance` — for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at <commit>; authorship unchecked` — and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+   "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) — a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter — and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "737dccd18117eb77ec7ed5284eee4917b4f90aba370f12f958883d88fc4cb161",
+ "coverage": {
+  "schema": "sworn/coverage/1",
+  "advisory": true,
+  "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
+  "sworn_total": 31,
+  "narrative_sentences": 200,
+  "sentence_share": 0.1342,
+  "diff_claim_sentences": 1,
+  "diff_claim_share": 0.9688,
+  "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+  "unsworn_claims": [
+   {
+    "start": 526,
+    "end": 645,
+    "text": "`sand_survey_user_agent_inputs/refetch_nonbrowser_summary.json`, which a committed script derives from a re-fetch whose"
+   }
+  ],
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "coverage_sha256": "d87529cf3a2b85438c9531a141ec23d332029a13da31ef7ea38875e717e8cf5f",
+ "timestamp": "2026-09-15T09:06:30Z"
+}

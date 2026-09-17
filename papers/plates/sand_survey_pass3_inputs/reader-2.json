@@ -1,0 +1,156 @@
+{
+ "reader": "reader-2",
+ "sources": [
+  {
+   "id": "L03",
+   "read_end_to_end": true,
+   "chars_read": 105414,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "The gpt-3.5-turbo API's sampled responses over time (1000 fixed ELI5 questions sent three times daily from 2023-03-05; 38,730 fixed JAT benchmark questions monthly), scored by ROUGE, accuracy and F1, with successive periods compared by a z-test against the within-period day-to-day spread of scores.",
+     "quote": "we conduct a statistical test that measures the degree of variation that can be attributed to version change rather than sampling randomness.",
+     "reason": "It compares the served model with its own earlier self on a fixed item set and grades period-to-period change against an in-situ spread by z-test, but it reports z-scores against critical values with no interval on the comparison, the floor is a within-period temporal spread on a black box whose weights are inferred (not known) to be unchanged, and the object is ROUGE/F1 on temperature-1 sampled generations rather than teacher-forced log-probabilities.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": true,
+      "interval_on_comparison": false,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": true,
+     "nearer_reason": "Unlike Thinking Machines 2025 (same-weights spread measured but not used to grade) or Dutta et al. 2024 (compression flips/KL, no floor), ChatLog compares the same served API with its earlier self on a fixed item set and grades the change against an in-situ spread with a significance test; it still lacks an interval and uses ROUGE/F1 on sampled generations rather than log-probabilities.",
+     "neighbour_phrase": "Tu et al. grade successive-period ROUGE means of gpt-3.5-turbo against within-period day-to-day spread by z-test"
+    }
+   ],
+   "bearing_quotes": [
+    "Although the default decoding parameter (temperature = 1) introduces randomness in responses, we mitigate this by sending the same set of 1000 questions to ChatGPT three times each day.",
+    "These 1000 questions have been repeatedly sent to ChatGPT from March 5 to now. There have been 207 days’ data recorded and evaluated until the paper submission.",
+    "Let P represent the language modeling probability of the changing black-box model, and t denote the time interval between every two evaluation with the same questions Q.",
+    "Let T1 and T2 denote two successive periods, if the model’s version is not changed from T2 to T1, then their average performance µ1, µ2 should be equal.",
+    "There are two significant version changes, one is in March 24 with a z-score of 16.98, another is in June 28 with a z-score of −142. Both of them are larger than the critical value 2.58 of z-score at the 99% confidence level.",
+    "For each stable version after March 24, we split their records into two evenly long parts, and the z-score of each part is −1.006 and 0.1629 respectively, which are smaller than the critical value 1.96 of z-score at the 95% confidence level. Therefore, we believe that ChatGPT are stable on these days.",
+    "Specifically, in the stable range after April, the curve of only one trail’s result exhibits relatively large fluctuations, but it doesn’t reach the level of difference observed between March and April due to version changes.",
+    "For evaluation on the generation task (Fan et al., 2019) of ChatLog-Daily, we choose the widely-used rouge (Lin, 2004) metric to measure the token-level overlap with the reference."
+   ],
+   "leads": [
+    "Lingjiao Chen, Matei Zaharia, and James Zou. 2023. How is chatgpt’s behavior changing over time? arXiv preprint arXiv:2307.09009.",
+    "Rachith Aiyappa, Jisun An, Haewoon Kwak, and Yong-Yeol Ahn. 2023. Can we trust the evaluation on ChatGPT? arXiv preprint arXiv:2303.12767."
+   ],
+   "notes": "The extracted text is arXiv:2304.14106v2 (18 Jun 2024), retitled 'ChatLog: Carefully Evaluating the Evolution of ChatGPT Across Time', not the v1 title in the protocol list. The z-test (eq. 5) uses the standard deviation of daily rouge-1-p averages within each period as its floor, not the 3-trial same-day spread; the 3-trial spread is used only to average scores and for a visual comparison in Appendix A.2, and the paper never has access to weights, so 'same version' within a period is an inference from stability, not a measurement."
+  },
+  {
+   "id": "L04",
+   "read_end_to_end": true,
+   "chars_read": 40686,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Ownership verification of a suspect LLM: whether its API logit or probability vectors lie in (or nearly span) the column space of the victim model's retained last linear layer, with a fixed numerical tolerance and no time series.",
+     "quote": "We model the problem of fingerprint authentication as the task of evaluating the similarity between the space of the victim model and the space of the suspect model.",
+     "reason": "It fingerprints a model to identify which model it is (provenance/ownership/derivative detection), the very class the protocol assigns to OCCUPIES; there is no comparison of a served model with its earlier or differently-served self on a fixed item set, no measured same-weights floor (the tolerance er is fixed to 1 a priori), and no interval on any comparison.",
+     "elements": {
+      "self_comparison": false,
+      "fixed_item_set": false,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": false,
+      "log_prob_object": true
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "",
+     "neighbour_phrase": "Yang & Wu grade suspect-model logit subspace distance against a fixed numerical tolerance for ownership"
+    }
+   ],
+   "bearing_quotes": [
+    "The defender, who retains access to their own model’s parameters, including the final linear layer as a fingerprint, aims to verify ownership by querying the suspect model through API access.",
+    "Let e represent the error tolerance induced by numerical instability. If d < e, we conclude that s is compatible with L, indicating that the suspect model is likely derived from the victim model.",
+    "For each experiment, we generate (or recover) 300 complete logits (or probabilities) for simulation. The error parameter er is fixed to 1 across all experiments.",
+    "It is worth to note that although this is the average results, this consistency will hold even with only a few samples in practice, thus also enabling rapid verification.",
+    "We also compare with a new version termed as Gemma-2, which shares the same structure but under a novel training method, leading to substantial income and completely different outputs for the identical inputs.",
+    "Overall, this research offers a practical and effective solution for LLM provenance tracking and ownership protection, and outlines a promising direction for future research on secure deployment of generative models.",
+    "By querying the model with the same prompt, the complete probabilities p can be perfectly reconstructed, according to the above operation."
+   ],
+   "leads": [
+    "M. Finlayson, X. Ren, S. Swayamdipta. Logits of API-protected LLMs leak proprietary information. In: Proc. Conference on Language Model, 2024.",
+    "N. Carlini, D. Paleka, K. D. Dvijotham et al. Stealing part of a production language model. In: Proc. International Conference on Machine Learning, pp. 5680-5705, 2024."
+   ],
+   "notes": "The extracted text is arXiv:2407.01235v2 dated 7 Dec 2025, a revision later than the 2024 date in the protocol list. The object is next-token logit/probability vectors used for subspace membership (logits s = Wz), not per-item teacher-forced scores; the prompts behind the 300 logits are not described as a fixed or hashed item set."
+  },
+  {
+   "id": "L05",
+   "read_end_to_end": true,
+   "chars_read": 27508,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Compressed BERT students (post-training/QAT int8 quantization, head pruning, distillation, module replacing) compared with the original finetuned BERT teacher on the MNLI and SST-2 test sets by label loyalty (agreement rate) and probability loyalty (1 minus root JS divergence of predicted label distributions), reported as mean plus/minus std over 3 runs.",
+     "quote": "For quantization and pruning, the source model is the same finetuned teacher.",
+     "reason": "Post-training quantization and pruning of the same finetuned teacher are a differently-served self on a fixed item set, and 3-run plus/minus values are reported, but no same-weights or seed-to-seed floor is measured or used: the teacher's loyalty to itself is 100 by construction and no null spread of teacher-vs-teacher is ever computed, so the loyalty drop is never graded against a floor.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": true,
+      "log_prob_object": true
+     },
+     "nearer_than_pass2_neighbour": false,
+     "nearer_reason": "Same practice as the pass-2 neighbour Dutta et al. 2024 (label flips = 1 - label loyalty; JS divergence beside KL under compression), three years earlier and with 3-run plus/minus, but equally without a floor; an earlier equivalent, not a nearer one.",
+     "neighbour_phrase": "Xu et al. grade compressed-BERT label and probability loyalty against the uncompressed teacher, without a floor"
+    }
+   ],
+   "bearing_quotes": [
+    "we propose two new metrics, label loyalty and probability loyalty that measure how closely a compressed model (i.e., student) mimics the original model (i.e., teacher).",
+    "Label loyalty directly reflects the resemblance of the labels predicted between the teacher and student models. It is calculated in the same way as accuracy, but between the student’s prediction and the teacher’s prediction, instead of ground labels:",
+    "As such it is desirable to have a metric to measure to what extent the “production model” is different from the “development model”.",
+    "Table 1: Accuracy, loyalty and robustness of compressed models on the test set of MNLI (3 runs).",
+    "Teacher (Devlin et al., 2019) 12 1.0× 84.5 / 83.3 100 100 8.1(±0.1) 89.6(±0.1)",
+    "Q8-PTQ (Zafrir et al., 2019) 12 1.8×‡ 80.7 / 80.4 89.6(±0.5) 80.8(±0.4) 40.2(±0.1) 91.6(±0.1)",
+    "Additionally, we directly optimize the KL divergence (i.e., pure KD loss) to set an upper bound for probability loyalty.",
+    "Also, we do not observe a significant difference between pretraining KD and downstream KD in terms of both loyalty and robustness (p > 0.1)."
+   ],
+   "leads": [
+    "Sara Hooker, Nyalleng Moorosi, Gregory Clark, Samy Bengio, and Emily Denton. 2020. Characterising bias in compressed models. arXiv preprint arXiv:2010.03058."
+   ],
+   "notes": "The plus/minus values are standard deviations over 3 runs of each compression/training, i.e. a spread on the student side, not a confidence interval on the teacher-student difference and not a floor; the only significance test (p > 0.1) is between two students, never against a null. The probability object is a 3-class label distribution per item (JS divergence), not token log-probabilities."
+  },
+  {
+   "id": "L06",
+   "read_end_to_end": true,
+   "chars_read": 59992,
+   "verdicts": [
+    {
+     "clause": "C4a",
+     "verdict": "OCCUPIES",
+     "object": "Populations of 30 independently trained ResNets (CIFAR-10, ImageNet, CelebA) pruned during training or quantized post-training, compared with the non-compressed population on the test set: per-class recall shift graded by Welch's t-test (p <= 0.05) across the populations, and Pruning Identified Exemplars defined by modal-label disagreement between populations.",
+     "quote": "For each class c, we we use a two-tailed, independent Welch’s t-test (Welch, 1947) to determine whether the mean-shifted class accuracy Sc t = {βc t,k −βM t,k}K k=1 of the samples Sc t and Sc 0 differ significantly. If the p-value <= 0.05, we reject the null hypothesis and consider the class to be disparately impacted by t level of compression relative to the baseline.",
+     "reason": "It grades the compressed-vs-base comparison on a fixed item set against a measured null, but the null is a seed-to-seed floor (the spread across 30 independently trained models) rather than a same-weights floor measured under the serving in use; pruned models are separately trained rather than the same weights (only the post-training quantized models are a differently-served self), the object is hard predictions with probabilities explicitly avoided, and p-values are reported with no interval on the comparison.",
+     "elements": {
+      "self_comparison": true,
+      "fixed_item_set": true,
+      "same_weights_floor_in_situ": false,
+      "interval_on_comparison": false,
+      "log_prob_object": false
+     },
+     "nearer_than_pass2_neighbour": true,
+     "nearer_reason": "Its quantization arm applies post-training int8/float16 quantization to the same trained weights and grades the population shift against a measured seed-to-seed null with a significance test, which Dutta et al. 2024's flips/KL (no floor) lack; the floor is across seeds, not same-weights, and the object is labels, not log-probabilities.",
+     "neighbour_phrase": "Hooker et al. grade compressed-vs-base class recall against a 30-seed population null by Welch's t-test"
+    }
+   ],
+   "bearing_quotes": [
+    "We independently train a population of K models for each compression method, dataset, and model that we consider. Thus, we have a sample Sc t of accuracy metrics per class c at each level of compression t.",
+    "Our goal is to move beyond anecdotal observations, and to measure statistical deviations between populations of models. Thus, we report metrics and statistical signiﬁcance for each dataset, model and compression variant across 30 independent trainings.",
+    "For each level of pruning t, we train 30 models from random initialization.",
+    "All networks were trained with 32-bit ﬂoating point weights and quantized post-training. This means there is no additional gradient updates to the weights post-quantization.",
+    "Given the limitations of un-calibrated probabilities in deep neural networks (Guo et al., 2017; Kendall & Gal, 2017), we focus on the level of disagreement between the predictions of compressed and non-compressed networks on a given image.",
+    "The exemplar is classiﬁed as a pruning identiﬁed exemplar PIEt if and only if the modal label is different between the set of t-pruned models and the non-pruned baseline models:",
+    "Along with the p-value, for each class we report the average relative deviation in class-level accuracy, which we refer to as relative recall difference:",
+    "We note that there is no constraint that the non-pruned predictions for PIEs match the true label. Thus the detection of PIEs is an unsupervised protocol that can be performed at test time."
+   ],
+   "leads": [],
+   "notes": "The extracted text is arXiv:1911.05248v3 (6 Sep 2021). The floor is the between-seed variance of 30 independent trainings per condition (Welch's t-test on mean-shifted class accuracy), which is a different null from a same-weights, same-serving floor; pruning is applied progressively over training so pruned and baseline populations never share weights, while the three quantization methods are applied post-training to the trained weights and so are differently-served selves of the same population."
+  }
+ ]
+}

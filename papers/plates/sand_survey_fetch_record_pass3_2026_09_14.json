@@ -1,0 +1,611 @@
+{
+ "_note": "pass 3 fetch record: URL, bytes and sha256 as fetched by fetch_pass3.py from the closed list in PROTOCOL_sand_prior_art_pass3_2026_09_14.md (commit 54b066ff); the PDFs and the extracted texts are kept outside the tree, the sha256 of each is here",
+ "L01": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2107.14203",
+    "url_effective": "https://arxiv.org/pdf/2107.14203",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 2836979,
+    "sha256": "a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5",
+    "fetched_at": "2026-09-14T10:37:44Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 33,
+    "fulltext": {
+     "file": "L01.txt",
+     "chars": 81839,
+     "sha256": "cc2436b55f8856f761b7c0b6139ecdc163bd0580fde9addddcb14462b6b0d21a"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2107.14203",
+  "url_effective": "https://arxiv.org/pdf/2107.14203",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 2836979,
+  "sha256": "a213e5343771fb563b28a65a0177f8ee429dc9989deda77e64d261c456b9d8c5",
+  "fetched_at": "2026-09-14T10:37:44Z",
+  "kind": "pdf",
+  "pages": 33,
+  "fulltext": {
+   "file": "L01.txt",
+   "chars": 81839,
+   "sha256": "cc2436b55f8856f761b7c0b6139ecdc163bd0580fde9addddcb14462b6b0d21a"
+  },
+  "status": "FETCHED"
+ },
+ "L02": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2209.08443",
+    "url_effective": "https://arxiv.org/pdf/2209.08443",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 4578299,
+    "sha256": "f5ead5afa0370c499a841584c7816c0c1568dd057aadc3bcc93d6c9c52ced351",
+    "fetched_at": "2026-09-14T10:37:45Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 26,
+    "fulltext": {
+     "file": "L02.txt",
+     "chars": 88365,
+     "sha256": "b4008a0de1a204a9d24f7616eba9b08af29043e943f4572b1f3100783036e929"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2209.08443",
+  "url_effective": "https://arxiv.org/pdf/2209.08443",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 4578299,
+  "sha256": "f5ead5afa0370c499a841584c7816c0c1568dd057aadc3bcc93d6c9c52ced351",
+  "fetched_at": "2026-09-14T10:37:45Z",
+  "kind": "pdf",
+  "pages": 26,
+  "fulltext": {
+   "file": "L02.txt",
+   "chars": 88365,
+   "sha256": "b4008a0de1a204a9d24f7616eba9b08af29043e943f4572b1f3100783036e929"
+  },
+  "status": "FETCHED"
+ },
+ "L03": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2304.14106",
+    "url_effective": "https://arxiv.org/pdf/2304.14106",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1049210,
+    "sha256": "f5b70193b1f38205be2f9b91d65fafa90d4eb774c80a7c9ff3bf72760c9f1912",
+    "fetched_at": "2026-09-14T10:37:46Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 31,
+    "fulltext": {
+     "file": "L03.txt",
+     "chars": 105414,
+     "sha256": "18867d972589ec67657b7ff37fceddad0c934e64a0a500e8f3f45053725261b8"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2304.14106",
+  "url_effective": "https://arxiv.org/pdf/2304.14106",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1049210,
+  "sha256": "f5b70193b1f38205be2f9b91d65fafa90d4eb774c80a7c9ff3bf72760c9f1912",
+  "fetched_at": "2026-09-14T10:37:46Z",
+  "kind": "pdf",
+  "pages": 31,
+  "fulltext": {
+   "file": "L03.txt",
+   "chars": 105414,
+   "sha256": "18867d972589ec67657b7ff37fceddad0c934e64a0a500e8f3f45053725261b8"
+  },
+  "status": "FETCHED"
+ },
+ "L04": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2407.01235",
+    "url_effective": "https://arxiv.org/pdf/2407.01235",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 591186,
+    "sha256": "e0e36cdde0d46e813e16e3c0256125510bc3f500d055e29cbfb5c5dfabe617c3",
+    "fetched_at": "2026-09-14T10:37:46Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 8,
+    "fulltext": {
+     "file": "L04.txt",
+     "chars": 40686,
+     "sha256": "0a2755152219806f8dd16479f60687e2a43601852ca215dfb28f51c18b75f9b8"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2407.01235",
+  "url_effective": "https://arxiv.org/pdf/2407.01235",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 591186,
+  "sha256": "e0e36cdde0d46e813e16e3c0256125510bc3f500d055e29cbfb5c5dfabe617c3",
+  "fetched_at": "2026-09-14T10:37:46Z",
+  "kind": "pdf",
+  "pages": 8,
+  "fulltext": {
+   "file": "L04.txt",
+   "chars": 40686,
+   "sha256": "0a2755152219806f8dd16479f60687e2a43601852ca215dfb28f51c18b75f9b8"
+  },
+  "status": "FETCHED"
+ },
+ "L05": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2109.03228",
+    "url_effective": "https://arxiv.org/pdf/2109.03228",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 540343,
+    "sha256": "25b16b9a61a6b623990c465e27eef47c298daa53b4e8b5665effcef6af8eeb3e",
+    "fetched_at": "2026-09-14T10:37:46Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 7,
+    "fulltext": {
+     "file": "L05.txt",
+     "chars": 27508,
+     "sha256": "909286bcb57ac3fe6cbf55f6ae7bc8f14de6385a5cde9e8c33e2129db8ea1d0e"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2109.03228",
+  "url_effective": "https://arxiv.org/pdf/2109.03228",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 540343,
+  "sha256": "25b16b9a61a6b623990c465e27eef47c298daa53b4e8b5665effcef6af8eeb3e",
+  "fetched_at": "2026-09-14T10:37:46Z",
+  "kind": "pdf",
+  "pages": 7,
+  "fulltext": {
+   "file": "L05.txt",
+   "chars": 27508,
+   "sha256": "909286bcb57ac3fe6cbf55f6ae7bc8f14de6385a5cde9e8c33e2129db8ea1d0e"
+  },
+  "status": "FETCHED"
+ },
+ "L06": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/1911.05248",
+    "url_effective": "https://arxiv.org/pdf/1911.05248",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 4917637,
+    "sha256": "0f72c3600059dac19fb3a11651795eebbee6213976e6d5b0241a649184f291e9",
+    "fetched_at": "2026-09-14T10:37:47Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 20,
+    "fulltext": {
+     "file": "L06.txt",
+     "chars": 59992,
+     "sha256": "4ee67bf9caae61ca9c9cf1cd142e7fe2ab0e4d9136fa88a846a0fd0ef2355587"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/1911.05248",
+  "url_effective": "https://arxiv.org/pdf/1911.05248",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 4917637,
+  "sha256": "0f72c3600059dac19fb3a11651795eebbee6213976e6d5b0241a649184f291e9",
+  "fetched_at": "2026-09-14T10:37:47Z",
+  "kind": "pdf",
+  "pages": 20,
+  "fulltext": {
+   "file": "L06.txt",
+   "chars": 59992,
+   "sha256": "4ee67bf9caae61ca9c9cf1cd142e7fe2ab0e4d9136fa88a846a0fd0ef2355587"
+  },
+  "status": "FETCHED"
+ },
+ "L07": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2408.04667",
+    "url_effective": "https://arxiv.org/pdf/2408.04667",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 1231657,
+    "sha256": "8aa6e2f2488397d0ce305e8c97461d55123f87dbaa440230424a87f59d024056",
+    "fetched_at": "2026-09-14T10:37:47Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 15,
+    "fulltext": {
+     "file": "L07.txt",
+     "chars": 42248,
+     "sha256": "328d0196cbc11ef74ae4a8dc9ee1e2ed652f956b0d78ae546766cb71579103e0"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2408.04667",
+  "url_effective": "https://arxiv.org/pdf/2408.04667",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 1231657,
+  "sha256": "8aa6e2f2488397d0ce305e8c97461d55123f87dbaa440230424a87f59d024056",
+  "fetched_at": "2026-09-14T10:37:47Z",
+  "kind": "pdf",
+  "pages": 15,
+  "fulltext": {
+   "file": "L07.txt",
+   "chars": 42248,
+   "sha256": "328d0196cbc11ef74ae4a8dc9ee1e2ed652f956b0d78ae546766cb71579103e0"
+  },
+  "status": "FETCHED"
+ },
+ "L08": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2406.10229",
+    "url_effective": "https://arxiv.org/pdf/2406.10229",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 3624944,
+    "sha256": "c27743bbd107d848e5588ba59c09085aee2ce437783de9135dd6095681ddf13c",
+    "fetched_at": "2026-09-14T10:37:47Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 23,
+    "fulltext": {
+     "file": "L08.txt",
+     "chars": 67659,
+     "sha256": "a93d7b6cd9e7dcdfbe0161da674546518dd774a0f7ff02bc1e05fe9cdb9c7ecb"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2406.10229",
+  "url_effective": "https://arxiv.org/pdf/2406.10229",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 3624944,
+  "sha256": "c27743bbd107d848e5588ba59c09085aee2ce437783de9135dd6095681ddf13c",
+  "fetched_at": "2026-09-14T10:37:47Z",
+  "kind": "pdf",
+  "pages": 23,
+  "fulltext": {
+   "file": "L08.txt",
+   "chars": 67659,
+   "sha256": "a93d7b6cd9e7dcdfbe0161da674546518dd774a0f7ff02bc1e05fe9cdb9c7ecb"
+  },
+  "status": "FETCHED"
+ },
+ "L09": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2407.15847",
+    "url_effective": "https://arxiv.org/pdf/2407.15847",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 2578890,
+    "sha256": "7cf91fcffc8e4b5576b16bbba72f9fd9036a12cbe697d74db2ed2c05c15232dd",
+    "fetched_at": "2026-09-14T10:37:49Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 25,
+    "fulltext": {
+     "file": "L09.txt",
+     "chars": 122531,
+     "sha256": "6af89874ae69a526a7990aed2b86e80bb505d595615f3b8304709833b7eaa42c"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2407.15847",
+  "url_effective": "https://arxiv.org/pdf/2407.15847",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 2578890,
+  "sha256": "7cf91fcffc8e4b5576b16bbba72f9fd9036a12cbe697d74db2ed2c05c15232dd",
+  "fetched_at": "2026-09-14T10:37:49Z",
+  "kind": "pdf",
+  "pages": 25,
+  "fulltext": {
+   "file": "L09.txt",
+   "chars": 122531,
+   "sha256": "6af89874ae69a526a7990aed2b86e80bb505d595615f3b8304709833b7eaa42c"
+  },
+  "status": "FETCHED"
+ },
+ "L10": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2408.02871",
+    "url_effective": "https://arxiv.org/pdf/2408.02871",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 542606,
+    "sha256": "46743615adbdf212b1fabede0c64607d7e42c1c8b71aef90d10f17ea945d91fa",
+    "fetched_at": "2026-09-14T10:37:49Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 14,
+    "fulltext": {
+     "file": "L10.txt",
+     "chars": 50459,
+     "sha256": "fcd55fe80de9eb7951a1aa253a853c4dbfa404516e955d47c119f2151211b8f4"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2408.02871",
+  "url_effective": "https://arxiv.org/pdf/2408.02871",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 542606,
+  "sha256": "46743615adbdf212b1fabede0c64607d7e42c1c8b71aef90d10f17ea945d91fa",
+  "fetched_at": "2026-09-14T10:37:49Z",
+  "kind": "pdf",
+  "pages": 14,
+  "fulltext": {
+   "file": "L10.txt",
+   "chars": 50459,
+   "sha256": "fcd55fe80de9eb7951a1aa253a853c4dbfa404516e955d47c119f2151211b8f4"
+  },
+  "status": "FETCHED"
+ },
+ "L11": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2104.10706",
+    "url_effective": "https://arxiv.org/pdf/2104.10706",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 759949,
+    "sha256": "b7c21e851b4c05d1c8c37461820fcd979604ef37afe952ba0b1af67987b98b14",
+    "fetched_at": "2026-09-14T10:37:50Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 22,
+    "fulltext": {
+     "file": "L11.txt",
+     "chars": 80213,
+     "sha256": "d6110d1fc9fd9bd1503baf8e5f1faab395d017f5f8842a0e8df6f4f3a3dd9a58"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2104.10706",
+  "url_effective": "https://arxiv.org/pdf/2104.10706",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 759949,
+  "sha256": "b7c21e851b4c05d1c8c37461820fcd979604ef37afe952ba0b1af67987b98b14",
+  "fetched_at": "2026-09-14T10:37:50Z",
+  "kind": "pdf",
+  "pages": 22,
+  "fulltext": {
+   "file": "L11.txt",
+   "chars": 80213,
+   "sha256": "d6110d1fc9fd9bd1503baf8e5f1faab395d017f5f8842a0e8df6f4f3a3dd9a58"
+  },
+  "status": "FETCHED"
+ },
+ "L12": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/2112.05588",
+    "url_effective": "https://arxiv.org/pdf/2112.05588",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 9824327,
+    "sha256": "3e7e220553d0012bb80d318576143c6038346ace3acb20b96f44230fd0a2ee0c",
+    "fetched_at": "2026-09-14T10:37:50Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 18,
+    "fulltext": {
+     "file": "L12.txt",
+     "chars": 95326,
+     "sha256": "f40d2ffb4af84b599a9c2df96687c25ac5ab571196d2c621e07db7155ba0354b"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/2112.05588",
+  "url_effective": "https://arxiv.org/pdf/2112.05588",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 9824327,
+  "sha256": "3e7e220553d0012bb80d318576143c6038346ace3acb20b96f44230fd0a2ee0c",
+  "fetched_at": "2026-09-14T10:37:50Z",
+  "kind": "pdf",
+  "pages": 18,
+  "fulltext": {
+   "file": "L12.txt",
+   "chars": 95326,
+   "sha256": "f40d2ffb4af84b599a9c2df96687c25ac5ab571196d2c621e07db7155ba0354b"
+  },
+  "status": "FETCHED"
+ },
+ "L13": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/1706.10268",
+    "url_effective": "https://arxiv.org/pdf/1706.10268",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 450848,
+    "sha256": "a6af4efdf9b7f668ca9f3eb0eff0d94042595154a6418334897e113c6c8c683b",
+    "fetched_at": "2026-09-14T10:37:50Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 10,
+    "fulltext": {
+     "file": "L13.txt",
+     "chars": 36617,
+     "sha256": "abf89ddb1d70bea2750e2bfcfc9e40fd622eb70996ee928f7b496801717e54da"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/1706.10268",
+  "url_effective": "https://arxiv.org/pdf/1706.10268",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 450848,
+  "sha256": "a6af4efdf9b7f668ca9f3eb0eff0d94042595154a6418334897e113c6c8c683b",
+  "fetched_at": "2026-09-14T10:37:50Z",
+  "kind": "pdf",
+  "pages": 10,
+  "fulltext": {
+   "file": "L13.txt",
+   "chars": 36617,
+   "sha256": "abf89ddb1d70bea2750e2bfcfc9e40fd622eb70996ee928f7b496801717e54da"
+  },
+  "status": "FETCHED"
+ },
+ "L14": {
+  "attempts": [
+   {
+    "url": "https://arxiv.org/pdf/1909.01838",
+    "url_effective": "https://arxiv.org/pdf/1909.01838",
+    "http": "200",
+    "content_type": "application/pdf",
+    "bytes": 411602,
+    "sha256": "b30e63fd43c3dbf8d9dee7dc8c30d250982c8c911367018f1a1ad084d446ed82",
+    "fetched_at": "2026-09-14T10:37:51Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 18,
+    "fulltext": {
+     "file": "L14.txt",
+     "chars": 86729,
+     "sha256": "28e5fb41d92c6eddac3052d748001a21c757615c16bee50327b2176a6b5c3ad5"
+    }
+   }
+  ],
+  "url": "https://arxiv.org/pdf/1909.01838",
+  "url_effective": "https://arxiv.org/pdf/1909.01838",
+  "http": "200",
+  "content_type": "application/pdf",
+  "bytes": 411602,
+  "sha256": "b30e63fd43c3dbf8d9dee7dc8c30d250982c8c911367018f1a1ad084d446ed82",
+  "fetched_at": "2026-09-14T10:37:51Z",
+  "kind": "pdf",
+  "pages": 18,
+  "fulltext": {
+   "file": "L14.txt",
+   "chars": 86729,
+   "sha256": "28e5fb41d92c6eddac3052d748001a21c757615c16bee50327b2176a6b5c3ad5"
+  },
+  "status": "FETCHED"
+ },
+ "L15": {
+  "attempts": [
+   {
+    "url": "https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time",
+    "url_effective": "charset=utf-8 https://www.normaltech.ai/p/is-gpt-4-getting-worse-over-time",
+    "http": "200",
+    "content_type": "text/html;",
+    "bytes": 194083,
+    "sha256": "80e413dedf4009971f8dd481c6f9f7e03bac93a15666ebf14cc43dff198a7a4d",
+    "fetched_at": "2026-09-14T10:37:52Z",
+    "error": null,
+    "kind": "html",
+    "fulltext": {
+     "file": "L15.txt",
+     "chars": 10133,
+     "sha256": "827e02ebeb3128e0b946cf6dd695dae5c03cb7f210b71dca37f6e81dbf599c8e"
+    }
+   }
+  ],
+  "url": "https://www.aisnakeoil.com/p/is-gpt-4-getting-worse-over-time",
+  "url_effective": "charset=utf-8 https://www.normaltech.ai/p/is-gpt-4-getting-worse-over-time",
+  "http": "200",
+  "content_type": "text/html;",
+  "bytes": 194083,
+  "sha256": "80e413dedf4009971f8dd481c6f9f7e03bac93a15666ebf14cc43dff198a7a4d",
+  "fetched_at": "2026-09-14T10:37:52Z",
+  "kind": "html",
+  "fulltext": {
+   "file": "L15.txt",
+   "chars": 10133,
+   "sha256": "827e02ebeb3128e0b946cf6dd695dae5c03cb7f210b71dca37f6e81dbf599c8e"
+  },
+  "status": "FETCHED"
+ },
+ "L16": {
+  "attempts": [
+   {
+    "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+    "url_effective": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+    "http": "200",
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 87457,
+    "sha256": "5138cec3cf542985766e91f0610180038e2c10070487261b4401e7188e67a657",
+    "fetched_at": "2026-09-14T10:37:52Z",
+    "error": null,
+    "kind": "html",
+    "fulltext": {
+     "file": "L16.txt",
+     "chars": 24162,
+     "sha256": "4f7d2a20f367ffb24a4ba05f247e70a54e336981848c41caa36e1b0fbbfd6a0f"
+    }
+   }
+  ],
+  "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+  "url_effective": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+  "http": "200",
+  "content_type": "text/html;charset=UTF-8",
+  "bytes": 87457,
+  "sha256": "5138cec3cf542985766e91f0610180038e2c10070487261b4401e7188e67a657",
+  "fetched_at": "2026-09-14T10:37:52Z",
+  "kind": "html",
+  "fulltext": {
+   "file": "L16.txt",
+   "chars": 24162,
+   "sha256": "4f7d2a20f367ffb24a4ba05f247e70a54e336981848c41caa36e1b0fbbfd6a0f"
+  },
+  "status": "FETCHED"
+ },
+ "L17": {
+  "attempts": [
+   {
+    "url": "https://zenodo.org/records/3818627/files/article.pdf",
+    "url_effective": "https://zenodo.org/records/3818627/files/article.pdf",
+    "http": "200",
+    "content_type": "application/octet-stream",
+    "bytes": 59636,
+    "sha256": "8039c23ea011068a3dab90e8b0fe8157b38fba428b2571f655ce8caeee060e9e",
+    "fetched_at": "2026-09-14T10:38:11Z",
+    "error": null,
+    "kind": "pdf",
+    "pages": 6,
+    "fulltext": {
+     "file": "L17.txt",
+     "chars": 15981,
+     "sha256": "7da4ddea3cb71cf2c8c10ebbd60e85f69398a701504c0b7585913bee4a78cf21"
+    }
+   }
+  ],
+  "url": "https://zenodo.org/records/3818627/files/article.pdf",
+  "url_effective": "https://zenodo.org/records/3818627/files/article.pdf",
+  "http": "200",
+  "content_type": "application/octet-stream",
+  "bytes": 59636,
+  "sha256": "8039c23ea011068a3dab90e8b0fe8157b38fba428b2571f655ce8caeee060e9e",
+  "fetched_at": "2026-09-14T10:38:11Z",
+  "kind": "pdf",
+  "pages": 6,
+  "fulltext": {
+   "file": "L17.txt",
+   "chars": 15981,
+   "sha256": "7da4ddea3cb71cf2c8c10ebbd60e85f69398a701504c0b7585913bee4a78cf21"
+  },
+  "status": "FETCHED"
+ }
+}
