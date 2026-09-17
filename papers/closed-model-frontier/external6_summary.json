@@ -1,0 +1,192 @@
+{
+ "what": "census of the accusations the installed wheel still makes on the EXTERNAL-1 corpus",
+ "eligible_prs": 71016,
+ "covered_prs": 17939,
+ "prs_with_a_python_file": 11116,
+ "claims_by_kind_and_verdict": {
+  "compat_claim": {
+   "UNCHECKABLE": 13329
+  },
+  "file_created": {
+   "VERIFIED": 2376,
+   "UNCHECKABLE": 1069
+  },
+  "file_deleted": {
+   "VERIFIED": 355,
+   "UNCHECKABLE": 485
+  },
+  "file_touched": {
+   "VERIFIED": 10163,
+   "UNCHECKABLE": 1889
+  },
+  "files_changed_count": {
+   "VERIFIED": 74,
+   "CONTRADICTED": 61,
+   "UNCHECKABLE": 7
+  },
+  "only_touches": {
+   "VERIFIED": 8,
+   "CONTRADICTED": 13,
+   "UNCHECKABLE": 337
+  },
+  "symbol_added": {
+   "VERIFIED": 2,
+   "UNCHECKABLE": 38
+  },
+  "tests_added": {
+   "VERIFIED": 13,
+   "CONTRADICTED": 6,
+   "UNCHECKABLE": 180
+  },
+  "tests_pass": {
+   "UNCHECKABLE": 5514
+  }
+ },
+ "accusations_total": 80,
+ "accusations_by_kind": {
+  "files_changed_count": 61,
+  "only_touches": 13,
+  "tests_added": 6
+ },
+ "tests_added": {
+  "verified_with_a_redefined_def": 0,
+  "verified_but_net_rule_disagrees": 0,
+  "UNCHECKABLE": 180,
+  "CONTRADICTED": 6,
+  "contradicted_python_in_diff": 6,
+  "VERIFIED": 13,
+  "verified_python_in_diff": 13
+ },
+ "tests_added_contradicted_by_counted_noun": {
+  "functions": 3,
+  "(none)": 3
+ },
+ "symbol_added": {
+  "UNCHECKABLE": 38,
+  "VERIFIED": 2
+ },
+ "only_touches": {
+  "UNCHECKABLE": 337,
+  "CONTRADICTED": 13,
+  "contradicted_prefix_looks_like_a_path": 13,
+  "VERIFIED": 8
+ },
+ "only_touches_top_contradicted_prefixes": [
+  [
+   "mods/submods",
+   3
+  ],
+  [
+   "packages/typespec-ts/",
+   1
+  ],
+  [
+   "faros_commits.ts",
+   1
+  ],
+  [
+   "app1/",
+   1
+  ],
+  [
+   "assert.notnull",
+   1
+  ],
+  [
+   ".k-step-link",
+   1
+  ],
+  [
+   "package.json",
+   1
+  ],
+  [
+   "blobstorage_pdisk_impl.cpp",
+   1
+  ],
+  [
+   ".githiub/workflows/dependabot.yml",
+   1
+  ],
+  [
+   "readme/documentation",
+   1
+  ],
+  [
+   "changelog.md",
+   1
+  ]
+ ],
+ "files_changed_count": {
+  "CONTRADICTED": 61,
+  "contradicted_sentence_is_a_git_stat_line": 26,
+  "VERIFIED": 74,
+  "UNCHECKABLE": 7
+ },
+ "accusations_unsupported_by_construction": 0,
+ "accusations_unsupported_share": 0.0,
+ "per_agent_accusations": {
+  "Claude_Code": {
+   "files_changed_count": 24
+  },
+  "Copilot": {
+   "files_changed_count": 30,
+   "only_touches": 11,
+   "tests_added": 3
+  },
+  "Cursor": {},
+  "Devin": {
+   "files_changed_count": 7,
+   "tests_added": 3,
+   "only_touches": 2
+  },
+  "Google_Jules": {},
+  "OpenAI_Codex": {}
+ },
+ "stop_words": [
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "behavior",
+  "by",
+  "code",
+  "excluded",
+  "existing",
+  "file",
+  "files",
+  "for",
+  "how",
+  "if",
+  "in",
+  "is",
+  "it",
+  "its",
+  "necessary",
+  "not",
+  "of",
+  "on",
+  "one",
+  "or",
+  "per",
+  "relevant",
+  "specific",
+  "that",
+  "the",
+  "these",
+  "this",
+  "those",
+  "to",
+  "two",
+  "values",
+  "was",
+  "were",
+  "what",
+  "when",
+  "where",
+  "which",
+  "with"
+ ]
+}
