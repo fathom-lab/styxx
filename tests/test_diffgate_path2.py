@@ -11,7 +11,13 @@ a definition.
 
 The reproduction tests fail on origin/main 87dded26 and pass after the repair. The edge-case tests
 pin the readings the prereg states, including the disclosed limits (a basename still resolves, a
-rename and a test moved between files count as added)."""
+rename and a test moved between files count as added).
+
+AMENDMENT_path2_resolution_2026_09_17 (the second freeze) adds the tests marked c1 / c2 / c3: removed
+and added definitions pair one to one per file and name (a status-A file pairs nothing), with patterns
+that read a BOM and a non-ASCII name the same way in both ports; COMPAT's and BC-1's path readings use
+the undotted key; `only_touches` abstains on dot misses alone and accuses listing real paths only. And
+the BIN-1 registration of dotfile headers with no hunks, on both doors."""
 import json
 import subprocess
 from pathlib import Path
@@ -288,12 +294,202 @@ def test_101_with_no_changed_definition_every_reason_is_the_old_one():
 
 def test_101_the_helpers_count_same_file_changes_only():
     sides = parse_unified_diff_sides(CHANGED_DEFS)
-    assert dg._changed_test_defs(sides) == 2
+    status = parse_unified_diff(CHANGED_DEFS)[0]
+    assert dg._changed_test_defs(sides, status) == 2
     assert dg._changed_test_defs(None) == 0
-    pat = r"^\s*(?:def|class)\s+backoff\b"
-    assert dg._definition_only_changed(pat, "def backoff(n, jitter=0):", sides)
-    assert not dg._definition_only_changed(pat, "def backoff(n, jitter=0):\ndef backoff():", sides)
-    assert not dg._definition_only_changed(pat, "y = 1", sides)
+    assert dg._definition_only_changed("backoff", sides, status)
+    assert not dg._definition_only_changed("missing", sides, status)
+    assert not dg._definition_only_changed("backoff", None)
+
+
+# ─────────────────────────────── AMENDMENT_path2_resolution_2026_09_17, C-1 (#101)
+
+def test_101_c1_one_removed_definition_cancels_one_added_one_not_every_same_named_one():
+    # TestA.test_run changes, TestB.test_run and test_other are new: two tests added
+    diff = ("--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,2 +1,5 @@\n-class TestA:\n-    def test_run(self):\n"
+            "+class TestA:\n+    def test_run(self, tmp_path):\n+class TestB:\n+    def test_run(self):\n+def test_other():\n")
+    sides = parse_unified_diff_sides(diff)
+    assert dg._changed_test_defs(sides, parse_unified_diff(diff)[0]) == 1
+    _, got = _claims("Added 1 test. Added 2 tests.", diff)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"),
+    ]
+
+
+def test_101_c1_a_changed_test_beside_a_same_named_new_one_is_not_zero_added():
+    diff = ("--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,2 +1,4 @@\n-class TestFoo:\n-    def test_basic(self):\n"
+            "+class TestFoo:\n+    def test_basic(self, client):\n+class TestBar:\n+    def test_basic(self):\n")
+    _, got = _claims("Added 0 tests. Added 1 test.", diff)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"),
+    ]
+
+
+FOLD_A = ("diff --git a/tests/test_x.py b/tests/test_x.py\nnew file mode 100644\n--- /dev/null\n+++ b/tests/test_x.py\n"
+          "@@ -0,0 +1,4 @@\n+def test_x():\n+    pass\n+def test_y():\n+    pass\n"
+          "@@ -1,2 +1,2 @@\n-def test_x():\n+def test_x(tmp_path):\n     pass\n")
+FOLD_M = ("diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
+          "@@ -1,1 +1,3 @@\n y = 1\n+def test_x():\n+    pass\n"
+          "@@ -2,2 +2,2 @@\n-def test_x():\n+def test_x(tmp_path):\n     pass\n")
+
+
+def test_101_c1_a_file_with_status_A_pairs_nothing_so_the_fold_reads_as_on_87dded26():
+    # the shelf's fold: a created file whose later commit edits a test; `got` over-counts, as it did
+    assert parse_unified_diff(FOLD_A)[0] == {"tests/test_x.py": "A"}
+    assert dg._changed_test_defs(parse_unified_diff_sides(FOLD_A), parse_unified_diff(FOLD_A)[0]) == 0
+    _, got = _claims("Added 2 tests. Added 3 tests.", FOLD_A)
+    assert got == [("tests_added", "CONTRADICTED", "diff adds 3 test functions, claim says 2"),
+                   ("tests_added", "VERIFIED", "diff adds 3 test functions, claim says 3")]
+
+
+def test_101_c1_the_fold_under_an_M_header_pairs_the_edit_once():
+    _, got = _claims("Added 0 tests. Added 1 test.", FOLD_M)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"),
+    ]
+
+
+def test_101_c1_a_bom_strip_is_a_changed_test_and_a_changed_function():
+    test_diff = "--- a/tests/test_b.py\n+++ b/tests/test_b.py\n@@ -1 +1 @@\n-\ufeffdef test_a():\n+def test_a():\n"
+    sym_diff = "--- a/src/h.py\n+++ b/src/h.py\n@@ -1 +1 @@\n-\ufeffdef backoff(n):\n+def backoff(n):\n"
+    _, got = _claims("Added 1 test.", test_diff)
+    assert got == [("tests_added", "UNCHECKABLE", "diff adds 0 test functions and changes 1, claim says 1; "
+                                                  "a changed test is not an added one (#101)")]
+    _, got = _claims("Adds function backoff.", sym_diff)
+    assert got == [("symbol_added", "UNCHECKABLE", ISSUE_101[0][2])]
+
+
+def test_101_c1_the_clamp_keeps_net_at_zero_when_only_the_pairing_reads_an_added_line():
+    # Python's \s does not match U+FEFF, so `got` does not count this added line while the pairing
+    # pattern does; without the clamp `net` would be -1. (JavaScript's \s does match U+FEFF: the
+    # disclosed, pre-existing added-blob gap, so this input is not a pinned pair.)
+    diff = "--- a/tests/test_b.py\n+++ b/tests/test_b.py\n@@ -1 +1 @@\n-def test_a():\n+\ufeffdef test_a():\n"
+    _, got = _claims("Added 0 tests.", diff)
+    assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0")]
+
+
+def test_101_c1_a_test_name_runs_to_a_space_tab_paren_or_colon_so_non_ascii_names_are_distinct():
+    assert dg._DEF_TEST_LINE.match("def test_\u00f6len(tmp_path):").group(1) == "test_\u00f6len"
+    assert dg._DEF_TEST_LINE.match("\ufeff\tdef test_a:").group(1) == "test_a"
+    assert dg._DEF_TEST_LINE.match("\u00a0def test_a():") is None           # no \s: only space and tab indent
+    diff = ("--- a/tests/test_u.py\n+++ b/tests/test_u.py\n@@ -1 +1,3 @@\n-def test_\u00f6len():\n"
+            "+def test_\u00f6len(tmp_path):\n+def test_\u00e4rger():\n+def test_plain():\n")
+    _, got = _claims("Added 1 test. Added 2 tests.", diff)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"),
+    ]
+
+
+def test_101_c1_symbol_verifies_when_a_file_adds_more_definitions_than_it_removes():
+    other_class = ("--- a/src/io.py\n+++ b/src/io.py\n@@ -1,2 +1,4 @@\n-class Reader:\n-    def close(self):\n"
+                   "+class Reader:\n+    def close(self, force=False):\n+class Writer:\n+    def close(self):\n")
+    in_place = "--- a/src/io.py\n+++ b/src/io.py\n@@ -1 +1 @@\n-    def close(self):\n+    def close(self, force=False):\n"
+    _, got = _claims("Adds method close.", other_class)
+    assert got == [("symbol_added", "VERIFIED", "added lines do define method 'close'")]
+    _, got = _claims("Adds method close.", in_place)
+    assert got == [("symbol_added", "UNCHECKABLE", "added lines define method 'close' only where the removed lines "
+                                                   "of the same file define it too; a changed definition is not an "
+                                                   "added one (#101)")]
+
+
+def test_101_c1_symbol_names_end_at_a_space_tab_paren_or_colon_and_status_A_removes_none():
+    unicode_suffix = "--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1 @@\n-def backoff\u00e9(n):\n+def backoff(n):\n"
+    under_a = "--- /dev/null\n+++ b/src/r.py\n@@ -1 +1 @@\n-def backoff(n):\n+def backoff(n, jitter=0):\n"
+    generic = "--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1 @@\n-x = 1\n+def backoff[T](n: T) -> T:\n"
+    for diff in (unicode_suffix, under_a, generic):
+        _, got = _claims("Adds function backoff.", diff)
+        assert got == [("symbol_added", "VERIFIED", "added lines do define function 'backoff'")], diff
+    assert dg._symbol_def_line("backoff").match("async\tdef backoff(n):")
+    assert not dg._symbol_def_line("backoff").match("def backoff_v2(n):")
+
+
+# ─────────────────────────────── AMENDMENT_path2_resolution_2026_09_17, C-2 (#121)
+
+STORYBOOK = ("--- a/.storybook/preview.js\n+++ b/.storybook/preview.js\n@@ -1 +1 @@\n"
+             "-export function withTheme(story) {\n+function withThemeLocal(story) {\n")
+
+
+def test_121_c2_a_dotted_scaffold_directory_stays_scaffolding_for_compat2():
+    g = gate_diff_text("This change is fully backward compatible.", STORYBOOK, run=None, strict=False)
+    (c,) = g.claims
+    assert (c.kind, c.verdict) == ("compat_claim", "UNCHECKABLE")
+    assert c.why == ("compatibility claimed; 1 public definition(s) removed, all in test/example/internal code: "
+                     ".storybook/preview.js: withTheme")
+    assert c.detail["surface_removed"] == 0 and c.detail["compat2_candidate"] is False
+    assert c.detail["removed"] == [{"path": ".storybook/preview.js", "language": "js/ts", "name": "withTheme",
+                                    "surface": False}]
+
+
+def test_121_c2_a_file_named_dot_py_is_not_python_to_bc1_or_compat():
+    diff = "--- a/.py\n+++ b/.py\n@@ -1,2 +1,2 @@\n-def public_api():\n+def test_a():\n"
+    g = gate_diff_text("Added 1 test. No breaking changes.", diff, run=None, strict=False)
+    assert [(c.kind, c.verdict, c.why) for c in g.claims] == [
+        ("tests_added", "UNCHECKABLE", "no Python file in the diff; this template counts `def` lines (#110)"),
+        ("compat_claim", "UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff "
+                                        "(python, js/ts, go, rust, java)"),
+    ]
+
+
+# ─────────────────────────────── AMENDMENT_path2_resolution_2026_09_17, C-3 (#121)
+
+def _m(path):
+    return f"--- a/{path}\n+++ b/{path}\n@@ -1 +1 @@\n-a\n+b\n"
+
+
+def test_121_c3_an_accusation_lists_only_real_outside_paths():
+    diff = _m(".github/a.yml") + _m(".github/b.yml") + _m(".github/c.yml") + _m("src/x.py")
+    _, got = _claims("Only touches github/.", diff)
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'github': ['src/x.py']")]
+    _, got = _claims("Only touches src and github.", diff[:-len(_m("src/x.py"))] + _m("docs/x.md") + _m("src/y.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src' and 'github': ['docs/x.md']")]
+
+
+def test_121_c3_a_dot_on_the_prefix_and_not_on_the_path_is_not_a_dot_miss():
+    _, got = _claims("Only touches .env.", _m("env"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.env': ['env']")]
+    _, got = _claims("Only touches .github/.", _m(".github/x.yml") + _m("github/z.md"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.github': ['github/z.md']")]
+
+
+def test_121_c3_a_dotdot_path_is_not_a_dot_miss():
+    _, got = _claims("Only touches src/.", _m("../src/x.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src': ['../src/x.py']")]
+    assert not dg._dot_miss("..env", ["env"]) and not dg._dot_miss("../src/x.py", ["src"])
+    assert dg._dot_miss(".github/x.yml", ["github"]) and dg._dot_miss(".env", ["env"])
+    assert not dg._dot_miss(".github/x.yml", [".github"]) and not dg._dot_miss("github/x.yml", ["github"])
+
+
+# ─────────────────────────────── BIN-1 registration keeps the dots (#121, R-121.2)
+
+BIN_TWINS = ("diff --git a/logo.png b/logo.png\ndeleted file mode 100644\nindex 3b18e51..0000000\n"
+             "Binary files a/logo.png and /dev/null differ\n"
+             "diff --git a/.logo.png b/.logo.png\nnew file mode 100644\nindex 0000000..3b18e51\n"
+             "Binary files /dev/null and b/.logo.png differ\n")
+RENAME_TO_DOTTED = ("diff --git a/eslintrc.json b/.eslintrc.json\nsimilarity index 100%\nrename from eslintrc.json\n"
+                    "rename to .eslintrc.json\n")
+
+
+def test_121_binary_dotfile_twins_with_no_hunks_are_two_files():
+    assert parse_unified_diff(BIN_TWINS)[0] == {"logo.png": "D", ".logo.png": "A"}
+    assert list(parse_unified_diff_sides(BIN_TWINS)) == ["logo.png", ".logo.png"]
+    _, got = _claims("2 files changed. Created .logo.png. Deleted logo.png. Only touches assets/.", BIN_TWINS)
+    assert got == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2"),
+                   ("file_created", "VERIFIED", "diff status 'A' for '.logo.png'"),
+                   ("file_deleted", "VERIFIED", "diff status 'D' for 'logo.png'"),
+                   ("only_touches", "CONTRADICTED", "paths outside 'assets': ['logo.png', '.logo.png']")]
+
+
+def test_121_a_pure_rename_to_a_dotted_name_registers_the_dotted_name():
+    assert parse_unified_diff(RENAME_TO_DOTTED)[0] == {".eslintrc.json": "M"}
+    _, got = _claims("1 file changed. Only touches .eslintrc.json. Only touches eslintrc.json.", RENAME_TO_DOTTED)
+    assert got == [("files_changed_count", "VERIFIED", "diff changes 1 files, claim says 1"),
+                   ("only_touches", "VERIFIED", "all changed paths under prefix"),
+                   ("only_touches", "UNCHECKABLE", "paths outside 'eslintrc.json' differ from it only by a leading "
+                                                   "dot: ['.eslintrc.json'] (#121)")]
 
 
 # ──────────────────────────────────────────────────────────── the doors agree
@@ -360,17 +556,56 @@ def test_the_git_door_and_the_raw_door_agree(tmp_path, name):
                            ("file_touched", "VERIFIED", "diff status 'M' for 'readme.md'")]
 
 
+@pytest.mark.parametrize("name", ["binary-dotfile-twins", "rename-to-a-dotted-name"])
+def test_the_doors_agree_on_dotfile_headers_with_no_hunks(tmp_path, name):
+    if name == "binary-dotfile-twins":
+        summary = "2 files changed. Created .logo.png. Deleted logo.png. Only touches assets/."
+        before = {"logo.png": "\x00\x01old-png-bytes\x00" * 3}
+        after = {"logo.png": None, ".logo.png": "\x00\x7fcompletely different content\x00\x02" * 5}
+    else:
+        summary = "1 file changed. Only touches .eslintrc.json. Only touches eslintrc.json."
+        before = {"eslintrc.json": '{"root": true, "rules": {"semi": "error"}}\n'}
+        after = {"eslintrc.json": None, ".eslintrc.json": '{"root": true, "rules": {"semi": "error"}}\n'}
+    diff = _git_repo(tmp_path, before, after)
+    via_git = gate_diff(summary, tmp_path, "HEAD~1", "HEAD")
+    via_text = gate_diff_text(summary, diff)
+    got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
+    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
+    if name == "binary-dotfile-twins":
+        assert "Binary files" in diff and "---" not in diff
+        assert parse_unified_diff(diff)[0] == {".logo.png": "A", "logo.png": "D"}
+        assert got_git == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2"),
+                           ("file_created", "VERIFIED", "diff status 'A' for '.logo.png'"),
+                           ("file_deleted", "VERIFIED", "diff status 'D' for 'logo.png'"),
+                           ("only_touches", "CONTRADICTED", "paths outside 'assets': ['.logo.png', 'logo.png']")]
+    else:
+        assert "rename to .eslintrc.json" in diff
+        assert parse_unified_diff(diff)[0] == {".eslintrc.json": "M"}
+        assert got_git == [("files_changed_count", "VERIFIED", "diff changes 1 files, claim says 1"),
+                           ("only_touches", "VERIFIED", "all changed paths under prefix"),
+                           ("only_touches", "UNCHECKABLE", "paths outside 'eslintrc.json' differ from it only by "
+                                                           "a leading dot: ['.eslintrc.json'] (#121)")]
+
+
 # ────────────────────────────────────────────────────────── the pinned pairs
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 17 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 38 and all(p["id"].startswith("path2:") for p in pairs)
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
-        got = [[c.kind, c.verdict, c.why] for c in g.claims]
+        width = len(p["expect"]["claims"][0]) if p["expect"]["claims"] else 3
+        got = [[c.kind, c.verdict, c.why][:width] for c in g.claims]
         assert got == p["expect"]["claims"], (p["id"], got)
         assert g.verdict == p["expect"]["verdict"], p["id"]
         assert g.uncovered_sentences == p["expect"]["uncovered_sentences"], p["id"]
+        extra = p["expect"].get("python_only")
+        if extra:
+            # a reading the port does not carry (COMPAT-2), pinned for the Python instrument alone
+            (c,) = g.claims
+            assert (c.why, c.detail["surface_removed"], c.detail["compat2_candidate"]) == \
+                (extra["why"], extra["surface_removed"], extra["compat2_candidate"]), p["id"]
+    assert sum(1 for p in pairs if "python_only" in p["expect"]) == 1
 
 
 def test_the_demo_is_unchanged():
