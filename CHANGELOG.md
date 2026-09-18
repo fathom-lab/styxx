@@ -93,6 +93,25 @@ numbers were the two that made the instrument look worse.
   nothing to know that the threshold question is out of reach, because it was found before a call
   was paid for. `calib1_ask.ts` and `calib1_score.py` make the rest one command each; the asker
   refuses a key passed as an argument, and its dry-run output scores to `INVALID__DRY_RUN`.
+- **AUDIT — the papers read against each other, and a guard that had quietly stopped firing.**
+  A correction to a module header turned out to be a regression, which is how anyone noticed that
+  `RESULT_decide1_decidable_fraction_2026_09_17.md` and `RESULT_scope1_ABANDONED_2026_09_18.md`
+  state different `only_touches` coverage — *17 of 299* and *16 of 299* — because the instrument
+  moved between them and neither paper points at the other. `audit_cross_paper_numbers.py` sweeps
+  the corpus for that shape and **proposes candidates without labelling any of them**: 20 pairs,
+  1 real supersession, 19 explained by reading, each explanation written down. DECIDE-1 now carries
+  the forward-pointing banner `FINDING_mount_fpr_live_2026_06_12.md` established as this
+  repository's convention — appended, never edited, and scoped to the one instrument-derived
+  figure, because its hand adjudication is untouched by any instrument change. **The sweep also
+  surfaced what it was not looking for**: `web/gate/differential/py_side.py` pins the instrument
+  and refuses to run against anything else, but `web/gate/` is in no workflow, so that guard fires
+  only by hand — and its own comment records that the port once "fell a whole cycle behind without
+  anything failing". The instance was repaired; the class was not.
+  `tests/test_gate_port_pin_is_current.py` closes half of it — the pin must name this checkout's
+  instrument, and there is no skip path — and a **`gate port` job in `test.yml` closes the other
+  half by running the differential itself**: 54 pairs, 84 claims, no network, about a second.
+  Checked both ways in a clean-room copy of the branch — exit 0 as committed, and exit 1 with the
+  disagreements printed when the port's files-changed verdict is flipped.
 
 **The datasets**
 
