@@ -118,6 +118,33 @@ against a 66.7% bar and **also failed**. Counts, symbol and prefix claims are un
 accuse. The full record, including two corrections to our own diagnosis, is in
 [RESULT_external1_the_gate_fails_in_the_wild](papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md).
 
+**2026-09-18 — the abstention was not restraint, and the accusations that remain are mostly
+wrong.** `file_touched` stopped accusing in August. `only_touches` did not, and this week it was
+measured properly for the first time. Every accusation the gate makes on that claim kind across
+the AIDev corpus was hand-adjudicated against the diff GitHub serves: **9 of 11 are false**,
+precision **0.18**. A bare filename was read as a file at the repository root, so a pull request
+changing `appservice/package.json` was called a liar for saying it only modified `package.json`;
+`Assert.NotNull` was read as a file path; one pull request was accused because its author typed
+`.githiub`. All nine are named, with the instrument's own reason strings, in
+[issue #128](https://github.com/fathom-lab/styxx/issues/128) and
+[RESULT_bench2_INVALID](papers/closed-model-frontier/RESULT_bench2_INVALID_2026_09_17.md).
+
+Two attempts to build a benchmark that would have caught this **both voided themselves** on their
+own blocking audit gates, and the second one is what found the nine. Their datasets are published
+anyway — 604 claims from 568 pull requests under CC-BY, with the hash of every diff, and with
+styxx's own verdicts deliberately stripped out, because having found 9 of 11 wrong we would rather
+nobody took ours on trust. `bench_reproduce.py` regenerates them, or scores your checker instead.
+
+And the sentence this project has been repeating — that abstaining is principled restraint — is
+**overturned by our own measurement**.
+[DECIDE-1](papers/closed-model-frontier/RESULT_decide1_decidable_fraction_2026_09_17.md) read 100
+claims by hand with no oracle and found **71% of them are decidable from the diff**, while the gate
+returns a verdict on 5.7% of `only_touches`. Most of the silence is extraction failing, not the
+domain being ambiguous. A repair landed two of the six known causes and moved precision from 0.18
+to **0.25**, which is not good — three quarters of what it accuses is still wrong, four causes are
+unrepaired, and tests assert the instrument is still wrong on them so none can be claimed
+silently.
+
 ### MEASURE — two minds can share a geometry and still be unable to read each other
 
 ```bash
