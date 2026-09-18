@@ -247,6 +247,55 @@ def _diff_touches_python(status: dict) -> bool:
     return any(p.lower().endswith(_PY_SUFFIXES) for p in status)
 
 
+# PATH-1 (PREREG_path1_only_touches_repair_2026_09_17, sha256 618d800f...). Two of the six
+# `only_touches` failure modes published in RESULT_bench2_INVALID_2026_09_17 are repaired here and
+# four are not; the prereg says which and why. This set is the committed data for mode 2 and
+# mirrors papers/closed-model-frontier/path1_extensions.txt byte for byte (test_path1 pins it).
+# It was frozen with the preregistration, before measurement, from general language conventions --
+# never tuned against the eleven pull requests the repair is scored on.
+PATH1_EXTENSIONS = frozenset("""
+c cc cpp cxx h hh hpp hxx m mm
+py pyi pyx rb rs go java kt kts scala clj cljs swift dart
+js jsx mjs cjs ts tsx vue svelte
+cs fs vb fsx pas pp
+php pl pm t r rmd jl lua tcl groovy gradle
+sh bash zsh fish ps1 psm1 psd1 bat cmd
+html htm xml xsl xslt svg css scss sass less styl
+json json5 yaml yml toml ini cfg conf properties env plist
+md markdown mdx rst adoc txt text tex bib
+sql graphql gql proto thrift avsc
+lock sum mod work
+dockerfile makefile mk cmake gemspec podspec csproj vbproj fsproj sln props targets
+tf tfvars hcl bicep nix
+at ac am in out golden snap
+png jpg jpeg gif webp ico bmp tiff pdf
+zip tar gz tgz bz2 xz 7z jar war whl
+""".split())
+
+
+def _has_real_extension(token: str) -> bool:
+    """`package.json` yes, `Assert.NotNull` no. PATH-1 mode 2."""
+    if "." not in token:
+        return False
+    return token.rsplit(".", 1)[-1].strip().lower() in PATH1_EXTENSIONS
+
+
+def _is_bare_filename(pref: str) -> bool:
+    """A prefix naming a file rather than a location: no slash, and a real extension.
+
+    PATH-1 mode 1. "Only modify package.json ... in each package folder" means a file with that
+    name anywhere in the tree, not a file at the repository root, so containment for such a
+    prefix matches on the basename.
+    """
+    return "/" not in pref and _has_real_extension(pref)
+
+
+def _path_inside(path: str, pref: str) -> bool:
+    if _is_bare_filename(pref):
+        return path == pref or path.endswith("/" + pref)
+    return path == pref or path.startswith(pref + "/")
+
+
 def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
     """A scope prefix is a path when it looks like one or names a segment of a changed path.
 
@@ -257,7 +306,12 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
     raw = prefix.strip("`\"'").rstrip(".")
     if not raw:
         return False
-    if any(ch in raw for ch in "/\\."):
+    if any(ch in raw for ch in "/\\"):
+        return True
+    # PATH-1 mode 2: a dot alone used to be enough, which admitted `Assert.NotNull` as a path.
+    # The suffix must be a real file extension from the committed list; otherwise fall through
+    # to the segment test below, exactly as a dotless word does.
+    if "." in raw and _has_real_extension(raw.rstrip("/")):
         return True
     low = _norm(raw).rstrip("/").lower()
     for changed in status:
@@ -1241,8 +1295,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
                     not_paths = [_norm(x).rstrip("/.") for x in raw_prefs
                                  if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
+                    # PATH-1 mode 1: _path_inside matches a bare filename on its basename.
                     outside = [p for p in status
-                               if not any(p.startswith(x + "/") or p == x for x in prefs)]
+                               if not any(_path_inside(p, x) for x in prefs)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4

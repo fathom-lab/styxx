@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the gate was pointed at itself, and the measurement is what came back
+
+*Staged for 7.48.0. Cutting the release also requires regenerating `conformance/sworn/` — the
+committed set pins `provenance.styxx_version`, so bumping `styxx/_version.py` invalidates its
+digest until `python conformance/sworn/gen_vectors.py` is re-run in an environment whose
+regeneration matches CI's. That step is deliberately not in this change.*
+
+The release where the diff gate stopped being graded by the people who wrote it. Eleven
+preregistered cycles against 71,016 agent pull requests from the AIDev corpus (CC-BY-4.0, Zenodo
+10.5281/zenodo.16919272). Four of them voided themselves. The two that produced the headline
+numbers were the two that made the instrument look worse.
+
+**The reading, repaired under preregistration**
+
+- **BC-2** — a scope prefix is checked for path shape before it is used. "only modifies the footer"
+  is not a directory. **569 accusations removed, none added**, the verified side intact. BC-1 was
+  declared INVALID first, on its own blocking gate.
+- **BIN-2** — the raw-diff doors see binary files, pure renames, mode changes and quoted paths.
+  BIN-1 was declared INVALID first, for the same reason.
+- **COMPAT-1 / COMPAT-2** — compatibility claims are read rather than judged: which public
+  definitions the diff removed, split by surface versus test/example/internal scaffolding, with
+  signature changes reported separately. **8,467 compat claims read, 211 candidates, not one
+  accusation.** The verdict is pinned to UNCHECKABLE by a flag a test holds false; only a blind
+  panel can license a second verdict.
+- **HARNESS-1** — the corpus reconstruction stopped folding merge traffic into pull requests.
+  **16 accusations and 247 removed-name readings were the harness's, not the agents'.**
+- **EXTERNAL-5** — 70 of 96 surviving accusations were checked at source and hold; 19 were the
+  harness's.
+- **PATH-1** — basename prefixes match anywhere in the tree, and a dotted identifier is no longer a
+  path. `Assert.NotNull` is a symbol; `appservice/package.json` is a `package.json`.
+
+**The measurements, including the ones that went against us**
+
+- **BENCH-1 — INVALID.** The first PR-claim benchmark failed its own blocking audit: 30 of 50
+  hand-audited items disagreed. Its oracle read the word after "only" as a path and called 279
+  honest pull requests liars. The instrument abstained on 276 of those 279.
+- **BENCH-2 — INVALID.** The repaired oracle failed too, and this time the errors were ours as
+  well. Hand adjudication of every accusation the instrument made on this corpus found **9 of 11
+  were wrong** — precision **0.18** on the one claim kind where it accuses. Named in full, with the
+  instrument's own reason strings, in the RESULT and in issue #128.
+- **DECIDE-1.** 100 claims read by hand, no oracle, each with a written reason. **71% of these
+  claims are decidable from the diff** (corpus-weighted) while the instrument returns a verdict on
+  5.7% of `only_touches`. The silence we had been describing as principled restraint is mostly
+  extraction failure. This overturned our own public statement of the week before, and the
+  correction is in the RESULT.
+- **PATH-1 moved precision from 0.18 to 0.25.** Predicted before the change, measured after, and
+  still a bad number: three quarters of the instrument's accusations on this claim kind remain
+  false. Four of the six known failure modes are not repaired, and tests assert the instrument is
+  still wrong on them so a later change cannot claim them silently.
+
+**The datasets**
+
+`papers/closed-model-frontier/bench{1,2}_dataset.jsonl` — 604 claims from 568 pull requests, with
+the live diff's sha256 per row, published under AIDev's CC-BY-4.0. **styxx's own verdicts are
+deliberately absent**: we do not publish accusations against third parties' pull requests, and
+having found 9 of 11 wrong we would rather nobody took ours on trust. `bench_reproduce.py`
+re-fetches every diff, verifies each hash, re-runs the oracle and scores styxx — or any other
+checker — in one command. `BENCH_DATASHEET.md` leads with both invalidations.
+
+**The port, and the guard that was not guarding**
+
+`web/gate/diffgate.js` carries the COMPAT-2 reading; the differential reads **3,220 pairs, 6,933
+claims, 0 disagreements**. It was found inert for a cycle: no workflow ran it, its instrument pin
+had gone stale and it was exiting to nobody, and a new pinned corpus was one `.gitignore` line from
+never existing. `tests/test_port_is_current.py` fails on every one of those, and was validated by
+failing ten times against the unfixed tree.
+
+**Also**
+
+- `--pr <url>` gates a public pull request by URL with no checkout.
+- `integrations/git/commit-msg` refuses a commit whose message contradicts the staged diff.
+
+---
+
 ## [Unreleased] — a commit-msg hook: the message cannot lie about the staged diff
 
 `integrations/git/commit-msg`, one file, copied into `.git/hooks/`: every commit message is read

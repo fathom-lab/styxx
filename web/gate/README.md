@@ -4,7 +4,7 @@ The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: th
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` as it stands on `main` (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2,
 pull requests #113, #115, #120 and #124, plus the `fetch_pr` door; the file **7.48.0** ships),
-sha256 `473a7dd7c2dce7b1fefd07eaba27291090dd351a0c108b28f4812c7dc77f536d` (LF line endings; a wheel
+sha256 `eba8f5fc351c240075ac61c32364f61a7c23fb9cd7f1dc805269b6b2458d5468` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -39,8 +39,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 df0c801605f0bb995e10be43b75e3ca3cd77113e6487496401988a23ff5596d8   20,696 chars
-    bookmarklet.href.txt  sha256 189ad32e349cad08bd6dcb971a4faa2325d7ef519857cad9bc84f7f2c79364dc   20,707 chars
+    bookmarklet.min.js    sha256 54dca73a4f42cfec39beb67d14599d6b17a0df81d654cf413f3b9f805291c48b   21,632 chars
+    bookmarklet.href.txt  sha256 fef555104beaee5775fe04bd9d4cb7d9ea616abba489a9aaa2cc9059d8b92ea6   21,643 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file. A bookmark
@@ -63,10 +63,10 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 473a7dd7…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to eba8f5fc…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 36 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 44 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -78,12 +78,25 @@ anything failing. `fetch_pr` fetches a pull request over the network and is no p
 the port transliterates; it moves this whole-file hash without changing a single verdict. Both
 facts are recorded here rather than quietly corrected.
 
-Result, 2026-09-18, `main` at the COMPAT-2 reading:
+`path1_pairs.json` carries eight pairs for PATH-1: a basename claim satisfied by files in
+subfolders, a nested single file, a basename claim that still accuses when something else changed,
+a dotted identifier (`Assert.NotNull`), a CSS selector (`.k-step-link`), a slashed prefix that
+still anchors, and two pinning the failure modes PATH-1 deliberately does **not** repair. Those
+last two assert the instrument is still wrong; they exist so a later change cannot claim an
+unrepaired mode without its own preregistration.
 
-    3212 pairs, 6921 claims (600 verified, 1612 contradicted, 4709 uncheckable) — 0 disagreement(s)
+The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried exactly **four**
+`only_touches` claims in 3,212 pairs and PATH-1 changed none of them — so the differential's
+"0 disagreements" was true and almost meaningless for that change. A check that does not exercise
+what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
+the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-The 3,212 are the 3,176 below plus 36 pinned pairs committed as JSON (the `.gitignore` here
-ignores generated JSON and names these four as exceptions): `bc1_pairs.json`, the four pairs BC-2
+Result, 2026-09-18, this branch at the COMPAT-2 reading plus PATH-1:
+
+    3220 pairs, 6933 claims (606 verified, 1616 contradicted, 4711 uncheckable) — 0 disagreement(s)
+
+The 3,220 are the 3,176 below plus 44 pinned pairs committed as JSON (the `.gitignore` here
+ignores generated JSON and names these five as exceptions): `bc1_pairs.json`, the four pairs BC-2
 owes the differential (a TypeScript commit saying "Added 2 tests", "adds a method to reload",
 "only modifies the footer", two prefixes), also checked on the Python side by
 `tests/test_diffgate_bc1.py`; and `compat_pairs.json`, nineteen more — the compatibility

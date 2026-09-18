@@ -1,0 +1,160 @@
+{
+ "prereg": "PREREG_bench2_pr_claim_benchmark_2026_09_17.md",
+ "population_prs": 691,
+ "reached_prs": 568,
+ "excluded_by_reason": {
+  "http_403": 107,
+  "ok": 14,
+  "http_404": 2
+ },
+ "items": 604,
+ "per_kind": {
+  "files_changed_count": {
+   "decidable_items": 116,
+   "instrument": {
+    "tp": 47,
+    "fp": 0,
+    "fn": 0,
+    "tn": 69,
+    "precision": 1.0,
+    "recall": 1.0,
+    "specificity": 1.0,
+    "f1": 1.0,
+    "abstained": 0,
+    "not_extracted": 0
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.89,
+    "tp": 43,
+    "fp": 68,
+    "fn": 4,
+    "tn": 1,
+    "precision": 0.3874,
+    "recall": 0.9149,
+    "specificity": 0.0145,
+    "f1": 0.5443
+   },
+   "false_discovery_rate": 0.0,
+   "claims_of_this_kind_per_71016_prs": 116
+  },
+  "only_touches": {
+   "decidable_items": 17,
+   "instrument": {
+    "tp": 11,
+    "fp": 0,
+    "fn": 0,
+    "tn": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "specificity": 1.0,
+    "f1": 1.0,
+    "abstained": 0,
+    "not_extracted": 0
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.88,
+    "tp": 10,
+    "fp": 6,
+    "fn": 1,
+    "tn": 0,
+    "precision": 0.625,
+    "recall": 0.9091,
+    "specificity": 0.0,
+    "f1": 0.7407
+   },
+   "false_discovery_rate": 0.0,
+   "claims_of_this_kind_per_71016_prs": 299
+  },
+  "symbol_added": {
+   "decidable_items": 15,
+   "instrument": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 3,
+    "tn": 12,
+    "precision": null,
+    "recall": 0.0,
+    "specificity": 1.0,
+    "f1": null,
+    "abstained": 13,
+    "not_extracted": 0
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.55,
+    "tp": 2,
+    "fp": 4,
+    "fn": 1,
+    "tn": 8,
+    "precision": 0.3333,
+    "recall": 0.6667,
+    "specificity": 0.6667,
+    "f1": 0.4444
+   },
+   "false_discovery_rate": null,
+   "claims_of_this_kind_per_71016_prs": 38
+  }
+ },
+ "truth_distribution": {
+  "files_changed_count": {
+   "CONTRADICTED": 47,
+   "SUPPORTED": 69
+  },
+  "only_touches": {
+   "UNDECIDABLE": 282,
+   "CONTRADICTED": 11,
+   "SUPPORTED": 6
+  },
+  "symbol_added": {
+   "SUPPORTED": 12,
+   "CONTRADICTED": 3,
+   "UNDECIDABLE": 23
+  }
+ },
+ "admissibility": {
+  "files_changed_count": {
+   "claims": 116,
+   "admissible": 116,
+   "undecidable": 0,
+   "admitted_by_clause": {}
+  },
+  "only_touches": {
+   "claims": 299,
+   "admissible": 17,
+   "undecidable": 282,
+   "admitted_by_clause": {
+    "a": 13,
+    "b": 9
+   }
+  },
+  "symbol_added": {
+   "claims": 38,
+   "admissible": 15,
+   "undecidable": 23,
+   "admitted_by_clause": {
+    "underscore_or_digit": 1,
+    "backticked": 10,
+    "called": 2,
+    "internal_uppercase": 2
+   }
+  }
+ },
+ "undecidable_by_reason": {
+  "files_changed_count": {},
+  "only_touches": {
+   "no stated prefix is path-shaped": 282
+  },
+  "symbol_added": {
+   "symbol is not code-shaped": 23
+  }
+ },
+ "notes": {
+  "tests_added_excluded": {
+   "items": 151,
+   "why": "deciding what counts as a test is a judgement; the prereg excludes it from scoring"
+  },
+  "supersedes": "BENCH-1 was declared INVALID by its own blocking audit gate: 30 of 50 hand-audited items disagreed against a limit of 2. See RESULT_bench1_INVALID_2026_09_17.md. No BENCH-2 number is to be published without that link (G-B2-5).",
+  "files_changed_count_is_circular": "the oracle counts diff --git headers and the instrument registers one file per header, so they agree by construction on well-formed diffs; a high score on this kind is evidence that two implementations of one rule agree, not evidence of discrimination (G-B2-6)",
+  "clause_c_bias": "PATH-SHAPED clause (c) conditions admissibility on the diff and can only move an item from CONTRADICTED to UNDECIDABLE, never the reverse; the measured contradiction rate is biased downward, as declared in the prereg before the run",
+  "oracle_agrees_by_construction": "the oracle and the instrument both read the live diff, so they agree on well-formed input; the discriminating power is in the hard cases and in the true negatives, and the audit is what establishes the oracle is right"
+ }
+}

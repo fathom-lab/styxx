@@ -1,0 +1,3324 @@
+[
+ {
+  "id": 1,
+  "kind": "files_changed_count",
+  "url": "https://github.com/mlflow/mlflow/pull/18253",
+  "claim": "- 6 files changed",
+  "detail": {
+   "n": "6"
+  },
+  "n_files": 6,
+  "paths": [
+   "dev/clint/src/clint/rules/mock_patch_as_decorator.py",
+   "tests/db/test_tracking_operations.py",
+   "tests/evaluate/logging/test_evaluation.py",
+   "tests/genai/evaluate/test_context.py",
+   "tests/genai/evaluate/test_evaluation.py",
+   "tests/pyfunc/test_pyfunc_model_with_type_hints.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 14638,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "states a file count for this PR; countable from headers"
+ },
+ {
+  "id": 2,
+  "kind": "files_changed_count",
+  "url": "https://github.com/utsmannn/compose-remote-layout/pull/24",
+  "claim": "11 files changed, 2782 insertions(+), 1 deletion(-)",
+  "detail": {
+   "n": "11"
+  },
+  "n_files": 16,
+  "paths": [
+   ".github/workflows/sample-router-deploy.yaml",
+   ".gitignore",
+   "ANIMATION_PROPOSAL.md",
+   "FEATURE_SUMMARY.md",
+   "QUICK_DEMO.md",
+   "README.MD",
+   "compose-remote-layout-router/src/commonMain/kotlin/com/utsman/composeremote/router/RemoteRouter.kt",
+   "docs/02-setup/06-implementing-animations.md",
+   "docs/02-setup/06a-quick-start-animations.md",
+   "docs/03-json-structure/07-live-editor.md",
+   "docs/03-json-structure/08-animations.md",
+   "docs/04-router/12-live-example.md",
+   "docs/examples/AnimationNodes.kt",
+   "docs/examples/README.md",
+   "docs/index.md",
+   "mkdocs.yml"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 93938,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "git summary line asserting the whole PR; countable (says 11, diff has 16)"
+ },
+ {
+  "id": 3,
+  "kind": "tests_added",
+  "url": "https://github.com/specmatic/specmatic/pull/1900",
+  "claim": "Added 3 new test methods to `OpenApiSpecificationTest.kt` that cover all the critical scenarios for the `getImplicitOverlayContent` function:",
+  "detail": {
+   "n": "3",
+   "noun": "methods"
+  },
+  "n_files": 1,
+  "paths": [
+   "core/src/test/kotlin/io/specmatic/conversions/OpenApiSpecificationTest.kt"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2902,
+  "n_added": 68,
+  "test_markers_added": 6,
+  "test_files_touched": [
+   "core/src/test/kotlin/io/specmatic/conversions/OpenApiSpecificationTest.kt"
+  ],
+  "sample_test_lines": [
+   "@Test",
+   "assertThat(result).isEmpty()",
+   "@Test",
+   "assertThat(result).isEmpty()",
+   "@Test",
+   "assertThat(result).isEqualTo(overlayContent)"
+  ],
+  "counts": {
+   "test_funcs": 3,
+   "param_rows": 0,
+   "asserts": 6,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'3 new test methods to OpenApiSpecificationTest.kt' -- @Test functions in a named file"
+ },
+ {
+  "id": 4,
+  "kind": "tests_added",
+  "url": "https://github.com/exceptionless/Exceptionless.DateTimeExtensions/pull/115",
+  "claim": "- [x] All 594 tests pass (added 22 new test cases)",
+  "detail": {
+   "n": "22",
+   "noun": "cases"
+  },
+  "n_files": 3,
+  "paths": [
+   "src/Exceptionless.DateTimeExtensions/TimeUnit.cs",
+   "tests/Exceptionless.DateTimeExtensions.Tests/DateMathTests.cs",
+   "tests/Exceptionless.DateTimeExtensions.Tests/TimeUnitTests.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 11134,
+  "n_added": 156,
+  "test_markers_added": 55,
+  "test_files_touched": [
+   "tests/Exceptionless.DateTimeExtensions.Tests/DateMathTests.cs",
+   "tests/Exceptionless.DateTimeExtensions.Tests/TimeUnitTests.cs"
+  ],
+  "sample_test_lines": [
+   "[InlineData(\"\")] // empty string",
+   "[InlineData(\"   \")] // whitespace only",
+   "[InlineData(\"\\t\\t\")] // tabs only",
+   "[InlineData(\"1y@\")] // special character after unit",
+   "[InlineData(\"1M!\")] // special character after unit",
+   "[InlineData(\"1w#\")] // special character after unit"
+  ],
+  "counts": {
+   "test_funcs": 3,
+   "param_rows": 37,
+   "asserts": 14,
+   "test_files": 2
+  },
+  "stated_matches": [],
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'22 new test cases' in xUnit: 3 [Fact] vs 37 [InlineData] rows; the unit is unstated and neither matches"
+ },
+ {
+  "id": 5,
+  "kind": "files_changed_count",
+  "url": "https://github.com/sightread/sightread/pull/201",
+  "claim": "The fix is minimal and surgical - only 3 files changed, adding new classes without modifying existing functionality for regular instruments.",
+  "detail": {
+   "n": "3"
+  },
+  "n_files": 4,
+  "paths": [
+   "package-lock.json",
+   "src/features/player/player.ts",
+   "src/features/synth/get-synth.ts",
+   "src/features/synth/index.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 305566,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'only 3 files changed' asserts a count for this PR"
+ },
+ {
+  "id": 6,
+  "kind": "tests_added",
+  "url": "https://github.com/marcocesarato/php-conventional-changelog/pull/88",
+  "claim": "- [x] Added 8 new tests (23 total tests, 44 assertions, 100% passing)",
+  "detail": {
+   "n": "8"
+  },
+  "n_files": 7,
+  "paths": [
+   "README.md",
+   "docs/config.md",
+   "src/Changelog.php",
+   "src/Configuration.php",
+   "src/DefaultCommand.php",
+   "src/Git/Repository.php",
+   "tests/ChangelogTest.php"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 12338,
+  "n_added": 209,
+  "test_markers_added": 20,
+  "test_files_touched": [
+   "tests/ChangelogTest.php"
+  ],
+  "sample_test_lines": [
+   "/** @test */",
+   "$this->assertTrue($config->isAnnotateTag());",
+   "$this->assertFalse($config->isAnnotateTag());",
+   "/** @test */",
+   "$this->assertTrue($config->isSignTag());",
+   "$this->assertFalse($config->isSignTag());"
+  ],
+  "counts": {
+   "test_funcs": 8,
+   "param_rows": 0,
+   "asserts": 15,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'8 new tests' -- 8 test functions added"
+ },
+ {
+  "id": 7,
+  "kind": "only_touches",
+  "url": "https://github.com/thorsten/phpMyFAQ/pull/3582",
+  "claim": "- **Surgical Updates**: Only modifies the specific `RewriteBase` line",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 4,
+  "paths": [
+   "phpmyfaq/src/phpMyFAQ/Setup/HtaccessUpdater.php",
+   "phpmyfaq/src/phpMyFAQ/Setup/Installer.php",
+   "phpmyfaq/src/phpMyFAQ/Setup/Update.php",
+   "tests/phpMyFAQ/Setup/HtaccessUpdaterTest.php"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 15038,
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'only modifies the specific RewriteBase line' -- a within-file line claim; PR touches 4 files, scope unstated"
+ },
+ {
+  "id": 8,
+  "kind": "tests_added",
+  "url": "https://github.com/JustinBeckwith/linkinator/pull/722",
+  "claim": "- \u2705 All 148 tests pass (added 1 new test)",
+  "detail": {
+   "n": "1"
+  },
+  "n_files": 10,
+  "paths": [
+   "README.md",
+   "src/cli.ts",
+   "src/config.ts",
+   "src/index.ts",
+   "src/links.ts",
+   "src/options.ts",
+   "test/fixtures/css/external-test.html",
+   "test/fixtures/css/index.html",
+   "test/fixtures/css/styles.css",
+   "test/test.index.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 17547,
+  "n_added": 349,
+  "test_markers_added": 7,
+  "test_files_touched": [
+   "test/fixtures/css/external-test.html",
+   "test/fixtures/css/index.html",
+   "test/fixtures/css/styles.css",
+   "test/test.index.ts"
+  ],
+  "sample_test_lines": [
+   "return Boolean(/text\\/css/g.test(contentType));",
+   "it('should extract URLs from inline CSS in style attributes and tags when checkCss is enabled', asyn",
+   "assert.ok(results.passed);",
+   "assert.ok(",
+   "it('should NOT extract URLs from inline CSS when checkCss is disabled', async () => {",
+   "assert.ok(results.passed);"
+  ],
+  "counts": {
+   "test_funcs": 3,
+   "param_rows": 0,
+   "asserts": 12,
+   "test_files": 4
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'(added 1 new test)' -- it() blocks are the unit; 2 added"
+ },
+ {
+  "id": 9,
+  "kind": "files_changed_count",
+  "url": "https://github.com/liam-hq/liam/pull/2773",
+  "claim": "- **Files Modified**: 6 files changed, 335 insertions(+), 11 deletions(-)",
+  "detail": {
+   "n": "6"
+  },
+  "n_files": 6,
+  "paths": [
+   ".env.template",
+   "frontend/apps/app/features/sessions/components/SessionForm/SchemaInfoSection/SchemaInfoSection.tsx",
+   "frontend/apps/app/features/sessions/components/SessionForm/URLSessionFormPresenter/UrlSessionFormPresenter.tsx",
+   "frontend/apps/app/features/sessions/components/SessionForm/constants/urlValidationConstants.ts",
+   "frontend/apps/app/features/sessions/components/SessionForm/utils/urlValidation.test.ts",
+   "frontend/apps/app/features/sessions/components/SessionForm/utils/urlValidation.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 17522,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Files Modified: 6 files changed' asserts a count"
+ },
+ {
+  "id": 10,
+  "kind": "symbol_added",
+  "url": "https://github.com/moonbitlang/core/pull/2790",
+  "claim": "This PR adds a new method `StringView::output_without_quote(self : StringView, logger : &Logger) -> Unit` that writes the StringView content directly to a logge",
+  "detail": {
+   "kind": "method",
+   "name": "StringView"
+  },
+  "n_files": 3,
+  "paths": [
+   "string/pkg.generated.mbti",
+   "string/view.mbt",
+   "string/view_test.mbt"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 3127,
+  "added_lines_with_symbol": [
+   "fn StringView::output_without_quote(Self, &Logger) -> Unit",
+   "/// Outputs the StringView content to a logger without quotes.",
+   "pub fn StringView::output_without_quote(",
+   "self : StringView,",
+   "test \"StringView::output_without_quote\" {"
+  ],
+  "n_added": 68,
+  "symbols_named_in_sentence": [
+   "This",
+   "PR",
+   "StringView",
+   "Logger"
+  ],
+  "definition_evidence": {
+   "This": {
+    "defs": []
+   },
+   "PR": {
+    "defs": []
+   },
+   "StringView": {
+    "defs": [
+     "fn StringView::output_without_quote(Self, &Logger) -> Unit",
+     "pub fn StringView::output_without_quote("
+    ]
+   },
+   "Logger": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names StringView::output_without_quote; definition present in added lines"
+ },
+ {
+  "id": 11,
+  "kind": "files_changed_count",
+  "url": "https://github.com/mRemoteNG/mRemoteNG/pull/2851",
+  "claim": "- 8 files changed",
+  "detail": {
+   "n": "8"
+  },
+  "n_files": 8,
+  "paths": [
+   "mRemoteNG/Config/DataProviders/FileBackupCreator.cs",
+   "mRemoteNG/Config/DataProviders/FileBackupPruner.cs",
+   "mRemoteNG/Config/DataProviders/FileDataProvider.cs",
+   "mRemoteNG/Tools/PathValidator.cs",
+   "mRemoteNGTests/Config/DataProviders/FileBackupCreatorTests.cs",
+   "mRemoteNGTests/Config/DataProviders/FileBackupPrunerTests.cs",
+   "mRemoteNGTests/Config/DataProviders/FileDataProviderTests.cs",
+   "mRemoteNGTests/Tools/PathValidatorTests.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 13625,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'8 files changed' asserts a count"
+ },
+ {
+  "id": 12,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/Generative-AI-for-beginners-dotnet/pull/409",
+  "claim": "> - ONLY MODIFY the README.md file at the root of the repository.",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 1,
+  "paths": [
+   "README.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 938,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "quoted scope instruction 'ONLY MODIFY the README.md file at the root' read as an implied compliance claim; condition is precise [CONTESTABLE]"
+ },
+ {
+  "id": 13,
+  "kind": "tests_added",
+  "url": "https://github.com/Azure/secrets-store-csi-driver-provider-azure/pull/1905",
+  "claim": "- Added 15 new test cases covering various invisible characters and scenarios",
+  "detail": {
+   "n": "15",
+   "noun": "cases"
+  },
+  "n_files": 2,
+  "paths": [
+   "pkg/provider/validate.go",
+   "pkg/provider/validate_test.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 7944,
+  "n_added": 213,
+  "test_markers_added": 2,
+  "test_files_touched": [
+   "pkg/provider/validate_test.go"
+  ],
+  "sample_test_lines": [
+   "func TestValidateNoInvisibleCharacters(t *testing.T) {",
+   "func TestValidateIntegration(t *testing.T) {"
+  ],
+  "counts": {
+   "test_funcs": 2,
+   "param_rows": 0,
+   "asserts": 1,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'15 new test cases' -- Go table-driven; rows in the table literal are countable"
+ },
+ {
+  "id": 14,
+  "kind": "tests_added",
+  "url": "https://github.com/newrelic/newrelic-dotnet-agent/pull/3279",
+  "claim": "- Added 23 new test cases covering all scenarios",
+  "detail": {
+   "n": "23",
+   "noun": "cases"
+  },
+  "n_files": 2,
+  "paths": [
+   "src/Agent/NewRelic/Agent/Core/Configuration/DefaultConfiguration.cs",
+   "tests/Agent/UnitTests/Core.UnitTest/Configuration/DefaultConfigurationTests.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5731,
+  "n_added": 50,
+  "test_markers_added": 0,
+  "test_files_touched": [
+   "tests/Agent/UnitTests/Core.UnitTest/Configuration/DefaultConfigurationTests.cs"
+  ],
+  "sample_test_lines": [],
+  "counts": {
+   "test_funcs": 0,
+   "param_rows": 23,
+   "asserts": 0,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "rows"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'23 new test cases' -- 23 [InlineData] rows added"
+ },
+ {
+  "id": 15,
+  "kind": "tests_added",
+  "url": "https://github.com/united-manufacturing-hub/united-manufacturing-hub/pull/2246",
+  "claim": "\u2705 Added 4 new test cases covering:",
+  "detail": {
+   "n": "4",
+   "noun": "cases"
+  },
+  "n_files": 5,
+  "paths": [
+   "umh-core/pkg/fsm/benthos_monitor/actions.go",
+   "umh-core/pkg/fsm/benthos_monitor/models.go",
+   "umh-core/pkg/service/benthos_monitor/benthos_monitor.go",
+   "umh-core/pkg/service/benthos_monitor/benthos_monitor_test.go",
+   "umh-core/pkg/service/benthos_monitor/mock.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 14361,
+  "n_added": 219,
+  "test_markers_added": 17,
+  "test_files_touched": [
+   "umh-core/pkg/service/benthos_monitor/benthos_monitor_test.go"
+  ],
+  "sample_test_lines": [
+   "Describe(\"GetConfig\", func() {",
+   "It(\"should extract port from monitor script pattern\", func() {",
+   "Expect(len(matches)).To(BeNumerically(\"<\", 2), \"Test case: %s\", tc.name)",
+   "Expect(len(matches)).To(BeNumerically(\">=\", 2), \"Test case: %s\", tc.name)",
+   "Expect(err).NotTo(HaveOccurred(), \"Test case: %s\", tc.name)",
+   "Expect(uint16(port)).To(Equal(tc.expectedPort), \"Test case: %s\", tc.name)"
+  ],
+  "counts": {
+   "test_funcs": 4,
+   "param_rows": 0,
+   "asserts": 20,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'4 new test cases' -- 4 test functions"
+ },
+ {
+  "id": 16,
+  "kind": "symbol_added",
+  "url": "https://github.com/evergreen-ci/evergreen/pull/9037",
+  "claim": "- Added a new function `ExtractCoAuthorEmail` to extract co-author information from commit messages",
+  "detail": {
+   "kind": "function",
+   "name": "ExtractCoAuthorEmail"
+  },
+  "n_files": 4,
+  "paths": [
+   "model/user/db.go",
+   "rest/route/github.go",
+   "thirdparty/github.go",
+   "units/patch_intent.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10566,
+  "added_lines_with_symbol": [
+   "func ExtractCoAuthorEmail(message string) string {",
+   "coAuthorEmail := ExtractCoAuthorEmail(*firstCommit.Commit.Message)"
+  ],
+  "n_added": 200,
+  "symbols_named_in_sentence": [
+   "ExtractCoAuthorEmail"
+  ],
+  "definition_evidence": {
+   "ExtractCoAuthorEmail": {
+    "defs": [
+     "func ExtractCoAuthorEmail(message string) string {"
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names ExtractCoAuthorEmail; checkable"
+ },
+ {
+  "id": 17,
+  "kind": "only_touches",
+  "url": "https://github.com/AndBible/and-bible/pull/3525",
+  "claim": "The fix is minimal and surgical, only modifying the component where the issue originated.",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 1,
+  "paths": [
+   "app/bibleview-js/src/components/EditableText.vue"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 3071,
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'only modifying the component where the issue originated' -- the component is never named"
+ },
+ {
+  "id": 18,
+  "kind": "files_changed_count",
+  "url": "https://github.com/openwhyd/openwhyd/pull/847",
+  "claim": "**Files Created** (6 files changed, 554 insertions, 9 deletions):",
+  "detail": {
+   "n": "6"
+  },
+  "n_files": 6,
+  "paths": [
+   "app.js",
+   "app/lib/auth0/features.js",
+   "app/lib/auth0/mock.js",
+   "app/lib/my-http-wrapper/http/Application.js",
+   "docs/TESTING-AUTH.md",
+   "env-vars-testing.conf"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 22903,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'(6 files changed, 554 insertions...)' asserts a count"
+ },
+ {
+  "id": 19,
+  "kind": "symbol_added",
+  "url": "https://github.com/z2586300277/three-cesium-examples/pull/164",
+  "claim": "**Fixed usage pattern**: Added function assignment before each call across 8 locations (FBX city model, GLTF models for car/plane/ship/elegant, and primitive ge",
+  "detail": {
+   "kind": "function",
+   "name": "assignment"
+  },
+  "n_files": 1,
+  "paths": [
+   "threeExamples/animation/personFirstMove.js"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 3579,
+  "added_lines_with_symbol": [],
+  "n_added": 9,
+  "symbols_named_in_sentence": [
+   "Fixed",
+   "Added",
+   "FBX",
+   "GLTF"
+  ],
+  "definition_evidence": {
+   "Fixed": {
+    "defs": []
+   },
+   "Added": {
+    "defs": []
+   },
+   "FBX": {
+    "defs": []
+   },
+   "GLTF": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "named_thing_not_in_diff_vocabulary",
+  "reason": "'added function assignment before each call across 8 locations' names no symbol"
+ },
+ {
+  "id": 20,
+  "kind": "tests_added",
+  "url": "https://github.com/spcl/dace/pull/2053",
+  "claim": "- **Comprehensive Testing**: Added 9 test cases covering simple arrays, complex expressions, nested access, and backward compatibility",
+  "detail": {
+   "n": "9",
+   "noun": "cases"
+  },
+  "n_files": 2,
+  "paths": [
+   "dace/symbolic.py",
+   "tests/pystr_to_symbolic_test.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 14010,
+  "n_added": 297,
+  "test_markers_added": 40,
+  "test_files_touched": [
+   "tests/pystr_to_symbolic_test.py"
+  ],
+  "sample_test_lines": [
+   "self.generic_visit(node)",
+   "detector.visit(tree)",
+   "self.generic_visit(node)",
+   "self.visit(arg)",
+   "self.visit(keyword.value)",
+   "self.generic_visit(node)"
+  ],
+  "counts": {
+   "test_funcs": 9,
+   "param_rows": 0,
+   "asserts": 33,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'9 test cases' -- 9 test functions"
+ },
+ {
+  "id": 21,
+  "kind": "only_touches",
+  "url": "https://github.com/bigcommerce/checkout-sdk-js/pull/2984",
+  "claim": "- Minimal documentation-only change with no impact on build or test processes",
+  "detail": {
+   "prefix": "with"
+  },
+  "n_files": 1,
+  "paths": [
+   "README.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 368,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'documentation-only change' is checkable against the changed paths"
+ },
+ {
+  "id": 22,
+  "kind": "symbol_added",
+  "url": "https://github.com/coassoftwaresystems/delphi-modbus/pull/77",
+  "claim": "- Added function code constant `mbfReadDeviceIdentification = $2B`",
+  "detail": {
+   "kind": "function",
+   "name": "code"
+  },
+  "n_files": 11,
+  "paths": [
+   "README.md",
+   "demos/DeviceIdentificationClientExample.pas",
+   "demos/DeviceIdentificationExample.pas",
+   "docs/RTU_over_TCP.md",
+   "docs/ReadDeviceIdentification.md",
+   "docs/history.txt",
+   "source/IdModbusClient.pas",
+   "source/IdModbusServer.pas",
+   "source/ModbusConsts.pas",
+   "source/ModbusReg.pas",
+   "source/ModbusTypes.pas"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 43898,
+  "added_lines_with_symbol": [
+   "// Object ID not found - return illegal register error (exception code 0x02)",
+   "The Modbus Function Code 43 (0x2B) with MEI Type 14 (Read Device Identification) allows clients to query a Modbus server for devic",
+   "- `mbObjIDProductCode` ($01): Product code",
+   "- Section 6.21: Read Device Identification (function code 43)"
+  ],
+  "n_added": 853,
+  "symbols_named_in_sentence": [
+   "Added",
+   "mbfReadDeviceIdentification"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   },
+   "mbfReadDeviceIdentification": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names the constant mbfReadDeviceIdentification; checkable"
+ },
+ {
+  "id": 23,
+  "kind": "files_changed_count",
+  "url": "https://github.com/microsoft/vscode-mssql/pull/20343",
+  "claim": "**Total: 4 files changed, 20 insertions (+)**",
+  "detail": {
+   "n": "4"
+  },
+  "n_files": 4,
+  "paths": [
+   "src/reactviews/pages/ConnectionDialog/connectionsListContainer.tsx",
+   "src/reactviews/pages/QueryResult/commandBar.tsx",
+   "src/reactviews/pages/QueryResult/queryResultPane.tsx",
+   "src/reactviews/pages/TableDesigner/designerPropertiesPane.tsx"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 6484,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Total: 4 files changed' asserts a count"
+ },
+ {
+  "id": 24,
+  "kind": "files_changed_count",
+  "url": "https://github.com/ornladios/ADIOS2/pull/4569",
+  "claim": "5 files changed, 6 insertions total (one include per file plus formatting)",
+  "detail": {
+   "n": "5"
+  },
+  "n_files": 5,
+  "paths": [
+   "source/adios2/common/ADIOSTypes.inl",
+   "source/adios2/engine/bp5/BP5Engine.h",
+   "source/adios2/operator/compress/CompressBlosc.h",
+   "source/adios2/operator/compress/CompressPNG.h",
+   "source/adios2/toolkit/interop/hdf5/HDF5Common.tcc"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2098,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'5 files changed' asserts a count"
+ },
+ {
+  "id": 25,
+  "kind": "files_changed_count",
+  "url": "https://github.com/pnp/powershell/pull/5119",
+  "claim": "- 18 files changed (89 insertions, 84 deletions)",
+  "detail": {
+   "n": "18"
+  },
+  "n_files": 17,
+  "paths": [
+   "CHANGELOG.md",
+   "documentation/Enable-PnPPrivilegedIdentityManagement.md",
+   "documentation/Get-PnPPrivilegedIdentityManagementEligibleAssignment.md",
+   "documentation/Get-PnPPrivilegedIdentityManagementRole.md",
+   "pages/articles/determinepermissions.md",
+   "pages/articles/permissionattributes.md",
+   "src/Commands/Base/PipeBinds/PrivilegedIdentityManagementRoleEligibilitySchedulePipeBind.cs",
+   "src/Commands/Base/PipeBinds/PrivilegedIdentityManagementRolePipeBind.cs",
+   "src/Commands/Model/PrivilegedIdentityManagement/Expiration.cs",
+   "src/Commands/Model/PrivilegedIdentityManagement/RoleAssignmentScheduleRequest.cs",
+   "src/Commands/Model/PrivilegedIdentityManagement/RoleDefinition.cs",
+   "src/Commands/Model/PrivilegedIdentityManagement/RoleEligibilitySchedule.cs",
+   "src/Commands/Model/PrivilegedIdentityManagement/ScheduleInfo.cs",
+   "src/Commands/PrivilegedIdentityManagement/EnablePrivilegedIdentityManagement.cs",
+   "src/Commands/PrivilegedIdentityManagement/GetPrivilegedIdentityManagementEligibleAssignment.cs",
+   "src/Commands/PrivilegedIdentityManagement/GetPrivilegedIdentityManagementRole.cs",
+   "src/Commands/Utilities/PrivilegedIdentityManagementUtility.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 41039,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'18 files changed' asserts a count (diff has 17)"
+ },
+ {
+  "id": 26,
+  "kind": "symbol_added",
+  "url": "https://github.com/NapNeko/NapCatQQ/pull/1221",
+  "claim": "Added a new method `FFmpegService.getVideoMetadata()` that extracts video duration and dimensions without generating thumbnails, using FFprobe directly:",
+  "detail": {
+   "kind": "method",
+   "name": "FFmpegService"
+  },
+  "n_files": 28,
+  "paths": [
+   "package-lock.json",
+   "src/common/download-ffmpeg.ts",
+   "src/common/ffmpeg.ts",
+   "src/common/file.ts",
+   "src/common/performance-monitor.ts",
+   "src/common/worker.ts",
+   "src/core/apis/file.ts",
+   "src/core/apis/friend.ts",
+   "src/core/apis/group.ts",
+   "src/core/apis/webapi.ts",
+   "src/core/data/album.ts",
+   "src/core/data/group.ts",
+   "src/core/data/index.ts",
+   "src/core/data/webapi.ts",
+   "src/core/packet/client/nativeClient.ts",
+   "src/core/packet/context/operationContext.ts",
+   "src/core/packet/transformer/proto/oidb/Oidb.0xf90_1.ts",
+   "src/core/services/NodeIKernelAlbumService.ts",
+   "src/onebot/action/extends/ClickInlineKeyboardButton.ts",
+   "src/onebot/action/extends/GetGroupAlbumMediaList.ts",
+   "src/onebot/action/extends/GetUnidirectionalFriendList.ts",
+   "src/onebot/action/msg/GetMsg.ts",
+   "src/onebot/action/msg/SendMsg.ts",
+   "src/onebot/action/packet/GetRkeyEx.ts",
+   "src/onebot/action/packet/GetRkeyServer.ts"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 42488,
+  "added_lines_with_symbol": [
+   "videoInfo = await FFmpegService.getVideoMetadata(filePath);"
+  ],
+  "n_added": 258,
+  "symbols_named_in_sentence": [
+   "FFmpegService.getVideoMetadata"
+  ],
+  "definition_evidence": {
+   "FFmpegService.getVideoMetadata": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names FFmpegService.getVideoMetadata(); checkable"
+ },
+ {
+  "id": 27,
+  "kind": "symbol_added",
+  "url": "https://github.com/web-infra-dev/rslint/pull/114",
+  "claim": "The enhancement adds new method handlers to the LSP server (`cmd/rslint/lsp.go`):",
+  "detail": {
+   "kind": "method",
+   "name": "handlers"
+  },
+  "n_files": 3,
+  "paths": [
+   "cmd/rslint/lsp.go",
+   "docs/LSP_ENHANCEMENTS.md",
+   "packages/vscode-extension/src/extension.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 21086,
+  "added_lines_with_symbol": [
+   "2. **Method Handlers:** Dedicated handlers for each LSP method"
+  ],
+  "n_added": 643,
+  "symbols_named_in_sentence": [
+   "The",
+   "LSP"
+  ],
+  "definition_evidence": {
+   "The": {
+    "defs": []
+   },
+   "LSP": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'new method handlers' -- plural, unnamed"
+ },
+ {
+  "id": 28,
+  "kind": "symbol_added",
+  "url": "https://github.com/evergreen-ci/evergreen/pull/9034",
+  "claim": "- Added a new function `GetGithubPRCommits` in the thirdparty package to fetch commits for a GitHub PR",
+  "detail": {
+   "kind": "function",
+   "name": "GetGithubPRCommits"
+  },
+  "n_files": 4,
+  "paths": [
+   "model/user/db.go",
+   "rest/route/github.go",
+   "thirdparty/github.go",
+   "units/patch_intent.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 11945,
+  "added_lines_with_symbol": [],
+  "n_added": 223,
+  "symbols_named_in_sentence": [
+   "GetGithubPRCommits"
+  ],
+  "definition_evidence": {
+   "GetGithubPRCommits": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names GetGithubPRCommits; checkable"
+ },
+ {
+  "id": 29,
+  "kind": "files_changed_count",
+  "url": "https://github.com/Voxelum/x-minecraft-launcher/pull/1108",
+  "claim": "**4 files changed, ~70 lines:**",
+  "detail": {
+   "n": "4"
+  },
+  "n_files": 39,
+  "paths": [
+   "package.json",
+   "xmcl",
+   "xmcl-electron-app/main/controllers/optifine.ts",
+   "xmcl-electron-app/package.json",
+   "xmcl-keystone-ui/locales/de.yaml",
+   "xmcl-keystone-ui/locales/en.yaml",
+   "xmcl-keystone-ui/locales/es-ES.yaml",
+   "xmcl-keystone-ui/locales/fr.yaml",
+   "xmcl-keystone-ui/locales/gl.yaml",
+   "xmcl-keystone-ui/locales/hu.yaml",
+   "xmcl-keystone-ui/locales/it-IT.yaml",
+   "xmcl-keystone-ui/locales/ja-JP.yaml",
+   "xmcl-keystone-ui/locales/ko.yaml",
+   "xmcl-keystone-ui/locales/kz.yaml",
+   "xmcl-keystone-ui/locales/pl.yaml",
+   "xmcl-keystone-ui/locales/pt-BR.yaml",
+   "xmcl-keystone-ui/locales/ru.yaml",
+   "xmcl-keystone-ui/locales/uk.yaml",
+   "xmcl-keystone-ui/locales/zh-CN.yaml",
+   "xmcl-keystone-ui/locales/zh-TW.yaml",
+   "xmcl-keystone-ui/package.json",
+   "xmcl-keystone-ui/src/components/AppCrashAIHint.vue",
+   "xmcl-keystone-ui/src/composables/instanceEdit.ts",
+   "xmcl-keystone-ui/src/composables/instanceVersionDiagnose.ts",
+   "xmcl-keystone-ui/src/composables/instanceVersionInstall.ts"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 53788,
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'**4 files changed, ~70 lines:**' is a section header over a list; PR has 39 files, so scope of the 4 is unclear"
+ },
+ {
+  "id": 30,
+  "kind": "tests_added",
+  "url": "https://github.com/arabold/docs-mcp-server/pull/253",
+  "claim": "- \u2705 Added 2 new test cases specifically validating the fix:",
+  "detail": {
+   "n": "2",
+   "noun": "cases"
+  },
+  "n_files": 3,
+  "paths": [
+   "package-lock.json",
+   "src/store/DocumentStore.test.ts",
+   "src/store/DocumentStore.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5516,
+  "n_added": 96,
+  "test_markers_added": 12,
+  "test_files_touched": [
+   "src/store/DocumentStore.test.ts"
+  ],
+  "sample_test_lines": [
+   "it(\"should completely remove a version including pages and documents\", async () => {",
+   "expect(await store.checkDocumentExists(\"removelib\", \"1.0.0\")).toBe(true);",
+   "expect(result.documentsDeleted).toBe(2);",
+   "expect(result.versionDeleted).toBe(true);",
+   "expect(result.libraryDeleted).toBe(true);",
+   "expect(await store.checkDocumentExists(\"removelib\", \"1.0.0\")).toBe(false);"
+  ],
+  "counts": {
+   "test_funcs": 2,
+   "param_rows": 0,
+   "asserts": 12,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'2 new test cases' -- 2 test functions"
+ },
+ {
+  "id": 31,
+  "kind": "symbol_added",
+  "url": "https://github.com/christianhelle/apiclientcodegen/pull/1181",
+  "claim": "- Added a new function `isJavaRuntimeInstalled()` to check if Java is installed on the user's system",
+  "detail": {
+   "kind": "function",
+   "name": "isJavaRuntimeInstalled"
+  },
+  "n_files": 1,
+  "paths": [
+   "src/VSCode/src/extension.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5293,
+  "added_lines_with_symbol": [
+   "function isJavaRuntimeInstalled(): boolean {",
+   "if (generatorRequiresJava(generator) && !isJavaRuntimeInstalled()) {",
+   "if (generatorRequiresJava(generator, true) && !isJavaRuntimeInstalled()) {"
+  ],
+  "n_added": 64,
+  "symbols_named_in_sentence": [
+   "isJavaRuntimeInstalled"
+  ],
+  "definition_evidence": {
+   "isJavaRuntimeInstalled": {
+    "defs": [
+     "function isJavaRuntimeInstalled(): boolean {"
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names isJavaRuntimeInstalled; definition present"
+ },
+ {
+  "id": 32,
+  "kind": "tests_added",
+  "url": "https://github.com/IgniteUI/igniteui-angular/pull/16368",
+  "claim": "Added 6 new test cases covering:",
+  "detail": {
+   "n": "6",
+   "noun": "cases"
+  },
+  "n_files": 3,
+  "paths": [
+   "projects/igniteui-angular/src/lib/grids/grid-base.directive.ts",
+   "projects/igniteui-angular/src/lib/grids/pivot-grid/pivot-grid.component.ts",
+   "projects/igniteui-angular/src/lib/grids/pivot-grid/pivot-grid.spec.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 13132,
+  "n_added": 211,
+  "test_markers_added": 32,
+  "test_files_touched": [
+   "projects/igniteui-angular/src/lib/grids/pivot-grid/pivot-grid.spec.ts"
+  ],
+  "sample_test_lines": [
+   "if ((/\\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(rec)) {",
+   "return datePatterns.some(pattern => pattern.test(value.trim()));",
+   "it('should auto-generate pivot config and detect date fields from timestamp values', () => {",
+   "expect(pivotGrid.allDimensions.length).toEqual(4);",
+   "expect(pivotGrid.pivotConfiguration.rows.map(x => x.memberName)).toEqual(['AllPeriods']);",
+   "expect(pivotGrid.pivotConfiguration.rows.map(x => x.enabled)).toEqual([true]);"
+  ],
+  "counts": {
+   "test_funcs": 7,
+   "param_rows": 0,
+   "asserts": 36,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'6 new test cases' -- it() blocks countable; 7 added"
+ },
+ {
+  "id": 33,
+  "kind": "symbol_added",
+  "url": "https://github.com/streamich/memfs/pull/1112",
+  "claim": "- **`FileHandle#getAsyncId()`**: Added method returning the file descriptor for async resource tracking",
+  "detail": {
+   "kind": "method",
+   "name": "returning"
+  },
+  "n_files": 4,
+  "paths": [
+   "src/__tests__/volume/FileHandle.test.ts",
+   "src/node/FileHandle.ts",
+   "src/node/types/misc.ts",
+   "yarn.lock"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 426055,
+  "added_lines_with_symbol": [],
+  "n_added": 1610,
+  "symbols_named_in_sentence": [
+   "FileHandle#getAsyncId"
+  ],
+  "definition_evidence": {
+   "FileHandle#getAsyncId": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names FileHandle#getAsyncId(); checkable"
+ },
+ {
+  "id": 34,
+  "kind": "tests_added",
+  "url": "https://github.com/pmndrs/react-three-fiber/pull/3553",
+  "claim": "- Added 4 new test cases to the existing `canvas.test.tsx` file",
+  "detail": {
+   "n": "4",
+   "noun": "cases"
+  },
+  "n_files": 1,
+  "paths": [
+   "packages/fiber/tests/canvas.test.tsx"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2161,
+  "n_added": 59,
+  "test_markers_added": 12,
+  "test_files_touched": [
+   "packages/fiber/tests/canvas.test.tsx"
+  ],
+  "sample_test_lines": [
+   "it('should use manual width and height when provided', async () => {",
+   "expect(canvas?.getAttribute('width')).toBe('640')",
+   "expect(canvas?.getAttribute('height')).toBe('480')",
+   "it('should fallback to useMeasure when only width is provided', async () => {",
+   "expect(canvas?.getAttribute('width')).toBe('1280')",
+   "expect(canvas?.getAttribute('height')).toBe('800')"
+  ],
+  "counts": {
+   "test_funcs": 4,
+   "param_rows": 0,
+   "asserts": 15,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'4 new test cases to canvas.test.tsx' -- named file, countable"
+ },
+ {
+  "id": 35,
+  "kind": "tests_added",
+  "url": "https://github.com/SkBlaz/py3plex/pull/36",
+  "claim": "This PR adds 5 new test files with 24 additional test functions, doubling the test coverage and providing thorough validation of core library functions.",
+  "detail": {
+   "n": "5",
+   "noun": "files"
+  },
+  "n_files": 12,
+  "paths": [
+   "TEST_COVERAGE_IMPROVEMENTS.md",
+   "py3plex/algorithms/statistics/topology.py",
+   "py3plex/core/multinet.py",
+   "py3plex/core/nx_compat.py",
+   "py3plex/core/parsers.py",
+   "py3plex/core/supporting.py",
+   "test_output.txt",
+   "tests/test_core_multinet_basic.py",
+   "tests/test_core_parsers.py",
+   "tests/test_core_random_generators.py",
+   "tests/test_core_supporting.py",
+   "tests/test_core_utilities.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 84917,
+  "n_added": 2000,
+  "test_markers_added": 213,
+  "test_files_touched": [
+   "tests/test_core_multinet_basic.py",
+   "tests/test_core_parsers.py",
+   "tests/test_core_random_generators.py",
+   "tests/test_core_supporting.py",
+   "tests/test_core_utilities.py"
+  ],
+  "sample_test_lines": [
+   "- **Clear assertions**: Tests have descriptive error messages",
+   "NX_VERSION = tuple(map(int, nx.__version__.split('.')[:2]))",
+   "\ud83d\udca1 1 test(s) skipped due to missing dependencies",
+   "def test_multilayer_network_init():",
+   "assert net.verbose is True, \"Default verbose should be True\"",
+   "assert net.network_type == \"multilayer\", f\"Default network_type should be 'multilayer', got {net.net"
+  ],
+  "counts": {
+   "test_funcs": 25,
+   "param_rows": 0,
+   "asserts": 191,
+   "test_files": 5
+  },
+  "stated_matches": [
+   "files"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'5 new test files' -- files are countable"
+ },
+ {
+  "id": 36,
+  "kind": "files_changed_count",
+  "url": "https://github.com/open-compass/opencompass/pull/2286",
+  "claim": "**Total: 4 files changed, 369 insertions(+), 133 deletions(-)**",
+  "detail": {
+   "n": "4"
+  },
+  "n_files": 4,
+  "paths": [
+   "docs/en/advanced_guides/accelerator_intro.md",
+   "docs/zh_cn/advanced_guides/accelerator_intro.md",
+   "opencompass/cli/main.py",
+   "opencompass/utils/run.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 30194,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Total: 4 files changed' asserts a count"
+ },
+ {
+  "id": 37,
+  "kind": "files_changed_count",
+  "url": "https://github.com/microsoft/typespec/pull/8139",
+  "claim": "- This resulted in a complete refresh of the generated client libraries (1090 files changed)",
+  "detail": {
+   "n": "1090"
+  },
+  "n_files": 1090,
+  "paths": [
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/ApiKeyClient.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/ApiKeyClientBuilder.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/InvalidAuth.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/implementation/ApiKeyClientImpl.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/implementation/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/apikey/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/CustomClient.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/CustomClientBuilder.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/InvalidAuth.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/implementation/CustomClientImpl.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/implementation/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/http/custom/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/InvalidAuth.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/OAuth2Client.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/OAuth2ClientBuilder.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/implementation/OAuth2ClientImpl.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/implementation/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/oauth2/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/union/UnionClient.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/union/UnionClientBuilder.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/union/implementation/UnionClientImpl.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/union/implementation/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/authentication/union/package-info.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/encode/bytes/Base64BytesProperty.java",
+   "packages/http-client-java/generator/http-client-generator-clientcore-test/src/main/java/encode/bytes/Base64urlArrayBytesProperty.java"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 5622992,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'(1090 files changed)' asserts a count"
+ },
+ {
+  "id": 38,
+  "kind": "files_changed_count",
+  "url": "https://github.com/brevdev/brev-cli/pull/239",
+  "claim": "**Impact:** 5 files changed with 89 insertions and 89 deletions (clean text replacements).",
+  "detail": {
+   "n": "5"
+  },
+  "n_files": 5,
+  "paths": [
+   "pkg/cmd/create/doc.md",
+   "pkg/cmd/open/open.go",
+   "pkg/cmd/shell/shell.go",
+   "pkg/cmd/start/doc.md",
+   "pkg/cmd/status/doc.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 17140,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Impact: 5 files changed' asserts a count"
+ },
+ {
+  "id": 39,
+  "kind": "only_touches",
+  "url": "https://github.com/SAP/e-mobility-charging-stations-simulator/pull/1548",
+  "claim": "- Only changes how messages are processed by the UI cache update handler",
+  "detail": {
+   "prefix": "how"
+  },
+  "n_files": 5,
+  "paths": [
+   "src/charging-station/Bootstrap.ts",
+   "src/charging-station/ui-server/AbstractUIServer.ts",
+   "src/charging-station/ui-server/ui-services/AbstractUIService.ts",
+   "src/types/ChargingStationWorker.ts",
+   "src/utils/MessageChannelUtils.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 7718,
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'only changes how messages are processed' describes program behaviour, not file scope"
+ },
+ {
+  "id": 40,
+  "kind": "symbol_added",
+  "url": "https://github.com/BerriAI/litellm/pull/14086",
+  "claim": "* **Header Processing**: Added a new function `add_request_spend_logs_metadata_to_metadata` to parse JSON from the `x-litellm-spend-logs-metadata` header.",
+  "detail": {
+   "kind": "function",
+   "name": "add_request_spend_logs_metadata_to_metadata"
+  },
+  "n_files": 5,
+  "paths": [
+   "docs/my-website/docs/proxy/request_headers.md",
+   "litellm/proxy/_types.py",
+   "litellm/proxy/litellm_pre_call_utils.py",
+   "litellm/types/llms/openai.py",
+   "tests/proxy_unit_tests/test_proxy_utils.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 7328,
+  "added_lines_with_symbol": [
+   "def add_request_spend_logs_metadata_to_metadata(",
+   "spend_logs_metadata = LiteLLMProxyRequestSetup.add_request_spend_logs_metadata_to_metadata(",
+   "Test the add_request_spend_logs_metadata_to_metadata function directly.",
+   "result = LiteLLMProxyRequestSetup.add_request_spend_logs_metadata_to_metadata(headers, data)",
+   "result = LiteLLMProxyRequestSetup.add_request_spend_logs_metadata_to_metadata(headers, data)"
+  ],
+  "n_added": 107,
+  "symbols_named_in_sentence": [
+   "add_request_spend_logs_metadata_to_metadata"
+  ],
+  "definition_evidence": {
+   "add_request_spend_logs_metadata_to_metadata": {
+    "defs": [
+     "def add_request_spend_logs_metadata_to_metadata("
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names add_request_spend_logs_metadata_to_metadata; definition present"
+ },
+ {
+  "id": 41,
+  "kind": "symbol_added",
+  "url": "https://github.com/QuantEcon/QuantEcon.jl/pull/343",
+  "claim": "- Added function signatures to docstrings where missing",
+  "detail": {
+   "kind": "function",
+   "name": "signatures"
+  },
+  "n_files": 1,
+  "paths": [
+   "src/markov/markov_approx.jl"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 26482,
+  "added_lines_with_symbol": [],
+  "n_added": 228,
+  "symbols_named_in_sentence": [
+   "Added"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'function signatures to docstrings where missing' -- 'where missing' needs judgement"
+ },
+ {
+  "id": 42,
+  "kind": "tests_added",
+  "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/710",
+  "claim": "Added 3 new test cases that verify file locking behavior:",
+  "detail": {
+   "n": "3",
+   "noun": "cases"
+  },
+  "n_files": 6,
+  "paths": [
+   "cobj/parser.c",
+   "cobj/parser.h",
+   "cobj/ppparse.c",
+   "cobj/ppparse.h",
+   "doc/file-locking-implementation.md",
+   "tests/run.src/miscellaneous.at"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 341548,
+  "n_added": 2526,
+  "test_markers_added": 2,
+  "test_files_touched": [
+   "tests/run.src/miscellaneous.at"
+  ],
+  "sample_test_lines": [
+   "#define YY_ASSERT(E) ((void) (0 && (E)))",
+   "YY_ASSERT (0 <= yystate && yystate < YYNSTATES);"
+  ],
+  "counts": {
+   "test_funcs": 0,
+   "param_rows": 0,
+   "asserts": 1,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'3 new test cases' -- Autotest .at AT_SETUP blocks are countable"
+ },
+ {
+  "id": 43,
+  "kind": "only_touches",
+  "url": "https://github.com/web-infra-dev/rsbuild/pull/6377",
+  "claim": "> - **IMPORTANT:** Only change a sentence if it clearly improves clarity or",
+  "detail": {
+   "prefix": "a"
+  },
+  "n_files": 9,
+  "paths": [
+   "website/docs/en/guide/advanced/env-vars.mdx",
+   "website/docs/en/guide/advanced/hmr.mdx",
+   "website/docs/en/guide/basic/html-template.mdx",
+   "website/docs/en/guide/basic/server.mdx",
+   "website/docs/en/guide/basic/static-assets.mdx",
+   "website/docs/en/guide/faq/general.mdx",
+   "website/docs/en/guide/optimization/build-performance.mdx",
+   "website/docs/en/guide/start/index.mdx",
+   "website/docs/en/guide/start/quick-start.mdx"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 15907,
+  "decidable": false,
+  "reason_code": "prose_or_documentation",
+  "reason": "quoted conditional instruction ('only change a sentence if it clearly improves clarity') -- judgement, not a check"
+ },
+ {
+  "id": 44,
+  "kind": "files_changed_count",
+  "url": "https://github.com/artsy/force/pull/15294",
+  "claim": "1 file changed, 81 deletions(-)",
+  "detail": {
+   "n": "1"
+  },
+  "n_files": 2,
+  "paths": [
+   "src/Components/ArtworkFilter/ArtworkFilters/__tests__/ArtistNationalityFilter.jest.enzyme.tsx",
+   "src/Components/ArtworkFilter/ArtworkFilters/__tests__/ArtistNationalityFilter.jest.tsx"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 6312,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "git summary '1 file changed' (diff has 2)"
+ },
+ {
+  "id": 45,
+  "kind": "only_touches",
+  "url": "https://github.com/ying-ge/FigureYa/pull/16",
+  "claim": "- Only modified actual markdown headings, not comments inside R code blocks",
+  "detail": {
+   "prefix": "actual"
+  },
+  "n_files": 175,
+  "paths": [
+   "FigureYa101PCA/FigureYa101PCA.Rmd",
+   "FigureYa102multipanelROC/FigureYa102multipanelROC.Rmd",
+   "FigureYa103coAbundant/FigureYa103coAbundant.Rmd",
+   "FigureYa105GDSC/FigureYa105GDSC.Rmd",
+   "FigureYa106immunotherapy/FigureYa106immunotherapy.Rmd",
+   "FigureYa109SubtypeGSEA_update/FigureYa109SubtypeGSEA_update.Rmd",
+   "FigureYa10chromosomeV2_update/FigureYa10chromosomeV2_update.Rmd",
+   "FigureYa110mutationSignature/FigureYa110mutationSignature.Rmd",
+   "FigureYa111markerGene/FigureYa111markerGene_step1.Rmd",
+   "FigureYa112Plus_venn/FigureYa112Plus_venn.Rmd",
+   "FigureYa112venn/FigureYa112venn.Rmd",
+   "FigureYa113MutSigCV/FigureYa113MutSigCV.Rmd",
+   "FigureYa114ternaryCluster/FigureYa114ternaryCluster.Rmd",
+   "FigureYa115cofactor/FigureYa115cofactor.Rmd",
+   "FigureYa116supervisedCluster/FigureYa116supervisedCluster.Rmd",
+   "FigureYa117multilinearDE/FigureYa117multilinearDE.Rmd",
+   "FigureYa118MulticlassDESeq2/FigureYa118MulticlassDESeq2.Rmd",
+   "FigureYa119Multiclasslimma/FigureYa119Multiclasslimma.Rmd",
+   "FigureYa11bubble/FigureYa11bubbles.Rmd",
+   "FigureYa120MulticlassedgeR/FigureYa120MulticlassedgeR.Rmd",
+   "FigureYa121MethCGIcluster/FigureYa121MethCGIcluster.Rmd",
+   "FigureYa122mut2expr_20230822_223122/FigureYa122mut2expr.Rmd",
+   "FigureYa123mutVSexpr/FigureYa123mutVSexpr.Rmd",
+   "FigureYa124AssociationHeatmap/FigureYa124AssociationHeatmap.Rmd",
+   "FigureYa125FishertestV2/FigureYa125FishertestV2.Rmd"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 415267,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'only modified actual markdown headings, not comments inside R code blocks' -- laborious but determinate from the hunks"
+ },
+ {
+  "id": 46,
+  "kind": "only_touches",
+  "url": "https://github.com/jMonkeyEngine/sdk/pull/683",
+  "claim": "- The property is only modified when necessary, reducing side effects",
+  "detail": {
+   "prefix": "when"
+  },
+  "n_files": 2,
+  "paths": [
+   "jme3-materialeditor/src/com/jme3/gde/materials/multiview/widgets/TexturePanel.java",
+   "jme3-materialeditor/test/unit/src/com/jme3/gde/materials/multiview/widgets/TexturePanelTest.java"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 6000,
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'the property is only modified when necessary' describes runtime behaviour"
+ },
+ {
+  "id": 47,
+  "kind": "symbol_added",
+  "url": "https://github.com/dotnet/docs/pull/47092",
+  "claim": "- Adding new method overloads",
+  "detail": {
+   "kind": "method",
+   "name": "overloads"
+  },
+  "n_files": 1,
+  "paths": [
+   "docs/csharp/versioning.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 4559,
+  "added_lines_with_symbol": [
+   "- Adding new overloads:"
+  ],
+  "n_added": 132,
+  "symbols_named_in_sentence": [
+   "Adding"
+  ],
+  "definition_evidence": {
+   "Adding": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "named_thing_not_in_diff_vocabulary",
+  "reason": "'Adding new method overloads' names nothing"
+ },
+ {
+  "id": 48,
+  "kind": "files_changed_count",
+  "url": "https://github.com/reflex-dev/reflex-web/pull/1512",
+  "claim": "**Total Impact:** 76 files changed (all renames + 2 code files updated)",
+  "detail": {
+   "n": "76"
+  },
+  "n_files": 79,
+  "paths": [
+   "docs/advanced_onboarding/how_reflex_works.md",
+   "docs/api_reference/browser_javascript.md",
+   "docs/api_reference/browser_storage.md",
+   "docs/api_reference/cli.md",
+   "docs/api_reference/event_triggers.md",
+   "docs/api_reference/special_events.md",
+   "docs/api_reference/utils.md",
+   "docs/api_reference/var_system.md",
+   "docs/api_routes/overview.md",
+   "docs/custom_components/command_reference.md",
+   "docs/custom_components/overview.md",
+   "docs/custom_components/prerequisites_for_publishing.md",
+   "docs/enterprise/ag_grid/aligned_grids.md",
+   "docs/enterprise/ag_grid/column_defs.md",
+   "docs/enterprise/ag_grid/model_wrapper.md",
+   "docs/enterprise/ag_grid/pivot_mode.md",
+   "docs/enterprise/ag_grid/value_transformers.md",
+   "docs/enterprise/built_with_reflex.md",
+   "docs/enterprise/drag_and_drop.md",
+   "docs/enterprise/mantine/json_input.md",
+   "docs/enterprise/mantine/loading_overlay.md",
+   "docs/enterprise/mantine/multi_select.md",
+   "docs/enterprise/mantine/number_formatter.md",
+   "docs/enterprise/mantine/ring_progress.md",
+   "docs/enterprise/mantine/semi_circle_progress.md"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 20504,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Total Impact: 76 files changed' (diff has 79)"
+ },
+ {
+  "id": 49,
+  "kind": "symbol_added",
+  "url": "https://github.com/evergreen-ci/evergreen/pull/9037",
+  "claim": "- Added function comments and improved code formatting",
+  "detail": {
+   "kind": "function",
+   "name": "comments"
+  },
+  "n_files": 4,
+  "paths": [
+   "model/user/db.go",
+   "rest/route/github.go",
+   "thirdparty/github.go",
+   "units/patch_intent.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10566,
+  "added_lines_with_symbol": [],
+  "n_added": 200,
+  "symbols_named_in_sentence": [
+   "Added"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'function comments and improved code formatting' -- 'improved' is a judgement"
+ },
+ {
+  "id": 50,
+  "kind": "symbol_added",
+  "url": "https://github.com/samchon/typia/pull/1642",
+  "claim": "This PR introduces new class transformation functions `typia.misc.classTransform<T>()` and `typia.misc.assertClassTransform<T>()` that convert plain objects int",
+  "detail": {
+   "kind": "class",
+   "name": "transformation"
+  },
+  "n_files": 15,
+  "paths": [
+   "src/misc.ts",
+   "src/module.ts",
+   "src/programmers/misc/MiscAssertClassTransformProgrammer.ts",
+   "src/programmers/misc/MiscClassTransformProgrammer.ts",
+   "src/transformers/CallExpressionTransformer.ts",
+   "src/transformers/features/misc/MiscAssertClassTransformTransformer.ts",
+   "src/transformers/features/misc/MiscClassTransformTransformer.ts",
+   "test-esm/generate/output/index.ts",
+   "test/generate/output/generate_llm.ts",
+   "test/src/features/misc.classTransform/comprehensive_test.ts",
+   "test/src/features/misc.classTransform/detailed_test.ts",
+   "test/src/features/misc.classTransform/test_misc_assertClassTransform_SimpleClass.ts",
+   "test/src/features/misc.classTransform/test_misc_classTransform_SimpleClass.ts",
+   "test/src/internal/_test_misc_classTransform.ts",
+   "test/src/structures/SimpleClass.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 30711,
+  "added_lines_with_symbol": [
+   "// Basic check - ensure transformation occurred without error"
+  ],
+  "n_added": 692,
+  "symbols_named_in_sentence": [
+   "This",
+   "PR",
+   "classTransform",
+   "assertClassTransform"
+  ],
+  "definition_evidence": {
+   "This": {
+    "defs": []
+   },
+   "PR": {
+    "defs": []
+   },
+   "classTransform": {
+    "defs": [
+     "export function classTransform<T>(input: unknown): T;",
+     "export function classTransform(): never {",
+     "export function classTransform<T>(input: unknown): T;"
+    ]
+   },
+   "assertClassTransform": {
+    "defs": [
+     "export function assertClassTransform<T>(",
+     "export function assertClassTransform(): never {",
+     "export function assertClassTransform<T>("
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names classTransform and assertClassTransform; both defined in added lines"
+ },
+ {
+  "id": 51,
+  "kind": "tests_added",
+  "url": "https://github.com/specmatic/specmatic/pull/1926",
+  "claim": "- **EmailPatternTest**: Added 3 tests covering basic substitution, variable substitution, and invalid email validation",
+  "detail": {
+   "n": "3"
+  },
+  "n_files": 5,
+  "paths": [
+   "core/src/test/kotlin/io/specmatic/conversions/OptionalBodyPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/AnyNonNullJSONValueTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/EmailPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/EnumPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/QueryParameterScalarPatternTest.kt"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 25730,
+  "n_added": 520,
+  "test_markers_added": 51,
+  "test_files_touched": [
+   "core/src/test/kotlin/io/specmatic/conversions/OptionalBodyPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/AnyNonNullJSONValueTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/EmailPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/EnumPatternTest.kt",
+   "core/src/test/kotlin/io/specmatic/core/pattern/QueryParameterScalarPatternTest.kt"
+  ],
+  "sample_test_lines": [
+   "@Test",
+   "assertThat(result).isInstanceOf(HasValue::class.java)",
+   "assertThat((result as HasValue).value).isEqualTo(numericValue)",
+   "@Test",
+   "assertThat(result).isInstanceOf(HasValue::class.java)",
+   "assertThat((result as HasValue).value).isEqualTo(StringValue(\"Welcome to Engineering\"))"
+  ],
+  "counts": {
+   "test_funcs": 19,
+   "param_rows": 0,
+   "asserts": 51,
+   "test_files": 5
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'EmailPatternTest: Added 3 tests' -- scoped to one class; @Test countable there"
+ },
+ {
+  "id": 52,
+  "kind": "only_touches",
+  "url": "https://github.com/antiwork/gumroad/pull/526",
+  "claim": "**Risk Assessment:** \ud83d\udfe1 Medium-Low Risk - Text-only changes in help documentation with merge conflict resolution requiring careful verification.",
+  "detail": {
+   "prefix": "in"
+  },
+  "n_files": 3,
+  "paths": [
+   "README.md",
+   "app/views/help_center/articles/contents/_13-getting-paid.html.erb",
+   "docs/development/windows.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5578,
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "risk assessment prose; 'text-only changes in help documentation' does not scope which files"
+ },
+ {
+  "id": 53,
+  "kind": "files_changed_count",
+  "url": "https://github.com/liam-hq/liam/pull/3323",
+  "claim": "**Validate import paths**: With 55 files changed, confirm no import references were missed or incorrect",
+  "detail": {
+   "n": "55"
+  },
+  "n_files": 57,
+  "paths": [
+   "frontend/internal-packages/agent/package.json",
+   "frontend/internal-packages/agent/scripts/executeDesignProcess.ts",
+   "frontend/internal-packages/agent/scripts/executeQaAgent.ts",
+   "frontend/internal-packages/agent/scripts/shared/streamingUtils.ts",
+   "frontend/internal-packages/agent/src/chat/workflow/types.ts",
+   "frontend/internal-packages/agent/src/chat/workflow/utils/toolMessageUtils.test.ts",
+   "frontend/internal-packages/agent/src/createGraph.ts",
+   "frontend/internal-packages/agent/src/db-agent/getToolConfigurable.ts",
+   "frontend/internal-packages/agent/src/db-agent/invokeDbAgent.ts",
+   "frontend/internal-packages/agent/src/db-agent/invokeDbAgentStream.ts",
+   "frontend/internal-packages/agent/src/db-agent/nodes/designSchemaNode.integration.test.ts",
+   "frontend/internal-packages/agent/src/db-agent/nodes/designSchemaNode.ts",
+   "frontend/internal-packages/agent/src/db-agent/nodes/invokeSchemaDesignToolNode.ts",
+   "frontend/internal-packages/agent/src/db-agent/routing/routeAfterDesignSchema.test.ts",
+   "frontend/internal-packages/agent/src/db-agent/tools/schemaDesignTool.ts",
+   "frontend/internal-packages/agent/src/deepModeling.ts",
+   "frontend/internal-packages/agent/src/deepModelingStream.ts",
+   "frontend/internal-packages/agent/src/getMessages.ts",
+   "frontend/internal-packages/agent/src/index.ts",
+   "frontend/internal-packages/agent/src/lead-agent/classifyMessage/index.integration.test.ts",
+   "frontend/internal-packages/agent/src/lead-agent/classifyMessage/index.ts",
+   "frontend/internal-packages/agent/src/lead-agent/createLeadAgentGraph.ts",
+   "frontend/internal-packages/agent/src/lead-agent/summarizeWorkflow/index.integration.test.ts",
+   "frontend/internal-packages/agent/src/lead-agent/summarizeWorkflow/index.ts",
+   "frontend/internal-packages/agent/src/lead-agent/tools/routeToAgent.ts"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 76500,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'With 55 files changed' asserts a count (diff has 57)"
+ },
+ {
+  "id": 54,
+  "kind": "tests_added",
+  "url": "https://github.com/godaddy/terminus/pull/332",
+  "claim": "- **Comprehensive testing**: Added 3 new test cases covering SIGTERM, SIGINT, and SIGUSR2",
+  "detail": {
+   "n": "3",
+   "noun": "cases"
+  },
+  "n_files": 8,
+  "paths": [
+   "README.md",
+   "example/signal-parameter-example.js",
+   "lib/standalone-tests/terminus.onsignal.with-signal.js",
+   "lib/standalone-tests/terminus.onsignal.with-signal.multiple.js",
+   "lib/terminus.js",
+   "lib/terminus.spec.js",
+   "typings/index.d.ts",
+   "typings/index.test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 7090,
+  "n_added": 112,
+  "test_markers_added": 6,
+  "test_files_touched": [
+   "lib/terminus.spec.js",
+   "typings/index.test.ts"
+  ],
+  "sample_test_lines": [
+   "it('passes signal parameter to onSignal function when killed with SIGTERM', () => {",
+   "expect(result.stdout.toString().trim()).to.eql('on-signal-runs:SIGTERM')",
+   "it('passes signal parameter to onSignal function when killed with SIGINT', () => {",
+   "expect(result.stdout.toString().trim()).to.eql('on-signal-runs:SIGINT')",
+   "it('passes signal parameter to onSignal function when killed with SIGUSR2', () => {",
+   "expect(result.stdout.toString().trim()).to.eql('on-signal-runs:SIGUSR2')"
+  ],
+  "counts": {
+   "test_funcs": 3,
+   "param_rows": 0,
+   "asserts": 3,
+   "test_files": 2
+  },
+  "stated_matches": [
+   "funcs",
+   "asserts"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'3 new test cases covering SIGTERM, SIGINT, SIG...' -- 3 test functions"
+ },
+ {
+  "id": 55,
+  "kind": "only_touches",
+  "url": "https://github.com/tokens-studio/figma-plugin/pull/3630",
+  "claim": "- **Origin filtering** ensures only changes from other users trigger updates (not self-changes)",
+  "detail": {
+   "prefix": "from"
+  },
+  "n_files": 9,
+  "paths": [
+   ".changeset/real-time-token-sync.md",
+   "docs/REAL_TIME_SYNC.md",
+   "packages/tokens-studio-for-figma/src/app/components/AppContainer/AppContainer.tsx",
+   "packages/tokens-studio-for-figma/src/plugin/asyncMessageHandlers/index.ts",
+   "packages/tokens-studio-for-figma/src/plugin/asyncMessageHandlers/reloadTokenData.ts",
+   "packages/tokens-studio-for-figma/src/plugin/asyncMessageHandlers/tokenDataChanged.ts",
+   "packages/tokens-studio-for-figma/src/plugin/controller.ts",
+   "packages/tokens-studio-for-figma/src/plugin/sendDocumentChange.ts",
+   "packages/tokens-studio-for-figma/src/types/AsyncMessages.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 15992,
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'ensures only changes from other users trigger updates' describes runtime filtering"
+ },
+ {
+  "id": 56,
+  "kind": "symbol_added",
+  "url": "https://github.com/QuantEcon/QuantEcon.jl/pull/349",
+  "claim": "**Added function signatures**: Each docstring now begins with a four-space indented function signature showing the function name and key parameters",
+  "detail": {
+   "kind": "function",
+   "name": "signatures"
+  },
+  "n_files": 1,
+  "paths": [
+   "src/matrix_eqn.jl"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5987,
+  "added_lines_with_symbol": [],
+  "n_added": 59,
+  "symbols_named_in_sentence": [
+   "Added",
+   "Each"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   },
+   "Each": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'each docstring now begins with a four-space indented function signature' is a precise, checkable assertion"
+ },
+ {
+  "id": 57,
+  "kind": "symbol_added",
+  "url": "https://github.com/AzureAD/microsoft-identity-web/pull/3532",
+  "claim": "**Updated API tracking**: Added new method overloads to `InternalAPI.Unshipped.txt` for all target frameworks",
+  "detail": {
+   "kind": "method",
+   "name": "overloads"
+  },
+  "n_files": 12,
+  "paths": [
+   "src/Microsoft.Identity.Web.DownstreamApi/DownstreamApi.HttpMethods.cs",
+   "src/Microsoft.Identity.Web.DownstreamApi/DownstreamApi.HttpMethods.tt",
+   "src/Microsoft.Identity.Web.DownstreamApi/DownstreamApi.cs",
+   "src/Microsoft.Identity.Web.DownstreamApi/PublicAPI/net462/InternalAPI.Unshipped.txt",
+   "src/Microsoft.Identity.Web.DownstreamApi/PublicAPI/net472/InternalAPI.Unshipped.txt",
+   "src/Microsoft.Identity.Web.DownstreamApi/PublicAPI/net8.0/InternalAPI.Unshipped.txt",
+   "src/Microsoft.Identity.Web.DownstreamApi/PublicAPI/net9.0/InternalAPI.Unshipped.txt",
+   "src/Microsoft.Identity.Web.DownstreamApi/PublicAPI/netstandard2.0/InternalAPI.Unshipped.txt",
+   "src/Microsoft.Identity.Web.Sidecar/OpenAPI/Microsoft.Identity.Web.Sidecar.json",
+   "tests/DevApps/aspnet-mvc/OwinWebApi/Web.config",
+   "tests/DevApps/aspnet-mvc/OwinWebApp/Web.config",
+   "tests/Microsoft.Identity.Web.Test/DownstreamWebApiSupport/DownstreamApiTests.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 86127,
+  "added_lines_with_symbol": [],
+  "n_added": 413,
+  "symbols_named_in_sentence": [
+   "InternalAPI.Unshipped.txt"
+  ],
+  "definition_evidence": {
+   "InternalAPI.Unshipped.txt": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'added new method overloads to InternalAPI.Unshipped.txt' -- named file gaining signature lines is checkable"
+ },
+ {
+  "id": 58,
+  "kind": "files_changed_count",
+  "url": "https://github.com/hpcc-systems/HPCC-Platform/pull/20553",
+  "claim": "5 files changed, 9 insertions(+), 5 deletions(-)",
+  "detail": {
+   "n": "5"
+  },
+  "n_files": 5,
+  "paths": [
+   "dockerfiles/platform-core-ubuntu-20.04.dockerfile",
+   "dockerfiles/platform-core-ubuntu-22.04.dockerfile",
+   "dockerfiles/platform-core-ubuntu-22.04/Dockerfile",
+   "dockerfiles/platform-core-ubuntu-24.04.dockerfile",
+   "helm/hpcc/templates/_helpers.tpl"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2854,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "git summary '5 files changed'"
+ },
+ {
+  "id": 59,
+  "kind": "symbol_added",
+  "url": "https://github.com/amitsaha/gitbackup/pull/171",
+  "claim": "- Added function documentation to all public functions",
+  "detail": {
+   "kind": "function",
+   "name": "documentation"
+  },
+  "n_files": 13,
+  "paths": [
+   "backup.go",
+   "bitbucket.go",
+   "bitbucket_test.go",
+   "client.go",
+   "config.go",
+   "git_repository_clone.go",
+   "github.go",
+   "gitlab.go",
+   "helpers.go",
+   "helpers_test.go",
+   "options.go",
+   "repositories.go",
+   "user_data.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 30205,
+  "added_lines_with_symbol": [],
+  "n_added": 477,
+  "symbols_named_in_sentence": [
+   "Added"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'to all public functions' across 13 files requires deciding what is public"
+ },
+ {
+  "id": 60,
+  "kind": "only_touches",
+  "url": "https://github.com/hmislk/hmis/pull/15088",
+  "claim": "- No tests were run; JSF-only changes per repository guidelines",
+  "detail": {
+   "prefix": "per"
+  },
+  "n_files": 1,
+  "paths": [
+   "src/main/webapp/pharmacy/admin/vtm.xhtml"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5260,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'JSF-only changes' checkable: single .xhtml file"
+ },
+ {
+  "id": 61,
+  "kind": "only_touches",
+  "url": "https://github.com/Azure/azure-rest-api-specs/pull/36679",
+  "claim": "**Corrected test case changes**: Fixed an earlier commit that incorrectly modified C# test cases when it should have only changed Go test cases.",
+  "detail": {
+   "prefix": "Go"
+  },
+  "n_files": 134,
+  "paths": [
+   "eng/tools/spec-gen-sdk-runner/test/fixtures/specification/service1/data-plane/widget/tspconfig.yaml",
+   "eng/tools/summarize-impact/test/fixtures/default/after/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml",
+   "eng/tools/summarize-impact/test/fixtures/default/before/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml",
+   "eng/tools/typespec-validation/src/rules/sdk-tspconfig-validation.ts",
+   "eng/tools/typespec-validation/test/sdk-tspconfig-validation.test.ts",
+   "specification/agricultureplatform/AgriculturePlatform.Management/tspconfig.yaml",
+   "specification/ai/Azure.AI.Agents/tspconfig.yaml",
+   "specification/ai/Azure.AI.Projects/tspconfig.yaml",
+   "specification/ai/ContentUnderstanding/tspconfig.yaml",
+   "specification/ai/DocumentIntelligence/tspconfig.yaml",
+   "specification/ai/Face/tspconfig.yaml",
+   "specification/ai/HealthInsights/HealthInsights.RadiologyInsights/tspconfig.yaml",
+   "specification/ai/ImageAnalysis/tspconfig.yaml",
+   "specification/ai/OpenAI.Assistants/tspconfig.yaml",
+   "specification/apicenter/ApiCenter.DataApi/tspconfig.yaml",
+   "specification/appconfiguration/AppConfiguration/tspconfig.yaml",
+   "specification/applicationinsights/ApplicationInsights.LiveMetrics/tspconfig.yaml",
+   "specification/azuredependencymap/DependencyMap.Management/tspconfig.yaml",
+   "specification/azurefleet/AzureFleet.Management/tspconfig.yaml",
+   "specification/batch/Azure.Batch/tspconfig.yaml",
+   "specification/botservice/BotService.Management/tspconfig.yaml",
+   "specification/carbon/Carbon.Management/tspconfig.yaml",
+   "specification/chaos/Chaos.Management/tspconfig.yaml",
+   "specification/cloudhealth/CloudHealth.Management/tspconfig.yaml",
+   "specification/cognitiveservices/AnomalyDetector/tspconfig.yaml"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 136129,
+  "decidable": false,
+  "reason_code": "other_refers_to_different_change",
+  "reason": "describes what an earlier commit did, not this PR's net diff"
+ },
+ {
+  "id": 62,
+  "kind": "tests_added",
+  "url": "https://github.com/MaestroError/LarAgent/pull/92",
+  "claim": "Added 1 test case verifying:",
+  "detail": {
+   "n": "1",
+   "noun": "case"
+  },
+  "n_files": 2,
+  "paths": [
+   "TEST_SUMMARY.md",
+   "tests/LarAgent/AgentTest.php"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10190,
+  "n_added": 261,
+  "test_markers_added": 22,
+  "test_files_touched": [
+   "tests/LarAgent/AgentTest.php"
+  ],
+  "sample_test_lines": [
+   "it('can parse mcp server config with server name only', function () {",
+   "expect($result)->toMatchArray([",
+   "it('can parse mcp server config with server name and method', function () {",
+   "expect($result)->toMatchArray([",
+   "it('can parse mcp server config with filter and single argument', function () {",
+   "expect($result)->toMatchArray(["
+  ],
+  "counts": {
+   "test_funcs": 12,
+   "param_rows": 0,
+   "asserts": 11,
+   "test_files": 1
+  },
+  "stated_matches": [
+   "files"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Added 1 test case' -- test functions countable; 12 added"
+ },
+ {
+  "id": 63,
+  "kind": "tests_added",
+  "url": "https://github.com/Azure/azure-sdk-tools/pull/12271",
+  "claim": "- Added 7 new test cases covering CLI argument validation, help functionality, and successful execution",
+  "detail": {
+   "n": "7",
+   "noun": "cases"
+  },
+  "n_files": 6,
+  "paths": [
+   "tools/apiview/parsers/js-api-parser/package-lock.json",
+   "tools/apiview/parsers/js-api-parser/package.json",
+   "tools/apiview/parsers/js-api-parser/readme.md",
+   "tools/apiview/parsers/js-api-parser/src/export.ts",
+   "tools/apiview/parsers/js-api-parser/test/cli.spec.ts",
+   "tools/apiview/parsers/js-api-parser/test/generate.spec.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 158740,
+  "n_added": 4345,
+  "test_markers_added": 33,
+  "test_files_touched": [
+   "tools/apiview/parsers/js-api-parser/test/cli.spec.ts",
+   "tools/apiview/parsers/js-api-parser/test/generate.spec.ts"
+  ],
+  "sample_test_lines": [
+   "\"node_modules/assertion-error\": {",
+   "\"resolved\": \"https://registry.npmjs.org/assertion-error/-/assertion-error-2.0.1.tgz\",",
+   "\"assertion-error\": \"^2.0.1\",",
+   "process.exit(0);",
+   "describe(\"CLI\", () => {",
+   "it(\"shows help message with --help\", async () => {"
+  ],
+  "counts": {
+   "test_funcs": 7,
+   "param_rows": 0,
+   "asserts": 27,
+   "test_files": 2
+  },
+  "stated_matches": [
+   "funcs"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'7 new test cases' -- 7 test functions"
+ },
+ {
+  "id": 64,
+  "kind": "tests_added",
+  "url": "https://github.com/justtrackio/gosoline/pull/1264",
+  "claim": "Created 5 new test files with 70+ test cases covering all public APIs and core functionality:",
+  "detail": {
+   "n": "5",
+   "noun": "files"
+  },
+  "n_files": 7,
+  "paths": [
+   "pkg/ipread/mocks/Provider.go",
+   "pkg/ipread/provider.go",
+   "pkg/ipread/provider_maxmind_test.go",
+   "pkg/ipread/provider_memory_test.go",
+   "pkg/ipread/reader_test.go",
+   "pkg/ipread/refresh_module_test.go",
+   "pkg/ipread/settings_test.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 41527,
+  "n_added": 1385,
+  "test_markers_added": 19,
+  "test_files_touched": [
+   "pkg/ipread/provider_maxmind_test.go",
+   "pkg/ipread/provider_memory_test.go",
+   "pkg/ipread/reader_test.go",
+   "pkg/ipread/refresh_module_test.go",
+   "pkg/ipread/settings_test.go"
+  ],
+  "sample_test_lines": [
+   "func (_m *Provider) EXPECT() *Provider_Expecter {",
+   "// NewProvider creates a new instance of Provider. It also registers a testing interface on the mock",
+   "mock.Mock.Test(t)",
+   "t.Cleanup(func() { mock.AssertExpectations(t) })",
+   "func (s *MaxmindProviderTestSuite) SetupTest() {",
+   "func TestMaxmindProviderTestSuite(t *testing.T) {"
+  ],
+  "counts": {
+   "test_funcs": 7,
+   "param_rows": 0,
+   "asserts": 15,
+   "test_files": 5
+  },
+  "stated_matches": [
+   "files"
+  ],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Created 5 new test files' -- files countable"
+ },
+ {
+  "id": 65,
+  "kind": "files_changed_count",
+  "url": "https://github.com/BrowserBox/BrowserBox/pull/1607",
+  "claim": "- **Total**: 2 files changed, 205 lines modified",
+  "detail": {
+   "n": "2"
+  },
+  "n_files": 3,
+  "paths": [
+   "package-lock.json",
+   "src/ws-server.js",
+   "windows-scripts/stop.ps1"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 13404,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Total: 2 files changed' (diff has 3)"
+ },
+ {
+  "id": 66,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/xdp-for-windows/pull/906",
+  "claim": "These are documentation-only changes with no code modifications.",
+  "detail": {
+   "prefix": "with"
+  },
+  "n_files": 10,
+  "paths": [
+   "docs/api/XDP_API_TABLE.md",
+   "docs/api/XDP_LOAD_API_CONTEXT.md",
+   "docs/api/XdpCloseApi.md",
+   "docs/api/XdpLoadApi.md",
+   "docs/api/XdpOpenApi.md",
+   "docs/api/XdpUnloadApi.md",
+   "docs/architecture.md",
+   "docs/threat-model.md",
+   "docs/usage.md",
+   "published/external/xdp/xdpapi_v1.h"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10102,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'documentation-only changes with no code modifications' checkable: all 10 paths under docs/"
+ },
+ {
+  "id": 67,
+  "kind": "only_touches",
+  "url": "https://github.com/dotnet/razor/pull/12323",
+  "claim": "- Only modifies Workspaces and Remote layers (as per requirements)",
+  "detail": {
+   "prefix": "Workspaces"
+  },
+  "n_files": 5,
+  "paths": [
+   ".github/copilot-instructions.md",
+   "src/Razor/src/Microsoft.CodeAnalysis.Razor.Workspaces/GoToDefinition/AbstractDefinitionService.cs",
+   "src/Razor/src/Microsoft.CodeAnalysis.Razor.Workspaces/GoToDefinition/IDefinitionService.cs",
+   "src/Razor/src/Microsoft.CodeAnalysis.Remote.Razor/GoToDefinition/RemoteGoToDefinitionService.cs",
+   "src/Razor/test/Microsoft.VisualStudioCode.RazorExtension.Test/Endpoints/Shared/CohostGoToDefinitionEndpointTest.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 20514,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Only modifies Workspaces and Remote layers' -- layers map to path segments; checkable"
+ },
+ {
+  "id": 68,
+  "kind": "tests_added",
+  "url": "https://github.com/mermaid-js/mermaid/pull/6845",
+  "claim": "- **Unit Tests**: Added 7 new test cases in `c4Diagram.spec.js` covering all lineStyle values, edge cases, and bidirectional relations",
+  "detail": {
+   "n": "7",
+   "noun": "cases"
+  },
+  "n_files": 7,
+  "paths": [
+   ".gitignore",
+   "cypress/integration/rendering/c4.spec.js",
+   "demos/c4context.html",
+   "docs/syntax/c4.md",
+   "packages/mermaid/src/diagrams/c4/parser/c4Diagram.spec.js",
+   "packages/mermaid/src/diagrams/c4/svgDraw.js",
+   "packages/mermaid/src/docs/syntax/c4.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 17631,
+  "n_added": 275,
+  "test_markers_added": 28,
+  "test_files_touched": [
+   "cypress/integration/rendering/c4.spec.js",
+   "packages/mermaid/src/diagrams/c4/parser/c4Diagram.spec.js"
+  ],
+  "sample_test_lines": [
+   "it('C4.6 should render dashed and dotted line styles for relations', () => {",
+   "imgSnapshotTest(",
+   "it('C4.7 should render mixed line styles with bidirectional relations', () => {",
+   "imgSnapshotTest(",
+   "describe('UpdateRelStyle with lineStyle parameter', function () {",
+   "it('should handle UpdateRelStyle with $lineStyle=\"dashed\"', function () {"
+  ],
+  "counts": {
+   "test_funcs": 9,
+   "param_rows": 0,
+   "asserts": 25,
+   "test_files": 2
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'7 new test cases in c4Diagram.spec.js' -- named file, it() countable"
+ },
+ {
+  "id": 69,
+  "kind": "only_touches",
+  "url": "https://github.com/airbytehq/airbyte/pull/66487",
+  "claim": "This is a documentation-only change that adds a new file without modifying existing functionality.",
+  "detail": {
+   "prefix": "that"
+  },
+  "n_files": 1,
+  "paths": [
+   "docs/release_notes/helm-chart-v2-release-notes.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10045,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'documentation-only change that adds a new file' checkable: one docs/*.md"
+ },
+ {
+  "id": 70,
+  "kind": "only_touches",
+  "url": "https://github.com/casdoor/casdoor/pull/4288",
+  "claim": "- `getOriginalUsersWithFilter()` - Queries only modified users",
+  "detail": {
+   "prefix": "users"
+  },
+  "n_files": 7,
+  "paths": [
+   ".gitignore",
+   "IMPLEMENTATION_SUMMARY.md",
+   "INCREMENTAL_SYNC.md",
+   "object/syncer.go",
+   "object/syncer_incremental_test.go",
+   "object/syncer_sync.go",
+   "object/syncer_user.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 20486,
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'Queries only modified users' describes what a function returns at runtime"
+ },
+ {
+  "id": 71,
+  "kind": "symbol_added",
+  "url": "https://github.com/microsoft/vscode-pull-request-github/pull/7345",
+  "claim": "This PR adds a new method `getReviewerUsers` to `GitHubRepository` class that specifically handles fetching users with reviewer capability.",
+  "detail": {
+   "kind": "method",
+   "name": "getReviewerUsers"
+  },
+  "n_files": 6,
+  "paths": [
+   "src/@types/vscode.proposed.chatParticipantAdditions.d.ts",
+   "src/github/folderRepositoryManager.ts",
+   "src/github/githubRepository.ts",
+   "src/github/quickPicks.ts",
+   "src/test/github/folderRepositoryManager.test.ts",
+   "src/test/github/githubRepository.test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 127376,
+  "added_lines_with_symbol": [
+   "this.getReviewerUsers(repositoriesAdded.length > 0);",
+   "async getReviewerUsers(clearCache?: boolean): Promise<{ [key: string]: IAccount[] }> {",
+   "const data = await githubRepository.getReviewerUsers();",
+   "async getReviewerUsers(): Promise<IAccount[]> {",
+   "const allReviewerUsers = await folderRepositoryManager.getReviewerUsers();"
+  ],
+  "n_added": 1872,
+  "symbols_named_in_sentence": [
+   "getReviewerUsers",
+   "GitHubRepository"
+  ],
+  "definition_evidence": {
+   "getReviewerUsers": {
+    "defs": []
+   },
+   "GitHubRepository": {
+    "defs": [
+     "export class GitHubRepository extends Disposable {"
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names getReviewerUsers on GitHubRepository; checkable"
+ },
+ {
+  "id": 72,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/typescript-go/pull/1933",
+  "claim": "The fix is minimal and focused - it only changes the token rules to exclude EOF from `allTokens`, preventing the \"SpaceAfterSemicolon\" rule from incorrectly app",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 2,
+  "paths": [
+   "internal/format/format_test.go",
+   "internal/format/rules.go"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2921,
+  "decidable": false,
+  "reason_code": "ambiguous_scope",
+  "reason": "'only changes the token rules' -- a test file is also changed; unclear whether that violates 'only'"
+ },
+ {
+  "id": 73,
+  "kind": "only_touches",
+  "url": "https://github.com/jsonresume/jsonresume.org/pull/234",
+  "claim": "None - this is backward compatible as it only changes the internal evaluation logic",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 64,
+  "paths": [
+   ".playwright-mcp/decisions-ai-second-job.png",
+   ".playwright-mcp/decisions-ai-test.png",
+   ".playwright-mcp/decisions-page-state.png",
+   ".playwright-mcp/job-detail-bottom.png",
+   ".playwright-mcp/job-detail-fixed.png",
+   ".playwright-mcp/job-detail-scrolled.png",
+   ".playwright-mcp/jobs-filtered.png",
+   ".playwright-mcp/jobs-list-filters.png",
+   ".playwright-mcp/jobs-page-current.png",
+   ".playwright-mcp/jobs-page-fixed.png",
+   ".playwright-mcp/jobs-page.png",
+   ".playwright-mcp/jobs-with-dates.png",
+   "AGENTS.md",
+   "apps/docs/FAQ_COVERAGE.md",
+   "apps/docs/FAQ_DOCUMENTATION_SUMMARY.md",
+   "apps/docs/FAQ_PART2_COVERAGE.md",
+   "apps/docs/FAQ_QUICK_REFERENCE.md",
+   "apps/docs/questions.md",
+   "apps/registry/app/[username]/ProfileLayout.js",
+   "apps/registry/app/[username]/decisions/DECISIONS_PRD.md",
+   "apps/registry/app/[username]/decisions/README.md",
+   "apps/registry/app/[username]/decisions/components/DecisionTreePane.jsx",
+   "apps/registry/app/[username]/decisions/components/JobDetail.jsx",
+   "apps/registry/app/[username]/decisions/components/JobsPane.jsx",
+   "apps/registry/app/[username]/decisions/components/PreferencesPanel.jsx"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 265283,
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'only changes the internal evaluation logic' is a semantic claim; 64 files incl. screenshots"
+ },
+ {
+  "id": 74,
+  "kind": "symbol_added",
+  "url": "https://github.com/Z3Prover/z3/pull/7975",
+  "claim": "- `src/ast/rewriter/finite_set_rewriter.h` - Added method declarations",
+  "detail": {
+   "kind": "method",
+   "name": "declarations"
+  },
+  "n_files": 2,
+  "paths": [
+   "src/ast/rewriter/finite_set_rewriter.cpp",
+   "src/test/finite_set_rewriter.cpp"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 14659,
+  "added_lines_with_symbol": [],
+  "n_added": 309,
+  "symbols_named_in_sentence": [
+   "Added"
+  ],
+  "definition_evidence": {
+   "Added": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names the header file gaining method declarations; checkable"
+ },
+ {
+  "id": 75,
+  "kind": "tests_added",
+  "url": "https://github.com/modelcontextprotocol/csharp-sdk/pull/896",
+  "claim": "Added 6 new tests across 2 test files:",
+  "detail": {
+   "n": "6"
+  },
+  "n_files": 2,
+  "paths": [
+   "tests/ModelContextProtocol.Tests/Configuration/McpServerOptionsSetupTests.cs",
+   "tests/ModelContextProtocol.Tests/Configuration/McpServerResourceCapabilityIntegrationTests.cs"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 10867,
+  "n_added": 242,
+  "test_markers_added": 30,
+  "test_files_touched": [
+   "tests/ModelContextProtocol.Tests/Configuration/McpServerOptionsSetupTests.cs",
+   "tests/ModelContextProtocol.Tests/Configuration/McpServerResourceCapabilityIntegrationTests.cs"
+  ],
+  "sample_test_lines": [
+   "[Fact]",
+   "Assert.NotNull(options.Capabilities?.Resources);",
+   "Assert.True(options.Capabilities.Resources.Subscribe, \"User's manually set Subscribe capability shou",
+   "Assert.NotNull(options.ResourceCollection);",
+   "Assert.NotEmpty(options.ResourceCollection);",
+   "[Fact]"
+  ],
+  "counts": {
+   "test_funcs": 7,
+   "param_rows": 0,
+   "asserts": 33,
+   "test_files": 2
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'6 new tests across 2 test files' -- [Fact] countable; 7 added"
+ },
+ {
+  "id": 76,
+  "kind": "files_changed_count",
+  "url": "https://github.com/WordPress/wordpress-playground/pull/2796",
+  "claim": "**Total Impact**: 4 files changed, 7 insertions(+), 7 deletions(-)",
+  "detail": {
+   "n": "4"
+  },
+  "n_files": 4,
+  "paths": [
+   "packages/playground/website/src/components/site-manager/sidebar/index.tsx",
+   "packages/playground/website/src/components/toolbar-buttons/github-import-menu-item.tsx",
+   "packages/playground/website/src/components/toolbar-buttons/gutenberg-pr-menu-item.tsx",
+   "packages/playground/website/src/components/toolbar-buttons/wordpress-pr-menu-item.tsx"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2947,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Total Impact: 4 files changed'"
+ },
+ {
+  "id": 77,
+  "kind": "symbol_added",
+  "url": "https://github.com/dependabot/dependabot-core/pull/12915",
+  "claim": "- Added method delegation to `Service` class",
+  "detail": {
+   "kind": "method",
+   "name": "delegation"
+  },
+  "n_files": 6,
+  "paths": [
+   "updater/lib/dependabot/api_client.rb",
+   "updater/lib/dependabot/service.rb",
+   "updater/lib/dependabot/updater/operations/create_group_update_pull_request.rb",
+   "updater/lib/dependabot/updater/operations/refresh_version_update_pull_request.rb",
+   "updater/lib/dependabot/updater/operations/update_all_versions.rb",
+   "updater/spec/dependabot/api_client_spec.rb"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 9348,
+  "added_lines_with_symbol": [],
+  "n_added": 161,
+  "symbols_named_in_sentence": [
+   "Service"
+  ],
+  "definition_evidence": {
+   "Service": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "named_thing_not_in_diff_vocabulary",
+  "reason": "'method delegation to Service class' names no method"
+ },
+ {
+  "id": 78,
+  "kind": "files_changed_count",
+  "url": "https://github.com/Kotlin-Android-Open-Source/MVI-Coroutines-Flow/pull/293",
+  "claim": "**Impact:** 8 files changed, 127 insertions(+), 13 deletions(-)",
+  "detail": {
+   "n": "8"
+  },
+  "n_files": 8,
+  "paths": [
+   "app/src/main/java/com/hoc/flowmvi/initializer/TimberInitializer.kt",
+   "core-ui/src/main/java/com/hoc/flowmvi/core_ui/parcelable.kt",
+   "data/src/main/java/com/hoc/flowmvi/data/mapper/UserErrorMapper.kt",
+   "data/src/test/java/com/hoc/flowmvi/data/mapper/UserErrorMapperTest.kt",
+   "feature-main/src/main/java/com/hoc/flowmvi/ui/main/MainActivity.kt",
+   "feature-search/src/main/java/com/hoc/flowmvi/ui/search/SearchActivity.kt",
+   "feature-search/src/main/java/com/hoc/flowmvi/ui/search/SearchVM.kt",
+   "gradle/libs.versions.toml"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 11153,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Impact: 8 files changed'"
+ },
+ {
+  "id": 79,
+  "kind": "symbol_added",
+  "url": "https://github.com/microsoft/vscode/pull/266979",
+  "claim": "- `setShowButtons(false)` adds the class back",
+  "detail": {
+   "kind": "class",
+   "name": "back"
+  },
+  "n_files": 2,
+  "paths": [
+   "src/vs/workbench/contrib/chat/browser/chatContentParts/chatConfirmationWidget.ts",
+   "src/vs/workbench/contrib/chat/test/browser/chatConfirmationWidget.test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 4759,
+  "added_lines_with_symbol": [
+   "// Verify setShowButtons(false) adds the class back",
+   "'setShowButtons(false) should add hideButtons class back');"
+  ],
+  "n_added": 74,
+  "symbols_named_in_sentence": [
+   "setShowButtons"
+  ],
+  "definition_evidence": {
+   "setShowButtons": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "runtime_behaviour",
+  "reason": "'setShowButtons(false) adds the class back' describes runtime effect"
+ },
+ {
+  "id": 80,
+  "kind": "files_changed_count",
+  "url": "https://github.com/ktnyt/cclsp/pull/13",
+  "claim": "- **11 files changed**, 1,745 additions, 25 deletions",
+  "detail": {
+   "n": "11"
+  },
+  "n_files": 14,
+  "paths": [
+   ".gitignore",
+   "README.md",
+   "bun.lock",
+   "index.ts",
+   "package.json",
+   "src/file-editor-rollback.test.ts",
+   "src/file-editor-symlink.test.ts",
+   "src/file-editor.test.ts",
+   "src/file-editor.ts",
+   "src/lsp-client.ts",
+   "test/fixtures/go-example.go",
+   "test/fixtures/python-example.py",
+   "test/fixtures/typescript-example.ts",
+   "test/manual-rename-test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 75177,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'11 files changed' (diff has 14)"
+ },
+ {
+  "id": 81,
+  "kind": "symbol_added",
+  "url": "https://github.com/thirdweb-dev/js/pull/7919",
+  "claim": "- Introduced a new function `getDelegationContractAddress` for fetching delegation contract addresses.",
+  "detail": {
+   "kind": "function",
+   "name": "getDelegationContractAddress"
+  },
+  "n_files": 16,
+  "paths": [
+   "packages/thirdweb/scripts/generate/abis/erc7702/MinimalAccount.json",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/events/Executed.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/events/SessionCreated.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/events/ValueReceived.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/eip712Domain.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/getCallPoliciesForSigner.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/getSessionExpirationForSigner.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/getSessionStateForSigner.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/getTransferPoliciesForSigner.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/read/isWildcardSigner.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/write/createSessionWithSig.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/write/execute.ts",
+   "packages/thirdweb/src/extensions/erc7702/__generated__/MinimalAccount/write/executeWithSig.ts",
+   "packages/thirdweb/src/extensions/erc7702/account/sessionkey.test.ts",
+   "packages/thirdweb/src/wallets/in-app/core/eip7702/minimal-account.ts",
+   "packages/thirdweb/src/wallets/in-app/web/lib/in-app-integration.test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 39724,
+  "added_lines_with_symbol": [
+   "async function getDelegationContractAddress(args: {",
+   "const delegationContractAddress = await getDelegationContractAddress({"
+  ],
+  "n_added": 313,
+  "symbols_named_in_sentence": [
+   "getDelegationContractAddress"
+  ],
+  "definition_evidence": {
+   "getDelegationContractAddress": {
+    "defs": [
+     "async function getDelegationContractAddress(args: {"
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names getDelegationContractAddress; definition present"
+ },
+ {
+  "id": 82,
+  "kind": "only_touches",
+  "url": "https://github.com/Azure-Samples/serverless-chat-langchainjs/pull/120",
+  "claim": "> - ONLY MODIFY the README.md file at the root of the repository.",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 1,
+  "paths": [
+   "README.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2318,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "quoted scope instruction 'ONLY MODIFY the README.md file at the root'; PR changes exactly that [CONTESTABLE]"
+ },
+ {
+  "id": 83,
+  "kind": "symbol_added",
+  "url": "https://github.com/drewnoakes/metadata-extractor-dotnet/pull/460",
+  "claim": "> <agent_instructions>Make a minimal PR that adds the method described in the issue discussion.",
+  "detail": {
+   "kind": "method",
+   "name": "described"
+  },
+  "n_files": 5,
+  "paths": [
+   "MetadataExtractor.Tests/Formats/Exif/ExifDirectoryTest.cs",
+   "MetadataExtractor/Formats/Exif/GpsDirectory.cs",
+   "MetadataExtractor/PublicAPI/net8.0/PublicAPI.Unshipped.txt",
+   "MetadataExtractor/PublicAPI/netstandard2.0/PublicAPI.Unshipped.txt",
+   "MetadataExtractor/PublicAPI/netstandard2.1/PublicAPI.Unshipped.txt"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 5646,
+  "added_lines_with_symbol": [],
+  "n_added": 31,
+  "symbols_named_in_sentence": [
+   "Make",
+   "PR"
+  ],
+  "definition_evidence": {
+   "Make": {
+    "defs": []
+   },
+   "PR": {
+    "defs": []
+   }
+  },
+  "decidable": false,
+  "reason_code": "prose_or_documentation",
+  "reason": "quoted agent instruction referring to 'the method described in the issue discussion'"
+ },
+ {
+  "id": 84,
+  "kind": "symbol_added",
+  "url": "https://github.com/Extelligence-ai/bagel/pull/29",
+  "claim": "This task requires you to update the `server.py` file by adding the function `read_topic_frequencies` and validating its functionality.",
+  "detail": {
+   "kind": "function",
+   "name": "read_topic_frequencies"
+  },
+  "n_files": 1,
+  "paths": [
+   "server.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 1979,
+  "added_lines_with_symbol": [
+   "def read_topic_frequencies("
+  ],
+  "n_added": 36,
+  "symbols_named_in_sentence": [
+   "server.py",
+   "read_topic_frequencies"
+  ],
+  "definition_evidence": {
+   "server.py": {
+    "defs": []
+   },
+   "read_topic_frequencies": {
+    "defs": [
+     "def read_topic_frequencies("
+    ]
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names read_topic_frequencies; definition present"
+ },
+ {
+  "id": 85,
+  "kind": "only_touches",
+  "url": "https://github.com/celestiaorg/docs/pull/2096",
+  "claim": "This is a minimal, surgical fix that only changes the separator dashes to be properly aligned according to prettier's formatting standards.",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 2,
+  "paths": [
+   "how-to-guides/mammoth.md",
+   "yarn.lock"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 36501,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'only changes the separator dashes' checkable; yarn.lock is also modified"
+ },
+ {
+  "id": 86,
+  "kind": "tests_added",
+  "url": "https://github.com/dependabot/dependabot-core/pull/13298",
+  "claim": "- \u2705 Added 3 new test cases covering the nil version edge cases",
+  "detail": {
+   "n": "3",
+   "noun": "cases"
+  },
+  "n_files": 4,
+  "paths": [
+   "maven/lib/dependabot/maven/update_checker/property_updater.rb",
+   "maven/lib/dependabot/maven/update_checker/version_finder.rb",
+   "maven/spec/dependabot/maven/update_checker/property_updater_spec.rb",
+   "maven/spec/dependabot/maven/update_checker/version_finder_spec.rb"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 4044,
+  "n_added": 42,
+  "test_markers_added": 2,
+  "test_files_touched": [
+   "maven/spec/dependabot/maven/update_checker/property_updater_spec.rb",
+   "maven/spec/dependabot/maven/update_checker/version_finder_spec.rb"
+  ],
+  "sample_test_lines": [
+   "expect(latest_version_details).to be_nil",
+   "expect(lowest_security_fix_version_details).to be_nil"
+  ],
+  "counts": {
+   "test_funcs": 0,
+   "param_rows": 0,
+   "asserts": 2,
+   "test_files": 2
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'3 new test cases' -- RSpec it blocks countable"
+ },
+ {
+  "id": 87,
+  "kind": "files_changed_count",
+  "url": "https://github.com/microsoft/vscode/pull/269760",
+  "claim": "- **Minimal changes**: 5 files changed with +15 -3 lines, following existing VS Code patterns",
+  "detail": {
+   "n": "5"
+  },
+  "n_files": 5,
+  "paths": [
+   "src/vs/workbench/contrib/accessibility/browser/accessibilityConfiguration.ts",
+   "src/vs/workbench/contrib/chat/browser/actions/chatAccessibilityHelp.ts",
+   "src/vs/workbench/contrib/chat/browser/chat.ts",
+   "src/vs/workbench/contrib/chat/browser/chatAccessibilityService.ts",
+   "src/vs/workbench/contrib/chat/browser/chatListRenderer.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 8220,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Minimal changes: 5 files changed'"
+ },
+ {
+  "id": 88,
+  "kind": "symbol_added",
+  "url": "https://github.com/netdata/netdata/pull/21196",
+  "claim": "Added a new function `cleanup_non_package_files()` that removes files not managed by package managers.",
+  "detail": {
+   "kind": "function",
+   "name": "cleanup_non_package_files"
+  },
+  "n_files": 1,
+  "paths": [
+   "packaging/installer/netdata-uninstaller.sh"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 3480,
+  "added_lines_with_symbol": [
+   "cleanup_non_package_files() {",
+   "cleanup_non_package_files",
+   "cleanup_non_package_files",
+   "cleanup_non_package_files",
+   "cleanup_non_package_files"
+  ],
+  "n_added": 40,
+  "symbols_named_in_sentence": [
+   "cleanup_non_package_files"
+  ],
+  "definition_evidence": {
+   "cleanup_non_package_files": {
+    "defs": []
+   }
+  },
+  "decidable": true,
+  "reason_code": null,
+  "reason": "names cleanup_non_package_files(); checkable"
+ },
+ {
+  "id": 89,
+  "kind": "tests_added",
+  "url": "https://github.com/liam-hq/liam/pull/3492",
+  "claim": "Added 8 new test cases in `PGliteInstanceManager.test.ts` covering:",
+  "detail": {
+   "n": "8",
+   "noun": "cases"
+  },
+  "n_files": 3,
+  "paths": [
+   ".changeset/fix-comment-statement-parsing.md",
+   "frontend/internal-packages/pglite-server/src/PGliteInstanceManager.test.ts",
+   "frontend/internal-packages/pglite-server/src/PGliteInstanceManager.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 9182,
+  "n_added": 211,
+  "test_markers_added": 47,
+  "test_files_touched": [
+   "frontend/internal-packages/pglite-server/src/PGliteInstanceManager.test.ts"
+  ],
+  "sample_test_lines": [
+   "describe('COMMENT Statement String Processing', () => {",
+   "it('should handle COMMENT ON TABLE statements correctly', async () => {",
+   "expect(results).toHaveLength(3)",
+   "expect(results[0]?.success).toBe(true)",
+   "expect(results[1]?.success).toBe(true)",
+   "expect(results[1]?.sql).toContain('COMMENT ON TABLE users')"
+  ],
+  "counts": {
+   "test_funcs": 12,
+   "param_rows": 0,
+   "asserts": 45,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'8 new test cases in PGliteInstanceManager.test.ts' -- named file, it() countable"
+ },
+ {
+  "id": 90,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/Generative-AI-for-beginners-dotnet/pull/452",
+  "claim": "- \u2705 Documentation-only changes with no code modifications",
+  "detail": {
+   "prefix": "with"
+  },
+  "n_files": 9,
+  "paths": [
+   "02-SetupDevEnvironment/readme.md",
+   "translations/de/02-SetupDevEnvironment/readme.md",
+   "translations/es/02-SetupDevEnvironment/readme.md",
+   "translations/fr/02-SetupDevEnvironment/readme.md",
+   "translations/ja/02-SetupDevEnvironment/readme.md",
+   "translations/ko/02-SetupDevEnvironment/readme.md",
+   "translations/pt/02-SetupDevEnvironment/readme.md",
+   "translations/tw/02-SetupDevEnvironment/readme.md",
+   "translations/zh/02-SetupDevEnvironment/readme.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 7430,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Documentation-only changes with no code modifications' checkable: 9 readme.md paths"
+ },
+ {
+  "id": 91,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/vscode/pull/268333",
+  "claim": "This is particularly useful when viewing blame information for files that have undergone formatting changes, as whitespace-only modifications can obscure the ac",
+  "detail": {
+   "prefix": "can"
+  },
+  "n_files": 6,
+  "paths": [
+   "extensions/git/package.json",
+   "extensions/git/package.nls.json",
+   "extensions/git/src/blame.ts",
+   "extensions/git/src/git.ts",
+   "extensions/git/src/repository.ts",
+   "extensions/git/src/test/git.test.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 8734,
+  "decidable": false,
+  "reason_code": "prose_or_documentation",
+  "reason": "describes when a feature is useful, not what this PR changed"
+ },
+ {
+  "id": 92,
+  "kind": "tests_added",
+  "url": "https://github.com/Rudra-ravi/wikipedia-mcp/pull/32",
+  "claim": "- Added 7 new test cases covering:",
+  "detail": {
+   "n": "7",
+   "noun": "cases"
+  },
+  "n_files": 4,
+  "paths": [
+   "README.md",
+   "tests/test_server_tools.py",
+   "wikipedia_mcp/server.py",
+   "wikipedia_mcp/wikipedia_client.py"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 17179,
+  "n_added": 313,
+  "test_markers_added": 22,
+  "test_files_touched": [
+   "tests/test_server_tools.py"
+  ],
+  "sample_test_lines": [
+   "def test_search_empty_query(self, mock_get):",
+   "assert results == []",
+   "mock_get.assert_not_called()",
+   "assert results == []",
+   "mock_get.assert_not_called()",
+   "def test_search_api_error_response(self, mock_get):"
+  ],
+  "counts": {
+   "test_funcs": 8,
+   "param_rows": 0,
+   "asserts": 15,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'7 new test cases' -- def test_ countable"
+ },
+ {
+  "id": 93,
+  "kind": "files_changed_count",
+  "url": "https://github.com/epam/ketcher/pull/8230",
+  "claim": "4 files changed: 8 insertions(+), 8 deletions(-)",
+  "detail": {
+   "n": "4"
+  },
+  "n_files": 4,
+  "paths": [
+   "ketcher-autotests/tests/pages/constants/monomers/Phosphates.ts",
+   "ketcher-autotests/tests/pages/constants/monomers/Sugars.ts",
+   "ketcher-autotests/tests/specs/Macromolecule-editor/RNA-Builder/rna-library.spec.ts",
+   "packages/ketcher-core/src/application/editor/data/monomers.ket"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 3636,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'4 files changed'"
+ },
+ {
+  "id": 94,
+  "kind": "files_changed_count",
+  "url": "https://github.com/masslight/ottehr/pull/3722",
+  "claim": "- [x] Verified only 3 files changed (tracking board related)",
+  "detail": {
+   "n": "3"
+  },
+  "n_files": 3,
+  "paths": [
+   "apps/ehr/src/telemed/features/tracking-board/TrackingBoardTable.tsx",
+   "apps/ehr/src/telemed/utils/appointments.test.ts",
+   "apps/ehr/src/telemed/utils/appointments.ts"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 9724,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Verified only 3 files changed'"
+ },
+ {
+  "id": 95,
+  "kind": "only_touches",
+  "url": "https://github.com/microsoft/typespec/pull/8169",
+  "claim": "- [x] **Updated `RestClientProvider`** with minimal changes - only modified CreateMessage call and removed SetMethod/SetUri operations",
+  "detail": {
+   "prefix": "CreateMessage"
+  },
+  "n_files": 92,
+  "paths": [
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/Abstractions/ClientPipelineApi.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/Abstractions/HttpMessageApi.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ClientPipelineProvider.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/PipelineMessageProvider.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/RestClientProvider.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/Abstractions/ClientPipelineApiTests.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/Abstractions/HttpMessageApiTests.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/Abstractions/TestData/ClientPipelineApiTests/ValidateBodyOfRestClientOperationIsOverridden.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/RestClientProviderTests.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/TestBuildCreateRequestMethodWithPaging(False).cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/TestBuildCreateRequestMethodWithPaging(True).cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/TestBuildCreateRequestMethodWithPathParameters.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/TestBuildCreateRequestMethodWithQueryParameters.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/TestNextLinkReinjectedParametersInCreateRequestMethod.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateAllClientResponseClassifiers.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateClientWithAcceptHeader_NoValuesDefined.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateClientWithAcceptHeader_ValueDefinedAsConstant.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateClientWithAcceptHeader_ValuesDefinedAsEnum.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateClientWithAcceptHeader_ValuesDefinedInResponse.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/RestClientProviders/TestData/RestClientProviderTests/ValidateClientWithSpecialHeaders.cs",
+   "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator/src/Primitives/NewProjectScaffolding.cs",
+   "packages/http-client-csharp/generator/Packages.Data.props",
+   "packages/http-client-csharp/generator/TestProjects/Local/Sample-TypeSpec/src/Generated/SampleTypeSpecClient.RestClient.cs",
+   "packages/http-client-csharp/generator/TestProjects/Local/Sample-TypeSpec/src/SampleTypeSpec.csproj",
+   "packages/http-client-csharp/generator/TestProjects/Spector/http/authentication/api-key/src/Authentication.ApiKey.csproj"
+  ],
+  "paths_truncated": true,
+  "diff_bytes": 139562,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "scoped to RestClientProvider and names the specific calls; checkable in that file's hunks"
+ },
+ {
+  "id": 96,
+  "kind": "only_touches",
+  "url": "https://github.com/airbytehq/airbyte/pull/66749",
+  "claim": "**No negative impacts expected** - this is documentation-only change providing previously missing information.",
+  "detail": {
+   "prefix": "providing"
+  },
+  "n_files": 1,
+  "paths": [
+   "docs/integrations/destinations/clickhouse.md"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 1577,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'documentation-only change' checkable: one docs/*.md"
+ },
+ {
+  "id": 97,
+  "kind": "tests_added",
+  "url": "https://github.com/PowerShell/PowerShell/pull/26244",
+  "claim": "Added 14 tests covering:",
+  "detail": {
+   "n": "14"
+  },
+  "n_files": 3,
+  "paths": [
+   ".github/workflows/fips-test.yml",
+   "build.psm1",
+   "test/powershell/engine/Security/FIPSPolicy.Tests.ps1"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 22117,
+  "n_added": 524,
+  "test_markers_added": 0,
+  "test_files_touched": [
+   ".github/workflows/fips-test.yml",
+   "test/powershell/engine/Security/FIPSPolicy.Tests.ps1"
+  ],
+  "sample_test_lines": [],
+  "counts": {
+   "test_funcs": 0,
+   "param_rows": 0,
+   "asserts": 36,
+   "test_files": 2
+  },
+  "stated_matches": [],
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'14 tests' -- Pester It blocks in FIPSPolicy.Tests.ps1 countable"
+ },
+ {
+  "id": 98,
+  "kind": "files_changed_count",
+  "url": "https://github.com/microsoft/FluidFramework/pull/25610",
+  "claim": "**Statistics**: 5 files changed, 117 additions(+), 20 deletions(-)",
+  "detail": {
+   "n": "5"
+  },
+  "n_files": 6,
+  "paths": [
+   "packages/test/test-drivers/src/routerliciousTestDriver.ts",
+   "scripts/wait-for-docker-services.sh",
+   "server/docker-compose.yml",
+   "server/routerlicious/docker-compose.yml",
+   "tools/pipelines/templates/include-test-real-service.yml",
+   "tools/pipelines/test-real-service.yml"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 22069,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'Statistics: 5 files changed' (diff has 6)"
+ },
+ {
+  "id": 99,
+  "kind": "only_touches",
+  "url": "https://github.com/libretro/mupen64plus-libretro-nx/pull/590",
+  "claim": "The fix is minimal and surgical, only changing the clearing color while preserving all other TexrectDrawer functionality.",
+  "detail": {
+   "prefix": "the"
+  },
+  "n_files": 1,
+  "paths": [
+   "GLideN64/src/Graphics/OpenGLContext/GLSL/glsl_SpecialShadersFactory.cpp"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 1016,
+  "decidable": true,
+  "reason_code": null,
+  "reason": "'only changing the clearing color' checkable in the single changed file's hunk"
+ },
+ {
+  "id": 100,
+  "kind": "tests_added",
+  "url": "https://github.com/antiwork/gumroad/pull/537",
+  "claim": "- **Testing**: Local specs pass but took ~30 seconds due to creating 100 test records per case",
+  "detail": {
+   "n": "100"
+  },
+  "n_files": 2,
+  "paths": [
+   "app/models/link.rb",
+   "spec/models/link_spec.rb"
+  ],
+  "paths_truncated": false,
+  "diff_bytes": 2682,
+  "n_added": 41,
+  "test_markers_added": 5,
+  "test_files_touched": [
+   "spec/models/link_spec.rb"
+  ],
+  "sample_test_lines": [
+   "expect(new_product).to be_valid",
+   "expect(new_product).not_to be_valid",
+   "expect(new_product.errors.full_messages).to include(\"Sorry, you can only create 100 products per day",
+   "expect(new_product).to be_valid",
+   "expect(new_product).to be_valid"
+  ],
+  "counts": {
+   "test_funcs": 0,
+   "param_rows": 0,
+   "asserts": 5,
+   "test_files": 1
+  },
+  "stated_matches": [],
+  "decidable": false,
+  "reason_code": "prose_or_documentation",
+  "reason": "'Local specs pass but took ~30 seconds due to creating 100 test records per case' is about a local run, not tests added"
+ }
+]

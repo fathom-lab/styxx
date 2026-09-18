@@ -1,0 +1,118 @@
+{
+ "prereg": "PREREG_bench1_pr_claim_benchmark_2026_09_17.md",
+ "population_prs": 691,
+ "reached_prs": 568,
+ "excluded_by_reason": {
+  "http_403": 107,
+  "ok": 14,
+  "http_404": 2
+ },
+ "items": 604,
+ "per_kind": {
+  "files_changed_count": {
+   "decidable_items": 116,
+   "instrument": {
+    "tp": 47,
+    "fp": 0,
+    "fn": 0,
+    "tn": 69,
+    "precision": 1.0,
+    "recall": 1.0,
+    "specificity": 1.0,
+    "f1": 1.0,
+    "abstained": 0,
+    "not_extracted": 0
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.89,
+    "tp": 43,
+    "fp": 68,
+    "fn": 4,
+    "tn": 1,
+    "precision": 0.3874,
+    "recall": 0.9149,
+    "specificity": 0.0145,
+    "f1": 0.5443
+   },
+   "false_discovery_rate": 0.0,
+   "claims_of_this_kind_per_71016_prs": 116
+  },
+  "only_touches": {
+   "decidable_items": 299,
+   "instrument": {
+    "tp": 12,
+    "fp": 0,
+    "fn": 281,
+    "tn": 6,
+    "precision": 1.0,
+    "recall": 0.041,
+    "specificity": 1.0,
+    "f1": 0.0787,
+    "abstained": 279,
+    "not_extracted": 2
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.95,
+    "tp": 286,
+    "fp": 6,
+    "fn": 7,
+    "tn": 0,
+    "precision": 0.9795,
+    "recall": 0.9761,
+    "specificity": 0.0,
+    "f1": 0.9778
+   },
+   "false_discovery_rate": 0.0,
+   "claims_of_this_kind_per_71016_prs": 299
+  },
+  "symbol_added": {
+   "decidable_items": 38,
+   "instrument": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 25,
+    "tn": 13,
+    "precision": null,
+    "recall": 0.0,
+    "specificity": 1.0,
+    "f1": null,
+    "abstained": 36,
+    "not_extracted": 0
+   },
+   "similarity_baseline_upper_bound": {
+    "threshold_chosen_on_the_labels": 0.82,
+    "tp": 24,
+    "fp": 11,
+    "fn": 1,
+    "tn": 2,
+    "precision": 0.6857,
+    "recall": 0.96,
+    "specificity": 0.1538,
+    "f1": 0.8
+   },
+   "false_discovery_rate": null,
+   "claims_of_this_kind_per_71016_prs": 38
+  }
+ },
+ "truth_distribution": {
+  "files_changed_count": {
+   "CONTRADICTED": 47,
+   "SUPPORTED": 69
+  },
+  "only_touches": {
+   "CONTRADICTED": 293,
+   "SUPPORTED": 6
+  },
+  "symbol_added": {
+   "SUPPORTED": 13,
+   "CONTRADICTED": 25
+  }
+ },
+ "notes": {
+  "tests_added_excluded": {
+   "items": 151,
+   "why": "deciding what counts as a test is a judgement; the prereg excludes it from scoring"
+  },
+  "oracle_agrees_by_construction": "the oracle and the instrument both read the live diff, so they agree on well-formed input; the discriminating power is in the hard cases and in the true negatives, and the audit is what establishes the oracle is right"
+ }
+}
