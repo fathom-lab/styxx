@@ -40,10 +40,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No `cache: 'pip'` here, deliberately. The install step below is conditional on a vendor
+      # key being present, so on a keyless day pip never runs, ~/.cache/pip is never created, and
+      # setup-python's POST step fails the whole job with "Cache folder path is retrieved for pip
+      # but doesn't exist on disk". That is what turned this workflow red every day from at least
+      # 2026-09-13 to 2026-09-18 — the keyless-skip guard below was written precisely to avoid a
+      # daily red X, and a cache directive above it defeated the guard from a post step the guard
+      # cannot reach. There is nothing worth caching either way: the one pip install is unpinned
+      # and has no lockfile to key on.
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
 
       # No vendor keys configured is an expected CONFIGURATION state, not a failure — skip green with a
       # notice instead of red-Xing the repo daily. The schedule stays armed: add any TELESCOPE_* secret and
