@@ -107,7 +107,11 @@ numbers were the two that made the instrument look worse.
   and refuses to run against anything else, but `web/gate/` is in no workflow, so that guard fires
   only by hand — and its own comment records that the port once "fell a whole cycle behind without
   anything failing". The instance was repaired; the class was not.
-  `tests/test_gate_port_pin_is_current.py` closes it, with no skip path.
+  `tests/test_gate_port_pin_is_current.py` closes half of it — the pin must name this checkout's
+  instrument, and there is no skip path — and a **`gate port` job in `test.yml` closes the other
+  half by running the differential itself**: 54 pairs, 84 claims, no network, about a second.
+  Checked both ways in a clean-room copy of the branch — exit 0 as committed, and exit 1 with the
+  disagreements printed when the port's files-changed verdict is flipped.
 
 **The datasets**
 
