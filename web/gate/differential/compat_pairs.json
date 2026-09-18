@@ -9,7 +9,7 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ]
    ],
    "uncovered_sentences": 1
@@ -41,7 +41,7 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 3 public definition(s) not re-defined in the added lines: lib/index.ts: parse, lib/index.ts: VERSION, lib/index.ts: Options"
+     "compatibility claimed; the diff removes 3 public definition(s) from the surface, not re-defined in the added lines: lib/index.ts: parse, lib/index.ts: VERSION, lib/index.ts: Options"
     ]
    ],
    "uncovered_sentences": 0
@@ -57,7 +57,7 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 4 public definition(s) not re-defined in the added lines: pkg/x.go: Exported, pkg/x.go: Thing, src/lib.rs: run, src/main/java/a.java: name"
+     "compatibility claimed; the diff removes 4 public definition(s) from the surface, not re-defined in the added lines: pkg/x.go: Exported, pkg/x.go: Thing, src/lib.rs: run, src/main/java/a.java: name"
     ]
    ],
    "uncovered_sentences": 0
@@ -89,7 +89,7 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 8 public definition(s) not re-defined in the added lines: m.py: f0, m.py: f1, m.py: f2, m.py: f3, m.py: f4 (+3 more)"
+     "compatibility claimed; the diff removes 8 public definition(s) from the surface, not re-defined in the added lines: m.py: f0, m.py: f1, m.py: f2, m.py: f3, m.py: f4 (+3 more)"
     ]
    ],
    "uncovered_sentences": 0
@@ -105,47 +105,47 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ],
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/api.py: session, src/api.py: Legacy"
     ]
    ],
    "uncovered_sentences": 0
@@ -182,7 +182,7 @@
     [
      "compat_claim",
      "UNCHECKABLE",
-     "compatibility claimed; the diff removes 2 public definition(s) not re-defined in the added lines: src/app.kt: render, src/svc.py: fetch_all"
+     "compatibility claimed; the diff removes 2 public definition(s) from the surface, not re-defined in the added lines: src/app.kt: render, src/svc.py: fetch_all"
     ]
    ],
    "uncovered_sentences": 0
