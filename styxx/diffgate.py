@@ -932,6 +932,9 @@ def selfcheck_tests_pass_never_accuses(source: str | None = None) -> dict:
     }
 
 
+from .declare import declaration_pass as _declaration_pass
+
+
 @dataclass
 class DiffClaim:
     kind: str
@@ -1157,7 +1160,8 @@ def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
 def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
-          raw_input_len: int | None = None, sides: dict | None = None) -> DiffGate:
+          raw_input_len: int | None = None, sides: dict | None = None,
+          _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1326,6 +1330,37 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     # That is disclosed rather than patched.
                     c.verdict, c.why = tests_pass_leg()
                 claims.append(c)
+
+    # DECLARE-1 (PREREG_declare1_the_toll_2026_09_18, sha256 7ffd0ba1...). The prose pass above
+    # is finished and is not changed by any of this. A body may ALSO declare its claims in one
+    # fenced `styxx` block; each declaration is normalised into the canonical sentence this same
+    # reader already understands and read by this same function one level down. Nothing here
+    # re-implements a verdict, so a declared claim and a prose claim of the same content cannot
+    # drift apart, and the differential sees one reading rather than two.
+    #
+    # The recursion terminates in one step: synthesized text never contains a styxx fence.
+    if not _declared:
+        _dtext, _drep = _declaration_pass(summary_text)
+        if _drep["declared"]:
+            if _dtext:
+                _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
+                             base=base, head=head, evidence=evidence, commit=commit,
+                             raw_input_len=raw_input_len, sides=sides, _declared=True)
+                for _c in _sub.claims:
+                    _c.detail = dict(_c.detail or {})
+                    _c.detail["declared"] = True
+                    claims.append(_c)
+            # Declared but deliberately unverifiable (`tests_pass`), and unreadable lines. Both
+            # are reported as UNCHECKABLE: a declaration that cannot be read is not a lie, and a
+            # declaration that tests passed is not evidence that they did.
+            for _u in _drep["unverifiable"]:
+                claims.append(DiffClaim(kind=_u["key"], text=f"{_u['key']}: {_u['value']}",
+                                        detail={"declared": True},
+                                        verdict="UNCHECKABLE", why=_u["why"]))
+            for _p in _drep["problems"]:
+                claims.append(DiffClaim(kind="declaration_problem", text=_p,
+                                        detail={"declared": True},
+                                        verdict="UNCHECKABLE", why=_p))
 
     contradicted = any(c.verdict == "CONTRADICTED" for c in claims)
     uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)
