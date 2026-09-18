@@ -156,6 +156,16 @@ const CRITERIA = {
  * this diff rather than in the abstract -- the cert-controller case turns on
  * `.githiub` being a path nothing in the diff resembles. Paths are truncated:
  * the question is about the sentence, and a 600-file diff would drown it.
+ *
+ * `totalPaths` exists because a caller's list is sometimes already short of the
+ * diff. `decide1_adjudication.json` caps `paths` at 25 while recording the real
+ * `n_files`, and four of the 25 `only_touches` items are capped that way -- one
+ * of them a 175-file pull request. Deriving the total from the array would tell
+ * the model that a 175-file diff has 25 files in it, which is the opposite of
+ * the reason the paths are shown at all. Callers that hold the true count pass
+ * it; the default is the array's own length, so nothing changes for callers that
+ * hand over everything. A total below the number of paths supplied is a caller
+ * bug and throws rather than being quietly clamped.
  */
 export async function triageSentence(
   sentence: string,
@@ -164,14 +174,16 @@ export async function triageSentence(
   client: JevClient,
   noul: NoulFactory,
   maxPaths = 40,
+  totalPaths = changedPaths.length,
 ): Promise<TriageReport> {
   assertThresholds(thresholds);
+  assertTotal(totalPaths, changedPaths.length);
 
   const shown = changedPaths.slice(0, maxPaths);
-  const omitted = changedPaths.length - shown.length;
+  const omitted = totalPaths - shown.length;
   const state =
     `Sentence from a pull request description:\n${sentence}\n\n` +
-    `Files this pull request changes (${changedPaths.length} total` +
+    `Files this pull request changes (${totalPaths} total` +
     `${omitted > 0 ? `, ${omitted} not shown` : ""}):\n` +
     (shown.length ? shown.map((p) => `- ${p}`).join("\n") : "- (none)");
 
@@ -248,6 +260,15 @@ function unreached(thresholds: TriageThresholds, why: string): TriageReport {
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
+}
+
+function assertTotal(total: number, supplied: number): void {
+  if (!Number.isInteger(total) || total < supplied) {
+    throw new RangeError(
+      `totalPaths must be an integer >= the number of paths supplied; ` +
+        `got ${total} with ${supplied} paths`,
+    );
+  }
 }
 
 function assertThresholds(t: TriageThresholds): void {
