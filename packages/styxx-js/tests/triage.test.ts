@@ -158,6 +158,24 @@ describe("triage — what the model is shown", () => {
     expect(seen.state).not.toContain("- src/file40.ts");
   });
 
+  it("reports the real file count when the caller's path list is already capped", async () => {
+    // decide1_adjudication.json item 45: 175 files, `paths` recorded as 25.
+    const capped = Array.from({ length: 25 }, (_, i) => `src/file${i}.ts`);
+    const { client, seen } = fake(0.9);
+    await triageSentence("s", capped, T, client, noul, 40, 175);
+    expect(seen.state).toContain("175 total, 150 not shown");
+    expect(seen.state).toContain("- src/file24.ts");
+  });
+
+  it("refuses a total smaller than the paths it was handed", async () => {
+    await expect(
+      triageSentence("s", ["a.ts", "b.ts"], T, fake(0.9).client, noul, 40, 1),
+    ).rejects.toThrow(RangeError);
+    await expect(
+      triageSentence("s", ["a.ts"], T, fake(0.9).client, noul, 40, 1.5),
+    ).rejects.toThrow(RangeError);
+  });
+
   it("says (none) rather than nothing on an empty diff", async () => {
     const { client, seen } = fake(0.9);
     await triageSentence("s", [], T, client, noul);
