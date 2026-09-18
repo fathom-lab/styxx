@@ -128,3 +128,91 @@ own preregistration and its own held-out split.
 *The product is that you do not have to trust us. Buying a model that reports its own confidence
 does not change that — it just adds someone else you would have to trust, unless we measure them
 first. This is the measurement, frozen before the first call.*
+
+
+---
+
+## Amendment A — 2026-09-18, appended before any Jev call was made
+
+This preregistration was frozen at sha256
+`7d550cd50473c6642770662149553eaf3db1e1a52308e8d80e1d518b3ad94aaa`. Everything below is appended;
+nothing above it is edited. **No call to Jev had been made when this was written** — the runner had
+been executed only against its own dry-run stub, whose answers come from a hash of the prompt.
+Appending after a call would make this document worthless. Appending before one is the only thing
+that keeps it worth anything.
+
+Each item below either fixes an error in the frozen text or removes a freedom the frozen text left
+open. None of them widens one.
+
+**A1 — Prediction 2 names four runtime-behaviour sentences. There are five.**
+`decide1_adjudication.json` carries five `only_touches` items with `reason_code:
+runtime_behaviour`: ids **39, 46, 55, 70, 73**. Prediction 2 is restated over all five — *all five
+score below 0.5* — and the ids are pinned here so the set cannot be chosen once the answers are in.
+
+**A2 — the corpus caps `paths` at 25, and the model must not be told that the cap is the diff.**
+`decide1_adjudication.json` records at most 25 paths per item, alongside the true `n_files`. Four of
+the 25 `only_touches` items are capped: ids **45** (175 files), **61** (134), **73** (64), **95**
+(92). Deriving the file count from the array would tell the model a 175-file pull request changes 25
+files, which inverts the reason the paths are shown at all. `triageSentence` takes a `totalPaths`
+argument for this and the runner passes `n_files`; the paths shown stay the 25 the corpus recorded.
+
+**A3 — every item is asked five times, and G-C1-4 is still computed over twenty.**
+The frozen text says 20 items x 5 repeats. The runner repeats all 25, because the marginal cost is
+five calls. **G-C1-4 is computed over exactly the 20 lowest `id`s**, so the preregistered statistic
+stays the preregistered statistic; the other five are published beside it and cannot move the gate.
+
+**A4 — spend is published only if a price is supplied.**
+G-C1-5 asks for spend "to the cent". No per-token price for Jev is recorded anywhere in this
+repository. The scorer publishes token counts and median latency unconditionally, and spend only
+when a price is passed on the command line. An estimated spend is not a measured one, and quietly
+substituting one for the other is the defect `RESULT_decide1_decidable_fraction_2026_09_17.md`
+names as a habit rather than a bug.
+
+**A5 — G-C1-2 is read on the pooled scored items, and its interval is a concordance interval.**
+Prediction 1 names no split, so the separation gate reads the pooled scored items; the per-split
+figures are published beside it. The population section asks for a Wilson interval on "the headline
+separation", and a difference of medians does not have one. The interval is therefore computed on
+the **concordance proportion** — the share of POSITIVE/NEGATIVE pairs in which the POSITIVE scores
+higher, ties counted as half. Those pairs are not independent, and the result must say so wherever
+it prints the interval.
+
+**A6 — G-C1-1 is unrunnable on this population, and is not being repaired.**
+
+`v14_gates.bucket` on the first five URL segments splits the 25 items like this:
+
+| split | POSITIVE | NEGATIVE | EXCLUDED |
+|---|---|---|---|
+| DEVELOPMENT (`bucket < 3`) | 3 | **0** | 4 |
+| HELD-OUT (`bucket >= 3`) | 10 | 8 | 0 |
+
+A development split holding no negative items cannot discriminate between threshold pairs: every
+pair that reads everything scores identically on it. G-C1-1 is blocking, and it cannot be run.
+
+The tempting repair is a different split — a different hash, a different segment count, a stratified
+draw. **That repair is the thing G-C1-1 exists to forbid.** It does not become acceptable because
+the person making it can see that this split is unlucky rather than unflattering; that is what every
+such repair looks like from the inside. The split was fixed before the data existed and it stays
+fixed.
+
+So: **G-C1-1 is recorded as UNRUNNABLE, and CALIB-1 ships no thresholds under any outcome.**
+`NO_DEFAULT_THRESHOLDS` stands, `triage.ts` stays unwired, and G-C1-6 reports band occupancy over a
+grid of candidate bands rather than over a chosen one.
+
+What the run is still worth: G-C1-2 through G-C1-5 do not depend on the split. They answer whether
+Jev separates these sentences at all, whether its probabilities mean anything, and whether it
+returns the same answer twice — which is exactly the question that decides whether a larger hand
+adjudication is worth funding. The population section already named that decision as the one a wide
+interval would force. The split forces it instead, and forces it earlier: **before a single call was
+paid for.**
+
+## Running it
+
+```
+node --experimental-strip-types papers/closed-model-frontier/calib1_ask.ts --dry-run
+TYPESAFE_API_KEY=... node --experimental-strip-types papers/closed-model-frontier/calib1_ask.ts
+python papers/closed-model-frontier/calib1_score.py
+```
+
+Node 22.6+ for the runner's type stripping, Node 20+ for the SDK. The key belongs in the operator's
+environment or in a repository secret; `calib1_ask.ts` refuses one passed as an argument. A dry-run
+raw file scores to `INVALID__DRY_RUN` and cannot be cited.
