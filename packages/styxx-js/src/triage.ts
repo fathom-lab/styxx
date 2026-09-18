@@ -2,10 +2,10 @@
  * TRIAGE — Jev decides what gets *read*. It never decides what gets *said*.
  *
  * DECIDE-1 hand-adjudicated 100 agent-PR claims and found 71% of them settleable
- * from the diff alone (52% for `only_touches`). The shipped instrument returns a
- * verdict on 5.4% of them. The gap is not judgement, it is extraction: the reader
- * cannot tell a sentence that claims a file scope from one that merely contains
- * the word "only".
+ * from the diff alone (52% for `only_touches`, 13 of 25). The shipped instrument
+ * returns a verdict on 17 of 299 `only_touches` claims -- it abstains on 94%. The
+ * gap is not judgement, it is extraction: the reader cannot tell a sentence that
+ * claims a file scope from one that merely contains the word "only".
  *
  * PATH-1 wrote that down and gave up on it:
  *
