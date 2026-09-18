@@ -1,0 +1,1627 @@
+{
+ "prereg": "PREREG_drift1_stale_or_false_2026_09_18.md",
+ "prereg_sha256_frozen": "9e5ac4e27bf64e205d8056187bdfc34888e6577c58aa510a8e1457de48de1e43",
+ "prereg_sha256_amended": "1f5829c749ce5d3aa9bb397d1a93fe4826df50cea9bd84d98d796df429f8a580",
+ "claims_in_population": 116,
+ "excluded": [
+  {
+   "url": "https://github.com/Mail-0/Zero/pull/1262",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 66,
+   "fetched": 41,
+   "commits": 6
+  },
+  {
+   "url": "https://github.com/microsoft/vstest/pull/15177",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 19,
+   "fetched": 10,
+   "commits": 9
+  },
+  {
+   "url": "https://github.com/ornladios/ADIOS2/pull/4569",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 15,
+   "fetched": 5,
+   "commits": 2
+  },
+  {
+   "url": "https://github.com/dotnet/android/pull/10264",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 302,
+   "fetched": 2,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/onetimesecret/onetimesecret/pull/1538",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 64,
+   "fetched": 645,
+   "commits": 30
+  },
+  {
+   "url": "https://github.com/ruvnet/ruv-FANN/pull/156",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 24,
+   "fetched": 21,
+   "commits": 9
+  },
+  {
+   "url": "https://github.com/pathintegral-institute/mcpm.sh/pull/221",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 21,
+   "fetched": 19,
+   "commits": 15
+  },
+  {
+   "url": "https://github.com/TracecatHQ/tracecat/pull/1287",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 40,
+   "fetched": 82,
+   "commits": 30
+  },
+  {
+   "url": "https://github.com/ydb-platform/ydb/pull/21739",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 13,
+   "fetched": 11,
+   "commits": 16
+  },
+  {
+   "url": "https://github.com/microsoft/typespec/pull/8139",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 300,
+   "fetched": 1090,
+   "commits": 2
+  },
+  {
+   "url": "https://github.com/liam-hq/liam/pull/3000",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 39,
+   "fetched": 38,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/masslight/ottehr/pull/3722",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 340,
+   "fetched": 3,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/open-telemetry/opentelemetry.io/pull/7806",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 163,
+   "fetched": 156,
+   "commits": 3
+  },
+  {
+   "url": "https://github.com/open-telemetry/opentelemetry.io/pull/7806",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 163,
+   "fetched": 156,
+   "commits": 3
+  },
+  {
+   "url": "https://github.com/hmislk/hmis/pull/15604",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 12,
+   "fetched": 10,
+   "commits": 8
+  },
+  {
+   "url": "https://github.com/gtg922r/obsidian-numerals/pull/113",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 24,
+   "fetched": 21,
+   "commits": 10
+  },
+  {
+   "url": "https://github.com/openwhyd/openwhyd/pull/847",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 7,
+   "fetched": 6,
+   "commits": 10
+  },
+  {
+   "url": "https://github.com/katspaugh/wavesurfer.js/pull/4213",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 70,
+   "fetched": 60,
+   "commits": 15
+  },
+  {
+   "url": "https://github.com/cloudposse/atmos/pull/1588",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 183,
+   "fetched": 369,
+   "commits": 10
+  },
+  {
+   "url": "https://github.com/microsoft/FluidFramework/pull/25610",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 375,
+   "fetched": 6,
+   "commits": 30
+  },
+  {
+   "url": "https://github.com/utsmannn/compose-remote-layout/pull/24",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 11,
+   "fetched": 16,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/web-infra-dev/rsbuild/pull/6314",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 9,
+   "fetched": 8,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/Azure/azure-sdk-for-python/pull/43269",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 105,
+   "fetched": 8,
+   "commits": 12
+  },
+  {
+   "url": "https://github.com/OpenMS/OpenMS/pull/8264",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 41,
+   "fetched": 2,
+   "commits": 3
+  },
+  {
+   "url": "https://github.com/microsoft/amplifier/pull/65",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 44,
+   "fetched": 15,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/AzureAD/microsoft-identity-web/pull/3545",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 21,
+   "fetched": 10,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/napi-rs/napi-rs/pull/2955",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 57,
+   "fetched": 55,
+   "commits": 10
+  },
+  {
+   "url": "https://github.com/mlflow/mlflow/pull/18253",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 7,
+   "fetched": 6,
+   "commits": 6
+  },
+  {
+   "url": "https://github.com/benwbrum/fromthepage/pull/4975",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 96,
+   "fetched": 16,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/marcocesarato/php-conventional-changelog/pull/84",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 5,
+   "fetched": 4,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/rsxdalv/TTS-WebUI/pull/597",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 51,
+   "fetched": 14,
+   "commits": 7
+  },
+  {
+   "url": "https://github.com/Azure/azure-rest-api-specs/pull/38236",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 300,
+   "fetched": 395,
+   "commits": 2
+  },
+  {
+   "url": "https://github.com/PowerShell/PowerShell/pull/26233",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 14,
+   "fetched": 6,
+   "commits": 27
+  },
+  {
+   "url": "https://github.com/SkBlaz/py3plex/pull/134",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 24,
+   "fetched": 21,
+   "commits": 9
+  },
+  {
+   "url": "https://github.com/mRemoteNG/mRemoteNG/pull/2954",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 14,
+   "fetched": 13,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/web-infra-dev/rspack/pull/11978",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 21,
+   "fetched": 19,
+   "commits": 5
+  },
+  {
+   "url": "https://github.com/dynaconf/dynaconf/pull/1330",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 24,
+   "fetched": 11,
+   "commits": 4
+  },
+  {
+   "url": "https://github.com/element-hq/dendrite/pull/3660",
+   "reason": "corpus head != fetched diff",
+   "corpus_head": 116,
+   "fetched": 250,
+   "commits": 30
+  }
+ ],
+ "classified": 78,
+ "by_class": {
+  "STALE": 13,
+  "MATCHES_CORPUS_HEAD": 53,
+  "NEITHER": 12
+ },
+ "disagree_with_head": 25,
+ "stale_share_of_disagreements": 0.52,
+ "stale_share_wilson": [
+  33.5,
+  70.0
+ ],
+ "stale_with_only_two_distinct_prefix_counts": 3,
+ "oracle_supported": 69,
+ "items": [
+  {
+   "url": "https://github.com/artsy/force/pull/15294",
+   "claim": "1 file changed, 102 insertions(+)",
+   "stated": 1,
+   "head": 2,
+   "commits": 3,
+   "prefix_counts": [
+    1,
+    1,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/artsy/force/pull/15294",
+   "claim": "1 file changed, 102 insertions(+)",
+   "stated": 1,
+   "head": 2,
+   "commits": 3,
+   "prefix_counts": [
+    1,
+    1,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/artsy/force/pull/15294",
+   "claim": "1 file changed, 81 deletions(-)",
+   "stated": 1,
+   "head": 2,
+   "commits": 3,
+   "prefix_counts": [
+    1,
+    1,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/microsoft/typescript-go/pull/1124",
+   "claim": "- \u2705 Net result: 126 files changed, 1515 insertions, 2709 deletions",
+   "stated": 126,
+   "head": 126,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    126
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Azure/azure-sdk-for-python/pull/41548",
+   "claim": "- 7 files changed, 19 insertions(+), 19 deletions(-)",
+   "stated": 7,
+   "head": 9,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    7,
+    8,
+    9
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "STALE",
+   "true_at_commit": 1,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/vltpkg/vltpkg/pull/911",
+   "claim": "The implementation is minimal and surgical - only 4 files changed with 152 lines added, primarily tests and documentatio",
+   "stated": 4,
+   "head": 4,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    4,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/gitroomhq/postiz-app/pull/864",
+   "claim": "- **4 files changed**: Minimal, surgical modifications",
+   "stated": 4,
+   "head": 4,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/goaop/framework/pull/509",
+   "claim": "The changes are minimal and surgical (2 files changed, 4 insertions, 4 deletions) and maintain full compatibility with t",
+   "stated": 2,
+   "head": 2,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Azure/azure-mcp/pull/576",
+   "claim": "- **Minimal impact**: Only 8 files changed with surgical modifications to existing code",
+   "stated": 8,
+   "head": 9,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    8,
+    8,
+    9
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "STALE",
+   "true_at_commit": 1,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/reflex-dev/reflex-web/pull/1512",
+   "claim": "**Total Impact:** 76 files changed (all renames + 2 code files updated)",
+   "stated": 76,
+   "head": 79,
+   "commits": 3,
+   "prefix_counts": [
+    76,
+    77,
+    79
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/brevdev/brev-cli/pull/239",
+   "claim": "**Impact:** 5 files changed with 89 insertions and 89 deletions (clean text replacements).",
+   "stated": 5,
+   "head": 5,
+   "commits": 1,
+   "prefix_counts": [
+    5
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Voxelum/x-minecraft-launcher/pull/1025",
+   "claim": "**Code changes:** 1 file changed, 7 insertions(+), 12 deletions(-)",
+   "stated": 1,
+   "head": 1,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    1,
+    1
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/microsoft/react-native-macos/pull/2568",
+   "claim": "- **86 files changed** total (including build artifacts)",
+   "stated": 86,
+   "head": 86,
+   "commits": 5,
+   "prefix_counts": [
+    0,
+    20,
+    45,
+    59,
+    86
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/ydb-platform/ydb/pull/21775",
+   "claim": "- **Impact**: 1 file changed, 1 deletion (-)",
+   "stated": 1,
+   "head": 1,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    1
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/liam-hq/liam/pull/2773",
+   "claim": "- **Files Modified**: 6 files changed, 335 insertions(+), 11 deletions(-)",
+   "stated": 6,
+   "head": 6,
+   "commits": 2,
+   "prefix_counts": [
+    6,
+    6
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/antiwork/gumboard/pull/175",
+   "claim": "**Files Modified:** 6 files changed, 177 insertions(+), 171 deletions(-)",
+   "stated": 6,
+   "head": 8,
+   "commits": 6,
+   "prefix_counts": [
+    6,
+    7,
+    7,
+    8,
+    8,
+    8
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/GopeedLab/gopeed/pull/1078",
+   "claim": "**Total**: 15 files changed, 180+ lines added, 0 breaking changes",
+   "stated": 15,
+   "head": 16,
+   "commits": 6,
+   "prefix_counts": [
+    0,
+    7,
+    14,
+    15,
+    15,
+    16
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "STALE",
+   "true_at_commit": 3,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/OrchardCMS/OrchardCore/pull/18241",
+   "claim": "- \u2705 Minimal scope - only 5 files changed, 11 lines total",
+   "stated": 5,
+   "head": 6,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    1,
+    5,
+    6
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "STALE",
+   "true_at_commit": 2,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/WEIFENG2333/VideoCaptioner/pull/751",
+   "claim": "58 files changed, 188 insertions(+), 267 deletions(-)",
+   "stated": 58,
+   "head": 58,
+   "commits": 1,
+   "prefix_counts": [
+    58
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/ktnyt/cclsp/pull/13",
+   "claim": "- **11 files changed**, 1,745 additions, 25 deletions",
+   "stated": 11,
+   "head": 14,
+   "commits": 21,
+   "prefix_counts": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    12,
+    14,
+    14
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "STALE",
+   "true_at_commit": 0,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/AllInOpenSource/All-In/pull/64",
+   "claim": "- **Minimal impact**: Only 1 file changed, 1 line added",
+   "stated": 1,
+   "head": 1,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    1
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/appledragon/everythingByMdfind/pull/10",
+   "claim": "- 3 files changed",
+   "stated": 3,
+   "head": 3,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/appledragon/everythingByMdfind/pull/10",
+   "claim": "- 10 files changed",
+   "stated": 10,
+   "head": 3,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/liam-hq/liam/pull/3323",
+   "claim": "- **55 files changed**: 355 insertions, 685 deletions",
+   "stated": 55,
+   "head": 57,
+   "commits": 3,
+   "prefix_counts": [
+    56,
+    57,
+    57
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/liam-hq/liam/pull/3323",
+   "claim": "**Validate import paths**: With 55 files changed, confirm no import references were missed or incorrect",
+   "stated": 55,
+   "head": 57,
+   "commits": 3,
+   "prefix_counts": [
+    56,
+    57,
+    57
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/sightread/sightread/pull/201",
+   "claim": "The fix is minimal and surgical - only 3 files changed, adding new classes without modifying existing functionality for ",
+   "stated": 3,
+   "head": 4,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    1,
+    4
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/vvb2060/KeyAttestation/pull/52",
+   "claim": "**Total: 6 files changed, 95 insertions(+), 12 deletions(-)**",
+   "stated": 6,
+   "head": 6,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    5,
+    6,
+    6
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/dvershinin/gixy/pull/78",
+   "claim": "- Evaluation of all 26 files changed in PR #58",
+   "stated": 26,
+   "head": 5,
+   "commits": 6,
+   "prefix_counts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "distinct_prefix_counts": 6,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/frostwire/frostwire/pull/1157",
+   "claim": "3 files changed, 640 insertions(+), 72 deletions(-)",
+   "stated": 3,
+   "head": 3,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    2,
+    3
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/frostwire/frostwire/pull/1159",
+   "claim": "- **13 files changed**: +682 lines, -272 lines",
+   "stated": 13,
+   "head": 13,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    11,
+    12,
+    13
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/safedep/vet/pull/607",
+   "claim": "**Total:** 4 files changed, 70 insertions(+), 9 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/vllm-project/semantic-router/pull/329",
+   "claim": "**Total:** 6 files changed, 815 insertions(+), 6 deletions(-)",
+   "stated": 6,
+   "head": 6,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    6
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/microsoft/vscode/pull/269760",
+   "claim": "- **Minimal changes**: 5 files changed with +15 -3 lines, following existing VS Code patterns",
+   "stated": 5,
+   "head": 5,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    5
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/appwrite/console/pull/2438",
+   "claim": "- 3 files changed",
+   "stated": 3,
+   "head": 3,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Voxelum/x-minecraft-launcher/pull/1108",
+   "claim": "**4 files changed, ~70 lines:**",
+   "stated": 4,
+   "head": 39,
+   "commits": 10,
+   "prefix_counts": [
+    5,
+    7,
+    8,
+    32,
+    34,
+    36,
+    36,
+    36,
+    39,
+    39
+   ],
+   "distinct_prefix_counts": 7,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/apache/spark/pull/52518",
+   "claim": "4 files changed, 98 insertions(+), 8 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 1,
+   "prefix_counts": [
+    4
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Kotlin-Android-Open-Source/MVI-Coroutines-Flow/pull/293",
+   "claim": "**Impact:** 8 files changed, 127 insertions(+), 13 deletions(-)",
+   "stated": 8,
+   "head": 8,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    2,
+    7,
+    8
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/mRemoteNG/mRemoteNG/pull/2851",
+   "claim": "- 8 files changed",
+   "stated": 8,
+   "head": 8,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    8
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/mlflow/mlflow/pull/18184",
+   "claim": "**Net change:** 9 files changed, 2 insertions(+), 130 deletions(-)",
+   "stated": 9,
+   "head": 9,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    9
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/CravateRouge/bloodyAD/pull/82",
+   "claim": "- **5 files changed**: 329 lines modified",
+   "stated": 5,
+   "head": 5,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    2,
+    5
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/burugo/one-mcp/pull/8",
+   "claim": "7 files changed, 111 insertions(+), 17 deletions(-)",
+   "stated": 7,
+   "head": 7,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    5,
+    7
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/open-compass/opencompass/pull/2286",
+   "claim": "**Total: 4 files changed, 369 insertions(+), 133 deletions(-)**",
+   "stated": 4,
+   "head": 4,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    2,
+    4
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/python-adaptive/adaptive/pull/488",
+   "claim": "**5 files changed**: 93 insertions(+), 20 deletions(-)",
+   "stated": 5,
+   "head": 8,
+   "commits": 9,
+   "prefix_counts": [
+    0,
+    3,
+    5,
+    5,
+    5,
+    8,
+    8,
+    8,
+    8
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "STALE",
+   "true_at_commit": 2,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/ArcadeData/arcadedb/pull/2622",
+   "claim": "**Total: 3 files changed, 12 insertions(+), 3 deletions(-)**",
+   "stated": 3,
+   "head": 3,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/graphistry/pygraphistry/pull/763",
+   "claim": "**9 files changed**",
+   "stated": 9,
+   "head": 12,
+   "commits": 12,
+   "prefix_counts": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    11,
+    11,
+    11,
+    12,
+    12,
+    12,
+    12
+   ],
+   "distinct_prefix_counts": 7,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/hoylabs/OpenDTU-OnBattery/pull/2284",
+   "claim": "- **Minimal changes**: 3 files changed, 23 insertions, 6 deletions",
+   "stated": 3,
+   "head": 3,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    3,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Haleclipse/CCometixLine/pull/42",
+   "claim": "12 files changed, 358 insertions(+), 13 deletions(-)",
+   "stated": 12,
+   "head": 27,
+   "commits": 14,
+   "prefix_counts": [
+    23,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    25,
+    25,
+    26,
+    27
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/kyantech/Palmr/pull/297",
+   "claim": "**Total**: 19 files changed",
+   "stated": 19,
+   "head": 19,
+   "commits": 5,
+   "prefix_counts": [
+    0,
+    5,
+    19,
+    19,
+    19
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Haleclipse/CCometixLine/pull/44",
+   "claim": "15 files changed, 198 insertions(+), 25 deletions(-)",
+   "stated": 15,
+   "head": 28,
+   "commits": 22,
+   "prefix_counts": [
+    23,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    25,
+    25,
+    26,
+    26,
+    26,
+    27,
+    27,
+    28,
+    28,
+    28,
+    28,
+    28
+   ],
+   "distinct_prefix_counts": 6,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/microsoft/Generative-AI-for-beginners-dotnet/pull/391",
+   "claim": "3 files changed, 368 insertions(+), 19 deletions(-)",
+   "stated": 3,
+   "head": 3,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    3
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/manusa/electronim/pull/578",
+   "claim": "25 files changed, with 139 insertions and 139 deletions across:",
+   "stated": 25,
+   "head": 25,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    25,
+    25
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/czlonkowski/n8n-mcp/pull/318",
+   "claim": "**Total:** 5 files changed, 155 insertions(+), 5 deletions(-)",
+   "stated": 5,
+   "head": 5,
+   "commits": 2,
+   "prefix_counts": [
+    5,
+    5
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/epam/ketcher/pull/8230",
+   "claim": "4 files changed: 8 insertions(+), 8 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/dr5hn/countries-states-cities-database/pull/1147",
+   "claim": "**Total**: 15 files changed, +900 lines added",
+   "stated": 15,
+   "head": 15,
+   "commits": 5,
+   "prefix_counts": [
+    0,
+    5,
+    11,
+    14,
+    15
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/PaddlePaddle/PaddleOCR/pull/16648",
+   "claim": "**Statistics:** 4 files changed, 138 insertions(+), 19 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    4,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/aristoteleo/spateo-release/pull/352",
+   "claim": "**Total: 8 files changed, 874 insertions (+)**",
+   "stated": 8,
+   "head": 8,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    5,
+    6,
+    8
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/WordPress/wordpress-playground/pull/2789",
+   "claim": "2 files changed, 253 insertions(+), 213 deletions(-)",
+   "stated": 2,
+   "head": 2,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/polarsource/polar/pull/7298",
+   "claim": "Total: 2 files changed, 5 insertions(+), 10 deletions(-)",
+   "stated": 2,
+   "head": 3,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    2,
+    2,
+    3
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "STALE",
+   "true_at_commit": 1,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/WordPress/wordpress-playground/pull/2796",
+   "claim": "**Total Impact**: 4 files changed, 7 insertions(+), 7 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    4
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Sicos1977/MSGReader/pull/477",
+   "claim": "- **4 files changed**: 59 insertions(+), 8 deletions(-)",
+   "stated": 4,
+   "head": 4,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    3,
+    4
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/pnp/powershell/pull/5119",
+   "claim": "- 18 files changed (89 insertions, 84 deletions)",
+   "stated": 18,
+   "head": 17,
+   "commits": 7,
+   "prefix_counts": [
+    0,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/zetxek/adritian-free-hugo-theme/pull/361",
+   "claim": ">  1 file changed, 18 insertions(+)",
+   "stated": 1,
+   "head": 1,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    1,
+    1
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/Jij-Inc/pyo3-stub-gen/pull/330",
+   "claim": "**Total**: 11 files changed, 409 insertions(+)",
+   "stated": 11,
+   "head": 11,
+   "commits": 2,
+   "prefix_counts": [
+    7,
+    11
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/nilaoda/N_m3u8DL-RE/pull/718",
+   "claim": "- 7 files changed",
+   "stated": 7,
+   "head": 7,
+   "commits": 1,
+   "prefix_counts": [
+    7
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/freerouting/freerouting/pull/562",
+   "claim": "**Stats**: 5 files changed, 108 insertions(+), 2 deletions(-)",
+   "stated": 5,
+   "head": 5,
+   "commits": 7,
+   "prefix_counts": [
+    0,
+    4,
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/PowerShell/PowerShell/pull/26247",
+   "claim": "- Total changes: 2 files changed, 4 insertions(+), 28 deletions(-)",
+   "stated": 2,
+   "head": 2,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/friendsofhyperf/components/pull/963",
+   "claim": "**Total**: 5 files changed, 16 insertions(+), 15 deletions(-)",
+   "stated": 5,
+   "head": 5,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    5
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/growilabs/growi/pull/10431",
+   "claim": "- 2 files changed, 5 insertions(+), 4 deletions(-)",
+   "stated": 2,
+   "head": 2,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    2,
+    2
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/lockfale/OSINT-Framework/pull/500",
+   "claim": "**Total**: 18 commits, 2,802 additions, 26 deletions, 15 files changed",
+   "stated": 15,
+   "head": 17,
+   "commits": 19,
+   "prefix_counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    13,
+    14,
+    15,
+    15,
+    15,
+    17
+   ],
+   "distinct_prefix_counts": 16,
+   "class": "STALE",
+   "true_at_commit": 15,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/hpcc-systems/HPCC-Platform/pull/20553",
+   "claim": "5 files changed, 9 insertions(+), 5 deletions(-)",
+   "stated": 5,
+   "head": 5,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    5
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/pig-mesh/pig/pull/1201",
+   "claim": "6 files changed, 591 insertions(+), 0 deletions(-)",
+   "stated": 6,
+   "head": 6,
+   "commits": 5,
+   "prefix_counts": [
+    0,
+    3,
+    4,
+    5,
+    6
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/microsoft/vscode-mssql/pull/20343",
+   "claim": "**Total: 4 files changed, 20 insertions (+)**",
+   "stated": 4,
+   "head": 4,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "distinct_prefix_counts": 4,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/NewFuture/DDNS/pull/574",
+   "claim": "**Total**: 5 files changed, 283 insertions(+), 2 deletions(-)",
+   "stated": 5,
+   "head": 5,
+   "commits": 2,
+   "prefix_counts": [
+    0,
+    5
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/flanksource/canary-checker/pull/2694",
+   "claim": "- **12 files changed**: 43 insertions, 43 deletions",
+   "stated": 12,
+   "head": 11,
+   "commits": 4,
+   "prefix_counts": [
+    0,
+    11,
+    11,
+    11
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/BrowserBox/BrowserBox/pull/1607",
+   "claim": "- **Total**: 2 files changed, 205 lines modified",
+   "stated": 2,
+   "head": 3,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    1,
+    3
+   ],
+   "distinct_prefix_counts": 3,
+   "class": "NEITHER",
+   "true_at_commit": null,
+   "oracle": "CONTRADICTED"
+  },
+  {
+   "url": "https://github.com/rolldown/rolldown/pull/6686",
+   "claim": "Total changes: 7 files changed, 1 insertion(+), 237 deletions(-)",
+   "stated": 7,
+   "head": 7,
+   "commits": 1,
+   "prefix_counts": [
+    7
+   ],
+   "distinct_prefix_counts": 1,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/casdoor/casdoor/pull/4310",
+   "claim": "**Total**: 7 files changed, 321 additions, 5 deletions",
+   "stated": 7,
+   "head": 7,
+   "commits": 6,
+   "prefix_counts": [
+    0,
+    3,
+    5,
+    6,
+    7,
+    7
+   ],
+   "distinct_prefix_counts": 5,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  },
+  {
+   "url": "https://github.com/casdoor/casdoor/pull/4311",
+   "claim": "**Total:** 8 files changed, 262 insertions(+), 17 deletions(-)",
+   "stated": 8,
+   "head": 8,
+   "commits": 3,
+   "prefix_counts": [
+    0,
+    8,
+    8
+   ],
+   "distinct_prefix_counts": 2,
+   "class": "MATCHES_CORPUS_HEAD",
+   "true_at_commit": null,
+   "oracle": "SUPPORTED"
+  }
+ ]
+}
