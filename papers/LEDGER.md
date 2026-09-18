@@ -11,7 +11,7 @@ ratio is visible without reading 158 cycle entries.
 | | |
 |---|---|
 | cycles logged | **163** |
-| preregistrations frozen | **404** (49 carrying a machine-scored gates block) |
+| preregistrations frozen | **407** (49 carrying a machine-scored gates block) |
 | OATH certificates | **208** |
 | trust-stack seals | **34** |
 | cycles ending in a refusal, null, retraction or INVALID | **62** of 163 |
