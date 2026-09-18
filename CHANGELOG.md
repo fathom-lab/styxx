@@ -73,6 +73,17 @@ numbers were the two that made the instrument look worse.
   open; this method is not the way to ask it. AIDev's stored commit order *is* chronological — a
   prefix of GitHub's live order, sha for sha, on 10 of 10 — which is the one part of the run worth
   reusing.
+- **TRIAGE — a model decides what gets *read*, never what gets *said*.**
+  `packages/styxx-js/src/triage.ts` asks Jev (TypeSafe, System One) one bounded question about a
+  sentence — *does this state which files this pull request changes?* — and can only move that
+  sentence from ignored to handed-to-the-reader. **Every verdict stays computable from the diff
+  bytes, offline, with no key**; `bench_reproduce.py` still re-derives all of them. Tests fail if
+  anyone teaches the module to emit a verdict. No network dependency is added: the client is
+  injected, so the suite runs with no key and no cost. **No default thresholds ship**, because
+  TypeSafe publishes no calibration evidence and says the right values depend on your corpus —
+  `PREREG_calib1_jev_2026_09_18.md` is frozen to measure separation, calibration, determinism and
+  cost on the 25 `only_touches` claims DECIDE-1 labelled by hand before this model was in the
+  picture. It predicts against the tool on calibration and determinism.
 
 **The datasets**
 
