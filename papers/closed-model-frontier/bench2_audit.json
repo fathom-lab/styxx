@@ -1,0 +1,169 @@
+{
+ "gate": "G-B2-1",
+ "prereg": "PREREG_bench2_pr_claim_benchmark_2026_09_17.md",
+ "prereg_sha256": "5a796aa7b5bef9408f7cbfa014f758df804c81440b48c3e740044ff2f8b5854d",
+ "instrument_sha256_prefix": "4ba947a8",
+ "audit_seed": 20260919,
+ "audit_n": 50,
+ "result": "INVALID",
+ "why": "3 of the first 7 non-files_changed_count audited items disagree with the oracle; the gate allowed 2",
+ "instrument_only_touches_accusations": 11,
+ "instrument_false_accusations": 9,
+ "instrument_precision_only_touches": 0.1818,
+ "failure_modes": {
+  "runtime_behaviour_sentence": 3,
+  "documentation_prose": 1,
+  "dotted_identifier_read_as_path": 1,
+  "basename_claim": 2,
+  "typo_in_stated_path": 1,
+  "prose_containing_a_slash": 1
+ },
+ "note": "every accusation was re-run against the shipped gate outside the scoring harness and all 11 reproduced; the instrument_why_verbatim field is the instrument's own reason string",
+ "items": [
+  {
+   "pr": "Albeoris/Memoria/pull/1142",
+   "url": "https://github.com/Albeoris/Memoria/pull/1142",
+   "claim": "[WIP] Minimal XML diff: only changed mods/submods are serialized, all others preserved bytewise from original",
+   "stated_prefixes": [
+    "mods/submods"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'mods/submods': ['gitignore', 'index.html']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "runtime_behaviour_sentence",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "Albeoris/Memoria/pull/1145",
+   "url": "https://github.com/Albeoris/Memoria/pull/1145",
+   "claim": "- Only modified mods/submods are serialized and saved",
+   "stated_prefixes": [
+    "mods/submods"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'mods/submods': ['index.html']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "runtime_behaviour_sentence",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "Albeoris/Memoria/pull/1147",
+   "url": "https://github.com/Albeoris/Memoria/pull/1147",
+   "claim": "- \u2705 Only changed mods/submods generate new XML with updated fields",
+   "stated_prefixes": [
+    "mods/submods"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'mods/submods': ['fixes_summary.md', 'index.html']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "runtime_behaviour_sentence",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "Azure/autorest.typescript/pull/3252",
+   "url": "https://github.com/Azure/autorest.typescript/pull/3252",
+   "claim": "- Only modified `packages/typespec-ts/` and `packages/typespec-test/` as specified",
+   "stated_prefixes": [
+    "packages/typespec-ts/",
+    "packages/typespec-test/"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'packages/typespec-ts' and 'packages/typespec-test': ['common/config/rush/pnpm-lock.yaml']",
+   "adjudication": "CORRECT",
+   "failure_mode": null,
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "mikepenz/release-changelog-builder-action/pull/1458",
+   "url": "https://github.com/mikepenz/release-changelog-builder-action/pull/1458",
+   "claim": "For example, when deploying `app2`, they don't want to see commits that only touched files in `app1/`.",
+   "stated_prefixes": [
+    "app1/"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'app1': ['readme.md', '__tests__/pathfiltering.test.ts', 'action.yml']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "documentation_prose",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "dotnet/runtime/pull/117821",
+   "url": "https://github.com/dotnet/runtime/pull/117821",
+   "claim": "Only modify Assert.NotNull usages within this file and do not alter other assertions or files.",
+   "stated_prefixes": [
+    "Assert.NotNull"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'assert.notnull': ['src/libraries/system.linq.asyncenumerable/tests/sequencetests.cs', 'src/libraries/system.linq/tests/sequencetests.cs']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "dotted_identifier_read_as_path",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "microsoft/vscode-azuretools/pull/2086",
+   "url": "https://github.com/microsoft/vscode-azuretools/pull/2086",
+   "claim": "> - Only modify package.json and package-lock.json files in each package folder",
+   "stated_prefixes": [
+    "package.json",
+    "package-lock.json"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'package.json' and 'package-lock.json': ['appservice/package-lock.json', 'appservice/package.json', 'appsettings/package-lock.json']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "basename_claim",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "ydb-platform/ydb/pull/25857",
+   "url": "https://github.com/ydb-platform/ydb/pull/25857",
+   "claim": "Only modified `blobstorage_pdisk_impl.cpp` to conditionally report pdiskState size fields when PDisk is not in error state:",
+   "stated_prefixes": [
+    "blobstorage_pdisk_impl.cpp"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'blobstorage_pdisk_impl.cpp': ['ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "basename_claim",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "open-policy-agent/cert-controller/pull/415",
+   "url": "https://github.com/open-policy-agent/cert-controller/pull/415",
+   "claim": "> <agent_instructions>Only change .githiub/workflows/dependabot.yml, keep the changes to minimum and output the reasoning behind change as part of pr descriptio",
+   "stated_prefixes": [
+    ".githiub/workflows/dependabot.yml"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'githiub/workflows/dependabot.yml': ['github/workflows/dependabot.yml']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "typo_in_stated_path",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "fern-api/fern/pull/9898",
+   "url": "https://github.com/fern-api/fern/pull/9898",
+   "claim": "**Scope alignment**: This only changes README/documentation snippets, not runtime SDK code.",
+   "stated_prefixes": [
+    "README/documentation"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'readme/documentation': ['generators/python/src/fern_python/generator_cli/readme_snippet_builder.py', 'seed/python-sdk/exhaustive/no-custom-config/.fernignore', 'seed/python-sdk/exhaustive/no-custom-config/tests/test_no_print_statements.py']",
+   "adjudication": "FALSE_ACCUSATION",
+   "failure_mode": "prose_containing_a_slash",
+   "reproduced_outside_harness": true
+  },
+  {
+   "pr": "microsoft/wassette/pull/442",
+   "url": "https://github.com/microsoft/wassette/pull/442",
+   "claim": "- **Restricted scope**: Only modifies CHANGELOG.md in the Unreleased section",
+   "stated_prefixes": [
+    "CHANGELOG.md"
+   ],
+   "instrument_verdict": "CONTRADICTED",
+   "instrument_why_verbatim": "paths outside 'changelog.md': ['github/workflows/changelog-pr-link.lock.yml', 'github/workflows/changelog-pr-link.md', 'github/workflows/ci-doctor.lock.yml']",
+   "adjudication": "CORRECT",
+   "failure_mode": null,
+   "reproduced_outside_harness": true
+  }
+ ]
+}
