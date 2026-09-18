@@ -25,7 +25,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "eba8f5fc351c240075ac61c32364f61a7c23fb9cd7f1dc805269b6b2458d5468"  # styxx/diffgate.py on main (LF)
+PINNED = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/diffgate.py on main (LF)
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
@@ -33,7 +33,7 @@ PINNED = "eba8f5fc351c240075ac61c32364f61a7c23fb9cd7f1dc805269b6b2458d5468"  # s
 # a whole cycle behind without anything failing. `fetch_pr` fetches a pull request over the
 # network and is not part of the reading the port transliterates; it moves this whole-file hash
 # without changing a single verdict, and that is recorded here rather than worked around.
-CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json")
+CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json")
 
 
 def _digest(path: Path) -> str:

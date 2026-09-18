@@ -1,0 +1,171 @@
+[
+ {
+  "id": "declare1:honest",
+  "summary": "```styxx\nfiles_changed: 2\nonly_touches: web/gate\nadds_symbol: gate_diff_text\n```",
+  "diff": "diff --git a/web/gate/a.py b/web/gate/a.py\n--- a/web/gate/a.py\n+++ b/web/gate/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\ndiff --git a/web/gate/b.py b/web/gate/b.py\n--- a/web/gate/b.py\n+++ b/web/gate/b.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'gate_diff_text'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 5
+  }
+ },
+ {
+  "id": "declare1:count-wrong",
+  "summary": "```styxx\nfiles_changed: 9\n```",
+  "diff": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\ndiff --git a/b.py b/b.py\n--- a/b.py\n+++ b/b.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 9"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:scope-broken",
+  "summary": "```styxx\nonly_touches: web/gate\n```",
+  "diff": "diff --git a/web/gate/a.py b/web/gate/a.py\n--- a/web/gate/a.py\n+++ b/web/gate/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\ndiff --git a/src/x.py b/src/x.py\n--- a/src/x.py\n+++ b/src/x.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'web/gate': ['src/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:glob-stripped",
+  "summary": "```styxx\nonly_touches: web/gate/**\n```",
+  "diff": "diff --git a/web/gate/a.py b/web/gate/a.py\n--- a/web/gate/a.py\n+++ b/web/gate/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:tests-pass-never-verified",
+  "summary": "```styxx\ntests_pass: true\n```",
+  "diff": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_pass",
+     "UNCHECKABLE",
+     "declared, and deliberately not verifiable: a declaration that tests passed is not evidence that they did"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:malformed-value",
+  "summary": "```styxx\nfiles_changed: many\n```",
+  "diff": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed",
+     "UNCHECKABLE",
+     "MALFORMED: 'many' is not a count"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:unknown-key",
+  "summary": "```styxx\nships_on_friday: yes\n```",
+  "diff": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "declaration_problem",
+     "UNCHECKABLE",
+     "unknown key 'ships_on_friday'; reported, never checked"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:two-blocks-declare-nothing",
+  "summary": "```styxx\nfiles_changed: 1\n```\n\nprose\n\n```styxx\nfiles_changed: 2\n```",
+  "diff": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [],
+   "uncovered_sentences": 7
+  }
+ },
+ {
+  "id": "declare1:narrow-declaration-not-punished",
+  "summary": "```styxx\nfiles_changed: 2\n```",
+  "diff": "diff --git a/web/gate/a.py b/web/gate/a.py\n--- a/web/gate/a.py\n+++ b/web/gate/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\ndiff --git a/src/elsewhere.py b/src/elsewhere.py\n--- a/src/elsewhere.py\n+++ b/src/elsewhere.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ },
+ {
+  "id": "declare1:prose-and-declaration-agree",
+  "summary": "This only touches web/gate.\n\n```styxx\nonly_touches: web/gate\n```",
+  "diff": "diff --git a/web/gate/a.py b/web/gate/a.py\n--- a/web/gate/a.py\n+++ b/web/gate/a.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\ndiff --git a/src/x.py b/src/x.py\n--- a/src/x.py\n+++ b/src/x.py\n@@ -1 +1 @@\n+def gate_diff_text(a):\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'web/gate': ['src/x.py']"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'web/gate': ['src/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 3
+  }
+ }
+]

@@ -1,0 +1,48 @@
+{
+ "note": "a CEILING under perfect adoption: every pull request here is assumed to have declared the SAME claim it made in prose, correctly formatted. No real pull request carries a block. This measures whether the format removes the EXTRACTION failure, which is all it was designed to remove.",
+ "per_kind": {
+  "files_changed_count": {
+   "decidable_items": 116,
+   "declared_and_read": 116,
+   "declared_and_abstained": 0,
+   "agrees_with_oracle": 116,
+   "disagrees_with_oracle": 0,
+   "no_value_to_declare": 0,
+   "coverage_when_declared": 1.0,
+   "prose_reader_said_on_the_same_claims": {
+    "CONTRADICTED": 47,
+    "VERIFIED": 69
+   },
+   "share_the_prose_reader_would_have_abstained_on": 0.0
+  },
+  "only_touches": {
+   "decidable_items": 17,
+   "declared_and_read": 16,
+   "declared_and_abstained": 1,
+   "agrees_with_oracle": 12,
+   "disagrees_with_oracle": 4,
+   "no_value_to_declare": 0,
+   "coverage_when_declared": 0.9412,
+   "prose_reader_said_on_the_same_claims": {
+    "CONTRADICTED": 8,
+    "VERIFIED": 8,
+    "UNCHECKABLE": 1
+   },
+   "share_the_prose_reader_would_have_abstained_on": 0.0588
+  },
+  "symbol_added": {
+   "decidable_items": 15,
+   "declared_and_read": 2,
+   "declared_and_abstained": 13,
+   "agrees_with_oracle": 2,
+   "disagrees_with_oracle": 0,
+   "no_value_to_declare": 0,
+   "coverage_when_declared": 0.1333,
+   "prose_reader_said_on_the_same_claims": {
+    "UNCHECKABLE": 13,
+    "VERIFIED": 2
+   },
+   "share_the_prose_reader_would_have_abstained_on": 0.8667
+  }
+ }
+}
