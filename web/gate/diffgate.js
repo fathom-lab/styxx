@@ -5,7 +5,7 @@
  * file) rather than by trust.
  *
  * Which Python: the file on the BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 checkout (pull requests #113, #115,
- * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 eba8f5fc351c240075ac61c32364f61a7c23fb9cd7f1dc805269b6b2458d5468 — the
+ * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -465,7 +465,77 @@ function _pathClaimVerdict(kind, claimed, findPath) {
   return ["VERIFIED", `diff status ${pyRepr(st)} for ${pyRepr(p)}`];
 }
 
-function gateDiffText(summaryText, diffText, { strict = false } = {}) {
+// DECLARE-1 (PREREG_declare1_the_toll_2026_09_18, sha256 7ffd0ba1...). Mirrors styxx/declare.py
+// exactly. A body may declare its claims in one fenced `styxx` block; each declaration is
+// normalised into the canonical sentence this same reader already understands and read by this
+// same function one level down, so a declared claim and a prose claim cannot drift apart.
+const DECLARE_BLOCK_RE = /^[ \t]*```[ \t]*styxx[ \t]*\r?\n([\s\S]*?)^[ \t]*```/gm;
+const DECLARE_LINE_RE = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*?)\s*$/;
+const DECLARABLE = {
+  files_changed: "files_changed_count", only_touches: "only_touches",
+  adds_symbol: "symbol_added", tests_added: "tests_added",
+  file_touched: "file_touched", file_created: "file_created",
+  file_deleted: "file_deleted", tests_pass: "tests_pass",
+};
+const _DEC_INT = /^\d{1,9}$/, _DEC_PATHY = /^[\w.\-/\\]+$/, _DEC_IDENT = /^[A-Za-z_]\w*$/;
+
+// Python's repr() for a simple string, because the reason strings are compared byte for byte by
+// the differential and JSON.stringify quotes differently. Python prefers single quotes and
+// switches to double only when the value itself contains a single quote and no double.
+function _pyRepr(v) {
+  const t = String(v);
+  if (t.includes("'") && !t.includes('"')) return '"' + t + '"';
+  return "'" + t.replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'";
+}
+
+function parseDeclaration(text) {
+  DECLARE_BLOCK_RE.lastIndex = 0;
+  const blocks = [...String(text || "").matchAll(DECLARE_BLOCK_RE)].map(m => m[1]);
+  if (!blocks.length) return [null, []];
+  if (blocks.length > 1) return [null, [`${blocks.length} styxx blocks; a body declares once or not at all`]];
+  const out = {}, problems = [];
+  for (const raw of blocks[0].split(/\r?\n/)) {
+    if (!raw.trim() || raw.trimStart().startsWith("#")) continue;
+    const m = DECLARE_LINE_RE.exec(raw);
+    if (!m) { problems.push(`MALFORMED line, not \`key: value\`: ${_pyRepr(raw.trim().slice(0, 60))}`); continue; }
+    const key = m[1].toLowerCase(); const value = _stripChars(m[2].trim(), "`\"'");
+    if (!(key in DECLARABLE)) { problems.push(`unknown key '${key}'; reported, never checked`); continue; }
+    if (key in out) { problems.push(`duplicate key '${key}'; the first is kept`); continue; }
+    out[key] = value;
+  }
+  return [out, problems];
+}
+
+function canonicalSentence(key, value) {
+  if (key === "tests_pass") return [null, "declared, and deliberately not verifiable: a declaration that tests passed is not evidence that they did"];
+  if (key === "files_changed") return _DEC_INT.test(value) ? [`${parseInt(value, 10)} files changed.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not a count`];
+  if (key === "tests_added") return _DEC_INT.test(value) ? [`Added ${parseInt(value, 10)} tests.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not a count`];
+  if (key === "adds_symbol") return _DEC_IDENT.test(value) ? [`Adds function ${value}.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not an identifier`];
+  const v = value.replace(/\/\*{1,2}$/, "");
+  if (!v || !_DEC_PATHY.test(v)) return [null, `MALFORMED: ${_pyRepr(value)} is not a path`];
+  if (key === "only_touches") return [`Only touches ${v}.`, null];
+  if (key === "file_touched") return [`Modified ${v}.`, null];
+  if (key === "file_created") return [`Created file ${v}.`, null];
+  if (key === "file_deleted") return [`Deleted ${v}.`, null];
+  return [null, `no canonical form for '${key}'`];
+}
+
+function declarationPass(summaryText) {
+  const [mapping, problems] = parseDeclaration(summaryText);
+  const report = { declared: false, keys: [], problems: problems.slice(), unverifiable: [] };
+  if (mapping === null) return ["", report];
+  report.declared = true;
+  report.keys = Object.keys(mapping).sort();
+  const sentences = [];
+  for (const key of report.keys) {
+    const [sent, why] = canonicalSentence(key, mapping[key]);
+    if (sent === null) report.unverifiable.push({ key, value: mapping[key], why });
+    else sentences.push(sent);
+  }
+  return [sentences.join("\n"), report];
+}
+
+function gateDiffText(summaryText, diffText, { strict = false, _declared = false } = {}) {
   const { status, addedBlob } = parseUnifiedDiff(diffText);
   const sides = parseUnifiedDiffSides(diffText);
   const rawInputLen = (diffText || "").length;
@@ -570,6 +640,29 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
       }
     }
   });
+  // DECLARE-1: the prose pass above is finished and is not changed by any of this. The recursion
+  // terminates in one step: synthesized text never contains a styxx fence.
+  if (!_declared) {
+    const [dtext, drep] = declarationPass(summaryText);
+    if (drep.declared) {
+      if (dtext) {
+        const sub = gateDiffText(dtext, diffText, { strict, _declared: true });
+        for (const c of (sub.claims || [])) {
+          c.detail = Object.assign({}, c.detail || {}, { declared: true });
+          claims.push(c);
+        }
+      }
+      for (const u of drep.unverifiable) {
+        claims.push({ kind: u.key, text: `${u.key}: ${u.value}`, detail: { declared: true },
+                      verdict: "UNCHECKABLE", why: u.why });
+      }
+      for (const p of drep.problems) {
+        claims.push({ kind: "declaration_problem", text: p, detail: { declared: true },
+                      verdict: "UNCHECKABLE", why: p });
+      }
+    }
+  }
+
   const contradicted = claims.some(c => c.verdict === "CONTRADICTED");
   const uncheckable = claims.some(c => c.verdict === "UNCHECKABLE");
   const verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";
