@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.48.0] — 2026-09-18 — the gate was pointed at itself, and the measurement is the release
+## [Unreleased] — the gate was pointed at itself, and the measurement is what came back
+
+*Staged for 7.48.0. Cutting the release also requires regenerating `conformance/sworn/` — the
+committed set pins `provenance.styxx_version`, so bumping `styxx/_version.py` invalidates its
+digest until `python conformance/sworn/gen_vectors.py` is re-run in an environment whose
+regeneration matches CI's. That step is deliberately not in this change.*
 
 The release where the diff gate stopped being graded by the people who wrote it. Eleven
 preregistered cycles against 71,016 agent pull requests from the AIDev corpus (CC-BY-4.0, Zenodo
