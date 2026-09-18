@@ -84,6 +84,15 @@ numbers were the two that made the instrument look worse.
   `PREREG_calib1_jev_2026_09_18.md` is frozen to measure separation, calibration, determinism and
   cost on the 25 `only_touches` claims DECIDE-1 labelled by hand before this model was in the
   picture. It predicts against the tool on calibration and determinism.
+  **Amendment A, appended to that preregistration before the first call, records that it cannot
+  choose thresholds at all.** `v14_gates.bucket` puts 3 POSITIVE and 0 NEGATIVE of the 25 items in
+  the development split, so G-C1-1 is unrunnable and CALIB-1 ships no thresholds under any outcome.
+  The split is not redrawn; redrawing a split after seeing its class balance is the act that gate
+  exists to forbid. What the run still answers is whether Jev separates these sentences at all,
+  which is what decides whether a larger hand adjudication is worth funding — and it now costs
+  nothing to know that the threshold question is out of reach, because it was found before a call
+  was paid for. `calib1_ask.ts` and `calib1_score.py` make the rest one command each; the asker
+  refuses a key passed as an argument, and its dry-run output scores to `INVALID__DRY_RUN`.
 
 **The datasets**
 
