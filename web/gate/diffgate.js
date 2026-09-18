@@ -5,7 +5,7 @@
  * file) rather than by trust.
  *
  * Which Python: the file on the BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 checkout (pull requests #113, #115,
- * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 473a7dd7c2dce7b1fefd07eaba27291090dd351a0c108b28f4812c7dc77f536d — the
+ * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 eba8f5fc351c240075ac61c32364f61a7c23fb9cd7f1dc805269b6b2458d5468 — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -75,12 +75,54 @@ function _stripChars(s, chars, left = true, right = true) {
 }
 const _rstrip = (s, chars) => _stripChars(s, chars, false, true);
 
+// PATH-1 (PREREG_path1_only_touches_repair_2026_09_17, sha256 618d800f...). Mirrors the Python
+// side exactly: two of the six only_touches failure modes from RESULT_bench2_INVALID_2026_09_17
+// are repaired, four are not. This list mirrors papers/closed-model-frontier/path1_extensions.txt
+// and styxx/diffgate.py PATH1_EXTENSIONS byte for byte; the differential pins all three.
+const PATH1_EXTENSIONS = new Set(`
+c cc cpp cxx h hh hpp hxx m mm
+py pyi pyx rb rs go java kt kts scala clj cljs swift dart
+js jsx mjs cjs ts tsx vue svelte
+cs fs vb fsx pas pp
+php pl pm t r rmd jl lua tcl groovy gradle
+sh bash zsh fish ps1 psm1 psd1 bat cmd
+html htm xml xsl xslt svg css scss sass less styl
+json json5 yaml yml toml ini cfg conf properties env plist
+md markdown mdx rst adoc txt text tex bib
+sql graphql gql proto thrift avsc
+lock sum mod work
+dockerfile makefile mk cmake gemspec podspec csproj vbproj fsproj sln props targets
+tf tfvars hcl bicep nix
+at ac am in out golden snap
+png jpg jpeg gif webp ico bmp tiff pdf
+zip tar gz tgz bz2 xz 7z jar war whl
+`.split(/\s+/).filter(Boolean));
+
+function _hasRealExtension(token) {
+  // `package.json` yes, `Assert.NotNull` no. PATH-1 mode 2.
+  const i = token.lastIndexOf(".");
+  if (i < 0) return false;
+  return PATH1_EXTENSIONS.has(token.slice(i + 1).trim().toLowerCase());
+}
+
+function _isBareFilename(pref) {
+  // PATH-1 mode 1: a prefix naming a file rather than a location.
+  return !pref.includes("/") && _hasRealExtension(pref);
+}
+
+function _pathInside(path, pref) {
+  if (_isBareFilename(pref)) return path === pref || path.endsWith("/" + pref);
+  return path === pref || path.startsWith(pref + "/");
+}
+
 function _prefixIsPathShaped(prefix, status) {
   // A scope prefix is a path when it looks like one or names a segment of a changed path.
   // Judged on the prefix as written, minus a sentence-final period.
   const raw = _rstrip(_stripChars(prefix, "`\"'"), ".");
   if (!raw) return false;
-  if (/[/\\.]/.test(raw)) return true;
+  if (/[/\\]/.test(raw)) return true;
+  // PATH-1 mode 2: a dot alone is no longer enough -- the suffix must be a real file extension.
+  if (raw.includes(".") && _hasRealExtension(_rstrip(raw, "/"))) return true;
   const low = _rstrip(_norm(raw), "/").toLowerCase();
   for (const changed of status.keys()) {
     if (changed.split("/").some(seg => seg.toLowerCase() === low)) return true;
@@ -505,7 +547,8 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
           const notPaths = BC1_BY_CONSTRUCTION
             ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
             : [];
-          const outside = [...status.keys()].filter(p => !prefs.some(x => p.startsWith(x + "/") || p === x));
+          // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
+          const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
           else {
