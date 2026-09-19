@@ -36,6 +36,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      # node, for tests/test_port_is_current.py, which holds web/gate/diffgate.js to the pinned
+      # pairs through check_pairs.js. Without node on PATH that test used to skip -- silently,
+      # which is failure mode (1) in its own docstring: the one check on the browser port
+      # reporting green while checking nothing. It now fails in CI instead of skipping, the way
+      # tests/test_ledger.py already does for its own precondition. This step is the repair; that
+      # branch is the alarm if the step is ever removed.
+      - name: Set up Node (the port is held to the pinned pairs inside the suite)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Install styxx + test deps
         run: |
           python -m pip install --upgrade pip
@@ -53,58 +64,6 @@ jobs:
 
       - name: Run tests
         run: python -m pytest tests -q
-
-  gate-port:
-    # The bookmarklet and the paste-in preview cannot import Python, so `web/gate/diffgate.js` is
-    # a hand transliteration of `styxx/diffgate.py`, and the differential in `web/gate/differential`
-    # is what makes "two implementations agree" a measurement instead of a claim.
-    #
-    # It had never run here. `web/gate/` appeared in no workflow, so the check backing a public
-    # door fired only when somebody remembered to run it by hand -- and `py_side.py`'s own comment
-    # records what that already cost once: the port "fell a whole cycle behind without anything
-    # failing", serving a stale reading from the bookmarklet while every check stayed green. That
-    # instance was repaired; this job is the repair for the class.
-    #
-    # No network. The six committed `*_pairs.json` corpora are in the tree; `corpus_real.json` and
-    # `corpus_fuzz.json` are gitignored and skipped by both sides when absent. 54 pairs, 84 claims,
-    # about a second.
-    #
-    # `tests/test_gate_port_pin_is_current.py` checks the pin still names this checkout's
-    # instrument. This job is the other half: that the port still agrees with the instrument the
-    # pin names. Both are needed -- a current pin over a stale port passes the first and fails
-    # here, and that is the failure worth having.
-    name: gate port (js vs py, 0 disagreements)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install styxx
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-
-      - name: Python side (refuses to run unless styxx/diffgate.py matches the port's pin)
-        working-directory: web/gate/differential
-        run: python py_side.py
-
-      - name: JavaScript side (the port, over the same corpus)
-        working-directory: web/gate/differential
-        run: node js_side.js
-
-      - name: Differential (exit 1 on the first disagreement)
-        working-directory: web/gate/differential
-        run: python differential.py
 
   package:
     name: wheel packaging
