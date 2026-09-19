@@ -9,6 +9,18 @@ is unchanged at sha256 `4ba947a8…`.
 **All five gates pass.** The finding contradicts what we said yesterday and most of what we said
 this morning.
 
+> **SUPERSEDED IN ONE FIGURE (2026-09-18, see `RESULT_scope1_ABANDONED_2026_09_18.md`):** the
+> abstention rate in this document's title, and the bullet below reading "the instrument returns a
+> verdict on **17 of 299** `only_touches` claims", were counted against instrument `4ba947a8…`.
+> The instrument moved twice the next day (`eba8f5fc…`, then `9b620e00…`); against the current
+> file the count is **16 of 299 — 5.4% [3.3%, 8.5%]**, receipted in `scope1_footprint.json` as
+> 8 VERIFIED + 8 CONTRADICTED + 281 UNCHECKABLE + 2 with no verdict. Quote that one.
+> **Everything else in this document is untouched.** The 71% decidable, the 52% for
+> `only_touches`, the per-kind table and the Wilson intervals are hand adjudication; no
+> instrument change can move them, and none did.
+> Appended on the convention `FINDING_mount_fpr_live_2026_06_12.md` set — the original lines
+> stand unedited. Found by `AUDIT_cross_paper_numbers_2026_09_18.md`.
+
 ## The number
 
 100 claims, stratified 25 per kind, seed 20260920, adjudicated by hand against the live diff under

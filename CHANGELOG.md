@@ -93,6 +93,27 @@ numbers were the two that made the instrument look worse.
   nothing to know that the threshold question is out of reach, because it was found before a call
   was paid for. `calib1_ask.ts` and `calib1_score.py` make the rest one command each; the asker
   refuses a key passed as an argument, and its dry-run output scores to `INVALID__DRY_RUN`.
+- **AUDIT — the papers read against each other, and a guard that had quietly stopped firing.**
+  A correction to a module header turned out to be a regression, which is how anyone noticed that
+  `RESULT_decide1_decidable_fraction_2026_09_17.md` and `RESULT_scope1_ABANDONED_2026_09_18.md`
+  state different `only_touches` coverage — *17 of 299* and *16 of 299* — because the instrument
+  moved between them and neither paper points at the other. `audit_cross_paper_numbers.py` sweeps
+  the corpus for that shape and **proposes candidates without labelling any of them**: 20 pairs,
+  1 real supersession, 19 explained by reading, each explanation written down. DECIDE-1 now carries
+  the forward-pointing banner `FINDING_mount_fpr_live_2026_06_12.md` established as this
+  repository's convention — appended, never edited, and scoped to the one instrument-derived
+  figure, because its hand adjudication is untouched by any instrument change. **The sweep also
+  surfaced what it was not looking for**, though not what its author first claimed. **#127** already
+  pins the instrument, holds the gate README to the same hash, and runs both implementations over
+  the pinned pairs; the first draft of this entry called that class unrepaired because it was
+  measured against `main` rather than against the stack it sits on, and the correction is recorded
+  in the note rather than overwritten. The real residue is one line: that test **skips** when node
+  is off `PATH`, and a skip is green — so on a runner without node the only check on the browser
+  port reports success while checking nothing, which is failure mode (1) of its own docstring.
+  Fixed the way `tests/test_ledger.py` already settled it: `test.yml` installs node so the
+  precondition is repaired, and the branch now **fails in CI instead of skipping**, so removing
+  that step is loud. Verified both ways — fails with `CI` set and node hidden, still skips for a
+  contributor who simply has no node.
 
 **The datasets**
 

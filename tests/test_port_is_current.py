@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -128,10 +129,33 @@ def test_python_matches_each_pinned_expect_block(name, pair):
     assert g.uncovered_sentences == pair["expect"]["uncovered_sentences"]
 
 
+def _in_ci() -> bool:
+    return bool(os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"))
+
+
 def test_the_javascript_port_agrees_on_every_pinned_pair():
-    """check_pairs.js, run here rather than left as a command in a README."""
+    """check_pairs.js, run here rather than left as a command in a README.
+
+    The skip below used to be unconditional, which quietly reopened failure mode (1) in this
+    file's own docstring: on a runner without node, the one test that holds the PORT to the
+    pinned pairs reported green while checking nothing. `tests/test_ledger.py` already settled
+    how this repository handles that -- *"the test now repairs its own precondition and, if it
+    cannot, fails in CI instead of skipping. Locally it still skips, because a developer with a
+    shallow clone is not the person hiding a defect."* The same asymmetry applies here: a
+    contributor without node gets a skip, CI gets a failure.
+
+    `test.yml` also installs node for the test job, so the precondition is repaired rather than
+    merely asserted. This branch is what catches its removal.
+    """
     node = shutil.which("node")
     if node is None:
+        if _in_ci():
+            raise AssertionError(
+                "node is not on PATH in CI, so the JavaScript port was not held to the pinned "
+                "pairs. This FAILS rather than skips because a guard that silently does not run "
+                "is the defect this file exists to document -- see failure mode (1) above. "
+                "Restore the node setup step in .github/workflows/test.yml."
+            )
         pytest.skip("node is not on PATH; the port cannot be held to the pinned pairs here")
     r = subprocess.run([node, str(CHECK_PAIRS)], capture_output=True, text=True,
                        encoding="utf-8", errors="replace", timeout=300)
