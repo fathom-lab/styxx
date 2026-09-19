@@ -76,7 +76,17 @@ Read in full, not dismissed by pattern:
 - The remainder are table-row indices, corpus sizes reused across unrelated quantities, and line
   truncations that put two unrelated numbers in one window.
 
-## The more serious finding, which the sweep did not produce
+## The more serious finding — and the correction it needed
+
+> **Correction, appended 2026-09-19.** The first version of this section said the class had not
+> been repaired. That was wrong, and wrong in this document's own way: measured against `main`
+> and described as the state of the repository. `tests/test_port_is_current.py` — introduced in
+> **#127**, commit `325667bd`, *"tests: the guard that would have caught the port falling a cycle
+> behind"* — already pins the instrument, already holds `web/gate/README.md` to the same hash,
+> already asserts every corpus `check_pairs.js` names exists and is whitelisted in `.gitignore`,
+> and already runs both implementations over the pinned pairs. It was sitting unmerged in the same
+> stack as this note. The sweep found no new defect here; it found a branch its author had not
+> read. What survives is narrower, and is stated below.
 
 `web/gate/differential/py_side.py` pins the instrument's sha256 and refuses to run against
 anything else, so "0 disagreements between the Python and the browser port" always means
@@ -90,8 +100,8 @@ The consequence is already written down, in a comment above the pin:
 > cycle behind without anything failing.
 
 The port fell a cycle behind, the public bookmarklet served a stale reading, and every check
-stayed green. That instance was found and repaired. **The class was not**: nothing fails the next
-time `styxx/diffgate.py` moves.
+stayed green. That instance was found and repaired, and so was the class — in #127, a branch
+above this one.
 
 `benchmarks/silent_pass/CORPUS.md` catalogues this shape as SP-1, an absent measurement
 surfacing as a passing check, and `tests/test_ledger.py` makes the same argument about the
@@ -99,10 +109,25 @@ ledger's regeneration guarantee — in its own words, "an absent measurement sur
 passing check is the defect class this repository exists to document ... It had been sitting in
 our own suite." It was sitting in the browser door too.
 
-`tests/test_gate_port_pin_is_current.py` closes it: the pin must name this checkout's
-instrument, and the README must name the same file. It proves the guard *can* fire; only the
-differential proves the port agrees, and the test says so rather than implying otherwise. There
-is no skip path, for the reason `test_ledger.py` gives.
+What #127 did not close is one line at the end of its own file:
+
+```python
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH; ...")
+```
+
+**A skip is green.** On any runner without node, the single test that holds the browser port to
+the pinned pairs reports success while checking nothing — failure mode (1) of that file's own
+docstring, reintroduced two screens below where it is named. `tests/test_ledger.py` had already
+settled how this repository answers that: repair the precondition, and **fail in CI instead of
+skipping**, because "a developer with a shallow clone is not the person hiding a defect."
+
+Both halves are now applied. `test.yml` installs node for the test job, so the precondition is
+repaired rather than assumed; and the node branch raises in CI instead of skipping, so removing
+that step sets off an alarm rather than going quiet. Checked in both directions: with `CI` set and
+node off `PATH` it fails with the message naming the workflow step, and without `CI` it still
+skips for a contributor who simply has no node.
 
 ## What this audit does not cover
 
