@@ -103,15 +103,17 @@ numbers were the two that made the instrument look worse.
   the forward-pointing banner `FINDING_mount_fpr_live_2026_06_12.md` established as this
   repository's convention — appended, never edited, and scoped to the one instrument-derived
   figure, because its hand adjudication is untouched by any instrument change. **The sweep also
-  surfaced what it was not looking for**: `web/gate/differential/py_side.py` pins the instrument
-  and refuses to run against anything else, but `web/gate/` is in no workflow, so that guard fires
-  only by hand — and its own comment records that the port once "fell a whole cycle behind without
-  anything failing". The instance was repaired; the class was not.
-  `tests/test_gate_port_pin_is_current.py` closes half of it — the pin must name this checkout's
-  instrument, and there is no skip path — and a **`gate port` job in `test.yml` closes the other
-  half by running the differential itself**: 54 pairs, 84 claims, no network, about a second.
-  Checked both ways in a clean-room copy of the branch — exit 0 as committed, and exit 1 with the
-  disagreements printed when the port's files-changed verdict is flipped.
+  surfaced what it was not looking for**, though not what its author first claimed. **#127** already
+  pins the instrument, holds the gate README to the same hash, and runs both implementations over
+  the pinned pairs; the first draft of this entry called that class unrepaired because it was
+  measured against `main` rather than against the stack it sits on, and the correction is recorded
+  in the note rather than overwritten. The real residue is one line: that test **skips** when node
+  is off `PATH`, and a skip is green — so on a runner without node the only check on the browser
+  port reports success while checking nothing, which is failure mode (1) of its own docstring.
+  Fixed the way `tests/test_ledger.py` already settled it: `test.yml` installs node so the
+  precondition is repaired, and the branch now **fails in CI instead of skipping**, so removing
+  that step is loud. Verified both ways — fails with `CI` set and node hidden, still skips for a
+  contributor who simply has no node.
 
 **The datasets**
 
