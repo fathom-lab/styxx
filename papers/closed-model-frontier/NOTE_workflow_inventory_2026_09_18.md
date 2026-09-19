@@ -15,16 +15,25 @@ firing; this is the same question asked of every other workflow.
 | `nightly-heavy.yml` | 91 | success, success, success |
 | `diffgate.yml` | 38 | success, success, success |
 | `publish.yml` | 80 | success (2026-09-01) |
-| **`telescope.yml`** | **146** | **failure, failure, failure** |
+| **`telescope.yml`** | **146** | **failure x138 consecutive, unbroken since 2026-05-04** |
 | **`gauntlet-pr.yml`** | **78** | **failure, failure, failure — last run 2026-05-28** |
 | `replications.yml` | 0 | never run |
 | `leaderboard-submission.yml` | 0 | never run |
 
 ## `telescope.yml` — red every day, and not for the reason anyone would look for
 
-Failing on every scheduled run from at least 2026-09-13 through 2026-09-18. The daily
-cognometric layer behind `fathom.darkflobi.com/scoreboard` has not produced a snapshot in that
-window, and the red is so routine that a real telescope failure would now be invisible inside it.
+**138 consecutive scheduled failures. The last green run was 2026-05-03.** The daily cognometric
+layer behind `fathom.darkflobi.com/scoreboard` has produced no snapshot in four and a half
+months, and the red is so routine by now that a real telescope failure would be invisible inside
+it.
+
+> **Correction, appended 2026-09-19.** The first draft of this note said "from at least
+> 2026-09-13 through 2026-09-18" — six days. That came from the three runs the API returns by
+> default, and it understated the streak by a factor of twenty. Paging the full run history gives
+> 138 in a row since 2026-05-04. The wrong number was mine, reading one page and describing it as
+> the record; it is corrected here rather than quietly overwritten, and it is a small live example
+> of the thing the table below is for — a number taken from what was in front of me instead of
+> from the whole of it.
 
 The job's own steps say where it breaks:
 
@@ -43,7 +52,8 @@ step:
 
 `cache: 'pip'` was set on `setup-python`. The install step below it is conditional on a vendor
 key, so on a keyless day pip never runs, `~/.cache/pip` is never created, and the post-job cache
-save fails the whole job.
+save fails the whole job. The timing fits: the pin on the workflow's last green run is 2026-05-03,
+and the streak starts with the very next scheduled run.
 
 What makes this worth writing down is the comment sitting four lines under the cache directive:
 
@@ -54,6 +64,21 @@ What makes this worth writing down is the comment sitting four lines under the c
 cannot reach.** A conditional `if:` cannot govern another action's cleanup. Removing `cache: 'pip'`
 is the whole fix; nothing was being cached anyway, because the one install is unpinned and has no
 lockfile to key on. The comment now says so, so it does not come back.
+
+**Checked, not argued.** The repaired workflow was dispatched against its own branch before this
+note was written: `workflow_dispatch` on `fathomlab-patch-31`, **conclusion success**, with the
+same keyless path as every failing run —
+
+```
+4. check vendor keys                    success
+5. install deps                         skipped
+6. run telescope                        skipped
+7. commit daily snapshot                skipped
+13. Post Run actions/setup-python@v5    success   <- was failure on every run on main
+```
+
+Nothing else moved. The job still does no work on a keyless day; it now finishes green while
+doing none, which is what the guard was written to make it do.
 
 ## `gauntlet-pr.yml` — last known state is failure, and the evidence has expired
 
