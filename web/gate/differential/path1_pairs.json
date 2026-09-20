@@ -1,0 +1,150 @@
+[
+ {
+  "id": "path1:basename-anywhere",
+  "summary": "Only modify package.json and package-lock.json files in each package folder",
+  "diff": "diff --git a/appservice/package.json b/appservice/package.json\n--- a/appservice/package.json\n+++ b/appservice/package.json\n@@ -1 +1 @@\n+x\ndiff --git a/appservice/package-lock.json b/appservice/package-lock.json\n--- a/appservice/package-lock.json\n+++ b/appservice/package-lock.json\n@@ -1 +1 @@\n+x\ndiff --git a/auth/package.json b/auth/package.json\n--- a/auth/package.json\n+++ b/auth/package.json\n@@ -1 +1 @@\n+x\ndiff --git a/auth/package-lock.json b/auth/package-lock.json\n--- a/auth/package-lock.json\n+++ b/auth/package-lock.json\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'appservice/package.json'"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:basename-nested-single",
+  "summary": "Only modified `blobstorage_pdisk_impl.cpp` to report fields",
+  "diff": "diff --git a/ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp b/ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp\n--- a/ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp\n+++ b/ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'ydb/core/blobstorage/pdisk/blobstorage_pdisk_impl.cpp'"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:basename-still-accuses",
+  "summary": "Only modify package.json and package-lock.json files in each package folder",
+  "diff": "diff --git a/appservice/package.json b/appservice/package.json\n--- a/appservice/package.json\n+++ b/appservice/package.json\n@@ -1 +1 @@\n+x\ndiff --git a/src/main.ts b/src/main.ts\n--- a/src/main.ts\n+++ b/src/main.ts\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'appservice/package.json'"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'package.json' and 'package-lock.json': ['src/main.ts']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:dotted-identifier",
+  "summary": "Only modify Assert.NotNull usages within this file.",
+  "diff": "diff --git a/src/libraries/System.Linq/tests/SequenceTests.cs b/src/libraries/System.Linq/tests/SequenceTests.cs\n--- a/src/libraries/System.Linq/tests/SequenceTests.cs\n+++ b/src/libraries/System.Linq/tests/SequenceTests.cs\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix 'assert.notnull' is not a path (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:css-selector",
+  "summary": "the fix was simplified to only change `.k-step-link` overflow",
+  "diff": "diff --git a/packages/core/scss/components/stepper/_layout.scss b/packages/core/scss/components/stepper/_layout.scss\n--- a/packages/core/scss/components/stepper/_layout.scss\n+++ b/packages/core/scss/components/stepper/_layout.scss\n@@ -1 +1 @@\n+x\ndiff --git a/tests/_output/stepper.png b/tests/_output/stepper.png\n--- a/tests/_output/stepper.png\n+++ b/tests/_output/stepper.png\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix 'k-step-link' is not a path (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:slash-prefix-anchors",
+  "summary": "Only modified `packages/typespec-ts/` and `packages/typespec-test/` as specified",
+  "diff": "diff --git a/packages/typespec-ts/a.ts b/packages/typespec-ts/a.ts\n--- a/packages/typespec-ts/a.ts\n+++ b/packages/typespec-ts/a.ts\n@@ -1 +1 @@\n+x\ndiff --git a/common/config/rush/pnpm-lock.yaml b/common/config/rush/pnpm-lock.yaml\n--- a/common/config/rush/pnpm-lock.yaml\n+++ b/common/config/rush/pnpm-lock.yaml\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'packages/typespec-ts' and 'packages/typespec-test': ['common/config/rush/pnpm-lock.yaml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:unrepaired-runtime-sentence",
+  "summary": "Only changed mods/submods generate new XML with updated fields",
+  "diff": "diff --git a/FIXES_SUMMARY.md b/FIXES_SUMMARY.md\n--- a/FIXES_SUMMARY.md\n+++ b/FIXES_SUMMARY.md\n@@ -1 +1 @@\n+x\ndiff --git a/index.html b/index.html\n--- a/index.html\n+++ b/index.html\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'mods/submods': ['fixes_summary.md', 'index.html']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path1:unrepaired-typo",
+  "summary": "Only change .githiub/workflows/dependabot.yml, keep the changes to minimum",
+  "diff": "diff --git a/.github/workflows/dependabot.yml b/.github/workflows/dependabot.yml\n--- a/.github/workflows/dependabot.yml\n+++ b/.github/workflows/dependabot.yml\n@@ -1 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'github/workflows/dependabot.yml'"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'githiub/workflows/dependabot.yml': ['github/workflows/dependabot.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ }
+]

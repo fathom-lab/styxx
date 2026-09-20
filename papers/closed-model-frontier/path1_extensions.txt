@@ -1,0 +1,22 @@
+# PATH-1 committed file-extension list (PREREG_path1_only_touches_repair_2026_09_17.md, G-P1-6).
+# Frozen with the preregistration, before any measurement. A token of the shape `name.ext` is a
+# path only when `ext` appears here; otherwise it is an identifier (`Assert.NotNull`) and the
+# prefix falls through to the segment test. Additions require a new preregistration.
+# General-purpose list: written from common language/tooling conventions, NOT from the eleven
+# pull requests PATH-1 is measured against.
+c cc cpp cxx h hh hpp hxx m mm
+py pyi pyx rb rs go java kt kts scala clj cljs swift dart
+js jsx mjs cjs ts tsx vue svelte
+cs fs vb fsx pas pp
+php pl pm t r rmd jl lua tcl groovy gradle
+sh bash zsh fish ps1 psm1 psd1 bat cmd
+html htm xml xsl xslt svg css scss sass less styl
+json json5 yaml yml toml ini cfg conf properties env plist
+md markdown mdx rst adoc txt text tex bib
+sql graphql gql proto thrift avsc
+lock sum mod work
+dockerfile makefile mk cmake gemspec podspec csproj vbproj fsproj sln props targets
+tf tfvars hcl bicep nix
+at ac am in out golden snap
+png jpg jpeg gif webp ico bmp tiff pdf
+zip tar gz tgz bz2 xz 7z jar war whl
