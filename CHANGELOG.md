@@ -92,6 +92,59 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — MUTE-1: cut the wire, and see whether the alarm still rings
+
+Four times this week a check in this repository was found reporting green while measuring nothing
+— `gauntlet-pr.yml` (#137), `telescope.yml` (#138), the port differential on `main` (#136), the
+styxx-js typecheck (#140). Each was found by a person reading a file. `benchmarks/silent_pass/`
+names the shape and holds twenty cases of it, all Python modules; its CONTRIBUTING file says its
+biggest weakness is being one codebase deep. This says the shape is also one *level* deep.
+
+**MUTE-1 is mutation testing of the checking harness itself.** `benchmarks/harness_mutation/mute.py`
+enumerates every declared check — 9 workflow triggers, 14 jobs, 38 `run:` steps, 4 npm scripts, 9
+declared subjects (the corpus, the pins, the lockfile, the status page) — applies one of seven cuts
+to each (delete the job, delete the step, wrap it `|| true`, flip its `if:` to false, switch the
+trigger to manual-only, delete the script, delete the subject) and asks the repository's own test
+suite whether it noticed. The oracle is selected by a path pattern, never by hand; verdicts are
+per-test against the unmutated tree, so a test that already fails cannot kill anything; every
+KILLED names the test that did it. The instrument refuses to mutate the checkout it lives in, and
+its receipt carries a *harness fingerprint* — a sha256 over every file a mutant can touch plus every
+file the oracle reads — so a run applies to any commit whose harness matches, not to one commit.
+
+`papers/harness/PREREG_mute1_harness_mutation_2026_09_20.md` was frozen before a single mutant was
+applied, with the population enumerated and eight predictions committed, including the totals.
+`papers/harness/mute1_score.py` scores them from the receipt in the open.
+
+**The run** (`mute1_receipt.json`, 21 minutes, 120 mutants, 495 oracle tests passing on the
+baseline): **18 KILLED, 101 SURVIVED, 1 UNREACHED.** Six of eight predictions HIT; the two misses
+are the same miss, one kill under-predicted for the leaderboard workflow's job. The direction held:
+**84% of the cuts to this repository's checking apparatus are invisible to its test suite.**
+
+What survived, read in `RESULT_mute1_harness_mutation_2026_09_20.md` §4 and marked there as a
+judgement: **every cut to `test.yml → test`, including deleting or swallowing `Run tests`** — if CI
+stopped running the Python suite tomorrow, every pull request would go on showing green and
+nothing in the repository would say so. Every cut to `telescope.yml`, because the guard written
+in #138 is conditional on the skip existing and is vacuous when the skip is cut. Twelve of fifteen
+cuts to `gauntlet-pr.yml`, because #137 guarded the step that finds submissions and not the step
+that verifies them. All eight `if:` guards. Eight of nine triggers. Four workflows nothing in
+`tests/` knows exist.
+
+Two of those findings are against guards written this week by the same hand, which is the
+instrument doing what it is for. Two more lessons it produced: the swallow of the gauntlet
+discovery step was killed by exactly one test — the one that *runs the step's shell* — while the
+textual guard beside it, which looks for `|| true` on a git line, saw nothing, because the wrapper
+puts `|| true` on its own line. A guard that reads the text of a check is fooled by anything that
+leaves the text in place. And one kill is a crash rather than a guard: removing the CALIB-1 prereg
+pin line stops `calib1_score.py` importing and fails the whole session, which the rule counts and
+a reader should not mistake for a targeted test.
+
+`tests/test_harness_mutation.py` holds the instrument's mechanics: every operator changes its file
+and leaves it parseable, a swallowed step provably cannot fail, an absent subject is UNREACHED
+never a verdict, verdicts compare per test rather than by exit code, the fingerprint moves when
+the harness moves, and the instrument refuses its own checkout. The instrument's own tests are
+excluded from the oracle (Amendment A): a mutation tester that graded itself would be the shape it
+exists to catch.
+
 ## [Unreleased] — a commit-msg hook: the message cannot lie about the staged diff
 
 `integrations/git/commit-msg`, one file, copied into `.git/hooks/`: every commit message is read
