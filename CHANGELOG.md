@@ -21,6 +21,44 @@ code" habit — the message becomes a preregistration and this is the half that 
 came true. Verdict logic untouched; `tests/test_git_commit_msg_hook.py` runs the hook the way
 git runs it, in a real temporary repository, including once installed as a real hook.
 
+## [Unreleased] — the submission gate verified nothing, and reported that in green
+
+`.github/workflows/gauntlet-pr.yml` re-runs `styxx gauntlet` on an outside researcher's method and
+refuses the PR when the numbers they reported are not the numbers the gauntlet produces. Its header
+said the leaderboard is trustworthy by construction because no submission lands without CI
+verification. It had never verified one.
+
+The discovery step read `git diff --name-only origin/${{ github.base_ref }}...HEAD` with `|| true`
+on the end. `origin/<base>` is not in the checkout: `actions/checkout@v4` at its default
+`fetch-depth: 1` fetches exactly one refspec on a `pull_request` event —
+`+<sha>:refs/remotes/pull/<n>/merge` (`src/ref-helper.ts`, `getRefSpec`; the
+`+refs/heads/*:refs/remotes/origin/*` spec lives in `getRefSpecForAllHistory`, which only runs at
+`fetch-depth: 0`). So the diff exited 128 with "unknown revision", `|| true` turned that into an
+empty string, every later step was skipped by `if: steps.discover.outputs.dirs != ''`, and the job
+printed *"no submissions/ files changed in this PR — nothing to verify"* and went green. Two
+different facts — *this PR changes no submission* and *I could not work out what this PR changes* —
+arrived at CI as the same check. That is SP-1 on the public submission path.
+
+Fixed by fetching the pull request's base commit by SHA and diffing two-dot against it — which
+needs no merge base, and a pair of depth-1 fetches may not share one — with no `|| true` anywhere
+in the step, and an `::error::` that says why a failure to compare is not a finding of no change.
+`.github/workflows/leaderboard-submission.yml`, which handles the other submission protocol
+(`submissions/GAUNTLET.md` documents the two side by side), already fetched its base ref and
+exited 1 on an empty result; it is now pinned by test, so the half that got this right cannot
+drift into the shape of the half that did not.
+
+`tests/test_gauntlet_pr_verifies_something.py` runs the shipped step's own shell against a base
+commit nothing can fetch and demands a non-zero exit, then runs the historical line in the same
+harness and shows it exits 0 with an empty answer — so the guard is known to discriminate rather
+than merely to pass. Reverting the workflow to the old line fails the behavioural test, which is
+how that was checked rather than assumed. It also runs `bash -n` over every `run:` block in all
+nine workflows (36 blocks, all valid today), because a syntax error in a workflow that fires twice
+a year surfaces twice a year.
+
+Found while trying to account for a different unknown: `gauntlet-pr`'s last recorded run was a
+failure from 2026-05-28 whose logs have since expired. Reading the file answered the question the
+logs no longer could.
+
 ## [Unreleased] — the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
 
 **Ten adversarial reviewers, one skeptic per dimension, on 2026-09-13; no blocker or defect finding

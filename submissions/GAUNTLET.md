@@ -52,6 +52,15 @@ Pick the protocol that matches the benchmark you want to attempt. Both are valid
 
 4. **Write `submission.json`** with metadata + reported scores. The CI workflow `.github/workflows/gauntlet-pr.yml` re-runs the gauntlet on your method and compares; if scores don't match (float tolerance 1e-3), the PR fails verification.
 
+   > **That sentence was not true until [#137](https://github.com/fathom-lab/styxx/pull/137).** The
+   > workflow's discovery step diffed against a ref its own checkout did not have, swallowed git's
+   > error with `|| true`, found an empty change set, skipped every step that does the verifying,
+   > and reported *"nothing to verify"* — in green — on every submission it was supposed to check.
+   > If you submitted before 2026-09-20 and your PR passed, it passed on scope, not on merit: push
+   > an empty commit and it will be checked for real. The run log now prints the files it found
+   > under `submissions/` and the submissions it will verify, and a diff it cannot take fails the
+   > job instead of being reported as a diff that found nothing.
+
    ```json
    {
      "name": "Your-Method-Name",
