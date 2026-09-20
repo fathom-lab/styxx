@@ -1,0 +1,312 @@
+{
+ "npm_scripts": {
+  "packages/styxx-js/package.json": [
+   "build",
+   "test",
+   "test:watch",
+   "typecheck"
+  ]
+ },
+ "regenerate": "python -m benchmarks.harness_mutation.manifest --write",
+ "what": "structure of the checking harness: triggers, jobs, run steps, guards, npm scripts",
+ "workflows": {
+  "audit-claims.yml": {
+   "jobs": {
+    "audit-claims": {
+     "if": null,
+     "name": "falsify PR self-report",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx"
+      },
+      {
+       "if": null,
+       "name": "Write PR body to a file"
+      },
+      {
+       "if": null,
+       "name": "Audit claims against substrate"
+      }
+     ]
+    }
+   },
+   "name": "audit-claims",
+   "on": [
+    "pull_request",
+    "workflow_dispatch"
+   ]
+  },
+  "diffgate.yml": {
+   "jobs": {
+    "diffgate": {
+     "if": null,
+     "name": "the PR body vs the diff",
+     "run_steps": []
+    }
+   },
+   "name": "diffgate",
+   "on": [
+    "pull_request",
+    "workflow_dispatch"
+   ]
+  },
+  "gauntlet-pr.yml": {
+   "jobs": {
+    "verify-submissions": {
+     "if": null,
+     "name": "re-run gauntlet on submitted methods",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx (editable, with test extras)"
+      },
+      {
+       "if": null,
+       "name": "Discover changed submissions"
+      },
+      {
+       "if": "steps.discover.outputs.dirs != ''",
+       "name": "Install per-submission requirements"
+      },
+      {
+       "if": "steps.discover.outputs.dirs != ''",
+       "name": "Re-run gauntlet on each changed submission"
+      },
+      {
+       "if": "steps.discover.outputs.dirs == ''",
+       "name": "No submissions changed"
+      }
+     ]
+    }
+   },
+   "name": "gauntlet PR verification",
+   "on": [
+    "pull_request"
+   ]
+  },
+  "leaderboard-submission.yml": {
+   "jobs": {
+    "run-submission": {
+     "if": "${{ startsWith(github.event.pull_request.title, '[submission]') }}",
+     "name": null,
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx + NLI stack"
+      },
+      {
+       "if": null,
+       "name": "Install submission dependencies (if any)"
+      },
+      {
+       "if": null,
+       "name": "Identify the submission file changed in this PR"
+      },
+      {
+       "if": null,
+       "name": "Run submission against 8 benchmarks"
+      }
+     ]
+    }
+   },
+   "name": "leaderboard submission",
+   "on": [
+    "pull_request"
+   ]
+  },
+  "nightly-heavy.yml": {
+   "jobs": {
+    "nightly-heavy": {
+     "if": null,
+     "name": "py3.11 + torch/nli/coherence/signing",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install CPU-only torch first (keeps the install lean & fast)"
+      },
+      {
+       "if": null,
+       "name": "Install styxx + heavy-dep extras"
+      },
+      {
+       "if": null,
+       "name": "Premise check — the heavy libs MUST import"
+      },
+      {
+       "if": null,
+       "name": "Run AUC-backing instrument tests"
+      },
+      {
+       "if": "always()",
+       "name": "Guard — no test skipped for a MISSING dependency"
+      },
+      {
+       "if": "always()",
+       "name": "Step summary"
+      }
+     ]
+    }
+   },
+   "name": "nightly-heavy (AUC instrument guard)",
+   "on": [
+    "schedule",
+    "workflow_dispatch"
+   ]
+  },
+  "publish.yml": {
+   "jobs": {
+    "build": {
+     "if": null,
+     "name": "Build sdist + wheel",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install build tooling"
+      },
+      {
+       "if": null,
+       "name": "Build distribution artifacts"
+      },
+      {
+       "if": null,
+       "name": "Verify both artifacts present"
+      },
+      {
+       "if": null,
+       "name": "Twine integrity check"
+      }
+     ]
+    },
+    "github-release": {
+     "if": "startsWith(github.ref, 'refs/tags/')",
+     "name": "Attach artifacts to GitHub Release",
+     "run_steps": []
+    },
+    "publish": {
+     "if": null,
+     "name": "Publish via Trusted Publishing",
+     "run_steps": []
+    }
+   },
+   "name": "publish-to-pypi",
+   "on": [
+    "push",
+    "workflow_dispatch"
+   ]
+  },
+  "replications.yml": {
+   "jobs": {
+    "verify": {
+     "if": "${{ startsWith(github.event.pull_request.title, '[replication]') }}",
+     "name": null,
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Identify submitted replication files"
+      },
+      {
+       "if": null,
+       "name": "Verify each submission against its canonical receipt"
+      }
+     ]
+    }
+   },
+   "name": "replication verification",
+   "on": [
+    "pull_request"
+   ]
+  },
+  "telescope.yml": {
+   "jobs": {
+    "telescope": {
+     "if": null,
+     "name": null,
+     "run_steps": [
+      {
+       "if": null,
+       "name": "check vendor keys"
+      },
+      {
+       "if": "steps.keys.outputs.present == 'true'",
+       "name": "install deps"
+      },
+      {
+       "if": "steps.keys.outputs.present == 'true'",
+       "name": "run telescope"
+      },
+      {
+       "if": "steps.keys.outputs.present == 'true' && github.event.inputs.dry_run != 'true'",
+       "name": "commit daily snapshot"
+      }
+     ]
+    }
+   },
+   "name": "cognitive-telescope",
+   "on": [
+    "schedule",
+    "workflow_dispatch"
+   ]
+  },
+  "test.yml": {
+   "jobs": {
+    "core-minimal": {
+     "if": null,
+     "name": "core-minimal (numpy-only install)",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx with NO extras"
+      },
+      {
+       "if": null,
+       "name": "Core surface must import + run with numpy only"
+      }
+     ]
+    },
+    "package": {
+     "if": null,
+     "name": "wheel packaging",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Build wheel"
+      },
+      {
+       "if": null,
+       "name": "Verify all subpackages + key modules are in the wheel"
+      }
+     ]
+    },
+    "test": {
+     "if": null,
+     "name": "py${{ matrix.python-version }}",
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx + test deps"
+      },
+      {
+       "if": null,
+       "name": "Lint (ruff — pinned to py39, catches the 3.9-3.11 syntax class)"
+      },
+      {
+       "if": null,
+       "name": "Import smoke (every top-level module must import on this version)"
+      },
+      {
+       "if": null,
+       "name": "Run tests"
+      }
+     ]
+    }
+   },
+   "name": "tests",
+   "on": [
+    "pull_request",
+    "push",
+    "workflow_dispatch"
+   ]
+  }
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "valid": true,
+ "gates": {
+  "G-M2-1": {
+   "pass": true,
+   "detail": "534 tests pass on the unmutated tree; the only guard cases not passing are the five preregistered skips; no manifest test excluded"
+  },
+  "G-M2-2": {
+   "pass": true,
+   "detail": "all 495 MUTE-1 baseline-passing tests still pass"
+  },
+  "G-M2-3": {
+   "pass": true,
+   "detail": "UNREACHED = 1"
+  },
+  "G-M2-4": {
+   "pass": true,
+   "detail": "every KILLED names a test and every SURVIVED names none"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "all 73 structural mutants KILLED with the manifest test among the killers",
+   "observed": {
+    "structural": 73,
+    "not_as_predicted": []
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "the manifest test kills no M-SWALLOW mutant",
+   "observed": {
+    "swallows_killed_by_manifest": []
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "33 swallows KILLED by their own behavioural case; 5 exempt SURVIVE with no killer",
+   "observed": {
+    "swallows": 38,
+    "killed": 33,
+    "survived": [
+     "MUTE-018",
+     "MUTE-024",
+     "MUTE-031",
+     "MUTE-050",
+     "MUTE-073"
+    ],
+    "not_as_predicted": []
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "behavioural cases kill non-swallow mutants only by vanishing with the deleted step(s); one collection-crash exception (MUTE-119)",
+   "observed": {
+    "not_as_predicted": [],
+    "collection_crash": [
+     "MUTE-119"
+    ]
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "every MUTE-1 kill stands, with its MUTE-1 killers among its killers now",
+   "observed": {
+    "mute1_kills": 18,
+    "not_as_predicted": []
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": {
+    "KILLED": 114,
+    "SURVIVED": 5,
+    "UNREACHED": 1
+   },
+   "observed": {
+    "KILLED": 114,
+    "SURVIVED": 5,
+    "UNREACHED": 1
+   },
+   "survivors": [
+    "MUTE-018",
+    "MUTE-024",
+    "MUTE-031",
+    "MUTE-050",
+    "MUTE-073"
+   ]
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "8da2770cfabb9fc631d6a71816e23ffe36ed75ae42f7f1826aa2b319d79c4ef1",
+   "observed": "8da2770cfabb9fc631d6a71816e23ffe36ed75ae42f7f1826aa2b319d79c4ef1",
+   "note": "computed by the RESULT on the run tree with mute.harness_fingerprint(tree, mute1 oracle files)"
+  }
+ },
+ "hits": 7,
+ "of": 7,
+ "receipt": "mute2_receipt.json",
+ "receipt_tree": "241cfb4f92883f27887cec762ac68695f09f5861",
+ "harness_fingerprint": "c3eaf2a72f66fe988f36b8bcb2d3b95eea998514df31ac8d6917be78524aea81",
+ "instrument_sha256": "1913e76f87ae726fe024394340915b5b3ac31072ed9ab2b4f8cf3440ad8e99be",
+ "prereg_sha256_at_freeze": "38248ebb67dea417083303dc9c907e859e7fbf0a3e4ab51820bf92162de05e88"
+}
