@@ -4,6 +4,10 @@
 
 powered by [`styxx`](https://pypi.org/project/styxx/) — the cognometric fingerprint package shipped from this repo.
 
+> [!IMPORTANT]
+> **It is not currently daily.** The last measurement is from 2026-05-10 and the scoreboard is
+> still serving it. [`STATUS.md`](STATUS.md) says why, and what has to happen to restart it.
+
 ---
 
 ## what's in here
@@ -16,7 +20,7 @@ telescope/
 ├─ data/
 │  ├─ latest.json      most recent run (overwritten daily)
 │  ├─ runs/            per-run ledgers, append-only history
-│  └─ timeseries.jsonl long-running per-model trajectory
+│  └─ timeseries.jsonl v0 seed rows from 2026-04-24 — NOT a trajectory, nothing writes it (STATUS.md)
 └─ _archive/           prior schema versions kept for provenance
 ```
 
