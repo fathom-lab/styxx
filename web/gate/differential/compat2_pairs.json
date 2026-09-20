@@ -1,0 +1,121 @@
+[
+ {
+  "id": "compat2:surface-and-scaffold",
+  "summary": "No breaking changes.",
+  "diff": "--- a/pkg/api.py\n+++ b/pkg/api.py\n@@ -1,5 +1,3 @@\n-def session(a, b=1):\n-    return 1\n-def keep(x):\n-    pass\n+def keep(x, y):\n+    pass\n--- a/tests/test_api.py\n+++ b/tests/test_api.py\n@@ -1,2 +1,1 @@\n-def helper():\n-    pass\n+x = 1\n",
+  "why": "a surface drop named first, a scaffolding drop counted, a signature change reported; candidate true, verdict UNCHECKABLE",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: pkg/api.py: session; 1 more in test/example/internal code; 1 signature(s) changed"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:scaffold-only",
+  "summary": "Backward compatible.",
+  "diff": "--- a/tests/test_api.py\n+++ b/tests/test_api.py\n@@ -1,2 +1,1 @@\n-def helper():\n-    pass\n+x = 1\n--- a/examples/demo.ts\n+++ b/examples/demo.ts\n@@ -1,1 +1,1 @@\n-export function run() {}\n+const y = 1;\n",
+  "why": "drops only under tests/ and examples/: not a candidate",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; 2 public definition(s) removed, all in test/example/internal code: tests/test_api.py: helper, examples/demo.ts: run"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:move-same-signature",
+  "summary": "No breaking changes.",
+  "diff": "--- a/pkg/a.py\n+++ b/pkg/a.py\n@@ -1,2 +1,1 @@\n-def moved(a, b):\n-    pass\n+x = 1\n--- a/pkg/b.py\n+++ b/pkg/b.py\n@@ -1,1 +1,2 @@\n+def moved(a,  b):\n+    pass\n",
+  "why": "a definition moved between files with the same parameters: neither a drop nor a change",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:multiline-signature",
+  "summary": "No functional changes.",
+  "diff": "--- a/pkg/a.go\n+++ b/pkg/a.go\n@@ -1,3 +1,3 @@\n-func Serve(addr string,\n-\topts ...Option) error {\n+func Serve(addr string, port int,\n+\topts ...Option) error {\n }\n",
+  "why": "a Go signature re-flowed over two lines compares on its first line",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (go read; behaviour beyond names not checked); 1 signature(s) changed"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:js-arrow-params",
+  "summary": "Non-breaking.",
+  "diff": "--- a/src/index.ts\n+++ b/src/index.ts\n@@ -1,2 +1,2 @@\n-export const parse = (s: string) => s;\n+export const parse = (s: string, strict: boolean) => s;\n export const keep = 1;\n",
+  "why": "an exported arrow function's parameter list is read",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (js/ts read; behaviour beyond names not checked); 1 signature(s) changed"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:java-name-not-at-match-end",
+  "summary": "Does not break the API.",
+  "diff": "--- a/src/main/java/App.java\n+++ b/src/main/java/App.java\n@@ -1,3 +1,3 @@\n-    public static String render(Model m) {\n+    public static String render(Model m, boolean strict) {\n-    public void gone() {}\n+    private void kept() {}\n",
+  "why": "Java's regex runs past the name to the paren; the parameter list still starts at the name's end",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/main/java/app.java: gone; 1 signature(s) changed"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "compat2:seven-surface-plus-internal",
+  "summary": "Fully compatible.",
+  "diff": "--- a/internal/x.go\n+++ b/internal/x.go\n@@ -1,1 +1,1 @@\n-func Hidden() {}\n+func hidden() {}\n--- a/pkg/y.go\n+++ b/pkg/y.go\n@@ -1,7 +1,1 @@\n-func A() {}\n-func B() {}\n-func C() {}\n-func D() {}\n-func E() {}\n-func F() {}\n-func G() {}\n+var z = 1\n",
+  "why": "seven surface drops (five named, +2 more) and one under internal/ counted beside them",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 7 public definition(s) from the surface, not re-defined in the added lines: pkg/y.go: A, pkg/y.go: B, pkg/y.go: C, pkg/y.go: D, pkg/y.go: E (+2 more); 1 more in test/example/internal code"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ }
+]

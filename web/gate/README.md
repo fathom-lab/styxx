@@ -2,9 +2,9 @@
 
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
-specific file — `styxx/diffgate.py` at the BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113,
-#115 and the #118 repair, the file **7.48.0** ships once they merge), sha256
-`397624d583edc3a147c74bf8791e5356f26a946c7f905d851e453b5297dc40a1` (LF line endings; a wheel
+specific file — `styxx/diffgate.py` as it stands on `main` (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2,
+pull requests #113, #115, #120 and #124, plus the `fetch_pr` door; the file **7.48.0** ships),
+sha256 `473a7dd7c2dce7b1fefd07eaba27291090dd351a0c108b28f4812c7dc77f536d` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -39,8 +39,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 4b2d34e137b77d299914e66ce7c0fc02336d432f650f3d3bc864e3647c0d1d32   19,002 chars
-    bookmarklet.href.txt  sha256 11fc19fbf68fef8a70662ef1377e675c418613a9952d6529f553a2ac79c4fec7   19,013 chars
+    bookmarklet.min.js    sha256 df0c801605f0bb995e10be43b75e3ca3cd77113e6487496401988a23ff5596d8   20,696 chars
+    bookmarklet.href.txt  sha256 189ad32e349cad08bd6dcb971a4faa2325d7ef519857cad9bc84f7f2c79364dc   20,707 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file. A bookmark
@@ -63,17 +63,27 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 397624d5…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 473a7dd7…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 29 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 36 pinned pairs against their expect blocks
 
-Result, 2026-09-16, the checkout at the #118 repair:
+The pin moved twice between the last two runs of this differential, and one of those moves is a
+finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
+follow it — that is ordinary. But #124 merged with only its Python half, and separately the
+`fetch_pr` door landed on `main` after the previous pin was written, so `py_side.py` had been
+**refusing to run on `main`** ever since: the check that guards the two-implementation claim was
+itself disabled, which is exactly how the port was able to fall a whole cycle behind without
+anything failing. `fetch_pr` fetches a pull request over the network and is no part of the reading
+the port transliterates; it moves this whole-file hash without changing a single verdict. Both
+facts are recorded here rather than quietly corrected.
 
-    3205 pairs, 6914 claims (600 verified, 1612 contradicted, 4702 uncheckable) — 0 disagreement(s)
+Result, 2026-09-18, `main` at the COMPAT-2 reading:
 
-The 3,205 are the 3,176 below plus 29 pinned pairs committed as JSON (the `.gitignore` here
-ignores generated JSON and names these three as exceptions): `bc1_pairs.json`, the four pairs BC-2
+    3212 pairs, 6921 claims (600 verified, 1612 contradicted, 4709 uncheckable) — 0 disagreement(s)
+
+The 3,212 are the 3,176 below plus 36 pinned pairs committed as JSON (the `.gitignore` here
+ignores generated JSON and names these four as exceptions): `bc1_pairs.json`, the four pairs BC-2
 owes the differential (a TypeScript commit saying "Added 2 tests", "adds a method to reload",
 "only modifies the footer", two prefixes), also checked on the Python side by
 `tests/test_diffgate_bc1.py`; and `compat_pairs.json`, nineteen more — the compatibility
@@ -84,10 +94,15 @@ changed path with an apostrophe (Python's `repr()` switches to double quotes; so
 and the demo diff with CRLF line endings; and `bin1_pairs.json`, six for the #118 repair — a
 binary beside a text file, three binaries added / modified / deleted, a pure rename and a mode
 change, a file count that is true only once the binaries are seen, an `only_touches` lie hidden
-behind a binary, a quoted path — also checked on the Python side by `tests/test_diffgate_bin1.py`.
-Their `expect` blocks are the Python's output, written down so a reader can see the intended
-readings without running anything. The 3,199 pre-repair records are byte-identical before and
-after the repair (no binary in the corpus), which is the repair's G-BIN-2.
+behind a binary, a quoted path — also checked on the Python side by `tests/test_diffgate_bin1.py`;
+and `compat2_pairs.json`, seven for the COMPAT-2 reading — a surface drop beside a scaffolding drop
+and a signature change, scaffolding-only removals, a move with the same parameters, a Go signature
+re-flowed over two lines, an exported arrow function's parameters, Java's name-then-paren regex,
+seven surface drops beside one under `internal/`. Their `expect` blocks are the Python's output,
+written down so a reader can see the intended readings without running anything. The 3,199
+pre-BIN-2 records were byte-identical before and after that repair (G-BIN-2); of the 3,205
+pre-COMPAT-2 records, 3,196 are byte-identical after it and 9 differ only in `compat_claim`
+reasons and details (17 claims), which is COMPAT-2's G-C2-4.
 
 The first result, the 7.47.0 port against the 7.47.0 file, was 3176 pairs, 8904 claims
 (1024 verified, 2172 contradicted, 5708 uncheckable), 0 disagreements; that port is in this
@@ -113,8 +128,9 @@ expected to disagree. Measured the same day, port against the 7.47.0 wheel:
     3199 pairs, 8932 claims (1031 verified, 2189 contradicted, 5712 uncheckable) — 5448 disagreement(s)
 
 What moved, on the 3,176 corpus pairs (the pinned pairs were written for the new file and are
-left out of these counts; the #118 repair changes none of the 3,176 records, so the figures
-below are unchanged by it): the wheel makes 573 accusations the port does not — `symbol_added`
+left out of these counts; the #118 repair changes none of the 3,176 records, and COMPAT-2 changes
+only `compat_claim` reasons, a kind the wheel never reads, so the figures below are unchanged by
+either): the wheel makes 573 accusations the port does not — `symbol_added`
 219, `only_touches` 205, `tests_added` 149 — and the port makes none the wheel does not. 286
 pairs flip from FAIL to PASS and none flip the other way. The port reads 2,044 fewer
 `file_touched` claims (the V14 repairs declining bare and ambiguous path mentions) and one more
