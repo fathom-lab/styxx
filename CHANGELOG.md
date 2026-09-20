@@ -64,6 +64,15 @@ numbers were the two that made the instrument look worse.
   requests BENCH-2 could not reach — re-probed one day later to **107 HTTP 403, 14 empty, 2 HTTP
   404, 0 newly reachable**. It would also have cut coverage from 5.4% to 3.3% of a claim space
   DECIDE-1 showed is 52% decidable. The six false accusations stay in the instrument.
+- **DRIFT-1 — INVALID.** Asked whether a file count the gate calls false was *true when it was
+  written*, on a branch that moved afterwards. Its own validity gate failed first: reconstructing a
+  pull request's file set as the union of its per-commit file lists — the obvious use of AIDev's
+  `pr_commit_details` — **disagrees with the actual diff on a third of the corpus**, 74 of 111
+  [57.5%, 74.7%] against a 90% floor, and in 31 of 37 disagreements the union is the larger, because
+  a file touched and reverted lives in a commit and not in `base...head`. The drift question is still
+  open; this method is not the way to ask it. AIDev's stored commit order *is* chronological — a
+  prefix of GitHub's live order, sha for sha, on 10 of 10 — which is the one part of the run worth
+  reusing.
 
 **The datasets**
 
