@@ -1,0 +1,112 @@
+{
+  "valid": true,
+  "gates": {
+    "G-M1-1": {
+      "pass": true,
+      "detail": "495 tests pass on baseline; 18 KILLED"
+    },
+    "G-M1-2": {
+      "pass": true,
+      "detail": "UNREACHED = 1"
+    },
+    "G-M1-3": {
+      "pass": true,
+      "detail": "every KILLED names a test and every SURVIVED names none"
+    }
+  },
+  "predictions": {
+    "P1": {
+      "hit": true,
+      "observed": {
+        "M-JOB typecheck-js": "KILLED",
+        "M-SUBJECT .gitignore line": "KILLED",
+        "M-SUBJECT py_side PINNED": "KILLED",
+        "M-STEP gauntlet discover": "KILLED",
+        "M-SWALLOW gauntlet discover": "KILLED"
+      },
+      "predicted": "all KILLED"
+    },
+    "P2": {
+      "hit": false,
+      "observed": {
+        "killed": [
+          ".github/workflows/gauntlet-pr.yml:verify-submissions",
+          ".github/workflows/leaderboard-submission.yml:run-submission",
+          ".github/workflows/test.yml:typecheck-js"
+        ],
+        "survived": 11
+      },
+      "predicted": "exactly 2 KILLED: gauntlet-pr verify-submissions, test.yml typecheck-js; 12 SURVIVED"
+    },
+    "P3": {
+      "hit": true,
+      "observed": {
+        "M-STEP Run tests": "SURVIVED",
+        "M-SWALLOW Run tests": "SURVIVED"
+      },
+      "predicted": "both SURVIVED"
+    },
+    "P4": {
+      "hit": true,
+      "observed": {
+        "killed": [
+          ".github/workflows/leaderboard-submission.yml"
+        ],
+        "survived": 8
+      },
+      "predicted": "8 SURVIVED, leaderboard-submission KILLED"
+    },
+    "P5": {
+      "hit": true,
+      "observed": {
+        "MUTE-019": "SURVIVED",
+        "MUTE-022": "SURVIVED",
+        "MUTE-025": "SURVIVED",
+        "MUTE-048": "SURVIVED",
+        "MUTE-051": "SURVIVED",
+        "MUTE-076": "SURVIVED",
+        "MUTE-079": "SURVIVED",
+        "MUTE-082": "SURVIVED"
+      },
+      "predicted": "all 8 SURVIVED"
+    },
+    "P6": {
+      "hit": true,
+      "observed": {
+        "build": "SURVIVED",
+        "test": "SURVIVED",
+        "test:watch": "SURVIVED",
+        "typecheck": "KILLED"
+      },
+      "predicted": "typecheck KILLED; build, test, test:watch SURVIVED"
+    },
+    "P7": {
+      "hit": true,
+      "observed": {
+        "Install the package's own dependencies from its lockfile": "SURVIVED",
+        "Typecheck": "SURVIVED"
+      },
+      "predicted": "both typecheck-js run steps SURVIVE a swallow"
+    },
+    "P8": {
+      "hit": false,
+      "observed": {
+        "KILLED": 18,
+        "SURVIVED": 101,
+        "UNREACHED": 1
+      },
+      "predicted": {
+        "KILLED": 17,
+        "SURVIVED": 102,
+        "UNREACHED": 1
+      },
+      "direction_hit": true
+    }
+  },
+  "hits": 6,
+  "of": 8,
+  "receipt": "mute1_receipt.json",
+  "receipt_tree": "50216c21dada61ff3ad5232ba96d83030f95b595",
+  "harness_fingerprint": "8da2770cfabb9fc631d6a71816e23ffe36ed75ae42f7f1826aa2b319d79c4ef1",
+  "prereg_sha256_at_freeze": "f569701e1a2fc6b71bbff8336d51d413f6e1291d94d3224a1ec525c392df9fbc"
+}
