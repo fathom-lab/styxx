@@ -35,6 +35,11 @@ sys.modules["calib1_score"] = C
 _SPEC.loader.exec_module(C)
 
 FROZEN = C.PREREG_SHA256_FROZEN
+PINNED = C.PINNED_MODEL
+
+#: Sentinel for "this raw file has no model_pinned key at all", which is what every raw file
+#: written before Amendment B1 looks like.
+_ABSENT = object()
 
 
 def _url(want_split, n=0):
@@ -47,8 +52,13 @@ def _url(want_split, n=0):
 
 
 def _raw(items, *, dry_run=False, prereg=FROZEN, repeats=1, spreads=None,
-         tokens=(200, 1), ms=120):
-    """Build a raw file. `items` is (cls, split, noul) triples."""
+         tokens=(200, 1), ms=120, model=PINNED, model_pinned=PINNED):
+    """Build a raw file. `items` is (cls, split, noul) triples.
+
+    `model` is what the calls report answered them and `model_pinned` is what the run declared it
+    asked for. Both default to the pinned version, so the builder produces a raw file that is valid
+    under Amendment B1 and a test has to opt in to breaking it.
+    """
     out_items, calls, n = [], [], 0
     for i, (cls, split, noul) in enumerate(items, start=1):
         url, n = _url(split, n)
@@ -64,11 +74,15 @@ def _raw(items, *, dry_run=False, prereg=FROZEN, repeats=1, spreads=None,
             if r > 0 and spreads:
                 v = min(1.0, noul + spreads.get(i, 0.0))
             calls.append({"id": i, "repeat": r, "noul": v, "ms": ms,
-                          "model": "jev-1", "input_tokens": tokens[0],
+                          "model": model, "input_tokens": tokens[0],
                           "output_tokens": tokens[1], "error": None})
-    return {"prereg": "PREREG_calib1_jev_2026_09_18.md", "prereg_sha256": prereg,
-            "triage_module_sha256": "0" * 64, "dry_run": dry_run,
-            "repeats": repeats, "items": out_items, "calls": calls}
+    raw = {"prereg": "PREREG_calib1_jev_2026_09_18.md", "prereg_sha256": prereg,
+           "triage_module_sha256": "0" * 64, "dry_run": dry_run,
+           "repeats": repeats, "items": out_items, "calls": calls,
+           "widest_state_chars": 4155, "state_char_budget": 30_000}
+    if model_pinned is not _ABSENT:
+        raw["model_pinned"] = model_pinned
+    return raw
 
 
 def _balanced(pos_noul=0.95, neg_noul=0.05, dev_negatives=2):
@@ -231,3 +245,72 @@ def test_a_call_that_failed_does_not_become_a_zero():
     res = C.score(raw)
     assert res["population"]["n_scored"] == 22
     assert gate(res, "G-C1-2")["n_positive"] == 12
+
+
+# --------------------------------------------------------------------------- #
+# Amendment B1 — the model is pinned, and a run answered by anything else is refused.
+
+def test_a_run_answered_by_another_version_is_refused():
+    """The defect B1 exists for. Without the pin, CALIB-1 calibrated whatever `jev-latest` meant
+    on the morning it ran, and the result would have said nothing about which."""
+    res = C.score(_raw(_balanced(), model="jev-1.14.0"))
+    assert res["verdict_token"] == "INVALID__MODEL_NOT_PINNED"
+    assert res["ships_thresholds"] is False
+    assert any("jev-1.14.0" in r for r in res["refusals"])
+    assert res["models_that_answered"] == ["jev-1.14.0"]
+
+
+def test_a_raw_file_that_declares_no_pin_is_refused_not_assumed():
+    """A raw file with no `model_pinned` predates the amendment and cannot say which version it
+    measured. That is the defect, not a missing field to fill in with the expected value."""
+    res = C.score(_raw(_balanced(), model_pinned=_ABSENT))
+    assert res["verdict_token"] == "INVALID__MODEL_NOT_PINNED"
+    assert res["model_pinned_declared"] is None
+    assert any("model_pinned" in r for r in res["refusals"])
+
+
+def test_declaring_the_pin_does_not_excuse_being_answered_off_it():
+    """The declaration and the answers are two different facts and both are checked. A run that
+    asked for the pinned version and was served another one is exactly the case a declaration-only
+    check would wave through."""
+    res = C.score(_raw(_balanced(), model_pinned=PINNED, model="jev-1.14.0"))
+    assert res["verdict_token"] == "INVALID__MODEL_NOT_PINNED"
+
+
+def test_the_pinned_model_is_not_a_refusal():
+    """The control. If this fails, the two tests above pass for the wrong reason."""
+    res = C.score(_raw(_balanced()))
+    assert res["verdict_token"] != "INVALID__MODEL_NOT_PINNED"
+    assert not any("model" in r for r in res["refusals"]), res["refusals"]
+    assert res["model_pinned_declared"] == PINNED
+    assert res["models_that_answered"] == [PINNED]
+
+
+def test_a_dry_run_is_reported_as_a_dry_run_even_though_its_model_is_also_wrong():
+    """Token precedence. The stub answers as `dry-run-stub`, so both refusals fire; the reader is
+    told the one that explains the others."""
+    res = C.score(_raw(_balanced(), dry_run=True, model="dry-run-stub"))
+    assert res["verdict_token"] == "INVALID__DRY_RUN"
+    assert len(res["refusals"]) >= 2
+
+
+def test_the_preregistration_on_disk_is_the_one_the_scorer_pins():
+    """Three files carry this hash — the document, the asker and the scorer. The instrument pin in
+    web/gate/differential/py_side.py went stale exactly this way, so it is checked here rather than
+    trusted."""
+    import hashlib
+    body = (ROOT / "papers" / "closed-model-frontier"
+            / "PREREG_calib1_jev_2026_09_18.md").read_bytes()
+    assert hashlib.sha256(body).hexdigest() == C.PREREG_SHA256_FROZEN, (
+        "the preregistration has moved since the scorer pinned it. If an amendment was appended, "
+        "move the hash in calib1_score.py AND calib1_ask.ts in the same commit.")
+
+
+def test_the_asker_pins_the_same_model_and_the_same_prereg_as_the_scorer():
+    """The asker is TypeScript and the scorer is Python; nothing but this test makes them agree."""
+    asker = (ROOT / "papers" / "closed-model-frontier" / "calib1_ask.ts").read_text(
+        encoding="utf-8")
+    assert f'const PINNED_MODEL = "{C.PINNED_MODEL}"' in asker, (
+        "calib1_ask.ts asks for a different model than calib1_score.py accepts")
+    assert f'const PREREG_SHA256 = "{C.PREREG_SHA256_FROZEN}"' in asker, (
+        "calib1_ask.ts checks the preregistration against a different hash than the scorer does")
