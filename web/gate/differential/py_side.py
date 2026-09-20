@@ -25,7 +25,13 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/diffgate.py on main (LF)
+PINNED = "68584b1eef9947326f3ae15defba0d22f1977864859b5d8e99a066dd84348582"  # styxx/diffgate.py on main (LF)
+# Moved again on 2026-09-20 for the same reason the note below gives, and it is worth stating
+# rather than quietly bumping: `fetch_pr` now says WHICH kind of 403 GitHub answered instead of
+# reporting all of them as an exhausted rate limit. `fetch_pr` is not part of the reading the port
+# transliterates -- the browser has no urllib and gates the text it is handed -- so this moves the
+# whole-file hash without changing a single verdict. The differential was re-run on the pinned
+# pairs after the move: 0 disagreements, unchanged.
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
