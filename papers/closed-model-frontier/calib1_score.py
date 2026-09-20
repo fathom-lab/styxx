@@ -8,8 +8,9 @@ from `calib1_raw.json`. That is the point of splitting it from the asker: the
 answers are recorded once and scored in the open, as many times as anyone likes.
 
 Prereg: PREREG_calib1_jev_2026_09_18.md, frozen at sha256 7d550cd5... and carrying
-Amendment A, appended before any call was made; the file now hashes to 8398db36... A raw file whose prereg hash does not
-match the frozen one is refused, not scored.
+Amendments A and B, both appended before any call was made; the file now hashes to 52d3a5cc...
+A raw file whose prereg hash does not match is refused, not scored, and so is one that was not
+answered by the pinned model (B1).
 
 The gates are G-C1-1 through G-C1-6 and they are implemented here in the order
 the preregistration states them. Two of them can fail in a way that stops the
@@ -31,8 +32,14 @@ sys.path.insert(0, str(HERE))
 from v14_gates import bucket                                   # noqa: E402
 
 PREREG_SHA256_AT_FREEZE = "7d550cd50473c6642770662149553eaf3db1e1a52308e8d80e1d518b3ad94aaa"
-#: Amendment A was appended before the first call; see A6. Both are published.
-PREREG_SHA256_FROZEN = "8398db36a7633fd980dd62dce8ed9d9a663eb99d472a5a445657b89f10e6296f"
+#: Amendments A and B were appended before the first call; see A6 and B1. Both are published.
+PREREG_SHA256_FROZEN = "52d3a5cc4c15f6f9ad69dd3fe7a445292a0d7e1c546545354f20fbf0053d61ea"
+
+#: Amendment B1. CALIB-1 is a calibration OF this version, not of whatever `jev-latest` means
+#: on the morning it runs. The SDK resolves an omitted model to `defaultModel`, which falls back
+#: to TYPESAFE_DEFAULT_MODEL and then to the alias -- so the pin is recorded in the raw file and
+#: checked here, where it is a gate rather than a warning.
+PINNED_MODEL = "jev-1.13.0"
 
 #: Prediction 1 / G-C1-2.
 SEPARATION_BAR = 0.35
@@ -357,6 +364,20 @@ def score(raw: dict, price_in=None, price_out=None) -> dict:
         refusals.append(
             f"prereg sha256 is {raw.get('prereg_sha256')}, frozen at {PREREG_SHA256_FROZEN}"
         )
+    # B1: the pin, and what actually answered. Absent `model_pinned` means the raw file predates
+    # the amendment and cannot say which version it measured -- which is the defect, not a detail.
+    pinned_declared = raw.get("model_pinned")
+    if pinned_declared != PINNED_MODEL:
+        refusals.append(
+            f"raw file declares model_pinned={pinned_declared!r}, not {PINNED_MODEL!r}"
+        )
+    answered_by = sorted({c.get("model") for c in raw.get("calls", []) if c.get("model")})
+    off_pin = [m for m in answered_by if m != PINNED_MODEL]
+    if off_pin:
+        refusals.append(
+            f"answered by {off_pin}, not {PINNED_MODEL!r}: a calibration of another version is "
+            "a different measurement, not a noisier one"
+        )
 
     noul0 = first_repeat(raw["calls"])
     items = []
@@ -385,7 +406,12 @@ def score(raw: dict, price_in=None, price_out=None) -> dict:
 
     excluded = [x for x in items if x["cls"] == "EXCLUDED"]
     if refusals:
-        token = "INVALID__DRY_RUN" if raw.get("dry_run") else "INVALID__PREREG_MOVED"
+        if raw.get("dry_run"):
+            token = "INVALID__DRY_RUN"
+        elif raw.get("prereg_sha256") != PREREG_SHA256_FROZEN:
+            token = "INVALID__PREREG_MOVED"
+        else:
+            token = "INVALID__MODEL_NOT_PINNED"
     elif g1["status"] == "UNRUNNABLE":
         token = ("CALIB1__NO_THRESHOLDS__G_C1_1_UNRUNNABLE__SEPARATION_"
                  + ("PASS" if g2["status"] == "PASS" else g2["status"]))
@@ -399,6 +425,11 @@ def score(raw: dict, price_in=None, price_out=None) -> dict:
         "prereg_sha256": raw.get("prereg_sha256"),
         "prereg_sha256_at_freeze": PREREG_SHA256_AT_FREEZE,
         "triage_module_sha256": raw.get("triage_module_sha256"),
+        "model_pinned_expected": PINNED_MODEL,
+        "model_pinned_declared": raw.get("model_pinned"),
+        "models_that_answered": answered_by,
+        "widest_state_chars": raw.get("widest_state_chars"),
+        "state_char_budget": raw.get("state_char_budget"),
         "dry_run": bool(raw.get("dry_run")),
         "refusals": refusals,
         "verdict_token": token,

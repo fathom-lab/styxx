@@ -7,6 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — CALIB-1 was about to calibrate an alias
+
+`calib1_ask.ts` built `new sdk.TypeSafeClient()` with no options and called
+`systemOne({ state, questions })` with no `model`. The SDK's own type definitions say what that
+resolves to — `@typesafe-ai/sdk` v0.6.0, `dist/index.d.mts`: `SystemOneRequest.model?` is a *"model
+override; omitted values inherit `defaultModel`"*, and `TypeSafeClientOptions.defaultModel` *"falls
+back to `TYPESAFE_DEFAULT_MODEL`, then `jev-latest`."*
+
+`jev-latest` is an alias. TypeSafe resolves it to `jev-1.13.0` today and publishes `jev-preview`
+beside it as *"currently identical"* — a pointer documented as free to move. So CALIB-1 would have
+calibrated whatever the alias meant on the morning it ran, a later replication would have had
+nothing to replicate against, and `TYPESAFE_DEFAULT_MODEL` in the operator's environment could have
+changed the answer without appearing in the receipt. A run half-answered by a new release would
+have scored the change as model non-determinism in G-C1-4 and never said so.
+
+This is the discipline the repository already applies to its own instrument and had not applied to
+the bought one: `web/gate/differential/py_side.py` refuses to run unless `styxx/diffgate.py` matches
+`PINNED`, and every RESULT paper names the instrument sha it used. A hosted model has no sha; its
+version string is the closest thing it has.
+
+**Amendment B**, appended to the frozen preregistration — never edited in, and still before any Jev
+call has been made:
+
+- **B1** pins `jev-1.13.0` on the client *and* on every request, records it in the raw file, and
+  refuses a run at scoring time (`INVALID__MODEL_NOT_PINNED`) if the declaration is missing or
+  wrong, or if any call was answered by another version. The declaration and the answers are two
+  separate facts and both are checked — a declaration-only check waves through exactly the case
+  that matters, a run that asked for the pin and was served something else.
+- **B2** supplies the per-token price A4 said this repository did not have — $0.042 per million
+  input tokens, output free — with its citation, and does **not** hard-code it. A4 stands: the
+  scorer still publishes spend only when a price is passed on the command line. A price written
+  into the repository goes stale in silence, which is the same defect in a different coat.
+  B2 also records the 64k/32k context budget and the 1,200 req/min rate limit, which retires an
+  unstated assumption: A3's 125 calls are inside the limit by an order of magnitude.
+
+The comparison deliberately does **not** live inside `triageSentence`. That function catches
+everything a client throws and returns UNDECIDED, so a mismatch raised in the client wrapper would
+have been recorded as an unreachable call and scored as a null — an absent measurement filed as an
+ordinary one, which is the shape `benchmarks/silent_pass/` exists to refuse. The check runs in the
+runner's loop, on `report.provenance.model`, outside that catch, and aborts the run with nothing
+written.
+
+`--dry-run` cannot exercise the abort without writing a false model into its own receipt, so it
+exercises the predicate instead and prints that it discriminates. The same run now reports the
+widest `state` it built against the context budget: **4,155 of 30,000 characters**. That bound is
+sound rather than estimated — a BPE token is at least one character, so N characters is at most N
+tokens — which is why it is counted in characters and says so.
+
+`tests/test_calib1_score.py` grows from 17 to 24. Two of the new ones are bookkeeping guards of the
+kind that were missing when the differential's pin went stale: the preregistration on disk must
+hash to what the scorer pins, and `calib1_ask.ts` must pin the same model and the same prereg hash
+as `calib1_score.py` — nothing else makes a TypeScript runner and a Python scorer agree. Each guard
+was checked by breaking it: a different model in the asker fails one test, a stray byte in the
+preregistration fails another, and deleting the scorer's off-pin check fails three.
+
 ## [Unreleased] — the gate was pointed at itself, and the measurement is what came back
 
 *Staged for 7.48.0. Cutting the release also requires regenerating `conformance/sworn/` — the

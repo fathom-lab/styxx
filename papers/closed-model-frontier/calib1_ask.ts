@@ -54,13 +54,38 @@ const DEFAULT_OUT = join(HERE, "calib1_raw.json");
  * Both hashes, because the document has one of each.
  *
  * `AT_FREEZE` is what it hashed to when it was frozen, before any call existed.
- * `PREREG_SHA256` is what it hashes to now: Amendment A was appended -- never
- * edited in -- before the first call, as A6 records. The runner checks the file
- * against the amended hash and writes both down, so a reader can verify the
- * append without taking anyone's word for what was in the frozen half.
+ * `PREREG_SHA256` is what it hashes to now: Amendments A and B were appended --
+ * never edited in -- before the first call, as A6 and B1 record. The runner
+ * checks the file against the amended hash and writes both down, so a reader can
+ * verify the appends without taking anyone's word for what was in the frozen half.
  */
 const PREREG_SHA256_AT_FREEZE = "7d550cd50473c6642770662149553eaf3db1e1a52308e8d80e1d518b3ad94aaa";
-const PREREG_SHA256 = "8398db36a7633fd980dd62dce8ed9d9a663eb99d472a5a445657b89f10e6296f";
+const PREREG_SHA256 = "52d3a5cc4c15f6f9ad69dd3fe7a445292a0d7e1c546545354f20fbf0053d61ea";
+
+/**
+ * The model this calibration is of. Amendment B1.
+ *
+ * `@typesafe-ai/sdk` v0.6.0 resolves an omitted `model` to the client's
+ * `defaultModel`, which falls back to `TYPESAFE_DEFAULT_MODEL` and then to
+ * `jev-latest` -- an alias TypeSafe documents as free to move, and which an
+ * operator's environment can redirect without appearing in the receipt. A
+ * calibration of an alias is a calibration of nothing in particular, so this is
+ * set on the client AND on every request, and every answer is checked against it.
+ */
+const PINNED_MODEL = "jev-1.13.0";
+
+/**
+ * Characters of `state` allowed, standing in for Jev's 32k `state` + longest
+ * question budget (B2).
+ *
+ * This counts characters, not tokens, on purpose: there is no Jev tokenizer here
+ * and inventing a chars-per-token ratio would be a guess wearing a bound's
+ * clothes. Every BPE token is at least one character, so a `state` of N
+ * characters is at most N tokens -- the bound below is therefore SOUND rather
+ * than estimated, at the cost of being loose. 2000 characters are reserved for
+ * the question and criteria, which are fixed strings in triage.ts.
+ */
+const STATE_CHAR_BUDGET = 30_000;
 
 /** Recording only; see the header. Never used to decide anything. */
 const RECORD_ONLY_THRESHOLDS = { skip: 0, read: 1 } as const;
@@ -95,6 +120,11 @@ function sha256(path: string): string {
 const noul: NoulFactory = (instructions, criteria) =>
   ({ type: "noul", instructions, criteria: criteria ?? null }) as JevNoulQuestion;
 
+/** True when an answer did not come from the pinned model. Null means the call never reached it. */
+function modelMismatch(seen: string | null): boolean {
+  return typeof seen === "string" && seen !== PINNED_MODEL;
+}
+
 /**
  * A stub that answers from a hash of the sentence.
  *
@@ -128,8 +158,37 @@ async function realClient(): Promise<JevClient> {
     );
   }
   const sdk = await import("@typesafe-ai/sdk");
-  const client = new sdk.TypeSafeClient();
-  return client as unknown as JevClient;
+  const client = new sdk.TypeSafeClient({ defaultModel: PINNED_MODEL });
+  return pinned(client as unknown as JevClient);
+}
+
+/** The largest `state` any client has been handed, for the budget check (B2). */
+const widest = { chars: 0 };
+
+/**
+ * Pin the model on every request and remember how wide the state was.
+ *
+ * This wrapper does NOT throw on a wrong answer, and that is deliberate.
+ * `triageSentence` catches everything a client throws and returns UNDECIDED, so a
+ * mismatch raised here would be recorded as an unreachable call and scored as a
+ * null -- an absent measurement reported as an ordinary one. The comparison is
+ * made in main(), on `report.provenance.model`, outside that catch. See B1.
+ */
+function pinned(client: JevClient): JevClient {
+  // `JevClient` is the subset triage.ts needs and deliberately carries no `model`:
+  // the shipped module takes no dependency on a network client and has no business
+  // holding a vendor's version string. The SDK's own SystemOneRequest does have
+  // one -- "Model override; omitted values inherit defaultModel" -- and the SDK
+  // forwards additional properties, so the field is declared here, where the
+  // experiment lives, rather than cast away.
+  type Pinnable = Parameters<JevClient["systemOne"]>[0] & { model: string };
+  return {
+    async systemOne(request) {
+      widest.chars = Math.max(widest.chars, request.state.length);
+      const withModel: Pinnable = { ...request, model: PINNED_MODEL };
+      return client.systemOne(withModel);
+    },
+  };
 }
 
 async function main(): Promise<void> {
@@ -166,7 +225,7 @@ async function main(): Promise<void> {
     throw new Error(`expected 25 only_touches items, found ${items.length}`);
   }
 
-  const client = dryRun ? stubClient() : await realClient();
+  const client = dryRun ? pinned(stubClient()) : await realClient();
   const calls: Call[] = [];
 
   for (let repeat = 0; repeat < repeats; repeat++) {
@@ -210,12 +269,49 @@ async function main(): Promise<void> {
         // difference between "the model refused" and "the network did".
         error: report.noul === null ? report.why : null,
       });
+      // B1. Outside triageSentence's catch, on purpose: a throw inside the client
+      // becomes UNDECIDED, and a version change would have been filed as an
+      // outage. A dry run is exempt because the stub answers as itself and the
+      // scorer refuses dry runs anyway; the control below proves the check bites.
+      const seen = report.provenance?.model ?? null;
+      if (!dryRun && modelMismatch(seen)) {
+        process.stderr.write("\n");
+        throw new Error(
+          `Jev answered as ${String(seen)}, not ${PINNED_MODEL}. Stopping after ` +
+            `${calls.length} call(s) with nothing written. CALIB-1 is a calibration OF ` +
+            `${PINNED_MODEL}; answers from another version are not a noisier version of ` +
+            `the same measurement, they are a different one. See Amendment B1.`,
+        );
+      }
+      // B2. The bound is sound rather than estimated: a token is at least one
+      // character, so a state of N characters is at most N tokens.
+      if (widest.chars > STATE_CHAR_BUDGET) {
+        process.stderr.write("\n");
+        throw new Error(
+          `A state of ${widest.chars} characters exceeds the ${STATE_CHAR_BUDGET}-character ` +
+            `budget standing in for Jev's 32k state-plus-question window. Stopping. ` +
+            `See Amendment B2.`,
+        );
+      }
       process.stderr.write(
         `\r${dryRun ? "dry-run " : ""}${calls.length}/${items.length * repeats}`,
       );
     }
   }
   process.stderr.write("\n");
+
+  if (dryRun) {
+    // The control for B1. The dry run cannot exercise the mismatch abort without
+    // writing a false model into its own receipt, so it exercises the predicate
+    // instead, against the value the stub actually reports.
+    if (!modelMismatch("dry-run-stub") || modelMismatch(PINNED_MODEL)) {
+      throw new Error("the model-pin check does not discriminate; B1 is decorative");
+    }
+    process.stderr.write(
+      `dry-run: model-pin check discriminates (rejects "dry-run-stub", accepts "${PINNED_MODEL}")\n`,
+    );
+  }
+  process.stderr.write(`widest state: ${widest.chars} of ${STATE_CHAR_BUDGET} characters\n`);
 
   const payload = {
     prereg: "PREREG_calib1_jev_2026_09_18.md",
@@ -228,6 +324,11 @@ async function main(): Promise<void> {
       join(HERE, "..", "..", "packages", "styxx-js", "src", "triage.ts"),
     ),
     dry_run: dryRun,
+    model_pinned: PINNED_MODEL,
+    models_seen: [...new Set(calls.map((c) => c.model).filter((m): m is string => m !== null))]
+      .sort(),
+    widest_state_chars: widest.chars,
+    state_char_budget: STATE_CHAR_BUDGET,
     node: process.version,
     repeats,
     asked_at: new Date().toISOString(),
