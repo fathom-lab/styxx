@@ -92,6 +92,47 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — MUTE-2: two guards, and the silent cuts go from 101 of 120 to 5
+
+MUTE-1 left a reading list: 101 cuts to this repository's checking apparatus that its test suite
+could not see. Read in full they have two shapes, and this cycle writes one guard per shape rather
+than one test per survivor.
+
+**`tests/test_harness_manifest.py`** — the tree's *structure* must equal
+`tests/harness_manifest.json`: for every workflow the events it fires on; for every job its name
+and its `if:`; for every `run:` step its name and its `if:`; the npm script names. Nothing about
+what a step does. Delete a job, a step, a trigger, a guard or a script and the test fails until
+`python -m benchmarks.harness_mutation.manifest --write` is run, which is a deliberate act in a
+diff — the guarantee `papers/build_index.py` already gives for arcs. A manifest that hashed step
+text would kill every mutant and mean nothing; this one pins only what a deletion changes.
+
+**`tests/test_ci_steps_propagate_failure.py`** — every `run:` step under `.github/workflows` is
+*executed* the way Actions executes it, in an empty directory with an empty PATH, so every
+external command fails, and the step must exit non-zero. A step that hides the failure of what it
+calls goes green there; a step that reaches no external command is skipped by name, never passed.
+This is the lesson of MUTE-1 made general: the one swallow the suite caught was caught by a test
+that ran the step, and every textual guard was fooled by a wrapper that left the text in place.
+
+**The run** (`papers/harness/mute2_receipt.json`, same instrument byte for byte, same 120 mutants,
+same tree fingerprint under MUTE-1's oracle): **114 KILLED, 5 SURVIVED, 1 UNREACHED**, against a
+preregistration (`PREREG_mute2_guards_under_mutation_2026_09_20.md`, sha256 `38248ebb…`) that named
+the five survivors by id before the run and said, per guard, what it would and would not see.
+**7 of 7 predictions HIT.** The manifest killed all 73 structural cuts and no swallow; the
+behavioural guard killed all 33 swallows of steps that reach a tool, 32 of them as the *only* test
+that noticed, and none of the 5 that reach nothing. Where both appear on one mutant it is because
+the deleted step's case vanished, which the preregistration said to expect and not to read as
+detection. Every MUTE-1 kill stands, by the same test.
+
+**Found on the way, and replicated for the RESULT:** run on `main`, the behavioural guard fails on
+exactly one step — `gauntlet-pr.yml` line 43, the `sort -u || true` that #137 exists to remove —
+with no knowledge of that step, that workflow, or that pull request. That is why this lands on top
+of #137: on `main` the guard is red, correctly.
+
+**What it does not say:** loudness is not truth. 114 of 120 cuts are visible; 0 of 120 checks have
+been shown correct. The kill rate is now easy to inflate and should be read by *which test* killed
+a mutant — the receipt's `killed_by` — not by how many were killed. The five survivors are named
+in the RESULT so that nobody spends an afternoon on them.
+
 ## [Unreleased] — MUTE-1: cut the wire, and see whether the alarm still rings
 
 Four times this week a check in this repository was found reporting green while measuring nothing
