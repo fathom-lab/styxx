@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const { gateDiffText } = require("../diffgate.js");
 let n = 0, bad = 0;
-for (const name of ["bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json"]) {
+for (const name of ["bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json"]) {
   const p = path.join(__dirname, name);
   if (!fs.existsSync(p)) continue;
   for (const pair of JSON.parse(fs.readFileSync(p, "utf8"))) {
