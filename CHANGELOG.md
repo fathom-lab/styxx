@@ -56,6 +56,14 @@ numbers were the two that made the instrument look worse.
   still a bad number: three quarters of the instrument's accusations on this claim kind remain
   false. Four of the six known failure modes are not repaired, and tests assert the instrument is
   still wrong on them so a later change cannot claim them silently.
+- **SCOPE-1 — ABANDONED, and nothing shipped.** A repair that would have taken precision on this
+  claim kind from 0.25 to 1.00 by withholding whenever no changed path lies inside the claimed
+  scope. Preregistered with its cost stated first, then measured: across all 299 `only_touches`
+  claims it moves **exactly the six items it was derived from and nothing else**, so the number it
+  produces is the hypothesis restated. The held-out set that would have decided it — the 123 pull
+  requests BENCH-2 could not reach — re-probed one day later to **107 HTTP 403, 14 empty, 2 HTTP
+  404, 0 newly reachable**. It would also have cut coverage from 5.4% to 3.3% of a claim space
+  DECIDE-1 showed is 52% decidable. The six false accusations stay in the instrument.
 
 **The datasets**
 
@@ -64,7 +72,10 @@ the live diff's sha256 per row, published under AIDev's CC-BY-4.0. **styxx's own
 deliberately absent**: we do not publish accusations against third parties' pull requests, and
 having found 9 of 11 wrong we would rather nobody took ours on trust. `bench_reproduce.py`
 re-fetches every diff, verifies each hash, re-runs the oracle and scores styxx — or any other
-checker — in one command. `BENCH_DATASHEET.md` leads with both invalidations.
+checker — in one command. `BENCH_DATASHEET.md` leads with both invalidations. Re-fetched end to
+end on 2026-09-18 by `scope1_footprint.py`: **566 of 568 diffs match their published sha256, 2
+mismatch because the pull request gained commits since, 0 unreachable**, and PATH-1's 8
+accusations at precision 0.25 come back identically from a script that shares no state with it.
 
 **The port, and the guard that was not guarding**
 

@@ -1,0 +1,146 @@
+{
+ "prereg": "PREREG_scope1_the_empty_scope_2026_09_18.md",
+ "prereg_sha256_frozen": "445d43493a82e0e70378dd01c284f2a2cdde7b64040b2b56296e3f4b4f985629",
+ "only_touches_rows": 299,
+ "diffs_missing": 0,
+ "verdicts": {
+  "VERIFIED": 8,
+  "CONTRADICTED": 8,
+  "UNCHECKABLE": 281,
+  "(none)": 2
+ },
+ "accusations": 8,
+ "scope1_would_suppress": 6,
+ "scope1_would_keep": 2,
+ "suppressed_outside_derivation_set": 0,
+ "kept_are_exactly_the_two_known_correct": true,
+ "detail": [
+  {
+   "url": "https://github.com/Albeoris/Memoria/pull/1142",
+   "claim": "[WIP] Minimal XML diff: only changed mods/submods are serialized, all others preserved bytewise from original",
+   "scopes": [
+    "mods/submods"
+   ],
+   "changed_paths": 2,
+   "inside": 0,
+   "outside": 2,
+   "inside_examples": [],
+   "why": "paths outside 'mods/submods': ['gitignore', 'index.html']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/Albeoris/Memoria/pull/1145",
+   "claim": "- Only modified mods/submods are serialized and saved",
+   "scopes": [
+    "mods/submods"
+   ],
+   "changed_paths": 1,
+   "inside": 0,
+   "outside": 1,
+   "inside_examples": [],
+   "why": "paths outside 'mods/submods': ['index.html']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/Albeoris/Memoria/pull/1147",
+   "claim": "- \u2705 Only changed mods/submods generate new XML with updated fields",
+   "scopes": [
+    "mods/submods"
+   ],
+   "changed_paths": 2,
+   "inside": 0,
+   "outside": 2,
+   "inside_examples": [],
+   "why": "paths outside 'mods/submods': ['fixes_summary.md', 'index.html']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/Azure/autorest.typescript/pull/3252",
+   "claim": "- Only modified `packages/typespec-ts/` and `packages/typespec-test/` as specified",
+   "scopes": [
+    "packages/typespec-ts",
+    "packages/typespec-test"
+   ],
+   "changed_paths": 49,
+   "inside": 48,
+   "outside": 1,
+   "inside_examples": [
+    "packages/typespec-test/package.json",
+    "packages/typespec-test/test/networkanalytics.management/generated/typespec-ts/sdk/test/arm-test/package.json",
+    "packages/typespec-test/test/networkanalytics.management/generated/typespec-ts/sdk/test/arm-test/review/arm-networkanalytics.api.md"
+   ],
+   "why": "paths outside 'packages/typespec-ts' and 'packages/typespec-test': ['common/config/rush/pnpm-lock.yaml']",
+   "scope1_suppresses": false,
+   "in_derivation_set": false,
+   "known_correct": true
+  },
+  {
+   "url": "https://github.com/mikepenz/release-changelog-builder-action/pull/1458",
+   "claim": "For example, when deploying `app2`, they don't want to see commits that only touched files in `app1/`.",
+   "scopes": [
+    "app1"
+   ],
+   "changed_paths": 14,
+   "inside": 0,
+   "outside": 14,
+   "inside_examples": [],
+   "why": "paths outside 'app1': ['readme.md', '__tests__/pathfiltering.test.ts', 'action.yml']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/open-policy-agent/cert-controller/pull/415",
+   "claim": "> <agent_instructions>Only change .githiub/workflows/dependabot.yml, keep the changes to minimum and output the reasoning behind change as part of pr descriptio",
+   "scopes": [
+    "githiub/workflows/dependabot.yml"
+   ],
+   "changed_paths": 1,
+   "inside": 0,
+   "outside": 1,
+   "inside_examples": [],
+   "why": "paths outside 'githiub/workflows/dependabot.yml': ['github/workflows/dependabot.yml']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/fern-api/fern/pull/9898",
+   "claim": "**Scope alignment**: This only changes README/documentation snippets, not runtime SDK code.",
+   "scopes": [
+    "readme/documentation"
+   ],
+   "changed_paths": 3,
+   "inside": 0,
+   "outside": 3,
+   "inside_examples": [],
+   "why": "paths outside 'readme/documentation': ['generators/python/src/fern_python/generator_cli/readme_snippet_builder.py', 'seed/python-sdk/exhaustive/no-custom-config/.fernignore', 'seed/python-sdk/exhaustive/no-custom-config/tests/test_no_print_statements.py']",
+   "scope1_suppresses": true,
+   "in_derivation_set": true,
+   "known_correct": false
+  },
+  {
+   "url": "https://github.com/microsoft/wassette/pull/442",
+   "claim": "- **Restricted scope**: Only modifies CHANGELOG.md in the Unreleased section",
+   "scopes": [
+    "changelog.md"
+   ],
+   "changed_paths": 4,
+   "inside": 1,
+   "outside": 3,
+   "inside_examples": [
+    "changelog.md"
+   ],
+   "why": "paths outside 'changelog.md': ['github/workflows/changelog-pr-link.lock.yml', 'github/workflows/changelog-pr-link.md', 'github/workflows/ci-doctor.lock.yml']",
+   "scope1_suppresses": false,
+   "in_derivation_set": false,
+   "known_correct": true
+  }
+ ]
+}
