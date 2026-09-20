@@ -5,7 +5,10 @@ The network is faked at the one seam `fetch_pr` exposes (`_open`), so these test
 no GitHub and pass on a machine with no network. What they pin: the URL forms accepted,
 the two documents fetched (JSON body, then the diff by Accept header), the verdict
 being the same object `gate_diff_text` returns for that pair, the exit codes, the
-refusal of `--run`, and the plain messages for 404 / rate-limit / too-large answers.
+refusal of `--run`, and the plain messages for 404 / 403 / too-large answers.
+
+The 403 cases get their own test below: GitHub answers 403 for at least three unrelated
+reasons and this entry point used to report all of them as an exhausted rate limit.
 """
 import io
 import json
@@ -91,8 +94,8 @@ def test_token_travels_as_bearer_and_nothing_else_changes():
 
 @pytest.mark.parametrize("code, needle", [
     (404, "does not exist or is private"),
-    (403, "60/hour"),
-    (429, "60/hour"),
+    (403, "either the request budget or credentials"),
+    (429, "either the request budget or credentials"),
     (406, "too large"),
     (500, "HTTP 500"),
 ])
@@ -157,3 +160,74 @@ def test_cli_pr_says_when_the_description_is_empty(monkeypatch, capsys):
     rc = main(["--pr", "https://github.com/o/r/pull/7"])
     text = capsys.readouterr().out
     assert rc == 0 and "the description is EMPTY" in text and "claims=0" in text
+
+
+# --------------------------------------------------------------------------------------------- #
+# 403 is not one failure
+# --------------------------------------------------------------------------------------------- #
+
+def _raiser(status, body=b"", headers=None):
+    """An opener that answers with a real HTTPError, body and headers included.
+
+    `_opener(status=...)` above raises with no body and no headers, which is the case where
+    GitHub tells us nothing. These three cases are the ones where it does.
+    """
+    def open_(req, timeout=60):
+        raise urllib.error.HTTPError(req.full_url, status, "nope", headers or {}, io.BytesIO(body))
+    return open_
+
+
+@pytest.mark.parametrize("name, body, headers, must_say, must_not_say", [
+    (
+        "credentials cannot see the repository",
+        b'{"message":"GitHub access to this repository is not enabled for this session."}',
+        {"X-RateLimit-Remaining": "15000"},
+        ["NOT the rate limit", "Waiting will not help", "not enabled for this session"],
+        ["Set GITHUB_TOKEN for a bigger budget"],
+    ),
+    (
+        "hourly budget spent",
+        b'{"message":"API rate limit exceeded for 1.2.3.4."}',
+        {"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": "1790000000"},
+        ["budget is spent", "or wait"],
+        ["cannot reach"],
+    ),
+    (
+        "secondary limit",
+        b'{"message":"You have exceeded a secondary rate limit."}',
+        {"Retry-After": "60"},
+        ["SECONDARY rate limit", "Waiting does fix this one", "60s"],
+        ["cannot reach"],
+    ),
+])
+def test_403_says_which_kind_of_403_it_is(name, body, headers, must_say, must_not_say):
+    """The defect: every 403 was reported as an exhausted rate limit.
+
+    Only one of these three is fixed by waiting. Telling the other two to wait sends a caller
+    to a clock that will never help them, on the entry point the bookmarklet and the public
+    "reply with a PR" offer both point at.
+    """
+    with pytest.raises(SystemExit) as e:
+        fetch_pr("https://github.com/o/r/pull/7", _open=_raiser(403, body, headers))
+    msg = str(e.value)
+    for s in must_say:
+        assert s in msg, f"{name}: missing {s!r} in {msg!r}"
+    for s in must_not_say:
+        assert s not in msg, f"{name}: should not say {s!r} in {msg!r}"
+
+
+def test_403_quotes_github_rather_than_paraphrasing_it():
+    """Whatever the branch, the caller gets GitHub's own sentence to search for."""
+    with pytest.raises(SystemExit) as e:
+        fetch_pr("https://github.com/o/r/pull/7",
+                 _open=_raiser(403, b'{"message":"Resource not accessible by integration"}', {}))
+    assert 'GitHub said: "Resource not accessible by integration"' in str(e.value)
+
+
+def test_403_with_an_unreadable_body_still_names_both_possibilities():
+    """A proxy can answer 403 with HTML. Guessing a cause from nothing is how this bug started."""
+    with pytest.raises(SystemExit) as e:
+        fetch_pr("https://github.com/o/r/pull/7", _open=_raiser(403, b"<html>nope</html>", {}))
+    msg = str(e.value)
+    assert "nope" in msg                      # the bytes are shown rather than swallowed
+    assert "NOT the rate limit" in msg

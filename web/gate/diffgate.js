@@ -5,8 +5,11 @@
  * file) rather than by trust.
  *
  * Which Python: the file on the BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 checkout (pull requests #113, #115,
- * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb — the
- * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
+ * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door), sha256 68584b1eef9947326f3ae15defba0d22f1977864859b5d8e99a066dd84348582 — the
+ * styxx/diffgate.py that 7.48.0 ships once they merge. (That hash moved on 2026-09-20 when
+ * `fetch_pr` learned to say WHICH kind of 403 GitHub answered. `fetch_pr` reaches the network and is
+ * no part of what this file transliterates, so the whole-file hash moved and not one verdict did:
+ * the differential was re-run on the pinned pairs afterwards and reported 0 disagreements.) Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
  * templates abstain when the diff has no Python; "added 3 test cases" is not a count of functions;
