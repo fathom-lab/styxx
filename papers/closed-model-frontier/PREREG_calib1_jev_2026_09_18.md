@@ -216,3 +216,90 @@ python papers/closed-model-frontier/calib1_score.py
 Node 22.6+ for the runner's type stripping, Node 20+ for the SDK. The key belongs in the operator's
 environment or in a repository secret; `calib1_ask.ts` refuses one passed as an argument. A dry-run
 raw file scores to `INVALID__DRY_RUN` and cannot be cited.
+
+## Amendment B — 2026-09-20, appended before any Jev call was made
+
+This document stood at sha256
+`8398db36a7633fd980dd62dce8ed9d9a663eb99d472a5a445657b89f10e6296f` — the frozen text plus
+Amendment A — when this was written. Everything below is appended; nothing above it is edited.
+**Still no call to Jev has been made.** The runner has been executed only against its own dry-run
+stub. The same rule applies as to Amendment A: appending after a call would make the document
+worthless; appending before one is the only thing that keeps it worth anything.
+
+Both items below remove a freedom the frozen text left open. Neither widens one.
+
+**B1 — the model is pinned to `jev-1.13.0`, and a run answered by anything else is refused.**
+
+The frozen text names no model version. `calib1_ask.ts` constructed `new sdk.TypeSafeClient()` with
+no options and called `systemOne({ state, questions })` with no `model`. The SDK's own type
+definitions say what that resolves to — `@typesafe-ai/sdk` v0.6.0, `dist/index.d.mts`:
+
+> `SystemOneRequest.model?: string` — *"Model override; omitted values inherit `defaultModel`."*
+>
+> `TypeSafeClientOptions.defaultModel?: string` — *"Default model; falls back to
+> `TYPESAFE_DEFAULT_MODEL`, then `jev-latest`."*
+
+`jev-latest` is an alias. TypeSafe's model documentation resolves it to `jev-1.13.0` today and
+carries `jev-preview` beside it as *"currently identical"* — a pointer that is documented as free to
+move. So CALIB-1 as frozen would have calibrated whatever the alias meant on the morning it ran,
+and a replication would have had nothing to replicate against. Worse, `TYPESAFE_DEFAULT_MODEL` in
+the operator's environment could have changed the answer without appearing anywhere in the receipt.
+
+This is the discipline the repository already applies to its own instrument and had not applied to
+the bought one. `web/gate/differential/py_side.py` refuses to run unless `styxx/diffgate.py` hashes
+to `PINNED`; every RESULT paper names the instrument sha it used. A hosted model has no sha, and its
+version string is the closest thing it has.
+
+So:
+
+- `calib1_ask.ts` sets `defaultModel: "jev-1.13.0"` on the client **and** `model: "jev-1.13.0"` on
+  every request. The per-request override is what decides; the client default means a code path
+  that forgets the override still cannot fall through to the alias.
+- Every call's answer carries `SystemOneResult.model`, *"the model used to answer the request"*.
+  The runner compares it and **aborts the whole run** on the first disagreement.
+- `calib1_score.py` is where this is a gate. A raw file is refused — verdict token
+  `INVALID__MODEL_NOT_PINNED` — if `model_pinned` is absent or is not `jev-1.13.0`, or if any call
+  recorded a different model.
+
+One implementation note belongs in the preregistration rather than only in the code, because it is
+the difference between a gate and a decoration. **The comparison cannot live inside
+`triageSentence`.** That function catches everything a client throws and returns UNDECIDED with
+`jev unreachable: …` — deliberately, so an outage can never change a verdict. A version mismatch
+raised inside the client wrapper would therefore have been *recorded as an unreachable call* and
+scored as a null, which is the silent-pass shape this corpus exists to refuse
+(`benchmarks/silent_pass/`). The check runs in the runner's loop, on `report.provenance.model`,
+outside that catch.
+
+Pinning does not widen anything. It can only cause a run to stop or be refused; it cannot turn a
+failing gate into a passing one.
+
+**B2 — the price A4 said did not exist now exists, and A4 still stands.**
+
+A4 reads: *"No per-token price for Jev is recorded anywhere in this repository."* That was true when
+it was written and is no longer true of the world. TypeSafe publishes, for `jev-1.13.0`:
+
+| | |
+|---|---|
+| input | **$0.042 per million tokens** ($42 per billion) |
+| output | **free** — billing is on input consumption only |
+| context | 64k tokens per request total; 32k for `state` plus the longest question |
+| rate limit | 250,000 tokens/second, 1,200 requests/minute |
+
+OpenRouter's listing for `typesafe/jev-1.13` gives the same $0.042 / $0 figures.
+
+**A4 is not repealed and the price is not hard-coded.** The scorer still publishes spend only when
+a price is passed on the command line, for the reason A4 gave: an estimated spend is not a measured
+one. A price written into this repository would additionally go stale in silence, which is the same
+defect wearing a different coat — the repository would keep quoting a number nobody had checked, in
+exactly the way `telescope/data/latest.json` kept being served four months after its last run. What
+changes is that the operator now has a figure to pass, and a citation for where it came from.
+
+The rate limit is recorded because it retires an unstated assumption: Amendment A3's 25 items x 5
+repeats is 125 calls, which is inside 1,200 requests per minute by an order of magnitude. That was
+assumed and is now checked.
+
+The context budget is recorded because it is a bound the runner can violate silently. The state
+`triageSentence` builds is a sentence plus at most 25 paths, which is small — but "is small" is an
+assertion about today's corpus, not a property of the code. `calib1_ask.ts` now builds the state for
+every item before the first call and refuses the run if any of them exceeds the documented 32k
+budget. `--dry-run` exercises that check without spending anything.
