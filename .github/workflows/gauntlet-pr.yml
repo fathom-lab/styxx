@@ -2,8 +2,13 @@ name: gauntlet PR verification
 
 # When an external researcher PRs against `submissions/`, this workflow
 # re-runs the styxx gauntlet against their method and verifies the scores
-# they reported match what the gauntlet actually produces. The leaderboard
-# is trustworthy by construction: no submission lands without CI verification.
+# they reported match what the gauntlet actually produces.
+#
+# It claimed that from the day it was written and did not do it: see the
+# comment in "Discover changed submissions" below. The claim is only as good
+# as the discovery step under it, so tests/test_gauntlet_pr_verifies_something.py
+# runs that step's shell and asserts a comparison that cannot be made fails
+# rather than reporting an empty change set.
 
 on:
   pull_request:
@@ -36,16 +41,47 @@ jobs:
       - name: Discover changed submissions
         id: discover
         run: |
-          # Find submissions/ subdirectories changed in this PR.
-          # If none changed, the workflow exits cleanly (the PR touches only LEADERBOARD.md).
-          set -e
-          changed_dirs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'submissions/' \
-            | awk -F/ 'NF >= 3 {print $1"/"$2}' | sort -u || true)
-          echo "changed submissions:"
-          echo "$changed_dirs"
-          echo "dirs<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$changed_dirs" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          # This step used to read:
+          #
+          #   changed_dirs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD \
+          #     -- 'submissions/' | awk ... | sort -u || true)
+          #
+          # `origin/<base>` is not in this checkout. actions/checkout@v4 at its default
+          # fetch-depth: 1 fetches exactly one refspec for a pull_request event --
+          # `+<sha>:refs/remotes/pull/<n>/merge` (see actions/checkout, src/ref-helper.ts,
+          # getRefSpec) -- and no refs/remotes/origin/* at all. So the diff failed with
+          # "unknown revision", the `|| true` turned that failure into an empty list, every
+          # later step was skipped by `if: steps.discover.outputs.dirs != ''`, and the job
+          # reported "nothing to verify" and went green. On a workflow whose header says the
+          # leaderboard is trustworthy because no submission lands without CI verification.
+          #
+          # .github/workflows/leaderboard-submission.yml, which handles the other submission
+          # protocol, already fetched its base ref before diffing. This one now does too.
+          base_sha="${{ github.event.pull_request.base.sha }}"
+          if ! git fetch --no-tags --depth=1 origin "$base_sha"; then
+            echo "::error::could not fetch the base commit $base_sha, so the diff cannot be taken. 'The comparison could not be made' is not the same fact as 'this PR changes no submission', and this job must never report the first as the second."
+            exit 1
+          fi
+          # Two-dot against the base commit, not three-dot against a branch tip: HEAD here is
+          # the pull_request merge commit, whose parents are the base and the head, so the
+          # two-dot diff IS the PR's change set -- and it needs no merge base, which a pair of
+          # depth-1 fetches may not share. No `|| true` anywhere below.
+          changed=$(git diff --name-only "$base_sha" HEAD -- 'submissions/')
+          echo "files changed under submissions/:"
+          printf '%s\n' "${changed:-(none)}"
+          # A gauntlet submission is a DIRECTORY: submissions/<name>/{method.py,submission.json}.
+          # A flat submissions/<name>.py is a Cognometry Detector Interface v0 submission and
+          # belongs to leaderboard-submission.yml, so this filter dropping it is correct and
+          # not a miss -- submissions/GAUNTLET.md documents the two protocols side by side.
+          changed_dirs=$(printf '%s\n' "$changed" | awk -F/ 'NF >= 3 {print $1"/"$2}' | sort -u)
+          echo "gauntlet submissions to verify:"
+          printf '%s\n' "${changed_dirs:-(none)}"
+          {
+            echo "dirs<<EOF"
+            printf '%s\n' "$changed_dirs"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Install per-submission requirements
         if: steps.discover.outputs.dirs != ''
