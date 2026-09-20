@@ -140,6 +140,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -1451,6 +1452,73 @@ _PR_URL = re.compile(
     r"(?P<number>\d+)(?:[/?#].*)?$")
 
 
+def _forbidden(owner: str, repo: str, number: int, e) -> str:
+    """Say which kind of 403 this is, because GitHub answers 403 for unrelated reasons.
+
+    This used to report every 403 and 429 as "the unauthenticated API limit is used up …
+    Set GITHUB_TOKEN, or wait." That is one of at least three causes, and it is the only
+    one waiting fixes. A caller whose token cannot see the repository — a fine-grained
+    token without it, an org that has not approved the app, a sandbox scoped to one repo —
+    was told to wait for a clock that never helps them, on the entry point the bookmarklet
+    and the public "send us a PR" offer both point at.
+
+    GitHub says which it is: the body carries a `message`, and the rate-limit headers carry
+    the count. This reads both and reports what it found, including the case where they say
+    nothing — an honest "could not tell, here is how to tell" beats a confident wrong guess.
+    """
+    try:
+        raw = e.read() or b""
+    except Exception:                                    # fp is None, already consumed, …
+        raw = b""
+    detail = ""
+    try:
+        parsed = json.loads(raw.decode("utf-8", errors="replace"))
+        detail = (parsed or {}).get("message") or ""
+    except Exception:
+        detail = raw.decode("utf-8", errors="replace").strip()[:200]
+
+    headers = getattr(e, "headers", None) or {}
+    def hdr(name):
+        try:
+            return headers.get(name)
+        except Exception:
+            return None
+    remaining, reset, retry_after = (hdr("X-RateLimit-Remaining"), hdr("X-RateLimit-Reset"),
+                                     hdr("Retry-After"))
+    said = f' GitHub said: "{detail}".' if detail else ""
+    head = f"{owner}/{repo}#{number}: GitHub answers {e.code}"
+    low = detail.lower()
+
+    if "secondary rate limit" in low or "abuse" in low:
+        wait = f" Retry-After: {retry_after}s." if retry_after else ""
+        return (f"{head} — a SECONDARY rate limit: too many requests in a burst, not the hourly "
+                f"budget.{wait} Waiting does fix this one.{said}")
+
+    if remaining == "0" or "rate limit" in low:
+        at = ""
+        if reset:
+            try:
+                at = (" It resets at "
+                      + time.strftime("%H:%M:%SZ", time.gmtime(int(reset))) + ".")
+            except (TypeError, ValueError):
+                at = ""
+        return (f"{head} — the request budget is spent (X-RateLimit-Remaining: "
+                f"{remaining if remaining is not None else 'unreported'}).{at} "
+                f"Set GITHUB_TOKEN for a bigger budget, or wait.{said}")
+
+    if detail:
+        left = f" (X-RateLimit-Remaining: {remaining})" if remaining not in (None, "") else ""
+        return (f"{head} — this is NOT the rate limit{left}: the credentials in use cannot reach "
+                f"{owner}/{repo}. Waiting will not help. Use a token that can see this repository, "
+                f"approve the app for the organisation that owns it, or check it out and use "
+                f"SUMMARY --repo --base --head.{said}")
+
+    return (f"{head} — GitHub gave no reason and no rate-limit headers, so this is either the "
+            f"request budget or credentials that cannot see {owner}/{repo}. If "
+            f"https://api.github.com/rate_limit reports budget remaining, it is access, and "
+            f"waiting will not help.")
+
+
 def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) -> dict:
     """The description and the diff of a public GitHub pull request, from the API.
 
@@ -1483,9 +1551,7 @@ def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) 
                                  "request does not exist or is private. For a private one, "
                                  "check it out and use SUMMARY --repo --base --head.") from e
             if e.code in (403, 429):
-                raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers {e.code} — the "
-                                 "unauthenticated API limit (60/hour per address) is used "
-                                 "up, or the token is refused. Set GITHUB_TOKEN, or wait.") from e
+                raise SystemExit(_forbidden(owner, repo, number, e)) from e
             if e.code == 406:
                 raise SystemExit(f"{owner}/{repo}#{number}: GitHub will not serve this diff "
                                  "over the API (too large). Check it out and use "
