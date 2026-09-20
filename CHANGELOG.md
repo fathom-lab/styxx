@@ -270,6 +270,54 @@ the reading rules as code, and a command for the stranger.**
   `styxx/__init__.py` exports none of them); the `styxx[plate]` extra serves modules the CLI does
   not register.
 
+## [Unreleased] — the telescope has not measured anything since 2026-05-09, and said nothing
+
+`telescope/README.md` opens with *"daily cognometric measurement layer for
+fathom.darkflobi.com/scoreboard · the public dashboard of LLM cognition health."* The scoreboard
+fetches `telescope/data/latest.json` straight from raw.githubusercontent.com. That file's own
+`ts_iso` is **2026-05-10T01:47:21Z** — 133 days ago at the time of writing. `telescope/data/runs/`
+holds six run ledgers in total, five from 2026-05-03 and one from 2026-05-09: the entire history of
+a daily runner.
+
+Two independent blockers, either of which alone stops the run, and the first hid the second for the
+whole life of the workflow.
+
+**1. No vendor keys.** `.github/workflows/telescope.yml`'s `check vendor keys` step sets
+`present=false` when no `TELESCOPE_*` secret is configured; the install, run and commit steps are
+all gated on `if: steps.keys.outputs.present == 'true'`; the job succeeds with a notice reading
+*"telescope skipped — no TELESCOPE_* vendor key secrets configured (expected state, not a
+failure)."* That is right for a fork and wrong for the repository the scoreboard reads: a green tick
+over an unrefreshed file. Worth stating plainly, because #135 is mine: removing the broken
+`cache: 'pip'` converts 138 consecutive red X's into a daily green tick over the same absence. The
+repair is correct and it measures nothing more than the failure did. Run #147, the dispatch that
+"proved" it, carries that skip notice in its annotations.
+
+**2. No corpus.** `run.py` exits at `load_prompts()` unless `telescope/prompts.json` is present —
+the held-out 21-prompt corpus every telescope number is derived from. `.gitignore` ignored it: a
+bare `telescope/*.json`, filed in the block headed `── LaTeX build artifacts ──` between `*.toc`
+and `packages/styxx-scope-*.zip`, there to sweep stray run output out of `telescope/`'s top level,
+catching the corpus with it. **A scheduled run with keys configured would have exited 1 before
+reaching a single model.** Nobody found that, because blocker 1 meant the step never ran.
+
+The rule is now narrowed (`!telescope/prompts.json`) and moved into a block of its own that says
+what it is for. Un-ignoring does not create the file; it still has to be committed.
+
+`telescope/STATUS.md` (new) states the position: last real measurement, both blockers, and the two
+steps that restart it. `tests/test_telescope_status_is_honest.py` holds the repository to it in both
+directions — stale data requires the acknowledgement, fresh data requires its removal, and STATUS.md
+must quote `latest.json`'s own `ts_iso`, so refreshing the data forces refreshing the claim. Each
+guard was checked by breaking it: restoring the old `.gitignore` line fails the corpus test,
+removing `STATUS.md` fails five, and back-dating `latest.json` to today fails the two that would
+then be lying.
+
+Also corrected: `telescope/data/timeseries.jsonl` was documented as the *long-running per-model
+trajectory*. Nothing writes it — `run.py` writes `data/runs/telescope__<ts>.json` and
+`data/latest.json` and never mentions it. It holds three rows dated 2026-04-24, in the
+`_archive/v0` schema (`K`, `C`, `D`, `trust`), naming three models no run ledger contains, with
+byte-identical metrics across all three (`K 0.4355 · C 0.0 · D 0.2044 · trust 0.8193`). It is v0
+seed data wearing a measurement's name. The instrument itself is fine: the last real run separates
+`gpt-5` from `gpt-5-mini` at composite dishonesty 0.3736 vs 0.2805.
+
 ## [Unreleased] — checksum v0: a fingerprint for model behavior, the observatory, the clock, the challenge record, the bounty
 
 **`styxx/checksum.py`, `styxx/observatory.py`, `styxx/beacon.py`, `styxx/epoch.py`,

@@ -78,9 +78,20 @@ release/v7.3.0-bundle/
 *.synctex.gz
 *.out
 *.toc
-telescope/*.json
-telescope/timeseries.jsonl
 packages/styxx-scope-*.zip
+
+# ── telescope scratch output ─────────────────────────
+# Stray run output that run.py or a hand run can drop at telescope/'s top
+# level. This used to be a bare `telescope/*.json` filed under the LaTeX
+# artifacts above, which also ignored telescope/prompts.json -- the held-out
+# 21-prompt corpus that run.py loads and that every telescope number is
+# derived from. A fresh checkout therefore had no corpus, and `python
+# telescope/run.py` in CI would exit 1 at load_prompts() before it ever
+# reached a model. Nobody saw it, because the workflow's vendor-key check
+# skipped the run first. See telescope/STATUS.md.
+telescope/*.json
+!telescope/prompts.json
+telescope/timeseries.jsonl
 
 # ── External corpora (fetchable, not redistributed) ──────
 # Anthropic sycophancy eval corpus (Perez et al. 2022) —
