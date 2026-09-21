@@ -92,6 +92,61 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — MUTE-3: nothing guarded the guards, and where the chain of guards ends
+
+MUTE-2 ended with a question it answered in advance: *cut `test_harness_manifest.py` itself and
+ask whether anything notices — on this tree nothing would.* This cycle measures that, adds the
+anchors the answer demands, measures again, and names where the chain ends.
+
+**The instrument moves to v1.1 first, and says so before it is used.** MUTE-1 and MUTE-2 counted a
+mutant as killed by any baseline-passing test that was *anything but passed* on it — red, or not
+collected at all. At level 2 that rule is wrong, not merely noisy: deleting a test makes its own id
+vanish, and a deleted test cannot be its own alarm. Under v1.1 only a *red* test kills; a test that
+is simply no longer collected has *vanished*, and the receipt lists it beside the kills, never
+among them (`failed_on_mutant`, `vanished_on_mutant`, `errors_on_mutant`). Three level-2 operators
+cut the six declared guard files (`GUARDS` in `mute.py`): **M-GFILE** deletes the file, **M-GFUNC**
+deletes one test function, **M-GVACUOUS** turns every `assert` in one function into `assert True`
+— the guard runs, passes and checks nothing.
+
+**Three runs** (`papers/harness/mute2r_receipt.json`, `mute3_receipt_A.json`,
+`mute3_receipt_B.json`), scored by `mute3_score.py` against
+`PREREG_mute3_the_guards_under_mutation_2026_09_21.md` (sha256 `ddcd207a…`), frozen before any
+level-2 mutant was applied:
+
+- **MUTE-2r** — MUTE-2's 120 mutants under v1.1: **114 / 5 / 1, verdict for verdict MUTE-2's.**
+  The rule change is invisible at level 1, and the 45 vanishings MUTE-2 could only predict are now
+  in the receipt.
+- **Run A** — the guards as they stood: **0 KILLED, 72 SURVIVED.** Every guard file can be
+  deleted, every guard test deleted, every guard hollowed, and no test in the repository goes red.
+  Under the old rule this run would have read 39 KILLED, every kill a deleted test "noticing" its
+  own absence.
+- **Run B** — after three anchors and nothing else: the manifest pins, for each declared guard,
+  the names of its test functions (`guards` in `tests/harness_manifest.json`); one *control* per
+  MUTE-2 guard, a test that calls the guard on a fixture it must reject and requires an
+  `AssertionError`; and an *anchor step* in `test.yml` that collects the two guard files before
+  the suite runs. **42 KILLED, 32 SURVIVED, 2 UNREACHED.** A guard's *absence* is now loud
+  everywhere but one file; its *hollowing* is loud only where a control exists — two of
+  thirty-three.
+
+**5 of 8 predictions HIT.** The three misses are one event: run B was predicted at 41 / 33 / 2,
+with the deletion of `test_the_harness_matches_the_committed_manifest` surviving because "the
+test that would notice is the one being cut". It was killed — by its control, which calls the
+guard by name and raises `NameError` when the name is gone. A control written against hollowing
+anchors existence too. So the fixed point inside the suite is one mutant, the manifest test
+*file*, not the pair the preregistration named; the anchor step holds that file from CI and the
+manifest holds the anchor step, both directions demonstrated outside the receipts
+(`mute3_anchor_demo.json`, `mute3_anchor_pin_demo.json`). Cut both at once and nothing in this
+repository says a word. That is where the chain ends, and it is written down.
+
+**Scorer correction, stated in the RESULT:** G-M3-3 was first encoded as a count and failed on a
+legitimate third gain to run B's baseline (the propagation guard's own case for the new anchor
+step); it is now the set condition the preregistration words, held from `mute3_baselines.json`.
+
+**What it does not say:** loudness is not truth, one level up. Thirty-one guards can still be
+hollowed to `assert True` unnoticed — the 26 functions of the four older guard files, whose
+controls belong to the pull requests those files are in, and five auxiliary tests. The receipt
+names each.
+
 ## [Unreleased] — MUTE-2: two guards, and the silent cuts go from 101 of 120 to 5
 
 MUTE-1 left a reading list: 101 cuts to this repository's checking apparatus that its test suite
