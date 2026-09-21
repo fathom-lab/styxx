@@ -118,6 +118,62 @@ def test_verdicts_compare_per_test_against_the_baseline_not_the_exit_code():
     assert [k for k in passing if mutant_res.get(k) != "passed"] == ["a::t1"], "t1 killed it; t2 recovering is not a kill"
 
 
+def test_a_kill_is_red_and_a_vanished_test_is_not_a_kill():
+    """v1.1 (MUTE-3). A baseline-passing test kills the mutant only by going RED. A test whose id
+    is not collected on the mutant has vanished -- recorded, never a kill: a deleted test cannot
+    be its own alarm. A red id that was not in the baseline at all is a collection error, and
+    that IS a kill (the suite went red, just not by a test the baseline knew)."""
+    passing = ["a::t1", "a::t2", "a::t3"]
+    baseline_ids = {"a::t1", "a::t2", "a::t3", "a::t4"}      # t4 failed on baseline: excluded
+    killed_by, failed, vanished, errors = mute.compare(passing, {"a::t1": "failed", "a::t3": "passed", "a::t4": "failed"}, baseline_ids)
+    assert killed_by == ["a::t1"] and failed == ["a::t1"] and vanished == ["a::t2"] and errors == []
+    killed_by, failed, vanished, errors = mute.compare(passing, {"a::t1": "passed", "a::t3": "passed"}, baseline_ids)
+    assert killed_by == [] and vanished == ["a::t2"], "vanishing alone is SURVIVED"
+    killed_by, failed, vanished, errors = mute.compare(passing, {"a::tests/a.py": "failed"}, baseline_ids)
+    assert killed_by == ["a::tests/a.py"] and errors == ["a::tests/a.py"] and vanished == passing, "a collection crash is red"
+
+
+def test_level_two_enumerates_exactly_the_declared_guards_and_their_tests():
+    checks, mutants = mute.inventory(level=2)
+    files = {c.path for c in checks if c.kind == "guard-file"}
+    assert files == {g for g in mute.GUARDS if (ROOT / g).exists()}
+    ops = {}
+    for m in mutants:
+        ops[m.operator] = ops.get(m.operator, 0) + 1
+    assert ops["M-GFUNC"] == ops["M-GVACUOUS"], "every test function gets both cuts"
+    assert ops["M-GFILE"] == len(files)
+    assert all(m.id.startswith("MUTE-G") for m in mutants), "level-2 ids are namespaced apart from level 1"
+
+
+def test_the_guard_operators_cut_exactly_one_thing_and_leave_the_file_parseable(tmp_path):
+    import ast
+    src = ('import pytest\n\n'
+           'def helper():\n    return 1\n\n'
+           '@pytest.mark.parametrize("x", [1, 2])\n'
+           'def test_first(x):\n    assert x > 0, "positive"\n    assert helper() == 1\n\n'
+           'def test_second():\n    assert helper() == 1\n')
+    t = tmp_path / "tests"
+    t.mkdir()
+    (t / "test_g.py").write_text(src, encoding="utf-8")
+    c = mute.Check("guard-function", "tests/test_g.py", name="test_first")
+    assert mute.apply(mute.Mutant("MUTE-G001", "M-GFUNC", c, ""), tmp_path) is True
+    after = (t / "test_g.py").read_text(encoding="utf-8")
+    names = [n.name for n in ast.parse(after).body if isinstance(n, ast.FunctionDef)]
+    assert names == ["helper", "test_second"], "the decorated function went, with its decorator, and nothing else"
+    (t / "test_g.py").write_text(src, encoding="utf-8")
+    assert mute.apply(mute.Mutant("MUTE-G002", "M-GVACUOUS", c, ""), tmp_path) is True
+    mod = ast.parse((t / "test_g.py").read_text(encoding="utf-8"))
+    first = next(n for n in mod.body if isinstance(n, ast.FunctionDef) and n.name == "test_first")
+    second = next(n for n in mod.body if isinstance(n, ast.FunctionDef) and n.name == "test_second")
+    assert all(isinstance(a.test, ast.Constant) and a.test.value is True for a in ast.walk(first) if isinstance(a, ast.Assert))
+    assert not any(isinstance(a.test, ast.Constant) for a in ast.walk(second) if isinstance(a, ast.Assert)), "the other function is untouched"
+    assert len(first.decorator_list) == 1, "the parametrize decorator survives the hollowing"
+    (t / "test_g.py").write_text(src, encoding="utf-8")
+    fc = mute.Check("guard-file", "tests/test_g.py", name="test_g.py")
+    assert mute.apply(mute.Mutant("MUTE-G003", "M-GFILE", fc, ""), tmp_path) is True and not (t / "test_g.py").exists()
+    assert mute.apply(mute.Mutant("MUTE-G003", "M-GFILE", fc, ""), tmp_path) is False, "cutting what is gone is UNREACHED"
+
+
 def test_the_instrument_refuses_to_mutate_its_own_checkout():
     r = subprocess.run([sys.executable, "-m", "benchmarks.harness_mutation.mute", "--run",
                         "--tree", str(ROOT)], cwd=str(ROOT), capture_output=True, text=True)

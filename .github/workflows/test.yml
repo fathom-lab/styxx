@@ -51,6 +51,15 @@ jobs:
           # styxx.mcp.server needs the mcp package (gated to py>=3.10); import it only when mcp is present.
           python -c "import importlib.util; m = importlib.import_module('styxx.mcp.server') if importlib.util.find_spec('mcp') else None; print('styxx.mcp.server', 'OK' if m else 'skipped (mcp absent on this python)')"
 
+      # The anchor for the guards of the harness (MUTE-3). tests/test_harness_manifest.py pins
+      # every workflow, job, step, guard, trigger, npm script and guard test in this repository,
+      # so nothing in the suite can notice that file itself going missing. This step can: it
+      # collects the two MUTE-2 guard files before the suite runs, and fails if either is gone or
+      # empty. The manifest pins this step in return. Cutting both at once is silent; that pair
+      # is the trust anchor, and it is written down here rather than left implicit.
+      - name: Anchor — the guard files still collect
+        run: python -m pytest tests/test_harness_manifest.py tests/test_ci_steps_propagate_failure.py --collect-only -q
+
       - name: Run tests
         run: python -m pytest tests -q
 

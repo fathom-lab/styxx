@@ -99,6 +99,15 @@ def test_there_are_steps_to_hold():
     assert len(STEPS) >= 30, f"only {len(STEPS)} run steps found under .github/workflows"
 
 
+def test_the_propagation_guard_rejects_a_swallowed_step():
+    """Control (MUTE-3). The guard above, called directly on a step that swallows the failure of
+    the tool it calls, must refuse it. If its assert is ever hollowed to `assert True`, this is
+    the test that notices; `test_the_method_sees_a_swallow...` below checks the method, not the
+    guard, and would not."""
+    with pytest.raises(AssertionError):
+        test_the_step_cannot_hide_the_failure_of_what_it_calls("fixture.yml::job::swallowed", "( python -m pytest tests -q\n) || true\n")
+
+
 def test_the_method_sees_a_swallow_and_passes_a_propagating_step():
     """The guard has to be able to see the thing it claims to see, in both directions."""
     rc, reached, _ = execute("python -m pytest tests -q\n")

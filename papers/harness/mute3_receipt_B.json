@@ -1,0 +1,1974 @@
+{
+  "schema": "styxx.harness-mutation/v1.1",
+  "level": 2,
+  "instrument": "benchmarks/harness_mutation/mute.py",
+  "instrument_sha256": "defc94722e01a49d461f41e1fad293375242066596235d1634fec5cd04c71779",
+  "tree": "e913678853820e99c5e415ebc37208b419aaf6f4",
+  "harness_fingerprint": "fb6d868cff477878aa27322e5443d32ab07fb34679e8bdd880234674db8bba07",
+  "oracle": {
+    "pattern": "\\.github/workflows|\\\"workflows\\\"|package\\.json|\\\"\\.gitignore\\\"|telescope|web/gate/differential|py_side|check_pairs|calib1_(ask|score)|PREREG_calib1",
+    "files": [
+      "tests/test_calib1_score.py",
+      "tests/test_ci_runs_the_js_typecheck.py",
+      "tests/test_ci_steps_propagate_failure.py",
+      "tests/test_diffgate_bc1.py",
+      "tests/test_diffgate_evidence.py",
+      "tests/test_gauntlet_pr_verifies_something.py",
+      "tests/test_harness_manifest.py",
+      "tests/test_path1.py",
+      "tests/test_port_is_current.py",
+      "tests/test_sworn_action.py",
+      "tests/test_telescope_status_is_honest.py",
+      "tests/test_version_never_behind_tag.py"
+    ],
+    "tests_passing_on_baseline": 537,
+    "tests_excluded_not_passing_on_baseline": [
+      "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Install per-submission requirements]",
+      "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::No submissions changed]",
+      "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Install submission dependencies (if any)]",
+      "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Step summary]",
+      "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::check vendor keys]",
+      "tests.test_diffgate_bc1::test_sacrificed_a_lying_count_of_test_cases",
+      "tests.test_diffgate_bc1::test_sacrificed_a_lying_test_count_in_typescript",
+      "tests.test_sworn_action.TestTheCommittedSample::test_the_committed_sample_reproduces",
+      "tests.test_version_never_behind_tag::test_version_is_never_behind_the_newest_tag"
+    ]
+  },
+  "population": {
+    "checks": 41,
+    "mutants": 76,
+    "by_operator": {
+      "M-GFILE": {
+        "KILLED": 5,
+        "SURVIVED": 1,
+        "UNREACHED": 0
+      },
+      "M-GFUNC": {
+        "KILLED": 35,
+        "SURVIVED": 0,
+        "UNREACHED": 0
+      },
+      "M-GVACUOUS": {
+        "KILLED": 2,
+        "SURVIVED": 31,
+        "UNREACHED": 2
+      }
+    }
+  },
+  "totals": {
+    "KILLED": 42,
+    "SURVIVED": 32,
+    "UNREACHED": 2
+  },
+  "verdicts": [
+    {
+      "mutant": "MUTE-G001",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_gauntlet_pr_verifies_something.py",
+        "detail": null
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 14.92,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_a_comparison_that_cannot_be_made_is_not_reported_as_nothing_to_verify",
+        "tests.test_gauntlet_pr_verifies_something::test_every_workflow_run_block_is_valid_shell",
+        "tests.test_gauntlet_pr_verifies_something::test_no_git_command_in_the_discover_step_swallows_its_status",
+        "tests.test_gauntlet_pr_verifies_something::test_the_discover_step_fetches_the_base_before_diffing_it",
+        "tests.test_gauntlet_pr_verifies_something::test_the_filter_drops_a_flat_file_because_the_other_workflow_owns_it",
+        "tests.test_gauntlet_pr_verifies_something::test_the_filter_keeps_a_gauntlet_submission",
+        "tests.test_gauntlet_pr_verifies_something::test_the_line_this_replaced_passes_the_test_above_so_the_test_discriminates",
+        "tests.test_gauntlet_pr_verifies_something::test_the_other_protocols_workflow_still_fails_loudly_when_it_finds_nothing"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G002",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_a_comparison_that_cannot_be_made_is_not_reported_as_nothing_to_verify",
+        "detail": "lines 111-121, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 14.96,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_a_comparison_that_cannot_be_made_is_not_reported_as_nothing_to_verify"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G003",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_a_comparison_that_cannot_be_made_is_not_reported_as_nothing_to_verify",
+        "detail": "lines 111-121, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 15.96,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G004",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_line_this_replaced_passes_the_test_above_so_the_test_discriminates",
+        "detail": "lines 124-147, 3 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.96,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_the_line_this_replaced_passes_the_test_above_so_the_test_discriminates"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G005",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_line_this_replaced_passes_the_test_above_so_the_test_discriminates",
+        "detail": "lines 124-147, 3 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 14.61,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G006",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_discover_step_fetches_the_base_before_diffing_it",
+        "detail": "lines 159-165, 3 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 15.12,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_the_discover_step_fetches_the_base_before_diffing_it"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G007",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_discover_step_fetches_the_base_before_diffing_it",
+        "detail": "lines 159-165, 3 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 14.44,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G008",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_no_git_command_in_the_discover_step_swallows_its_status",
+        "detail": "lines 168-172, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 15.09,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_no_git_command_in_the_discover_step_swallows_its_status"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G009",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_no_git_command_in_the_discover_step_swallows_its_status",
+        "detail": "lines 168-172, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 15.55,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G010",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_workflow_run_block_is_valid_shell",
+        "detail": "lines 175-195, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 15.08,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_every_workflow_run_block_is_valid_shell"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G011",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_workflow_run_block_is_valid_shell",
+        "detail": "lines 175-195, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 15.78,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G012",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_filter_keeps_a_gauntlet_submission",
+        "detail": "lines 211-215, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 14.86,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_the_filter_keeps_a_gauntlet_submission"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G013",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_filter_keeps_a_gauntlet_submission",
+        "detail": "lines 211-215, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.82,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G014",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_filter_drops_a_flat_file_because_the_other_workflow_owns_it",
+        "detail": "lines 218-225, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.81,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_the_filter_drops_a_flat_file_because_the_other_workflow_owns_it"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G015",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_filter_drops_a_flat_file_because_the_other_workflow_owns_it",
+        "detail": "lines 218-225, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.9,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G016",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_other_protocols_workflow_still_fails_loudly_when_it_finds_nothing",
+        "detail": "lines 228-232, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 13.12,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_gauntlet_pr_verifies_something::test_the_other_protocols_workflow_still_fails_loudly_when_it_finds_nothing"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G017",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_gauntlet_pr_verifies_something.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_other_protocols_workflow_still_fails_loudly_when_it_finds_nothing",
+        "detail": "lines 228-232, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 13.29,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G018",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_telescope_status_is_honest.py",
+        "detail": null
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.7,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_a_missing_corpus_is_stated_rather_than_left_to_be_discovered",
+        "tests.test_telescope_status_is_honest::test_every_data_file_the_readme_documents_is_written_by_something",
+        "tests.test_telescope_status_is_honest::test_status_and_the_data_agree_about_whether_the_telescope_is_running",
+        "tests.test_telescope_status_is_honest::test_status_names_the_measurement_that_is_actually_published",
+        "tests.test_telescope_status_is_honest::test_the_corpus_run_py_requires_is_not_gitignored",
+        "tests.test_telescope_status_is_honest::test_the_readme_sends_a_reader_to_the_status_page",
+        "tests.test_telescope_status_is_honest::test_the_workflows_green_skip_is_acknowledged_somewhere_a_reader_looks"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G019",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_corpus_run_py_requires_is_not_gitignored",
+        "detail": "lines 75-102, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 13.44,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_the_corpus_run_py_requires_is_not_gitignored"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G020",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_corpus_run_py_requires_is_not_gitignored",
+        "detail": "lines 75-102, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.96,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G021",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_a_missing_corpus_is_stated_rather_than_left_to_be_discovered",
+        "detail": "lines 105-112, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 13.13,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_a_missing_corpus_is_stated_rather_than_left_to_be_discovered"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G022",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_a_missing_corpus_is_stated_rather_than_left_to_be_discovered",
+        "detail": "lines 105-112, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.94,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G023",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_status_names_the_measurement_that_is_actually_published",
+        "detail": "lines 117-123, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 13.71,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_status_names_the_measurement_that_is_actually_published"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G024",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_status_names_the_measurement_that_is_actually_published",
+        "detail": "lines 117-123, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 15.17,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G025",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_status_and_the_data_agree_about_whether_the_telescope_is_running",
+        "detail": "lines 126-139, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 13.41,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_status_and_the_data_agree_about_whether_the_telescope_is_running"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G026",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_status_and_the_data_agree_about_whether_the_telescope_is_running",
+        "detail": "lines 126-139, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.26,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G027",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_readme_sends_a_reader_to_the_status_page",
+        "detail": "lines 142-145, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.74,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_the_readme_sends_a_reader_to_the_status_page"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G028",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_readme_sends_a_reader_to_the_status_page",
+        "detail": "lines 142-145, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.56,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G029",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_data_file_the_readme_documents_is_written_by_something",
+        "detail": "lines 150-160, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.77,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_every_data_file_the_readme_documents_is_written_by_something"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G030",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_data_file_the_readme_documents_is_written_by_something",
+        "detail": "lines 150-160, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.41,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G031",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_workflows_green_skip_is_acknowledged_somewhere_a_reader_looks",
+        "detail": "lines 165-177, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.19,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_telescope_status_is_honest::test_the_workflows_green_skip_is_acknowledged_somewhere_a_reader_looks"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G032",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_telescope_status_is_honest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_workflows_green_skip_is_acknowledged_somewhere_a_reader_looks",
+        "detail": "lines 165-177, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.53,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G033",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_ci_runs_the_js_typecheck.py",
+        "detail": null
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.23,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_runs_the_js_typecheck::test_ci_runs_the_typecheck_in_the_package_directory",
+        "tests.test_ci_runs_the_js_typecheck::test_the_package_still_declares_the_script_this_guards",
+        "tests.test_ci_runs_the_js_typecheck::test_the_typecheck_job_installs_from_the_lockfile_first"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G034",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_package_still_declares_the_script_this_guards",
+        "detail": "lines 29-32, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.49,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_runs_the_js_typecheck::test_the_package_still_declares_the_script_this_guards"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G035",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_package_still_declares_the_script_this_guards",
+        "detail": "lines 29-32, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.33,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G036",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_ci_runs_the_typecheck_in_the_package_directory",
+        "detail": "lines 35-42, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.57,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_runs_the_js_typecheck::test_ci_runs_the_typecheck_in_the_package_directory"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G037",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_ci_runs_the_typecheck_in_the_package_directory",
+        "detail": "lines 35-42, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.18,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G038",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_typecheck_job_installs_from_the_lockfile_first",
+        "detail": "lines 45-59, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.91,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_runs_the_js_typecheck::test_the_typecheck_job_installs_from_the_lockfile_first"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G039",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_runs_the_js_typecheck.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_typecheck_job_installs_from_the_lockfile_first",
+        "detail": "lines 45-59, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.24,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G040",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_port_is_current.py",
+        "detail": null
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.2,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[bc1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[bin1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[compat2_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[compat_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[declare1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[path1_pairs.json]",
+        "tests.test_port_is_current::test_gitignore_whitelists_every_named_pairs_file",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:the-prefix]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:ts-tests]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:two-prefixes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:word-symbol]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:count-now-true]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:prefix-now-caught]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:quoted-path]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:rename-and-mode]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:text-and-binary]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:three-binaries]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:java-name-not-at-match-end]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:js-arrow-params]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:move-same-signature]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:multiline-signature]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:scaffold-only]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:seven-surface-plus-internal]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:surface-and-scaffold]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:dotted-prefix-absent]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:second-prefix-by-segment]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:symbol-articles]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:test-cases-verify-and-abstain]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:two-path-shaped-prefixes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:word-prefix-quoted]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:empty-diff]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:go-rust-java]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:js-exports]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:kotlin-and-async-def]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:more-than-five]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:nine-phrases]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:no-language]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:py-moves]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:py-removes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-crlf:demo-diff]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-repr:quote-in-changed-path]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-v14:bare-name-abstains]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-v14:containment-touch-skipped]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:count-wrong]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:glob-stripped]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:honest]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:malformed-value]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:narrow-declaration-not-punished]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:prose-and-declaration-agree]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:scope-broken]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:tests-pass-never-verified]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:two-blocks-declare-nothing]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:unknown-key]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-anywhere]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-nested-single]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-still-accuses]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:css-selector]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:dotted-identifier]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:slash-prefix-anchors]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:unrepaired-runtime-sentence]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:unrepaired-typo]",
+        "tests.test_port_is_current::test_the_differential_pin_matches_the_instrument",
+        "tests.test_port_is_current::test_the_gate_readme_names_the_same_instrument",
+        "tests.test_port_is_current::test_the_javascript_port_agrees_on_every_pinned_pair",
+        "tests.test_port_is_current::test_the_port_names_the_instrument_it_transliterates",
+        "tests.test_port_is_current::test_there_are_pinned_pairs_to_check"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G041",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_differential_pin_matches_the_instrument",
+        "detail": "lines 64-72, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.01,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_the_differential_pin_matches_the_instrument"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G042",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_differential_pin_matches_the_instrument",
+        "detail": "lines 64-72, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.38,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G043",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_gate_readme_names_the_same_instrument",
+        "detail": "lines 75-82, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.11,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_the_gate_readme_names_the_same_instrument"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G044",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_gate_readme_names_the_same_instrument",
+        "detail": "lines 75-82, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 11.95,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G045",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_named_pairs_file_exists",
+        "detail": "lines 87-95, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.42,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[bc1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[bin1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[compat2_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[compat_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[declare1_pairs.json]",
+        "tests.test_port_is_current::test_every_named_pairs_file_exists[path1_pairs.json]"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G046",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_every_named_pairs_file_exists",
+        "detail": "lines 87-95, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 11.8,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G047",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_gitignore_whitelists_every_named_pairs_file",
+        "detail": "lines 98-102, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.15,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_gitignore_whitelists_every_named_pairs_file"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G048",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_gitignore_whitelists_every_named_pairs_file",
+        "detail": "lines 98-102, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.38,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G049",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_there_are_pinned_pairs_to_check",
+        "detail": "lines 117-119, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.99,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_there_are_pinned_pairs_to_check"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G050",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_there_are_pinned_pairs_to_check",
+        "detail": "lines 117-119, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.25,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G051",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_python_matches_each_pinned_expect_block",
+        "detail": "lines 122-129, 3 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.57,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:the-prefix]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:ts-tests]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:two-prefixes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bc1_pairs.json-bc1:word-symbol]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:count-now-true]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:prefix-now-caught]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:quoted-path]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:rename-and-mode]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:text-and-binary]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[bin1_pairs.json-bin1:three-binaries]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:java-name-not-at-match-end]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:js-arrow-params]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:move-same-signature]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:multiline-signature]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:scaffold-only]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:seven-surface-plus-internal]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat2_pairs.json-compat2:surface-and-scaffold]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:dotted-prefix-absent]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:second-prefix-by-segment]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:symbol-articles]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:test-cases-verify-and-abstain]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:two-path-shaped-prefixes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-bc2:word-prefix-quoted]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:empty-diff]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:go-rust-java]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:js-exports]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:kotlin-and-async-def]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:more-than-five]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:nine-phrases]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:no-language]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:py-moves]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-compat:py-removes]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-crlf:demo-diff]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-repr:quote-in-changed-path]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-v14:bare-name-abstains]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[compat_pairs.json-v14:containment-touch-skipped]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:count-wrong]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:glob-stripped]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:honest]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:malformed-value]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:narrow-declaration-not-punished]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:prose-and-declaration-agree]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:scope-broken]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:tests-pass-never-verified]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:two-blocks-declare-nothing]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[declare1_pairs.json-declare1:unknown-key]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-anywhere]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-nested-single]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:basename-still-accuses]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:css-selector]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:dotted-identifier]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:slash-prefix-anchors]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:unrepaired-runtime-sentence]",
+        "tests.test_port_is_current::test_python_matches_each_pinned_expect_block[path1_pairs.json-path1:unrepaired-typo]"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G052",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_python_matches_each_pinned_expect_block",
+        "detail": "lines 122-129, 3 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.17,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G053",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_javascript_port_agrees_on_every_pinned_pair",
+        "detail": "lines 136-163, 2 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.51,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_the_javascript_port_agrees_on_every_pinned_pair"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G054",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_javascript_port_agrees_on_every_pinned_pair",
+        "detail": "lines 136-163, 2 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.0,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G055",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_port_names_the_instrument_it_transliterates",
+        "detail": "lines 166-171, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.38,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_port_is_current::test_the_port_names_the_instrument_it_transliterates"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G056",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_port_is_current.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_port_names_the_instrument_it_transliterates",
+        "detail": "lines 166-171, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.03,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G057",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_harness_manifest.py",
+        "detail": null
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.19,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest",
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job",
+        "tests.test_harness_manifest::test_the_manifest_is_committed",
+        "tests.test_harness_manifest::test_the_manifest_is_not_hollow",
+        "tests.test_harness_manifest::test_the_manifest_pins_no_step_text"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G058",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_is_committed",
+        "detail": "lines 26-27, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.21,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_is_committed"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G059",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_is_committed",
+        "detail": "lines 26-27, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.01,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G060",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_harness_matches_the_committed_manifest",
+        "detail": "lines 30-39, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ],
+      "seconds": 12.31,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G061",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_harness_matches_the_committed_manifest",
+        "detail": "lines 30-39, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ],
+      "seconds": 11.46,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G062",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_guard_rejects_a_tree_missing_a_job",
+        "detail": "lines 42-62, 0 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.59,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G063",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_guard_rejects_a_tree_missing_a_job",
+        "detail": "lines 42-62, 0 asserts"
+      },
+      "verdict": "UNREACHED",
+      "killed_by": [],
+      "seconds": 0.0,
+      "note": "nothing to cut: the file, job, step, guard or line is absent",
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G064",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_is_not_hollow",
+        "detail": "lines 65-73, 4 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.48,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_is_not_hollow"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G065",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_is_not_hollow",
+        "detail": "lines 65-73, 4 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 11.75,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G066",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_pins_no_step_text",
+        "detail": "lines 76-83, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.98,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_harness_manifest::test_the_manifest_pins_no_step_text"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G067",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_harness_manifest.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_manifest_pins_no_step_text",
+        "detail": "lines 76-83, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 11.89,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G068",
+      "operator": "M-GFILE",
+      "check": {
+        "kind": "guard-file",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_ci_steps_propagate_failure.py",
+        "detail": null
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.46,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_method_sees_a_swallow_and_passes_a_propagating_step",
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Audit claims against substrate]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Install styxx]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Write PR body to a file]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Discover changed submissions]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Install styxx (editable, with test extras)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Re-run gauntlet on each changed submission]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Identify the submission file changed in this PR]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Install styxx + NLI stack]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Run submission against 8 benchmarks]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Guard \\u2014 no test skipped for a MISSING dependency]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Install CPU-only torch first (keeps the install lean & fast)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Install styxx + heavy-dep extras]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Premise check \\u2014 the heavy libs MUST import]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Run AUC-backing instrument tests]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Build distribution artifacts]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Install build tooling]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Twine integrity check]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Verify both artifacts present]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[replications.yml::verify::Identify submitted replication files]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[replications.yml::verify::Verify each submission against its canonical receipt]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::commit daily snapshot]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::install deps]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::run telescope]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::core-minimal::Core surface must import + run with numpy only]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::core-minimal::Install styxx with NO extras]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::package::Build wheel]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::package::Verify all subpackages + key modules are in the wheel]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Anchor \\u2014 the guard files still collect]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Import smoke (every top-level module must import on this version)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Install styxx + test deps]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Lint (ruff \\u2014 pinned to py39, catches the 3.9-3.11 syntax class)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Run tests]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::typecheck-js::Install the package's own dependencies from its lockfile]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::typecheck-js::Typecheck]",
+        "tests.test_ci_steps_propagate_failure::test_there_are_steps_to_hold"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G069",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_step_cannot_hide_the_failure_of_what_it_calls",
+        "detail": "lines 86-95, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step",
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 11.75,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step",
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Audit claims against substrate]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Install styxx]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[audit-claims.yml::audit-claims::Write PR body to a file]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Discover changed submissions]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Install styxx (editable, with test extras)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[gauntlet-pr.yml::verify-submissions::Re-run gauntlet on each changed submission]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Identify the submission file changed in this PR]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Install styxx + NLI stack]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[leaderboard-submission.yml::run-submission::Run submission against 8 benchmarks]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Guard \\u2014 no test skipped for a MISSING dependency]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Install CPU-only torch first (keeps the install lean & fast)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Install styxx + heavy-dep extras]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Premise check \\u2014 the heavy libs MUST import]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[nightly-heavy.yml::nightly-heavy::Run AUC-backing instrument tests]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Build distribution artifacts]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Install build tooling]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Twine integrity check]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[publish.yml::build::Verify both artifacts present]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[replications.yml::verify::Identify submitted replication files]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[replications.yml::verify::Verify each submission against its canonical receipt]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::commit daily snapshot]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::install deps]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[telescope.yml::telescope::run telescope]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::core-minimal::Core surface must import + run with numpy only]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::core-minimal::Install styxx with NO extras]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::package::Build wheel]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::package::Verify all subpackages + key modules are in the wheel]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Anchor \\u2014 the guard files still collect]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Import smoke (every top-level module must import on this version)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Install styxx + test deps]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Lint (ruff \\u2014 pinned to py39, catches the 3.9-3.11 syntax class)]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Run tests]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::typecheck-js::Install the package's own dependencies from its lockfile]",
+        "tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::typecheck-js::Typecheck]"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G070",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_step_cannot_hide_the_failure_of_what_it_calls",
+        "detail": "lines 86-95, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step"
+      ],
+      "seconds": 11.64,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step"
+      ],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G071",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_there_are_steps_to_hold",
+        "detail": "lines 98-99, 1 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.48,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_there_are_steps_to_hold"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G072",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_there_are_steps_to_hold",
+        "detail": "lines 98-99, 1 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 12.08,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G073",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_propagation_guard_rejects_a_swallowed_step",
+        "detail": "lines 102-108, 0 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.34,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G074",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_propagation_guard_rejects_a_swallowed_step",
+        "detail": "lines 102-108, 0 asserts"
+      },
+      "verdict": "UNREACHED",
+      "killed_by": [],
+      "seconds": 0.0,
+      "note": "nothing to cut: the file, job, step, guard or line is absent",
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G075",
+      "operator": "M-GFUNC",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_method_sees_a_swallow_and_passes_a_propagating_step",
+        "detail": "lines 111-118, 3 asserts"
+      },
+      "verdict": "KILLED",
+      "killed_by": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "seconds": 12.1,
+      "note": null,
+      "failed_on_mutant": [
+        "tests.test_harness_manifest::test_the_harness_matches_the_committed_manifest"
+      ],
+      "vanished_on_mutant": [
+        "tests.test_ci_steps_propagate_failure::test_the_method_sees_a_swallow_and_passes_a_propagating_step"
+      ],
+      "errors_on_mutant": []
+    },
+    {
+      "mutant": "MUTE-G076",
+      "operator": "M-GVACUOUS",
+      "check": {
+        "kind": "guard-function",
+        "path": "tests/test_ci_steps_propagate_failure.py",
+        "job": null,
+        "step": null,
+        "name": "test_the_method_sees_a_swallow_and_passes_a_propagating_step",
+        "detail": "lines 111-118, 3 asserts"
+      },
+      "verdict": "SURVIVED",
+      "killed_by": [],
+      "seconds": 11.66,
+      "note": null,
+      "failed_on_mutant": [],
+      "vanished_on_mutant": [],
+      "errors_on_mutant": []
+    }
+  ],
+  "seconds": 959.1,
+  "caveat": "SURVIVED means no test in the oracle set noticed the cut. It is a finding to be read, not a defect to be counted, and the oracle is the test suite, not CI."
+}

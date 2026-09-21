@@ -1,4 +1,32 @@
 {
+ "guards": {
+  "tests/test_ci_runs_the_js_typecheck.py": null,
+  "tests/test_ci_steps_propagate_failure.py": [
+   "test_the_method_sees_a_swallow_and_passes_a_propagating_step",
+   "test_the_propagation_guard_rejects_a_swallowed_step",
+   "test_the_step_cannot_hide_the_failure_of_what_it_calls",
+   "test_there_are_steps_to_hold"
+  ],
+  "tests/test_gauntlet_pr_verifies_something.py": null,
+  "tests/test_harness_manifest.py": [
+   "test_the_harness_matches_the_committed_manifest",
+   "test_the_manifest_guard_rejects_a_tree_missing_a_job",
+   "test_the_manifest_is_committed",
+   "test_the_manifest_is_not_hollow",
+   "test_the_manifest_pins_no_step_text"
+  ],
+  "tests/test_port_is_current.py": [
+   "test_every_named_pairs_file_exists",
+   "test_gitignore_whitelists_every_named_pairs_file",
+   "test_python_matches_each_pinned_expect_block",
+   "test_the_differential_pin_matches_the_instrument",
+   "test_the_gate_readme_names_the_same_instrument",
+   "test_the_javascript_port_agrees_on_every_pinned_pair",
+   "test_the_port_names_the_instrument_it_transliterates",
+   "test_there_are_pinned_pairs_to_check"
+  ],
+  "tests/test_telescope_status_is_honest.py": null
+ },
  "npm_scripts": {
   "packages/styxx-js/package.json": [
    "build",
@@ -8,7 +36,7 @@
   ]
  },
  "regenerate": "python -m benchmarks.harness_mutation.manifest --write",
- "what": "structure of the checking harness: triggers, jobs, run steps, guards, npm scripts",
+ "what": "structure of the checking harness: triggers, jobs, run steps, guards, npm scripts, and the test functions of the guard files",
  "workflows": {
   "audit-claims.yml": {
    "jobs": {
@@ -293,6 +321,10 @@
       {
        "if": null,
        "name": "Import smoke (every top-level module must import on this version)"
+      },
+      {
+       "if": null,
+       "name": "Anchor — the guard files still collect"
       },
       {
        "if": null,

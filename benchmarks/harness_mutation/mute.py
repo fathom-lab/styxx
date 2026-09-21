@@ -3,6 +3,7 @@
     python -m benchmarks.harness_mutation.mute --inventory        # list the checks and the mutants, run nothing
     python -m benchmarks.harness_mutation.mute --run              # apply every mutant, ask the oracle, write the receipt
     python -m benchmarks.harness_mutation.mute --run --only M-JOB # one operator
+    python -m benchmarks.harness_mutation.mute --run --level 2    # MUTE-3: mutate the GUARDS themselves (see below)
 
 Mutation testing asks of a test suite: if I break the program, does a test go red? This asks the
 same question one level up, of the *checking apparatus*: if I cut a check out of CI, silence a
@@ -33,12 +34,34 @@ A MUTANT is one CHECK with one OPERATOR applied:
 The ORACLE is the repository's own test suite, restricted to the tests that read the harness
 (selected by a path pattern, listed in the receipt, never hand-picked). A mutant is
 
-    KILLED      some test that passed on the unmutated tree fails on the mutant
-    SURVIVED    every test that passed on the unmutated tree still passes -- the cut was silent
+    KILLED      some test that passed on the unmutated tree goes RED on the mutant (fails or
+                errors), or the mutant makes collection itself error
+    SURVIVED    nothing goes red -- the cut was silent
     UNREACHED   the mutant could not be applied (the file or line is not there to cut)
 
 Per-test comparison against the baseline, not "did the oracle exit non-zero": a test that already
 fails on the unmutated tree cannot kill anything, and is reported as excluded rather than counted.
+
+Receipt schema v1.1 (MUTE-3) splits what v1 folded together. A baseline-passing test can be RED
+on the mutant, or it can have VANISHED (its id is not collected at all -- a parametrized case
+whose subject was deleted, or a test function that was itself the thing cut). v1 counted both as
+kills; v1.1 counts only red, and a collection error, and records the vanished ids beside them.
+Nothing in MUTE-1 or MUTE-2 changes under v1.1 (their kills were red, or a collection crash), and
+the split is what makes level 2 readable: a deleted test cannot be its own alarm.
+
+Level 2 -- the guards under mutation
+------------------------------------
+`--level 2` asks the question one level further up. The GUARDS are the test files written to hold
+the harness in place (declared in `GUARDS` below; the manifest pins their test functions since
+MUTE-3). Three operators cut them:
+
+    M-GFILE     the guard file is deleted
+    M-GFUNC     one test function is deleted
+    M-GVACUOUS  every `assert` in one test function becomes `assert True` -- the guard still
+                runs, still passes, and checks nothing
+
+The oracle is the same suite. A guard that is cut and noticed by nothing is a guard with no
+guard; the RESULT names where that chain ends.
 
 What this measures and what it does not
 ---------------------------------------
@@ -97,6 +120,19 @@ SUBJECTS: list[tuple[str, str, str | None]] = [
 ]
 
 
+#: The guards: test files whose purpose is to hold the harness in place. Declared, not inferred,
+#: for the same reason SUBJECTS are: "what guards what" is not mechanical. Level 2 mutates exactly
+#: these; since MUTE-3 the manifest pins their test functions.
+GUARDS: list[str] = [
+    "tests/test_gauntlet_pr_verifies_something.py",
+    "tests/test_telescope_status_is_honest.py",
+    "tests/test_ci_runs_the_js_typecheck.py",
+    "tests/test_port_is_current.py",
+    "tests/test_harness_manifest.py",
+    "tests/test_ci_steps_propagate_failure.py",
+]
+
+
 @dataclass
 class Check:
     kind: str            # workflow-trigger | workflow-job | workflow-step | npm-script | subject
@@ -121,9 +157,12 @@ class Verdict:
     operator: str
     check: dict
     verdict: str                     # KILLED | SURVIVED | UNREACHED
-    killed_by: list[str] = field(default_factory=list)
+    killed_by: list[str] = field(default_factory=list)      # red tests + collection errors: the alarms
     seconds: float = 0.0
     note: str | None = None
+    failed_on_mutant: list[str] = field(default_factory=list)     # baseline-passing ids that went red
+    vanished_on_mutant: list[str] = field(default_factory=list)   # baseline-passing ids not collected
+    errors_on_mutant: list[str] = field(default_factory=list)     # red ids that were not in the baseline (collection errors)
 
 
 # --------------------------------------------------------------------------- inventory
@@ -133,7 +172,9 @@ def _load_wf(path: Path) -> dict:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
 
-def inventory() -> tuple[list[Check], list[Mutant]]:
+def inventory(level: int = 1) -> tuple[list[Check], list[Mutant]]:
+    if level == 2:
+        return inventory_guards()
     checks: list[Check] = []
     mutants: list[Mutant] = []
     n = 0
@@ -174,6 +215,45 @@ def inventory() -> tuple[list[Check], list[Mutant]]:
         checks.append(c)
         mut("M-SUBJECT", c, f"{rel}: " + ("remove the line matching /{}/".format(line) if line else "delete the file"))
 
+    return checks, mutants
+
+
+def guard_functions(path: Path) -> list[tuple[str, int, int, int]]:
+    """(name, first line incl. decorators, last line, number of asserts) for every top-level test_*."""
+    import ast
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    out = []
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("test_"):
+            first = min([node.lineno] + [d.lineno for d in node.decorator_list])
+            asserts = sum(1 for n in ast.walk(node) if isinstance(n, ast.Assert))
+            out.append((node.name, first, node.end_lineno, asserts))
+    return out
+
+
+def inventory_guards() -> tuple[list[Check], list[Mutant]]:
+    """Level 2: the guard files and their test functions, from GUARDS above."""
+    checks: list[Check] = []
+    mutants: list[Mutant] = []
+    n = 0
+
+    def mut(op: str, check: Check, desc: str) -> None:
+        nonlocal n
+        n += 1
+        mutants.append(Mutant(id=f"MUTE-G{n:03d}", operator=op, check=check, description=desc))
+
+    for rel in GUARDS:
+        p = ROOT / rel
+        if not p.exists():
+            continue
+        fc = Check("guard-file", rel, name=p.name)
+        checks.append(fc)
+        mut("M-GFILE", fc, f"{rel}: delete the guard file")
+        for name, first, last, asserts in guard_functions(p):
+            c = Check("guard-function", rel, name=name, detail=f"lines {first}-{last}, {asserts} asserts")
+            checks.append(c)
+            mut("M-GFUNC", c, f"{rel}::{name}: delete the test function")
+            mut("M-GVACUOUS", c, f"{rel}::{name}: every assert becomes `assert True`")
     return checks, mutants
 
 
@@ -228,6 +308,35 @@ def apply(m: Mutant, tree: Path) -> bool:
             return False
         del pkg["scripts"][c.name]
         target.write_text(json.dumps(pkg, indent=2) + "\n", encoding="utf-8")
+        return True
+    if m.operator == "M-GFILE":
+        if not target.exists():
+            return False
+        target.unlink()
+        return True
+    if m.operator in ("M-GFUNC", "M-GVACUOUS"):
+        if not target.exists():
+            return False
+        funcs = {name: (first, last, asserts) for name, first, last, asserts in guard_functions(target)}
+        if c.name not in funcs:
+            return False
+        first, last, asserts = funcs[c.name]
+        lines = target.read_text(encoding="utf-8").splitlines(keepends=True)
+        if m.operator == "M-GFUNC":
+            del lines[first - 1:last]
+            target.write_text("".join(lines), encoding="utf-8")
+            return True
+        if asserts == 0:
+            return False                      # nothing to make vacuous
+        import ast
+        mod = ast.parse("".join(lines))
+        for node in mod.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == c.name:
+                for sub in ast.walk(node):
+                    if isinstance(sub, ast.Assert):
+                        sub.test = ast.Constant(True)
+                        sub.msg = None
+        target.write_text(ast.unparse(ast.fix_missing_locations(mod)) + "\n", encoding="utf-8")
         return True
     if m.operator == "M-SUBJECT":
         if not target.exists():
@@ -286,6 +395,21 @@ def run_oracle(tree: Path, files: list[str]) -> dict[str, str]:
     return out
 
 
+def compare(passing: list[str], res: dict[str, str], baseline_ids: set[str] | None = None
+            ) -> tuple[list[str], list[str], list[str], list[str]]:
+    """(killed_by, failed_on_mutant, vanished_on_mutant, errors_on_mutant) for one oracle result.
+
+    v1.1 rule. A mutant is killed by every baseline-passing test that is RED on it (failed or
+    error), and by every red id that was not in the baseline at all (a collection error). A
+    baseline-passing test whose id is simply not collected on the mutant has VANISHED: recorded,
+    never a kill -- a deleted test cannot be its own alarm."""
+    baseline_ids = baseline_ids if baseline_ids is not None else set(passing)
+    failed = [k for k in passing if res.get(k) == "failed"]
+    vanished = [k for k in passing if k not in res]
+    errors = sorted(k for k, v in res.items() if v == "failed" and k not in baseline_ids)
+    return (sorted(failed + errors), failed, vanished, errors)
+
+
 def _restore(tree: Path) -> None:
     subprocess.run(["git", "checkout", "-q", "--", "."], cwd=str(tree), check=True)
     subprocess.run(["git", "clean", "-qfd"], cwd=str(tree), check=True)
@@ -319,9 +443,9 @@ def harness_fingerprint(tree: Path, oracle: list[str]) -> str:
 
 # --------------------------------------------------------------------------- the run
 
-def run(tree: Path, only: str | None, out: Path, limit: int | None) -> dict:
+def run(tree: Path, only: str | None, out: Path, limit: int | None, level: int = 1) -> dict:
     t0 = time.time()
-    checks, mutants = inventory()
+    checks, mutants = inventory(level)
     if only:
         mutants = [m for m in mutants if m.operator == only]
     if limit:
@@ -334,6 +458,7 @@ def run(tree: Path, only: str | None, out: Path, limit: int | None) -> dict:
     baseline = run_oracle(tree, files)
     passing = sorted(k for k, v in baseline.items() if v == "passed")
     excluded = sorted(k for k, v in baseline.items() if v != "passed")
+    baseline_ids = set(baseline)
     if not passing:
         sys.exit("no test passes on the unmutated tree; the oracle cannot kill anything")
 
@@ -347,12 +472,16 @@ def run(tree: Path, only: str | None, out: Path, limit: int | None) -> dict:
                                     note="nothing to cut: the file, job, step, guard or line is absent"))
             _restore(tree)
             continue
-        res = run_oracle(tree, files)
+        # a deleted guard file must not turn the whole session into a usage error: ask pytest
+        # only for the files that still exist; the deleted one's tests then simply vanish
+        res = run_oracle(tree, [f for f in files if (tree / f).exists()])
         _restore(tree)
-        killed_by = sorted(k for k in passing if res.get(k) != "passed")
+        killed_by, failed, vanished, errors = compare(passing, res, baseline_ids)
         verdicts.append(Verdict(m.id, m.operator, asdict(m.check),
                                 "KILLED" if killed_by else "SURVIVED", killed_by,
-                                round(time.time() - t1, 2)))
+                                round(time.time() - t1, 2),
+                                failed_on_mutant=failed, vanished_on_mutant=vanished,
+                                errors_on_mutant=errors))
         sys.stderr.write(f"\r{len(verdicts)}/{len(mutants)} {m.id} {verdicts[-1].verdict:9s}")
     sys.stderr.write("\n")
 
@@ -361,7 +490,8 @@ def run(tree: Path, only: str | None, out: Path, limit: int | None) -> dict:
         by_op.setdefault(v.operator, {"KILLED": 0, "SURVIVED": 0, "UNREACHED": 0})[v.verdict] += 1
 
     receipt = {
-        "schema": "styxx.harness-mutation/v1",
+        "schema": "styxx.harness-mutation/v1.1",   # red-only kills; failed/vanished/errors split per verdict
+        "level": level,
         "instrument": "benchmarks/harness_mutation/mute.py",
         "instrument_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "tree": tree_sha(tree),
@@ -396,9 +526,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--tree", default=str(ROOT), help="a git worktree to mutate (restored after every mutant)")
     ap.add_argument("--out", default=str(RECEIPT_DEFAULT))
+    ap.add_argument("--level", type=int, default=1, choices=(1, 2), help="1: the harness; 2: the guards")
     a = ap.parse_args(argv)
     if a.inventory:
-        checks, mutants = inventory()
+        checks, mutants = inventory(a.level)
         by = {}
         for m in mutants:
             by[m.operator] = by.get(m.operator, 0) + 1
@@ -411,7 +542,7 @@ def main(argv: list[str] | None = None) -> int:
         tree = Path(a.tree).resolve()
         if tree == ROOT.resolve():
             sys.exit("refusing to mutate the checkout this instrument lives in; pass --tree <worktree>")
-        r = run(tree, a.only, Path(a.out), a.limit)
+        r = run(tree, a.only, Path(a.out), a.limit, a.level)
         t = r["totals"]
         print(f"KILLED {t['KILLED']}  SURVIVED {t['SURVIVED']}  UNREACHED {t['UNREACHED']}  -> {a.out}")
         for v in r["verdicts"]:

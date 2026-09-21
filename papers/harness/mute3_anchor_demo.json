@@ -1,0 +1,10 @@
+{
+ "what": "the anchor step of test.yml, run as a shell on the run-B tree, with and without tests/test_harness_manifest.py",
+ "tree": "e913678853820e99c5e415ebc37208b419aaf6f4",
+ "anchor_step_run": "python -m pytest tests/test_harness_manifest.py tests/test_ci_steps_propagate_failure.py --collect-only -q",
+ "exit_intact": 0,
+ "last_line_intact": "47 tests collected in 0.12s",
+ "exit_with_manifest_test_deleted": 4,
+ "last_line_with_manifest_test_deleted": "ERROR: file or directory not found: tests/test_harness_manifest.py",
+ "reading": "a demonstration outside the oracle, not a verdict: the anchor is in CI, which the suite cannot see"
+}
