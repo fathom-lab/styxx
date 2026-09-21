@@ -92,6 +92,51 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-2: which way it falls — one fault at a time through 2,178 workflows
+
+SWALLOW-1 ended on the limit of its method: it sees that a step cannot fail; it cannot see which
+way the step falls. `benchmarks/harness_mutation/faults.py` simulates the *workflow* instead of
+the step. Two healthy worlds — every external command succeeds and prints `x`, or prints nothing
+and `grep` reports no match — and, for every bash step that reaches a tool, one fault world in
+which that step's tools fail. Steps run in job order with what Actions gives them: `$GITHUB_OUTPUT`
+and `$GITHUB_ENV` read back; `steps.*.outputs`, `env.*` and `needs.*.outputs` substituted; every
+`if:`, `needs:` and `fromJSON` matrix evaluated by a three-valued evaluator in which what the
+simulation cannot know is unknown and lets a step run. Each fault gets one verdict: **RED** (a job
+goes red), **FAIL_OPEN** (a check that would have run is silently not run), **SWALLOWED** (a check
+ran and its failure was hidden), **ABSORBED**, **NO_CHECK**. No runner, no token, no code. On this
+repository's own `gauntlet-pr.yml` at `main` the instrument reproduces #137 — the discover step's
+tools fail, both gated steps are skipped, the job is green — and on #137's tree the same fault is
+RED (`swallow2_self.json`).
+
+**The run** (`papers/harness/swallow2_receipt.json.gz`, scored by `swallow2_score.py` against
+`PREREG_swallow2_which_way_it_falls_2026_09_21.md`, sha256 `bdae83fb…`, frozen before the
+population was touched): SWALLOW-1's 100 repositories, re-cloned; **30,642 faults through 2,178
+workflows**, 94,974 step executions, 1,104 s. **VALID, 5 of 11 predictions HIT.** Of 6,336
+interpretable hand-written faults, **92% are RED**. **49 are SWALLOWED, in 23 repositories** —
+and 33 of the 49 are hidden by `continue-on-error: true` on the step, not by anything in the
+script. **3 are FAIL_OPEN, in 2 repositories**: `antiwork/gumroad`'s `run_scope`, where a failed
+labels query writes `full=false` and both test jobs gated on it are skipped — #137's shape at the
+job level, the one clean instance in the population — and two in-step cases. The steps SWALLOW-1
+said cannot fail, followed into their workflows, mostly touch no check: of 303 interpretable,
+268 have no check in scope or leave every check as it was, 16 are fail-closed through the step
+after them, 18 hide their own failure, 1 drops a check.
+
+**The misses, in the open:** fail-open was predicted common (≥ 6 repositories) and is rare; three
+of the five steps SWALLOW-1's RESULT had read as fail-open by eye protect something the
+instrument does not count as a check — an action (`lycheeverse/lychee-action`, never executed), a
+recommendation comment, and, for mlflow's `Run tests`, a script reached for the query and never
+for the run, which the preregistered definition reads as SWALLOWED and a *counted* reading
+(reached fewer times) reads as FAIL_OPEN; the counted reading is reported beside the frozen one,
+never in its place. The coverage bar missed: 80% of fault sites are interpretable, not 85%.
+
+**Five runs, stated.** The instrument as frozen in prose had three defects the population found
+and the pilot had not — the model's `x` compared unequal to every literal and turned `== 'true'`
+gates off; a script's stub was blocked by an argument on a continuation line; a fault step's
+`cd sub && tool` failed on the `cd`. Each is a commit with its reason; each time the population
+run was repeated from scratch; a fifth run followed a Python-3.9 compatibility change to a cleanup
+call, so the receipt names the committed instrument. The predictions and the scoring definitions
+never moved, and neither did the score.
+
 ## [Unreleased] — SWALLOW-1: in 67 of 87 repositories a CI step cannot fail, and in 35 of them that step is a check
 
 MUTE-2's behavioural guard — execute every `run:` step with an empty PATH, so every external

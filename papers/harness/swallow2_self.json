@@ -1,0 +1,253 @@
+{
+ "what": "the fault instrument on this repository and on gauntlet-pr.yml before and after #137",
+ "self": {
+  "fault_sites": 33,
+  "by_verdict": {
+   "RED": 31,
+   "BASELINE_RED": 2
+  },
+  "alone_by_verdict": {
+   "PROPAGATES": 33
+  },
+  "deterministic": true,
+  "alone_differs_from_swallow1": [],
+  "swallow1_sites_missing": []
+ },
+ "gauntlet_before_137": {
+  "file": "/tmp/gauntlet_main.yml",
+  "discover_index": 3,
+  "discover_alone": "SWALLOWS",
+  "plus": {
+   "result": "success",
+   "steps": [
+    {
+     "index": 0,
+     "name": "Checkout PR source",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 1,
+     "name": "Set up Python 3.12",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 2,
+     "name": "Install styxx (editable, with test extras)",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 3,
+     "name": "Discover changed submissions",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 4,
+     "name": "Install per-submission requirements",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 5,
+     "name": "Re-run gauntlet on each changed submission",
+     "ran": true,
+     "why": null,
+     "exit": 1
+    },
+    {
+     "index": 6,
+     "name": "No submissions changed",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    }
+   ]
+  },
+  "minus_discover": {
+   "result": "success",
+   "steps": [
+    {
+     "index": 0,
+     "name": "Checkout PR source",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 1,
+     "name": "Set up Python 3.12",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 2,
+     "name": "Install styxx (editable, with test extras)",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 3,
+     "name": "Discover changed submissions",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 4,
+     "name": "Install per-submission requirements",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    },
+    {
+     "index": 5,
+     "name": "Re-run gauntlet on each changed submission",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    },
+    {
+     "index": 6,
+     "name": "No submissions changed",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    }
+   ]
+  },
+  "instrument_verdict": "NO_CHECK",
+  "dropped": []
+ },
+ "gauntlet_after_137": {
+  "file": "/tmp/gauntlet_137.yml",
+  "discover_index": 3,
+  "discover_alone": "PROPAGATES",
+  "plus": {
+   "result": "success",
+   "steps": [
+    {
+     "index": 0,
+     "name": "Checkout PR source",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 1,
+     "name": "Set up Python 3.12",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 2,
+     "name": "Install styxx (editable, with test extras)",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 3,
+     "name": "Discover changed submissions",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 4,
+     "name": "Install per-submission requirements",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 5,
+     "name": "Re-run gauntlet on each changed submission",
+     "ran": true,
+     "why": null,
+     "exit": 1
+    },
+    {
+     "index": 6,
+     "name": "No submissions changed",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    }
+   ]
+  },
+  "minus_discover": {
+   "result": "failure",
+   "steps": [
+    {
+     "index": 0,
+     "name": "Checkout PR source",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 1,
+     "name": "Set up Python 3.12",
+     "ran": false,
+     "why": "uses",
+     "exit": null
+    },
+    {
+     "index": 2,
+     "name": "Install styxx (editable, with test extras)",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    },
+    {
+     "index": 3,
+     "name": "Discover changed submissions",
+     "ran": true,
+     "why": null,
+     "exit": 1
+    },
+    {
+     "index": 4,
+     "name": "Install per-submission requirements",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    },
+    {
+     "index": 5,
+     "name": "Re-run gauntlet on each changed submission",
+     "ran": false,
+     "why": "if",
+     "exit": null
+    },
+    {
+     "index": 6,
+     "name": "No submissions changed",
+     "ran": true,
+     "why": null,
+     "exit": 0
+    }
+   ]
+  },
+  "instrument_verdict": "RED",
+  "dropped": []
+ },
+ "gate": {
+  "alone_reproduces_swallow1": true,
+  "deterministic": true,
+  "before_137_gated_steps_skipped_and_green": true,
+  "after_137_discover_is_red": true
+ },
+ "pass": true
+}
