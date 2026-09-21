@@ -1,0 +1,450 @@
+{
+ "valid": false,
+ "gates": {
+  "G-S3-1": {
+   "pass": true,
+   "detail": "population sha256 5ac2789b6d67eed8\u2026, 100 entries; faults.py d26a407ca276d1b1\u2026 (frozen d26a407ca276d1b1\u2026)"
+  },
+  "G-S3-2": {
+   "pass": true,
+   "detail": "96 cloned; failures [('MihaiCristianCondrea/Smart-Cleaner-for-Android', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/flexile', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/helper', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('Metta-AI/metta', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\")]; HEAD moved []; capped []"
+  },
+  "G-S3-3": {
+   "pass": false,
+   "detail": "30642 SWALLOW-2 faults; 30645 here; missing 1; extra 4; verdict mismatches 3 (with a timeout on either side: 0; unexplained: 3)",
+   "mismatches": [
+    {
+     "fault": [
+      "airbytehq/airbyte",
+      "ai-ready-command.yml",
+      "validate",
+      5
+     ],
+     "swallow2": "BASELINE_SKIPPED",
+     "here_runs_only": "RED",
+     "timeout_old": false,
+     "timeout_new": false
+    },
+    {
+     "fault": [
+      "browser-use/browser-use",
+      "test.yaml",
+      "setup-chromium",
+      2
+     ],
+     "swallow2": "NO_CHECK",
+     "here_runs_only": "ABSORBED",
+     "timeout_old": false,
+     "timeout_new": false
+    },
+    {
+     "fault": [
+      "browser-use/browser-use",
+      "test.yaml",
+      "tests",
+      5
+     ],
+     "swallow2": "NO_CHECK",
+     "here_runs_only": "ABSORBED",
+     "timeout_old": false,
+     "timeout_new": false
+    }
+   ]
+  },
+  "G-S3-4": {
+   "pass": true,
+   "detail": "312 census names; undecided []; decided twice []; instrument in tree == receipt's: True"
+  },
+  "G-S3-5": {
+   "pass": true,
+   "detail": "tests: 7 passed in 0.98s; this repository: 32 faults, unmoved True, deterministic True"
+  },
+  "G-S3-6": {
+   "pass": true,
+   "detail": "moved outside the declared transitions: 0; RED 23033 vs 23033; SWALLOWED 167 vs 167"
+  },
+  "G-S3-7": {
+   "pass": true,
+   "detail": "verdicts and checks are the instrument's; nothing reclassified"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": false,
+   "predicted": "\u2265 10% of hand-written NO_CHECK faults move to ABSORBED or FAIL_OPEN",
+   "observed": {
+    "no_check_runs_only": 284,
+    "moved": 5,
+    "rate": 0.018,
+    "to": {
+     "ABSORBED": 4,
+     "FAIL_OPEN": 1
+    }
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "\u2265 5 hand-written FAIL_OPEN faults in \u2265 3 repositories (from 3 in 2)",
+   "observed": {
+    "fail_open": 4,
+    "repos": [
+     "antiwork/gumroad",
+     "crewAIInc/crewAI",
+     "getsentry/sentry-docs"
+    ],
+    "fail_open_runs_only": 3,
+    "repos_runs_only": [
+     "antiwork/gumroad",
+     "crewAIInc/crewAI"
+    ]
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "getsentry/sentry-docs lint-external-links.yml \u203a check-pr \u203a 1 'Get changed files': FAIL_OPEN, lychee among the dropped",
+   "observed": {
+    "name": "Get changed files",
+    "verdict": "FAIL_OPEN",
+    "verdict_runs_only": "NO_CHECK",
+    "dropped": [
+     [
+      "lycheeverse/lychee-action",
+      "step-if"
+     ]
+    ]
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "primer/react recommend-integration-tests.yml \u203a recommend \u203a 2 'Get source files changes': not FAIL_OPEN",
+   "observed": {
+    "name": "Get source files changes",
+    "verdict": "NO_CHECK",
+    "verdict_runs_only": "NO_CHECK",
+    "action_checks_in_scope": 0
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "step-if is the single commonest mechanism among dropped action checks (strict plurality); vacuous = MISS",
+   "observed": {
+    "mechanisms": {
+     "job-if": 2,
+     "step-if": 1
+    },
+    "dropped_action_checks": 3
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "< 100 hand-written faults move (< 1.6% of the interpretable)",
+   "observed": {
+    "moved": 5,
+    "interpretable": 6341,
+    "rate": 0.0008,
+    "by_transition": {
+     "NO_CHECK->ABSORBED": 4,
+     "NO_CHECK->FAIL_OPEN": 1
+    }
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "\u2264 1 status-check (CodeQL / Sonar / zizmor) among the dropped action checks",
+   "observed": {
+    "status_drops": [],
+    "by_kind": {
+     "carried": 2,
+     "lint": 1
+    }
+   }
+  }
+ },
+ "hits": 4,
+ "of": 7,
+ "summary": {
+  "by_verdict_counted": {
+   "RED": 23033,
+   "SWALLOWED": 159,
+   "ABSORBED": 1375,
+   "NO_CHECK": 2632,
+   "FAIL_OPEN": 13
+  },
+  "by_verdict_counted_hand_written": {
+   "RED": 5838,
+   "SWALLOWED": 41,
+   "ABSORBED": 171,
+   "NO_CHECK": 279,
+   "FAIL_OPEN": 12
+  },
+  "repos_with_fail_open_counted_hand_written": 7,
+  "fail_open_counted_by_mechanism": {
+   "fewer": 8,
+   "unreached": 2,
+   "job-if": 6,
+   "step-if": 1
+  },
+  "repos": 100,
+  "repos_clone_failed": 4,
+  "repos_with_a_fault_site": 87,
+  "faults": 30645,
+  "by_verdict": {
+   "RED": 23033,
+   "BASELINE_RED": 2160,
+   "SWALLOWED": 167,
+   "ABSORBED": 1375,
+   "BASELINE_SKIPPED": 1273,
+   "NO_CHECK": 2632,
+   "FAIL_OPEN": 5
+  },
+  "hand_written_faults": 7916,
+  "by_verdict_hand_written": {
+   "RED": 5838,
+   "BASELINE_RED": 727,
+   "SWALLOWED": 49,
+   "ABSORBED": 171,
+   "BASELINE_SKIPPED": 848,
+   "NO_CHECK": 279,
+   "FAIL_OPEN": 4
+  },
+  "repos_with_fail_open": 4,
+  "repos_with_fail_open_hand_written": 3,
+  "fail_open_cross_step": 3,
+  "fail_open_in_step": 2,
+  "fail_open_by_mechanism": {
+   "unreached": 2,
+   "job-if": 6,
+   "step-if": 1
+  },
+  "verification_steps": 3191,
+  "verification_reached_in_plus": 2786,
+  "verification_not_executed": 83,
+  "artifact_failures_in_plus": {
+   "x": 2222,
+   "empty": 2342
+  },
+  "steps_run_in_plus": {
+   "x": 31935,
+   "empty": 31554
+  },
+  "faults_by_flavour_used": {
+   "x": 27138,
+   "empty": 74
+  },
+  "workflows": 2178,
+  "repos_capped": 0,
+  "executions": 94978,
+  "by_verdict_runs_only": {
+   "RED": 23033,
+   "BASELINE_RED": 2160,
+   "SWALLOWED": 167,
+   "ABSORBED": 1371,
+   "BASELINE_SKIPPED": 1273,
+   "NO_CHECK": 2637,
+   "FAIL_OPEN": 4
+  },
+  "by_verdict_runs_only_hand_written": {
+   "RED": 5838,
+   "BASELINE_RED": 727,
+   "SWALLOWED": 49,
+   "ABSORBED": 167,
+   "BASELINE_SKIPPED": 848,
+   "NO_CHECK": 284,
+   "FAIL_OPEN": 3
+  },
+  "moved": 5,
+  "moved_hand_written": 5,
+  "moved_by_transition": {
+   "NO_CHECK->ABSORBED": 4,
+   "NO_CHECK->FAIL_OPEN": 1
+  },
+  "moved_by_transition_hand_written": {
+   "NO_CHECK->ABSORBED": 4,
+   "NO_CHECK->FAIL_OPEN": 1
+  },
+  "moved_outside_declared_transitions": 0,
+  "repos_with_fail_open_runs_only_hand_written": 2,
+  "fail_open_actions_by_mechanism": {
+   "job-if": 2,
+   "step-if": 1
+  },
+  "fail_open_actions_by_kind": {
+   "carried": 2,
+   "lint": 1
+  },
+  "fail_open_actions_by_action": {
+   "nick-fields/retry": 2,
+   "lycheeverse/lychee-action": 1
+  },
+  "action_checks": 105,
+  "action_checks_reached_in_plus": 100,
+  "action_checks_unverified": 7,
+  "action_checks_by_kind": {
+   "lint": 37,
+   "security": 15,
+   "status": 29,
+   "test": 12,
+   "carried": 12
+  },
+  "step_classes": {
+   "not:checkout": 6575,
+   "not:setup": 3376,
+   "run": 33659,
+   "not:auth": 316,
+   "not:build": 146,
+   "not:publish": 69,
+   "not:cache": 1070,
+   "not:artifact": 8435,
+   "not:unreadable": 14627,
+   "not:sign": 21,
+   "local": 3121,
+   "not:fixer": 30,
+   "check:lint": 37,
+   "not:comment": 100,
+   "check:security": 15,
+   "not:coverage-upload": 37,
+   "check:status": 29,
+   "not:results-upload": 9,
+   "unlisted": 8,
+   "not:deploy": 55,
+   "not:pr": 69,
+   "not:notify": 38,
+   "not:utility": 152,
+   "not:housekeeping": 32,
+   "not:dispatch": 19,
+   "conditional-off": 58,
+   "not:metadata": 18,
+   "other": 4,
+   "not:report": 12,
+   "not:agent": 39,
+   "check:test": 12,
+   "check:carried": 12,
+   "not:push": 8,
+   "docker": 8
+  },
+  "reusable_workflow_jobs": 349,
+  "repos_with_an_action_check": 45
+ },
+ "hand_written": {
+  "faults": 7916,
+  "interpretable": 6341,
+  "moved": 5,
+  "by_verdict": {
+   "RED": 5838,
+   "SWALLOWED": 49,
+   "ABSORBED": 171,
+   "NO_CHECK": 279,
+   "FAIL_OPEN": 4
+  },
+  "by_verdict_runs_only": {
+   "RED": 5838,
+   "SWALLOWED": 49,
+   "ABSORBED": 167,
+   "NO_CHECK": 284,
+   "FAIL_OPEN": 3
+  },
+  "moved_by_transition": {
+   "NO_CHECK->ABSORBED": 4,
+   "NO_CHECK->FAIL_OPEN": 1
+  },
+  "moved_repos": [
+   "airbytehq/airbyte",
+   "browser-use/browser-use",
+   "getsentry/sentry-docs",
+   "tokens-studio/figma-plugin"
+  ],
+  "fail_open_faults": [
+   {
+    "repo": "crewAIInc/crewAI",
+    "workflow": "update-test-durations.yml",
+    "job": "update-durations",
+    "index": 4,
+    "name": "Run all tests and store durations",
+    "verdict_runs_only": "FAIL_OPEN",
+    "flavour": "x",
+    "dropped": [
+     [
+      "Run all tests and store durations",
+      "unreached",
+      null
+     ]
+    ],
+    "run_head": "PYTHON_VERSION_SAFE=$(echo \"${{ matrix.python-version }}\" | tr '.' '_')"
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "ci-green.yml",
+    "job": "report",
+    "index": 1,
+    "name": "Re-check migration versions against current main",
+    "verdict_runs_only": "FAIL_OPEN",
+    "flavour": "x",
+    "dropped": [
+     [
+      "Re-check migration versions against current main",
+      "unreached",
+      null
+     ]
+    ],
+    "run_head": "set -uo pipefail"
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "tests.yml",
+    "job": "run_scope",
+    "index": 0,
+    "name": null,
+    "verdict_runs_only": "FAIL_OPEN",
+    "flavour": "x",
+    "dropped": [
+     [
+      "Run tests",
+      "job-if",
+      null
+     ],
+     [
+      "Run tests",
+      "job-if",
+      null
+     ],
+     [
+      "nick-fields/retry",
+      "job-if",
+      "carried"
+     ],
+     [
+      "nick-fields/retry",
+      "job-if",
+      "carried"
+     ]
+    ],
+    "run_head": "if [ \"$GITHUB_EVENT_NAME\" = \"push\" ] && [ \"$GITHUB_REF\" = \"refs/heads/main\" ]; then"
+   },
+   {
+    "repo": "getsentry/sentry-docs",
+    "workflow": "lint-external-links.yml",
+    "job": "check-pr",
+    "index": 1,
+    "name": "Get changed files",
+    "verdict_runs_only": "NO_CHECK",
+    "flavour": "x",
+    "dropped": [
+     [
+      "lycheeverse/lychee-action",
+      "step-if",
+      "lint"
+     ]
+    ],
+    "run_head": "FILES=$(git diff --name-only --diff-filter=AMR origin/${{ github.base_ref }}...HEAD -- '*.md' '*.mdx' || true)"
+   }
+  ],
+  "drops_on_unverified_entries": []
+ },
+ "instrument_sha256": "0e723694d459ca2368799e3fc21a26d06e70fb89ad09bd2b0152466bf2a68f72",
+ "faults_sha256": "d26a407ca276d1b1c218fd32bc6bf853544fc394ce5ebc98b2b6ae4bd0fa3543",
+ "receipt_sha256": "e3c7c2d1f85e27e0da3853820ac1b27d169f81c470e405851760c3ad6c8278f0",
+ "swallow2_receipt_sha256": "2d6a0a4d5a04a651e8d27db931224e292a8e62454055aac804f4b334b4b671de",
+ "census_sha256": "e25a6f82355b93ee880fddb51649cdfea624fef2d88e3306a61ffcce22447f0a",
+ "receipt_file": "swallow3_receipt.json.gz",
+ "prereg_sha256_at_freeze": "1799321af3af10f27ca11267d1260940307cf21f8307efc21673fafac32836ff"
+}
