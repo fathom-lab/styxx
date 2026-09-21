@@ -92,6 +92,38 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-5: the structural repairs — the second stage of `styxx ci-audit --repair`
+
+SWALLOW-4 left 14 hand-written checks a strict shell could not make loud, and read why: the
+script's own logic decides the exit status. `benchmarks/harness_mutation/repair_structural.py`
+states two edits to that logic and tries them on exactly that residue, verified on the same two
+halves — the same fault RED on the repaired workflow, a healthy run unchanged in both flavours:
+**`guard-status`**, a single-line `if CMD; then` rewritten as an explicit status capture in which
+a status above 1 fails the step (`__rc=0; CMD || __rc=$?` keeps CMD exempt from errexit, as the
+condition was; status 1 stays grep's "no"); and **`no-default`**, every `|| echo …` fallback
+removed and the shell made strict, so the query's failure reaches `set -e`. `test -n` on an
+answer is not tried, and the preregistration says why: the instrument's `empty` flavour is a
+healthy run in which every answer is empty, so that repair can never pass the twin condition.
+
+**VALID, 9/12** (`RESULT_swallow5_the_structural_repairs_2026_09_21.md`; prereg frozen at
+`9bb6f856…`; two runs — the first run's `no-default` cut a fallback mid-string on `nodetool`, a
+defect fixed with a regression test, the run repeated, both scores stated: 8/12 then 9/12, one
+target and one prediction moved). **7 of the 14 have a verified structural repair**, five by the
+guard (`hmis`, `roslyn`, `aspire`'s three `jq -e` runsheet checks — read as loops in SWALLOW-4,
+which was the reading's miss) and two by the default removed (`langfuse`'s continuation-line
+`|| echo`, `nodetool`'s per-package one). The seven that remain: three verifiers that warn by
+design (`selfxyz` ×2, `gh-aw`), one reporter (`aspire`'s flaky-test iterations), one fail-closed
+by design (`gumroad`'s `ci-green`), and three — `selfxyz`, `mlflow`, `serviceradar` — that are one
+shape, a query whose empty answer is indistinguishable from a legitimate "nothing", whose repair
+is the `test -n` this instrument cannot verify. The twin condition rejected two generated
+candidates for the right reason: `dotnet/maui`'s `test -f FILE && echo ok || echo missing`, whose
+`|| echo` is the else of a test, not a tool's default.
+
+**`styxx ci-audit --repair` has two stages**: SWALLOW-4's repairs, then for what they leave
+unverified the structural ones; the card prints the verified diff, or which half failed, or that
+no repair among the five applies. `styxx/ciaudit/repair_structural.py` is the living copy;
+`tests/test_ciaudit.py` pins four instruments and holds each shipped copy to its frozen one.
+
 ## [Unreleased] — SWALLOW-4: the repair is loud — `styxx ci-audit --repair`
 
 Three cycles read what a workflow does when one step's tools fail. This one asks the question a

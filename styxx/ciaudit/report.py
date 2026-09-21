@@ -110,7 +110,7 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
             else:
                 tried = [c for c in t["candidates"] if c.get("applies")]
                 if not tried:
-                    why = "neither repair applies: " + "; ".join(sorted({c.get("why", "") for c in t["candidates"] if c.get("why")}))[: width - 40]
+                    why = "no repair applies: " + "; ".join(sorted({c.get("why", "") for c in t["candidates"] if c.get("why")}))[: width + 40]
                 else:
                     rej = next((c for c in tried if c.get("unchanged") is False), None)
                     if rej is not None:

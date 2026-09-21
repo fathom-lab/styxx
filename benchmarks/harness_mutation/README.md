@@ -122,3 +122,25 @@ control flow, which a strict shell does not reach. `repair.py` is frozen at the 
 receipt names (`7b9a1695…`); the living copy is `styxx/ciaudit/repair.py`, behind
 `styxx ci-audit --repair`, and `tests/test_ciaudit.py` holds the two to identical outcomes.
 
+## The structural repairs (SWALLOW-5)
+
+For the checks a strict shell cannot make loud, `repair_structural.py` tries two edits to the
+script's logic, on the residue SWALLOW-4 leaves: `guard-status` (a single-line `if CMD; then`
+becomes an explicit status capture in which a status above 1 fails the step, CMD kept exempt from
+errexit) and `no-default` (every `|| echo …` fallback removed, then the strict shell), verified on
+the same two halves. `test -n` on an answer is not tried, and the module says why: the
+instrument's `empty` flavour is a healthy run in which every answer is empty.
+
+```
+python -m benchmarks.harness_mutation.repair_structural --tree .
+python -m benchmarks.harness_mutation.repair_structural --receipt papers/harness/swallow4_receipt.json.gz --clones <clones> --out receipt.json
+python papers/harness/swallow5_score.py
+```
+
+`papers/harness/RESULT_swallow5_the_structural_repairs_2026_09_21.md` (VALID, 9/12; two runs, the
+revision stated): 7 of the 14 hand-written checks SWALLOW-4 could not make loud have a verified
+structural repair, five of them the guard; the remainder is three warn-by-design verifiers, one
+reporter, one fail-closed by design, and three that need the one edit this instrument cannot
+verify. `repair_structural.py` is frozen at the sha256 that receipt names (`77067a71…`); the living
+copy is `styxx/ciaudit/repair_structural.py`, the second stage of `styxx ci-audit --repair`.
+
