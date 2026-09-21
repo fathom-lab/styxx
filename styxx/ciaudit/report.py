@@ -29,6 +29,23 @@ def _where(f: dict) -> str:
     return f"{f['workflow']} › {f['job']} › {name}"
 
 
+def _since_line(h: dict) -> str:
+    """One line of history for a finding: since when, by whose hand, and whether the commit said why."""
+    import datetime as dt
+    if not h.get("placed"):
+        return f"history: not placed — {h.get('why', '')}"
+    day = dt.datetime.fromtimestamp(h["since"], dt.timezone.utc).strftime("%Y-%m-%d")
+    age = f", {int(h['age_days'])} days" if h.get("age_days") is not None else ""
+    sha = (h.get("sha") or "")[:7]
+    if h.get("born_hidden"):
+        how = "born hidden" + (" at the clone's oldest commit (may be older)" if h.get("at_boundary") else "")
+    else:
+        how = "acquired: " + ", ".join(h.get("mechanism") or []) + (f' — "{h["subject"][:60]}"' if h.get("subject") else "")
+    ack = f" [the commit says: {h['acknowledged']}]" if h.get("acknowledged") else ""
+    rep = f" (made loud {h['repaired_before']}× before)" if h.get("repaired_before") else ""
+    return f"hidden since {day} ({sha}{age}): {how}{ack}{rep}"
+
+
 def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
     key = "verdict_counted" if counted else "verdict"
     s = rec.get("summary") or {}
@@ -69,6 +86,7 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
         lines.append("  CAPPED: the deadline passed before every workflow was read; the numbers above are partial")
 
     findings = [f for f in faults if (f.get(key) or f["verdict"]) in ("FAIL_OPEN", "SWALLOWED")]
+    hist = {(h["workflow"], h["job"], h["index"]): h for h in (rec.get("history") or {}).get("findings", [])}
     lines.append("")
     if not findings:
         lines.append("nothing hidden, nothing dropped." if by.get("RED") else "nothing hidden, nothing dropped — and nothing read: see the counts above.")
@@ -94,6 +112,23 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
                 lines.append(f"             drops {d['job']} › {what}{act}: {mech}{runs}")
             if f.get("run_head"):
                 lines.append(f"             {f['run_head'][:width - 13]}")
+            h = hist.get((f["workflow"], f["job"], f["index"]))
+            if h is not None:
+                lines.append("             " + _since_line(h)[: width + 60])
+    if rec.get("history") is not None:
+        hm = rec["history"]
+        note = []
+        if hm.get("error"):
+            note.append(hm["error"])
+        if hm.get("shallow") and any(h.get("at_boundary") for h in hm.get("findings", [])):
+            since = (rec.get("history_clone") or {}).get("since")
+            note.append(f"history fetched since {since}; a step hidden at that boundary may be older" if since
+                        else "the clone is shallow: a step hidden at its oldest commit may be older")
+        if hm.get("capped"):
+            note.append("the deadline passed before every workflow's history was read")
+        lines.append("")
+        lines.append(f"history: {hm.get('revisions_read', 0)} workflow revisions read on the mainline (first-parent from HEAD)"
+                     + (f"; {'; '.join(note)}" if note else ""))
     if rec.get("repairs") is not None:
         lines.append("")
         lines.append("repairs (verified: RED under the same fault, and a healthy run unchanged in both flavours):")

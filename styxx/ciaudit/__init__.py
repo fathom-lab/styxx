@@ -7,6 +7,7 @@
     styxx ci-audit . --counted             # the counted reading of a dropped check (see engine)
     styxx ci-audit . --no-actions          # SWALLOW-2's reading: checks are `run:` steps only
     styxx ci-audit . --repair              # for every finding, a verified repair of the workflow text, or why there is none
+    styxx ci-audit . --history             # for every finding, the commit it has been hidden since: born hidden, or acquired, and by what
 
 A green CI light means every job exited 0. It does not mean every check ran, or that every
 check could have failed. This command asks the question the light does not answer: for each
@@ -39,6 +40,15 @@ failed, and what the original line was protecting (SWALLOW-4). For a finding tho
 unverified, two edits to the script's logic are tried next (`repair_structural.py`: a guard whose
 failing tool is not its green path; a query without its `|| echo` default), verified the same way
 (SWALLOW-5).
+
+`--history` asks since when. Every revision of the workflow on the checkout's own mainline
+(first-parent from HEAD) is read with the same engine and the finding's step is followed as a
+lineage -- the same job and step name -- back to the commit that created it. The card says whether
+the step was born hidden (the `|| true` was written with it) or acquired its hiding later, in which
+commit, by which mechanism (`continue-on-error`, `|| true`, `set +e`, a `|| echo` default, gating,
+a rewrite, or a change elsewhere), and whether that commit's message says why in one of a stated
+list of words (`history.py`, SWALLOW-6). For `owner/repo` the clone is deepened to the GitHub
+Actions YAML era (2019-08) first, blob-less.
 
 What it does not say: a step that is loud is not thereby correct; an action check cannot be seen
 to fail (no fault is injected into one); a local action, a reusable workflow and `github-script`
@@ -77,8 +87,8 @@ def _require_yaml() -> None:
         raise ImportError("styxx ci-audit needs PyYAML: pip install 'styxx[ciaudit]'") from e
 
 
-def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, work: Optional[str] = None,
-          deadline_seconds: Optional[float] = None) -> dict:
+def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, history: bool = False,
+          work: Optional[str] = None, deadline_seconds: Optional[float] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
     with its verdict, every dropped check with its mechanism, and a summary. `actions=False` is
@@ -114,6 +124,11 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
         from .repair_structural import REPAIRS as STRUCTURAL
         rec["repairs"] = repair_faults(tree, rec["faults"])
         rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL)
+    if history:
+        from .history import deepen, since
+        if cloned is not None:
+            rec["history_clone"] = deepen(tree)
+        rec["history"] = since(tree, rec["faults"], deadline=(t0 + deadline_seconds) if deadline_seconds else None)
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
@@ -198,12 +213,13 @@ def main(argv=None) -> int:
     ap.add_argument("--counted", action="store_true", help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
     ap.add_argument("--no-actions", action="store_true", help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
     ap.add_argument("--repair", action="store_true", help="for every finding, try the two stated repairs of the workflow text and verify each: loud under the same fault, healthy run unchanged")
+    ap.add_argument("--history", action="store_true", help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history")
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
     a = ap.parse_args(argv)
     try:
-        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, work=a.work, deadline_seconds=a.deadline)
+        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, work=a.work, deadline_seconds=a.deadline)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
