@@ -115,6 +115,7 @@ jobs:
               "styxx/ciaudit/repair.py",
               "styxx/ciaudit/repair_structural.py",
               "styxx/ciaudit/history.py",
+              "styxx/ciaudit/differential.py",
           ]
           missing = [m for m in required if m not in names]
           if missing:
