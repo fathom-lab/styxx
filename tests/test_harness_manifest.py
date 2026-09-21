@@ -15,6 +15,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from benchmarks.harness_mutation import manifest as mf
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -25,14 +27,39 @@ def test_the_manifest_is_committed():
     assert MANIFEST.exists(), f"tests/harness_manifest.json is missing; run: {mf.REGENERATE}"
 
 
-def test_the_harness_matches_the_committed_manifest():
-    current = mf.build(ROOT)
-    committed = json.loads(MANIFEST.read_text(encoding="utf-8"))
+def test_the_harness_matches_the_committed_manifest(root=ROOT, manifest=MANIFEST):
+    """The guard. `root` and `manifest` default to this tree and this manifest; the control below
+    calls it on a fixture to prove it can go red."""
+    current = mf.build(root)
+    committed = json.loads(manifest.read_text(encoding="utf-8"))
     lines = mf.drift(current, committed)
     assert not lines, (
         "the checking harness differs from tests/harness_manifest.json -- a workflow, job, step, "
-        "guard, trigger or npm script was added, removed or renamed:\n  " + "\n  ".join(lines)
+        "guard, trigger, npm script or guard test was added, removed or renamed:\n  " + "\n  ".join(lines)
         + f"\nIf the change is intended, run: {mf.REGENERATE}")
+
+
+def test_the_manifest_guard_rejects_a_tree_missing_a_job(tmp_path):
+    """Control (MUTE-3). A guard that cannot go red is not a guard: build a copy of the harness,
+    pin it, delete one job from the copy, and require the guard above to refuse it. If the guard's
+    asserts are ever hollowed to `assert True`, this is the test that notices."""
+    import shutil
+    import yaml
+    fixture = tmp_path / "tree"
+    shutil.copytree(ROOT / ".github" / "workflows", fixture / ".github" / "workflows")
+    (fixture / "tests").mkdir()
+    for g in mf.GUARDS:
+        if (ROOT / g).exists():
+            shutil.copy(ROOT / g, fixture / g)
+    pinned = fixture / "tests" / "harness_manifest.json"
+    pinned.write_text(mf.dumps(mf.build(fixture)), encoding="utf-8")
+    test_the_harness_matches_the_committed_manifest(fixture, pinned)          # a faithful copy passes
+    wf = fixture / ".github" / "workflows" / "test.yml"
+    doc = yaml.safe_load(wf.read_text(encoding="utf-8"))
+    del doc["jobs"]["test"]
+    wf.write_text(yaml.safe_dump(doc, sort_keys=False), encoding="utf-8")
+    with pytest.raises(AssertionError):
+        test_the_harness_matches_the_committed_manifest(fixture, pinned)      # a copy missing a job is refused
 
 
 def test_the_manifest_is_not_hollow():
