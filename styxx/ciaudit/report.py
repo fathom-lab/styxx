@@ -46,6 +46,48 @@ def _since_line(h: dict) -> str:
     return f"hidden since {day} ({sha}{age}): {how}{ack}{rep}"
 
 
+def _differential_section(d: dict, width: int) -> list[str]:
+    """What this HEAD hides that its base did not, what it made loud or removed, and what it left as it was."""
+    out = []
+    if d.get("error"):
+        out.append(f"since {d.get('base_ref')}: could not read the base — {d['error']}")
+        return out
+    head = f"since {d.get('base_ref')} (merge-base {(d.get('merge_base') or '')[:8]}): "
+    wfs = d.get("workflows", [])
+    if not wfs:
+        out.append(head + "no workflow changed; the gate has nothing to read.")
+        return out
+    n, r, still, unread = d.get("new_hidden", 0), d.get("removed_hidden", 0), d.get("still_hidden", 0), d.get("hidden_after_unread", 0)
+    out.append(head + f"{len(wfs)} workflow{'s' if len(wfs) != 1 else ''} changed · "
+               + (f"{n} check{'s' if n != 1 else ''} newly hidden — THE GATE FIRES" if n else "nothing newly hidden")
+               + (f" · {r} hidden check{'s' if r != 1 else ''} made loud or removed" if r else "")
+               + (f" · {still} hidden on both sides (not this change's doing)" if still else "")
+               + (f" · {unread} hidden here, unreadable at the base" if unread else ""))
+    for w in wfs:
+        for x in w.get("new_hidden", []):
+            what = x.get("name") or "step " + str(x["index"])
+            how = x["kind"] + (": " + ", ".join(x["mechanism"]) if x.get("mechanism") else "")
+            out.append(f"  {x['verdict']:<10} {w['workflow']} › {x['job']} › {what}   [{how}]")
+            if x.get("run_head"):
+                out.append(f"             {x['run_head'][:width - 13]}")
+            fx = x.get("fix") or {}
+            if fx.get("verified_repair"):
+                out.append(f"             repair: {fx['verified_repair']}, {fx['lines_changed']} line{'s' if fx['lines_changed'] != 1 else ''} (verified: loud under the same fault, healthy run unchanged)")
+                for dl in (fx.get("diff") or "").splitlines():
+                    if (dl.startswith("+") or dl.startswith("-")) and not dl.startswith(("+++", "---")):
+                        out.append("                 " + dl[: width + 60])
+            elif fx:
+                out.append(f"             no verified repair: {(fx.get('why_not') or '')[: width + 40]}")
+        for x in w.get("removed_hidden", []):
+            what = x.get("name") or "step " + str(x["index"])
+            out.append(f"  {'loud' if x['kind'] == 'repaired' else 'gone':<10} {w['workflow']} › {x['job']} › {what}   [{x['kind']}"
+                       + (": " + ", ".join(x["mechanism"]) if x.get("mechanism") else "") + "]")
+        for x in w.get("hidden_after_unread", []):
+            what = x.get("name") or "step " + str(x["index"])
+            out.append(f"  {x['verdict']:<10} {w['workflow']} › {x['job']} › {what}   [hidden here; the base could not be read: {x.get('verdict_before')}]")
+    return out
+
+
 def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
     key = "verdict_counted" if counted else "verdict"
     s = rec.get("summary") or {}
@@ -129,6 +171,9 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
         lines.append("")
         lines.append(f"history: {hm.get('revisions_read', 0)} workflow revisions read on the mainline (first-parent from HEAD)"
                      + (f"; {'; '.join(note)}" if note else ""))
+    if rec.get("differential") is not None:
+        lines.append("")
+        lines.extend(_differential_section(rec["differential"], width))
     if rec.get("repairs") is not None:
         lines.append("")
         lines.append("repairs (verified: RED under the same fault, and a healthy run unchanged in both flavours):")
