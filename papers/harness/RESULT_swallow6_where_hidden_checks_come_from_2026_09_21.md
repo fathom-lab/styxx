@@ -1,34 +1,36 @@
-# RESULT — SWALLOW-6: where hidden checks come from — 40 of the 53 were written hidden; of 142 that were ever hidden, 5 are loud today; a hidden check is a median 155 days old and the oldest is four and a half years; when an author does make one loud, the edit is the instrument's 12 times in 14
+# RESULT — SWALLOW-6: where hidden checks come from — 40 of the 53 were written hidden; of 148 that were ever hidden, 5 are loud today; a hidden check is a median 155 days old and the oldest is four and a half years; when an author does make one loud, the edit is the instrument's 13 times in 15
 
 Fathom Lab · 2026-09-21 · Scores the receipt `swallow6_receipt.json.gz` against the
 preregistration frozen at sha256 `d19eff1fc5a018b68d1d5d46984f67f3731b437fefb3f616d638043e94233725`.
-Not amended. Three runs: the instrument was amended twice after the freeze, once for memory and
-once for a bookkeeping defect the second run's own gate exposed; §1 states each change, what it
-moved, and that the predictions and the scorer's tests did not move.
+Amended once, in §1 and in the numbers it moved, after SWALLOW-7's gate exposed a defect in this
+instrument. Five runs: the instrument was amended twice before run 3 (memory; a bookkeeping
+defect its own gate exposed) and twice after it (a renamed workflow's earlier revisions were read
+as absent; then the same for a repair's revision before); §1 states each change, what it moved,
+and that the predictions and the scorer's tests did not move.
 
-Receipt: `papers/harness/swallow6_receipt.json.gz` (sha256 of the JSON `acc592cb…`, recorded by the
+Receipt: `papers/harness/swallow6_receipt.json.gz` (sha256 of the JSON `6fc5f0f8…`, recorded by the
 scorer; every lineage's birth, events, renames and death are in it) · instrument
-`benchmarks/harness_mutation/history.py`, sha256 `4b961880…` (the prereg names `d92b1b32…`; §1),
+`benchmarks/harness_mutation/history.py`, sha256 `93efb4a9…` (the prereg names `d92b1b32…`; §1),
 on top of `repair.py` (`7b9a1695…`), `repair_structural.py` (`77067a71…`), `action_checks.py`
 (`0e723694…`) and `faults.py` (`d26a407c…`), none changed · population: the 100 repositories of
 the SWALLOW-3 receipt (`609e6645…`) at their pinned HEADs, 96 cloned with history to 2019-08-01,
-4 no longer public · 27,624 mainline commits touching `.github/workflows`, 35,071 workflow
-revisions read, 14,199 lineages followed through 2,819 hand-written workflow paths (alive at HEAD
-or removed along the way) · 1,629 s on two workers · scored by `swallow6_score.py`.
+4 no longer public · 27,624 mainline commits touching `.github/workflows`, 36,934 workflow
+revisions read, 14,630 lineages followed through 2,819 hand-written workflow paths (alive at HEAD
+or removed along the way) · 1,575 s on two workers · scored by `swallow6_score.py`.
 
 **VALID. 5 of 7 predictions HIT** (P1, P3, P5, P6, P7); P2 and P4 MISS. Of the **53 hidden
 checks alive at HEAD**, **40 were hidden at birth and have never been loud** (P1: 75%); 3 were
 loud once and hidden later, each by a `continue-on-error: true`; 10 are one commit in
-`dotnet/maui` that rewrote ten non-checks into ten hidden checks. Of the **142 lineages that were
-ever hidden**, **5 are alive and loud today** (P3: 3.5%); 64 died hidden — 55 of them born
+`dotnet/maui` that rewrote ten non-checks into ten hidden checks. Of the **148 lineages that were
+ever hidden**, **5 are alive and loud today** (P3: 3.4%); 68 died hidden — 59 of them born
 hidden — and 53 are alive hidden. The median hidden check is **155 days** old (P4 predicted 180:
 MISS; 26 of 53 are older than 180 days, 12 older than a year, the oldest — `mlflow`'s database
-tests — 1,630 days and 291 revisions of `master.yml`). Sixteen commits hid a loud check; 12 of
-them by `continue-on-error` or `|| true` (P5: 75%); **4 of the 16 say why** in the stated words
-(P2 predicted half: MISS — "tweak github actions" hid four at once). Fourteen commits made a
+tests — 1,630 days and 291 revisions of `master.yml`). Seventeen commits hid a loud check; 13 of
+them by `continue-on-error` or `|| true` (P5: 76%); **5 of the 17 say why** in the stated words
+(P2 predicted half: MISS — "tweak github actions" hid four at once). Fifteen commits made a
 hidden check loud; on the revision before each, SWALLOW-4 or SWALLOW-5 proposes a verified repair
-13 times, and **12 times it is the edit the author made** (P6: 86%). Hiding outnumbers repairing,
-16 to 14 (P7, by two).
+14 times, and **13 times it is the edit the author made** (P6: 87%). Hiding outnumbers repairing,
+17 to 15 (P7, by two).
 
 ## 0. What was done
 
@@ -59,7 +61,7 @@ batch per repository; the 19 lineages born at that boundary are marked left-cens
 | G-S6-4 frozen underneath | the instrument and everything under it at the named hashes | pass at the amended hash (below); `repair.py`, `repair_structural.py`, `action_checks.py`, `faults.py` and the SWALLOW-3 receipt file unchanged |
 | G-S6-5 ledger | P1–P7 scored | pass |
 
-**Deviation 1 — the instrument was amended twice after the freeze; the prereg text was not.**
+**Deviation 1 — the instrument was amended four times after the freeze; the prereg text was not.**
 The preregistration names `history.py` at `d92b1b32…`. **Run 1** (that file) was stopped after 6
 repositories: the worker on `githubnext/gh-aw` reached 5.5 GB, because the texts of every
 generated `*.lock.yml` revision were fetched though never read. Amended (`6986d59f…`): one
@@ -77,8 +79,23 @@ before; **4 lineages were counted alive-hidden that are uninterpretable at HEAD*
 this. **Run 3** (that file, this receipt) is VALID with G-S6-3 at 6,380 of 6,381. **The
 amendment moved one prediction**: run 2 scored 6/7 with P4 HIT at a median of 184.3 days on 57
 lineages; run 3 scores 5/7 with P4 MISS at 155.4 days on 53. Both are stated; the second is the
-one that reads the checks as they are. The scorer's tests, the predictions and their bars did not
-change between runs; the scorer's pinned instrument hash did, and says so in a comment.
+one that reads the checks as they are. **Runs 4 and 5** came after this RESULT was first written:
+SWALLOW-7's gate, run at every commit, reproduced run 3's arrivals in `hidden` except at two
+commits that were both renames of a workflow, and reading them showed the defect — a renamed
+workflow's revisions before the rename were fetched at its later path, read as absent, and its
+lineages were born at the rename (`gh-aw`'s `test-integration-agentics.yml`: 5 revisions, 1
+read). Amended (`941c5e33…`): each revision is read at the path it had then; run 4 read 1,863
+more revisions and found 423 more lineages, 6 more ever-hidden lineages (`airbyte`'s three
+`Get Connector Language`, `sentry`'s `Commit any eslint fixed files`, `genaiscript`'s `run
+summarize` twice over), one more acquisition and one more repair — both `microsoft/genaiscript`'s
+`openai.yml`, hidden by "ignore github models error in github actions" (`ignor`) and made loud
+three days later by "add openai smoke tests" — and left the 53 alive-hidden checks, their ages,
+and every HIT and MISS where they were. That repair's revision before was still looked up at the
+later path, so its agreement was unread; amended again (`93efb4a9…`): the agreement reads the
+revision before at its path then; **run 5** (this receipt) reads it as the instrument's own edit,
+13 of 15. The scripted history gained a workflow that is added, renamed, repaired under its new
+name and removed, to hold both. The scorer's tests, the predictions and their bars did not change
+between runs; the scorer's pinned instrument hash did, and says so in a comment.
 
 **Deviation 2 — the acknowledgement list has a false positive.** `flak` matches `flake8`. One
 repair (`AutoGPT`'s `Lint with flake8`, "fix-flake8-issues") is counted acknowledged by it; no
@@ -93,12 +110,12 @@ checks aged 24, 555 and 33 days. They are in the population and in every count.
 | | predicted | observed | |
 |---|---|---|---|
 | P1 born hidden | ≥ 60% of the hidden checks alive at HEAD hidden at birth, never loud | **40 of 53, 75.5%**; 3 acquired; 10 became checks already hidden (`maui`, one commit) | HIT |
-| P2 acknowledged | ≥ 50% of acquisitions say why in the stated words | **4 of 16, 25%** (`unblock`, `non-blocking`, `skip`, `broken`) | MISS |
-| P3 repair is rare | ≤ 25% of ever-hidden lineages alive, loud and repaired at HEAD | **5 of 142, 3.5%** | HIT |
+| P2 acknowledged | ≥ 50% of acquisitions say why in the stated words | **5 of 17, 29%** (`unblock`, `non-blocking`, `skip`, `broken`, `ignor`) | MISS |
+| P3 repair is rare | ≤ 25% of ever-hidden lineages alive, loud and repaired at HEAD | **5 of 148, 3.4%** | HIT |
 | P4 not transient | median age of the 53 ≥ 180 days | **155.4 days** (quartiles 61 / 155 / 364; 26 over 180, 12 over 365) | MISS |
-| P5 the two lines | continue-on-error + `\|\| true` the primary mechanism of ≥ 50% of acquisitions | **12 of 16, 75%** (11 `continue-on-error`, 1 `\|\| true`, 4 rewrites — one commit) | HIT |
-| P6 the instrument's edit | ≥ 40% of readable wild repairs agree with the verified candidate | **12 of 14, 85.7%**; 13 have a verified candidate | HIT |
-| P7 hiding outnumbers repairing | acquisitions > repairs | **16 > 14** | HIT |
+| P5 the two lines | continue-on-error + `\|\| true` the primary mechanism of ≥ 50% of acquisitions | **13 of 17, 76%** (12 `continue-on-error`, 1 `\|\| true`, 4 rewrites — one commit) | HIT |
+| P6 the instrument's edit | ≥ 40% of readable wild repairs agree with the verified candidate | **13 of 15, 86.7%**; 14 have a verified candidate | HIT |
+| P7 hiding outnumbers repairing | acquisitions > repairs | **17 > 15** | HIT |
 
 ## 3. The natural history, read
 
@@ -133,20 +150,21 @@ only)" (470), `vscode`'s four (444), `crewAI` (373), `gh-aw`'s `Verify no compil
 205. P4's bar was 180 and the median is below it; the reading is that a hidden check is not
 transient and not ancient: half are older than five months, a quarter older than a year.
 
-**Sixteen acquisitions, four acknowledged.** Eleven by `continue-on-error`, one by `|| true` (with
-a `set +e`), four by a rewrite — `oven-sh/bun`'s "tweak github actions (#6195)" rewrote the node
-test runner step in four workflows at once. The four the list finds: `cal.com` "Allow lint to
-error but continue (**unblock** pipeline)", `promptfoo` "make staging redteam test
-**non-blocking**", `mochi` ("ci: **skip** Maven publish gracefully", in the body), `neondatabase`
-(`broken`, in the body). Read after the fact and not scored: `FastLED`'s "allow build even if failure on other
+**Seventeen acquisitions, five acknowledged.** Twelve by `continue-on-error`, one by `|| true`
+(with a `set +e`), four by a rewrite — `oven-sh/bun`'s "tweak github actions (#6195)" rewrote the
+node test runner step in four workflows at once. The five the list finds: `cal.com` "Allow lint
+to error but continue (**unblock** pipeline)", `promptfoo` "make staging redteam test
+**non-blocking**", `genaiscript` "**ignore** github models error in github actions", `mochi`
+("ci: **skip** Maven publish gracefully", in the body), `neondatabase` (`broken`, in the body). Read after the fact and not scored: `FastLED`'s "allow build even if failure on other
 platforms" and `gh-aw`'s "advisory" say why in words the list does not have; `cal.com`'s
 "revert: fix: lint" is a revert; "tweak github actions", "Linting (#2083)", two `codex/…` merges
 and "run mac UI tests only in cmux-vm" do not say. The list found a quarter; a reader finds
 about half. P2 is a MISS on the list as frozen.
 
-**Fourteen repairs, twelve the instrument's.** Eleven removed a `continue-on-error`
-(`no-continue-on-error` verifies each), one removed a `|| true` (`bun`'s "Maybe fix test
-workflow": `strict-shell` verifies it), two do not agree: `novu`'s `Start WS` was rewritten (no
+**Fifteen repairs, thirteen the instrument's.** Twelve removed a `continue-on-error`
+(`no-continue-on-error` verifies each; `genaiscript`'s came three days after the hiding), one
+removed a `|| true` (`bun`'s "Maybe fix test workflow": `strict-shell` verifies it), two do not
+agree: `novu`'s `Start WS` was rewritten (no
 candidate verifies on the revision before) and `manaflow-ai/cmux`'s `Run UI tests` had its
 `|| true` removed by the author while on the revision before the instrument's first stage
 verifies nothing and its second verifies the guard, so the instrument's edit and the author's
@@ -156,12 +174,12 @@ lint to error but continue (unblock pipeline)"), loud 2025-03-23 ("fix: lint (#2
 again the next day ("revert: fix: lint"), loud 2026-01-21 ("fix: make linting required for CI").
 Four events, two repairs, and the instrument's edit each time.
 
-**Sixty-four died hidden** — 29 with the step, 35 with the whole workflow — and 55 of them were
+**Sixty-eight died hidden** — 33 with the step, 35 with the whole workflow — and 59 of them were
 born hidden and removed without ever being loud: `mlflow`'s `Database tests - run` (born hidden, removed
 2022-04-05 by "Separate database tests" — the same commit that created the one alive today, 1,630
 days old), `vscode`'s `Run Smoke Tests (Electron)` ("Remove Build jobs for now", 2020), `airbyte`'s
 `Run lint check (info only)` (removed and reborn hidden in the same "merge all summary status
-checks" commit). Death is the common end of a hidden check; repair is the rare one: 64 to 5.
+checks" commit). Death is the common end of a hidden check; repair is the rare one: 68 to 5.
 
 ## 4. What this does not say
 
@@ -184,7 +202,7 @@ checkout's own mainline — `hidden since 2025-03-14 (1a11430, 556 days): born h
 non-blocking]` — with the number of revisions read, whether the clone is shallow at that
 boundary, and whether the deadline capped the walk. For `owner/repo` the sparse clone is deepened
 to 2019-08-01 first, blob-less, one batch. `styxx/ciaudit/history.py` is the living copy;
-`tests/test_ciaudit.py` pins the frozen instrument at `4b961880…` and holds the living copy to it
+`tests/test_ciaudit.py` pins the frozen instrument at `93efb4a9…` and holds the living copy to it
 on the scripted history.
 
 ## 6. Next

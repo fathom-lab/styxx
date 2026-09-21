@@ -16,8 +16,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 PREREG = HERE / "PREREG_swallow6_where_hidden_checks_come_from_2026_09_21.md"
 PREREG_SHA256_FROZEN = "d19eff1fc5a018b68d1d5d46984f67f3731b437fefb3f616d638043e94233725"
-# amended after the freeze (stated in the RESULT): the prereg names d92b1b32…; the run is at the sha below (run 3): one workflow's texts fetched at a time, and the reading at the latest revision kept as it is beside the last interpretable one
-INSTRUMENT_SHA256_FROZEN = "4b961880c88c6f288b1df694df3cc8225f269cc70169cc83a8dcd18b8295c3d7"
+# amended after the freeze (stated in the RESULT): the prereg names d92b1b32…; the run is at the sha below (run 5): one workflow's texts fetched at a time, the reading at the latest revision kept beside the last interpretable one, and a renamed workflow's earlier revisions (and a repair's revision before) read at the path they had then
+INSTRUMENT_SHA256_FROZEN = "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c"
 FAULTS_SHA256_FROZEN = "d26a407ca276d1b1c218fd32bc6bf853544fc394ce5ebc98b2b6ae4bd0fa3543"
 ACTIONS_SHA256_FROZEN = "0e723694d459ca2368799e3fc21a26d06e70fb89ad09bd2b0152466bf2a68f72"
 REPAIR_SHA256_FROZEN = "7b9a1695d316c2ce109495cf60c5a9a1de03bac204e9bf48fdbc2a1ac66012b9"

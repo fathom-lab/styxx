@@ -3,7 +3,7 @@
  "gates": {
   "G-S6-1": {
    "pass": true,
-   "detail": "4 passed in 3.17s"
+   "detail": "4 passed in 3.73s"
   },
   "G-S6-2": {
    "pass": true,
@@ -33,7 +33,7 @@
   },
   "G-S6-4": {
    "pass": true,
-   "detail": "history 4b961880c88c6f28\u2026, faults d26a407ca276d1b1\u2026, action_checks 0e723694d459ca23\u2026, repair 7b9a1695d316c2ce\u2026, structural 77067a71fa41e480\u2026, source 609e664549df085b\u2026 (file 609e664549df085b\u2026)"
+   "detail": "history 93efb4a947a18e61\u2026, faults d26a407ca276d1b1\u2026, action_checks 0e723694d459ca23\u2026, repair 7b9a1695d316c2ce\u2026, structural 77067a71fa41e480\u2026, source 609e664549df085b\u2026 (file 609e664549df085b\u2026)"
   }
  },
  "predictions": {
@@ -52,12 +52,13 @@
    "hit": false,
    "predicted": "\u2265 50% of acquisitions acknowledged in the commit message",
    "observed": {
-    "acquisitions": 16,
-    "acknowledged": 4,
-    "pct": 25.0,
+    "acquisitions": 17,
+    "acknowledged": 5,
+    "pct": 29.4,
     "words": {
      "skip": 1,
      "unblock": 1,
+     "ignor": 1,
      "broken": 1,
      "non-blocking": 1
     }
@@ -67,11 +68,11 @@
    "hit": true,
    "predicted": "\u2264 25% of ever-hidden lineages are alive, loud and repaired at HEAD",
    "observed": {
-    "ever_hidden": 142,
+    "ever_hidden": 148,
     "repaired_and_loud": 5,
-    "pct": 3.5,
+    "pct": 3.4,
     "alive_hidden": 53,
-    "died_hidden": 64
+    "died_hidden": 68
    }
   },
   "P4": {
@@ -93,11 +94,11 @@
    "hit": true,
    "predicted": "continue-on-error + or-true are the primary mechanism of \u2265 50% of acquisitions",
    "observed": {
-    "acquisitions": 16,
-    "the_two": 12,
-    "pct": 75.0,
+    "acquisitions": 17,
+    "the_two": 13,
+    "pct": 76.5,
     "by_mechanism": {
-     "continue-on-error": 11,
+     "continue-on-error": 12,
      "rewrite": 4,
      "or-true": 1
     }
@@ -107,19 +108,19 @@
    "hit": true,
    "predicted": "\u2265 40% of readable wild repairs agree with the instrument's verified candidate",
    "observed": {
-    "repairs": 14,
-    "readable": 14,
-    "agree": 12,
-    "pct": 85.7,
-    "verified_any": 13,
+    "repairs": 15,
+    "readable": 15,
+    "agree": 13,
+    "pct": 86.7,
+    "verified_any": 14,
     "by_candidate": {
-     "no-continue-on-error": 11,
+     "no-continue-on-error": 12,
      "strict-shell": 1,
      "null": 1,
      "guard-status": 1
     },
     "wild_mechanisms": {
-     "continue-on-error": 11,
+     "continue-on-error": 12,
      "or-true": 2,
      "rewrite": 1
     }
@@ -129,8 +130,8 @@
    "hit": true,
    "predicted": "acquisitions strictly outnumber repairs",
    "observed": {
-    "acquisitions": 16,
-    "repairs": 14
+    "acquisitions": 17,
+    "repairs": 15
    }
   }
  },
@@ -138,11 +139,11 @@
  "of": 7,
  "population": {
   "repos_read": 96,
-  "lineages": 14199,
+  "lineages": 14630,
   "alive_hidden": 53,
-  "ever_hidden": 142,
+  "ever_hidden": 148,
   "births_at_boundary": 19,
-  "revisions_read": 35071
+  "revisions_read": 36934
  },
  "alive_hidden": [
   {
@@ -1056,6 +1057,21 @@
    "verdicts": "RED -> SWALLOWED"
   },
   {
+   "repo": "microsoft/genaiscript",
+   "workflow": "openai.yml",
+   "job": "tests",
+   "step": "name:run summarize openai:gpt-3.5-turbo",
+   "kind": "acquisition",
+   "sha": "787070e3a49c",
+   "date": "2024-08-02",
+   "subject": "ignore github models error in github actions",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "ignor",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
    "repo": "FastLED/FastLED",
    "workflow": "build_wasm.yml",
    "job": "build",
@@ -1292,6 +1308,24 @@
    "acknowledged": null,
    "verdicts": "SWALLOWED -> RED",
    "instrument": "strict-shell",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "microsoft/genaiscript",
+   "workflow": "openai.yml",
+   "job": "tests",
+   "step": "name:run summarize openai:gpt-3.5-turbo",
+   "kind": "repair",
+   "sha": "fb4335a72857",
+   "date": "2024-08-05",
+   "subject": "add openai smoke tests",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
    "stage": "swallow-4",
    "agrees": true
   },
@@ -1562,6 +1596,36 @@
   {
    "repo": "airbytehq/airbyte",
    "workflow": "connector-ci-checks.yml",
+   "job": "connectors-test-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-07",
+   "subject": "ci: split java/non-java connector test matrix, simplify matrix generation and su"
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "connectors-lint-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-08",
+   "subject": "CI: Add support for manifest-only connectors in the Connectors CI Matrix (Beta) "
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "non-jvm-connectors-test-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-08",
+   "subject": "CI: Add support for manifest-only connectors in the Connectors CI Matrix (Beta) "
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
    "job": "connectors-lint-matrix",
    "step": "name:Run lint check (info only)",
    "born": "hidden",
@@ -1818,6 +1882,16 @@
    "death": "step removed",
    "date": "2026-05-13",
    "subject": "ci(frontend): Use tsgo for frontend typecheck, upgrade tsgo (#115504)"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "frontend.yml",
+   "job": "typescript-and-lint",
+   "step": "name:Commit any eslint fixed files",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2020-12-01",
+   "subject": "build(ci): git patch --> github review suggestion (#22253)"
   },
   {
    "repo": "getsentry/sentry",
@@ -2122,46 +2196,46 @@
  ],
  "summary": {
   "acquisition_mechanisms": {
-   "continue-on-error": 11,
+   "continue-on-error": 12,
    "or-true": 1,
    "rewrite": 4
   },
-  "acquisitions": 16,
-  "acquisitions_acknowledged": 4,
+  "acquisitions": 17,
+  "acquisitions_acknowledged": 5,
   "ages_days_quartiles": [
    61.0,
    155.4,
    364.1
   ],
-  "alive": 6479,
+  "alive": 6480,
   "alive_hidden": 53,
   "alive_hidden_acquired": 3,
   "alive_hidden_born_hidden": 40,
   "births_at_boundary": 19,
-  "checks_followed": 3375,
-  "died_hidden": 64,
-  "died_loud": 7215,
-  "ever_hidden": 142,
-  "lineages": 14199,
+  "checks_followed": 3491,
+  "died_hidden": 68,
+  "died_loud": 7627,
+  "ever_hidden": 148,
+  "lineages": 14630,
   "median_age_days": 155.4,
   "repair_mechanisms": {
-   "continue-on-error": 11,
+   "continue-on-error": 12,
    "or-true": 2,
    "rewrite": 1
   },
-  "repairs": 14,
+  "repairs": 15,
   "repairs_acknowledged": 4,
-  "repairs_agreeing": 12,
-  "repairs_instrument_verified": 13,
-  "repairs_with_agreement_read": 14,
+  "repairs_agreeing": 13,
+  "repairs_instrument_verified": 14,
+  "repairs_with_agreement_read": 15,
   "repos": 96,
   "repos_capped": 0,
-  "revisions_read": 35071,
+  "revisions_read": 36934,
   "workflows": 2819
  },
- "seconds": 1629.1,
- "instrument_sha256": "4b961880c88c6f288b1df694df3cc8225f269cc70169cc83a8dcd18b8295c3d7",
- "receipt_sha256": "acc592cbbdf04ad441aece93f854d8677f3a2c13120a93b8dd120ff351e9811d",
+ "seconds": 1575.1,
+ "instrument_sha256": "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c",
+ "receipt_sha256": "6fc5f0f816567c843978f408be8883af0dc48153174039706dc990683226d544",
  "receipt_file": "swallow6_receipt.json.gz",
  "prereg_sha256_at_freeze": "d19eff1fc5a018b68d1d5d46984f67f3731b437fefb3f616d638043e94233725"
 }
