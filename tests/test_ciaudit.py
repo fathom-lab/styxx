@@ -28,6 +28,10 @@ ACTIONS_INSTRUMENT_SHA256 = "0e723694d459ca2368799e3fc21a26d06e70fb89ad09bd2b015
 # names (papers/harness/swallow4_receipt.json.gz). Same rule.
 REPAIR_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "repair.py"
 REPAIR_INSTRUMENT_SHA256 = "7b9a1695d316c2ce109495cf60c5a9a1de03bac204e9bf48fdbc2a1ac66012b9"
+# SWALLOW-5's instrument -- the structural repairs -- frozen at the sha256 the SWALLOW-5 receipt
+# names (papers/harness/swallow5_receipt.json.gz, run 2). Same rule.
+STRUCTURAL_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "repair_structural.py"
+STRUCTURAL_INSTRUMENT_SHA256 = "77067a71fa41e48089b4c3e68fae17f02322fd892fc71d604d83f23cb693982c"
 
 FIXTURE = """
     on: [push]
@@ -141,6 +145,9 @@ def test_the_instruments_are_the_ones_the_receipts_name():
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
     assert hashlib.sha256(REPAIR_INSTRUMENT.read_bytes()).hexdigest() == REPAIR_INSTRUMENT_SHA256, (
         "benchmarks/harness_mutation/repair.py is the instrument that produced the SWALLOW-4 receipt and is "
+        "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
+    assert hashlib.sha256(STRUCTURAL_INSTRUMENT.read_bytes()).hexdigest() == STRUCTURAL_INSTRUMENT_SHA256, (
+        "benchmarks/harness_mutation/repair_structural.py is the instrument that produced the SWALLOW-5 receipt and is "
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
 
 
@@ -316,13 +323,83 @@ def test_the_repair_flag_prints_verified_diffs_and_says_which_half_failed(tmp_pa
     assert "-        continue-on-error: true" in out
     assert "ci.yml › lint › Lint changed python — no verified repair: strict-shell is loud but changes the healthy run in flavour empty" in out
     rec = ciaudit.audit(str(tree), repair=True)
-    assert rec["repair_catalogue"] == ["no-continue-on-error", "strict-shell", "both"]
+    assert rec["repair_catalogue"][:3] == ["no-continue-on-error", "strict-shell", "both"]
     assert rec["summary"]["repairs"] == {"targets": 3, "verified": 2, "by_repair": {"strict-shell": 1, "no-continue-on-error": 1},
                                          "rejected_changes_healthy_run": 1, "not_loud": 0, "no_candidate_applies": 0}
-    # the command's path (repair_faults on the audit's findings) and the tree path agree
+    # the command's path (repair_faults on the audit's findings) and the tree path agree on the first stage
     from styxx.ciaudit import repair as shipped
-    assert _strip_repairs({"targets": rec["repairs"]}) == _strip_repairs(shipped.repair_tree(tree))
+    first = [dict(t, candidates=t["candidates"][:3]) for t in rec["repairs"]]
+    assert _strip_repairs({"targets": [dict(t, verified_repair=next((c["repair"] for c in t["candidates"] if c.get("verified")), None)) for t in first]}) == \
+        _strip_repairs(shipped.repair_tree(tree))
     # without the flag the card has no repairs section and the receipt no repairs
     assert main([str(tree)]) == 1 and "repairs (" not in capsys.readouterr().out
     assert "repairs" not in ciaudit.audit(str(tree))
+
+
+STRUCTURAL_FIXTURE = """
+    on: [push]
+    jobs:
+      lint:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Lint for secrets
+            run: |
+              if grep -rq "SECRET" src/; then
+                exit 1
+              fi
+          - name: Verify branch
+            run: |
+              CURRENT=$(git rev-parse --abbrev-ref HEAD || echo "unknown")
+              echo "on $CURRENT"
+          - name: Verify label
+            run: |
+              KIND=$(gh pr view --json labels | grep -o 'release' || echo none)
+              echo "kind is $KIND"
+          - name: Test each package
+            run: |
+              FAIL=0
+              for p in a b; do pytest tests/$p || FAIL=$((FAIL+1)); done
+              echo "$FAIL packages failed"
+"""
+
+
+def test_the_shipped_structural_repairs_are_the_instruments(tmp_path):
+    sys.path.insert(0, str(ROOT))
+    from benchmarks.harness_mutation import repair_structural as instrument
+    from styxx.ciaudit import repair_structural as shipped
+    tree = _tree(tmp_path, "ci.yml", STRUCTURAL_FIXTURE)
+    a, b = instrument.structural_tree(tree), shipped.structural_tree(tree)
+    assert _strip_repairs(a) == _strip_repairs(b)
+    assert _strip_repairs({"targets": a["first_stage"]}) == _strip_repairs({"targets": b["first_stage"]})
+    assert shipped.REPAIRS == instrument.REPAIRS
+    for run in ('if grep -q x f; then\n  exit 1\nfi\n', 'X=$(a || echo "b (c)")\ncmd || echo d >&2\n'):
+        assert shipped.guard_status(run) == instrument.guard_status(run) and shipped.no_default(run) == instrument.no_default(run)
+
+
+def test_the_repair_flag_has_two_stages(tmp_path, capsys):
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    tree = _tree(tmp_path, "ci.yml", STRUCTURAL_FIXTURE)
+    assert main([str(tree), "--repair"]) == 1
+    out = capsys.readouterr().out
+    assert "ci.yml › lint › Lint for secrets — guard-status, 4 lines" in out
+    assert '+          __rc=0; grep -rq "SECRET" src/ || __rc=$?' in out
+    assert "ci.yml › lint › Verify branch — no-default, 3 lines" in out
+    assert "ci.yml › lint › Verify label — no verified repair: no-default is loud but changes the healthy run in flavour empty" in out
+    assert "ci.yml › lint › Test each package — no verified repair: strict-shell / both: not loud" in out
+    rec = ciaudit.audit(str(tree), repair=True)
+    assert rec["repair_catalogue"] == ["no-continue-on-error", "strict-shell", "both", "guard-status", "no-default", "both-structural"]
+    by = {t["name"]: t for t in rec["repairs"]}
+    assert [c["repair"] for c in by["Lint for secrets"]["candidates"]] == rec["repair_catalogue"]      # the second stage ran after the first
+    assert by["Lint for secrets"]["verified_repair"] == "guard-status" and by["Verify branch"]["verified_repair"] == "no-default"
+    assert [c["repair"] for c in by["Test each package"]["candidates"]] == rec["repair_catalogue"] and by["Test each package"]["verified_repair"] is None
+    assert rec["summary"]["repairs"] == {"targets": 4, "verified": 2, "by_repair": {"guard-status": 1, "no-default": 1},
+                                         "rejected_changes_healthy_run": 1, "not_loud": 1, "no_candidate_applies": 0}
+    # the shipped second stage agrees with the instrument's on the same tree
+    from benchmarks.harness_mutation import repair_structural as instrument
+    inst = {t["name"]: t for t in instrument.structural_tree(tree)["targets"]}
+    for name, t in by.items():
+        assert t["verified_repair"] == inst[name]["verified_repair"]
+        assert [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in t["candidates"][3:]] == \
+            [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in inst[name]["candidates"]]
 
