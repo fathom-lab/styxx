@@ -1246,6 +1246,31 @@ def cmd_leaderboard(args):
     return 0
 
 
+def cmd_ci_audit(args):
+    """styxx ci-audit — when one CI step's tools fail, what does the workflow do?
+
+    Simulates every workflow under .github/workflows with one fault at a time -- every external
+    command of one `run:` step failing, everything else healthy -- and reports, per fault, whether
+    the workflow goes RED, a check is silently not run (FAIL_OPEN), a check runs and its failure
+    is hidden (SWALLOWED), or nothing about the checks changes. No runner, no token, no code:
+    `owner/repo` is a blob-less sparse clone of the workflow files alone. The engine is the
+    instrument of papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md.
+
+    Exit status: 0 when nothing is hidden or dropped, 1 when something is, 2 on an error.
+    """
+    from styxx.ciaudit import main as _main
+    argv = [args.target, "--format", args.format]
+    if args.counted:
+        argv.append("--counted")
+    if args.out:
+        argv += ["--out", args.out]
+    if args.work:
+        argv += ["--work", args.work]
+    if args.deadline is not None:
+        argv += ["--deadline", str(args.deadline)]
+    return _main(argv)
+
+
 def cmd_gauntlet(args):
     """styxx gauntlet — run a candidate method against the empirical floor.
 
@@ -2952,6 +2977,22 @@ def _build_parser() -> argparse.ArgumentParser:
     p_leaderboard.set_defaults(func=cmd_leaderboard)
 
     # gauntlet — 7.7.5 public-challenge runner
+    # ci-audit — one fault at a time through the workflows (SWALLOW-2's engine)
+    p_ciaudit = sub.add_parser(
+        "ci-audit",
+        help="when one CI step's tools fail, what does the workflow do? (RED / FAIL_OPEN / SWALLOWED, per step; no runner, no token)",
+    )
+    p_ciaudit.add_argument("target", nargs="?", default=".",
+                           help="a checkout path (default: .), or owner/repo for a public repository's workflow files")
+    p_ciaudit.add_argument("--format", choices=["card", "json"], default="card",
+                           help="output format (default: card)")
+    p_ciaudit.add_argument("--counted", action="store_true",
+                           help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
+    p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
+    p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
+    p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
+    p_ciaudit.set_defaults(func=cmd_ci_audit)
+
     p_gauntlet = sub.add_parser(
         "gauntlet",
         help="run a candidate method against the empirical floor (the public challenge runner)",
