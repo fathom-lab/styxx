@@ -144,3 +144,33 @@ reporter, one fail-closed by design, and three that need the one edit this instr
 verify. `repair_structural.py` is frozen at the sha256 that receipt names (`77067a71…`); the living
 copy is `styxx/ciaudit/repair_structural.py`, the second stage of `styxx ci-audit --repair`.
 
+
+## Where hidden checks come from (SWALLOW-6)
+
+`history.py` reads the same checks through time: every revision of every hand-written workflow on
+the default branch's mainline (first-parent, from the GitHub Actions YAML era's start on
+2019-08-01 to the pinned HEAD) with the frozen SWALLOW-3 reading, and follows every check as a
+lineage — the same job, the same step name (else id, else first line) — from the commit that
+created it to HEAD or to the commit that removed it. Between readable revisions, loud → hidden is
+an acquisition and hidden → loud a repair, each with the commit, the mechanism read from the
+step's YAML before and after (`continue-on-error`, `|| true`, `set +e`, a `|| echo` default,
+gating, a rewrite, or a change elsewhere), and the first acknowledgement a stated word list finds
+in the commit message. For every repair, SWALLOW-4's and SWALLOW-5's candidates are tried on the
+revision before and the first verified one is compared with what the author did. The clones are
+blob-less and shallow to 2019-08-01; every workflow blob along the mainline is fetched in one
+batch.
+
+```
+python -m benchmarks.harness_mutation.history --tree .
+python -m benchmarks.harness_mutation.history --receipt papers/harness/swallow3_receipt.json.gz --work <clones> --workers 2 --out receipt.json
+python papers/harness/swallow6_score.py
+```
+
+`papers/harness/RESULT_swallow6_where_hidden_checks_come_from_2026_09_21.md` (VALID, 5/7; three
+runs, two amendments stated): of the 53 hidden checks alive at HEAD, 40 were written hidden and
+never loud, 3 were hidden later by a `continue-on-error`, 10 were rewritten into hidden checks by
+one commit; of 142 lineages ever hidden, 5 are loud today and 64 died hidden; the median hidden
+check is 155 days old, the oldest 1,630; 16 commits hid a loud check and 4 said why in the stated
+words; 14 made one loud, and 12 times the edit is the one the instrument proposes. `history.py` is
+frozen at the sha256 that receipt names (`4b961880…`); the living copy is
+`styxx/ciaudit/history.py`, behind `styxx ci-audit --history`.
