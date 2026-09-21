@@ -1,0 +1,153 @@
+{
+ "valid": true,
+ "gates": {
+  "G-M3-1": {
+   "pass": true,
+   "detail": "tests/test_harness_mutation.py: see RESULT \u00a71 (run outside the receipts)"
+  },
+  "G-M3-2": {
+   "pass": true,
+   "detail": "run A baseline: 534 passing, 9 excluded (MUTE-2: 534, 9)"
+  },
+  "G-M3-3": {
+   "pass": true,
+   "detail": "run B baseline: 537 passing; lost from A: []; gained: ['tests.test_ci_steps_propagate_failure::test_the_propagation_guard_rejects_a_swallowed_step', 'tests.test_ci_steps_propagate_failure::test_the_step_cannot_hide_the_failure_of_what_it_calls[test.yml::test::Anchor \\\\u2014 the guard files still collect]', 'tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job']; same exclusions"
+  },
+  "G-M3-4": {
+   "pass": true,
+   "detail": "A unreached: []; B unreached: ['test_the_manifest_guard_rejects_a_tree_missing_a_job', 'test_the_propagation_guard_rejects_a_swallowed_step']"
+  },
+  "G-M3-5": {
+   "pass": true,
+   "detail": "every KILLED names a red test; every SURVIVED names none"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "identical verdicts, 114/5/1",
+   "observed": {
+    "totals": {
+     "KILLED": 114,
+     "SURVIVED": 5,
+     "UNREACHED": 1
+    },
+    "differing": []
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "45 mutants with vanished ids (33 M-STEP, 11 M-JOB, MUTE-119); errors on MUTE-119 only",
+   "observed": {
+    "vanished_count": 45,
+    "by_operator": {
+     "M-JOB": 11,
+     "M-STEP": 33,
+     "M-SUBJECT": 1
+    },
+    "errors": [
+     "MUTE-119"
+    ]
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": {
+    "KILLED": 0,
+    "SURVIVED": 72,
+    "UNREACHED": 0
+   },
+   "observed": {
+    "KILLED": 0,
+    "SURVIVED": 72,
+    "UNREACHED": 0
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "5 of 6 KILLED by the manifest test; the manifest file's own deletion survives",
+   "observed": {
+    "files": 6,
+    "not_as_predicted": []
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "34 of 35 KILLED by the manifest test; deleting the matching test itself survives",
+   "observed": {
+    "functions": 35,
+    "not_as_predicted": [
+     [
+      "test_the_harness_matches_the_committed_manifest",
+      "expected the fixed point to survive",
+      [
+       "tests.test_harness_manifest::test_the_manifest_guard_rejects_a_tree_missing_a_job"
+      ]
+     ]
+    ]
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "2 UNREACHED (controls), 2 KILLED by their controls, 31 SURVIVED",
+   "observed": {
+    "hollowings": 35,
+    "killed": [
+     "test_the_harness_matches_the_committed_manifest",
+     "test_the_step_cannot_hide_the_failure_of_what_it_calls"
+    ],
+    "survived": 31,
+    "not_as_predicted": []
+   }
+  },
+  "P7": {
+   "hit": false,
+   "predicted": {
+    "KILLED": 41,
+    "SURVIVED": 33,
+    "UNREACHED": 2
+   },
+   "observed": {
+    "KILLED": 42,
+    "SURVIVED": 32,
+    "UNREACHED": 2
+   }
+  },
+  "P8": {
+   "hit": false,
+   "predicted": "the only non-hollowing survivors are the manifest file and its matching test; the anchor step fails on that mutant",
+   "observed": {
+    "non_hollowing_survivors": [
+     [
+      "tests/test_harness_manifest.py",
+      "test_harness_manifest.py",
+      "M-GFILE"
+     ]
+    ],
+    "anchor_demo": true
+   }
+  }
+ },
+ "hits": 5,
+ "of": 8,
+ "receipts": {
+  "mute2r": "mute2r_receipt.json",
+  "A": "mute3_receipt_A.json",
+  "B": "mute3_receipt_B.json",
+  "baselines": "mute3_baselines.json",
+  "anchor_demo": "mute3_anchor_demo.json",
+  "anchor_pin_demo": "mute3_anchor_pin_demo.json"
+ },
+ "trees": {
+  "mute2r": "b6836600064040bd0cbfe0086858e6abc33089a7",
+  "A": "b6836600064040bd0cbfe0086858e6abc33089a7",
+  "B": "e913678853820e99c5e415ebc37208b419aaf6f4"
+ },
+ "fingerprints": {
+  "mute2r": "c3eaf2a72f66fe988f36b8bcb2d3b95eea998514df31ac8d6917be78524aea81",
+  "A": "c3eaf2a72f66fe988f36b8bcb2d3b95eea998514df31ac8d6917be78524aea81",
+  "B": "fb6d868cff477878aa27322e5443d32ab07fb34679e8bdd880234674db8bba07"
+ },
+ "instrument_sha256": "defc94722e01a49d461f41e1fad293375242066596235d1634fec5cd04c71779",
+ "prereg_sha256_at_freeze": "ddcd207a489811ede222fe0be9d5739d83b7e15163f7cebe08dd1f5a6dde708d"
+}

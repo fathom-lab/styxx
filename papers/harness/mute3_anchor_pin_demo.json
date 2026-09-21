@@ -1,0 +1,21 @@
+{
+ "what": "the level-1 M-STEP mutant of the anchor step in test.yml, applied to the run-B tree; the manifest test file run on the intact tree and on the mutant",
+ "tree": "e913678853820e99c5e415ebc37208b419aaf6f4",
+ "mutant": {
+  "id": "MUTE-091",
+  "operator": "M-STEP",
+  "check": {
+   "kind": "workflow-step",
+   "path": ".github/workflows/test.yml",
+   "job": "test",
+   "step": 6,
+   "name": "Anchor \u2014 the guard files still collect",
+   "detail": "python -m pytest tests/test_harness_manifest.py tests/test_ci_steps_propagate_fa"
+  },
+  "applied": true
+ },
+ "manifest_test_intact": "passed",
+ "manifest_test_on_mutant": "failed",
+ "other_tests_red_on_mutant": [],
+ "reading": "a demonstration outside the receipts, not a verdict: the anchor step is a level-1 mutant of a tree no level-1 receipt of this cycle was taken on"
+}
