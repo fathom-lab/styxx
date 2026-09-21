@@ -92,6 +92,47 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-1: in 67 of 87 repositories a CI step cannot fail, and in 35 of them that step is a check
+
+MUTE-2's behavioural guard — execute every `run:` step with an empty PATH, so every external
+command fails, and demand that the step go red — needs nothing but a repository's workflow files.
+`benchmarks/harness_mutation/census.py` takes it to any list of repositories: a blob-less sparse
+clone of `.github/workflows`, every bash step executed as the guard executes it, and classified
+PROPAGATES / SWALLOWS / TOOLLESS / SYNTAX / TIMEOUT / NOT_BASH, with `continue-on-error`, a
+category from the step's name and first command, and #137's exact shape (`git … || true`)
+recorded beside the verdict.
+
+**The census** (`papers/harness/swallow1_receipt.json.gz`, 19 MB of JSON with every step's text,
+carried gzipped; scored by `swallow1_score.py` against
+`PREREG_swallow1_ci_steps_that_cannot_fail_2026_09_21.md`, sha256 `7342f633…`, frozen before any
+repository in the population was touched): the 100 repositories that receive the most
+agent-authored pull requests in the AIDev corpus — the population EXTERNAL-1's ledger already
+held, chosen before any workflow was read. 96 cloned, 87 with a bash step that ran, **33,651
+`run:` steps executed** in 475 s; 8,912 hand-written, 24,739 generated agentic workflows
+(`*.lock.yml`, 19,559 of them in one repository).
+
+**VALID, 6 of 7 predictions HIT.** In **67 of 87 repositories (77%) a step cannot fail** —
+SWALLOWS at the shell, or `continue-on-error`; in **35 of 87 (40%) that step is a check** — a
+test, lint or typecheck step that reports green whatever happens. The median repository swallows
+2.2% of its hand-written steps; 24 repositories carry #137's shape, a git query whose failure
+becomes an empty answer, 40 steps in all. P5 missed: generated agentic workflows are 17%
+`continue-on-error`, not the 30% extrapolated from one pilot repository — recorded as what it is.
+
+**Read one by one**, the 38 verification swallows split about evenly: best-effort steps named as
+such (cleanups, version lookups, *non-blocking* linters, mis-filed by a heuristic that saw the
+word *test*), auto-fixers, one method artifact (`test "$(git rev-parse HEAD)" = "$EXACT_COMMIT"`,
+which compares two empty strings when git fails), and the #137 direction — a query fails, the
+answer is "nothing", the check runs on nothing: `getsentry/sentry-docs`, `primer/react`,
+`getsentry/sentry`, and `mlflow/mlflow`'s `Run tests`, where a failed enumeration of services
+leaves a loop body unrun, a trap unfired, and *Run tests* green having run no tests. Beside them,
+in the same population, the safe direction — `carverauto/serviceradar` "running Mix lint to stay
+fail-closed", `airbytehq/airbyte` landing a failed `git diff --quiet` in the *changes detected*
+branch.
+
+**What it does not say, and the limit it names:** a step that cannot fail is not a defect. The
+instrument sees that a step cannot fail; **it cannot see which way it falls** — fail-open and
+fail-closed exit 0 identically. That is SWALLOW-2's question.
+
 ## [Unreleased] — MUTE-3: nothing guarded the guards, and where the chain of guards ends
 
 MUTE-2 ended with a question it answered in advance: *cut `test_harness_manifest.py` itself and
