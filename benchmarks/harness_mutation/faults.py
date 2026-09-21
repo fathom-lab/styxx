@@ -624,57 +624,67 @@ class Runner:
 
     @staticmethod
     def _execute(text: str, world: str, env: dict) -> dict:
-        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as td:
-            t = Path(td)
-            (t / "bin").mkdir()
-            (t / "work").mkdir()
-            if world not in ("fail", "fault"):
-                for name in REAL_IN_HEALTHY:
-                    real = shutil.which(name)
-                    if real:
-                        (t / "bin" / name).symlink_to(real)
-                (t / "bin" / "sleep").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
-                (t / "bin" / "sleep").chmod(0o755)
-            log = t / "reached.log"
-            script = t / "step.sh"
-            script.write_text(PROLOGUE[world] + text, encoding="utf-8")
-            # bash never calls command_not_found_handle for a command with a slash in it, so a
-            # script the repository ships (./ci/test.sh, scripts/lint.py) would be "No such file"
-            # in both worlds. Each relative path a segment starts with gets a stub that behaves as
-            # the world says: logs itself, then exits 127 (fail) or prints x and exits 0 (ok).
-            for rel in sorted(_relative_commands(text), key=lambda r: -r.count("/")):   # deepest first: a/b/c.sh before a/b
-                stub = t / rel
-                try:
-                    if stub.exists():
-                        continue
-                    stub.parent.mkdir(parents=True, exist_ok=True)
-                    stub.write_text('#!/bin/bash\nprintf "%s\\n" "$0" >> "$STUB_LOG"\n' + STUB_BODY[world], encoding="utf-8")
-                    stub.chmod(0o755)
-                except OSError:
-                    pass
-            full_env = {"PATH": str(t / "bin"), "STUB_LOG": str(log), "HOME": str(t), "LANG": "C.UTF-8",
-                        "GITHUB_OUTPUT": str(t / "output"), "GITHUB_ENV": str(t / "env"), "GITHUB_PATH": str(t / "path"),
-                        "GITHUB_STEP_SUMMARY": str(t / "summary"), "GITHUB_WORKSPACE": str(t / "work"), "RUNNER_TEMP": str(t),
-                        "GITHUB_ACTIONS": "true", "CI": "true"}
-            for k, v in env.items():
-                if k not in full_env and re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", k):
-                    full_env[k] = v
-            proc = subprocess.Popen(["/bin/bash", "--noprofile", "--norc", "-eo", "pipefail", str(script)],
-                                    cwd=str(t / "work"), env=full_env, stdin=subprocess.DEVNULL,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
-            timeout = STEP_TIMEOUT_FAIL if world in ("fail", "fault") else STEP_TIMEOUT_OK
+        # mkdtemp + rmtree(ignore_errors) rather than TemporaryDirectory(ignore_cleanup_errors=...),
+        # which Python 3.9 -- still in this repository's test matrix -- does not have. A step may
+        # leave a backgrounded builtin loop writing into the directory after bash returns; the
+        # group is killed, but the race is real and the instrument must not stop for it.
+        td = tempfile.mkdtemp(prefix="faults_")
+        try:
+            return Runner._execute_in(Path(td), text, world, env)
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
+
+    @staticmethod
+    def _execute_in(t: Path, text: str, world: str, env: dict) -> dict:
+        (t / "bin").mkdir()
+        (t / "work").mkdir()
+        if world not in ("fail", "fault"):
+            for name in REAL_IN_HEALTHY:
+                real = shutil.which(name)
+                if real:
+                    (t / "bin" / name).symlink_to(real)
+            (t / "bin" / "sleep").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
+            (t / "bin" / "sleep").chmod(0o755)
+        log = t / "reached.log"
+        script = t / "step.sh"
+        script.write_text(PROLOGUE[world] + text, encoding="utf-8")
+        # bash never calls command_not_found_handle for a command with a slash in it, so a
+        # script the repository ships (./ci/test.sh, scripts/lint.py) would be "No such file"
+        # in both worlds. Each relative path a segment starts with gets a stub that behaves as
+        # the world says: logs itself, then exits 127 (fail) or prints x and exits 0 (ok).
+        for rel in sorted(_relative_commands(text), key=lambda r: -r.count("/")):   # deepest first: a/b/c.sh before a/b
+            stub = t / rel
             try:
-                _, err = proc.communicate(timeout=timeout)
-                rc = proc.returncode
-                timed_out = False
-            except subprocess.TimeoutExpired:
-                _kill_group(proc)
-                rc, err, timed_out = -1, "", True
+                if stub.exists():
+                    continue
+                stub.parent.mkdir(parents=True, exist_ok=True)
+                stub.write_text('#!/bin/bash\nprintf "%s\\n" "$0" >> "$STUB_LOG"\n' + STUB_BODY[world], encoding="utf-8")
+                stub.chmod(0o755)
+            except OSError:
+                pass
+        full_env = {"PATH": str(t / "bin"), "STUB_LOG": str(log), "HOME": str(t), "LANG": "C.UTF-8",
+                    "GITHUB_OUTPUT": str(t / "output"), "GITHUB_ENV": str(t / "env"), "GITHUB_PATH": str(t / "path"),
+                    "GITHUB_STEP_SUMMARY": str(t / "summary"), "GITHUB_WORKSPACE": str(t / "work"), "RUNNER_TEMP": str(t),
+                    "GITHUB_ACTIONS": "true", "CI": "true"}
+        for k, v in env.items():
+            if k not in full_env and re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", k):
+                full_env[k] = v
+        proc = subprocess.Popen(["/bin/bash", "--noprofile", "--norc", "-eo", "pipefail", str(script)],
+                                cwd=str(t / "work"), env=full_env, stdin=subprocess.DEVNULL,
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+        timeout = STEP_TIMEOUT_FAIL if world in ("fail", "fault") else STEP_TIMEOUT_OK
+        try:
+            _, err = proc.communicate(timeout=timeout)
+            rc = proc.returncode
+            timed_out = False
+        except subprocess.TimeoutExpired:
             _kill_group(proc)
-            reached = log.read_text(encoding="utf-8", errors="replace").split() if log.exists() else []
-            return {"exit": rc, "timeout": timed_out, "reached": reached, "n_reached": len(reached),
-                    "outputs": _parse_kv_file(t / "output"), "env": _parse_kv_file(t / "env"),
-                    "tail": ((err or "").strip().splitlines() or [""])[-1][:160]}
+            rc, err, timed_out = -1, "", True
+        _kill_group(proc)
+        reached = log.read_text(encoding="utf-8", errors="replace").split() if log.exists() else []
+        return {"exit": rc, "timeout": timed_out, "reached": reached, "n_reached": len(reached),
+                "outputs": _parse_kv_file(t / "output"), "env": _parse_kv_file(t / "env"),
+                "tail": ((err or "").strip().splitlines() or [""])[-1][:160]}
 
 
 # ----------------------------------------------------------------------------- simulation

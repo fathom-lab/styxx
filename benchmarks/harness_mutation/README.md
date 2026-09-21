@@ -65,4 +65,4 @@ python papers/harness/swallow2_score.py
 It reproduces #137 with no runner, no token and no code: on `main` the two gated steps are skipped
 and the job is green when the discover step's tools fail; on #137's tree the same fault is RED.
 `papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md` has the map for 100
-repositories, and the four runs it took to draw it.
+repositories, and the runs it took to draw it.
