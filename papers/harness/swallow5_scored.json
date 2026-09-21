@@ -1,0 +1,830 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S5-1": {
+   "pass": true,
+   "detail": "5 passed in 3.06s"
+  },
+  "G-S5-2": {
+   "pass": true,
+   "detail": "18 targets; baseline differs or absent: 0; missing: 0",
+   "excluded": []
+  },
+  "G-S5-3": {
+   "pass": true,
+   "detail": "verified candidates failing a half: 0",
+   "bad": []
+  },
+  "G-S5-4": {
+   "pass": true,
+   "detail": "candidates outside the stated repairs: 0; receipt repairs ['guard-status', 'no-default', 'both-structural']; repair.py 7b9a1695d316c2ce\u2026"
+  },
+  "G-S5-5": {
+   "pass": true,
+   "detail": "faults d26a407ca276d1b1\u2026, action_checks 0e723694d459ca23\u2026, repair 7b9a1695d316c2ce\u2026, source 7f19927a15a1042e\u2026 (file 7f19927a15a1042e\u2026)"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "\u2265 7 of the 14 hand-written residue targets verified",
+   "observed": {
+    "hand_written": 14,
+    "verified": 7,
+    "by_repair": {
+     "guard-status": 5,
+     "no-default": 2
+    },
+    "which": [
+     [
+      "dotnet/aspire",
+      "Check if any test requires NuGets",
+      "guard-status"
+     ],
+     [
+      "dotnet/aspire",
+      "Check if any test requires CLI archives",
+      "guard-status"
+     ],
+     [
+      "dotnet/aspire",
+      "Check if any test requires GitHub token",
+      "guard-status"
+     ],
+     [
+      "hmislk/hmis",
+      "Validate grantAllPrivilegesToAllUsersForTesting",
+      "guard-status"
+     ],
+     [
+      "dotnet/roslyn",
+      "Determine validation type and pipeline ID",
+      "guard-status"
+     ],
+     [
+      "nodetool-ai/nodetool",
+      "Run mutation testing",
+      "no-default"
+     ],
+     [
+      "langfuse/langfuse",
+      "run SQL-equivalence tests (non-blocking)",
+      "no-default"
+     ]
+    ]
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "guard-status verifies \u2265 as many as no-default",
+   "observed": {
+    "guard-status": 5,
+    "no-default": 2
+   }
+  },
+  "P3a": {
+   "hit": true,
+   "predicted": "hmislk/hmis development_pr_validation.yml \u203a validate-jdbc-data-sources: verified by guard-status",
+   "observed": {
+    "name": "Validate grantAllPrivilegesToAllUsersForTesting",
+    "verified_repair": "guard-status",
+    "index": 2,
+    "candidates": [
+     [
+      "guard-status",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "no-default",
+      false,
+      null,
+      null,
+      "no `|| echo \u2026` fallback"
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P3b": {
+   "hit": true,
+   "predicted": "dotnet/roslyn pr-validation.yml \u203a validate-and-trigger: verified by guard-status",
+   "observed": {
+    "name": "Determine validation type and pipeline ID",
+    "verified_repair": "guard-status",
+    "index": 11,
+    "candidates": [
+     [
+      "guard-status",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "no-default",
+      false,
+      null,
+      null,
+      "no `|| echo \u2026` fallback"
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P3c": {
+   "hit": false,
+   "predicted": "selfxyz/self mobile-deploy.yml \u203a build-ios: verified by no-default",
+   "observed": {
+    "name": "Verify branch and commit (iOS)",
+    "verified_repair": null,
+    "index": 3,
+    "candidates": [
+     [
+      "guard-status",
+      false,
+      null,
+      null,
+      "no single-line `if CMD; then` with a guardable command"
+     ],
+     [
+      "no-default",
+      true,
+      false,
+      true,
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P3d": {
+   "hit": true,
+   "predicted": "langfuse/langfuse pipeline.yml \u203a tests-shared: verified by no-default",
+   "observed": {
+    "name": "run SQL-equivalence tests (non-blocking)",
+    "verified_repair": "no-default",
+    "index": 9,
+    "candidates": [
+     [
+      "guard-status",
+      false,
+      null,
+      null,
+      "no single-line `if CMD; then` with a guardable command"
+     ],
+     [
+      "no-default",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P3e": {
+   "hit": true,
+   "predicted": "antiwork/gumroad ci-green.yml \u203a report: not verified",
+   "observed": {
+    "name": "Re-check migration versions against current main",
+    "verified_repair": null,
+    "index": 1,
+    "candidates": [
+     [
+      "guard-status",
+      false,
+      null,
+      null,
+      "no single-line `if CMD; then` with a guardable command"
+     ],
+     [
+      "no-default",
+      false,
+      null,
+      null,
+      "no `|| echo \u2026` fallback"
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P3f": {
+   "hit": true,
+   "predicted": "dotnet/aspire reproduce-flaky-tests.yml \u203a reproduce: not verified",
+   "observed": {
+    "name": "Run test iterations (Linux/macOS)",
+    "verified_repair": null,
+    "index": 12,
+    "candidates": [
+     [
+      "guard-status",
+      true,
+      false,
+      true,
+      "not loud: x=SWALLOWED"
+     ],
+     [
+      "no-default",
+      false,
+      null,
+      null,
+      "no `|| echo \u2026` fallback"
+     ],
+     [
+      "both-structural",
+      false,
+      null,
+      null,
+      "both edits must apply"
+     ]
+    ]
+   }
+  },
+  "P4": {
+   "hit": false,
+   "predicted": "mlflow, nodetool and aspire's three runsheet checks: none verified",
+   "observed": [
+    [
+     "dotnet/aspire",
+     "Check if any test requires NuGets",
+     "guard-status"
+    ],
+    [
+     "dotnet/aspire",
+     "Check if any test requires CLI archives",
+     "guard-status"
+    ],
+    [
+     "dotnet/aspire",
+     "Check if any test requires GitHub token",
+     "guard-status"
+    ],
+    [
+     "mlflow/mlflow",
+     "Run tests",
+     null
+    ],
+    [
+     "nodetool-ai/nodetool",
+     "Run mutation testing",
+     "no-default"
+    ]
+   ]
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "every verified hand-written repair \u2264 8 lines; median \u2264 5",
+   "observed": {
+    "sizes": [
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "median": 5
+   }
+  },
+  "P6": {
+   "hit": false,
+   "predicted": "\u2265 1 hand-written target with an applying candidate rejected for changing a healthy run",
+   "observed": []
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "\u2264 2 of 4 generated residue targets verified",
+   "observed": {
+    "generated": 4,
+    "verified": 1,
+    "which": [
+     [
+      "githubnext/gh-aw",
+      "static-analysis-report.lock.yml",
+      "Verify static analysis tools",
+      "no-default"
+     ]
+    ]
+   }
+  }
+ },
+ "hits": 9,
+ "of": 12,
+ "summary": {
+  "all": {
+   "targets": 18,
+   "verified": 8,
+   "by_repair": {
+    "no-default": 3,
+    "guard-status": 5
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 2,
+   "no_candidate_applies": 5,
+   "not_loud": 3,
+   "lines_changed": [
+    4,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    35
+   ]
+  },
+  "hand_written": {
+   "targets": 14,
+   "verified": 7,
+   "by_repair": {
+    "guard-status": 5,
+    "no-default": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 4,
+   "not_loud": 3,
+   "lines_changed": [
+    4,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ]
+  },
+  "generated": {
+   "targets": 4,
+   "verified": 1,
+   "by_repair": {
+    "no-default": 1
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 2,
+   "no_candidate_applies": 1,
+   "not_loud": 0,
+   "lines_changed": [
+    35
+   ]
+  },
+  "hand_written_swallowed": {
+   "targets": 13,
+   "verified": 7,
+   "by_repair": {
+    "guard-status": 5,
+    "no-default": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 3,
+   "not_loud": 3,
+   "lines_changed": [
+    4,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+   ]
+  },
+  "hand_written_fail_open": {
+   "targets": 1,
+   "verified": 0,
+   "by_repair": {},
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 1,
+   "not_loud": 0,
+   "lines_changed": []
+  }
+ },
+ "hand_written": {
+  "targets": 14,
+  "verified": 7,
+  "by_repair": {
+   "guard-status": 5,
+   "no-default": 2
+  },
+  "residue": [
+   {
+    "repo": "githubnext/gh-aw",
+    "workflow": "integration-agentics.yml",
+    "job": "integration-test-agentics",
+    "index": 12,
+    "name": "Verify no compilation errors",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "echo \"Verifying workflow compilation completed without errors...\"",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "reproduce-flaky-tests.yml",
+    "job": "reproduce",
+    "index": 12,
+    "name": "Run test iterations (Linux/macOS)",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "PASS=0",
+    "candidates": [
+     [
+      "guard-status",
+      "not loud: x=SWALLOWED",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 5,
+    "name": "Check if any test requires NuGets",
+    "verdict": "SWALLOWED",
+    "verified_repair": "guard-status",
+    "run_head": "RUNSHEET='${{ steps.inject_properties.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "guard-status",
+      "verified",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 6,
+    "name": "Check if any test requires CLI archives",
+    "verdict": "SWALLOWED",
+    "verified_repair": "guard-status",
+    "run_head": "RUNSHEET='${{ steps.inject_properties.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "guard-status",
+      "verified",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 7,
+    "name": "Check if any test requires GitHub token",
+    "verdict": "SWALLOWED",
+    "verified_repair": "guard-status",
+    "run_head": "RUNSHEET='${{ steps.generate_tests_matrix.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "guard-status",
+      "verified",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "hmislk/hmis",
+    "workflow": "development_pr_validation.yml",
+    "job": "validate-jdbc-data-sources",
+    "index": 2,
+    "name": "Validate grantAllPrivilegesToAllUsersForTesting",
+    "verdict": "SWALLOWED",
+    "verified_repair": "guard-status",
+    "run_head": "if grep -q \"grantAllPrivilegesToAllUsersForTesting = true\" src/main/java/com/divudi/bean/common/WebU",
+    "candidates": [
+     [
+      "guard-status",
+      "verified",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "mlflow/mlflow",
+    "workflow": "master.yml",
+    "job": "database",
+    "index": 3,
+    "name": "Run tests",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "set +e",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "ci-green.yml",
+    "job": "report",
+    "index": 1,
+    "name": "Re-check migration versions against current main",
+    "verdict": "FAIL_OPEN",
+    "verified_repair": null,
+    "run_head": "set -uo pipefail",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "selfxyz/self",
+    "workflow": "mobile-deploy.yml",
+    "job": "build-ios",
+    "index": 3,
+    "name": "Verify branch and commit (iOS)",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "echo \"\ud83d\udd0d Verifying we're building from the correct branch and commit...\"",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "not loud: x=SWALLOWED, empty=SWALLOWED",
+      6
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "selfxyz/self",
+    "workflow": "mobile-deploy.yml",
+    "job": "build-android",
+    "index": 8,
+    "name": "Verify branch and commit (Android)",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "echo \"\ud83d\udd0d Verifying we're building from the correct branch and commit...\"",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "not loud: x=SWALLOWED, empty=SWALLOWED",
+      6
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "carverauto/serviceradar",
+    "workflow": "release.yml",
+    "job": "publish",
+    "index": 15,
+    "name": "Verify Alpine APK pins",
+    "verdict": "SWALLOWED",
+    "verified_repair": null,
+    "run_head": "set -euo pipefail",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/roslyn",
+    "workflow": "pr-validation.yml",
+    "job": "validate-and-trigger",
+    "index": 11,
+    "name": "Determine validation type and pipeline ID",
+    "verdict": "SWALLOWED",
+    "verified_repair": "guard-status",
+    "run_head": "if echo \"$COMMENT_BODY\" | grep -q \"/dart\"; then",
+    "candidates": [
+     [
+      "guard-status",
+      "verified",
+      5
+     ],
+     [
+      "no-default",
+      "no `|| echo \u2026` fallback",
+      null
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "nodetool-ai/nodetool",
+    "workflow": "mutation-testing.yaml",
+    "job": "mutation",
+    "index": 4,
+    "name": "Run mutation testing",
+    "verdict": "SWALLOWED",
+    "verified_repair": "no-default",
+    "run_head": "PKGS=\"${{ github.event.inputs.packages }}\"",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "verified",
+      4
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   },
+   {
+    "repo": "langfuse/langfuse",
+    "workflow": "pipeline.yml",
+    "job": "tests-shared",
+    "index": 9,
+    "name": "run SQL-equivalence tests (non-blocking)",
+    "verdict": "SWALLOWED",
+    "verified_repair": "no-default",
+    "run_head": "pnpm --filter @langfuse/shared run test .golden.test \\",
+    "candidates": [
+     [
+      "guard-status",
+      "no single-line `if CMD; then` with a guardable command",
+      null
+     ],
+     [
+      "no-default",
+      "verified",
+      5
+     ],
+     [
+      "both-structural",
+      "both edits must apply",
+      null
+     ]
+    ]
+   }
+  ]
+ },
+ "instrument_sha256": "77067a71fa41e48089b4c3e68fae17f02322fd892fc71d604d83f23cb693982c",
+ "receipt_sha256": "030d65911d8191a234d1f78dbb6baa7ba5b5c615b7098f8f44f1b5ef6770538b",
+ "receipt_file": "swallow5_receipt.json.gz",
+ "prereg_sha256_at_freeze": "9bb6f856d51632a888c2574ba498c18445321dc7c1ab31282d73c7c06847da28"
+}
