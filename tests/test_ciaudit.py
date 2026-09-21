@@ -24,6 +24,10 @@ INSTRUMENT_SHA256 = "d26a407ca276d1b1c218fd32bc6bf853544fc394ce5ebc98b2b6ae4bd0f
 # change needs a new receipt, not a new pin.
 ACTIONS_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "action_checks.py"
 ACTIONS_INSTRUMENT_SHA256 = "0e723694d459ca2368799e3fc21a26d06e70fb89ad09bd2b0152466bf2a68f72"
+# SWALLOW-4's instrument -- the two verified repairs -- frozen at the sha256 the SWALLOW-4 receipt
+# names (papers/harness/swallow4_receipt.json.gz). Same rule.
+REPAIR_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "repair.py"
+REPAIR_INSTRUMENT_SHA256 = "7b9a1695d316c2ce109495cf60c5a9a1de03bac204e9bf48fdbc2a1ac66012b9"
 
 FIXTURE = """
     on: [push]
@@ -135,6 +139,9 @@ def test_the_instruments_are_the_ones_the_receipts_name():
     assert hashlib.sha256(ACTIONS_INSTRUMENT.read_bytes()).hexdigest() == ACTIONS_INSTRUMENT_SHA256, (
         "benchmarks/harness_mutation/action_checks.py is the instrument that produced the SWALLOW-3 receipt and is "
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
+    assert hashlib.sha256(REPAIR_INSTRUMENT.read_bytes()).hexdigest() == REPAIR_INSTRUMENT_SHA256, (
+        "benchmarks/harness_mutation/repair.py is the instrument that produced the SWALLOW-4 receipt and is "
+        "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
 
 
 def test_the_shipped_catalogue_is_the_frozen_one():
@@ -242,3 +249,80 @@ def test_a_gated_action_check_is_a_finding_and_the_runs_only_reading_is_kept(tmp
     assert main([str(tree), "--no-actions"]) == 0
     out = capsys.readouterr().out
     assert "nothing hidden, nothing dropped" in out and "run: steps only" in json.dumps(ciaudit.audit(str(tree), actions=False)["summary"])
+
+
+REPAIR_FIXTURE = """
+    on: [push]
+    jobs:
+      changes:
+        runs-on: ubuntu-latest
+        outputs:
+          files: ${{ steps.q.outputs.files }}
+        steps:
+          - name: Discover changed files
+            id: q
+            run: |
+              files=$(git diff --name-only origin/main...HEAD -- 'src/' | sort -u || true)
+              echo "files=$files" >> "$GITHUB_OUTPUT"
+      test:
+        needs: changes
+        if: needs.changes.outputs.files != ''
+        runs-on: ubuntu-latest
+        steps:
+          - name: Run tests
+            run: python -m pytest tests -q
+          - name: Lint (non-blocking)
+            continue-on-error: true
+            run: npm run lint
+      lint:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Lint changed python
+            run: |
+              files=$(git diff --name-only origin/main | grep '\\.py$' || true)
+              ruff check $files || true
+"""
+
+
+def _strip_repairs(rec: dict) -> list:
+    return [(t["workflow"], t["job"], t["index"], t["verdict"], t["verified_repair"],
+             [(c["repair"], c.get("applies"), c.get("loud"), c.get("unchanged"), c.get("diff"), c.get("why"), c.get("lines_changed")) for c in t["candidates"]])
+            for t in rec["targets"]]
+
+
+def test_the_shipped_repairs_are_the_instruments(tmp_path):
+    sys.path.insert(0, str(ROOT))
+    from benchmarks.harness_mutation import repair as instrument
+    from styxx.ciaudit import repair as shipped
+    tree = _tree(tmp_path, "ci.yml", REPAIR_FIXTURE)
+    a, b = instrument.repair_tree(tree), shipped.repair_tree(tree)
+    assert _strip_repairs(a) == _strip_repairs(b)
+    assert shipped.REPAIRS == instrument.REPAIRS
+    assert shipped.strict_shell("x=$(cmd || true)\nset +e\ncmd2 || :\n") == instrument.strict_shell("x=$(cmd || true)\nset +e\ncmd2 || :\n")
+
+
+def test_the_repair_flag_prints_verified_diffs_and_says_which_half_failed(tmp_path, capsys):
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    tree = _tree(tmp_path, "ci.yml", REPAIR_FIXTURE)
+    rc = main([str(tree), "--repair"])
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert "repairs (verified: RED under the same fault, and a healthy run unchanged in both flavours):" in out
+    assert "ci.yml › changes › Discover changed files — strict-shell, 3 lines" in out
+    assert "-          files=$(git diff --name-only origin/main...HEAD -- 'src/' | sort -u || true)" in out
+    assert "+          set -eo pipefail" in out
+    assert "ci.yml › test › Lint (non-blocking) — no-continue-on-error, 1 line" in out
+    assert "-        continue-on-error: true" in out
+    assert "ci.yml › lint › Lint changed python — no verified repair: strict-shell is loud but changes the healthy run in flavour empty" in out
+    rec = ciaudit.audit(str(tree), repair=True)
+    assert rec["repair_catalogue"] == ["no-continue-on-error", "strict-shell", "both"]
+    assert rec["summary"]["repairs"] == {"targets": 3, "verified": 2, "by_repair": {"strict-shell": 1, "no-continue-on-error": 1},
+                                         "rejected_changes_healthy_run": 1, "not_loud": 0, "no_candidate_applies": 0}
+    # the command's path (repair_faults on the audit's findings) and the tree path agree
+    from styxx.ciaudit import repair as shipped
+    assert _strip_repairs({"targets": rec["repairs"]}) == _strip_repairs(shipped.repair_tree(tree))
+    # without the flag the card has no repairs section and the receipt no repairs
+    assert main([str(tree)]) == 1 and "repairs (" not in capsys.readouterr().out
+    assert "repairs" not in ciaudit.audit(str(tree))
+

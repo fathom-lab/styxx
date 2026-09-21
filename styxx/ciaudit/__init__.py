@@ -6,6 +6,7 @@
     styxx ci-audit . --format json         # the receipt
     styxx ci-audit . --counted             # the counted reading of a dropped check (see engine)
     styxx ci-audit . --no-actions          # SWALLOW-2's reading: checks are `run:` steps only
+    styxx ci-audit . --repair              # for every finding, a verified repair of the workflow text, or why there is none
 
 A green CI light means every job exited 0. It does not mean every check ran, or that every
 check could have failed. This command asks the question the light does not answer: for each
@@ -29,6 +30,12 @@ A check that is an action (`uses: pre-commit/action`, `lycheeverse/lychee-action
 catalogue, every entry with its reason) says which actions are checks, and a fault that closes the
 gate in front of one is FAIL_OPEN. `verdict_runs_only` on every fault keeps SWALLOW-2's reading,
 without the catalogue.
+
+`--repair` asks the next question of every finding: is there a small change to the workflow that
+makes the same fault loud and leaves a healthy run exactly as it was? Two stated repairs are tried
+at the fault site (`repair.py`: remove the step's `continue-on-error`; make its shell strict), each
+verified on both halves against the same model, and the card prints the diff -- or which half
+failed, and what the original line was protecting (SWALLOW-4).
 
 What it does not say: a step that is loud is not thereby correct; an action check cannot be seen
 to fail (no fault is injected into one); a local action, a reusable workflow and `github-script`
@@ -67,7 +74,7 @@ def _require_yaml() -> None:
         raise ImportError("styxx ci-audit needs PyYAML: pip install 'styxx[ciaudit]'") from e
 
 
-def audit(target: str, *, counted: bool = False, actions: bool = True, work: Optional[str] = None,
+def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, work: Optional[str] = None,
           deadline_seconds: Optional[float] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
@@ -99,6 +106,10 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, work: Opt
         raise FileNotFoundError(f"{target}: not a directory, and not an owner/repo")
 
     rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None, actions=actions)
+    if repair:
+        from .repair import REPAIRS, repair_faults
+        rec["repairs"] = repair_faults(tree, rec["faults"])
+        rec["repair_catalogue"] = list(REPAIRS)
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
@@ -147,7 +158,22 @@ def summarize(rec: dict, *, counted: bool = False) -> dict:
         "moved_by_the_catalogue": sum(1 for f in faults if f.get("verdict_runs_only") and f["verdict_runs_only"] != f["verdict"]),
         "unreadable_steps": sum(n for s in ws.values() for c, n in s.get("step_classes", {}).items() if c in ("local", "docker", "workflow", "not:unreadable")),
         "reading": ("counted" if counted else "preregistered") + ("" if rec.get("actions", True) else ", run: steps only"),
+        "repairs": ({"targets": len(rec["repairs"]), "verified": sum(1 for t in rec["repairs"] if t.get("verified_repair")),
+                     "by_repair": _count(t["verified_repair"] for t in rec["repairs"] if t.get("verified_repair")),
+                     "rejected_changes_healthy_run": sum(1 for t in rec["repairs"] if not t.get("verified_repair")
+                                                         and any(c.get("applies") and c.get("unchanged") is False for c in t["candidates"])),
+                     "not_loud": sum(1 for t in rec["repairs"] if not t.get("verified_repair") and any(c.get("applies") for c in t["candidates"])
+                                     and all(c.get("unchanged") is not False for c in t["candidates"])),
+                     "no_candidate_applies": sum(1 for t in rec["repairs"] if all(not c.get("applies") for c in t["candidates"]))}
+                    if "repairs" in rec else None),
     }
+
+
+def _count(it) -> dict:
+    out: dict = {}
+    for x in it:
+        out[x] = out.get(x, 0) + 1
+    return out
 
 
 def render(rec: dict, *, counted: bool = False, width: int = 96) -> str:
@@ -167,12 +193,13 @@ def main(argv=None) -> int:
     ap.add_argument("--format", choices=["card", "json"], default="card")
     ap.add_argument("--counted", action="store_true", help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
     ap.add_argument("--no-actions", action="store_true", help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
+    ap.add_argument("--repair", action="store_true", help="for every finding, try the two stated repairs of the workflow text and verify each: loud under the same fault, healthy run unchanged")
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
     a = ap.parse_args(argv)
     try:
-        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, work=a.work, deadline_seconds=a.deadline)
+        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, work=a.work, deadline_seconds=a.deadline)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2

@@ -92,6 +92,34 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-4: the repair is loud — `styxx ci-audit --repair`
+
+Three cycles read what a workflow does when one step's tools fail. This one asks the question a
+maintainer asks next, of every hidden and dropped check in the population: what is the fix, and
+does it work? `benchmarks/harness_mutation/repair.py` tries two stated edits to the workflow
+text at the fault site — remove the step's `continue-on-error`; make its shell strict (`|| true`
+and `set +e` gone, `set -eo pipefail` in) — and verifies each on **both halves** with the same
+instrument: the same fault is RED on the repaired workflow, and a healthy run of the repaired
+workflow is indistinguishable from the original's in both flavours. A repair that is loud but
+changes a healthy run has found what the original line was protecting, and is rejected.
+
+**VALID, 8/10** (`RESULT_swallow4_the_repair_is_loud_2026_09_21.md`; prereg frozen at
+`0069be79…` before any repair was tried; 172 targets from the SWALLOW-3 receipt on the same trees,
+172 baselines equal). **39 of 53 hand-written hidden and dropped checks have a verified repair,
+32 of them one line**; every one of the 33 hidden by `continue-on-error` is one line from loud
+(and 115 of 116 generated ones — `gh-aw`'s compiler marks its agent step that way); 3 of the 4
+dropped checks are repaired, the fourth is fail-closed by design as predicted. The misses are the
+shell: the strict shell repairs the `|| true` idiom (3 of 16) and does not reach a check hidden
+by control flow — an `if grep -q …; then exit 1; fi` whose failing grep is the green path, a
+verifier that compares and echoes, a loop that counts. The twin condition rejected one repair,
+and the right one: `dotnet/aspire` disables `errexit` with a comment saying why, and the strict
+shell would have broken its flaky-test reproducer to make it loud. Read plainly: a non-blocking
+lint is a choice, made in 33 files, and it is one deleted line.
+
+**`styxx ci-audit --repair`** prints, under the findings, the verified diff for each — or which
+half failed and what the line was protecting. `styxx/ciaudit/repair.py` is the living copy;
+`tests/test_ciaudit.py` pins all three instruments and holds each shipped copy to its frozen one.
+
 ## [Unreleased] — SWALLOW-3: the checks that are actions — INVALID on its reproduction gate, and the catalogue ships
 
 SWALLOW-2's RESULT named its blind spot first: a check that is an action (`uses:`) is never

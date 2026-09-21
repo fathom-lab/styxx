@@ -1,0 +1,1266 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S4-1": {
+   "pass": true,
+   "detail": "5 passed in 1.56s"
+  },
+  "G-S4-2": {
+   "pass": true,
+   "detail": "172 targets (53 hand-written); baseline differs or absent: 0 (0 hand-written); missing clones/workflows: 0",
+   "excluded": []
+  },
+  "G-S4-3": {
+   "pass": true,
+   "detail": "verified candidates failing a half: 0",
+   "bad": []
+  },
+  "G-S4-4": {
+   "pass": true,
+   "detail": "candidates outside the stated repairs: 0; receipt repairs ['no-continue-on-error', 'strict-shell', 'both']"
+  },
+  "G-S4-5": {
+   "pass": true,
+   "detail": "faults d26a407ca276d1b1\u2026, action_checks 0e723694d459ca23\u2026, source receipt 609e664549df085b\u2026 (file 609e664549df085b\u2026)"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": false,
+   "predicted": "\u2265 40 of the 49 hand-written SWALLOWED faults verified",
+   "observed": {
+    "swallowed": 49,
+    "verified": 36,
+    "by_repair": {
+     "no-continue-on-error": 31,
+     "strict-shell": 3,
+     "both": 2
+    },
+    "coe": {
+     "targets": 33,
+     "verified": 33
+    },
+    "shell": {
+     "targets": 16,
+     "verified": 3
+    }
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "\u2265 3 of the 16 shell-hidden SWALLOWED faults rejected by the twin condition",
+   "observed": {
+    "shell_hidden": 16,
+    "rejected": 1,
+    "which": [
+     [
+      "dotnet/aspire",
+      "reproduce-flaky-tests.yml",
+      "Run test iterations (Linux/macOS)",
+      "changes the healthy run in flavour x: what the repaired line was protecting"
+     ]
+    ]
+   }
+  },
+  "P3a": {
+   "hit": true,
+   "predicted": "antiwork/gumroad tests.yml \u203a run_scope \u203a 0: verified",
+   "observed": {
+    "verdict": "FAIL_OPEN",
+    "baseline": "FAIL_OPEN",
+    "verified_repair": "strict-shell",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      false,
+      null,
+      null,
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "both",
+      true,
+      true,
+      true,
+      ""
+     ]
+    ]
+   }
+  },
+  "P3b": {
+   "hit": true,
+   "predicted": "getsentry/sentry-docs lint-external-links.yml \u203a check-pr \u203a 1: verified",
+   "observed": {
+    "verdict": "FAIL_OPEN",
+    "baseline": "FAIL_OPEN",
+    "verified_repair": "strict-shell",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      false,
+      null,
+      null,
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "both",
+      true,
+      true,
+      true,
+      ""
+     ]
+    ]
+   }
+  },
+  "P3c": {
+   "hit": true,
+   "predicted": "crewAIInc/crewAI update-test-durations.yml \u203a update-durations \u203a 4: verified",
+   "observed": {
+    "verdict": "FAIL_OPEN",
+    "baseline": "FAIL_OPEN",
+    "verified_repair": "no-continue-on-error",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      true,
+      true,
+      true,
+      ""
+     ],
+     [
+      "strict-shell",
+      true,
+      false,
+      true,
+      "not loud: x=FAIL_OPEN, empty=FAIL_OPEN"
+     ],
+     [
+      "both",
+      true,
+      true,
+      true,
+      ""
+     ]
+    ]
+   }
+  },
+  "P3d": {
+   "hit": true,
+   "predicted": "antiwork/gumroad ci-green.yml \u203a report \u203a 1: not verified",
+   "observed": {
+    "verdict": "FAIL_OPEN",
+    "baseline": "FAIL_OPEN",
+    "verified_repair": null,
+    "candidates": [
+     [
+      "no-continue-on-error",
+      false,
+      null,
+      null,
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      true,
+      false,
+      true,
+      "not loud: x=FAIL_OPEN, empty=FAIL_OPEN"
+     ],
+     [
+      "both",
+      true,
+      false,
+      true,
+      "not loud: x=FAIL_OPEN, empty=FAIL_OPEN"
+     ]
+    ]
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "\u2265 4 of the 8 'fewer' faults verified",
+   "observed": {
+    "fewer": 8,
+    "verified": 6,
+    "which": [
+     [
+      "microsoft/vscode",
+      "Diagnostics before smoke test run (processes, max_user_watches, number of opened file handles)",
+      "no-continue-on-error"
+     ],
+     [
+      "microsoft/vscode",
+      "Diagnostics after smoke test run (processes, max_user_watches, number of opened file handles)",
+      "no-continue-on-error"
+     ],
+     [
+      "dotnet/aspire",
+      "Run test iterations (Linux/macOS)",
+      null
+     ],
+     [
+      "mlflow/mlflow",
+      "Run tests",
+      null
+     ],
+     [
+      "prebid/Prebid.js",
+      "Run linter on base branch",
+      "strict-shell"
+     ],
+     [
+      "prebid/Prebid.js",
+      "Run linter on PR",
+      "strict-shell"
+     ],
+     [
+      "getsentry/sentry-docs",
+      "Run redirect validation",
+      "both"
+     ],
+     [
+      "getsentry/sentry-docs",
+      "Run redirect chain lint",
+      "both"
+     ]
+    ]
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "median verified hand-written repair \u2264 3 lines; max \u2264 10",
+   "observed": {
+    "n": 39,
+    "median": 1,
+    "max": 6,
+    "sizes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     4,
+     4,
+     4,
+     5,
+     5,
+     6,
+     6
+    ]
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "\u2265 90% of generated targets verified, \u2265 90% of those by no-continue-on-error alone",
+   "observed": {
+    "generated": 119,
+    "verified": 115,
+    "by_repair": {
+     "no-continue-on-error": 115
+    }
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "no verified repair with an empty diff; `both` verified whenever a smaller repair is and it applies",
+   "observed": {
+    "empty_diffs": 0,
+    "both_undoes": [],
+    "n_undone": 0
+   }
+  }
+ },
+ "hits": 8,
+ "of": 10,
+ "summary": {
+  "all": {
+   "targets": 172,
+   "verified": 154,
+   "by_repair": {
+    "no-continue-on-error": 147,
+    "strict-shell": 5,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 2,
+   "not_loud": 15,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6
+   ]
+  },
+  "hand_written": {
+   "targets": 53,
+   "verified": 39,
+   "by_repair": {
+    "no-continue-on-error": 32,
+    "strict-shell": 5,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 0,
+   "not_loud": 13,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6
+   ]
+  },
+  "hand_written_frozen": {
+   "targets": 53,
+   "verified": 39,
+   "by_repair": {
+    "no-continue-on-error": 32,
+    "strict-shell": 5,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 0,
+   "not_loud": 13,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6
+   ]
+  },
+  "hand_written_swallowed": {
+   "targets": 49,
+   "verified": 36,
+   "by_repair": {
+    "no-continue-on-error": 31,
+    "strict-shell": 3,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 0,
+   "not_loud": 12,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    5,
+    5,
+    6,
+    6
+   ]
+  },
+  "hand_written_fail_open": {
+   "targets": 4,
+   "verified": 3,
+   "by_repair": {
+    "no-continue-on-error": 1,
+    "strict-shell": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 0,
+   "not_loud": 1,
+   "lines_changed": [
+    1,
+    4,
+    4
+   ]
+  },
+  "hand_written_counted_only": {
+   "targets": 0,
+   "verified": 0,
+   "by_repair": {},
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 0,
+   "not_loud": 0,
+   "lines_changed": []
+  },
+  "hand_written_fewer": {
+   "targets": 8,
+   "verified": 6,
+   "by_repair": {
+    "no-continue-on-error": 2,
+    "strict-shell": 2,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 0,
+   "not_loud": 1,
+   "lines_changed": [
+    1,
+    1,
+    5,
+    5,
+    6,
+    6
+   ]
+  },
+  "hand_written_swallowed_by_continue_on_error": {
+   "targets": 33,
+   "verified": 33,
+   "by_repair": {
+    "no-continue-on-error": 31,
+    "both": 2
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 0,
+   "not_loud": 0,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    5
+   ]
+  },
+  "hand_written_swallowed_by_the_shell": {
+   "targets": 16,
+   "verified": 3,
+   "by_repair": {
+    "strict-shell": 3
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 1,
+   "no_candidate_applies": 0,
+   "not_loud": 12,
+   "lines_changed": [
+    4,
+    6,
+    6
+   ]
+  },
+  "generated": {
+   "targets": 119,
+   "verified": 115,
+   "by_repair": {
+    "no-continue-on-error": 115
+   },
+   "baseline_differs_from_receipt": 0,
+   "rejected_changes_healthy_run": 0,
+   "no_candidate_applies": 2,
+   "not_loud": 2,
+   "lines_changed": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  }
+ },
+ "hand_written": {
+  "targets": 53,
+  "verified": 39,
+  "by_repair": {
+   "no-continue-on-error": 32,
+   "strict-shell": 5,
+   "both": 2
+  },
+  "not_verified": [
+   {
+    "repo": "githubnext/gh-aw",
+    "workflow": "integration-agentics.yml",
+    "job": "integration-test-agentics",
+    "index": 12,
+    "name": "Verify no compilation errors",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "echo \"Verifying workflow compilation completed without errors...\"",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "reproduce-flaky-tests.yml",
+    "job": "reproduce",
+    "index": 12,
+    "name": "Run test iterations (Linux/macOS)",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "PASS=0",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "changes the healthy run in flavour x: what the repaired line was protecting"
+     ],
+     [
+      "both",
+      "changes the healthy run in flavour x: what the repaired line was protecting"
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 5,
+    "name": "Check if any test requires NuGets",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "RUNSHEET='${{ steps.inject_properties.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 6,
+    "name": "Check if any test requires CLI archives",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "RUNSHEET='${{ steps.inject_properties.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/aspire",
+    "workflow": "specialized-test-runner.yml",
+    "job": "generate_tests_matrix",
+    "index": 7,
+    "name": "Check if any test requires GitHub token",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "RUNSHEET='${{ steps.generate_tests_matrix.outputs.runsheet }}'",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "hmislk/hmis",
+    "workflow": "development_pr_validation.yml",
+    "job": "validate-jdbc-data-sources",
+    "index": 2,
+    "name": "Validate grantAllPrivilegesToAllUsersForTesting",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "if grep -q \"grantAllPrivilegesToAllUsersForTesting = true\" src/main/java/com/divudi/bean/common/WebU",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "mlflow/mlflow",
+    "workflow": "master.yml",
+    "job": "database",
+    "index": 3,
+    "name": "Run tests",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "set +e",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "ci-green.yml",
+    "job": "report",
+    "index": 1,
+    "name": "Re-check migration versions against current main",
+    "verdict": "FAIL_OPEN",
+    "coe": false,
+    "run_head": "set -uo pipefail",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=FAIL_OPEN, empty=FAIL_OPEN"
+     ],
+     [
+      "both",
+      "not loud: x=FAIL_OPEN, empty=FAIL_OPEN"
+     ]
+    ]
+   },
+   {
+    "repo": "selfxyz/self",
+    "workflow": "mobile-deploy.yml",
+    "job": "build-ios",
+    "index": 3,
+    "name": "Verify branch and commit (iOS)",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "echo \"\ud83d\udd0d Verifying we're building from the correct branch and commit...\"",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "selfxyz/self",
+    "workflow": "mobile-deploy.yml",
+    "job": "build-android",
+    "index": 8,
+    "name": "Verify branch and commit (Android)",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "echo \"\ud83d\udd0d Verifying we're building from the correct branch and commit...\"",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "carverauto/serviceradar",
+    "workflow": "release.yml",
+    "job": "publish",
+    "index": 15,
+    "name": "Verify Alpine APK pins",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "set -euo pipefail",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "dotnet/roslyn",
+    "workflow": "pr-validation.yml",
+    "job": "validate-and-trigger",
+    "index": 11,
+    "name": "Determine validation type and pipeline ID",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "if echo \"$COMMENT_BODY\" | grep -q \"/dart\"; then",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "nodetool-ai/nodetool",
+    "workflow": "mutation-testing.yaml",
+    "job": "mutation",
+    "index": 4,
+    "name": "Run mutation testing",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "PKGS=\"${{ github.event.inputs.packages }}\"",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   },
+   {
+    "repo": "langfuse/langfuse",
+    "workflow": "pipeline.yml",
+    "job": "tests-shared",
+    "index": 9,
+    "name": "run SQL-equivalence tests (non-blocking)",
+    "verdict": "SWALLOWED",
+    "coe": false,
+    "run_head": "pnpm --filter @langfuse/shared run test .golden.test \\",
+    "candidates": [
+     [
+      "no-continue-on-error",
+      "no continue-on-error on the step or its job"
+     ],
+     [
+      "strict-shell",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ],
+     [
+      "both",
+      "not loud: x=SWALLOWED, empty=SWALLOWED"
+     ]
+    ]
+   }
+  ],
+  "fail_open": [
+   {
+    "repo": "crewAIInc/crewAI",
+    "workflow": "update-test-durations.yml",
+    "job": "update-durations",
+    "index": 4,
+    "verified_repair": "no-continue-on-error"
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "ci-green.yml",
+    "job": "report",
+    "index": 1,
+    "verified_repair": null
+   },
+   {
+    "repo": "antiwork/gumroad",
+    "workflow": "tests.yml",
+    "job": "run_scope",
+    "index": 0,
+    "verified_repair": "strict-shell"
+   },
+   {
+    "repo": "getsentry/sentry-docs",
+    "workflow": "lint-external-links.yml",
+    "job": "check-pr",
+    "index": 1,
+    "verified_repair": "strict-shell"
+   }
+  ]
+ },
+ "instrument_sha256": "7b9a1695d316c2ce109495cf60c5a9a1de03bac204e9bf48fdbc2a1ac66012b9",
+ "receipt_sha256": "7353781af308d55c084e6ed715814db6624ac3e262c723ca756ebb301259a420",
+ "receipt_file": "swallow4_receipt.json.gz",
+ "prereg_sha256_at_freeze": "0069be79eada6501354f8bde314bda80553f30f2a539f6e6677211eb25f93610"
+}

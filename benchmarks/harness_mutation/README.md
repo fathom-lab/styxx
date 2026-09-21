@@ -99,3 +99,26 @@ stub order, a background subshell racing the log), each demonstrated in `swallow
 and reports, not claims, what the catalogue moved: 5 hand-written faults, one to a dropped check.
 `action_checks.py` is frozen at the sha256 that receipt names (`0e723694…`); the living copy of the
 catalogue is `styxx/ciaudit/actions.py`, and `tests/test_ciaudit.py` holds them equal.
+
+## The repair is loud (SWALLOW-4)
+
+For every hidden or dropped check, `repair.py` tries two stated edits to the workflow text at the
+fault site — remove the step's `continue-on-error`; make its shell strict — and verifies each on
+both halves with the same instrument: LOUD (the same fault is RED on the repaired workflow) and
+UNCHANGED (a healthy run of the repaired workflow is indistinguishable from the original's, in
+both flavours). A repair that is loud but changes a healthy run has found what the original line
+was protecting, and is rejected with the flavour and the step. The receipt carries every diff.
+
+```
+python -m benchmarks.harness_mutation.repair --tree .
+python -m benchmarks.harness_mutation.repair --receipt papers/harness/swallow3_receipt.json.gz --clones <clones> --out receipt.json
+python papers/harness/swallow4_score.py
+```
+
+`papers/harness/RESULT_swallow4_the_repair_is_loud_2026_09_21.md` (VALID, 8/10): 39 of the
+population's 53 hand-written hidden and dropped checks have a verified repair, 32 of them one
+line; every check hidden by `continue-on-error` is one line from loud; the shell hides the rest by
+control flow, which a strict shell does not reach. `repair.py` is frozen at the sha256 that
+receipt names (`7b9a1695…`); the living copy is `styxx/ciaudit/repair.py`, behind
+`styxx ci-audit --repair`, and `tests/test_ciaudit.py` holds the two to identical outcomes.
+

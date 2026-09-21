@@ -112,6 +112,7 @@ jobs:
               "styxx/ciaudit/__init__.py",
               "styxx/ciaudit/engine.py",
               "styxx/ciaudit/actions.py",
+              "styxx/ciaudit/repair.py",
           ]
           missing = [m for m in required if m not in names]
           if missing:
