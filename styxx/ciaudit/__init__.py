@@ -35,7 +35,10 @@ without the catalogue.
 makes the same fault loud and leaves a healthy run exactly as it was? Two stated repairs are tried
 at the fault site (`repair.py`: remove the step's `continue-on-error`; make its shell strict), each
 verified on both halves against the same model, and the card prints the diff -- or which half
-failed, and what the original line was protecting (SWALLOW-4).
+failed, and what the original line was protecting (SWALLOW-4). For a finding those leave
+unverified, two edits to the script's logic are tried next (`repair_structural.py`: a guard whose
+failing tool is not its green path; a query without its `|| echo` default), verified the same way
+(SWALLOW-5).
 
 What it does not say: a step that is loud is not thereby correct; an action check cannot be seen
 to fail (no fault is injected into one); a local action, a reusable workflow and `github-script`
@@ -108,8 +111,9 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
     rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None, actions=actions)
     if repair:
         from .repair import REPAIRS, repair_faults
+        from .repair_structural import REPAIRS as STRUCTURAL
         rec["repairs"] = repair_faults(tree, rec["faults"])
-        rec["repair_catalogue"] = list(REPAIRS)
+        rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL)
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,

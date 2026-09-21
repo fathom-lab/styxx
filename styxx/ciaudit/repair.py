@@ -357,5 +357,11 @@ def repair_faults(tree: Path, faults_list: list) -> list:
                        verdict_counted=f.get("verdict_counted"), stratum="frozen", continue_on_error=f.get("continue_on_error", False),
                        run_head=f.get("run_head", ""), check=f.get("check"),
                        fewer=any(d.get("mechanism") == "fewer" for d in f.get("dropped_counted", [])))
+            if rec["verified_repair"] is None and rec["baseline"].get("verdict") is not None:
+                # the second stage (SWALLOW-5): the structural repairs, for what the small ones leave
+                from .repair_structural import try_structural
+                second = try_structural(text, wf_name, f["job"], f["index"], runner, baseline=f)
+                rec["candidates"] = rec["candidates"] + second["candidates"]
+                rec["verified_repair"] = second["verified_repair"]
             out.append(rec)
     return out
