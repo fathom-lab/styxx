@@ -66,3 +66,8 @@ It reproduces #137 with no runner, no token and no code: on `main` the two gated
 and the job is green when the discover step's tools fail; on #137's tree the same fault is RED.
 `papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md` has the map for 100
 repositories, and the runs it took to draw it.
+
+`faults.py` here is **frozen** at the sha256 the SWALLOW-2 receipt names (`d26a407c…`;
+`tests/test_ciaudit.py` pins it). The living copy is the shipped engine, `styxx/ciaudit/engine.py`,
+behind `styxx ci-audit`; the same test holds the two to identical verdicts on the fixtures and on
+this repository's own workflows until a cycle declares otherwise.
