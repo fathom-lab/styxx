@@ -1266,6 +1266,8 @@ def cmd_ci_audit(args):
         argv.append("--counted")
     if getattr(args, "no_actions", False):
         argv.append("--no-actions")
+    if getattr(args, "repair", False):
+        argv.append("--repair")
     if args.out:
         argv += ["--out", args.out]
     if args.work:
@@ -2994,6 +2996,8 @@ def _build_parser() -> argparse.ArgumentParser:
                            help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
     p_ciaudit.add_argument("--no-actions", action="store_true",
                            help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
+    p_ciaudit.add_argument("--repair", action="store_true",
+                           help="for every finding, try the two stated repairs of the workflow text and verify each (loud under the fault, healthy run unchanged)")
     p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
     p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
     p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
