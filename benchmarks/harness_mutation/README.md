@@ -25,3 +25,22 @@ The receipt carries a *harness fingerprint*: a sha256 over every file a mutant c
 file the oracle reads. Two commits with the same fingerprint have the same harness, and a run
 applies to either. That is how a run made on a locally merged tree is checked against the commit
 that eventually carries the same files.
+
+## The census (SWALLOW-1): the behavioural guard, taken to other repositories
+
+MUTE-2's second guard needs nothing but a repository's workflow files: execute every `run:` step
+with an empty PATH, so that every external command fails, and see whether the step goes red.
+`census.py` does that for any list of repositories — a blob-less sparse clone of
+`.github/workflows`, every bash step executed and classified (PROPAGATES, SWALLOWS, TOOLLESS,
+SYNTAX, TIMEOUT, NOT_BASH), `continue-on-error`, a category, and #137's exact shape recorded
+beside the verdict.
+
+```
+python -m benchmarks.harness_mutation.census --tree .                                   # this repository
+python -m benchmarks.harness_mutation.census --repos papers/harness/swallow1_population.json --out receipt.json
+python papers/harness/swallow1_score.py
+```
+
+It sees that a step *cannot fail*; it cannot see which way the step falls when it does not —
+`papers/harness/RESULT_swallow1_ci_steps_that_cannot_fail_2026_09_21.md` says so, and reads the
+38 verification steps it found one by one.

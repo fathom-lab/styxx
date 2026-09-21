@@ -1,0 +1,502 @@
+[
+{
+"repo": "mochilang/mochi",
+"agent_prs": 13448,
+"rank": 1
+},
+{
+"repo": "MontrealAI/AGI-Alpha-Agent-v0",
+"agent_prs": 3646,
+"rank": 2
+},
+{
+"repo": "githubnext/gh-aw",
+"agent_prs": 1109,
+"rank": 3
+},
+{
+"repo": "liam-hq/liam",
+"agent_prs": 643,
+"rank": 4
+},
+{
+"repo": "microsoft/vscode",
+"agent_prs": 614,
+"rank": 5
+},
+{
+"repo": "dotnet/aspire",
+"agent_prs": 572,
+"rank": 6
+},
+{
+"repo": "nagisa77/OpenIsle",
+"agent_prs": 562,
+"rank": 7
+},
+{
+"repo": "mfat/sshpilot",
+"agent_prs": 533,
+"rank": 8
+},
+{
+"repo": "hmislk/hmis",
+"agent_prs": 520,
+"rank": 9
+},
+{
+"repo": "jrkropp/open-webui-developer-toolkit",
+"agent_prs": 501,
+"rank": 10
+},
+{
+"repo": "MihaiCristianCondrea/Smart-Cleaner-for-Android",
+"agent_prs": 490,
+"rank": 11
+},
+{
+"repo": "charlesvestal/extending-move",
+"agent_prs": 457,
+"rank": 12
+},
+{
+"repo": "crewAIInc/crewAI",
+"agent_prs": 403,
+"rank": 13
+},
+{
+"repo": "mlflow/mlflow",
+"agent_prs": 395,
+"rank": 14
+},
+{
+"repo": "wieslawsoltes/Dock",
+"agent_prs": 313,
+"rank": 15
+},
+{
+"repo": "antiwork/flexile",
+"agent_prs": 297,
+"rank": 16
+},
+{
+"repo": "airbytehq/airbyte",
+"agent_prs": 295,
+"rank": 17
+},
+{
+"repo": "ryokun6/ryos",
+"agent_prs": 288,
+"rank": 18
+},
+{
+"repo": "vinhnx/vtcode",
+"agent_prs": 281,
+"rank": 19
+},
+{
+"repo": "dotnet/docs",
+"agent_prs": 277,
+"rank": 20
+},
+{
+"repo": "calcom/cal.com",
+"agent_prs": 244,
+"rank": 21
+},
+{
+"repo": "antiwork/gumroad",
+"agent_prs": 243,
+"rank": 22
+},
+{
+"repo": "jdereg/java-util",
+"agent_prs": 228,
+"rank": 23
+},
+{
+"repo": "asynkron/protoactor-dotnet",
+"agent_prs": 216,
+"rank": 24
+},
+{
+"repo": "onlook-dev/onlook",
+"agent_prs": 206,
+"rank": 25
+},
+{
+"repo": "selfxyz/self",
+"agent_prs": 205,
+"rank": 26
+},
+{
+"repo": "antiwork/helper",
+"agent_prs": 201,
+"rank": 27
+},
+{
+"repo": "StockSharp/StockSharp",
+"agent_prs": 201,
+"rank": 28
+},
+{
+"repo": "rsyslog/rsyslog",
+"agent_prs": 193,
+"rank": 29
+},
+{
+"repo": "dotnet/runtime",
+"agent_prs": 190,
+"rank": 30
+},
+{
+"repo": "oven-sh/bun",
+"agent_prs": 183,
+"rank": 31
+},
+{
+"repo": "KomodoPlatform/komodo-wallet",
+"agent_prs": 182,
+"rank": 32
+},
+{
+"repo": "microsoft/genaiscript",
+"agent_prs": 177,
+"rank": 33
+},
+{
+"repo": "DaveSkender/Stock.Indicators",
+"agent_prs": 170,
+"rank": 34
+},
+{
+"repo": "kuberhealthy/kuberhealthy",
+"agent_prs": 170,
+"rank": 35
+},
+{
+"repo": "dcSpark/shinkai-local-ai-agents",
+"agent_prs": 169,
+"rank": 36
+},
+{
+"repo": "microsoft/vscode-pull-request-github",
+"agent_prs": 168,
+"rank": 37
+},
+{
+"repo": "dotnet/maui",
+"agent_prs": 166,
+"rank": 38
+},
+{
+"repo": "wieslawsoltes/Xaml.Behaviors",
+"agent_prs": 164,
+"rank": 39
+},
+{
+"repo": "neondatabase/website",
+"agent_prs": 161,
+"rank": 40
+},
+{
+"repo": "epam/ketcher",
+"agent_prs": 155,
+"rank": 41
+},
+{
+"repo": "OpenHFT/Chronicle-Wire",
+"agent_prs": 154,
+"rank": 42
+},
+{
+"repo": "giselles-ai/giselle",
+"agent_prs": 150,
+"rank": 43
+},
+{
+"repo": "theopenco/llmgateway",
+"agent_prs": 150,
+"rank": 44
+},
+{
+"repo": "oxc-project/oxc",
+"agent_prs": 150,
+"rank": 45
+},
+{
+"repo": "bionic-gpt/bionic-gpt",
+"agent_prs": 149,
+"rank": 46
+},
+{
+"repo": "l5yth/potato-mesh",
+"agent_prs": 149,
+"rank": 47
+},
+{
+"repo": "novuhq/novu",
+"agent_prs": 145,
+"rank": 48
+},
+{
+"repo": "tokens-studio/figma-plugin",
+"agent_prs": 144,
+"rank": 49
+},
+{
+"repo": "langfuse/langfuse-docs",
+"agent_prs": 143,
+"rank": 50
+},
+{
+"repo": "dotnet/aspnetcore",
+"agent_prs": 137,
+"rank": 51
+},
+{
+"repo": "carverauto/serviceradar",
+"agent_prs": 137,
+"rank": 52
+},
+{
+"repo": "prebid/Prebid.js",
+"agent_prs": 135,
+"rank": 53
+},
+{
+"repo": "microsoft/wassette",
+"agent_prs": 133,
+"rank": 54
+},
+{
+"repo": "operately/operately",
+"agent_prs": 129,
+"rank": 55
+},
+{
+"repo": "davidmerfield/blot",
+"agent_prs": 125,
+"rank": 56
+},
+{
+"repo": "getsentry/sentry",
+"agent_prs": 122,
+"rank": 57
+},
+{
+"repo": "DannyMac180/meta-agent",
+"agent_prs": 122,
+"rank": 58
+},
+{
+"repo": "firecrawl/firecrawl",
+"agent_prs": 121,
+"rank": 59
+},
+{
+"repo": "openai/codex",
+"agent_prs": 120,
+"rank": 60
+},
+{
+"repo": "microsoft/typespec",
+"agent_prs": 118,
+"rank": 61
+},
+{
+"repo": "selcukorkmaz/fastml",
+"agent_prs": 113,
+"rank": 62
+},
+{
+"repo": "gluesql/gluesql",
+"agent_prs": 112,
+"rank": 63
+},
+{
+"repo": "dotnet/roslyn",
+"agent_prs": 110,
+"rank": 64
+},
+{
+"repo": "OpenHFT/Chronicle-Core",
+"agent_prs": 109,
+"rank": 65
+},
+{
+"repo": "browser-use/browser-use",
+"agent_prs": 109,
+"rank": 66
+},
+{
+"repo": "Azure/azure-rest-api-specs",
+"agent_prs": 108,
+"rank": 67
+},
+{
+"repo": "promptfoo/promptfoo",
+"agent_prs": 106,
+"rank": 68
+},
+{
+"repo": "codenameone/CodenameOne",
+"agent_prs": 106,
+"rank": 69
+},
+{
+"repo": "AgentOps-AI/agentops",
+"agent_prs": 105,
+"rank": 70
+},
+{
+"repo": "Metta-AI/metta",
+"agent_prs": 105,
+"rank": 71
+},
+{
+"repo": "jdereg/json-io",
+"agent_prs": 105,
+"rank": 72
+},
+{
+"repo": "nodetool-ai/nodetool",
+"agent_prs": 104,
+"rank": 73
+},
+{
+"repo": "Azure/azure-sdk-for-python",
+"agent_prs": 104,
+"rank": 74
+},
+{
+"repo": "reflex-dev/reflex-web",
+"agent_prs": 103,
+"rank": 75
+},
+{
+"repo": "langfuse/langfuse",
+"agent_prs": 102,
+"rank": 76
+},
+{
+"repo": "thomhurst/TUnit",
+"agent_prs": 101,
+"rank": 77
+},
+{
+"repo": "SMEWebify/WebErpMesv2",
+"agent_prs": 100,
+"rank": 78
+},
+{
+"repo": "CitizensFoundation/your-priorities-app",
+"agent_prs": 99,
+"rank": 79
+},
+{
+"repo": "OpenHFT/Chronicle-Values",
+"agent_prs": 99,
+"rank": 80
+},
+{
+"repo": "jaseci-labs/jaseci",
+"agent_prs": 98,
+"rank": 81
+},
+{
+"repo": "primer/react",
+"agent_prs": 98,
+"rank": 82
+},
+{
+"repo": "FastLED/FastLED",
+"agent_prs": 98,
+"rank": 83
+},
+{
+"repo": "pyth-network/pyth-crosschain",
+"agent_prs": 97,
+"rank": 84
+},
+{
+"repo": "GlareDB/glaredb",
+"agent_prs": 97,
+"rank": 85
+},
+{
+"repo": "marin-community/levanter",
+"agent_prs": 96,
+"rank": 86
+},
+{
+"repo": "willmiao/ComfyUI-Lora-Manager",
+"agent_prs": 96,
+"rank": 87
+},
+{
+"repo": "SkBlaz/py3plex",
+"agent_prs": 95,
+"rank": 88
+},
+{
+"repo": "getsentry/sentry-docs",
+"agent_prs": 94,
+"rank": 89
+},
+{
+"repo": "antiwork/gumboard",
+"agent_prs": 94,
+"rank": 90
+},
+{
+"repo": "microsoft/testfx",
+"agent_prs": 93,
+"rank": 91
+},
+{
+"repo": "Azure/azure-sdk-for-net",
+"agent_prs": 93,
+"rank": 92
+},
+{
+"repo": "dotnet/sdk",
+"agent_prs": 93,
+"rank": 93
+},
+{
+"repo": "go-vikunja/vikunja",
+"agent_prs": 93,
+"rank": 94
+},
+{
+"repo": "Significant-Gravitas/AutoGPT",
+"agent_prs": 91,
+"rank": 95
+},
+{
+"repo": "manaflow-ai/cmux",
+"agent_prs": 90,
+"rank": 96
+},
+{
+"repo": "featureform/enrichmcp",
+"agent_prs": 89,
+"rank": 97
+},
+{
+"repo": "box/box-ui-elements",
+"agent_prs": 88,
+"rank": 98
+},
+{
+"repo": "microsoft/typescript-go",
+"agent_prs": 88,
+"rank": 99
+},
+{
+"repo": "Sh0ckFR/Universal-Dear-ImGui-Hook",
+"agent_prs": 88,
+"rank": 100
+}
+]

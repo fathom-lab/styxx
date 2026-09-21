@@ -1,0 +1,181 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S1-1": {
+   "pass": true,
+   "detail": "population sha256 5ac2789b6d67eed8\u2026, 100 entries"
+  },
+  "G-S1-2": {
+   "pass": true,
+   "detail": "96 cloned; failures: [('MihaiCristianCondrea/Smart-Cleaner-for-Android', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/flexile', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/helper', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('Metta-AI/metta', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\")]"
+  },
+  "G-S1-3": {
+   "pass": true,
+   "detail": "self-census: {'PROPAGATES': 33, 'TOOLLESS': 5}"
+  },
+  "G-S1-4": {
+   "pass": true,
+   "detail": "verdicts and categories are the instrument's; nothing reclassified"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "\u2265 50% of repos with an executed step have a step that cannot fail",
+   "observed": {
+    "repos_with_executed_step": 87,
+    "repos_with_cannot_fail": 67,
+    "rate": 0.77
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "\u2265 10% have a verification step that cannot fail",
+   "observed": {
+    "repos_with_verification_cannot_fail": 35,
+    "rate": 0.402,
+    "repos": [
+     "FastLED/FastLED",
+     "KomodoPlatform/komodo-wallet",
+     "Significant-Gravitas/AutoGPT",
+     "SkBlaz/py3plex",
+     "airbytehq/airbyte",
+     "antiwork/gumroad",
+     "browser-use/browser-use",
+     "carverauto/serviceradar",
+     "crewAIInc/crewAI",
+     "davidmerfield/blot",
+     "dotnet/aspire",
+     "dotnet/maui",
+     "dotnet/sdk",
+     "firecrawl/firecrawl",
+     "getsentry/sentry",
+     "getsentry/sentry-docs",
+     "giselles-ai/giselle",
+     "githubnext/gh-aw",
+     "gluesql/gluesql",
+     "go-vikunja/vikunja",
+     "jaseci-labs/jaseci",
+     "langfuse/langfuse",
+     "manaflow-ai/cmux",
+     "microsoft/testfx",
+     "microsoft/vscode",
+     "mlflow/mlflow",
+     "mochilang/mochi",
+     "neondatabase/website",
+     "nodetool-ai/nodetool",
+     "novuhq/novu",
+     "openai/codex",
+     "oxc-project/oxc",
+     "primer/react",
+     "promptfoo/promptfoo",
+     "selfxyz/self"
+    ]
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "median per-repo shell swallow rate < 5% (hand-written)",
+   "observed": {
+    "median": 0.021929824561403508,
+    "repos": 87,
+    "p75": 0.06060606060606061,
+    "max": 1.0
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "\u2265 3 repos with a git query whose failure becomes an empty answer",
+   "observed": {
+    "repos": [
+     "Significant-Gravitas/AutoGPT",
+     "airbytehq/airbyte",
+     "antiwork/gumroad",
+     "carverauto/serviceradar",
+     "codenameone/CodenameOne",
+     "davidmerfield/blot",
+     "dotnet/aspire",
+     "dotnet/maui",
+     "dotnet/roslyn",
+     "dotnet/runtime",
+     "dotnet/sdk",
+     "getsentry/sentry",
+     "getsentry/sentry-docs",
+     "githubnext/gh-aw",
+     "jaseci-labs/jaseci",
+     "l5yth/potato-mesh",
+     "manaflow-ai/cmux",
+     "mfat/sshpilot",
+     "microsoft/vscode",
+     "microsoft/wassette",
+     "prebid/Prebid.js",
+     "primer/react",
+     "pyth-network/pyth-crosschain",
+     "selfxyz/self"
+    ],
+    "count": 24
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "\u2265 10 repos with *.lock.yml; \u2265 30% of their steps continue-on-error",
+   "observed": {
+    "repos": 14,
+    "generated_steps": 24739,
+    "continue_on_error": 4196,
+    "rate": 0.17
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "TOOLLESS \u2264 25% of bash steps; SYNTAX+TIMEOUT \u2264 2%",
+   "observed": {
+    "bash_steps": 33358,
+    "toolless_rate": 0.074,
+    "syntax_timeout_rate": 0.0
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "< 60% of hand-written executed steps containing '|| true' actually swallow",
+   "observed": {
+    "steps_with_or_true": 527,
+    "swallow": 135,
+    "rate": 0.256
+   }
+  }
+ },
+ "hits": 6,
+ "of": 7,
+ "summary": {
+  "repos_with_an_executed_step": 87,
+  "median_per_repo_shell_swallow_rate": 0.01818181818181818,
+  "repos_with_a_step_that_cannot_fail": 67,
+  "repos_with_a_verification_step_that_cannot_fail": 35,
+  "repos_with_generated_agentic_workflows": 14,
+  "generated_steps": 24739,
+  "generated_steps_continue_on_error": 4196,
+  "steps_syntax_or_timeout": 0,
+  "steps_git_query_or_true": 40,
+  "repos": 100,
+  "repos_with_workflows": 90,
+  "repos_clone_failed": 4,
+  "steps": 33651,
+  "by_verdict": {
+   "PROPAGATES": 30495,
+   "TOOLLESS": 2453,
+   "NOT_BASH": 293,
+   "SWALLOWS": 410
+  },
+  "swallow_rate_among_executed": 0.0133,
+  "verification_steps_executed": 1646,
+  "verification_swallows": 38,
+  "verification_continue_on_error": 42,
+  "repos_with_a_swallow": 57,
+  "repos_with_a_verification_swallow": 20
+ },
+ "instrument_sha256": "98d394c2cbf32295a157d9c9288d5fd7c121f7a198bbc5bdd84bdd10780cd264",
+ "receipt_sha256": "25b6ee628fed98c4e2da91d081ad814d1cabe50fb8be97f84108ec3e0a74e0b0",
+ "receipt_file": "swallow1_receipt.json.gz",
+ "prereg_sha256_at_freeze": "7342f633a8d738c596e83714cec90c160929944d04d3f1b0132f3c69c2d8d3a3"
+}
