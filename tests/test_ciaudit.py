@@ -36,6 +36,10 @@ STRUCTURAL_INSTRUMENT_SHA256 = "77067a71fa41e48089b4c3e68fae17f02322fd892fc71d60
 # at the sha256 the SWALLOW-6 prereg and receipt name (papers/harness/swallow6_receipt.json.gz). Same rule.
 HISTORY_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "history.py"
 HISTORY_INSTRUMENT_SHA256 = "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c"
+# SWALLOW-7's instrument -- the gate between a base and a head -- frozen at the sha256 the SWALLOW-7
+# prereg and receipt name (papers/harness/swallow7_receipt.json.gz). Same rule.
+DIFFERENTIAL_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "differential.py"
+DIFFERENTIAL_INSTRUMENT_SHA256 = "91e4a4a755b80027ed2e3e8c96d72be299ec44e2afce5ca35b402eecdba11c9e"
 
 FIXTURE = """
     on: [push]
@@ -155,6 +159,8 @@ def test_the_instruments_are_the_ones_the_receipts_name():
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
     assert hashlib.sha256(HISTORY_INSTRUMENT.read_bytes()).hexdigest() == HISTORY_INSTRUMENT_SHA256, (
         "benchmarks/harness_mutation/history.py is not the file the SWALLOW-6 receipt names; a new receipt, not a new pin")
+    assert hashlib.sha256(DIFFERENTIAL_INSTRUMENT.read_bytes()).hexdigest() == DIFFERENTIAL_INSTRUMENT_SHA256, (
+        "benchmarks/harness_mutation/differential.py is not the file the SWALLOW-7 receipt names; a new receipt, not a new pin")
 
 
 def test_the_shipped_catalogue_is_the_frozen_one():
@@ -449,3 +455,45 @@ def test_the_history_flag_says_since_when_and_by_whose_hand(tmp_path, capsys):
     rec = ciaudit.audit(str(bare), history=True)
     assert rec["history"].get("error", "").startswith("no git history") or all(not f["placed"] for f in rec["history"]["findings"])
 
+
+def test_the_shipped_gate_is_the_instruments(tmp_path):
+    """The living copy says the same as the frozen instrument at every commit of the scripted history."""
+    sys.path.insert(0, str(ROOT))
+    from benchmarks.harness_mutation import differential as instrument
+    from styxx.ciaudit import differential as shipped
+    from tests.test_harness_differential import _shas
+    from tests.test_harness_history import _repo
+    tree = _repo(tmp_path)
+    shas = _shas(tree)
+    strip = lambda a: [(w["workflow"], w["status"], [(x["job"], x["step"], x["kind"], x["verdict"], x.get("mechanism"), x["fix"]["verified_repair"], x["fix"]["diff"]) for x in w["new_hidden"]],  # noqa: E731
+                        [(x["job"], x["step"], x["kind"], x.get("mechanism")) for x in w["removed_hidden"]], sorted(x["step"] for x in w["still_hidden"])) for w in a["workflows"]]
+    for n, sha in enumerate(shas[1:], 1):
+        assert strip(instrument.audit_commit(tree, shas[n - 1], sha, {})) == strip(shipped.audit_commit(tree, shas[n - 1], sha, {}))
+    assert shipped.FIRES == instrument.FIRES
+
+
+def test_the_base_flag_is_the_pull_requests_gate(tmp_path, capsys):
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    from tests.test_harness_differential import _shas
+    from tests.test_harness_history import _repo
+    tree = _repo(tmp_path)
+    shas = _shas(tree)
+    # against the first commit: one check newly hidden (the gate fires, exit 1), two hidden checks made loud or removed
+    assert main([str(tree), "--base", shas[0]]) == 1
+    out = capsys.readouterr().out
+    assert f"since {shas[0]} (merge-base {shas[0][:8]}): 1 workflow changed · 1 check newly hidden — THE GATE FIRES · 2 hidden checks made loud or removed" in out
+    assert "  SWALLOWED  ci.yml › test › Lint (non-blocking)   [acquired: continue-on-error]" in out
+    assert "repair: no-continue-on-error, 1 line (verified: loud under the same fault, healthy run unchanged)" in out
+    assert "                 -        continue-on-error: true" in out
+    assert "  loud       ci.yml › test › Lint colors   [repaired: or-true]" in out and "  gone       ci.yml › test › Lint markdown   [removed]" in out
+    # against the second commit: the hidden check was already hidden there -- not this change's doing, exit 0
+    assert main([str(tree), "--base", shas[1]]) == 0
+    out = capsys.readouterr().out
+    assert "nothing newly hidden · 2 hidden checks made loud or removed · 1 hidden on both sides (not this change's doing)" in out
+    # against HEAD itself: nothing to read, exit 0; a base that does not resolve is an error, exit 2
+    assert main([str(tree), "--base", "HEAD"]) == 0
+    assert "no workflow changed; the gate has nothing to read." in capsys.readouterr().out
+    assert main([str(tree), "--base", "no-such-ref"]) == 2
+    rec = ciaudit.audit(str(tree), base=shas[0])
+    assert rec["differential"]["fires"] and rec["differential"]["new_hidden"] == 1 and rec["differential"]["merge_base"] == shas[0]
