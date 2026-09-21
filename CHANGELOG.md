@@ -92,6 +92,39 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-6: where hidden checks come from — `styxx ci-audit --history`
+
+SWALLOW-2 to SWALLOW-5 read a checkout at one moment. `benchmarks/harness_mutation/history.py`
+reads the same checks through time: every revision of every hand-written workflow on the default
+branch's mainline, from the GitHub Actions YAML era's start (2019-08-01) to the pinned HEAD, with
+the frozen SWALLOW-3 reading, and follows every check as a lineage — the same job and step name —
+from the commit that created it. Loud → hidden is an acquisition, hidden → loud a repair, each
+with its commit, the mechanism read from the step's YAML before and after, and whether the commit
+message says why in a stated list of words; for every repair, SWALLOW-4's and SWALLOW-5's
+candidates are tried on the revision before and compared with what the author did.
+
+**VALID, 5/7** (`RESULT_swallow6_where_hidden_checks_come_from_2026_09_21.md`; prereg frozen at
+`d19eff1f…`; five runs — the instrument was amended for memory, for a bookkeeping defect its own
+HEAD-agreement gate exposed (that one moved P4 from HIT to MISS), and twice for renamed workflows
+read as absent before the rename, which SWALLOW-7's gate exposed; each stated with what it moved).
+Across 96 repositories, 27,624 mainline commits and 36,934 workflow revisions: **40 of the 53 hidden checks alive at HEAD were written hidden and have never been
+loud**; 3 were hidden later, each by `continue-on-error`; 10 were rewritten into hidden checks by
+one `dotnet/maui` commit. **Of 148 lineages that were ever hidden, 5 are loud today** and 68 died
+hidden. The median hidden check is **155 days** old (P4 predicted 180: MISS), a quarter are older
+than a year, and `mlflow`'s database tests have been hidden for 1,630 days through 291 revisions.
+Seventeen commits hid a loud check — 13 by `continue-on-error` or `|| true`, four at once by
+"tweak github actions" — and **5 of the 17 say why** in the stated words (P2 predicted half: MISS;
+a reader finds about half, in words the list does not have). Fifteen commits made a hidden check
+loud, and **13 times the edit is the one the instrument proposes** — `cal.com`'s `Run Lint` went
+hidden, loud, hidden and loud again over a year, and the instrument's repair agreed each time.
+
+**`styxx ci-audit --history`** says, for every finding, since when: `hidden since 2025-03-14
+(1a11430, 556 days): born hidden`, or `acquired: continue-on-error — "ci: make lint non-blocking
+for now (flaky)" [the commit says: non-blocking]`, read from the checkout's own history (an
+`owner/repo` clone is deepened to 2019-08-01 first, blob-less, one batch). `styxx/ciaudit/history.py`
+is the living copy; `tests/test_ciaudit.py` pins the frozen instrument and holds the copy to it on
+a scripted seven-commit history.
+
 ## [Unreleased] — SWALLOW-5: the structural repairs — the second stage of `styxx ci-audit --repair`
 
 SWALLOW-4 left 14 hand-written checks a strict shell could not make loud, and read why: the

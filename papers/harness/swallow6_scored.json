@@ -1,0 +1,2241 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S6-1": {
+   "pass": true,
+   "detail": "4 passed in 3.73s"
+  },
+  "G-S6-2": {
+   "pass": true,
+   "detail": "96 of 100 read to their pinned HEAD uncapped; capped: 0; failed: 4",
+   "capped": [],
+   "failed": [
+    "MihaiCristianCondrea/Smart-Cleaner-for-Android",
+    "antiwork/flexile",
+    "antiwork/helper",
+    "Metta-AI/metta"
+   ]
+  },
+  "G-S6-3": {
+   "pass": true,
+   "detail": "6380 of 6381 matched hand-written faults carry the same verdict at HEAD (100.0%)",
+   "differ": [
+    [
+     "mfat/sshpilot",
+     "macos-pyinstaller.yml",
+     "build-arm64",
+     2,
+     "BASELINE_RED",
+     "RED"
+    ]
+   ],
+   "differ_count": 1
+  },
+  "G-S6-4": {
+   "pass": true,
+   "detail": "history 93efb4a947a18e61\u2026, faults d26a407ca276d1b1\u2026, action_checks 0e723694d459ca23\u2026, repair 7b9a1695d316c2ce\u2026, structural 77067a71fa41e480\u2026, source 609e664549df085b\u2026 (file 609e664549df085b\u2026)"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "\u2265 60% of the hidden checks alive at HEAD were born hidden and never loud",
+   "observed": {
+    "alive_hidden": 53,
+    "born_hidden_never_loud": 40,
+    "acquired": 3,
+    "pct": 75.5,
+    "other": 10
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "\u2265 50% of acquisitions acknowledged in the commit message",
+   "observed": {
+    "acquisitions": 17,
+    "acknowledged": 5,
+    "pct": 29.4,
+    "words": {
+     "skip": 1,
+     "unblock": 1,
+     "ignor": 1,
+     "broken": 1,
+     "non-blocking": 1
+    }
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "\u2264 25% of ever-hidden lineages are alive, loud and repaired at HEAD",
+   "observed": {
+    "ever_hidden": 148,
+    "repaired_and_loud": 5,
+    "pct": 3.4,
+    "alive_hidden": 53,
+    "died_hidden": 68
+   }
+  },
+  "P4": {
+   "hit": false,
+   "predicted": "median age of the hidden checks alive at HEAD \u2265 180 days",
+   "observed": {
+    "n": 53,
+    "median_days": 155.4,
+    "quartiles": [
+     61.0,
+     155.4,
+     364.1
+    ],
+    "over_180": 26,
+    "over_365": 12
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "continue-on-error + or-true are the primary mechanism of \u2265 50% of acquisitions",
+   "observed": {
+    "acquisitions": 17,
+    "the_two": 13,
+    "pct": 76.5,
+    "by_mechanism": {
+     "continue-on-error": 12,
+     "rewrite": 4,
+     "or-true": 1
+    }
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "\u2265 40% of readable wild repairs agree with the instrument's verified candidate",
+   "observed": {
+    "repairs": 15,
+    "readable": 15,
+    "agree": 13,
+    "pct": 86.7,
+    "verified_any": 14,
+    "by_candidate": {
+     "no-continue-on-error": 12,
+     "strict-shell": 1,
+     "null": 1,
+     "guard-status": 1
+    },
+    "wild_mechanisms": {
+     "continue-on-error": 12,
+     "or-true": 2,
+     "rewrite": 1
+    }
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "acquisitions strictly outnumber repairs",
+   "observed": {
+    "acquisitions": 17,
+    "repairs": 15
+   }
+  }
+ },
+ "hits": 5,
+ "of": 7,
+ "population": {
+  "repos_read": 96,
+  "lineages": 14630,
+  "alive_hidden": 53,
+  "ever_hidden": 148,
+  "births_at_boundary": 19,
+  "revisions_read": 36934
+ },
+ "alive_hidden": [
+  {
+   "repo": "SkBlaz/py3plex",
+   "workflow": "tests.yml",
+   "job": "coverage",
+   "step": "name:Run tests with coverage",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-04-18",
+   "hidden_since": "2026-04-18",
+   "age_days": 155.4,
+   "revisions": 2,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "connectors-lint",
+   "step": "name:Run lint check (info only)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-06-05",
+   "hidden_since": "2025-06-05",
+   "age_days": 470.2,
+   "revisions": 40,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "antiwork/gumroad",
+   "workflow": "ci-green.yml",
+   "job": "report",
+   "step": "name:Re-check migration versions against current main",
+   "verdict": "FAIL_OPEN",
+   "born": "hidden",
+   "born_date": "2026-08-01",
+   "hidden_since": "2026-08-01",
+   "age_days": 50.6,
+   "revisions": 1,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "antiwork/gumroad",
+   "workflow": "tests.yml",
+   "job": "run_scope",
+   "step": "id:scope",
+   "verdict": "FAIL_OPEN",
+   "born": "hidden",
+   "born_date": "2026-08-04",
+   "hidden_since": "2026-08-04",
+   "age_days": 47.6,
+   "revisions": 18,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "carverauto/serviceradar",
+   "workflow": "release.yml",
+   "job": "publish",
+   "step": "name:Verify Alpine APK pins",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-08-18",
+   "hidden_since": "2026-08-18",
+   "age_days": 33.5,
+   "revisions": 11,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "codenameone/CodenameOne",
+   "workflow": "syndication-health.yml",
+   "job": "check",
+   "step": "name:Inspect local-runner queue",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-07-17",
+   "hidden_since": "2026-07-17",
+   "age_days": 65.3,
+   "revisions": 5,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "crewAIInc/crewAI",
+   "workflow": "update-test-durations.yml",
+   "job": "update-durations",
+   "step": "name:Run all tests and store durations",
+   "verdict": "FAIL_OPEN",
+   "born": "hidden",
+   "born_date": "2025-09-11",
+   "hidden_since": "2025-09-11",
+   "age_days": 373.1,
+   "revisions": 5,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "davidmerfield/blot",
+   "workflow": "integration.yml",
+   "job": "app-e2e",
+   "step": "name:Run end-to-end checks",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-09-09",
+   "hidden_since": "2026-09-09",
+   "age_days": 11.2,
+   "revisions": 3,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "deployment-tests.yml",
+   "job": "provision-subscription",
+   "step": "name:Verify Azure authentication",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-07-30",
+   "hidden_since": "2026-07-30",
+   "age_days": 51.0,
+   "revisions": 7,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "polyglot-validation.yml",
+   "job": "validate_rust",
+   "step": "name:Run Rust SDK validation",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-01-22",
+   "hidden_since": "2026-01-22",
+   "age_days": 239.1,
+   "revisions": 9,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "reproduce-flaky-tests.yml",
+   "job": "reproduce",
+   "step": "name:Run test iterations (Linux/macOS)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-02-25",
+   "hidden_since": "2026-02-25",
+   "age_days": 205.3,
+   "revisions": 7,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "specialized-test-runner.yml",
+   "job": "generate_tests_matrix",
+   "step": "name:Check if any test requires NuGets",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-12-02",
+   "hidden_since": "2025-12-02",
+   "age_days": 290.2,
+   "revisions": 14,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "specialized-test-runner.yml",
+   "job": "generate_tests_matrix",
+   "step": "name:Check if any test requires CLI archives",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-03-18",
+   "hidden_since": "2026-03-18",
+   "age_days": 184.3,
+   "revisions": 10,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/aspire",
+   "workflow": "specialized-test-runner.yml",
+   "job": "generate_tests_matrix",
+   "step": "name:Check if any test requires GitHub token",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-04-23",
+   "hidden_since": "2026-04-23",
+   "age_days": 148.3,
+   "revisions": 4,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_0",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_1",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_2",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_3",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_4",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_5",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_6",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_7",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_8",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/maui",
+   "workflow": "validate-pat-pool.yml",
+   "job": "validate",
+   "step": "name:Validate COPILOT_PAT_9",
+   "verdict": "SWALLOWED",
+   "born": "other",
+   "born_date": "2026-07-05",
+   "hidden_since": "2026-07-21",
+   "age_days": 61.0,
+   "revisions": 4,
+   "events": [
+    [
+     "other->hidden",
+     "rewrite",
+     null,
+     "2026-07-21"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "dotnet/roslyn",
+   "workflow": "pr-validation.yml",
+   "job": "validate-and-trigger",
+   "step": "name:Determine validation type and pipeline ID",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-01-05",
+   "hidden_since": "2026-01-05",
+   "age_days": 257.3,
+   "revisions": 12,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "getsentry/sentry-docs",
+   "workflow": "check-redirects-on-rename.yml",
+   "job": "check-redirects",
+   "step": "name:Run redirect validation",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-02-13",
+   "hidden_since": "2026-02-13",
+   "age_days": 217.0,
+   "revisions": 9,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "getsentry/sentry-docs",
+   "workflow": "lint-external-links.yml",
+   "job": "check-pr",
+   "step": "name:Get changed files",
+   "verdict": "FAIL_OPEN",
+   "born": "hidden",
+   "born_date": "2026-02-23",
+   "hidden_since": "2026-02-23",
+   "age_days": 207.1,
+   "revisions": 6,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "getsentry/sentry-docs",
+   "workflow": "lint-redirect-chains.yml",
+   "job": "lint-redirect-chains",
+   "step": "name:Run redirect chain lint",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-07-07",
+   "hidden_since": "2026-07-07",
+   "age_days": 73.3,
+   "revisions": 3,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "giselles-ai/giselle",
+   "workflow": "ci.yml",
+   "job": "check",
+   "step": "name:Lint Colors in Code (non-blocking)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-10-09",
+   "hidden_since": "2025-10-09",
+   "age_days": 327.1,
+   "revisions": 24,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "cgo.yml",
+   "job": "lint-error-messages",
+   "step": "name:Lint error messages",
+   "verdict": "SWALLOWED",
+   "born": "loud",
+   "born_date": "2026-07-27",
+   "hidden_since": "2026-08-22",
+   "age_days": 28.0,
+   "revisions": 43,
+   "events": [
+    [
+     "acquisition",
+     "continue-on-error",
+     null,
+     "2026-08-22"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "integration-agentics.yml",
+   "job": "integration-test-agentics",
+   "step": "name:Verify no compilation errors",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-09-11",
+   "hidden_since": "2025-09-11",
+   "age_days": 373.0,
+   "revisions": 11,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "go-vikunja/vikunja",
+   "workflow": "test.yml",
+   "job": "frontend-typecheck",
+   "step": "name:Typecheck",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-03-26",
+   "hidden_since": "2025-03-26",
+   "age_days": 541.7,
+   "revisions": 234,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "hmislk/hmis",
+   "workflow": "development_pr_validation.yml",
+   "job": "validate-jdbc-data-sources",
+   "step": "name:Validate grantAllPrivilegesToAllUsersForTesting",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-03-14",
+   "hidden_since": "2025-03-14",
+   "age_days": 554.9,
+   "revisions": 7,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "langfuse/langfuse",
+   "workflow": "pipeline.yml",
+   "job": "tests-shared",
+   "step": "name:run SQL-equivalence tests (non-blocking)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-08-28",
+   "hidden_since": "2026-08-28",
+   "age_days": 23.1,
+   "revisions": 15,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "microsoft/vscode",
+   "workflow": "pr-darwin-test.yml",
+   "job": "macOS-test",
+   "step": "name:Diagnostics before smoke test run",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-07-04",
+   "hidden_since": "2025-07-04",
+   "age_days": 443.7,
+   "revisions": 40,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "microsoft/vscode",
+   "workflow": "pr-darwin-test.yml",
+   "job": "macOS-test",
+   "step": "name:Diagnostics after smoke test run",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-07-04",
+   "hidden_since": "2025-07-04",
+   "age_days": 443.7,
+   "revisions": 40,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "microsoft/vscode",
+   "workflow": "pr-linux-test.yml",
+   "job": "linux-test",
+   "step": "name:Diagnostics before smoke test run (processes, max_user_watches, number of opened file handles)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-07-04",
+   "hidden_since": "2025-07-04",
+   "age_days": 443.7,
+   "revisions": 44,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "microsoft/vscode",
+   "workflow": "pr-linux-test.yml",
+   "job": "linux-test",
+   "step": "name:Diagnostics after smoke test run (processes, max_user_watches, number of opened file handles)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-07-04",
+   "hidden_since": "2025-07-04",
+   "age_days": 443.7,
+   "revisions": 44,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "mlflow/mlflow",
+   "workflow": "master.yml",
+   "job": "database",
+   "step": "name:Run tests",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2022-04-05",
+   "hidden_since": "2022-04-05",
+   "age_days": 1629.5,
+   "revisions": 291,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "jvm.yml",
+   "job": "test-ea",
+   "step": "name:Run smoke tests (JDK 26 EA)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-05-27",
+   "hidden_since": "2026-05-27",
+   "age_days": 5.1,
+   "revisions": 7,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "transpiler3-beam-repro.yml",
+   "job": "beam-repro",
+   "step": "name:Run reproducibility gate",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-05-27",
+   "hidden_since": "2026-05-27",
+   "age_days": 5.2,
+   "revisions": 1,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "transpiler3-kotlin-test.yml",
+   "job": "kotlin-test",
+   "step": "name:Phases 15, 17, 18 (Android, K/Native, Play Console \u2014 skip-gated)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-05-29",
+   "hidden_since": "2026-05-29",
+   "age_days": 3.1,
+   "revisions": 2,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "transpiler3-python-repro.yml",
+   "job": "python-repro-host",
+   "step": "name:Run host reproducibility gate",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-05-29",
+   "hidden_since": "2026-05-29",
+   "age_days": 2.8,
+   "revisions": 1,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "neondatabase/website",
+   "workflow": "e2e-tests.yml",
+   "job": "install",
+   "step": "name:Monitor critical user outcomes",
+   "verdict": "SWALLOWED",
+   "born": "loud",
+   "born_date": "2026-08-04",
+   "hidden_since": "2026-08-05",
+   "age_days": 44.3,
+   "revisions": 3,
+   "events": [
+    [
+     "acquisition",
+     "continue-on-error",
+     "broken",
+     "2026-08-05"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "mutation-testing.yaml",
+   "job": "mutation",
+   "step": "name:Run mutation testing",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-06-14",
+   "hidden_since": "2026-06-14",
+   "age_days": 98.5,
+   "revisions": 3,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "prebid/Prebid.js",
+   "workflow": "linter.yml",
+   "job": "check-linter",
+   "step": "name:Run linter on base branch",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2024-07-04",
+   "hidden_since": "2024-07-04",
+   "age_days": 806.1,
+   "revisions": 17,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "prebid/Prebid.js",
+   "workflow": "linter.yml",
+   "job": "check-linter",
+   "step": "name:Run linter on PR",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2024-07-04",
+   "hidden_since": "2024-07-04",
+   "age_days": 806.1,
+   "revisions": 17,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "promptfoo/promptfoo",
+   "workflow": "main.yml",
+   "job": "redteam-staging",
+   "step": "name:Run Redteam with Staging API",
+   "verdict": "SWALLOWED",
+   "born": "loud",
+   "born_date": "2025-09-18",
+   "hidden_since": "2025-11-10",
+   "age_days": 314.3,
+   "revisions": 73,
+   "events": [
+    [
+     "acquisition",
+     "continue-on-error",
+     "non-blocking",
+     "2025-11-10"
+    ]
+   ],
+   "at_boundary": false
+  },
+  {
+   "repo": "selfxyz/self",
+   "workflow": "mobile-deploy.yml",
+   "job": "build-android",
+   "step": "name:Verify branch and commit (Android)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-09-07",
+   "hidden_since": "2025-09-07",
+   "age_days": 364.1,
+   "revisions": 31,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "selfxyz/self",
+   "workflow": "mobile-deploy.yml",
+   "job": "build-ios",
+   "step": "name:Verify branch and commit (iOS)",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2025-09-07",
+   "hidden_since": "2025-09-07",
+   "age_days": 364.1,
+   "revisions": 31,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "vinhnx/vtcode",
+   "workflow": "ci.yml",
+   "job": "zen-governance",
+   "step": "name:Rust file length baseline",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-03-03",
+   "hidden_since": "2026-03-03",
+   "age_days": 201.2,
+   "revisions": 31,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "vinhnx/vtcode",
+   "workflow": "ci.yml",
+   "job": "zen-governance",
+   "step": "name:unwrap/expect baseline",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-03-03",
+   "hidden_since": "2026-03-03",
+   "age_days": 201.2,
+   "revisions": 31,
+   "events": [],
+   "at_boundary": false
+  },
+  {
+   "repo": "vinhnx/vtcode",
+   "workflow": "ci.yml",
+   "job": "zen-governance",
+   "step": "name:allowlist hygiene baseline",
+   "verdict": "SWALLOWED",
+   "born": "hidden",
+   "born_date": "2026-03-03",
+   "hidden_since": "2026-03-03",
+   "age_days": 201.2,
+   "revisions": 31,
+   "events": [],
+   "at_boundary": false
+  }
+ ],
+ "acquisitions": [
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Linting with Reports",
+   "kind": "acquisition",
+   "sha": "e53648d21832",
+   "date": "2022-03-09",
+   "subject": "Linting (#2083)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-linux-build.yml",
+   "job": "linux-test",
+   "step": "name:Test (node runner)",
+   "kind": "acquisition",
+   "sha": "c21be13be42f",
+   "date": "2023-09-30",
+   "subject": "tweak github actions  (#6195)",
+   "mechanism": [
+    "rewrite"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-mac-aarch64.yml",
+   "job": "macOS-test",
+   "step": "name:Test (node runner)",
+   "kind": "acquisition",
+   "sha": "c21be13be42f",
+   "date": "2023-09-30",
+   "subject": "tweak github actions  (#6195)",
+   "mechanism": [
+    "rewrite"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-mac-x64-baseline.yml",
+   "job": "macOS-test",
+   "step": "name:Test (node runner)",
+   "kind": "acquisition",
+   "sha": "c21be13be42f",
+   "date": "2023-09-30",
+   "subject": "tweak github actions  (#6195)",
+   "mechanism": [
+    "rewrite"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-mac-x64.yml",
+   "job": "macOS-test",
+   "step": "name:Test (node runner)",
+   "kind": "acquisition",
+   "sha": "c21be13be42f",
+   "date": "2023-09-30",
+   "subject": "tweak github actions  (#6195)",
+   "mechanism": [
+    "rewrite"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "microsoft/genaiscript",
+   "workflow": "openai.yml",
+   "job": "tests",
+   "step": "name:run summarize openai:gpt-3.5-turbo",
+   "kind": "acquisition",
+   "sha": "787070e3a49c",
+   "date": "2024-08-02",
+   "subject": "ignore github models error in github actions",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "ignor",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "FastLED/FastLED",
+   "workflow": "build_wasm.yml",
+   "job": "build",
+   "step": "name:Verify Colima installation",
+   "kind": "acquisition",
+   "sha": "09fafaa1a27e",
+   "date": "2024-10-30",
+   "subject": "allow build even if failure on other platforms",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Lint",
+   "kind": "acquisition",
+   "sha": "f5ab9bd40b3e",
+   "date": "2025-01-14",
+   "subject": "Allow lint to error but continue (unblock pipeline)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "unblock",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Lint",
+   "kind": "acquisition",
+   "sha": "10c9c63ad8c9",
+   "date": "2025-03-24",
+   "subject": "revert: \"fix: lint (#20325)\" (#20337)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "MontrealAI/AGI-Alpha-Agent-v0",
+   "workflow": "size-check.yml",
+   "job": "build-and-check",
+   "step": "name:Update browserslist database",
+   "kind": "acquisition",
+   "sha": "22431accad30",
+   "date": "2025-07-11",
+   "subject": "Merge pull request #3212 from MontrealAI/codex/modify-browserslist-database-workflow",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "MontrealAI/AGI-Alpha-Agent-v0",
+   "workflow": "ci.yml",
+   "job": "docs-check",
+   "step": "name:Verify downloaded assets",
+   "kind": "acquisition",
+   "sha": "4f953132080f",
+   "date": "2025-07-16",
+   "subject": "Merge pull request #3432 from MontrealAI/codex/add-fetch-assets-step-to-docs-check-job",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "promptfoo/promptfoo",
+   "workflow": "main.yml",
+   "job": "redteam-staging",
+   "step": "name:Run Redteam with Staging API",
+   "kind": "acquisition",
+   "sha": "2d7e61835dc4",
+   "date": "2025-11-10",
+   "subject": "chore(ci): make staging redteam test non-blocking (#6159)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "non-blocking",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "manaflow-ai/cmux",
+   "workflow": "ci.yml",
+   "job": "ui-tests",
+   "step": "name:Run UI tests",
+   "kind": "acquisition",
+   "sha": "0d950cb89165",
+   "date": "2026-02-11",
+   "subject": "CI: run mac UI tests only in cmux-vm",
+   "mechanism": [
+    "or-true",
+    "set+e"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "transpiler3-c-cross-tier1.yml",
+   "job": "cross-macos-x86",
+   "step": "name:Phase 11.5 - x86_64-darwin native",
+   "kind": "acquisition",
+   "sha": "90881635e4a5",
+   "date": "2026-05-28",
+   "subject": "Merge pull request #22470 from mochilang/ci/fix-maven-publish-secret-guard",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "skip",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "visual-regression.yml",
+   "job": "update-baselines",
+   "step": "name:Regenerate baselines",
+   "kind": "acquisition",
+   "sha": "86682ca0a62f",
+   "date": "2026-07-28",
+   "subject": "fix(visual): repair the CI baseline-update path and stop silent-backend failures (#4546)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "neondatabase/website",
+   "workflow": "e2e-tests.yml",
+   "job": "install",
+   "step": "name:Monitor critical user outcomes",
+   "kind": "acquisition",
+   "sha": "8bfc1f42f05b",
+   "date": "2026-08-05",
+   "subject": "ci: point npm at the Databricks JFrog mirror so npm ci stops dying on the protected runners (#5442)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "broken",
+   "verdicts": "RED -> SWALLOWED"
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "cgo.yml",
+   "job": "lint-error-messages",
+   "step": "name:Lint error messages",
+   "kind": "acquisition",
+   "sha": "f9379c65a42c",
+   "date": "2026-08-22",
+   "subject": "Make error-message lint advisory (#54800)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "RED -> SWALLOWED"
+  }
+ ],
+ "repairs": [
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "python.yml",
+   "job": "test-py3",
+   "step": "name:Python 3.6 backend (${{ steps.setup.outputs.matrix-instance-number }} of ${{ strategy.job-total }})",
+   "kind": "repair",
+   "sha": "042f90429164",
+   "date": "2020-10-01",
+   "subject": "test: py3 required on master except snuba (#20537)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "Significant-Gravitas/AutoGPT",
+   "workflow": "ci.yml",
+   "job": "build",
+   "step": "name:Lint with flake8",
+   "kind": "repair",
+   "sha": "a0f900f2dabd",
+   "date": "2023-04-12",
+   "subject": "Merge pull request #1007 from drikusroor/fix-flake8-issues",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "flak",
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "reusable-widget-e2e.yml",
+   "job": "e2e_widget",
+   "step": "name:Start WS",
+   "kind": "repair",
+   "sha": "fac0b08f2461",
+   "date": "2023-05-02",
+   "subject": "Merge pull request #3314 from novuhq/v0.15.x",
+   "mechanism": [
+    "rewrite"
+   ],
+   "acknowledged": "disable",
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": null,
+   "stage": null,
+   "agrees": false
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "run-test.yml",
+   "job": "test",
+   "step": "name:Run Tests",
+   "kind": "repair",
+   "sha": "d4c31d3c9ea3",
+   "date": "2024-04-17",
+   "subject": "Maybe fix test workflow",
+   "mechanism": [
+    "or-true"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "strict-shell",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "microsoft/genaiscript",
+   "workflow": "openai.yml",
+   "job": "tests",
+   "step": "name:run summarize openai:gpt-3.5-turbo",
+   "kind": "repair",
+   "sha": "fb4335a72857",
+   "date": "2024-08-05",
+   "subject": "add openai smoke tests",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "FastLED/FastLED",
+   "workflow": "build_wasm.yml",
+   "job": "build",
+   "step": "name:Verify Colima installation",
+   "kind": "repair",
+   "sha": "e2d7a75acb3d",
+   "date": "2024-10-30",
+   "subject": "try and fix wasm builds",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "tokens-studio/figma-plugin",
+   "workflow": "eslint.yml",
+   "job": "eslint",
+   "step": "name:Run ESLint",
+   "kind": "repair",
+   "sha": "f971c214de40",
+   "date": "2024-12-03",
+   "subject": "Merge pull request #3218 from tokens-studio/fix-linting",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Lint",
+   "kind": "repair",
+   "sha": "1dc63e0df774",
+   "date": "2025-03-23",
+   "subject": "fix: lint (#20325)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "MontrealAI/AGI-Alpha-Agent-v0",
+   "workflow": "ci.yml",
+   "job": "docs-check",
+   "step": "name:Verify downloaded assets",
+   "kind": "repair",
+   "sha": "cf28298b8f00",
+   "date": "2025-07-17",
+   "subject": "Merge pull request #3463 from MontrealAI/codex/wrap-asset-verification-commands-in-blocks",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Lint",
+   "kind": "repair",
+   "sha": "ddcac4b3b10d",
+   "date": "2026-01-21",
+   "subject": "fix: make linting required for CI (#27091)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "warn",
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "manaflow-ai/cmux",
+   "workflow": "ci.yml",
+   "job": "ui-tests",
+   "step": "name:Run UI tests",
+   "kind": "repair",
+   "sha": "e72916a77ddf",
+   "date": "2026-02-11",
+   "subject": "CI: require UI tests via vm; robust ssh opts",
+   "mechanism": [
+    "or-true"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "guard-status",
+   "stage": "swallow-5",
+   "agrees": false
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "cgo.yml",
+   "job": "lint-go",
+   "step": "name:Run custom linters",
+   "kind": "repair",
+   "sha": "21c1f003e6b7",
+   "date": "2026-05-19",
+   "subject": "Enforce prod errstringmatch findings and centralize 403/410 error classification (#33216)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "codenameone/CodenameOne",
+   "workflow": "scripts-ios.yml",
+   "job": "build-ios-metal",
+   "step": "name:Run iOS UI screenshot tests (Metal)",
+   "kind": "repair",
+   "sha": "9b92d96bd684",
+   "date": "2026-05-19",
+   "subject": "Iterative GC mark to fix iOS stack overflow on deep graphs (#3136) (#4980)",
+   "mechanism": [
+    "continue-on-error"
+   ],
+   "acknowledged": "skip",
+   "verdicts": "FAIL_OPEN -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "user-journeys.yml",
+   "job": "journeys",
+   "step": "name:Type-check journey suite",
+   "kind": "repair",
+   "sha": "3dd77840aca4",
+   "date": "2026-09-14",
+   "subject": "Repair Playwright suite architecture (#5778)",
+   "mechanism": [
+    "continue-on-error",
+    "gating"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "user-journeys.yml",
+   "job": "journeys",
+   "step": "name:Run user-journey suite",
+   "kind": "repair",
+   "sha": "3dd77840aca4",
+   "date": "2026-09-14",
+   "subject": "Repair Playwright suite architecture (#5778)",
+   "mechanism": [
+    "continue-on-error",
+    "gating"
+   ],
+   "acknowledged": null,
+   "verdicts": "SWALLOWED -> RED",
+   "instrument": "no-continue-on-error",
+   "stage": "swallow-4",
+   "agrees": true
+  }
+ ],
+ "died_hidden": [
+  {
+   "repo": "mochilang/mochi",
+   "workflow": "transpiler3-c-cross-tier1.yml",
+   "job": "cross-macos-x86",
+   "step": "name:Phase 11.5 - x86_64-darwin native",
+   "born": "loud",
+   "death": "step removed",
+   "date": "2026-05-29",
+   "subject": "Merge pull request #22487 from mochilang/mep/0050-kotlin-transpiler"
+  },
+  {
+   "repo": "MontrealAI/AGI-Alpha-Agent-v0",
+   "workflow": "ci-health.yml",
+   "job": "ci-health",
+   "step": "name:Observe integration CI freshness (informational)",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-04-07",
+   "subject": "Merge pull request #4571 from MontrealAI/codex/harden-repo-healer-v1-and-optimiz"
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "cpi.yml",
+   "job": "pi-extension-integration",
+   "step": "name:Verify steering extension was loaded",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-06-08",
+   "subject": "ci: scope workflow triggers to relevant paths (#37898)"
+  },
+  {
+   "repo": "githubnext/gh-aw",
+   "workflow": "test-integration-agentics.yml",
+   "job": "integration-test-agentics",
+   "step": "name:Verify no compilation errors",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2025-09-11",
+   "subject": "remove tests"
+  },
+  {
+   "repo": "microsoft/vscode",
+   "workflow": "ci.yml",
+   "job": "build-darwin-smoke-tests",
+   "step": "name:Run Smoke Tests (Electron)",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2020-12-15",
+   "subject": "Remove Build jobs for now"
+  },
+  {
+   "repo": "mlflow/mlflow",
+   "workflow": "autoformat.yml",
+   "job": "format",
+   "step": "run:pre-commit run prettier --all-files --color=always || true",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2023-12-08",
+   "subject": "Run `pre-commit install` before running `pre-commit run prettier` in autoformat "
+  },
+  {
+   "repo": "mlflow/mlflow",
+   "workflow": "autoformat.yml",
+   "job": "format",
+   "step": "run:pre-commit run prettier --all-files --color=always || true",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2024-04-16",
+   "subject": "Use pre-commit to format files in autoformat workflow (#11718)"
+  },
+  {
+   "repo": "mlflow/mlflow",
+   "workflow": "master.yml",
+   "job": "python-large",
+   "step": "name:Database tests - run",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2022-04-05",
+   "subject": "Separate database tests (#5608)"
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "connectors-test-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-07",
+   "subject": "ci: split java/non-java connector test matrix, simplify matrix generation and su"
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "connectors-lint-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-08",
+   "subject": "CI: Add support for manifest-only connectors in the Connectors CI Matrix (Beta) "
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "non-jvm-connectors-test-matrix",
+   "step": "name:Get Connector Language",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-08",
+   "subject": "CI: Add support for manifest-only connectors in the Connectors CI Matrix (Beta) "
+  },
+  {
+   "repo": "airbytehq/airbyte",
+   "workflow": "connector-ci-checks.yml",
+   "job": "connectors-lint-matrix",
+   "step": "name:Run lint check (info only)",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-06-05",
+   "subject": "ci: merge all summary status checks into a single check result, add logic to exp"
+  },
+  {
+   "repo": "vinhnx/vtcode",
+   "workflow": "tool-nextest-tools.yml",
+   "job": "tool-tests",
+   "step": "name:Build tests",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2025-12-22",
+   "subject": "refactor: Migrate testing from `cargo nextest` to `cargo test` and enhance Anthr"
+  },
+  {
+   "repo": "calcom/cal.com",
+   "workflow": "lint.yml",
+   "job": "lint",
+   "step": "name:Run Linting with Reports",
+   "born": "loud",
+   "death": "step removed",
+   "date": "2025-01-13",
+   "subject": "fix: main lint errors (#18634)"
+  },
+  {
+   "repo": "selfxyz/self",
+   "workflow": "mobile-e2e.yml",
+   "job": "android-build-test",
+   "step": "name:Verify APK and android-passport-reader integration",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-09-29",
+   "subject": "chore: rename android-passport-reader to android-passport-nfc-reader (#1137)"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-linux-build.yml",
+   "job": "linux-test",
+   "step": "name:Test (node runner)",
+   "born": "loud",
+   "death": "workflow removed",
+   "date": "2024-04-17",
+   "subject": "Testing workflows (#10157)"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-mac-aarch64.yml",
+   "job": "macOS-test",
+   "step": "name:Test (node runner)",
+   "born": "loud",
+   "death": "workflow removed",
+   "date": "2024-04-17",
+   "subject": "Testing workflows (#10157)"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-mac-x64.yml",
+   "job": "macOS-test",
+   "step": "name:Test (node runner)",
+   "born": "loud",
+   "death": "workflow removed",
+   "date": "2024-04-17",
+   "subject": "Testing workflows (#10157)"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "bun-windows.yml",
+   "job": "windows-test",
+   "step": "name:Run tests",
+   "born": "other",
+   "death": "workflow removed",
+   "date": "2024-04-17",
+   "subject": "Testing workflows (#10157)"
+  },
+  {
+   "repo": "oven-sh/bun",
+   "workflow": "lint.yml",
+   "job": "format",
+   "step": "name:Lint",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2024-04-17",
+   "subject": "Testing workflows (#10157)"
+  },
+  {
+   "repo": "KomodoPlatform/komodo-wallet",
+   "workflow": "ui-tests-on-pr.yml",
+   "job": "tests",
+   "step": "name:Test air_dex chrome (unix) (Linux)",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-23",
+   "subject": "Merge pull request #2526 from KomodoPlatform/dev"
+  },
+  {
+   "repo": "KomodoPlatform/komodo-wallet",
+   "workflow": "ui-tests-on-pr.yml",
+   "job": "tests",
+   "step": "name:Test air_dex safari (MacOS)",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-23",
+   "subject": "Merge pull request #2526 from KomodoPlatform/dev"
+  },
+  {
+   "repo": "DaveSkender/Stock.Indicators",
+   "workflow": "copilot-setup-steps.yml",
+   "job": "copilot-setup-steps",
+   "step": "name:Test environment",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-11-12",
+   "subject": "chore: Add .NET 10 target framework support (#1734)"
+  },
+  {
+   "repo": "oxc-project/oxc",
+   "workflow": "ci_vscode.yml",
+   "job": "test",
+   "step": "name:VSCode oxlint plugin test (flaky)",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-02-05",
+   "subject": "chore(editors): remove VS Code extension (moved to oxc-vscode repo) (#18982)"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "dev-deploy-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start Client",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "dev-deploy-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start WS",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "prod-deploy-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start Client",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "prod-deploy-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start WS",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "reusable-widget-e2e.yml",
+   "job": "e2e_widget",
+   "step": "name:Start Client",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2025-04-02",
+   "subject": "chore(root): Remove legacy notification-center"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "test-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start Client",
+   "born": "other",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "novuhq/novu",
+   "workflow": "test-widget.yml",
+   "job": "test_widget",
+   "step": "name:Start WS",
+   "born": "other",
+   "death": "step removed",
+   "date": "2022-03-23",
+   "subject": "Merge pull request #382 from notifirehq/actions-reusable-parts"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "backend-selective.yml",
+   "job": "prepare-selective-tests",
+   "step": "name:Find coverage data for selective testing",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-02-26",
+   "subject": "feat(infra): Replace full backend workflow on PRs with selective testing (#10934"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "backend-selective.yml",
+   "job": "prepare-selective-tests",
+   "step": "name:Download coverage database",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-02-26",
+   "subject": "feat(infra): Replace full backend workflow on PRs with selective testing (#10934"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "backend-selective.yml",
+   "job": "prepare-selective-tests",
+   "step": "name:Compute selected tests",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-02-26",
+   "subject": "feat(infra): Replace full backend workflow on PRs with selective testing (#10934"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "backend-selective.yml",
+   "job": "calculate-shards",
+   "step": "name:Calculate test shards",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-02-26",
+   "subject": "feat(infra): Replace full backend workflow on PRs with selective testing (#10934"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "backend.yml",
+   "job": "prepare-selective-tests",
+   "step": "name:Find coverage data for selective testing",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-04-06",
+   "subject": "ci(st): cutover to new selective testing infra (#112263)"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "frontend-optional.yml",
+   "job": "typescript-native",
+   "step": "name:tsgo",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-05-13",
+   "subject": "ci(frontend): Use tsgo for frontend typecheck, upgrade tsgo (#115504)"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "frontend.yml",
+   "job": "typescript-and-lint",
+   "step": "name:Commit any eslint fixed files",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2020-12-01",
+   "subject": "build(ci): git patch --> github review suggestion (#22253)"
+  },
+  {
+   "repo": "getsentry/sentry",
+   "workflow": "python.yml",
+   "job": "test-py3-snuba",
+   "step": "name:Python 3.6 snuba backend (${{ steps.setup.outputs.matrix-instance-number }} of ${{ strategy.job-total }})",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2020-10-16",
+   "subject": "build(gha): Refactor `python.yml` workflow into multiple workflows (#21388)"
+  },
+  {
+   "repo": "browser-use/browser-use",
+   "workflow": "install-script.yml",
+   "job": "test-uvx-pypi",
+   "step": "name:Verify Chromium installed",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-07-01",
+   "subject": "add browser-use skill+CLI backed by browser-harness (#5088)"
+  },
+  {
+   "repo": "codenameone/CodenameOne",
+   "workflow": "scripts-javascript.yml",
+   "job": "javascript-screenshots",
+   "step": "name:Run JavaScript lifecycle test",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-06-08",
+   "subject": "fix(JS port) #5145: correct worker\u2194host barrier ownership model (#5148)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "abstraction-police.yaml",
+   "job": "abstraction-police",
+   "step": "name:Grep for violations no script covers",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "abstraction-police.yaml",
+   "job": "abstraction-police",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "anti-slop-ratchet.yaml",
+   "job": "anti-slop-ratchet",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "crash-fuzzer.yaml",
+   "job": "crash-fuzzer",
+   "step": "name:Fuzz the parsers",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-08-17",
+   "subject": "Merge pull request #4993 from nodetool-ai/claude/crash-fuzzer-mutation-testing-j"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "crash-fuzzer.yaml",
+   "job": "crash-fuzzer",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "crash-fuzzer.yaml",
+   "job": "crash-fuzzer",
+   "step": "name:Sweep fresh inputs",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "crash-fuzzer.yaml",
+   "job": "crash-fuzzer",
+   "step": "name:Mutation-test the parsers against the crash corpus",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "dead-code-cleanup.yaml",
+   "job": "dead-code-cleanup",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "dependency-cleanup.yaml",
+   "job": "dependency-cleanup",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "duplicate-unifier.yaml",
+   "job": "duplicate-unifier",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "logic-simplifier.yaml",
+   "job": "logic-simplifier",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "opencode.yml",
+   "job": "assistant",
+   "step": "name:Pre-flight quality check",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-03-30",
+   "subject": "Merge pull request #2454 from nodetool-ai/claude/cleanup-ai-bots-Ny5Vu"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "performance-optimization.yaml",
+   "job": "performance-optimization",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "security-audit.yaml",
+   "job": "security-audit",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "test-coverage.yaml",
+   "job": "test-coverage",
+   "step": "name:Run tests with coverage",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-03-30",
+   "subject": "Merge pull request #2454 from nodetool-ai/claude/cleanup-ai-bots-Ny5Vu"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "test-coverage.yaml",
+   "job": "test-coverage",
+   "step": "name:Run coverage report",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "test-coverage.yaml",
+   "job": "test-coverage",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "type-safety.yaml",
+   "job": "type-safety",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-08-17",
+   "subject": "Merge pull request #5000 from nodetool-ai/claude/type-safety-workflow-narrow-6m4"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "ui-primitives-compliance.yaml",
+   "job": "ui-primitives-compliance",
+   "step": "name:Run quality checks baseline",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "visual-regression.yml",
+   "job": "visual",
+   "step": "name:Run visual regression tests",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-08-13",
+   "subject": "Merge branch 'main' of github.com:nodetool-ai/nodetool"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "visual-regression.yml",
+   "job": "update-baselines",
+   "step": "name:Regenerate baselines",
+   "born": "loud",
+   "death": "workflow removed",
+   "date": "2026-08-13",
+   "subject": "Merge branch 'main' of github.com:nodetool-ai/nodetool"
+  },
+  {
+   "repo": "nodetool-ai/nodetool",
+   "workflow": "workflow-example-validation.yaml",
+   "job": "workflow-example-validation",
+   "step": "name:Validate shipped examples",
+   "born": "hidden",
+   "death": "workflow removed",
+   "date": "2026-09-07",
+   "subject": "chore: remove agentic GitHub workflows (#5672)"
+  },
+  {
+   "repo": "SkBlaz/py3plex",
+   "workflow": "code-quality.yml",
+   "job": "type-check",
+   "step": "name:Run mypy",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-10-12",
+   "subject": "Add production-grade Makefile entrypoint for py3plex development workflow (#72)"
+  },
+  {
+   "repo": "dotnet/sdk",
+   "workflow": "fix-completions-on-comment.yml",
+   "job": "fix-completions",
+   "step": "name:Build repository",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-01-13",
+   "subject": "Partition GH Actions SDK Jobs into Sub Jobs (#52411)"
+  },
+  {
+   "repo": "dotnet/sdk",
+   "workflow": "fix-completions-on-comment.yml",
+   "job": "fix-completions",
+   "step": "name:Run completion tests",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-01-13",
+   "subject": "Partition GH Actions SDK Jobs into Sub Jobs (#52411)"
+  },
+  {
+   "repo": "go-vikunja/vikunja",
+   "workflow": "test.yml",
+   "job": "define-frontend-e2e-batches",
+   "step": "name:Get spec batches",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2025-05-16",
+   "subject": "feat(ci): use docker image when testing with cypress parallel"
+  },
+  {
+   "repo": "microsoft/typescript-go",
+   "workflow": "ci.yml",
+   "job": "baselines",
+   "step": "name:Run tests",
+   "born": "hidden",
+   "death": "step removed",
+   "date": "2026-02-03",
+   "subject": "Add first-class unused baseline tracking (#2645)"
+  }
+ ],
+ "summary": {
+  "acquisition_mechanisms": {
+   "continue-on-error": 12,
+   "or-true": 1,
+   "rewrite": 4
+  },
+  "acquisitions": 17,
+  "acquisitions_acknowledged": 5,
+  "ages_days_quartiles": [
+   61.0,
+   155.4,
+   364.1
+  ],
+  "alive": 6480,
+  "alive_hidden": 53,
+  "alive_hidden_acquired": 3,
+  "alive_hidden_born_hidden": 40,
+  "births_at_boundary": 19,
+  "checks_followed": 3491,
+  "died_hidden": 68,
+  "died_loud": 7627,
+  "ever_hidden": 148,
+  "lineages": 14630,
+  "median_age_days": 155.4,
+  "repair_mechanisms": {
+   "continue-on-error": 12,
+   "or-true": 2,
+   "rewrite": 1
+  },
+  "repairs": 15,
+  "repairs_acknowledged": 4,
+  "repairs_agreeing": 13,
+  "repairs_instrument_verified": 14,
+  "repairs_with_agreement_read": 15,
+  "repos": 96,
+  "repos_capped": 0,
+  "revisions_read": 36934,
+  "workflows": 2819
+ },
+ "seconds": 1575.1,
+ "instrument_sha256": "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c",
+ "receipt_sha256": "6fc5f0f816567c843978f408be8883af0dc48153174039706dc990683226d544",
+ "receipt_file": "swallow6_receipt.json.gz",
+ "prereg_sha256_at_freeze": "d19eff1fc5a018b68d1d5d46984f67f3731b437fefb3f616d638043e94233725"
+}

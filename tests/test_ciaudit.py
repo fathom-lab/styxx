@@ -32,6 +32,10 @@ REPAIR_INSTRUMENT_SHA256 = "7b9a1695d316c2ce109495cf60c5a9a1de03bac204e9bf48fdbc
 # names (papers/harness/swallow5_receipt.json.gz, run 2). Same rule.
 STRUCTURAL_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "repair_structural.py"
 STRUCTURAL_INSTRUMENT_SHA256 = "77067a71fa41e48089b4c3e68fae17f02322fd892fc71d604d83f23cb693982c"
+# SWALLOW-6's instrument -- every check followed through the mainline history as a lineage -- frozen
+# at the sha256 the SWALLOW-6 prereg and receipt name (papers/harness/swallow6_receipt.json.gz). Same rule.
+HISTORY_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "history.py"
+HISTORY_INSTRUMENT_SHA256 = "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c"
 
 FIXTURE = """
     on: [push]
@@ -149,6 +153,8 @@ def test_the_instruments_are_the_ones_the_receipts_name():
     assert hashlib.sha256(STRUCTURAL_INSTRUMENT.read_bytes()).hexdigest() == STRUCTURAL_INSTRUMENT_SHA256, (
         "benchmarks/harness_mutation/repair_structural.py is the instrument that produced the SWALLOW-5 receipt and is "
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
+    assert hashlib.sha256(HISTORY_INSTRUMENT.read_bytes()).hexdigest() == HISTORY_INSTRUMENT_SHA256, (
+        "benchmarks/harness_mutation/history.py is not the file the SWALLOW-6 receipt names; a new receipt, not a new pin")
 
 
 def test_the_shipped_catalogue_is_the_frozen_one():
@@ -402,4 +408,44 @@ def test_the_repair_flag_has_two_stages(tmp_path, capsys):
         assert t["verified_repair"] == inst[name]["verified_repair"]
         assert [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in t["candidates"][3:]] == \
             [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in inst[name]["candidates"]]
+
+
+
+def test_the_shipped_history_is_the_instruments(tmp_path):
+    """The living copy follows the same lineages, with the same events, as the frozen instrument, on the scripted history."""
+    sys.path.insert(0, str(ROOT))
+    from benchmarks.harness_mutation import history as instrument
+    from styxx.ciaudit import history as shipped
+    from tests.test_harness_history import _repo
+    tree = _repo(tmp_path)
+    strip = lambda rec: {wf: [(l["job"], l["key"], l["born"]["state"], l["state"], l.get("alive"),  # noqa: E731
+                               [(e["kind"], e["sha"], tuple(e["mechanism"]), e["acknowledged"], (e.get("agreement") or {}).get("verified_repair")) for e in l["events"]])
+                              for l in w["lineages"]] for wf, w in rec["workflows"].items()}
+    a, b = instrument.tree_history(tree, "fixture"), shipped.tree_history(tree, "fixture")
+    assert strip(a) == strip(b) and a["summary"] == b["summary"]
+    assert shipped.ACK.pattern == instrument.ACK.pattern and shipped.MECHANISMS == instrument.MECHANISMS
+    assert shipped.CANDIDATE_MECHANISMS == instrument.CANDIDATE_MECHANISMS and shipped.HIDDEN == instrument.HIDDEN
+    for step in ({"name": "x", "run": "a"}, {"id": "q", "run": "a"}, {"run": "\n b\n"}):
+        assert shipped.step_key(step) == instrument.step_key(step)
+
+
+def test_the_history_flag_says_since_when_and_by_whose_hand(tmp_path, capsys):
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    from tests.test_harness_history import _repo
+    tree = _repo(tmp_path)
+    assert main([str(tree), "--history"]) == 1
+    out = capsys.readouterr().out
+    assert "SWALLOWED  ci.yml › test › Lint (non-blocking)   [continue-on-error]" in out
+    assert "hidden since 2023-03-01 (" in out and ", 366 days): acquired: continue-on-error — \"ci: make lint non-blocking for now (flaky)\" [the commit says: non-blocking]" in out
+    assert "history: 5 workflow revisions read on the mainline (first-parent from HEAD)" in out
+    rec = ciaudit.audit(str(tree), history=True)
+    (h,) = [h for h in rec["history"]["findings"] if h["job"] == "test"]
+    assert h["placed"] and not h["born_hidden"] and h["kind"] == "acquisition" and h["mechanism"] == ["continue-on-error"]
+    assert h["acknowledged"] == "non-blocking" and h["age_days"] == 366.0 and h["revisions"] == 5 and h["repaired_before"] == 0
+    assert rec["history"]["shallow"] is False and rec["history"]["capped"] is False
+    # a tree without history is said so, not a traceback
+    bare = _tree(tmp_path / "bare", "ci.yml", FIXTURE)
+    rec = ciaudit.audit(str(bare), history=True)
+    assert rec["history"].get("error", "").startswith("no git history") or all(not f["placed"] for f in rec["history"]["findings"])
 
