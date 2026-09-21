@@ -44,3 +44,25 @@ python papers/harness/swallow1_score.py
 It sees that a step *cannot fail*; it cannot see which way the step falls when it does not —
 `papers/harness/RESULT_swallow1_ci_steps_that_cannot_fail_2026_09_21.md` says so, and reads the
 38 verification steps it found one by one.
+
+## Fault injection (SWALLOW-2): which way it falls
+
+The census sees that a step cannot fail; it cannot see which way the step falls. `faults.py`
+simulates the *workflow*: two healthy worlds (every tool succeeds and prints `x`, or prints
+nothing), and for every bash step that reaches a tool, one fault world in which that step's
+tools fail. Outputs, env, `if:`, `needs:` and `fromJSON` matrices are followed; what the
+simulation cannot know is unknown and lets a step run. Each fault gets one verdict — RED,
+FAIL_OPEN, SWALLOWED, ABSORBED, NO_CHECK — and the receipt names every dropped check with its
+mechanism.
+
+```
+python -m benchmarks.harness_mutation.faults --tree .                                      # this repository
+python -m benchmarks.harness_mutation.faults --repos papers/harness/swallow1_population.json --out receipt.json
+python papers/harness/swallow2_self.py --before <gauntlet-pr.yml@main> --after <gauntlet-pr.yml@137>
+python papers/harness/swallow2_score.py
+```
+
+It reproduces #137 with no runner, no token and no code: on `main` the two gated steps are skipped
+and the job is green when the discover step's tools fail; on #137's tree the same fault is RED.
+`papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md` has the map for 100
+repositories, and the four runs it took to draw it.
