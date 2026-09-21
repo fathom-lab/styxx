@@ -53,7 +53,7 @@ import time
 from pathlib import Path
 
 
-ENGINE_VERSION = "styxx.ci-audit/v1"
+ENGINE_VERSION = "styxx.ci-audit/v2"
 
 
 # ----------------------------------------------------------------------------- shared with the census
@@ -999,8 +999,11 @@ def _fault_site_is_artifact(sim: dict, jid: str, i: int) -> bool:
     return any(s["index"] == i and s.get("artifact") for s in job["steps"])
 
 
-def _fault_verdict(doc: dict, jobs: dict, verify: dict, plus: dict, runner: Runner, jid: str, i: int, flavour: str) -> dict | None:
-    """One fault in one healthy flavour; None when the flavour cannot interpret it."""
+def _fault_verdict(doc: dict, jobs: dict, verify: dict, plus: dict, runner: Runner, jid: str, i: int, flavour: str,
+                   acts: dict | None = None) -> dict | None:
+    """One fault in one healthy flavour; None when the flavour cannot interpret it. `acts` is the
+    catalogue's action checks of this workflow ((job, index) -> record); with it, the verdict counts
+    a gated action as a dropped check (SWALLOW-3), and `verdict_runs_only` keeps SWALLOW-2's reading."""
     st = jobs[jid]["steps"][i]
     if _fault_site_is_artifact(plus, jid, i):
         return {"uninterpretable": "BASELINE_RED"}
@@ -1049,17 +1052,87 @@ def _fault_verdict(doc: dict, jobs: dict, verify: dict, plus: dict, runner: Runn
         return "NO_CHECK"
     verdict = _verdict(dropped)
     ms = next((s for s in minus[jid]["steps"] if s["index"] == i), None) if minus.get(jid) else None
-    return {"verdict": verdict, "red_job": red, "dropped": dropped, "checks_in_scope": len(checks), "checks_live": len(live),
-            "verdict_counted": _verdict(dropped_counted), "dropped_counted": dropped_counted,
-            "self_live": (jid, i) in live,
-            "exit_minus": ms["exit"] if ms else None, "timeout": bool(ms and ms["timeout"]) or bool(plus_step["timeout"])}
+    out = {"verdict": verdict, "red_job": red, "dropped": dropped, "checks_in_scope": len(checks), "checks_live": len(live),
+           "verdict_counted": _verdict(dropped_counted), "dropped_counted": dropped_counted,
+           "self_live": (jid, i) in live,
+           "exit_minus": ms["exit"] if ms else None, "timeout": bool(ms and ms["timeout"]) or bool(plus_step["timeout"])}
+    # SWALLOW-3: the checks that are actions. Never executed; reached when the job runs, no earlier
+    # step failed, and the step's own if: is not false; dropped when reached in W+ and not in W-A.
+    achecks = [(k, a) for k, a in (acts or {}).items() if k[0] in scope]
+    live_a = [(k, a) for k, a in achecks if _action_reached(plus, *k)]
+    dropped_a = [{"job": k[0], "index": k[1], "name": a["name"], "check_by": a["check_by"], "action": a["action"], "kind": a["kind"],
+                  "verified": a["verified"], "mechanism": _action_mechanism(minus, *k, a["has_if"]), "cross_step": True,
+                  "runs_plus": 1, "runs_minus": 0}
+                 for k, a in live_a if not _action_reached(minus, *k)]
+
+    def _verdict3(drops):
+        if red:
+            return "RED"
+        if drops:
+            return "FAIL_OPEN"
+        if self_check:
+            return "SWALLOWED"
+        if live or live_a:
+            return "ABSORBED"
+        return "NO_CHECK"
+    out.update(verdict_runs_only=verdict, verdict_counted_runs_only=out["verdict_counted"],
+               dropped=dropped + dropped_a, dropped_counted=dropped_counted + dropped_a, dropped_actions=dropped_a,
+               action_checks_in_scope=len(achecks), action_checks_live=len(live_a),
+               checks_in_scope=len(checks) + len(achecks), checks_live=len(live) + len(live_a))
+    out["verdict"] = _verdict3(out["dropped"])
+    out["verdict_counted"] = _verdict3(out["dropped_counted"])
+    return out
+
+
+def _action_steps(doc: dict) -> dict:
+    """The catalogue's checks among a workflow's `uses:` steps: (job, index) -> record."""
+    from .actions import _entry, action_check, action_name
+    out = {}
+    for jid, job in (doc.get("jobs") or {}).items():
+        if not isinstance(job, dict):
+            continue
+        for i, st in enumerate(job.get("steps") or []):
+            if isinstance(st, dict) and "uses" in st and not isinstance(st.get("run"), str):
+                r = action_check(st, verification=verification, fixer_rx=FIXER_RX)
+                if r:
+                    name = action_name(st["uses"])[0]
+                    out[(jid, i)] = {"kind": r[0], "check_by": r[1], "action": name, "name": st.get("name"),
+                                     "has_if": st.get("if") is not None, "verified": (_entry(name) or {}).get("verified", True) is not False}
+    return out
+
+
+def _action_reached(sim: dict, jid: str, i: int) -> bool:
+    job = sim.get(jid)
+    if not job or job["result"] == "skipped":
+        return False
+    for s in job["steps"]:
+        if s["index"] == i:
+            return s["why"] == "uses"
+    return False
+
+
+def _action_mechanism(minus: dict, jid: str, i: int, has_if: bool) -> str:
+    mjob = minus.get(jid)
+    if not mjob or mjob["result"] == "skipped":
+        return "job-" + str((mjob or {}).get("skipped") or "skipped")
+    ms = next((s for s in mjob["steps"] if s["index"] == i), None)
+    if ms is None:
+        return "not-run"
+    if ms["why"] == "if":
+        return "step-if" if has_if else "after-failure"
+    return "not-run"
+
+
+def _action_class(step: dict) -> str:
+    from .actions import action_class
+    return action_class(step, verification=verification, fixer_rx=FIXER_RX)
 
 
 _PRECEDENCE = ("RED", "FAIL_OPEN", "SWALLOWED", "ABSORBED", "NO_CHECK")
 FLAVOURS = ("x", "empty")
 
 
-def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict) -> tuple[list[dict], dict]:
+def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict, actions: bool = True) -> tuple[list[dict], dict]:
     """Every fault verdict for one workflow. `alone` maps (job, index) -> SWALLOW-1 verdict.
 
     Each fault is judged in both healthy flavours; the verdict is the strongest by precedence
@@ -1069,6 +1142,7 @@ def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict) -> tu
     jobs = {k: v for k, v in (doc.get("jobs") or {}).items() if isinstance(v, dict)}
     plus = {f: simulate(doc, runner, None, f) for f in FLAVOURS}
     verify = _verification_steps(doc)
+    acts = _action_steps(doc) if actions else {}
     faults = []
     for jid, job in jobs.items():
         for i, st in enumerate(job.get("steps") or []):
@@ -1085,12 +1159,14 @@ def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict) -> tu
                    "continue_on_error": st.get("continue-on-error") is True or job.get("continue-on-error") is True,
                    "run_sha256": hashlib.sha256(st["run"].encode()).hexdigest()[:16],
                    "run_head": st["run"].strip().splitlines()[0][:160] if st["run"].strip() else ""}
-            per = {f: _fault_verdict(doc, jobs, verify, plus[f], runner, jid, i, f) for f in FLAVOURS}
+            per = {f: _fault_verdict(doc, jobs, verify, plus[f], runner, jid, i, f, acts) for f in FLAVOURS}
             interpretable = {f: v for f, v in per.items() if v and "verdict" in v}
             rec["by_flavour"] = {f: (v["verdict"] if "verdict" in v else v["uninterpretable"]) for f, v in per.items()}
+            rec["by_flavour_runs_only"] = {f: (v["verdict_runs_only"] if "verdict" in v else v["uninterpretable"]) for f, v in per.items()}
             if not interpretable:
                 kinds = {v["uninterpretable"] for v in per.values()}
-                rec.update(verdict="BASELINE_SKIPPED" if kinds == {"BASELINE_SKIPPED"} else "BASELINE_RED", dropped=[], red_job=None)
+                u = "BASELINE_SKIPPED" if kinds == {"BASELINE_SKIPPED"} else "BASELINE_RED"
+                rec.update(verdict=u, verdict_runs_only=u, dropped=[], dropped_actions=[], red_job=None)
                 faults.append(rec)
                 continue
             best_f = min(interpretable, key=lambda f: _PRECEDENCE.index(interpretable[f]["verdict"]))
@@ -1098,6 +1174,12 @@ def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict) -> tu
             best_c = min(interpretable, key=lambda f: _PRECEDENCE.index(interpretable[f]["verdict_counted"]))
             best["verdict_counted"] = interpretable[best_c]["verdict_counted"]
             best["dropped_counted"] = interpretable[best_c]["dropped_counted"]
+            # SWALLOW-2's reading, chosen by SWALLOW-2's precedence over the flavours, fault for fault
+            best_r = min(interpretable, key=lambda f: _PRECEDENCE.index(interpretable[f]["verdict_runs_only"]))
+            best["verdict_runs_only"] = interpretable[best_r]["verdict_runs_only"]
+            best_rc = min(interpretable, key=lambda f: _PRECEDENCE.index(interpretable[f]["verdict_counted_runs_only"]))
+            best["verdict_counted_runs_only"] = interpretable[best_rc]["verdict_counted_runs_only"]
+            best["flavour_runs_only"] = best_r
             rec.update(flavour=best_f, **best)
             faults.append(rec)
     def reached_any(k):
@@ -1108,6 +1190,19 @@ def analyse_workflow(doc: dict, wf_name: str, runner: Runner, alone: dict) -> tu
                "verification_steps": len(verify),
                "verification_reached_in_plus": sum(1 for k in verify if reached_any(k)),
                "verification_not_executed": sum(1 for k in verify if _reached(plus["x"], *k) is None)}
+    if actions:
+        classes: dict = {}
+        for job in jobs.values():
+            for st in job.get("steps") or []:
+                if isinstance(st, dict):
+                    c = _action_class(st)
+                    classes[c] = classes.get(c, 0) + 1
+        summary.update({"action_checks": len(acts),
+                        "action_checks_reached_in_plus": sum(1 for k in acts if any(_action_reached(plus[f], *k) for f in FLAVOURS)),
+                        "action_checks_by_kind": _count(a["kind"] for a in acts.values()),
+                        "action_checks_unverified": sum(1 for a in acts.values() if not a["verified"]),
+                        "step_classes": classes,
+                        "reusable_workflow_jobs": sum(1 for job in jobs.values() if isinstance(job.get("uses"), str))})
     return faults, summary
 
 
@@ -1124,7 +1219,7 @@ def alone_verdict(run: str, runner: Runner) -> str:
     return "PROPAGATES"
 
 
-def analyse_tree(tree: Path, repo: str | None = None, deadline: float | None = None) -> dict:
+def analyse_tree(tree: Path, repo: str | None = None, deadline: float | None = None, actions: bool = True) -> dict:
     import yaml
     runner = Runner()
     wdir = tree / ".github" / "workflows"
@@ -1152,7 +1247,7 @@ def analyse_tree(tree: Path, repo: str | None = None, deadline: float | None = N
                 if isinstance(st, dict) and isinstance(st.get("run"), str) and _shell_for(st, job, doc) in ("bash", "sh"):
                     alone[(jid, i)] = alone_verdict(st["run"], runner)
         try:
-            faults, summary = analyse_workflow(doc, wf.name, runner, alone)
+            faults, summary = analyse_workflow(doc, wf.name, runner, alone, actions=actions)
         except RecursionError:
             out["unparseable"].append({"workflow": wf.name, "error": "recursion"})
             continue

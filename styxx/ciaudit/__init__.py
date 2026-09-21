@@ -5,6 +5,7 @@
     styxx ci-audit OWNER/REPO              # any public repository: workflow files only, no runner, no token
     styxx ci-audit . --format json         # the receipt
     styxx ci-audit . --counted             # the counted reading of a dropped check (see engine)
+    styxx ci-audit . --no-actions          # SWALLOW-2's reading: checks are `run:` steps only
 
 A green CI light means every job exited 0. It does not mean every check ran, or that every
 check could have failed. This command asks the question the light does not answer: for each
@@ -23,9 +24,26 @@ to: 92% RED; a check's own failure hidden in 23 repositories; a check silently d
 reproduces this repository's own #137 -- the discover step's tools fail, both gated steps are
 skipped, the job is green -- and finds the repair RED.
 
-What it does not say: a step that is loud is not thereby correct; a check that is an action
-(`uses:`) is never executed and is invisible to it; a job is not a status; the check rule is a
-stated heuristic. Read the receipt, which keeps every step's name and first line.
+A check that is an action (`uses: pre-commit/action`, `lycheeverse/lychee-action`, CodeQL's
+`analyze`) is never executed, but it is counted: the declared list in `actions.py` (SWALLOW-3's
+catalogue, every entry with its reason) says which actions are checks, and a fault that closes the
+gate in front of one is FAIL_OPEN. `verdict_runs_only` on every fault keeps SWALLOW-2's reading,
+without the catalogue.
+
+What it does not say: a step that is loud is not thereby correct; an action check cannot be seen
+to fail (no fault is injected into one); a local action, a reusable workflow and `github-script`
+cannot be read; a job is not a status; the check rule and the catalogue are stated heuristics.
+Read the receipt, which keeps every step's name and first line.
+
+Stated plainly: the catalogue ships under an INVALID receipt
+(`papers/harness/RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md`). Its own gates
+held -- every verdict it moves is one of the declared transitions, RED and SWALLOWED never move --
+but the cycle's reproduction gate found that the engine underneath is not bit-reproducible on the
+population: 8 records of 30,642 differ between two runs at the same commits, because of the real
+`date`, a tie in the order stubs are created, and a background subshell racing the log that counts
+what a step reached. That is true of this command with or without the catalogue, and it is the
+next cycle's first item. A verdict here can move by those mechanisms; a repository's card can
+differ between two runs on a step that calls `date`, backgrounds a command, or ties two stubs.
 
 Needs PyYAML (`pip install 'styxx[ciaudit]'`); nothing here imports it, or anything heavy, until
 `audit()` is called.
@@ -35,7 +53,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-CIAUDIT_VERSION = "styxx.ci-audit/v1"
+CIAUDIT_VERSION = "styxx.ci-audit/v2"
 VERDICTS = ("RED", "FAIL_OPEN", "SWALLOWED", "ABSORBED", "NO_CHECK")
 UNINTERPRETABLE = ("BASELINE_RED", "BASELINE_SKIPPED")
 
@@ -49,10 +67,12 @@ def _require_yaml() -> None:
         raise ImportError("styxx ci-audit needs PyYAML: pip install 'styxx[ciaudit]'") from e
 
 
-def audit(target: str, *, counted: bool = False, work: Optional[str] = None, deadline_seconds: Optional[float] = None) -> dict:
+def audit(target: str, *, counted: bool = False, actions: bool = True, work: Optional[str] = None,
+          deadline_seconds: Optional[float] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
-    with its verdict, every dropped check with its mechanism, and a summary."""
+    with its verdict, every dropped check with its mechanism, and a summary. `actions=False` is
+    SWALLOW-2's reading (checks are `run:` steps only); the default counts the catalogue's actions."""
     import shutil
     import subprocess
     import tempfile
@@ -78,7 +98,7 @@ def audit(target: str, *, counted: bool = False, work: Optional[str] = None, dea
     else:
         raise FileNotFoundError(f"{target}: not a directory, and not an owner/repo")
 
-    rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None)
+    rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None, actions=actions)
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
@@ -87,6 +107,7 @@ def audit(target: str, *, counted: bool = False, work: Optional[str] = None, dea
         target=target,
         head=head.stdout.strip() if head.returncode == 0 else None,
         counted=bool(counted),
+        actions=bool(actions),
         seconds=round(time.time() - t0, 1),
     )
     rec["summary"] = summarize(rec, counted=counted)
@@ -119,7 +140,13 @@ def summarize(rec: dict, *, counted: bool = False) -> dict:
         "hidden": sum(1 for f in faults if (f.get(key) or f["verdict"]) == "SWALLOWED"),
         "dropped": sum(1 for f in faults if (f.get(key) or f["verdict"]) == "FAIL_OPEN"),
         "artifact_failures_in_healthy_world": {fl: sum(s.get("artifact_failures_in_plus", {}).get(fl, 0) for s in ws.values()) for fl in ("x", "empty")},
-        "reading": "counted" if counted else "preregistered",
+        "action_checks": sum(s.get("action_checks", 0) for s in ws.values()),
+        "action_checks_reached_in_healthy_world": sum(s.get("action_checks_reached_in_plus", 0) for s in ws.values()),
+        "action_checks_unverified": sum(s.get("action_checks_unverified", 0) for s in ws.values()),
+        "dropped_action_checks": sum(len(f.get("dropped_actions", [])) for f in faults if (f.get(key) or f["verdict"]) == "FAIL_OPEN"),
+        "moved_by_the_catalogue": sum(1 for f in faults if f.get("verdict_runs_only") and f["verdict_runs_only"] != f["verdict"]),
+        "unreadable_steps": sum(n for s in ws.values() for c, n in s.get("step_classes", {}).items() if c in ("local", "docker", "workflow", "not:unreadable")),
+        "reading": ("counted" if counted else "preregistered") + ("" if rec.get("actions", True) else ", run: steps only"),
     }
 
 
@@ -139,12 +166,13 @@ def main(argv=None) -> int:
     ap.add_argument("target", help="a checkout path, or owner/repo (public; workflow files only)")
     ap.add_argument("--format", choices=["card", "json"], default="card")
     ap.add_argument("--counted", action="store_true", help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
+    ap.add_argument("--no-actions", action="store_true", help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
     a = ap.parse_args(argv)
     try:
-        rec = audit(a.target, counted=a.counted, work=a.work, deadline_seconds=a.deadline)
+        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, work=a.work, deadline_seconds=a.deadline)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
