@@ -92,6 +92,50 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-3: the checks that are actions — INVALID on its reproduction gate, and the catalogue ships
+
+SWALLOW-2's RESULT named its blind spot first: a check that is an action (`uses:`) is never
+executed and never counted, so a fault whose only downstream check is `pre-commit/action` or a
+link lint reads NO_CHECK. This cycle is the declared list of checking actions, and the measurement
+of what it changes. `benchmarks/harness_mutation/action_checks.py` holds the rule, the catalogue
+(82 entries and 3 families that are checks, each with its reason, 7 marked unverified; 262 names
+excluded by category — every `uses:` name the population's hand-written workflows use is decided
+once, `swallow3_actions_census.json` has the count) and the instrument, which runs SWALLOW-2's
+`faults.py` unchanged and, over the same executions, asks of every catalogued action step in a
+fault's scope whether it is reached in the healthy world and in the fault world. Every fault
+carries SWALLOW-2's reading beside the new one.
+
+**INVALID** (`RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md`, one run, not amended).
+The population was re-cloned at the HEADs the SWALLOW-2 receipt records, every one of 96, and
+gate G-S3-3 asked that SWALLOW-2 reproduce fault for fault: **8 of 30,642 records did not**, none
+with a timeout. The three causes are in the frozen instrument's contact with the world, each
+demonstrated on its own step in `swallow3_repro.json`: the real `date` (airbyte's weekend freeze,
+Pacific time — SWALLOW-2 ran on a Sunday evening), a tie in the order stubs are created that
+falls to a set's iteration order (`tests/ci/` and `tests/ci/x.py`, one step of browser-use; two
+hash seeds in eight go the other way), and a background subshell racing the log that counts what
+a step reached (langfuse, gh-aw). SWALLOW-2's published counts move by those 8 and nothing else.
+Its own determinism gate ran on this repository's 32 faults and could not see any of the three.
+
+On the same run, reported and not claimed: **4 of 7** predictions HIT. The catalogue moves **5**
+of 6,341 interpretable hand-written faults — four NO_CHECK → ABSORBED and one NO_CHECK →
+FAIL_OPEN, `getsentry/sentry-docs`' `Get changed files`, whose `git diff … || true` gates
+`lycheeverse/lychee-action` behind a step `if:` (SWALLOW-2's P4b, resolved). Of 105 catalogued
+action checks in 45 repositories, 147 faults have one in scope and 135 of those are RED already:
+the blind spot is real and is that small. No fault moved outside the declared transitions; RED and
+SWALLOWED are identical between the two readings (G-S3-6). Next is SWALLOW-2.1, the same run
+twice on an executor with the three causes fixed; the catalogue and these priors wait for it.
+
+**`styxx ci-audit` reads with the catalogue by default.** `styxx/ciaudit/actions.py` is the living
+copy of the catalogue, held equal to the frozen one entry for entry by `tests/test_ciaudit.py`,
+which now pins both instruments and holds the engine to each one's verdicts, fault for fault, with
+the catalogue on (SWALLOW-3) and off (SWALLOW-2; `--no-actions`). The card names a dropped action
+check with the action and its kind (*drops check-pr › Check external links
+[lycheeverse/lychee-action, lint]: the check's `if:` turns false*), counts the action checks
+reached in the healthy world, and counts the steps it cannot read — local actions, docker images,
+`github-script`. Shipped under an INVALID receipt, and the docstring says so: what is gated and
+pinned is the catalogue's logic; what is not yet established is the bit-reproducibility of the
+engine underneath it, which is the same with or without the catalogue. `styxx.ci-audit/v2`.
+
 ## [Unreleased] — `styxx ci-audit`: the fault-injection engine ships as a command
 
 ```
