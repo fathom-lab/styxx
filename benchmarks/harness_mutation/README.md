@@ -200,3 +200,25 @@ rename defect in SWALLOW-6's instrument, which was fixed and rerun. `differentia
 at the sha256 that receipt names (`91e4a4a7…`); the living copy is
 `styxx/ciaudit/differential.py`, behind `styxx ci-audit --base`, and
 `.github/workflows/ci-audit.yml` runs it on this repository's own pull requests.
+
+## Who writes the hidden check (SWALLOW-8)
+
+`authorship.py` reads every mainline commit of the SWALLOW-7 receipt for its author name and
+address, subject and body, and classes it by a stated rule — `agent` on a coding agent's
+signature (an agent as author, a `Co-authored-by` trailer naming one, "Generated with …",
+"[CI] Agentic workflows", a merge of a `codex/`, `claude/`, `copilot/` branch), `automation` on a
+bot author with no such signature, `human` otherwise — and joins the class to the gate's
+firings. A bare first name is not a signal; the receipt carries classes and signal labels, never
+a name; the agent class is a floor.
+
+```
+python -m benchmarks.harness_mutation.authorship --receipt papers/harness/swallow7_receipt.json.gz --work <clones> --out receipt.json
+python papers/harness/swallow8_score.py
+```
+
+`papers/harness/RESULT_swallow8_who_writes_the_hidden_check_2026_09_21.md` (VALID, 4/7): 4,098 of
+21,569 workflow-touching commits carry an agent's signature — 0.09% of 2024's, 38% of 2026's —
+and bring 49 of the 147 newly hidden checks; 0.76% of agent commits fire against 0.46% of a
+person's (1.64×, short of the 2× predicted; 1.27× within 2025–2026); none of 1,690 dependency
+and release bot commits fires; the agent's hidden check is repaired no worse (73% vs 66%).
+`authorship.py` is frozen at the sha256 that receipt names (`c3fb6e42…`) and pinned by its test.
