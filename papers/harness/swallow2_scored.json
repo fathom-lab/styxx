@@ -1,0 +1,303 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S2-1": {
+   "pass": true,
+   "detail": "population sha256 5ac2789b6d67eed8\u2026, 100 entries"
+  },
+  "G-S2-2": {
+   "pass": true,
+   "detail": "96 cloned; failures [('MihaiCristianCondrea/Smart-Cleaner-for-Android', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/flexile', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('antiwork/helper', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\"), ('Metta-AI/metta', \"fatal: could not read Username for 'https://github.com': terminal prompts disabled\")]; capped []"
+  },
+  "G-S2-3": {
+   "pass": true,
+   "detail": "{\"alone_reproduces_swallow1\": true, \"deterministic\": true, \"before_137_gated_steps_skipped_and_green\": true, \"after_137_discover_is_red\": true}"
+  },
+  "G-S2-4": {
+   "pass": true,
+   "detail": "tests/test_harness_faults.py: see RESULT \u00a71; self-run deterministic: True"
+  },
+  "G-S2-5": {
+   "pass": true,
+   "detail": "verdicts and checks are the instrument's; nothing reclassified"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "RED \u2265 80% of interpretable hand-written faults",
+   "observed": {
+    "interpretable": 6339,
+    "red": 5836,
+    "rate": 0.921,
+    "by_verdict": {
+     "RED": 5836,
+     "SWALLOWED": 49,
+     "ABSORBED": 167,
+     "NO_CHECK": 284,
+     "FAIL_OPEN": 3
+    }
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "\u2265 6 repositories with a hand-written FAIL_OPEN fault",
+   "observed": {
+    "repos": [
+     "antiwork/gumroad",
+     "crewAIInc/crewAI"
+    ],
+    "count": 2
+   }
+  },
+  "P3": {
+   "hit": false,
+   "predicted": "\u2265 half of hand-written FAIL_OPEN faults are cross-step",
+   "observed": {
+    "fail_open": 3,
+    "cross_step": 1,
+    "in_step": 2,
+    "mechanisms": {
+     "unreached": 2,
+     "job-if": 2
+    }
+   }
+  },
+  "P4a": {
+   "predicted": "mlflow/mlflow master.yml database 'Run tests': FAIL_OPEN, in-step (unreached)",
+   "hit": false,
+   "matches": [
+    {
+     "workflow": "master.yml",
+     "job": "database",
+     "index": 3,
+     "verdict": "SWALLOWED",
+     "dropped": []
+    }
+   ]
+  },
+  "P4b": {
+   "predicted": "getsentry/sentry-docs 'Get changed files': FAIL_OPEN, cross-step",
+   "hit": false,
+   "matches": [
+    {
+     "workflow": "lint-external-links.yml",
+     "job": "check-pr",
+     "index": 1,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    }
+   ]
+  },
+  "P4c": {
+   "predicted": "primer/react 'Get source files changes': FAIL_OPEN, cross-step",
+   "hit": false,
+   "matches": [
+    {
+     "workflow": "recommend-integration-tests.yml",
+     "job": "recommend",
+     "index": 2,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    }
+   ]
+  },
+  "P4d": {
+   "predicted": "carverauto/serviceradar 'Decide whether this Mix project needs lint': not FAIL_OPEN",
+   "hit": true,
+   "matches": [
+    {
+     "workflow": "elixir-quality.yml",
+     "job": "quality",
+     "index": 1,
+     "verdict": "RED",
+     "dropped": []
+    }
+   ]
+  },
+  "P4e": {
+   "predicted": "airbytehq/airbyte 'Check for changes' (git diff --quiet): not FAIL_OPEN",
+   "hit": true,
+   "matches": [
+    {
+     "workflow": "auto-upgrade-certified-connectors-cdk.yml",
+     "job": "upgrade-connector-cdk",
+     "index": 8,
+     "verdict": "BASELINE_SKIPPED",
+     "dropped": []
+    },
+    {
+     "workflow": "bump-version-command.yml",
+     "job": "bump-version",
+     "index": 8,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    },
+    {
+     "workflow": "enable-autopilot-rollouts-command.yml",
+     "job": "enable-autopilot-rollouts",
+     "index": 8,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    },
+    {
+     "workflow": "format-fix-command.yml",
+     "job": "format-fix",
+     "index": 7,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    },
+    {
+     "workflow": "regenerate-agent-engine-api-spec.yml",
+     "job": "regenerate-spec",
+     "index": 9,
+     "verdict": "NO_CHECK",
+     "dropped": []
+    },
+    {
+     "workflow": "update-connector-cdk-version-command.yml",
+     "job": "update-connector-cdk-version",
+     "index": 7,
+     "verdict": "RED",
+     "dropped": []
+    }
+   ]
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "SWALLOWED in \u2265 8 repositories, and in more repositories than FAIL_OPEN",
+   "observed": {
+    "swallowed_repos": 23,
+    "fail_open_repos": 2,
+    "repos": [
+     "SkBlaz/py3plex",
+     "airbytehq/airbyte",
+     "carverauto/serviceradar",
+     "codenameone/CodenameOne",
+     "davidmerfield/blot",
+     "dotnet/aspire",
+     "dotnet/maui",
+     "dotnet/roslyn",
+     "getsentry/sentry-docs",
+     "giselles-ai/giselle",
+     "githubnext/gh-aw",
+     "go-vikunja/vikunja",
+     "hmislk/hmis",
+     "langfuse/langfuse",
+     "microsoft/vscode",
+     "mlflow/mlflow",
+     "mochilang/mochi",
+     "neondatabase/website",
+     "nodetool-ai/nodetool",
+     "prebid/Prebid.js",
+     "promptfoo/promptfoo",
+     "selfxyz/self",
+     "vinhnx/vtcode"
+    ]
+   }
+  },
+  "P6": {
+   "hit": false,
+   "predicted": "interpretable \u2265 85% of hand-written fault sites; artifact failures \u2264 10% of steps run in W+ (x)",
+   "observed": {
+    "hand_written_sites": 7915,
+    "interpretable": 6339,
+    "rate": 0.801,
+    "artifact_failures_x": 2222,
+    "steps_run_x": 31932,
+    "artifact_rate": 0.0696
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "\u2265 90% of live hand-written checks are RED under their own fault; the rest SWALLOWED or FAIL_OPEN",
+   "observed": {
+    "live_checks": 1452,
+    "red": 1401,
+    "rate": 0.965,
+    "by_verdict": {
+     "RED": 1401,
+     "SWALLOWED": 49,
+     "FAIL_OPEN": 2
+    }
+   }
+  }
+ },
+ "hits": 5,
+ "of": 11,
+ "summary": {
+  "by_verdict_counted": {
+   "RED": 23031,
+   "SWALLOWED": 159,
+   "ABSORBED": 1371,
+   "NO_CHECK": 2638,
+   "FAIL_OPEN": 12
+  },
+  "by_verdict_counted_hand_written": {
+   "RED": 5836,
+   "SWALLOWED": 41,
+   "ABSORBED": 167,
+   "NO_CHECK": 284,
+   "FAIL_OPEN": 11
+  },
+  "repos_with_fail_open_counted_hand_written": 7,
+  "fail_open_counted_by_mechanism": {
+   "fewer": 8,
+   "unreached": 2,
+   "job-if": 4
+  },
+  "repos": 100,
+  "repos_clone_failed": 4,
+  "repos_with_a_fault_site": 87,
+  "faults": 30645,
+  "by_verdict": {
+   "RED": 23031,
+   "BASELINE_RED": 2160,
+   "SWALLOWED": 167,
+   "ABSORBED": 1371,
+   "BASELINE_SKIPPED": 1274,
+   "NO_CHECK": 2638,
+   "FAIL_OPEN": 4
+  },
+  "hand_written_faults": 7915,
+  "by_verdict_hand_written": {
+   "RED": 5836,
+   "BASELINE_RED": 727,
+   "SWALLOWED": 49,
+   "ABSORBED": 167,
+   "BASELINE_SKIPPED": 849,
+   "NO_CHECK": 284,
+   "FAIL_OPEN": 3
+  },
+  "repos_with_fail_open": 3,
+  "repos_with_fail_open_hand_written": 2,
+  "fail_open_cross_step": 2,
+  "fail_open_in_step": 2,
+  "fail_open_by_mechanism": {
+   "unreached": 2,
+   "job-if": 4
+  },
+  "verification_steps": 3190,
+  "verification_reached_in_plus": 2786,
+  "verification_not_executed": 83,
+  "artifact_failures_in_plus": {
+   "x": 2222,
+   "empty": 2342
+  },
+  "steps_run_in_plus": {
+   "x": 31932,
+   "empty": 31551
+  },
+  "faults_by_flavour_used": {
+   "x": 27137,
+   "empty": 74
+  },
+  "workflows": 2177,
+  "repos_capped": 0,
+  "executions": 94971
+ },
+ "instrument_sha256": "b086476d1cdc2cc529018029437ce41d62f722a0cfa258d6f4b87dabaeeb5149",
+ "receipt_sha256": "43e6c397aa36057e64d799bc65cf88deb8f0d0280167dd45982f05f01bf3465d",
+ "receipt_file": "swallow2_receipt.json.gz",
+ "prereg_sha256_at_freeze": "bdae83fbdb9a5d3beea2ecc8c35a213feed97ff285a08f5d4997a07bdd80225a"
+}
