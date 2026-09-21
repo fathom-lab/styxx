@@ -174,3 +174,29 @@ check is 155 days old, the oldest 1,630; 17 commits hid a loud check and 5 said 
 words; 15 made one loud, and 13 times the edit is the one the instrument proposes. `history.py` is
 frozen at the sha256 that receipt names (`93efb4a9…`); the living copy is
 `styxx/ciaudit/history.py`, behind `styxx ci-audit --history`.
+
+## The differential audit (SWALLOW-7)
+
+`differential.py` is the pull request's gate: given a base and a head, it reads only the
+workflows that changed, matches every step across the two revisions (job and step name, else id,
+else first line; a renamed step by its script) and reports what the head hides that the base did
+not — each with the repair SWALLOW-4 then SWALLOW-5 verifies on the head's text — what it made
+loud or removed, and what was hidden on both sides. The population reading runs that gate at
+every mainline commit of the SWALLOW-6 clones that touches a hand-written workflow, base its first
+parent, and times every 100th with nothing memoised.
+
+```
+python -m benchmarks.harness_mutation.differential --tree . --base origin/main
+python -m benchmarks.harness_mutation.differential --receipt papers/harness/swallow6_receipt.json.gz --work <clones> --workers 2 --out receipt.json
+python papers/harness/swallow7_score.py [<clones>]
+```
+
+`papers/harness/RESULT_swallow7_the_differential_audit_2026_09_21.md` (INVALID on its own join
+with the SWALLOW-6 history, stated first; 6/7 reported, not claimed; two runs): the gate fires on
+104 of 21,569 commits, reproduces every one of the history's 147 arrivals once a renamed workflow
+is followed and never fires where the history saw nothing, has a verified repair for 101 of the
+147 checks it catches (66 of them one line), and costs 0.15 s median. Its first run exposed the
+rename defect in SWALLOW-6's instrument, which was fixed and rerun. `differential.py` is frozen
+at the sha256 that receipt names (`91e4a4a7…`); the living copy is
+`styxx/ciaudit/differential.py`, behind `styxx ci-audit --base`, and
+`.github/workflows/ci-audit.yml` runs it on this repository's own pull requests.

@@ -65,6 +65,28 @@
     "workflow_dispatch"
    ]
   },
+  "ci-audit.yml": {
+   "jobs": {
+    "differential": {
+     "if": null,
+     "name": null,
+     "run_steps": [
+      {
+       "if": null,
+       "name": "Install styxx with ci-audit"
+      },
+      {
+       "if": null,
+       "name": "What this head hides that its base did not"
+      }
+     ]
+    }
+   },
+   "name": "ci-audit",
+   "on": [
+    "pull_request"
+   ]
+  },
   "diffgate.yml": {
    "jobs": {
     "diffgate": {

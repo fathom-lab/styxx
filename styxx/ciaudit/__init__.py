@@ -8,6 +8,7 @@
     styxx ci-audit . --no-actions          # SWALLOW-2's reading: checks are `run:` steps only
     styxx ci-audit . --repair              # for every finding, a verified repair of the workflow text, or why there is none
     styxx ci-audit . --history             # for every finding, the commit it has been hidden since: born hidden, or acquired, and by what
+    styxx ci-audit . --base origin/main    # the pull request's gate: what this HEAD hides that its base did not (exit 1 if anything)
 
 A green CI light means every job exited 0. It does not mean every check ran, or that every
 check could have failed. This command asks the question the light does not answer: for each
@@ -50,6 +51,13 @@ a rewrite, or a change elsewhere), and whether that commit's message says why in
 list of words (`history.py`, SWALLOW-6). For `owner/repo` the clone is deepened to the GitHub
 Actions YAML era (2019-08) first, blob-less.
 
+`--base <rev>` is the gate for a pull request. Only the workflows that changed between the
+merge-base of <rev> and HEAD are read, every step is matched across the two revisions, and the
+card says what HEAD hides that the base did not -- a check born hidden, or an existing one made
+hidden, each with the verified repair -- what it made loud or removed, and what was hidden on both
+sides (not this change's doing). With `--base` the exit status is 1 only when the change brings a
+new hidden check (`differential.py`, SWALLOW-7).
+
 What it does not say: a step that is loud is not thereby correct; an action check cannot be seen
 to fail (no fault is injected into one); a local action, a reusable workflow and `github-script`
 cannot be read; a job is not a status; the check rule and the catalogue are stated heuristics.
@@ -88,7 +96,7 @@ def _require_yaml() -> None:
 
 
 def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, history: bool = False,
-          work: Optional[str] = None, deadline_seconds: Optional[float] = None) -> dict:
+          base: Optional[str] = None, work: Optional[str] = None, deadline_seconds: Optional[float] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
     with its verdict, every dropped check with its mechanism, and a summary. `actions=False` is
@@ -129,6 +137,12 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
         if cloned is not None:
             rec["history_clone"] = deepen(tree)
         rec["history"] = since(tree, rec["faults"], deadline=(t0 + deadline_seconds) if deadline_seconds else None)
+    if base:
+        from .differential import tree_differential
+        try:
+            rec["differential"] = tree_differential(tree, base)
+        except RuntimeError as e:
+            rec["differential"] = {"base_ref": base, "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
@@ -214,12 +228,13 @@ def main(argv=None) -> int:
     ap.add_argument("--no-actions", action="store_true", help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
     ap.add_argument("--repair", action="store_true", help="for every finding, try the two stated repairs of the workflow text and verify each: loud under the same fault, healthy run unchanged")
     ap.add_argument("--history", action="store_true", help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history")
+    ap.add_argument("--base", default=None, help="the pull request's gate: read only the workflows changed since the merge-base with this revision, and exit 1 only if HEAD hides a check the base did not")
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
     a = ap.parse_args(argv)
     try:
-        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, work=a.work, deadline_seconds=a.deadline)
+        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, base=a.base, work=a.work, deadline_seconds=a.deadline)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
@@ -230,4 +245,7 @@ def main(argv=None) -> int:
     else:
         print(render(rec, counted=a.counted))
     s = rec["summary"]
+    if rec.get("differential") is not None:
+        d = rec["differential"]
+        return 2 if d.get("error") else (1 if d.get("fires") else 0)
     return 1 if (s["hidden"] or s["dropped"]) else 0

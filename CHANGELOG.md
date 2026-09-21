@@ -92,6 +92,39 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-7: the differential audit — `styxx ci-audit --base`, and a gate on this repository's own pull requests
+
+The place to catch a hidden check is the change that brings it.
+`benchmarks/harness_mutation/differential.py` is that gate: given a base and a head, it reads only
+the workflows that changed, matches every step across the two revisions, and says what the head
+hides that the base did not — each with the repair SWALLOW-4 then SWALLOW-5 verifies on the
+head's text — what it made loud or removed, and what was hidden on both sides. Run at every
+mainline commit of the SWALLOW-6 clones that touches a hand-written workflow (21,569, base the
+first parent), and timed on every 100th with nothing memoised.
+
+**INVALID on its own join with the history, stated first; 6/7 reported, not claimed**
+(`RESULT_swallow7_the_differential_audit_2026_09_21.md`; prereg frozen at `a8f4f675…`; two runs).
+The gate that holds the cycle asked it to reproduce SWALLOW-6's arrivals "at the same (repo,
+workflow, job, key, sha)"; it reproduces 139 of 147 under that join and 147 of 147 once a
+renamed workflow is followed to the name it had at the commit — the frozen rule is the verdict,
+the reading is that the gate saw everything, and it fired at 0 of 21,465 commits where the
+history saw nothing. Its first run exposed a defect in SWALLOW-6's instrument — a renamed
+workflow's earlier revisions read as absent — which was fixed and rerun (SWALLOW-6 runs 4 and 5).
+What the gate would have said: **it fires on 104 of 21,569 commits (0.5%)**; **101 of the 147
+checks it catches have a verified repair on that very text, 66 of them one line** (P2 predicted
+70%: MISS at 68.7%); 113 of 147 are born hidden, 17 are existing checks turned hidden, 17 became
+checks already hidden; eight commits bring three or more at once — `dotnet/maui`'s ten
+`Validate COPILOT_PAT_N` from a compiler's asset update, `nodetool`'s two batches of six from
+bots; 90 of 147 carry `continue-on-error`; and the gate costs **0.15 s median, 1.13 s at p90**.
+
+**`styxx ci-audit . --base <rev>`** is the pull request's gate: only the workflows changed since
+the merge-base are read, the card says what HEAD hides that the base did not (with the diff of
+the verified repair), what it made loud or removed, and what was already hidden (not this
+change's doing), and the exit status is 1 only for a newly hidden check.
+**`.github/workflows/ci-audit.yml`** runs it on this repository's own pull requests that touch a
+workflow. `styxx/ciaudit/differential.py` is the living copy; `tests/test_ciaudit.py` pins the
+frozen instrument and holds the copy to it at every commit of a scripted history.
+
 ## [Unreleased] — SWALLOW-6: where hidden checks come from — `styxx ci-audit --history`
 
 SWALLOW-2 to SWALLOW-5 read a checkout at one moment. `benchmarks/harness_mutation/history.py`

@@ -1,0 +1,32 @@
+name: ci-audit
+
+# The pull request's gate (SWALLOW-7). When a workflow file changes, `styxx ci-audit --base` reads
+# only the workflows that changed between the base and this head, matches every step across the
+# two revisions, and fails only when the change brings a check that hides its own failure -- a
+# `|| true`, a `continue-on-error`, a guard whose failing tool is its green path -- printing the
+# verified one-line repair when there is one. A check that was already hidden on the base is
+# reported, not failed: it is not this change's doing.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  differential:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install styxx with ci-audit
+        run: python -m pip install -e ".[ciaudit]"
+      - name: What this head hides that its base did not
+        run: python -m styxx.ciaudit . --base "origin/${{ github.base_ref }}"
