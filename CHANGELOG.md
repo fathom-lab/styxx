@@ -92,6 +92,27 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-8: who writes the hidden check
+
+The gate's 104 firings, by who made the commit. `benchmarks/harness_mutation/authorship.py`
+classes every mainline commit of the SWALLOW-7 receipt by a stated rule on its author, subject
+and body — `agent` on a coding agent's signature, `automation` on a bot with none, `human`
+otherwise; a first name is not a signal; no name is written — and joins the class to the gate.
+
+**VALID, 4/7** (`RESULT_swallow8_who_writes_the_hidden_check_2026_09_21.md`; prereg frozen at
+`316db050…`; one run). **4,098 of the population's 21,569 workflow-touching commits carry an
+agent's signature — 0.09% of those dated 2024, 21% of 2025's, 38% of 2026's** — in 80 of 96
+repositories. They bring **49 of the 147 newly hidden checks**: 0.76% of agent commits fire
+against 0.46% of a person's (1.64×; the prereg said 2×, MISS — and within 2025–2026 the ratio is
+1.27: the era explains more than the author). **Not one of 1,690 dependency, release and
+action-bot commits brings a hidden check.** The agent's hidden check is repaired no worse — 36
+of 49 have a verified one-line fix, against 65 of 98 for a person's — and it is not only born:
+Copilot's update of `dotnet/maui`'s generated assets rewrote ten steps into hidden checks in one
+commit. Every agent number is a floor: a commit whose agent left no signature is a person's
+under the rule.
+
+Nothing in `styxx` changes; the cycle reads the receipts of the last two.
+
 ## [Unreleased] — SWALLOW-7: the differential audit — `styxx ci-audit --base`, and a gate on this repository's own pull requests
 
 The place to catch a hidden check is the change that brings it.

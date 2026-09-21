@@ -1,0 +1,304 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S8-1": {
+   "pass": true,
+   "detail": "3 passed in 1.99s"
+  },
+  "G-S8-2": {
+   "pass": true,
+   "detail": "21569 commits, 0 unclassified, 96 repositories; missing clones: 0"
+  },
+  "G-S8-3": {
+   "pass": true,
+   "detail": "authorship c3fb6e422a5d068d\u2026, source c6b12d0987592927\u2026 (file c6b12d0987592927\u2026), differential 91e4a4a755b80027\u2026"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "\u2265 20% of newly hidden checks brought by agent-class commits",
+   "observed": {
+    "agent": 49,
+    "human": 98,
+    "automation": 0,
+    "total": 147,
+    "pct_agent": 33.33
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "agent-class commits fire \u2265 2\u00d7 as often as human-class commits",
+   "observed": {
+    "agent_commits": 4098,
+    "agent_firing": 31,
+    "agent_rate_pct": 0.76,
+    "human_commits": 15781,
+    "human_firing": 73,
+    "human_rate_pct": 0.46,
+    "ratio": 1.64
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "\u2264 0.1% of automation-class commits fire",
+   "observed": {
+    "automation_commits": 1690,
+    "firing": 0,
+    "rate_pct": 0.0
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "verified-repair share of agent-brought checks \u2265 human-brought",
+   "observed": {
+    "agent": "36 of 49 (73.47%)",
+    "human": "65 of 98 (66.33%)"
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "mean newly hidden checks per firing commit: agent \u2265 1.5\u00d7 human",
+   "observed": {
+    "agent": 1.58,
+    "human": 1.34,
+    "ratio": 1.18
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "agent share of workflow-touching commits \u2265 5% in 2026 and \u2265 3\u00d7 the 2024 share",
+   "observed": {
+    "share_by_year_pct": {
+     "2019": 0.0,
+     "2020": 0.0,
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.09,
+     "2025": 21.23,
+     "2026": 38.18
+    },
+    "commits_by_year": {
+     "2019": {
+      "agent": 0,
+      "automation": 0,
+      "firing": 0,
+      "human": 40
+     },
+     "2020": {
+      "agent": 0,
+      "automation": 0,
+      "firing": 5,
+      "human": 505
+     },
+     "2021": {
+      "agent": 0,
+      "automation": 0,
+      "firing": 0,
+      "human": 788
+     },
+     "2022": {
+      "agent": 0,
+      "automation": 25,
+      "firing": 8,
+      "human": 1333
+     },
+     "2023": {
+      "agent": 0,
+      "automation": 77,
+      "firing": 5,
+      "human": 1897
+     },
+     "2024": {
+      "agent": 3,
+      "automation": 148,
+      "firing": 7,
+      "human": 3189
+     },
+     "2025": {
+      "agent": 1358,
+      "automation": 696,
+      "firing": 28,
+      "human": 4342
+     },
+     "2026": {
+      "agent": 2737,
+      "automation": 744,
+      "firing": 51,
+      "human": 3687
+     }
+    }
+   }
+  },
+  "P7": {
+   "hit": false,
+   "predicted": "\u2265 90% of agent-brought newly hidden checks are born hidden",
+   "observed": {
+    "born_hidden": 36,
+    "of": 49,
+    "pct": 73.47,
+    "by_kind": {
+     "born hidden": 36,
+     "acquired": 3,
+     "became a check, hidden": 10
+    },
+    "human_by_kind": {
+     "born hidden": 77,
+     "acquired": 14,
+     "became a check, hidden": 7
+    }
+   }
+  }
+ },
+ "hits": 4,
+ "of": 7,
+ "exploratory_not_scored": {
+  "fire_rate_2025_2026_pct": {
+   "agent": 0.76,
+   "automation": 0.0,
+   "human": 0.6
+  },
+  "commits_2025_2026": {
+   "agent": 4095,
+   "automation": 1440,
+   "human": 8029
+  },
+  "agent_firings_by_signal": {
+   "branch-prefix": 7,
+   "author-name": 11,
+   "co-authored-by": 13
+  },
+  "agent_commits_by_signal": {
+   "author-email": 7,
+   "author-name": 1286,
+   "branch-prefix": 905,
+   "co-authored-by": 1858,
+   "generated-with": 42
+  },
+  "agent_firing_repos": [
+   "MontrealAI/AGI-Alpha-Agent-v0",
+   "SkBlaz/py3plex",
+   "codenameone/CodenameOne",
+   "dotnet/aspire",
+   "dotnet/maui",
+   "dotnet/sdk",
+   "getsentry/sentry-docs",
+   "githubnext/gh-aw",
+   "langfuse/langfuse",
+   "nodetool-ai/nodetool",
+   "selfxyz/self"
+  ],
+  "continue_on_error_pct": {
+   "agent": 73.47,
+   "automation": null,
+   "human": 55.1
+  }
+ },
+ "summary": {
+  "by_class": {
+   "agent": {
+    "born_hidden": 36,
+    "checks_per_firing": 1.58,
+    "commits": 4098,
+    "continue_on_error": 36,
+    "fire_rate": 0.00756,
+    "firing_commits": 31,
+    "new_hidden_checks": 49,
+    "repos": 80,
+    "signals": {
+     "author-email": 7,
+     "author-name": 1286,
+     "branch-prefix": 905,
+     "co-authored-by": 1858,
+     "generated-with": 42
+    },
+    "with_repair": 36
+   },
+   "automation": {
+    "born_hidden": 0,
+    "checks_per_firing": null,
+    "commits": 1690,
+    "continue_on_error": 0,
+    "fire_rate": 0.0,
+    "firing_commits": 0,
+    "new_hidden_checks": 0,
+    "repos": 44,
+    "signals": {
+     "bot-author": 1690
+    },
+    "with_repair": 0
+   },
+   "human": {
+    "born_hidden": 77,
+    "checks_per_firing": 1.34,
+    "commits": 15781,
+    "continue_on_error": 54,
+    "fire_rate": 0.00463,
+    "firing_commits": 73,
+    "new_hidden_checks": 98,
+    "repos": 93,
+    "signals": {},
+    "with_repair": 65
+   }
+  },
+  "by_year": {
+   "2019": {
+    "agent": 0,
+    "automation": 0,
+    "firing": 0,
+    "human": 40
+   },
+   "2020": {
+    "agent": 0,
+    "automation": 0,
+    "firing": 5,
+    "human": 505
+   },
+   "2021": {
+    "agent": 0,
+    "automation": 0,
+    "firing": 0,
+    "human": 788
+   },
+   "2022": {
+    "agent": 0,
+    "automation": 25,
+    "firing": 8,
+    "human": 1333
+   },
+   "2023": {
+    "agent": 0,
+    "automation": 77,
+    "firing": 5,
+    "human": 1897
+   },
+   "2024": {
+    "agent": 3,
+    "automation": 148,
+    "firing": 7,
+    "human": 3189
+   },
+   "2025": {
+    "agent": 1358,
+    "automation": 696,
+    "firing": 28,
+    "human": 4342
+   },
+   "2026": {
+    "agent": 2737,
+    "automation": 744,
+    "firing": 51,
+    "human": 3687
+   }
+  },
+  "commits": 21569,
+  "repos": 96,
+  "unclassified": 0
+ },
+ "seconds": 25.5,
+ "instrument_sha256": "c3fb6e422a5d068df9f57ac3d0aac641b4c140337f09a28a90e8688a677d06ab",
+ "receipt_sha256": "a3dd0272293a44ba6592f6463fd95e6345987bee3e294a7513e5f6626dd99a40",
+ "receipt_file": "swallow8_receipt.json.gz",
+ "prereg_sha256_at_freeze": "316db0509151e4697c8f5c475812e212754e0d775f35017e38ec096bb535ecb3"
+}
