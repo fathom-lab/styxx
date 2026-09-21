@@ -57,7 +57,10 @@ RELEASE = """
         steps:
           - name: Verify tag
             run: git describe --exact-match --tags
+          - name: Lint release notes
+            run: npx markdownlint RELEASE.md || true
 """
+RELEASE_FIXED = RELEASE.replace("run: npx markdownlint RELEASE.md || true", "run: npx markdownlint RELEASE.md")
 SCRIPT = [  # (date, subject, {path: text | None})
     ("2023-01-01T12:00:00", "ci: add the pipeline", {"ci.yml": V1}),
     ("2023-03-01T12:00:00", "ci: make lint non-blocking for now (flaky)", {"ci.yml": V2}),
@@ -65,7 +68,9 @@ SCRIPT = [  # (date, subject, {path: text | None})
     ("2023-09-01T12:00:00", "ci: rename the test step", {"ci.yml": V4}),
     ("2024-01-01T12:00:00", "ci: drop the markdown lint", {"ci.yml": V5}),
     ("2024-02-01T12:00:00", "ci: add a release workflow", {"release.yml": RELEASE}),
-    ("2024-03-01T12:00:00", "ci: remove the release workflow", {"release.yml": None}),
+    ("2024-02-15T12:00:00", "ci: rename the release workflow", {"release.yml": None, "publish.yml": RELEASE}),   # a rename: git sees R100
+    ("2024-02-20T12:00:00", "ci: fail on release notes lint", {"publish.yml": RELEASE_FIXED}),                # a repair whose revision before predates nothing, but whose lineage began under the old path
+    ("2024-03-01T12:00:00", "ci: remove the release workflow", {"publish.yml": None}),
 ]
 
 
@@ -114,8 +119,9 @@ def test_the_lineage_key_and_the_mechanism_are_the_stated_rules():
 
 def test_every_event_on_the_scripted_history(tmp_path):
     rec = H.tree_history(_repo(tmp_path), "fixture")
-    assert set(rec["workflows"]) == {"ci.yml", "release.yml"}
+    assert set(rec["workflows"]) == {"ci.yml", "publish.yml"}                 # the renamed workflow is one history under its last name
     assert rec["workflows"]["ci.yml"]["revisions"] == 5 and rec["workflows"]["ci.yml"]["reads"] == 5
+    assert rec["workflows"]["publish.yml"]["revisions"] == 4 and rec["workflows"]["publish.yml"]["reads"] == 2   # added, renamed, repaired, removed: two texts
     ci = _by_key(rec, "ci.yml")
     # born loud, renamed, alive: no event
     t = ci[("test", "name:Run unit tests")]
@@ -137,18 +143,24 @@ def test_every_event_on_the_scripted_history(tmp_path):
     d = ci[("test", "name:Lint markdown")]
     assert d["born"]["state"] == "hidden" and not d["alive"] and d["death"]["state"] == "hidden" and d["death"]["why"] == "step removed"
     assert d["death"]["subject"] == "ci: drop the markdown lint"
-    # a workflow that came and went
-    r = _by_key(rec, "release.yml")[("release", "name:Verify tag")]
-    assert r["born"]["state"] == "loud" and not r["alive"] and r["death"]["why"] == "workflow removed"
+    # a workflow that came, was renamed (its text read at the path it had then), and went
+    r = _by_key(rec, "publish.yml")[("release", "name:Verify tag")]
+    assert r["born"]["state"] == "loud" and r["born"]["subject"] == "ci: add a release workflow" and r["revisions"] == 3
+    assert not r["alive"] and r["death"]["why"] == "workflow removed" and r["death"]["subject"] == "ci: remove the release workflow"
+    # a hidden check born under the old path, repaired under the new one: the agreement reads the revision before at its path then
+    ln = _by_key(rec, "publish.yml")[("release", "name:Lint release notes")]
+    assert ln["born"]["state"] == "hidden" and ln["born"]["subject"] == "ci: add a release workflow" and ln["revisions"] == 3
+    (ev,) = ln["events"]
+    assert ev["kind"] == "repair" and ev["mechanism"] == ["or-true"] and ev["agreement"]["verified_repair"] == "strict-shell" and ev["agreement"]["agrees"]
     # a check the reading cannot interpret at any revision (its job is skipped in the healthy world): unread, never hidden, never loud
     u = ci[("nightly", "name:Run nightly tests")]
     assert u["born"]["state"] == "unread" and u["state_last"] == "unread" and u["verdict_last"] == "BASELINE_SKIPPED" and u["alive"] and u["events"] == []
     s = rec["summary"]
     assert s["alive_unread"] == 1
     assert s["alive_hidden"] == 1 and s["alive_hidden_born_hidden"] == 0 and s["alive_hidden_acquired"] == 1
-    assert s["ever_hidden"] == 3 and s["died_hidden"] == 1 and s["died_loud"] == 1
+    assert s["ever_hidden"] == 4 and s["died_hidden"] == 1 and s["died_loud"] == 2
     assert s["acquisitions"] == 1 and s["acquisitions_acknowledged"] == 1 and s["acquisition_mechanisms"] == {"continue-on-error": 1}
-    assert s["repairs"] == 1 and s["repairs_agreeing"] == 1 and s["repairs_instrument_verified"] == 1 and s["repair_mechanisms"] == {"or-true": 1}
+    assert s["repairs"] == 2 and s["repairs_agreeing"] == 2 and s["repairs_instrument_verified"] == 2 and s["repair_mechanisms"] == {"or-true": 2}
     assert s["ages_days"] == [366.0]              # hidden since 2023-03-01, HEAD at 2024-03-01
     assert rec["shallow"] is False
 

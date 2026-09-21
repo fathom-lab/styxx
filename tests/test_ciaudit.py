@@ -35,7 +35,7 @@ STRUCTURAL_INSTRUMENT_SHA256 = "77067a71fa41e48089b4c3e68fae17f02322fd892fc71d60
 # SWALLOW-6's instrument -- every check followed through the mainline history as a lineage -- frozen
 # at the sha256 the SWALLOW-6 prereg and receipt name (papers/harness/swallow6_receipt.json.gz). Same rule.
 HISTORY_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "history.py"
-HISTORY_INSTRUMENT_SHA256 = "4b961880c88c6f288b1df694df3cc8225f269cc70169cc83a8dcd18b8295c3d7"
+HISTORY_INSTRUMENT_SHA256 = "93efb4a947a18e61d4457af12c17bf266ca5680ec89156da6935035211f93d1c"
 
 FIXTURE = """
     on: [push]
@@ -448,3 +448,4 @@ def test_the_history_flag_says_since_when_and_by_whose_hand(tmp_path, capsys):
     bare = _tree(tmp_path / "bare", "ci.yml", FIXTURE)
     rec = ciaudit.audit(str(bare), history=True)
     assert rec["history"].get("error", "").startswith("no git history") or all(not f["placed"] for f in rec["history"]["findings"])
+
