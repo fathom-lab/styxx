@@ -104,18 +104,18 @@ message says why in a stated list of words; for every repair, SWALLOW-4's and SW
 candidates are tried on the revision before and compared with what the author did.
 
 **VALID, 5/7** (`RESULT_swallow6_where_hidden_checks_come_from_2026_09_21.md`; prereg frozen at
-`d19eff1f…`; three runs — the instrument was amended once for memory and once for a bookkeeping
-defect its own HEAD-agreement gate exposed, each stated with what it moved: the second amendment
-moved P4 from HIT to MISS). Across 96 repositories, 27,624 mainline commits and 35,071 workflow
-revisions: **40 of the 53 hidden checks alive at HEAD were written hidden and have never been
+`d19eff1f…`; five runs — the instrument was amended for memory, for a bookkeeping defect its own
+HEAD-agreement gate exposed (that one moved P4 from HIT to MISS), and twice for renamed workflows
+read as absent before the rename, which SWALLOW-7's gate exposed; each stated with what it moved).
+Across 96 repositories, 27,624 mainline commits and 36,934 workflow revisions: **40 of the 53 hidden checks alive at HEAD were written hidden and have never been
 loud**; 3 were hidden later, each by `continue-on-error`; 10 were rewritten into hidden checks by
-one `dotnet/maui` commit. **Of 142 lineages that were ever hidden, 5 are loud today** and 64 died
+one `dotnet/maui` commit. **Of 148 lineages that were ever hidden, 5 are loud today** and 68 died
 hidden. The median hidden check is **155 days** old (P4 predicted 180: MISS), a quarter are older
 than a year, and `mlflow`'s database tests have been hidden for 1,630 days through 291 revisions.
-Sixteen commits hid a loud check — 12 by `continue-on-error` or `|| true`, four at once by "tweak
-github actions" — and **4 of the 16 say why** in the stated words (P2 predicted half: MISS; a
-reader finds about half, in words the list does not have). Fourteen commits made a hidden check
-loud, and **12 times the edit is the one the instrument proposes** — `cal.com`'s `Run Lint` went
+Seventeen commits hid a loud check — 13 by `continue-on-error` or `|| true`, four at once by
+"tweak github actions" — and **5 of the 17 say why** in the stated words (P2 predicted half: MISS;
+a reader finds about half, in words the list does not have). Fifteen commits made a hidden check
+loud, and **13 times the edit is the one the instrument proposes** — `cal.com`'s `Run Lint` went
 hidden, loud, hidden and loud again over a year, and the instrument's repair agreed each time.
 
 **`styxx ci-audit --history`** says, for every finding, since when: `hidden since 2025-03-14
