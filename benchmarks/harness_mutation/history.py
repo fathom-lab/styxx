@@ -329,7 +329,7 @@ def follow(revisions: list[dict], reader: Reader, wf_name: str) -> list[dict]:
                 continue
             match = next((nk for nk, ji in new_keys.items() if nk[0] == k[0] and snap[ji]["run_sha"] == lin["run_sha"]), None)
             if match is not None:
-                lin["renames"] = lin.get("renames", []) + [{"sha": rev["sha"], "from": k[1], "to": match[1]}]
+                lin["renames"] = lin.get("renames", []) + [{"sha": rev["sha"], "from": k[1], "to": match[1], "revision": n}]
                 lin["key"] = match[1]
                 live[match] = live.pop(k)
                 del new_keys[match]
@@ -425,7 +425,7 @@ def history_of(clone: Path, tip: str, repo: str | None = None, deadline: float |
                 by_path[path] = by_path.pop(ch["from"])
                 alias[ch["from"]] = path
             by_path.setdefault(path, []).append({"sha": c["sha"], "time": c["time"], "subject": c["subject"], "body": c["body"],
-                                                 "parents": c["parents"], "status": ch["status"]})
+                                                 "parents": c["parents"], "status": ch["status"], "path": path})   # the path AT this revision
     merged_cache: dict[str, list[str]] = {}
     for path in sorted(by_path):
         if path.endswith(".lock.yml"):
@@ -434,10 +434,10 @@ def history_of(clone: Path, tip: str, repo: str | None = None, deadline: float |
             out["capped"] = True
             break
         wf_name = path.rsplit("/", 1)[-1]
-        texts = texts_at(clone, [(r["sha"], path) for r in by_path[path] if r["status"] != "D"])   # one workflow's texts at a time
+        texts = texts_at(clone, [(r["sha"], r["path"]) for r in by_path[path] if r["status"] != "D"])   # one workflow's texts at a time, each at its path then
         revs = []
         for r in by_path[path]:
-            text = None if r["status"] == "D" else texts.get((r["sha"], path))
+            text = None if r["status"] == "D" else texts.get((r["sha"], r["path"]))
             if len(r["parents"]) > 1:
                 if r["sha"] not in merged_cache:
                     merged_cache[r["sha"]] = merged_subjects(clone, r)
@@ -447,11 +447,12 @@ def history_of(clone: Path, tip: str, repo: str | None = None, deadline: float |
             revs.append({"sha": r["sha"], "time": r["time"], "subject": r["subject"], "body": r["body"], "merged": merged, "text": text})
         reader = Reader()
         lineages = follow(revs, reader, wf_name)
+        path_at = {r["sha"]: r["path"] for r in by_path[path]}                 # a revision before a rename lived at another path
         if agreement:
             for lin in lineages:
                 for ev in lin["events"]:
                     if ev["kind"] == "repair" and ev.get("before"):
-                        before_text = texts.get((ev["before"]["sha"], path))
+                        before_text = texts.get((ev["before"]["sha"], path_at.get(ev["before"]["sha"], path)))
                         if before_text is not None and ev["before"]["index"] is not None:
                             try:
                                 ev["agreement"] = wild_repair_agreement(before_text, wf_name, lin["job"], ev["before"]["index"], reader.runner, ev["mechanism"])

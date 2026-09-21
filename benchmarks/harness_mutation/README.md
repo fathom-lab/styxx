@@ -166,11 +166,11 @@ python -m benchmarks.harness_mutation.history --receipt papers/harness/swallow3_
 python papers/harness/swallow6_score.py
 ```
 
-`papers/harness/RESULT_swallow6_where_hidden_checks_come_from_2026_09_21.md` (VALID, 5/7; three
-runs, two amendments stated): of the 53 hidden checks alive at HEAD, 40 were written hidden and
+`papers/harness/RESULT_swallow6_where_hidden_checks_come_from_2026_09_21.md` (VALID, 5/7; five
+runs, four amendments stated): of the 53 hidden checks alive at HEAD, 40 were written hidden and
 never loud, 3 were hidden later by a `continue-on-error`, 10 were rewritten into hidden checks by
-one commit; of 142 lineages ever hidden, 5 are loud today and 64 died hidden; the median hidden
-check is 155 days old, the oldest 1,630; 16 commits hid a loud check and 4 said why in the stated
-words; 14 made one loud, and 12 times the edit is the one the instrument proposes. `history.py` is
-frozen at the sha256 that receipt names (`4b961880…`); the living copy is
+one commit; of 148 lineages ever hidden, 5 are loud today and 68 died hidden; the median hidden
+check is 155 days old, the oldest 1,630; 17 commits hid a loud check and 5 said why in the stated
+words; 15 made one loud, and 13 times the edit is the one the instrument proposes. `history.py` is
+frozen at the sha256 that receipt names (`93efb4a9…`); the living copy is
 `styxx/ciaudit/history.py`, behind `styxx ci-audit --history`.
