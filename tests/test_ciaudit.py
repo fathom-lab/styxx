@@ -19,6 +19,11 @@ INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "faults.py"
 # pin -- or the engine grew a behaviour the instrument does not have, which
 # test_the_engine_gives_the_instruments_verdicts below will say, and a cycle must declare.
 INSTRUMENT_SHA256 = "d26a407ca276d1b1c218fd32bc6bf853544fc394ce5ebc98b2b6ae4bd0fa3543"
+# SWALLOW-3's instrument -- the catalogue of checking actions applied on top of faults.py -- frozen
+# at the sha256 the SWALLOW-3 receipt names (papers/harness/swallow3_receipt.json.gz). Same rule: a
+# change needs a new receipt, not a new pin.
+ACTIONS_INSTRUMENT = ROOT / "benchmarks" / "harness_mutation" / "action_checks.py"
+ACTIONS_INSTRUMENT_SHA256 = "0e723694d459ca2368799e3fc21a26d06e70fb89ad09bd2b0152466bf2a68f72"
 
 FIXTURE = """
     on: [push]
@@ -123,28 +128,117 @@ def test_the_cli_subcommand_reaches_the_engine(tmp_path):
     assert rec["summary"]["dropped"] == 1
 
 
-def test_the_instrument_is_the_one_the_receipt_names():
+def test_the_instruments_are_the_ones_the_receipts_name():
     assert hashlib.sha256(INSTRUMENT.read_bytes()).hexdigest() == INSTRUMENT_SHA256, (
         "benchmarks/harness_mutation/faults.py is the instrument that produced the SWALLOW-2 receipt and is "
         "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
+    assert hashlib.sha256(ACTIONS_INSTRUMENT.read_bytes()).hexdigest() == ACTIONS_INSTRUMENT_SHA256, (
+        "benchmarks/harness_mutation/action_checks.py is the instrument that produced the SWALLOW-3 receipt and is "
+        "frozen at the sha256 the RESULT names; a change to it needs a new receipt, not a new pin")
+
+
+def test_the_shipped_catalogue_is_the_frozen_one():
+    sys.path.insert(0, str(ROOT))
+    from benchmarks.harness_mutation import action_checks as instrument
+    from styxx.ciaudit import actions
+    assert actions.CATALOGUE == instrument.CATALOGUE
+    assert actions.FAMILIES == instrument.FAMILIES
+    assert actions.NOT_CHECKS == instrument.NOT_CHECKS
+    assert actions.UNREADABLE == instrument.UNREADABLE
 
 
 def _verdicts(rec: dict) -> list:
-    return [(f["workflow"], f["job"], f["index"], f["verdict"], f.get("verdict_counted"),
-             [(d["job"], d["index"], d["mechanism"]) for d in f.get("dropped_counted", f.get("dropped", []))])
+    return [(f["workflow"], f["job"], f["index"], f["verdict"], f.get("verdict_counted"), f.get("flavour"), f.get("by_flavour"),
+             f.get("checks_in_scope"), f.get("checks_live"), f.get("self_live"),
+             [(d["job"], d["index"], d["mechanism"], d.get("action")) for d in f.get("dropped_counted", f.get("dropped", []))])
             for f in rec["faults"]]
 
 
-@pytest.mark.parametrize("tree_name", ["fixture", "this-repository"])
+def _verdicts3(rec: dict) -> list:
+    return [(f["workflow"], f["job"], f["index"], f["verdict"], f.get("verdict_counted"), f.get("verdict_runs_only"),
+             f.get("verdict_counted_runs_only"), f.get("flavour"), f.get("flavour_runs_only"), f.get("by_flavour"), f.get("by_flavour_runs_only"),
+             f.get("checks_in_scope"), f.get("checks_live"), f.get("action_checks_in_scope"), f.get("action_checks_live"), f.get("self_live"),
+             f.get("dropped"), f.get("dropped_counted"), f.get("dropped_actions"))
+            for f in rec["faults"]]
+
+
+ACTION_FIXTURE = """
+    on: [push]
+    jobs:
+      changes:
+        runs-on: ubuntu-latest
+        outputs:
+          docs: ${{ steps.q.outputs.docs }}
+        steps:
+          - name: Get changed files
+            id: q
+            run: |
+              files=$(git diff --name-only origin/main...HEAD -- 'docs/' | sort -u || true)
+              echo "docs=$files" >> "$GITHUB_OUTPUT"
+          - name: Link check
+            if: steps.q.outputs.docs != ''
+            uses: lycheeverse/lychee-action@v2
+            with:
+              fail: true
+      lint:
+        needs: changes
+        if: needs.changes.outputs.docs != ''
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: pre-commit/action@v3.0.1
+      release:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Notify
+            run: curl -X POST https://example.com/hook || true
+          - name: Retry the tests
+            uses: nick-fields/retry@v3
+            with:
+              command: npm test
+          - uses: ./.github/actions/publish
+"""
+
+
+@pytest.mark.parametrize("tree_name", ["fixture", "action-fixture", "this-repository"])
 def test_the_engine_gives_the_instruments_verdicts(tmp_path, tree_name):
-    """The shipped engine and the frozen research instrument agree, fault for fault, on the
-    fixture and on this repository's own workflows. When the engine is deliberately changed, this
-    is the test a cycle updates -- with the receipt that justifies it."""
+    """The shipped engine and the frozen research instruments agree, fault for fault: with the
+    catalogue off, the engine is SWALLOW-2's instrument; with it on (the default), SWALLOW-3's.
+    When the engine is deliberately changed, this is the test a cycle updates -- with the receipt
+    that justifies it."""
     sys.path.insert(0, str(ROOT))
-    from benchmarks.harness_mutation import faults as instrument
+    from benchmarks.harness_mutation import action_checks as instrument3
+    from benchmarks.harness_mutation import faults as instrument2
     from styxx.ciaudit import engine
-    tree = _tree(tmp_path, "ci.yml", FIXTURE) if tree_name == "fixture" else ROOT
-    a = instrument.analyse_tree(tree)
-    b = engine.analyse_tree(tree)
-    assert _verdicts(a) == _verdicts(b)
-    assert a["workflow_summaries"] == b["workflow_summaries"]
+    tree = ROOT if tree_name == "this-repository" else _tree(tmp_path, "ci.yml", FIXTURE if tree_name == "fixture" else ACTION_FIXTURE)
+    a2, b2 = instrument2.analyse_tree(tree), engine.analyse_tree(tree, actions=False)
+    assert _verdicts(a2) == _verdicts(b2)
+    for wf, sm in a2["workflow_summaries"].items():
+        assert {k: b2["workflow_summaries"][wf][k] for k in sm} == sm
+    a3, b3 = instrument3.analyse_tree(tree), engine.analyse_tree(tree)
+    assert _verdicts3(a3) == _verdicts3(b3)
+    assert a3["workflow_summaries"] == b3["workflow_summaries"]
+
+
+def test_a_gated_action_check_is_a_finding_and_the_runs_only_reading_is_kept(tmp_path, capsys):
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    tree = _tree(tmp_path, "ci.yml", ACTION_FIXTURE)
+    rc = main([str(tree)])
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert "FAIL_OPEN  ci.yml › changes › Get changed files" in out
+    assert "drops changes › Link check [lycheeverse/lychee-action, lint]: the check's `if:` turns false" in out
+    assert "drops lint › step 1 [pre-commit/action, lint]: the check's job `if:` turns false" in out
+    assert "action checks: 3 of 3 reached in the healthy world" in out
+    assert "unreadable: 1 steps" in out
+    rec = ciaudit.audit(str(tree))
+    by = {f["name"]: f for f in rec["faults"]}
+    assert by["Get changed files"]["verdict"] == "FAIL_OPEN" and by["Get changed files"]["verdict_runs_only"] == "NO_CHECK"
+    assert by["Notify"]["verdict"] == "ABSORBED" and by["Notify"]["verdict_runs_only"] == "NO_CHECK"     # the retried tests still run
+    assert rec["summary"]["dropped_action_checks"] == 2 and rec["summary"]["moved_by_the_catalogue"] == 2
+    assert rec["summary"]["reading"] == "preregistered"
+    # SWALLOW-2's reading, on request
+    assert main([str(tree), "--no-actions"]) == 0
+    out = capsys.readouterr().out
+    assert "nothing hidden, nothing dropped" in out and "run: steps only" in json.dumps(ciaudit.audit(str(tree), actions=False)["summary"])
