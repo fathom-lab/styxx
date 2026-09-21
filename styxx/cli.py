@@ -1254,7 +1254,9 @@ def cmd_ci_audit(args):
     the workflow goes RED, a check is silently not run (FAIL_OPEN), a check runs and its failure
     is hidden (SWALLOWED), or nothing about the checks changes. No runner, no token, no code:
     `owner/repo` is a blob-less sparse clone of the workflow files alone. The engine is the
-    instrument of papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md.
+    instrument of papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md, with the
+    catalogue of checking actions of RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md
+    (`--no-actions` reads without it).
 
     Exit status: 0 when nothing is hidden or dropped, 1 when something is, 2 on an error.
     """
@@ -1262,6 +1264,8 @@ def cmd_ci_audit(args):
     argv = [args.target, "--format", args.format]
     if args.counted:
         argv.append("--counted")
+    if getattr(args, "no_actions", False):
+        argv.append("--no-actions")
     if args.out:
         argv += ["--out", args.out]
     if args.work:
@@ -2988,6 +2992,8 @@ def _build_parser() -> argparse.ArgumentParser:
                            help="output format (default: card)")
     p_ciaudit.add_argument("--counted", action="store_true",
                            help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
+    p_ciaudit.add_argument("--no-actions", action="store_true",
+                           help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
     p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
     p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
     p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")

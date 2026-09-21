@@ -20,6 +20,7 @@ _MECHANISM = {
     "unreached": "the check runs but never reaches its runner",
     "fewer": "the check reaches its runner fewer times",
     "not-run": "the check is not run",
+    "after-failure": "an earlier step of the job failed",
 }
 
 
@@ -50,9 +51,17 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
         lines.append(f"  checks: {s['checks_reached_in_healthy_world']} of {s['checks']} reach their runner in the healthy world; "
                      f"{s['live_checks_red_under_own_fault']} of {s['live_checks']} are RED under their own fault")
     elif s.get("checks"):
-        lines.append(f"  checks: {s['checks']} recognised, none reaches its runner in the healthy world (actions and non-bash steps are not executed)")
+        lines.append(f"  checks: {s['checks']} recognised, none reaches its runner in the healthy world (non-bash steps are not executed)")
     else:
-        lines.append("  checks: none recognised (a known test / lint / typecheck runner, a test-named script, or a check-word in the step name)")
+        lines.append("  checks: none recognised in run: steps (a known test / lint / typecheck runner, a test-named script, or a check-word in the step name)")
+    if s.get("action_checks"):
+        unv = f"; {s['action_checks_unverified']} on an unverified catalogue entry" if s.get("action_checks_unverified") else ""
+        lines.append(f"  action checks: {s['action_checks_reached_in_healthy_world']} of {s['action_checks']} reached in the healthy world "
+                     f"(never executed: a catalogued action is a check that is reached or not){unv}")
+    elif rec.get("actions", True):
+        lines.append("  action checks: none catalogued (see styxx/ciaudit/actions.py for the list)")
+    if s.get("unreadable_steps"):
+        lines.append(f"  unreadable: {s['unreadable_steps']} steps are local actions, reusable workflows, docker images or github-script, which cannot be read")
     art = s.get("artifact_failures_in_healthy_world", {})
     if any(art.values()):
         lines.append(f"  model artifacts: {art.get('x', 0)} steps fail on their own logic in the x flavour, {art.get('empty', 0)} in the empty flavour (carried past, not counted)")
@@ -79,10 +88,12 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
             drops = f.get("dropped_counted" if counted else "dropped", [])
             for d in drops:
                 mech = _MECHANISM.get(d.get("mechanism"), d.get("mechanism"))
-                runs = f" ({d['runs_minus']} of {d['runs_plus']} runs)" if counted and "runs_plus" in d else ""
-                lines.append(f"             drops {d['job']} › {d.get('name') or 'step ' + str(d['index'])}: {mech}{runs}")
+                runs = f" ({d['runs_minus']} of {d['runs_plus']} runs)" if counted and "runs_plus" in d and not d.get("action") else ""
+                what = d.get("name") or "step " + str(d["index"])
+                act = f" [{d['action']}, {d.get('kind')}{'' if d.get('verified', True) else ', unverified entry'}]" if d.get("action") else ""
+                lines.append(f"             drops {d['job']} › {what}{act}: {mech}{runs}")
             if f.get("run_head"):
                 lines.append(f"             {f['run_head'][:width - 13]}")
     lines.append("")
-    lines.append("RED is loud, not correct. A check that is an action (`uses:`) is never executed here. The receipt (--format json) keeps every step.")
+    lines.append("RED is loud, not correct. An action check is counted, never executed: it can be dropped here, not seen to fail. The receipt (--format json) keeps every step.")
     return "\n".join(lines)

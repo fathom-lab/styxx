@@ -1,0 +1,181 @@
+{
+ "schema": "styxx.swallow3-repro/v1",
+ "instrument": "benchmarks/harness_mutation/faults.py (frozen, d26a407c\u2026)",
+ "stub_order_tie": {
+  "step": "browser-use/browser-use test.yaml \u203a tests \u203a 9 'Check if test file exists'",
+  "stubs": [
+   "work/tests/ci/",
+   "work/tests/ci/x.py"
+  ],
+  "trials": [
+   {
+    "seed": 0,
+    "stub_order": [
+     "work/tests/ci/x.py",
+     "work/tests/ci/"
+    ],
+    "alone": "TOOLLESS",
+    "n_reached": 0
+   },
+   {
+    "seed": 1,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 2,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 3,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 4,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 5,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 6,
+    "stub_order": [
+     "work/tests/ci/",
+     "work/tests/ci/x.py"
+    ],
+    "alone": "PROPAGATES",
+    "n_reached": 4
+   },
+   {
+    "seed": 7,
+    "stub_order": [
+     "work/tests/ci/x.py",
+     "work/tests/ci/"
+    ],
+    "alone": "TOOLLESS",
+    "n_reached": 0
+   }
+  ],
+  "outcomes": [
+   "PROPAGATES",
+   "TOOLLESS"
+  ],
+  "reading": "two stubs of equal depth (tests/ci/ from the sed pattern, tests/ci/x.py from the assignment); created in set order; when the file comes first the step finds it and reaches nothing (TOOLLESS: not a fault site), when the directory comes first the file is not created and the step reaches find/sed/sort (PROPAGATES: a fault site)"
+ },
+ "wall_clock": {
+  "step": "airbytehq/airbyte ai-ready-command.yml \u203a validate \u203a 3 'Check for weekend freeze'",
+  "script_head": "dow=$(TZ=\"America/Los_Angeles\" date +%u)",
+  "now_utc": "2026-09-21T11:22:40Z",
+  "now_pacific_dow": "1 Monday",
+  "blocked_now": false,
+  "step_outputs_now": {
+   "blocked": "false"
+  },
+  "swallow2_receipt_committed": "2026-09-21T04:41:11+00:00",
+  "reading": "`date` is real in the healthy worlds; the step decides by the Pacific day of week; SWALLOW-2's receipt was made on a Sunday evening Pacific and its 'Apply ready label' step was skipped (BASELINE_SKIPPED); this run was made on the Monday and the same step runs (RED)"
+ },
+ "background_race": {
+  "step": "langfuse/langfuse pipeline.yml \u203a tests-web \u203a 1 'Install golang-migrate for Clickhouse migrations in background'",
+  "script_shape": "( set -e; curl \u2026; tar \u2026; sudo mv \u2026; touch \u2026 ) > /tmp/migrate-install.log 2>&1 &",
+  "trials_now": [
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ],
+   [
+    "TOOLLESS",
+    0
+   ]
+  ],
+  "in_the_run": "SWALLOWS (a fault site) in all three jobs; absent from SWALLOW-2's receipt",
+  "reading": "the subshell runs in the background; whether its first command has written to the stub log when the script exits and the log is read depends on scheduling"
+ },
+ "background_race_2": {
+  "step": "githubnext/gh-aw visual-regression-checker.lock.yml \u203a agent \u203a 12 'Start docs server'",
+  "script_head": "nohup npm run dev -- --host 0.0.0.0 --port 4321 > /tmp/gh-aw/agent/preview.log 2>&1 &",
+  "in_the_run": "absent (not a fault site); SWALLOWS in SWALLOW-2's receipt",
+  "trials_now_with_dir": [
+   "SWALLOWS",
+   1
+  ],
+  "reading": "`nohup npm \u2026 &` is a background command; in the fail world the not-found handler that logs `nohup` runs in the background subshell, and whether it has written to the stub log when the script exits and the log is read depends on scheduling: reached (SWALLOWS, a fault site) or not (TOOLLESS, absent). Same cause as langfuse's; the run was under load, the trials here are not"
+ },
+ "tmp_leak_observed": {
+  "step": "the same step",
+  "/tmp/gh-aw/agent_present_before": true,
+  "alone_with_dir": [
+   "SWALLOWS",
+   1
+  ],
+  "alone_without_dir": [
+   "PROPAGATES",
+   0
+  ],
+  "reading": "a second mechanism seen on the same step, not the cause of this record: the script redirects into /tmp/gh-aw/agent/, an absolute path the sandbox does not cover, and `mkdir -p` is real in the healthy worlds, so an earlier step of an earlier run creates it on the machine; with the directory npm is reached (SWALLOWS), without it the redirect fails and the -e script stops (PROPAGATES) -- a fault site either way"
+ }
+}

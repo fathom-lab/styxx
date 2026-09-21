@@ -71,3 +71,31 @@ repositories, and the runs it took to draw it.
 `tests/test_ciaudit.py` pins it). The living copy is the shipped engine, `styxx/ciaudit/engine.py`,
 behind `styxx ci-audit`; the same test holds the two to identical verdicts on the fixtures and on
 this repository's own workflows until a cycle declares otherwise.
+
+## The checks that are actions (SWALLOW-3)
+
+`faults.py` sees a check only in a `run:` step; a check that is an action (`pre-commit/action`,
+`lycheeverse/lychee-action`, CodeQL's `analyze`) is never executed and never counted.
+`action_checks.py` is the declared list — the rule, every `uses:` name the population's hand-written
+workflows use decided once with its reason (`CATALOGUE`, `FAMILIES`, `NOT_CHECKS`; the counts in
+`papers/harness/swallow3_actions_census.json`) — and the instrument that applies it on top of
+`faults.py` without changing it: an action check is *reached* when its job runs, no earlier step
+failed and its own `if:` is not false, and *dropped* when reached in the healthy world and not in
+the fault world. Every fault carries `verdict_runs_only` (SWALLOW-2's reading) beside `verdict`.
+
+```
+python papers/harness/swallow3_census.py --work <clones>                              # the census, at SWALLOW-2's HEADs
+python -m benchmarks.harness_mutation.action_checks --repos papers/harness/swallow1_population.json \
+    --heads papers/harness/swallow2_receipt.json.gz --work <clones> --keep --out receipt.json
+python -m benchmarks.harness_mutation.action_checks --tree .
+python papers/harness/swallow3_score.py
+python papers/harness/swallow3_repro.py --clones <clones>                             # the evidence for G-S3-3
+```
+
+`papers/harness/RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md` is **INVALID** on its
+reproduction gate — a re-clone at the same HEADs did not reproduce SWALLOW-2 in 8 of 30,642
+records, for three reasons in `faults.py`'s contact with the world (the real `date`, a tie in the
+stub order, a background subshell racing the log), each demonstrated in `swallow3_repro.json` —
+and reports, not claims, what the catalogue moved: 5 hand-written faults, one to a dropped check.
+`action_checks.py` is frozen at the sha256 that receipt names (`0e723694…`); the living copy of the
+catalogue is `styxx/ciaudit/actions.py`, and `tests/test_ciaudit.py` holds them equal.
