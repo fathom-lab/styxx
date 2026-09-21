@@ -79,7 +79,7 @@ def audit(target: str, *, counted: bool = False, work: Optional[str] = None, dea
         raise FileNotFoundError(f"{target}: not a directory, and not an owner/repo")
 
     rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None)
-    head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True)
+    head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
         instrument="styxx/ciaudit/engine.py",

@@ -106,9 +106,9 @@ def sparse_clone(repo: str, work: Path) -> "tuple[Path | None, str | None]":
     url = f"https://github.com/{repo}.git"
     try:
         subprocess.run(["git", "clone", "-q", "--depth", "1", "--filter=blob:none", "--sparse", url, str(dest)],
-                       check=True, capture_output=True, text=True, timeout=180)
+                       check=True, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
         subprocess.run(["git", "-C", str(dest), "sparse-checkout", "set", ".github/workflows"],
-                       check=True, capture_output=True, text=True, timeout=180)
+                       check=True, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
     except subprocess.CalledProcessError as e:
         return None, (e.stderr or "").strip().splitlines()[-1][:200] if (e.stderr or "").strip() else f"exit {e.returncode}"
     except subprocess.TimeoutExpired:
@@ -722,7 +722,7 @@ class Runner:
                 full_env[k] = v
         proc = subprocess.Popen(["/bin/bash", "--noprofile", "--norc", "-eo", "pipefail", str(script)],
                                 cwd=str(t / "work"), env=full_env, stdin=subprocess.DEVNULL,
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8", errors="replace", start_new_session=True)
         timeout = STEP_TIMEOUT_FAIL if world in ("fail", "fault") else STEP_TIMEOUT_OK
         try:
             _, err = proc.communicate(timeout=timeout)
@@ -1249,7 +1249,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             t1 = time.time()
             rec = analyse_tree(dest, name, deadline=t1 + REPO_SECONDS_CAP)
-            rec["head"] = subprocess.run(["git", "-C", str(dest), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+            rec["head"] = subprocess.run(["git", "-C", str(dest), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace").stdout.strip()
             rec["seconds"] = round(time.time() - t1, 1)
             if isinstance(r, dict):
                 rec["population"] = {k2: v for k2, v in r.items() if k2 != "repo"}
