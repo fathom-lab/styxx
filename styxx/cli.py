@@ -1258,7 +1258,8 @@ def cmd_ci_audit(args):
     catalogue of checking actions of RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md
     (`--no-actions` reads without it).
 
-    Exit status: 0 when nothing is hidden or dropped, 1 when something is, 2 on an error.
+    Exit status: 0 when nothing is hidden or dropped, 1 when something is, 2 on an error. With
+    `--base`, 1 only when HEAD hides a check its base did not.
     """
     from styxx.ciaudit import main as _main
     argv = [args.target, "--format", args.format]
@@ -1270,6 +1271,8 @@ def cmd_ci_audit(args):
         argv.append("--repair")
     if getattr(args, "history", False):
         argv.append("--history")
+    if getattr(args, "base", None):
+        argv += ["--base", args.base]
     if args.out:
         argv += ["--out", args.out]
     if args.work:
@@ -3002,6 +3005,8 @@ def _build_parser() -> argparse.ArgumentParser:
                            help="for every finding, try the two stated repairs of the workflow text and verify each (loud under the fault, healthy run unchanged)")
     p_ciaudit.add_argument("--history", action="store_true",
                            help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history (SWALLOW-6)")
+    p_ciaudit.add_argument("--base", type=str, default=None,
+                           help="the pull request's gate: read only the workflows changed since the merge-base with this revision; exit 1 only if HEAD hides a check the base did not (SWALLOW-7)")
     p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
     p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
     p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
