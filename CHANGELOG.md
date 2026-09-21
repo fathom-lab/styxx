@@ -92,6 +92,41 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — `styxx ci-audit`: the fault-injection engine ships as a command
+
+```
+styxx ci-audit .                # this checkout's .github/workflows
+styxx ci-audit OWNER/REPO       # any public repository: workflow files only, no runner, no token, no code
+styxx ci-audit . --format json  # the receipt; --counted for the counted reading; --out to keep it
+```
+
+A green CI light means every job exited 0. It does not mean every check ran, or that every check
+could have failed. `styxx ci-audit` asks what the light does not answer: for each `run:` step
+that reaches a tool, if that step's tools failed and everything else stayed healthy, would the
+workflow go red? Would a check be silently skipped? Would a check run, fail, and be hidden? It
+answers by simulating the workflow — outputs, env, `if:`, `needs:`, `fromJSON` matrices — in a
+sandbox where every tool is a stub, and prints one card: the counts by verdict (RED / FAIL_OPEN /
+SWALLOWED / ABSORBED / NO_CHECK, and what the model could not read), how many recognised checks
+are loud under their own fault, and every finding on one line with the mechanism (*the check's
+job `if:` turns false*, *the check runs but never reaches its runner*, …). Exit 0 when nothing is
+hidden or dropped, 1 when something is.
+
+**`styxx/ciaudit/`** — `engine.py` is the living copy of SWALLOW-2's instrument;
+`benchmarks/harness_mutation/faults.py`, the file that produced `swallow2_receipt.json.gz`, is
+frozen at the sha256 the RESULT names, and `tests/test_ciaudit.py` pins it and holds the shipped
+engine to identical verdicts on the fixtures and on this repository's own workflows. When the
+engine is deliberately changed — the counted reading by default, a declared list of checking
+actions, a check rule without the diagnostics — that test is where a cycle says so, with the
+receipt that justifies it. PyYAML is imported when the command runs, never at `import styxx`
+(`pip install 'styxx[ciaudit]'` on a bare install).
+
+On this repository the card reads: 32 fault sites, 29 RED, 8 of 8 checks reach their runner in
+the healthy world, 7 of 7 RED under their own fault, nothing hidden, nothing dropped — and one
+NO_CHECK, `gauntlet-pr.yml`'s discover step, whose gated verifier the check rule does not
+recognise (the RESULT says why). On `main` before #137 the same step's fault skips both gated
+steps with the job green; the command cannot call that FAIL_OPEN for the same reason, which is
+the honest limit of a rule that names what a check is.
+
 ## [Unreleased] — SWALLOW-2: which way it falls — one fault at a time through 2,178 workflows
 
 SWALLOW-1 ended on the limit of its method: it sees that a step cannot fail; it cannot see which
