@@ -94,6 +94,32 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
                 lines.append(f"             drops {d['job']} › {what}{act}: {mech}{runs}")
             if f.get("run_head"):
                 lines.append(f"             {f['run_head'][:width - 13]}")
+    if rec.get("repairs") is not None:
+        lines.append("")
+        lines.append("repairs (verified: RED under the same fault, and a healthy run unchanged in both flavours):")
+        if not rec["repairs"]:
+            lines.append("  nothing to repair.")
+        for t in rec["repairs"]:
+            where = f"{t['workflow']} › {t['job']} › {t.get('name') or 'step ' + str(t['index'])}"
+            if t.get("verified_repair"):
+                c = next(c for c in t["candidates"] if c["repair"] == t["verified_repair"])
+                lines.append(f"  {where} — {t['verified_repair']}, {c['lines_changed']} line{'s' if c['lines_changed'] != 1 else ''}")
+                for dl in c["diff"].splitlines():
+                    if (dl.startswith("+") or dl.startswith("-")) and not dl.startswith(("+++", "---")):
+                        lines.append("      " + dl[: width + 80])
+            else:
+                tried = [c for c in t["candidates"] if c.get("applies")]
+                if not tried:
+                    why = "neither repair applies: " + "; ".join(sorted({c.get("why", "") for c in t["candidates"] if c.get("why")}))[: width - 40]
+                else:
+                    rej = next((c for c in tried if c.get("unchanged") is False), None)
+                    if rej is not None:
+                        why = f"{rej['repair']} is loud but {rej['why']}"
+                    elif len({c.get("why") for c in tried}) == 1:
+                        why = f"{' / '.join(c['repair'] for c in tried)}: {tried[0].get('why', '')}"
+                    else:
+                        why = "; ".join(f"{c['repair']}: {c.get('why', '')}" for c in tried)
+                lines.append(f"  {where} — no verified repair: {why[: width + 80]}")
     lines.append("")
     lines.append("RED is loud, not correct. An action check is counted, never executed: it can be dropped here, not seen to fail. The receipt (--format json) keeps every step.")
     return "\n".join(lines)
