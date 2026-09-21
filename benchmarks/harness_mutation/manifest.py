@@ -27,6 +27,15 @@ two guards are deliberately separate: one says *the check is still declared*, th
 Loudness is not truth. A manifest that pinned the sha256 of every step's text would kill every
 mutant MUTE-1 can make and would say nothing at all, since any edit to CI would break it. This
 one pins only what a deletion changes.
+
+Since MUTE-3 the manifest also pins the GUARDS: the test files written to hold the harness in
+place, and the names of the test functions in each. Delete a guard, or one of its tests, and
+the manifest moves. It cannot see a guard whose asserts were hollowed out; that is what each
+guard's own control is for (a test that calls the guard on a fixture it must reject). And it
+cannot see its own deletion: the anchor for that is outside the suite, in `test.yml`, which
+collects the guard files before running the suite -- and which the manifest pins in return.
+Cutting both at once is silent. That pair is the trust anchor, and it is named here rather than
+hidden.
 """
 from __future__ import annotations
 
@@ -41,6 +50,8 @@ PACKAGE_JSON = ROOT / "packages" / "styxx-js" / "package.json"
 MANIFEST = ROOT / "tests" / "harness_manifest.json"
 REGENERATE = "python -m benchmarks.harness_mutation.manifest --write"
 
+from .mute import GUARDS   # the guards are the instrument's population at level 2; declared once, there
+
 
 def _events(on) -> list[str]:
     if isinstance(on, dict):
@@ -50,11 +61,30 @@ def _events(on) -> list[str]:
     return [str(on)]
 
 
+def guard_tests(root: Path) -> dict:
+    """{guard file: [test function names]} for every declared guard present in the tree.
+
+    Names only: a guard's body is not pinned, for the reason step text is not. A missing guard
+    file is recorded as absent rather than skipped, so its loss is a drift, not a silence."""
+    import ast
+    out: dict = {}
+    for rel in GUARDS:
+        p = root / rel
+        if not p.exists():
+            out[rel] = None
+            continue
+        tree = ast.parse(p.read_text(encoding="utf-8"))
+        out[rel] = sorted(n.name for n in tree.body
+                          if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name.startswith("test_"))
+    return out
+
+
 def build(root: Path = ROOT) -> dict:
     """The structural manifest of the tree at `root`. Deterministic; sorted; no content hashes."""
     import yaml
-    out: dict = {"what": "structure of the checking harness: triggers, jobs, run steps, guards, npm scripts",
-                 "regenerate": REGENERATE, "workflows": {}, "npm_scripts": {}}
+    out: dict = {"what": "structure of the checking harness: triggers, jobs, run steps, guards, npm scripts, "
+                         "and the test functions of the guard files",
+                 "regenerate": REGENERATE, "workflows": {}, "npm_scripts": {}, "guards": guard_tests(root)}
     for wf in sorted((root / ".github" / "workflows").glob("*.yml")):
         doc = yaml.safe_load(wf.read_text(encoding="utf-8")) or {}
         on = doc.get(True, doc.get("on"))    # PyYAML reads the `on:` key as the boolean True
