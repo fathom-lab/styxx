@@ -282,3 +282,27 @@ person's hidden check is the textbook one (19 of 32 `continue-on-error`, 31 of 3
 attribution whose head commit carries an agent's signature fire at 3.7%. The closest-branch base
 agrees with SWALLOW-9's on 96.5% of the agents' pull requests and the gate's verdict on 100%.
 `human_prs.py` is frozen at the sha256 that receipt names (`7d764d5d…`) and pinned by its test.
+
+## One click from loud (SWALLOW-11)
+
+`ci-audit/action.yml` ships the gate as a GitHub Action (the driver is `styxx/ciaudit/action.py`):
+on the change that triggered the workflow it marks the line that hides each new check, writes the
+verified repair into the job summary, and with `suggest: true` posts it as a one-click review
+suggestion. `one_click.py` replays every firing pair of the SWALLOW-7, -9 and -10 receipts through
+the functions the Action ships and asks, for each hidden check: located? the annotation inside the
+change's diff? the verified repair rebuilt identical to the printed diff, and reproduced by its
+suggestion? the suggestion inside one hunk of the diff — one click away?
+
+```
+python -m benchmarks.harness_mutation.one_click --r7 papers/harness/swallow7_receipt.json.gz --r9 papers/harness/swallow9_receipt.json.gz --r10 papers/harness/swallow10_receipt.json.gz --clones7 <swallow-6 clones> --work <clones> --out receipt.json
+python papers/harness/swallow11_score.py
+```
+
+`papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md` (VALID, 7/8): the product
+re-read all 140 changes and found exactly the receipts' hidden checks in each; it located the
+hiding line for all 226 checks, 213 inside the change's diff; all 177 verified repairs were rebuilt
+and reproduced by their suggestion; 165 of 226 (73%) are one click away, 124 of them a single line,
+and in pull requests 76 of 79. The miss: an acquired check is always one click (the change wrote
+the hiding line), a born-hidden one less often — for want of a verified repair, not of a place to
+put it. `one_click.py` is frozen at `047a1123…` and pinned, with `action.py` at `a9615d9b…`, by its
+test.
