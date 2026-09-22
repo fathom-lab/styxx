@@ -337,7 +337,7 @@ def test_the_repair_flag_prints_verified_diffs_and_says_which_half_failed(tmp_pa
     rec = ciaudit.audit(str(tree), repair=True)
     assert rec["repair_catalogue"][:3] == ["no-continue-on-error", "strict-shell", "both"]
     assert rec["summary"]["repairs"] == {"targets": 3, "verified": 2, "by_repair": {"strict-shell": 1, "no-continue-on-error": 1},
-                                         "rejected_changes_healthy_run": 1, "not_loud": 0, "no_candidate_applies": 0}
+                                         "rejected_changes_healthy_run": 1, "not_loud": 0, "no_candidate_applies": 0, "routed": 0, "declared": 0}
     # the command's path (repair_faults on the audit's findings) and the tree path agree on the first stage
     from styxx.ciaudit import repair as shipped
     first = [dict(t, candidates=t["candidates"][:3]) for t in rec["repairs"]]
@@ -388,7 +388,7 @@ def test_the_shipped_structural_repairs_are_the_instruments(tmp_path):
         assert shipped.guard_status(run) == instrument.guard_status(run) and shipped.no_default(run) == instrument.no_default(run)
 
 
-def test_the_repair_flag_has_two_stages(tmp_path, capsys):
+def test_the_repair_flag_has_three_stages(tmp_path, capsys):
     from styxx import ciaudit
     from styxx.ciaudit import main
     tree = _tree(tmp_path, "ci.yml", STRUCTURAL_FIXTURE)
@@ -400,19 +400,21 @@ def test_the_repair_flag_has_two_stages(tmp_path, capsys):
     assert "ci.yml › lint › Verify label — no verified repair: no-default is loud but changes the healthy run in flavour empty" in out
     assert "ci.yml › lint › Test each package — no verified repair: strict-shell / both: not loud" in out
     rec = ciaudit.audit(str(tree), repair=True)
-    assert rec["repair_catalogue"] == ["no-continue-on-error", "strict-shell", "both", "guard-status", "no-default", "both-structural"]
+    from styxx.ciaudit import repair_frontier
+    assert rec["repair_catalogue"] == ["no-continue-on-error", "strict-shell", "both", "guard-status", "no-default", "both-structural"] + list(repair_frontier.REPAIRS)
     by = {t["name"]: t for t in rec["repairs"]}
-    assert [c["repair"] for c in by["Lint for secrets"]["candidates"]] == rec["repair_catalogue"]      # the second stage ran after the first
+    assert [c["repair"] for c in by["Lint for secrets"]["candidates"]] == rec["repair_catalogue"][:6]  # the second stage ran after the first, and repaired
     assert by["Lint for secrets"]["verified_repair"] == "guard-status" and by["Verify branch"]["verified_repair"] == "no-default"
+    # the third stage ran after the second, and has no edit for a loop that counts
     assert [c["repair"] for c in by["Test each package"]["candidates"]] == rec["repair_catalogue"] and by["Test each package"]["verified_repair"] is None
     assert rec["summary"]["repairs"] == {"targets": 4, "verified": 2, "by_repair": {"guard-status": 1, "no-default": 1},
-                                         "rejected_changes_healthy_run": 1, "not_loud": 1, "no_candidate_applies": 0}
+                                         "rejected_changes_healthy_run": 1, "not_loud": 1, "no_candidate_applies": 0, "routed": 0, "declared": 0}
     # the shipped second stage agrees with the instrument's on the same tree
     from benchmarks.harness_mutation import repair_structural as instrument
     inst = {t["name"]: t for t in instrument.structural_tree(tree)["targets"]}
     for name, t in by.items():
         assert t["verified_repair"] == inst[name]["verified_repair"]
-        assert [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in t["candidates"][3:]] == \
+        assert [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in t["candidates"][3:6]] == \
             [(c["repair"], c.get("applies"), c.get("verified"), c.get("diff")) for c in inst[name]["candidates"]]
 
 

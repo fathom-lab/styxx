@@ -5,6 +5,7 @@ rule. The tests hold the fixtures to the shapes they stand for, the plan to what
 preregistration says it predicts, the splice to every byte, and the plan to itself."""
 from __future__ import annotations
 
+import contextlib
 import sys
 from pathlib import Path
 
@@ -44,9 +45,26 @@ def test_the_splice_keeps_every_other_byte():
     assert L.splice(text, [{"start_line": 1, "line": 1, "lines": ["A"]}, {"start_line": 3, "line": 3, "lines": ["C"]}]) == b"A\nb\nC\n"
 
 
+# the repair stages the gate had when SWALLOW-12 ran. SWALLOW-13 added a third, and its no-exit-zero repairs the
+# fixture SWALLOW-12 froze as the control no repair reaches (s12-13): the plan is SWALLOW-12's with the first two
+S12_STAGES = ("swallow-4", "swallow-5")
+
+
+@contextlib.contextmanager
+def _swallow12_gate():
+    from styxx.ciaudit import differential as D
+    was = D.STAGES
+    D.STAGES = S12_STAGES
+    try:
+        yield
+    finally:
+        D.STAGES = was
+
+
 @pytest.fixture(scope="module")
 def plan(tmp_path_factory):
-    return L.plan(tmp_path_factory.mktemp("plan"))
+    with _swallow12_gate():
+        return L.plan(tmp_path_factory.mktemp("plan"))
 
 
 def test_the_plan_is_what_the_preregistration_predicts(plan):
@@ -91,20 +109,38 @@ def _without_scratch_shas(p: dict) -> dict:
     """The plan with the ids of its scratch commits masked. The job summaries it stores name the
     offline repository's base and test-merge commits, and those ids depend on the machine's git
     configuration: the machine that froze the plan signs its commits (commit.gpgsign), the CI runner
-    does not. Nothing the receipt compares holds a commit id."""
+    does not. Nothing the receipt compares holds a commit id. The product's files move on after the
+    run (SWALLOW-13's third stage): their hashes are the frozen ones in the frozen plan, held below,
+    and masked here."""
     import copy
     import re
     q = copy.deepcopy(p)
     for run in q["runs"].values():
         run["summary"] = re.sub(r"`[0-9a-f]{8}`", "`<commit>`", run["summary"])
+    for k in ("action_sha256", "differential_living_sha256"):
+        q[k] = "<the product as it is>"
     return q
 
 
 def test_the_plan_is_deterministic_and_is_the_frozen_one(plan, tmp_path):
     import json
-    assert L.plan(tmp_path) == plan
+    with _swallow12_gate():
+        assert L.plan(tmp_path) == plan
     frozen = json.loads((ROOT / "papers" / "harness" / "swallow12_plan.json").read_text(encoding="utf-8"))
+    assert frozen["action_sha256"].startswith("e0cb518e") and frozen["differential_living_sha256"].startswith("95f6ccf1")
     assert _without_scratch_shas(frozen) == _without_scratch_shas(plan)
+
+
+def test_the_third_stage_repairs_swallow12s_control():
+    """SWALLOW-12's control with no repair (`|| exit 0`) is what SWALLOW-13's no-exit-zero repairs."""
+    from styxx.ciaudit import differential as D
+    from styxx.ciaudit import engine
+    text = L.FIXTURES["s12-13-no-repair.yml"][2]
+    fx = D.fix_for(text, "s12-13-no-repair.yml", "test", 2, engine.Runner())
+    assert fx["verified_repair"] == "no-exit-zero" and fx["stage"] == "swallow-13"
+    assert "-        run: python -m pytest -q || exit 0" in fx["diff"] and "+          python -m pytest -q" in fx["diff"]
+    with _swallow12_gate():
+        assert D.fix_for(text, "s12-13-no-repair.yml", "test", 2, engine.Runner())["verified_repair"] is None
 
 
 def test_the_base_workflow_is_the_repositorys_gate():
