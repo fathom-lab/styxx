@@ -13,5 +13,8 @@ jobs:
         run: pip install -e .
       - name: Unit tests
         run: python -m pytest tests/unit -q
+      - name: Integration tests
+        run: python -m pytest tests/integration -q
+        continue-on-error: true
       - name: Package
         run: python -m build

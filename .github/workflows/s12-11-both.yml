@@ -11,3 +11,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install
         run: yarn install --frozen-lockfile
+      - name: Tests
+        continue-on-error: true
+        run: yarn test --ci || true
+      - name: Upload the log
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: logs/

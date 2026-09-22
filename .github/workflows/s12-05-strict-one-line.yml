@@ -11,5 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: cargo build --locked
+      - name: Tests
+        run: cargo test --locked || true
       - name: Docs
         run: cargo doc --no-deps

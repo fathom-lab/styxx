@@ -11,3 +11,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install
         run: composer install
+      - name: PHPUnit
+        run: vendor/bin/phpunit || true

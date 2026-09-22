@@ -11,5 +11,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup k6
         run: sudo apt-get install -y k6
+      - name: Load test
+        run: |
+          k6 run --out json=k6-results.json load-test.js || true
+          
       - name: Report
         run: echo "done"

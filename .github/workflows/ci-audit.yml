@@ -1,13 +1,7 @@
 name: ci-audit
 
-# The pull request's gate (SWALLOW-7), run as the action this repository ships: ci-audit/action.yml.
-# When a workflow, the action or the gate's own code changes, the action reads only the workflows
-# that changed between GitHub's test merge and its first parent, and fails only when the change
-# brings a check that hides its own failure -- a `|| true`, a `continue-on-error`, a guard whose
-# failing tool is its green path -- marking the line and putting the verified repair in the job
-# summary. A check that was already hidden is reported, not failed: it is not this change's doing.
-# The checkout is the default one (depth 1, the test merge): the action fetches the one commit it
-# needs, which is the path every repository that adopts it will take.
+# SWALLOW-12's live run: this repository's own gate, with the Action's one-click suggestions on.
+# This file exists only on the live pull request's head branch; it is never merged.
 on:
   pull_request:
     paths:
@@ -17,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   differential:
@@ -26,3 +21,5 @@ jobs:
         uses: actions/checkout@v5
       - name: What this change hides that its base did not
         uses: ./ci-audit
+        with:
+          suggest: true

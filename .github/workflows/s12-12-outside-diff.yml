@@ -18,3 +18,5 @@ jobs:
         run: cargo +nightly doc --no-deps
       - name: Bench build
         run: cargo +nightly bench --no-run
+      - name: Tests
+        run: cargo +nightly test

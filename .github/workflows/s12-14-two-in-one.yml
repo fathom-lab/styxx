@@ -11,5 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install
         run: pip install -e .[dev]
+      - name: Type check
+        run: mypy src || true
       - name: Build wheel
         run: python -m build
+      - name: Unit tests
+        continue-on-error: true
+        run: python -m pytest -q
