@@ -98,7 +98,7 @@ Copilot 3 of 277, Codex 6 of 758 (0.8%). Every prediction is scored on the froze
 | P4 repairable (blind) | ≥ 60% of new hidden checks with a verified repair | **22 of 24 (92%)** — 9 strict shell, 6 `continue-on-error` removed, 6 default removed, 1 guard | HIT |
 | P5 the textbook line (blind) | ≥ 50% carry `continue-on-error: true` | **6 of 24 (25%)** | MISS |
 | P6 the pull request says so (blind) | acknowledging firing ≥ 1.5× expected from each agent's non-firing rate | **6 of 17 against 5.07 expected, 1.18×** | MISS |
-| P7 born, not turned (blind) | ≥ 70% born hidden | **15 of 24 (62.5%)**; 9 acquired (4 `|| true`, 3 `continue-on-error`, 2 defaults; 4 also gated) | MISS |
+| P7 born, not turned (blind) | ≥ 70% born hidden | **15 of 24 (62.5%)**; 9 acquired (4 `\|\| true`, 3 `continue-on-error`, 2 defaults; 4 also gated) | MISS |
 | P8 still there (blind) | ≥ 70% of checks merged firing pull requests brought, whose file exists at the tip, still hidden | **2 of 6 (33%)**: 2 repaired, 1 no longer a check, 1 removed; 3 more whose file is gone | MISS |
 
 ## 3. Reading
