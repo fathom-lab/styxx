@@ -12,6 +12,8 @@ jobs:
       - name: Install
         run: npm ci
       - name: Lint
-        run: npm run lint || true
+        run: |
+          set -eo pipefail
+          npm run lint
       - name: Format
         run: npx prettier --check .

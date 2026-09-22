@@ -12,4 +12,6 @@ jobs:
       - name: Install
         run: pip install -e .[test]
       - name: Tests
-        run: python -m pytest -q || true
+        run: |
+          set -eo pipefail
+          python -m pytest -q

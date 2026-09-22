@@ -12,7 +12,9 @@ jobs:
       - name: Install
         run: npm ci
       - name: Typecheck
-        run: npm run typecheck || echo "type errors, see the log"
+        run: |
+          set -eo pipefail
+          npm run typecheck
       - name: Upload the log
         uses: actions/upload-artifact@v4
         with:

@@ -13,7 +13,8 @@ jobs:
         run: pip install -r docs/requirements.txt
       - name: Check links
         run: |
-          python scripts/check_links.py             --root docs             --strict || echo "::warning::some links need attention"
+          set -eo pipefail
+          python scripts/check_links.py             --root docs             --strict
       - name: Upload the log
         uses: actions/upload-artifact@v4
         with:

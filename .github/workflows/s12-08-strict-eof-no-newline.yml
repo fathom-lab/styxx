@@ -12,4 +12,6 @@ jobs:
       - name: Install
         run: composer install
       - name: PHPUnit
-        run: vendor/bin/phpunit || true
+        run: |
+          set -eo pipefail
+          vendor/bin/phpunit

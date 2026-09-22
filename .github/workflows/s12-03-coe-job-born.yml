@@ -13,7 +13,6 @@ jobs:
         run: npx eslint .
   e2e:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: End-to-end tests

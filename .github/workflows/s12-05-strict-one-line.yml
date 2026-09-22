@@ -12,6 +12,8 @@ jobs:
       - name: Build
         run: cargo build --locked
       - name: Tests
-        run: cargo test --locked || true
+        run: |
+          set -eo pipefail
+          cargo test --locked
       - name: Docs
         run: cargo doc --no-deps

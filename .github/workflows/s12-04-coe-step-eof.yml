@@ -13,4 +13,3 @@ jobs:
         run: cargo fmt --check
       - name: Clippy
         run: cargo clippy -- -D warnings
-        continue-on-error: true

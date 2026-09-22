@@ -13,7 +13,7 @@ jobs:
         run: go mod download
       - name: Tests
         run: |
-          set +e
+          set -eo pipefail
           go vet ./...
-          go test ./... -race -count=1 || true
+          go test ./... -race -count=1
           echo "tests finished"
