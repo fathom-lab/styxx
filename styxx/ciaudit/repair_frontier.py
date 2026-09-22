@@ -6,7 +6,8 @@ same fault, the healthy run unchanged:
   hoist-substitution    a `$(...)` whose status the line throws away -- inside an `echo`/`printf`
                         argument, a `for ... in` list, an `export`/`local` assignment, a one-test
                         `if [ ... ]` -- moved onto its own line as `__subN="$(...)"`, and the shell
-                        made strict, so the command's failure stops the step
+                        made strict, so the command's failure stops the step (a grep's, a diff's,
+                        a `jq -e`'s status 1 -- an answer, not a failure -- kept)
   background-liveness   a job started with `&` whose early death nobody waits for: after it,
                         `__bgN=$!`, a short sleep, and `wait` on it if it has already exited -- a
                         job that died failing fails the step; one still running, or that exited
@@ -179,6 +180,15 @@ def _hoistable(first: str, masked: str) -> bool:
     return False
 
 
+# commands whose status 1 is an answer, not a failure: no match (grep and its kin, pgrep), a
+# difference (diff, cmp, `git diff --exit-code`/`--quiet`), not found (which, `command -v`), false
+# (`jq -e`). A hoisted substitution of one keeps its 1 -- `|| [ $? -eq 1 ]` -- so only a status above 1
+# stops the step, as guard-status reads a guard's. The model's stubs never answer 1; this is the
+# real run's "no". (Added after SWALLOW-13's run; see its RESULT.)
+_STATUS_ONE = re.compile(r"(?:^|[|;&(`!])\s*(?:e?grep|fgrep|zgrep|rg|ag|pgrep|diff|cmp|which|command\s+-v|"
+                         r"git\s+diff\b[^|;&]*--(?:exit-code|quiet)|jq\b[^|;&]*\s(?:-[a-zA-Z]*e[a-zA-Z]*|--exit-status))(?=\s|$|\))")
+
+
 def hoist_substitution(run: str) -> str:
     """The hoist-substitution repair; the script unchanged when no substitution can be hoisted."""
     lines = run.splitlines()
@@ -214,7 +224,8 @@ def hoist_substitution(run: str) -> str:
         new, pre, last = [], [], 0
         for s0, s1 in subs:
             v = name()
-            pre.append(f'{ind}{v}="{line[s0:s1]}"')
+            keep_one = " || [ $? -eq 1 ]" if _STATUS_ONE.search(line[s0 + 2:s1 - 1]) else ""
+            pre.append(f'{ind}{v}="{line[s0:s1]}"{keep_one}')
             new.append(line[last:s0] + "${" + v + "}")
             last = s1
         new.append(line[last:])
