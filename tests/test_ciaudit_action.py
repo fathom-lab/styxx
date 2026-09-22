@@ -298,7 +298,7 @@ def test_suggestions_are_posted_once_and_never_twice(tmp_path, monkeypatch, caps
     assert "```suggestion\n        run: |\n          set -eo pipefail\n          npx tsc --noEmit\n```" in p1["body"]
     # a re-run finds its own marks and posts nothing
     r = _run(monkeypatch, capsys, tmp_path, ws, "pull_request", _pr_event(7, s["h7"], s["c1"]), s["m7"], suggest="true")
-    assert len(posted) == 2 and "already suggested on this pull request" in r["out"]
+    assert len(posted) == 2 and "styxx ci-audit: 0 suggestions posted; 2 already on this pull request" in r["out"]
     # a fork's read-only token: reported, and the gate's verdict does not change
     monkeypatch.setattr(A, "api", lambda method, url, token, payload=None: (200, []) if method == "GET" else (403, "Resource not accessible by integration"))
     r = _run(monkeypatch, capsys, tmp_path, ws, "pull_request", _pr_event(7, s["h7"], s["c1"]), s["m7"], suggest="true")
@@ -312,6 +312,49 @@ def test_hunks_are_the_lines_a_review_comment_can_sit_on(tmp_path):
     h = A.hunks(ws, s["c1"], s["m7"], ".github/workflows/ci.yml")
     coe, tsc = _line(CI_PR7, "continue-on-error: true"), _line(CI_PR7, "npx tsc --noEmit || true")
     assert A.within((coe, coe), h) and A.within((tsc, tsc), h) and not A.within((1, 1), h)
+
+
+# ----------------------------------------------------------------------------- GitHub keeps ten annotations of each level per step
+
+def test_past_ten_annotations_the_level_steps_down_and_the_diff_goes_first():
+    items = [{"i": k, "in_diff": k % 3 != 0} for k in range(35)]
+    plan = A.plan_annotations(items, "error")
+    levels = [lv for lv, _, _ in plan]
+    assert levels == ["error"] * 10 + ["warning"] * 10 + ["notice"] * 10 + [None] * 5
+    assert all(it["in_diff"] for _, _, it in plan[:23]) and not any(it["in_diff"] for _, _, it in plan[23:])
+    assert [r for _, r, _ in plan] == list(range(35))
+    # fail-on: never writes warnings first; ten warnings, ten notices, the rest in the summary only
+    assert [lv for lv, _, _ in A.plan_annotations(items[:25], "warning")] == ["warning"] * 10 + ["notice"] * 10 + [None] * 5
+    assert A.plan_annotations([], "error") == []
+
+
+def test_twelve_hidden_checks_are_ten_errors_and_two_warnings(tmp_path, monkeypatch, capsys):
+    """A change that hides twelve checks: GitHub would drop two error annotations, so the action writes
+    ten errors and two warnings, and the job summary says so."""
+    src = tmp_path / "src"
+    (src / ".github" / "workflows").mkdir(parents=True)
+    subprocess.run(["git", "init", "-q", "-b", "main", str(src)], check=True)
+    wf = src / ".github" / "workflows" / "ci.yml"
+    wf.write_text(CI)
+    _git(src, "add", "-A")
+    _git(src, "commit", "-q", "-m", "ci")
+    base = _git(src, "rev-parse", "HEAD")
+    wf.write_text(CI + "".join(f"      - name: Check {k}\n        continue-on-error: true\n        run: npm run check-{k}\n" for k in range(12)))
+    _git(src, "commit", "-q", "-am", "twelve checks, all non-blocking")
+    head = _git(src, "rev-parse", "HEAD")
+    remote = tmp_path / "remote.git"
+    subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(remote)], check=True)
+    _git(remote, "config", "uploadpack.allowAnySHA1InWant", "true")
+    _git(src, "push", "-q", str(remote), "main")
+    ws = _checkout(tmp_path, {"remote": remote}, head)
+    r = _run(monkeypatch, capsys, tmp_path, ws, "push", {"before": base, "after": head}, head)
+    assert r["rc"] == 1 and r["outputs"]["new-hidden"] == "12"
+    out = r["out"].splitlines()
+    assert sum(ln.startswith("::error file=") for ln in out) == 10 and sum(ln.startswith("::warning file=") for ln in out) == 2
+    assert all("GitHub keeps 10 of each level from one step, so this one is a warning" in ln for ln in out if ln.startswith("::warning file="))
+    assert "12 checks: GitHub keeps 10 annotations of each level from one step, so they are written as 10 errors, 2 warnings" in r["summary"]
+    rec = json.loads(Path(r["outputs"]["receipt"]).read_text())
+    assert rec["annotations"] == {"error": 10, "warning": 2}
 
 
 # ----------------------------------------------------------------------------- the action itself

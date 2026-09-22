@@ -23,11 +23,24 @@ from tests.test_ciaudit_action import CI_PR7, _github, _line  # noqa: E402
 
 # frozen at the sha256 the SWALLOW-11 receipt names (papers/harness/swallow11_receipt.json.gz); a change needs a new receipt, not a new pin
 INSTRUMENT_SHA256 = "047a11235ce35f02bb3c1e2e467857bf2c1e54d5cbd0b0fc9eede8dc6a6ff807"
-# the Action as it ships. The scored receipt was taken with action.py a9615d9b...; after scoring, one text-mode subprocess
-# call (readable()'s `git diff --quiet`) gained its encoding pin, and the replay was re-run with the shipped file:
-# swallow11_rerun_receipt.json.gz names this sha, and is the scored receipt in every pair and check (held below)
-ACTION_SHA256 = "c642493df6e2c00d483debd8e28bc3c8a104528df345dd3703881de9b3952c3a"
+# the Action the replay measured. The scored receipt ran action.py a9615d9b...; after scoring, one text-mode subprocess
+# call (readable()'s `git diff --quiet`) gained its encoding pin, and the replay was re-run with that file, c642493d...:
+# swallow11_rerun_receipt.json.gz names it and is the scored receipt in every pair and check (held below). The file
+# itself moves on (SWALLOW-12's annotation levels); what the replay called is pinned by its source, function by function
+ACTION_SHA256_RERUN = "c642493df6e2c00d483debd8e28bc3c8a104528df345dd3703881de9b3952c3a"
 ACTION_SHA256_SCORED = "a9615d9bb909b4435fd301f4aa6496320af81828177766bf7c4718ee3c25a76f"
+REPLAYED_FUNCTIONS_SHA256 = {
+    "git": "c3d007d72d97b4d09572941c115a28ee21f5d98517d5d75f1652e90f35335248",
+    "have": "5d71f0cf18a564227f119b1c61d14fd6bf1dc68ad60a8bd41f3c76d30d36900b",
+    "readable": "d6d2b051d550e2fb70c3f94034ee6b8bfa2e8685478905be9838f07b97e9f83b",
+    "positions": "ff4a3a5f4cf96b5268712894b10be0d85781a68e655bf7409ec7397bc0a8bd7b",
+    "target": "15f9a48d09edbdd84c0add904f0c6cacd5f840bb5419f6322f47d48de3722f94",
+    "repaired_text": "423fcaef744b8682ad14e56df028a5798f480b5ef41f048218066699301f6965",
+    "suggestion": "230bfff4ce51b8c802c41af9616935df44be6effad6d4897420e532b603142a2",
+    "apply_suggestion": "fca6815124fe9112d2f24e5b44fe87383328519f5d4d0e329a3e79e110470abc",
+    "hunks": "90d2a9ed14ac50c66de3ad4171666fdf87aea3286bab3bfd95ab44923802de00",
+    "within": "3e8e7b5c4a58634bd1582e05bd94bf55ad7db0a6a0efec17d0a152ceaf14900f",
+}
 HARNESS = ROOT / "papers" / "harness"
 
 
@@ -37,19 +50,29 @@ def _receipt(name: str) -> dict:
     return json.loads(gzip.decompress((HARNESS / name).read_bytes()).decode("utf-8"))
 
 
-def test_the_instrument_and_the_action_are_the_ones_a_receipt_names():
+def _function_sources(path: Path) -> dict:
+    import ast
+    import hashlib
+    src = path.read_text(encoding="utf-8")
+    lines = src.splitlines(keepends=True)
+    return {n.name: hashlib.sha256("".join(lines[n.lineno - 1:n.end_lineno]).encode("utf-8")).hexdigest()
+            for n in ast.parse(src).body if isinstance(n, ast.FunctionDef)}
+
+
+def test_the_instrument_and_the_functions_it_called_are_the_ones_a_receipt_names():
     import hashlib
     if INSTRUMENT_SHA256 is None:
         pytest.skip("not yet frozen")
     assert hashlib.sha256((ROOT / "benchmarks" / "harness_mutation" / "one_click.py").read_bytes()).hexdigest() == INSTRUMENT_SHA256
-    assert hashlib.sha256((ROOT / "styxx" / "ciaudit" / "action.py").read_bytes()).hexdigest() == ACTION_SHA256
+    shipped = _function_sources(ROOT / "styxx" / "ciaudit" / "action.py")
+    assert {k: shipped.get(k) for k in REPLAYED_FUNCTIONS_SHA256} == REPLAYED_FUNCTIONS_SHA256
 
 
 def test_the_rerun_with_the_shipped_action_is_the_scored_receipt():
-    """The shipped action.py differs from the one the scored receipt ran by an encoding pin; the
-    replay re-run with the shipped file must be that receipt in every pair and every check."""
+    """The re-run's action.py differs from the one the scored receipt ran by an encoding pin; the
+    replay re-run with it must be that receipt in every pair and every check."""
     scored, rerun = _receipt("swallow11_receipt.json.gz"), _receipt("swallow11_rerun_receipt.json.gz")
-    assert scored["action_sha256"] == ACTION_SHA256_SCORED and rerun["action_sha256"] == ACTION_SHA256
+    assert scored["action_sha256"] == ACTION_SHA256_SCORED and rerun["action_sha256"] == ACTION_SHA256_RERUN
     assert rerun["instrument_sha256"] == scored["instrument_sha256"] == INSTRUMENT_SHA256
     assert rerun["differential_living_sha256"] == scored["differential_living_sha256"]
     assert rerun["sources_sha256"] == scored["sources_sha256"]
