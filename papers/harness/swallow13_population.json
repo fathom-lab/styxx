@@ -1,0 +1,2211 @@
+{
+ "schema": "styxx.harness-frontier/v1#population",
+ "rule": "SWALLOW-9's repositories at the default-branch tip SWALLOW-9 recorded, minus SWALLOW-1's hundred (read by SWALLOW-2 to -7) and SWALLOW-11's sixty (which hold SWALLOW-13's development set)",
+ "sources_sha256": {
+  "swallow9_receipt.json.gz": "b78c4730233239a49cc7112fd0f1dd53724a5fbf62b38c71bc155ef2998f5152",
+  "swallow1_population.json": "5ac2789b6d67eed87fa7e2fcf0d92581c35b7b46acab3c1d109dce3b2042e9f6",
+  "swallow11_receipt.json.gz": "97b1769b0561cd36592bf72369527cf5e4e7bf5b7ae933a25757f5f63d457a68"
+ },
+ "swallow9_repos": 623,
+ "excluded_swallow1": 57,
+ "excluded_swallow11": 17,
+ "count": 549,
+ "repos": [
+  {
+   "repo": "0xfurai/peekaping",
+   "tip": "742a60d94fdaacc977c09444b651f7cf1c1aab9e"
+  },
+  {
+   "repo": "1c-syntax/bsl-language-server",
+   "tip": "f1af5db9c9aa3335d0af44cdd2fd4787ff2819ee"
+  },
+  {
+   "repo": "3rdIteration/btcrecover",
+   "tip": "1457088acf17630eb12a5b53989982ac34e55f2a"
+  },
+  {
+   "repo": "514-labs/moosestack",
+   "tip": "99bcb9f9fff7230e23db49fd5b70af62af511bf9"
+  },
+  {
+   "repo": "567-labs/instructor",
+   "tip": "e12f8b49203b0c1f253d27c1e709d0a09b9fc5a8"
+  },
+  {
+   "repo": "567-labs/kura",
+   "tip": "956d95ac6a19c841c59eefe692f3341dfc2ba410"
+  },
+  {
+   "repo": "AArnott/Nerdbank.MessagePack",
+   "tip": "daf94e87eb0001facaaf8eed08030fbd4e7c640a"
+  },
+  {
+   "repo": "APPFL/APPFL",
+   "tip": "6477b8371caae13c0983033b3970379f8db17176"
+  },
+  {
+   "repo": "AirLabsTeam/react-drag-to-select",
+   "tip": "0b93b3a4c6481694cb118a2a0d8bf94158fa00b9"
+  },
+  {
+   "repo": "AlexGladkov/JetHabit",
+   "tip": "d107d90ce5fb84271fb269aa682a6f522f6d6914"
+  },
+  {
+   "repo": "AliAkhtari78/SpotifyScraper",
+   "tip": "9cbf05aa4963bac3684bb941270dcb62fc851ab7"
+  },
+  {
+   "repo": "Arize-ai/openinference",
+   "tip": "01d2f8ff2870e900a4b75ba2fac415971ed53e7d"
+  },
+  {
+   "repo": "Arize-ai/phoenix",
+   "tip": "c282563e8742b1b858fe6a382e5e54818a3835ea"
+  },
+  {
+   "repo": "Avarok-Cybersecurity/Citadel-Protocol",
+   "tip": "bfb6f8d8123a4b4609a581f6c121ff637e0b5b2b"
+  },
+  {
+   "repo": "Azure-Samples/azure-ai-travel-agents",
+   "tip": "67e16b9075cc1f9e279e4dfae1d7102b9bef6c8e"
+  },
+  {
+   "repo": "Azure-Samples/rag-postgres-openai-python",
+   "tip": "ef371067205b35991c21f7b7348574eb09e621d5"
+  },
+  {
+   "repo": "Azure-Samples/serverless-chat-langchainjs",
+   "tip": "2b0bfd2348847db6648843d67afdb3f124f8c3b0"
+  },
+  {
+   "repo": "Azure/PSRule.Rules.Azure",
+   "tip": "e259e104429a7faa894d9e2c1eb3386c5c7cede9"
+  },
+  {
+   "repo": "Azure/autorest",
+   "tip": "92dc622f3d704dcd326e051e17da773b714d3f4d"
+  },
+  {
+   "repo": "Azure/autorest.csharp",
+   "tip": "f1627965fe88ec53fa4e0a3b60b40828ee8f742a"
+  },
+  {
+   "repo": "Azure/azure-container-networking",
+   "tip": "a3ac8ba808c1d8b1a81328272e0fe8633e778f24"
+  },
+  {
+   "repo": "Azure/azure-dev",
+   "tip": "487420e562fcd53736685970379942cd0e996839"
+  },
+  {
+   "repo": "Azure/azure-kusto-python",
+   "tip": "a3150e13ac809c63475f205d48f8ed5046d97271"
+  },
+  {
+   "repo": "Azure/azure-mcp",
+   "tip": "54f04ab1ade20b4adc4955cffea0833788307596"
+  },
+  {
+   "repo": "Azure/azure-sdk",
+   "tip": "9138082988bbf6a9d3349c9a252c26ba03e04f16"
+  },
+  {
+   "repo": "Azure/azure-sdk-for-java",
+   "tip": "6a0601cb4151741357f7f1fc8f78d551fa8f271e"
+  },
+  {
+   "repo": "Azure/azure-service-operator",
+   "tip": "9b59c9c71279753e5dcfdbcb0a4193c97458ad06"
+  },
+  {
+   "repo": "Azure/bicep-registry-modules",
+   "tip": "93266e74f2e721eaff2fc93233233e27c4aac651"
+  },
+  {
+   "repo": "Azure/kubelogin",
+   "tip": "911deca204062c402d03b91887c4d57e5a881542"
+  },
+  {
+   "repo": "Azure/missionlz",
+   "tip": "320593e7fd87c2d820fdf7cfb85ab89190e8cbf5"
+  },
+  {
+   "repo": "Azure/sql-action",
+   "tip": "1945d43ac0ea226e63b98855edfedd8fcf9d653d"
+  },
+  {
+   "repo": "AzureCosmosDB/data-migration-desktop-tool",
+   "tip": "f074249f05e2b28fe0c72844d898b1d65c87bf48"
+  },
+  {
+   "repo": "BeehiveInnovations/zen-mcp-server",
+   "tip": "7afc7c1cc96e23992c8f105f960132c657883bb1"
+  },
+  {
+   "repo": "Blaizzy/mlx-vlm",
+   "tip": "a74c7de90a344a2c2c7334acb4e48b57a40480e2"
+  },
+  {
+   "repo": "BlueWallet/GroundControl",
+   "tip": "bf7ac1e90f222a5478cff983b779546b5c243673"
+  },
+  {
+   "repo": "CX330Blake/Black-Hat-Zig",
+   "tip": "c27e9dde9d014a90ff29f703546fa2b7de30e447"
+  },
+  {
+   "repo": "CapSoftware/Cap",
+   "tip": "c2ee42bda0159e51e031356689e00d7ac4d66d11"
+  },
+  {
+   "repo": "Chia-Network/chia-blockchain",
+   "tip": "7412a57d5ec9ce9cf88428446142a1a1f4436406"
+  },
+  {
+   "repo": "CodeWithCJ/SparkyFitness",
+   "tip": "3c84e8007fb4f2541c58238ec71a2dcbb7d458a4"
+  },
+  {
+   "repo": "CodingAleCR/http_interceptor",
+   "tip": "a9ce716ab794badc7050b3a898aff973a24a205a"
+  },
+  {
+   "repo": "CommunityToolkit/Aspire",
+   "tip": "bdfc1a57eb45fb3b912e84cee217743b1a0fb13f"
+  },
+  {
+   "repo": "ComposioHQ/composio",
+   "tip": "3a88a1a7397c5a5e88f0ed18649cdbd4506bb846"
+  },
+  {
+   "repo": "DataDog/dd-trace-go",
+   "tip": "541837434c0d79ef206b5a59207aff26b6205e58"
+  },
+  {
+   "repo": "DataDog/dd-trace-java",
+   "tip": "2425f4370c330466296529b8fbe088b0ee31f771"
+  },
+  {
+   "repo": "DataDog/dd-trace-rb",
+   "tip": "e35deb4f6a25892206c8faad7c9c8293c2d2446f"
+  },
+  {
+   "repo": "DeepLabCut/DeepLabCut",
+   "tip": "4dcb9a7d5a701427ef78ecc8103d38eeef70601a"
+  },
+  {
+   "repo": "Deepractice/PromptX",
+   "tip": "93c1e53556cd5c91215e6eab18bc802dbce5e8a5"
+  },
+  {
+   "repo": "DistroAV/DistroAV",
+   "tip": "2c17798b447416793e6bc3bae49a3e33907d37a4"
+  },
+  {
+   "repo": "DivineOmega/uxdm",
+   "tip": "ac351d3997a5b508e9cd7f88cedc1b02471dc8b9"
+  },
+  {
+   "repo": "ESPresense/ESPresense",
+   "tip": "fd99fe21dc321f14d9d8991799c52e36dbe60846"
+  },
+  {
+   "repo": "ESPresense/ESPresense-companion",
+   "tip": "cae354edb3ecd7c22c956d6670aa4f6577a1ed69"
+  },
+  {
+   "repo": "EduMIPS64/edumips64",
+   "tip": "be2de24ff6c2750f801c54613ca4e70c3cca95e0"
+  },
+  {
+   "repo": "FLOX-Foundation/flox",
+   "tip": "581b6230f45cb50a7c93a3a62a2ca491ca1b5332"
+  },
+  {
+   "repo": "FidelusAleksander/ghcertified",
+   "tip": "48d21dce0a874cd6244605bfc2fce00b0914bc0b"
+  },
+  {
+   "repo": "FritzAndFriends/SharpSite",
+   "tip": "c35e5e06c5e17b3e0fbada8fb006d30dadcbf5e6"
+  },
+  {
+   "repo": "GrimAnticheat/Grim",
+   "tip": "8eb5f2809591c891deb4958bb2927844871e0600"
+  },
+  {
+   "repo": "HaveAGitGat/Tdarr_Plugins",
+   "tip": "26c97a52f9dcf5fc6faeb751071cb82cdf97ca4e"
+  },
+  {
+   "repo": "HumanSignal/label-studio",
+   "tip": "2ee287c5df518c84a7186ffb969ce93f2af612ef"
+  },
+  {
+   "repo": "J-Tech-Japan/Sekiban",
+   "tip": "23a5096de313f67fd43cc1f530f179c29a9dc275"
+  },
+  {
+   "repo": "JakeWharton/gitout",
+   "tip": "eba8b21647cd2f6a8f8a7e04a3af17f954c94ef0"
+  },
+  {
+   "repo": "JessicaTegner/pypandoc",
+   "tip": "b1152c1c51efc1329baea0b5e09b078a3ed5e166"
+  },
+  {
+   "repo": "Kanaries/graphic-walker",
+   "tip": "f936a695321ad5dd34e0f7c785b6e928bd3f4334"
+  },
+  {
+   "repo": "Kiln-AI/Kiln",
+   "tip": "5992e2e51ec6782fce33f277145954ba3ae8467e"
+  },
+  {
+   "repo": "Krande/adapy",
+   "tip": "c83c96b12072858ee3ff8ac1c3a9c251d099184e"
+  },
+  {
+   "repo": "MaestroError/LarAgent",
+   "tip": "3af608816cfcdc63da181425d1ee69b52735029f"
+  },
+  {
+   "repo": "Marco-Christiani/zigrad",
+   "tip": "f44dc4f5359830e651e74dd15597c75951f47b6c"
+  },
+  {
+   "repo": "MikePopoloski/slang",
+   "tip": "f5a93a85a8d7d76449e33ffd54964f0ba4b66c46"
+  },
+  {
+   "repo": "NangoHQ/nango",
+   "tip": "f0d7052bba14149904a4239c378d23f5dac333a2"
+  },
+  {
+   "repo": "NethermindEth/nethermind",
+   "tip": "964bf134950b1b5fbc4349579f43f882aa100e8a"
+  },
+  {
+   "repo": "NewFuture/DDNS",
+   "tip": "18b5b5bc9e15f3e2ef004d6ec2e50b697f089176"
+  },
+  {
+   "repo": "NikolayS/postgres_dba",
+   "tip": "455c2f69aae37fc679c763f8de0952bdd5517a1b"
+  },
+  {
+   "repo": "OHIF/Viewers",
+   "tip": "aafb6e8f5fd272a4d2a61a8dbc69ab523d955301"
+  },
+  {
+   "repo": "OVINC-CN/OpenWebUI",
+   "tip": "23996c8a419a96dbc5e69afeb3b797ca6561e38e"
+  },
+  {
+   "repo": "OWASP/wrongsecrets",
+   "tip": "c873f450f5b02a89adbc08c79871b08c796f1b91"
+  },
+  {
+   "repo": "ObservedObserver/async-code",
+   "tip": "a3f259537e3492b8b0960c4116da5b3b564e60cd"
+  },
+  {
+   "repo": "OneKeyHQ/app-monorepo",
+   "tip": "49b8353cb8f3fa5e4ae39e45e459cd92e1e7ab7d"
+  },
+  {
+   "repo": "OpenHD/QOpenHD",
+   "tip": "6dd753d730bbd732dd747790b86e42ae6a5f6b2e"
+  },
+  {
+   "repo": "OpenSprinkler/OpenSprinkler-App",
+   "tip": "0af653d87d254c61bdeb10e4d23a4dabb2ef5b3f"
+  },
+  {
+   "repo": "PRQL/prql",
+   "tip": "bae6f1b59c931bf041d0bf8f00ba20c7e8dc472a"
+  },
+  {
+   "repo": "PV-Bhat/vibe-check-mcp-server",
+   "tip": "ed8452f2d626011526b0c62f7be7d0a6f67794c1"
+  },
+  {
+   "repo": "PepperDash/Essentials",
+   "tip": "7f05654638a27800f4ee0cbc285d66eb856b786f"
+  },
+  {
+   "repo": "PostHog/posthog",
+   "tip": "854a4262ec8b23513b91a3c4d3659ec9b1e9cd90"
+  },
+  {
+   "repo": "PrimeIntellect-ai/verifiers",
+   "tip": "6e6494ed83f37e763c7cc4d89b4461443116ecea"
+  },
+  {
+   "repo": "Producdevity/EmuReady",
+   "tip": "212928376089863f095054a8c2e15a97050347f9"
+  },
+  {
+   "repo": "PrunaAI/pruna",
+   "tip": "af8bff46a36bf111847c3d0ea6d470a8fb88ae83"
+  },
+  {
+   "repo": "RevenueCat/purchases-android",
+   "tip": "1fa2a4349f8c00e25f5a65200e249e42441e35f7"
+  },
+  {
+   "repo": "RooCodeInc/Roo-Code",
+   "tip": "b867ec9145750d0ae1ff7f02d35406e9bf2a0b16"
+  },
+  {
+   "repo": "SaveTheRbtz/zstd-seekable-format-go",
+   "tip": "13e882a4f6dfc0b568af8d7adf6ed9f5c97edd72"
+  },
+  {
+   "repo": "SchemaStore/schemastore",
+   "tip": "95515978468ac0373ed052151745715c05c32fd5"
+  },
+  {
+   "repo": "Schniz/cmd-ts",
+   "tip": "bbe46910c43a7ae4fb4a74fea96596db42b91639"
+  },
+  {
+   "repo": "SciML/DiffEqGPU.jl",
+   "tip": "278bee38686b181dc53a74cba6a6287306a36723"
+  },
+  {
+   "repo": "SecurityBrewery/catalyst",
+   "tip": "e9180a4ee5fed3b59d34dda1a804f77767e0476b"
+  },
+  {
+   "repo": "ShaunLawrie/PwshSpectreConsole",
+   "tip": "5be3622169d4bc333288c5e957d9921e57178613"
+  },
+  {
+   "repo": "Skyscanner/backpack-ios",
+   "tip": "d1881336eb88b3a2611b33d45406c23bf7bc7164"
+  },
+  {
+   "repo": "Skyvern-AI/skyvern",
+   "tip": "9a3ee5e4429a86eb0df886ffd7cee1e71da77e96"
+  },
+  {
+   "repo": "Stirling-Tools/Stirling-PDF",
+   "tip": "eac9799c64965fa712b4e8504a707dcd69a55d32"
+  },
+  {
+   "repo": "Sumukh/Ignite",
+   "tip": "cec9b163a6e87ab2aa9df460078b7d4c8a367754"
+  },
+  {
+   "repo": "Tencent/ncnn",
+   "tip": "050ba22657682768ad7648c9c334b45dc7557f50"
+  },
+  {
+   "repo": "The-Art-of-Hacking/h4cker",
+   "tip": "660399824109a100a5fa2d86dfacd4fdfc32c2fc"
+  },
+  {
+   "repo": "TheAlgorithms/Python",
+   "tip": "51a19deb30a490fc394d87e1b2c7674c1e1257d6"
+  },
+  {
+   "repo": "TwillAI/summon-app",
+   "tip": "c26ff37dc7a236c865a5b7b887224aea4b20178f"
+  },
+  {
+   "repo": "TypedDevs/bashunit",
+   "tip": "860c797a48e34be20b019a70f58c0e06d15c8d33"
+  },
+  {
+   "repo": "UIforFreedom/UIF",
+   "tip": "d68ad1e3500cb3b50dad3119c8780d27278fab61"
+  },
+  {
+   "repo": "Uberi/speech_recognition",
+   "tip": "8075e8f76acdac58fcf6ac41a104172f51349e98"
+  },
+  {
+   "repo": "XiangpengHao/liquid-cache",
+   "tip": "0033b159b716a381dff59bb26358b992a21089cb"
+  },
+  {
+   "repo": "Yacht-sh/Yacht",
+   "tip": "dd5058baa0e7f9e77ae1c24b68b4b13411cac14e"
+  },
+  {
+   "repo": "Zipstack/unstract",
+   "tip": "0a2c3e31c66cb6a0d6743010b9ca159767b60af1"
+  },
+  {
+   "repo": "a16z/halmos",
+   "tip": "079bb4241d1b460baf986257d56ea86977d73451"
+  },
+  {
+   "repo": "aavetis/PRarena",
+   "tip": "b9ad9e5819730bfcdbe8a668cff156973f36011d"
+  },
+  {
+   "repo": "actnwit/RhodoniteTS",
+   "tip": "30483f7a8ddb39cc42d38ee095a1e635e3b80ced"
+  },
+  {
+   "repo": "acts-project/acts",
+   "tip": "36d60b0de949d823425608cbd89f82418d0baa51"
+  },
+  {
+   "repo": "ag2ai/ag2",
+   "tip": "57814c91b568e3fe76e3478ee9d0c0229cdf5a6e"
+  },
+  {
+   "repo": "airbytehq/PyAirbyte",
+   "tip": "1b11ce1e3fa30be248a7d17a847f701807650dc1"
+  },
+  {
+   "repo": "akto-api-security/akto",
+   "tip": "487affa75fe89185b200648e405c1bc6e7ba3c18"
+  },
+  {
+   "repo": "alandtse/alexa_media_player",
+   "tip": "07326d44cf0f6372d7bd877dc42e9eaea7e20d4c"
+  },
+  {
+   "repo": "alchemy-run/alchemy",
+   "tip": "1f251fa6a8bcbe4ea19e85fd64aedf00c814fd95"
+  },
+  {
+   "repo": "alchemyplatform/aa-sdk",
+   "tip": "5a962f810a50e21656963234fa5fcd91d59a431d"
+  },
+  {
+   "repo": "aldinokemal/go-whatsapp-web-multidevice",
+   "tip": "c5871ab2fda4224bff03f35953ff2c3b1e123877"
+  },
+  {
+   "repo": "alexanderjeurissen/ranger_devicons",
+   "tip": "1bcaff0366a9d345313dc5af14002cfdcddabb82"
+  },
+  {
+   "repo": "aliev/aioauth",
+   "tip": "81365d30a5e4bf8ec48490032b73e1728b359570"
+  },
+  {
+   "repo": "alirezamika/autoscraper",
+   "tip": "68a818158c673bf320a8569da10a8b979c1d23fe"
+  },
+  {
+   "repo": "altive/flutter_app_template",
+   "tip": "21e2af514002d7623236a81c84a1668dcdf4c995"
+  },
+  {
+   "repo": "amber-lang/amber",
+   "tip": "117ead1e94607a97a0e03487002231debbc36043"
+  },
+  {
+   "repo": "ant-design/ant-design",
+   "tip": "b6a7df2743e3ef11be134835ef76f84b4a403096"
+  },
+  {
+   "repo": "antiwork/shortest",
+   "tip": "45a8dcfe89992b37ed2dfb1f76618048cff0f45c"
+  },
+  {
+   "repo": "antontanderup/mediocre-hass-media-player-cards",
+   "tip": "196824c61991499d6b49f27a46e24f2e6c18fb76"
+  },
+  {
+   "repo": "anyproto/anytype-mcp",
+   "tip": "0134fe8cc2341d1bf90f310c7606b5345b636c21"
+  },
+  {
+   "repo": "apache/ozone",
+   "tip": "aed7ceac7cc515a796863b79066c9d5389732979"
+  },
+  {
+   "repo": "appdotbuild/agent",
+   "tip": "9a0c1d26c136247c3fde2e61bf65fcb2c477baab"
+  },
+  {
+   "repo": "appsmithorg/appsmith",
+   "tip": "a72a95b73a996485d3bc786ba6f63e3121f6849d"
+  },
+  {
+   "repo": "arakoodev/EdgeChains",
+   "tip": "8d79cb4bbf23a9dbc305152fc225bd50db48a0de"
+  },
+  {
+   "repo": "arondeparon/laravel-request-sanitizer",
+   "tip": "66870a27ca54e1d82d0999f8ae96e6bcbff4e7ae"
+  },
+  {
+   "repo": "astronomer/airflow-ai-sdk",
+   "tip": "89f13456a9521f326d51daa4a8a18f7a1a2f87f7"
+  },
+  {
+   "repo": "ateliee/jquery.schedule",
+   "tip": "1a4400b986609a9f1a393bbcd832b7490e5a499a"
+  },
+  {
+   "repo": "aztfmod/terraform-provider-azurecaf",
+   "tip": "ac7461576007e6abe4b0338222380ac3d49bec48"
+  },
+  {
+   "repo": "azu/ni.zsh",
+   "tip": "9dd33217877d4d5d0ed982609ec50977f6f756b7"
+  },
+  {
+   "repo": "azu/promises-book",
+   "tip": "ced01d85f01d5b9b3f1081924ff4deb95646eefe"
+  },
+  {
+   "repo": "azure-ai-foundry/foundry-samples",
+   "tip": "c7c601431b2fcb6871a5a5ccd69215d96a58ea52"
+  },
+  {
+   "repo": "barter-rs/barter-rs",
+   "tip": "9770b27a83f844472b93b593b08063affc974b0d"
+  },
+  {
+   "repo": "baynezy/Html2Markdown",
+   "tip": "6d0666e69d12c67bdc145120275b96e533fdfb6e"
+  },
+  {
+   "repo": "benbalter/jekyll-remote-theme",
+   "tip": "0a18a10a6a2e6fff77e26618b9b8183ba18ea39f"
+  },
+  {
+   "repo": "benwbrum/fromthepage",
+   "tip": "9269ad9d1b74875c9b08e07dd74fc5dbf1322c28"
+  },
+  {
+   "repo": "beowolx/rensa",
+   "tip": "b16e06e65b3402986cdbe4e4c18976c3f30f9590"
+  },
+  {
+   "repo": "berachain/beacon-kit",
+   "tip": "87cc3d3adb42c691eb0a0a46bac652c16edb7539"
+  },
+  {
+   "repo": "bespokelabsai/curator",
+   "tip": "461b4170b96690873a152e829185a920a941b960"
+  },
+  {
+   "repo": "bitcoin/bitcoin",
+   "tip": "f839ee1afb0ff02c58422dae6d2678e5e654b605"
+  },
+  {
+   "repo": "bmad-code-org/BMAD-METHOD",
+   "tip": "f033e70a2c0a3751aaab17dfdd29839ac621f541"
+  },
+  {
+   "repo": "box/boxcli",
+   "tip": "97e4351cb5e4a2077f37090bb5aca0ae2fe7020f"
+  },
+  {
+   "repo": "briangu/klongpy",
+   "tip": "3b298541ba510cf45bd9702b8a10e4c96a4ddbc6"
+  },
+  {
+   "repo": "bruin-data/bruin",
+   "tip": "1cb27e7f302c3e83d15d2b22a97c523b07b8dd33"
+  },
+  {
+   "repo": "busser/tfautomv",
+   "tip": "b1a070dd2f4c0db63f894a77461a775ec508d5e1"
+  },
+  {
+   "repo": "bytebot-ai/bytebot",
+   "tip": "3d37894ce07ef8d8b40adc7fd309ad96c2a71313"
+  },
+  {
+   "repo": "c3rb3ru5d3d53c/binlex",
+   "tip": "f02f270c378b652dcfaca8a88f7d65bd4a95347b"
+  },
+  {
+   "repo": "caesar0301/http-sniffer",
+   "tip": "46a4322e951ab873e2e66c90559c7e88defdf81b"
+  },
+  {
+   "repo": "caesar0301/pkt2flow",
+   "tip": "e4cd57b2da1b9b6a30f957d44e3809c336083ba1"
+  },
+  {
+   "repo": "calganaygun/MDcat",
+   "tip": "492ce087bcb746488ed4d40e539a36462143bdbe"
+  },
+  {
+   "repo": "callstack/react-native-testing-library",
+   "tip": "b87a246e6853b3a824d78e6fa0aba85ea872011a"
+  },
+  {
+   "repo": "camUrban/PteraSoftware",
+   "tip": "3be75c2feb526535af0d9733c8e1809662f827fb"
+  },
+  {
+   "repo": "camunda/camunda",
+   "tip": "35877347cdd20b7c3464bcf07e5e8e77aa8070fd"
+  },
+  {
+   "repo": "cartography-cncf/cartography",
+   "tip": "7764be58ab981a1898b98040295acfbce2471870"
+  },
+  {
+   "repo": "catatsuy/private-isu",
+   "tip": "77bc87d561e515e324ec63a4c78380980e2f4ab7"
+  },
+  {
+   "repo": "cberner/raptorq",
+   "tip": "83cf19434fdd15888f33872704d3aff873839c92"
+  },
+  {
+   "repo": "celestiaorg/celestia-app",
+   "tip": "359b973ca506fe60ec03ad7d485fd6818e729e2e"
+  },
+  {
+   "repo": "celestiaorg/celestia-core",
+   "tip": "a2523d4724a7b9c3153d270718260da0176bf03e"
+  },
+  {
+   "repo": "chebpy/chebpy",
+   "tip": "215b8175dfdd76e9a31ba3488f3cfe2756140645"
+  },
+  {
+   "repo": "christianhelle/apiclientcodegen",
+   "tip": "fefbc8c801b900959b68e2d244051e7ae2c7286c"
+  },
+  {
+   "repo": "christianhelle/httpgenerator",
+   "tip": "dca8b9b4628b640ba187fccd295a799a684053a3"
+  },
+  {
+   "repo": "cloudposse/atmos",
+   "tip": "411f892c8913761d9e99abf923d8284e08f972d1"
+  },
+  {
+   "repo": "cloudwalk/stratus",
+   "tip": "46939446ce8ef8451f9940aa1ca725aa1bd41121"
+  },
+  {
+   "repo": "cmer/socialization",
+   "tip": "1e4889792a973564b414d2f0b644ddbb0c0f4584"
+  },
+  {
+   "repo": "coderamp-labs/gitingest",
+   "tip": "4e259a02fe72115bee538271622f1234a81c8e1a"
+  },
+  {
+   "repo": "codezonediitj/pydatastructs",
+   "tip": "dcc01755ae594c92497b441fb81f7a9856a96f71"
+  },
+  {
+   "repo": "colinhacks/zod",
+   "tip": "10dda3a3a4bc76ed0bf83e994de194587e489ef8"
+  },
+  {
+   "repo": "collinbarrett/FilterLists",
+   "tip": "056f77ec1a7544156500b8d0e6505d1b5aa9dce5"
+  },
+  {
+   "repo": "colorstackorg/oyster",
+   "tip": "f7fc638a4be6fc83b2adf951580e60c21f2b4600"
+  },
+  {
+   "repo": "commaai/opendbc",
+   "tip": "4ad6045b2cd19c0c9adc0c2cd79bf96c8bda6e5d"
+  },
+  {
+   "repo": "commaai/panda",
+   "tip": "43ab39f7fb5dcad273e9f38cf215e3491f75b10d"
+  },
+  {
+   "repo": "commonwarexyz/monorepo",
+   "tip": "bd0f7eb33af26c4aa9831d98d53621ba3cb4b14e"
+  },
+  {
+   "repo": "confident-ai/deepteam",
+   "tip": "2fd3445c5bb2070ce09834f66f1622eb914f6f46"
+  },
+  {
+   "repo": "cordx56/rustowl",
+   "tip": "01e455edba772f801d345858de1994b7313a1d32"
+  },
+  {
+   "repo": "crewAIInc/crewAI-tools",
+   "tip": "62f4d7efd1ea61ec11e5c0922eee01b444b6c6d2"
+  },
+  {
+   "repo": "cwuom/ono",
+   "tip": "5bb97d16bfaf3e76e8ce45dce4c0218d227a1ff6"
+  },
+  {
+   "repo": "cybersemics/em",
+   "tip": "16b46873f14ede6fe2c42e6dba684482aa2c3b95"
+  },
+  {
+   "repo": "czlonkowski/n8n-mcp",
+   "tip": "2fef056337668dd1861c1431e9f0b4bcf78dc7f9"
+  },
+  {
+   "repo": "dai-shi/excalidraw-claymate",
+   "tip": "878dceb621e4b2d0f4074ff176468c5f897b4a42"
+  },
+  {
+   "repo": "dailydotdev/apps",
+   "tip": "073d89606e8e81127d5f3a03d3b1369dcd08dab9"
+  },
+  {
+   "repo": "daniel-sc/ng-extract-i18n-merge",
+   "tip": "bf2177dd16f644b9590848058e8e2bc8c64add95"
+  },
+  {
+   "repo": "dartsim/dart",
+   "tip": "de0753f4b92d3b479da5ff5a50a6d239f15543a1"
+  },
+  {
+   "repo": "datahub-project/datahub",
+   "tip": "4131ac293c872ee264bef696161b888b66ceb712"
+  },
+  {
+   "repo": "davideicardi/live-plugin-manager",
+   "tip": "175ef9ab0ab64ece3644b0be874cd19c22f7ac58"
+  },
+  {
+   "repo": "davidmigloz/langchain_dart",
+   "tip": "9cc8d8f4ca8af24f90b75b9c294890486e215757"
+  },
+  {
+   "repo": "deadlydog/PowerShell.tiPS",
+   "tip": "adefd95392036ce2b0f78422d97f3c1e108d3a6a"
+  },
+  {
+   "repo": "debloper/piosk",
+   "tip": "e0bec4b54354a5aa646c6f9a56c7c69720ec50cb"
+  },
+  {
+   "repo": "deepflowio/deepflow",
+   "tip": "9a1219fa5cf1471ba2ec8742019661567d98002e"
+  },
+  {
+   "repo": "demergent-labs/azle",
+   "tip": "723e82d4790d5817ddfd69c037107c8ba2081e35"
+  },
+  {
+   "repo": "devitocodes/devito",
+   "tip": "760a4767fd8cf7580cb87b72e1353f321d90ef9f"
+  },
+  {
+   "repo": "different-ai/note-companion",
+   "tip": "96b06c1c9b4bcd4ae4f4860f04f5ca6e75ebf724"
+  },
+  {
+   "repo": "different-ai/zero-finance",
+   "tip": "edf977fb0a315728ca1bf247f70249d838b01519"
+  },
+  {
+   "repo": "digitaldemocracy2030/kouchou-ai",
+   "tip": "751e2c88be26c7a73f2d3e059a53ab4e2497493a"
+  },
+  {
+   "repo": "dnplus/streamlit-oauth",
+   "tip": "83a8129ed801bb453c448b6b001fcc259d7b125f"
+  },
+  {
+   "repo": "docker/hello-genai",
+   "tip": "0f4aaed5a5454e37ef9b801aba7f1b6238453d5c"
+  },
+  {
+   "repo": "documentdb/documentdb",
+   "tip": "d9301892d7fa47b6f5bb923c93b1f6915c3b9bad"
+  },
+  {
+   "repo": "doggy8088/github-copilot-configs",
+   "tip": "d28557fd33fe39a9b9d7c12653d79be774cd8eef"
+  },
+  {
+   "repo": "dotCMS/core",
+   "tip": "85f6976346a541fa195c6f0b63280db9276ff3b0"
+  },
+  {
+   "repo": "dotnet/android",
+   "tip": "3c669fd0ba8db6632479f56dcf624efe322d7e8b"
+  },
+  {
+   "repo": "dotnet/android-libraries",
+   "tip": "80749fe90c8309999ad6ce46fbbb56f3a59b4600"
+  },
+  {
+   "repo": "dotnet/csharp-notebooks",
+   "tip": "7203f0e9cf6d36325f51a72190acd1386cc914db"
+  },
+  {
+   "repo": "dotnet/dev-proxy",
+   "tip": "20c42c34d34f328e575a06817dd6ab886bcfbde2"
+  },
+  {
+   "repo": "dotnet/docfx",
+   "tip": "f94269dead41ce270087632d867c21f22697c4a6"
+  },
+  {
+   "repo": "dotnet/docs-aspire",
+   "tip": "1839b5aeecb4221c47b0a9678e5f95d79e2e55a5"
+  },
+  {
+   "repo": "dotnet/fsharp",
+   "tip": "bd4e77f0f51e96f701357a7a7fc75d6c72aee693"
+  },
+  {
+   "repo": "dotnet/java-interop",
+   "tip": "92b5d471f1e0f6164fc332b1f661b472f5cf3aad"
+  },
+  {
+   "repo": "dotnet/msbuild",
+   "tip": "d8a38703ae6829dcb9dc500e89908c9927865492"
+  },
+  {
+   "repo": "dotnet/xharness",
+   "tip": "4718c92993b49c51af7600769662354c6da1caf7"
+  },
+  {
+   "repo": "dropseed/plain",
+   "tip": "e7e5e7b5d848ca447a20406fc03e1a9755831d43"
+  },
+  {
+   "repo": "dsfsi/textaugment",
+   "tip": "8553ea0a4dd5701df7f4c5f17c9b315ff099f11d"
+  },
+  {
+   "repo": "duneanalytics/spellbook",
+   "tip": "15a830de4f3ba89e5c740399df4ba008339da5e3"
+  },
+  {
+   "repo": "dvcrn/mcp-server-siri-shortcuts",
+   "tip": "4b9ec553c70afff8ba5459ab9aac80a75bf0b46a"
+  },
+  {
+   "repo": "dynamoose/dynamoose",
+   "tip": "8d797d842baeebd86849402c8d7fea841a4acd35"
+  },
+  {
+   "repo": "effekseer/Effekseer",
+   "tip": "82b37081a302b9f9eff0bf14dc6c845fca8c3c54"
+  },
+  {
+   "repo": "eigenwallet/core",
+   "tip": "0e17c7f7cd8f0657af176c8852aa4c9949586051"
+  },
+  {
+   "repo": "elastic/terraform-provider-elasticstack",
+   "tip": "6b71689eb23ddf9d0feac7d900b867502d58e8f4"
+  },
+  {
+   "repo": "elementary-data/dbt-data-reliability",
+   "tip": "9a7e2b559693e662c30672b2d449b4025c254cd9"
+  },
+  {
+   "repo": "elizaOS/eliza",
+   "tip": "59181070ab75c8b9e781910f4fef5365dfc70149"
+  },
+  {
+   "repo": "elsa-workflows/elsa-core",
+   "tip": "d339a9c4f5fdbafa4387355ec0ea6bc7ec9fd6ef"
+  },
+  {
+   "repo": "ensdomains/ens-app-v3",
+   "tip": "89f8681d524e9f40511dadd016ee95a6abff346d"
+  },
+  {
+   "repo": "epicweb-dev/epicshop",
+   "tip": "a4f76d857eae17150ee94bff62b0beb078fff4e8"
+  },
+  {
+   "repo": "eplatonoff/pilorama",
+   "tip": "b8e48131ec660bdd524e3e6c2806454d99537844"
+  },
+  {
+   "repo": "espresso3389/pdfrx",
+   "tip": "8df35f9cd41e91c8e5e782542f3f5dbb7503883e"
+  },
+  {
+   "repo": "estruyf/vscode-demo-time",
+   "tip": "132d8664befd1ae463f974b1a5c58375707f0d22"
+  },
+  {
+   "repo": "evandempsey/fp-growth",
+   "tip": "f498ce4107c95e946d83b0a593c344d46d850220"
+  },
+  {
+   "repo": "evstack/ev-node",
+   "tip": "3f67d1bd9ac813c74168f3c810763e07c218c778"
+  },
+  {
+   "repo": "facebookresearch/fastMRI",
+   "tip": "91f2df4711adbb6d643df1810f234e4abcf5881b"
+  },
+  {
+   "repo": "facioquo/stock-indicators-python",
+   "tip": "a9aacf8e40629d1910040a071bd96c7a30db7c90"
+  },
+  {
+   "repo": "fatedier/fft",
+   "tip": "b3cf96145d0069fdd983dbc6c8140f674dd7fa3d"
+  },
+  {
+   "repo": "filecoin-project/ref-fvm",
+   "tip": "b5491ebd4947f0ec2caa24d2e503410045f450e1"
+  },
+  {
+   "repo": "forntoh/LcdMenu",
+   "tip": "86243aad4f072a218b80db0fa4b7464fd1fc34db"
+  },
+  {
+   "repo": "foxminchan/BookWorm",
+   "tip": "96e13c8a4e20c75d50ba8e5b0d17689c1c59fa8f"
+  },
+  {
+   "repo": "fredrikburmester/streamystats",
+   "tip": "1a154af6e59b5f6a5407f1e18704cc6bd5ac15bf"
+  },
+  {
+   "repo": "freenet/freenet-core",
+   "tip": "7fa2c6605b9933f329c7b3a8d20bca5ae2e5f753"
+  },
+  {
+   "repo": "futo-org/android-keyboard",
+   "tip": "a0b84ef9a349273040e36fbe5fec5c45bc62dd28"
+  },
+  {
+   "repo": "gacela-project/gacela",
+   "tip": "c148b7f1fd44d84d8d71a5b84c7a882e7a86c75a"
+  },
+  {
+   "repo": "geekan/HowToLiveLonger",
+   "tip": "81c562a3c302ad54b75df73657373cc102384f95"
+  },
+  {
+   "repo": "get-convex/convex-helpers",
+   "tip": "adfa6d3275d1a2d4091cb2c37b4a4fa222f9c894"
+  },
+  {
+   "repo": "getsentry/sentry-cli",
+   "tip": "c880db5fc6b69378b62310b7fdbd74637bcd5fb4"
+  },
+  {
+   "repo": "getsentry/sentry-cocoa",
+   "tip": "0810c3f0a59b93d501e24aca8c400ff37f906ec0"
+  },
+  {
+   "repo": "getsentry/sentry-dart",
+   "tip": "91c111c3b1a83afb6e0cc253c0c5bf89a9d772e0"
+  },
+  {
+   "repo": "getsentry/sentry-javascript",
+   "tip": "5db16e527c8b63e3f1fa6ce19ac6d4c293848c53"
+  },
+  {
+   "repo": "getsentry/sentry-unity",
+   "tip": "133307ac0e84bbca18db96baea79798724ae89f6"
+  },
+  {
+   "repo": "getsentry/sentry-unreal",
+   "tip": "213febfb6aeee968e0de51478103fa0cc2238e23"
+  },
+  {
+   "repo": "gindemit/unity-rlottie",
+   "tip": "2921ac263c3538487708417d59381ea0d6d21a91"
+  },
+  {
+   "repo": "github/docs",
+   "tip": "1d0d9a86ebdba79d8a290f81a086727dc2d815f3"
+  },
+  {
+   "repo": "github/gh-gei",
+   "tip": "b9b3fa175b9bf99b429f3a628b65fd6846459aee"
+  },
+  {
+   "repo": "githubnext/awesome-continuous-ai",
+   "tip": "0dbfdb04d8b3b177c33a9fbfa3f9853343663941"
+  },
+  {
+   "repo": "gluesql/glues",
+   "tip": "0082583971532e8bb8052d631fb42e05acf787b6"
+  },
+  {
+   "repo": "go-vikunja/app",
+   "tip": "60ea06e9ad47590ccedbcbbd827d7fbfca76fb97"
+  },
+  {
+   "repo": "goaop/framework",
+   "tip": "38b9d96ffce1b6c09ab2aaae39aefb5d0cb34aa6"
+  },
+  {
+   "repo": "gofiber/fiber",
+   "tip": "4e1fce79a6b3cb625f1d6ec9da365b4e15b12e35"
+  },
+  {
+   "repo": "gofiber/storage",
+   "tip": "51ffe3968c84cc727ea9da30cae8bff0d5b04540"
+  },
+  {
+   "repo": "golang-design/clipboard",
+   "tip": "725156d211e3d02eb70c41f0ed09f17ef89ac180"
+  },
+  {
+   "repo": "goniszewski/grimoire",
+   "tip": "8c704c1829db1e4e502708a00825514c0a2d902d"
+  },
+  {
+   "repo": "google-gemini-php/client",
+   "tip": "d61ebe8e8f7acc2aa66ce2e8a57c23bf32e1e340"
+  },
+  {
+   "repo": "google-gemini/gemini-cli",
+   "tip": "d5b3e3accb26000d273abf16e0f1dd83aa5428a9"
+  },
+  {
+   "repo": "gridaco/grida",
+   "tip": "c01596aef61b9a335b3ad185843a698377504601"
+  },
+  {
+   "repo": "gtg922r/obsidian-numerals",
+   "tip": "1bbf1e2e9e6e941ded0cb624ea45d0bd4381e30a"
+  },
+  {
+   "repo": "hackmdio/codimd",
+   "tip": "b1188a5648a23d970b9ad58612376e6602431f6f"
+  },
+  {
+   "repo": "helme/ecg_ptbxl_benchmarking",
+   "tip": "cdbf4e66d7e57d9b6a2657b6024716212b8d0afa"
+  },
+  {
+   "repo": "huggingface/tokenizers",
+   "tip": "fb11e5128f670c4e6e805ed8cf452a467e6def40"
+  },
+  {
+   "repo": "hyperlight-dev/hyperlight",
+   "tip": "5e5a5c01339875e35390ee6ac85848daf638a98c"
+  },
+  {
+   "repo": "ika-rwth-aachen/mqtt_client",
+   "tip": "517fa53a055e31ff95355e114798f6d2eb4f6d2a"
+  },
+  {
+   "repo": "imbhargav5/rooks",
+   "tip": "b14419d1507882a683a273901d987033e6d9b4b3"
+  },
+  {
+   "repo": "invokable/laravel-google-sheets",
+   "tip": "77cf62bae950469773bb192e35221af9d8e9fea9"
+  },
+  {
+   "repo": "iotubeproject/ioTube",
+   "tip": "2c282c42b3778c230f3a0fb0f7a7e2ca196cd86d"
+  },
+  {
+   "repo": "iovisor/ubpf",
+   "tip": "e374cd265b66bd08e41876460eb4ee3aaa0e3a68"
+  },
+  {
+   "repo": "isucon/isucon9-qualify",
+   "tip": "16d7dc1a8f9f515381f5730bccfcfcc458fc79e7"
+  },
+  {
+   "repo": "iterative/datachain",
+   "tip": "4aa5bf706e79a943da350d665e299ed89485f505"
+  },
+  {
+   "repo": "jabrena/cursor-rules-java",
+   "tip": "9a3dc2923f01af913fd0bb01b96879ba8f5bc4f6"
+  },
+  {
+   "repo": "james-gould/azure-keyvault-emulator",
+   "tip": "f505c3c79b16e4b63b05a37979b2fd2b9dbbfebf"
+  },
+  {
+   "repo": "jamesrochabrun/SwiftAnthropic",
+   "tip": "b7d030cd7453f314c780f5492385f73d704cbd5d"
+  },
+  {
+   "repo": "janbjorge/pgqueuer",
+   "tip": "fb3c54564119841b8a8f8575ad68734e0cff2419"
+  },
+  {
+   "repo": "jcputney/scorm-again",
+   "tip": "eac301feae95a85bdcb12a52911e9abac110d106"
+  },
+  {
+   "repo": "jdx/mise",
+   "tip": "c50af8d9039fea12648c0725aaaaab16ba5d5a66"
+  },
+  {
+   "repo": "jina-ai/node-DeepResearch",
+   "tip": "fd323b521a51264d497bec333bfb997da1bf3210"
+  },
+  {
+   "repo": "joamag/boytacean",
+   "tip": "2eb66337ad1732087c26076ec5bd7d08fe9f6e93"
+  },
+  {
+   "repo": "joewandy/hlda",
+   "tip": "886c590c5e6f94eb59ba6b0b96fcbb56f45e18df"
+  },
+  {
+   "repo": "johnpaulett/python-hl7",
+   "tip": "e41436ac6bee0d14a90b0a7035f0160819c5ae2e"
+  },
+  {
+   "repo": "jonasbark/swiftcontrol",
+   "tip": "579cd3b315c512343d498a2faf7970b91a8a9b0a"
+  },
+  {
+   "repo": "joshuafuller/ATAK-Maps",
+   "tip": "218fad8c748eedc5ceb6082747f39bab7ee576dc"
+  },
+  {
+   "repo": "joshukraine/dotfiles",
+   "tip": "538542f322e5fc1eb9e8936046c42e8a5e80bc06"
+  },
+  {
+   "repo": "justtrackio/gosoline",
+   "tip": "d2af67343ab140e30bec6683b937ffca8c2c80f9"
+  },
+  {
+   "repo": "kanisterio/kanister",
+   "tip": "ab800e2e9c09cf80bab751ea14ec0fa46fa420c0"
+  },
+  {
+   "repo": "katspaugh/wavesurfer.js",
+   "tip": "876e75dfbeebbacf2f696963601d29ba00ba24d4"
+  },
+  {
+   "repo": "kavishdevar/librepods",
+   "tip": "53679cc90222e94ade84e66542d97ace2540e626"
+  },
+  {
+   "repo": "keitaoouchi/MarkdownView",
+   "tip": "34676408db6b0a66d1d01de458bc9e86101c4369"
+  },
+  {
+   "repo": "kentcdodds/kentcdodds.com",
+   "tip": "e439e31695088203e8eda726c1e63325d5e8cb42"
+  },
+  {
+   "repo": "kern/filepizza",
+   "tip": "3258673e790145ba86637114a35388165a651ff3"
+  },
+  {
+   "repo": "kingstinct/react-native-healthkit",
+   "tip": "6473f892c48dece1adbca978513b3e75d5041e48"
+  },
+  {
+   "repo": "kiwicom/orbit",
+   "tip": "126c4060f5897f88dec3c7c96f54675f6bf1af4d"
+  },
+  {
+   "repo": "kube-hetzner/terraform-hcloud-kube-hetzner",
+   "tip": "17e4746de8c49ffd9b6825643345d7231d48c9c4"
+  },
+  {
+   "repo": "kyryl-opens-ml/no-ocr",
+   "tip": "a15c4217927f7afd459761a6839395e95bf8d1eb"
+  },
+  {
+   "repo": "laiso/askrepo",
+   "tip": "ef42d4e73edd21c9a2e47a9a0b61bf5aab6cdbd2"
+  },
+  {
+   "repo": "laiso/site2pdf",
+   "tip": "73cfe98d630cb72940c525bd1fe21b54a6a28f96"
+  },
+  {
+   "repo": "langchain-ai/langchain",
+   "tip": "7e89d6c79c4919acf4643e56494ea02a11c68bd4"
+  },
+  {
+   "repo": "laude-institute/terminal-bench",
+   "tip": "d28711d0da2675d0bb1d56de45ae5df6082438a3"
+  },
+  {
+   "repo": "launchdarkly/ld-relay",
+   "tip": "bbdfd9c72883e36776fb73fe63272df96341e266"
+  },
+  {
+   "repo": "lemonade-sdk/lemonade",
+   "tip": "f86359b9ef3a62b3b3db7b64bf0bcab81497a340"
+  },
+  {
+   "repo": "leoafarias/fvm",
+   "tip": "19d3dde10bcac026a2194859d150e729af693e90"
+  },
+  {
+   "repo": "lgallard/terraform-aws-backup",
+   "tip": "e2b6e78814a946c0e45e7a05e468ec541b4b86fd"
+  },
+  {
+   "repo": "licensee/licensee",
+   "tip": "06f3704af348c06359ff9151f9f64efd4d2b8624"
+  },
+  {
+   "repo": "lidofinance/diffyscan",
+   "tip": "90d4327229a2709914979daea9e9ad51dd52e3f7"
+  },
+  {
+   "repo": "lingodotdev/lingo.dev",
+   "tip": "591b5bb6971129a3a2db029c6f5b9ddb3d6795c0"
+  },
+  {
+   "repo": "linkerd/linkerd2",
+   "tip": "2245d16d3b2ceb81fe0ed900770118c6860292c0"
+  },
+  {
+   "repo": "linux-do/cdk",
+   "tip": "6d947d26a76b94d9c63531ac932c2d0a1e2c06ff"
+  },
+  {
+   "repo": "loadkpi/crawler_detect",
+   "tip": "67a3e3fe573635dfba84a56166d9cdedfb4c8be3"
+  },
+  {
+   "repo": "logancyang/obsidian-copilot",
+   "tip": "37bb99d393ed56765f1b6543c91079fb9b575978"
+  },
+  {
+   "repo": "longbridge/gpui-component",
+   "tip": "2f2bab9a6cea994531527bd382bfdafc463b0d0b"
+  },
+  {
+   "repo": "lordmauve/pgzero",
+   "tip": "2e32d727282e0b82f7ef0053da6c0649517d74d7"
+  },
+  {
+   "repo": "ltwlf/json-diff-ts",
+   "tip": "abf5dac5ff62ca003f144625c88b5d1d30f31366"
+  },
+  {
+   "repo": "macalbert/envilder",
+   "tip": "550720ae69cdb39073c30ab00a64a805f2fdbed6"
+  },
+  {
+   "repo": "mackysoft/Navigathena",
+   "tip": "c6b55a7c33149aec783a0764432ca28c9849428d"
+  },
+  {
+   "repo": "magiclabs/magic-js",
+   "tip": "0dcf5b5471f98af505a51617ef4e00250f1503f1"
+  },
+  {
+   "repo": "manekinekko/angular-web-bluetooth",
+   "tip": "f918a6338e51a06002f0e37ccc04aec190d4ea7e"
+  },
+  {
+   "repo": "mangiucugna/json_repair",
+   "tip": "0a7317eab4f037596b41a4bea96cbb195ce425e8"
+  },
+  {
+   "repo": "marimo-team/marimo",
+   "tip": "155ed0c411a9b101aae25cc41e3e4f7b1ebfe177"
+  },
+  {
+   "repo": "marin-community/haliax",
+   "tip": "a5767bcd82479d11a9614f5e3b878c3e12f8cec0"
+  },
+  {
+   "repo": "marin-community/marin",
+   "tip": "fbdbe3e9786e2dc0655782077d5f9a41c1e99a8f"
+  },
+  {
+   "repo": "mariotoffia/FluentDocker",
+   "tip": "4aef31aecfa9a56f5e356179e7751ff578f31b6c"
+  },
+  {
+   "repo": "mastra-ai/mastra",
+   "tip": "33a46bd43a5945b052e00341d1eecdcd78327d6e"
+  },
+  {
+   "repo": "matthias-k/pysaliency",
+   "tip": "472822656a660b7f64934caddd47a6920dadacd3"
+  },
+  {
+   "repo": "maxDcb/C2TeamServer",
+   "tip": "7f843a6368f5fc7ad788b97e53964ed30529d2c1"
+  },
+  {
+   "repo": "mcpgod/cli",
+   "tip": "7c31e5231f9706a43f28f0c3aa3c646f0c7b63b2"
+  },
+  {
+   "repo": "mediar-ai/terminator",
+   "tip": "73a381c0c1c33eda55f2c0ecb1d918bf5ec7561a"
+  },
+  {
+   "repo": "microsoft/AL-Go",
+   "tip": "f4387d14d67b25dee093a9bba6f09aea741c132e"
+  },
+  {
+   "repo": "microsoft/ApplicationInsights-JS",
+   "tip": "7dd3d86af6d770c828a1ab3a31f78b99c85070f5"
+  },
+  {
+   "repo": "microsoft/ApplicationInsights-Java",
+   "tip": "e9c80c8d5cfbc6365ee5859c8d221deaf44a9f40"
+  },
+  {
+   "repo": "microsoft/ApplicationInsights-node.js",
+   "tip": "5b850d1c34e47ac84a0c04a660d9b18c712c5cc4"
+  },
+  {
+   "repo": "microsoft/AzureTRE",
+   "tip": "04bce1aa7f72aa72b75651ece2d24df1919bca64"
+  },
+  {
+   "repo": "microsoft/GSL",
+   "tip": "a16852b79452bdfa217381c6a5eab0b2975e2076"
+  },
+  {
+   "repo": "microsoft/PSRule",
+   "tip": "4518001c205b07810bd2249cb2d67c8aff0b20de"
+  },
+  {
+   "repo": "microsoft/TypeScript",
+   "tip": "1ac2d5aed0bf19626a75f5424a80980573dead7d"
+  },
+  {
+   "repo": "microsoft/Web-Dev-For-Beginners",
+   "tip": "78085398be0dea7abaaf5eda914817f46f6ddbbc"
+  },
+  {
+   "repo": "microsoft/autogen",
+   "tip": "027ecf0a379bcc1d09956d46d12d44a3ad9cee14"
+  },
+  {
+   "repo": "microsoft/azure-devops-mcp",
+   "tip": "482d5e63f9f74914f8f6c18645b55e4247accccd"
+  },
+  {
+   "repo": "microsoft/azurelinux",
+   "tip": "259277239acbabe540343890efdb69cd46e7d90d"
+  },
+  {
+   "repo": "microsoft/debug-gym",
+   "tip": "a50a8f81fe8035e11947d4d179333d64e305b491"
+  },
+  {
+   "repo": "microsoft/ebpf-for-windows",
+   "tip": "3a8f0c97b5434a8b5ccfce00358dc5226fe6d01d"
+  },
+  {
+   "repo": "microsoft/etl2pcapng",
+   "tip": "b06ebcf73263002d81c4d84233d4010ae68b20b4"
+  },
+  {
+   "repo": "microsoft/fabric-cicd",
+   "tip": "be776a4d755dca8c549e52f57d47da09a827ea53"
+  },
+  {
+   "repo": "microsoft/finops-toolkit",
+   "tip": "8885e12d8d55c566a0485d0ea58199028cb769e4"
+  },
+  {
+   "repo": "microsoft/fluentui-blazor",
+   "tip": "37510ff7c16c705a8dd497f5c97881699f0d6761"
+  },
+  {
+   "repo": "microsoft/go-mssqldb",
+   "tip": "1f5229662c8006ab3f2ff8bee49d24faa95287b8"
+  },
+  {
+   "repo": "microsoft/graphitation",
+   "tip": "bbd15c4f010e02f4573482cbd1eafbdc0f54baec"
+  },
+  {
+   "repo": "microsoft/graphrag",
+   "tip": "82b87bf0434fc69f857663280e2c36a1c48e52fe"
+  },
+  {
+   "repo": "microsoft/license-checker-webpack-plugin",
+   "tip": "cdefc710375f3da72623fc110b1ed49b16dd7283"
+  },
+  {
+   "repo": "microsoft/msquic",
+   "tip": "7e6525d1806966ee39dd107b51bc06704c5d3d02"
+  },
+  {
+   "repo": "microsoft/mssql-python",
+   "tip": "f3e34e66bca6d6f45d7a2cbea070c40ebe4ba194"
+  },
+  {
+   "repo": "microsoft/openvmm",
+   "tip": "15c0c6cb43f42dcbe69b1c5c62b125bbef36e6d5"
+  },
+  {
+   "repo": "microsoft/promptpex",
+   "tip": "697b5e3f4d8ef96a80945cb01908852d346c3dae"
+  },
+  {
+   "repo": "microsoft/qdk",
+   "tip": "d2872906b236bb58ecff80652b5a34e871588251"
+  },
+  {
+   "repo": "microsoft/retina",
+   "tip": "1d9d8e0534229e5981e71253aa860f5a2a67149c"
+  },
+  {
+   "repo": "microsoft/sbom-tool",
+   "tip": "4d2b44739b4317ff2655b4076292ca2522d376bf"
+  },
+  {
+   "repo": "microsoft/vscode-mssql",
+   "tip": "f8c0ad9eebfd527fe306358fd4eb4ac5e5bacdea"
+  },
+  {
+   "repo": "microsoft/vstest",
+   "tip": "197a28244177d51219cb66cd54448ccfc609562e"
+  },
+  {
+   "repo": "microsoft/windows-rs",
+   "tip": "a38689a8b29520db84e3d398e4389d48f18e6346"
+  },
+  {
+   "repo": "microsoft/xdp-for-windows",
+   "tip": "8346be8e927bb35df82cab70cc4e5fa95740255a"
+  },
+  {
+   "repo": "mihneadb/node-directory-tree",
+   "tip": "d97859137e443c913cc89f607432e6ff05caae8e"
+  },
+  {
+   "repo": "mikepenz/AboutLibraries",
+   "tip": "6bb0166138b2f2673e5adce77ba643dc9a9ed006"
+  },
+  {
+   "repo": "milkshakesoftware/PreMailer.Net",
+   "tip": "57404d695596a2bb33c8e6842d70e1eb73d396a3"
+  },
+  {
+   "repo": "mlco2/codecarbon",
+   "tip": "e5e46abef9d4c41dc5cc87d87fc4332a9782a260"
+  },
+  {
+   "repo": "mnsami/composer-custom-directory-installer",
+   "tip": "23b7039ea7cf18b5846faae2b9f4d9c9445e0039"
+  },
+  {
+   "repo": "modelcontextprotocol/inspector",
+   "tip": "2e90a628e6296c62e4bef942afbb43d3faa4baf4"
+  },
+  {
+   "repo": "mosecorg/mosec",
+   "tip": "d5739b49588eff6923245945e2096b0e3571547b"
+  },
+  {
+   "repo": "mvdicarlo/postybirb",
+   "tip": "3699e7fbc60e0df6cd7e7420e6bbcc2314d1bd46"
+  },
+  {
+   "repo": "nandyalu/trailarr",
+   "tip": "c45184c2ef422b11e79087846b244a819d971f8b"
+  },
+  {
+   "repo": "navidrome/navidrome",
+   "tip": "9e3deb4330b346ab0e78aa4e48605d074a6bcee3"
+  },
+  {
+   "repo": "near/nearcore",
+   "tip": "6de070881e862d5f0bf5ef341b4762928edea8a0"
+  },
+  {
+   "repo": "neondatabase/autoscaling",
+   "tip": "a4bce09e4d6bd7932ea634a1ed79afe26a9cfd1f"
+  },
+  {
+   "repo": "neondatabase/mcp-server-neon",
+   "tip": "a7b29270aaa322307f8c73670716233e92121a0f"
+  },
+  {
+   "repo": "neondatabase/neon",
+   "tip": "fa504217c61bbcaf5c512d75830564541f917f8f"
+  },
+  {
+   "repo": "netbirdio/netbird",
+   "tip": "ee2344502eaa139636afd97483b414f1f8d58145"
+  },
+  {
+   "repo": "nextcloud/desktop",
+   "tip": "a51a9f2dd71e8af1ee2f11fbaab5503b341a9785"
+  },
+  {
+   "repo": "nicolaslopezj/simple-react-form",
+   "tip": "584860712b4d2f67d78a1b37f0f72a8bd04168fd"
+  },
+  {
+   "repo": "nihui/opencv-mobile",
+   "tip": "8d5bd6e7a6bf8362511e222ff25d91c69d8a845d"
+  },
+  {
+   "repo": "nnstreamer/nntrainer",
+   "tip": "2d1e4974ae84e1e6d37784416bdfb52b647919a6"
+  },
+  {
+   "repo": "nodejs/snap",
+   "tip": "45303ef6f666210760028efa20b7085aa0692dbe"
+  },
+  {
+   "repo": "nrwl/nx-console",
+   "tip": "10dc46373e546a3a044333873d4e3a60082316bf"
+  },
+  {
+   "repo": "numbagg/numbagg",
+   "tip": "1036c86993ff4dc32ac1fd192762a4e87d69cd0e"
+  },
+  {
+   "repo": "nvm-sh/nvm",
+   "tip": "a885b885fef16fac4bc544188fb25e9e37ae83e8"
+  },
+  {
+   "repo": "o1-labs/mina-rust",
+   "tip": "82480cd468f1963b73dc0b700161036411449e4c"
+  },
+  {
+   "repo": "oam-dev/cluster-gateway",
+   "tip": "c9b17d0918ed3b8cb3beaddfb9431de93e0e4f32"
+  },
+  {
+   "repo": "obi1kenobi/cargo-semver-checks",
+   "tip": "883f156fc7323c756726b080852dbcd9674bf834"
+  },
+  {
+   "repo": "obophenotype/uberon",
+   "tip": "7d36e9c3a4ea887a69152a6bc83ec92c50e5c9b4"
+  },
+  {
+   "repo": "odigos-io/odigos",
+   "tip": "416fa3d03203da0a130ecd1dd0c64dfb6768ae11"
+  },
+  {
+   "repo": "onnx/onnx",
+   "tip": "1b7ae64f88bafb30cef74f4e9174aa8f73ec97f8"
+  },
+  {
+   "repo": "onyx-dot-app/onyx",
+   "tip": "e8709da3874761c227eb4c12f4071107506677a2"
+  },
+  {
+   "repo": "op-rs/kona",
+   "tip": "2586fc56ea0b0f17a8b47c44196012e33a321ea7"
+  },
+  {
+   "repo": "open-lambda/open-lambda",
+   "tip": "5a1a912f0791a04394f4d6e565e6e4673e273d90"
+  },
+  {
+   "repo": "open-metadata/OpenMetadata",
+   "tip": "0c0aabb3582ff0d664fe6898e05fbc515bfca0ab"
+  },
+  {
+   "repo": "open-telemetry/opentelemetry-cpp",
+   "tip": "b4257f0a53d247afc1d01de0c843292edf69261d"
+  },
+  {
+   "repo": "open-telemetry/opentelemetry-rust",
+   "tip": "bc222dac2ab5001f448f18048ce6be93c27db25a"
+  },
+  {
+   "repo": "openai/openai-agents-js",
+   "tip": "612009de83fbe576ab2ad9e2890b7a84f7543747"
+  },
+  {
+   "repo": "openai/openai-agents-python",
+   "tip": "ad93f5420edfecb30c6d2bc3a1a22047918cba1a"
+  },
+  {
+   "repo": "openfga/openfga",
+   "tip": "ab557c5592670c899de35297e7aa067015f06502"
+  },
+  {
+   "repo": "openops-cloud/openops",
+   "tip": "daa77aad4c9fe8a23e977fe76656267555d36806"
+  },
+  {
+   "repo": "openvm-org/openvm",
+   "tip": "f08bf2836409f3c0a5f6b6cfe73eb177a8a3e8c8"
+  },
+  {
+   "repo": "openworm/sibernetic",
+   "tip": "2b3f1eb3770cb9e3142cf38391b40a1adf27c89d"
+  },
+  {
+   "repo": "optiscaler/OptiScaler",
+   "tip": "aa0119fc634ec089515b73ce9fb5973e3ccc5fd1"
+  },
+  {
+   "repo": "oraios/serena",
+   "tip": "9f19a79a045f3f2681ba7b58f88938b83a81ca8f"
+  },
+  {
+   "repo": "orangewise/s3-zip",
+   "tip": "c8c52f68dffae26d79da6ce6bb982d6ffd91a7f9"
+  },
+  {
+   "repo": "osori/korean-romanizer",
+   "tip": "19ab68f1eacad90ba8c8394b9c673d4b9b894e5e"
+  },
+  {
+   "repo": "owncast/owncast",
+   "tip": "21a6f5670ef4c0e13750e2987729ae57de7f7f8c"
+  },
+  {
+   "repo": "oysandvik94/curl.nvim",
+   "tip": "f3c258e57d56a6158733a9e3bb5eeb931f204d19"
+  },
+  {
+   "repo": "ozantunca/elb-log-analyzer",
+   "tip": "ff7c613a442300b017faf6086fa64692d798e033"
+  },
+  {
+   "repo": "pannous/wasp",
+   "tip": "c2c9f21fc10c652ee963f7606817c9cc09fff861"
+  },
+  {
+   "repo": "pardeike/Harmony",
+   "tip": "e7872dc17008bc0ca2b3de1f53fd4120dbd7a17c"
+  },
+  {
+   "repo": "pathintegral-institute/mcpm.sh",
+   "tip": "6a92e54c748766973add4b8c153fcc85738d2d89"
+  },
+  {
+   "repo": "pavelzbornik/whisperX-FastAPI",
+   "tip": "6bd9cd63da754976953b4ec31e91e1745860d188"
+  },
+  {
+   "repo": "pazz/alot",
+   "tip": "b71dd79d93920e1f8e92105fb8879e5254e4217d"
+  },
+  {
+   "repo": "pdfme/pdfme",
+   "tip": "9ea472e1bfa750ead4f4fbd7b771fc4f10f8db03"
+  },
+  {
+   "repo": "pelicanmapping/rocky",
+   "tip": "af74f681f10dd58430b6d2244555ceb5aba6ffaf"
+  },
+  {
+   "repo": "permitio/fastapi_websocket_pubsub",
+   "tip": "b7f593ccd535e66a0011a764b8b18415068a36aa"
+  },
+  {
+   "repo": "picatz/doh",
+   "tip": "fdc11aeb498ac82ad7f9393743b0e71cb1d95f9c"
+  },
+  {
+   "repo": "pixijs/pixijs",
+   "tip": "ecd3797cf9b57766b045f3eea8388db9677744f8"
+  },
+  {
+   "repo": "polkadot-cloud/polkadot-staking-dashboard",
+   "tip": "8c8039bc904da03fbdaefc5909d5380e6ef91eee"
+  },
+  {
+   "repo": "port-labs/ocean",
+   "tip": "ed6c31ee92879ce5069c376589642811dab38a45"
+  },
+  {
+   "repo": "praveenjuge/mynaui-icons",
+   "tip": "579977f9afb1991c24a32da73417a9cbcc4d5b22"
+  },
+  {
+   "repo": "prequel-dev/preq",
+   "tip": "4a790baf3317289bda72b69c3ae9236541524668"
+  },
+  {
+   "repo": "primer/view_components",
+   "tip": "f6179900575f776a5d43db722a4dddef2d129551"
+  },
+  {
+   "repo": "probelabs/probe",
+   "tip": "6425fb59f949f2dbce4bf442ef247a151017f760"
+  },
+  {
+   "repo": "psastras/sarif-rs",
+   "tip": "ef010c0366eb71612d47617410704a7165e4e7df"
+  },
+  {
+   "repo": "pu2clr/SI4735",
+   "tip": "123eccc730dc03c0ccc28526cbea6e305da7d2fc"
+  },
+  {
+   "repo": "public-ui/kolibri",
+   "tip": "e659945cf808f69fcef250fd591f47ef8aae60d1"
+  },
+  {
+   "repo": "python-cachier/cachier",
+   "tip": "e5fd990d646b05764977fe20f3e846c9e3d59076"
+  },
+  {
+   "repo": "python/python-docs-zh-tw",
+   "tip": "f996730950d07c68329da7a2644dd360ba23474a"
+  },
+  {
+   "repo": "pyvista/pyvista",
+   "tip": "a4fef7536c4feea323c98a2705ba0f37a06fc4e0"
+  },
+  {
+   "repo": "qaiu/netdisk-fast-download",
+   "tip": "0c678a4124bde71f8b599b9424bcc1cf8f2e9014"
+  },
+  {
+   "repo": "quarylabs/sqruff",
+   "tip": "ba5385ef921d39881be4c949f32921e483f588e1"
+  },
+  {
+   "repo": "radius-project/radius",
+   "tip": "1f828edba7adb5e10cb7478dfcce99977688e8fa"
+  },
+  {
+   "repo": "rainbow-me/rainbowkit",
+   "tip": "03360ee924cfa6af13ff1d623b356bf5a170348e"
+  },
+  {
+   "repo": "ray-project/kuberay",
+   "tip": "e76908b64fc372668ee6be4632415d460d7b5f8b"
+  },
+  {
+   "repo": "raycast/extensions",
+   "tip": "9cc313e84b4dbf43454cb8463c2584df3e142bb1"
+  },
+  {
+   "repo": "rcourtman/Pulse",
+   "tip": "dd93eeb6b4b04c0a8177012ef04ba8bd943feb97"
+  },
+  {
+   "repo": "receptron/graphai",
+   "tip": "89d8495fbb9bcef319e30077a5c3b568185ddef9"
+  },
+  {
+   "repo": "regenrek/deepwiki-mcp",
+   "tip": "d62d749629716a28905da5555922b6f93a654fbf"
+  },
+  {
+   "repo": "remotion-dev/remotion",
+   "tip": "574c6ddb9bf3e12e7f70fcd8d91350034345129e"
+  },
+  {
+   "repo": "reorx/jsoncv",
+   "tip": "4ca1de09fe59c7fd0a950752e5e9cc249147f6de"
+  },
+  {
+   "repo": "reown-com/appkit",
+   "tip": "99faa4bdc3c7b6fbc5bf8f35753d11ef7135418b"
+  },
+  {
+   "repo": "retrage/svc-hook",
+   "tip": "f2f5c8cf097d3a3b29779f5d66e3aae91e797852"
+  },
+  {
+   "repo": "risingwavelabs/risingwave",
+   "tip": "d3195d7ae307e472d2bf620f908b7e7c79d15577"
+  },
+  {
+   "repo": "robinp7720/Oblecto",
+   "tip": "66f0a2d53f4a820f54c1de60a137e575516e4951"
+  },
+  {
+   "repo": "roboflow/inference",
+   "tip": "2311f4b1750ce1607c974a5fc0c2e5845f5c9ede"
+  },
+  {
+   "repo": "roeniss/dhlottery-api",
+   "tip": "0d5b7566af42a1e31638650aeec44ddd232718a4"
+  },
+  {
+   "repo": "rohitg00/awesome-ai-apps",
+   "tip": "28d77aff824c793d9d743d411a507256d5c6963c"
+  },
+  {
+   "repo": "rqlite/rqlite",
+   "tip": "8dcc08613d3208e5180a759d3a8a2881b8d6a243"
+  },
+  {
+   "repo": "rsyslog/rsyslog-docker",
+   "tip": "af48ef66db9271a147495e2b4c4d63c5845eea33"
+  },
+  {
+   "repo": "rust-cross/cargo-zigbuild",
+   "tip": "fcc8f30d06b3409536d67388e37ff1627b70c7b0"
+  },
+  {
+   "repo": "salehhashemi1992/laravel-otp-manager",
+   "tip": "f457107f2444c1b213f0cd77a70639ccc053ac8c"
+  },
+  {
+   "repo": "sandrohanea/whisper.net",
+   "tip": "8e4c53ef4892bc40061f417a2484a9096fa5ce69"
+  },
+  {
+   "repo": "sashabaranov/go-openai",
+   "tip": "241543b4263b706a68dc0005264d7efd36ecc4a6"
+  },
+  {
+   "repo": "saturday06/VRM-Addon-for-Blender",
+   "tip": "2199421f91c60c3a493f87152cb8c5542749a791"
+  },
+  {
+   "repo": "sblom/RegExtract",
+   "tip": "1db802128e29809e98ed65d9a3e1f8a2b320ec16"
+  },
+  {
+   "repo": "schemahero/schemahero",
+   "tip": "8fca22cee1665d5c9c06a1fbfffdba2c9862aff7"
+  },
+  {
+   "repo": "sebdah/goldie",
+   "tip": "5baf619c5b8d5800b92622afb831c564bbbf5f2a"
+  },
+  {
+   "repo": "sequinstream/sequin",
+   "tip": "46ce4e1048437575ce3c40ebb3eb589a4b9e4f27"
+  },
+  {
+   "repo": "sgb-io/fta",
+   "tip": "ef329312abc9876ac1e77662ca6b7cda725bde06"
+  },
+  {
+   "repo": "shader-slang/slang",
+   "tip": "98bed99788c968ce46324965217af9ec88c92fc7"
+  },
+  {
+   "repo": "shiosyakeyakini-info/miria",
+   "tip": "33f21e0fc34a06ac587e2a0a0df7b47c89ecd786"
+  },
+  {
+   "repo": "shopware/shopware",
+   "tip": "eb8dcb3eebfb94dcefc1d0ef927ec50b393b212e"
+  },
+  {
+   "repo": "shugo/textbringer",
+   "tip": "82e9ce62e16185dc0ffc53ad0547c321bb5c1561"
+  },
+  {
+   "repo": "softmaple/softmaple",
+   "tip": "2cc9a0408814613eae3ec982310df3c4f08dbe1a"
+  },
+  {
+   "repo": "spcl/dace",
+   "tip": "92fc6c3242aa8875fd6588d3e0c59b3dd438ed09"
+  },
+  {
+   "repo": "specmatic/specmatic",
+   "tip": "ac480bf004f8f6bd9b9a3ca03401fc9a8d866461"
+  },
+  {
+   "repo": "sqlrooms/sqlrooms",
+   "tip": "9d2a2936ed124aed6035d1fc34c7d1f958384429"
+  },
+  {
+   "repo": "sshaw/itunes_store_transporter",
+   "tip": "a5edbef1a2ef31b95493c5c5a92c805cdfbfb885"
+  },
+  {
+   "repo": "sst/opencode",
+   "tip": "fe3f3a41f79ad292cc3c7c629567385a20ec5130"
+  },
+  {
+   "repo": "stack-auth/stack-auth",
+   "tip": "c4fe55907838fd20884341229611ec9a74d4fa2e"
+  },
+  {
+   "repo": "stefankoegl/python-json-pointer",
+   "tip": "5998f951dcc5ace60f67f35afe6778c445401a07"
+  },
+  {
+   "repo": "steipete/Peekaboo",
+   "tip": "94c00517565aa9a9fffb113cc67651a266630b9b"
+  },
+  {
+   "repo": "stevehansen/csv",
+   "tip": "fd0944f1da04bc5e44c925921bb156a9608a97c9"
+  },
+  {
+   "repo": "steveklabnik/jujutsu-tutorial",
+   "tip": "8c4b3784d174c652dc30efee75b155f03f25506c"
+  },
+  {
+   "repo": "sugyan/claude-code-webui",
+   "tip": "9109263873cfc2a6eb0a160396fdfd60c2d6a37f"
+  },
+  {
+   "repo": "sunbeam-labs/sunbeam",
+   "tip": "96ad68bbfc7d4a1e128f0035f9fdc0fe662faf66"
+  },
+  {
+   "repo": "superagent-ai/vibekit",
+   "tip": "c670afd2e332037cd591209b7df1ff48ab7162ee"
+  },
+  {
+   "repo": "surrealdb/surrealdb",
+   "tip": "18971ffba781a796c0ad3897bb4b82432c241e4c"
+  },
+  {
+   "repo": "svilupp/PromptingTools.jl",
+   "tip": "86fbfd504f914821ffae9b91261464261ca12901"
+  },
+  {
+   "repo": "sysadminsmedia/homebox",
+   "tip": "a962eb3b464b42ad19bc39751fbcc9bc00d74ac9"
+  },
+  {
+   "repo": "tact-lang/tact",
+   "tip": "e3d660568eca259b6ae653717e7414e5eac0830e"
+  },
+  {
+   "repo": "taiga-family/taiga-ui",
+   "tip": "5ab31f91b71e884d9303cdce115ca91cd57869d0"
+  },
+  {
+   "repo": "team-mirai/policy",
+   "tip": "a5f218af3ff58bcf20a130a5ece2c8346197acd7"
+  },
+  {
+   "repo": "tegnike/aituber-kit",
+   "tip": "c7ea2b65f99ac68bf0621c626b9dedf9c30e2c32"
+  },
+  {
+   "repo": "temporalio/temporal",
+   "tip": "543367eec690da3c23e536cf5dfe76928af11b2c"
+  },
+  {
+   "repo": "textlint/textlint",
+   "tip": "43bc913314cc4e5f6e8e09c381f16bd8a73e62a8"
+  },
+  {
+   "repo": "theepicsaxguy/homelab",
+   "tip": "17fca69fab89ac2e5a9cd98a3815598151c6adf2"
+  },
+  {
+   "repo": "theosanderson/taxonium",
+   "tip": "ae4bceba28723d0b122330a7a8e1491601a97e2f"
+  },
+  {
+   "repo": "thiennn/myshop",
+   "tip": "20bbc25683ffcca4952943433fd92fc0af332d4a"
+  },
+  {
+   "repo": "thirdweb-dev/js",
+   "tip": "0dc2b9bb1731e57f52a75808047da5b718c169cf"
+  },
+  {
+   "repo": "thorek1/MacroModelling.jl",
+   "tip": "6d9295e2c3a67f4869c435c6d9767df674438c74"
+  },
+  {
+   "repo": "tier4/scenario_simulator_v2",
+   "tip": "3370c817efc5458fbe69cc3c02a9bc8956cb8a81"
+  },
+  {
+   "repo": "timakin/bodyclose",
+   "tip": "857993a2939c1245454bd304459ac3c7e61a98ad"
+  },
+  {
+   "repo": "timburgan/timburgan",
+   "tip": "0e93ef01984285f6f00df5fb53cf08dc4a8bebe9"
+  },
+  {
+   "repo": "timmo001/system-bridge",
+   "tip": "406a2ab1688545ce1eead1fa0a3f9b4cc91614a5"
+  },
+  {
+   "repo": "tinygrad/tinygrad",
+   "tip": "6c4fbd9fb3370c20e32fe83d44725724e86c9abe"
+  },
+  {
+   "repo": "toeverything/AFFiNE",
+   "tip": "d897bb3d84099e54a6b3c0bd5f4265f8aa87d190"
+  },
+  {
+   "repo": "tom-doerr/simpledspy",
+   "tip": "a3958497e548de06de9557626a8a5d1380afd570"
+  },
+  {
+   "repo": "toshimaru/nyan",
+   "tip": "3327086947e54edb2476d5e230320371e77f58c8"
+  },
+  {
+   "repo": "transloadit/uppy",
+   "tip": "c011da4d596384ec829a820741739f49858ec6ae"
+  },
+  {
+   "repo": "trycompai/comp",
+   "tip": "2b255847891988a7fd890cd3db3b50358ac85a0f"
+  },
+  {
+   "repo": "tw-haiven/haiven",
+   "tip": "e7f387d1229906e5dffb14a92fda62fd7d7fb523"
+  },
+  {
+   "repo": "typstyle-rs/typstyle",
+   "tip": "0f69bb4825e5d2b8d055257da4a01b46c48f7570"
+  },
+  {
+   "repo": "umputun/spot",
+   "tip": "6e2b1fcc85d2770a55778af51b67523fe293de75"
+  },
+  {
+   "repo": "vapourismo/knx-go",
+   "tip": "02e5353106027f7710c456b98c0d68aeebe13e62"
+  },
+  {
+   "repo": "vbpf/prevail",
+   "tip": "71e70c5fbe9c09b015c54b3e71635f0a7adb51a6"
+  },
+  {
+   "repo": "vdaas/vald",
+   "tip": "1afc0f4a475af6205e53f9016757fa039c8720aa"
+  },
+  {
+   "repo": "vectordotdev/vector",
+   "tip": "6d125dba7264a7292b5aa71df2fe035849d4b0e2"
+  },
+  {
+   "repo": "vercel/next.js",
+   "tip": "cdecbe0953056aad1a05e0e468125b215dd82089"
+  },
+  {
+   "repo": "vespa-engine/pyvespa",
+   "tip": "41ad97f9e12df7c3e07d22595dc66fbb5f3dd21a"
+  },
+  {
+   "repo": "vexxhost/atmosphere",
+   "tip": "6ac73401bdf51a12cf0b5d68ef11e33e1e2210aa"
+  },
+  {
+   "repo": "virattt/ai-hedge-fund",
+   "tip": "154a8b2f46dca0f40764d814e4e747b0ad71f4c4"
+  },
+  {
+   "repo": "vladfi1/slippi-ai",
+   "tip": "577965a7731dc53e3472ea63d9e9853a4e9d65fa"
+  },
+  {
+   "repo": "vlm-run/vlmrun-hub",
+   "tip": "55b534d87980aaca55fba28a4a6062a58f8f01ab"
+  },
+  {
+   "repo": "vltpkg/vltpkg",
+   "tip": "ea1220cf9cfaec2f2c3ef5ef1189f2d0ca51f39b"
+  },
+  {
+   "repo": "waldzellai/waldzell-mcp",
+   "tip": "fc8a8f3d691734d9768c57e10770a72d4be294fa"
+  },
+  {
+   "repo": "wangkanai/wangkanai",
+   "tip": "0d6122a073593a695346a2f1d98692e2e02d1d58"
+  },
+  {
+   "repo": "warting/android-signaturepad",
+   "tip": "83d2c1487633aaf4534028e3544fbd71d347bce7"
+  },
+  {
+   "repo": "wasp-lang/wasp",
+   "tip": "633a42bdae20f6673df2d2341459a3605132e00b"
+  },
+  {
+   "repo": "web-infra-dev/rspack",
+   "tip": "cb9a731cf375d5f65d046ea08219812ca8fa33c5"
+  },
+  {
+   "repo": "wei/socialify",
+   "tip": "d2a6cc9b9ba41f9008e684ec87efab376b04ce2b"
+  },
+  {
+   "repo": "wgzhao/Addax",
+   "tip": "9a7cbd232850be9fc489f97286c1b15c35ab3501"
+  },
+  {
+   "repo": "whitphx/stlite",
+   "tip": "762f6ab2a136e70d615e76a3b9f5fad2726bed0f"
+  },
+  {
+   "repo": "whitphx/streamlit-webrtc",
+   "tip": "e8a4e716c3892a214995c6c92ef2497afd4221da"
+  },
+  {
+   "repo": "wix/react-native-ui-lib",
+   "tip": "0cde3008733260fa058f866fe4d31f38b52f4517"
+  },
+  {
+   "repo": "wolfSSL/wolfBoot",
+   "tip": "4f33091f74419deb5cd6a6d4a749365d42eaf2ed"
+  },
+  {
+   "repo": "wolfSSL/wolfTPM",
+   "tip": "5b4da3bffba516e45e6d70bdf195dc4fab582b5e"
+  },
+  {
+   "repo": "wolfSSL/wolfssh",
+   "tip": "236cc46124f54aa4e162c13d3c69ac29b759804d"
+  },
+  {
+   "repo": "wolfSSL/wolfssl",
+   "tip": "0437fdcdc8be47ff777b460e2a1c07010f013e56"
+  },
+  {
+   "repo": "workarea-commerce/workarea",
+   "tip": "2d01fcff4c8adbd080166c94f69ce6082d8ca5e3"
+  },
+  {
+   "repo": "wp-document-revisions/wp-document-revisions",
+   "tip": "e80f67c90f12062b72cabcf3f151c0f3c6606e82"
+  },
+  {
+   "repo": "wvabrinskas/Neuron",
+   "tip": "2473f9955b704ff745477548df429916ca8c43a5"
+  },
+  {
+   "repo": "wvlet/wvlet",
+   "tip": "a87471e4412a49499aed9bb85bc877725e8ad922"
+  },
+  {
+   "repo": "yamadashy/repomix",
+   "tip": "4299b5838ef4013cf63b54c93208a6bbfb0f5383"
+  },
+  {
+   "repo": "yamadashy/tech-blog-rss-feed",
+   "tip": "234a64ba7e8e8b987f01c5af79501259ca0f6605"
+  },
+  {
+   "repo": "yegor256/micromap",
+   "tip": "fdc9ef04b7c860182d757443750eecb699c9612e"
+  },
+  {
+   "repo": "yiisoft-contrib/yiiframework.com",
+   "tip": "dc486d0beeeee35aae5df273baa8b9216a19146c"
+  },
+  {
+   "repo": "yurkinh/Plugin.Maui.Calendar",
+   "tip": "cc6a1671040d7343252ff996da3e0e8091bf906c"
+  },
+  {
+   "repo": "zenml-io/zenml-projects",
+   "tip": "544862bd165982fb40d23d44bae7b4108aed6975"
+  },
+  {
+   "repo": "zeroc-ice/ice",
+   "tip": "9e5178a4e76bdcbf85af23d012cd154190fb9ab7"
+  },
+  {
+   "repo": "zeroc-ice/ice-demos",
+   "tip": "4a0f1582d9851267f6adbcfa5bf24215dc3cc09d"
+  },
+  {
+   "repo": "zeta-chain/node",
+   "tip": "4ceb66555370d2ef766d7982c2d559428f10456f"
+  },
+  {
+   "repo": "zuplo/zudoku",
+   "tip": "c16a3a79c8d01d8d526373746cbdf71d67e7da2c"
+  }
+ ]
+}
