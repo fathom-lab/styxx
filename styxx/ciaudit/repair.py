@@ -134,7 +134,15 @@ def _replace_run(lines: list[str], pos: dict, new_run: str) -> list[str] | None:
 
 
 def apply_repair(text: str, jid: str, i: int, repair: str) -> tuple[str | None, str | None]:
-    """(repaired text, reason it does not apply). A repair that changes nothing does not apply."""
+    """(repaired text, reason it does not apply). A repair that changes nothing does not apply. A
+    later stage's repair is applied by name, by the function that verified it."""
+    if repair not in REPAIRS:
+        from . import repair_frontier, repair_structural
+        if repair in repair_structural.REPAIRS:
+            return repair_structural.apply_structural(text, jid, i, repair)
+        if repair in repair_frontier.REPAIRS:
+            return repair_frontier.apply_frontier(text, jid, i, repair)
+        return None, f"unknown repair: {repair}"
     pos = locate(text, jid, i)
     if pos is None:
         return None, "step not located in the workflow text"
@@ -363,5 +371,15 @@ def repair_faults(tree: Path, faults_list: list) -> list:
                 second = try_structural(text, wf_name, f["job"], f["index"], runner, baseline=f)
                 rec["candidates"] = rec["candidates"] + second["candidates"]
                 rec["verified_repair"] = second["verified_repair"]
+                if rec["verified_repair"] is None:
+                    # the third stage (SWALLOW-13): the frontier's edits; for what none repairs, the two readings
+                    from .repair_frontier import readings, try_frontier
+                    third = try_frontier(text, wf_name, f["job"], f["index"], runner)
+                    rec["candidates"] = rec["candidates"] + third["candidates"]
+                    rec["verified_repair"] = third["verified_repair"]
+                    if rec["verified_repair"] is None:
+                        rd = readings(text, f["job"], f["index"])
+                        if rd["routed"] or rd["declared"]:
+                            rec["readings"] = rd
             out.append(rec)
     return out

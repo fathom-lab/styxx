@@ -1,0 +1,186 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S13-1": {
+   "pass": true,
+   "detail": "40 passed in 30.28s"
+  },
+  "G-S13-2": {
+   "pass": true,
+   "detail": "instrument 7b3c2b129750292c\u2026, product files at the frozen hashes: 5 of 5, population 6f65d8f755ce00bf\u2026"
+  },
+  "G-S13-3": {
+   "pass": true,
+   "detail": "549 of 549 fetched at the tip and audited without error or timeout (fetch failed 0, errors 0, capped 0)"
+  },
+  "G-S13-4": {
+   "pass": true,
+   "detail": "stage-3 population 44"
+  },
+  "G-S13-5": {
+   "pass": true,
+   "detail": "stage 3 twice: 44 equal, 0 differ, of 44"
+  },
+  "G-S13-6": {
+   "pass": true,
+   "detail": "P1\u2013P8 scored"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "stage 3 verifies a repair for at least 25% of the stage-3 population",
+   "observed": {
+    "verified": 13,
+    "of": 44,
+    "share": 0.295
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "counted once per distinct script, at least 20%",
+   "observed": {
+    "verified": 13,
+    "of": 44,
+    "share": 0.295
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "stage-3 repairs land in at least 3 repositories",
+   "observed": {
+    "repositories": 9
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "the hoist family is the largest stage-3 family, strictly",
+   "observed": {
+    "hoist": 12,
+    "no-coe+guard-status": 1
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "stages 1-3 verify at least 85% of the read targets",
+   "observed": {
+    "stage1": 86,
+    "stage2": 13,
+    "stage3": 13,
+    "of": 143,
+    "share": 0.783
+   }
+  },
+  "P6": {
+   "hit": false,
+   "predicted": "at least one stage-3 candidate is loud and rejected because it changes the healthy run",
+   "observed": {
+    "candidates": 0
+   }
+  },
+  "P7": {
+   "hit": false,
+   "predicted": "(a coin) routed or declared matches at least 20% of the residue",
+   "observed": {
+    "routed": 1,
+    "declared": 1,
+    "either": 2,
+    "of": 31,
+    "share": 0.065
+   }
+  },
+  "P8": {
+   "hit": true,
+   "predicted": "the median stage-3 repair changes at most 6 lines",
+   "observed": {
+    "median": 5,
+    "lines": [
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     8
+    ]
+   }
+  }
+ },
+ "hits": 5,
+ "of": 8,
+ "receipt_sha256": "41ca966811ad7786b628d102ad9d506890f29caf2c32b1c2f97f7b8bd95633a0",
+ "prereg_sha256_at_freeze": "125836d2b841ce31fafd525461cacabbb3a1669eac355914baabdb16cb60ea65",
+ "summary": {
+  "all_stages_verified": 112,
+  "by_verdict": {
+   "read": {
+    "FAIL_OPEN": 23,
+    "SWALLOWED": 120
+   },
+   "stage3_population": {
+    "FAIL_OPEN": 14,
+    "SWALLOWED": 30
+   }
+  },
+  "capped": 0,
+  "distinct_scripts": {
+   "read": 142,
+   "residue": 31,
+   "residue_read": 2,
+   "stage3_population": 44,
+   "stage3_verified": 13
+  },
+  "errors": 0,
+  "fetch_failed": 0,
+  "fetched": 549,
+  "not_a_fault_site_on_repair": 0,
+  "read": 143,
+  "repos": 549,
+  "repos_with_targets": 71,
+  "residue": 31,
+  "residue_declared": 1,
+  "residue_read": 2,
+  "residue_routed": 1,
+  "residue_routed_a_reader_can_fail": 0,
+  "residue_unexplained": 29,
+  "stage1_verified": 86,
+  "stage2_verified": 13,
+  "stage3_again_differs": 0,
+  "stage3_again_equal": 44,
+  "stage3_by_family": {
+   "hoist": 12,
+   "no-coe+guard-status": 1
+  },
+  "stage3_by_repair": {
+   "hoist-substitution": 12,
+   "no-coe+guard-status": 1
+  },
+  "stage3_candidates_loud_but_change_the_healthy_run": 0,
+  "stage3_lines_changed": [
+   4,
+   4,
+   5,
+   5,
+   5,
+   5,
+   5,
+   5,
+   5,
+   5,
+   6,
+   6,
+   8
+  ],
+  "stage3_population": 44,
+  "stage3_repos": 9,
+  "stage3_verified": 13,
+  "targets": 143,
+  "workflows": 6479
+ }
+}

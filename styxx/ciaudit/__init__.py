@@ -42,7 +42,13 @@ verified on both halves against the same model, and the card prints the diff -- 
 failed, and what the original line was protecting (SWALLOW-4). For a finding those leave
 unverified, two edits to the script's logic are tried next (`repair_structural.py`: a guard whose
 failing tool is not its green path; a query without its `|| echo` default), verified the same way
-(SWALLOW-5).
+(SWALLOW-5). For what those leave, a third stage (`repair_frontier.py`, SWALLOW-13): a `$(...)`
+whose status its line throws away hoisted onto a line of its own, a background job whose early
+death nobody waits for checked once, `|| exit 0` removed, a fallback hidden by a continued line,
+each alone or with the `continue-on-error` removed -- verified the same way. A finding none of the
+three stages repairs carries two readings of its script, when they match: its failure is routed (a
+flag written to GITHUB_ENV or GITHUB_OUTPUT that a later step reads), or the script says it is not
+fatal (a `::warning`, or stated words). A reading is context for the reviewer, not a verdict.
 
 `--history` asks since when. Every revision of the workflow on the checkout's own mainline
 (first-parent from HEAD) is read with the same engine and the finding's step is followed as a
@@ -132,9 +138,10 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
     rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None, actions=actions)
     if repair:
         from .repair import REPAIRS, repair_faults
+        from .repair_frontier import REPAIRS as FRONTIER
         from .repair_structural import REPAIRS as STRUCTURAL
         rec["repairs"] = repair_faults(tree, rec["faults"])
-        rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL)
+        rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL) + list(FRONTIER)
     if history:
         from .history import deepen, since
         if cloned is not None:
@@ -206,7 +213,9 @@ def summarize(rec: dict, *, counted: bool = False) -> dict:
                                                          and any(c.get("applies") and c.get("unchanged") is False for c in t["candidates"])),
                      "not_loud": sum(1 for t in rec["repairs"] if not t.get("verified_repair") and any(c.get("applies") for c in t["candidates"])
                                      and all(c.get("unchanged") is not False for c in t["candidates"])),
-                     "no_candidate_applies": sum(1 for t in rec["repairs"] if all(not c.get("applies") for c in t["candidates"]))}
+                     "no_candidate_applies": sum(1 for t in rec["repairs"] if all(not c.get("applies") for c in t["candidates"])),
+                     "routed": sum(1 for t in rec["repairs"] if (t.get("readings") or {}).get("routed")),
+                     "declared": sum(1 for t in rec["repairs"] if (t.get("readings") or {}).get("declared"))}
                     if "repairs" in rec else None),
     }
 
@@ -235,7 +244,7 @@ def main(argv=None) -> int:
     ap.add_argument("--format", choices=["card", "json"], default="card")
     ap.add_argument("--counted", action="store_true", help="report the counted reading of a dropped check (reached fewer times than in the healthy world)")
     ap.add_argument("--no-actions", action="store_true", help="SWALLOW-2's reading: a check is a run: step only; the catalogue of checking actions is not applied")
-    ap.add_argument("--repair", action="store_true", help="for every finding, try the two stated repairs of the workflow text and verify each: loud under the same fault, healthy run unchanged")
+    ap.add_argument("--repair", action="store_true", help="for every finding, try the stated repairs of the workflow text, in three stages, and verify each: loud under the same fault, healthy run unchanged")
     ap.add_argument("--history", action="store_true", help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history")
     ap.add_argument("--base", default=None, help="the pull request's gate: read only the workflows changed since the merge-base with this revision, and exit 1 only if HEAD hides a check the base did not")
     ap.add_argument("--pr", type=int, default=None, help="the same gate on pull request N of the remote, from GitHub's refs/pull/N/merge (its test merge against the base branch) -- no checkout of the branch needed")
