@@ -92,6 +92,33 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-13: the frontier — a third repair stage, and a reading for what it cannot repair
+
+`styxx ci-audit --repair`, the pull request's gate and the Action verify a repair in two stages;
+SWALLOW-11's replay left 49 hidden checks with none. This cycle wrote a third stage on those 49
+(`styxx/ciaudit/repair_frontier.py`): **hoist-substitution** (a `$(...)` whose status its line throws
+away — an `echo "x=$(tool)" >> $GITHUB_OUTPUT`, a `for` list, an `export`, a one-test `if` — put on a
+line of its own, the shell made strict), **background-liveness** (a job started with `&` checked once
+for an early death), **no-exit-zero**, **no-default-joined**, each alone or with the
+`continue-on-error` removed; every candidate verified as the first two stages are — loud under the
+same fault, the healthy run unchanged. For a check no stage repairs, two readings on the card, in
+the Action's annotation and in its job summary: **routed** (the failure is a flag written to
+GITHUB_ENV/GITHUB_OUTPUT that a later step reads) and **declared** (a `::warning`, or stated words).
+
+**VALID, 5/8** (`RESULT_swallow13_the_frontier_2026_09_22.md`; prereg `125836d2…`), on 549
+repositories none of it was designed on, each at a pinned tip: 143 hand-written hidden checks;
+stage 1 verifies 86, stage 2 13, and of the 44 left **stage 3 verifies 13 (30%), in 9
+repositories**, twelve of them one hoist — seven of those the producer of a matrix or switch whose
+empty value silently skipped the tests. Same outcome run twice. Missed: the three stages together
+reach 112 of 143 (78%, 85% predicted); the readings match 2 of the 31 left. Most of what is left
+passes on an empty list — a loop fed by a failed `find`, or "nothing to check" on an empty answer.
+
+The gate records the stage (`swallow-13`); `repair.apply_repair` rebuilds any stage's repair by
+name, so a third-stage repair is one click away unchanged; `differential.STAGES` names the stages,
+and SWALLOW-12's plan is re-computed with the two it ran. After scoring: a hoisted grep, diff,
+`git diff --exit-code` or `jq -e` keeps its status 1 (an answer, not a failure) — no verdict moves.
+`benchmarks/harness_mutation/frontier.py` frozen at `7b3c2b12…`.
+
 ## [Unreleased] — SWALLOW-12: the click, live — and the Action past GitHub's ten-annotation limit
 
 SWALLOW-11 counted a fix one click away by the documented placement rule; this cycle put it to
