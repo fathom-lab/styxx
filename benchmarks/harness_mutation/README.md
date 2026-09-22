@@ -333,3 +333,25 @@ suggestions" made the 15 files the planned text byte for byte, a file without a 
 without one; the Action then reported exactly the three controls, and GitHub kept all 19 of its
 annotations (ten errors, nine warnings). `live_click.py` is frozen at `83be2100…` and pinned by its
 test, which also holds the committed plan to the instrument.
+
+## The frontier (SWALLOW-13)
+
+The checks the first two repair stages leave. `styxx/ciaudit/repair_frontier.py` is the third stage,
+written on SWALLOW-11's 49 unrepaired checks: hoist-substitution, background-liveness, no-exit-zero,
+no-default-joined, each alone or with the `continue-on-error` removed, verified as the first two
+are; for what none repairs, the routed and declared readings. `frontier.py` runs the product's
+`--repair` path, unchanged, on SWALLOW-9's repositories at the tips SWALLOW-9 recorded, minus
+SWALLOW-1's hundred and SWALLOW-11's sixty — 549 repositories no stage was designed on — each in its
+own process, and runs stage 3 twice on every check it reaches.
+
+```
+python -m benchmarks.harness_mutation.frontier --build-population --out papers/harness/swallow13_population.json
+python -m benchmarks.harness_mutation.frontier --population papers/harness/swallow13_population.json --work <dir> --out papers/harness/swallow13_receipt.json.gz --workers 2
+python papers/harness/swallow13_score.py
+```
+
+`papers/harness/RESULT_swallow13_the_frontier_2026_09_22.md` (VALID, 5/8): 143 hand-written hidden
+checks; stage 1 verifies 86, stage 2 13; of the 44 left, stage 3 verifies 13 (30%) in 9
+repositories, twelve by hoist-substitution, a median of 5 lines; the same outcome twice. The three
+stages together reach 112 of 143 (78%); the readings match 2 of the 31 left, most of which pass on
+an empty list. `frontier.py` is frozen at `7b3c2b12…` and pinned by its test.
