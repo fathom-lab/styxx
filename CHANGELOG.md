@@ -92,6 +92,35 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-10: the baseline — and `styxx ci-audit --pr N`
+
+Compared with what? `benchmarks/harness_mutation/human_prs.py` samples, in the 609 repositories
+SWALLOW-9 read, the pull requests people opened in the same months (up to 150 per repository,
+seeded, from `refs/pull/*/head`), and puts them and the agents' through one pipeline: one group
+rule (the dataset's agent, else SWALLOW-8's rule on the head commit), one base rule (the closest
+branch), one gate, one merge signal from git. No name is written.
+
+**INVALID on its merge-signal gate as frozen, 8/8 reported, not claimed**
+(`RESULT_swallow10_the_baseline_2026_09_22.md`; prereg frozen at `aed0c1b4…`; one run). The
+gate held git's merge signal against the dataset's merged flag and allowed 5% false positives;
+6.5% were flagged — 177 of the 221 are pull requests open at collection and merged since, and
+among the pull requests the dataset saw closed the signal is right 98.3% of the time (stated,
+non-gating). **Of 1,989 pull requests people opened that change a workflow, 12 bring a check
+that hides its own failure (0.60%); of 1,479 the agents opened, 18 (1.22%) — twice the rate.**
+Without the one repository that holds five of the twelve human firings, 0.35% and 3.4×. The
+person's hidden check is the textbook one — 19 of 32 `continue-on-error`, 31 of 32 born hidden,
+31 of 32 repairable — where the agents' are `|| true`, `set +e`, defaults and fail-open queries.
+None of 249 bot pull requests fires. Pull requests outside the dataset's attribution whose head
+commit carries an agent's signature fire at 3.7%. The closest-branch base agrees with SWALLOW-9's
+commit-list base on 96.5% of the agents' pull requests and the gate's verdict on 100%.
+
+**`styxx ci-audit OWNER/REPO --pr N`** (and `styxx ci-audit . --pr N --remote origin`) runs the
+gate on one pull request from GitHub's own test-merge ref — `refs/pull/N/merge` against its
+first parent, the base branch as GitHub would merge into — with no checkout and no token; a
+closed or conflicting pull request has no merge ref, and the head is then read against its
+merge-base with the default branch, and the card says which reading it is. On this repository's
+own open pull requests: 7–10 s.
+
 ## [Unreleased] — SWALLOW-9: the agent's pull request at the gate
 
 The gate, run on the pull requests coding agents actually opened.

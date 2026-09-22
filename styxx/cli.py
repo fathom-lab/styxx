@@ -1259,7 +1259,8 @@ def cmd_ci_audit(args):
     (`--no-actions` reads without it).
 
     Exit status: 0 when nothing is hidden or dropped, 1 when something is, 2 on an error. With
-    `--base`, 1 only when HEAD hides a check its base did not.
+    `--base`, 1 only when HEAD hides a check its base did not; with `--pr N`, the same for pull
+    request N of the remote, read from GitHub's own test-merge ref without checking it out.
     """
     from styxx.ciaudit import main as _main
     argv = [args.target, "--format", args.format]
@@ -1273,6 +1274,10 @@ def cmd_ci_audit(args):
         argv.append("--history")
     if getattr(args, "base", None):
         argv += ["--base", args.base]
+    if getattr(args, "pr", None) is not None:
+        argv += ["--pr", str(args.pr)]
+    if getattr(args, "remote", None):
+        argv += ["--remote", args.remote]
     if args.out:
         argv += ["--out", args.out]
     if args.work:
@@ -3007,6 +3012,9 @@ def _build_parser() -> argparse.ArgumentParser:
                            help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history (SWALLOW-6)")
     p_ciaudit.add_argument("--base", type=str, default=None,
                            help="the pull request's gate: read only the workflows changed since the merge-base with this revision; exit 1 only if HEAD hides a check the base did not (SWALLOW-7)")
+    p_ciaudit.add_argument("--pr", type=int, default=None,
+                           help="the same gate on pull request N of the remote, read from GitHub's refs/pull/N/merge (its test merge against the base branch) without checking the branch out (SWALLOW-9)")
+    p_ciaudit.add_argument("--remote", type=str, default="origin", help="with --pr: the remote to fetch the pull request from")
     p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
     p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
     p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")

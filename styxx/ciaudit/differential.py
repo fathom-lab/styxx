@@ -189,5 +189,45 @@ def tree_differential(tree: Path, base: str, fix: bool = True) -> dict:
     return out
 
 
+def pr_differential(tree: Path, number: int, remote: str = "origin", fix: bool = True) -> dict:
+    """The gate on pull request `number` of `remote`, without checking it out. GitHub keeps two refs
+    per pull request: `refs/pull/N/head`, the branch as pushed, and -- while the pull request is
+    open and mergeable -- `refs/pull/N/merge`, its test merge into the base branch. With the merge
+    ref, BASE is the merge's first parent (the base branch as GitHub would merge into) and HEAD the
+    merge itself: exactly what merging would bring, no history needed. Without it (closed, or
+    conflicting), BASE is the merge-base of the head with the remote's default branch, which needs
+    history, and the record says which reading it is."""
+    pfx = f"refs/ciaudit/pull/{number}"
+    # a clone that is already shallow (owner/repo's sparse clone) stays so: the merge and its two parents are enough;
+    # a real checkout is never made shallow by this command
+    depth = ["--depth=2"] if H._git(tree, ["rev-parse", "--is-shallow-repository"], check=False).strip() == "true" else []
+    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/merge:{pfx}/merge"], check=False, timeout=600)
+    got_merge = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{pfx}/merge^{{commit}}"], check=False).strip() != ""
+    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/head:{pfx}/head"], check=False, timeout=600)
+    head = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{pfx}/head^{{commit}}"], check=False).strip()
+    if not head:
+        raise RuntimeError(f"{remote} has no refs/pull/{number}/head")
+    if got_merge:
+        merge = H._git(tree, ["rev-parse", f"{pfx}/merge"]).strip()
+        base = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{merge}^1"], check=False).strip()
+        if not base:
+            raise RuntimeError(f"refs/pull/{number}/merge has no first parent in this clone")
+        out = audit_commit(tree, base, merge, readers={}, fix=fix)
+        out.update(base_ref=f"pull request #{number}", merge_base=base, pr=number, pr_head=head, pr_merge=merge,
+                   reading="GitHub's test merge (refs/pull/N/merge) against its first parent, the base branch")
+        return out
+    default = H._git(tree, ["symbolic-ref", "--quiet", "--short", f"refs/remotes/{remote}/HEAD"], check=False).strip() or f"{remote}/HEAD"
+    base_tip = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{default}^{{commit}}"], check=False).strip()
+    if not base_tip:
+        raise RuntimeError(f"refs/pull/{number}/merge is not there (closed, or conflicting) and {remote}'s default branch is unknown here")
+    merge_base = H._git(tree, ["merge-base", base_tip, head], check=False).strip()
+    if not merge_base:
+        raise RuntimeError(f"refs/pull/{number}/merge is not there (closed, or conflicting) and the head shares no history with {default} in this clone")
+    out = audit_commit(tree, merge_base, head, readers={}, fix=fix)
+    out.update(base_ref=f"pull request #{number}", merge_base=merge_base, pr=number, pr_head=head, pr_merge=None,
+               reading=f"the head against its merge-base with {default} (no refs/pull/N/merge: the pull request is closed, or conflicts)")
+    return out
+
+
 def instrument_sha256() -> str:
     return H._sha(Path(__file__))

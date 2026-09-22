@@ -53,6 +53,8 @@ def _differential_section(d: dict, width: int) -> list[str]:
         out.append(f"since {d.get('base_ref')}: could not read the base — {d['error']}")
         return out
     head = f"since {d.get('base_ref')} (merge-base {(d.get('merge_base') or '')[:8]}): "
+    if d.get("pr") is not None:
+        head = f"{d.get('base_ref')} (head {(d.get('pr_head') or '')[:8]}, base {(d.get('merge_base') or '')[:8]}; {d.get('reading')}): "
     wfs = d.get("workflows", [])
     if not wfs:
         out.append(head + "no workflow changed; the gate has nothing to read.")

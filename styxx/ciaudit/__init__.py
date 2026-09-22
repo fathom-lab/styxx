@@ -9,6 +9,8 @@
     styxx ci-audit . --repair              # for every finding, a verified repair of the workflow text, or why there is none
     styxx ci-audit . --history             # for every finding, the commit it has been hidden since: born hidden, or acquired, and by what
     styxx ci-audit . --base origin/main    # the pull request's gate: what this HEAD hides that its base did not (exit 1 if anything)
+    styxx ci-audit . --pr 42               # the same gate on pull request #42 of origin, from GitHub's own test-merge ref, no checkout
+    styxx ci-audit OWNER/REPO --pr 42      # ... on any public repository
 
 A green CI light means every job exited 0. It does not mean every check ran, or that every
 check could have failed. This command asks the question the light does not answer: for each
@@ -96,7 +98,8 @@ def _require_yaml() -> None:
 
 
 def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, history: bool = False,
-          base: Optional[str] = None, work: Optional[str] = None, deadline_seconds: Optional[float] = None) -> dict:
+          base: Optional[str] = None, pr: Optional[int] = None, remote: str = "origin", work: Optional[str] = None,
+          deadline_seconds: Optional[float] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
     with its verdict, every dropped check with its mechanism, and a summary. `actions=False` is
@@ -143,6 +146,12 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
             rec["differential"] = tree_differential(tree, base)
         except RuntimeError as e:
             rec["differential"] = {"base_ref": base, "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
+    elif pr is not None:
+        from .differential import pr_differential
+        try:
+            rec["differential"] = pr_differential(tree, int(pr), remote=remote)
+        except RuntimeError as e:
+            rec["differential"] = {"base_ref": f"pull request #{pr}", "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
     head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     rec.update(
         schema=CIAUDIT_VERSION,
@@ -229,12 +238,15 @@ def main(argv=None) -> int:
     ap.add_argument("--repair", action="store_true", help="for every finding, try the two stated repairs of the workflow text and verify each: loud under the same fault, healthy run unchanged")
     ap.add_argument("--history", action="store_true", help="for every finding, the commit it has been hidden since -- born hidden, or acquired later and by what -- from the checkout's git history")
     ap.add_argument("--base", default=None, help="the pull request's gate: read only the workflows changed since the merge-base with this revision, and exit 1 only if HEAD hides a check the base did not")
+    ap.add_argument("--pr", type=int, default=None, help="the same gate on pull request N of the remote, from GitHub's refs/pull/N/merge (its test merge against the base branch) -- no checkout of the branch needed")
+    ap.add_argument("--remote", default="origin", help="with --pr: the remote to fetch the pull request from (default origin)")
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
     a = ap.parse_args(argv)
     try:
-        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, base=a.base, work=a.work, deadline_seconds=a.deadline)
+        rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, base=a.base, pr=a.pr, remote=a.remote,
+                    work=a.work, deadline_seconds=a.deadline)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2

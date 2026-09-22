@@ -1,0 +1,327 @@
+{
+ "valid": false,
+ "gates": {
+  "G-S10-1": {
+   "pass": true,
+   "detail": "6 passed in 13.02s"
+  },
+  "G-S10-2": {
+   "pass": true,
+   "detail": "596 repositories audited; 1989 touching human pull requests; 0 of 609 repositories failed to clone; 34647 audited of 35307 (26428 human sampled of 97940 in span); missing head 28, no base 632, capped 0"
+  },
+  "G-S10-3": {
+   "pass": true,
+   "detail": "instrument 7d764d5db800da39\u2026, sample 854447b532015b9a\u2026 (file 854447b532015b9a\u2026), differential 91e4a4a7\u2026, agent_prs ec9ef750\u2026, authorship c3fb6e42\u2026"
+  },
+  "G-S10-4": {
+   "pass": true,
+   "detail": "base agrees on 1977 of 2048 (96.53%); the gate agrees on 2037 of 2037 (100.0%)"
+  },
+  "G-S10-5": {
+   "pass": false,
+   "detail": "recalled 5042 of 5264 dataset-merged (95.78%); flagged 221 of 3397 not merged (6.51%); by signal {'merged_by_merge_commit': 1669, 'merged_by_rebase': 173, 'merged_by_subject': 4922}"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "human fire rate in [0.4%, 1.6%]",
+   "observed": {
+    "firing": 12,
+    "touching": 1989,
+    "rate_pct": 0.6,
+    "checks": 32
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "agents' fire rate \u2265 1.2\u00d7 the human rate (this pipeline)",
+   "observed": {
+    "agents_firing": 18,
+    "agents_touching": 1479,
+    "agents_rate_pct": 1.22,
+    "human_rate_pct": 0.6,
+    "ratio": 2.02,
+    "by_agent": {
+     "OpenAI_Codex": {
+      "touching": 770,
+      "firing": 6
+     },
+     "Copilot": {
+      "touching": 304,
+      "firing": 4
+     },
+     "Devin": {
+      "touching": 293,
+      "firing": 3
+     },
+     "Cursor": {
+      "touching": 77,
+      "firing": 2
+     },
+     "Claude_Code": {
+      "touching": 35,
+      "firing": 3
+     }
+    }
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "\u2265 40% of human-brought checks carry continue-on-error",
+   "observed": {
+    "continue_on_error": 19,
+    "of": 32,
+    "pct": 59.38,
+    "agents": "6 of 20"
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "\u2265 60% of human-brought checks have a verified repair",
+   "observed": {
+    "repaired": 31,
+    "of": 32,
+    "pct": 96.88,
+    "by_repair": {
+     "no-continue-on-error": 18,
+     "strict-shell": 7,
+     "guard-status": 4,
+     "no-default": 2,
+     "none": 1
+    },
+    "agents": "18 of 20"
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "firing human pull requests merged \u2264 0.9\u00d7 as often as non-firing (git signal)",
+   "observed": {
+    "firing_merged": "8 of 12",
+    "non_firing_merged": "1536 of 1977",
+    "ratio": 0.858,
+    "agents_firing_merged": "10 of 18",
+    "agents_non_firing_merged": "1020 of 1461"
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "\u2265 50% of human-brought checks born hidden",
+   "observed": {
+    "born_hidden": 31,
+    "of": 32,
+    "pct": 96.88,
+    "by_kind": {
+     "born hidden": 31,
+     "acquired": 1
+    },
+    "agents_by_kind": {
+     "born hidden": 16,
+     "acquired": 4
+    }
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "\u2264 0.1% of touching automation pull requests fire",
+   "observed": {
+    "firing": 0,
+    "touching": 249,
+    "rate_pct": 0.0
+   }
+  },
+  "P8": {
+   "hit": true,
+   "predicted": "\u2264 5% of the agents' unlisted pull requests touch a workflow by git's diff",
+   "observed": {
+    "touching": 94,
+    "of": 6540,
+    "pct": 1.44,
+    "firing": 0
+   }
+  }
+ },
+ "hits": 8,
+ "of": 8,
+ "exploratory_not_scored": {
+  "merge_signal_on_pull_requests_closed_at_collection_NON_GATING": {
+   "merged": 5264,
+   "recalled": 5042,
+   "not_merged": 2512,
+   "flagged": 44,
+   "open_at_collection_flagged": 177,
+   "recall_pct": 95.78,
+   "flagged_pct": 1.75
+  },
+  "agent_signed": {
+   "touching": 134,
+   "firing": 5,
+   "rate_pct": 3.73,
+   "checks": 20
+  },
+  "human_firing_by_repo": {
+   "ruvnet/ruv-FANN": 5,
+   "AMICI-dev/AMICI": 1,
+   "FinAegis/core-banking-prototype-laravel": 1,
+   "amantus-ai/vibetunnel": 1,
+   "ikamensh/flynt": 1,
+   "microsoft/vscode": 1,
+   "module-federation/core": 1,
+   "nrwl/nx": 1
+  },
+  "human_without_top_repo": {
+   "touching": 1976,
+   "firing": 7,
+   "rate_pct": 0.35,
+   "ratio_agents_over_this": 3.44
+  },
+  "shapes": {
+   "human": {
+    "continue-on-error": 19,
+    "or-true": 6,
+    "other (FAIL_OPEN)": 4,
+    "default": 2,
+    "set +e": 1
+   },
+   "agents": {
+    "continue-on-error": 6,
+    "other (SWALLOWED)": 6,
+    "other (FAIL_OPEN)": 3,
+    "or-true": 2,
+    "set +e": 2,
+    "default": 1
+   }
+  },
+  "mechanisms_of_acquired": {
+   "human": {
+    "gating": 1,
+    "or-true": 1
+   },
+   "agents": {
+    "continue-on-error": 3,
+    "gating": 1,
+    "or-true": 1
+   }
+  },
+  "human_repos_touching": 289,
+  "human_firing_repos": 8,
+  "checks_per_firing": {
+   "human": 2.67,
+   "agents": 1.11
+  },
+  "repo_weighted_rates_pct": {
+   "human": 0.54
+  },
+  "touching_share_pct": {
+   "human": 9.23,
+   "agents": 17.08,
+   "automation": 7.23
+  },
+  "by_base_method": {
+   "closest-branch": 2861,
+   "merge-commit": 990
+  },
+  "repos_deepened": 46,
+  "median_seconds_per_touching_pr": 1.18,
+  "removed_hidden": {
+   "human": 6,
+   "agents": 6
+  }
+ },
+ "summary": {
+  "audited": 34647,
+  "base_agreement9": {
+   "agree": 1977,
+   "compared": 2048
+  },
+  "by_group": {
+   "Claude_Code": {
+    "audited": 149,
+    "firing": 3,
+    "merged_heuristic_touching": 28,
+    "new_hidden_checks": 4,
+    "touching": 35
+   },
+   "Copilot": {
+    "audited": 2466,
+    "firing": 4,
+    "merged_heuristic_touching": 188,
+    "new_hidden_checks": 5,
+    "touching": 304
+   },
+   "Cursor": {
+    "audited": 707,
+    "firing": 2,
+    "merged_heuristic_touching": 41,
+    "new_hidden_checks": 2,
+    "touching": 77
+   },
+   "Devin": {
+    "audited": 2106,
+    "firing": 3,
+    "merged_heuristic_touching": 158,
+    "new_hidden_checks": 3,
+    "touching": 293
+   },
+   "OpenAI_Codex": {
+    "audited": 3233,
+    "firing": 6,
+    "merged_heuristic_touching": 615,
+    "new_hidden_checks": 6,
+    "touching": 770
+   },
+   "agent-signed": {
+    "audited": 986,
+    "firing": 5,
+    "merged_heuristic_touching": 95,
+    "new_hidden_checks": 20,
+    "touching": 134
+   },
+   "automation": {
+    "audited": 3446,
+    "firing": 0,
+    "merged_heuristic_touching": 183,
+    "new_hidden_checks": 0,
+    "touching": 249
+   },
+   "human": {
+    "audited": 21554,
+    "firing": 12,
+    "merged_heuristic_touching": 1544,
+    "new_hidden_checks": 32,
+    "touching": 1989
+   }
+  },
+  "capped": 0,
+  "clone_failures": 0,
+  "fires_agreement9": {
+   "agree": 2037,
+   "compared": 2037
+  },
+  "firing": 35,
+  "human_sampled": 26428,
+  "merged_heuristic_on_dataset_truth": {
+   "false_positive": 221,
+   "merged": 5264,
+   "not_merged": 3397,
+   "recalled": 5042,
+   "recalled_by": {
+    "merged_by_merge_commit": 1669,
+    "merged_by_rebase": 173,
+    "merged_by_subject": 4922
+   }
+  },
+  "missing_head": 28,
+  "no_base": 632,
+  "non_agent_in_span": 97940,
+  "prs": 35307,
+  "repos": 609,
+  "repos_deepened": 46,
+  "touching": 3851
+ },
+ "seconds": 6250.9,
+ "instrument_sha256": "7d764d5db800da3986a9b5ea4f5d620addd3a794d0bc037fa6b9c6eeebe3afe7",
+ "receipt_sha256": "485f6c5b5d475acfd2ce058e20d8e05a16579d1733a52d21e8738b8d47805f06",
+ "receipt_file": "swallow10_receipt.json.gz",
+ "prereg_sha256_at_freeze": "aed0c1b4b9159036ccdfc76bb4a9e544e3fa9f1b4b92c422c6787920a5586cac"
+}
