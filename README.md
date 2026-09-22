@@ -84,7 +84,21 @@ verdict: FAIL — this summary would fail your CI with each lie named.
 ```
 
 Zero receipts, zero cooperation from the agent that wrote the summary, no checkout.
-Fails only on a contradicted claim. The same gate on every commit before it lands:
+Fails only on a contradicted claim.
+
+**And the gate on the checks themselves — the one that fails when a change makes CI unable to fail:**
+
+```yaml
+- uses: actions/checkout@v4
+- uses: fathom-lab/styxx/ci-audit@main    # a new `|| true` / continue-on-error / fail-open guard: the line marked, the verified fix one click away
+```
+
+It reads only the workflows the change touched, simulates each step's tools failing (no runner,
+no token, no code run), marks the line that hides the check and writes the verified repair into the
+job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 220
+hidden checks it has caught in this program's receipts, it located every hiding line, and the
+verified fix was one click away for 159 — for 70 of 73 in pull requests
+([RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md)). The same gate on every commit before it lands:
 [`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
 
@@ -344,6 +358,7 @@ register instruments on wordless input rather than folding an artifact into the 
 | `certify` (OATH) + `corpus_audit` | extract every numeric claim in a document, verify against its receipts, emit a machine-checkable certificate — and re-certify the *entire* published corpus on demand | hardened across five preregistered versions to v0.6.2 — tamper-catch 0.304 → 0.319 with false-verify 0.184 → 0.166 on a battery grown to 3287 mutants, including a self-caught false accusation fixed under its own prereg; `python -m styxx.corpus_audit papers/` turns the verifier on every claim styxx has ever shipped ([CHANGELOG.md](CHANGELOG.md)) |
 | `attest` / `verify_attestation` | signed receipts for what an agent claimed vs what the substrate read | verifier hardened against its own artifact — RCE fix, 7.17.1 ([SECURITY.md](SECURITY.md), [CHANGELOG.md](CHANGELOG.md)) |
 | **the trust stack — verification as the product. one command seals agent work or refuses it.** | | |
+| **GitHub Action: ci-audit** | `uses: fathom-lab/styxx/ci-audit@main` — the gate on a change's workflows: fails when the change brings a check that hides its own failure, annotates the hiding line, puts the verified repair in the job summary and (`suggest: true`) one click away on the pull request. Refuses `pull_request_target`, drops tokens before reading the change, exits 2 — never 0 — when it cannot run. This repo runs it on itself | [ci-audit/action.yml](ci-audit/action.yml) · [.github/workflows/ci-audit.yml](.github/workflows/ci-audit.yml) · [RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md) |
 | **GitHub Action** | `uses: fathom-lab/styxx@main` — every PR body gated against its actual diff, checkout-free, job-summary table + annotations, fails only on a contradicted claim (`strict`/`soft-fail` inputs). This repo runs it on itself: if we ever lie about a diff, our own product fails our own build | [action.yml](action.yml) · [.github/workflows/diffgate.yml](.github/workflows/diffgate.yml) |
 | `seal` / `verify_seal` | the trust seal for agent deliverables: every numeric claim OATH-certified, every referenced prereg re-scored through its FROZEN gates block, the composite content-hashed — `python -m styxx.seal DOC.md receipts...` exits 0/1 as a CI gate; SEALED / VACUOUS (said loudly) / REFUSED with the failing claim named | in production since birth: every finding in the nine-act island arc (b37–b46) ships sealed, including its INVALIDs ([papers/disjoint-worlds/](papers/disjoint-worlds/)) |
 | `Experiment` (protocol) | the research loop as enforceable machinery: scoring REFUSED unless the prereg is committed in git; gates parse from the frozen document (no API exists to pass a bar at scoring time); verdicts walk the frozen outcome table — the agent reports the verdict, it does not choose it; smoke is INVALID by type | born the week it earned itself: two same-day INVALIDs (b34 v1/v2) honored by convention, then made machinery ([CHANGELOG](CHANGELOG.md)) |

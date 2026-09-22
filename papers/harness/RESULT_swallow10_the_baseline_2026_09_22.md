@@ -159,3 +159,16 @@ signature list applied to every pull request of a repository, not only the agent
 and their 3.7% wants a prereg of its own. The merge signal wants the dataset's snapshot date as
 a parameter. And the human sample can be re-weighted by repository against the agents' to give
 the multiple both ways.
+
+## Note, from SWALLOW-11 — by pull request and by change
+
+This RESULT counts pull requests, as the preregistration does. Twelve of the changes it read
+arrive in two or three pull requests (the same repository, base and head, opened again); one of
+them fires: `ruvnet/ruv-FANN` `#44` and `#48` are one change, its six checks counted twice in the
+check-level numbers above. By change instead of by pull request: people's 11 of 1,982 changes
+fire (0.55%), the agents' 18 of 1,477 (1.22%), 2.2×; the person's 26 checks — 16 with
+`continue-on-error`, 25 born hidden, 25 with a verified repair; and P5's ratio is 0.93× (8 of 11
+firing changes merged against 1,534 of 1,971) — over its 0.9 bar, a MISS if the unit were the
+change. Neither pull request was merged. The preregistered unit is the pull request, and this
+RESULT was reported, not claimed. SWALLOW-11, whose unit is the change, counts it once
+(`swallow11_once.py`).

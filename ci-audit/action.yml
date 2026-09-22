@@ -1,0 +1,98 @@
+name: "styxx ci-audit"
+description: >-
+  The gate on a change's CI workflows: fails when the change brings a check that hides its own
+  failure -- a continue-on-error, an `|| true`, an `|| echo` default, a guard whose failing tool
+  is its green path -- marks the line, and puts the verified repair in the job summary, or, with
+  `suggest`, one click away on the pull request. It reads only the workflows the change touched,
+  simulating each step's tools failing in a sandbox of stubs (no runner, no token, no code run),
+  and matches every step across base and head: a check that was already hidden is reported, not
+  failed. On 2,123 pull requests five coding agents opened that touch a workflow, it fired on 17,
+  and 22 of the 24 checks had a verified repair
+  (papers/harness/RESULT_swallow9_the_agents_pull_request_at_the_gate_2026_09_21.md).
+author: "Fathom Lab"
+branding:
+  icon: "alert-triangle"
+  color: "gray-dark"
+
+inputs:
+  fail-on:
+    description: "new-hidden (default): fail the job when the change brings a check that hides its own failure. never: report only (an adoption ramp)."
+    required: false
+    default: "new-hidden"
+  suggest:
+    description: >-
+      Post each verified repair as a review suggestion on its line, applied with one click
+      (pull_request only; needs `permissions: pull-requests: write`; a fork's read-only token is
+      reported, not an error). Posted once per check, never repeated on re-runs.
+    required: false
+    default: "false"
+  annotate:
+    description: "Mark the line of every newly hidden check with an error annotation."
+    required: false
+    default: "true"
+  github-token:
+    description: "Used only to post suggestions; dropped from the environment before the gate reads anything."
+    required: false
+    default: ${{ github.token }}
+  styxx-version:
+    description: >-
+      `action` (default): run styxx from this action's own ref, so the action and the gate are one
+      version (installs only numpy and PyYAML). Or a pip requirement, e.g. `styxx[ciaudit]>=7.49`.
+    required: false
+    default: "action"
+  python-version:
+    description: "Python for the gate."
+    required: false
+    default: "3.12"
+
+outputs:
+  fires:
+    description: "true when the change brings a check that hides its own failure"
+    value: ${{ steps.gate.outputs.fires }}
+  new-hidden:
+    description: "how many checks the change newly hides"
+    value: ${{ steps.gate.outputs.new-hidden }}
+  workflows-changed:
+    description: "how many workflows the gate read"
+    value: ${{ steps.gate.outputs.workflows-changed }}
+  measured:
+    description: "false when the event is not gated or the gate could not run"
+    value: ${{ steps.gate.outputs.measured }}
+  receipt:
+    description: "path of the gate's JSON receipt"
+    value: ${{ steps.gate.outputs.receipt }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install the gate
+      shell: bash
+      env:
+        # inputs reach the scripts as environment variables, never as interpolated shell text
+        STYXX_VERSION: ${{ inputs.styxx-version }}
+      run: |
+        set -euo pipefail
+        if [ "$STYXX_VERSION" = "action" ]; then
+          python -m pip install --quiet --disable-pip-version-check "numpy>=1.24" "PyYAML>=6"
+        else
+          python -m pip install --quiet --disable-pip-version-check "$STYXX_VERSION" "PyYAML>=6"
+        fi
+    - name: The gate
+      id: gate
+      shell: bash
+      env:
+        STYXX_VERSION: ${{ inputs.styxx-version }}
+        STYXX_ROOT: ${{ github.action_path }}/..
+        STYXX_FAIL_ON: ${{ inputs.fail-on }}
+        STYXX_SUGGEST: ${{ inputs.suggest }}
+        STYXX_ANNOTATE: ${{ inputs.annotate }}
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        set -euo pipefail
+        if [ "$STYXX_VERSION" = "action" ]; then
+          export PYTHONPATH="$STYXX_ROOT${PYTHONPATH:+:$PYTHONPATH}"
+        fi
+        python -m styxx.ciaudit.action

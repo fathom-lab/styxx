@@ -92,6 +92,41 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-11: one click from loud — `ci-audit` as a GitHub Action
+
+**`uses: fathom-lab/styxx/ci-audit@<ref>`** (`ci-audit/action.yml`, driver
+`styxx/ciaudit/action.py`): the gate on the change that triggered the workflow — on
+`pull_request`, GitHub's test merge against its first parent (what merging would bring), read from
+the default depth-1 checkout with the one commit it needs fetched by name; `merge_group`; `push`.
+It puts an error annotation on the exact line that hides each new check (the `continue-on-error:`
+key, or the `run:` block), writes the verified repairs into the job summary as diffs, sets
+`fires`/`new-hidden`/`measured`/`receipt` outputs and writes a JSON receipt; with `suggest: true`
+(and `pull-requests: write`) it posts each verified repair as a review suggestion that applies
+with one click — once per check, found again by its marker on re-runs; a fork's read-only token is
+reported, not an error. It runs styxx from its own ref with only numpy and PyYAML installed
+(`styxx-version: action`), refuses `pull_request_target`, drops every token from its environment
+before it reads the change, prints the change's own text only inside a `stop-commands` region,
+checks both revisions are comparable before it reads (an unreadable pair is loud, never an empty
+change), and exits 2 — never 0 — when it could not run. Its own steps pass the gate it runs
+(tested). This repository's `ci-audit.yml` now runs it on its own pull requests.
+
+**VALID, 7/8** (`RESULT_swallow11_one_click_from_loud_2026_09_22.md`; prereg frozen at
+`1017fac9…`; one run). Every firing change of the SWALLOW-7, -9 and -10 receipts — 139 changes, 220
+hidden checks — replayed through the functions the Action ships: **the product re-read all 139 and
+found exactly the receipts' hidden checks in each; it located the hiding line for all 220, inside
+the change's diff for 207; all 171 verified repairs were rebuilt and reproduced line for line by
+their suggestion; 159 of 220 (72%) are one click away — 121 of them one line — and in pull
+requests 70 of 73.** The miss (P6, the other way): an acquired check is always one click away,
+because the change itself wrote the line that hides it; a born-hidden check less often, for want
+of a verified repair rather than a place to put it. A correction found after scoring, before
+merge: the population held one change twice — `ruvnet/ruv-FANN` #44 and #48, two pull requests
+with one base and one head — and the numbers above count it once (`swallow11_once.py`); the scored
+file keeps the rule as frozen (226 checks, 165 one click, 76 of 79); no verdict moves. And after
+the run, CI's encoding guard caught one text-mode subprocess call in `action.py` without a pinned
+encoding (`readable()`'s `git diff --quiet`); it is pinned, and the replay re-run with the shipped
+file is the scored receipt in every pair and check (`swallow11_rerun_receipt.json.gz`, held by
+`tests/test_harness_one_click.py`).
+
 ## [Unreleased] — SWALLOW-10: the baseline — and `styxx ci-audit --pr N`
 
 Compared with what? `benchmarks/harness_mutation/human_prs.py` samples, in the 609 repositories

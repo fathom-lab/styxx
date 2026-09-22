@@ -1,0 +1,290 @@
+{
+ "receipt_sha256": "d84c70ec8b66301f330af18a81c8488fc51fe98b026d2da4b7379e708b045229",
+ "rule": "each (repository, base, head) once",
+ "repeated": [
+  {
+   "repo": "ruvnet/ruv-FANN",
+   "numbers": [
+    44,
+    48
+   ],
+   "source": "swallow10",
+   "group": "human",
+   "base": "88f7d70b9288",
+   "head": "618237162130",
+   "checks": 6
+  }
+ ],
+ "as_frozen": {
+  "pairs": 140,
+  "re_read": 140,
+  "reproduced": 140,
+  "checks": 226,
+  "repos": 60,
+  "repos_with_a_one_click_fix": 52,
+  "predictions": {
+   "P1": {
+    "hit": true,
+    "located": [
+     226,
+     226
+    ],
+    "target": {
+     "continue-on-error": 96,
+     "job continue-on-error": 23,
+     "run": 107
+    }
+   },
+   "P2": {
+    "hit": true,
+    "visible": [
+     213,
+     226
+    ]
+   },
+   "P3": {
+    "hit": true,
+    "one_click": [
+     165,
+     226
+    ],
+    "why_not": {
+     "outside the change's diff": 12,
+     "no verified repair": 49
+    }
+   },
+   "P4": {
+    "hit": true,
+    "one_click_of_rebuilt": [
+     165,
+     177
+    ],
+    "reproduced": [
+     177,
+     177
+    ]
+   },
+   "P5": {
+    "hit": true,
+    "at_most_3": [
+     133,
+     165
+    ],
+    "one_line": 124
+   },
+   "P6": {
+    "hit": false,
+    "born_hidden": [
+     131,
+     177
+    ],
+    "acquired": [
+     32,
+     32
+    ]
+   },
+   "P7": {
+    "hit": true,
+    "pull_requests": [
+     76,
+     79
+    ],
+    "mainline": [
+     89,
+     147
+    ]
+   },
+   "P8": {
+    "hit": true,
+    "people": [
+     31,
+     32
+    ],
+    "agents": [
+     25,
+     27
+    ],
+    "agent_signed": [
+     20,
+     20
+    ]
+   }
+  },
+  "hits": 7,
+  "by_repair": {
+   "both": [
+    4,
+    4
+   ],
+   "guard-status": [
+    13,
+    13
+   ],
+   "no-continue-on-error": [
+    83,
+    94
+   ],
+   "no-default": [
+    15,
+    16
+   ],
+   "strict-shell": [
+    50,
+    50
+   ]
+  },
+  "sizes": {
+   "1": 124,
+   "2": 2,
+   "3": 7,
+   "4": 5,
+   "5": 2,
+   "6": 12,
+   "7": 1,
+   "8": 1,
+   "10": 1,
+   "11": 1,
+   "12": 1,
+   "14": 5,
+   "15": 1,
+   "38": 1,
+   "45": 1
+  }
+ },
+ "each_change_once": {
+  "pairs": 139,
+  "re_read": 139,
+  "reproduced": 139,
+  "checks": 220,
+  "repos": 60,
+  "repos_with_a_one_click_fix": 52,
+  "predictions": {
+   "P1": {
+    "hit": true,
+    "located": [
+     220,
+     220
+    ],
+    "target": {
+     "continue-on-error": 94,
+     "job continue-on-error": 22,
+     "run": 104
+    }
+   },
+   "P2": {
+    "hit": true,
+    "visible": [
+     207,
+     220
+    ]
+   },
+   "P3": {
+    "hit": true,
+    "one_click": [
+     159,
+     220
+    ],
+    "why_not": {
+     "outside the change's diff": 12,
+     "no verified repair": 49
+    }
+   },
+   "P4": {
+    "hit": true,
+    "one_click_of_rebuilt": [
+     159,
+     171
+    ],
+    "reproduced": [
+     171,
+     171
+    ]
+   },
+   "P5": {
+    "hit": true,
+    "at_most_3": [
+     129,
+     159
+    ],
+    "one_line": 121
+   },
+   "P6": {
+    "hit": false,
+    "born_hidden": [
+     125,
+     171
+    ],
+    "acquired": [
+     32,
+     32
+    ]
+   },
+   "P7": {
+    "hit": true,
+    "pull_requests": [
+     70,
+     73
+    ],
+    "mainline": [
+     89,
+     147
+    ]
+   },
+   "P8": {
+    "hit": true,
+    "people": [
+     25,
+     26
+    ],
+    "agents": [
+     25,
+     27
+    ],
+    "agent_signed": [
+     20,
+     20
+    ]
+   }
+  },
+  "hits": 7,
+  "by_repair": {
+   "both": [
+    4,
+    4
+   ],
+   "guard-status": [
+    12,
+    12
+   ],
+   "no-continue-on-error": [
+    80,
+    91
+   ],
+   "no-default": [
+    14,
+    15
+   ],
+   "strict-shell": [
+    49,
+    49
+   ]
+  },
+  "sizes": {
+   "1": 121,
+   "2": 2,
+   "3": 6,
+   "4": 5,
+   "5": 2,
+   "6": 11,
+   "7": 1,
+   "8": 1,
+   "10": 1,
+   "11": 1,
+   "12": 1,
+   "14": 4,
+   "15": 1,
+   "38": 1,
+   "45": 1
+  }
+ }
+}
