@@ -299,10 +299,12 @@ python papers/harness/swallow11_score.py
 ```
 
 `papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md` (VALID, 7/8): the product
-re-read all 140 changes and found exactly the receipts' hidden checks in each; it located the
-hiding line for all 226 checks, 213 inside the change's diff; all 177 verified repairs were rebuilt
-and reproduced by their suggestion; 165 of 226 (73%) are one click away, 124 of them a single line,
-and in pull requests 76 of 79. The miss: an acquired check is always one click (the change wrote
+re-read all 139 changes and found exactly the receipts' hidden checks in each; it located the
+hiding line for all 220 checks, 207 inside the change's diff; all 171 verified repairs were rebuilt
+and reproduced by their suggestion; 159 of 220 (72%) are one click away, 121 of them a single line,
+and in pull requests 70 of 73. The miss: an acquired check is always one click (the change wrote
 the hiding line), a born-hidden one less often — for want of a verified repair, not of a place to
-put it. `one_click.py` is frozen at `047a1123…` and pinned, with `action.py` at `a9615d9b…`, by its
+put it. The population as frozen held one change twice (two pull requests, one base, one head);
+these numbers count it once — `papers/harness/swallow11_once.py` — and the scored file keeps the
+rule as frozen. `one_click.py` is frozen at `047a1123…` and pinned, with `action.py` at `a9615d9b…`, by its
 test.
