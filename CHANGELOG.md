@@ -121,7 +121,11 @@ because the change itself wrote the line that hides it; a born-hidden check less
 of a verified repair rather than a place to put it. A correction found after scoring, before
 merge: the population held one change twice — `ruvnet/ruv-FANN` #44 and #48, two pull requests
 with one base and one head — and the numbers above count it once (`swallow11_once.py`); the scored
-file keeps the rule as frozen (226 checks, 165 one click, 76 of 79); no verdict moves.
+file keeps the rule as frozen (226 checks, 165 one click, 76 of 79); no verdict moves. And after
+the run, CI's encoding guard caught one text-mode subprocess call in `action.py` without a pinned
+encoding (`readable()`'s `git diff --quiet`); it is pinned, and the replay re-run with the shipped
+file is the scored receipt in every pair and check (`swallow11_rerun_receipt.json.gz`, held by
+`tests/test_harness_one_click.py`).
 
 ## [Unreleased] — SWALLOW-10: the baseline — and `styxx ci-audit --pr N`
 
