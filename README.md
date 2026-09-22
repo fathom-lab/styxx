@@ -89,7 +89,7 @@ Fails only on a contradicted claim.
 **And the gate on the checks themselves — the one that fails when a change makes CI unable to fail:**
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@v5
 - uses: fathom-lab/styxx/ci-audit@main    # a new `|| true` / continue-on-error / fail-open guard: the line marked, the verified fix one click away
 ```
 
