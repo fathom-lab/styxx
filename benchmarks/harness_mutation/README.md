@@ -222,3 +222,33 @@ and bring 49 of the 147 newly hidden checks; 0.76% of agent commits fire against
 person's (1.64×, short of the 2× predicted; 1.27× within 2025–2026); none of 1,690 dependency
 and release bot commits fires; the agent's hidden check is repaired no worse (73% vs 66%).
 `authorship.py` is frozen at the sha256 that receipt names (`c3fb6e42…`) and pinned by its test.
+
+## The agent's pull request at the gate (SWALLOW-9)
+
+`agent_prs.py` runs SWALLOW-7's gate on the pull requests AIDev (Zenodo record 16919272) lists
+for five coding agents — OpenAI Codex, Copilot, Devin, Cursor, Claude Code, with the agent named
+by GitHub's own attribution and whether a person merged it — on every one whose own commits touch
+a hand-written workflow. HEAD is `refs/pull/N/head` as GitHub keeps it, checked against the
+dataset's commit list; BASE is what that list implies — the parents of the pull request's commits
+that are not its commits, the base branch as the pull request last saw it, whatever branch that
+is; the gate reads only the workflows the dataset says the pull request changed, and a pull
+request whose git diff is larger than the dataset's count is *suspect*. For a merged pull request
+that fires, each check is looked for at the default branch's tip. The receipt carries repository,
+number, agent, state, shas and the gate's records — no name, no address, no text beyond the
+acknowledgement word.
+
+```
+python -m benchmarks.harness_mutation.agent_prs --aidev <dir> --population-out papers/harness/swallow9_population.json
+python -m benchmarks.harness_mutation.agent_prs --population papers/harness/swallow9_population.json.gz --work <clones> --workers 3 --out receipt.json
+python papers/harness/swallow9_score.py
+```
+
+`papers/harness/RESULT_swallow9_the_agents_pull_request_at_the_gate_2026_09_21.md` (VALID on its
+gates, 2/8; two runs stated — the first's base rule compared a pull request into `dev` with
+`main` and was amended): of 2,123 audited pull requests the gate fires on 17 (0.8%; 1.2% of the
+1,407 with a workflow change of their own), bringing 24 hidden checks; a person merged 9 of the
+17 (53%) against 77% of the rest; 22 of 24 have a verified repair; only 6 carry
+`continue-on-error` — the rest are `|| true`, `|| echo` defaults, `set +e` and fail-open
+queries; Claude Code's pull requests fire most (3 of 49, one bringing seven checks), Copilot's
+least (3 of 516); of the 9 checks merged into a default branch, 2 are still hidden today.
+`agent_prs.py` is frozen at the sha256 that receipt names (`ec9ef750…`) and pinned by its test.
