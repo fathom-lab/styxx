@@ -2,7 +2,7 @@
 """The GitHub Action for `styxx ci-audit`: the gate on the change that triggered the workflow, the
 check it hides marked on its own line, and the verified repair one click away.
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: fathom-lab/styxx/ci-audit@main
 
 It reads the event payload from GITHUB_EVENT_PATH (no event text ever reaches a shell), works out
@@ -59,6 +59,7 @@ from . import repair_structural as RS
 
 SCHEMA = "styxx.ci-audit-action/v1"
 MARK = "styxx-ci-audit"
+ALREADY = "already suggested on this pull request"
 ZERO = "0" * 40
 TOKEN_ENV = ("GH_TOKEN", "GITHUB_TOKEN", "INPUT_GITHUB-TOKEN", "INPUT_GITHUB_TOKEN", "ACTIONS_RUNTIME_TOKEN",
              "ACTIONS_ID_TOKEN_REQUEST_TOKEN", "ACTIONS_ID_TOKEN_REQUEST_URL")
@@ -296,6 +297,19 @@ def annotation(level: str, message: str, title: str, path: Optional[str] = None,
     return f"::{level} {','.join(props)}::{esc_data(message)}"
 
 
+PER_LEVEL = 10      # GitHub keeps at most ten annotations of each level from one step (the actions toolkit's documented limit)
+
+
+def plan_annotations(items: list[dict], first: str) -> list[tuple[Optional[str], int, dict]]:
+    """The level each check's annotation is written at. GitHub keeps ten annotations of each level
+    from one step and drops the rest, so the checks whose line is inside the change's diff come
+    first, and after the first ten at `first` come ten warnings, then ten notices; beyond that a
+    check is in the job summary only (level None). Returns (level, rank, item) in reading order."""
+    levels = [first] + [lv for lv in ("warning", "notice") if lv != first]
+    order = sorted(range(len(items)), key=lambda k: (not items[k].get("in_diff"), k))
+    return [(levels[r // PER_LEVEL] if r // PER_LEVEL < len(levels) else None, r, items[k]) for r, k in enumerate(order)]
+
+
 def code(s: str) -> str:
     """An inline code span that no backtick, pipe or newline in `s` can break out of."""
     s = str(s).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
@@ -443,7 +457,7 @@ def suggest(tree: Path, rec: dict, res: dict, token: str, repo: str, api_url: st
                     if len(body) < 100:
                         break
             if any(f"{MARK}:suggest:{key}" in b for b in existing):
-                o["why"] = "already suggested on this pull request"
+                o["why"] = ALREADY
                 continue
             payload = {"body": suggestion_body(x, w, s, key), "commit_id": pr_head, "path": w["path"], "line": s["line"], "side": "RIGHT"}
             if s["start_line"] < s["line"]:
@@ -493,14 +507,16 @@ def main(argv: Optional[list[str]] = None) -> int:
         return 0 if fail_on == "never" else 2
 
     located: dict = {}
-    notes = []
+    items = []
+    renamed = {ch["path"]: ch["from"] for ch in D.changed_workflows(tree, res["base"], res["head"])} if rec.get("new_hidden") else {}
     for w in rec.get("workflows", []):
         text = D._text(tree, rec["head"], w["path"]) if w.get("new_hidden") else None
+        diff = hunks(tree, res["base"], res["head"], w["path"], before=renamed.get(w["path"])) if w.get("new_hidden") else []
         for x in w.get("new_hidden", []):
             pos = positions(text, x["job"], x["index"]) if text is not None else None
             if pos is None:                                   # the file, not the line: still an annotation on it
-                notes.append(annotation(level_err, f"{x['verdict']}: {x.get('name') or x['step']} ({x['job']}) hides its own failure — {_what(x)}.",
-                                        "styxx ci-audit — a check that hides its own failure", w["path"]))
+                items.append({"path": w["path"], "line": None, "end": None, "in_diff": False,
+                              "message": f"{x['verdict']}: {x.get('name') or x['step']} ({x['job']}) hides its own failure — {_what(x)}."})
                 continue
             a, b, what = target(pos, x)
             located[(w["path"], x["job"], x["index"])] = (a, b, what)
@@ -509,14 +525,23 @@ def main(argv: Optional[list[str]] = None) -> int:
                         if fx.get("verified_repair") else " No verified repair.")
             msg = (f"{x['verdict']}: the step '{x.get('name') or x['step']}' in job '{x['job']}' hides its own failure — {_what(x)}. "
                    f"If `{x.get('run_head') or 'its tools'}` fails, the job stays green.{fix_line}")
-            notes.append(annotation(level_err, msg, "styxx ci-audit — a check that hides its own failure", w["path"], a, b))
+            items.append({"path": w["path"], "line": a, "end": b, "in_diff": within((a, a), diff), "message": msg})
+    notes, levels_used = [], {}
+    for level, rank, it in plan_annotations(items, level_err):
+        levels_used[level or "summary only"] = levels_used.get(level or "summary only", 0) + 1
+        if level is None:
+            continue
+        msg = it["message"] + (f" (Annotation {rank + 1} of {len(items)}: GitHub keeps {PER_LEVEL} of each level from one step, so this one is a {level}.)"
+                               if level != level_err else "")
+        notes.append(annotation(level, msg, "styxx ci-audit — a check that hides its own failure", it["path"], it["line"], it["end"]))
 
     sugg = suggest(tree, rec, res, token, env.get("GITHUB_REPOSITORY", ""), env.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")) \
         if want_suggest and rec.get("new_hidden") and res.get("pr") is not None else []
     rec_out = {"schema": SCHEMA, "event": event_name, "base": res.get("base"), "head": res.get("head"), "reading": res.get("reading"),
                "pr": res.get("pr"), "fires": rec["fires"], "new_hidden": rec["new_hidden"], "removed_hidden": rec["removed_hidden"],
                "still_hidden": rec["still_hidden"], "hidden_after_unread": rec.get("hidden_after_unread", 0), "workflows": rec["workflows"],
-               "lines": {f"{k[0]}::{k[1]}::{k[2]}": v for k, v in located.items()}, "suggestions": sugg, "seconds": round(time.time() - t0, 2),
+               "lines": {f"{k[0]}::{k[1]}::{k[2]}": v for k, v in located.items()}, "annotations": levels_used, "suggestions": sugg,
+               "seconds": round(time.time() - t0, 2),
                "fail_on": fail_on}
     receipt = str(receipt_path)
     try:
@@ -534,9 +559,14 @@ def main(argv: Optional[list[str]] = None) -> int:
             print(ln)
     posted = [o for o in sugg if o.get("posted")]
     if sugg:
+        already = sum(1 for o in sugg if o.get("why") == ALREADY)
         print(f"styxx ci-audit: {len(posted)} suggestion{'s' if len(posted) != 1 else ''} posted"
-              + "".join(f"; {o['path']} {o['step']}: {o['why']}" for o in sugg if not o.get("posted") and o.get("why")))
-    _write(env.get("GITHUB_STEP_SUMMARY"), summary_md(rec, res, located)
+              + (f"; {already} already on this pull request" if already else "")
+              + "".join(f"; {o['path']} {o['step']}: {o['why']}" for o in sugg if not o.get("posted") and o.get("why") and o["why"] != ALREADY))
+    over = (f"\n{len(items)} checks: GitHub keeps {PER_LEVEL} annotations of each level from one step, so they are written as "
+            + ", ".join(f"{v} {k}{'s' if v != 1 and k != 'summary only' else ''}" for k, v in levels_used.items())
+            + " — the checks inside the change's diff first. Every check is in the table above.\n") if len(items) > PER_LEVEL and want_annotate else ""
+    _write(env.get("GITHUB_STEP_SUMMARY"), summary_md(rec, res, located) + over
            + (f"\n{len(posted)} one-click suggestion{'s' if len(posted) != 1 else ''} posted on the pull request.\n" if posted else ""))
     outputs(fires="true" if rec["fires"] else "false", **{"new-hidden": rec["new_hidden"], "workflows-changed": len(rec.get("workflows", [])),
                                                             "measured": "true", "receipt": receipt})

@@ -306,5 +306,30 @@ and in pull requests 70 of 73. The miss: an acquired check is always one click (
 the hiding line), a born-hidden one less often — for want of a verified repair, not of a place to
 put it. The population as frozen held one change twice (two pull requests, one base, one head);
 these numbers count it once — `papers/harness/swallow11_once.py` — and the scored file keeps the
-rule as frozen. `one_click.py` is frozen at `047a1123…` and pinned, with the shipped `action.py` at `c642493d…`
-(one encoding pin after the run; the re-run receipt is the scored one in every check), by its test.
+rule as frozen. `one_click.py` is frozen at `047a1123…` and pinned by its test, with the ten functions of `action.py`
+the replay called pinned by their source (as of `c642493d…`, one encoding pin after the run; the
+re-run receipt is the scored one in every check).
+
+## The click, live (SWALLOW-12)
+
+SWALLOW-11's one click was the documented rule. `live_click.py` puts it to GitHub: `files` writes
+a pull request made for it — eighteen workflow files, fifteen carrying the suggestion shapes the
+replay found and three controls, every one on `workflow_dispatch` only — and `plan` runs the
+Action offline on that change exactly as GitHub will (a depth-1 checkout of the test merge, the
+event, the review API answered by the rule), again on the same head, and on the head with every
+placed suggestion applied. The live run is the plan's procedure on a real pull request; `receipt`
+reads GitHub's comments, annotations and commits back against it.
+
+```
+python -m benchmarks.harness_mutation.live_click files --out <dir>
+python -m benchmarks.harness_mutation.live_click plan --out papers/harness/swallow12_plan.json
+python -m benchmarks.harness_mutation.live_click receipt --plan papers/harness/swallow12_plan.json --observed papers/harness/swallow12_observed.json --clone <clone> --out papers/harness/swallow12_receipt.json
+python papers/harness/swallow12_score.py
+```
+
+`papers/harness/RESULT_swallow12_the_click_live_2026_09_22.md` (VALID, 8/8): GitHub accepted the
+16 suggestions the rule places and refused its 2; the re-run posted nothing; one "Commit
+suggestions" made the 15 files the planned text byte for byte, a file without a final newline kept
+without one; the Action then reported exactly the three controls, and GitHub kept all 19 of its
+annotations (ten errors, nine warnings). `live_click.py` is frozen at `83be2100…` and pinned by its
+test, which also holds the committed plan to the instrument.

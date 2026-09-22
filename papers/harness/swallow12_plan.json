@@ -1,0 +1,1184 @@
+{
+ "action_sha256": "e0cb518ed10002c634f0ebb64e95219d320a8212647ee817ebd58605bb9fa55c",
+ "action_yml_sha256": "83d14bc1558f4098c39d69f18acfa33dd0b1349036e9cc2f90db3a18f1e3cd93",
+ "base_workflow_sha256": "97ac5c80311c663236261acf2803f6cb9725ec7d0b13d8dbaa875f5d2de6e815",
+ "differential_living_sha256": "95f6ccf1f981a21882af152296d4ae6cd1f27c0d3a12fe66a3d22ea46b321428",
+ "expected_files": {
+  ".github/workflows/s12-01-coe-step-acquired.yml": {
+   "final_newline": true,
+   "lines_sha256": "3d83d84e1e00d5d3791ddab7da2d0fc6c5b29877c45b9c9ccc252ddb1fb03584",
+   "sha256": "cc598436c1966e8f6b729f43d884c64c0520f8405d859eb71a209c5c0e78ab84",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-02-coe-step-born.yml": {
+   "final_newline": true,
+   "lines_sha256": "36dd1fd37dd1a94185d795471b41929456556906b3f839c49d9aa84bacc409b1",
+   "sha256": "8d8ee60ec66c67d97c9749c2a14aae17fbf75735c132caa71d2c1fa7d2997808",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-03-coe-job-born.yml": {
+   "final_newline": true,
+   "lines_sha256": "279d5773b76595c2830c46e2c9e6974a4a985bcc620843afcb5e627bf28b3714",
+   "sha256": "befb98d1c10ca35bf2a44b3b13da845724614f145ced3ab2590ee7f734b5dc72",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-04-coe-step-eof.yml": {
+   "final_newline": true,
+   "lines_sha256": "b27ef1f37263011a8276a22b0c2951324eecbb9de527deab64f90561ee6b8899",
+   "sha256": "43269278111b0fab139749bcc4f98351c2dc65ee2dd3b4a18bcb18f2fb2cf7a1",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-05-strict-one-line.yml": {
+   "final_newline": true,
+   "lines_sha256": "d96d53d76eb4b5a622d2bb8530c8c5fbcaf25617d6ec04a8b8de806f1fd90e33",
+   "sha256": "54bd812f18e71ab008dd4c6db14bb9738085a7d1ad2b2f7a68db93eff1da0d49",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-05b-strict-acquired.yml": {
+   "final_newline": true,
+   "lines_sha256": "620e2b2d0a260345791dfdb8c86e7a83730ed47609bd0c6ce514e30d855e39a0",
+   "sha256": "f065f9bc16d4707a6de44a854ea3eaa9aa8735345428bf444319c645baeed49b",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-06-strict-multi.yml": {
+   "final_newline": true,
+   "lines_sha256": "1c94e53940348b70c0a724c1e61b0f235b56b35230764331c10c33425cb7da35",
+   "sha256": "af8292cbac53d69ce63eca3a08be025cab53f451d73b2b15a1d06c376e22f0d1",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-06b-strict-ws-line.yml": {
+   "final_newline": true,
+   "lines_sha256": "a3355a90d8ad4784d76b71ff7617f384fd15f234c04e810da3bb40fce108252a",
+   "sha256": "5a47ce215528ec82c696d1a8b5bb1cfe60e35ab2a921aab2f38298d8eb258174",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-07-strict-eof.yml": {
+   "final_newline": true,
+   "lines_sha256": "1046b1dc9eb2c1e4ce8f1546efbe75c6c014161b0cbd73c880d4cbd470bfbbdf",
+   "sha256": "33f4dc7daee2ff679cf0f0f7738d9fa607ce78e8e30f7816c32ce014fcdfb253",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-08-strict-eof-no-newline.yml": {
+   "final_newline": false,
+   "lines_sha256": "aff8558b6314209e4d9ff9689a30329680dcae55f3b6e87a2b9a03c19e261b79",
+   "sha256": "aff8558b6314209e4d9ff9689a30329680dcae55f3b6e87a2b9a03c19e261b79",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-09-no-default.yml": {
+   "final_newline": true,
+   "lines_sha256": "94ff8025df1566b4e8dd2ce975f5ac2735c59b9b1da7e2b2bd1e5287ba0a4509",
+   "sha256": "021bf40d36302900a3d9f4eba8f34f25c310087f2fe89d032383218971d65f75",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-09b-no-default-block.yml": {
+   "final_newline": true,
+   "lines_sha256": "a26c06d1bf5aef10e157b5a4a5892091d1165d8ecb57b31948da55e1d6ffde5c",
+   "sha256": "4d7b5996bb846e1d3c0e9d0fcfa6c6572f7957ace4f19e30cea85ca63b5872de",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-10-guard.yml": {
+   "final_newline": true,
+   "lines_sha256": "79695701722b17e0cd2723045a50d938751ba54cd73c46500dcaf84d8d337e53",
+   "sha256": "a8aba0bc134e2c4a73c0a0358fd1987b7b5ae09ca5aff88630e8b5e3d5a5bdca",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-11-both.yml": {
+   "final_newline": true,
+   "lines_sha256": "911a767703608757d47a812dc148c83bc4f7a3c50dc16804eba361c10d19a3d0",
+   "sha256": "392e660a78e9b539e1ba0573c0af1958e46c41fc086382d978a403301f65833c",
+   "suggestions": 1
+  },
+  ".github/workflows/s12-14-two-in-one.yml": {
+   "final_newline": true,
+   "lines_sha256": "f66e42137bcbe93957a5dc6cc3ecfed03b00b5a4e07f26f0438fe2e816dcbfbf",
+   "sha256": "abad7801522a75802e24146d489e593b51395c4d2872d3133ddec90cb9744fe6",
+   "suggestions": 2
+  }
+ },
+ "fixtures": {
+  "s12-01-coe-step-acquired.yml": {
+   "base_sha256": "cc598436c1966e8f6b729f43d884c64c0520f8405d859eb71a209c5c0e78ab84",
+   "head_sha256": "e9b9a8271a457edc026df700a1b3a142ae7d990fea488fbc988dd25e401c27f6",
+   "why": "the step's continue-on-error added to an existing check (acquired): an empty suggestion"
+  },
+  "s12-02-coe-step-born.yml": {
+   "base_sha256": "aec2c0d971304d943b52a3863bf9c15ebdb9de8980623833cd6e6bb5e8c46670",
+   "head_sha256": "4ccd8006bb22529b679253e15faa6fda979adf40c893defe8d796a2544665f59",
+   "why": "a new check written with the step's continue-on-error (born hidden), mid-file"
+  },
+  "s12-03-coe-job-born.yml": {
+   "base_sha256": "e86ff810c7a23f33d24b7ae33ac702d5239bf0e9fd756e9da7078796c8a9b486",
+   "head_sha256": "712aad028fdcdfae862aa2b5bcbcb4d25e761adde7bbde59fe3fac35e334f793",
+   "why": "a new job written with the job's continue-on-error"
+  },
+  "s12-04-coe-step-eof.yml": {
+   "base_sha256": "dca01206be7264e87be007f5a0312b981b0609de5ff8b1bc94b9371153c8aec6",
+   "head_sha256": "b350c3c5de809dcc08a00b089e71f0e8eb3f9d1c52b6368ab114a198d530ab6c",
+   "why": "the hiding line is the file's last line"
+  },
+  "s12-05-strict-one-line.yml": {
+   "base_sha256": "0697926d45673afd041519d7b40716a05a7305394b08710ad7e5f7d1e44ea613",
+   "head_sha256": "69606aef4ea9a1b29e1f050900e3bedb3bd78bdea60469419fb7ca2e1c9aae83",
+   "why": "a new one-line check with an or-true: the strict shell, one line to three"
+  },
+  "s12-05b-strict-acquired.yml": {
+   "base_sha256": "0b95b9a1853df62c142e542c69a265652b1c09f75779b9ccb2e0f5fc36960fad",
+   "head_sha256": "e2df215f0ee578c13981f32d6265f6845ebc7234d6cdd8b846006888e247f53e",
+   "why": "an existing check given an or-true (acquired): the strict shell"
+  },
+  "s12-06-strict-multi.yml": {
+   "base_sha256": "b490858710d7f97ec095506e3ec422d36288d47c6de8e9d9e9a731fecca19792",
+   "head_sha256": "9b8d02256d1a3c4b72d91537ffe0e8be1ef277d44342bffc70ba8db76b950679",
+   "why": "a block with `set +e` and an or-true: the strict shell over several lines"
+  },
+  "s12-06b-strict-ws-line.yml": {
+   "base_sha256": "56e016363d917ba40b94b5cce2ffeed3e0c99c597f3d7c357cdf4fc6bdecc661",
+   "head_sha256": "c23d67193a96583cb3881f9e2c4d884af051104a866e6254195374fde9a264ce",
+   "why": "a block ending in a whitespace-only line: the strict shell deletes it"
+  },
+  "s12-07-strict-eof.yml": {
+   "base_sha256": "0d329e273bffd7be92ad515dd8d32b48ae5d36c38b07cd8f444d25ec7d6cbbe8",
+   "head_sha256": "624b3f7a82c1d9c024a8b37b46fd9eb81556e381c496016544710f59b4a80666",
+   "why": "the strict shell on the last line of a file that ends in a newline"
+  },
+  "s12-08-strict-eof-no-newline.yml": {
+   "base_sha256": "746c479fa35c819d32f10d322f8f8ba205f27991954d5e58fbf75f24eafe8403",
+   "head_sha256": "a0411cec0867395b9d0940be214a71aab8794e25a941f88d268b9fe67773070e",
+   "why": "the strict shell on the last line of a file with no final newline"
+  },
+  "s12-09-no-default.yml": {
+   "base_sha256": "04c0e88ecbce87919873f557c31e17f23ec8ce8619494c730f65d7afc2d09105",
+   "head_sha256": "79a107aa22991de51d91eac1f5ca6fc989d46c5d2f8f8b92a14fdf11958cbf4d",
+   "why": "a check whose `|| echo` default is the green path, one line"
+  },
+  "s12-09b-no-default-block.yml": {
+   "base_sha256": "fc53ba4b9aee42363de246bbb262826c40108f1fc17931f2c93cc695848b11a6",
+   "head_sha256": "28a12c805f4dee3c5c3c67fcf2c42b146b2cdc45489feb643a7e1f2df1c02500",
+   "why": "the same default ending a continued command in a block"
+  },
+  "s12-10-guard.yml": {
+   "base_sha256": "91200db4b07c9ec184e565e8aaf5c3274f849d3250e160ebfe656506d370d758",
+   "head_sha256": "094e2380c5062e686f992b9429ee3791f543e67e88aa559af9c9c7e909ebd8ae",
+   "why": "a guard whose failing tool reads as its green path"
+  },
+  "s12-11-both.yml": {
+   "base_sha256": "97d892bed172dbda1850b9dd0b5077c89974ff027886f84714832d6b423aea8b",
+   "head_sha256": "be16d4d9b7f16ca8fad24bdd653586dc297ed6352bd072c1c621c9b1a4c84550",
+   "why": "continue-on-error and an or-true on one step: both edits"
+  },
+  "s12-12-outside-diff.yml": {
+   "base_sha256": "45122b6b9ede6b83e74b45991febfe8a18c24af90c829063f7a48807d1d8c698",
+   "head_sha256": "2c6165a17ccb5462ccc4d594668af638009e60da1cfda208e3125b7b3c04253c",
+   "why": "control: the job was already continue-on-error; the repair's line is outside the change's diff"
+  },
+  "s12-12b-span-leaves-hunk.yml": {
+   "base_sha256": "29326e916951b8564d6ef5cdbdf769a5862edee16747403d04175d72a3e7b14a",
+   "head_sha256": "dafd53f7e978540f56abba6a1a0e44f624d8bdcd19c7687c3f1b039781583752",
+   "why": "control: an or-true appended far below `run: |`; the repair's lines leave the hunk"
+  },
+  "s12-13-no-repair.yml": {
+   "base_sha256": "1dad78fd1b63342e6b33ab3a2c4f87d0452483e71b8947c3d4257e848dc8bb2f",
+   "head_sha256": "cbfee12007af9d3d644bc19dfd924331fff049be5175b260057f2d7cc4d6fc49",
+   "why": "control: a check hidden by `|| exit 0`, which no repair family reaches"
+  },
+  "s12-14-two-in-one.yml": {
+   "base_sha256": "da5c3ed9460e82be8b9a4498992c04189d1e63eb329d82b5a7fdcc880dea3148",
+   "head_sha256": "6314e00f43ed6224f3fa732cbb1eb5170d7e183b1eb467e0a83c9427f23dfc1a",
+   "why": "two checks in one file: two suggestions, committed in one batch"
+  }
+ },
+ "instrument_sha256": "83be210029e8c647f6e6f20eafafe4b0de6b97002d7cc40cbaf3a792c520577c",
+ "live_workflow_sha256": "95c2e1dc54bce14157d7a345afb4a41c34023bcb6f8828d4abeebd08b40666a0",
+ "runs": {
+  "again": {
+   "annotation_levels": {
+    "error": 10,
+    "warning": 9
+   },
+   "annotations": [
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Unit tests' in job 'test' hides its own failure \u2014 acquired: continue-on-error. If `npm test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 18,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Integration tests' in job 'test' hides its own failure \u2014 born hidden (continue-on-error). If `python -m pytest tests/integration -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-02-coe-step-born.yml",
+     "start_line": 18,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'End-to-end tests' in job 'e2e' hides its own failure \u2014 born hidden (continue-on-error). If `npx playwright test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-03-coe-job-born.yml",
+     "start_line": 16,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Clippy' in job 'check' hides its own failure \u2014 born hidden (continue-on-error). If `cargo clippy -- -D warnings` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-04-coe-step-eof.yml",
+     "start_line": 16,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `cargo test --locked || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-05-strict-one-line.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Lint' in job 'lint' hides its own failure \u2014 acquired: or-true. If `npm run lint || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-05b-strict-acquired.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `set +e` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-06-strict-multi.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Load test' in job 'load' hides its own failure \u2014 born hidden. If `k6 run --out json=k6-results.json load-test.js || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `python -m pytest -q || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-07-strict-eof.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'PHPUnit' in job 'test' hides its own failure \u2014 born hidden. If `vendor/bin/phpunit || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Typecheck' in job 'types' hides its own failure \u2014 born hidden. If `npm run typecheck || echo \"type errors, see the log\"` fails, the job stays green. Verified repair: no-default (4 lines; the diff is in the job summary). (Annotation 11 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-09-no-default.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Check links' in job 'links' hides its own failure \u2014 born hidden. If `python scripts/check_links.py             --root docs             --strict || echo \"::warning::some links need attention\"` fails, the job stays green. Verified repair: no-default (3 lines; the diff is in the job summary). (Annotation 12 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-09b-no-default-block.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'No focused tests' in job 'tests' hides its own failure \u2014 born hidden. If `if grep -rn \"it.only(\" tests/; then` fails, the job stays green. Verified repair: guard-status (4 lines; the diff is in the job summary). (Annotation 13 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-10-guard.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden (continue-on-error). If `yarn test --ci || true` fails, the job stays green. Verified repair: both (5 lines; the diff is in the job summary). (Annotation 14 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-11-both.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `python -m pytest -q || exit 0` fails, the job stays green. No verified repair. (Annotation 15 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Type check' in job 'ci' hides its own failure \u2014 born hidden. If `mypy src || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary). (Annotation 16 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Unit tests' in job 'ci' hides its own failure \u2014 born hidden (continue-on-error). If `python -m pytest -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 17 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "start_line": 19,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 10,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'nightly' hides its own failure \u2014 born hidden (continue-on-error). If `cargo +nightly test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 18 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "start_line": 10,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 18,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Integration' in job 'integration' hides its own failure \u2014 acquired: or-true. If `echo \"integration tests\"` fails, the job stays green. Verified repair: strict-shell (3 lines; the diff is in the job summary). (Annotation 19 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "start_line": 13,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    }
+   ],
+   "checks": [
+    {
+     "job": "test",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Unit tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-02-coe-step-born.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Integration tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "e2e",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-03-coe-job-born.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:End-to-end tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "check",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-04-coe-step-eof.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Clippy",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-05-strict-one-line.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "lint",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-05b-strict-acquired.yml",
+     "repair": "strict-shell",
+     "step": "name:Lint",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-06-strict-multi.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "load",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+     "repair": "strict-shell",
+     "step": "name:Load test",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-07-strict-eof.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+     "repair": "strict-shell",
+     "step": "name:PHPUnit",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "types",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-09-no-default.yml",
+     "repair": "no-default",
+     "step": "name:Typecheck",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "links",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-09b-no-default-block.yml",
+     "repair": "no-default",
+     "step": "name:Check links",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "tests",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-10-guard.yml",
+     "repair": "guard-status",
+     "step": "name:No focused tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-11-both.yml",
+     "repair": "both",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "nightly",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "integration",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "repair": "strict-shell",
+     "step": "name:Integration",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "repair": null,
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "ci",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "repair": "strict-shell",
+     "step": "name:Type check",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "ci",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Unit tests",
+     "verdict": "SWALLOWED"
+    }
+   ],
+   "fires": true,
+   "new_hidden": 19,
+   "posts": [
+    {
+     "body_sha256": "232f41b0aba5c7aca479e40857d4fc6ba501b98abdd9dccf667ae08453c575fb",
+     "key": "dcd14fac5933baf4",
+     "line": 10,
+     "lines": [],
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "side": "RIGHT",
+     "start_line": 10,
+     "status": 422
+    },
+    {
+     "body_sha256": "2e5c9c0685ccc289d25b049e02f9bf7e8d975247e12564b875b6509ded9de023",
+     "key": "d1b66d6aca6189c6",
+     "line": 18,
+     "lines": [
+      "          set -eo pipefail",
+      "          echo \"integration tests\"",
+      "          echo \"database: $DATABASE_URL\"",
+      "          echo \"seed: $SEED\"",
+      "          echo \"shard: 1 of 1\"",
+      "          npm run test:integration"
+     ],
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "side": "RIGHT",
+     "start_line": 14,
+     "status": 422
+    }
+   ],
+   "rc": 1,
+   "suggest_line": "styxx ci-audit: 0 suggestions posted; 16 already on this pull request; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+   "summary": "### styxx ci-audit \u2014 19 checks newly hidden: the gate fires\n\nGitHub's test merge, against its first parent (the base branch) \u00b7 base `8f2ebc02` \u2192 test merge `f03106e1` of the pull request's head `be38c0e7` \u00b7 19 workflows changed\n\n| the check | what hides it | verified repair |\n|---|---|---|\n| `s12-01-coe-step-acquired.yml` \u203a `test` \u203a `Unit tests` (line 15) | SWALLOWED \u2014 `acquired: continue-on-error` | `no-continue-on-error`, 1 line |\n| `s12-02-coe-step-born.yml` \u203a `test` \u203a `Integration tests` (line 18) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-03-coe-job-born.yml` \u203a `e2e` \u203a `End-to-end tests` (line 16) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-04-coe-step-eof.yml` \u203a `check` \u203a `Clippy` (line 16) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-05-strict-one-line.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-05b-strict-acquired.yml` \u203a `lint` \u203a `Lint` (line 15) | SWALLOWED \u2014 `acquired: or-true` | `strict-shell`, 4 lines |\n| `s12-06-strict-multi.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-06b-strict-ws-line.yml` \u203a `load` \u203a `Load test` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-07-strict-eof.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-08-strict-eof-no-newline.yml` \u203a `test` \u203a `PHPUnit` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-09-no-default.yml` \u203a `types` \u203a `Typecheck` (line 15) | SWALLOWED \u2014 `born hidden` | `no-default`, 4 lines |\n| `s12-09b-no-default-block.yml` \u203a `links` \u203a `Check links` (line 15) | SWALLOWED \u2014 `born hidden` | `no-default`, 3 lines |\n| `s12-10-guard.yml` \u203a `tests` \u203a `No focused tests` (line 15) | SWALLOWED \u2014 `born hidden` | `guard-status`, 4 lines |\n| `s12-11-both.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `both`, 5 lines |\n| `s12-12-outside-diff.yml` \u203a `nightly` \u203a `Tests` (line 10) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-12b-span-leaves-hunk.yml` \u203a `integration` \u203a `Integration` (line 13) | SWALLOWED \u2014 `acquired: or-true` | `strict-shell`, 3 lines |\n| `s12-13-no-repair.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | none verified |\n| `s12-14-two-in-one.yml` \u203a `ci` \u203a `Type check` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-14-two-in-one.yml` \u203a `ci` \u203a `Unit tests` (line 19) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n\n<details open><summary>the repairs \u2014 each verified: loud under the same fault, the healthy run unchanged</summary>\n\n```diff\n--- a/.github/workflows/s12-01-coe-step-acquired.yml\n+++ b/.github/workflows/s12-01-coe-step-acquired.yml\n@@ -13,5 +13,4 @@\n         run: npm ci\n       - name: Unit tests\n-        continue-on-error: true\n         run: npm test\n       - name: Build\n```\n\n```diff\n--- a/.github/workflows/s12-02-coe-step-born.yml\n+++ b/.github/workflows/s12-02-coe-step-born.yml\n@@ -16,5 +16,4 @@\n       - name: Integration tests\n         run: python -m pytest tests/integration -q\n-        continue-on-error: true\n       - name: Package\n         run: python -m build\n```\n\n```diff\n--- a/.github/workflows/s12-03-coe-job-born.yml\n+++ b/.github/workflows/s12-03-coe-job-born.yml\n@@ -14,5 +14,4 @@\n   e2e:\n     runs-on: ubuntu-latest\n-    continue-on-error: true\n     steps:\n       - uses: actions/checkout@v4\n```\n\n```diff\n--- a/.github/workflows/s12-04-coe-step-eof.yml\n+++ b/.github/workflows/s12-04-coe-step-eof.yml\n@@ -14,3 +14,2 @@\n       - name: Clippy\n         run: cargo clippy -- -D warnings\n-        continue-on-error: true\n```\n\n```diff\n--- a/.github/workflows/s12-05-strict-one-line.yml\n+++ b/.github/workflows/s12-05-strict-one-line.yml\n@@ -13,5 +13,7 @@\n         run: cargo build --locked\n       - name: Tests\n-        run: cargo test --locked || true\n+        run: |\n+          set -eo pipefail\n+          cargo test --locked\n       - name: Docs\n         run: cargo doc --no-deps\n```\n\n```diff\n--- a/.github/workflows/s12-05b-strict-acquired.yml\n+++ b/.github/workflows/s12-05b-strict-acquired.yml\n@@ -13,5 +13,7 @@\n         run: npm ci\n       - name: Lint\n-        run: npm run lint || true\n+        run: |\n+          set -eo pipefail\n+          npm run lint\n       - name: Format\n         run: npx prettier --check .\n```\n\n```diff\n--- a/.github/workflows/s12-06-strict-multi.yml\n+++ b/.github/workflows/s12-06-strict-multi.yml\n@@ -14,6 +14,6 @@\n       - name: Tests\n         run: |\n-          set +e\n+          set -eo pipefail\n           go vet ./...\n-          go test ./... -race -count=1 || true\n+          go test ./... -race -count=1\n           echo \"tests finished\"\n```\n\n```diff\n--- a/.github/workflows/s12-06b-strict-ws-line.yml\n+++ b/.github/workflows/s12-06b-strict-ws-line.yml\n@@ -14,6 +14,6 @@\n       - name: Load test\n         run: |\n-          k6 run --out json=k6-results.json load-test.js || true\n-          \n+          set -eo pipefail\n+          k6 run --out json=k6-results.json load-test.js\n       - name: Report\n         run: echo \"done\"\n```\n\n```diff\n--- a/.github/workflows/s12-07-strict-eof.yml\n+++ b/.github/workflows/s12-07-strict-eof.yml\n@@ -13,3 +13,5 @@\n         run: pip install -e .[test]\n       - name: Tests\n-        run: python -m pytest -q || true\n+        run: |\n+          set -eo pipefail\n+          python -m pytest -q\n```\n\n```diff\n--- a/.github/workflows/s12-08-strict-eof-no-newline.yml\n+++ b/.github/workflows/s12-08-strict-eof-no-newline.yml\n@@ -13,3 +13,5 @@\n         run: composer install\n       - name: PHPUnit\n-        run: vendor/bin/phpunit || true+        run: |\n+          set -eo pipefail\n+          vendor/bin/phpunit\n```\n\n```diff\n--- a/.github/workflows/s12-09-no-default.yml\n+++ b/.github/workflows/s12-09-no-default.yml\n@@ -13,5 +13,7 @@\n         run: npm ci\n       - name: Typecheck\n-        run: npm run typecheck || echo \"type errors, see the log\"\n+        run: |\n+          set -eo pipefail\n+          npm run typecheck\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-09b-no-default-block.yml\n+++ b/.github/workflows/s12-09b-no-default-block.yml\n@@ -14,5 +14,6 @@\n       - name: Check links\n         run: |\n-          python scripts/check_links.py             --root docs             --strict || echo \"::warning::some links need attention\"\n+          set -eo pipefail\n+          python scripts/check_links.py             --root docs             --strict\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-10-guard.yml\n+++ b/.github/workflows/s12-10-guard.yml\n@@ -14,5 +14,7 @@\n       - name: No focused tests\n         run: |\n-          if grep -rn \"it.only(\" tests/; then\n+          __rc=0; grep -rn \"it.only(\" tests/ || __rc=$?\n+          if [ \"$__rc\" -gt 1 ]; then echo \"guard command failed (exit $__rc): grep -rn \\\"it.only(\\\" tests/\" >&2; exit \"$__rc\"; fi\n+          if [ \"$__rc\" -eq 0 ]; then\n             echo \"::error::a focused test was left in\"\n             exit 1\n```\n\n```diff\n--- a/.github/workflows/s12-11-both.yml\n+++ b/.github/workflows/s12-11-both.yml\n@@ -13,6 +13,7 @@\n         run: yarn install --frozen-lockfile\n       - name: Tests\n-        continue-on-error: true\n-        run: yarn test --ci || true\n+        run: |\n+          set -eo pipefail\n+          yarn test --ci\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-12-outside-diff.yml\n+++ b/.github/workflows/s12-12-outside-diff.yml\n@@ -8,5 +8,4 @@\n   nightly:\n     runs-on: ubuntu-latest\n-    continue-on-error: true\n     steps:\n       - uses: actions/checkout@v4\n```\n\n```diff\n--- a/.github/workflows/s12-12b-span-leaves-hunk.yml\n+++ b/.github/workflows/s12-12b-span-leaves-hunk.yml\n@@ -12,9 +12,10 @@\n       - name: Integration\n         run: |\n+          set -eo pipefail\n           echo \"integration tests\"\n           echo \"database: $DATABASE_URL\"\n           echo \"seed: $SEED\"\n           echo \"shard: 1 of 1\"\n-          npm run test:integration || true\n+          npm run test:integration\n       - name: Report\n         if: always()\n```\n\n```diff\n--- a/.github/workflows/s12-14-two-in-one.yml\n+++ b/.github/workflows/s12-14-two-in-one.yml\n@@ -13,5 +13,7 @@\n         run: pip install -e .[dev]\n       - name: Type check\n-        run: mypy src || true\n+        run: |\n+          set -eo pipefail\n+          mypy src\n       - name: Build wheel\n         run: python -m build\n```\n\n```diff\n--- a/.github/workflows/s12-14-two-in-one.yml\n+++ b/.github/workflows/s12-14-two-in-one.yml\n@@ -17,4 +17,3 @@\n         run: python -m build\n       - name: Unit tests\n-        continue-on-error: true\n         run: python -m pytest -q\n```\n\n</details>\n\n<sub>The gate reads only the workflows this change touched, simulating each step's tools failing in a sandbox of stubs: no runner, no token, no code run. RED is loud, not correct. <a href=\"https://github.com/fathom-lab/styxx\">styxx ci-audit</a></sub>\n\n19 checks: GitHub keeps 10 annotations of each level from one step, so they are written as 10 errors, 9 warnings \u2014 the checks inside the change's diff first. Every check is in the table above.\n"
+  },
+  "applied": {
+   "annotation_levels": {
+    "error": 3
+   },
+   "annotations": [
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `python -m pytest -q || exit 0` fails, the job stays green. No verified repair.",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 10,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'nightly' hides its own failure \u2014 born hidden (continue-on-error). If `cargo +nightly test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "start_line": 10,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 18,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Integration' in job 'integration' hides its own failure \u2014 acquired: or-true. If `echo \"integration tests\"` fails, the job stays green. Verified repair: strict-shell (3 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "start_line": 13,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    }
+   ],
+   "checks": [
+    {
+     "job": "nightly",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "integration",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "repair": "strict-shell",
+     "step": "name:Integration",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "repair": null,
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    }
+   ],
+   "fires": true,
+   "new_hidden": 3,
+   "posts": [
+    {
+     "body_sha256": "232f41b0aba5c7aca479e40857d4fc6ba501b98abdd9dccf667ae08453c575fb",
+     "key": "dcd14fac5933baf4",
+     "line": 10,
+     "lines": [],
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "side": "RIGHT",
+     "start_line": 10,
+     "status": 422
+    },
+    {
+     "body_sha256": "2e5c9c0685ccc289d25b049e02f9bf7e8d975247e12564b875b6509ded9de023",
+     "key": "d1b66d6aca6189c6",
+     "line": 18,
+     "lines": [
+      "          set -eo pipefail",
+      "          echo \"integration tests\"",
+      "          echo \"database: $DATABASE_URL\"",
+      "          echo \"seed: $SEED\"",
+      "          echo \"shard: 1 of 1\"",
+      "          npm run test:integration"
+     ],
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "side": "RIGHT",
+     "start_line": 14,
+     "status": 422
+    }
+   ],
+   "rc": 1,
+   "suggest_line": "styxx ci-audit: 0 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+   "summary": "### styxx ci-audit \u2014 3 checks newly hidden: the gate fires\n\nGitHub's test merge, against its first parent (the base branch) \u00b7 base `8f2ebc02` \u2192 test merge `e27ed155` of the pull request's head `98a1a716` \u00b7 18 workflows changed\n\n| the check | what hides it | verified repair |\n|---|---|---|\n| `s12-12-outside-diff.yml` \u203a `nightly` \u203a `Tests` (line 10) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-12b-span-leaves-hunk.yml` \u203a `integration` \u203a `Integration` (line 13) | SWALLOWED \u2014 `acquired: or-true` | `strict-shell`, 3 lines |\n| `s12-13-no-repair.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | none verified |\n\n<details open><summary>the repairs \u2014 each verified: loud under the same fault, the healthy run unchanged</summary>\n\n```diff\n--- a/.github/workflows/s12-12-outside-diff.yml\n+++ b/.github/workflows/s12-12-outside-diff.yml\n@@ -8,5 +8,4 @@\n   nightly:\n     runs-on: ubuntu-latest\n-    continue-on-error: true\n     steps:\n       - uses: actions/checkout@v4\n```\n\n```diff\n--- a/.github/workflows/s12-12b-span-leaves-hunk.yml\n+++ b/.github/workflows/s12-12b-span-leaves-hunk.yml\n@@ -12,9 +12,10 @@\n       - name: Integration\n         run: |\n+          set -eo pipefail\n           echo \"integration tests\"\n           echo \"database: $DATABASE_URL\"\n           echo \"seed: $SEED\"\n           echo \"shard: 1 of 1\"\n-          npm run test:integration || true\n+          npm run test:integration\n       - name: Report\n         if: always()\n```\n\n</details>\n\n<sub>The gate reads only the workflows this change touched, simulating each step's tools failing in a sandbox of stubs: no runner, no token, no code run. RED is loud, not correct. <a href=\"https://github.com/fathom-lab/styxx\">styxx ci-audit</a></sub>\n"
+  },
+  "first": {
+   "annotation_levels": {
+    "error": 10,
+    "warning": 9
+   },
+   "annotations": [
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Unit tests' in job 'test' hides its own failure \u2014 acquired: continue-on-error. If `npm test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 18,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Integration tests' in job 'test' hides its own failure \u2014 born hidden (continue-on-error). If `python -m pytest tests/integration -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-02-coe-step-born.yml",
+     "start_line": 18,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'End-to-end tests' in job 'e2e' hides its own failure \u2014 born hidden (continue-on-error). If `npx playwright test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-03-coe-job-born.yml",
+     "start_line": 16,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Clippy' in job 'check' hides its own failure \u2014 born hidden (continue-on-error). If `cargo clippy -- -D warnings` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary).",
+     "path": ".github/workflows/s12-04-coe-step-eof.yml",
+     "start_line": 16,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `cargo test --locked || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-05-strict-one-line.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Lint' in job 'lint' hides its own failure \u2014 acquired: or-true. If `npm run lint || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-05b-strict-acquired.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `set +e` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-06-strict-multi.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Load test' in job 'load' hides its own failure \u2014 born hidden. If `k6 run --out json=k6-results.json load-test.js || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `python -m pytest -q || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-07-strict-eof.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "error",
+     "message": "SWALLOWED: the step 'PHPUnit' in job 'test' hides its own failure \u2014 born hidden. If `vendor/bin/phpunit || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary).",
+     "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Typecheck' in job 'types' hides its own failure \u2014 born hidden. If `npm run typecheck || echo \"type errors, see the log\"` fails, the job stays green. Verified repair: no-default (4 lines; the diff is in the job summary). (Annotation 11 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-09-no-default.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 16,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Check links' in job 'links' hides its own failure \u2014 born hidden. If `python scripts/check_links.py             --root docs             --strict || echo \"::warning::some links need attention\"` fails, the job stays green. Verified repair: no-default (3 lines; the diff is in the job summary). (Annotation 12 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-09b-no-default-block.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'No focused tests' in job 'tests' hides its own failure \u2014 born hidden. If `if grep -rn \"it.only(\" tests/; then` fails, the job stays green. Verified repair: guard-status (4 lines; the diff is in the job summary). (Annotation 13 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-10-guard.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden (continue-on-error). If `yarn test --ci || true` fails, the job stays green. Verified repair: both (5 lines; the diff is in the job summary). (Annotation 14 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-11-both.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure \u2014 born hidden. If `python -m pytest -q || exit 0` fails, the job stays green. No verified repair. (Annotation 15 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 15,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Type check' in job 'ci' hides its own failure \u2014 born hidden. If `mypy src || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary). (Annotation 16 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "start_line": 15,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 19,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Unit tests' in job 'ci' hides its own failure \u2014 born hidden (continue-on-error). If `python -m pytest -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 17 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "start_line": 19,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 10,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Tests' in job 'nightly' hides its own failure \u2014 born hidden (continue-on-error). If `cargo +nightly test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 18 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "start_line": 10,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    },
+    {
+     "end_line": 18,
+     "level": "warning",
+     "message": "SWALLOWED: the step 'Integration' in job 'integration' hides its own failure \u2014 acquired: or-true. If `echo \"integration tests\"` fails, the job stays green. Verified repair: strict-shell (3 lines; the diff is in the job summary). (Annotation 19 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "start_line": 13,
+     "title": "styxx ci-audit \u2014 a check that hides its own failure"
+    }
+   ],
+   "checks": [
+    {
+     "job": "test",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Unit tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-02-coe-step-born.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Integration tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "e2e",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-03-coe-job-born.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:End-to-end tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "check",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-04-coe-step-eof.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Clippy",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-05-strict-one-line.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "lint",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-05b-strict-acquired.yml",
+     "repair": "strict-shell",
+     "step": "name:Lint",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-06-strict-multi.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "load",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+     "repair": "strict-shell",
+     "step": "name:Load test",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-07-strict-eof.yml",
+     "repair": "strict-shell",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+     "repair": "strict-shell",
+     "step": "name:PHPUnit",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "types",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-09-no-default.yml",
+     "repair": "no-default",
+     "step": "name:Typecheck",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "links",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-09b-no-default-block.yml",
+     "repair": "no-default",
+     "step": "name:Check links",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "tests",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-10-guard.yml",
+     "repair": "guard-status",
+     "step": "name:No focused tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-11-both.yml",
+     "repair": "both",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "nightly",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "integration",
+     "kind": "acquired",
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "repair": "strict-shell",
+     "step": "name:Integration",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "test",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-13-no-repair.yml",
+     "repair": null,
+     "step": "name:Tests",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "ci",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "repair": "strict-shell",
+     "step": "name:Type check",
+     "verdict": "SWALLOWED"
+    },
+    {
+     "job": "ci",
+     "kind": "born hidden",
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "repair": "no-continue-on-error",
+     "step": "name:Unit tests",
+     "verdict": "SWALLOWED"
+    }
+   ],
+   "fires": true,
+   "new_hidden": 19,
+   "posts": [
+    {
+     "body_sha256": "f1b55e2c1295e71a74db346286792d656e9dfe64db1e46fe1708b5f90df9122a",
+     "key": "06f27faaa1590ea9",
+     "line": 15,
+     "lines": [],
+     "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "c225f5405cd4c30c733f10ee482155a99d9f267765db8f0b544b768a30c8fe2f",
+     "key": "26b633e4cf853840",
+     "line": 18,
+     "lines": [],
+     "path": ".github/workflows/s12-02-coe-step-born.yml",
+     "side": "RIGHT",
+     "start_line": 18,
+     "status": 201
+    },
+    {
+     "body_sha256": "b0d29504641a4f0ee9721ba8e89aebee56263adc986c2970e0a7822ee6ba96c9",
+     "key": "19f4a7efcc031d7a",
+     "line": 16,
+     "lines": [],
+     "path": ".github/workflows/s12-03-coe-job-born.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "12f812080114c664c865b7adf5afa76e2fb4082ffaa5ca156bee2663d4a6d3b1",
+     "key": "7bbc8b52ddd8e2ab",
+     "line": 16,
+     "lines": [],
+     "path": ".github/workflows/s12-04-coe-step-eof.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "e8c6ad69776ef70a219b00829d6912a35d473801f11a0aa0353c78627d69b503",
+     "key": "d02183c8c6361c58",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          cargo test --locked"
+     ],
+     "path": ".github/workflows/s12-05-strict-one-line.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "26264e4d31e7f392619ff0414f3249d44a104cfd3623e66e46a6ea324b495833",
+     "key": "a84be3aa63f83584",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          npm run lint"
+     ],
+     "path": ".github/workflows/s12-05b-strict-acquired.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "691b56999586f9276254f3a70c7ac81f7dfe966a38c7b341b3edab68ec8c062e",
+     "key": "dcc9920e0b32c551",
+     "line": 18,
+     "lines": [
+      "          set -eo pipefail",
+      "          go vet ./...",
+      "          go test ./... -race -count=1"
+     ],
+     "path": ".github/workflows/s12-06-strict-multi.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "26a557b5ed25ffdd0205031fe3c0c0adc9d9b51d58a31c4111c915f4f201921e",
+     "key": "fb528c380aac7626",
+     "line": 17,
+     "lines": [
+      "          set -eo pipefail",
+      "          k6 run --out json=k6-results.json load-test.js"
+     ],
+     "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "2d2df0a05f8493e70ffa67fff74ebd150547dd17168ca35e2cd781f635c11370",
+     "key": "8eb6459b154fabda",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          python -m pytest -q"
+     ],
+     "path": ".github/workflows/s12-07-strict-eof.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "1d565f49307bc746dc5d629d2bb1f8a3983b6f89cb3a1eb9ca67d4ec0cff9873",
+     "key": "eae588bd4ed9ce18",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          vendor/bin/phpunit"
+     ],
+     "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "847ad920844c150ca9772a8581b0b4be3b49dd03a626a4735677cce111d2f96d",
+     "key": "b3a86c92c25cf6b5",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          npm run typecheck"
+     ],
+     "path": ".github/workflows/s12-09-no-default.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "7bfcf8e6d977eafc9dd74c18a8d61845a963fd35bdbff9b48109ba84a9f08a23",
+     "key": "3c3d1c29b969a757",
+     "line": 16,
+     "lines": [
+      "          set -eo pipefail",
+      "          python scripts/check_links.py             --root docs             --strict"
+     ],
+     "path": ".github/workflows/s12-09b-no-default-block.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "38add5c4ab2854fa0406f6105c5e5f3b84d4ca56309282e73bc7bc9bc2f7bfb7",
+     "key": "e9be03aad8df76d0",
+     "line": 16,
+     "lines": [
+      "          __rc=0; grep -rn \"it.only(\" tests/ || __rc=$?",
+      "          if [ \"$__rc\" -gt 1 ]; then echo \"guard command failed (exit $__rc): grep -rn \\\"it.only(\\\" tests/\" >&2; exit \"$__rc\"; fi",
+      "          if [ \"$__rc\" -eq 0 ]; then"
+     ],
+     "path": ".github/workflows/s12-10-guard.yml",
+     "side": "RIGHT",
+     "start_line": 16,
+     "status": 201
+    },
+    {
+     "body_sha256": "f57fc5f74b5a3fb187fb327f01eba806c15598bcf2d721111722413b786ec1e3",
+     "key": "e1cc032940f7f061",
+     "line": 16,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          yarn test --ci"
+     ],
+     "path": ".github/workflows/s12-11-both.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "232f41b0aba5c7aca479e40857d4fc6ba501b98abdd9dccf667ae08453c575fb",
+     "key": "dcd14fac5933baf4",
+     "line": 10,
+     "lines": [],
+     "path": ".github/workflows/s12-12-outside-diff.yml",
+     "side": "RIGHT",
+     "start_line": 10,
+     "status": 422
+    },
+    {
+     "body_sha256": "2e5c9c0685ccc289d25b049e02f9bf7e8d975247e12564b875b6509ded9de023",
+     "key": "d1b66d6aca6189c6",
+     "line": 18,
+     "lines": [
+      "          set -eo pipefail",
+      "          echo \"integration tests\"",
+      "          echo \"database: $DATABASE_URL\"",
+      "          echo \"seed: $SEED\"",
+      "          echo \"shard: 1 of 1\"",
+      "          npm run test:integration"
+     ],
+     "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+     "side": "RIGHT",
+     "start_line": 14,
+     "status": 422
+    },
+    {
+     "body_sha256": "d1444dfb65b282e44996c4465dee187af669d4ef5e3787b0ddf6e9d8b86a65d1",
+     "key": "a757dda7af35c81f",
+     "line": 15,
+     "lines": [
+      "        run: |",
+      "          set -eo pipefail",
+      "          mypy src"
+     ],
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "side": "RIGHT",
+     "start_line": 15,
+     "status": 201
+    },
+    {
+     "body_sha256": "bf4710454b4468d1fb9e1956b259613b1ebcca8e3790eb1541985805de0473b1",
+     "key": "b8fab6c6a9a268d6",
+     "line": 19,
+     "lines": [],
+     "path": ".github/workflows/s12-14-two-in-one.yml",
+     "side": "RIGHT",
+     "start_line": 19,
+     "status": 201
+    }
+   ],
+   "rc": 1,
+   "suggest_line": "styxx ci-audit: 16 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+   "summary": "### styxx ci-audit \u2014 19 checks newly hidden: the gate fires\n\nGitHub's test merge, against its first parent (the base branch) \u00b7 base `8f2ebc02` \u2192 test merge `f03106e1` of the pull request's head `be38c0e7` \u00b7 19 workflows changed\n\n| the check | what hides it | verified repair |\n|---|---|---|\n| `s12-01-coe-step-acquired.yml` \u203a `test` \u203a `Unit tests` (line 15) | SWALLOWED \u2014 `acquired: continue-on-error` | `no-continue-on-error`, 1 line |\n| `s12-02-coe-step-born.yml` \u203a `test` \u203a `Integration tests` (line 18) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-03-coe-job-born.yml` \u203a `e2e` \u203a `End-to-end tests` (line 16) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-04-coe-step-eof.yml` \u203a `check` \u203a `Clippy` (line 16) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-05-strict-one-line.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-05b-strict-acquired.yml` \u203a `lint` \u203a `Lint` (line 15) | SWALLOWED \u2014 `acquired: or-true` | `strict-shell`, 4 lines |\n| `s12-06-strict-multi.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-06b-strict-ws-line.yml` \u203a `load` \u203a `Load test` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-07-strict-eof.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-08-strict-eof-no-newline.yml` \u203a `test` \u203a `PHPUnit` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-09-no-default.yml` \u203a `types` \u203a `Typecheck` (line 15) | SWALLOWED \u2014 `born hidden` | `no-default`, 4 lines |\n| `s12-09b-no-default-block.yml` \u203a `links` \u203a `Check links` (line 15) | SWALLOWED \u2014 `born hidden` | `no-default`, 3 lines |\n| `s12-10-guard.yml` \u203a `tests` \u203a `No focused tests` (line 15) | SWALLOWED \u2014 `born hidden` | `guard-status`, 4 lines |\n| `s12-11-both.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `both`, 5 lines |\n| `s12-12-outside-diff.yml` \u203a `nightly` \u203a `Tests` (line 10) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n| `s12-12b-span-leaves-hunk.yml` \u203a `integration` \u203a `Integration` (line 13) | SWALLOWED \u2014 `acquired: or-true` | `strict-shell`, 3 lines |\n| `s12-13-no-repair.yml` \u203a `test` \u203a `Tests` (line 15) | SWALLOWED \u2014 `born hidden` | none verified |\n| `s12-14-two-in-one.yml` \u203a `ci` \u203a `Type check` (line 15) | SWALLOWED \u2014 `born hidden` | `strict-shell`, 4 lines |\n| `s12-14-two-in-one.yml` \u203a `ci` \u203a `Unit tests` (line 19) | SWALLOWED \u2014 `born hidden (continue-on-error)` | `no-continue-on-error`, 1 line |\n\n<details open><summary>the repairs \u2014 each verified: loud under the same fault, the healthy run unchanged</summary>\n\n```diff\n--- a/.github/workflows/s12-01-coe-step-acquired.yml\n+++ b/.github/workflows/s12-01-coe-step-acquired.yml\n@@ -13,5 +13,4 @@\n         run: npm ci\n       - name: Unit tests\n-        continue-on-error: true\n         run: npm test\n       - name: Build\n```\n\n```diff\n--- a/.github/workflows/s12-02-coe-step-born.yml\n+++ b/.github/workflows/s12-02-coe-step-born.yml\n@@ -16,5 +16,4 @@\n       - name: Integration tests\n         run: python -m pytest tests/integration -q\n-        continue-on-error: true\n       - name: Package\n         run: python -m build\n```\n\n```diff\n--- a/.github/workflows/s12-03-coe-job-born.yml\n+++ b/.github/workflows/s12-03-coe-job-born.yml\n@@ -14,5 +14,4 @@\n   e2e:\n     runs-on: ubuntu-latest\n-    continue-on-error: true\n     steps:\n       - uses: actions/checkout@v4\n```\n\n```diff\n--- a/.github/workflows/s12-04-coe-step-eof.yml\n+++ b/.github/workflows/s12-04-coe-step-eof.yml\n@@ -14,3 +14,2 @@\n       - name: Clippy\n         run: cargo clippy -- -D warnings\n-        continue-on-error: true\n```\n\n```diff\n--- a/.github/workflows/s12-05-strict-one-line.yml\n+++ b/.github/workflows/s12-05-strict-one-line.yml\n@@ -13,5 +13,7 @@\n         run: cargo build --locked\n       - name: Tests\n-        run: cargo test --locked || true\n+        run: |\n+          set -eo pipefail\n+          cargo test --locked\n       - name: Docs\n         run: cargo doc --no-deps\n```\n\n```diff\n--- a/.github/workflows/s12-05b-strict-acquired.yml\n+++ b/.github/workflows/s12-05b-strict-acquired.yml\n@@ -13,5 +13,7 @@\n         run: npm ci\n       - name: Lint\n-        run: npm run lint || true\n+        run: |\n+          set -eo pipefail\n+          npm run lint\n       - name: Format\n         run: npx prettier --check .\n```\n\n```diff\n--- a/.github/workflows/s12-06-strict-multi.yml\n+++ b/.github/workflows/s12-06-strict-multi.yml\n@@ -14,6 +14,6 @@\n       - name: Tests\n         run: |\n-          set +e\n+          set -eo pipefail\n           go vet ./...\n-          go test ./... -race -count=1 || true\n+          go test ./... -race -count=1\n           echo \"tests finished\"\n```\n\n```diff\n--- a/.github/workflows/s12-06b-strict-ws-line.yml\n+++ b/.github/workflows/s12-06b-strict-ws-line.yml\n@@ -14,6 +14,6 @@\n       - name: Load test\n         run: |\n-          k6 run --out json=k6-results.json load-test.js || true\n-          \n+          set -eo pipefail\n+          k6 run --out json=k6-results.json load-test.js\n       - name: Report\n         run: echo \"done\"\n```\n\n```diff\n--- a/.github/workflows/s12-07-strict-eof.yml\n+++ b/.github/workflows/s12-07-strict-eof.yml\n@@ -13,3 +13,5 @@\n         run: pip install -e .[test]\n       - name: Tests\n-        run: python -m pytest -q || true\n+        run: |\n+          set -eo pipefail\n+          python -m pytest -q\n```\n\n```diff\n--- a/.github/workflows/s12-08-strict-eof-no-newline.yml\n+++ b/.github/workflows/s12-08-strict-eof-no-newline.yml\n@@ -13,3 +13,5 @@\n         run: composer install\n       - name: PHPUnit\n-        run: vendor/bin/phpunit || true+        run: |\n+          set -eo pipefail\n+          vendor/bin/phpunit\n```\n\n```diff\n--- a/.github/workflows/s12-09-no-default.yml\n+++ b/.github/workflows/s12-09-no-default.yml\n@@ -13,5 +13,7 @@\n         run: npm ci\n       - name: Typecheck\n-        run: npm run typecheck || echo \"type errors, see the log\"\n+        run: |\n+          set -eo pipefail\n+          npm run typecheck\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-09b-no-default-block.yml\n+++ b/.github/workflows/s12-09b-no-default-block.yml\n@@ -14,5 +14,6 @@\n       - name: Check links\n         run: |\n-          python scripts/check_links.py             --root docs             --strict || echo \"::warning::some links need attention\"\n+          set -eo pipefail\n+          python scripts/check_links.py             --root docs             --strict\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-10-guard.yml\n+++ b/.github/workflows/s12-10-guard.yml\n@@ -14,5 +14,7 @@\n       - name: No focused tests\n         run: |\n-          if grep -rn \"it.only(\" tests/; then\n+          __rc=0; grep -rn \"it.only(\" tests/ || __rc=$?\n+          if [ \"$__rc\" -gt 1 ]; then echo \"guard command failed (exit $__rc): grep -rn \\\"it.only(\\\" tests/\" >&2; exit \"$__rc\"; fi\n+          if [ \"$__rc\" -eq 0 ]; then\n             echo \"::error::a focused test was left in\"\n             exit 1\n```\n\n```diff\n--- a/.github/workflows/s12-11-both.yml\n+++ b/.github/workflows/s12-11-both.yml\n@@ -13,6 +13,7 @@\n         run: yarn install --frozen-lockfile\n       - name: Tests\n-        continue-on-error: true\n-        run: yarn test --ci || true\n+        run: |\n+          set -eo pipefail\n+          yarn test --ci\n       - name: Upload the log\n         uses: actions/upload-artifact@v4\n```\n\n```diff\n--- a/.github/workflows/s12-12-outside-diff.yml\n+++ b/.github/workflows/s12-12-outside-diff.yml\n@@ -8,5 +8,4 @@\n   nightly:\n     runs-on: ubuntu-latest\n-    continue-on-error: true\n     steps:\n       - uses: actions/checkout@v4\n```\n\n```diff\n--- a/.github/workflows/s12-12b-span-leaves-hunk.yml\n+++ b/.github/workflows/s12-12b-span-leaves-hunk.yml\n@@ -12,9 +12,10 @@\n       - name: Integration\n         run: |\n+          set -eo pipefail\n           echo \"integration tests\"\n           echo \"database: $DATABASE_URL\"\n           echo \"seed: $SEED\"\n           echo \"shard: 1 of 1\"\n-          npm run test:integration || true\n+          npm run test:integration\n       - name: Report\n         if: always()\n```\n\n```diff\n--- a/.github/workflows/s12-14-two-in-one.yml\n+++ b/.github/workflows/s12-14-two-in-one.yml\n@@ -13,5 +13,7 @@\n         run: pip install -e .[dev]\n       - name: Type check\n-        run: mypy src || true\n+        run: |\n+          set -eo pipefail\n+          mypy src\n       - name: Build wheel\n         run: python -m build\n```\n\n```diff\n--- a/.github/workflows/s12-14-two-in-one.yml\n+++ b/.github/workflows/s12-14-two-in-one.yml\n@@ -17,4 +17,3 @@\n         run: python -m build\n       - name: Unit tests\n-        continue-on-error: true\n         run: python -m pytest -q\n```\n\n</details>\n\n<sub>The gate reads only the workflows this change touched, simulating each step's tools failing in a sandbox of stubs: no runner, no token, no code run. RED is loud, not correct. <a href=\"https://github.com/fathom-lab/styxx\">styxx ci-audit</a></sub>\n\n19 checks: GitHub keeps 10 annotations of each level from one step, so they are written as 10 errors, 9 warnings \u2014 the checks inside the change's diff first. Every check is in the table above.\n\n16 one-click suggestions posted on the pull request.\n"
+  }
+ },
+ "schema": "styxx.harness-live-click/v1"
+}

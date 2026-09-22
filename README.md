@@ -89,7 +89,7 @@ Fails only on a contradicted claim.
 **And the gate on the checks themselves — the one that fails when a change makes CI unable to fail:**
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@v5
 - uses: fathom-lab/styxx/ci-audit@main    # a new `|| true` / continue-on-error / fail-open guard: the line marked, the verified fix one click away
 ```
 
@@ -98,7 +98,10 @@ no token, no code run), marks the line that hides the check and writes the verif
 job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 220
 hidden checks it has caught in this program's receipts, it located every hiding line, and the
 verified fix was one click away for 159 — for 70 of 73 in pull requests
-([RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md)). The same gate on every commit before it lands:
+([RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md)); on a pull
+request made for it, GitHub placed every suggestion where that rule said and its own button made
+each the verified repair, byte for byte
+([RESULT_swallow12](papers/harness/RESULT_swallow12_the_click_live_2026_09_22.md)). The same gate on every commit before it lands:
 [`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
 

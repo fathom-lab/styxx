@@ -1,0 +1,139 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S12-1": {
+   "pass": true,
+   "detail": "26 passed in 18.27s"
+  },
+  "G-S12-2": {
+   "pass": true,
+   "detail": "plan 1524022e8b966755\u2026, instrument 83be210029e8c647\u2026, action e0cb518ed10002c6\u2026, action.yml 83d14bc1558f4098\u2026; the live head's gate code: {'ci-audit/action.yml': True, 'styxx/ciaudit/action.py': True, 'styxx/ciaudit/differential.py': True}"
+  },
+  "G-S12-3": {
+   "pass": true,
+   "detail": "base files identical 19 of 19; head files 19 of 19; first run on GitHub's test merge: True"
+  },
+  "G-S12-4": {
+   "pass": true,
+   "detail": "parent is the live head: True; committed by GitHub: True; changes 15 files, the plan's 15: True"
+  },
+  "G-S12-5": {
+   "pass": true,
+   "detail": "P1\u2013P8 scored"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "GitHub accepts the 16 suggestions the rule places; the live comments are the planned ones, byte for byte",
+   "observed": {
+    "planned": 16,
+    "live": 16,
+    "equal": true,
+    "only_in_plan": [],
+    "only_live": [],
+    "authors": [
+     "Bot"
+    ],
+    "commit_ids": [
+     true
+    ]
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "the 2 suggestions the rule refuses are refused by GitHub (422, 'outside the diff'), and no other",
+   "observed": {
+    "live": "styxx ci-audit: 16 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+    "planned": "styxx ci-audit: 16 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair"
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "the re-run posts nothing: the same 16 comments after it; its log line is the planned one",
+   "observed": {
+    "comments_after": 16,
+    "comments_before": 16,
+    "same_ids": true,
+    "live": "styxx ci-audit: 0 suggestions posted; 16 already on this pull request; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+    "planned": "styxx ci-audit: 0 suggestions posted; 16 already on this pull request; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair"
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "after GitHub's batch commit, each of the 15 files equals the planned text line for line",
+   "observed": {
+    "lines_equal": 15,
+    "of": 15,
+    "not": []
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "the 14 files that end in a newline are byte-identical to the planned bytes",
+   "observed": {
+    "bytes_equal": 14,
+    "of": 14,
+    "not": []
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "the file with no final newline is byte-identical to the planned bytes: GitHub adds none",
+   "observed": {
+    "bytes_equal": true,
+    "final_newline_got": false
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "the Action on the applied head reports exactly the 3 controls, as 3 error annotations on their planned lines; the check run fails",
+   "observed": {
+    "planned": 3,
+    "live": 3,
+    "equal": true,
+    "levels_live": {
+     "error": 3,
+     "notice": 0,
+     "warning": 0
+    },
+    "conclusion": "failure",
+    "only_in_plan": [],
+    "only_live": []
+   }
+  },
+  "P8": {
+   "hit": true,
+   "predicted": "the first run's check run carries exactly the planned 19 annotations, 10 failure and 9 warning, as planned",
+   "observed": {
+    "planned": 19,
+    "live": 19,
+    "equal": true,
+    "levels_live": {
+     "error": 10,
+     "notice": 0,
+     "warning": 9
+    },
+    "levels_planned": {
+     "error": 10,
+     "notice": 0,
+     "warning": 9
+    },
+    "only_in_plan": [],
+    "only_live": [],
+    "conclusion": "failure"
+   }
+  }
+ },
+ "hits": 8,
+ "of": 8,
+ "pr": 156,
+ "receipt_sha256": "35da5d61ae29dc1764d5df35abfd72143771c7f25a0ad68d83763cbaf4654652",
+ "prereg_sha256_at_freeze": "9a4d0c6c99461e51e17121cad34507f7fdb06ecf018d133eb81a062c16da69f4",
+ "untouched_after_apply": {
+  ".github/workflows/ci-audit.yml": true,
+  ".github/workflows/s12-12-outside-diff.yml": true,
+  ".github/workflows/s12-12b-span-leaves-hunk.yml": true,
+  ".github/workflows/s12-13-no-repair.yml": true
+ }
+}
