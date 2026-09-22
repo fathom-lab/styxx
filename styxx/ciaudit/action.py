@@ -55,6 +55,7 @@ from typing import Optional
 
 from . import differential as D
 from . import repair as R
+from . import repair_frontier as F
 from . import repair_structural as RS
 
 SCHEMA = "styxx.ci-audit-action/v1"
@@ -349,8 +350,9 @@ def summary_md(rec: dict, res: dict, located: dict) -> str:
                 if ln:
                     where += f" (line {ln[0]})"
                 fx = x.get("fix") or {}
+                said = F.say(fx["readings"]) if fx.get("readings") else None
                 rep = (f"{code(fx['verified_repair'])}, {fx['lines_changed']} line{'s' if fx['lines_changed'] != 1 else ''}" if fx.get("verified_repair")
-                       else "none verified")
+                       else "none verified" + (f" — {said}" if said else ""))
                 out.append(f"| {where} | {x['verdict']} — {code(_what(x))} | {rep} |")
         diffs = [(w, x) for w in wfs for x in w.get("new_hidden", []) if (x.get("fix") or {}).get("diff")]
         if diffs:
@@ -521,8 +523,9 @@ def main(argv: Optional[list[str]] = None) -> int:
             a, b, what = target(pos, x)
             located[(w["path"], x["job"], x["index"])] = (a, b, what)
             fx = x.get("fix") or {}
+            said = F.say(fx["readings"]) if fx.get("readings") else None
             fix_line = (f" Verified repair: {fx['verified_repair']} ({fx['lines_changed']} line{'s' if fx['lines_changed'] != 1 else ''}; the diff is in the job summary)."
-                        if fx.get("verified_repair") else " No verified repair.")
+                        if fx.get("verified_repair") else " No verified repair." + (f" Reading: {said}." if said else ""))
             msg = (f"{x['verdict']}: the step '{x.get('name') or x['step']}' in job '{x['job']}' hides its own failure — {_what(x)}. "
                    f"If `{x.get('run_head') or 'its tools'}` fails, the job stays green.{fix_line}")
             items.append({"path": w["path"], "line": a, "end": b, "in_diff": within((a, a), diff), "message": msg})

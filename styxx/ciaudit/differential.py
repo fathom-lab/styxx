@@ -20,10 +20,13 @@ from pathlib import Path
 
 from . import history as H              # the living copy of SWALLOW-6's instrument; names read as in benchmarks/harness_mutation/differential.py
 from . import repair
+from . import repair_frontier as rf
 from . import repair_structural as rs
 
 SCHEMA = "styxx.ci-audit.differential/v1"
 FIRES = ("loud", "other")           # what a check was at BASE for its hiding at HEAD to be a firing
+# the repair stages the gate tries, in order. SWALLOW-12's plan is re-computed with the first two, the stages it ran
+STAGES = ("swallow-4", "swallow-5", "swallow-13")
 
 
 # ----------------------------------------------------------------------------- git
@@ -143,18 +146,30 @@ def audit_pair(base_text: str | None, head_text: str | None, wf_name: str, reade
 
 
 def fix_for(text: str, wf_name: str, jid: str, i: int, runner) -> dict:
-    """SWALLOW-4's repairs, then SWALLOW-5's, on HEAD's text: the first verified one with its diff."""
+    """SWALLOW-4's repairs, then SWALLOW-5's, then SWALLOW-13's, on HEAD's text: the first verified
+    one with its diff. For a check none of them repairs, SWALLOW-13's two readings of what the
+    script does with the failure -- routed to a later step, or declared not fatal -- when either
+    matches."""
     r = repair.try_repairs(text, wf_name, jid, i, runner)
     stage = "swallow-4"
-    if r.get("verified_repair") is None:
+    if r.get("verified_repair") is None and "swallow-5" in STAGES:
         r2 = rs.try_structural(text, wf_name, jid, i, runner)
         if r2.get("verified_repair") is not None:
             r, stage = r2, "swallow-5"
+    if r.get("verified_repair") is None and "swallow-13" in STAGES:
+        r3 = rf.try_frontier(text, wf_name, jid, i, runner)
+        if r3.get("verified_repair") is not None:
+            r, stage = r3, "swallow-13"
     v = r.get("verified_repair")
     c = next((c for c in r.get("candidates", []) if c["repair"] == v), None) if v else None
-    return {"verified_repair": v, "stage": stage if v else None, "lines_changed": c["lines_changed"] if c else None,
-            "diff": c["diff"] if c else None,
-            "why_not": None if v else "; ".join(f"{c['repair']}: {c.get('why', '')}" for c in r.get("candidates", []) if c.get("why"))[:200]}
+    out = {"verified_repair": v, "stage": stage if v else None, "lines_changed": c["lines_changed"] if c else None,
+           "diff": c["diff"] if c else None,
+           "why_not": None if v else "; ".join(f"{c['repair']}: {c.get('why', '')}" for c in r.get("candidates", []) if c.get("why"))[:200]}
+    if v is None and "swallow-13" in STAGES:
+        rd = rf.readings(text, jid, i)
+        if rd["routed"] or rd["declared"]:
+            out["readings"] = rd
+    return out
 
 
 def audit_commit(clone: Path, base: str, head: str, readers: dict | None = None, fix: bool = True) -> dict:

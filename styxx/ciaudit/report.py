@@ -11,6 +11,16 @@ _MEANING = {
     "BASELINE_RED": "fails on its own logic under the model: not read",
     "BASELINE_SKIPPED": "does not run under the model: not read",
 }
+
+
+def _said(readings) -> str | None:
+    """SWALLOW-13's readings of an unrepaired finding's script, in one line."""
+    if not readings:
+        return None
+    from .repair_frontier import say
+    return say(readings)
+
+
 _ORDER = ("RED", "FAIL_OPEN", "SWALLOWED", "ABSORBED", "NO_CHECK", "BASELINE_RED", "BASELINE_SKIPPED")
 _MECHANISM = {
     "step-if": "the check's `if:` turns false",
@@ -80,6 +90,9 @@ def _differential_section(d: dict, width: int) -> list[str]:
                         out.append("                 " + dl[: width + 60])
             elif fx:
                 out.append(f"             no verified repair: {(fx.get('why_not') or '')[: width + 40]}")
+                said = _said(fx.get("readings"))
+                if said:
+                    out.append(f"             reading: {said[: width + 60]}")
         for x in w.get("removed_hidden", []):
             what = x.get("name") or "step " + str(x["index"])
             out.append(f"  {'loud' if x['kind'] == 'repaired' else 'gone':<10} {w['workflow']} › {x['job']} › {what}   [{x['kind']}"
@@ -202,6 +215,9 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
                     else:
                         why = "; ".join(f"{c['repair']}: {c.get('why', '')}" for c in tried)
                 lines.append(f"  {where} — no verified repair: {why[: width + 80]}")
+                said = _said(t.get("readings"))
+                if said:
+                    lines.append(f"      reading: {said[: width + 60]}")
     lines.append("")
     lines.append("RED is loud, not correct. An action check is counted, never executed: it can be dropped here, not seen to fail. The receipt (--format json) keeps every step.")
     return "\n".join(lines)
