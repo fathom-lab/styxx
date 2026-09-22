@@ -2,14 +2,15 @@
 
 Fathom Lab · 2026-09-22 · Scores the receipt `swallow11_receipt.json.gz` against the
 preregistration frozen at sha256 `1017fac935d1945880177a07d67f7656b79d069c1504a78619d858e354194ec4`.
-Not amended. One run. One correction to the count, stated below: the population holds one change
-twice, and every number here counts it once.
+Not amended. One run, and one re-run with the Action as shipped. One correction to the count,
+stated below: the population holds one change twice, and every number here counts it once.
 
 Receipt: `papers/harness/swallow11_receipt.json.gz` (sha256 of the JSON `d84c70ec…`, recorded by the scorer;
 every pair with its shas, every check with the lines each flag was decided on — no name, no
 address, no text) · instrument `benchmarks/harness_mutation/one_click.py`, sha256 `047a1123…`,
-calling the product as it ships: `styxx/ciaudit/action.py` `a9615d9b…` and the living gate
-`styxx/ciaudit/differential.py` `95f6ccf1…` · sources: the SWALLOW-7, -9 and -10 receipts
+calling the product: `styxx/ciaudit/action.py` `a9615d9b…` (shipped as `c642493d…` — one encoding
+pin, the replay re-run identical, below) and the living gate `styxx/ciaudit/differential.py`
+`95f6ccf1…` · sources: the SWALLOW-7, -9 and -10 receipts
 (`c6b12d09…`, `b78c4730…`, `cc6b5dc1…`) · 140 pairs as frozen — 139 changes — in 60 repositories,
 220 checks · 8 minutes · scored by `swallow11_score.py` (the rule as frozen), counted once by
 `swallow11_once.py`.
@@ -41,6 +42,17 @@ line; P6 born 131 of 177, acquired 32 of 32; P7 76 of 79 against 89 of 147; P8 3
 25 of 27. SWALLOW-10 counts pull requests, and these are two; its check-level description counts
 the six twice — the note appended to that RESULT gives its numbers by change.
 
+## A change after the run — the Action as shipped, re-run
+
+The repository's encoding guard (`tests/test_subprocess_encoding_pinned.py`) failed this pull
+request's CI on one call the replay had used: `readable()` ran `git diff --quiet` in text mode
+without pinning an encoding, so the platform's locale would decode its error text. The call now
+decodes as UTF-8 with replacement; `action.py` is `c642493d…`. Its answer to the replay is its exit
+status, which the encoding does not touch — and the replay was re-run with the shipped file to
+show it: `swallow11_rerun_receipt.json.gz` (sha256 of the JSON `28daa2e6…`) is the scored receipt
+in all 140 pairs and every check, differing only in the recorded `action.py` and the seconds (218
+against 485). `tests/test_harness_one_click.py` pins the shipped file and holds that equality.
+
 ## 0. What was done
 
 For every firing pair of three receipts — 104 mainline commits (SWALLOW-7), 17 agents' pull
@@ -66,7 +78,8 @@ As scored, on the rule as frozen.
 | G-S11-4 construction | a suggestion is the verified repair | pass — **177 of 177** rebuilt repairs reproduced by their suggestion (171 of 171 once) |
 | G-S11-5 ledger | P1–P8 scored | pass |
 
-No deviation from the procedure; the one correction is to the count, above.
+No deviation from the procedure. Two things after it, both above: a correction to the count, and
+a one-line change to the shipped Action with the replay re-run on it.
 
 ## 2. Predictions, scored
 
@@ -145,8 +158,8 @@ runs styxx from its own ref with only numpy and PyYAML installed, refuses `pull_
 drops every token from its environment before reading the change, keeps the change's text from
 acting as a workflow command, and exits 2 — never 0 — when it could not run. This repository's own
 `ci-audit.yml` now runs it on its own pull requests, from the default depth-1 checkout.
-`one_click.py` is frozen at `047a1123…` and pinned, with `action.py` at `a9615d9b…`, by
-`tests/test_harness_one_click.py`.
+`one_click.py` is frozen at `047a1123…` and pinned, with the shipped `action.py` at `c642493d…`,
+by `tests/test_harness_one_click.py`, which also holds the re-run equal to the scored receipt.
 
 ## 6. Next
 
