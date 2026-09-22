@@ -497,3 +497,59 @@ def test_the_base_flag_is_the_pull_requests_gate(tmp_path, capsys):
     assert main([str(tree), "--base", "no-such-ref"]) == 2
     rec = ciaudit.audit(str(tree), base=shas[0])
     assert rec["differential"]["fires"] and rec["differential"]["new_hidden"] == 1 and rec["differential"]["merge_base"] == shas[0]
+
+
+def test_the_pr_flag_reads_githubs_test_merge_without_a_checkout(tmp_path, capsys):
+    """A local bare remote stands in for GitHub: refs/pull/N/head as pushed and refs/pull/N/merge as the test merge."""
+    import os
+    import subprocess
+    from styxx import ciaudit
+    from styxx.ciaudit import main
+    from tests.test_harness_differential import _shas
+    from tests.test_harness_history import _repo
+    tree = _repo(tmp_path)                       # the scripted history: main at V5 with the release workflow gone
+    shas = _shas(tree)
+    env = dict(os.environ, GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@example.com", GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@example.com")
+    g = lambda *a, cwd=tree: subprocess.run(["git", "-C", str(cwd), *a], check=True, capture_output=True, text=True, env=env).stdout.strip()  # noqa: E731
+    # pull request 7: a branch off main that hides the unit-test step -- newly hidden against main
+    g("checkout", "-q", "-b", "pr7")
+    text = (tree / ".github" / "workflows" / "ci.yml").read_text()
+    assert "      - name: Run unit tests\n        run: python -m pytest tests -q" in text
+    (tree / ".github" / "workflows" / "ci.yml").write_text(text.replace(
+        "      - name: Run unit tests\n        run: python -m pytest tests -q", "      - name: Run unit tests\n        continue-on-error: true\n        run: python -m pytest tests -q"))
+    g("commit", "-qam", "ci: make the unit tests non-blocking")
+    head7 = g("rev-parse", "HEAD")
+    g("checkout", "-q", "main")
+    g("checkout", "-q", "-b", "merge7")
+    g("merge", "-q", "--no-ff", "-m", "Merge pr7 into main", "pr7")
+    merge7 = g("rev-parse", "HEAD")
+    g("checkout", "-q", "main")
+    g("branch", "-qD", "merge7")
+    # pull request 8: a branch off main that adds a loud check -- quiet; no merge ref (as GitHub keeps none for a closed pull request)
+    g("checkout", "-q", "-b", "pr8")
+    (tree / ".github" / "workflows" / "ci.yml").write_text((tree / ".github" / "workflows" / "ci.yml").read_text() + "  typecheck:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Typecheck\n        run: npx tsc --noEmit\n")
+    g("commit", "-qam", "ci: typecheck")
+    head8 = g("rev-parse", "HEAD")
+    g("checkout", "-q", "main")
+    remote = tmp_path / "remote.git"
+    subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(remote)], check=True)
+    g("push", "-q", str(remote), "main", f"{head7}:refs/pull/7/head", f"{merge7}:refs/pull/7/merge", f"{head8}:refs/pull/8/head")
+    clone = tmp_path / "clone"
+    subprocess.run(["git", "clone", "-q", f"file://{remote}", str(clone)], check=True)
+    # #7 through the merge ref: the gate fires, exit 1; the card says which reading it is
+    assert main([str(clone), "--pr", "7"]) == 1
+    out = capsys.readouterr().out
+    assert f"pull request #7 (head {head7[:8]}, base " in out and "GitHub's test merge" in out and "1 check newly hidden — THE GATE FIRES" in out
+    assert "  SWALLOWED  ci.yml › test › Run unit tests   [acquired: continue-on-error]" in out
+    rec = ciaudit.audit(str(clone), pr=7)
+    d = rec["differential"]
+    assert d["fires"] and d["pr"] == 7 and d["pr_head"] == head7 and d["pr_merge"] == merge7 and d["merge_base"] == shas[-1] and d["new_hidden"] == 1
+    # #8 has no merge ref: the head against its merge-base with the default branch, quiet, exit 0
+    assert main([str(clone), "--pr", "8"]) == 0
+    out = capsys.readouterr().out
+    assert "no refs/pull/N/merge" in out and "nothing newly hidden" in out
+    rec = ciaudit.audit(str(clone), pr=8)
+    assert rec["differential"]["pr_merge"] is None and rec["differential"]["merge_base"] == shas[-1] and not rec["differential"]["fires"]
+    # a pull request the remote does not have: an error, exit 2
+    assert main([str(clone), "--pr", "99"]) == 2
+    assert "has no refs/pull/99/head" in capsys.readouterr().out
