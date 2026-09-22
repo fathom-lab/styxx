@@ -49,7 +49,11 @@ closed, not merged.
 | G-S12-4 the click is GitHub's | the batch commit | pass — its only parent is the live head, GitHub committed it, and it changes exactly the **15** planned files |
 | G-S12-5 ledger | P1–P8 scored | pass |
 
-No deviation.
+No deviation. One change after scoring, to a test, not to anything measured: on this pull
+request's CI, the test that holds the committed plan to the instrument failed on the ids of the
+plan's scratch commits, which the three stored job summaries print — the machine that froze the
+plan signs its commits (`commit.gpgsign`), the CI runner does not. Every field the receipt compares
+was equal; the test now masks those ids and passes on both.
 
 ## 2. Predictions, scored
 
