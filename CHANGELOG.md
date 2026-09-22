@@ -92,6 +92,28 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-12: the click, live — and the Action past GitHub's ten-annotation limit
+
+SWALLOW-11 counted a fix one click away by the documented placement rule; this cycle put it to
+GitHub. `benchmarks/harness_mutation/live_click.py` builds a pull request made for it — eighteen
+workflow files (fifteen suggestion shapes, three controls; `workflow_dispatch` only, so nothing
+runs them) — and the plan: the Action run offline on that change as GitHub runs it, with the review
+API answered by the rule. Prereg, plan and scorer were committed before the live branches existed.
+
+**VALID, 8/8** (`RESULT_swallow12_the_click_live_2026_09_22.md`; prereg `9a4d0c6c…`; pull request
+#156, closed unmerged). **GitHub accepted all 16 suggestions the rule places and refused the 2 it
+refuses; the re-run posted nothing; sixteen "Add to batch" clicks and one "Commit suggestions" made
+one commit whose 15 files are the planned text byte for byte** — including the last line of a file
+with no final newline, where GitHub added none; the Action then reported exactly the three controls,
+and all 19 of its annotations were kept. Observed, not predicted: GitHub's own "Process completed
+with exit code 1." annotation counts against the step's ten errors.
+
+The Action: past ten checks it writes ten errors, then ten warnings, then ten notices — the checks
+inside the change's diff first — and says so in the job summary (GitHub keeps ten annotations of
+each level from one step; one change of SWALLOW-11's 139 hides fourteen); `actions/setup-python@v6`
+(Node 24), the examples on `actions/checkout@v5`; repeated "already suggested" entries counted in
+one. SWALLOW-11's test pins the ten functions its replay called by their source.
+
 ## [Unreleased] — SWALLOW-11: one click from loud — `ci-audit` as a GitHub Action
 
 **`uses: fathom-lab/styxx/ci-audit@<ref>`** (`ci-audit/action.yml`, driver
