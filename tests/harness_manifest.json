@@ -70,16 +70,7 @@
     "differential": {
      "if": null,
      "name": null,
-     "run_steps": [
-      {
-       "if": null,
-       "name": "Install styxx with ci-audit"
-      },
-      {
-       "if": null,
-       "name": "What this head hides that its base did not"
-      }
-     ]
+     "run_steps": []
     }
    },
    "name": "ci-audit",
