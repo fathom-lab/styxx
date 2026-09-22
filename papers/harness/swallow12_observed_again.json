@@ -1,0 +1,359 @@
+{
+ "stage": "again",
+ "captured_at": "2026-09-22T13:11:13.212Z",
+ "repo": "fathom-lab/styxx",
+ "pr": 156,
+ "head_sha": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+ "suggest_line_sha256": "e439a4c1e2d03e2f679950076eb9232926f42b3924b118f924c092224ba1f08a",
+ "suggest_line_length": 353,
+ "first_run_suggest_line_sha256": "7acbd3ed977c8092ac5bae2e06cace55f91add218c917ff22c898bd566afcb1b",
+ "first_run_suggest_line_length": 321,
+ "check_run": {
+  "id": 106758367866,
+  "name": "differential",
+  "conclusion": "failure",
+  "head_sha": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+  "started_at": "2026-09-22T13:09:22Z",
+  "completed_at": "2026-09-22T13:09:46Z",
+  "annotations": [
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-12b-span-leaves-hunk.yml",
+    "start_line": 13,
+    "end_line": 18,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Integration' in job 'integration' hides its own failure — acquired: or-true. If `echo \"integration tests\"` fails, the job stays green. Verified repair: strict-shell (3 lines; the diff is in the job summary). (Annotation 19 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-12-outside-diff.yml",
+    "start_line": 10,
+    "end_line": 10,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'nightly' hides its own failure — born hidden (continue-on-error). If `cargo +nightly test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 18 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-14-two-in-one.yml",
+    "start_line": 19,
+    "end_line": 19,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Unit tests' in job 'ci' hides its own failure — born hidden (continue-on-error). If `python -m pytest -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary). (Annotation 17 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-14-two-in-one.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Type check' in job 'ci' hides its own failure — born hidden. If `mypy src || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary). (Annotation 16 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-13-no-repair.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure — born hidden. If `python -m pytest -q || exit 0` fails, the job stays green. No verified repair. (Annotation 15 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-11-both.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure — born hidden (continue-on-error). If `yarn test --ci || true` fails, the job stays green. Verified repair: both (5 lines; the diff is in the job summary). (Annotation 14 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-10-guard.yml",
+    "start_line": 15,
+    "end_line": 19,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'No focused tests' in job 'tests' hides its own failure — born hidden. If `if grep -rn \"it.only(\" tests/; then` fails, the job stays green. Verified repair: guard-status (4 lines; the diff is in the job summary). (Annotation 13 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-09b-no-default-block.yml",
+    "start_line": 15,
+    "end_line": 16,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Check links' in job 'links' hides its own failure — born hidden. If `python scripts/check_links.py             --root docs             --strict || echo \"::warning::some links need attention\"` fails, the job stays green. Verified repair: no-default (3 lines; the diff is in the job summary). (Annotation 12 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "warning",
+    "path": ".github/workflows/s12-09-no-default.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Typecheck' in job 'types' hides its own failure — born hidden. If `npm run typecheck || echo \"type errors, see the log\"` fails, the job stays green. Verified repair: no-default (4 lines; the diff is in the job summary). (Annotation 11 of 19: GitHub keeps 10 of each level from one step, so this one is a warning.)"
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'PHPUnit' in job 'test' hides its own failure — born hidden. If `vendor/bin/phpunit || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-07-strict-eof.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure — born hidden. If `python -m pytest -q || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+    "start_line": 15,
+    "end_line": 16,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Load test' in job 'load' hides its own failure — born hidden. If `k6 run --out json=k6-results.json load-test.js || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-06-strict-multi.yml",
+    "start_line": 15,
+    "end_line": 19,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure — born hidden. If `set +e` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-05b-strict-acquired.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Lint' in job 'lint' hides its own failure — acquired: or-true. If `npm run lint || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-05-strict-one-line.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Tests' in job 'test' hides its own failure — born hidden. If `cargo test --locked || true` fails, the job stays green. Verified repair: strict-shell (4 lines; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-04-coe-step-eof.yml",
+    "start_line": 16,
+    "end_line": 16,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Clippy' in job 'check' hides its own failure — born hidden (continue-on-error). If `cargo clippy -- -D warnings` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-03-coe-job-born.yml",
+    "start_line": 16,
+    "end_line": 16,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'End-to-end tests' in job 'e2e' hides its own failure — born hidden (continue-on-error). If `npx playwright test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-02-coe-step-born.yml",
+    "start_line": 18,
+    "end_line": 18,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Integration tests' in job 'test' hides its own failure — born hidden (continue-on-error). If `python -m pytest tests/integration -q` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "failure",
+    "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+    "start_line": 15,
+    "end_line": 15,
+    "title": "styxx ci-audit — a check that hides its own failure",
+    "message": "SWALLOWED: the step 'Unit tests' in job 'test' hides its own failure — acquired: continue-on-error. If `npm test` fails, the job stays green. Verified repair: no-continue-on-error (1 line; the diff is in the job summary)."
+   },
+   {
+    "annotation_level": "notice",
+    "path": ".github",
+    "start_line": 1,
+    "end_line": 1,
+    "title": "",
+    "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+   }
+  ]
+ },
+ "comments": [
+  {
+   "id": 4071925366,
+   "path": ".github/workflows/s12-01-coe-step-acquired.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: acquired: continue-on-error): if `npm test` fails, the job stays green.\n\n```suggestion\n\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-continue-on-error`, 1 line).\n<!-- styxx-ci-audit:suggest:06f27faaa1590ea9 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071925551,
+   "path": ".github/workflows/s12-02-coe-step-born.yml",
+   "line": 18,
+   "start_line": null,
+   "original_line": 18,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden (continue-on-error)): if `python -m pytest tests/integration -q` fails, the job stays green.\n\n```suggestion\n\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-continue-on-error`, 1 line).\n<!-- styxx-ci-audit:suggest:26b633e4cf853840 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071925710,
+   "path": ".github/workflows/s12-03-coe-job-born.yml",
+   "line": 16,
+   "start_line": null,
+   "original_line": 16,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden (continue-on-error)): if `npx playwright test` fails, the job stays green.\n\n```suggestion\n\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-continue-on-error`, 1 line).\n<!-- styxx-ci-audit:suggest:19f4a7efcc031d7a -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071926416,
+   "path": ".github/workflows/s12-04-coe-step-eof.yml",
+   "line": 16,
+   "start_line": null,
+   "original_line": 16,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden (continue-on-error)): if `cargo clippy -- -D warnings` fails, the job stays green.\n\n```suggestion\n\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-continue-on-error`, 1 line).\n<!-- styxx-ci-audit:suggest:7bbc8b52ddd8e2ab -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071926626,
+   "path": ".github/workflows/s12-05-strict-one-line.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `cargo test --locked \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          cargo test --locked\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:d02183c8c6361c58 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071926853,
+   "path": ".github/workflows/s12-05b-strict-acquired.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: acquired: or-true): if `npm run lint \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          npm run lint\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:a84be3aa63f83584 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071927020,
+   "path": ".github/workflows/s12-06-strict-multi.yml",
+   "line": 18,
+   "start_line": 16,
+   "original_line": 18,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `set +e` fails, the job stays green.\n\n```suggestion\n          set -eo pipefail\n          go vet ./...\n          go test ./... -race -count=1\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:dcc9920e0b32c551 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071927250,
+   "path": ".github/workflows/s12-06b-strict-ws-line.yml",
+   "line": 17,
+   "start_line": 16,
+   "original_line": 17,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `k6 run --out json=k6-results.json load-test.js \\|\\| true` fails, the job stays green.\n\n```suggestion\n          set -eo pipefail\n          k6 run --out json=k6-results.json load-test.js\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:fb528c380aac7626 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071927557,
+   "path": ".github/workflows/s12-07-strict-eof.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `python -m pytest -q \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          python -m pytest -q\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:8eb6459b154fabda -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071927728,
+   "path": ".github/workflows/s12-08-strict-eof-no-newline.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `vendor/bin/phpunit \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          vendor/bin/phpunit\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:eae588bd4ed9ce18 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071927896,
+   "path": ".github/workflows/s12-09-no-default.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `npm run typecheck \\|\\| echo \"type errors, see the log\"` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          npm run typecheck\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-default`, 4 lines).\n<!-- styxx-ci-audit:suggest:b3a86c92c25cf6b5 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071928052,
+   "path": ".github/workflows/s12-09b-no-default-block.yml",
+   "line": 16,
+   "start_line": null,
+   "original_line": 16,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `python scripts/check_links.py             --root docs             --strict \\|\\| echo \"::warning::some links need attention\"` fails, the job stays green.\n\n```suggestion\n          set -eo pipefail\n          python scripts/check_links.py             --root docs             --strict\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-default`, 3 lines).\n<!-- styxx-ci-audit:suggest:3c3d1c29b969a757 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071928246,
+   "path": ".github/workflows/s12-10-guard.yml",
+   "line": 16,
+   "start_line": null,
+   "original_line": 16,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `if grep -rn \"it.only(\" tests/; then` fails, the job stays green.\n\n```suggestion\n          __rc=0; grep -rn \"it.only(\" tests/ || __rc=$?\n          if [ \"$__rc\" -gt 1 ]; then echo \"guard command failed (exit $__rc): grep -rn \\\"it.only(\\\" tests/\" >&2; exit \"$__rc\"; fi\n          if [ \"$__rc\" -eq 0 ]; then\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`guard-status`, 4 lines).\n<!-- styxx-ci-audit:suggest:e9be03aad8df76d0 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071928462,
+   "path": ".github/workflows/s12-11-both.yml",
+   "line": 16,
+   "start_line": 15,
+   "original_line": 16,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden (continue-on-error)): if `yarn test --ci \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          yarn test --ci\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`both`, 5 lines).\n<!-- styxx-ci-audit:suggest:e1cc032940f7f061 -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071928745,
+   "path": ".github/workflows/s12-14-two-in-one.yml",
+   "line": 15,
+   "start_line": null,
+   "original_line": 15,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden): if `mypy src \\|\\| true` fails, the job stays green.\n\n```suggestion\n        run: |\n          set -eo pipefail\n          mypy src\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`strict-shell`, 4 lines).\n<!-- styxx-ci-audit:suggest:a757dda7af35c81f -->",
+   "author_type": "Bot"
+  },
+  {
+   "id": 4071928892,
+   "path": ".github/workflows/s12-14-two-in-one.yml",
+   "line": 19,
+   "start_line": null,
+   "original_line": 19,
+   "side": "RIGHT",
+   "commit_id": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+   "body": "**styxx ci-audit** — this step hides its own failure (SWALLOWED: born hidden (continue-on-error)): if `python -m pytest -q` fails, the job stays green.\n\n```suggestion\n\n```\n\nThe repair is verified: under the same fault the workflow goes red, and the healthy run is unchanged (`no-continue-on-error`, 1 line).\n<!-- styxx-ci-audit:suggest:b8fab6c6a9a268d6 -->",
+   "author_type": "Bot"
+  }
+ ]
+}
