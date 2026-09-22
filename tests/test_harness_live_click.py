@@ -87,10 +87,24 @@ def test_each_fixture_is_the_shape_it_stands_for(plan):
     assert kinds[("s12-13-no-repair.yml", "name:Tests")][1] is None
 
 
+def _without_scratch_shas(p: dict) -> dict:
+    """The plan with the ids of its scratch commits masked. The job summaries it stores name the
+    offline repository's base and test-merge commits, and those ids depend on the machine's git
+    configuration: the machine that froze the plan signs its commits (commit.gpgsign), the CI runner
+    does not. Nothing the receipt compares holds a commit id."""
+    import copy
+    import re
+    q = copy.deepcopy(p)
+    for run in q["runs"].values():
+        run["summary"] = re.sub(r"`[0-9a-f]{8}`", "`<commit>`", run["summary"])
+    return q
+
+
 def test_the_plan_is_deterministic_and_is_the_frozen_one(plan, tmp_path):
     import json
     assert L.plan(tmp_path) == plan
-    assert json.loads((ROOT / "papers" / "harness" / "swallow12_plan.json").read_text(encoding="utf-8")) == plan
+    frozen = json.loads((ROOT / "papers" / "harness" / "swallow12_plan.json").read_text(encoding="utf-8"))
+    assert _without_scratch_shas(frozen) == _without_scratch_shas(plan)
 
 
 def test_the_base_workflow_is_the_repositorys_gate():
