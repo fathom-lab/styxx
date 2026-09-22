@@ -306,5 +306,6 @@ and in pull requests 70 of 73. The miss: an acquired check is always one click (
 the hiding line), a born-hidden one less often — for want of a verified repair, not of a place to
 put it. The population as frozen held one change twice (two pull requests, one base, one head);
 these numbers count it once — `papers/harness/swallow11_once.py` — and the scored file keeps the
-rule as frozen. `one_click.py` is frozen at `047a1123…` and pinned, with the shipped `action.py` at `c642493d…`
-(one encoding pin after the run; the re-run receipt is the scored one in every check), by its test.
+rule as frozen. `one_click.py` is frozen at `047a1123…` and pinned by its test, with the ten functions of `action.py`
+the replay called pinned by their source (as of `c642493d…`, one encoding pin after the run; the
+re-run receipt is the scored one in every check).
